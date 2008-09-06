@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.file.transfer.introduction">
     <title>Zend_File_Transfer</title>
 
@@ -13,8 +13,7 @@
 
         <para>L'implémentation actuelle de <code>Zend_File_Transfer</code> embarquée en version 1.6.0 est limitée aux
         uploads de type HTTP Post. Le téléchargement de fichiers et les autres adaptateurs seront ajoutés dans les
-        prochaines versions. De plus il n'y a pas de filtres disponibles et les fonctionnalités pour ceux-ci ne sont pas
-        implémentées. Les méthodes non implémentées pour le moment lèveront une exception. Donc réellement vous devriez
+        prochaines versions. Les méthodes non implémentées pour le moment lèveront une exception. Donc réellement vous devriez
         directement utiliser une instance de <code>Zend_File_Transfer_Adapter_Http</code>. Ceci changera dans le futur,
         dès qu'il existera des adaptateurs disponibles.</para>
     </note>

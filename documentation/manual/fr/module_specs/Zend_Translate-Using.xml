@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.translate.using">
     <title>Utiliser les adaptateurs de traduction</title>
 
@@ -662,7 +662,7 @@ $translate->addTranslation("\my_de.mo","de");
             detection for <code>Zend_Translate</code>.</para>
 
             <para>
-                Since Zend Framework 1.6 <code>Zend_Translate</code> recognises also an application
+                Since Zend Framework 1.7.0 <code>Zend_Translate</code> recognises also an application
                 wide locale. You can simply set a <code>Zend_Locale</code> instance to the registry like shown
                 below. With this notation you can forget about setting the locale manually with each instance
                 when you want to use the same locale multiple times.

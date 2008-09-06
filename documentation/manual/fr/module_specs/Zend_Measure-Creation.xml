@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.measure.creation">
     <title>Création d'une mesure</title>
 
@@ -103,7 +103,7 @@ echo $unite; // affiche "1234.50 m"
 ]]></programlisting>
         </example>
 
-        <para>Depuis la version 1.6 du Zend Framework, <code>Zend_Measure</code> supporte aussi l'utilisation d'une
+        <para>Depuis la version 1.7.0 du Zend Framework, <code>Zend_Measure</code> supporte aussi l'utilisation d'une
         application pleinement localisée. Vous pouvez simplement paramétrer une instance <code>Zend_Locale</code> dans
         le registre comme présenté ci-dessous. Avec cette notation vous pouvez ne pas paramétrer cette valeur
         manuellement à chaque fois quand vous utilisez la même localisation plusieurs fois.</para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11202 -->
+<!-- EN-Revision: 11231 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profiler avec Firebug</title>
 
@@ -60,6 +60,9 @@ $response = new Zend_Controller_Response_Http();
 $channel  = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
+
+// Démarrer l'output buffering
+ob_start();
 
 // Maintenant vous pouvez lancer les requêtes qui doivent être profilées
 
