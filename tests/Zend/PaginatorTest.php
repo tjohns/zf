@@ -61,6 +61,11 @@ require_once 'Zend/Controller/Action/HelperBroker.php';
 require_once 'Zend/View/Helper/PaginationControl.php';
 
 /**
+ * @see Zf4207
+ */
+require_once 'Zend/Paginator/_files/Zf4207.php';
+
+/**
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
@@ -528,5 +533,12 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $items = $paginator->getCurrentItems();
 
         $this->assertEquals('item2', $items[0]);
+    }
+    
+    // ZF-4207
+    public function testAcceptsTraversableInstanceFromAdapter()
+    {
+        $paginator = new Zend_Paginator(new Zf4207());
+        $this->assertType('ArrayObject', $paginator->getCurrentItems());
     }
 }

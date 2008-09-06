@@ -70,7 +70,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     /**
      * Current page items
      *
-     * @var Iterator
+     * @var Traversable
      */
     protected $_currentItems = null;
 
@@ -377,7 +377,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     /**
      * Returns the items for the current page.
      *
-     * @return ArrayIterator
+     * @return Traversable
      */
     public function getCurrentItems()
     {
@@ -416,9 +416,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
     /**
      * Get an item from a page. The current page is used if there's no page sepcified.
      *
-     * @param int $itemNumber Item number. Valid range: 1 - itemCountPerPage
-     * @param int $pageNumber
-     * @return ArrayIterator
+     * @param  integer $itemNumber Item number (1 to itemCountPerPage)
+     * @param  integer $pageNumber
+     * @return mixed
      */
     public function getItem($itemNumber, $pageNumber = null)
     {
@@ -504,7 +504,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     /**
      * Returns the items for a given page.
      *
-     * @return ArrayIterator
+     * @return Traversable
      */
     public function getItemsByPage($pageNumber)
     {
@@ -518,7 +518,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         $items = $this->_adapter->getItems($offset, $this->_itemCountPerPage);
         
-        if (!$items instanceof Iterator) {
+        if (!$items instanceof Traversable) {
             $items = new ArrayIterator($items);
         }
         
@@ -530,7 +530,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     /**
      * Returns a foreach-compatible iterator.
      *
-     * @return ArrayIterator
+     * @return Traversable
      */
     public function getIterator()
     {
