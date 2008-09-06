@@ -12,9 +12,4 @@ class Zf4207 extends ArrayObject implements Zend_Paginator_Adapter_Interface
     {
         return new ArrayObject(range(1, 10));
     }
-    
-    public function getIterator($key, $value)
-    {
-        throw new Exception();
-    }
 }

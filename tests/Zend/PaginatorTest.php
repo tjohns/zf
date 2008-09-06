@@ -541,4 +541,20 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $paginator = new Zend_Paginator(new Zf4207());
         $this->assertType('ArrayObject', $paginator->getCurrentItems());
     }
+    
+    // ZF-4193
+    public function testCastsIntegerValuesToInteger()
+    {
+        // Current page number
+        $this->_paginator->setCurrentPageNumber(3.3);
+        $this->assertTrue($this->_paginator->getCurrentPageNumber() == 3);
+
+        // Item count per page
+        $this->_paginator->setItemCountPerPage(3.3);
+        $this->assertTrue($this->_paginator->getItemCountPerPage() == 3);
+
+        // Page range
+        $this->_paginator->setPageRange(3.3);
+        $this->assertTrue($this->_paginator->getPageRange() == 3);
+    }
 }
