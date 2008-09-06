@@ -95,13 +95,13 @@ abstract class Zend_Cache
     }
     
     /**
-     * FIXME
+     * Frontend Constructor
      *
-     * @param unknown_type $backend
-     * @param unknown_type $backendOptions
-     * @param unknown_type $customBackendNaming
-     * @param unknown_type $autoload
-     * @return unknown
+     * @param string  $backend
+     * @param array   $backendOptions
+     * @param boolean $customBackendNaming
+     * @param boolean $autoload
+     * @return Zend_Cache_Core|Zend_Cache_Frontend
      */
     public static function _makeBackend($backend, $backendOptions, $customBackendNaming = false, $autoload = false)
     {
@@ -136,13 +136,13 @@ abstract class Zend_Cache
     }
     
     /**
-     * FIXME
+     * Backend Constructor
      *
-     * @param unknown_type $frontend
-     * @param unknown_type $frontendOptions
-     * @param unknown_type $customFrontendNaming
-     * @param unknown_type $autoload
-     * @return unknown
+     * @param string  $frontend
+     * @param array   $frontendOptions
+     * @param boolean $customFrontendNaming
+     * @param boolean $autoload
+     * @return Zend_Cache_Backend
      */
     public static function _makeFrontend($frontend, $frontendOptions = array(), $customFrontendNaming = false, $autoload = false)
     {
@@ -221,6 +221,7 @@ abstract class Zend_Cache
         if (!$fh = @fopen($filename, 'r', true)) {
             return false;
         }
+        @fclose($fh);
         return true;
     }
 
