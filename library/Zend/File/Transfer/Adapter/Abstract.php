@@ -88,6 +88,13 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
     protected $_tmpDir;
 
     /**
+     * Options for file transfers
+     */
+    protected $_options = array(
+        'ignoreNoFile' => false
+    );
+
+    /**
      * Send file
      * 
      * @param  mixed $options 
@@ -463,6 +470,17 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
     }
 
     /**
+     * Sets Options for adapters
+     *
+     * @param array $options
+     */
+    public function setOptions($options = array()) {
+        if (is_array($options)) {
+            $this->_options = $options;
+        }
+    }
+
+    /**
      * Checks if the files are valid
      *
      * @param  string|array $files Files to check
@@ -474,18 +492,25 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
         $this->_messages = array();
         foreach ($check as $content) {
             $uploaderror = false;
+            $fileerrors  = array();
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
                     $validator = $this->_validators[$class];
                     if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content)) {
-                        $this->_messages += $validator->getMessages();
+                        $fileerrors += $validator->getMessages();
                     }
 
                     if (($class === 'Zend_Validate_File_Upload') and (count($this->_messages) > 0)) {
-                        $uploaderror = true;
+                            $uploaderror = true;
                     }
                 }
             }
+
+            if ($this->_options['ignoreNoFile'] and (isset($this->_messages['fileUploadErrorNoFile']))) {
+                $fileerrors = array();
+            }
+
+            $this->_messages += $fileerrors;
         }
 
         if (count($this->_messages) > 0) {

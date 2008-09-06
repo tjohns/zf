@@ -33,11 +33,17 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 {
     /**
      * Constructor for Http File Transfers
+     *
+     * @param array $options OPTIONAL Options to set
      */
-    public function __construct()
+    public function __construct($options = array())
     {
         $this->_files = $this->_prepareFiles($_FILES);
         $this->addValidator('Upload', $this->_files);
+
+        if (is_array($options)) {
+            $this->_options = $options;
+        }
     }
 
     /**
@@ -70,9 +76,8 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     /**
      * Receive the file from the client (Upload)
      *
-     * @todo Check if file exists otherwise existing will be overwritten
      * @todo Add filters
-     * @param  string|array $files (Optional) Files to receive
+     * @param  string|array $files   (Optional) Files to receive
      * @return bool
      */
     public function receive($files = null)
@@ -90,6 +95,10 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
             // Should never return false when it's tested by the upload validator
             if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
+                if (isset($this->_options['ignoreNoFile'])) {
+                    return true;
+                }
+
                 return false;
             }
 
