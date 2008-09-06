@@ -506,7 +506,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
                 }
             }
 
-            if ($this->_options['ignoreNoFile'] and (isset($this->_messages['fileUploadErrorNoFile']))) {
+            if ($this->_options['ignoreNoFile'] and (isset($fileerrors['fileUploadErrorNoFile']))) {
                 $fileerrors = array();
             }
 
