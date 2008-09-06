@@ -101,7 +101,7 @@ abstract class Zend_Cache
      * @param array   $backendOptions
      * @param boolean $customBackendNaming
      * @param boolean $autoload
-     * @return Zend_Cache_Core|Zend_Cache_Frontend
+     * @return Zend_Cache_Backend
      */
     public static function _makeBackend($backend, $backendOptions, $customBackendNaming = false, $autoload = false)
     {
@@ -142,7 +142,7 @@ abstract class Zend_Cache
      * @param array   $frontendOptions
      * @param boolean $customFrontendNaming
      * @param boolean $autoload
-     * @return Zend_Cache_Backend
+     * @return Zend_Cache_Core|Zend_Cache_Frontend
      */
     public static function _makeFrontend($frontend, $frontendOptions = array(), $customFrontendNaming = false, $autoload = false)
     {
