@@ -106,8 +106,31 @@ abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
                 $val = $this->view->escape($val);
             }
 
+            if ('id' == $key) {
+                $val = $this->_normalizeId($val);
+            }
+
             $xhtml .= " $key=\"$val\"";
         }
         return $xhtml;
+    }
+
+    /**
+     * Normalize an ID
+     * 
+     * @param  string $value 
+     * @return string
+     */
+    protected function _normalizeId($value)
+    {
+        if (strstr($value, '[')) {
+            if ('[]' == substr($value, -2)) {
+                $value = substr($value, 0, strlen($value) - 2);
+            }
+            $value = trim($value, ']');
+            $value = str_replace('][', '-', $value);
+            $value = str_replace('[', '-', $value);
+        }
+        return $value;
     }
 }

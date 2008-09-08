@@ -74,7 +74,9 @@ class Zend_Dojo_View_Helper_CheckBox extends Zend_Dojo_View_Helper_Dijit
         }
         $checkboxInfo = Zend_View_Helper_FormCheckbox::determineCheckboxInfo($value, $checked, $checkedOptions);
         $attribs['checked'] = $checkboxInfo['checked'];
-        $attribs['id']      = $id;
+        if (!array_key_exists('id', $attribs)) {
+            $attribs['id'] = $id;
+        }
 
         $attribs = $this->_prepareDijit($attribs, $params, 'element');
 
