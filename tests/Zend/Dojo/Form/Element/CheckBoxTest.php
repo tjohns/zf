@@ -243,6 +243,15 @@ class Zend_Dojo_Form_Element_CheckBoxTest extends PHPUnit_Framework_TestCase
         $html = $this->element->render();
         $this->assertContains('dojoType="dijit.form.CheckBox"', $html);
     }
+
+    /**
+     * @group ZF-3879
+     */
+    public function testOptionsShouldNotBeRenderedAsElementAttribute()
+    {
+        $html = $this->element->render();
+        $this->assertNotContains('options="', $html, $html);
+    }
 }
 
 // Call Zend_Dojo_Form_Element_CheckBoxTest::main() if this source file is executed directly.
