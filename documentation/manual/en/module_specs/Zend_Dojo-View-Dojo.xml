@@ -45,7 +45,8 @@
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Next, the view script. In this case, we're going to specify
@@ -67,10 +68,11 @@ State: <input id="state" dojoType="dijit.form.FilteringSelect"
 <? // setup required dojo elements:
 $this->dojo()->enable()
              ->setDjConfigOption('parseOnLoad', true)
-             ->registerModulePath('../custom/')
+             ->registerModulePath('custom', '../custom/')
              ->requireModule('dijit.form.FilteringSelect')
-             ->requireModule('custom.PairedStore');
-]]></programlisting>
+             ->requireModule('custom.PairedStore'); ?>
+]]>
+        </programlisting>
 
         <para>
             In our layout script, we'll then check to see if Dojo is enabled,
@@ -86,10 +88,11 @@ $this->dojo()->enable()
     <?= $this->headMeta() ?> 
     <?= $this->headLink() ?> 
     <?= $this->headStyle() ?> 
-<? if ($this->dojo()->isEnabled()):
+<? if ($this->dojo()->isEnabled()){
     $this->dojo()->setLocalPath('/js/dojo/dojo.js')
                  ->addStyleSheetModule('dijit.themes.tundra');
     echo $this->dojo();
+   }
 ?>
     <?= $this->headScript() ?> 
 </head>
@@ -98,7 +101,8 @@ $this->dojo()->enable()
     <?= $this->inlineScript() ?>
 </body>
 </html>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             At this point, you only need to ensure that your files are in the
@@ -158,7 +162,8 @@ $this->dojo()->enable()
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 If you decide instead to use programmatic usage, call the static
@@ -167,7 +172,8 @@ Zend_Dojo_View_Helper_Dojo::setUseDeclarative();
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Finally, if you want to create your own programmatic rules, you
@@ -178,7 +184,8 @@ Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
 
             <programlisting role="php"><![CDATA[
 Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(-1);
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
     </sect3>
 
@@ -192,7 +199,8 @@ Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(-1);
 
         <programlisting role="php"><![CDATA[
 $view->dojo()->addStylesheetModule('dijit.themes.tundra');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The module path is discovered by using the character '.' as a
@@ -210,7 +218,8 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
         <programlisting role="html"><![CDATA[
 <body class="tundra">
-]]></programlisting>
+]]>
+</programlisting>
     </sect3>
 
     <sect3 id="zend.dojo.view.dojo.layers">
@@ -261,7 +270,8 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
         <programlisting role="html"><![CDATA[
 $view->dojo()->addLayer('/js/foo/foo.js');
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             For more information on creating custom builds, please <ulink
@@ -298,8 +308,6 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     registered module paths.</para></listitem>
             <listitem><para><code>addLayer($path)</code>: add a layer (custom
                     build) path to use.</para></listitem>
-            <listitem><para><code>addLayer($path)</code>: add a layer (custom
-                    build) path to use.</para></listitem>
             <listitem><para><code>getLayers()</code>: get a list of all
                     registered layer paths (custom builds).</para></listitem>
             <listitem><para><code>removeLayer($path)</code>: remove the layer
@@ -325,8 +333,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
             <listitem><para><code>getCdnDojoPath()</code>: retrieve the last
                     path segment of the CDN url pointing to the dojo.js
                     file.</para></listitem>
-            <listitem><para><code>useCdn()</code></para>: tell the container to
-                    utilize the CDN; implicitly enables integration.</listitem>
+            <listitem><para><code>useCdn()</code>: tell the container to
+                    utilize the CDN; implicitly enables integration.</para></listitem>
             <listitem><para><code>setLocalPath($path)</code>: tell the container
                     the path to a local Dojo install (should be a path relative
                     to the server, and contain the dojo.js file itself);
