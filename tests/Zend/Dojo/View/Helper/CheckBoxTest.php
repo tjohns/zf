@@ -156,6 +156,15 @@ class Zend_Dojo_View_Helper_CheckBoxTest extends PHPUnit_Framework_TestCase
         $this->assertContains('value="1"', $matches[1]);
         $this->assertNotContains('checked', $matches[1]);
     }
+
+    /**
+     * @group ZF-3878
+     */
+    public function testElementShouldCreateAppropriateIdWhenNameIncludesArrayNotation()
+    {
+        $html = $this->helper->checkBox('foo[bar]', '0');
+        $this->assertContains('id="foo-bar"', $html);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_CheckBoxTest::main() if this source file is executed directly.
