@@ -52,7 +52,7 @@ class Zend_View_Helper_Fieldset extends Zend_View_Helper_FormElement
             $legendString = trim($attribs['legend']);
             if (!empty($legendString)) {
                 $legend = '<legend>' 
-                        . $this->view->escape($legendString) 
+                        . (($escape) ? $this->view->escape($legendString) : $legendString)
                         . '</legend>' . PHP_EOL;
             }
             unset($attribs['legend']);
