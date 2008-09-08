@@ -23,7 +23,7 @@ $currency = new Zend_Currency();
     </example>
 
     <para>
-        从 Zend Framework 1.6 开始，<code>Zend_Currency</code> 也支持程序范围的地方的用法。你可以简单地如下设置 <code>Zend_Locale</code> 实例到注册表。
+        从 Zend Framework 1.7.0 开始，<code>Zend_Currency</code> 也支持程序范围的地方的用法。你可以简单地如下设置 <code>Zend_Locale</code> 实例到注册表。
         如果你想多次使用同一地方，用这个符号你不需要记住对每个实例手工设置地方。
      </para>
 

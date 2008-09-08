@@ -12,9 +12,8 @@
         <title>局限</title>
         <para>
             当前的 <code>Zend_File_Transfer</code> 实现包含在 1.6.0 版中，仅限于 HTTP Post 上载。文件下载和
-            其它适配器在下次发行时会增加。并且实际上还没有过滤器以及和它相关的功能还没有实现。没实现的功能
-            会抛出异常。所以应该直接使用 <code>Zend_File_Transfer_Adapter_Http</code> 的实例。当多重适配器
-            可用时，这个就会改变。
+            其它适配器在下次发行时会增加。没实现的功能会抛出异常。所以应该直接使用 <code>Zend_File_Transfer_Adapter_Http</code> 的实例。
+            当多重适配器可用时，这个就会改变。
         </para>
     </note>
 
