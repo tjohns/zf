@@ -78,6 +78,15 @@ class Zend_View_Helper_FieldsetTest extends PHPUnit_Framework_TestCase
             $this->assertNotContains('<legend>', $html, 'Failed with value ' . var_export($legend, 1) . ': ' . $html);
         }
     }
+
+    /**
+     * @group ZF-3632
+     */
+    public function testHelperShouldAllowDisablingEscapingOfLegend()
+    {
+        $html = $this->helper->fieldset('foo', 'foobar', array('legend' => '<b>Great Scott!</b>', 'escape' => false));
+        $this->assertRegexp('#<legend><b>Great Scott!</b></legend>#', $html, $html);
+    }
 }
 
 // Call Zend_View_Helper_FieldsetTest::main() if this source file is executed directly.
