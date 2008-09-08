@@ -119,6 +119,19 @@ class Zend_Dojo_View_Helper_DojoTest extends PHPUnit_Framework_TestCase
         $this->assertContains('foo.bar', $modules);
     }
 
+    /**
+     * @group ZF-3914
+     */
+    public function testShouldAllowRequiringMultipleModulesAtOnce()
+    {
+        $modules = array('foo.bar', 'bar.baz', 'baz.bat');
+        $this->helper->requireModule($modules);
+        $test = $this->helper->getModules();
+        foreach ($modules as $module) {
+            $this->assertTrue(in_array($module, $test));
+        }
+    }
+
     public function testInvalidModuleNameShouldThrowExceptionDuringRegistration()
     {
         try {
