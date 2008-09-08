@@ -154,7 +154,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_oldFile => $this->_newFile), $filter->getFile());
         $this->assertEquals($this->_newFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -168,7 +168,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_oldFile => $this->_newFile), $filter->getFile());
         $this->assertEquals($this->_newFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -182,7 +182,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_oldFile => $this->_newFile), $filter->getFile());
         $this->assertEquals($this->_newFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -196,7 +196,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_newFile), $filter->getFile());
         $this->assertEquals($this->_newFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -210,7 +210,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_oldFile => $this->_newDir), $filter->getFile());
         $this->assertEquals($this->_newDirFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -224,7 +224,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_oldFile => $this->_newDir), $filter->getFile());
         $this->assertEquals($this->_newDirFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -238,7 +238,7 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_oldFile => $this->_newDir), $filter->getFile());
         $this->assertEquals($this->_newDirFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 
     /**
@@ -252,6 +252,6 @@ class Zend_Filter_File_RenameTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(array($this->_newDir), $filter->getFile());
         $this->assertEquals($this->_newDirFile, $filter->filter($this->_oldFile));
-        $this->assertFalse($filter->filter('falsefile'));
+        $this->assertEquals('falsefile', $filter->filter('falsefile'));
     }
 }

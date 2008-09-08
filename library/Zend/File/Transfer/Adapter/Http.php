@@ -42,7 +42,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
         $this->addValidator('Upload', $this->_files);
 
         if (is_array($options)) {
-            $this->_options = $options;
+            $this->setOptions($options);
         }
     }
 
@@ -76,8 +76,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     /**
      * Receive the file from the client (Upload)
      *
-     * @todo Add filters
-     * @param  string|array $files   (Optional) Files to receive
+     * @param  string|array $files (Optional) Files to receive
      * @return bool
      */
     public function receive($files = null)
@@ -96,12 +95,15 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             // Should never return false when it's tested by the upload validator
             if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
                 if (isset($this->_options['ignoreNoFile'])) {
-                    return true;
+                    continue;
                 }
 
                 return false;
             }
 
+            if (!$this->_filter($file)) {
+                return false;
+            }
         }
 
         return true;

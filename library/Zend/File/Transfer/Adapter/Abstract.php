@@ -19,9 +19,6 @@
  * @version   $Id: $
  */
 
-/** Zend_Validate_Interface */
-require_once 'Zend/Validate/Interface.php';
-
 /**
  * Abstract class for file transfers (Downloads and Uploads)
  *
@@ -30,7 +27,7 @@ require_once 'Zend/Validate/Interface.php';
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Interface
+abstract class Zend_File_Transfer_Adapter_Abstract
 {
     /**@+
      * @const string Plugin loader Constants
@@ -476,17 +473,17 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
      */
     public function setOptions($options = array()) {
         if (is_array($options)) {
-            $this->_options = $options;
+            $this->_options += $options;
         }
     }
 
     /**
      * Checks if the files are valid
      *
-     * @param  string|array $files Files to check
+     * @param  string|array $files (Optional) Files to check
      * @return boolean True if all checks are valid
      */
-    public function isValid($files)
+    public function isValid($files = null)
     {
         $check           = $this->_getFiles($files);
         $this->_messages = array();
@@ -578,9 +575,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
                     continue;
                 }
             }
+
             if (!array_key_exists($file, $this->_files)) {
                 continue;
             }
+
             $this->_files[$file]['filters'][] = $class;
         }
         
@@ -886,25 +885,30 @@ abstract class Zend_File_Transfer_Adapter_Abstract implements Zend_Validate_Inte
     /**
      * Internal function to filter all given files
      *
+     * @param  string|array $files (Optional) Files to check
      * @return boolean False on error
      */
-    protected function _filter()
+    protected function _filter($files = null)
     {
-        $check           = $this->_getFiles();
-        $this->_messages = array();
+        $check           = $this->_getFiles($files);
         foreach ($check as $name => $content) {
             if (array_key_exists('filters', $content)) {
                 foreach ($content['filters'] as $class) {
                     $filter = $this->_filters[$class];
-                    $result = $filter->filter($this->getFileName($name));
-                    if (is_string($result)) {
+                    try {
+                        $result = $filter->filter($this->getFileName($name));
+
                         $this->_files[$name]['destination'] = dirname($result);
                         $this->_files[$name]['name']        = basename($result);
-                    } else {
-                        return false;
+                    } catch (Zend_Filter_Exception $e) {
+                        $this->_messages += array($e->getMessage());
                     }
                 }
             }
+        }
+
+        if (count($this->_messages) > 0) {
+            return false;
         }
 
         return true;

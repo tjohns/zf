@@ -89,10 +89,13 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
     }
 
     /**
-     * Class constructor
+     * Sets a new file or directory as target, deleting existing ones
      *
-     * @param string|array $oldfile File which should be renamed/moved
-     * @param string|array $newfile 
+     * @param  string|array $oldfile   Old file which should be renamed/moved, if $newfile
+     *                                 is empty $oldfile will be used as $newfile
+     * @param  string|array $newfile   New file to set the name to
+     * @param  boolean      $overwrite If true any existing file will be overwritten
+     * @return Zend_Filter_File_Rename
      */
     public function setFile($oldfile, $newfile = null, $overwrite = false)
     {
@@ -103,13 +106,21 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
     }
 
     /**
-     * Class constructor
+     * Adds a new file or directory as target to the existing ones
      *
-     * @param string|array $oldfile File which should be renamed/moved
-     * @param string|array $newfile 
+     * @param  string|array $oldfile   Old file which should be renamed/moved, if $newfile
+     *                                 is empty $oldfile will be used as $newfile
+     * @param  string|array $newfile   New file to set the name to
+     * @param  boolean      $overwrite If true any existing file will be overwritten
+     * @return Zend_Filter_File_Rename
      */
     public function addFile($oldfile, $newfile = null, $overwrite = false)
     {
+        if (is_bool($newfile)) {
+            $overwrite = $newfile;
+            $newfile   = null;
+        }
+
         if (is_array($oldfile)) {
             if (is_array($newfile)) {
                 $files = array_combine($oldfile, $newfile);
@@ -124,14 +135,25 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
             }
         }
 
+        $newoption = null;
         foreach ($files as $oldfile => $newfile) {
             if (isset($this->_files[$oldfile]) and (empty($newfile))) {
                 unset($this->_files[$oldfile]);
                 unset($this->_overwrite[$oldfile]); 
             }
 
-            $this->_files[$oldfile] = $newfile;
-            $this->_overwrite[$oldfile] = $overwrite;
+            if (is_bool($newfile)) {
+                $newoption = $newfile;
+            } else {
+                $this->_files[$oldfile]     = $newfile;
+                $this->_overwrite[$oldfile] = $overwrite;
+            }
+        }
+
+        if ($newoption !== null) {
+            foreach($files as $oldfile => $newfile) {
+                $this->_overwrite[$oldfile] = $newoption;
+            }
         }
 
         return $this;
@@ -153,12 +175,13 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
             $overwrite = $this->_overwrite[$value];
         } else if (isset($this->_files[0])) {
             if (!file_exists($value)) {
-                return false;
+                return $value;
             }
+
             $newfile   = $this->_files[0];
             $overwrite = $this->_overwrite[0];
         } else {
-            return false;
+            return $value;
         }
 
         if (is_dir($newfile)) {
@@ -175,11 +198,17 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
             unlink($newfile);
         }
 
+        if (file_exists($newfile)) {
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception("File $value could not be renamed. It already exists.");
+        }
+
         $result = rename($value, $newfile);
+
         if ($result === true) {
             return $newfile;
         }
 
-        return $result;
+        return false;
     }
 }
