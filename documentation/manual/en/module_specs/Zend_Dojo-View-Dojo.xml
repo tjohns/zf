@@ -68,7 +68,7 @@ State: <input id="state" dojoType="dijit.form.FilteringSelect"
 <? // setup required dojo elements:
 $this->dojo()->enable()
              ->setDjConfigOption('parseOnLoad', true)
-             ->registerModulePath('../custom/')
+             ->registerModulePath('custom', '../custom/')
              ->requireModule('dijit.form.FilteringSelect')
              ->requireModule('custom.PairedStore'); ?>
 ]]>
