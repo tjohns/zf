@@ -305,7 +305,7 @@ $view->addPrefixPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->stackContainer(
+<?= $view->tabContainer(
     'foo', 
     $content, 
     array(),
