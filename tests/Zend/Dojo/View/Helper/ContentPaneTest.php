@@ -112,6 +112,19 @@ class Zend_Dojo_View_Helper_ContentPaneTest extends PHPUnit_Framework_TestCase
         $this->assertNotRegexp('/<div[^>]*(dojoType="dijit.layout.ContentPane")/', $html);
         $this->assertNotNull($this->view->dojo()->getDijit('pane1'));
     }
+
+    /**
+     * @group ZF-3877
+     */
+    public function testContentPaneMarkupShouldNotContainNameAttribute()
+    {
+        $html = $this->view->contentPane('pane1', 'This is the pane content', array('id' => 'pane', 'title' => 'Pane 1'));
+        $this->assertNotContains('name="/', $html, $html);
+
+        Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
+        $html = $this->view->contentPane('pane1', 'This is the pane content', array('id' => 'pane', 'title' => 'Pane 1'));
+        $this->assertNotContains('name="/', $html, $html);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_ContentPaneTest::main() if this source file is executed directly.
