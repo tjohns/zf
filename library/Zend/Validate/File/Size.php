@@ -202,7 +202,8 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!$this->_isReadable($value, $file, self::NOT_FOUND)) {
+        if (!@is_readable($value)) {
+            $this->_throw($file, self::NOT_FOUND);
             return false;
         }
 
@@ -211,64 +212,20 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
         $this->_setValue($size);
 
         // Check to see if it's smaller than min size
-        if ($size < $this->_min) {
-            if ($file !== null) {
-                $this->_value = $file;
-            }
-
-            $this->_error(self::TOO_SMALL);
+        if (($this->_min !== null) && ($size < $this->_min)) {
+            $this->_throw($file, self::TOO_SMALL);
         }
 
         // Check to see if it's larger than max size
-        $this->_isNotTooLarge($size, $file, self::TOO_BIG);
+        if (($this->_max !== null) && ($this->_max < $size)) {
+            $this->_throw($file, self::TOO_BIG);
+        }
 
         if (count($this->_messages) > 0) {
             return false;
         } else {
             return true;
         }
-    }
-
-    /**
-     * Is the given file readable?
-     * 
-     * @param  string $value 
-     * @param  string $file 
-     * @param  string $errorType 
-     * @return bool
-     */
-    protected function _isReadable($value, $file, $errorType)
-    {
-        if (!@is_readable($value)) {
-            if ($file !== null) {
-                $this->_value = $file['name'];
-            }
-
-            $this->_error($errorType);
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Is the file less than the max size?
-     * 
-     * @param  int $size 
-     * @param  string $file 
-     * @param  string $errorType 
-     * @return bool
-     */
-    protected function _isNotTooLarge($size, $file, $errorType)
-    {
-        if (($this->_max !== null) && ($this->_max < $size)) {
-            if ($file !== null) {
-                $this->_value = $file['name'];
-            }
-
-            $this->_error(self::TOO_BIG);
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -330,5 +287,22 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
         }
 
         return $value;
+    }
+
+    /**
+     * Throws an error of the given type
+     *
+     * @param  string $file
+     * @param  string $errorType
+     * @return false
+     */
+    protected function _throw($file, $errorType)
+    {
+        if ($file !== null) {
+            $this->_value = $file['name'];
+        }
+
+        $this->_error($errorType);
+        return false;
     }
 }

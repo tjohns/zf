@@ -121,7 +121,8 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
 
         foreach ($value as $files) {
             // Is file readable ?
-            if (!$this->_isReadable($files, $file, self::NOT_READABLE)) {
+            if (!@is_readable($files)) {
+                $this->_throw($file, self::NOT_READABLE);
                 return false;
             }
 
@@ -136,12 +137,14 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
             $size         = @filesize($files);
             $this->_size += $size;
             $this->_setValue($this->_size);
-            $this->_isNotTooLarge($this->_size, $file, self::TOO_BIG);
+            if (($this->_max !== null) && ($this->_max < $this->_size)) {
+                $this->_throw($file, self::TOO_BIG);
+            }
         }
 
         // Check that aggregate files are >= minimum size
         if (($this->_min !== null) && ($this->_size < $this->_min)) {
-            $this->_error(self::TOO_SMALL);
+            $this->_throw($file, self::TOO_SMALL);
         }
 
         if (count($this->_messages) > 0) {

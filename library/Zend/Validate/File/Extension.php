@@ -158,7 +158,8 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!$this->_isReadable($value, $file, self::NOT_FOUND)) {
+        if (!@is_readable($value)) {
+            $this->_throw($file, self::NOT_FOUND);
             return false;
         }
 
@@ -180,32 +181,24 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
             }
         }
 
-        if ($file !== null) {
-            $this->_value = $file['name'];
-        }
-
-        $this->_error(self::FALSE_EXTENSION);
+        $this->_throw($file, self::FALSE_EXTENSION);
         return false;
     }
 
     /**
-     * Is the given file readable?
-     * 
-     * @param  string $value 
-     * @param  string $file 
-     * @param  string $errorType 
-     * @return bool
+     * Throws an error of the given type
+     *
+     * @param  string $file
+     * @param  string $errorType
+     * @return false
      */
-    protected function _isReadable($value, $file, $errorType)
+    protected function _throw($file, $errorType)
     {
-        if (!@is_readable($value)) {
-            if ($file !== null) {
-                $this->_value = $file['name'];
-            }
-
-            $this->_error($errorType);
-            return false;
+        if ($file !== null) {
+            $this->_value = $file['name'];
         }
-        return true;
+
+        $this->_error($errorType);
+        return false;
     }
 }

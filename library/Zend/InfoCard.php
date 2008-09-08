@@ -139,7 +139,7 @@ class Zend_InfoCard
     public function getAdapter()
     {
         if(is_null($this->_adapter)) {
-            Zend_Loader::loadClass('Zend_InfoCard_Adapter_Default');
+            require_once 'Zend/InfoCard/Adapter/Default.php';
             $this->setAdapter(new Zend_InfoCard_Adapter_Default());
         }
 

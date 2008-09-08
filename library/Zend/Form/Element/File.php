@@ -258,23 +258,24 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         $adapter = $this->getTransferAdapter();
         $this->setValue($adapter->getFileName($this->getName()));
 
-        if (!$this->isRequired() && empty($value)) {
-            return true;
-        }
-
-        if ($this->isRequired() 
-            && $this->autoInsertNotEmptyValidator() 
-            && !$this->getValidator('NotEmpty'))
-        {
-            $validators = $this->getValidators();
-            $notEmpty   = array('validator' => 'NotEmpty', 'breakChainOnFailure' => true);
-            array_unshift($validators, $notEmpty);
-            $this->setValidators($validators);
+        if (!$this->isRequired()) {
+            $adapter->setOptions(array('ignoreNoFile' => true));
+        } else {
+            $adapter->setOptions(array('ignoreNoFile' => false));
+            if ($this->autoInsertNotEmptyValidator() and
+                   !$this->getValidator('NotEmpty'))
+            {
+                $validators = $this->getValidators();
+                $notEmpty   = array('validator' => 'NotEmpty', 'breakChainOnFailure' => true);
+                array_unshift($validators, $notEmpty);
+                $this->setValidators($validators);
+            }
         }
 
         if($adapter->receive($value)) {
             return true;
         }
+
         return false;
     }
 
