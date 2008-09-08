@@ -50,6 +50,12 @@ class Zend_Dojo_Data implements ArrayAccess,Iterator,Countable
     protected $_label;
 
     /**
+     * Data container metadata
+     * @var array
+     */
+    protected $_metadata = array();
+
+    /**
      * Constructor
      * 
      * @param  string|null $identifier 
@@ -264,6 +270,60 @@ class Zend_Dojo_Data implements ArrayAccess,Iterator,Countable
     }
 
     /**
+     * Set metadata by key or en masse
+     * 
+     * @param  string|array $spec 
+     * @param  mixed $value 
+     * @return Zend_Dojo_Data
+     */
+    public function setMetadata($spec, $value = null)
+    {
+        if (is_string($spec) && (null !== $value)) {
+            $this->_metadata[$spec] = $value;
+        } elseif (is_array($spec)) {
+            foreach ($spec as $key => $value) {
+                $this->setMetadata($key, $value);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Get metadata item or all metadata
+     * 
+     * @param  null|string $key Metadata key when pulling single metadata item
+     * @return mixed
+     */
+    public function getMetadata($key = null)
+    {
+        if (null === $key) {
+            return $this->_metadata;
+        }
+
+        if (array_key_exists($key, $this->_metadata)) {
+            return $this->_metadata[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     * Clear individual or all metadata item(s)
+     * 
+     * @param  null|string $key 
+     * @return Zend_Dojo_Data
+     */
+    public function clearMetadata($key = null)
+    {
+        if (null === $key) {
+            $this->_metadata = array();
+        } elseif (array_key_exists($key, $this->_metadata)) {
+            unset($this->_metadata[$key]);
+        }
+        return $this;
+    }
+
+    /**
      * Load object from array
      * 
      * @param  array $data 
@@ -318,6 +378,13 @@ class Zend_Dojo_Data implements ArrayAccess,Iterator,Countable
             'identifier' => $identifier,
             'items'      => array_values($this->getItems()),
         );
+
+        $metadata = $this->getMetadata();
+        if (!empty($metadata)) {
+            foreach ($metadata as $key => $value) {
+                $array[$key] = $value;
+            }
+        }
 
         if (null !== ($label = $this->getLabel())) {
             $array['label'] = $label;

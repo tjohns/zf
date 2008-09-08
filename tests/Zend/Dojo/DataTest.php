@@ -467,6 +467,67 @@ class Zend_Dojo_DataTest extends PHPUnit_Framework_TestCase
     {
         $this->dojoData->fromJson(new stdClass);
     }
+
+    /**
+     * @group ZF-3841
+     */
+    public function testDataContainerShouldAcceptAdditionalMetadataPerKey()
+    {
+        $this->assertNull($this->dojoData->getMetadata('numRows'));
+        $this->dojoData->setMetadata('numRows', 100);
+        $this->assertEquals(100, $this->dojoData->getMetadata('numRows'));
+    }
+
+    /**
+     * @group ZF-3841
+     */
+    public function testDataContainerShouldAcceptAdditionalMetadataEnMasse()
+    {
+        $metadata = $this->dojoData->getMetadata();
+        $this->assertTrue(is_array($metadata));
+        $this->assertTrue(empty($metadata));
+
+        $metadata = array('numRows' => 100, 'sort' => 'name');
+        $this->dojoData->setMetadata($metadata);
+        $test = $this->dojoData->getMetadata();
+        $this->assertEquals($metadata, $test);
+    }
+
+    /**
+     * @group ZF-3841
+     */
+    public function testDataContainerShouldAllowClearingIndividualMetadataItems()
+    {
+        $this->testDataContainerShouldAcceptAdditionalMetadataEnMasse();
+        $this->dojoData->clearMetadata('numRows');
+        $metadata = $this->dojoData->getMetadata();
+        $this->assertEquals(1, count($metadata));
+        $this->assertFalse(array_key_exists('numRows', $metadata));
+        $this->assertTrue(array_key_exists('sort', $metadata));
+    }
+
+    /**
+     * @group ZF-3841
+     */
+    public function testDataContainerShouldAllowClearingMetadataEnMasse()
+    {
+        $this->testDataContainerShouldAcceptAdditionalMetadataEnMasse();
+        $this->dojoData->clearMetadata();
+        $metadata = $this->dojoData->getMetadata();
+        $this->assertEquals(0, count($metadata));
+    }
+
+    /**
+     * @group ZF-3841
+     */
+    public function testSerializingToArrayShouldIncludeMetadata()
+    {
+        $this->testDataContainerShouldAcceptAdditionalMetadataEnMasse();
+        $this->dojoData->setIdentifier('id');
+        $array = $this->dojoData->toArray();
+        $this->assertTrue(array_key_exists('numRows', $array));
+        $this->assertTrue(array_key_exists('sort', $array));
+    }
 }
 
 class Zend_Dojo_DataTest_DataObject
