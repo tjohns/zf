@@ -157,6 +157,52 @@ $data->fromJson($json);
         </example>
     </sect2>
 
+    <sect2 id="zend.dojo.data.metadata">
+        <title>Adding metadata to your containers</title>
+
+        <para>
+            Some Dojo components require additional metadata to be returned with
+            the dojo.data payload. As an example, <code>dojox.grid.Grid</code>
+            can pull data dynamically from a
+            <code>dojox.data.QueryReadStore</code>. To allow pagination to work
+            correctly, each return payload should contain a <code>numRows</code>
+            key with the total number of rows that could be returned by the
+            query; that way, the grid knows (a) when to continue making small
+            requests to the server for subsets of data, and (b) when to stop
+            making more requests (i.e., it has reached the last page of data).
+            This technique is useful for serving large sets of data in your
+            grids without loading the entire set at once.
+        </para>
+
+        <para>
+            <code>Zend_Dojo_Data</code> allows setting such properties as
+            metadata to the object. The following illustrates usage:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Set the "numRows" to 100
+$data->setMetadata('numRows', 100);
+
+// Set several items at once:
+$data->setMetadata(array(
+    'numRows' => 100,
+    'sort'    => 'name',
+));
+
+// Inspect a single metadata value:
+$numRows = $data->getMetadata('numRows');
+
+// Inspect all metadata:
+$metadata = $data->getMetadata();
+
+// Remove a metadata item:
+$data->clearMetadata('numRows');
+
+// Remove all metadata:
+$data->clearMetadata();
+]]></programlisting>
+    </sect2>
+
     <sect2 id="zend.dojo.data.advanced">
         <title>Advanced Use Cases</title>
 
