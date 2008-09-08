@@ -112,7 +112,7 @@ class SomeController extends Zend_Controller_Action
         // Set the default options for the redirector
         // Since the object is registered in the helper broker, these 
         // become relevant for all actions from this point forward
-        $this->_redirector->setCode('303')
+        $this->_redirector->setCode(303)
                           ->setExit(false)
                           ->setGotoSimple("this-action", 
                                           "some-controller");
