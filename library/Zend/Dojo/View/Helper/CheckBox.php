@@ -80,6 +80,11 @@ class Zend_Dojo_View_Helper_CheckBox extends Zend_Dojo_View_Helper_Dijit
 
         $attribs = $this->_prepareDijit($attribs, $params, 'element');
 
+        // strip options so they don't show up in markup
+        if (array_key_exists('options', $attribs)) {
+            unset($attribs['options']);
+        }
+
         // and now we create it:
         $html = '';
         if (!strstr($id, '[]')) {
