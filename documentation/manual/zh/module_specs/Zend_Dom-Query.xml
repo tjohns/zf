@@ -72,14 +72,15 @@
                         任何地方包含字符串 "baz" 的 "bar" 属性的 div 元素。
                     </para></listitem>
                 </itemizedlist>
+             </listitem>
 
-                <itemizedlist><para>
+                <listitem><para>
                     <emphasis>direct descendents</emphasis>: 
                     利用在选择器之间的 '&gt;'表示直接的子孙。'div > span'将只选择 'div'直接的子孙 'span' 元素。
                     它可用于任何上述的选择器。
-                </para></itemizedlist>
+                </para></listitem>
 
-                <itemizedlist>
+                <listitem>
                     <para>
                         <emphasis>descendents</emphasis>: 
                         把多个选择器集中成一字符串来表示一个搜索的层次。
@@ -105,9 +106,10 @@
         </tr>
     </table>
 </div>
-]]></programlisting>
-                </itemizedlist>
-            </listitem>
+]]>
+</programlisting>
+          </listitem>
+      </itemizedlist>
         </itemizedlist>
 
         <para>
@@ -127,7 +129,8 @@ $count = count($results); // get number of matches: 4
 foreach ($results as $result) {
     // $result is a DOMElement
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             <code>Zend_Dom_Query</code> 也允许利用 <code>queryXpath()</code> method 直接 XPath 查询；

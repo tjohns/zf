@@ -22,7 +22,8 @@
 
         <programlisting role="php"><![CDATA[
 $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             另外，你也可以使用 <code>Zend_Dojo</code> 的
@@ -31,7 +32,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
 
         <programlisting role="php"><![CDATA[
 Zend_Dojo::enableView($view);
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <xi:include href="Zend_Dojo-View-Dojo.xml" />

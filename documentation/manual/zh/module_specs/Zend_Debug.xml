@@ -8,9 +8,11 @@
 
     <example id="zend.debug.dumping.example">
         <title> dump()方法使用示例 </title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 
-Zend_Debug::dump($var, $label=null, $echo=true);]]></programlisting>
+Zend_Debug::dump($var, $label=null, $echo=true);
+]]>
+        </programlisting>
     </example>
 
     <para>
