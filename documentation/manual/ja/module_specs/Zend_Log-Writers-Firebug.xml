@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 11231 -->
 <sect2 id="zend.log.writers.firebug">
     <title>Firebug への書き込み</title>
     <para>
@@ -51,7 +51,8 @@ $writer = new Zend_Log_Writer_Firebug();
 $logger = new Zend_Log($writer);
 
 // モデル、ビューおよびコントローラのファイル内でこれを使用します
-$logger->log('This is a log message!', Zend_Log::INFO);]]>
+$logger->log('This is a log message!', Zend_Log::INFO);
+]]>
       </programlisting>	
     </example>
       
@@ -68,13 +69,17 @@ $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
 
+// 出力バッファリングを開始します
+ob_start();
+
 // ロガーをコールします
  
 $logger->log('This is a log message!', Zend_Log::INFO);
 
 // ログデータをブラウザに送ります
 $channel->flush();
-$response->sendHeaders();]]>
+$response->sendHeaders();
+]]>
       </programlisting>
     </example>
     
@@ -87,16 +92,18 @@ $response->sendHeaders();]]>
         <code>setPriorityStyle()</code> メソッドを使用します。
       </para>
       <programlisting role="php"><![CDATA[
-  $logger->addPriority('FOO', 8);
-  $writer->setPriorityStyle(8, 'TRACE');
-  $logger->foo('Foo Message');]]>
+$logger->addPriority('FOO', 8);
+$writer->setPriorityStyle(8, 'TRACE');
+$logger->foo('Foo Message');
+]]>
       </programlisting>	
       <para>
         ユーザ定義の優先度用のデフォルトのスタイルを設定するには
         <code>setDefaultPriorityStyle()</code> メソッドを使用します。
       </para>
       <programlisting role="php"><![CDATA[
-  $writer->setDefaultPriorityStyle('TRACE');]]>
+$writer->setDefaultPriorityStyle('TRACE');
+]]>
       </programlisting>
       <para>
         サポートしているスタイルは次のとおりです。
@@ -169,8 +176,9 @@ $response->sendHeaders();]]>
         例外は自動的に例外と判断されます。
       </para>
       <programlisting role="php"><![CDATA[
-  $exception = new Zend_Exception('Test exception');
-  $logger->err($exception);]]>
+$exception = new Zend_Exception('Test exception');
+$logger->err($exception);
+]]>
       </programlisting>
     </sect3>
   
@@ -183,17 +191,18 @@ $response->sendHeaders();]]>
         データの最初の行がヘッダと見なされます。
       </para>
       <programlisting role="php"><![CDATA[
-  $writer->setPriorityStyle(8, 'TABLE');
-  $logger->addPriority('TABLE', 8);
-  
-  $table = array('Summary line for the table',
-                 array(
-                     array('Column 1', 'Column 2'),
-                     array('Row 1 c 1',' Row 1 c 2'),
-                     array('Row 2 c 1',' Row 2 c 2')
-                 )
-                );
-  $logger->table($table);]]>
+$writer->setPriorityStyle(8, 'TABLE');
+$logger->addPriority('TABLE', 8);
+
+$table = array('Summary line for the table',
+             array(
+                 array('Column 1', 'Column 2'),
+                 array('Row 1 c 1',' Row 1 c 2'),
+                 array('Row 2 c 1',' Row 2 c 2')
+             )
+            );
+$logger->table($table);
+]]>
       </programlisting>
     </sect3>
 </sect2>
