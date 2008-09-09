@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.loader.load">
 
     <title>ファイルやクラスの動的な読み込み</title>
@@ -35,7 +35,8 @@
         <example id="zend.loader.load.file.example">
             <title>loadFile() メソッドの例</title>
             <programlisting role="php"><![CDATA[
-Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
+Zend_Loader::loadFile($filename, $dirs=null, $once=false);
+]]>
             </programlisting>
     </example>
 
@@ -83,7 +84,8 @@ Zend_Loader::loadClass('Container_Tree',
         '/home/production/mylib',
         '/home/production/myapp'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
 
@@ -130,7 +132,8 @@ Zend_Loader::loadClass('Container_Tree',
             <programlisting role="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // $filename で何かをします
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -163,7 +166,8 @@ if (Zend_Loader::isReadable($filename)) {
         <example id="zend.loader.load.autoload.example">
             <title>自動ローダー用コールバックメソッドの登録例</title>
             <programlisting role="php"><![CDATA[
-Zend_Loader::registerAutoload();]]>
+Zend_Loader::registerAutoload();
+]]>
             </programlisting>
         </example>
 
@@ -211,7 +215,8 @@ class My_Loader extends Zend_Loader
     }
 }
 
-Zend_Loader::registerAutoload('My_Loader');]]>
+Zend_Loader::registerAutoload('My_Loader');
+]]>
             </programlisting>
         </example>
 
