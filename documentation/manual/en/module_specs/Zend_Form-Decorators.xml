@@ -340,6 +340,45 @@ class My_Decorator_Errors
             elements' decorators.
         </para>
     </sect2>
+
+    <sect2 id="zend.form.decorators.individual">
+        <title>Rendering Individual Decorators</title>
+
+        <para>
+            Since decorators can target distince metadata of the element or form
+            they decorate, it's often useful to render an individual decorator
+            at a time. Fortunately, this feature is possible via method
+            overloading in each major form class type (forms, sub form, display
+            group, element).
+        </para>
+
+        <para>
+            To do so, simply call <code>render[DecoratorName]()</code>, where
+            "[DecoratorName]" is the "short name" of your decorator; optionally,
+            you can pass in content you want decorated. For example:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// render just the element label decorator:
+echo $element->renderLabel();
+
+// render just the display group fieldset, with some content:
+echo $group->renderFieldset('fieldset content');
+
+// render just the form HTML tag, with some content:
+echo $form->renderHtmlTag('wrap this content');
+]]></programlisting>
+
+        <para>
+            If the decorator does not exist, an exception is raised.
+        </para>
+
+        <para>
+            This can be useful particularly when rendering a form with the
+            ViewScript decorator; each element can use its attached decorators
+            to generate content, but with fine-grained control.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

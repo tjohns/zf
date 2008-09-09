@@ -1293,6 +1293,28 @@ $fooBar  = $form->getDecorator('FooBar');
                     <code>clearDecorators()</code>
                 </para></listitem>
         </itemizedlist>
+
+        <para>
+            <code>Zend_Form</code> also uses overloading to allow rendering
+            specific decorators. <code>__call()</code> will intercept methods
+            that lead with the text 'render' and use the remainder of the method
+            name to lookup a decorator; if found, it will then render that
+            <emphasis>single</emphasis> decorator. Any arguments passed to the
+            method call will be used as content to pass to the decorator's
+            <code>render()</code> method. As an example: 
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Render only the FormElements decorator:
+echo $form->renderFormElements();
+
+// Render only the fieldset decorator, passing in content:
+echo $form->renderFieldset("<p>This is fieldset content</p>");
+]]></programlisting>
+
+        <para>
+            If the decorator does not exist, an exception is raised.
+        </para>
     </sect2>
 
     <sect2 id="zend.form.forms.validation">

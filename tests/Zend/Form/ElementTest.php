@@ -108,7 +108,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
     public function testGetTranslatorRetrievesGlobalDefaultWhenAvailable()
     {
         $this->testNoTranslatorByDefault();
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         Zend_Form::setDefaultTranslator($translator);
         $received = $this->element->getTranslator();
         $this->assertSame($translator->getAdapter(), $received);
@@ -116,7 +116,7 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
 
     public function testTranslatorAccessorsWork()
     {
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         $this->element->setTranslator($translator);
         $received = $this->element->getTranslator($translator);
         $this->assertSame($translator->getAdapter(), $received);
@@ -1869,6 +1869,35 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $decorators = $element->getDecorators();
         $this->assertTrue(empty($decorators));
     }
+
+    /**
+     * @group ZF-3217
+     */
+    public function testElementShouldOverloadToRenderDecorators()
+    {
+        $this->element->setLabel('Foo Label')
+                      ->setView($this->getView());
+        $html = $this->element->renderViewHelper();
+        $this->assertContains('<input', $html);
+        $this->assertContains('id="' . $this->element->getFullyQualifiedName() . '"', $html, 'Received: ' . $html);
+        $this->assertNotContains('<dd', $html);
+        $this->assertNotContains('<label', $html);
+
+        $html = $this->element->renderLabel('this is the content');
+        $this->assertRegexp('#<label[^>]*for="' . $this->element->getFullyQualifiedName() . '"[^>]*>Foo Label</label>#', $html);
+        $this->assertContains('this is the content', $html);
+        $this->assertNotContains('<input', $html);
+    }
+
+    /**
+     * @group ZF-3217
+     * @expectedException Zend_Form_Element_Exception
+     */
+    public function testOverloadingToInvalidMethodsShouldThrowAnException()
+    {
+        $html = $this->element->bogusMethodCall();
+    }
+
 
     /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
