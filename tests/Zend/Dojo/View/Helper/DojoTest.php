@@ -142,6 +142,15 @@ class Zend_Dojo_View_Helper_DojoTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group ZF-3916
+     */
+    public function testRequireModuleShouldAllowDashAndUnderscoreCharacters()
+    {
+        $this->helper->requireModule('dojox.highlight.language._www');
+        $this->helper->requireModule('dojo.NodeList-fx');
+    }
+
     public function testShouldNotRegisterDuplicateModules()
     {
         $this->helper->requireModule('foo.bar');
@@ -296,6 +305,16 @@ class Zend_Dojo_View_Helper_DojoTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($stylesheets));
         $this->assertContains('dijit.themes.tundra', $stylesheets);
     }
+
+    /**
+     * @group ZF-3916
+     */
+    public function testAddingStylesheetModuleShouldAllowDashAndUnderscoreCharacters()
+    {
+        $this->helper->addStylesheetModule('dojox._highlight.pygments');
+        $this->helper->addStylesheetModule('dojo.NodeList-fx.styles');
+    }
+
 
     public function testInvalidStylesheetModuleNameShouldThrowException()
     {
