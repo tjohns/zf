@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.measure.creation">
 
     <title>計測値の作成</title>
@@ -137,7 +137,7 @@ echo $unit; // 出力は "1234.50 m" となります
         </example>
 
         <para>
-            Zend Framework 1.6 以降では、<code>Zend_Measure</code>
+            Zend Framework 1.7.0 以降では、<code>Zend_Measure</code>
             はアプリケーション単位でのロケールの使用にも対応します。
             そのためには、<code>Zend_Locale</code>
             のインスタンスを以下のようにレジストリに登録します。
@@ -151,7 +151,8 @@ $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // アプリケーションのどこかで
-$length = new Zend_Measure_Length(Zend_Measure_Length::METER();]]>
+$length = new Zend_Measure_Length(Zend_Measure_Length::METER();
+]]>
         </programlisting>
 
     </sect2>

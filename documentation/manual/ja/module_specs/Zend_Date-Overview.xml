@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API の概要</title>
@@ -174,14 +174,17 @@
 
         <example id="zend.date.values.example-1">
             <title>ユーザ定義の入力日付書式</title>
-            <programlisting role="php"><![CDATA[$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
+            <programlisting role="php"><![CDATA[
+$date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 
 $date2 = new Zend_Date('Feb 31, 2007', Zend_Date::DATES, 'en_US');
 echo $date2, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
 
-$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy'); // 指定したフォーマットで解釈するように強制します
-echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
+// 指定したフォーマットで解釈するように強制します
+$date3 = new Zend_Date('Feb 31, 2007', 'MM.dd.yyyy');
+echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります
+]]>
             </programlisting>
         </example>
 
@@ -210,7 +213,7 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
         </para>
 
         <para>
-            Zend Framework 1.6 以降では、<code>Zend_Date</code>
+            Zend Framework 1.7.0 以降では、<code>Zend_Date</code>
             はアプリケーション単位でのロケールの使用にも対応します。
             そのためには、<code>Zend_Locale</code>
             のインスタンスを以下のようにレジストリに登録します。
@@ -218,12 +221,14 @@ echo $date3, "\n"; // 出力は "Mar 3, 2007 12:00:00 AM" となります]]>
             各インスタンスで毎回ロケールを設定する手間を省けます。
         </para>
 
-        <programlisting role="php"><![CDATA[// 起動ファイルで
+        <programlisting role="php"><![CDATA[
+// 起動ファイルで
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // アプリケーションのどこかで
-$date = new Zend_Date('31.Feb.2007');]]>
+$date = new Zend_Date('31.Feb.2007');
+]]>
         </programlisting>
 
     </sect2>
@@ -253,11 +258,13 @@ $date = new Zend_Date('31.Feb.2007');]]>
 
         <example id="zend.date.basic.example-1">
             <title>日付要素の操作</title>
-            <programlisting role="php"><![CDATA[$date = new Zend_Date(); // $date のタイムスタンプは time() の返す値と等しくなります
+            <programlisting role="php"><![CDATA[
+$date = new Zend_Date(); // $date のタイムスタンプは time() の返す値と等しくなります
 
 // $date に 12 時間足します
 $date->add('12', Zend_Date::HOUR);
-print $date;]]>
+print $date;
+]]>
             </programlisting>
         </example>
 

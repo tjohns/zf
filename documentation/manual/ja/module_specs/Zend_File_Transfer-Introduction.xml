@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -18,8 +18,6 @@
             1.6.0 に同梱される現在の <code>Zend_File_Transfer</code>
             の実装では、HTTP Post によるアップロードにしか対応していません。
             ファイルのダウンロードやその他のアダプタについては次のリリースで追加される予定です。
-            また、今のところ使用できるフィルタはありませんし、
-            フィルタ機能も実装されていません。
             実装されていないメソッドを実行すると例外をスローします。
             したがって、実際のところは
             <code>Zend_File_Transfer_Adapter_Http</code>
@@ -47,10 +45,12 @@
         <programlisting><![CDATA[
 <form enctype="multipart/form-data" action="/file/upload" method="POST">
     <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
-        アップロードするファイルを選択: <input name="uploadedfile" type="file" /><br />
+        アップロードするファイルを選択: <input name="uploadedfile" type="file" />
+    <br />
     <input type="submit" value="アップロード" />
-</form>]]>
-        </programlisting>
+</form>
+]]>
+</programlisting>
         <para>
             HTML を直接作成するのではなく、利便性を考慮して
             <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link>

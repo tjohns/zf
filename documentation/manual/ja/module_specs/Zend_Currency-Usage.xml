@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
@@ -23,13 +23,16 @@
             'en_US' となります。
         </para>
 
-        <programlisting role="php"><![CDATA[$currency = new Zend_Currency();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$currency = new Zend_Currency();
+]]>
+        </programlisting>
 
 
     </example>
 
     <para>
-        Zend Framework 1.6 以降、<code>Zend_Currency</code>
+        Zend Framework 1.7.0 以降、<code>Zend_Currency</code>
         アプリケーション単位でのロケールの指定をサポートするようになりました。
         下の例のように、<code>Zend_Locale</code> のインスタンスをレジストリに登録します。
         このようにすると、インスタンスを作成する際に
@@ -37,12 +40,14 @@
         これは同じロケールを何度も使用する場合に便利です。
     </para>
 
-    <programlisting role="php"><![CDATA[// 起動ファイル内で
+    <programlisting role="php"><![CDATA[
+// 起動ファイル内で
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // アプリケーションのどこかで
-$currency = new Zend_Currency();]]>
+$currency = new Zend_Currency();
+]]>
     </programlisting>
 
     <note>
@@ -105,7 +110,8 @@ $currency = new Zend_Currency();]]>
 
         <title>Zend_Currency のインスタンスを作成する別の例</title>
 
-        <programlisting role="php"><![CDATA[// 標準のロケールが 'de_AT' であるものとします
+        <programlisting role="php"><![CDATA[
+// 標準のロケールが 'de_AT' であるものとします
 
 // 'en_US' でインスタンスを作成します。これは 'USD' を使用します ('en_US' のデフォルトの通貨です)
 $currency = new Zend_Currency('en_US');
@@ -114,7 +120,8 @@ $currency = new Zend_Currency('en_US');
 $currency = new Zend_Currency();
 
 // 通貨として 'EUR'、数値フォーマットに 'en_US' を使用するインスタンスを作成します
-$currency = new Zend_Currency('en_US', 'EUR');]]>
+$currency = new Zend_Currency('en_US', 'EUR');
+]]>
         </programlisting>
 
     </example>
@@ -171,7 +178,8 @@ $currency = new Zend_Currency('en_US', 'EUR');]]>
 
             <title>通貨形式での出力の作成</title>
 
-            <programlisting role="php"><![CDATA[// 'en_US' でインスタンスを作成します。これは 'USD' を使用します ('en_US' のデフォルトの通貨です)
+            <programlisting role="php"><![CDATA[
+// 'en_US' でインスタンスを作成します。これは 'USD' を使用します ('en_US' のデフォルトの通貨です)
 $currency = new Zend_Currency('en_US');
 
 // '$ 1,000.00' と表示します
@@ -181,7 +189,8 @@ echo $currency->toCurrency(1000);
 echo $currency->toCurrency(1000, array('format' => 'de_AT'));
 
 // '$ ١٬٠٠٠٫٠٠' と表示します
-echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
+echo $currency->toCurrency(1000, array('script' => 'Arab'));
+]]>
             </programlisting>
 
         </example>
@@ -324,7 +333,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title>通貨記号の設定を指定するための定数</title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry>定数</entry>
@@ -357,7 +366,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title>表示する場所を指定するための定数</title>
 
-            <tgroup cols="3" align="left">
+            <tgroup cols="2" align="left">
                 <thead>
                     <row>
                         <entry>定数</entry>
@@ -386,19 +395,23 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));]]>
 
             <title>通貨の表示形式の変更</title>
 
-            <programlisting role="php"><![CDATA[// 'en_US' でインスタンスを作成します。これは 'USD'、'Latin' そして 'en_US' を使用します (これらは 'en_US' のデフォルトです)
+            <programlisting role="php"><![CDATA[
+// 'en_US' でインスタンスを作成します。これは 'USD'、'Latin' そして 'en_US' を使用します (これらは 'en_US' のデフォルトです)
 $currency = new Zend_Currency('en_US');
 
 // 'US$ 1,000.00' と表示します
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME, 'position' => Zend_Currency::RIGHT);
+$currency->setFormat('display' => Zend_Currency::USE_NAME,
+                     'position' => Zend_Currency::RIGHT);
+
 // '1.000,00 US Dollar' と表示します
 echo $currency->toCurrency(1000);
 
 $currency->setFormat('name' => 'American Dollar');
 // '1.000,00 American Dollar' と表示します
-echo $currency->toCurrency(1000);]]>
+echo $currency->toCurrency(1000);
+]]>
             </programlisting>
 
         </example>
@@ -486,7 +499,8 @@ echo $currency->toCurrency(1000);]]>
 
             <title>通貨に関する情報の取得</title>
 
-            <programlisting role="php"><![CDATA[// 'en_US' でインスタンスを作成します。これは 'USD'、'Latin' そして 'en_US' を使用します (これらは 'en_US' のデフォルトです)
+            <programlisting role="php"><![CDATA[
+// 'en_US' でインスタンスを作成します。これは 'USD'、'Latin' そして 'en_US' を使用します (これらは 'en_US' のデフォルトです)
 $currency = new Zend_Currency('en_US');
 
 // '$' と表示します
@@ -502,7 +516,8 @@ echo $currency->getName('ATS', 'de_AT');
 print_r($currency->getRegionList();
 
 // この地域で用いられているすべての通貨を配列で返します
-print_r($currency->getCurrencyList('de_AT');]]>
+print_r($currency->getCurrencyList('de_AT');
+]]>
             </programlisting>
 
         </example>
@@ -524,7 +539,8 @@ print_r($currency->getCurrencyList('de_AT');]]>
 
             <title>新しいロケールの設定</title>
 
-            <programlisting role="php"><![CDATA[// 米国の通貨を取得します
+            <programlisting role="php"><![CDATA[
+// 米国の通貨を取得します
 $currency = new Zend_Currency('en_US');
 print $currency->toCurrency(1000);
 
@@ -555,11 +571,16 @@ print $currency->toCurrency(1000);
 
             <title>通貨のキャッシュ処理</title>
 
-            <programlisting role="php"><![CDATA[// キャッシュオブジェクトを作成します
-$cache = Zend_Cache::factory('Core', 'File',
-             array('lifetime' => 120, 'automatic_serialization' => true),
-             array('cache_dir' => dirname(__FILE__) . '/_files/'));
-Zend_Currency::setCache($cache);]]>
+            <programlisting role="php"><![CDATA[
+// キャッシュオブジェクトを作成します
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             array('lifetime' => 120,
+                                   'automatic_serialization' => true),
+                             array('cache_dir'
+                                       => dirname(__FILE__) . '/_files/'));
+Zend_Currency::setCache($cache);
+]]>
             </programlisting>
         </example>
 
