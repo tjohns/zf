@@ -5,11 +5,11 @@
     </para>
     <example id="zend.mail.boundary.example-1">
         <title>更改MIME分界线</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Mail.php';
+        <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
-// build message... ]]>
+// build message... 
+]]>
        </programlisting>
     </example>
 </sect1>

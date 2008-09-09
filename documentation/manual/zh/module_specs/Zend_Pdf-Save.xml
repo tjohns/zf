@@ -14,7 +14,7 @@
 
     <example id="zend.pdf.save.example-1">
         <title>Save PDF document.</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 ...
 // Load PDF document.
 $pdf = Zend_Pdf::load($fileName);
@@ -27,7 +27,8 @@ $pdf->save($newFileName);
 // Return PDF document as a string.
 $pdfString = $pdf->render();
 
-...]]>
+...
+]]>
         </programlisting>
     </example>
 

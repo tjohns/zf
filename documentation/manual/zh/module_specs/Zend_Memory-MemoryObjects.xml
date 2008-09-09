@@ -8,8 +8,9 @@
 
         <para>
             使用内存管理器的<code>create([$data])</code>方法创建可移动的内存对象:
-            <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->create($data);]]>
+            <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->create($data);
+]]>
             </programlisting>
         </para>
 
@@ -25,8 +26,9 @@ $memObject = $memoryManager->create($data);]]>
 
         <para>
             使用内存管理器的<code>createLocked([$data])</code>方法创建锁定的内存对象:
-            <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->createLocked($data);]]>
+            <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->createLocked($data);
+]]>
             </programlisting>
         </para>
 
@@ -63,7 +65,7 @@ $memObject = $memoryManager->createLocked($data);]]>
 
         <para>
             使用内存容器(可移动或者锁定)'<code>值</code>'属性操作内存对象数据:
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 
 echo $memObject->value;
@@ -74,7 +76,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);]]>
+$memObject->value = substr($memObject->value, $start, $length);
+]]>
             </programlisting>
         </para>
 
@@ -96,8 +99,9 @@ $memObject->value = substr($memObject->value, $start, $length);]]>
 
             <title>getRef() 方法</title>
 
-            <programlisting role="php"><![CDATA[<?php
-public function &getRef();]]>
+            <programlisting role="php"><![CDATA[
+public function &getRef();
+]]>
             </programlisting>
 
             <para>
@@ -117,7 +121,7 @@ public function &getRef();]]>
             <para>
                 追踪数据的变化需要额外的资源.<code>getRef()</code>返回字符串的引用,它直接由用户应用程序改变.
                 因此好的办法是使用<code>getRef()</code>方法进行值数据处理:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 
 $value = &$memObject->getRef();
@@ -125,7 +129,8 @@ $value = &$memObject->getRef();
 for ($count = 0; $count < strlen($value); $count++) {
     $char = $value[$count];
     ...
-}]]>
+}
+]]>
                 </programlisting>
             </para>
 
@@ -135,12 +140,13 @@ for ($count = 0; $count < strlen($value); $count++) {
 
             <title>touch() 方法</title>
 
-            <programlisting role="php"><![CDATA[<?php
-public function touch();]]>
+            <programlisting role="php"><![CDATA[
+public function touch();
+]]>
             </programlisting>
             <para>
                 <code>touch()</code> 方法应该和<code>getRef()</code>一起使用.当对象值改变时它会发出信号.
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 ...
 
@@ -154,7 +160,8 @@ for ($count = 0; $count < strlen($value); $count++) {
     ...
 }
 
-$memObject->touch();]]>
+$memObject->touch();
+]]>
                 </programlisting>
 
             </para>
@@ -165,8 +172,9 @@ $memObject->touch();]]>
 
             <title>lock() 方法</title>
 
-            <programlisting role="php"><![CDATA[<?php
-public function lock();]]>
+            <programlisting role="php"><![CDATA[
+public function lock();
+]]>
             </programlisting>
 
             <para>
@@ -176,7 +184,7 @@ public function lock();]]>
 
             <para>
                 在内存中锁定的对象还保证了在解锁对象前<code>getRef()</code>方法返回的引用是有效的:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject1 = $memoryManager->create($data1);
 $memObject2 = $memoryManager->create($data2);
 ...
@@ -193,7 +201,8 @@ for ($count = 0; $count < strlen($value2); $count++) {
 
 $memObject1->touch();
 $memObject1->unlock();
-$memObject2->unlock();]]>
+$memObject2->unlock();
+]]>
                 </programlisting>
             </para>
 
@@ -203,8 +212,9 @@ $memObject2->unlock();]]>
 
             <title>unlock() 方法</title>
 
-            <programlisting role="php"><![CDATA[<?php
-public function unlock();]]>
+            <programlisting role="php"><![CDATA[
+public function unlock();
+]]>
             </programlisting>
 
             <para>
@@ -217,8 +227,9 @@ public function unlock();]]>
 
             <title>isLocked() 方法</title>
 
-            <programlisting role="php"><![CDATA[<?php
-public function isLocked();]]>
+            <programlisting role="php"><![CDATA[
+public function isLocked();
+]]>
             </programlisting>
 
             <para>

@@ -13,8 +13,7 @@
     <para>
         一个基本用法的例子如下：
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/EmailAddress.php';
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress();
 if ($validator->isValid($email)) {
     // email appears to be valid
@@ -24,7 +23,6 @@ if ($validator->isValid($email)) {
         echo "$message\n";
     }
 }
-
 ]]>
         </programlisting>
 
@@ -49,8 +47,7 @@ if ($validator->isValid($email)) {
         Email地址中的主机名部分依靠<link linkend="zend.validate.set.hostnames"><code>Zend_Validate_Hostname</code></link>来校验。尽管你希望IP地址和本地主机名也被接受，但缺省地只有像<code>domain.com</code>格式的DNS主机名被接受。
         当然如果你想如愿，需要实例化<code>Zend_Validate_EmailAddress</code>并传递一个参数来指明哪种主机名你想接受。更多的细节包含在<code>Zend_Validate_Hostname</code>中。
         下面的例子显示如何同时接受DNS和本地主机名：
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Validate/EmailAddress.php';
+        <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
     // email appears to be valid
@@ -60,7 +57,6 @@ if ($validator->isValid($email)) {
         echo "$message\n";
     }
 }
-
 ]]>
         </programlisting>
 
@@ -75,9 +71,9 @@ if ($validator->isValid($email)) {
 
     <para>
         MX 检查不是缺省地激活的，并且目前只支持UNIX平台。为激活MX检查，你可以传递第二个参数给<code>Zend_Validate_EmailAddress</code>构造器。
-        <programlisting role="php"><![CDATA[<?php
-
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+]]>
         </programlisting>
 
         另外你可以传递 <code>true</code> 或 <code>false</code> 给<code>$validator->setValidateMx()</code> 来激活或禁止 MX 校验。
@@ -94,9 +90,9 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
     <para>
         <code>Zend_Validate_EmailAddress</code> 也将匹配存在于某些域名中的国际字符。这就是国际域名（IDN）支持。这个是缺省激活，你可以通过用存在于 <code>Zend_Validate_EmailAddress</code> 中的内部的 <code>Zend_Validate_Hostname</code> 对象来改变设置来禁止。
 
-    <programlisting role="php"><![CDATA[<?php
-
-$validator->hostnameValidator->setValidateIdn(false);]]>
+    <programlisting role="php"><![CDATA[
+$validator->hostnameValidator->setValidateIdn(false);
+]]>
     </programlisting>
 
         关于 <code>setValidateIdn()</code> 更多的信息在<code>Zend_Validate_Hostname</code> 文档中。
@@ -112,9 +108,9 @@ $validator->hostnameValidator->setValidateIdn(false);]]>
 
     <para>
        缺省地用已知的TLDs列表来检查主机名。你可以通过用存在于<code>Zend_Validate_EmailAddress</code> 中的内部的 <code>Zend_Validate_Hostname</code> 对象来改变设置来禁止。
-    <programlisting role="php"><![CDATA[<?php
-
-$validator->hostnameValidator->setValidateTld(false);]]>
+    <programlisting role="php"><![CDATA[
+$validator->hostnameValidator->setValidateTld(false);
+]]>
     </programlisting>
 
         关于 <code>setValidateTld()</code> 更多的信息在<code>Zend_Validate_Hostname</code> 文档中。

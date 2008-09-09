@@ -18,12 +18,13 @@
             第二个参数<code>$backendOptions</code>是一个可选的后端选项参数.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $backendOptions = array(
     'cache_dir' => './tmp/' // Directory where to put the swapped memory blocks
 );
 
-$memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
+$memoryManager = Zend_Memory::factory('File', $backendOptions);
+]]>
         </programlisting>
 
         <para>
@@ -33,8 +34,9 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
         <para>
             除了标准的Zend_Cache后端之外,你可以使用特殊名称'<code>None</code>'作为后端名称.
 
-            <programlisting role="php"><![CDATA[<?php
-$memoryManager = Zend_Memory::factory('None');]]>
+            <programlisting role="php"><![CDATA[
+$memoryManager = Zend_Memory::factory('None');
+]]>
             </programlisting>
         </para>
 
@@ -63,8 +65,9 @@ $memoryManager = Zend_Memory::factory('None');]]>
 
             <para>
                 使用<code>Zend_Memory_Manager::create([$data])</code> 方法创建可移动的对象 (对象可以被交换):
-                <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->create($data);]]>
+                <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->create($data);
+]]>
                 </programlisting>
 
             </para>
@@ -81,8 +84,9 @@ $memObject = $memoryManager->create($data);]]>
 
             <para>
                 使用<code>Zend_Memory_Manager::createLocked([$data])</code>方法创建锁定的(对象不能被交换)对象:
-                <programlisting role="php"><![CDATA[<?php
-$memObject = $memoryManager->createLocked($data);]]>
+                <programlisting role="php"><![CDATA[
+$memObject = $memoryManager->createLocked($data);
+]]>
                 </programlisting>
             </para>
 
@@ -99,7 +103,7 @@ $memObject = $memoryManager->createLocked($data);]]>
             <para>
                 当内存对象超出作用域它们被从内存管理器中自动销毁和删除:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 function foo()
 {
     global $memoryManager, $memList;
@@ -121,7 +125,8 @@ function foo()
     ...
     // $memObject1 is destroyed here
     // but $memObject3 object is still referenced by $memList and is not destroyed
-}]]>
+}
+]]>
                 </programlisting>
             </para>
 
@@ -152,9 +157,10 @@ function foo()
             <para>
                 你可以使用<code>getMemoryLimit()</code> and <code>setMemoryLimit($newLimit)</code>方法
                 检索和设置内存限制:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit();  // Get memory limit in bytes
-$memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes]]>
+$memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes
+]]>
                 </programlisting>
             </para>
 
@@ -180,9 +186,10 @@ $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes]]>
             <para>
                 你可以分别使用<code>getMinSize()</code> 和 <code>setMinSize($newSize)</code>方法
                 检索和设置对象的最小大小:
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // Get MinSize in bytes
-$memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes]]>
+$memoryManager->setMinSize($newSize);        // Set MinSize limit in bytes
+]]>
                 </programlisting>
             </para>
 

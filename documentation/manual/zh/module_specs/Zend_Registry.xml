@@ -20,9 +20,9 @@
 
         <example id="zend.registry.using.storing.example">
             <title>set() 使用示例：</title>
-            <programlisting role="php"><![CDATA[<?php
-
-Zend_Registry::set('index', $value);]]>
+            <programlisting role="php"><![CDATA[
+Zend_Registry::set('index', $value);
+]]>
            </programlisting>
         </example>
 
@@ -46,9 +46,9 @@ Zend_Registry::set('index', $value);]]>
 
         <example id="zend.registry.using.retrieving.example">
             <title> get() 方法示例：</title>
-            <programlisting role="php"><![CDATA[<?php
-
-$value = Zend_Registry::get('index');]]>
+            <programlisting role="php"><![CDATA[
+$value = Zend_Registry::get('index');
+]]>
            </programlisting>
         </example>
 
@@ -62,13 +62,14 @@ $value = Zend_Registry::get('index');]]>
 
         <example id="zend.registry.using.retrieving.example-iterating">
             <title>迭代一个registry对象：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
 
 foreach ($registry as $index => $value) {
     echo "Registry index $index contains:\n";
     var_dump($value);
-}]]>
+}
+]]>
            </programlisting>
         </example>
 
@@ -93,9 +94,9 @@ foreach ($registry as $index => $value) {
 
         <example id="zend.registry.using.constructing.example">
             <title>创建一个registry对象</title>
-            <programlisting role="php"><![CDATA[<?php
-
-$registry = new Zend_Registry(array('index' => $value));]]>
+            <programlisting role="php"><![CDATA[
+$registry = new Zend_Registry(array('index' => $value));
+]]>
            </programlisting>
         </example>
 
@@ -105,10 +106,11 @@ $registry = new Zend_Registry(array('index' => $value));]]>
 
         <example id="zend.registry.using.constructing.example-setinstance">
             <title>Example of initializing the static registry</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $registry = new Zend_Registry(array('index' => $value));
 
-Zend_Registry::setInstance($registry);]]>
+Zend_Registry::setInstance($registry);
+]]>
            </programlisting>
         </example>
 
@@ -128,12 +130,13 @@ Zend_Registry::setInstance($registry);]]>
 
         <example id="zend.registry.using.array-access.example">
             <title>array 方式访问示例：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
 
 $registry['index'] = $value;
 
-var_dump( $registry['index'] );]]>
+var_dump( $registry['index'] );
+]]>
            </programlisting>
         </example>
 
@@ -153,7 +156,7 @@ var_dump( $registry['index'] );]]>
 
         <example id="zend.registry.using.array-object.example">
             <title>对象形式的访问：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 //在你的bootstrap代码中：
 $registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS)
 Zend_Registry::setInstance($registry);
@@ -170,7 +173,8 @@ echo $registry->tree; // echo's "apple"
 
 $registry->index = $value;
 
-var_dump($registry->index);]]>
+var_dump($registry->index);
+]]>
            </programlisting>
         </example>
 
@@ -186,10 +190,11 @@ var_dump($registry->index);]]>
 
         <example id="zend.registry.using.isset.example-isregistered">
             <title>isRegistered() 示例：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
-}]]>
+}
+]]>
            </programlisting>
         </example>
 
@@ -200,7 +205,7 @@ if (Zend_Registry::isRegistered($index)) {
 
         <example id="zend.registry.using.isset.example-isset">
             <title>isset() 示例：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
 
 // using array-access syntax
@@ -211,7 +216,8 @@ if (isset($registry['index'])) {
 // using object-access syntax, if enabled
 if (isset($registry->index)) {
     var_dump( $registry->index );
-}]]>
+}
+]]>
            </programlisting>
         </example>
 
@@ -227,10 +233,11 @@ if (isset($registry->index)) {
 
         <example id="zend.registry.using.subclassing.example">
             <title>指定静态注册表的类名：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Registry::setClassName('My_Registry');
 
-Zend_Registry::set('index', $value);]]>
+Zend_Registry::set('index', $value);
+]]>
            </programlisting>
         </example>
 
@@ -262,7 +269,7 @@ Zend_Registry::set('index', $value);]]>
 
         <example id="zend.registry.using.unsetting.example">
             <title> _unsetInstance() 示例：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
 
 Zend_Registry::_unsetInstance();
@@ -270,7 +277,8 @@ Zend_Registry::_unsetInstance();
 // 改变我们要使用的类
 Zend_Registry::setClassName('My_Registry');
 
-Zend_Registry::set('index', $value);]]>
+Zend_Registry::set('index', $value);
+]]>
            </programlisting>
         </example>
 

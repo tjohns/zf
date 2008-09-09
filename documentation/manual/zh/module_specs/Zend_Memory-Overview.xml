@@ -25,7 +25,7 @@
             <para>
                 <code>Zend_Memory::factory()</code> 用指定的后端选项实例化内存管理器对象.
             </para>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 require_once 'Zend/Memory.php';
 
 $backendOptions = array(
@@ -48,8 +48,9 @@ echo $loadedFiles[$index1]->value;
 
 $loadedFiles[$index2]->value = $newValue;
 
-$loadedFiles[$index3]->value[$charIndex] = '_';]]>
-            </programlisting>
+$loadedFiles[$index3]->value[$charIndex] = '_';
+]]>
+                </programlisting>
         </example>
     </sect2>
 
@@ -97,7 +98,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';]]>
             <para>
                 你可以作为对象属性操作这个<code>值</code>属性:
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 
 echo $memObject->value;
@@ -108,7 +109,8 @@ $memObject->value[$index] = '_';
 
 echo ord($memObject->value[$index1]);
 
-$memObject->value = substr($memObject->value, $start, $length);]]>
+$memObject->value = substr($memObject->value, $start, $length);
+]]>
                 </programlisting>
             </para>
 
