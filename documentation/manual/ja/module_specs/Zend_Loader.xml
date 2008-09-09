@@ -90,8 +90,8 @@ Zend_Loader::loadClass('Container_Tree',
         </example>
 
         <para>
-            クラスを指定する文字列は、アンダースコアをパス区切り文字に変換し、
-            最後に '.php' を追加されます。上の例では、
+            クラスを指定する文字列は、アンダースコアをパス区切り文字に変換して最後に
+            '.php' を追加したものとなります。上の例では、
             'Container_Tree' は 'Container/Tree.php' となります。
         </para>
 
