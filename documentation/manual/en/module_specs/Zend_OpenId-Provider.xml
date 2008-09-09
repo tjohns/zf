@@ -149,7 +149,7 @@ name="openid_action" value="login"></td></tr>
             The fact that the user is logged-in doesn't mean that the
             authentication must succeed. The user may decide to trust or not to trust
             particular OpenID enabled sites. The following trust screen allows the
-            end-user to make that choise. This choise may be done only for current
+            end-user to make that choice. This choice may be done only for current
             requests or "forever". In the last case information about
             trusted/untrusted sites is stored in an internal database and all
             following authentication requests from this site will be handled
