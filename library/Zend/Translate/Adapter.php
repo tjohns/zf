@@ -308,14 +308,6 @@ abstract class Zend_Translate_Adapter {
             $locale = $temp[0];
         }
 
-        if (empty($this->_translate[$locale])) {
-            /**
-             * @see Zend_Translate_Exception
-             */
-            require_once 'Zend/Translate/Exception.php';
-            throw new Zend_Translate_Exception("No translation for the language '{$locale}' available.");
-        }
-
         $this->_options['locale'] = $locale;
 
         if (isset(self::$_cache)) {

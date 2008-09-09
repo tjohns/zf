@@ -35,7 +35,7 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $adapter = new Zend_Translate_Adapter_Array(array('msg1' => 'Message 1 (en)', 'msg2' => 'Message 2 (en)', 'msg3' => 'Message 3 (en)'));
+        $adapter = new Zend_Translate_Adapter_Array(array());
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
 
         try {
@@ -167,20 +167,6 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/testarray', 'de_DE', array('scan' => Zend_Translate::LOCALE_FILENAME));
         $this->assertEquals(array('de_DE' => 'de_DE', 'en_US' => 'en_US'), $adapter->getList());
         $this->assertEquals('Nachricht 8', $adapter->translate('Message 8'));
-    }
-
-    public function testZF3937()
-    {
-        $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.php', 'en');
-        $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_empty.php', 'de');
-
-        $this->assertEquals('en', $adapter->getLocale());
-        try {
-            $adapter->setLocale('de');
-            $this->fail('Empty translations should not be settable');
-        } catch (Zend_Translate_Exception $e) {
-            $this->assertContains('No translation for the language', $e->getMessage());
-        }
     }
 
     public function testLoadArrayFile()

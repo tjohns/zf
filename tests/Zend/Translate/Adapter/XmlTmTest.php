@@ -169,20 +169,6 @@ class Zend_Translate_Adapter_XmlTmTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Nachricht 1', $adapter->translate('Message 1'));
     }
 
-    public function testZF3937()
-    {
-        $adapter = new Zend_Translate_Adapter_XmlTm(dirname(__FILE__) . '/_files/translation_en.xmltm', 'en');
-        $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_empty.xmltm', 'de');
-
-        $this->assertEquals('en', $adapter->getLocale());
-        try {
-            $adapter->setLocale('de');
-            $this->fail('Empty translations should not be settable');
-        } catch (Zend_Translate_Exception $e) {
-            $this->assertContains('No translation for the language', $e->getMessage());
-        }
-    }
-
     public function testIsoEncoding()
     {
         $adapter = new Zend_Translate_Adapter_XmlTm(dirname(__FILE__) . '/_files/translation_en3.xmltm', 'en');
