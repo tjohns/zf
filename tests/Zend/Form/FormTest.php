@@ -351,7 +351,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3250
+     * @group ZF-3250
      */
     public function testDisplayGroupOrderInConfigShouldNotMatter()
     {
@@ -362,7 +362,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3112
+     * @group ZF-3112
      */
     public function testSetOptionsShouldCreateDisplayGroupsLast()
     {
@@ -1064,7 +1064,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3146
+     * @group ZF-3146
      */
     public function testSetElementsBelongToShouldApplyToBothExistingAndFutureElements()
     {
@@ -1079,7 +1079,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3742
+     * @group ZF-3742
      */
     public function testElementsInDisplayGroupsShouldInheritFormElementsBelongToSetting()
     {
@@ -1546,7 +1546,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3254
+     * @group ZF-3254
      */
     public function testAddingDisplayGroupShouldPassOptions()
     {
@@ -2374,7 +2374,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**#@+
-     * @see ZF-2988
+     * @group ZF-2988
      */
     public function testSettingErrorMessageShouldOverrideValidationErrorMessages()
     {
@@ -2596,7 +2596,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3069
+     * @group ZF-3069
      */
     public function testRemovingNamedDecoratorShouldWork()
     {
@@ -2885,7 +2885,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testCanSetTranslator()
     {
         require_once 'Zend/Translate/Adapter/Array.php';
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         $this->form->setTranslator($translator);
         $received = $this->form->getTranslator($translator);
         $this->assertSame($translator->getAdapter(), $received);
@@ -2894,7 +2894,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testCanSetDefaultGlobalTranslator()
     {
         $this->assertNull($this->form->getTranslator());
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         Zend_Form::setDefaultTranslator($translator);
 
         $received = Zend_Form::getDefaultTranslator();
@@ -2911,13 +2911,13 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testLocalTranslatorPreferredOverDefaultGlobalTranslator()
     {
         $this->assertNull($this->form->getTranslator());
-        $translatorDefault = new Zend_Translate('array', array());
+        $translatorDefault = new Zend_Translate('array', array('foo' => 'bar'));
         Zend_Form::setDefaultTranslator($translatorDefault);
 
         $received = $this->form->getTranslator();
         $this->assertSame($translatorDefault->getAdapter(), $received);
 
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         $this->form->setTranslator($translator);
         $received = $this->form->getTranslator();
         $this->assertNotSame($translatorDefault->getAdapter(), $received);
@@ -2927,7 +2927,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     public function testTranslatorFromRegistryUsedWhenNoneRegistered()
     {
         $this->assertNull($this->form->getTranslator());
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         Zend_Registry::set('Zend_Translate', $translator);
 
         $received = Zend_Form::getDefaultTranslator();
@@ -3169,7 +3169,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3597
+     * @group ZF-3597
      */
     public function testSettingElementDecoratorsWithConcreteDecoratorShouldHonorOrder()
     {
@@ -3195,7 +3195,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**#@+
-     * @see ZF-3228
+     * @group ZF-3228
      */
     public function testShouldAllowSpecifyingSpecificElementsToDecorate()
     {
@@ -3325,7 +3325,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3093
+     * @group ZF-3093
      */
     public function testSettingElementPrefixPathPropagatesToAttachedSubForms()
     {
@@ -3430,7 +3430,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @see ZF-3213
+     * @group ZF-3213
      */
     public function testShouldAllowSettingDisplayGroupPrefixPathViaConfigOptions()
     {
@@ -3475,7 +3475,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     // Clone
 
     /**
-     * @see ZF-3819
+     * @group ZF-3819
      */
     public function testCloningShouldCloneAllChildren()
     {
@@ -3510,7 +3510,7 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
     // Reset
 
     /**
-     * @see ZF-3227
+     * @group ZF-3227
      */
     public function testFormsShouldAllowResetting()
     {
@@ -3543,6 +3543,35 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
         $test = $form->getValues();
         $this->assertNotEquals($values, $test);
         $this->assertEquals(0, array_sum($test));
+    }
+
+    /**
+     * @group ZF-3217
+     */
+    public function testFormShouldOverloadToRenderDecorators()
+    {
+        $this->setupElements();
+        $this->form->setView($this->getView());
+        $html = $this->form->renderFormElements();
+        foreach ($this->form->getElements() as $element) {
+            $this->assertContains('id="' . $element->getFullyQualifiedName() . '"', $html, 'Received: ' . $html);
+        }
+        $this->assertNotContains('<dl', $html);
+        $this->assertNotContains('<form', $html);
+
+        $html = $this->form->renderForm('this is the content');
+        $this->assertContains('<form', $html);
+        $this->assertContains('</form>', $html);
+        $this->assertContains('this is the content', $html);
+    }
+
+    /**
+     * @group ZF-3217
+     * @expectedException Zend_Form_Exception
+     */
+    public function testOverloadingToInvalidMethodsShouldThrowAnException()
+    {
+        $html = $this->form->bogusMethodCall();
     }
 
     /**

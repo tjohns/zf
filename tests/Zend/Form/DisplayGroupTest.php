@@ -427,7 +427,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
     public function testGetTranslatorRetrievesGlobalDefaultWhenAvailable()
     {
         $this->testNoTranslatorByDefault();
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         Zend_Form::setDefaultTranslator($translator);
         $received = $this->group->getTranslator();
         $this->assertSame($translator->getAdapter(), $received);
@@ -435,7 +435,7 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
 
     public function testTranslatorAccessorsWorks()
     {
-        $translator = new Zend_Translate('array', array());
+        $translator = new Zend_Translate('array', array('foo' => 'bar'));
         $this->group->setTranslator($translator);
         $received = $this->group->getTranslator($translator);
         $this->assertSame($translator->getAdapter(), $received);
@@ -701,6 +701,38 @@ class Zend_Form_DisplayGroupTest extends PHPUnit_Framework_TestCase
         );
         $decorators = $group->getDecorators();
         $this->assertTrue(empty($decorators));
+    }
+
+    /**
+     * @group ZF-3217
+     */
+    public function testGroupShouldOverloadToRenderDecorators()
+    {
+        $foo  = new Zend_Form_Element_Text('foo');
+        $bar  = new Zend_Form_Element_Text('bar');
+        $this->group->addElements(array($foo, $bar));
+
+        $this->group->setView($this->getView());
+        $html = $this->group->renderFormElements();
+        foreach ($this->group->getElements() as $element) {
+            $this->assertContains('id="' . $element->getFullyQualifiedName() . '"', $html, 'Received: ' . $html);
+        }
+        $this->assertNotContains('<dl', $html);
+        $this->assertNotContains('<form', $html);
+
+        $html = $this->group->renderFieldset('this is the content');
+        $this->assertContains('<fieldset', $html);
+        $this->assertContains('</fieldset>', $html);
+        $this->assertContains('this is the content', $html);
+    }
+
+    /**
+     * @group ZF-3217
+     * @expectedException Zend_Form_Exception
+     */
+    public function testOverloadingToInvalidMethodsShouldThrowAnException()
+    {
+        $html = $this->group->bogusMethodCall();
     }
 
     /**
