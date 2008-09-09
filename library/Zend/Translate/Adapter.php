@@ -273,7 +273,7 @@ abstract class Zend_Translate_Adapter {
             $temp = explode('_', $locale);
             if (isset($this->_translate[$temp[0]]) === false) {
                 // throwing a notice due to possible problems on locale setting
-                trigger_error("No translation for the language '{$locale}' available.", E_NOTICE);
+                trigger_error("No translation for the language '{$locale}' available.", E_USER_NOTICE);
             }
             $locale = $temp[0];
         }
