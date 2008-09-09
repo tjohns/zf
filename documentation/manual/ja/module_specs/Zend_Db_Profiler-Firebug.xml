@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10846 -->
+<!-- EN-Revision: 11231 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Firebug によるプロファイリング</title>
 
@@ -45,8 +45,8 @@
         <programlisting role="php"><![CDATA[
 // 起動ファイル
 
-// プロファイラのインスタンスを作成します
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
+$profiler->setEnabled(true);
 
 // プロファイラを db アダプタにアタッチします
 $db->setProfiler($profiler)
@@ -64,6 +64,9 @@ $db->setProfiler($profiler)
         
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
+$profiler->setEnabled(true);
+
+// プロファイラを DB アダプタにアタッチします
 $db->setProfiler($profiler)
 
 $request  = new Zend_Controller_Request_Http();
@@ -72,12 +75,16 @@ $channel  = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
 
+// 出力バッファリングを開始します
+ob_start();
+
 // DB クエリを発行すると、それがプロファイリングされます
 
 // データをブラウザに送信します
 $channel->flush();
 $response->sendHeaders();
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--
