@@ -885,7 +885,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $origSuffix = $this->getViewSuffix();
             $this->setViewSuffix($params['suffix']);
         }
-        if (isset($moduleDir)) {
+        if (isset($params['moduleDir'])) {
             $origModuleDir = $this->_getModuleDir();
             $this->_setModuleDir($params['moduleDir']);
         }
@@ -895,7 +895,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         if (isset($params['suffix'])) {
             $this->setViewSuffix($origSuffix);
         }
-        if (isset($moduleDir)) {
+        if (isset($params['moduleDir'])) {
             $this->_setModuleDir($origModuleDir);
         }
 
