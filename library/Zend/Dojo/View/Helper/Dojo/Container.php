@@ -142,6 +142,12 @@ class Zend_Dojo_View_Helper_Dojo_Container
     protected $_onLoadActions = array();
 
     /**
+     * Register the Dojo stylesheet?
+     * @var bool
+     */
+    protected $_registerDojoStylesheet = false;
+
+    /**
      * Style sheet modules to load
      * @var array
      */
@@ -152,7 +158,6 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * @var array
      */
     protected $_stylesheets = array();
-
 
     /**
      * Set view object
@@ -521,6 +526,25 @@ class Zend_Dojo_View_Helper_Dojo_Container
         if (!in_array($path, $this->_stylesheets)) {
             $this->_stylesheets[] = (string) $path;
         }
+        return $this;
+    }
+
+    /**
+     * Register the dojo.css stylesheet?
+     *
+     * With no arguments, returns the status of the flag; with arguments, sets 
+     * the flag and returns the object.
+     * 
+     * @param  null|bool $flag
+     * @return Zend_Dojo_View_Helper_Dojo_Container|bool
+     */
+    public function registerDojoStylesheet($flag = null)
+    {
+        if (null === $flag) {
+             return $this->_registerDojoStylesheet;
+        }
+
+        $this->_registerDojoStylesheet = (bool) $flag;
         return $this;
     }
 
@@ -898,6 +922,10 @@ EOJ;
 
         foreach ($this->getStylesheets() as $stylesheet) {
             $stylesheets[] = $stylesheet;
+        }
+
+        if ($this->_registerDojoStylesheet) {
+            $stylesheets[] = $base . '/dojo/resources/dojo.css';
         }
 
         if (empty($stylesheets)) {

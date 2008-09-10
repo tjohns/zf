@@ -34,6 +34,7 @@ require_once 'Zend/Dojo/Form/Element/ComboBoxTest.php';
 require_once 'Zend/Dojo/Form/Element/CurrencyTextBoxTest.php';
 require_once 'Zend/Dojo/Form/Element/DateTextBoxTest.php';
 require_once 'Zend/Dojo/Form/Element/DijitTest.php';
+require_once 'Zend/Dojo/Form/Element/EditorTest.php';
 require_once 'Zend/Dojo/Form/Element/FilteringSelectTest.php';
 require_once 'Zend/Dojo/Form/Element/HorizontalSliderTest.php';
 require_once 'Zend/Dojo/Form/Element/NumberSpinnerTest.php';
@@ -70,6 +71,7 @@ class Zend_Dojo_Form_Element_AllTests
         $suite->addTestSuite('Zend_Dojo_Form_Element_CurrencyTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_DateTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_DijitTest');
+        $suite->addTestSuite('Zend_Dojo_Form_Element_EditorTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_FilteringSelectTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_HorizontalSliderTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_NumberSpinnerTest');

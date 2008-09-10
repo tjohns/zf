@@ -659,6 +659,21 @@ echo $view->dateTextBox(
 
             <listitem>
                 <para>
+                    <emphasis>Editor</emphasis>: dijit.Editor. Provides a
+                    WYSIWYG editor via which users may create or edit content.
+                    <code>dijit.Editor</code> is a pluggable, extensible editor
+                    with a variety of parameters you can utilize for
+                    customization; see <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/advanced-editing-and-display/editor-rich-text">the
+                    dijit.Editor documentation</ulink> for more details.
+                </para>
+
+                <programlisting role="php"><![CDATA[
+echo $view->editor('foo');
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis>FilteringSelect</emphasis>:
                     dijit.form.FilteringSelect. Similar to ComboBox, this is a
                     select/text hybrid that can either render a provided list
@@ -935,6 +950,26 @@ echo $view->radioButton(
         'bar' => 'Bar',
         'baz' => 'Baz',
     )
+);
+]]>
+                </programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>SimpleTextarea</emphasis>: dijit.form.SimpleTextarea. 
+                    These act like normal textareas, but are styled using the
+                    current dijit theme. You do not need to specify either the
+                    rows or columns attributes; use <code>ems</code> or
+                    percentages for the width and height, instead.
+                </para>
+
+                <programlisting role="php"><![CDATA[
+echo $view->simpleTextarea(
+    'foo',
+    'Start writing here...',
+    array(),
+    array('style' => 'width: 90%; height: 5ems;')
 );
 ]]>
                 </programlisting>

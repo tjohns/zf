@@ -46,6 +46,7 @@ require_once 'Zend/Dojo/View/Helper/NumberSpinnerTest.php';
 require_once 'Zend/Dojo/View/Helper/NumberTextBoxTest.php';
 require_once 'Zend/Dojo/View/Helper/PasswordTextBoxTest.php';
 require_once 'Zend/Dojo/View/Helper/RadioButtonTest.php';
+require_once 'Zend/Dojo/View/Helper/SimpleTextareaTest.php';
 require_once 'Zend/Dojo/View/Helper/SubmitButtonTest.php';
 require_once 'Zend/Dojo/View/Helper/SplitContainerTest.php';
 require_once 'Zend/Dojo/View/Helper/StackContainerTest.php';
@@ -91,6 +92,7 @@ class Zend_Dojo_View_Helper_AllTests
         $suite->addTestSuite('Zend_Dojo_View_Helper_NumberTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_PasswordTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_RadioButtonTest');
+        $suite->addTestSuite('Zend_Dojo_View_Helper_SimpleTextareaTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_SubmitButtonTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_SplitContainerTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_StackContainerTest');

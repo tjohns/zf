@@ -52,6 +52,12 @@ abstract class Zend_Dojo_View_Helper_Dijit extends Zend_View_Helper_HtmlElement
     protected $_elementType;
 
     /**
+     * Parameters that should be JSON encoded
+     * @var array
+     */
+    protected $_jsonParams = array('constraints');
+
+    /**
      * Dojo module to use
      * @var string
      */
@@ -196,12 +202,29 @@ abstract class Zend_Dojo_View_Helper_Dijit extends Zend_View_Helper_HtmlElement
         }
 
         // Normalize constraints, if present
-        if (array_key_exists('constraints', $params) && is_array($params['constraints'])) {
-            require_once 'Zend/Json.php';
-            $params['constraints'] = Zend_Json::encode($params['constraints']);
-        }
-        if (array_key_exists('constraints', $params) && $this->_useDeclarative()) {
-            $params['constraints'] = str_replace('"', "'", $params['constraints']);
+        foreach ($this->_jsonParams as $param) {
+            if (array_key_exists($param, $params)) {
+                require_once 'Zend/Json.php';
+
+                if (is_array($params[$param])) {
+                    $values = array();
+                    foreach ($params[$param] as $key => $value) {
+                        if (!is_string($value)) {
+                            continue;
+                        }
+                        $values[] = $value;
+                    }
+                } elseif (is_string($params[$param])) {
+                    $values = (array) $params[$param];
+                } else {
+                    $values = array();
+                }
+                $values = Zend_Json::encode($values);
+                if ($this->_useDeclarative()) {
+                    $values = str_replace('"', "'", $values);
+                }
+                $params[$param] = $values;
+            }
         }
 
         $dijit = (null === $dijit) ? $this->_dijit : $dijit;
@@ -262,5 +285,27 @@ abstract class Zend_Dojo_View_Helper_Dijit extends Zend_View_Helper_HtmlElement
             'type'  => 'hidden',
         );
         return '<input' . $this->_htmlAttribs($hiddenAttribs) . $this->getClosingBracket();
+    }
+
+    /**
+     * Create JS function for retrieving parent form
+     * 
+     * @return void
+     */
+    protected function _createGetParentFormFunction()
+    {
+        $function =<<<EOJ
+if (zend == undefined) {
+    var zend = {};
+}
+zend.findParentForm = function(elementNode) {
+    while (elementNode.nodeName.toLowerCase() != 'form') {
+        elementNode = elementNode.parentNode;
+    }
+    return elementNode;
+};
+EOJ;
+
+        $this->dojo->addJavascript($function);
     }
 }
