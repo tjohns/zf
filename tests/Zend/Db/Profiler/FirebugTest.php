@@ -76,7 +76,7 @@ class Zend_Db_Profiler_FirebugTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         if (!extension_loaded('pdo_sqlite')) {
-            $this->markAsSkipped('Requires PDO_Sqlite extension');
+            $this->markTestSkipped('Requires PDO_Sqlite extension');
         }
 
         date_default_timezone_set('America/Los_Angeles');
