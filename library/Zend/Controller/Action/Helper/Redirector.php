@@ -89,7 +89,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     protected function _checkCode($code)
     {
         $code = (int)$code;
-        if ((300 > $code) || (307 < $code)) {
+        if ((300 > $code) || (307 < $code) || (304 == $code) || (306 == $code)) {
             /**
              * @see Zend_Controller_Exception
              */
