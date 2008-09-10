@@ -32,17 +32,18 @@ class Zend_Soap_Client_Common extends SoapClient
      *
      * @var callback
      */
-    protected $_doRequestMethod = null;
+    protected $_doRequestCallback;
 
     /**
      * Common Soap Client constructor
      *
+     * @param callback $doRequestMethod
      * @param string $wsdl
      * @param array $options
      */
-    function __construct($doRequestMethod, $wsdl, $options)
+    function __construct($doRequestCallback, $wsdl, $options)
     {
-        $this->_doRequestMethod = $doRequestMethod;
+        $this->_doRequestCallback = $doRequestCallback;
 
         parent::__construct($wsdl, $options);
     }
@@ -60,7 +61,11 @@ class Zend_Soap_Client_Common extends SoapClient
      */
     function __doRequest($request, $location, $action, $version, $one_way = null)
     {
-   	    return call_user_func_array($this->_doRequestMethod, array($this, $request, $location, $action, $version));
+        if ($one_way === null) {
+   	        return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version);
+        } else {
+            return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version, $one_way);
+        }
     }
 
 }
