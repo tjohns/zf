@@ -67,7 +67,8 @@
 
         <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Captcha's may then be registered using the <code>setCaptcha()</code>
@@ -81,7 +82,8 @@ $element->setCaptcha(new Zend_Captcha_Figlet());
 
 // Using shortnames:
 $element->setCaptcha('Dumb');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             If you wish to load your element via configuration, specify either
@@ -110,7 +112,8 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         'timeout' => 300,
     ),
 ));
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             The decorator used is determined by querying the captcha adapter. By
@@ -195,9 +198,10 @@ $element->setLabel('Upload an image:')
         ->setDestination('/var/www/upload')
         ->addValidator('Count', false, 1)     // ensure only 1 file
         ->addValidator('Size', false, 102400) // limit to 100K
-        ->addValidator('Extension' false, 'jpg,png,gif'); // only JPEG, PNG, and GIFs
+        ->addValidator('Extension', false, 'jpg,png,gif'); // only JPEG, PNG, and GIFs
 $form->addElement($element, 'foo');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 You also need to ensure the correct encoding type is provided to
@@ -207,7 +211,8 @@ $form->addElement($element, 'foo');
             
             <programlisting role="php"><![CDATA[
 $form->setAttrib('enctype', 'multipart/form-data');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 When the element has successfully validated, you can determine
@@ -216,16 +221,18 @@ $form->setAttrib('enctype', 'multipart/form-data');
 
             <programlisting role="php"><![CDATA[
 $location = $form->foo->getValue();
-]]></programlisting>
+]]>
+            </programlisting>
 
-            <note>
-                <title>Default upload locations</title>
-
-                <para>
-                    By default, files are uploaded to the system temp directory.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <title>Default upload locations</title>
+
+            <para>
+                By default, files are uploaded to the system temp directory.
+            </para>
+        </note>
 
         <para>
             There is one current limitation to the file upload element shipped in
@@ -263,9 +270,10 @@ $location = $form->foo->getValue();
             same names and different salts would not collide:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
-?>]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             You can set the salt later using the <code>setSalt($salt)</code>
@@ -363,6 +371,30 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
             <listitem><para><code>clearMultiOptions()</code></para></listitem>
         </itemizedlist>
+
+        <para>
+            To mark checked items, you need to pass an array of values to
+            <code>setValue()</code>. The following will check the values "bar"
+            and "bat":
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_MultiCheckbox('foo', array(
+    'multiOptions' => array(
+        'foo' => 'Foo Option',
+        'bar' => 'Bar Option',
+        'baz' => 'Baz Option',
+        'bat' => 'Bat Option',
+    );
+));
+
+$element->setValue(array('bar', 'bat'));
+]]>
+        </programlisting>
+
+        <para>
+            Note that even when setting a single value, you must pass an array.
+        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.multiselect">
