@@ -125,36 +125,11 @@ class Zend_Db_Profiler_Firebug extends Zend_Db_Profiler
         
         $this->_totalElapsedTime += $profile->getElapsedSecs();
         
-        $params = $profile->getQueryParams();
-        if ($params) {
-            array_walk($params,array($this, '_normalizeQueryParams'));      
-        }
-        
         $this->_message->addRow(array(round($profile->getElapsedSecs(),5),
                                       $profile->getQuery(),
-                                      ($params)?$params:null));
-                                        
+                                      ($params=$profile->getQueryParams())?$params:null));
+                                      
         $this->updateMessageLabel();
-    }
-    
-   
-    /**
-     * Normalize any query parameters that cannot be sent to
-     * Firebug in their native form.
-     * 
-     * @param mixed $data The original parameter
-     * @return mized The normalized parameter
-     */
-    
-    protected function _normalizeQueryParams($data)
-    {
-        // Remove binary data and insert placeholder
-/*
-        if (gettype($data)=='string' && strcmp((string)$data,$data)!=0 ) {
-            return '** DINARY DATA **';
-        }
-*/        
-        return $data;
     }
     
     /**
