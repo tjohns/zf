@@ -26,7 +26,8 @@ $client = new Zend_Http_Client();
 $client->setUri('http://example.org');
 $client->setConfig(array(
     'maxredirects' => 0,
-    'timeout'      => 30));]]>
+    'timeout'      => 30));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -116,7 +117,8 @@ $client->setConfig(array(
                 <title>执行一个简单的 GET 请求</title>
                 <programlisting role="php"><![CDATA[
 $client = new Zend_Http_Client('http://example.org');
-$response = $client->request();]]>
+$response = $client->request();
+]]>
                 </programlisting>
             </example>
             request() 带一个可选的参数 - 请求方法，它可以是 GET, POST, PUT, HEAD, 
@@ -140,7 +142,8 @@ $response = $client->request('POST');
 
 // 另外一种执行 POST 请求的方式
 $client->setMethod(Zend_Http_Client::POST);
-$response = $client->request();]]>
+$response = $client->request();
+]]>
                 </programlisting>
             </example>
         </para>
@@ -169,7 +172,8 @@ $client->setParameterGet(array(
     'first_name'  => 'Bender',
     'middle_name' => 'Bending'
     'made_in'     => 'Mexico',
-));]]>
+));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -189,7 +193,8 @@ $client->setParameterPost(array(
     'language'  => 'es',
     'country'   => 'ar',
     'selection' => array(45, 32, 80)
-));]]>
+));
+]]>
                 </programlisting>
             </example>
             需要注意的是，当发送 POST 请求时，即可设置GET参数，也可设置POST参数。

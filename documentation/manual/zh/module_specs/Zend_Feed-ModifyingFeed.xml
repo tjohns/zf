@@ -7,14 +7,15 @@
 
     <example>
         <title>修改一个已存在的条目</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
 $entry->title = 'This is a new title';
 $entry->author->email = 'my_email@example.com';
 
-echo $entry->saveXML();]]>
+echo $entry->saveXML();
+]]>
         </programlisting>
         <para>
             这段代码将输出一个新条目完整(包括<code>&lt;?xml ... &gt;</code> 声明)的包含所有必要命名空间的XML格式。
@@ -30,7 +31,7 @@ echo $entry->saveXML();]]>
 
     <example>
         <title>用自定义的命名空间创建一个Atom条目元素</title>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $entry = new Zend_Feed_Entry_Atom();
 // Atom的id总是由服务器分配
 $entry->title = 'my custom entry';
@@ -46,7 +47,9 @@ $entry->{'myns:container_elt'}->part2 = 'second nested custom part';
 
 echo $entry->saveXML();
 
-?>]]>   </programlisting>
+?>
+]]>   
+        </programlisting>
     </example>
 </sect1>
 <!--

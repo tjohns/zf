@@ -4,12 +4,13 @@
         <code>Zend_Json</code>的使用包括使用现有的两个公共的static方法
         : <code>Zend_Json::encode()</code> 和
         <code>Zend_Json::decode()</code>.
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 获得一个value:
 $phpNative = Zend_Json::decode($encodedValue);
 
 // 编码并返回给客户端:
-$json = Zend_Json::encode($phpNative);]]>
+$json = Zend_Json::encode($phpNative);
+]]>
     </programlisting>
     </para>
 </sect1>

@@ -13,9 +13,7 @@
     <para>
         下面的例子，示范了怎样编写一个定制的过滤器：
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Filter/Interface.php';
-
+        <programlisting role="php"><![CDATA[
 class MyFilter implements Zend_Filter_Interface
 {
     public function filter($value)
@@ -24,7 +22,8 @@ class MyFilter implements Zend_Filter_Interface
 
         return $valueFiltered;
     }
-}]]>
+}
+]]>
        </programlisting>
 
     </para>
@@ -32,9 +31,10 @@ class MyFilter implements Zend_Filter_Interface
     <para>
         添加上述过滤器的实例到过滤器链中：
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $filterChain = new Zend_Filter();
-$filterChain->addFilter(new MyFilter());]]>
+$filterChain->addFilter(new MyFilter());
+]]>
        </programlisting>
 
     </para>

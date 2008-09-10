@@ -9,8 +9,8 @@
 
         <para>
           关于文件格式的更详细的描述在这里：
-          <ulink url="http://lucene.apache.org/java/2_0_0/fileformats.html"/>。
-          <footnote><para> 当前支持的 Lucene 索引文件格式版本是 v2.1.</para></footnote>
+          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>。
+          <footnote><para> 当前支持的 Lucene 索引文件格式版本是 v2.3（从ZF 1.6 版开始）。</para></footnote>
         </para>
     </sect2>
 
@@ -73,10 +73,10 @@ FileInputStream is = new FileInputStream(f);
 Reader reader = new BufferedReader(new InputStreamReader(is));
 doc.add(Field.Text("contents", reader));
 
-indexWriter.addDocument(doc);]]>
-        </programlisting>
+indexWriter.addDocument(doc);
+]]>
+</programlisting>
     </sect2>
-
 </sect1>
 
 <!--

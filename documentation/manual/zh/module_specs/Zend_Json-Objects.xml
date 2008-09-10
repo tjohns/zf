@@ -12,9 +12,10 @@
     <para>
         默认情况下， <code>Zend_Json</code> 将解码JSON对象作为关联数组。但是如果你希望它返回一个对象， 以可以这样来指定：
     </para>    
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // 解码 JSON 对象作为 PHP 对象
-$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
+]]>
     </programlisting>
     <para>
         这样任何解码后的对象将被作为一个<code>StdClass</code>的对象来返回，对象带有根据JSON对象的key/value对生成的一系列属性。

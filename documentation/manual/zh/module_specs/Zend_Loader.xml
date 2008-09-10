@@ -23,8 +23,9 @@
 
         <example id="zend.loader.load.file.example">
             <title>loadFile() 方法范例 </title>
-            <programlisting role="php"><![CDATA[<?php
-Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
+            <programlisting role="php"><![CDATA[
+Zend_Loader::loadFile($filename, $dirs=null, $once=false);
+]]>
             </programlisting>
     </example>
 
@@ -52,13 +53,14 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);]]>
 
         <example id="zend.loader.load.class.example">
             <title>Example of loadClass() method</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 Zend_Loader::loadClass('Container_Tree',
     array(
         '/home/production/mylib',
         '/home/production/myapp'
     )
-);]]>
+);
+]]>
             </programlisting>
         </example>
 
@@ -90,10 +92,11 @@ Zend_Loader::loadClass('Container_Tree',
 
         <example id="zend.loader.load.isreadable.example">
             <title>isReadable()示例：</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 if (Zend_Loader::isReadable($filename)) {
     // do something with $filename
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -113,8 +116,9 @@ if (Zend_Loader::isReadable($filename)) {
 
         <example id="zend.loader.load.autoload.example">
             <title> 注册 autoloader callback 方法范例 </title>
-            <programlisting role="php"><![CDATA[<?php
-Zend_Loader::registerAutoload();]]>
+            <programlisting role="php"><![CDATA[
+Zend_Loader::registerAutoload();
+]]>
             </programlisting>
         </example>
 
@@ -131,7 +135,7 @@ Zend_Loader::registerAutoload();]]>
             <para>
                 因为在 PHP 中静态函数引用的语义，你必须实现 <code>loadClass()</code> 和 <code>autoload()</code>，<code>autoload()</code> 必须调用 <code>self::loadClass()</code>。如果 <code>autoload()</code> 方法代表它的父类调用 <code>self::loadClass()</code>，那么它调用在父类中的方法，而不是子类中。
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class My_Loader extends Zend_Loader
 {
     public static function loadClass($class, $dirs = null)
@@ -150,7 +154,8 @@ class My_Loader extends Zend_Loader
     }
 }
 
-Zend_Loader::registerAutoload('My_Loader');]]>
+Zend_Loader::registerAutoload('My_Loader');
+]]>
             </programlisting>
         </example>
 
