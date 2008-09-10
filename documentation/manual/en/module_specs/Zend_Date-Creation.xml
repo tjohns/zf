@@ -4,7 +4,7 @@
 
     <para>
         <code>Zend_Date</code> provides several different ways to create a new instance of itself. As there are
-        different needs the most convinient ways will be shown in this chapter.
+        different needs the most convenient ways will be shown in this chapter.
     </para>
 
     <sect2 id="zend.date.creation.actual">
@@ -13,7 +13,7 @@
 
         <para>
             The simplest way of creating a date object is to create the actual date. You can either create a new
-            instance with <emphasis role="strong">new Zend_Date()</emphasis> or use the convinient static method
+            instance with <emphasis role="strong">new Zend_Date()</emphasis> or use the convenient static method
             <emphasis role="strong">Zend_Date::now()</emphasis> which both will return the actual date as new
             instance of <code>Zend_Date</code>. The actual date always include the actual date and time for the
             actual set timezone.
@@ -75,7 +75,7 @@ $date = Zend_Date::now();
         </para>
 
         <para>
-            So we have one quick and one convinient way of creating dates from database values.
+            So we have one quick and one convenient way of creating dates from database values.
         </para>
 
         <example id="zend.date.creation.database.example-1">
