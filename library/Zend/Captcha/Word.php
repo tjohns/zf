@@ -221,7 +221,7 @@ abstract class Zend_Captcha_Word extends Zend_Captcha_Base
         if (!isset($this->_session) || (null === $this->_session)) {
             $id = $this->getId();
             $this->_session = new $this->_sessionClass('Zend_Form_Captcha_' . $id);
-            $this->_session->setExpirationHops(1);
+            $this->_session->setExpirationHops(1, null, true);
             $this->_session->setExpirationSeconds($this->getTimeout());
         }
         return $this->_session;

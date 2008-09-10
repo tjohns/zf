@@ -221,7 +221,7 @@ class Zend_Form_Element_Hash extends Zend_Form_Element_Xhtml
     public function initCsrfToken()
     {
         $session = $this->getSession();
-        $session->setExpirationHops(1);
+        $session->setExpirationHops(1, null, true);
         $session->setExpirationSeconds($this->getTimeout());
         $session->hash = $this->getHash();
     }
