@@ -198,7 +198,7 @@ $element->setLabel('Upload an image:')
         ->setDestination('/var/www/upload')
         ->addValidator('Count', false, 1)     // ensure only 1 file
         ->addValidator('Size', false, 102400) // limit to 100K
-        ->addValidator('Extension' false, 'jpg,png,gif'); // only JPEG, PNG, and GIFs
+        ->addValidator('Extension', false, 'jpg,png,gif'); // only JPEG, PNG, and GIFs
 $form->addElement($element, 'foo');
 ]]>
             </programlisting>
