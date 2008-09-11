@@ -187,6 +187,9 @@ abstract class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_Te
     public function reset()
     {
         $_SESSION = array();
+        $_GET     = array();
+        $_POST    = array();
+        $_COOKIE  = array();
         $this->_request  = null;
         $this->_response = null;
         Zend_Layout::resetMvcInstance();
