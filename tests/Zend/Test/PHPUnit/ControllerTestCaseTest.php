@@ -649,6 +649,23 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
         $this->assertEquals('proper', $request->getQuery('mr'), '(post) Failed retrieving mr parameter: ' . var_export($request->getQuery(), 1));
         $this->assertEquals('bond', $request->getQuery('james'), '(post) Failed retrieving james parameter: ' . var_export($request->getQuery(), 1));
     }
+
+    /**
+     * @group ZF-3979
+     */
+    public function testSuperGlobalArraysShouldBeClearedDuringSetUp()
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $request = $this->testCase->request;
+        $request->setQuery('mr', 'proper')
+                ->setPost('foo', 'bar')
+                ->setCookie('bar', 'baz');
+
+        $this->testCase->setUp();
+        $this->assertNull($request->getQuery('mr'), 'Retrieved mr get parameter: ' . var_export($request->getQuery(), 1));
+        $this->assertNull($request->getPost('foo'), 'Retrieved foo post parameter: ' . var_export($request->getPost(), 1));
+        $this->assertNull($request->getCookie('bar'), 'Retrieved bar cookie parameter: ' . var_export($request->getCookie(), 1));
+    }
 }
 
 // Concrete test case class for testing purposes
