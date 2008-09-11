@@ -61,6 +61,13 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected $_filters = array();
 
     /**
+     * Internal validation flag
+     *
+     * @var boolean
+     */
+    protected $_validated = false;
+
+    /**
      * Internal list of files
      * This array looks like this:
      *     array(form => array( - Form is the name within the form or, if not set the filename
@@ -312,6 +319,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             $this->_files[$file]['validators'][] = $class;
         }
         
+        $this->_validated = false;
         return $this;
     }
 
@@ -449,6 +457,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             }
             unset($this->_files[$file]['validators'][$index]);
         }
+
+        $this->_validated = false;
         return $this;
     }
 
@@ -463,6 +473,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         foreach (array_keys($this->_files) as $file) {
             $this->_files[$file]['validators'] = array();
         }
+
+        $this->_validated = false;
         return $this;
     }
 
@@ -473,8 +485,26 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function setOptions($options = array()) {
         if (is_array($options)) {
-            $this->_options += $options;
+            foreach ($options as $name => $value) {
+                if (array_key_exists($name, $this->_options)) {
+                    $this->_options[$name] = (boolean) $value;
+                } else {
+                    require_once 'Zend/File/Transfer/Exception.php';
+                    throw new Zend_File_Transfer_Exception("Unknown option: $name = $value");
+                }
+            }
         }
+
+        return $this;
+    }
+
+    /**
+     * Returns set options for adapters
+     *
+     * @param array $options
+     */
+    public function getOptions() {
+        return $this->_options;
     }
 
     /**
@@ -511,9 +541,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
 
         if (count($this->_messages) > 0) {
+            $this->_validated = false;
             return false;
         }
 
+        $this->_validated = true;
         return true;
     }
 

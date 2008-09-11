@@ -81,8 +81,10 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function receive($files = null)
     {
-        if (!$this->isValid($files)) {
-            return false;
+        if (!$this->_validated) {
+            if (!$this->isValid($files)) {
+                return false;
+            }
         }
 
         $check = $this->_getFiles($files);
