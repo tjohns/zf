@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.gdata.gapps">
     <title>Google Apps Provisionierung verwenden</title>
     
@@ -155,8 +155,10 @@ echo 'Name: ' . $user->login->givenName . "\n";
 echo 'Familienname: ' . $user->login->familyName . "\n";
 echo 'Unterbrochen: ' . ($user->login->suspended ? 'Ja' : 'Nein') . "\n";
 echo 'Administrator: ' . ($user->login->admin ? 'Ja' : 'Nein') . "\n"
-echo 'Muss das Passwort ändern: ' . ($user->login->changePasswordAtNextLogin ? 'Ja' : 'Nein') . "\n";
-echo 'Hat den Regeln zugestimmt: ' . ($user->login->agreedToTerms ? 'Ja' : 'Nein') . "\n";
+echo 'Muss das Passwort ändern: ' .
+     ($user->login->changePasswordAtNextLogin ? 'Ja' : 'Nein') . "\n";
+echo 'Hat den Regeln zugestimmt: ' .
+     ($user->login->agreedToTerms ? 'Ja' : 'Nein') . "\n";
 ]]>
             </programlisting>
             
@@ -175,8 +177,10 @@ echo 'Name: ' . $user->login->givenName . "\n";
 echo 'Familien Name: ' . $user->login->familyName . "\n";
 echo 'Unterbrochen: ' . ($user->login->suspended ? 'Ja' : 'Nein') . "\n";
 echo 'Administrator: ' . ($user->login->admin ? 'Ja' : 'Nein') . "\n"
-echo 'Muss das Passwort ändern: ' . ($user->login->changePasswordAtNextLogin ? 'Ja' : 'Nein') . "\n";
-echo 'Hat den Regeln zugestimmt: ' . ($user->login->agreedToTerms ? 'Ja' : 'Nein') . "\n";
+echo 'Muss das Passwort ändern: ' .
+     ($user->login->changePasswordAtNextLogin ? 'Ja' : 'Nein') . "\n";
+echo 'Hat den Regeln zugestimmt: ' .
+     ($user->login->agreedToTerms ? 'Ja' : 'Nein') . "\n";
 ]]>
             </programlisting>
             

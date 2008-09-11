@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>Indexerstellung</title>
 
@@ -57,7 +57,8 @@ $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
 // Indiziere den Dokumenteninhalt
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  $docContent));
 
 // Füge das Dokument dem Index hinzu
 $index->addDocument($doc);
@@ -270,7 +271,8 @@ $index->optimize();
 
         <programlisting role="php"><![CDATA[
 // Die aktuelle Datei Berechtigung erhalten
-$currentPermissions = Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
+$currentPermissions =
+    Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 
 // Nur für den aktuellen Benutzer und die Gruppe Lese-Schreib Berechtigung setzen
 Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);

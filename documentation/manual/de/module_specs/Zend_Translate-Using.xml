@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -444,7 +444,9 @@ print_r $translate->getAdapterInfo();
 <?xml version="1.0" ?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
- <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en-us" srclang="de-at" o-tmf="abc" creationtool="XYZTool" >
+ <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+         adminlang="en-us" srclang="de-at" o-tmf="abc"
+         creationtool="XYZTool" >
  </header>
  <body>
   <tu tuid='message1'>
@@ -544,7 +546,10 @@ message2,"Nachricht,2"
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', array('delimiter' => ','));
+$translate = new Zend_Translate('csv',
+                                'path/to/mytranslation.csv',
+                                'de',
+                                array('delimiter' => ','));
 $translate->addTranslation('path/to/other.csv', 'fr');
 ]]>
             </programlisting>
@@ -618,7 +623,10 @@ $translate->addTranslation('path/to/other.ini', 'it');
             <programlisting role="php"><![CDATA[
 // Definiere ':' als Trenner für die Quelldatei der Übersetzung
 $options = array('separator' => ':');
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de', $options);
+$translate = new Zend_Translate('csv',
+                                'path/to/mytranslation.csv',
+                                'de',
+                                $options);
 
 ...
 
@@ -761,7 +769,8 @@ echo $translate->_("mein_Text", "fr");
 // oder es wird eine neue Standardsprache gesetzt
 $translate->setLocale("fr");
 echo $translate->_("mein_Text");
-// zur Basissprache referieren... fr_CH wird zu fr downgegradet and verwendet
+// zur Basissprache referieren... fr_CH wird zu fr downgegradet und
+// verwendet
 $translate->setLocale("fr_CH");
 echo $translate->_("mein_Text");
 
@@ -809,7 +818,8 @@ $translate->addTranslation("\my_it.mo","it_IT");
 // Beispiel 3:
 $translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
 $translate->addTranslation("\my_de.mo","de");
-// Die am besten passende Sprache ist "de" weil "de_AT" zu "de" degradiert wird
+// Die am besten passende Sprache ist "de" weil "de_AT" zu "de"
+// degradiert wird
 
 // Beispiel 4:
 $translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
@@ -940,7 +950,11 @@ $translate = new Zend_Translate('tmx', '/language');
 //  /language/en/login/login.mo
 //  /language/en/error/loginerror.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+$translate = new Zend_Translate('gettext',
+                                '/language',
+                                null,
+                                array('scan' =>
+                                      Zend_Translate::LOCALE_DIRECTORY));
 ]]>
                 </programlisting>
             </example>
@@ -989,7 +1003,11 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
 //  /language/error/loginerror_en.mo
 //  /language/error/loginerror_de.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));
+$translate = new Zend_Translate('gettext',
+                                '/language',
+                                null,
+                                array('scan' =>
+                                      Zend_Translate::LOCALE_FILENAME));
 ]]>
                 </programlisting>
             </example>
@@ -1060,7 +1078,7 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                 <programlisting><![CDATA[
 /languages
   view_en_de.mo  -> erkennt englisch
-  view_en_es.mo  -> erkennt englisch und überschreibt die erste Datei weil die gleichen MessageIDs verwendet werden
+  view_en_es.mo  -> erkennt englisch und überschreibt die erste Datei
   view_it_it.mo  -> erkennt italienisch
 ]]>
                 </programlisting>
@@ -1117,7 +1135,8 @@ if ($translate->isTranslated('message1')) {
     print "'message1' kann übersetzt werden";
 }
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' kann nicht in 'de' übersetzt werden da es nur in 'de_AT' vorhanden ist";
+    print "'message1' kann nicht in 'de' übersetzt werden da es " .
+    "nur in 'de_AT' vorhanden ist";
 }
 if ($translate->isTranslated('message1', false, 'de')) {
     print "'message1' kann in 'de_AT' übersetzt werden da es zu 'de' zurückfällt";

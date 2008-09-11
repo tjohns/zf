@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11129 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.charset">
     <title>Zeichensätze</title>
 
@@ -139,10 +139,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 $doc = new Zend_Search_Lucene_Document();
 
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($contents)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  strtolower($contents)));
 
 // Titel Feld für das Durchsuchen (indiziert, nicht gespeichert)
-$doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('title',
+                                                  strtolower($title)));
 
 // Titel Feld für das Empfangen (nicht indiziert, gespeichert)
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));

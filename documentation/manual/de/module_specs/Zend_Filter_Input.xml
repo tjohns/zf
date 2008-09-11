@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -315,7 +315,8 @@ if ($input->hasInvalid() || $input->hasMissing()) {
   $messages = $input->getMessages();
 }
 
-// getMessages() gibt einfach die Zusammenfassung von getInvalid() und getMissing() zurück
+// getMessages() gibt einfach die Zusammenfassung von getInvalid()
+// und getMissing() zurück
 
 if ($input->hasInvalid()) {
   $invalidFields = $input->getInvalid();
@@ -526,8 +527,9 @@ $validators = array(
         'fields' => array('password1', 'password2')
     )
 );
-//  Inkludiert die hypotetische Klasse Zend_Validate_StringEquals, übergibt dieser ein Array Argument das
-// den Wert der beiden Eingabe Datenfelder enthält die 'password1' und 'password2' heißen.
+//  Inkludiert die hypotetische Klasse Zend_Validate_StringEquals,
+// übergibt dieser ein Array Argument das den Wert der beiden Eingabe
+// Datenfelder enthält die 'password1' und 'password2' heißen.
 ]]>
             </programlisting>
 
@@ -734,7 +736,8 @@ $input = new Zend_Filter_Input(null, $validators);
             </para>
 
             <programlisting role="php"><![CDATA[
-// Prüfkette mit nicht einheitlichen breakChainOnFailure Attributen erstellen
+// Prüfkette mit nicht einheitlichen breakChainOnFailure Attributen
+// erstellen
 $chain = new Zend_Validate();
 $chain->addValidator(new Zend_Validate_Digits(), true);
 $chain->addValidator(new Zend_Validate_Between(1,12), false);
@@ -825,9 +828,11 @@ $validators = array(
             'Ein Monat darf nur aus Ziffern bestehen',
             array(
                 Zend_Validate_Between::NOT_BETWEEN =>
-                    'Der Wert %value% vom Monat sollte zwischen %min% und %max% sein',
+                    'Der Wert %value% vom Monat sollte zwischen ' .
+                    '%min% und %max% sein',
                 Zend_Validate_Between::NOT_BETWEEN_STRICT =>
-                    'Der Wert %value% vom Monat darf nur zwischen %min% und %max% sein'
+                    'Der Wert %value% vom Monat darf nur zwischen ' .
+                    '%min% und %max% sein'
             )
         )
     )

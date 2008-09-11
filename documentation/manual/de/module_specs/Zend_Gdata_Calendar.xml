@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11174 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Kalender verwenden</title>
     <para>
@@ -116,9 +116,14 @@ function getCurrentUrl()
     global $_SERVER;
 
     // Filtert php_self um Sicherheitsprobleme zu vermeiden.
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri =
+        htmlentities(substr($_SERVER['REQUEST_URI'],
+                            0,
+                            strcspn($_SERVER['REQUEST_URI'], "\n\r")),
+                            ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) &&
+        strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -134,8 +139,9 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** Einen AuthSub authentifizierten HTTP Client nehmen, der den Benutzer zum
- * AuthSub Server zum Login umleitet wenn es notwendig ist.
+/**
+ * Einen AuthSub authentifizierten HTTP Client nehmen, der den Benutzer
+ * zum AuthSub Server zum Login umleitet wenn es notwendig ist.
  */
 function getAuthSubHttpClient()
 {
@@ -152,7 +158,10 @@ function getAuthSubHttpClient()
 
         // Den Benutzer zum AuthSub server umleiten zur Anmeldung
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
+                                                             $scope,
+                                                             $secure,
+                                                             $session);
          header("HTTP/1.0 307 Temporary redirect");
 
          header("Location: " . $authSubUrl);
@@ -176,12 +185,12 @@ function getAuthSubHttpClient()
 
 // -> Skript Bearbeitung beginnt hier <-
 
-// Sicher stellen http://code.google.com/apis/gdata/reference.html#Queriesthat das der Benutzer eine
-// gültige Session hat, sodas der AuthSub Session Token gespeichert werden kann sobald er vorhanden ist.
+// Sicher stellen das der Benutzer eine gültige Session hat, sodas der
+// AuthSub Session Token gespeichert werden kann sobald er vorhanden ist.
 session_start();
 
-// Erstellt eine Instanz des Kalender Services, und leitet den Benutzer zum AuthSub Server
-// um wenn das notwendig ist.
+// Erstellt eine Instanz des Kalender Services, und leitet den Benutzer
+// zum AuthSub Server um wenn das notwendig ist.
 $service = new Zend_Gdata_Calendar(getAuthSubHttpClient());
 ]]>
             </programlisting>
@@ -189,7 +198,8 @@ $service = new Zend_Gdata_Calendar(getAuthSubHttpClient());
                 Schlußendlich, kann ein nicht authentifizierter Server erstellt werden um Ihn entweder mit
                 öffentlichen Feeds oder MagicCookie Authentifizierung zu verwenden:</para>
             <programlisting role="php"><![CDATA[
-// Erstellt eine Instanz des Kalender Services wobei ein nicht authentifizierter HTTP Client verwendet wird
+// Erstellt eine Instanz des Kalender Services wobei ein nicht
+// authentifizierter HTTP Client verwendet wird
 
 $service = new Zend_Gdata_Calendar();
 ]]>
@@ -224,7 +234,7 @@ $service = new Zend_Gdata_Calendar($client);
 try {
     $listFeed= $service->getCalendarListFeed();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Fehler: " . $e->getResponse();
+    echo "Fehler: " . $e->getMessage();
 }
 ]]>
         </programlisting>
@@ -239,7 +249,8 @@ try {
 echo "<h1>Kalender Feed Liste</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
-    echo "<li>" . $calendar->title . " (Event Feed: " . $calendar->id . ")</li>";
+    echo "<li>" . $calendar->title .
+         " (Event Feed: " . $calendar->id . ")</li>";
 }
 echo "</ul>";
 ]]>
@@ -309,7 +320,8 @@ echo "</ul>";
             <programlisting role="php"><![CDATA[
 $query = $service->newEventQuery();
 $query->setUser('default');
-// Setze $query->setVisibility('private-magicCookieValue') wenn MagicCookie Authentifizierung verwendet wird
+// Setze $query->setVisibility('private-magicCookieValue') wenn
+// MagicCookie Authentifizierung verwendet wird
 $query->setVisibility('private');
 $query->setProjection('full');
 $query->setOrderby('starttime');
@@ -319,7 +331,7 @@ $query->setFutureevents('true');
 try {
     $eventFeed = $service->getCalendarEventFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Fehler: " . $e->getResponse();
+    echo "Fehler: " . $e->getMessage();
 }
 
 // Iteriere durch die Liste der Events und gib Sie als HTML Liste aus
@@ -385,7 +397,7 @@ $query->setEvent($eventId);
 try {
     $event = $service->getCalendarEventEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Fehler: " . $e->getResponse();
+    echo "Fehler: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -396,12 +408,13 @@ try {
                 das Event zu erhalten.
             </para>
             <programlisting role="php"><![CDATA[
-$eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
+$eventURL =
+    "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Fehler: " . $e->getResponse();
+    echo "Fehler: " . $e->getMessage();
 }
 ]]>
             </programlisting>
@@ -503,7 +516,8 @@ $event= $service->newEventEntry();
 // Beachte das jedes Attribu als Instanz der zugehörenden Klasse erstellt wird
 $event->title = $service->newTitle("Mein Event");
 $event->where = array($service->newWhere("Berg Ansicht, Kalifornien"));
-$event->content = $service->newContent(" Das ist mein super Event. RSVP benötigt.");
+$event->content =
+    $service->newContent(" Das ist mein super Event. RSVP benötigt.");
 
 // Setze das Datum und verwende das RFC 3339 Format.
 $startDate = "2008-01-20";
@@ -542,7 +556,8 @@ $newEvent = $service->insertEvent($event);
                 <ulink url="http://www.ietf.org/rfc/rfc3339.txt">RFC3339</ulink> Format angegeben werden.
             </para>
             <programlisting role="php"><![CDATA[
-// Plane ein Event das am 05. Dezember 2007 um 14h PST stattfindet (UTC-8) mit der Dauer einer Stunde.
+// Plane ein Event das am 05. Dezember 2007 um 14h PST stattfindet
+// (UTC-8) mit der Dauer einer Stunde.
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
@@ -570,7 +585,8 @@ $event->when = $when;
                 werden.
             </para>
             <programlisting role="php"><![CDATA[
-// Erstellt ein Erinnerungs Objekt. Es sollte eine Email Nachricht an den Benutzer senden, 10 Minuten vor dem Event.
+// Erstellt ein Erinnerungs Objekt. Es sollte eine Email an den Benutzer
+// senden, 10 Minuten vor dem Event.
 $reminder = $service->newReminder();
 $reminder->method = "email";
 $reminder->minutes = "10";
@@ -611,7 +627,10 @@ $event= $service->newEventEntry();
 // Es ist zu beachten das jedes Attribut als Instanz der betreffenden Klasse erstellt wird
 $event->title = $service->newTitle("Mein wiederkehrendes Event");
 $event->where = array($service->newWhere("Palo Alto, Kalifornien"));
-$event->content = $service->newContent("Das ist mein anderes super Event, das jeden Dienstag von 01.05.2007 bis 04.09.2007 stattfinden. Kein RSVP benötigt.");
+$event->content =
+    $service->newContent('Das ist mein anderes super Event, ' .
+                         'das jeden Dienstag von 01.05.2007 bis ' .
+                         '04.09.2007 stattfinden. Kein RSVP benötigt.");
 
 // Setze die Dauer und Frequenz durch Spezifizierung des Wiederholungs Patterns.
 
@@ -677,7 +696,7 @@ $event->title = $service->newTitle("Wuff!");
 try {
     $event->save();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Fehler: " . $e->getResponse();
+    echo "Fehler: " . $e->getMessage();
 }
 ]]>
         </programlisting>
@@ -701,8 +720,9 @@ $event->delete();
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
-// Option 2: Events können gelöscht werden indem die Bearbeitungs URL des Events zu diesem Kalender Service
-// angegeben wird, wenn diese bekannt ist
+// Option 2: Events können gelöscht werden indem die Bearbeitungs URL
+// des Events zu diesem Kalender Service angegeben wird, wenn diese
+// bekannt ist
 $service->delete($event->getEditLink()->href);
 ]]>
         </programlisting>
@@ -730,13 +750,14 @@ $commentUrl = $event->comments->feedLink->url;
 try {
 $commentFeed = $service->getFeed($commentUrl);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "Fehler: " . $e->getResponse();
+    echo "Fehler: " . $e->getMessage();
 }
 
 // Jedes Kommentar als HTML Liste ausgeben
 echo "<ul>";
 foreach ($commentFeed as $comment) {
-    echo "<li><em>Kommentar von: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
+    echo "<li><em>Kommentar von: " . $comment->author->name "</em><br/>" .
+         $comment->content . "</li>";
 }
 echo "</ul>";
 ]]>

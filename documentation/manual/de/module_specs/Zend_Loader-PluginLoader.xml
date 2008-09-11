@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -56,8 +56,10 @@ library/
         <programlisting role="php"><![CDATA[
 $loader = new Zend_Loader_PluginLoader();
 $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
-       ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
-       ->addPrefixPath('Bar_View_Helper', 'application/modules/bar/views/helpers');
+       ->addPrefixPath('Foo_View_Helper',
+                       'application/modules/foo/views/helpers')
+       ->addPrefixPath('Bar_View_Helper',
+                       'application/modules/bar/views/helpers');
 ]]>
         </programlisting>
 

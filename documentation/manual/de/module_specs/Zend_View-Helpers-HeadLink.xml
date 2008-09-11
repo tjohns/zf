@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink Helfer</title>
 
@@ -72,7 +72,9 @@
         <programlisting role="php"><![CDATA[
 <?php // Links in einem View Skript setzen:
 $this->headLink()->appendStylesheet('/styles/basic.css')
-                 ->headLink(array('rel' => 'favicon', 'href' => '/img/favicon.ico'), 'PREPEND')
+                 ->headLink(array('rel' => 'favicon',
+                                  'href' => '/img/favicon.ico'),
+                                  'PREPEND')
                  ->prependStylesheet('/styles/moz.css', 'screen', true);
 ?>
 <?php // Darstellen der Links: ?>

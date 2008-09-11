@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie und Zend_Http_CookieJar</title>
 
@@ -89,15 +89,21 @@
                <title>Instanzieren eines Zend_Http_Cookie-Objekts</title>
                <programlisting role="php"><![CDATA[
 // Zuerst nutzen wir den Konstruktor. Der Cookie wird in zwei Stunden ablaufen
-$cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
+$cookie = new Zend_Http_Cookie('foo',
+                               'bar',
+                               '.example.com',
+                               time() + 7200,
+                               '/path');
 
 // Man kann auch den HTTP-Antwort 'Set-Cookie'-header dafür nutzen.
-// Dieser Cookie ist ähnlich zum vorangegangenen, allerdings wird er nicht
-// ablaufen und nur über sichere Verbindungen gesendet.
-$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
+// Dieser Cookie ist ähnlich zum vorangegangenen, allerdings wird
+// er nicht ablaufen und nur über sichere Verbindungen gesendet.
+$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; ' .
+                                       'path=/path; secure');
 
 // Wenn die Domain des Cookies nicht gesetzt ist, muss man ihn selbst angeben.
-$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');
+$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;',
+                                       'http://www.example.com/path');
 ]]>
                 </programlisting>
             </example>
@@ -119,7 +125,11 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
                <title>Transformation eines Zend_Http_Cookie-Objekts zu einem String</title>
                <programlisting role="php"><![CDATA[
 // Erstellt einen neuen Cookie
-$cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
+$cookie = new Zend_Http_Cookie('foo',
+                               'two words',
+                               '.example.com',
+                               time() + 7200,
+                               '/path');
 
 // Gibt 'foo=two+words;' aus
 echo $cookie->__toString();
@@ -201,7 +211,11 @@ echo $cookie;
                 <title>Nutzen der getter-Methoden von Zend_Http_Cookie</title>
                 <programlisting role="php"><![CDATA[
 // Zuerst wird der Cookie erstellt
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=.example.com; ' +
+                                       'path=/somedir; ' +
+                                       'secure; ' +
+                                       'expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // Gibt 'foo' aus
 echo $cookie->getValue();  // Gibt 'two words' aus
@@ -260,7 +274,10 @@ echo ($cookie->isSessionCookie() ? 'Ja' : 'Nein');
                 <title>Zutreffen von Cookies</title>
                 <programlisting role="php"><![CDATA[
 // Erstellen eines Cookie Objekts - zuerst ein sicherer Cookie ohne Ablaufzeit
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=.example.com; ' +
+                                       'path=/somedir; ' +
+                                       'secure;');
 
 $cookie->match('https://www.example.com/somedir/foo.php');
 // Gibt true zurück
@@ -280,20 +297,26 @@ $cookie->match('https://www.example.com/somedir/foo.php', false);
 $cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php');
 // Gibt true zurück
 
-// Erstellen eines anderen Cookie-Objekts - diesmal unsicher und einer Ablaufzeit die zwei Stunden in der Zukunft liegt
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=www.example.com; expires=' . date(DATE_COOKIE, time() + 7200));
+// Erstellen eines anderen Cookie-Objekts - diesmal unsicher und
+// einer Ablaufzeit die zwei Stunden in der Zukunft liegt
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=www.example.com; ' +
+                                       'expires='
+                                       . date(DATE_COOKIE, time() + 7200));
 
 $cookie->match('http://www.example.com/');
 // Gibt true zurück
 
 $cookie->match('https://www.example.com/');
-// Gibt true zurück, da unsichere Cookies genauso gut über sichere Verbindungen übertragen werden können
+// Gibt true zurück, da unsichere Cookies genauso gut über sichere
+// Verbindungen übertragen werden können
 
 $cookie->match('http://subdomain.example.com/');
 // Gibt false zurück, da die Domain unzutreffend ist
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
-// Gibt false zurück, da die Ablaufzeit drei Stunden in der Zukunft liegt
+// Gibt false zurück, da die Ablaufzeit drei Stunden in der Zukunft
+// liegt
 ]]>
                 </programlisting>
             </example>

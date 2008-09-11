@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -148,11 +148,17 @@ echo $this->formCheckbox('foo', null, null, array(
 
 // 'bar' und 'baz' als gecheckte/ungecheckte Optionen; gecheckt 
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => true),
+                         array('bar', 'baz');
 
 // 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => false),
+                         array('bar', 'baz');
 ]]>
                 </programlisting>
 
@@ -292,13 +298,13 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
 ?>
 <form action="action.php" method="post">
     <p><label>Deine Email:
-        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+<?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
     </label></p>
     <p><label>Dein Land:
-        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+<?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
     </label></p>
     <p><label>Möchtest Du hinzugefügt werden?
-        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+<?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
 </form>
 ]]>
@@ -407,10 +413,12 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // wenn nun $this->helperName() aufgerufen wird, wird Zend_View zuerst nach
-// "/path/to/some/helpers/HelperName" mit dem Klassennamen "Your_View_Helper_HelperName",
-// dann nach "/other/path/to/helpers/HelperName.php" mit dem Klassennamen "My_View_Helper_HelperName",
-// und zuletzt nach "Zend/View/Helpers/HelperName.php" mit dem Klassennamen "Zend_View_Helper_HelperName"
-// schauen.
+// "/path/to/some/helpers/HelperName" mit dem Klassennamen
+// "Your_View_Helper_HelperName", dann nach
+// "/other/path/to/helpers/HelperName.php" mit dem Klassennamen
+// "My_View_Helper_HelperName", und zuletzt nach
+// "Zend/View/Helpers/HelperName.php" mit dem Klassennamen
+// "Zend_View_Helper_HelperName" schauen.
 ]]>
         </programlisting>
 

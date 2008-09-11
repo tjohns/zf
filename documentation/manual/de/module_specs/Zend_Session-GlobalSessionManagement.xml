@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.session.global_session_management">
 
     <title>Globales Session Management</title>
@@ -63,7 +63,8 @@
 ; gc_probability
 ; hash_bits_per_character
 ; hash_function
-; name sollte für jede PHP Anwendung eindeutig sein und den selben Domain Namen verwenden
+; name sollte für jede PHP Anwendung eindeutig sein und den
+; selben Domain Namen verwenden
 name = UNIQUE_NAME
 ; referer_check
 ; save_handler
@@ -77,9 +78,11 @@ name = UNIQUE_NAME
 ; strict = on|off
 
 
-; Entwicklung beinhaltet Konfiguration der Produktion, überschreibt aber diverse Werte
+; Entwicklung beinhaltet Konfiguration der Produktion,
+; überschreibt aber diverse Werte
 [development : production]
-; Nicht vergessen, dieses Verzeichnis zu erstellen und es rwx machen (lesbar und änderbar) durch PHP.
+; Nicht vergessen, dieses Verzeichnis zu erstellen und es
+; rwx machen (lesbar und änderbar) durch PHP.
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; Beim Analysieren von Session ID Cookies, frage nach einer TTL von 10 Tagen
@@ -362,19 +365,19 @@ Zend_Session::setOptions($config->toArray());
                 <itemizedlist mark='opencircle'>
                     <listitem>
                         <para>
-                            - Der Angreifer initiiert eine Session auf der Webseite um eine gültige Session Id zu
+                            Der Angreifer initiiert eine Session auf der Webseite um eine gültige Session Id zu
                             erhalten
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            - Der Angreifer benutzt XSS Gefährdungen auf der Webseite um ein Cookie auf dem Browser
+                            Der Angreifer benutzt XSS Gefährdungen auf der Webseite um ein Cookie auf dem Browser
                             des Opfers mit der geichen, gültigen Session Id (z.b. Session Fixierung), zu erstellen
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            - Beide, das Opfer und der Angreifer kommen von der selben Proxy Farm (z.B. wenn beide
+                            Beide, das Opfer und der Angreifer kommen von der selben Proxy Farm (z.B. wenn beide
                             hinter der selben Firewall einer großen Firma, wie AOL, sind)
                         </para>
                     </listitem>

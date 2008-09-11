@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.service.strikeiron.advanced-uses">
     <title>Zend_Service_StrikeIron: Erweiterte Verwendung</title>
 
@@ -25,7 +25,10 @@ $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
                                                 'password' => 'your-password'));
 
 // Erhalte einen generellen Client zum Reverse Phone Lookup Service
-$phone = $strikeIron->getService(array('wsdl' => 'http://ws.strikeiron.com/ReversePhoneLookup?WSDL'));
+$phone = $strikeIron->getService(
+                          array('wsdl' =>
+                                'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
+                      );
 
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;
@@ -83,9 +86,10 @@ echo $result->listingName;
         aufzurufen:
 
         <programlisting role="php"><![CDATA[
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password',
-                                                'options'  => array('trace' => true)));
+$strikeIron =
+    new Zend_Service_StrikeIron(array('username' => 'your-username',
+                                      'password' => 'your-password',
+                                      'options'  => array('trace' => true)));
 
 // Erstelle einen Client für das Verkaufs & Verwende Steuer BasisService
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));

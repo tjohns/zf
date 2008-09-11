@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
@@ -181,7 +181,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
             $label .= '*';
         }
         $label .= ':';
-        return $element->getView()->formLabel($element->getName(), $label);
+        return $element->getView()
+                       ->formLabel($element->getName(), $label);
     }
 
     public function buildInput()
@@ -203,7 +204,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         if (empty($messages)) {
             return '';
         }
-        return '<div class="errors">' . $element->getView()->formErrors($messages) . '</div>';
+        return '<div class="errors">' .
+               $element->getView()->formErrors($messages) . '</div>';
     }
 
     public function buildDescription()
@@ -258,10 +260,14 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
 
         <programlisting role="php"><![CDATA[
 // für ein Element:
-$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+$element->addPrefixPath('My_Decorator',
+                        'My/Decorator/',
+                        'decorator');
 
 // für alle Elemente:
-$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+$form->addElementPrefixPath('My_Decorator',
+                            'My/Decorator/',
+                            'decorator');
 ]]>
         </programlisting>
 

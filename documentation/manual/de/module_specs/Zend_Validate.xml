@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.validate.introduction">
 
     <title>Einführung</title>
@@ -126,14 +126,15 @@ if ($validator->isValid($email)) {
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
-    'Der String \'%value%\' ist zu kurz; er muss mindestens %min% Zeichen sein',
+    'Der String \'%value%\' ist zu kurz; er muss mindestens %min% ' .
+    'Zeichen sein',
     Zend_Validate_StringLength::TOO_SHORT);
 
 if (!$validator->isValid('word')) {
     $messages = $validator->getMessages();
     echo $messages[0];
 
-    // Ausgabe von "Der String 'word' ist zu kurz; er muss mindestens 8 Zeichen sein"
+    // "Der String 'word' ist zu kurz; er muss mindestens 8 Zeichen sein"
 }
 ]]>
             </programlisting>
@@ -147,8 +148,10 @@ if (!$validator->isValid('word')) {
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
-    Zend_Validate_StringLength::TOO_SHORT => 'Der String \'%value%\' ist zu kurz',
-    Zend_Validate_StringLength::TOO_LONG  => 'Der String \'%value%\' ist zu lang'
+    Zend_Validate_StringLength::TOO_SHORT =>
+        'Der String \'%value%\' ist zu kurz',
+    Zend_Validate_StringLength::TOO_LONG  =>
+        'Der String \'%value%\' ist zu lang'
 ));
 ]]>
             </programlisting>

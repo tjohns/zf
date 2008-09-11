@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale verwenden</title>
@@ -38,7 +38,9 @@ $stringLocale = $locale->toString();
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP ruft automatisch toString() über __toString(); auf
+
+// PHP ruft automatisch toString() über __toString(); auf
+print "copied: ", $copiedLocale;
 ]]>
             </programlisting>
         </example>
@@ -209,7 +211,8 @@ print_r ($list);
 // [de] -> Deutsch
 // [en] -> Englisch
 
-// Einen der zurückgegebenen Schlüssel als Wert für die getTranslation() Methode einer anderen Sprache verwenden
+// Einen der zurückgegebenen Schlüssel als Wert für die
+// getTranslation() Methode einer anderen Sprache verwenden
 print $locale->getTranslation('de', 'language', 'zh');
 // Gibt die Übersetzung für die Sprache 'de' in chinesisch zurück
 ]]>

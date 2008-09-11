@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.form.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
@@ -249,7 +249,9 @@ class My_Form_Registration extends Zend_Form
                 'filters'    => array('StringTrim', 'StringToLower'),
                 'validators' => array(
                     'Alnum',
-                    array('Regex', false, array('/^[a-z][a-z0-9]{2,}$/'))
+                    array('Regex',
+                          false,
+                          array('/^[a-z][a-z0-9]{2,}$/'))
                 )
             )),
 
@@ -264,7 +266,8 @@ class My_Form_Registration extends Zend_Form
             )),
         ));
 
-        // Erstellt die Demographische Subform: Vorname, Familienname und Ort
+        // Erstellt die Demographische Subform: Vorname,
+        // Familienname und Ort
         $demog = new Zend_Form_SubForm();
         $demog->addElements(array(
             new Zend_Form_Element_Text('givenName', array(
@@ -272,7 +275,9 @@ class My_Form_Registration extends Zend_Form
                 'label'      => 'Vorname (erster):',
                 'filters'    => array('StringTrim'),
                 'validators' => array(
-                    array('Regex', false, array('/^[a-z][a-z0-9., \'-]{2,}$/i'))
+                    array('Regex',
+                          false,
+                          array('/^[a-z][a-z0-9., \'-]{2,}$/i'))
                 )
             )),
 
@@ -281,7 +286,9 @@ class My_Form_Registration extends Zend_Form
                 'label'      => 'Familienname (letzter):',
                 'filters'    => array('StringTrim'),
                 'validators' => array(
-                    array('Regex', false, array('/^[a-z][a-z0-9., \'-]{2,}$/i'))
+                    array('Regex',
+                          false,
+                          array('/^[a-z][a-z0-9., \'-]{2,}$/i'))
                 )
             )),
 
@@ -298,20 +305,23 @@ class My_Form_Registration extends Zend_Form
         // Erstellt die Mailinglisten Subform
         $listOptions = array(
             'none'        => 'keine Listen bitte',
-            'fw-general'  =>  'Zend Framework General Liste',
-            'fw-mvc'      =>  'Zend Framework MVC Liste',
-            'fw-auth'     =>  'Zend Framwork Authentication und ACL Liste',
+            'fw-general'  => 'Zend Framework General Liste',
+            'fw-mvc'      => 'Zend Framework MVC Liste',
+            'fw-auth'     => 'Zend Framework Authentication und ACL Liste',
             'fw-services' => 'Zend Framework Web Services Liste',
         );
         $lists = new Zend_Form_SubForm();
         $lists->addElements(array(
             new Zend_Form_Element_MultiCheckbox('subscriptions', array(
-                'label'        => 'Welche Liste wollen Sie erhalten?',
+                'label'        =>
+                    'Welche Liste wollen Sie erhalten?',
                 'multiOptions' => $listOptions,
                 'required'     => true,
                 'filters'      => array('StringTrim'),
                 'validators'   => array(
-                    array('InArray', false, array(array_keys($listOptions)))
+                    array('InArray',
+                          false,
+                          array(array_keys($listOptions)))
                 )
             )),
         ));
@@ -354,7 +364,8 @@ class My_Form_Registration extends Zend_Form
         } elseif ($spec instanceof Zend_Form_SubForm) {
             $subForm = $spec;
         } else {
-            throw new Exception('Ungültiges Argument an ' . __FUNCTION__ . '() übergeben');
+            throw new Exception('Ungültiges Argument an ' .
+                                __FUNCTION__ . '() übergeben');
         }
         $this->setSubFormDecorators($subForm)
              ->addSubmitButton($subForm)
@@ -372,7 +383,8 @@ class My_Form_Registration extends Zend_Form
     {
         $subForm->setDecorators(array(
             'FormElements',
-            array('HtmlTag', array('tag' => 'dl', 'class' => 'zend_form')),
+            array('HtmlTag', array('tag' => 'dl',
+                                   'class' => 'zend_form')),
             'Form',
         ));
         return $this;
@@ -470,7 +482,8 @@ class RegistrationController extends Zend_Controller_Action
     public function getSessionNamespace()
     {
         if (null === $this->_session) {
-            $this->_session = new Zend_Session_Namespace($this->_namespace);
+            $this->_session =
+                new Zend_Session_Namespace($this->_namespace);
         }
 
         return $this->_session;
@@ -584,7 +597,8 @@ class My_Form_Registration extends Zend_Form
      * @param  array $data 
      * @return bool
      */
-    public function subFormIsValid(Zend_Form_SubForm $subForm, array $data)
+    public function subFormIsValid(Zend_Form_SubForm $subForm,
+                                   array $data)
     {
         $name = $subForm->getName();
         if ($subForm->isValid($data)) {
@@ -626,8 +640,8 @@ class RegistrationController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // Entweder die aktuelle Seite nochmals anzeigen, oder die nächste "next" (erste)
-        // Subform holen
+        // Entweder die aktuelle Seite nochmals anzeigen, oder
+        // die nächste "next" (erste) Subform holen
         if (!$form = $this->getCurrentSubForm()) {
             $form = $this->getNextSubForm();
         }
@@ -640,7 +654,8 @@ class RegistrationController extends Zend_Controller_Action
             return $this->_forward('index');
         }
 
-        if (!$this->subFormIsValid($form, $this->getRequest()->getPost())) {
+        if (!$this->subFormIsValid($form,
+                                   $this->getRequest()->getPost())) {
             $this->view->form = $this->getForm()->prepareSubForm($form);
             return $this->render('index');
         }
@@ -686,7 +701,8 @@ class RegistrationController extends Zend_Controller_Action
 </p>
 
 <?
-// Dieses Konstrukt muß getan werden wegen dem Weg wie Elemente im Session Namespace gespeichert werden
+// Dieses Konstrukt muß getan werden wegen dem Weg wie Elemente
+// im Session Namespace gespeichert werden
 foreach ($this->info as $info):
     foreach ($info as $form => $data): ?>
 <h4><?= ucfirst($form) ?>:</h4>

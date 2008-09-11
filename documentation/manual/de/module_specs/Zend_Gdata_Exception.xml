@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata Ausnahmen auffangen</title>
 
@@ -10,7 +10,8 @@
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
+    $client =
+        Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
     // Die Ausnahme an den Benutzer bekanntgeben
     die($ex->getMessage());
@@ -76,7 +77,9 @@ try {
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
+    $client = Zend_Gdata_ClientLogin::getHttpClient($username,
+                                                    $password,
+                                                    $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {
     // Die Benutzer Account Daten sind nicht korrekt.
     // Es wäre nett dem Benutzer einen zweiten Versuch zu geben.

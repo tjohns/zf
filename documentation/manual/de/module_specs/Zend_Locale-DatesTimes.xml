@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>Arbeiten mit Daten und Zeiten</title>
@@ -39,7 +39,7 @@
 
         <table id="zend.locale.date.normalize.table-1">
             <title>Schlüsselwerte für getDate() mit der Option 'fix_date'</title>
-            <tgroup cols='4'>
+            <tgroup cols='2'>
                 <thead>
                     <row>
                         <entry>Wert</entry>
@@ -150,8 +150,14 @@
         <example id="zend.locale.date.normalize.example-1">
             <title>Normalisieren von Daten</title>
             <programlisting role="php"><![CDATA[
-$dateString = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => 'dd.MM.yyyy'));
-$dateObject = Zend_Date('13.04.2006', array('date_format' => 'dd.MM.yyyy')); // Erstellt ein Zend_Date Objekt für dieses Datum
+$dateString = Zend_Locale_Format::getDate('13.04.2006',
+                                          array('date_format' =>
+                                                    'dd.MM.yyyy')
+                                         );
+
+// Erstellt ein Zend_Date Objekt für dieses Datum
+$dateObject = Zend_Date('13.04.2006',
+                        array('date_format' => 'dd.MM.yyyy'));
 
 print_r($dateString); // Ausgabe
 
@@ -164,7 +170,10 @@ Array
 )
 
 // Alternativ können einige Arten von Problemen mit den Eingabedaten automatisch korrigiert werden
-$date2 = Zend_Locale_Format::getDate('04.13.2006', array('date_format' => 'dd.MM.yyyy', 'fix_date' => true));
+$date2 = Zend_Locale_Format::getDate('04.13.2006',
+                                     array('date_format' => 'dd.MM.yyyy',
+                                           'fix_date' => true)
+                                    );
 
 print_r($date); // Ausgabe
 
@@ -195,7 +204,11 @@ Array
             <title>Normalisieren eines Datums durch ein Gebietsschema</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2006', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale));
+$date = Zend_Locale_Format::getDate('13.04.2006',
+                                    array('date_format' =>
+                                              Zend_Locale_Format::STANDARD,
+                                          'locale' => $locale)
+                                   );
 
 print_r ($date);
 ]]>
@@ -227,7 +240,10 @@ print_r ($date);
         <example id="zend.locale.date.normalize.example-4">
             <title>Normalisieren eines Benutzerdefinierten Datums</title>
             <programlisting role="php"><![CDATA[
-$date = Zend_Locale_Format::getDate('13200504T551422', array('date_format' => 'ddyyyyMM ssmmHH');
+$date = Zend_Locale_Format::getDate('13200504T551422',
+                                    array('date_format' =>
+                                              'ddyyyyMM ssmmHH')
+                                   );
 
 print_r ($date);
 ]]>
@@ -334,7 +350,10 @@ print_r ($date);
         <example id="zend.locale.date.normalize.example-5">
             <title>Automatische Korrektur von Datumsangaben</title>
             <programlisting role="php"><![CDATA[
-$date = Zend_Locale_Format::getDate('41.10.20', array('date_format' => 'ddMMyy', 'fix_date' => true));
+$date = Zend_Locale_Format::getDate('41.10.20',
+                                    array('date_format' => 'ddMMyy',
+                                          'fix_date' => true)
+                                   );
 
 // Statt 41 für den Tag wird die 41 als Wert für das Jahr zurück gegeben
 print_r ($date);
@@ -363,7 +382,11 @@ print_r ($date);
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 // Benutzen des Standard Datumsformates für 'de_AT'... ist das ein gültiges Datum ?
-if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Zend_Locale_Format::STANDARD, $locale)) {
+if (Zend_Locale_Format::checkDateFormat('13.Apr.2006',
+                                        array('date_format' =>
+                                                  Zend_Locale_Format::STANDARD,
+                                              $locale)
+                                       ) {
     print "Datum";
 } else {
     print "kein Datum";
@@ -389,7 +412,11 @@ if (Zend_Locale_Format::checkDateFormat('13.Apr.2006', array('date_format' => Ze
             <title>Normalisieren einer unbekannten Zeit</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale)) {
+if (Zend_Locale_Format::getTime('13:44:42',
+                                array('date_format' =>
+                                          Zend_Locale_Format::STANDARD,
+                                      'locale' => $locale)
+                               ) {
     print "Zeit";
 } else {
     print "keine Zeit";
@@ -414,7 +441,9 @@ if (Zend_Locale_Format::getTime('13:44:42', array('date_format' => Zend_Locale_F
             <title>Testen einer Zeit</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-if (Zend_Locale_Format::checkDateFormat('13:44:42', array('date_format' => 'HH:mm:ss', 'locale' => $locale)) {
+if (Zend_Locale_Format::checkDateFormat('13:44:42',
+                                        array('date_format' => 'HH:mm:ss',
+                                              'locale' => $locale)) {
     print "Zeit";
 } else {
     print "keine Zeit";

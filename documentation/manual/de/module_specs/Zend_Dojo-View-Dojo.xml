@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11185 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -84,10 +84,11 @@ $this->dojo()->enable()
     <?= $this->headMeta() ?> 
     <?= $this->headLink() ?> 
     <?= $this->headStyle() ?> 
-<? if ($this->dojo()->isEnabled()):
+<? if ($this->dojo()->isEnabled()){
     $this->dojo()->setLocalPath('/js/dojo/dojo.js')
                  ->addStyleSheetModule('dijit.themes.tundra');
     echo $this->dojo();
+   }
 ?>
     <?= $this->headScript() ?> 
 </head>

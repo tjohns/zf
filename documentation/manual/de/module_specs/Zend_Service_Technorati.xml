@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.service.technorati">
     <title>Zend_Service_Technorati</title>
 
@@ -173,10 +173,11 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $result = $technorati->getInfo('weppos');
 
 $author = $result->getAuthor();
-echo "<h2>Blogs authorisiert von " . $author->getFirstName() . " " . $author->getLastName() . "</h2>";
-echo "<ol>";
+echo '<h2>Blogs authorisiert von ' . $author->getFirstName() . " " .
+          $author->getLastName() . '</h2>';
+echo '<ol>';
 foreach ($result->getWeblogs() as $weblog) {
-    echo "<li>" . $weblog->getName() . "</li>";
+    echo '<li>' . $weblog->getName() . '</li>';
 }
 echo "</ol>";
 ]]>
@@ -243,7 +244,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $key = $technorati->keyInfo();
 
 echo "API Schlüssel: " . $key->getApiKey() . "<br />";
-echo "Tägliche Verwendung: " . $key->getApiQueries() . "/" . $key->getMaxQueries() . "<br />";
+echo "Tägliche Verwendung: " . $key->getApiQueries() . "/" .
+     $key->getMaxQueries() . "<br />";
 ]]>
             </programlisting>
         </example>
@@ -281,7 +283,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->cosmos('http://devzone.zend.com/');
 
 echo "<p>Liest " . $resultSet->totalResults() .
-     " von " . $resultSet->totalResultsAvailable() . " vorhandenen Ergebnissen</p>";
+     " von " . $resultSet->totalResultsAvailable() .
+     " vorhandenen Ergebnissen</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getWeblog()->getName() . "</li>";
@@ -308,7 +311,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->search('zend framework');
 
 echo "<p>Liest " . $resultSet->totalResults() .
-     " von " . $resultSet->totalResultsAvailable() . " vorhandenen Ergebnissen</p>";
+     " von " . $resultSet->totalResultsAvailable() .
+     " vorhandenen Ergebnissen</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getWeblog()->getName() . "</li>";
@@ -335,7 +339,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->tag('php');
 
 echo "<p>Liest " . $resultSet->totalResults() .
-     " von " . $resultSet->totalResultsAvailable() . " vorhandenen Ergebnissen</p>";
+     " von " . $resultSet->totalResultsAvailable() .
+     " vorhandenen Ergebnissen</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getWeblog()->getName() . "</li>";
@@ -362,7 +367,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->dailyCounts('php');
 
 foreach ($resultSet as $result) {
-    echo "<li>" . $result->getDate() . "(" . $result->getCount() . ")</li>";
+    echo "<li>" . $result->getDate() .
+         "(" . $result->getCount() . ")</li>";
 }
 echo "</ol>";
 ]]>
@@ -386,7 +392,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->topTags();
 
 echo "<p>Liest " . $resultSet->totalResults() .
-     " von " . $resultSet->totalResultsAvailable() . "  vorhandenen Ergebnissen</p>";
+     " von " . $resultSet->totalResultsAvailable() .
+     "  vorhandenen Ergebnissen</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getTag() . "</li>";
@@ -435,7 +442,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->blogPostTags('http://devzone.zend.com/');
 
 echo "<p>Liest " . $resultSet->totalResults() .
-     " von " . $resultSet->totalResultsAvailable() . " vorhandenen Ergebnissen</p>";
+     " von " . $resultSet->totalResultsAvailable() .
+     " vorhandenen Ergebnissen</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
     echo "<li>" . $result->getTag() . "</li>";
@@ -462,7 +470,8 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $result = $technorati->getInfo('weppos');
 
 $author = $result->getAuthor();
-echo "<h2>Blogs authorisiert von " . $author->getFirstName() . " " . $author->getLastName() . "</h2>";
+echo "<h2>Blogs authorisiert von " . $author->getFirstName() . " " .
+     $author->getLastName() . "</h2>";
 echo "<ol>";
 foreach ($result->getWeblogs() as $weblog) {
     echo "<li>" . $weblog->getName() . "</li>";
@@ -554,7 +563,8 @@ echo "</ol>";
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->search('php');
 
-// $resultSet ist jetzt eine Instanz von Zend_Service_Technorati_SearchResultSet
+// $resultSet ist jetzt eine Instanz von
+// Zend_Service_Technorati_SearchResultSet
 // sie erweitert Zend_Service_Technorati_ResultSet
 foreach ($resultSet as $result) {
     // irgendwas mit dem Zend_Service_Technorati_SearchResult Objekt anfangen

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.extending">
     <title>Erweiterbarkeit</title>
 
@@ -56,7 +56,10 @@ $index->addDocument($doc);
             <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>Eigener Textanalysator</title>
                 <programlisting role="php"><![CDATA[
-/** Hier ist ein eigener Textanalysator, der Worte mit Ziffern als einen Begriff behandelt */
+/**
+ * Hier ist ein eigener Textanalysator, der Worte mit Ziffern
+ * als einen Begriff behandelt
+ */
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
@@ -106,7 +109,8 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
             $token = new Zend_Search_Lucene_Analysis_Token(
                                       substr($this->_input,
                                              $termStartPosition,
-                                             $this->_position - $termStartPosition),
+                                             $this->_position -
+                                             $termStartPosition),
                                       $termStartPosition,
                                       $this->_position);
             $token = $this->normalize($token);
@@ -177,9 +181,11 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             eigenen Analysatoren wie folgt verwendet werden:
             <programlisting role="php"><![CDATA[
 $stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
-$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
+$stopWordsFilter =
+    new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
 
-$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer =
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
@@ -188,7 +194,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
             <programlisting role="php"><![CDATA[
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 
-$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer =
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($shortWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
@@ -438,8 +445,8 @@ abstract function touchFile($filename);
 
 
 /**
- * Gibt ein Zend_Search_Lucene_Storage_File Objekt für den Dateinamen $filename aus dem
- * Verzeichnis zurück.
+ * Gibt ein Zend_Search_Lucene_Storage_File Objekt für den^
+ * Dateinamen $filename aus dem Verzeichnis zurück.
  *
  * @param string $filename
  * @return Zend_Search_Lucene_Storage_File

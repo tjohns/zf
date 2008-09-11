@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>Fortgeschrittene Benutzung</title>
@@ -233,7 +233,8 @@ $s->setExpirationSeconds(60);
 // ...
 // Im Frage-View Kontroller
 $testSpace = new Zend_Session_Namespace('testSpace');
-$testSpace->setExpirationSeconds(300, 'accept_answer'); // Nur diese Variable ablaufen lassen
+$testSpace->setExpirationSeconds(300, 'accept_answer');
+// Nur diese Variable ablaufen lassen
 $testSpace->accept_answer = true;
 //...
 ]]>
@@ -287,7 +288,8 @@ $testSpace->accept_answer = true;
 // Eine Instanz eines Namensraumes erstellen
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
-// Eine weitere Instanz des selben Namensraumes erstellen, aber weitere Instanzen verbieten
+// Eine weitere Instanz des selben Namensraumes erstellen,
+// aber weitere Instanzen verbieten
 $authSpaceAccessor2 = new Zend_Session_Namespace('Zend_Auth', true);
 
 // Eine Referenz erstellen ist immer noch möglich
@@ -300,7 +302,8 @@ assert($authSpaceAccessor2->foo, 'bar');
 try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
-    echo "Dieser Namensraum kann nicht instanziert werden da \$authSpaceAccessor2 erstellt wurde\n";
+    echo 'Dieser Namensraum kann nicht instanziert werden da ' .
+         '$authSpaceAccessor2 erstellt wurde\n';
 }
 ]]>
             </programlisting>
@@ -344,7 +347,8 @@ try {
             <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
-$sessionNamespace->array['testKey'] = 1; // wird nicht wie gewünscht funktionieren vor PHP 5.2.1
+// wird nicht wie gewünscht funktionieren vor PHP 5.2.1
+$sessionNamespace->array['testKey'] = 1;
 echo $sessionNamespace->array['testKey'];
 ]]>
             </programlisting>
@@ -491,18 +495,23 @@ exec($script . "expireAll $id expireAll", $result);
 $result = $this->sortResult($result);
 $expect = ';a === apfel;o === orange;p === pfirsich';
 $this->assertTrue($result === $expect,
-    "Iterierung durch standard Zend_Session Namensraum fehlgeschlagen; erwartet result === '$expect', aber '$result' bekommen");
-sleep(2); // lange genug damit die Dinge ablaufen (insgesamt 6 Sekunden warten, aber nach 5 Sekunden abgelaufen)
+    "Iterierung durch standard Zend_Session Namensraum fehlgeschlagen; " .
+    "erwartet result === '$expect', aber '$result' bekommen");
+sleep(2); // lange genug damit die Dinge ablaufen (insgesamt 6 Sekunden
+          // warten, aber nach 5 Sekunden abgelaufen)
 exec($script . "expireAll $id expireAll", $result);
 $result = array_pop($result);
 $this->assertTrue($result === '',
-    "Iterierung dirch standard Zend_Session Namensraum fehlgeschlagen; erwartet result === '', aber '$result' bekommen)");
+    "Iterierung durch standard Zend_Session Namensraum fehlgeschlagen; " .
+    "erwartet result === '', aber '$result' bekommen)");
 session_start(); // wiederherstellen der vorher eingefrorenen Session
 
-// Das könnte in einen seperaten Test abgeteilt werden, aber aktuell, wenn irgendwas vom darüberleigenden
-// Test den darunterliegenden Test kontaminiert, ist das auch ein Fehler den wir wissen wollen.
+// Das könnte in einen seperaten Test abgeteilt werden, aber aktuell, wenn
+// irgendwas vom darüberleigenden Test den darunterliegenden Test
+// kontaminiert, ist das auch ein Fehler den wir wissen wollen.
 $s = new Zend_Session_Namespace('expireGuava');
-$s->setExpirationSeconds(5, 'g'); // Versuch nur einen Schlüssel im Namensraum ablaufen zu lassen
+$s->setExpirationSeconds(5, 'g'); // Versuch nur einen Schlüssel im
+                                  // Namensraum ablaufen zu lassen
 $s->g = 'guava';
 $s->p = 'peach';
 $s->p = 'plum';

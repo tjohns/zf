@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.best-practice">
     <title>Die besten Anwendungen</title>
 
@@ -470,8 +470,12 @@ foreach ($docIds as $id) {
             spezifiziert werden: 
             <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
-$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+$doc->addField(Zend_Search_Lucene_Field::Text('title',
+                                              $title,
+                                              'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  $contents,
+                                                  'utf-8'));
 ]]>
             </programlisting>
             Das ist der beste Weg um Problemen bei der verwendeten Verschlüsselung vorzubeugen.
@@ -507,7 +511,8 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
             Verschlüsselung kann als optionaler Parameter übergeben werden, wenn die Abfrage explizit vor der
             Suche geparsed wird:
             <programlisting role="php"><![CDATA[
-$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+$query =
+    Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
 ...
 ]]>

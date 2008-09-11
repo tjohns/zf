@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.log.formatters">
   <title>Formatter</title>
   <para>
@@ -94,7 +94,10 @@ $logger->info('Informative Nachricht');
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
-$formatter = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'level' => 'priorityName'));
+$formatter = new Zend_Log_Formatter_Xml('log',
+                                        array('msg' => 'message',
+                                              'level' => 'priorityName')
+                                       );
 $writer->setFormatter($formatter);
 
 $logger = new Zend_Log();

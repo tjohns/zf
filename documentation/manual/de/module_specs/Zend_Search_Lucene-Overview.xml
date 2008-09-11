@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.overview">
     <title>Überblick</title>
 
@@ -118,8 +118,12 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 
                 <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
-$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));
+$doc->addField(Zend_Search_Lucene_Field::Text('title',
+                                              $title,
+                                              'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  $contents,
+                                                  'utf-8'));
 ]]>
                 </programlisting>
             </para>
@@ -210,7 +214,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
 
                 <table id="zend.search.lucene.index-creation.understanding-field-types.table">
                     <title>Zend_Search_Lucene_Field Typen</title>
-                    <tgroup cols="4">
+                    <tgroup cols="5">
                         <thead>
                             <row>
                                 <entry>Feldtyp</entry>

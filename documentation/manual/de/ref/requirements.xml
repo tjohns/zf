@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9658 -->
+<!-- EN-Revision: 11146 -->
 <appendix id="requirements">
 
     <title>Zend Framework Voraussetzungen</title>
@@ -58,9 +58,8 @@
         <table frame='all' id="requirements.extensions.table-1">
             <title>PHP Erweiterungen verwendet im Zend Framework nach Komponente</title>
             <tgroup cols='3'>
-                <colspec colwidth='1in'/>
-                <colspec colwidth='1in'/>
-                <colspec colwidth='3in'/>
+                <!-- <colspec colwidth='1in'/>
+                <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
                         <entry>Erweiterung</entry>
@@ -635,11 +634,11 @@
 
         <table frame='all' id="requirements.zendcomponents.table-1">
             <title>Zend Framework Komponenten und die PHP Erweiterungen die sie verwenden</title>
-            <tgroup cols='3'>
-                <colspec colwidth='3in'/>
+            <tgroup cols='4'>
+                <!-- <colspec colwidth='3in'/>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='3in'/>
-                <colspec colwidth='3in'/>
+                <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
                         <entry>Zend Framework Komponenten</entry>

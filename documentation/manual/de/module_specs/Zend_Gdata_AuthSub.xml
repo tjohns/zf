@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.gdata.authsub">
     <title>Authentifizierung mit AuthSub</title>
 
@@ -70,7 +70,8 @@ $my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
         // Ein einmal-verwendbarer Token kann in einen Session Token konvertiert werden
-        $session_token =  Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
+        $session_token =
+            Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
         // Speichert den Session Token in der Session
         $_SESSION['cal_token'] = $session_token;
     } else {
@@ -78,7 +79,8 @@ if (!isset($_SESSION['cal_token'])) {
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
             $my_calendar, 0, 1);
-        echo "Klicke <a href='$googleUri'>hier</a> um diese Anwendung zu authorisieren.";
+        echo "Klicke <a href='$googleUri'>hier</a> um diese Anwendung " .
+             "zu authorisieren.";
         exit();
     }
 }
@@ -104,7 +106,10 @@ $cal = new Zend_Gdata_Calendar($client);
 
         <programlisting role="php"><![CDATA[
 // Vorsichtig den Wert erstellen um Sicherheitsprobleme mit der Anwendung zu vermeiden
-$php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0, strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
+$php_self = htmlentities(substr($_SERVER['PHP_SELF'],
+                         0,
+                         strcspn($_SERVER['PHP_SELF'], "\n\r")),
+                         ENT_QUOTES);
 
 if (isset($_GET['logout'])) {
     Zend_Gdata_AuthSub::AuthSubRevokeToken($_SESSION['cal_token']);

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.pdf.usage">
     <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
     <para>
@@ -29,7 +29,8 @@ if (!isset($argv[1])) {
 try {
     $pdf = Zend_Pdf::load($argv[1]);
 } catch (Zend_Pdf_Exception $e) {
-    if ($e->getMessage() == 'Datei \'' . $argv[1] . '\' konnte nicht zum Lesen geöffnet werden.') {
+    if ($e->getMessage() == 'Datei \'' . $argv[1] .
+                            '\' konnte nicht zum Lesen geöffnet werden.') {
         // Erstelle neues PDF, wenn Datei nicht existiert
         $pdf = new Zend_Pdf();
 
@@ -38,12 +39,13 @@ try {
             $argv[2] = $argv[1];
         }
     } else {
-        // Werfe eine Ausnahme, wenn es nicht die "Can't open file" Exception ist
+        // Werfe eine Ausnahme, wenn es nicht die "Can't open file"
+        // Exception ist
         throw $e;
     }
 }
 
-//------------------------------------------------------------------------------------
+//--------------------------------------------------------------------
 // Kehre die Seitenreihenfolge um
 $pdf->pages = array_reverse($pdf->pages);
 
@@ -53,11 +55,14 @@ $style->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
+$style->setFont(Zend_Pdf_Font::fontWithName(
+                    Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32
+               );
 
 try {
     // Erstelle ein neues Grafikobjekt
-    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) .
+                                                '/stamp.jpg');
 } catch (Zend_Pdf_Exception $e) {
     // Beispiel wie man mit Ladefehlern bei Grafiken umgeht. 
     if ($e->getMessage() != 'Image Erweiterung nicht installiert.' &&
@@ -85,13 +90,14 @@ foreach ($pdf->pages as $page){
     $page->restoreGS();
 }
 
-// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts (die Seite wird an das angegebene
-// Dokument angehängt)
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts
+// (die Seite wird an das angegebene Dokument angehängt)
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
-// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts (die Seite wird nicht an das
-// angegebene Dokument angehängt)
-$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts
+// (die Seite wird nicht an das angegebene Dokument angehängt)
+$pdf->pages[] =
+    ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 
 // Erstelle einen neuen Zeichensatz
 $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
@@ -105,7 +111,8 @@ $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
 // Verwenden einen anderen Zeichensatz
-$page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
+$page2->setFont(
+    new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
 // Zeichne ein Rechteck
@@ -149,7 +156,7 @@ $page2->drawPolygon($x, $y,
 // Zeichne eine Linie
 $page2->setLineWidth(0.5);
 $page2->drawLine(60, 375, 400, 375);
-//------------------------------------------------------------------------------------
+//--------------------------------------------------------------------
 
 if (isset($argv[2])) {
     $pdf->save($argv[2]);

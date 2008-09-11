@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -31,10 +31,10 @@ $height = $pdfPage->getHeight();
 // $grayLevel (Fließkommazahl). 0.0 (schwarz) - 1.0 (weiß)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
-// $r, $g, $b (Fließkommazahlen). 0.0 (minimale Helligkeit) - 1.0 (maximale Helligkeit)
+// $r, $g, $b (Fließkommazahlen). 0.0 (min Helligkeit) - 1.0 (max Helligkeit)
 $color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 
-// $c, $m, $y, $k (Fließkommazahlen). 0.0 (minimale Helligkeit) - 1.0 (maximale Helligkeit)
+// $c, $m, $y, $k (Fließkommazahlen). 0.0 (min Helligkeit) - 1.0 (max Helligkeit)
 $color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);
 ]]>
             </programlisting>
@@ -75,9 +75,10 @@ public function drawLine($x1, $y1, $x2, $y2);
  * Zeichne ein Rechteck.
  *
  * Füllarten:
- * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fülle und strichele das Rechteck (Standard)
- * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - strichele das Rechteck
- * Zend_Pdf_Page::SHAPE_DRAW_FILL        - fülle das Rechteck
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fülle und strichliere
+ *                                             das Rechteck (Standard)
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE          - strichele das Rechteck
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL            - fülle das Rechteck
  *
  * @param float $x1
  * @param float $y1
@@ -85,15 +86,16 @@ public function drawLine($x1, $y1, $x2, $y2);
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
+public function drawRectangle($x1, $y1, $x2, $y2,
+                    $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
  * Zeichne ein Polygon
  *
- * Wenn $fillType Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE oder Zend_Pdf_Page::SHAPE_DRAW_FILL ist,
- * wird das Polygon automatisch geschlossen.
+ * Wenn $fillType Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE oder
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL ist, wird das Polygon automatisch geschlossen.
  * Für eine detaillierte Beschreibung dieser Methode schaue in eine PDF Dokumentation
  * (Kapitel 4.4.2 Path painting Operators, Filling)
  *
@@ -103,8 +105,10 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHA
  * @param integer $fillMethod
  */
 public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+                            $fillType =
+                                Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                            $fillMethod =
+                                Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -120,11 +124,12 @@ public function drawPolygon($x, $y,
  * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
  *
  *
- * Es ist kein echter Kreis, weil PDF nur kubische Bezierkurven unterstützt.
- * Aber es ist eine sehr Annäherung.
+ * Es ist kein echter Kreis, weil PDF nur kubische Bezierkurven
+ * unterstützt. Aber es ist eine sehr Annäherung.
  * Es unterscheidet sich von echten Kreisen maximal um 0.00026 Radien
- * (Bei PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 und 15*PI/8 Winkeln).
- * Bei 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 und 7*PI/4 ist es exakt eine Tangente zu einem Kreis.
+ * (Bei PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 und
+ * 15*PI/8 Winkeln). Bei 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 und
+ * 7*PI/4 ist es exakt eine Tangente zu einem Kreis.
  *
  * @param float $x
  * @param float $y
@@ -133,7 +138,12 @@ public function drawPolygon($x, $y,
  * @param mixed $param5
  * @param mixed $param6
  */
-public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);
+public function  drawCircle($x,
+                            $y,
+                            $radius,
+                            $param4 = null,
+                            $param5 = null,
+                            $param6 = null);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -177,15 +187,15 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @param string $text
  * @param float $x
  * @param float $y
- * @param string $charEncoding (optional) Zeichencodierung des Quelltexts.
- *          Standard ist die aktuelle "locale".
+ * @param string $charEncoding (optional) Zeichencodierung des
+ *               Quelltexts. Standard ist die aktuelle "locale".
  * @throws Zend_Pdf_Exception
  */
 public function drawText($text, $x, $y, $charEncoding = '');
 ]]>
         </programlisting>
         <example id="zend.pdf.drawing.text-drawing.example-1">
-            <title>Zeichne einen String auf der Seite.</title>
+            <title>Zeichne einen String auf der Seite</title>
             <programlisting role="php"><![CDATA[
 ...
 $pdfPage->drawText('Hello world!', 72, 720);
@@ -205,7 +215,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
             Funktion unterstützt wird.
         </para>
         <example id="zend.pdf.drawing.text-drawing.example-2">
-            <title>Zeiche einen UTF-8 kodierten String auf der Seite.</title>
+            <title>Zeiche einen UTF-8 kodierten String auf der Seite</title>
             <programlisting role="php"><![CDATA[
 ...
 // Lese einen UTF-8 kodierten String von der Platte
@@ -324,7 +334,7 @@ $pdfPage->setFont($font, 36);
             eine Ausnahme werfen:
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-2">
-            <title>Erstelle einen TrueType Zeichensatz.</title>
+            <title>Erstelle einen TrueType Zeichensatz</title>
             <programlisting role="php"><![CDATA[
 ...
 // Erstelle einen neuen Zeichensatz
@@ -378,8 +388,10 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             <title>Werfe keine Ausnahme für Zeichensätze, die nicht eingebettet werden können.</title>
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
-                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
+$font = Zend_Pdf_Font::fontWithPath(
+           '/path/to/unEmbeddableFont.ttf',
+           Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION
+        );
 ...
 ]]>
             </programlisting>
@@ -414,9 +426,10 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
             <title>Kombiniere die Zeichensatz Einbettungsoptionen.</title>
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
-                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
-                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+$font = Zend_Pdf_Font::fontWithPath(
+            $someUserSelectedFontPath,
+            (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+            Zend_Pdf_Font::EMBED_DONT_COMPRESS));
 ...
 ]]>
             </programlisting>
@@ -454,8 +467,9 @@ $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 $yPosition = 700;
 foreach ($fontList as $font) {
     $page->setFont($font, 15);
-    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
-                  . ':  Der schnelle braune Fuchs springt über den lahmen Hund', 100, $yPosition, 'UTF-8');
+    $page->drawText(
+       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') . 
+       ':  Der schnelle braune Fuchs springt über den lahmen Hund', 100, $yPosition, 'UTF-8');
     $yPosition -= 30;
 }
 ...
@@ -480,7 +494,9 @@ $page->setFont($font, $fontSize);
 $page->drawText($text, $x, $y);
 ...
 // Diese Schrift sollte woanders gespeichert werden...
-$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
+                               'en',
+                               'UTF-8');
 ...
 $pdf->save($docPath);
 ...
@@ -493,7 +509,8 @@ $pdf = Zend_Pdf::load($docPath);
 ...
 $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 
-$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) kann auch hier verwendet werden */
+/* $srcPage->extractFont($fontName) kann auch hier verwendet werden */
+$font = $pdf->extractFont($fontName);
 $page->setFont($font, $fontSize);
 $page->drawText($text, $x, $y);
 ...
@@ -526,7 +543,10 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
     $page->drawText($text[$charIndex], xPosition, $y);
 
     // Die originale Schrift für die Berechnung der Breite des Textes verwenden
-    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+    $width += $originalFont->widthForGlyph(
+                  $originalFont->glyphNumberForCharacter($text[$charIndex])
+              );
+    $xPosition += $width/$originalFont->getUnitsPerEm()*$fontSize;
 }
 ...
 ]]>
@@ -602,7 +622,8 @@ public function setLineWidth(float $width);
 /**
  * Setze das Strichmuster.
  *
- * Pattern ist ein Array mit Fließkommazahlen: array(on_length, off_length, on_length, off_length, ...)
+ * Pattern ist ein Array mit Fließkommazahlen:
+ *     array(on_length, off_length, on_length, off_length, ...)
  * Phase is shift from the beginning of line.
  *
  * @param array $pattern
@@ -730,13 +751,15 @@ public function rotate($x, $y, $angle);
         <programlisting role="php"><![CDATA[
 /**
  * Speichere den Grafikzustand dieser Seite.
- * Es wir ein Schnappschuss vom aktuell festgelegten Stil, Position, Zeichenbereich und
- * jeder festgelegten Drehung/Umrechnung/Skalierung erstellt.
+ * Es wir ein Schnappschuss vom aktuell festgelegten Stil, Position,
+ * Zeichenbereich und jeder festgelegten Drehung/Umrechnung/Skalierung
+ * erstellt.
  */
 public function saveGS();
 
 /**
- * Stelle den Grafikzustand wieder her, der mit dem letzten Aufruf von saveGS() gespeichert wurde.
+ * Stelle den Grafikzustand wieder her, der mit dem letzten Aufruf von
+ * saveGS() gespeichert wurde.
  */
 public function restoreGS();
 ]]>
@@ -774,7 +797,10 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  * @param array $y  - Array mit Floats (die Y Koordinaten der Eckpunkte)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+public function clipPolygon($x,
+                            $y,
+                            $fillMethod =
+                                Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -787,7 +813,11 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);
+public function clipCircle($x,
+                           $y,
+                           $radius,
+                           $startAngle = null,
+                           $endAngle = null);
 ]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
@@ -807,7 +837,12 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);
+public function clipEllipse($x1,
+                            $y1,
+                            $x2,
+                            $y2,
+                            $startAngle = null,
+                            $endAngle = null);
 ]]>
         </programlisting>
     </sect2>
@@ -965,7 +1000,7 @@ public function getFontSize();
 
     <sect2 id="zend.pdf.drawing.alpha">
 
-        <title>Transparenz.</title>
+        <title>Transparenz</title>
 
         <para>
             Das <code>Zend_Pdf</code> Modul unterstützt die Handhabung von Transparenz.
@@ -983,8 +1018,8 @@ public function getFontSize();
  * $alpha == 1  - Opaque
  *
  * Von PDF unterstützte Transparent-Modi:
- * Normal (standard), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
- * SoftLight, Difference, Exclusion
+ * Normal (standard), Multiply, Screen, Overlay, Darken, Lighten,
+ * ColorDodge, ColorBurn, HardLight, SoftLight, Difference, Exclusion
  *
  * @param float $alpha
  * @param string $mode

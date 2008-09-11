@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -30,10 +30,12 @@ $inflector->setRules(array(
 ));
 
 $string   = 'camelCasedWords';
-$filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
+$filtered = $inflector->filter(array('page' => $string));
+// pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';
-$filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
+$filtered = $inflector->filter(array('page' => $string));
+// pages/this_is_not_camel_cased.html
 ]]>
         </programlisting>
     </example>

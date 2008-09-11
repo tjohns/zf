@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 11184 -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
 
@@ -20,8 +20,8 @@
         </para></listitem>
 
         <listitem><para>
-                <code>hasDijitParam($key)</code>: Ob ein angegebener Dijit Parameter definiert und vorhanden
-                ist oder nicht.
+                <code>hasDijitParam($key)</code>: Wenn ein angegebener Dijit Parameter definiert und vorhanden
+                ist, wird TRUE zurückgegeben, andernfalls FALSE.
         </para></listitem>
 
         <listitem><para>

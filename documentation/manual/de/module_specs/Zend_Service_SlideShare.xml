@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.service.slideshare">
 
     <title>Einführung</title>
@@ -33,7 +33,10 @@
 
         <programlisting role="php"><![CDATA[
 // Erstellt eine neue Instanz der Komponente
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 ]]>
         </programlisting>
 
@@ -166,7 +169,8 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Erhält die textuelle Beschreibung des Status der Slideshow auf dem Server
+     * Erhält die textuelle Beschreibung des Status der Slideshow
+     * auf dem Server
      */
     public function getStatusDescription() {
         return $this->_statusDescription;
@@ -222,7 +226,10 @@ class Zend_Service_SlideShare_SlideShow {
 
         <programlisting role="php"><![CDATA[
 // Erstellt eine neue Instanz der Komponente
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 
 $slideshow = $ss->getSlideShow(123456);
 
@@ -291,7 +298,10 @@ print "Anzahl an Besuchen: {$slideshow->getNumViews()}<br/>\n";
 
         <programlisting role="php"><![CDATA[
 // Erstellt eine neue Instanz der Komponente
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 
 $starting_offset = 0;
 $limit = 10;
@@ -330,9 +340,15 @@ $frontendOptions = array(
 $backendOptions  = array(
                         'cache_dir' => '/webtmp/');
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
@@ -359,7 +375,10 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
 $client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
 

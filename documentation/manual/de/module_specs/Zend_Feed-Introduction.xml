@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.feed.introduction">
     <title>Einführung</title>
     <para>
@@ -39,7 +39,8 @@
         <programlisting role="php"><![CDATA[
 // hole die neuesten Slashdot Schlagzeilen
 try {
-    $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
+    $slashdotRss =
+        Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
     // Import des Feeds ist fehlgeschlagen
     echo "Exception caught importing feed: {$e->getMessage()}\n";

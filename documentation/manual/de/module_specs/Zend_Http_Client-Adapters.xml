@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
 
@@ -299,7 +299,8 @@ $adapter->setResponse(
     "Content-type: text/xml" . "\r\n" .
                                "\r\n" .
     '<?xml version="1.0" encoding="UTF-8"?>' .
-    '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+    '<rss version="2.0" ' .
+    '     xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
     '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
     '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
     '  <channel>' .
@@ -389,7 +390,8 @@ $adapter->addResponse(
         <example id="zend.http.client.adapters.extending.example-1">
             <title>Gerüst für einen eigenen Verbindungs-Adapter</title>
             <programlisting role="php"><![CDATA[
-class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
+class MyApp_Http_Client_Adapter_BananaProtocol
+    implements Zend_Http_Client_Adapter_Interface
 {
     /**
      * Konfigurationsarray für den Adapter
@@ -424,10 +426,15 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      * @param string        $body
      * @return string Request as text
      */
-    public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '')
+    public function write($method,
+                          $url,
+                          $http_ver = '1.1',
+                          $headers = array(),
+                          $body = '')
     {
         // Anfrage stellen
-        // Diese Methode muss die komplette Antwort zurückliefern, inklusive aller Header
+        // Diese Methode muss die komplette Antwort zurückliefern,
+        // inklusive aller Header
     }
 
     /**

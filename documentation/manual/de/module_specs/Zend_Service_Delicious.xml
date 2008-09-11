@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.service.delicious">
     <title>Zend_Service_Delicious</title>
     <sect2 id="zend.service.delicious.introduction">
@@ -33,8 +33,9 @@ foreach ($posts as $post) {
         </para>
         <programlisting role="php"><![CDATA[
 /**
- * Beiträge werden je nach Parametern geladen. Ist kein Datum oder kein URL gegeben, so wird
- * standardmäßig das aktuelleste Datum verwendet.
+ * Beiträge werden je nach Parametern geladen. Ist kein Datum oder
+ * kein URL gegeben, so wird standardmäßig das aktuelleste Datum
+ * verwendet.
  *
  * @param string $tag Optionaler Filter nach einem bestimmten tag
  * @param Zend_Date $dt Optionaler Filter nach Datum
@@ -47,7 +48,8 @@ public function getPosts($tag = null, $dt = null, $url = null);
  * Die letzten x Beiträge abrufen.
  *
  * @param string $tag   Optionaler Filter nach einem bestimmten tag
- * @param string $count Maximale Anzahl der Beiträge, die zurückgeliefert werden (standardmäßig 15)
+ * @param string $count Maximale Anzahl der Beiträge, die
+ *                      zurückgeliefert werden (standardmäßig 15)
  * @return Zend_Service_Delicious_PostList
  */
 public function getRecentPosts($tag = null, $count = 15);
@@ -220,7 +222,8 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
           ->save();
 
 // Neuen Beitrag erstellen, ändern und abspeichern (ohne Verkettung)
-$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
+$newPost = $delicious->createNewPost('Zend Framework',
+                                     'http://framework.zend.com');
 $newPost->setNotes('Zend Framework Homepage');
 $newPost->save();
 ]]>
@@ -270,7 +273,7 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
         </para>
         <table id="zend.service.delicious.public_data.functions_for_retrieving_public_data">
             <title>Methoden, um öffentliche Daten abzurufen</title>
-            <tgroup cols="2">
+            <tgroup cols="3">
                 <thead>
                     <row>
                         <entry>Name</entry>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.gdata.introduction">
     <title>Einführung zu Gdata</title>
     <para>
@@ -564,7 +564,8 @@ $gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $entry = $gdata->newEntry();
 $entry->title = $gdata->newTitle('Füßball im Park spielen');
-$content = $gdata->newContent('Wir besuchen den Part und spielen ein paar Runden Fußball');
+$content =
+    $gdata->newContent('Wir besuchen den Part und spielen Fußball');
 $content->setType('text');
 $entry->content = $content;
 
@@ -604,7 +605,8 @@ $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
     // Option 1 - den Eintrag direkt löschen
     $feedEntry->delete();
-    // Option 2 - den eintrag durch Übergabe der bearbeiteten URL an $gdata->delete() löschen
+    // Option 2 - den eintrag durch Übergabe der bearbeiteten URL an
+    // $gdata->delete() löschen
     // $gdata->delete($feedEntry->getEditLink()->href);
 }
 ]]>

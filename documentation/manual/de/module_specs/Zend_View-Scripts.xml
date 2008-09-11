@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
@@ -216,7 +216,8 @@ public function addBasePath($path, $prefix = 'Zend_View');
 public function getScriptPaths();
 
 /**
- * Überladungsmethoden zum Zuordnen von Templatevariablen als Objekteigenschaften
+ * Überladungsmethoden zum Zuordnen von Templatevariablen
+ * als Objekteigenschaften
  */
 public function __set($key, $value);
 public function __get($key);
@@ -224,8 +225,8 @@ public function __isset($key);
 public function __unset($key);
 
 /**
- * Manuelle Zuweisung von Templatevariablen oder die Möglichkeit, mehrere Variablen in einem
- * Durchgang zuzuordnen.
+ * Manuelle Zuweisung von Templatevariablen oder die Möglichkeit,
+ * mehrere Variablen in einem Durchgang zuzuordnen.
  */
 public function assign($spec, $value = null);
 
@@ -384,12 +385,13 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Weise dem Template Variablen zu
      *
-     * Erlaubt das Zuweisen eines bestimmten Wertes zu einem bestimmten Schlüssel, ODER die
-     * Übergabe eines Array mit Schlüssel => Wert Paaren zum Setzen in einem Rutsch.
+     * Erlaubt das Zuweisen eines bestimmten Wertes zu einem bestimmten
+     * Schlüssel, ODER die Übergabe eines Array mit Schlüssel => Wert
+     * Paaren zum Setzen in einem Rutsch.
      *
      * @see __set()
-     * @param string|array $spec Die zu verwendene Zuweisungsstrategie (Schlüssel oder Array mit
-     * Schlüssel => Wert paaren)
+     * @param string|array $spec Die zu verwendene Zuweisungsstrategie
+     * (Schlüssel oder Array mit Schlüssel => Wert paaren)
      * @param mixed $value (Optional) Wenn ein Variablenname verwendet wurde, verwende dies als den
      * Wert.
      * @return void
@@ -407,8 +409,9 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Setze alle zugewiesenen Variablen zurück.
      *
-     * Setzt alle Variablen zurück, die Zend_View entweder durch {@link assign()} oder
-     * Überladen von Eigenschaften ({@link __get()}/{@link __set()}) zugewiesen worden sind.
+     * Setzt alle Variablen zurück, die Zend_View entweder durch
+     * {@link assign()} oder Überladen von Eigenschaften
+     * ({@link __get()}/{@link __set()}) zugewiesen worden sind.
      *
      * @return void
      */

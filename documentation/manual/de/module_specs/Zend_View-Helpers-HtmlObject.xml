@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>HTML Objekt Helfer</title>
 
@@ -63,9 +63,10 @@
         </para>
         
         <programlisting role="html"><![CDATA[
-<object data="/path/to/flash.swf" type="application/x-shockwave-flash" 
-    classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
-    codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
+<object data="/path/to/flash.swf"
+        type="application/x-shockwave-flash" 
+        classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
+        codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
 </object>
 ]]>
         </programlisting>

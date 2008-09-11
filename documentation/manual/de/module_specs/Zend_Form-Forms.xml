@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -310,13 +310,19 @@ $form->reset();
 $form->addElementPrefixPath('My_Foo', 'My/Foo/');
 
 // Nur Filterpfade:
-$form->addElementPrefixPath('My_Foo_Filter', 'My/Foo/Filter', 'filter');
+$form->addElementPrefixPath('My_Foo_Filter',
+                            'My/Foo/Filter',
+                            'filter');
 
 // Nur Prüfungspfade:
-$form->addElementPrefixPath('My_Foo_Validate', 'My/Foo/Validate', 'validate');
+$form->addElementPrefixPath('My_Foo_Validate',
+                            'My/Foo/Validate',
+                            'validate');
 
 // Nur Dekoratorpfade:
-$form->addElementPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator', 'decorator');
+$form->addElementPrefixPath('My_Foo_Decorator',
+                            'My/Foo/Decorator',
+                            'decorator');
 ]]>
                 </programlisting>
             </example>
@@ -1759,23 +1765,28 @@ class My_Form_Login extends Zend_Form
         $username->class = 'formtext';
         $username->setLabel('Benutzername:')
                  ->setDecorators(array(
-                     array('ViewHelper', array('helper' => 'formText')),
-                     array('Label', array('class' => 'label'))
+                     array('ViewHelper',
+                           array('helper' => 'formText')),
+                     array('Label',
+                           array('class' => 'label'))
                  ));
 
         $password = new Zend_Form_Element_Password('password');
         $password->class = 'formtext';
         $password->setLabel('Benutzername:')
                  ->setDecorators(array(
-                     array('ViewHelper', array('helper' => 'formPassword')),
-                     array('Label', array('class' => 'label'))
+                     array('ViewHelper',
+                           array('helper' => 'formPassword')),
+                     array('Label',
+                           array('class' => 'label'))
                  ));
 
         $submit = new Zend_Form_Element_Submit('login');
         $submit->class = 'formsubmit';
         $submit->setValue('Anmeldung')
                ->setDecorators(array(
-                   array('ViewHelper', array('helper' => 'formSubmit'))
+                   array('ViewHelper',
+                   array('helper' => 'formSubmit'))
                ));
 
         $this->addElements(array(

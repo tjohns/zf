@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.mail.multiple-emails">
     <title>Versand von mehreren E-Mails über eine SMTP Verbindung</title>
 
@@ -22,7 +22,9 @@ for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
     $mail->addTo('studio@peptolab.com', 'Test');
     $mail->setFrom('studio@peptolab.com', 'Test');
-    $mail->setSubject('Demonstration - mit einer SMTP Verbindung mehrfache E-Mails senden');
+    $mail->setSubject(
+        'Demonstration - mit einer SMTP Verbindung mehrfache E-Mails senden'
+    );
     $mail->setBodyText('...Hier die Nachricht...');
     $mail->send($transport);
 }
@@ -57,7 +59,9 @@ for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
     $mail->addTo('studio@peptolab.com', 'Test');
     $mail->setFrom('studio@peptolab.com', 'Test');
-    $mail->setSubject('Demonstration - mit einer SMTP Verbindung mehrfache E-Mails senden');
+    $mail->setSubject(
+        'Demonstration - mit einer SMTP Verbindung mehrfache E-Mails senden'
+    );
     $mail->setBodyText('...Hier die Nachricht...');
 
     // Die Verbindung manuell kontrollieren

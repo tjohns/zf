@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.infocard.basics">
     <title>Einführung</title>
 
@@ -166,7 +166,7 @@ if (isset($_POST['xmlToken'])) {
 if (isset($_POST['xmlToken'])) {
     $infocard = new Zend_InfoCard();
     $infocard->addCertificatePair('/usr/local/Zend/apache2/conf/server.key',
-                                   '/usr/local/Zend/apache2/conf/server.crt');
+                                  '/usr/local/Zend/apache2/conf/server.crt');
 
     $claims = $infocard->process($_POST['xmlToken']);
 
@@ -269,11 +269,13 @@ if (isset($_POST['xmlToken'])) {
 public function submitinfocardAction() 
 {
     if (!isset($_REQUEST['xmlToken'])) {
-        throw new ZBlog_Exception("Verschlüsselter Token erwartet aber nicht übergeben");
+        throw new ZBlog_Exception('Verschlüsselter Token erwartet ' .
+                                  'aber nicht übergeben');
     }
     
     $infoCard = new Zend_InfoCard();
-    $infoCard->addCertificatePair(SSL_CERTIFICATE_PRIVATE, SSL_CERTIFICATE_PUB);
+    $infoCard->addCertificatePair(SSL_CERTIFICATE_PRIVATE,
+                                  SSL_CERTIFICATE_PUB);
 
     try {
         $claims = $infoCard->process($request['xmlToken']);
@@ -302,7 +304,8 @@ public function submitinfocardAction()
         $this->view->render();
         return;
     } else {
-        throw new ZBlog_Exception("Informationskarte hat die Sicherheitsprüfungen nicht bestanden");
+        throw new
+            ZBlog_Exception("Informationskarte hat die Sicherheitsprüfungen nicht bestanden");
     }
 }
 ]]>
@@ -340,7 +343,9 @@ public function submitinfocardAction()
         <programlisting role="php"><![CDATA[
 class myAdapter implements Zend_InfoCard_Adapter_Interface 
 {
-    public function storeAssertion($assertionURI, $assertionID, $conditions) 
+    public function storeAssertion($assertionURI,
+                                   $assertionID,
+                                   $conditions) 
     {
         /* Die durch ID und URI angegebene Assertion und Ihre Konditionen speichern */
     }

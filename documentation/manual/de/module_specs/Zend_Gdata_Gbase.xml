@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base verwenden</title>
     <para>
@@ -126,9 +126,14 @@ function getCurrentUrl()
     global $_SERVER;
 
     // Filtert php_self um Sicherheits Risiken zu vermeiden
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri = 
+        htmlentities(substr($_SERVER['REQUEST_URI'],
+                            0,
+                            strcspn($_SERVER['REQUEST_URI'], "\n\r")),
+                     ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) &&
+        strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -144,8 +149,9 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** Einen AuthSub authentifizierten HTTP Client erhalten, und den Benutzer zum
- *  AuthSub Server umleiten um sich anzumelden wenn das notwendig ist.
+/**
+ * Einen AuthSub authentifizierten HTTP Client erhalten, und den Benutzer zum
+ * AuthSub Server umleiten um sich anzumelden wenn das notwendig ist.
  */
 function getAuthSubHttpClient()
 {
@@ -162,7 +168,10 @@ function getAuthSubHttpClient()
 
         // Den Benutzer zum AuthSub Server umleiten um sich anzumelden
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
+                                                             $scope,
+                                                             $secure,
+                                                             $session);
          header("HTTP/1.0 307 Temporary redirect");
 
          header("Location: " . $authSubUrl);
@@ -283,7 +292,8 @@ $feed = $service->getGbaseSnippetFeed($query);
             </para>
             <programlisting role="php"><![CDATA[
 foreach ($feed->entries as $entry) {
-  // Alle Attribute erhalten und den Namen und den Textwert jedes Attributes ausgeben
+  // Alle Attribute erhalten und den Namen und den Textwert
+  // jedes Attributes ausgeben
   $baseAttributes = $entry->getGbaseAttributes();
   foreach ($baseAttributes as $attr) {
     echo "Attribut " . $attr->name . " : " . $attr->text . "<br>";

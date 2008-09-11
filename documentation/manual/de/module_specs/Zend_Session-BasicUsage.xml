@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.session.basic_usage">
 
     <title>Grundsätzliche Verwendung</title>
@@ -53,12 +53,14 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
-    $defaultNamespace->numberOfPageRequests++; // Das erhöht den Zählen für jeden Seitenaufruf
+ // Das erhöht den Zählen für jeden Seitenaufruf
+    $defaultNamespace->numberOfPageRequests++;
 } else {
     $defaultNamespace->numberOfPageRequests = 1; // Erster Zugriff
 }
 
-echo "Seitenzugriffe in dieser Session: ", $defaultNamespace->numberOfPageRequests;
+echo "Seitenzugriffe in dieser Session: ",
+    $defaultNamespace->numberOfPageRequests;
 ]]>
             </programlisting>
 
@@ -130,7 +132,8 @@ $_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";
             <title>Session wiederholen</title>
 
             <programlisting role="php"><![CDATA[
-$aNamespace = new Zend_Session_Namespace('Einige_Namensräume_Mit_aktuellen_Daten');
+$aNamespace =
+    new Zend_Session_Namespace('Einige_Namensräume_Mit_aktuellen_Daten');
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";

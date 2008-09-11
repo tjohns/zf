@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Form Dekoratore die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -345,8 +345,9 @@ class Util
         </para>
 
         <programlisting role="php"><![CDATA[
-// Setzt den Dekorator für das Element zu einem einzelnen, ViewScript, Dekorator
-// spezifiziert das viewScript als Option, und einige extra Optionen:
+// Setzt den Dekorator für das Element zu einem einzelnen, ViewScript,
+// Dekorator spezifiziert das viewScript als Option, und einige extra
+// Optionen:
 $element->setDecorators(array(array('ViewScript', array(
     'viewScript' => '_element.phtml',
     'class'      => 'form element'
@@ -354,7 +355,8 @@ $element->setDecorators(array(array('ViewScript', array(
 
 // ODER das viewScript als Attribut des Elements spezifizieren:
 $element->viewScript = '_element.phtml';
-$element->setDecorators(array(array('ViewScript', array('class' => 'form element'))));
+$element->setDecorators(array(array('ViewScript',
+                                    array('class' => 'form element'))));
 ]]>
         </programlisting>
 
@@ -364,7 +366,8 @@ $element->setDecorators(array(array('ViewScript', array('class' => 'form element
 
         <programlisting role="php"><![CDATA[
 <div class="<?= $this->class ?>">
-    <?= $this->formLabel($this->element->getName(), $this->element->getLabel()) ?>
+    <?= $this->formLabel($this->element->getName(),
+                         $this->element->getLabel()) ?>
     <?= $this->{$this->element->helper}(
         $this->element->getName(),
         $this->element->getValue(), 

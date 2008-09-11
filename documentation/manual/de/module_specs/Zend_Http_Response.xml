@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.http.response">
     <title>Zend_Http_Response</title>
 
@@ -103,7 +103,8 @@ $response = Zend_Http_Response::factory($str);
                 <programlisting role="php"><![CDATA[
 if ($response->isError()) {
   echo "Error transmitting data.\n"
-  echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
+  echo "Server reply was: " . $response->getStatus() .
+       " " . $response->getMessage() . "\n";
 }
 // .. verarbeite die Antwort hier...
 ]]>

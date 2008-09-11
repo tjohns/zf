@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partielle Helfer</title>
 
@@ -100,8 +100,8 @@
 // Dem Partiellen mitteilen das ein Objekt als 'model' Variable übergeben wird
 $view->partial()->setObjectKey('model');
 
-// Dem Partiellen mitteilen das ein Objekt von partialLoop als 'model' Variable im letzten Partiellen View
-// Skript übergeben wird
+// Dem Partiellen mitteilen das ein Objekt von partialLoop als 'model'
+// Variable im letzten Partiellen View Skript übergeben wird
 $view->partialLoop()->setObjectKey('model');
 ]]>
         </programlisting>

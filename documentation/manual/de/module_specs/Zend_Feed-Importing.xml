@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.feed.importing">
 
     <title>Feeds importieren</title>
@@ -57,7 +57,8 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 // Importieren eines Feeds von einem Array
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
-// Die folgende Zeile ist identisch mit der obigen; standardmäßig wird eine Zend_Feed_Atom Instanz zurückgegeben
+// Die folgende Zeile ist identisch mit der obigen; standardmäßig
+// wird eine Zend_Feed_Atom Instanz zurückgegeben
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // Importieren eines RSS Feeds von einem Array
@@ -79,13 +80,18 @@ array(
       'description' => 'Kurzbeschreibung des Feeds', //optional
       'author'      => 'Author, Veröffentlicher des Feeds', //optional
       'email'       => 'Email des Authors', //optional
-      'webmaster'   => 'Email Adresse der Person die für technische Belange verantwortlich ist' // optional, ignoriert wenn Atom verwendet wird
+      'webmaster'   =>     // optional, ignoriert wenn Atom verwendet wird
+                       'Email Adresse der Person die für technische ' .
+                       'Belange verantwortlich ist'
       'copyright'   => 'Copyright Notiz', //optional
       'image'       => 'URL zu Bildern', //optional
       'generator'   => 'Ersteller', // optional
       'language'    => 'Sprache in der der Feed geschrieben ist', // optional
-      'ttl'         => 'Wie lange ein Feed gecached werden kann bevor er erneut werden muß', // optional, ignoriert wenn Atom verwendet wird
-      'rating'      => 'Die PICS Rate dieses Kanals', // optional, ignoriert wenn Atom verwendet wird
+      'ttl'         =>     // optional, ignoriert wenn Atom verwendet wird
+                       'Wie lange ein Feed gecached werden kann ' .
+                       'bevor er erneut werden muß',
+      'rating'      =>     // optional, ignoriert wenn Atom verwendet wird
+                       'Die PICS Rate dieses Kanals',
       'cloud'       => array(
                              'domain'            => 'Domain der Wolke, e.g. rpc.sys.com' // benötigt
                              'port'              => 'Port zu dem verbunden wird' // optional, standard ist 80
@@ -231,13 +237,17 @@ array(
 
             <programlisting role="php"><![CDATA[
 // Einen Feed von einer eigenen Erstellungsquelle importieren
-$atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
+$atomFeedFromArray =
+    Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// Die folgende Zeile ist mit der obigen äquivalent; standardmäßig wird eine Zend_Feed_Atom Instanz zurückgegeben
-$atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
+// Die folgende Zeile ist mit der obigen äquivalent; standardmäßig
+// wird eine Zend_Feed_Atom Instanz zurückgegeben
+$atomFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // Einen RSS Feeed von einem Array von eigenen Erstellungsquellen importieren
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+$rssFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
 ]]>
             </programlisting>
 
@@ -252,7 +262,8 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 <code>send()</code> oder <code>saveXml()</code> Methoden verwendet werden.
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // Den Feed an der Standardausgabe ausgeben

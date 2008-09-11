@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 11189 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -141,7 +141,7 @@ class SomeController extends Zend_Controller_Action
         // Setzt die Standardoptionen für die Umleitung
         // Da das Objekt in der Helferanwendung registriert ist, wird diese für alle Aktionen ab diesem
         // Zeitpunkt relevant
-        $this->_redirector->setCode('303')
+        $this->_redirector->setCode(303)
                           ->setExit(false)
                           ->setGotoSimple("this-action",
                                           "some-controller");

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.form.i18n">
     <title>Internationalisierung von Zend_Form</title>
 
@@ -82,8 +82,9 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
                 </para>
 
                 <programlisting role="php"><![CDATA[
-// Allen Form Klassen mitteilen das ein spezieller Übersetzungsadapter verwendet werden soll,
-// sowie das der Adapter für die Übersetzung von Fehlermeldungen verwendet werden soll:
+// Allen Form Klassen mitteilen das ein spezieller Übersetzungsadapter
+// verwendet werden soll, sowie das der Adapter für die Übersetzung von
+// Fehlermeldungen verwendet werden soll:
 Zend_Form::setDefaultTranslator($translate);
 ]]>
                 </programlisting>
@@ -97,12 +98,14 @@ Zend_Form::setDefaultTranslator($translate);
                 </para>
 
                 <programlisting role="php"><![CDATA[
-// *Dieser* Form Klassen mitteilen das ein spezieller Übersetzungsadapter verwendet werden soll,
-// sie wird auch für die Übersetzung von allen Prüf-Fehlermeldungen für alle Elemente verwendet:
+// *Dieser* Form Klassen mitteilen das ein spezieller Übersetzungsadapter
+// verwendet werden soll, sie wird auch für die Übersetzung von allen
+// Prüf-Fehlermeldungen für alle Elemente verwendet:
 $form->setTranslator($translate);
 
-// *Diesem* Element mitteilen das ein spezieller Übersetzungsadapter verwendet werden soll,
-// sie wird auch für die Übersetzung von allen Prüf-Fehlermeldungen für dieses Elemente verwendet:
+// *Diesem* Element mitteilen das ein spezieller Übersetzungsadapter
+// verwendet werden soll, sie wird auch für die Übersetzung von allen
+// Prüf-Fehlermeldungen für dieses Elemente verwendet:
 $element->setTranslator($translate);
 ]]>
                 </programlisting>
