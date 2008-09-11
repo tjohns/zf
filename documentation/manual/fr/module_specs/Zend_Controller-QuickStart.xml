@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11358 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller - Démarrage rapide</title>
 
@@ -61,14 +61,17 @@ html/
             <para>Éditez le fichier <code>html/.htaccess</code> afin de lire ceci :</para>
 
             <programlisting role="php"><![CDATA[
-RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
 ]]></programlisting>
 
-            <para>Les règles ci-dessus vont redirigées toute requête non-ressource (images, feuilles de style CSS) vers
-            le contrôleur frontal. S'il y a d'autres extensions que vous souhaitez exclure du contrôleur frontal (PDF,
-            fichiers textes, etc.), ajoutez leurs extensions au commutateur, ou créez vos propres règles de
-            réécriture.</para>
+            <para>Les règles ci-dessus vont redirigées toute requête vers des ressources existantes (liens symboliques,
+            fichiers non vides, ou répertoires non-vides), tout autre requête sera renvoyée vers le contrôleur
+            frontal.</para>
 
             <note>
                 <para>Les règles de réécriture ci-dessus sont pour Apache ; pour des exemples de règles de réécriture
