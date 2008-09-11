@@ -770,7 +770,7 @@ function() {
         if (null != n) {
             dojo.attr(n, dojo.mixin({ id: info.id }, info.params));
         }
-    })
+    });
     dojo.parser.parse();
 }
 EOJ;
