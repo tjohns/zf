@@ -236,6 +236,29 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     }
 
     /**
+     * Set GET values
+     * 
+     * @param  string|array $spec 
+     * @param  null|mixed $value 
+     * @return Zend_Controller_Request_Http
+     */
+    public function setQuery($spec, $value = null)
+    {
+        if ((null === $value) && !is_array($spec)) {
+            require_once 'Zend/Controller/Exception.php';
+            throw new Zend_Controller_Exception('Invalid value passed to setQuery(); must be either array of values or key/value pair');
+        }
+        if ((null === $value) && is_array($spec)) {
+            foreach ($spec as $key => $value) {
+                $this->setQuery($key, $value);
+            }
+            return $this;
+        }
+        $_GET[(string) $spec] = $value;
+        return $this;
+    }
+
+    /**
      * Retrieve a member of the $_GET superglobal
      *
      * If no $key is passed, returns the entire $_GET array.
@@ -252,6 +275,29 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
         }
 
         return (isset($_GET[$key])) ? $_GET[$key] : $default;
+    }
+
+    /**
+     * Set POST values
+     * 
+     * @param  string|array $spec 
+     * @param  null|mixed $value 
+     * @return Zend_Controller_Request_Http
+     */
+    public function setPost($spec, $value = null)
+    {
+        if ((null === $value) && !is_array($spec)) {
+            require_once 'Zend/Controller/Exception.php';
+            throw new Zend_Controller_Exception('Invalid value passed to setPost(); must be either array of values or key/value pair');
+        }
+        if ((null === $value) && is_array($spec)) {
+            foreach ($spec as $key => $value) {
+                $this->setPost($key, $value);
+            }
+            return $this;
+        }
+        $_POST[(string) $spec] = $value;
+        return $this;
     }
 
     /**
@@ -356,12 +402,11 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
             return $this;
         } else {
             // Set GET items, if available
-            $_GET = array();
             if (false !== ($pos = strpos($requestUri, '?'))) {
                 // Get key => value pairs and set $_GET
                 $query = substr($requestUri, $pos + 1);
                 parse_str($query, $vars);
-                $_GET = $vars;
+                $this->setQuery($vars);
             }
         }
 
