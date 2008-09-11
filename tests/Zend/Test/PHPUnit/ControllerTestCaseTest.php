@@ -610,6 +610,45 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
         $this->assertFalse($view->dojo()->isEnabled(), 'Dojo is enabled? ', $view->dojo());
         $this->assertNotContains('Foo', $view->headTitle()->__toString(), 'Head title persisted?');
     }
+
+    /**
+     * @group ZF-4070
+     */
+    public function testQueryParametersShouldPersistFollowingDispatch()
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $request = $this->testCase->request;
+        $request->setQuery('mr', 'proper')
+                ->setQuery('james', 'bond');
+
+        $this->assertEquals('proper', $request->getQuery('mr'), '(pre) Failed retrieving mr parameter: ' . var_export($request->getQuery(), 1));
+        $this->assertEquals('bond', $request->getQuery('james'), '(pre) Failed retrieving james parameter: ' . var_export($request->getQuery(), 1));
+
+        $this->testCase->dispatch('/');
+
+        $this->assertEquals('proper', $request->getQuery('mr'), '(post) Failed retrieving mr parameter: ' . var_export($request->getQuery(), 1));
+        $this->assertEquals('bond', $request->getQuery('james'), '(post) Failed retrieving james parameter: ' . var_export($request->getQuery(), 1));
+    }
+
+    /**
+     * @group ZF-4070
+     */
+    public function testQueryStringShouldNotOverwritePreviouslySetQueryParameters()
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $request = $this->testCase->request;
+        $request->setQuery('mr', 'proper')
+                ->setQuery('james', 'bond');
+
+        $this->assertEquals('proper', $request->getQuery('mr'), '(pre) Failed retrieving mr parameter: ' . var_export($request->getQuery(), 1));
+        $this->assertEquals('bond', $request->getQuery('james'), '(pre) Failed retrieving james parameter: ' . var_export($request->getQuery(), 1));
+
+        $this->testCase->dispatch('/?spy=super');
+
+        $this->assertEquals('super', $request->getQuery('spy'), '(post) Failed retrieving spy parameter: ' . var_export($request->getQuery(), 1));
+        $this->assertEquals('proper', $request->getQuery('mr'), '(post) Failed retrieving mr parameter: ' . var_export($request->getQuery(), 1));
+        $this->assertEquals('bond', $request->getQuery('james'), '(post) Failed retrieving james parameter: ' . var_export($request->getQuery(), 1));
+    }
 }
 
 // Concrete test case class for testing purposes
