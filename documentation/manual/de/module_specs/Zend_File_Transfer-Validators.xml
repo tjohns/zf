@@ -97,7 +97,7 @@
                     <code>addValidator($validator, $options = null, $files = null)</code>: Fügt die
                     angegebene Prüfung zu den Prüfungsstapel hinzu (optional nur zu den Datei(en) die
                     spezifiziert wurden). <code>$validator</code> kann entweder eine aktuelle
-                    Prüfinstanz sein, oder ein Kurzname der den Pfrüfungstyp spezifiziert (z.B. 'Count').
+                    Prüfinstanz sein, oder ein Kurzname der den Prüfungstyp spezifiziert (z.B. 'Count').
                 </para>
             </listitem>
 
@@ -106,7 +106,7 @@
                     <code>addValidators(array $validators, $files = null)</code>: Fügt die angegebenen
                     Prüfungen zum Prüfungsstapel hinzu. Jeder Eintrag kann entweder ein Prüfungstyp/-options
                     Paar sein, oder ein Array mit dem Schlüssel 'validator' das die Prüfung spezifiziert
-                    (alle anderen Optoinen werden als Optionen für die Instalzierung der Prüfung angenommen).
+                    (alle anderen Optionen werden als Optionen für die Instanzierung der Prüfung angenommen).
                 </para>
             </listitem>
 

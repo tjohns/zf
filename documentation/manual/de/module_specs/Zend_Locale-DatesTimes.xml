@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11201 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>Arbeiten mit Daten und Zeiten</title>
@@ -90,7 +90,7 @@
 
         <table id="zend.locale.date.normalize.table-2">
             <title>Rückgabewerte</title>
-            <tgroup cols='4'>
+            <tgroup cols='5'>
                 <thead>
                     <row>
                         <entry>getDate() Format Zeichen</entry>

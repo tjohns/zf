@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -16,8 +16,7 @@
         <para>
             Die aktuelle Implementation von <code>Zend_File_Transfer</code> die in 1.6.0 ausgeliefert wird,
             ist auf HTTP Post Uploads limitiert. Downloaden von Dateien und andere Adapter werden in einem
-            kommenden Release hinzugefügt. Aktuell sind auch noch keine Filter vorhanden und die Funktionalität
-            hierfür ist noch nicht implementiert. Nicht implementierte Methoden werfen eine Ausnahme. Deswegen
+            kommenden Release hinzugefügt. Nicht implementierte Methoden werfen eine Ausnahme. Deswegen
             sollte aktuell eine Instanz von <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet
             werden. Das wird sich in Zukunft ändern, sobald mehrere Adapter vorhanden sind.
         </para>

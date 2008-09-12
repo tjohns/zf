@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11185 -->
+<!-- EN-Revision: 11280 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -65,7 +65,7 @@ State: <input id="state" dojoType="dijit.form.FilteringSelect"
 <? // Notwendige Dojo Elemente einstellen:
 $this->dojo()->enable()
              ->setDjConfigOption('parseOnLoad', true)
-             ->registerModulePath('../custom/')
+             ->registerModulePath('custom', '../custom/')
              ->requireModule('dijit.form.FilteringSelect')
              ->requireModule('custom.PairedStore'); ?>
 ]]>

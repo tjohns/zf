@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11231 -->
 <sect2 id="zend.log.writers.firebug">
 
     <title>An Firebox schreiben</title>
@@ -73,6 +73,9 @@ $response = new Zend_Controller_Response_Http();
 $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
+
+// Ausgabe buffering starten
+ob_start();
 
 // Jetzt können Aufrufe an den Logger durchgeführt werden
 $logger->log('Das ist eine Lognachricht!', Zend_Log::INFO);

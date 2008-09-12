@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -34,7 +34,7 @@ $currency = new Zend_Currency();
     </example>
 
     <para>
-        Seit dem Zend Framework 1.6 unterstützt <code>Zend_Currency</code> auch die Verwendung eines
+        Seit dem Zend Framework 1.7.0 unterstützt <code>Zend_Currency</code> auch die Verwendung eines
         Anwendungsweiten Gebietsschemas. Man kann einfach eine <code>Zend_Locale</code> Instanz in der
         Registry setzen wie unten gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
         Gebietsschemas mit jeder Instanz komplett vergessen wenn man das gleiche Gebietsschema mehrere

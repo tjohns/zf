@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11282 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data Envelopes</title>
 
@@ -152,6 +152,54 @@ $data->fromJson($json);
 ]]>
             </programlisting>
         </example>
+    </sect2>
+
+    <sect2 id="zend.dojo.data.metadata">
+        <title>Den Containern Metadaten hinzufügen</title>
+
+        <para>
+            Einige Dojo Komponenten benötigen zusätzliche Metadaten die mit dem
+            dojo.data Payload zurückgegeben werden. Als Beispiel kann
+            <code>dojox.grid.Grid</code> Daten dynamisch von einem
+            <code>dojox.data.QueryReadStore</code> herausziehen. Damit die
+            Seitenweise Darstellung richtig funktioniert, sollte jeder zurückgegebene
+            Payload einen <code>numRows</code> Schlüssel mit der kompletten Anzahl
+            an Zeilen enthalten, die von der Abfrage zurückgegeben wird; auf diesem
+            Weg, weiß der Grid (a) wann er weitere kleine Anfragen an den Server
+            abschicken muß für Subsets von Daten, und (b) wann er aufhören soll
+            weitere Anfragen zu erstellen (z.B., wenn er die letzte Seite der Daten
+            erreicht hat). Diese Technik ist nützlich wenn große Sets an Daten im
+            Grid geliefert werden sollen, ohne das man das komplette Set auf einmal
+            laden muß. 
+        </para>
+
+        <para>
+            <code>Zend_Dojo_Data</code> erlaubt das setzen solcher Eigenschaften als
+            Metadaten des Objekts. Das folgende zeigt die Verwendung:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Setzt "numRows" auf 100
+$data->setMetadata('numRows', 100);
+
+// Setzt verschiedene Items auf einmal:
+$data->setMetadata(array(
+    'numRows' => 100,
+    'sort'    => 'name',
+));
+
+// Zeigt einen einzelnen Metadaten Wert:
+$numRows = $data->getMetadata('numRows');
+
+// Zeigt alle Metadaten:
+$metadata = $data->getMetadata();
+
+// Entfernt ein Metadaten Item:
+$data->clearMetadata('numRows');
+
+// Entfernt alle Metadaten:
+$data->clearMetadata();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.dojo.data.advanced">

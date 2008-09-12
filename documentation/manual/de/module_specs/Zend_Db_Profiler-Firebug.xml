@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11231 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profilen mit Firebug</title>
 
@@ -42,11 +42,11 @@
         <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei
 
-// Instanzieren des Profilers
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
+$profiler->setEnabled(true);
 
 // Den Profiler an den DB Adapter anfügen
-$db->setProfiler($profiler)
+$db->setProfiler($profiler);
 
 // Den Frontcontroller ausführen
 
@@ -61,13 +61,19 @@ $db->setProfiler($profiler)
         
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
-$db->setProfiler($profiler)
+$profiler->setEnabled(true);
+
+// Den Profiler an den DB Adapter anfügen
+$db->setProfiler($profiler);
 
 $request  = new Zend_Controller_Request_Http();
 $response = new Zend_Controller_Response_Http();
 $channel  = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 $channel->setRequest($request);
 $channel->setResponse($response);
+
+// Ausgabe buffering starten
+ob_start();
 
 // Jetzt können DB Abfragen durchgeführt werden die auch profiled werden
 

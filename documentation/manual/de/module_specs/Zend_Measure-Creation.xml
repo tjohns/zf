@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.measure.creation">
 
     <title>Erstellung einer Maßeinheit</title>
@@ -129,7 +129,7 @@ echo $unit; // Ausgabe "1234.50 m"
         </example>
 
         <para>
-            Seit Zend Framework 1.6 unterstützt <code>Zend_Measure</code> auch die Verwendung eines
+            Seit Zend Framework 1.7.0 unterstützt <code>Zend_Measure</code> auch die Verwendung eines
             Anwendungsweiten Gebietsschemas. Man kann ganz einfach eine <code>Zend_Locale</code> Instanz
             in der Registry setzen wie anbei gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
             Gebietsschemas für jede Instanz vergessen wenn man das selbe Gebietsschema mehrere Male verwenden

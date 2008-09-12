@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11228 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -843,7 +843,7 @@ $translate->addTranslation("\my_de.mo","de");
             </para>
 
             <para>
-                Seit dem Zend Framework 1.6 unterstützt <code>Zend_Translate</code> auch die Verwendung eines
+                Seit dem Zend Framework 1.7.0 unterstützt <code>Zend_Translate</code> auch die Verwendung eines
                 Anwendungsweiten Gebietsschemas. Man kann einfach eine <code>Zend_Locale</code> Instanz in der
                 Registry setzen wie unten gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
                 Gebietsschemas mit jeder Instanz komplett vergessen wenn man das gleiche Gebietsschema mehrere

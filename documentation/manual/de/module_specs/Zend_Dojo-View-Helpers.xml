@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 11298 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -292,7 +292,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->stackContainer(
+<?= $view->tabContainer(
     'foo', 
     $content, 
     array(),
