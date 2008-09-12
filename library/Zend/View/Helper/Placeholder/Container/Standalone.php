@@ -52,6 +52,13 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone extends Zend_Vi
     protected $_regKey;
 
     /**
+     * Flag wheter to automatically escape output, must also be
+     * enforced in the child class if __toString/toString is overriden
+     * @var book
+     */
+    protected $_autoEscape = true;
+
+    /**
      * Constructor
      * 
      * @return void
@@ -83,6 +90,28 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone extends Zend_Vi
     {
         $this->_registry = $registry;
         return $this;
+    }
+
+    /**
+     * Set whether or not auto escaping should be used
+     * 
+     * @param  bool $autoEscape whether or not to auto escape output
+     * @return Zend_View_Helper_Placeholder_Container_Standalone
+     */
+    public function setAutoEscape($autoEscape = true)
+    {
+        $this->_autoEscape = ($autoEscape) ? true : false;
+        return $this;
+    }
+    
+    /**
+     * Return whether autoEscaping is enabled or disabled
+     *
+     * return bool
+     */
+    public function getAutoEscape()
+    {
+        return $this->_autoEscape;
     }
 
     /**
