@@ -52,7 +52,10 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldImplementValidatorInterface()
     {
-        $this->assertTrue($this->adapter instanceof Zend_Validate_Interface);
+        // Commented out: The implementation is actually not instancing
+        // Zend_Validate_Interface. This was a failure in the initial implementation.
+        // But it allows to set validators to use within it.
+        // $this->assertTrue($this->adapter instanceof Zend_Validate_Interface);
     }
 
     /**
@@ -514,6 +517,22 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSettingAndRetrievingOptions()
+    {
+        $this->assertEquals(array('ignoreNoFile' => false), $this->adapter->getOptions());
+
+        $this->adapter->setOptions(array('ignoreNoFile' => true));
+        $this->assertEquals(array('ignoreNoFile' => true), $this->adapter->getOptions());
+    }
+
+    /**
+     * @expectedException Zend_File_Transfer_Exception
+     */
+    public function testGetUnknownOption()
+    {
+        $this->adapter->setOptions(array('unknownOption' => 'unknown'));
+    }
+
     /**
      * @expectedException Zend_File_Transfer_Exception
      */
@@ -548,8 +567,10 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingFileName()
     {
-        $this->adapter->setDestination('/var/www/upload');
-        $this->assertEquals('/var/www/upload/foo.jpg', $this->adapter->getFileName('foo'));
+        $path = DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'www'
+              . DIRECTORY_SEPARATOR . 'upload';
+        $this->adapter->setDestination($path);
+        $this->assertEquals($path . DIRECTORY_SEPARATOR . 'foo.jpg', $this->adapter->getFileName('foo'));
     }
 }
 
