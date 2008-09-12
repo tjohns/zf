@@ -297,7 +297,7 @@ abstract class Zend_Translate_Adapter {
         $locale = (string) $locale;
         if (!isset($this->_translate[$locale])) {
             $temp = explode('_', $locale);
-            if (!isset($this->_translate[$temp[0]])) {
+            if (!isset($this->_translate[$temp[0]]) and !isset($this->_translate[$locale])) {
                 /**
                  * @see Zend_Translate_Exception
                  */
