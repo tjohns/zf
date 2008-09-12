@@ -497,6 +497,17 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
         Zend_Layout::resetMvcInstance();
         $this->assertNull(Zend_Layout::getMvcInstance());
     }
+    
+    public function testMinimalViewObjectWorks()
+    {
+        require_once dirname(__FILE__) . '/_files/MinimalCustomView.php';
+        $layout = new Zend_Layout(array(
+            'view' => new Zend_Layout_Test_MinimalCustomView(),
+            'ViewScriptPath' => 'some/path'
+            ));
+        $layout->render();
+    }
+    
 }
 
 /**

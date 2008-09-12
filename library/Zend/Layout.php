@@ -773,7 +773,11 @@ class Zend_Layout
         $view = $this->getView();
 
         if (null !== ($path = $this->getViewScriptPath())) {
-            $view->addScriptPath($path);
+            if (method_exists($view, 'addScriptPath')) {
+                $view->addScriptPath($path);
+            } else {
+                $view->setScriptPath($path);
+            }
         } elseif (null !== ($path = $this->getViewBasePath())) {
             $view->addBasePath($path, $this->_viewBasePrefix);
         }
