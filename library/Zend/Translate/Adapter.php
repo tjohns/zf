@@ -269,13 +269,23 @@ abstract class Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
-        if (empty($this->_translate[$locale]) === true) {
+        $locale = (string) $locale;
+        if (!isset($this->_translate[$locale])) {
             $temp = explode('_', $locale);
-            if (isset($this->_translate[$temp[0]]) === false) {
-                // throwing a notice due to possible problems on locale setting
-                trigger_error("No translation for the language '{$locale}' available.", E_USER_NOTICE);
+            if (!isset($this->_translate[$temp[0]]) and !isset($this->_translate[$locale])) {
+                /**
+                 * @see Zend_Translate_Exception
+                 */
+                require_once 'Zend/Translate/Exception.php';
+                throw new Zend_Translate_Exception("The language '{$locale}' has to be added before it can be used.");
             }
+
             $locale = $temp[0];
+        }
+
+        if (empty($this->_translate[$locale])) {
+            // throwing a notice due to possible problems on locale setting
+            trigger_error("No translation for the language '{$locale}' available.", E_USER_NOTICE);
         }
 
         $this->_options['locale'] = $locale;
