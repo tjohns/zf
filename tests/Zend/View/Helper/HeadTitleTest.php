@@ -145,6 +145,19 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('    <title>', $string);
     }
+    
+    public function testAutoEscapeIsHonored()
+    {
+        $this->helper->headTitle('Some Title &copyright;');
+        $this->assertEquals('<title>Some Title &amp;copyright;</title>', $this->helper->toString());
+
+        $this->assertTrue($this->helper->headTitle()->getAutoEscape());
+        $this->helper->headTitle()->setAutoEscape(false);
+        $this->assertFalse($this->helper->headTitle()->getAutoEscape());
+
+        
+        $this->assertEquals('<title>Some Title &copyright;</title>', $this->helper->toString());
+    }
 }
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.
