@@ -93,9 +93,9 @@ class Zend_Validate_File_NotExistsTest extends PHPUnit_Framework_TestCase
             'name'        => 'testsize.mo',
             'type'        => 'text',
             'size'        => 200,
-            'tmp_name'    => dirname(__FILE__) . '\_files\testsize.mo',
+            'tmp_name'    => dirname(__FILE__) . '/_files/testsize.mo',
             'error'       => 0,
-            'destination' => dirname(__FILE__) . '\_files'
+            'destination' => dirname(__FILE__) . '/_files'
         );
 
         foreach ($valuesExpected as $element) {
@@ -123,8 +123,8 @@ class Zend_Validate_File_NotExistsTest extends PHPUnit_Framework_TestCase
      */
     public function testGetDirectory()
     {
-        $validator = new Zend_Validate_File_NotExists('C:\temp');
-        $this->assertEquals('C:\temp', $validator->getDirectory());
+        $validator = new Zend_Validate_File_NotExists('C:/temp');
+        $this->assertEquals('C:/temp', $validator->getDirectory());
 
         $validator = new Zend_Validate_File_NotExists(array('temp', 'dir', 'jpg'));
         $this->assertEquals('temp,dir,jpg', $validator->getDirectory());
