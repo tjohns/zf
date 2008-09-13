@@ -49,6 +49,11 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     protected $_adapter;
 
     /**
+     * @var boolean Already validated ?
+     */
+    protected $_validated = false;
+
+    /**
      * Set plugin loader
      * 
      * @param  Zend_Loader_PluginLoader_Interface $loader 
@@ -169,6 +174,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->addValidator($validator, $options);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -182,6 +189,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->addValidators($validators);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -195,6 +204,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->setValidators($validators);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -231,6 +242,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->removeValidator($name);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -243,6 +256,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->clearValidators();
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -255,6 +270,10 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function isValid($value, $context = null)
     {
+        if ($this->_validated) {
+            return true;
+        }
+
         $adapter = $this->getTransferAdapter();
         $this->setValue($adapter->getFileName($this->getName()));
 
@@ -272,7 +291,31 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             }
         }
 
-        if($adapter->receive($value)) {
+        if($adapter->isValid($value)) {
+            $this->_validated = true;
+            return true;
+        }
+
+        $this->_validated = false;
+        return false;
+    }
+
+    /**
+     * Receive the uploaded file
+     *
+     * @param  string $value
+     * @return boolean
+     */
+    public function receive($value)
+    {
+        if (!$this->_validated) {
+            if (!$this->isValid($value)) {
+                return false;
+            }
+        }
+
+        $adapter = $this->getTransferAdapter();
+        if ($adapter->receive($value)) {
             return true;
         }
 
