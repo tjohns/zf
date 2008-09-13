@@ -45,7 +45,9 @@ class Zend_Translate_Adapter_CsvTest extends PHPUnit_Framework_TestCase
             $this->assertContains('Error opening translation file', $e->getMessage());
         }
 
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/failed.csv', 'en');
+        restore_error_handler();
     }
 
     public function testToString()
@@ -180,6 +182,21 @@ class Zend_Translate_Adapter_CsvTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Message 1 (en)', $adapter->_('Message 1'));
         $this->assertEquals('Message 6;" (en)', $adapter->translate('Message 6'));
         $this->assertEquals('Message 7 (en)', $adapter->translate('Message ;" 7'));
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 

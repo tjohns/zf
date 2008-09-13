@@ -45,7 +45,9 @@ class Zend_Translate_Adapter_IniTest extends PHPUnit_Framework_TestCase
             $this->assertContains('not found', $e->getMessage());
         }
 
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $adapter = new Zend_Translate_Adapter_Ini(dirname(__FILE__) . '/_files/failed.ini', 'en');
+        restore_error_handler();
     }
 
     public function testToString()
@@ -163,6 +165,21 @@ class Zend_Translate_Adapter_IniTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Translate_Adapter_Ini(dirname(__FILE__) . '/_files/testini', 'de_DE', array('scan' => Zend_Translate::LOCALE_FILENAME));
         $this->assertEquals(array('de_DE' => 'de_DE', 'en_US' => 'en_US'), $adapter->getList());
         $this->assertEquals('Nachricht 8', $adapter->translate('Message_8'));
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 

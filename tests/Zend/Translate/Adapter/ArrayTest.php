@@ -35,7 +35,9 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $adapter = new Zend_Translate_Adapter_Array(array());
+        restore_error_handler();
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
 
         try {
@@ -173,6 +175,21 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.php');
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 
