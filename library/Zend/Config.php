@@ -383,7 +383,11 @@ class Zend_Config implements Countable, Iterator
      */
     protected function _loadFileErrorHandler($errno, $errstr, $errfile, $errline)
     { 
-        $this->_loadFileErrorStr = $errstr;
+        if ($this->_loadFileErrorStr === null) {
+            $this->_loadFileErrorStr = $errstr;
+        } else {
+            $this->_loadFileErrorStr .= (PHP_EOL . $errstr);
+        }
     }
 
 }
