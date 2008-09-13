@@ -208,18 +208,27 @@ $form->addElement($element, 'foo');
                 the form; you should use 'multipart/form-data'. You can do this
                 by setting the 'enctype' attribute on the form:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $form->setAttrib('enctype', 'multipart/form-data');
 ]]>
             </programlisting>
 
             <para>
-                When the element has successfully validated, you can determine
-                the final location using getValue():
+                When the form has successfully validated, you have to receive the file
+                to store it in the final destination using receive(). Additionally you
+                can determinate the final location using getValue():
             </para>
 
             <programlisting role="php"><![CDATA[
+if (!$form->isValid) {
+    print "Ohoh... validation error";
+}
+
+if (!$form->foo->receive()) {
+    print "Error receiving the file";
+}
+
 $location = $form->foo->getValue();
 ]]>
             </programlisting>
@@ -233,13 +242,6 @@ $location = $form->foo->getValue();
                 By default, files are uploaded to the system temp directory.
             </para>
         </note>
-
-        <para>
-            There is one current limitation to the file upload element shipped in
-            1.6.0. At this time, you cannot specify filters to change the name
-            of the final uploaded file; this functionality will be added in an
-            upcoming release.
-        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">
