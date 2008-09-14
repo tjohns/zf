@@ -77,6 +77,10 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
     {
         date_default_timezone_set('America/Los_Angeles');
         
+        // Reset front controller to reset registered plugins and 
+        // registered request/response objects
+        Zend_Controller_Front::getInstance()->resetInstance();
+
         $this->_request = new Zend_Log_Writer_FirebugTest_Request();
         $this->_response = new Zend_Log_Writer_FirebugTest_Response();
 
