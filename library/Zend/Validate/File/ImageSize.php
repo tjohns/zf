@@ -52,7 +52,7 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
         self::WIDTH_TOO_SMALL  => "Width of the image '%value%' is smaller than allowed",
         self::HEIGHT_TOO_BIG   => "Height of the image '%value%' is bigger than allowed",
         self::HEIGHT_TOO_SMALL => "Height of the image '%value%' is smaller than allowed",
-        self::NOT_DETECTED     => "Size if the image '%value%' could not be detected",
+        self::NOT_DETECTED     => "Size of the image '%value%' could not be detected",
         self::NOT_READABLE     => "The image '%value%' can not be read"
     );
 
