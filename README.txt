@@ -5,7 +5,7 @@ with all Zend Framework 1.x releases.
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6.1 (<INSERT REV NUM HERE>).
+Zend Framework 1.6.1 ([INSERT REV NUM HERE]).
 Released on 2008-09-15.
 
 NEW FEATURES
