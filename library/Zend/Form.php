@@ -303,7 +303,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 
         if (isset($options['displayGroupPrefixPath'])) {                          
             $this->addDisplayGroupPrefixPaths($options['displayGroupPrefixPath']);      
-            unset($options['elementPrefixPath']);                             
+            unset($options['displayGroupPrefixPath']);                             
         }
 
         if (isset($options['elements'])) {
