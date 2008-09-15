@@ -19,7 +19,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Form_Decorator_Abstract */
+/**
+ * @see Zend_Form_Decorator_Abstract
+ */
 require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
@@ -97,11 +99,11 @@ class Zend_Form_Decorator_HtmlTag extends Zend_Form_Decorator_Abstract
             require_once 'Zend/Filter.php';
             require_once 'Zend/Filter/Alnum.php';
             require_once 'Zend/Filter/StringToLower.php';
-            $this->_filter = new Zend_Filter();
-            $this->_filter->addFilter(new Zend_Filter_Alnum())
-                          ->addFilter(new Zend_Filter_StringToLower());
+            $this->_tagFilter = new Zend_Filter();
+            $this->_tagFilter->addFilter(new Zend_Filter_Alnum())
+                             ->addFilter(new Zend_Filter_StringToLower());
         }
-        return $this->_filter->filter($tag);
+        return $this->_tagFilter->filter($tag);
     }
 
     /**
