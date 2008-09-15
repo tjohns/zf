@@ -31,11 +31,6 @@ require_once 'Zend/Mail/Transport/Abstract.php';
 require_once 'Zend/Mime.php';
 
 /**
- * @see Zend_Mail_Transport_Abstract
- */
-require_once 'Zend/Mail/Transport/Abstract.php';
-
-/**
  * @see Zend_Mime_Message
  */
 require_once 'Zend/Mime/Message.php';
