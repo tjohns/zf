@@ -12,9 +12,6 @@ require_once 'Zend/Controller/Action/HelperBroker.php';
 /** Zend_Layout */
 require_once 'Zend/Layout.php';
 
-/** Zend_Registry */
-require_once 'Zend/Registry.php';
-
 /** Zend_Session */
 require_once 'Zend/Session.php';
 
