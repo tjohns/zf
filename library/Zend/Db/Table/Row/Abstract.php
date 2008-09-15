@@ -533,7 +533,15 @@ abstract class Zend_Db_Table_Row_Abstract
      */
     public function delete()
     {
-        $where = $this->_getWhereQuery();
+        /**
+         * A read-only row cannot be deleted.
+         */
+        if ($this->_readOnly === true) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception('This row has been marked read-only');
+        }
+
+    	$where = $this->_getWhereQuery();
 
         /**
          * Execute pre-DELETE logic
