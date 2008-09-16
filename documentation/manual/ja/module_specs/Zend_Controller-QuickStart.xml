@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11358 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller クイックスタート</title>
 
@@ -55,7 +55,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php]]>
+    index.php
+]]>
             </programlisting>
 
         </sect3>
@@ -78,16 +79,20 @@ html/
             </para>
 
             <programlisting role="php"><![CDATA[
-RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+]]>
             </programlisting>
 
             <para>
-                このルールは、リソース (画像やスタイルシート)
-                以外のすべてのリクエストをフロントコントローラに転送します。
-                これ以外にもフロントコントローラにまわしたくない拡張子がある場合
-                (PDF やテキストファイルなど) は、その拡張子を追加するなり
-                rewrite ルールを独自に作成するなりしましょう。
+                このルールは、既存のリソース
+                (シンボリックリンク、空でないファイル、あるいは空でないディレクトリ)
+                へのリクエストを適切に転送し、
+                それ以外のすべてのリクエストをフロントコントローラに転送します。
             </para>
 
             <note>
@@ -109,7 +114,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 <code>html/index.php</code> をお好みのエディタで開き、次の内容を追加します。
             </para>
 
-            <programlisting role="php"><![CDATA[Zend_Controller_Front::run('/path/to/app/controllers');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/app/controllers');
+]]>
+            </programlisting>
 
             <para>
                 これは、フロントコントローラのインスタンスとディスパッチを行います。
@@ -163,14 +171,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 を開き、次の内容を入力しましょう。
             </para>
 
-            <programlisting role="php"><![CDATA[/** Zend_Controller_Action */
+            <programlisting role="php"><![CDATA[
+/** Zend_Controller_Action */
 class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
     }
 }
-}]]>
+]]>
             </programlisting>
 
             <para>
@@ -220,7 +229,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hello, World!</h1>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
@@ -237,12 +247,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 というメソッドがあることを想定しています。
             </para>
 
-            <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -266,7 +278,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>エラーが発生しました</h1>
     <p>エラーが発生しました。後ほどもう一度お試しください。</p>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
