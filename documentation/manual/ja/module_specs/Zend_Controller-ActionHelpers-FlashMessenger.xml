@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect3 id="zend.controller.actionhelpers.flashmessenger">
     <title>FlashMessenger</title>
 
@@ -28,7 +28,8 @@
             (そして削除) します。
         </para>
 
-        <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * FlashMessenger
@@ -39,7 +40,8 @@
 
     public function init()
     {
-        $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
+        $this->_flashMessenger =
+            $this->_helper->getHelper('FlashMessenger');
         $this->initView();
     }
 
@@ -47,7 +49,8 @@
     {
         /**
          * Zend_Controller_Action_Helper_FlashMessenger
-         * のインスタンスを必要に応じて取得するためのデフォルトメソッド
+         * のインスタンスを必要に応じて取得するための
+         * デフォルトメソッド
          */
         $this->_flashMessenger->addMessage('Record Saved!');
     }
@@ -57,7 +60,8 @@
         $this->view->messages = $this->_flashMessenger->getMessages();
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 </sect3>

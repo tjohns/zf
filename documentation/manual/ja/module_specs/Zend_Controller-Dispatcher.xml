@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.dispatcher">
     <title>ディスパッチャ</title>
 
@@ -32,12 +32,14 @@
                 を設定すればこれが実現できるようになりました。
             </para>
 
-            <programlisting role="php"><![CDATA[// フロントコントローラで
+            <programlisting role="php"><![CDATA[
+// フロントコントローラで
 $front->setParam('prefixDefaultModule', true);
 
 // ディスパッチャで
 $dispatcher->setParam('prefixDefaultModule', true);
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 これにより、既存のモジュールをアプリケーションのデフォルトモジュールとすることができます。
@@ -68,7 +70,8 @@ $dispatcher->setParam('prefixDefaultModule', true);
             そして新しいアクションに送りたい追加のパラメータを指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[public function fooAction()
+        <programlisting role="php"><![CDATA[
+public function fooAction()
 {
     // 現在のモジュールおよびコントローラの、別のアクションに転送します
     $this->_forward('bar', null, null, array('baz' => 'bogus'));
@@ -86,7 +89,8 @@ public function bazAction()
     // 別のモジュールにある、別のコントローラのアクション
     // Foo_BarController::bazAction() に転送します
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -138,7 +142,9 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Request_Abstract $request
      * @return boolean
      */
-    public function isDispatchable(Zend_Controller_Request_Abstract $request);
+    public function isDispatchable(
+        Zend_Controller_Request_Abstract $request
+    );
 
     /**
      * Set a user parameter (via front controller, or for local use)
@@ -175,7 +181,8 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Clear the user parameter stack, or a single user parameter
      *
-     * @param null|string|array single key or array of keys for params to clear
+     * @param null|string|array single key or array of keys for
+     *        params to clear
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function clearParams($name = null);
@@ -186,7 +193,9 @@ interface Zend_Controller_Dispatcher_Interface
      * @param Zend_Controller_Response_Abstract|null $response
      * @return void
      */
-    public function setResponse(Zend_Controller_Response_Abstract $response = null);
+    public function setResponse(
+        Zend_Controller_Response_Abstract $response = null
+    );
 
     /**
      * Retrieve the response object, if any
@@ -205,7 +214,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function addControllerDirectory($path, $args = null);
 
     /**
-     * Set the directory (or directories) where controller files are stored
+     * Set the directory (or directories) where controller files are
+     * stored
      *
      * @param string|array $dir
      * @return Zend_Controller_Dispatcher_Interface
@@ -213,7 +223,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function setControllerDirectory($path);
 
     /**
-     * Return the currently set directory(ies) for controller file lookup
+     * Return the currently set directory(ies) for controller file
+     * lookup
      *
      * @return array
      */
@@ -226,7 +237,10 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Response_Abstract $response
      * @return Zend_Controller_Request_Abstract|boolean
      */
-    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
+    public function dispatch(
+        Zend_Controller_Request_Abstract $request,
+        Zend_Controller_Response_Abstract $response
+    );
 
     /**
      * Whether or not a given module is valid
@@ -256,7 +270,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @return string
      */
     public function getDefaultAction();
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

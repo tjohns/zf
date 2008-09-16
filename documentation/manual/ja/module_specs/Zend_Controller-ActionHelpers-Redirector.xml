@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11189 -->
 <sect3 id="zend.controller.actionhelpers.redirector">
     <title>Redirector</title>
 
@@ -139,7 +139,8 @@
                 URL を指定しています。
             </para>
 
-            <programlisting role="php"><![CDATA[class SomeController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class SomeController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -155,9 +156,10 @@
         // リダイレクタのデフォルトのオプションを設定します
         // このオブジェクトはヘルパーブローカに登録されるので、
         // これ以降のすべてのアクションで有効となります
-        $this->_redirector->setCode('303')
+        $this->_redirector->setCode(303)
                           ->setExit(false)
-                          ->setGotoSimple("this-action", "some-controller");
+                          ->setGotoSimple("this-action",
+                                          "some-controller");
     }
 
     public function myAction()
@@ -169,7 +171,8 @@
         $this->_redirector->redirectAndExit();
         return; // 決してここには到達しません
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -182,7 +185,8 @@
                 <code>exit()</code> が実行されるということです。
             </para>
 
-            <programlisting role="php"><![CDATA[// 別の例
+            <programlisting role="php"><![CDATA[
+// 別の例
 class AlternativeController extends Zend_Controller_Action
 {
     /**
@@ -201,10 +205,12 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* 何かを行います */
 
-        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
+        $this->_redirector
+            ->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         return; // リダイレクト後に自動的に exit() されるので、決してここには到達しません
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -220,7 +226,8 @@ class AlternativeController extends Zend_Controller_Action
                 また、アクションチェインではなくリダイレクトを行います。
             </para>
 
-            <programlisting role="php"><![CDATA[class ForwardController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class ForwardController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -241,9 +248,16 @@ class AlternativeController extends Zend_Controller_Action
         // 現在のモジュールの 'my-controller' コントローラの
         // 'my-action' アクションにリダイレクトします。
         // パラメータは param1 => test、param2 => test2 となります。
-        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action',
+                                       'my-controller',
+                                       null,
+                                       array('param1' => 'test',
+                                             'param2' => 'test2'
+                                             )
+                                       );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -258,20 +272,25 @@ class AlternativeController extends Zend_Controller_Action
                 次のようなルートが登録されているものと仮定します。
             </para>
 
-            <programlisting role="php"><![CDATA[$route = new Zend_Controller_Router_Route(
+            <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
-    array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
+    array('controller' => 'archive',
+          'module' => 'blog',
+          'action' => 'view')
 );
 $router->addRoute('blogArchive', $route);
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
-                year を 2006、month を 4、そして day を 24
+                year を 2006、month を 4、day を 24、そして ID を 42
                 として配列を渡すと、結果の URL は
                 <code>/blog/2006/4/24/42</code> となります。
             </para>
 
-            <programlisting role="php"><![CDATA[class BlogAdminController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class BlogAdminController extends Zend_Controller_Action
 {
     /**
      * Redirector - defined for code completion
@@ -292,11 +311,15 @@ $router->addRoute('blogArchive', $route);
         // blog の過去記事にリダイレクトします。URL は
         // /blog/2006/4/24/42 になります。
         $this->_redirector->gotoRoute(
-            array('year' => 2006, 'month' => 4, 'day' => 24, 'id' => 42),
+            array('year' => 2006,
+                  'month' => 4,
+                  'day' => 24,
+                  'id' => 42),
             'blogArchive'
         );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>

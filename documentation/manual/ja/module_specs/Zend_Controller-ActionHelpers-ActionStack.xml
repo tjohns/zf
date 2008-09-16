@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
@@ -33,21 +33,26 @@
             をコールするのが一番シンプルな方法です。
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // 2 つのアクションをスタックに格納して
         // /foo/baz/bar/baz をコールします
         // (FooController::bazAction() にリクエスト変数 bar == baz を指定したもの)
-        $this->_helper->actionStack('baz', 'foo', 'default', array('bar' => 'baz'));
+        $this->_helper->actionStack('baz',
+                                    'foo',
+                                    'default',
+                                    array('bar' => 'baz'));
 
         // /bar/bat のコール
         // (BarController::batAction()) を追加します
         $this->_helper->actionStack('bat', 'bar');
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
     </example>
 
@@ -60,7 +65,8 @@
             ヘルパーに渡すこともできます。
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -68,19 +74,22 @@
         // /foo/baz/bar/baz をコールします
         // (FooController::bazAction() にリクエスト変数 bar == baz を指定したもの)
         $request = clone $this->getRequest();
-        $request->setActionName('baz')              // コントローラやモジュールは指定せず、
-                ->setParams(array('bar' => 'baz')); // 現在の値を使用します
+        // コントローラやモジュールは指定せず、現在の値を使用します
+        $request->setActionName('baz') 
+                ->setParams(array('bar' => 'baz'));
         $this->_helper->actionStack($request);
 
         // /bar/bat のコール
         // (BarController::batAction()) を追加します
         $request = clone $this->getRequest();
-        $request->setActionName('bat')      // モジュールは指定せず、
-                ->setControllerName('bar'); // 現在の値を使用します
+        // モジュールは指定せず、現在の値を使用します
+        $request->setActionName('bat')
+                ->setControllerName('bar');
         $this->_helper->actionStack($request);
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

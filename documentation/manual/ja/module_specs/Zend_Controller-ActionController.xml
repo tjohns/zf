@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11085 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
@@ -72,11 +72,13 @@ class FooController extends Zend_Controller_Action
                 以下のいずれかの方法を使用します。
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // このコントローラでのみ無効にします。初期化時に読み込まれるので、全アクションに影響を及ぼします
+        // このコントローラでのみ無効にします。
+        // 初期化時に読み込まれるので、全アクションに影響を及ぼします
         $this->_helper->viewRenderer->setNoRender(true);
 
         // 全体で無効にします
@@ -84,9 +86,11 @@ class FooController extends Zend_Controller_Action
 
         // これも全体で無効にしますが、同時にローカルでも無効にしておく必要があります。
         // これは、ローカルの設定を全体に伝播させる方法です。
-        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+        Zend_Controller_Front::getInstance()
+            ->setParam('noViewRenderer', true);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -103,14 +107,16 @@ class FooController extends Zend_Controller_Action
                 フラグを設定することもできます。
             </para>
 
-            <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
         // このアクションでのみ自動レンダリングを無効にします
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -245,7 +251,8 @@ $this->getResponse()->appendBody($content);
                         <code>_hasParam()</code> をコールする必要がなくなります。
                     </para>
 
-                    <programlisting role="php"><![CDATA[// id が設定されていない場合のデフォルト値を 1 とします
+                    <programlisting role="php"><![CDATA[
+// id が設定されていない場合のデフォルト値を 1 とします
 $id = $this->_getParam('id', 1);
 
 // わざわざこのようにする必要はありません
@@ -253,7 +260,8 @@ if ($this->_hasParam('id') {
     $id = $this->_getParam('id');
 } else {
     $id = 1;
-}]]>
+}
+]]>
                     </programlisting>
                 </note>
             </listitem>
@@ -322,7 +330,11 @@ applicationOrModule/
                 <code>render()</code> のシグネチャは次のとおりです。
             </para>
 
-            <programlisting role="php"><![CDATA[string render(string $action = null, string $name = null, bool $noController = false);]]>
+            <programlisting role="php"><![CDATA[
+string render(string $action = null,
+              string $name = null,
+              bool $noController = false);
+]]>
             </programlisting>
 
             <para>
@@ -357,7 +369,8 @@ applicationOrModule/
                 例を見てみましょう。
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function fooAction()
     {
@@ -370,10 +383,12 @@ applicationOrModule/
         // baz.phtml をレンダリングします
         $this->render('baz', null, true);
 
-        // my/login.phtml をレンダリングし、レスポンスオブジェクトの 'form' の部分に返します
+        // my/login.phtml をレンダリングし、
+        // レスポンスオブジェクトの 'form' の部分に返します
         $this->render('login', 'form');
 
-        // site.phtml をレンダリングし、レスポンスオブジェクトの 'page' の部分に返します
+        // site.phtml をレンダリングし、レスポンスオブジェクトの
+        // 'page' の部分に返します
         // 'my/' ディレクトリは使用しません
         $this->render('site', 'page', true);
     }
@@ -383,7 +398,8 @@ applicationOrModule/
         // my/baz-bat.phtml をレンダリングします
         $this->render();
     }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -512,19 +528,25 @@ applicationOrModule/
                 たとえば、エラーメッセージを表示させたい場合は次のようになります。
             </para>
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // アクションメソッドが見つからなかった場合は、エラー用のテンプレートをレンダリングします
+            // アクションメソッドが見つからなかった場合は、
+            // エラー用のテンプレートをレンダリングします
             return $this->render('error');
         }
 
         // その他のメソッドの場合は例外をスローします
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "'
+                            . $method
+                            . '" called',
+                            500);
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -532,7 +554,8 @@ applicationOrModule/
             </para>
 
 
-            <programlisting role="php"><![CDATA[class MyController extends Zend_Controller_Action
+            <programlisting role="php"><![CDATA[
+class MyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
@@ -542,14 +565,19 @@ applicationOrModule/
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // アクションメソッドが見つからなかった場合は、index アクションに転送します
+            // アクションメソッドが見つからなかった場合は、
+            // index アクションに転送します
             return $this->_forward('index');
         }
 
         // その他のメソッドの場合は例外をスローします
-        throw new Exception('Invalid method "' . $method . '" called', 500);
+        throw new Exception('Invalid method "'
+                            . $method
+                            . '" called',
+                            500);
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -560,7 +588,8 @@ applicationOrModule/
             <code>initView()</code> メソッドを次のように書き換えることになるでしょう。
         </para>
 
-        <programlisting role="php"><![CDATA[abstract class My_Base_Controller extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+abstract class My_Base_Controller extends Zend_Controller_Action
 {
     public function initView()
     {
@@ -575,7 +604,8 @@ applicationOrModule/
 
         return $this->view;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
