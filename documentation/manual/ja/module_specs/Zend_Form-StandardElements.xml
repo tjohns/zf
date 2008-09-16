@@ -68,7 +68,8 @@
 
         <programlisting role="php"><![CDATA[
 $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Captcha を登録するには <code>setCaptcha()</code>
@@ -82,7 +83,8 @@ $element->setCaptcha(new Zend_Captcha_Figlet());
 
 // 短い名前
 $element->setCaptcha('Dumb');
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             設定経由で要素を読み込みたい場合は、キー 'captcha'
@@ -93,7 +95,7 @@ $element->setCaptcha('Dumb');
         <programlisting role="php"><![CDATA[
 // 単一の captcha キーの使用
 $element = new Zend_Form_Element_Captcha('foo', array(
-    'label' => "あなたが人間かどうかを確認します"
+    'label' => "あなたが人間かどうかを確認します",
     'captcha' => array(
         'captcha' => 'Figlet',
         'wordLen' => 6,
@@ -111,7 +113,8 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         'timeout' => 300,
     ),
 ));
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             使用するデコレータは、captcha アダプタの設定によって決まります。
@@ -205,28 +208,40 @@ $element->setLabel('Upload an image:')
         ->setDestination('/var/www/upload')
         ->addValidator('Count', false, 1)     // ファイルはひとつだけ
         ->addValidator('Size', false, 102400) // 最大で 100K
-        ->addValidator('Extension' false, 'jpg,png,gif'); // JPEG、PNG および GIF のみ
+        ->addValidator('Extension', false, 'jpg,png,gif'); // JPEG、PNG および GIF のみ
 $form->addElement($element, 'foo');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 また、正しいエンコード形式をフォームに指定する必要があります。
                 'multipart/form-data' を使用しなければなりません。
                 これは、フォームの 'enctype' 属性で指定します。
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $form->setAttrib('enctype', 'multipart/form-data');
-]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
-                要素の検証が成功したら、
-                getValue() で最終的な場所を取得します。
+                フォームの検証が成功したら、receive()
+                でファイルを受信して最終的な場所に保存しなければなりません。
+                さらに、最終的な場所を取得するには getValue() を使用します。
             </para>
 
             <programlisting role="php"><![CDATA[
+if (!$form->isValid) {
+    print "あららら... 検証エラー";
+}
+
+if (!$form->foo->receive()) {
+    print "ファイル受信エラー";
+}
+
 $location = $form->foo->getValue();
-]]></programlisting>
+]]>
+            </programlisting>
 
         </example>
 
@@ -238,13 +253,6 @@ $location = $form->foo->getValue();
                 temp ディレクトリにファイルがアップロードされます。
             </para>
         </note>
-
-        <para>
-            1.6.0 に同梱されているファイルアップロード要素には、
-            ひとつ制限があります。現時点では、
-            フィルタを指定してアップロードされたファイルの名前を変更することができません。
-            この機能は今後のリリースで追加される予定です。
-        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">
@@ -277,7 +285,8 @@ $location = $form->foo->getValue();
 
         <programlisting role="php"><![CDATA[
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
-?>]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             salt は、後から <code>setSalt($salt)</code>
@@ -399,7 +408,8 @@ $element = new Zend_Form_Element_MultiCheckbox('foo', array(
 ));
 
 $element->setValue(array('bar', 'bat'));
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             値をひとつだけ指定する場合でも、配列形式でなければならないことに注意しましょう。
