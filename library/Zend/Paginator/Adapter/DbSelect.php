@@ -93,7 +93,14 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
         if ($rowCount instanceof Zend_Db_Select) {
             $columns = $rowCount->getPart(Zend_Db_Select::COLUMNS);
             
-            if (false === strpos((string) $columns[0][1], self::ROW_COUNT_COLUMN)) {
+            $countColumnPart = $columns[0][1];
+            
+            if ($countColumnPart instanceof Zend_Db_Expr) {
+                $countColumnPart = $countColumnPart->__toString();
+            }
+            
+            // The select query can contain only one column, which should be the row count column
+            if (false === strpos($countColumnPart, self::ROW_COUNT_COLUMN)) {
                 /**
                  * @see Zend_Paginator_Exception
                  */
@@ -141,7 +148,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
     public function count()
     {
         if ($this->_rowCount === null) {
-            $rowCount   = clone $this->_select;
+            $rowCount = clone $this->_select;
             
             /**
              * The DISTINCT and GROUP BY queries only work when selecting one column.
@@ -156,7 +163,11 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 	$columns[] = $part[1];
                 }
                 
-                $groupPart = implode(',', $columns);
+                if (count($columns) == 1 && $columns[0] == '*') {
+                    $groupPart = null;
+                } else {
+                    $groupPart = implode(',', $columns);
+                }
             } else {
                 $groupPart = implode(',', $rowCount->getPart(Zend_Db_Select::GROUP));
             }

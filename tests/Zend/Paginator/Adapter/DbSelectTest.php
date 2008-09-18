@@ -232,9 +232,31 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
                                      ->order('number ASC')
                                      ->limit(1000, 0)
                                      ->distinct();
-                           
+
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(2, $adapter->count());
+    }
+    
+    // ZF-4094
+    public function testSelectSpecificColumns()
+    {
+        $query = $this->_db->select()->from('test', array('testgroup', 'number'))
+                                     ->where('number >= ?', '1');
+        
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+        
+        $this->assertEquals(500, $adapter->count());                       
+    }
+    
+    // ZF-4177
+    public function testSelectDistinctAllUsesRegularCountAll()
+    {
+        $query = $this->_db->select()->from('test')
+                                     ->distinct();
+        
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+        
+        $this->assertEquals(500, $adapter->count());  
     }
 }
