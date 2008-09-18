@@ -15,7 +15,8 @@ class MonFiltre implements Zend_Filter_Interface
 {
     public function filter($valeur)
     {
-        // application de transformations sur $valeur pour parvenir à $valeurFiltree
+        // application de transformations sur $valeur
+        // pour parvenir à $valeurFiltree
 
         return $valeurFiltree;
     }

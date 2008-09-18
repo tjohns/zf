@@ -203,7 +203,8 @@ $accountsTable      = new Accounts();
 $accountsRowset     = $accountsTable->find(1234);
 $user1234           = $accountsRowset->current();
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
+                                                     'Engineer');
 ]]></programlisting>
         </example>
 
@@ -225,7 +226,9 @@ $user1234           = $accountsRowset->current();
 $select             = $accountsTable->select()->order('name ASC')
                                               ->limit(3);
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select);
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
+                                                     'Engineer',
+                                                     $select);
 ]]></programlisting>
             </example>Vous pouvez récupérer les enregistrements dépendants d'une autre manière. En utilisant les
         "méthodes magiques". En effet, <code>Zend_Db_Table_Row_Abstract</code> va utiliser la méthode
@@ -296,11 +299,11 @@ $row->findParentRow($table, [$rule]);
             personne ayant reporté le bug)</para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable   = new Bugs();
+$bugsRowset  = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
+$bug1        = $bugsRowset->current();
 
-$reporter          = $bug1->findParentRow('Accounts');
+$reporter    = $bug1->findParentRow('Accounts');
 ]]></programlisting>
         </example>
 
@@ -318,11 +321,11 @@ $reporter          = $bug1->findParentRow('Accounts');
             personne en étant assignée. Il va falloir utiliser le rôle <code>"Engineer"</code>.</para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable   = new Bugs();
+$bugsRowset  = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1        = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Accounts', 'Engineer');
+$engineer    = $bug1->findParentRow('Accounts', 'Engineer');
 ]]></programlisting>
         </example>
 
@@ -357,15 +360,15 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');
             récupérer l'enregistrement parent.</para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable   = new Bugs();
+$bugsRowset  = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1        = $bugsRowset->current();
 
 // Utilise le rôle par défaut ( le premier déclaré)
-$reporter          = $bug1->findParentAccounts();
+$reporter    = $bug1->findParentAccounts();
 
 // Utilise un rôle spécifique
-$engineer          = $bug1->findParentAccountsByEngineer();
+$engineer    = $bug1->findParentAccountsByEngineer();
 ]]></programlisting>
         </example>
     </sect2>
@@ -378,7 +381,11 @@ $engineer          = $bug1->findParentAccountsByEngineer();
         enregistrements de la table de destination, via une table dite "d'intersection". Utilisez la méthode :</para>
 
         <programlisting role="php"><![CDATA[
-$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);
+$row->findManyToManyRowset($table,
+                           $intersectionTable, 
+                           [$rule1,
+                           [$rule2,
+                           [Zend_Db_Table_Select $select]]]);
 ]]></programlisting>
 
         <para>Cette méthode retourne un objet instance de <code>Zend_Db_Table_Rowset_Abstract</code> qui contient les
@@ -404,7 +411,8 @@ $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');
+$productsRowset   = $bug1234->findManyToManyRowset('Products',
+                                                   'BugsProducts');
 ]]></programlisting>
         </example>
 
@@ -435,7 +443,9 @@ $bugsTable        = new Bugs();
 $bugsRowset       = $bugsTable->find(1234);
 $bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');
+$productsRowset   = $bug1234->findManyToManyRowset('Products',
+                                                   'BugsProducts',
+                                                   'Bug');
 ]]></programlisting>
         </example>
 
@@ -480,15 +490,15 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', '
             produit, en passant par une table d'intersection, le tout, via des méthodes magiques.</para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+$bugsTable   = new Bugs();
+$bugsRowset  = $bugsTable->find(1234);
+$bug1234     = $bugsRowset->current();
 
 // Utilisation des rôles par défaut
-$products          = $bug1234->findProductsViaBugsProducts();
+$products    = $bug1234->findProductsViaBugsProducts();
 
 // Utilisation d'un rôle spécifique
-$products          = $bug1234->findProductsViaBugsProductsByBug();
+$products    = $bug1234->findProductsViaBugsProductsByBug();
 ]]></programlisting>
         </example>
     </sect2>
@@ -627,6 +637,3 @@ class BugsProducts extends Zend_Db_Table_Abstract
         </sect3>
     </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

@@ -40,8 +40,8 @@ $db->setProfiler($profiler)
 
 // Dispatcher votre contrôleur frontal
 
-// Toutes les requêtes dans vos fichiers de modèles, vues et contrôleurs
-// seront maintenant profilées et envoyées à Firebug
+// Toutes les requêtes dans vos fichiers de modèles, vues et
+// contrôleurs seront maintenant profilées et envoyées à Firebug
 ]]></programlisting>
     </example>
 
@@ -64,7 +64,8 @@ $channel->setResponse($response);
 // Démarrer l'output buffering
 ob_start();
 
-// Maintenant vous pouvez lancer les requêtes qui doivent être profilées
+// Maintenant vous pouvez lancer les requêtes
+// qui doivent être profilées
 
 // Envoi des données de profiling vers le navigateur
 $channel->flush();

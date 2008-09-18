@@ -67,10 +67,13 @@ url.rewrite-once = (
 
         <programlisting role="php"><![CDATA[
 /* Créer un routeur */
-$router = $frontctrl->getRouter(); // retourne un routeur de réécriture par défaut
+$router = $frontctrl->getRouter();
+// retourne un routeur de réécriture par défaut
 $router->addRoute(
     'user',
-    new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
+    new Zend_Controller_Router_Route('user/:username',
+                                     array('controller' => 'user',
+                                           'action' => 'info'))
 );
 ]]></programlisting>
     </sect2>
@@ -83,7 +86,8 @@ $router->addRoute(
         <code>Zend_Controller_Router_Route_Interface</code>. Exemple :</para>
 
         <programlisting role="php"><![CDATA[
-$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));
+$router->addRoute('user',
+                  new Zend_Controller_Router_Route('user/:username'));
 ]]></programlisting>
 
         <para>Le routeur de réécriture est fourni avec quatre types de route, dont une spéciale :</para>
@@ -123,7 +127,9 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));
             <para>L'utilisation la plus plausible du nom de la route est illustrée dans l'aide vue "url":</para>
 
             <programlisting role="php"><![CDATA[
-<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>
+<a href="<?= $this->url(array('username' => 'martel'), 'user') ?>">
+Martel
+</a>
 ]]></programlisting>
 
             <para>Ce qui donnera un "href" : <code>user/martel</code>.</para>
@@ -213,7 +219,9 @@ http://example/blog/archive/list/sort/alpha/date/desc
         le nom "default" dans le routeur de réécriture(RewriteRouter). Il est conçu comme ceci :</para>
 
         <programlisting role="php"><![CDATA[
-$compat = new Zend_Controller_Router_Route_Module(array(), $dispatcher, $request);
+$compat = new Zend_Controller_Router_Route_Module(array(),
+                                                  $dispatcher,
+                                                  $request);
 $this->addRoute('default', $compat);
 ]]></programlisting>
 

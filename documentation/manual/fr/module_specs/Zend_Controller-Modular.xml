@@ -86,7 +86,8 @@ $front->setControllerDirectory(array(
         au module <code>default.</code></para>
 
         <programlisting role="php"><![CDATA[
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');
+$front->addControllerDirectory('/path/to/application/news/controllers',
+                               'news');
 ]]></programlisting>
 
         <para>Enfin, si vous avez un dossier spécial regroupant tous vos modules, indiquez le grâce à

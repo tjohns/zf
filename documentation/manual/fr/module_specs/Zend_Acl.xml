@@ -2,8 +2,8 @@
 <sect1 id="zend.acl.introduction">
     <title>Introduction</title>
 
-    <para><code>Zend_Acl</code> fournit une implémentation légère et flexible de listes de contrôle d'accès (ACL : Access
-    Control List) pour la gestion de privilèges. En général, une application peut utiliser une telle
+    <para><code>Zend_Acl</code> fournit une implémentation légère et flexible de listes de contrôle d'accès (ACL :
+    Access Control List) pour la gestion de privilèges. En général, une application peut utiliser une telle
     fonctionnalité pour contrôler l'accès à certains objets par d'autres objets demandeurs.</para>
 
     <para>Dans le cadre de cette documentation, <itemizedlist>
@@ -29,7 +29,7 @@
         <para>Avec <code>Zend_Acl</code>, créer une ressource est très simple. <code>Zend_Acl</code> fournit
         <code>Zend_Acl_Resource_Interface</code> pour faciliter la tâche aux développeurs. Une classe a simplement
         besoin d'implémenter cette interface, qui consiste en une seule méthode, <code>getResourceId()</code>, pour que
-        <code>Zend_Acl</code> reconnait l'objet comme étant une ressource. Par ailleurs, <code>Zend_Acl_Resource</code>
+        <code>Zend_Acl</code> reconnaît l'objet comme étant une ressource. Par ailleurs, <code>Zend_Acl_Resource</code>
         est fourni par <code>Zend_Acl</code> comme une implémentation basique de ressource que les développeurs peuvent
         étendre si besoin.</para>
 
@@ -263,11 +263,12 @@ ce qui précède peut aussi être écrit :
 $acl->allow('invité', null, 'voir');
 */
 
-// Staff hérite des privilèges de Invité, mais a aussi ses propres privilèges
+// Staff hérite des privilèges de Invité, mais a aussi ses propres
+// privilèges
 $acl->allow('staff', null, array('edit', 'submit', 'relire'));
 
-// Editeur hérite les privilèges voir, modifier, soumettre, et relire de Staff,
-// mais a aussi besoin de certains privilèges
+// Editeur hérite les privilèges voir, modifier, soumettre, 
+// et relire de Staff, mais a aussi besoin de certains privilèges
 $acl->allow('editeur', null, array('publier', 'archiver', 'supprimer'));
 
 // Administrateur hérite de rien, mais reçoit tous les privilèges
@@ -287,28 +288,36 @@ $acl->allow('administrateur');
 
         <programlisting role="php"><![CDATA[
 echo $acl->isAllowed('invité', null, 'voir') ?
-     "autorisé" : "refusé"; // autorisé
+     "autorisé" : "refusé";
+// autorisé
 
 echo $acl->isAllowed('staff', null, 'publier') ?
-     "autorisé" : "refusé"; // refusé
+     "autorisé" : "refusé";
+// refusé
 
 echo $acl->isAllowed('staff', null, 'relire') ?
-     "autorisé" : "refusé"; // autorisé
+     "autorisé" : "refusé";
+// autorisé
 
 echo $acl->isAllowed('editeur', null, 'voir') ?
-     "autorisé" : "refusé"; // autorisé parce que hérité de Invité
+     "autorisé" : "refusé";
+// autorisé parce que hérité de Invité
 
 echo $acl->isAllowed('editeur', null, 'modifier') ?
-     "autorisé" : "refusé"; // refusé parce qu'il n'y a pas de règle pour 'modifier'
+     "autorisé" : "refusé";
+// refusé parce qu'il n'y a pas de règle pour 'modifier'
 
 echo $acl->isAllowed('administrateur', null, 'voir') ?
-     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
+     "autorisé" : "refusé";
+// autorisé car administrateur est autorisé pour tout
 
 echo $acl->isAllowed('administrateur') ?
-     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
+     "autorisé" : "refusé";
+// autorisé car administrateur est autorisé pour tout
 
 echo $acl->isAllowed('administrateur', null, 'modifier') ?
-     "autorisé" : "refusé"; // autorisé car administrateur est autorisé pour tout
+     "autorisé" : "refusé";
+// autorisé car administrateur est autorisé pour tout
 ]]></programlisting>
     </sect2>
 </sect1>

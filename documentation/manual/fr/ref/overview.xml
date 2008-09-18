@@ -8,7 +8,7 @@
     Cette architecture faiblement couplée permet aux développeurs d'utiliser les composants individuellement. On appelle
     souvent ce type de conception "use-at-will".</para>
 
-    <para>Bien qu'ils peuvent être utiliser individuellement, les composants de la librairie standard du Zend Framework
+    <para>Bien qu'ils puissent être utilisés individuellement, les composants de la librairie standard du Zend Framework
     forment un framework d'application web puissant et extensible quand ils sont combinés. Le ZF offre une robuste et
     performante implémentation du motif MVC, une abstraction de base de données simple d'utilisation, et un composant de
     formulaire qui implémente un rendu HTML, la validation et le filtrage des données, ainsi les développeurs peuvent

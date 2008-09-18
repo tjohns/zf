@@ -50,7 +50,8 @@ $client->setCookie('parfum', 'pépites de chocolat');
 $client->setCookie('parfum=p%C3%A9pites%20de%20chocolat');
 
 // En fournissant un objet Zend_Http_Cookie
-$cookie = Zend_Http_Cookie::fromString('parfum=p%C3%A9pites%20de%20chocolat');
+$cookie =
+    Zend_Http_Cookie::fromString('parfum=p%C3%A9pites%20de%20chocolat');
 $client->setCookie($cookie);
 ]]></programlisting>
             </example> Pour plus d'information sur les objets <code>Zend_Http_Cookie</code>, voir <xref
@@ -63,7 +64,8 @@ $client->setCookie($cookie);
                 <title>Activer la persistance des cookies</title>
 
                 <programlisting role="php"><![CDATA[
-// Pour activer la persistance des cookies, définissez un Magasin de cookie "Cookie Jar"
+// Pour activer la persistance des cookies,
+// définissez un Magasin de cookie "Cookie Jar"
 $client->setCookieJar();
 
 // Première requête : s'identifier et démarrer une session
@@ -93,13 +95,15 @@ $client->request('GET');
                 <title>Définir un entête personnalisé unique</title>
 
                 <programlisting role="php"><![CDATA[
-// Définition d'un entête unique, écrasant toute valeur précédemment définie
+// Définition d'un entête unique,
+// écrasant toute valeur précédemment définie
 $client->setHeaders('Host', 'www.exemple.com');
 
 // La même chose d'une autre manière
 $client->setHeaders('Host: www.example.com');
 
-// Définition de plusieurs valeurs pour le même entête (surtout utile pour les entêtes de cookies)
+// Définition de plusieurs valeurs pour le même entête
+// (surtout utile pour les entêtes de cookies)
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=fr'
@@ -113,7 +117,8 @@ $client->setHeaders('Cookie', array(
                 <title>Définition de plusieurs entêtes personnalisés</title>
 
                 <programlisting role="php"><![CDATA[
-// Définition de plusieurs entêtes, écrasant toute valeur précédemment définie
+// Définition de plusieurs entêtes,
+// écrasant toute valeur précédemment définie
 $client->setHeaders(array(
     'Host' => 'www.exemple.com',
     'Accept-encoding' => 'gzip,deflate',
@@ -218,9 +223,12 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');
 
                 <programlisting role="php"><![CDATA[
 // Utilisation de l'authentification 'basic'
-$client->setAuth('shahar', 'monMotdePasse!', Zend_Http_Client::AUTH_BASIC);
+$client->setAuth('shahar',
+                 'monMotdePasse!',
+                 Zend_Http_Client::AUTH_BASIC);
 
-// L'authentification 'basic' étant le comportement par défaut, on peut aussi écrire ceci :
+// L'authentification 'basic' étant le comportement par défaut,
+// on peut aussi écrire ceci :
 $client->setAuth('shahar', 'monMotdePasse!');
 ]]></programlisting>
             </example></para>
@@ -269,9 +277,9 @@ $client->setAuth('shahar', 'monMotdePasse!');
 
             <programlisting role="php"><![CDATA[
 // D'abord, instancier le client
-$client = new Zend_Http_Client('http://www.exemple.com/obtientdonnees.php', array(
-    'keepalive' => true
-));
+$client =
+    new Zend_Http_Client('http://www.exemple.com/obtientdonnees.php',
+                         array('keepalive' => true));
 
 // Disposons-nous du cookie de session ?
 if (isset($_SESSION['cookiejar']) &&

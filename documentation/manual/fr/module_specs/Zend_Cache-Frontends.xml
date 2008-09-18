@@ -164,7 +164,8 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] fait quelque chose avec $data (affichage, passage ailleurs, etc, etc)
+// [...] fait quelque chose avec $data
+// (affichage, passage ailleurs, etc, etc)
 ]]></programlisting></para>
 
             <para>Si vous voulez cacher des blocs multiples ou des instances de données, l'idée reste la même :
@@ -210,7 +211,8 @@ echo($data);
             compacte montrée ci-dessus. Vous devez tester de manière formelle l'état du cache.</para>
 
             <programlisting role="php"><![CDATA[
-// La construction compacte (ne pas utiliser si vous cachez des chaînes et/ou des booléens)
+// La construction compacte (ne pas utiliser si vous cachez
+// des chaînes et/ou des booléens)
 if (!($data = $cache->load($id))) {
 
     // cache absent
@@ -359,8 +361,8 @@ echo 'This is never cached ('.time().').';
             <code>call_user_func_array()</code> en PHP : <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-// $params est dans un tableau
-// par exemple, pour appeler (avec mise en cache) veryExpensiveFunc(1, 'foo', 'bar')
+// $params est dans un tableau par exemple, pour appeler 
+// (avec mise en cache) : veryExpensiveFunc(1, 'foo', 'bar')
 // vous devriez utiliser
 $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));
 ]]></programlisting></para>
@@ -737,7 +739,8 @@ $res = $cache->foobar2('1', '2');
 // [...] // require, configuration et factory
 
 $cache->start();
-// si le cache est trouvé, le résultat est envoyé au navigateur et le script s'arrête là
+// si le cache est trouvé, le résultat est envoyé au navigateur
+// et le script s'arrête là
 
 // reste de la page ...
 ]]></programlisting></para>
@@ -745,21 +748,35 @@ $cache->start();
             <para>Un exemple plus complexe qui montre un moyen pour obtenir une gestion centralisée du cache dans un
             fichier d'amorçage (pour utiliser avec <code>Zend_Controller</code> par exemple) <programlisting
             role="php"><![CDATA[
-// vous devriez éviter de mettre trop de lignes avant la section de cache
-// [...] par exemple, pour des performances optimales, "require_once" ou "Zend_Loader::loadClass" devrait être
-// [...] après la section de cache
+// vous devriez éviter de mettre trop de lignes avant la section
+// de cache par exemple, pour des performances optimales,
+// "require_once" ou "Zend_Loader::loadClass" devrait être
+// après la section de cache
 
 $frontendOptions = array(
    'lifetime' => 7200,
-   'debug_header' => true,                        // pour le déboguage
+   'debug_header' => true, // pour le déboguage
    'regexps' => array(
-       '^/$' => array('cache' => true),           // met en cache la totalité d'IndexController
-       '^/index/' => array('cache' => true),      // met en cache la totalité d'IndexController
-       '^/article/' => array('cache' => false),   // nous ne mettons pas en cache l'ArticleController...
-       '^/article/view/' => array(                // ...mais nous mettons en cache l'action "view"
-           'cache' => true,                       // de cet ArticleController
-           'cache_with_post_variables' => true,   // et nous mettons en cache même lorsqu'il y a des variables dans $_POST
-           'make_id_with_post_variables' => true, // (mais le cache sera dépendent du tableau $_POST)
+       // met en cache la totalité d'IndexController
+       '^/$' => array('cache' => true),
+
+       // met en cache la totalité d'IndexController
+       '^/index/' => array('cache' => true),
+
+       // nous ne mettons pas en cache l'ArticleController...
+       '^/article/' => array('cache' => false),
+
+       // ...mais nous mettons en cache l'action "view"
+       '^/article/view/' => array(
+            // de cet ArticleController
+           'cache' => true,
+
+           // et nous mettons en cache même lorsqu'il y a
+           // des variables dans $_POST
+           'cache_with_post_variables' => true,
+
+           // (mais le cache sera dépendent du tableau $_POST)
+           'make_id_with_post_variables' => true,
        )
    )
 );
@@ -768,12 +785,17 @@ $backendOptions = array(
 );
 
 // obtenir un objet Zend_Cache_Frontend_Page
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 $cache->start();
-// si nous trouvons un cache, le résultat est envoyé au navigateur, et le script s'arrête là
+// si nous trouvons un cache, le résultat est envoyé au navigateur,
+// et le script s'arrête là
 
-// [...] la fin du fichier de démarrage (ces lignes ne seront pas exécutées si on trouve un cache)
+// [...] la fin du fichier de démarrage
+// (ces lignes ne seront pas exécutées si on trouve un cache)
 ]]></programlisting></para>
         </sect3>
 

@@ -54,7 +54,8 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Locale à ce seul contrôleur ; affecte toutes les actions, si chargée dans l'init :
+        // Locale à ce seul contrôleur ; affecte toutes les actions,
+        // si chargée dans l'init :
         $this->_helper->viewRenderer->setNoRender(true);
 
         // Global :
@@ -62,7 +63,8 @@ class FooController extends Zend_Controller_Action
 
         // Global aussi, mais doit être réalisé en conjonction avec
         // la version locale pour être propagé dans ce contrôleur:
-        Zend_Controller_Front::getInstance()->setParam('noViewRenderer', true);
+        Zend_Controller_Front::getInstance()->setParam('noViewRenderer',
+                                                       true);
     }
 }
 ]]></programlisting>
@@ -239,7 +241,9 @@ applicationOrModule/
             <para><code>render()</code> a la signature suivante :</para>
 
             <programlisting role="php"><![CDATA[
-string render(string $action = null, string $name = null, bool $noController = false);
+string render(string $action = null,
+              string $name = null,
+              bool $noController = false);
 ]]></programlisting>
 
             <para><code>render()</code> effectue le rendu d'un script de vue. Si aucun argument n'est fourni, la méthode
@@ -277,11 +281,13 @@ class MonController extends Zend_Controller_Action
         // Effectue le rendu de baz.phtml
         $this->render('baz', null, true);
 
-        // Effectue le rendu de mon/login.phtml vers le segment 'form' de l'objet réponse
+        // Effectue le rendu de mon/login.phtml vers le segment
+        // 'form' de l'objet réponse
         $this->render('login', 'form');
 
-        // Effectue le rendu de site.phtml vers le segment 'page' de l'objet réponse ; sans
-        // utiliser le sous-dossier 'mon/'
+        // Effectue le rendu de site.phtml vers le segment
+        // 'page' de l'objet réponse ; sans utiliser
+        // le sous-dossier 'mon/'
         $this->render('site', 'page', true);
     }
 
@@ -381,12 +387,14 @@ class MonController extends Zend_Controller_Action
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // Si une méthode d'action n'est pas trouvée, rendre le script d'erreur
+            // Si une méthode d'action n'est pas trouvée,
+            // rendre le script d'erreur
             return $this->render('error');
         }
 
         // pour toute autre méthode, levée d'une exception
-        throw new Exception('Méthode invalide "' . $method . '" appelée', 500);
+        throw new Exception('Méthode invalide "' . $method . '" appelée',
+                            500);
     }
 }
 ]]></programlisting>
@@ -404,12 +412,14 @@ class MyController extends Zend_Controller_Action
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // Si une méthode d'action n'est pas trouvée, rediriger vers l'action index
+            // Si une méthode d'action n'est pas trouvée,
+            // rediriger vers l'action index
             return $this->_forward('index');
         }
 
         // pour tout autre méthode, levée d'une exception
-        throw new Exception('Méthode invalide "' . $method . '" appelée', 500);
+        throw new Exception('Méthode invalide "' . $method . '" appelée',
+                            500);
     }
 }
 ]]></programlisting>

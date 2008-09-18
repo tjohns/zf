@@ -23,10 +23,12 @@ $inflector->setRules(array(
 ));
 
 $string   = 'motsEnNotationCamel';
-$filtered = $inflector->filter(array('page' => $string)); // pages/mots-en-notation-camel.html
+$filtered = $inflector->filter(array('page' => $string));
+// pages/mots-en-notation-camel.html
 
 $string   = 'ceci_n_est_pas_en_notation_camel';
-$filtered = $inflector->filter(array('page' => $string)); // pages/ceci_n_est_pas_en_notation_camel.html
+$filtered = $inflector->filter(array('page' => $string));
+// pages/ceci_n_est_pas_en_notation_camel.html
 ]]></programlisting>
     </example>
 
@@ -192,8 +194,10 @@ class Foo
      */
     public function __construct()
     {
-        $this->_inflector = new Zend_Filter_Inflector(':script.:suffix');
-        $this->_inflector->setStaticRuleReference('suffix', $this->_suffix);
+        $this->_inflector =
+            new Zend_Filter_Inflector(':script.:suffix');
+        $this->_inflector
+             ->setStaticRuleReference('suffix', $this->_suffix);
     }
 
     /**
@@ -242,7 +246,8 @@ class Foo
             <programlisting role="php"><![CDATA[
 $inflector = new Zend_Filter_Inflector(':script.:suffix');
 
-// Affecte une règle pour utiliser le filtre Zend_Filter_Word_CamelCaseToDash
+// Affecte une règle pour utiliser le filtre
+//Zend_Filter_Word_CamelCaseToDash
 $inflector->setFilterRule('script', 'Word_CamelCaseToDash');
 
 // Ajoute une règle vers un filtre de casse minuscule

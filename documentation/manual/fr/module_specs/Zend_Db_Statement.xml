@@ -21,8 +21,8 @@
             <title>Création d'un objet statement avec query()</title>
 
             <programlisting role="php"><![CDATA[
-$stmt = $db->query('SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?',
-                array('goofy', 'FIXED'));
+$sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
+$stmt = $db->query($sql, array('goofy', 'FIXED'));
 ]]></programlisting>
         </example>
 
@@ -74,7 +74,9 @@ $stmt->execute(array('goofy', 'FIXED'));
             <title>Exécution d'un statement avec paramètres nommés</title>
 
             <programlisting role="php"><![CDATA[
-$sql = 'SELECT * FROM bugs WHERE reported_by = :reporter AND bug_status = :status';
+$sql = 'SELECT * FROM bugs'
+    . ' WHERE reported_by = :reporter'
+    . ' AND bug_status = :status';
 
 $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 
@@ -211,7 +213,9 @@ echo $rows[0][0];
                 <title>Utiliser fetchColumn()</title>
 
                 <programlisting role="php"><![CDATA[
-$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
+$sql = 'SELECT bug_id, bug_description, bug_status FROM bugs';
+
+$stmt = $db->query($sql);
 
 $bug_status = $stmt->fetchColumn(2);
 ]]></programlisting>
@@ -234,7 +238,9 @@ $bug_status = $stmt->fetchColumn(2);
                 <title>Utiliser fetchObject()</title>
 
                 <programlisting role="php"><![CDATA[
-$stmt = $db->query('SELECT bug_id, bug_description, bug_status FROM bugs');
+$sql = 'SELECT bug_id, bug_description, bug_status FROM bugs';
+
+$stmt = $db->query($sql);
 
 $obj = $stmt->fetchObject();
 

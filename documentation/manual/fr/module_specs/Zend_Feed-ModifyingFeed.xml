@@ -45,11 +45,14 @@ $entree->author->name = 'Auteur';
 $entree->author->email = 'moi@exemple.com';
 
 // maintenant on s'occupe de la partie personnalisée
-Zend_Feed::registerNamespace('monen', 'http://www.exemple.com/monen/1.0');
+Zend_Feed::registerNamespace('monen',
+                             'http://www.exemple.com/monen/1.0');
 
 $entree->{'monen:monelement_un'} = 'ma première valeur personnalisée';
-$entree->{'monen:conteneur_elt'}->partie1 = 'première partie imbriquée personnalisée';
-$entree->{'monen:conteneur_elt'}->partie2 = 'deuxième partie imbriquée personnalisée';
+$entree->{'monen:conteneur_elt'}
+       ->partie1 = 'première partie imbriquée personnalisée';
+$entree->{'monen:conteneur_elt'}
+       ->partie2 = 'deuxième partie imbriquée personnalisée';
 
 echo $entree->saveXML();
 ]]></programlisting>

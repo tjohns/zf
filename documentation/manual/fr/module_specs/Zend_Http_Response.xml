@@ -87,7 +87,10 @@ $response = Zend_Http_Response::factory($str);
                 <programlisting role="php"><![CDATA[
 if ($response->isError()) {
   echo "Erreur de transmission des données.\n"
-  echo "Les infos Serveur sont : " . $response->getStatus() . " " . $response->getMessage() . "\n";
+  echo "Les infos Serveur sont : "
+     . $response->getStatus()
+     . " " . $response->getMessage()
+     . "\n";
 }
 // ... traiter la réponse ici ...
 ]]></programlisting>

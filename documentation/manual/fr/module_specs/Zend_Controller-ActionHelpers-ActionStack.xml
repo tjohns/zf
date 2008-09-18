@@ -29,9 +29,12 @@ class FooController extends Zend_Controller_Action
     {
         // Ajoute deux actions à la pile
 
-        // Ajoute un appel à /foo/baz/bar/baz
-        // (FooController::bazAction() avec une variable de requête bar == baz)
-        $this->_helper->actionStack('baz', 'foo', 'default', array('bar' => 'baz'));
+        // Ajoute un appel à /foo/baz/bar/baz (FooController::bazAction()
+        // avec une variable de requête bar == baz)
+        $this->_helper->actionStack('baz',
+                                    'foo',
+                                    'default',
+                                    array('bar' => 'baz'));
 
         // Ajoute un appel à /bar/bat
         // (BarController::batAction())
@@ -54,18 +57,21 @@ class FooController extends Zend_Controller_Action
     {
         // Ajoute deux actions à la pile
 
-        // Ajoute un appel à /foo/baz/bar/baz
-        // (FooController::bazAction() avec une variable de requête bar == baz)
+        // Ajoute un appel à /foo/baz/bar/baz (FooController::bazAction()
+        // avec une variable de requête bar == baz)
         $request = clone $this->getRequest();
-        $request->setActionName('baz')              // sans régler le contrôleur ou le module
-                ->setParams(array('bar' => 'baz')); // utilise les valeurs courantes
+        // sans régler le contrôleur ou le module,
+        // utilise les valeurs courantes
+        $request->setActionName('baz')
+                ->setParams(array('bar' => 'baz'));
         $this->_helper->actionStack($request);
 
         // Ajoute un appel à /bar/bat
         // (BarController::batAction())
         $request = clone $this->getRequest();
-        $request->setActionName('bat')      // sans régler le module
-                ->setControllerName('bar'); // utilise la valeur courante
+        // sans régler le module, utilise la valeur courante
+        $request->setActionName('bat')
+                ->setControllerName('bar');
         $this->_helper->actionStack($request);
     }
 }

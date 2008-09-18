@@ -80,7 +80,8 @@
                 pour ne plus séparer les mots d'une action avec un tiret :</para>
 
                 <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -243,7 +244,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                 <para>A tout moment durant le processus d'amorçage :</para>
 
                 <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);
 ]]></programlisting>
             </listitem>
@@ -336,7 +338,10 @@ Zend_Controller_Front::run('/chemin/vers/controleurs');
                 maintenant :</para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);
+final protected function _forward($action,
+                                  $controller = null,
+                                  $module = null,
+                                  array $params = null);
 ]]></programlisting>
 
                 <para><code>$action</code> est toujours obligatoire ; si aucun contrôleur n'est spécifié, une action
@@ -479,8 +484,9 @@ echo $response;
                         <programlisting role="php"><![CDATA[
 // Récupère le nom de controleur de la requête
 // L'accès se fait via : $this->_action->getControllerName().
-// L'exemple ci-dessous utilise getRequest(), bien que vous pourriez accéder directement
-// à la propriété $_request ; l'utilisation de getRequest() est recommandée puisue la classe
+// L'exemple ci-dessous utilise getRequest(), bien que vous pourriez
+// accéder directement à la propriété $_request ; 
+// l'utilisation de getRequest() est recommandée puisque la classe
 // parente peut surcharger l'accès à l'objet requête.
 $controller = $this->getRequest()->getControllerName();
 
@@ -489,11 +495,12 @@ $controller = $this->getRequest()->getControllerName();
 $action = $this->getRequest()->getActionName();
 
 // Recupere les parametres de la requete
-// Ceci n'a pas changé ; les methodes _getParams() and _getParam() relaient simplement
-// l'objet requete maintenant.
+// Ceci n'a pas changé ; les méthodes _getParams() et _getParam()
+// relaient simplement l'objet requete maintenant.
 $params = $this->_getParams();
-$foo = $this->_getParam('foo', 'default'); // parametre de la requete 'foo', en utilisant
-                                           // 'default' en tant que valeur par défaut si aucune valeur n'est trouvée
+$foo = $this->_getParam('foo', 'default'); 
+// parametre de la requete 'foo', en utilisant 'default'
+// en tant que valeur par défaut si aucune valeur n'est trouvée
 ]]></programlisting>
                     </listitem>
 
@@ -505,7 +512,8 @@ $foo = $this->_getParam('foo', 'default'); // parametre de la requete 'foo', en 
                         <programlisting role="php"><![CDATA[
 public function __call($method, $args)
 {
-    // Si la méthode requetee ne correspond a aucune methode 'Action', on renvoie vers la méthode d'action par défaut :
+    // Si la méthode requetee ne correspond a aucune methode 'Action',
+    // on renvoie vers la méthode d'action par défaut :
     if ('Action' == substr($method, -6)) {
         return $this->defaultAction();
     }

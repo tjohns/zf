@@ -118,7 +118,8 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
 // require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
 
-// Charge automatiquement la classe Zend_Db_Adapter_Pdo_Mysql et en créer une instance.
+// Charge automatiquement la classe Zend_Db_Adapter_Pdo_Mysql
+// et en créer une instance.
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
@@ -137,7 +138,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 <title>Utilisation de la fabrique avec une classe personnalisée</title>
 
                 <programlisting role="php"><![CDATA[
-// Charge automatiquement la classe MyProject_Db_Adapter_Pdo_Mysql et l'instantie.
+// Charge automatiquement la classe MyProject_Db_Adapter_Pdo_Mysql
+// et l'instantie.
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'             => '127.0.0.1',
     'username'         => 'webuser',
@@ -314,7 +316,8 @@ $params = array(
 
 $db = Zend_Db::factory('Pdo_Mysql', $params);
 
-echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
+echo $db->getConnection()
+        ->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
 ]]></programlisting>
             </example>
         </sect3>
@@ -346,9 +349,11 @@ try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
     $db->getConnection();
 } catch (Zend_Db_Adapter_Exception $e) {
-    // probablement mauvais identifiants, ou alors le SGBD n'est pas joignable
+    // probablement mauvais identifiants,
+    // ou alors le SGBD n'est pas joignable
 } catch (Zend_Exception $e) {
-    // probablement que factory() n'a pas réussi à charger la classe de l'adaptateur demandé
+    // probablement que factory() n'a pas réussi à charger
+    // la classe de l'adaptateur demandé
 }
 ]]></programlisting>
             </example>
@@ -557,7 +562,8 @@ echo $result[0]['bug_description'];
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
+$sql = 'SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?';
+$result = $db->fetchCol($sql, 2);
 
 // Contient bug_description ; bug_id n'est pas retourné
 echo $result[0];
@@ -964,7 +970,8 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
                 <title>Utiliser quoteInto()</title>
 
                 <programlisting role="php"><![CDATA[
-$sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
+$sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?",
+                      "O'Reilly");
 
 echo $sql;
 // SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
@@ -978,7 +985,9 @@ echo $sql;
                 <title>Utiliser quoteInto() avec un type SQL</title>
 
                 <programlisting role="php"><![CDATA[
-$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
+$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?",
+                      '1234',
+                      'INTEGER');
 
 echo $sql;
 // SELECT * FROM bugs WHERE reported_by = 1234
@@ -1011,7 +1020,8 @@ echo $sql;
                 <title>Utiliser quoteIdentifier()</title>
 
                 <programlisting role="php"><![CDATA[
-// nous possédons une table ayant un nom correspondant à un mot reservé en SQL
+// nous possédons une table ayant un nom correspondant
+// à un mot reservé en SQL
 $tableName = $db->quoteIdentifier("order");
 
 $sql = "SELECT * FROM $tableName";
@@ -1075,9 +1085,10 @@ try {
     $db->commit();
 
 } catch (Exception $e) {
-    // Si une des requête s'est mal déroulée, alors nous voulons annuler les changements
-    // de toutes les requêtes faisant partie de la transaction, même celles qui se sont
-    // bien déroulées. Tous les changements sont annulés d'un seul coup.
+    // Si une des requête s'est mal déroulée, alors nous voulons
+    // annuler les changements de toutes les requêtes faisant partie
+    // de la transaction, même celles qui se sont bien déroulées.
+    // Tous les changements sont annulés d'un seul coup.
     $db->rollBack();
     echo $e->getMessage();
 }

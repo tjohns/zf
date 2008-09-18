@@ -385,7 +385,8 @@ $adapter->addResponse(
             <title>Création de votre propre adaptateur de connexion</title>
 
             <programlisting role="php"><![CDATA[
-class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
+class MyApp_Http_Client_Adapter_BananaProtocol
+    implements Zend_Http_Client_Adapter_Interface
 {
     /**
      * Définit le tableau de configuration pour cet adaptateur
@@ -394,8 +395,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      */
     public function setConfig($config = array())
     {
-        // Ceci change rarement, vous devriez copier l'implémentation présente dans
-        // Zend_Http_Client_Adapter_Socket.
+        // Ceci change rarement, vous devriez copier l'implémentation
+        // présente dans Zend_Http_Client_Adapter_Socket.
     }
 
     /**
@@ -420,10 +421,14 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      * @param string        $body
      * @return string Request as text
      */
-    public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '')
+    public function write($method,
+                          $url,
+                          $http_ver = '1.1',
+                          $headers = array(),
+                          $body = '')
     {
-        // Envoie la requête au serveur distant.
-        // Cette fonction devrait retourner la requête complète (en-tête et corps) as a string
+        // Envoie la requête au serveur distant. Cette fonction devrait
+        // retourner la requête complète (en-tête et corps) as a string
     }
 
     /**
@@ -433,7 +438,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      */
     public function read()
     {
-        // Lit la réponse du serveur distant, et la retourne sous forme de chaine de caractères
+        // Lit la réponse du serveur distant, et la retourne sous forme
+        // de chaine de caractères
     }
 
     /**

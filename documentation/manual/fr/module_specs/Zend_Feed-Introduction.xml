@@ -38,7 +38,8 @@ try {
 Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
     // l'importation du flux a échoué
-    echo "Une exception a été interceptée lors de l'importation du flux : {$e->getMessage()}\n";
+    echo "Une exception a été interceptée lors de l'importation "
+       . "du flux : {$e->getMessage()}\n";
     exit;
 }
 
@@ -50,8 +51,8 @@ $canal = array(
     'elements'    => array()
     );
 
-// on itère sur chaque élément du canal et on stocke les données qui nous
-intéressent
+// on itère sur chaque élément du canal et
+// on stocke les données qui nous intéressent
 foreach ($rssSlashdot as $elem) {
     $canal['elements'][] = array(
         'titre'       => $elem->title(),

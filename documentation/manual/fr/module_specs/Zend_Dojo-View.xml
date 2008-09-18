@@ -19,7 +19,8 @@
         pouvez faire ceci en appelant <code>addHelperPath()</code> :</para>
 
         <programlisting role="php"><![CDATA[
-$view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
+$view->addHelperPath('Zend/Dojo/View/Helper/',
+                     'Zend_Dojo_View_Helper');
 ]]></programlisting>
 
         <para>De manière alternative, vous pouvez utiliser la méthode <code>enableView()</code> de

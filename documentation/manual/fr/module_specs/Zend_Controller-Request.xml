@@ -170,7 +170,8 @@ $front->setRequest($request);
 
             <programlisting role="php"><![CDATA[
 /**
- * Dispatche la requête avec une base d'URL réglé avec Zend_Controller_Front.
+ * Dispatche la requête avec une base d'URL réglé
+ * avec Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
 $controller = Zend_Controller_Front::getInstance();

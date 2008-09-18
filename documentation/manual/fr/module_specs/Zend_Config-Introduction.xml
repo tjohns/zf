@@ -36,10 +36,12 @@ $configArray = array(
 // Crée un objet à partir des données de configuration
 $config = new Zend_Config($configArray);
 
-// Affiche une donnée de configuration en particulier (résultat : 'www.example.com')
+// Affiche une donnée de configuration en particulier
+// (résultat : 'www.example.com')
 echo $config->webhost;
 
-// Utilise les données de configuration pour se connecter à une base de données
+// Utilise les données de configuration pour se connecter
+// à une base de données
 $db = Zend_Db::factory($config->database->adapter,
                        $config->database->params->toArray());
 

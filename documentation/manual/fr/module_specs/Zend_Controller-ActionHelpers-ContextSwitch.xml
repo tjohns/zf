@@ -545,15 +545,15 @@ class CommentController extends Zend_Controller_Action
     public function formAction()
     {
         // Rend les formulaire "ajoutez un commentaire".
-        // Lorsque le AjaxContext est détecté, il utilise le script de vue
-        // comment/form.ajax.phtml
+        // Lorsque le AjaxContext est détecté, il utilise le script de
+        // vue : comment/form.ajax.phtml
     }
 
     public function processAction()
     {
         // Traite un commentaire
-        // Retourne les résultats sous forme JSON; assignez simplement vos résultats comme
-        // variables de vues.
+        // Retourne les résultats sous forme JSON ; assignez simplement
+        // vos résultats comme variables de vues.
     }
 }
 ]]></programlisting>

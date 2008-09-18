@@ -43,7 +43,8 @@
 class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
 {
     /**
-     * Définition de l'identifiant et du mot de passe pour authentification
+     * Définition de l'identifiant et du mot de passe
+     * pour authentification
      *
      * @return void
      */
@@ -55,7 +56,8 @@ class MonAdaptateurAuth implements Zend_Auth_Adapter_Interface
     /**
      * Réalise une tentative d'authentification
      *
-     * @throws Zend_Auth_Adapter_Exception si l'authentification ne peut pas être réalisée
+     * @throws Zend_Auth_Adapter_Exception Si l'authentification
+     *                                     ne peut pas être réalisée
      * @return Zend_Auth_Result
      */
     public function authenticate()
@@ -184,10 +186,12 @@ $auth = Zend_Auth::getInstance();
 $auth->setStorage(new Zend_Auth_Storage_Session('unEspaceDeNommage'));
 
 /**
- * @todo paramètrage de l'adaptateur d'authentification, $authAdaptateur
+ * @todo Paramètrage de l'adaptateur d'authentification :
+ *       $authAdaptateur
  */
 
-// authentification, sauvegarde du résultat et stockage du résultat en cas de succès
+// authentification, sauvegarde du résultat
+// et stockage du résultat en cas de succès
 $resultat = $auth->authenticate($authAdaptateur);
 ]]></programlisting></para>
             </example>
@@ -212,7 +216,8 @@ class MonStockage implements Zend_Auth_Storage_Interface
     /**
      * Retourne true si et seulement si le stockage est vide
      *
-     * @throws Zend_Auth_Storage_Exception S'il est impossible de déterminer si le stockage est vide
+     * @throws Zend_Auth_Storage_Exception S'il est impossible de déterminer
+     *                                     si le stockage est vide
      * @return boolean
      */
     public function isEmpty()
@@ -227,7 +232,8 @@ class MonStockage implements Zend_Auth_Storage_Interface
      *
      * Comportement à définir si le stockage est vide.
      *
-     * @throws Zend_Auth_Storage_Exception Si la lecture du stockage est impossible
+     * @throws Zend_Auth_Storage_Exception Si la lecture du stockage
+     *                                     est impossible
      * @return mixed
      */
     public function read()
@@ -241,7 +247,8 @@ class MonStockage implements Zend_Auth_Storage_Interface
      * Ecrit $contents dans le stockage
      *
      * @param  mixed $contents
-     * @throws Zend_Auth_Storage_Exception si l'écriture de $contents est impossible
+     * @throws Zend_Auth_Storage_Exception Si l'écriture de $contents
+     *                                     est impossible
      * @return void
      */
     public function write($contents)
@@ -254,7 +261,8 @@ class MonStockage implements Zend_Auth_Storage_Interface
     /**
      * RAZ du stockage
      *
-     * @throws Zend_Auth_Storage_Exception Si la remise à zéro (RAZ) est impossible
+     * @throws Zend_Auth_Storage_Exception Si la remise à zéro (RAZ)
+     *                                     est impossible
      * @return void
      */
     public function clear()
@@ -273,10 +281,12 @@ class MonStockage implements Zend_Auth_Storage_Interface
 Zend_Auth::getInstance()->setStorage(new MonStockage());
 
 /**
- * @todo paramètrage de l'adaptateur d'authentification, $authAdaptateur
+ * @todo Paramètrage de l'adaptateur d'authentification :
+ *       $authAdaptateur
  */
 
-// Authentification, sauvegarde et persistance du résultat en cas de succès.
+// Authentification, sauvegarde et
+// persistance du résultat en cas de succès.
 $result = Zend_Auth::getInstance()->authenticate($authAdaptateur);
 ]]></programlisting></para>
             </example>
@@ -313,7 +323,8 @@ if (!$resultat->isValid()) {
         echo "$message\n";
     }
 } else {
-    // Authentification réussie ; l'identité ($identifiant) est stockée dans la session
+    // Authentification réussie ; l'identité ($identifiant) est
+    // stockée dans la session
     // $resultat->getIdentity() === $auth->getIdentity()
     // $resultat->getIdentity() === $identifiant
 }

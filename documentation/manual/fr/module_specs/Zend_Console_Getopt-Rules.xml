@@ -82,8 +82,8 @@ $opts = new Zend_Console_Getopt('abp:');
 $opts = new Zend_Console_Getopt(
   array(
     'abricot|a'  => 'option abricot, sans parametres',
-    'banane|b=i' => 'option banane, avec un parametre obligatoire de type entier',
-    'pear|p-s'   => 'option pear, avec un parametre optionel de type chaine de caracteres'
+    'banane|b=i' => 'option banane, avec un parametre entier obligatoire',
+    'pear|p-s'   => 'option pear, avec un parametre chaine de caracteres optionel'
   )
 );
 ]]></programlisting>

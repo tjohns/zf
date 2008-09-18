@@ -81,7 +81,8 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
             <title>Récupérer toutes les villes disponibles</title>
 
             <programlisting role="php"><![CDATA[
-// Affiche la liste complète de toutes les villes disponibles dans la classe d'aide
+// Affiche la liste complète de toutes les villes disponibles 
+// dans la classe d'aide
 print_r (Zend_Date_Cities::getCityList());
 ]]></programlisting>
         </example>
@@ -176,7 +177,8 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
 // Retrouve la localisation d'une ville
 $city = Zend_Date_Cities::City('Vienna');
 
-// Créer une date à partir de laquelle extraire les informations relatives au soleil
+// Créer une date à partir de laquelle extraire
+// les informations relatives au soleil
 $date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
 
 // calcul du levé du soleil
@@ -218,7 +220,8 @@ foreach ($info as $sun) {
             <title>Travailler avec les fuseaux horaires (timezones)</title>
 
             <programlisting role="php"><![CDATA[
-// Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
+// Règle le fuseau horaire PHP par défaut.
+// En général, celui-ci est réglé dans php.ini.
 // Ici nous le faisons pour l'exemple
 date_default_timezone_set('Europe/Vienna');
 
@@ -255,7 +258,8 @@ print $date->getIso();
             <title>Plusieurs fuseaux horaires</title>
 
             <programlisting role="php"><![CDATA[
-// Règle le fuseau horaire PHP par défaut. EN général, celui-ci est réglé dans php.ini
+// Règle le fuseau horaire PHP par défaut.
+// En général, celui-ci est réglé dans php.ini
 // Ici nous le faisons pour l'exemple
 date_default_timezone_set('Europe/Vienna');
 

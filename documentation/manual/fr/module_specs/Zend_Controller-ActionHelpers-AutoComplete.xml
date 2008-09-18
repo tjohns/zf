@@ -24,10 +24,14 @@ class FooController extends Zend_Controller_Action
         $this->_helper->autoCompleteDojo($data);
 
         // Ou :
-        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+        $response = $this->_helper
+                         ->autoCompleteDojo
+                         ->sendAutoCompletion($data);
 
         // Ou alors prépare simplement les données :
-        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+        $response = $this->_helper
+                         ->autoCompleteDojo
+                         ->prepareAutoCompletion($data);
     }
 }
 ]]></programlisting>
@@ -118,11 +122,13 @@ $this->_helper->autoCompleteDojo($data);
 
             <programlisting role="javascript"><![CDATA[
 dojo.provide("custom.TestNameReadStore");
-dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
-    fetch:function (request) {
-        request.serverQuery = { test:request.query.name };
-        return this.inherited("fetch", arguments);
-    }
+dojo.declare("custom.TestNameReadStore",
+             dojox.data.QueryReadStore,
+             {
+             fetch:function (request) {
+                 request.serverQuery = { test:request.query.name };
+                 return this.inherited("fetch", arguments);
+             }
 });
 ]]></programlisting>
 
@@ -142,7 +148,8 @@ class TestController extends Zend_Controller_Action
             require_once 'Zend/Form.php';
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
-                ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
+                ->setAction($this->getRequest()->getBaseUrl()
+                          . '/test/process')
                 ->addElements(array(
                     'test' => array('type' => 'text', 'options' => array(
                         'filters'        => array('StringTrim'),
@@ -152,7 +159,8 @@ class TestController extends Zend_Controller_Action
                         'hasDownArrow'   => 'true',
                         'label' => 'Your input:',
                     )),
-                    'go' => array('type' => 'submit', 'options' => array('label' => 'Go!'))
+                    'go' => array('type' => 'submit',
+                                  'options' => array('label' => 'Go!'))
                 ));
         }
         return $this->_form;
@@ -218,7 +226,8 @@ class TestController extends Zend_Controller_Action
             <programlisting role="php"><![CDATA[
 <? // configuration de l'entrepôt de données : ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax" requestMethod="get"></div>
+    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    requestMethod="get"></div>
 
 <? // rendu du formulaire : ?>
 <?= $this->form ?>

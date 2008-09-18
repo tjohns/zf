@@ -270,7 +270,8 @@ $select = $db->select()
 
 $select = $db->select()
              ->from(array('p' => 'produits'),
-                    array('produit_id', 'prix_avec_taxe' => '(p.prix * 1.08)'));
+                    array('produit_id',
+                          'prix_avec_taxe' => '(p.prix * 1.08)'));
 
 // Construire cette requête en utilisant explicitement Zend_Db_Expr :
 //   SELECT p."produit_id", p.prix * 1.08 AS prix_avec_taxe
@@ -278,7 +279,9 @@ $select = $db->select()
 
 $select = $db->select()
              ->from(array('p' => 'produits'),
-                    array('produit_id', 'prix_avec_taxe' => new Zend_Db_Expr('p.prix * 1.08')));
+                    array('produit_id',
+                          'prix_avec_taxe' =>
+                                new Zend_Db_Expr('p.prix * 1.08')));
 ]]></programlisting>
             </example>
 
@@ -303,13 +306,16 @@ $select = $db->select()
                 <title>Exemples d'échappement de colonnes dans une expression</title>
 
                 <programlisting role="php"><![CDATA[
-// Construire cette requête, en échappant une colonne spéciale nommée "from" dans une expression :
+// Construire cette requête, en échappant une colonne spéciale
+// nommée "from" dans une expression :
 //   SELECT p."from" + 10 AS origine
 //   FROM "produits" AS p
 
 $select = $db->select()
              ->from(array('p' => 'produits'),
-                    array('origine' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));
+                    array('origine' => '(p.'
+                                     . $db->quoteIdentifier('from')
+                                     . ' + 10)'));
 ]]></programlisting>
             </example>
         </sect3>
@@ -342,7 +348,8 @@ $select = $db->select()
 
 $select = $db->select()
              ->from(array('p' => 'produits'), 'p.produit_id')
-             ->columns('produit_nom', 'p'); // Ou alternativement columns('p.produit_nom')
+             ->columns('produit_nom', 'p'); 
+             // Ou alternativement columns('p.produit_nom')
 ]]></programlisting>
             </example>
         </sect3>
@@ -796,7 +803,8 @@ $select = $db->select()
                     'p.produit_id = l.produit_id',
                     array('ligne_items_par_produit' => 'COUNT(*)'))
              ->group('p.produit_id')
-             ->order(array('ligne_items_par_produit DESC', 'produit_id'));
+             ->order(array('ligne_items_par_produit DESC',
+                           'produit_id'));
 ]]></programlisting>
             </example>
         </sect3>
@@ -824,7 +832,8 @@ $select = $db->select()
 //   LIMIT 10, 20
 
 $select = $db->select()
-             ->from(array('p' => 'produits'), array('produit_id', 'produit_nom'))
+             ->from(array('p' => 'produits'),
+                    array('produit_id', 'produit_nom'))
              ->limit(10, 20);
 ]]></programlisting>
             </example>
@@ -854,7 +863,8 @@ $select = $db->select()
 //   LIMIT 10, 20
 
 $select = $db->select()
-             ->from(array('p' => 'products'), array('product_id', 'product_name'))
+             ->from(array('p' => 'products'),
+                    array('product_id', 'product_name'))
              ->limitPage(2, 10);
 ]]></programlisting>
             </example>

@@ -48,12 +48,14 @@
         authentifié.</para>
 
         <programlisting role="php"><![CDATA[
-$my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
+$my_calendar =
+    'http://www.google.com/calendar/feeds/default/private/full';
 
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
         // Vous pouvez convertir le jeton unique en jeton de session.
-        $session_token =  Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
+        $session_token =
+            Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
         // Enregistre le jeton de session, dans la session PHP.
         $_SESSION['cal_token'] = $session_token;
     } else {
@@ -61,12 +63,14 @@ if (!isset($_SESSION['cal_token'])) {
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
             $my_calendar, 0, 1);
-        echo "Cliquez <a href='$googleUri'>ici</a> pour autoriser votre application.";
+        echo "Cliquez <a href='$googleUri'>ici</a>"
+           . " pour autoriser votre application.";
         exit();
     }
 }
 
-// Création d'un client HTTP authentifié pour les échanges avec les serveurs Google.
+// Création d'un client HTTP authentifié
+// pour les échanges avec les serveurs Google.
 $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['cal_token']);
 
 // Création d'un objet Gdata utilisant le client HTTP authentifié :
@@ -82,7 +86,10 @@ $cal = new Zend_Gdata_Calendar($client);
 
         <programlisting role="php"><![CDATA[
 // construction sécurisée de la valeur.
-$php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0, strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
+$php_self = htmlentities(substr($_SERVER['PHP_SELF'],
+                                0,
+                                strcspn($_SERVER['PHP_SELF'], "\n\r")),
+                         ENT_QUOTES);
 
 if (isset($_GET['logout'])) {
     Zend_Gdata_AuthSub::AuthSubRevokeToken($_SESSION['cal_token']);

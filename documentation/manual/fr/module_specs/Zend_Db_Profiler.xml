@@ -19,7 +19,9 @@ $params = array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test',
-    'profiler' => true  // active le profileur ; mettre à false pour désactiver (désactivé par défaut)
+    'profiler' => true  // active le profileur ;
+                        // mettre à false pour désactiver
+                        // (désactivé par défaut)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -176,11 +178,21 @@ foreach ($profileur->getQueryProfiles() as $query) {
     }
 }
 
-echo 'Exécution de ' . $nombreRequetes . ' requêtes en ' . $tempsTotal . ' secondes' . "\n";
-echo 'Temps moyen : ' . $tempsTotal / $nombreRequetes . ' secondes' . "\n";
-echo 'Requêtes par seconde: ' . $nombreRequetes / $tempsTotal . ' seconds' . "\n";
-echo 'Requête la plus lente (secondes) : ' . $tempsLePlusLong . "\n";
-echo "Requête la plus lente (SQL) : \n" . $requeteLaPlusLongue . "\n";
+echo 'Exécution de '
+   . $nombreRequetes
+   . ' requêtes en '
+   . $tempsTotal
+   . ' secondes' . "\n";
+echo 'Temps moyen : '
+   . $tempsTotal / $nombreRequetes
+   . ' secondes' . "\n";
+echo 'Requêtes par seconde: '
+   . $nombreRequetes / $tempsTotal
+   . ' seconds' . "\n";
+echo 'Requête la plus lente (secondes) : '
+   . $tempsLePlusLong . "\n";
+echo "Requête la plus lente (SQL) : \n"
+   . $requeteLaPlusLongue . "\n";
 ]]></programlisting>
     </sect2>
 
@@ -259,7 +271,9 @@ $profileur->setFilterElapsedSecs(null);
 $profileur->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // profile les requêtes SELECT, INSERT, et UPDATE
-$profileur->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+$profileur->setFilterQueryType(Zend_Db_Profiler::SELECT
+                             | Zend_Db_Profiler::INSERT
+                             | Zend_Db_Profiler::UPDATE);
 
 // profile les requêtes DELETE
 $profileur->setFilterQueryType(Zend_Db_Profiler::DELETE);
@@ -282,11 +296,14 @@ $profileur->setFilterQueryType(null);
 // Récupère uniquement les profils des requêtes SELECT
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
-// Récupère uniquement les profils des requêtes SELECT, INSERT, et UPDATE
-$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+// Récupère uniquement les profils des requêtes :
+// SELECT, INSERT, et UPDATE
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT
+                                      | Zend_Db_Profiler::INSERT
+                                      | Zend_Db_Profiler::UPDATE);
 
-// Récupère uniquement les profils des requêtes DELETE (on peut donc comprendre pourquoi les données
-// disparaissent)
+// Récupère uniquement les profils des requêtes DELETE
+// (on peut donc comprendre pourquoi les données disparaissent)
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
 ]]></programlisting>
         </sect3>

@@ -71,7 +71,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                     :</para>
 
                     <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 ]]></programlisting>
@@ -110,7 +111,8 @@ class Foo_BarController extends Zend_Controller_Action
     }
 
     // Rend bar/populate.phtml avec une variable 'foo' à la valeur 'bar'.
-    // l'objet de vue est défini dans le preDispatch(), il est donc accessible.
+    // l'objet de vue est défini dans le preDispatch(), il est donc
+    // accessible.
     public function populateAction()
     {
         $this->view->foo = 'bar';
@@ -206,7 +208,8 @@ $this->_helper->viewRenderer('form', 'html', true);
         <programlisting role="php"><![CDATA[
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
+$viewRenderer =
+    new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]></programlisting>
 
         <para>Il est aussi possible de personnaliser les chemins utilisés pour déterminer le base path (chemin de base)
@@ -545,7 +548,8 @@ class Foo_BarController extends Zend_Controller_Action
 
     public function bazAction()
     {
-        // Récupère l'objet de vue, et lui passe la fonction d'echappement 'htmlspecialchars'
+        // Récupère l'objet de vue, et lui passe la fonction
+        // d'2chappement 'htmlspecialchars'
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
@@ -598,7 +602,8 @@ class SearchController extends Zend_Controller_Action
     public function resultsAction()
     {
         // Considérons $this->model comme étant un modèle valide
-        $this->view->results = $this->model->find($this->_getParam('query', '');
+        $this->view->results = $this->model
+                                    ->find($this->_getParam('query', '');
 
         // render() est proxiée vers ViewRenderer
         // Rend d'abord un formulaire, puis un résultat

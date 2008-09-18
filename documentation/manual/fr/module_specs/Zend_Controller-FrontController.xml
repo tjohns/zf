@@ -182,7 +182,8 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             frontal.</para>
 
             <programlisting role="php"><![CDATA[
-// Instancie le contrôleur frontal, règle les dossiers de contrôleurs, et dispatche en une seule étape :
+// Instancie le contrôleur frontal, règle les dossiers de contrôleurs,
+// et dispatche en une seule étape :
 Zend_Controller_Front::run('../application/controllers');
 ]]></programlisting>
         </sect3>

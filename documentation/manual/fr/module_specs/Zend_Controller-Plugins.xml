@@ -83,34 +83,45 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         <programlisting role="php"><![CDATA[
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
-    public function routeStartup(Zend_Controller_Request_Abstract $request)
+    public function routeStartup(
+                Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>routeStartup() appelée</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>routeStartup() appelée</p>\n");
     }
 
-    public function routeShutdown(Zend_Controller_Request_Abstract $request)
+    public function routeShutdown(
+                Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>routeShutdown() appelée</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>routeShutdown() appelée</p>\n");
     }
 
-    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
+    public function dispatchLoopStartup(
+                Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>dispatchLoopStartup() appelée</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>dispatchLoopStartup() appelée</p>\n");
     }
 
-    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    public function preDispatch(
+                Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>preDispatch() appelée</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>preDispatch() appelée</p>\n");
     }
 
-    public function postDispatch(Zend_Controller_Request_Abstract $request)
+    public function postDispatch(
+                Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>postDispatch() appelée</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>postDispatch() appelée</p>\n");
     }
 
     public function dispatchLoopShutdown()
     {
-        $this->getResponse()->appendBody("<p>dispatchLoopShutdown() appelée</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>dispatchLoopShutdown() appelée</p>\n");
     }
 }
 

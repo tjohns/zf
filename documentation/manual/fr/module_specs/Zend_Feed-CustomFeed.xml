@@ -16,17 +16,19 @@
 
         <programlisting role="php"><![CDATA[
 /**
- * La classe personnalisée connaît automatiquement l'URI du flux (qui est
- * optionnelle) et elle peut ajouter automatiquement des espaces de noms
- * supplémentaires.
+ * La classe personnalisée connaît automatiquement l'URI du flux
+ * (qui est optionnelle) et elle peut ajouter automatiquement
+ * des espaces de noms supplémentaires.
  */
 class MonEntree extends Zend_Feed_Entry_Atom
 {
 
-    public function __construct($uri = 'http://www.exemple.com/monflux/', $xml = null)
+    public function __construct($uri = 'http://www.exemple.com/monflux/',
+                                $xml = null)
     {
         parent::__construct($uri, $xml);
-        Zend_Feed::registerNamespace('monen', 'http://www.exemple.com/monen/1.0');
+        Zend_Feed::registerNamespace('monen',
+                                     'http://www.exemple.com/monen/1.0');
     }
 
     public function __get($var)

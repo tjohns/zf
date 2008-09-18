@@ -93,7 +93,8 @@ $service = new Zend_Gdata_Photos($client);
 session_start();
 
 /**
- * Retourne l'URL complet de la page actuelle, en fonction des variables d'environnement
+ * Retourne l'URL complet de la page actuelle,
+ * en fonction des variables d'environnement
  * 
  * Env variables utilisées:
  * $_SERVER['HTTPS'] = (on|off|)
@@ -113,7 +114,8 @@ function getCurrentUrl()
     $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0,
     strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS'])
+     && strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -130,9 +132,11 @@ function getCurrentUrl()
 }
 
 /**
- * Retourne l'URL AuthSub que l'utilisateur doit visiter pour authentifier ses requêtes
+ * Retourne l'URL AuthSub que l'utilisateur doit visiter
+ * pour authentifier ses requêtes
  *
- * Utilise getCurrentUrl() pour récupérer le prochain URL vers lequel l'utilisateur sera redirigé après
+ * Utilise getCurrentUrl() pour récupérer le prochain URL
+ * vers lequel l'utilisateur sera redirigé après
  * s'être authentifié.
  *
  * @return string AuthSub URL
@@ -143,16 +147,20 @@ function getAuthSubUrl()
     $scope = 'http://picasaweb.google.com/data';
     $secure = false;
     $session = true;
-    return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, 
-        $session);
+    return Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
+                                                  $scope,
+                                                  $secure,
+                                                  $session);
 }
 
 /**
- * Retourne un objet servant de client HTTP avec les bons en-têtes, permettant de 
- * communiquer avec les services Google, et utilisant l'authentification AuthSub.
+ * Retourne un objet servant de client HTTP avec les bons en-têtes,
+ * permettant de communiquer avec les services Google, et utilisant
+ * l'authentification AuthSub.
  *
- * Utilise $_SESSION['sessionToken'] pour stocker le jeton de session AuthSub après l'avoir obtenu.
- * $_GET['token'] récupère ce jeton après la redirection d'authentification
+ * Utilise $_SESSION['sessionToken'] pour stocker le jeton de session
+ * AuthSub après l'avoir obtenu. $_GET['token'] récupère ce jeton 
+ * après la redirection d'authentification
  *
  * @return Zend_Http_Client
  */
@@ -163,13 +171,14 @@ function getAuthSubHttpClient()
         $_SESSION['sessionToken'] = 
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
     } 
-    $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
+    $client =
+        Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
     return $client;
 }
 
 /**
- * Créer une instance du service, redirigeant l'utilisateur vers le serveur
- * AuthSub si nécéssaire.
+ * Créer une instance du service, redirigeant l'utilisateur
+ * vers le serveur AuthSub si nécéssaire.
  */
 $service = new Zend_Gdata_Photos(getAuthSubHttpClient());
 ]]></programlisting>
@@ -729,7 +738,9 @@ try {
     $this->delete($album);
 } catch (Zend_Gdata_App_HttpException $e) {
     if ($e->getMessage()->getStatus() === 409) {
-        $entry = new Zend_Gdata_Photos_AlbumEntry($e->getMessage()->getBody());
+        $entry =
+            new Zend_Gdata_Photos_AlbumEntry($e->getMessage()
+                                               ->getBody());
         $this->delete($entry->getLink('edit')->href);
     } else {
         throw $e;

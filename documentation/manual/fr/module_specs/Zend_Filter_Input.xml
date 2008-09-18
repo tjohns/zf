@@ -388,8 +388,9 @@ $validators = array(
         'fields' => array('password1', 'password2')
     )
 );
-// Invoque la classe Zend_Validate_StringEquals, en lui passant un tableau contenant les valeurs des 
-// champs 'password1' and 'password2'.
+// Invoque la classe Zend_Validate_StringEquals,
+// en lui passant un tableau contenant les valeurs
+// des champs 'password1' and 'password2'.
 ]]></programlisting>
 
             <para>Si la validation échoue, alors le nom de la règle (<code>'password'</code>) est utilisé dans le retour
@@ -486,7 +487,8 @@ $validators = array(
 
             <programlisting role="php"><![CDATA[
 $options = array(
-    'notEmptyMessage' => "Une valeur non vide est requise pour le champ '%field%'"
+    'notEmptyMessage' => 
+        "Une valeur non vide est requise pour le champ '%field%'"
 );
 
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
@@ -532,13 +534,15 @@ $input = new Zend_Filter_Input(null, $validators);
             créez votre propre chaine de validation comme ceci :</para>
 
             <programlisting role="php"><![CDATA[
-// Créer une chaine de validation avec un attribut breakChainOnFailure non uniforme
+// Créer une chaine de validation avec un attribut
+// breakChainOnFailure non uniforme
 $chain = new Zend_Validate();
 $chain->addValidator(new Zend_Validate_Digits(), true);
 $chain->addValidator(new Zend_Validate_Between(1,12), false);
 $chain->addValidator(new Zend_Validate_GreaterThan(0), true);
 
-// Déclare la règloe de validation en faisant référence à la chaine de validation ci dessus
+// Déclare la règloe de validation en faisant référence
+// à la chaine de validation ci dessus
 $validators = array(
     'month' => $chain
 );
@@ -605,9 +609,11 @@ $validators = array(
             'Un mois ne peut contenir que des chiffres',
             array(
                 Zend_Validate_Between::NOT_BETWEEN =>
-                    'La valeur %value% du mois doit être comprise entre %min% et %max%',
+                    'La valeur %value% du mois doit être comprise'
+                  . ' entre %min% et %max%',
                 Zend_Validate_Between::NOT_BETWEEN_STRICT =>
-                    'La valeur %value% du mois doit être comprise strictement entre %min% et %max%'
+                    'La valeur %value% du mois doit être comprise'
+                  . ' strictement entre %min% et %max%'
             )
         )
     )

@@ -203,7 +203,8 @@ $rowset = $bugs->fetchAll();
 // Convertit l'objet en sa forme sérialisée
 $serializedRowset = serialize($rowset);
 
-// Maintenant vous pouvez écrire $serializedRowset dans un fichier, etc.
+// Maintenant vous pouvez écrire $serializedRowset
+// dans un fichier, etc.
 ]]></programlisting>
         </example>
 

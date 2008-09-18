@@ -27,7 +27,9 @@
         la clé de <code>$options</code> en construisant l'objet <code>Zend_Config_Ini</code>. Par exemple:
         <programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
-$options = new Zend_Config_Ini('/chemin/vers/config.ini', 'test', $options);
+$options = new Zend_Config_Ini('/chemin/vers/config.ini',
+                               'test',
+                               $options);
 ]]></programlisting></para>
     </note>
 
@@ -53,8 +55,8 @@ database.params.username = dbuser
 database.params.password = secret
 database.params.dbname   = dbname
 
-; Données de configuration du site de test héritant du site de production
-; et surchargeant les clés nécessaires
+; Données de configuration du site de test héritant du site
+; de production et surchargeant les clés nécessaires
 [test : production]
 database.params.host     = dev.example.com
 database.params.username = devuser

@@ -76,8 +76,8 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name = 'bug_db.bugs';
 }
 
-// Si le nom de la base est spécifiée dans $_name ET $_schema, alors c'est
-// celui spécifié dans $_name qui prime :
+// Si le nom de la base est spécifiée dans $_name ET $_schema,
+// alors c'est celui spécifié dans $_name qui prime :
 
 class Bugs extends Zend_Db_Table_Abstract
 {
@@ -110,7 +110,8 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs');
 // Si le nom de la base est spécifié dans name ET schema, alors c'est
 // celui spécifié dans name qui prime :
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs',
+                            'schema' => 'ignored');
 ]]></programlisting>
             </example>
 
@@ -666,7 +667,8 @@ $rows = $table->fetchAll($select);
                     <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
-$rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));
+$rows = $table->fetchAll($table->select()
+                               ->where('bug_status = ?', 'NEW'));
 ]]></programlisting>
                 </example></para>
         </sect3>
@@ -756,7 +758,8 @@ $rows = $table->fetchAll($select);
 $table = new Bugs();
 
 $select = $table->select();
-$select->from($table, array('COUNT(reported_by) as `count`', 'reported_by'))
+$select->from($table,
+              array('COUNT(reported_by) as `count`', 'reported_by'))
        ->where('bug_status = ?', 'NEW')
        ->group('reported_by');
 
@@ -798,7 +801,9 @@ $table = new Bugs();
 
 $select = $table->select()->setIntegrityCheck(false);
 $select->where('bug_status = ?', 'NEW')
-       ->join('accounts', 'accounts.account_name = bugs.reported_by', 'account_name')
+       ->join('accounts',
+              'accounts.account_name = bugs.reported_by',
+              'account_name')
        ->where('accounts.account_name = ?', 'Bob');
 
 $rows = $table->fetchAll($select);
@@ -946,8 +951,10 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
-
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // Puis passons le comme objet de cache par défaut
 Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
@@ -958,7 +965,6 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     // ...
 }
-
 
 // Chaque instance utilise l'objet par défaut
 $bugs = new Bugs();
@@ -981,7 +987,10 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // Testons avec une classe
 class Bugs extends Zend_Db_Table_Abstract
@@ -989,7 +998,8 @@ class Bugs extends Zend_Db_Table_Abstract
     // ...
 }
 
-// Lors de son instanciation, il est possible de lui passer l'objet de cache
+// Lors de son instanciation, il est possible
+// de lui passer l'objet de cache
 $bugs = new Bugs(array('metadataCache' => $cache));
 ]]></programlisting>
         </example>
@@ -1137,7 +1147,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
     public function findByStatus($status)
     {
-        $where = $this->getAdapter()->quoteInto('bug_status = ?', $status);
+        $where = $this->getAdapter()->quoteInto('bug_status = ?',
+                                                $status);
         return $this->fetchAll($where, 'bug_id');
     }
 }

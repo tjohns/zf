@@ -36,7 +36,8 @@
 
                 <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->getHelper('FlashMessenger');
-$flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière requête');
+$message = 'Nous avons fait quelquechose lors de la dernière requête';
+$flashMessenger->addMessage($message);
 ]]></programlisting>
             </listitem>
 
@@ -46,7 +47,8 @@ $flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière r
 
                 <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->FlashMessenger;
-$flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière requête');
+$message = 'Nous avons fait quelquechose lors de la dernière requête';
+$flashMessenger->addMessage($message);
 ]]></programlisting>
             </listitem>
 
@@ -56,7 +58,8 @@ $flashMessenger->addMessage('Nous avons fait quelquechose lors de la dernière r
                 appelle <code>addMessage()</code> :</para>
 
                 <programlisting role="php"><![CDATA[
-$this->_helper->FlashMessenger('Nous avons fait quelquechose lors de la dernière requête');
+$message = 'Nous avons fait quelquechose lors de la dernière requête';
+$this->_helper->FlashMessenger($message);
 ]]></programlisting>
             </listitem>
         </itemizedlist>
@@ -135,14 +138,17 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         (c'est-à-dire sans le préfixe).</para>
 
         <programlisting role="php"><![CDATA[
-// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire, et l'extrait :
+// Vérifie si l'aide 'redirector' est enregistrée dans le gestionnaire,
+// et l'extrait :
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
-    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+    $redirector =
+        Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
 }
 
 // Ou, simplement le récupère, sans se soucier s'il a ou non été
 // enregistré précédemment :
-$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+$redirector =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }
 ]]></programlisting>
 

@@ -43,7 +43,8 @@ $fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);
 // on importe un flux atom à partir d'un tableau
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
-// la ligne suivante est équivalente à celle ci-dessus ; par défaut l'instance Zend_Feed_Atom est retournée
+// la ligne suivante est équivalente à celle ci-dessus ;
+// par défaut l'instance Zend_Feed_Atom est retournée
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // on importe un flux rss à partir d'un tableau
@@ -54,101 +55,101 @@ $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
 
             <programlisting role="php"><![CDATA[
 array(
-      'title'       => 'titre du flux', // obligatoire
-      'link'        => 'url canonique du flux', // obligatoire
-      'lastUpdate'  => 'date de la mise à jour au format timestamp', // optionel
-      'published'   => 'date de la publication au format timestamp', // optionel
-      'charset'     => 'charset des données textuelles', // obligatoire
-      'description' => 'description courte du flux', // optionel
-      'author'      => 'auteur du flux', // optionel
-      'email'       => 'email de l'auteur du flux', // optionel
-      'webmaster'   => 'email de la personne responsable en cas de problème technique' // optionel, ignoré si le flux est de type atom
-      'copyright'   => 'informations de copyright', // optionel
-      'image'       => 'url de l'image', // optionel
-      'generator'   => 'générateur du flux', // optionel
-      'language'    => 'langue dans la quelle le flux est écrit', // optionel
-      'ttl'         => 'combien de temps en minutes un flux peut être mis en cache avant rafraichissement', // optionel, ignoré si le flux est de type atom
-      'rating'      => 'l'évaluation PICS du canal', // optionel, ignoré si le flux est de type atom
-      'cloud'       => array(
-                             'domain'            => 'domaine du nuage, ex. rpc.sys.com' // obligatoire
-                             'port'              => 'port de connexion' // optionel, par défault port 80
-                             'path'              => 'chemin du nuage, ex. /RPC2' // obligatoire
-                             'registerProcedure' => 'procédure à appeler, ex. myCloud.rssPleaseNotify' // obligatoire
-                             'protocol'          => 'protocole à utiliser , ex. soap ou xml-rpc' // obligatoire
-                             ), // un nuage pour être averti des mises à jour // optionel, ignoré si le flux est de type atom
-      'textInput'   => array(
-                             'title'       => 'l'intitulé du bouton de validation de la boîte de saisie' // obligatoire,
-                             'description' => 'explication de la boîte de saisie' // obligatoire
-                             'name'        => 'le nom de l'objet texte' // obligatoire
-                             'link'        => 'l'URL du CGI qui va analyser la requête' // obligatoire
-                             ) // une boîte de saisie qui peut être montrée avec le flux  // optionel, ignoré si le flux est de type atom
-      'skipHours'   => array(
-                             'heures dans le format 24H', // ex. 13 (1pm)
-                             // jusqu'à 24 lignes dont les valeurs sont des nombres commpris entre 0 et 23
-                             ) // Information disant aux aggrégateurs quelles heures ils peuvent ignorer // optionel, ignoré si le flux est de type atom
-      'skipDays '   => array(
-                             'jour', // ex. Monday
-                             // jusqu'à 7 lignes dont les valeurs peuvent être Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday
-                             ) // Information disant aux aggrégateurs quelles jours ils peuvent ignorer // optionel, ignoré si le flux est de type atom
-      'itunes'      => array(
-                             'author'       => 'nom de l'artiste' // optionel, par défaut l'auteur principal
-                             'owner'        => array(
-                                                     'name' => 'nom du propriétaire' // optionel, default l'auteur principal
-                                                     'email' => 'email du propriétaire' // optionel, default l'email de l'auteur principal
-                                                     ) // propriétaire du podcast // optionel
-                             'image'        => 'image de l'album/podcast' // optionel, default to the main image value
-                             'subtitle'     => 'description courte' // optionel, default to the main description value
-                             'summary'      => 'description longue' // optionel, default to the main description value
-                             'block'        => 'empêcher l'apparition d'un épisode (yes|no)' // optionel
-                             'category'     => array(
-                                                     array('main' => 'catégorie principale', // obligatoire
-                                                           'sub'  => 'sous-catégorie' // optionel
-                                                           ),
-                                                     // jusqu'à 3 lignes
-                                                     ) // 'Catégorie et information de recherche dans iTunes Music Store' // obligatoire
-                             'explicit'     => 'graphique d'avertissement parental (yes|no|clean)' // optionel
-                             'keywords'     => 'une liste d'au maximum 12 mot clés separés par des virgules' // optionel
-                             'new-feed-url' => 'utiliser pour informer iTunes d'un nouvel URL de flux' // optionel
-                             ) // Données d'extension iTunes // optionel, ignoré si le flux est de type atom
-      'entries'     => array(
-                             array(
-                                   'title'        => 'titre de l'item', // obligatoire
-                                   'link'         => 'url de cet item', // obligatoire
-                                   'description'  => 'version raccourci du texte', // seulement du text, pas d'html, obligatoire
-                                   'guid'         => 'id de l'article, si aucun alors la valeur link est utilisée', // optionel
-                                   'content'      => 'version complète de l'information', // peut contenir html, optionel
-                                   'lastUpdate'   => 'date de publication au format timestamp', // optionel
-                                   'comments'     => 'page de commentaires de l'item', // optionel
-                                   'commentRss'   => 'l'url du flux des commentaires associés', // optionel
-                                   'source'       => array(
-                                                           'title' => 'titre de la source originale' // obligatoire,
-                                                           'url' => 'url de la source originale' // obligatoire
-                                                           ) // source originale de l'item // optionel
-                                   'category'     => array(
-                                                           array(
-                                                                 'term' => 'intitulé de la première catégorie' // obligatoire,
-                                                                 'scheme' => 'url qui décrit l'organisation de la catégorie' // optionel
-                                                                 ),
-                                                           array(
-                                                                 //données de la seconde catégorie et ainsi de suite
-                                                                 )
-                                                           ) // liste des catégories attachées// optionel
-                                   'enclosure'    => array(
-                                                           array(
-                                                                 'url' => 'url de la pièce jointe' // obligatoire
-                                                                 'type' => 'type mime de la pièce jointe' // optionel
-                                                                 'length' => 'length de la pièce jointe en octets' // optionel
-                                                                 ),
-                                                           array(
-                                                                 //données de la seconde pièce jointe et ainsi de suite
-                                                                 )
-                                                           ) // liste des pièces jointes à l'item // optionel
-                                   ),
-                             array(
-                                   //données du second item et ainsi de suite
-                                   )
-                             )
-       );
+  'title'       => 'titre du flux', // obligatoire
+  'link'        => 'url canonique du flux', // obligatoire
+  'lastUpdate'  => 'date de la mise à jour au format timestamp', // optionel
+  'published'   => 'date de la publication au format timestamp', // optionel
+  'charset'     => 'charset des données textuelles', // obligatoire
+  'description' => 'description courte du flux', // optionel
+  'author'      => 'auteur du flux', // optionel
+  'email'       => 'email de l'auteur du flux', // optionel
+  'webmaster'   => 'email de la personne responsable en cas de problème technique' // optionel, ignoré si le flux est de type atom
+  'copyright'   => 'informations de copyright', // optionel
+  'image'       => 'url de l'image', // optionel
+  'generator'   => 'générateur du flux', // optionel
+  'language'    => 'langue dans la quelle le flux est écrit', // optionel
+  'ttl'         => 'combien de temps en minutes un flux peut être mis en cache avant rafraichissement', // optionel, ignoré si le flux est de type atom
+  'rating'      => 'l'évaluation PICS du canal', // optionel, ignoré si le flux est de type atom
+  'cloud'       => array(
+             'domain'            => 'domaine du nuage, ex. rpc.sys.com' // obligatoire
+             'port'              => 'port de connexion' // optionel, par défault port 80
+             'path'              => 'chemin du nuage, ex. /RPC2' // obligatoire
+             'registerProcedure' => 'procédure à appeler, ex. myCloud.rssPleaseNotify' // obligatoire
+             'protocol'          => 'protocole à utiliser , ex. soap ou xml-rpc' // obligatoire
+             ), // un nuage pour être averti des mises à jour // optionel, ignoré si le flux est de type atom
+  'textInput'   => array(
+             'title'       => 'l'intitulé du bouton de validation de la boîte de saisie' // obligatoire,
+             'description' => 'explication de la boîte de saisie' // obligatoire
+             'name'        => 'le nom de l'objet texte' // obligatoire
+             'link'        => 'l'URL du CGI qui va analyser la requête' // obligatoire
+             ) // une boîte de saisie qui peut être montrée avec le flux  // optionel, ignoré si le flux est de type atom
+  'skipHours'   => array(
+             'heures dans le format 24H', // ex. 13 (1pm)
+             // jusqu'à 24 lignes dont les valeurs sont des nombres commpris entre 0 et 23
+             ) // Information disant aux aggrégateurs quelles heures ils peuvent ignorer // optionel, ignoré si le flux est de type atom
+  'skipDays '   => array(
+             'jour', // ex. Monday
+             // jusqu'à 7 lignes dont les valeurs peuvent être Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday
+             ) // Information disant aux aggrégateurs quelles jours ils peuvent ignorer // optionel, ignoré si le flux est de type atom
+  'itunes'      => array(
+             'author'       => 'nom de l'artiste' // optionel, par défaut l'auteur principal
+             'owner'        => array(
+                                     'name' => 'nom du propriétaire' // optionel, default l'auteur principal
+                                     'email' => 'email du propriétaire' // optionel, default l'email de l'auteur principal
+                                     ) // propriétaire du podcast // optionel
+             'image'        => 'image de l'album/podcast' // optionel, default to the main image value
+             'subtitle'     => 'description courte' // optionel, default to the main description value
+             'summary'      => 'description longue' // optionel, default to the main description value
+             'block'        => 'empêcher l'apparition d'un épisode (yes|no)' // optionel
+             'category'     => array(
+                                     array('main' => 'catégorie principale', // obligatoire
+                                           'sub'  => 'sous-catégorie' // optionel
+                                           ),
+                                     // jusqu'à 3 lignes
+                                     ) // 'Catégorie et information de recherche dans iTunes Music Store' // obligatoire
+             'explicit'     => 'graphique d'avertissement parental (yes|no|clean)' // optionel
+             'keywords'     => 'une liste d'au maximum 12 mot clés separés par des virgules' // optionel
+             'new-feed-url' => 'utiliser pour informer iTunes d'un nouvel URL de flux' // optionel
+             ) // Données d'extension iTunes // optionel, ignoré si le flux est de type atom
+  'entries'     => array(
+             array(
+                   'title'        => 'titre de l'item', // obligatoire
+                   'link'         => 'url de cet item', // obligatoire
+                   'description'  => 'version raccourci du texte', // seulement du text, pas d'html, obligatoire
+                   'guid'         => 'id de l'article, si aucun alors la valeur link est utilisée', // optionel
+                   'content'      => 'version complète de l'information', // peut contenir html, optionel
+                   'lastUpdate'   => 'date de publication au format timestamp', // optionel
+                   'comments'     => 'page de commentaires de l'item', // optionel
+                   'commentRss'   => 'l'url du flux des commentaires associés', // optionel
+                   'source'       => array(
+                               'title' => 'titre de la source originale' // obligatoire,
+                               'url' => 'url de la source originale' // obligatoire
+                               ) // source originale de l'item // optionel
+                   'category'     => array(
+                               array(
+                                     'term' => 'intitulé de la première catégorie' // obligatoire,
+                                     'scheme' => 'url qui décrit l'organisation de la catégorie' // optionel
+                                     ),
+                               array(
+                                     //données de la seconde catégorie et ainsi de suite
+                                     )
+                               ) // liste des catégories attachées// optionel
+                   'enclosure'    => array(
+                               array(
+                                     'url' => 'url de la pièce jointe' // obligatoire
+                                     'type' => 'type mime de la pièce jointe' // optionel
+                                     'length' => 'length de la pièce jointe en octets' // optionel
+                                     ),
+                               array(
+                                     //données de la seconde pièce jointe et ainsi de suite
+                                     )
+                               ) // liste des pièces jointes à l'item // optionel
+                   ),
+             array(
+                   //données du second item et ainsi de suite
+                   )
+             )
+   );
 ]]></programlisting>
 
             <para>Références : <itemizedlist>
@@ -197,13 +198,17 @@ array(
 
             <programlisting role="php"><![CDATA[
 // importe un flux atom à partir d'un constructeur personnalisé
-$atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
+$atomFeedFromArray =
+    Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// la ligne suivante est équivalente à celle ci-dessus ; par défaut l'instance Zend_Feed_Atom est retournée
-$atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
+// la ligne suivante est équivalente à celle ci-dessus ;
+// par défaut l'instance Zend_Feed_Atom est retournée
+$atomFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // importe un flux rss à partir d'un constructeur personnalisé
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+$rssFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
 ]]></programlisting>
         </sect3>
 

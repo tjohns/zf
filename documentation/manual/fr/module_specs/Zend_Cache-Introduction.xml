@@ -27,11 +27,15 @@ $frontendOptions = array(
 );
 
 $backendOptions = array(
-    'cache_dir' => './tmp/' // Répertoire où stocker les fichiers de cache
+    // Répertoire où stocker les fichiers de cache
+    'cache_dir' => './tmp/'
 );
 
 // créer un objet Zend_Cache_Core
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 ]]></programlisting>
     </example>
 
@@ -86,13 +90,18 @@ print_r($result);
         méthode <code>end()</code> est appelée. A la prochaine exécution, la section complète sera évitée, au profit de
         la récupération de son cache (si le cache est encore valide). <programlisting role="php"><![CDATA[
 $frontendOptions = array(
-   'lifetime' => 30,                   // temps de vue du cache de 30 secondes
-   'automatic_serialization' => false  // par défaut
+    // temps de vue du cache de 30 secondes
+    'lifetime' => 30,
+    // par défaut
+    'automatic_serialization' => false
 );
 
 $backendOptions = array('cache_dir' => './tmp/');
 
-$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Output',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // nous passons un identifiant unique de la méthode start()
 if(!$cache->start('mypage')) {
@@ -100,8 +109,9 @@ if(!$cache->start('mypage')) {
 
     echo 'Hello world! ';
     echo 'Ceci est issu du cache('.time().') ';
-
-    $cache->end(); // la sortie est sauvegardée est envoyé au navigateur
+    
+    // la sortie est sauvegardée est envoyé au navigateur
+    $cache->end();
 }
 
 echo "Ceci n' jamais mis en cache (" . time() . ").";

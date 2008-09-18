@@ -53,7 +53,8 @@
             unique, et insère une ligne sur laquelle nous pouvons réaliser une requête d'authentification plus tard. Cet
             exemple requiert que l'extension PDO SQLite soit disponible : <programlisting role="php"><![CDATA[
 // Crée une connexion de base de données SQLite en mémoire
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' =>
+                                                  ':memory:'));
 
 // Construit une requête de création de table
 $sqlCreate = 'CREATE TABLE [users] ( '
@@ -79,7 +80,10 @@ $dbAdapter->query($sqlInsert);
             fournies au constructeur ou en tant que paramètres aux méthodes de réglage après l'instanciation :
             <programlisting role="php"><![CDATA[
 // Configure une instance avec des paramètres de constructeur ...
-$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter, 'users', 'username', 'password');
+$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter,
+                                             'users',
+                                             'username',
+                                             'password');
 
 // ... ou configure l'instance avec des méthodes de réglage
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
@@ -140,11 +144,14 @@ $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
 
-    // stocke l'identité comme objet dans lequel seulement username et real_name sont retournés
+    // stocke l'identité comme objet dans lequel seulement username et
+    // real_name sont retournés
     $storage = $this->_auth->getStorage();
-    $storage->write($adapter->getResultRowObject(array('username', 'real_name')));
+    $storage->write($adapter->getResultRowObject(array('username',
+                                                       'real_name')));
 
-    // stocke l'identité comme objet dans lequel la colonne password a été omis
+    // stocke l'identité comme objet dans lequel la colonne password
+    // a été omis
     $storage->write($adapter->getResultRowObject(null, 'password'));
 
     /* ... */
@@ -172,11 +179,21 @@ if ($result->isValid()) {
         l'authentification pour résoudre quelques problèmes communs d'utilisateur.</para>
 
         <programlisting role="php"><![CDATA[
-// La valeur du champs "etat" d'un compte ne doit pas être égal à "compromis"
-$adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND etat != "compromis"');
+// La valeur du champs "etat" d'un compte
+// ne doit pas être égal à "compromis"
+$adapter = new Zend_Auth_Adapter_DbTable($db,
+                                         'utilisateurs',
+                                         'login',
+                                         'password',
+                                         'MD5(?) AND etat != "compromis"');
 
-// La valeur du champs "actif" d'un compte doit être égal à "TRUE"
-$adapter = new Zend_Auth_Adapter_DbTable($db, 'utilisateurs', 'login', 'password', 'MD5(?) AND actif = "TRUE"');
+// La valeur du champs "actif" d'un compte
+// doit être égal à "TRUE"
+$adapter = new Zend_Auth_Adapter_DbTable($db,
+                                         'utilisateurs',
+                                         'login',
+                                         'password',
+                                         'MD5(?) AND actif = "TRUE"');
 ]]></programlisting>
 
         <para>Un autre scénario possible est l'implantation d'un mécanisme de "salting". "Salting" est un terme se

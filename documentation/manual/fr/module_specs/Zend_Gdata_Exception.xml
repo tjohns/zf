@@ -7,7 +7,8 @@
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
+    $client =
+        Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
     // Affiche l'exception à l'utilisateur
     die($ex->getMessage());
@@ -55,10 +56,14 @@ try {
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
+    $client =
+        Zend_Gdata_ClientLogin::getHttpClient($username,
+                                              $password,
+                                              $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {
     // identifiants fournis incorrects
-    // Vous pourriez par exemple offrir une seconde chance à l'utilisateur ici
+    // Vous pourriez par exemple offrir une
+    // seconde chance à l'utilisateur ici
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // les serveurs Google Data sont injoignables

@@ -50,7 +50,8 @@ $id = $captcha->generate();
 echo $captcha->render($view);
 
 // Lors de la requête suivante :
-// suppose que $captcha a été paramètré avant, et que $value est la valeur soumise :
+// suppose que $captcha a été paramètré avant,
+// et que $value est la valeur soumise :
 if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
 }

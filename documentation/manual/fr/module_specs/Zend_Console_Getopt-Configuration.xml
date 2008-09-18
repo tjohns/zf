@@ -46,9 +46,9 @@ $opts->addRules(
 $opts = new Zend_Console_Getopt('abp:');
 $opts->setHelp(
     array(
-        'a' => 'option abricot, sans parametres',
-        'b' => 'option banane, avec un parametre obligatoire de type entier',
-        'p' => 'option pear, avec un parametre optionel de type chaine de caracteres'
+        'a' => 'option abricot, sans paramètres',
+        'b' => 'option banane, avec un paramètre entier obligatoire',
+        'p' => 'option pear, avec un paramètre chaîne de caractères optionel'
     )
 );
 ]]></programlisting>

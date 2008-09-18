@@ -108,8 +108,9 @@ class SomeController extends Zend_Controller_Action
         $this->_redirector = $this->_helper->getHelper('Redirector');
 
         // Régle les options par défaut pour le redirector
-        // Puisque l'objet est enregistré dans le gestionnaire d'aide, ceci sera effectif
-        // pour toutes les actions réalisées après ce point
+        // Puisque l'objet est enregistré dans le gestionnaire d'aide,
+        // ceci sera effectif pour toutes les actions réalisées après
+        // ce point
         $this->_redirector->setCode(303)
                           ->setExit(false)
                           ->setGotoSimple("this-action", "some-controller");
@@ -119,7 +120,8 @@ class SomeController extends Zend_Controller_Action
     {
         /* Faire quelquechose */
 
-        // Redirige vers une URL enregistrée précédemment, et force une sortie pour finir
+        // Redirige vers une URL enregistrée précédemment,
+        // et force une sortie pour finir
         $this->_redirector->redirectAndExit();
         return; // jamais atteint
     }
@@ -153,8 +155,11 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* Faire quelquechose */
 
-        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
-        return; // jamais atteint puisque les paramètres par défaut sont à goto et exit
+        $url = '/my-controller/my-action/param1/test/param2/test2';
+        $this->_redirector->gotoUrl($url);
+        return;
+        // jamais atteint puisque les paramètres par défaut
+        // sont à goto et exit
     }
 }
 ]]></programlisting>
@@ -187,9 +192,14 @@ class ForwardController extends Zend_Controller_Action
     {
         /* Faire quelquechose */
 
-        // Redirige vers 'my-action' de 'my-controller' dans le module courant
-        // en utilisant les paramètres param1 => test et param2 => test2
-        $this->_redirector->gotoSimple('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        // Redirige vers 'my-action' de 'my-controller' dans le module
+        // courant en utilisant les paramètres :
+        // param1 => test et param2 => test2
+        $this->_redirector->gotoSimple('my-action',
+                                       'my-controller',
+                                       null,
+                                       array('param1' => 'test',
+                                             'param2' => 'test2'));
     }
 }
 ]]></programlisting>
@@ -205,7 +215,9 @@ class ForwardController extends Zend_Controller_Action
             <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
-    array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
+    array('controller' => 'archive',
+          'module' => 'blog',
+          'action' => 'view')
 );
 $router->addRoute('blogArchive', $route);
 ]]></programlisting>

@@ -69,7 +69,7 @@ if ($response->isException()) {
     // log, mail, etc...
 }
 
-// Demande au contrôleur frontal de ne pas afficher, mais retourner:
+// Demande au contrôleur frontal de ne pas afficher, mais retourner :
 $front->returnResponse(true);
 $response = $front->dispatch();
 
@@ -172,7 +172,8 @@ $front->dispatch();
         :</para>
 
         <programlisting role="php"><![CDATA[
-// Considérons ce plugin comme étant enregistré auprès du contrôleur frontal
+// Considérons ce plugin comme étant enregistré
+// auprès du contrôleur frontal
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)

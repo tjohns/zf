@@ -54,21 +54,22 @@ $dispatcher->setParam('prefixDefaultModule', true);
         <programlisting role="php"><![CDATA[
 public function fooAction()
 {
-    // Transférer la nouvelle action dans le contrôleur et le module courant :
+    // Transférer la nouvelle action dans le contrôleur
+    // et le module courant :
     $this->_forward('bar', null, null, array('baz' => 'bogus'));
 }
 
 public function barAction()
 {
-    // Transférer vers une action dans un autre contrôleur, FooController::bazAction(),
-    // dans le module courant :
+    // Transférer vers une action dans un autre contrôleur,
+    // FooController::bazAction(), dans le module courant :
     $this->_forward('baz', 'foo', null, array('baz' => 'bogus'));
 }
 
 public function bazAction()
 {
-    // Transférer vers une action dans un autre contrôleur dans un autre module,
-    // Foo_BarController::bazAction():
+    // Transférer vers une action dans un autre contrôleur
+    // dans un autre module, Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
 }
 ]]></programlisting>
@@ -114,10 +115,12 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Request_Abstract $request
      * @return boolean
      */
-    public function isDispatchable(Zend_Controller_Request_Abstract $request);
+    public function isDispatchable(
+                Zend_Controller_Request_Abstract $request);
 
     /**
-     * Règle un paramètre utilisateur (via le contrôleur frontal, ou pour un usage local)
+     * Règle un paramètre utilisateur
+     * (via le contrôleur frontal, ou pour un usage local)
      *
      * @param string $name
      * @param mixed $value
@@ -149,9 +152,11 @@ interface Zend_Controller_Dispatcher_Interface
     public function getParams();
 
     /**
-     * Efface le tableau des paramètres utilisateur, ou un paramètre utilisateur unique :
+     * Efface le tableau des paramètres utilisateur,
+     * ou un paramètre utilisateur unique :
      *
-     * @param null|string|array single key or array of keys for params to clear
+     * @param null|string|array single key or 
+     *                          array of keys for params to clear
      * @return Zend_Controller_Dispatcher_Interface
      */
     public function clearParams($name = null);
@@ -162,7 +167,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @param Zend_Controller_Response_Abstract|null $response
      * @return void
      */
-    public function setResponse(Zend_Controller_Response_Abstract $response = null);
+    public function setResponse(
+                Zend_Controller_Response_Abstract $response = null);
 
     /**
      * Récupère l'objet réponse, s'il existe
@@ -172,7 +178,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function getResponse();
 
     /**
-     * Ajoute un dossier de contrôleur dans le tableau des dossiers de contrôleurs
+     * Ajoute un dossier de contrôleur dans le tableau
+     * des dossiers de contrôleurs
      *
      * @param string $path
      * @param string $args
@@ -181,7 +188,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function addControllerDirectory($path, $args = null);
 
     /**
-     * Règle le(s) dossier(s) où les fichiers de contrôleurs sont stockés
+     * Règle le(s) dossier(s) où les fichiers de contrôleurs
+     * sont stockés
      *
      * @param string|array $dir
      * @return Zend_Controller_Dispatcher_Interface
@@ -189,7 +197,8 @@ interface Zend_Controller_Dispatcher_Interface
     public function setControllerDirectory($path);
 
     /**
-     * Retourne le(s) dossier(s) où les fichiers de contrôleurs sont stockés
+     * Retourne le(s) dossier(s) où les fichiers de contrôleurs
+     * sont stockés
      *
      * @return array
      */
@@ -202,7 +211,8 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Response_Abstract $response
      * @return Zend_Controller_Request_Abstract|boolean
      */
-    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
+    public function dispatch(Zend_Controller_Request_Abstract $request,
+                             Zend_Controller_Response_Abstract $response);
 
     /**
      * Informe si un module donné est valide
