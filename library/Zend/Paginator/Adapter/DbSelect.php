@@ -160,7 +160,6 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 $columns = array();
                 
                 foreach ($columnParts as $part) {
-                    var_dump($part);var_dump($part[1]);
                 	$columns[] = $part[1];
                 }
                 
