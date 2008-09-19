@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11183 -->
 <sect1 id="zend.http.client.advanced">
     <title>Zend_Http_Client - 高度な使用法</title>
 
@@ -27,7 +27,8 @@
 $client->setConfig(array('strictredirects' => true));
 
 // 厳格でないリダイレクト
-$client->setConfig(array('strictredirects' => false));]]>
+$client->setConfig(array('strictredirects' => false));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -55,7 +56,8 @@ $client->setCookie('flavor=chocolate%20chips');
 
 // Zend_Http_Cookie オブジェクトを指定します。
 $cookie = Zend_Http_Cookie::fromString('flavor=chocolate%20chips');
-$client->setCookie($cookie);]]>
+$client->setCookie($cookie);
+]]>
                 </programlisting>
             </example>
             Zend_Http_Cookie オブジェクトについての詳細は
@@ -85,7 +87,8 @@ $client->request('POST');
 // 次のリクエストを送信します。この際に、
 // 先ほど保存されたクッキーが自動的に送信されます。
 $client->setUri('http://example.com/read_member_news.php');
-$client->request('GET');]]>
+$client->request('GET');
+]]>
                 </programlisting>
             </example>
             Zend_Http_CookieJar クラスについての詳細は
@@ -111,7 +114,8 @@ $client->setHeaders('Host: www.example.com');
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -131,7 +135,8 @@ $client->setHeaders(array(
 $client->setHeaders(array(
     'Host: www.example.com',
     'Accept-encoding: gzip,deflate',
-    'X-Powered-By: Zend Framework'));]]>
+    'X-Powered-By: Zend Framework'));
+]]>
                 </programlisting>
             </example>
         </para>
@@ -167,7 +172,8 @@ $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
 $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
 
 // ファイルを送信します。
-$client->submit('POST');]]>
+$client->request('POST');
+]]>
                 </programlisting>
             </example>
             最初の例では、変数 $text の内容がアップロードされ、サーバ上で
@@ -209,7 +215,8 @@ $xml = '<book>' .
 $client->setRawData($xml, 'text/xml')->request('POST');
 
 // 同じことを、別の方法でもできます。
-$client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
+$client->setRawData($xml)->setEncType('text/xml')->request('POST');
+]]>
                 </programlisting>
             </example>
             このデータをサーバ側で使用するには、PHP の変数
@@ -242,7 +249,8 @@ $client->setRawData($xml)->setEncType('text/xml')->request('POST');]]>
 $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
 
 // ベーシック認証はデフォルトなので、このように省略することもできます。
-$client->setAuth('shahar', 'myPassword!');]]>
+$client->setAuth('shahar', 'myPassword!');
+]]>
                 </programlisting>
             </example>
         </para>
@@ -325,7 +333,8 @@ if (isset($_SESSION['cookiejar']) &&
 $response = $client->request(Zend_Http_Client::GET);
 
 // クッキーをセッションに保存し、次のページで使用します。
-$_SESSION['cookiejar'] = $client->getCookieJar();]]>
+$_SESSION['cookiejar'] = $client->getCookieJar();
+]]>
             </programlisting>
         </example>
     </sect2>
