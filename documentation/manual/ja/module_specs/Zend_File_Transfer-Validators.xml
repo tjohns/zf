@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11430 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -96,7 +96,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>addValidator($validator, $options = null, $files =
+                    <code>addValidator($validator, $breakChainOnFailure, $options = null, $files =
                     null)</code>: 指定したバリデータをバリデータスタックに追加します
                     (オプションで、指定したファイルにだけ追加することもできます)。
                     <code>$validator</code> に指定するのは、
@@ -168,12 +168,13 @@
 $upload = new Zend_File_Transfer();
 
 // ファイルサイズを 20000 バイトに設定します
-$upload->addValidator('Size', 20000);
+$upload->addValidator('Size', false, 20000);
 
 // ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定します
-$upload->addValidator('Size', array(20, 20000));
+$upload->addValidator('Size', false, array(20, 20000));
 
-// ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定し、同時にファイルの数も設定します
+// ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定し、
+// 同時にファイルの数も設定します
 $upload->setValidators(array(
     'Size'  => array(20, 20000), 
     'Count' => array(1, 3),
@@ -197,7 +198,7 @@ $upload->setValidators(array(
 $upload = new Zend_File_Transfer();
 
 // ファイルサイズを 20000 バイトとし、それを 'file2' にのみ適用します
-$upload->addValidator('Size', 20000, 'file2');
+$upload->addValidator('Size', false, 20000, 'file2');
 ]]>
             </programlisting>
         </example>
@@ -223,9 +224,9 @@ $upload->addValidator('Size', 20000, 'file2');
 $upload = new Zend_File_Transfer();
 
 // ファイルサイズを 20000 バイトに設定します
-$upload->addValidator('Size', 20000)
-       ->addValidator('Count', 2)
-       ->addValidator('Filessize', 25000);
+$upload->addValidator('Size', false, 20000)
+       ->addValidator('Count', false, 2)
+       ->addValidator('Filessize', false, 25000);
 ]]>
             </programlisting>
 
@@ -297,10 +298,10 @@ $upload->addValidator('Size', 20000)
 $upload = new Zend_File_Transfer();
 
 // ファイルの数を最大 2 に制限します
-$upload->addValidator('Count', 2);
+$upload->addValidator('Count', false, 2);
 
 // 最大でも 5 個、少なくとも 1 つのファイルが返されるよう制限します
-$upload->addValidator('Count', array(1, 5);
+$upload->addValidator('Count', false, array(1, 5);
 ]]>
             </programlisting>
 
@@ -344,10 +345,10 @@ $upload->addValidator('Count', array(1, 5);
 $upload = new Zend_File_Transfer();
 
 // temp ディレクトリをチェック対象に追加します
-$upload->addValidator('Exists', '\temp');
+$upload->addValidator('Exists', false, '\temp');
 
 // ふたつのディレクトリを配列記法で追加します
-$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+$upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
 ]]>
             </programlisting>
 
@@ -406,10 +407,10 @@ $upload->addValidator('Exists', array('\home\images', '\home\uploads'));
 $upload = new Zend_File_Transfer();
 
 // 拡張子を jpg と png のみに制限します
-$upload->addValidator('Extension', 'jpg,png');
+$upload->addValidator('Extension', false, 'jpg,png');
 
 // 配列形式で、拡張子を jpg と png のみに制限します
-$upload->addValidator('Extension', array('jpg', 'png'));
+$upload->addValidator('Extension', false, array('jpg', 'png'));
 
 // 大文字小文字を区別したチェックを行います
 $upload = new Zend_File_Transfer('mo,png', true);
@@ -488,10 +489,10 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
 $upload = new Zend_File_Transfer();
 
 // ファイルサイズの合計を 40000 バイトまでに制限します
-$upload->addValidator('FilesSize', 40000);
+$upload->addValidator('FilesSize', false, 40000);
 
 // ファイルサイズの合計を最大 4MB、最小 10kB に制限します
-$upload->setValidator('FilesSize', array('10kB', '4MB');
+$upload->addValidator('FilesSize', false, array('10kB', '4MB');
 ]]>
             </programlisting>
 
@@ -584,13 +585,18 @@ $upload->setValidator('FilesSize', array('10kB', '4MB');
 $upload = new Zend_File_Transfer();
 
 // 画像の高さを 100-200 ピクセル、幅を 40-80 ピクセルに制限します
-$upload->addValidator('ImageSize', 40, 100, 80, 200);
+$upload->addValidator('ImageSize', false, 40, 100, 80, 200);
 
 // 配列表記を使用します
-$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+$upload->addValidator('ImageSize', false, array(40, 100, 80, 200);
 
 // 連想配列表記を使用します
-$upload->setValidator('ImageSize', array('minwidth' => 40, 'maxwidth' => 80, 'minheight' => 100, 'maxheight' => 200);
+$upload->addValidator('ImageSize', false, 
+                      array('minwidth' => 40, 
+                            'maxwidth' => 80, 
+                            'minheight' => 100, 
+                            'maxheight' => 200)
+                      );
 
 // 別の画像サイズを設定します
 $upload->setImageWidth(20, 200);
@@ -634,13 +640,13 @@ $upload->setImageWidth(20, 200);
 $upload = new Zend_File_Transfer();
 
 // mimetype を制限し、gif 画像のみを許可するようにします
-$upload->addValidator('MimeType', 'image/gif');
+$upload->addValidator('MimeType', false, 'image/gif');
 
 // すべてのファイルが gif および jpeg 画像でなければならないように mimetype を制限します
-$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+$upload->addValidator('MimeType', false, array('image/gif', 'image/jpeg');
 
 // すべてのファイルが画像であるように mimetype を制限します
-$upload->setValidator('MimeType', 'image');
+$upload->addValidator('MimeType', false, 'image');
 ]]>
             </programlisting>
         </example>
@@ -694,10 +700,13 @@ $upload->setValidator('MimeType', 'image');
 $upload = new Zend_File_Transfer();
 
 // temp ディレクトリをチェック対象に追加します
-$upload->addValidator('NotExists', '\temp');
+$upload->addValidator('NotExists', false, '\temp');
 
 // ふたつのディレクトリを配列記法で追加します
-$upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
+$upload->addValidator('NotExists', false,
+                      array('\home\images',
+                            '\home\uploads')
+                     );
 ]]>
             </programlisting>
 
@@ -769,11 +778,11 @@ $upload->addValidator('NotExists', array('\home\images', '\home\uploads'));
 $upload = new Zend_File_Transfer();
 
 // ファイルサイズを 40000 バイトまでに制限します
-$upload->addValidator('Size', 40000);
+$upload->addValidator('Size', false, 40000);
 
 // 指定したファイルのサイズを最大 4MB、最小 10kB に制限し、
 // このバリデータをファイル "uploadfile" に適用します
-$upload->addValidator('Size', array('10kB', '4MB', 'uploadfile');
+$upload->addValidator('Size', false, array('10kB', '4MB', 'uploadfile');
 ]]>
             </programlisting>
         </example>
