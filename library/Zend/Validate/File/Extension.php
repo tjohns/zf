@@ -164,7 +164,7 @@ class Zend_Validate_File_Extension extends Zend_Validate_Abstract
         }
 
         if ($file !== null) {
-            $info['extension'] = substr($file['name'], strpos($file['name'], '.') + 1);
+            $info['extension'] = substr($file['name'], strrpos($file['name'], '.') + 1);
         } else {
             $info = @pathinfo($value);
         }
