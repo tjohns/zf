@@ -26,20 +26,24 @@ if (!isset($argv[1])) {
 try {
     $pdf = Zend_Pdf::load($argv[1]);
 } catch (Zend_Pdf_Exception $e) {
-    if ($e->getMessage() == 'Ouverture du fichier \'' . $argv[1] . '\' impossible en lecture.') {
+    if ($e->getMessage() == 'Ouverture du fichier \''
+                          . $argv[1]
+                          . '\' impossible en lecture.') {
         // Create new PDF if file doesn't exist
         $pdf = new Zend_Pdf();
         if (!isset($argv[2])) {
-            // Force la ré-écriture complète du fichier (plutôt qu'une mise à jour)
+            // Force la ré-écriture complète du fichier
+            // (plutôt qu'une mise à jour)
             $argv[2] = $argv[1];
         }
     } else {
-        // Lève une exception si ce n'est pas l'exception "Ouverture du fichier impossible"
+        // Lève une exception si ce n'est pas l'exception
+        // "Ouverture du fichier impossible"
         throw $e;
     }
 }
 
-//------------------------------------------------------------------------------------
+//--------------------------------------------------------------------
 // Inverse l'ordre des pages
 $pdf->pages = array_reverse($pdf->pages);
 
@@ -49,11 +53,14 @@ $style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32)
+$style->setFont(Zend_Pdf_Font::fontWithName(
+                    Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32
+                );
 
 try {
     // Crée un nouvel objet image
-    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) .
+                                                '/stamp.jpg');
 } catch (Zend_Pdf_Exception $e) {
     // Exemple de gestion des exceptions lors du chargement d'image
     if ($e->getMessage() != 'Image extension is not installed.' &&
@@ -81,11 +88,14 @@ foreach ($pdf->pages as $page){
     $page->restoreGS();
 }
 
-// Ajoute une nouvelle page générée par l'objet Zend_Pdf (la page est attachée au document)
+// Ajoute une nouvelle page générée par l'objet Zend_Pdf
+// (la page est attachée au document)
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
-// Ajoute une nouvelle page générée par l'objet Zend_Pdf (la page n'est pas attachée au document)
-$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
+// Ajoute une nouvelle page générée par l'objet Zend_Pdf
+// (la page n'est pas attachée au document)
+$pdf->pages[] =
+    ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 
 // Crée une nouvelle police
 $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
@@ -99,7 +109,8 @@ $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
 // Utilise une autre police
-$page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
+$page2->setFont(Zend_Pdf_Font::fontWithName(
+                        Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
 // Dessine un rectangle
@@ -143,7 +154,7 @@ $page2->drawPolygon($x, $y,
 // Dessine une ligne
 $page2->setLineWidth(0.5);
 $page2->drawLine(60, 375, 400, 375);
-//------------------------------------------------------------------------------------
+//--------------------------------------------------------------------
 
 if (isset($argv[2])) {
     $pdf->save($argv[2]);

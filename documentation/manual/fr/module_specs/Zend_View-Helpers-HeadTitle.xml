@@ -22,12 +22,14 @@
         action et ressources potentielles.</para>
 
         <programlisting role="php"><![CDATA[
-// Paramétrage des noms de contrôleurs et d'action en tant que segment de titre :
+// Paramétrage des noms de contrôleurs et d'action
+// en tant que segment de titre :
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())
      ->headTitle($request->getControllerName());
 
-// Réglage du nom de site, par exemple dans votre script de disposition :
+// Réglage du nom de site, par exemple dans votre script
+// de disposition :
 $this->headTitle('Zend Framework');
 
 // Réglage de la haîne de séparation des segments :

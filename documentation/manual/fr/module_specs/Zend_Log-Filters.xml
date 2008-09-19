@@ -33,10 +33,12 @@ $logger->emerg("Message d'urgence");
         de ce rédacteur : <programlisting role="php"><![CDATA[
 $logger = new Zend_Log();
 
-$redacteur1 = new Zend_Log_Writer_Stream('/chemin/vers/premier/fichierdelog');
+$redacteur1 =
+    new Zend_Log_Writer_Stream('/chemin/vers/premier/fichierdelog');
 $logger->addWriter($redacteur1);
 
-$redacteur2 = new Zend_Log_Writer_Stream('/chemin/vers/second/fichierdelog');
+$redacteur2 =
+    new Zend_Log_Writer_Stream('/chemin/vers/second/fichierdelog');
 $logger->addWriter($redacteur2);
 
 // ajoute le filter seulement pour le redacteur2

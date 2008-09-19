@@ -21,7 +21,8 @@ require_once 'Zend/Rest/Client.php';
 
 $client = new Zend_Rest_Client('http://framework.zend.com/rest');
 
-echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
+echo $client->sayHello('Davey', 'Day')->get();
+// "Hello Davey, Good Day"
 ]]></programlisting>
         </example>
 
@@ -93,7 +94,8 @@ echo $result->firstname() .' '. $result->lastname();
             <programlisting role="xml"><![CDATA[
 <?xml version="1.0" encoding="utf-8"?>
 <!-- generator="Technorati API version 1.0 /bloginfo" -->
-<!DOCTYPE tapi PUBLIC "-//Technorati, Inc.//DTD TAPI 0.02//EN" "http://api.technorati.com/dtd/tapi-002.xml">
+<!DOCTYPE tapi PUBLIC "-//Technorati, Inc.//DTD TAPI 0.02//EN"
+     "http://api.technorati.com/dtd/tapi-002.xml">
 <tapi version="1.0">
     <document>
         <result>

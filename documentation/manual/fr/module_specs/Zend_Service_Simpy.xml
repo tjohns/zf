@@ -62,14 +62,17 @@ foreach ($linkSet as $link) {
     echo '</a><br />';
 }
 
-/* Recherche les 5 derniers liens ajoutés, contenant 'PHP' dans leur titre */
+/* Recherche les 5 derniers liens ajoutés,
+contenant 'PHP' dans leur titre */
 $linkQuery->setQueryString('title:PHP');
 $linkQuery->setLimit(5);
 
-/* Cherche tous les liens avec le mot 'French' dans le titre et le mot-clé 'language' */
+/* Cherche tous les liens avec le mot 'French' dans le titre
+et le mot-clé 'language' */
 $linkQuery->setQueryString('+title:French +tags:language');
 
-/* Cherche tous les liens avec le mot 'French' dans le titre et pas le mot-clé 'travel' */
+/* Cherche tous les liens avec le mot 'French' dans le titre
+et pas le mot-clé 'travel' */
 $linkQuery->setQueryString('+title:French -tags:travel');
 
 /* Cherche tous les liens ajoutés le 9/12/06 */
@@ -147,7 +150,8 @@ $simpy->saveLink(
     'zend, framework, php' // Tags
 );
 
-/* Récupère la liste de tous les mots-clés utilisés par les liens et les notes */
+/* Récupère la liste de tous les mots-clés utilisés par les liens 
+et les notes */
 $tagSet = $simpy->getTags();
 
 /* Affiche chaque mot-clé avec le nombre de liens les utilisant */
@@ -164,9 +168,10 @@ $simpy->removeTag('zend');
 /* Renome le mot-clé 'framework' vers 'frameworks' */
 $simpy->renameTag('framework', 'frameworks');
 
-/* Eclate le mot-clé 'frameworks' en 'framework' et 'development', ce qui va effacer
-le mot-clé 'frameworks' et ajouter les mots-clés 'framework' et 'development' pour tous les
-liens l'utilisant anciennement */
+/* Eclate le mot-clé 'frameworks' en 'framework' et 'development',
+ce qui va effacer le mot-clé 'frameworks' et ajouter les mots-clés
+'framework' et 'development' pour tous les liens l'utilisant
+anciennement */
 $simpy->splitTag('frameworks', 'framework', 'development');
 
 /* Cette opération de fusion est l'opposé de l'opération ci-dessus */

@@ -49,7 +49,8 @@ if ($validateur->isValid($hostname)) {
     créer des configurations combinant ces différents types. Par exemple, pour accepter les domaines qualifiés et les
     domaines locaux, instanciez votre objet <code>Zend_Validate_Hostname</code> de la manière suivante : <programlisting
     role="php"><![CDATA[
-$validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_IP);
+$validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
+                                         Zend_Validate_Hostname::ALLOW_IP);
 ]]></programlisting></para>
 
     <para><emphasis role="strong">Validation de Nom de Domaine International (IDN)</emphasis></para>
@@ -100,7 +101,8 @@ $validateur = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS | Zen
 
     <para>Vous pouvez aussi désactiver la validation IDN en passant un second paramètre au constructeur du
     <code>Zend_Validate_Hostname</code> comme ceci : <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS,
+                                        false);
 ]]></programlisting>
     Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à
     <code>$validator-&gt;setValidateIdn()</code> pour activer ou désactiver la validation IDN. Si vous essayez de
@@ -118,7 +120,9 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false
     désactiver la validation TLD en passant un troisième paramètre au constructeur de
     <code>Zend_Validate_Hostname</code>. Dans l'exemple ci-dessous, la validation IDN est supportée via le second
     paramètre. <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, true, false);
+$validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS,
+                                        true,
+                                        false);
 ]]></programlisting>
     Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à
     <code>$validator-&gt;setValidateTld()</code> pour activer ou désactiver la validation TLD.</para>

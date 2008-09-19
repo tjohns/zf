@@ -266,7 +266,11 @@
 
         <programlisting role="php"><![CDATA[
 try {
-    $translate = new Zend_Translate('MonEntreprise_Translate_Adapter_MonFormat', '/chemin/vers/translate.xx', 'fr', array('monoption' => 'mavaleur'));
+    $translate = new Zend_Translate(
+                        'MonEntreprise_Translate_Adapter_MonFormat',
+                        '/chemin/vers/translate.xx',
+                        'fr',
+                        array('monoption' => 'mavaleur'));
 } catch (Exception $e) {
     // Fichier non trouvé, pas de classe d'adaptateur...
     // Echec de l'application
@@ -288,9 +292,14 @@ try {
         <code>Zend_Translate::getCache()</code>.</para>
 
         <programlisting role="php"><![CDATA[
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 Zend_Translate::setCache($cache);
-$translate = new Zend_Translate('gettext', '/chemin/vers/traduction.mo', 'en');
+$translate = new Zend_Translate('gettext',
+                                '/chemin/vers/traduction.mo',
+                                'en');
 ]]></programlisting>
 
         <note>

@@ -70,7 +70,9 @@ $logger->info("Message d'information");
         de l'élément racine comme premier paramètre et un tableau associatif avec les éléments de correspondance comme
         deuxième paramètre : <programlisting role="php"><![CDATA[
 $redacteur = new Zend_Log_Writer_Stream('php://output');
-$formateur = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'niveau' => 'priorityName'));
+$formateur = new Zend_Log_Formatter_Xml('log',
+                                        array('msg' => 'message',
+                                              'niveau' => 'priorityName'));
 $redacteur->setFormatter($formateur);
 
 $logger = new Zend_Log();

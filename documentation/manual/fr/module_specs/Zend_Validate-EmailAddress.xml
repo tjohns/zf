@@ -60,7 +60,9 @@ if ($validateur->isValid($email)) {
     <para>La vérification MX n'est pas active par défaut et est seulement supporté par des plates-formes UNIX pour
     l'instant. Pour activer la vérification MX vous pouvez passer un deuxième paramètre au constructeur
     <code>Zend_Validate_EmailAddress</code>. <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+$validator =
+    new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
+                                   true);
 ]]></programlisting>
     Alternativement vous pouvez passer soit <code>true</code> soit <code>false</code> à
     <code>$validator-&gt;setValidateMx()</code> pour activer ou désactiver la validation MX.</para>

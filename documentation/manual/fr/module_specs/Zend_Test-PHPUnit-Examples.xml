@@ -130,7 +130,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     public function appBootstrap()
     {
         $controller = $this->getFrontController();
-        $controller->registerPlugin(new Bugapp_Plugin_Initialize('development'));
+        $controller->registerPlugin(
+            new Bugapp_Plugin_Initialize('development')
+        );
     }
 
     public function setUp()

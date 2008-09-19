@@ -98,10 +98,14 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 $doc = new Zend_Search_Lucene_Document();
 
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($contents)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored(
+                    'contents', strtolower($contents))
+              );
 
 // champ titre (indexed, unstored)
-$doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored(
+                    'title', strtolower($title))
+              );
 
 // champ titre (unindexed, stored)
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));

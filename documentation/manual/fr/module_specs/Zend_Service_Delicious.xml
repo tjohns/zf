@@ -36,7 +36,8 @@ foreach ($posts as $post) {
 
         <programlisting role="php"><![CDATA[
 /**
- * Récupère les entrées correspondants aux arguments. Si la date ou l'url n'est pas précisée, la date la plus récente
+ * Récupère les entrées correspondants aux arguments. Si la date ou
+ * l'url n'est pas précisée, la date la plus récente
  * sera prise en compte.
  *
  * @param string $tag Optionnel pour filtrer par tag
@@ -50,7 +51,8 @@ public function getPosts($tag = null, $dt = null, $url = null);
  * Récupère les dernières entrées
  *
  * @param string $tag Optionnel pour filtrer par tag
- * @param string $count Nombre maximum d'entrées à récupérer ( 15 par défaut)
+ * @param string $count Nombre maximum d'entrées à récupérer
+ *                     (15 par défaut)
  * @return Zend_Service_Delicious_PostList
  */
 public function getRecentPosts($tag = null, $count = 15);
@@ -79,7 +81,8 @@ public function getAllPosts($tag = null);
             <title>Accéder à la liste des entrées</title>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 // Affiche le nombre d'entrées
@@ -115,7 +118,8 @@ echo $posts[0]->getTitle();
             spécifier qu'une seule étiquette</para>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 // Affiche les entrées ayant les étiquettes "php" et "zend"
@@ -133,7 +137,8 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
             utilisant la méthode <code>withUrl()</code> :</para>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 $posts = $delicious->getAllPosts();
 
 // Affiche les entrées ayant "help" dans l'URL
@@ -152,7 +157,8 @@ foreach ($posts->withUrl('/help/') as $post) {
             <title>Édition d'une entrée</title>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 $posts = $delicious->getPosts();
 
 // change le titre
@@ -169,7 +175,8 @@ $posts[0]->save();
             pouvez donc chaîner les appels aux méthodes en utilisant une interface fluide.</para>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 $posts = $delicious->getPosts();
 
 $posts[0]->setTitle('Nouveau Titre')
@@ -189,7 +196,8 @@ $posts[0]->setTitle('Nouveau Titre')
             <title>Suppression d'une entrée</title>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 
 // en spécifiant l' URL
 $delicious->deletePost('http://framework.zend.com');
@@ -215,7 +223,8 @@ $delicious->deletePost($posts[0]->getUrl());
             <title>Ajouter une entrée</title>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 
 // créé et sauvegarde une nouvelle entrée (en chainant les méthodes)
 $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
@@ -223,7 +232,8 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
           ->save();
 
 // créé et sauvegarde une nouvelle entrée (sans enchaîner les méthodes)
-$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
+$newPost = $delicious->createNewPost('Zend Framework',
+                                     'http://framework.zend.com');
 $newPost->setNotes('Page d\'accueil du Zend Framework');
 $newPost->save();
 ]]></programlisting>
@@ -237,7 +247,8 @@ $newPost->save();
             <title>Récupérer les étiquettes</title>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 
 // récupère tous les étiquettes
 print_r($delicious->getTags());
@@ -255,7 +266,8 @@ $delicious->renameTag('ZF', 'zendFramework');
             <title>Gestion des groupes d'étiquette</title>
 
             <programlisting role="php"><![CDATA[
-$delicious = new Zend_Service_Delicious('nom_d_utilisateur', 'mot_de_passe');
+$delicious = new Zend_Service_Delicious('nom_d_utilisateur',
+                                        'mot_de_passe');
 
 // récupère tous les groupes
 print_r($delicious->getBundles());

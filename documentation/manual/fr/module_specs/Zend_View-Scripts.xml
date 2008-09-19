@@ -68,10 +68,12 @@ echo $this->escape($this->variable);
 // crée une instance Zend_View
 $view = new Zend_View();
 
-// spécifie qu'il faut utiliser htmlentities comme rappel d'échappement
+// spécifie qu'il faut utiliser htmlentities
+// comme rappel d'échappement
 $view->setEscape('htmlentities');
 
-// ou spécifie qu'il faut utiliser une méthode statique comme rappel d'échappement
+// ou spécifie qu'il faut utiliser une méthode statique
+// comme rappel d'échappement
 $view->setEscape(array('UneClasse', 'nomDeMethode'));
 
 // ou alors une méthode d'instance
@@ -180,7 +182,8 @@ public function addBasePath($path, $prefix = 'Zend_View');
 public function getScriptPaths();
 
 /**
- * Méthode à surcharger pour affecter les variables des gabarits en tant que propriétés de l'objet
+ * Méthode à surcharger pour affecter les variables des gabarits
+ * en tant que propriétés de l'objet
  */
 public function __set($key, $value);
 public function __get($key);
@@ -188,8 +191,8 @@ public function __isset($key);
 public function __unset($key);
 
 /**
- * Affectation manuelle de variable de gabarit, ou possibilité d'affecter des
- * variables en masse.
+ * Affectation manuelle de variable de gabarit, ou possibilité
+ * d'affecter des variables en masse.
  */
 public function assign($spec, $value = null);
 
@@ -224,7 +227,8 @@ class Zend_View_Smarty implements Zend_View_Interface
      * @param array $extraParams
      * @return void
      */
-    public function __construct($tmplPath = null, $extraParams = array())
+    public function __construct($tmplPath = null,
+                                $extraParams = array())
     {
         $this->_smarty = new Smarty;
 
@@ -347,11 +351,14 @@ class Zend_View_Smarty implements Zend_View_Interface
      *
      * Autorise une affectation simple (une clé => une valeur) 
      * OU 
-     * le passage d'un tableau (paire de clé => valeur) à affecter en masse
+     * le passage d'un tableau (paire de clé => valeur)
+     * à affecter en masse
      *
      * @see __set()
-     * @param string|array $spec Le type d'affectation à utiliser (clé ou tableau de paires clé => valeur)
-     * @param mixed $value (Optionel) Si vous assignez une variable nommée, utilisé ceci comme valeur
+     * @param string|array $spec Le type d'affectation à utiliser
+                                (clé ou tableau de paires clé => valeur)
+     * @param mixed $value (Optionel) Si vous assignez une variable nommée,
+                                      utilisé ceci comme valeur
      * @return void
      */
     public function assign($spec, $value = null)
@@ -367,8 +374,9 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Effacement de toutes les variables affectées
      *
-     * Efface toutes les variables affectées à Zend_View via {@link assign()} ou
-     * surcharge de propriété ({@link __get()}/{@link __set()}).
+     * Efface toutes les variables affectées à Zend_View
+     * via {@link assign()} ou surcharge de propriété
+     * ({@link __get()}/{@link __set()}).
      *
      * @return void
      */

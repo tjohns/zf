@@ -203,7 +203,9 @@ $this->view->paginator = $paginator;
 
         <para><programlisting role="php"><![CDATA[
 Zend_Paginator::setDefaultScrollingStyle('Sliding');
-Zend_View_Helper_PaginationControl::setDefaultViewPartial('my_pagination_control.phtml');
+Zend_View_Helper_PaginationControl::setDefaultViewPartial(
+    'my_pagination_control.phtml'
+);
 $paginator->setView($view);
 ]]></programlisting></para>
 
@@ -228,7 +230,9 @@ Voir http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <div class="paginationControl">
 <!-- Previous page link --> 
 <?php if (isset($this->previous)): ?> 
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Previous</a> | 
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">
+    &lt; Previous
+  </a> |
 <?php else: ?> 
   <span class="disabled">&lt; Previous</span> | 
 <?php endif; ?> 
@@ -271,7 +275,9 @@ of <?= $this->totalItemCount; ?>
 
 <!-- Previous page link --> 
 <?php if (isset($this->previous)): ?> 
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Previous</a> | 
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">
+    &lt; Previous
+  </a> |
 <?php else: ?> 
   <span class="disabled">&lt; Previous</span> | 
 <?php endif; ?> 
@@ -299,12 +305,16 @@ of <?= $this->totalItemCount; ?>
 <select id="paginationControl" size="1"> 
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>
-  <option value="<?= $this->url(array('page' => $page)); ?>"<?= $selected ?>><?= $page; ?></option> 
+  <option value="<?= $this->url(array('page' => $page)); ?>"<?= $selected ?>>
+    <?= $page; ?>
+  </option> 
 <?php endforeach; ?>
 </select>
 <?php endif; ?>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+<script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js">
+</script>
 <script type="text/javascript">
 $('paginationControl').observe('change', function() {
     window.location = this.options[this.selectedIndex].value;

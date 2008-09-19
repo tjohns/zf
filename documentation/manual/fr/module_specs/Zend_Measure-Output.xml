@@ -22,7 +22,9 @@
                 <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89 Meter";
-$unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
+$unite = new Zend_Measure_Length($machaine,
+                                 Zend_Measure_Length::STANDARD,
+                                 $locale);
 
 echo $unite; // affiche "1234567.89 m"
 ]]></programlisting>
@@ -47,7 +49,9 @@ echo $unite; // affiche "1234567.89 m"
                 <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89 Meter";
-$unite = new Zend_Measure_Length($machaine,Zend_Measure_Length::STANDARD, $locale);
+$unite = new Zend_Measure_Length($machaine,
+                                 Zend_Measure_Length::STANDARD,
+                                 $locale);
 
 echo $unite->getValue(); // affiche "1234567.89"
 ]]></programlisting>
@@ -67,7 +71,9 @@ echo $unite->getValue(); // affiche "1234567.89"
                 <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89";
-$unit = new Zend_Measure_Weight($machaine,Zend_Measure_Weight::POUND, $locale);
+$unit = new Zend_Measure_Weight($machaine,
+                                Zend_Measure_Weight::POUND,
+                                $locale);
 
 echo $unit->getType(); // affiche "POUND"
 ]]></programlisting>

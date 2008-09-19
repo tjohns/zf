@@ -43,22 +43,28 @@ library/
 
         <programlisting role="php"><![CDATA[
 $loader = new Zend_Loader_PluginLoader();
-$loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
-       ->addPrefixPath('Foo_View_Helper', 'application/modules/foo/views/helpers')
-       ->addPrefixPath('Bar_View_Helper', 'application/modules/bar/views/helpers');
+$loader->addPrefixPath('Zend_View_Helper',
+                       'Zend/View/Helper/')
+       ->addPrefixPath('Foo_View_Helper',
+                       'application/modules/foo/views/helpers')
+       ->addPrefixPath('Bar_View_Helper',
+                       'application/modules/bar/views/helpers');
 ]]></programlisting>
 
         <para>Il devient alors possible de charger une aide de vue en spécifiant juste le nom de sa classe :</para>
 
         <programlisting role="php"><![CDATA[
 // charge l'aide 'FormText' :
-$formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
+$formTextClass = $loader->load('FormText');
+// 'Zend_View_Helper_FormText'
 
 // charge l'aide 'FormLabel' :
-$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel' 
+$formLabelClass = $loader->load('FormLabel');
+// 'Foo_View_Helper_FormLabel' 
 
 // charge l'aide 'FormSubmit' :
-$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
+$formSubmitClass = $loader->load('FormSubmit');
+// 'Bar_View_Helper_FormSubmit'
 ]]></programlisting>
 
         <para>Une fois chargée, la classe devient instanciable.</para>

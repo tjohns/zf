@@ -18,7 +18,9 @@
 
         <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('en');
-$unit = new Zend_Measure_Length(100, Zend_Measure_Length::METER, $locale);
+$unit = new Zend_Measure_Length(100,
+                                Zend_Measure_Length::METER,
+                                $locale);
 
 // Converti les mètres en yards
 echo $unit->convertTo(Zend_Measure_Length::YARD);
@@ -39,8 +41,10 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
         utilisée. L'unité de visualisation est <code>m</code>.</para>
 
         <programlisting role="php"><![CDATA[
-echo Zend_Measure_Length::STANDARD;  // affiche 'Length::METER'
-echo Zend_Measure_Length::KILOMETER; // affiche 'Length::KILOMETER'
+echo Zend_Measure_Length::STANDARD;
+// affiche 'Length::METER'
+echo Zend_Measure_Length::KILOMETER;
+// affiche 'Length::KILOMETER'
 
 $unit = new Zend_Measure_Length(100,'METER');
 echo $unit;

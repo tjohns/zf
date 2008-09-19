@@ -110,13 +110,16 @@ $this->headScript()->appendFile('/js/prototype.js')
         <programlisting role="php"><![CDATA[
 // mettre les scripts dans l'ordre
 
-// placer celui-ci à un offset particulier pour s'assurer de le charger en dernier
+// placer celui-ci à un offset particulier pour s'assurer
+// de le charger en dernier
 $this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
 
-// utiliser les effets de scriptaculous (append utilises l'index suivant, c-à-d. 101)
+// utiliser les effets de scriptaculous (append utilise
+// l'index suivant, c-à-d. 101)
 $this->headScript()->appendScript('/js/scriptaculous.js');
 
-// mais dans tous les cas, le script de base prototype doit être chargé en premier :
+// mais dans tous les cas, le script de base prototype
+// doit être chargé en premier :
 $this->headScript()->prependScript('/js/prototype.js');
 ]]></programlisting>
 

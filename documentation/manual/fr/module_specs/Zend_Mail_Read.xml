@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11431 -->
 <sect1 id="zend.mail.read">
     <title>Lire des émail</title>
 
@@ -138,13 +138,15 @@ foreach ($mail as $message) {
         <code>Zend_Mail_Storage_Mbox</code>:</para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));
+$mail =
+    new Zend_Mail_Storage_Mbox(array('filename' => '/home/test/mail/inbox'));
 ]]></programlisting>
 
         <para>Maildir est très similaire mais nécessite un nom de dossier :</para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));
+$mail =
+    new Zend_Mail_Storage_Maildir(array('dirname' => '/home/test/mail/'));
 ]]></programlisting>
 
         <para>Ces deux constructeurs lèvent une exception <code>Zend_Mail_Exception</code> si le stockage ne peut pas
@@ -180,9 +182,11 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'exemple.com',
         indiqué dans la RFC.</para>
 
         <programlisting role="php"><![CDATA[
-// exemples pour Zend_Mail_Storage_Pop3, identique à Zend_Mail_Storage_Imap
+// exemples pour Zend_Mail_Storage_Pop3,
+// identique à Zend_Mail_Storage_Imap
 
-// utiliser SSL avec un port différent (par défaut 995 pour Pop3 et 993 pour Imap)
+// utiliser SSL avec un port différent
+// (par défaut 995 pour Pop3 et 993 pour Imap)
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'exemple.com'
                                          'user'     => 'test',
                                          'password' => 'test',
@@ -276,7 +280,9 @@ $type = $message->contentType;
         <code>getHeader()</code>.</para>
 
         <programlisting role="php"><![CDATA[
-// récupérer l'entête comme une propriété - le résultat est toujours une chaîne, avec de nouvelles lignes entre chaque occurence dans le message
+// récupérer l'entête comme une propriété - le résultat est toujours
+// une chaîne, avec de nouvelles lignes entre chaque occurence
+// dans le message
 $received = $message->received;
 
 // la même chose avec la méthode getHeader()
@@ -288,7 +294,8 @@ foreach ($received as $line) {
     // faire qqch
 }
 
-// si vous ne définissez pas de format vous récupérerez la représentation interne (chaîne pour entêtes uniques, tableau pour entêtes multiples
+// si vous ne définissez pas de format vous récupérerez la représentation
+// interne (chaîne pour entêtes uniques, tableau pour entêtes multiples
 $received = $message->getHeader('received');
 if (is_string($received)) {
     // seulement un entête received trouvé dans le message
@@ -336,7 +343,9 @@ $part = $message;
 while ($part->isMultipart()) {
     $part = $message->getPart(1);
 }
-echo 'Le type de cette partie est ' . strtok($part->contentType, ';') . "\n";
+echo 'Le type de cette partie est '
+   . strtok($part->contentType, ';')
+   . "\n";
 echo "Contenu :\n";
 echo $part->getContent();
 ]]></programlisting>
@@ -449,22 +458,29 @@ if (!$message->hasFlag('$SpamTeste')) {
 
         <programlisting role="php"><![CDATA[
 // mbox avec dossiers
-$mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Folder_Mbox(
+            array('dirname' => '/home/test/mail/')
+        );
 
 // mbox avec un dossier par défaut nommé INBOX, fontionne aussi
 // avec Zend_Mail_Storage_Folder_Maildir et Zend_Mail_Storage_Imap
-$mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' => '/home/test/mail/',
-                                                'folder'  => 'Archive'));
+$mail = new Zend_Mail_Storage_Folder_Mbox(
+            array('dirname' => '/home/test/mail/', 'folder'  => 'Archive')
+        );
 
 // maildir avec dossiers
-$mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Folder_Maildir(
+            array('dirname' => '/home/test/mail/')
+        );
 
-// maildir avec deux-points comme délimiteur, comme suggéré dans Maildir++
-$mail = new Zend_Mail_Storage_Folder_Maildir(array('dirname' => '/home/test/mail/'
-                                                   'delim'   => ':'));
+// maildir avec deux-points comme délimiteur,
+// comme suggéré dans Maildir++
+$mail = new Zend_Mail_Storage_Folder_Maildir(
+            array('dirname' => '/home/test/mail/', 'delim'   => ':')
+        );
 
 // imap est le même avec ou sans dossier
-$mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
+$mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test'));
 ]]></programlisting>
@@ -518,11 +534,14 @@ $mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
         l'arbre entier dans une vue :</para>
 
         <programlisting role="php"><![CDATA[
-$folders = new RecursiveIteratorIterator($this->mail->getFolders(),
-                                         RecursiveIteratorIterator::SELF_FIRST);
+$folders = new RecursiveIteratorIterator(
+                    $this->mail->getFolders(),
+                    RecursiveIteratorIterator::SELF_FIRST
+                );
 echo '<select name="folder">';
 foreach ($folders as $localName => $folder) {
-    $localName = str_pad('', $folders->getDepth(), '-', STR_PAD_LEFT) . $localName;
+    $localName = str_pad('', $folders->getDepth(), '-', STR_PAD_LEFT)
+               . $localName;
     echo '<option';
     if (!$folder->isSelectable()) {
         echo ' disabled="disabled"';
@@ -546,7 +565,9 @@ echo '</select>';
 //  INBOX.Archive.2005
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
-echo 'Le précédent dossier était ' . $mail->getSelectedFolder() . "Le nouveau dossier est $folder\n";
+echo 'Le précédent dossier était '
+   . $mail->getSelectedFolder()
+   . "Le nouveau dossier est $folder\n";
 $mail->selectFolder($folder);
 ]]></programlisting>
     </sect2>
@@ -595,8 +616,11 @@ $mbox_basedir = '/home/test/mail/';
 $cache_id = 'exemple de mail en cache ' . $mbox_basedir . $signal_file;
 
 $cache = new Your_Cache_Class();
-if (!$cache->isCached($cache_id) || filemtime($signal_file) > $cache->getMTime($cache_id)) {
-    $mail = new Zend_Mail_Storage_Folder_Pop3(array('dirname' => $mbox_basedir));
+if (!$cache->isCached($cache_id) ||
+    filemtime($signal_file) > $cache->getMTime($cache_id)) {
+    $mail = new Zend_Mail_Storage_Folder_Pop3(
+                array('dirname' => $mbox_basedir)
+            );
 } else {
     $mail = $cache->get($cache_id);
 }
@@ -664,7 +688,8 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
     public function __construct(array $params)
     {
         // ... vérifier les $params ici ! ...
-        $protocol = new Example_Mail_Protocol_Pop3_Knock($params['host']);
+        $protocol =
+            new Example_Mail_Protocol_Pop3_Knock($params['host']);
 
         // faire votre fonction "spéciale"
         foreach ((array)$params['knock_ports'] as $port) {
@@ -680,10 +705,14 @@ class Example_Mail_Pop3_Knock extends Zend_Mail_Storage_Pop3
     }
 }
 
-$mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
-                                          'user'        => 'test',
-                                          'password'    => 'test',
-                                          'knock_ports' => array(1101, 1105, 1111)));
+$mail = new Example_Mail_Pop3_Knock(
+            array('host'        => 'localhost',
+                                   'user'        => 'test',
+                                   'password'    => 'test',
+                                   'knock_ports' => array(1101,
+                                                          1105,
+                                                          1111))
+        );
 ]]></programlisting>
 
             <para>Comme vous voyez nous supposons toujours que nous sommes reliés, identifiés et, si supporté, un
@@ -706,19 +735,32 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
             <code>checkQuota()</code>:</para>
 
             <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' => '/home/test/mail/'));
+$mail = new Zend_Mail_Storage_Writable_Maildir(
+            array('dirname' => '/home/test/mail/')
+        );
 $mail->setQuota(true); // true pour activer, false pour désactiver
-echo 'La vérification du quota est maintenant ', $mail->getQuota() ? 'active' : 'inactive', "\n";
-// la vérification du quota peut être utilisée si celle-ci est désactivée
-echo 'Vous êtes ', $mail->checkQuota() ? 'hors quota' : 'dans le quota', "\n";
+echo 'La vérification du quota est maintenant ',
+     $mail->getQuota() ? 'active' : 'inactive',
+     "\n";
+// la vérification du quota peut être utilisée
+// si celle-ci est désactivée
+echo 'Vous êtes ',
+     $mail->checkQuota() ? 'hors quota' : 'dans le quota',
+     "\n";
 ]]></programlisting>
 
             <para><code>checkQuota()</code> peut aussi retournée une réponse plus détaillée :</para>
 
             <programlisting role="php"><![CDATA[
 $quota = $mail->checkQuota(true);
-echo 'Vous êtes ', $quota['over_quota'] ? 'hors quota' : 'dans le quota', "\n";
-echo 'Vous avez ', $quota['count'], ' de ', $quota['quota']['count'], ' messages et vous utilisez ';
+echo 'Vous êtes ',
+     $quota['over_quota'] ? 'hors quota' : 'dans le quota',
+     "\n";
+echo 'Vous avez ',
+     $quota['count'],
+     ' de ',
+     $quota['quota']['count'],
+     ' messages et vous utilisez ';
 echo $quota['size'], ' de ', $quota['quota']['size'], ' octets';
 ]]></programlisting>
 
@@ -726,7 +768,8 @@ echo $quota['size'], ' de ', $quota['quota']['size'], ' octets';
             contrôle de la taille du dossier de mails, vous pouvez le faire avec <code>setQuota()</code> :</para>
 
             <programlisting role="php"><![CDATA[
-// le nombre de messages et la taille en octet sont supportés, l'ordre est important
+// le nombre de messages et la taille en octet sont supportés,
+// l'ordre est important
 $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
 ]]></programlisting>
 
@@ -737,7 +780,8 @@ $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
 
             <programlisting role="php"><![CDATA[
 class Exemple_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
-    // getQuota est appelé avec $fromStorage = true par la vérification de quota
+    // getQuota est appelé avec $fromStorage = true
+    // par la vérification de quota
     public function getQuota($fromStorage = false) {
         try {
             return parent::getQuota($fromStorage);
@@ -746,7 +790,8 @@ class Exemple_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
                 // Erreur inconnue
                 throw $e;
             }
-            // le fichier de contrôle de la taille du dossier de mails doit être absent
+            // le fichier de contrôle de la taille du dossier de mails
+            // doit être absent
 
             list($count, $size) = get_un_autre_quota();
             return array('count' => $count, 'size' => $size);

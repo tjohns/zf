@@ -176,10 +176,14 @@ class MonValidateur_PasswordStrength extends Zend_Validate_Abstract
     const DIGIT  = 'digit';
 
     protected $_messageTemplates = array(
-        self::LENGTH => "'%value%' doit avoir une longueur d'au moins 8 caractères",
-        self::UPPER  => "'%value%' doit contenir au moins une lettre majuscule",
-        self::LOWER  => "'%value%' doit contenir au moins une lettre minuscule",
-        self::DIGIT  => "'%value%' doit contenir au moins un chiffre"
+        self::LENGTH =>
+            "'%value%' doit avoir une longueur d'au moins 8 caractères",
+        self::UPPER  => 
+            "'%value%' doit contenir au moins une lettre majuscule",
+        self::LOWER  =>
+            "'%value%' doit contenir au moins une lettre minuscule",
+        self::DIGIT  =>
+            "'%value%' doit contenir au moins un chiffre"
     );
 
     public function isValid($value)

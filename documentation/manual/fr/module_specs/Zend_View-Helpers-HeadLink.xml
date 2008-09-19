@@ -72,8 +72,12 @@
         <programlisting role="php"><![CDATA[
 <?php // régler les liens dans votre script de vue :
 $this->headLink()->appendStylesheet('/styles/basic.css')
-                 ->headLink(array('rel' => 'favicon', 'href' => '/img/favicon.ico'), 'PREPEND')
-                 ->prependStylesheet('/styles/moz.css', 'screen', true);
+                 ->headLink(array('rel' => 'favicon',
+                                  'href' => '/img/favicon.ico'),
+                            'PREPEND')
+                 ->prependStylesheet('/styles/moz.css',
+                                     'screen',
+                                     true);
 ?>
 
 <!-- effectuer le rendu -->

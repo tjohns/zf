@@ -15,7 +15,8 @@
     est réalisé comme ceci :</para>
 
     <programlisting role="php"><![CDATA[
-// la fonction fromXml prend simplement une chaîne contenant le XML comme entrée
+// la fonction fromXml prend simplement une chaîne
+// contenant le XML comme entrée
 $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
 ]]></programlisting>
 

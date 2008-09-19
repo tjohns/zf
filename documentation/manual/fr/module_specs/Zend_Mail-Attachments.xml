@@ -14,7 +14,10 @@
 $mail = new Zend_Mail();
 // construction du message
 $mail->createAttachment($uneChaineBinaire);
-$mail->createAttachment($monImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+$mail->createAttachment($monImage,
+                        'image/gif',
+                        Zend_Mime::DISPOSITION_INLINE,
+                        Zend_Mime::ENCODING_8BIT);
 ]]></programlisting>
     </example>
 

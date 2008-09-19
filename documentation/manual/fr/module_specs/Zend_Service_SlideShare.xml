@@ -20,7 +20,10 @@
 
         <programlisting role="php"><![CDATA[
 // Crée une instance du composant
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 ]]></programlisting>
     </sect2>
 
@@ -72,8 +75,8 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Règle le nom de fichier du diaporama dans le système de fichiers local
-     * (pour l'upload d'un nouveau diaporama)
+     * Règle le nom de fichier du diaporama dans le système
+     * de fichiers local (pour l'upload d'un nouveau diaporama)
      */
     public function setFilename($file) {
         $this->_slideShowFilename = (string)$file;
@@ -81,8 +84,8 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Rècupère le nom de fichier du diaporama dans le système de fichiers local
-     * qui sera uploadé
+     * Rècupère le nom de fichier du diaporama dans le système
+     * de fichiers local qui sera uploadé
      */
     public function getFilename() {
         return $this->_slideShowFilename;
@@ -147,7 +150,8 @@ class Zend_Service_SlideShare_SlideShow {
     }
 
     /**
-     * Récupère la description textuelle du statut du diaporama sur le serveur
+     * Récupère la description textuelle du statut du diaporama
+     * sur le serveur
      */
     public function getStatusDescription() {
         return $this->_statusDescription;
@@ -188,7 +192,10 @@ class Zend_Service_SlideShare_SlideShow {
 
         <programlisting role="php"><![CDATA[
 // Création d'une instance du composant
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 
 $slideshow = $ss->getSlideShow(123456);
 
@@ -230,7 +237,10 @@ print "Nombre de diapositives : {$slideshow->getNumViews()}<br/>\n";
 
         <programlisting role="php"><![CDATA[
 // Crée une nouvelle instance du composant
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 
 $starting_offset = 0;
 $limit = 10;
@@ -262,9 +272,15 @@ $frontendOptions = array(
 $backendOptions  = array(
                         'cache_dir' => '/webtmp/');
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
@@ -283,7 +299,10 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
 $client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
 ]]></programlisting>

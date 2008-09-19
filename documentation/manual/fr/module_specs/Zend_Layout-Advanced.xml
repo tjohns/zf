@@ -65,7 +65,8 @@ $layout->setView($view);
 
             <programlisting role="php"><![CDATA[
 $placeholders = new Zend_View_Helper_Placeholder();
-$layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
+$layoutVars   = $placeholders->placeholder('Zend_Layout')
+                             ->getArrayCopy();
 ]]></programlisting>
         </note>
     </sect2>

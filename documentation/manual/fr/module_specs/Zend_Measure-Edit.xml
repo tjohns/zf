@@ -54,10 +54,13 @@ $locale = new Zend_Locale('de');
 $machaine = "1.234.567,89";
 $unite = new Zend_Measure_Weight($machaine,'POND', $locale);
 
-print "Kilo : ".$unite->convertTo('KILOGRAM'); // affiche "Kilo : 617283.945 kg"
+print "Kilo : ".$unite->convertTo('KILOGRAM');
+// affiche "Kilo : 617283.945 kg"
 
-// l'utilisation de constantes est considérée comme une meilleure pratique que les chaînes
-print "Tonne : ".$unite->convertTo(Zend_Measure_Weight::TON); // affiche "Tonne : 617.283945 t"
+// l'utilisation de constantes est considérée comme
+// une meilleure pratique que les chaînes
+print "Tonne : ".$unite->convertTo(Zend_Measure_Weight::TON);
+// affiche "Tonne : 617.283945 t"
 
 // définition de la précision pour l'affichage
 print "Tonne :".$unit->convertTo(Zend_Measure_Weight::TON, 3);
@@ -171,9 +174,12 @@ $unite1 = new Zend_Measure_Length(100, Zend_Measure_Length::CENTIMETER);
 $unite2 = new Zend_Measure_Length(1, Zend_Measure_Length::METER);
 $unite3 = new Zend_Measure_Length(1.2, Zend_Measure_Length::METER);
 
-print "Egalité : ".$unite2->compare($unite1);        // affiche "Egalité : 0"
-print "Plus petit que : ".$unite2->compare($unite3); // affiche "Plus petit que : -1"
-print "Plus grand que : ".$unite3->compare($unite2); // affiche "Plus grand que : 1"
+print "Egalité : ".$unite2->compare($unite1);
+// affiche "Egalité : 0"
+print "Plus petit que : ".$unite2->compare($unite3);
+// affiche "Plus petit que : -1"
+print "Plus grand que : ".$unite3->compare($unite2);
+// affiche "Plus grand que : 1"
 ]]></programlisting>
             </example></para>
     </sect2>

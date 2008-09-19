@@ -87,14 +87,16 @@ if ($validator->isValid($email)) {
 $validator = new Zend_Validate_StringLength(8);
 
 $validator->setMessage(
-    'La chaîne \'%value%\' est trop courte ; elle doit être au moins de %min% caractères',
+    'La chaîne \'%value%\' est trop courte ; '
+  . 'elle doit être au moins de %min% caractères',
     Zend_Validate_StringLength::TOO_SHORT);
 
 if (!$validator->isValid('word')) {
     $messages = $validator->getMessages();
     echo current($messages);
 
-    // affiche "La chaîne 'word' est trop courte ; elle doit être au moins de 8 caractères"
+    // affiche "La chaîne 'word' est trop courte ;
+    // elle doit être au moins de 8 caractères"
 }
 ]]></programlisting></para>
 
@@ -103,8 +105,10 @@ if (!$validator->isValid('word')) {
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
-    Zend_Validate_StringLength::TOO_SHORT => 'La chaîne \'%value%\' est trop courte',
-    Zend_Validate_StringLength::TOO_LONG  => 'La chaîne \'%value%\' est trop longue'
+    Zend_Validate_StringLength::TOO_SHORT =>
+            'La chaîne \'%value%\' est trop courte',
+    Zend_Validate_StringLength::TOO_LONG  =>
+            'La chaîne \'%value%\' est trop longue'
 ));
 ]]></programlisting></para>
 

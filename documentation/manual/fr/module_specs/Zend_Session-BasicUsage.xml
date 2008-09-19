@@ -40,12 +40,15 @@ $monNamespace = new Zend_Session_Namespace('monNamespace');
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
-    $defaultNamespace->numberOfPageRequests++;   // ceci s'incrémente à chaque chargement de page.
+    $defaultNamespace->numberOfPageRequests++;  
+    // ceci s'incrémente à chaque chargement de page.
 } else {
-    $defaultNamespace->numberOfPageRequests = 1; // première page
+    $defaultNamespace->numberOfPageRequests = 1;
+    // première page
 }
 
-echo "Page demandée lors de cette session : ", $defaultNamespace->numberOfPageRequests;
+echo "Page demandée lors de cette session : ",
+     $defaultNamespace->numberOfPageRequests;
 ]]></programlisting>
         </example>
 
@@ -98,7 +101,8 @@ $_SESSION['Un_Service_Web']['user'] = "monwebusername";
             <title>Énumération des sessions</title>
 
             <programlisting role="php"><![CDATA[
-$unNamespace = new Zend_Session_Namespace('un_namespace_avec_des_donnes_presentes');
+$unNamespace =
+    new Zend_Session_Namespace('un_namespace_avec_des_donnes_presentes');
 
 foreach ($unNamespace as $index => $valeur) {
     echo "unNamespace->$index = '$valeur';\n";
@@ -120,7 +124,8 @@ foreach ($unNamespace as $index => $valeur) {
             <title>Accéder aux données de session</title>
 
             <programlisting role="php"><![CDATA[
-$namespace = new Zend_Session_Namespace(); // Espace de noms par défaut
+$namespace = new Zend_Session_Namespace();
+// Espace de noms par défaut
 
 $namespace->foo = 100;
 

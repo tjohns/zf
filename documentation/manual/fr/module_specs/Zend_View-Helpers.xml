@@ -104,11 +104,17 @@ echo $this->formCheckbox('foo', null, null, array(
 
 // "bar" et "baz" en tant qu'options cochée/décochée ; cochée 
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => true),
+                         array('bar', 'baz');
 
 // "bar" et "baz" en tant qu'options cochée/décochée ; décochée 
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => false),
+                         array('bar', 'baz');
 ]]></programlisting>
 
                 <para>Dans tous les cas, la balise est précédée d'un élément masqué ("hidden") avec la valeur de l'état
@@ -230,18 +236,27 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
         <programlisting role="php"><![CDATA[
 <!--
 Dans votre script de vue, $this se réfère à l'instance de Zend_View.
-Partons du principe que vous avez déjà assigné une série d'options de sélection dans un
-tableau $pays =  array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagne').
+Partons du principe que vous avez déjà assigné une série d'options
+de sélection dans un tableau $pays =
+array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagne').
 -->
 <form action="action.php" method="post">
     <p><label>Votre email :
-        <?php echo $this->formText('email', 'vous@exemple.fr', array('size' => 32)) ?>
+        <?php echo $this->formText('email',
+                                   'vous@exemple.fr',
+                                   array('size' => 32)) ?>
     </label></p>
     <p><label>Votre pays :
-        <?php echo $this->formSelect('country', 'us', null, $this->pays) ?>
+        <?php echo $this->formSelect('country',
+                                     'us',
+                                     null,
+                                     $this->pays) ?>
     </label></p>
     <p><label>??? Would you like to opt in ???
-        <?php echo $this->formCheckbox('opt_in', 'oui', null, array('oui', 'non')) ?>
+        <?php echo $this->formCheckbox('opt_in',
+                                       'oui',
+                                       null,
+                                       array('oui', 'non')) ?>
     </label></p>
 </form>
 ]]></programlisting>
@@ -251,7 +266,8 @@ tableau $pays =  array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagn
         <programlisting role="php"><![CDATA[
 <form action="action.php" method="post">
     <p><label>Votre email :
-        <input type="text" name="email" value="vous@exemple.fr" size="32" />
+        <input type="text" name="email"
+               value="vous@exemple.fr" size="32" />
     </label></p>
     <p><label>Votre pays :
         <select name="country">
@@ -262,7 +278,8 @@ tableau $pays =  array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagn
     </label></p>
     <p><label>??? Would you like to opt in ???
         <input type="hidden" name="opt_in" value="non" />
-        <input type="checkbox" name="opt_in" value="oui" checked="checked" />
+        <input type="checkbox" name="opt_in"
+               value="oui" checked="checked" />
     </label></p>
 </form>
 ]]></programlisting>
@@ -298,7 +315,8 @@ tableau $pays =  array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagn
 
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
-$view->setHelperPath('/chemin/vers/plus/de/classes/d-aides', 'Ma_View_Helper');
+$view->setHelperPath('/chemin/vers/plus/de/classes/d-aides',
+                     'Ma_View_Helper');
 ]]></programlisting>
 
         <para>En fait, vous pouvez "empiler" les chemins en utilisant la méthode <code>addHelperPath()</code>. Comme
@@ -309,15 +327,22 @@ $view->setHelperPath('/chemin/vers/plus/de/classes/d-aides', 'Ma_View_Helper');
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
 
-// Ajoute /chemin/vers/des/aides avec le préfixe de classe 'Ma_View_Helper'
-$view->addHelperPath('/chemin/vers/des/aides', 'Ma_View_Helper');
-// Ajoute /autre/chemin/vers/des/aides avec le préfixe de classe 'Votre_View_Helper'
-$view->addHelperPath('/autre/chemin/vers/des/aides', 'Votre_View_Helper');
+// Ajoute /chemin/vers/des/aides avec le préfixe
+// de classe 'Ma_View_Helper'
+$view->addHelperPath('/chemin/vers/des/aides',
+                     'Ma_View_Helper');
+// Ajoute /autre/chemin/vers/des/aides avec le préfixe
+// de classe 'Votre_View_Helper'
+$view->addHelperPath('/autre/chemin/vers/des/aides',
+                     'Votre_View_Helper');
 
 // maintenant, lorsque vous appelerez $this->helperName(), Zend_View
-// va rechercher en premier /autre/chemin/vers/des/aides/HelperName.php en utilisant la classe "Votre_View_Helper_HelperName",
-// et ensuite dans /chemin/vers/des/aides/HelperName.php en utilisant la classe "Ma_View_Helper_HelperName",
-// et finalement dans Zend/View/Helpers/HelperName.php en utilisant la classe "Zend_View_Helper_HelperName"
+// va rechercher en premier /autre/chemin/vers/des/aides/HelperName.php
+// en utilisant la classe "Votre_View_Helper_HelperName", et ensuite
+// dans /chemin/vers/des/aides/HelperName.php en utilisant la classe
+// "Ma_View_Helper_HelperName", et finalement dans 
+// Zend/View/Helpers/HelperName.php en utilisant la classe
+// "Zend_View_Helper_HelperName"
 ]]></programlisting>
     </sect2>
 

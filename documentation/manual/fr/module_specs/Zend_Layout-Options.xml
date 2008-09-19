@@ -78,7 +78,8 @@
 $options = array(
     'layout'     => 'foo',
     'layoutPath' => '/chemin/vers/layouts',
-    'contentKey' => 'CONTENT',           // ignorés si MVC n'est pas utilisé
+    'contentKey' => 'CONTENT'
+    // ignorés si MVC n'est pas utilisé
 );
 ]]></programlisting>
 

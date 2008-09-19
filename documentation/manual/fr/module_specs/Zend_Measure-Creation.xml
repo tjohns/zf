@@ -22,7 +22,8 @@
 
             <programlisting role="php"><![CDATA[
 $mesure = 1234.7;
-$unite = new Zend_Measure_Length((integer)$mesure, Zend_Measure_Length::STANDARD);
+$unite = new Zend_Measure_Length((integer)$mesure,
+                                  Zend_Measure_Length::STANDARD);
 echo $unite;
 // affiche '1234 m' (mètres)
 
@@ -70,7 +71,8 @@ $machaine = "Ma maison a une superficie de 125m².";
 $unite = new Zend_Measure_Area($machaine, Zend_Measure_Area::STANDARD);
 echo $unite; // affiche "125 m²";
 
-$machaine = "Ma maison a une superficie de 125m², elle comprend 5 pièces de 25m² chacune.";
+$machaine = "Ma maison a une superficie de 125m²,"
+          . " elle comprend 5 pièces de 25m² chacune.";
 $unite = new Zend_Measure_Area($machaine, Zend_Measure_Area::STANDARD);
 echo $unite; // affiche "125 m² in size";
 ]]></programlisting>
@@ -93,12 +95,14 @@ echo $unite; // affiche "125 m² in size";
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $machaine = "The boat is 1,234.50 long.";
-$unite = new Zend_Measure_Length($machaine, Zend_Measure_Length::STANDARD, $locale);
+$unite = new Zend_Measure_Length($machaine,
+                                 Zend_Measure_Length::STANDARD, $locale);
 echo $unite; // affiche "1.234 m"
 
 
 $machaine = "The boat is 1,234.50 long.";
-$unite = new Zend_Measure_Length($machaine, Zend_Measure_Length::STANDARD, 'en_US');
+$unite = new Zend_Measure_Length($machaine,
+                                 Zend_Measure_Length::STANDARD, 'en_US');
 echo $unite; // affiche "1234.50 m"
 ]]></programlisting>
         </example>

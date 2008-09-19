@@ -122,7 +122,8 @@ $flickr = new Zend_Service_Flickr('MA_CLE_API');
 
 $image = $flickr->getImageDetails($imageId);
 
-echo "ID de l'image : $imageId, taille : $image->width x $image->height pixels.<br />\n";
+echo "ID de l'image : $imageId, taille : "
+   . "$image->width x $image->height pixels.<br />\n";
 echo "<a href=\"$image->clickUri\">Clicker pour l'image</a>\n";
 ]]></programlisting>
         </example>

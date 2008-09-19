@@ -27,7 +27,8 @@
 
             <programlisting role="php"><![CDATA[
 $backendOptions = array(
-    'cache_dir' => './tmp/'    // Dossier où les blocks de mémoire peuvent être stockés
+    'cache_dir' => './tmp/'
+    // Dossier où les blocks de mémoire peuvent être stockés
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);

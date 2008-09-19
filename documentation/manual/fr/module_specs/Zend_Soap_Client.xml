@@ -101,11 +101,13 @@ $client = new SoapClient("some.wsdl",
 ...
 // Compresse les requêtes avec gzip et un taux de 5
 $client = new SoapClient("some.wsdl", 
-  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
+  array('compression' =>
+            SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
 // Compresse les requêtes en utilisant deflate
 $client = new SoapClient("some.wsdl", 
-  array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
+  array('compression' =>
+            SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
 ]]></programlisting></para>
                 </listitem>
             </itemizedlist></para>

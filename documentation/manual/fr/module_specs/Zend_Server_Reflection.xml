@@ -44,8 +44,8 @@ foreach ($prototypes as $prototype) {
 }
 
 // Récupère l'espace de noms d'une classe, d'une fonction, ou d'une méthode.
-// Les espaces de noms peuvent être définis au moment de l'instanciation (deuxième argument),
-// ou en utilisant setNamespace()
+// Les espaces de noms peuvent être définis au moment de l'instanciation
+// (deuxième argument), ou en utilisant setNamespace()
 $reflection->getNamespace();
 ]]></programlisting>
 

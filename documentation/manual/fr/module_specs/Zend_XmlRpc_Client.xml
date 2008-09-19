@@ -295,9 +295,11 @@ $result = $client->call('foo.bar', array(array()));
             <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
-$server = $client->getProxy();           // Proxy l'espace de nom par défaut
+$server = $client->getProxy();
+// Proxy l'espace de nom par défaut
 
-$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) retourne "hello"
+$hello = $server->test->sayHello(1, 2);
+// test.Hello(1, 2) retourne "hello"
 ]]></programlisting>
         </example>
 
@@ -311,9 +313,11 @@ $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) retourne "hello"
             <programlisting role="php"><![CDATA[
 $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
-$test  = $client->getProxy('test');     // Proxy l'espace de nommage "test"
+$test  = $client->getProxy('test');
+// Proxy l'espace de nommage "test"
 
-$hello = $test->sayHello(1, 2);         // test.Hello(1,2) retourne "hello"
+$hello = $test->sayHello(1, 2);
+// test.Hello(1,2) retourne "hello"
 ]]></programlisting>
         </example>
 

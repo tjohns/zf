@@ -362,10 +362,13 @@
         <programlisting role="php"><![CDATA[
 $valeur_grande = '_X';
 $locale = new Zend_Locale('en');
-$unite = new Zend_Measure_Number($valeur_grande,Zend_Measure_Number::ROMAN, $locale);
+$unite = new Zend_Measure_Number($valeur_grande,
+                                 Zend_Measure_Number::ROMAN,
+                                 $locale);
 
 // convertir en système décimal
-echo $unite->convertTo(Zend_Measure_Number::DECIMAL); // affiche 10000
+echo $unite->convertTo(Zend_Measure_Number::DECIMAL);
+// affiche 10000
 ]]></programlisting>
     </sect2>
 </sect1>

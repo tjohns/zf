@@ -133,8 +133,8 @@ function myFunc($val1, $val2, $val3)
         <para>Si vous voulez ajouter un espace de noms aux méthodes que vous servez, procédez alors comme suit :</para>
 
         <programlisting role="php"><![CDATA[
-// Toutes les méthodes publiques de My_Service_Class seront accessibles via
-// myservice.METHODNAME
+// Toutes les méthodes publiques de My_Service_Class seront accessibles
+// via myservice.METHODNAME
 $server->setClass('My_Service_Class', 'myservice');
 
 // la fonction 'somefunc' sera accessible via funcs.somefunc
@@ -215,9 +215,12 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     require_once 'My/Services/Paste.php';
     require_once 'My/Services/Tape.php';
 
-    $server->setClass('My_Services_Glue', 'glue');   // espace de noms glue
-    $server->setClass('My_Services_Paste', 'paste'); // espace de noms paste
-    $server->setClass('My_Services_Tape', 'tape');   // espace de noms tape
+    $server->setClass('My_Services_Glue', 'glue');
+    // espace de noms glue
+    $server->setClass('My_Services_Paste', 'paste');
+    // espace de noms paste
+    $server->setClass('My_Services_Tape', 'tape');
+    // espace de noms tape
 
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
@@ -282,9 +285,12 @@ require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la forme comb.*
-$server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
-$server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
+$server->setClass('Services_Comb', 'comb');
+// méthodes appelées sous la forme comb.*
+$server->setClass('Services_Brush', 'brush');
+// méthodes appelées sous la forme brush.*
+$server->setClass('Services_Pick', 'pick');
+// méthodes appelées sous la forme pick.*
 echo $server->handle();
 ]]></programlisting>
         </sect3>
@@ -305,9 +311,12 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la forme comb.*
-$server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
-$server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
+$server->setClass('Services_Comb', 'comb');
+// méthodes appelées sous la forme comb.*
+$server->setClass('Services_Brush', 'brush');
+// méthodes appelées sous la forme brush.*
+$server->setClass('Services_Pick', 'pick');
+// méthodes appelées sous la forme pick.*
 echo $server->handle();
 ]]></programlisting>
         </sect3>
@@ -328,9 +337,12 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la forme comb.*
-$server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
-$server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
+$server->setClass('Services_Comb', 'comb');
+// méthodes appelées sous la forme comb.*
+$server->setClass('Services_Brush', 'brush');
+// méthodes appelées sous la forme brush.*
+$server->setClass('Services_Pick', 'pick');
+// méthodes appelées sous la forme pick.*
 
 // Crée un objet de requête
 $request = new Services_Request();
@@ -356,9 +368,12 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la forme comb.*
-$server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
-$server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
+$server->setClass('Services_Comb', 'comb');
+// méthodes appelées sous la forme comb.*
+$server->setClass('Services_Brush', 'brush');
+// méthodes appelées sous la forme brush.*
+$server->setClass('Services_Pick', 'pick');
+// méthodes appelées sous la forme pick.*
 
 // Crée un objet de requête
 $request = new Services_Request();
@@ -393,9 +408,12 @@ $server = new Zend_XmlRpc_Server();
 
 // Essaye de récupérer la définition du serveur via le cache
 if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
-    $server->setClass('Services_Comb', 'comb');   // méthodes appelées sous la forme comb.*
-    $server->setClass('Services_Brush', 'brush'); // méthodes appelées sous la forme brush.*
-    $server->setClass('Services_Pick', 'pick');   // méthodes appelées sous la forme pick.*
+    $server->setClass('Services_Comb', 'comb');
+    // méthodes appelées sous la forme comb.*
+    $server->setClass('Services_Brush', 'brush');
+    // méthodes appelées sous la forme brush.*
+    $server->setClass('Services_Pick', 'pick');
+    // méthodes appelées sous la forme pick.*
 
     // Sauve le cache
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server));

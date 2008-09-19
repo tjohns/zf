@@ -87,7 +87,8 @@ $logger = null;
 
         <para>La classe de <code>Zend_Log</code> définit les priorités suivantes : <programlisting role="php"><![CDATA[
 EMERG   = 0;  // Urgence : le système est inutilisable
-ALERT   = 1;  // Alerte: une mesure corrective doit être prise immédiatement
+ALERT   = 1;  // Alerte: une mesure corrective 
+              // doit être prise immédiatement
 CRIT    = 2;  // Critique : états critiques
 ERR     = 3;  // Erreur: états d'erreur
 WARN    = 4;  // Avertissement: états d'avertissement

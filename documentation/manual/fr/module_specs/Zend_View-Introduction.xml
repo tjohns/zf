@@ -22,7 +22,8 @@
         afficher en passant par une vue. Le contrôleur pourrait alors ressembler à ceci :</para>
 
         <programlisting role="php"><![CDATA[
-// utilise un modèle pour obtenir les données sur les livres : auteurs et titres
+// utilise un modèle pour obtenir les données sur les livres :
+// auteurs et titres
 $data = array(
     array(
         'auteur' => 'Hernando de Soto',

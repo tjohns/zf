@@ -116,7 +116,8 @@ php_value session.auto_start 0
             <title>Verrouillage des espaces de noms de session</title>
 
             <programlisting role="php"><![CDATA[
-$userProfileNamespace = new Zend_Session_Namespace('userProfileNamespace');
+$userProfileNamespace =
+    new Zend_Session_Namespace('userProfileNamespace');
 
 // vérrouillons une session en lecture seule
 $userProfileNamespace->lock();
@@ -148,7 +149,8 @@ $s->a = 'apple';
 $s->p = 'pear';
 $s->o = 'orange';
 
-$s->setExpirationSeconds(5, 'a'); // expire seulement pour la clé "a" dans 5 secondes
+$s->setExpirationSeconds(5, 'a');
+// expire seulement pour la clé "a" dans 5 secondes
 
 // expiration de tout l'espace de nommage dans 5 "hops"
 $s->setExpirationHops(5);
@@ -183,7 +185,8 @@ $s->setExpirationSeconds(60);
 
             <programlisting role="php"><![CDATA[
 $testSpace = new Zend_Session_Namespace('testSpace');
-$testSpace->setExpirationSeconds(300, 'accept_answer'); // expire seulement cette variable
+$testSpace->setExpirationSeconds(300, 'accept_answer');
+// expire seulement cette variable
 $testSpace->accept_answer = true;
 ]]></programlisting>
 
@@ -222,7 +225,8 @@ else {
 // créer une instance d'espace
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
-// créer une autre instance du même espace, mais désactiver toute nouvelle instance
+// créer une autre instance du même espace,
+// mais désactiver toute nouvelle instance
 $authSpaceAccessor2 = new Zend_Session_Namespace('Zend_Auth', true);
 
 // créer une référence est toujours possible
@@ -235,7 +239,8 @@ assert($authSpaceAccessor2->foo, 'bar');
 try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
-    echo "Cannot instantiate this namespace since \$authSpaceAccessor2 was created\n";
+    echo "Cannot instantiate this namespace "
+       . "since $authSpaceAccessor2 was created\n";
 }
 ]]></programlisting>
         </example>
@@ -268,7 +273,8 @@ try {
             <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
-$sessionNamespace->array['testKey'] = 1; // ne fonctionne pas comme attendu avant PHP 5.2.1
+$sessionNamespace->array['testKey'] = 1;
+// ne fonctionne pas comme attendu avant PHP 5.2.1
 echo $sessionNamespace->array['testKey'];
 ]]></programlisting>
         </example>
@@ -368,7 +374,8 @@ echo $myNamespace->someArray['foo']; // affiche "bar"
 
             <programlisting role="php"><![CDATA[
 // tester setExpirationSeconds()
-require 'tests/Zend/Session/SessionTestHelper.php'; // voir aussi SessionTest.php dans trunk/
+require 'tests/Zend/Session/SessionTestHelper.php';
+// voir aussi SessionTest.php dans trunk/
 $script = 'SessionTestHelper.php';
 $s = new Zend_Session_Namespace('espace');
 $s->a = 'abricot';
@@ -377,30 +384,39 @@ $s->setExpirationSeconds(5);
 
 Zend_Session::regenerateId();
 $id = Zend_Session::getId();
-session_write_close(); // relâche la session donc le processus suivant peut l'utiliser
+session_write_close();
+// relâche la session donc le processus suivant peut l'utiliser
 sleep(4); // pas assez long pour les éléments expirent
 exec($script . "expireAll $id expireAll", $result);
 $result = $this->sortResult($result);
 $expect = ';a === abricot;o === orange;p === pear';
 $this->assertTrue($result === $expect,
-    "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
+    "iteration over default Zend_Session namespace failed; "
+  . "expecting result === '$expect', but got '$result'");
 
-sleep(2); // assez long pour que les éléments expirent (total de 6 secondes écoulées, avec une expiration de 5)
+sleep(2);
+// assez long pour que les éléments expirent
+// (total de 6 secondes écoulées, avec une expiration de 5)
 exec($script . "expireAll $id expireAll", $result);
 $result = array_pop($result);
 $this->assertTrue($result === '',
-    "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+    "iteration over default Zend_Session namespace failed; "
+  . "expecting result === '', but got '$result')");
 session_start(); // redémarre artificiellement une session suspendue
 
-// Ceci peut être découpé dans un test séparé, mais en réalité, si quoi que ce soit reste de la partie précédente
-// et contamine les tests suivants, alors c'est un bug dont nous voulons avoir des informations
+// Ceci peut être découpé dans un test séparé, mais en réalité,
+// si quoi que ce soit reste de la partie précédente et contamine
+// les tests suivants, alors c'est un bug dont nous voulons avoir
+// des informations
 $s = new Zend_Session_Namespace('expireGuava');
-$s->setExpirationSeconds(5, 'g'); // maitenant essayons d'expirer seulement une clé dans l'espace
+$s->setExpirationSeconds(5, 'g');
+// maintenant essayons d'expirer seulement une clé dans l'espace
 $s->g = 'guava';
 $s->p = 'peach';
 $s->p = 'plum';
 
-session_write_close(); // relâche la session donc le processus suivant peut l'utiliser
+session_write_close();
+// relâche la session donc le processus suivant peut l'utiliser
 sleep(6); // pas assez long pour les éléments expirent
 exec($script . "expireAll $id expireGuava", $result);
 $result = $this->sortResult($result);

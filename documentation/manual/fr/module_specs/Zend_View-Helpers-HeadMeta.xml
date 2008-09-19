@@ -83,7 +83,8 @@ $this->headMeta()->appendName('keywords', 'framework php productivité');
 
         <programlisting role="php"><![CDATA[
 // désactiver la mise en cache côté client
-$this->headMeta()->appendHttpEquiv('expires', 'Wed, 26 Feb 1997 08:21:57 GMT')
+$this->headMeta()->appendHttpEquiv('expires',
+                                   'Wed, 26 Feb 1997 08:21:57 GMT')
                  ->appendHttpEquiv('pragma', 'no-cache')
                  ->appendHttpEquiv('Cache-Control', 'no-cache');
 ]]></programlisting>
@@ -101,8 +102,10 @@ $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
         d'utiliser une métadonnée "refresh" :</para>
 
         <programlisting role="php"><![CDATA[
-// paramètrer une métadonnée refresh pour 3 secondes avant une nouvel URL :
-$this->headMeta()->appendHttpEquiv('Refresh', '3;URL=http://www.some.org/some.html');
+// paramètrer une métadonnée refresh pour 3 secondes
+// avant une nouvel URL :
+$this->headMeta()->appendHttpEquiv('Refresh',
+                                   '3;URL=http://www.some.org/some.html');
 ]]></programlisting>
 
         <para>Quand vous êtes prêts à placer vos métadonnées dans votre script de disposition, réalisez un

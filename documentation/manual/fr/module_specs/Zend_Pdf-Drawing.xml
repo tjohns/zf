@@ -29,10 +29,12 @@ $height = $pdfPage->getHeight();
 // $grayLevel (float). 0.0 (noir) - 1.0 (blanc)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
-// $r, $g, $b (float). 0.0 (intensité mimimum) - 1.0 (intensité maximum)
+// $r, $g, $b (float).
+// 0.0 (intensité mimimum) - 1.0 (intensité maximum)
 $color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
 
-// $c, $m, $y, $k (float). 0.0 (intensité mimimum) - 1.0 (intensité maximum)
+// $c, $m, $y, $k (float).
+// 0.0 (intensité mimimum) - 1.0 (intensité maximum)
 $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);
 ]]></programlisting>
 
@@ -69,9 +71,12 @@ public function drawLine($x1, $y1, $x2, $y2);
  * Dessine un rectangle.
  *
  * Type de remplissage:
- * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - remplit le rectangle et dessine le contour (par défaut)
- * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - trace uniquement le contour du rectangle
- * Zend_Pdf_Page::SHAPE_DRAW_FILL        - remplit le rectangle
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE
+ * - remplit le rectangle et dessine le contour (par défaut)
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE
+ * - trace uniquement le contour du rectangle
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL 
+ * - remplit le rectangle
  *
  * @param float $x1
  * @param float $y1
@@ -79,14 +84,16 @@ public function drawLine($x1, $y1, $x2, $y2);
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
+public function drawRectangle(
+    $x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
 ]]></programlisting></para>
 
         <para><programlisting role="php"><![CDATA[
 /**
  * Dessine un polygone.
  *
- * Si $fillType est Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE ou Zend_Pdf_Page::SHAPE_DRAW_FILL,
+ * Si $fillType est Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE
+ * ou Zend_Pdf_Page::SHAPE_DRAW_FILL,
  * le polygone est automatiquement fermé.
  * Regardez la description détaillée de ces méthodes dans la
  * documentation du format PDF
@@ -97,9 +104,10 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHA
  * @param integer $fillType
  * @param integer $fillMethod
  */
-public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            $fillMethod = $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+public function drawPolygon(
+    $x, $y,
+    $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+    $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]></programlisting></para>
 
         <para><programlisting role="php"><![CDATA[
@@ -115,11 +123,14 @@ public function drawPolygon($x, $y,
  * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
  *
  *
- * Ce n'est pas réellement un cercle, car le format supporte uniquement des courbe de Bezier cubique.
+ * Ce n'est pas réellement un cercle, car le format supporte
+ * uniquement des courbe de Bezier cubique.
  * Mais c'est une très bonne approximation.
  * La différence avec un vrai cercle est de au maximum 0.00026 radians
- * (avec les angle PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 et 15*PI/8).
- * Avec les angles 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 et 7*PI/4 c'est exactement la tangente d'un cercle.
+ * (avec les angles PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8,
+ * 13*PI/8 et 15*PI/8).
+ * Avec les angles 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 et 7*PI/4
+ * c'est exactement la tangente d'un cercle.
  *
  * @param float $x
  * @param float $y
@@ -128,7 +139,8 @@ public function drawPolygon($x, $y,
  * @param mixed $param5
  * @param mixed $param6
  */
-public function drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);
+public function drawCircle(
+    $x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);
 ]]></programlisting></para>
 
         <para><programlisting role="php"><![CDATA[
@@ -151,7 +163,8 @@ public function drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $par
  * @param mixed $param6
  * @param mixed $param7
  */
-public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
+public function drawEllipse(
+    $x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
 ]]></programlisting></para>
     </sect2>
 
@@ -340,8 +353,9 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             <programlisting role="php"><![CDATA[
 ...
 // Crée la nouvelle police
-$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/chemin/vers/GOODDC__.TTF',
-                                               Zend_Pdf_Font::EMBED_DONT_EMBED);
+$goodDogCoolFont =
+    Zend_Pdf_Font::fontWithPath('/chemin/vers/GOODDC__.TTF',
+                                Zend_Pdf_Font::EMBED_DONT_EMBED);
 
 // Applique cette police
 $pdfPage->setFont($goodDogCoolFont, 36);
@@ -365,8 +379,9 @@ $pdfPage->setFont($goodDogCoolFont, 36);
 
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceNonIncorporable.ttf',
-                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
+$font =
+    Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceNonIncorporable.ttf',
+                                Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
 ...
 ]]></programlisting>
         </example>
@@ -385,8 +400,9 @@ $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceNonIncorporable.ttf',
 
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceDeGrandeTaille.ttf',
-                                    Zend_Pdf_Font::EMBED_DONT_COMPRESS);
+$font =
+    Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceDeGrandeTaille.ttf',
+                                Zend_Pdf_Font::EMBED_DONT_COMPRESS);
 ...
 ]]></programlisting>
         </example>
@@ -399,9 +415,10 @@ $font = Zend_Pdf_Font::fontWithPath('/chemin/vers/PoliceDeGrandeTaille.ttf',
 
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath($cheminVersPoliceQuelconque,
-                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
-                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+$font = Zend_Pdf_Font::fontWithPath(
+    $cheminVersPoliceQuelconque,
+    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
 ...
 ]]></programlisting>
         </example>
@@ -433,8 +450,12 @@ $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 $yPosition = 700;
 foreach ($listePolice as $police) {
     $page->setFont($police, 15);
-    $page->drawText($police->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'fr', 'UTF-8')
-                  . ': Le renard brun rapide saute par-dessus le chien paresseux', 100, $yPosition, 'UTF-8');
+    $page->drawText(
+        $police->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'fr', 'UTF-8')
+      . ': Le renard brun rapide saute par-dessus le chien paresseux',
+        100,
+        $yPosition,
+        'UTF-8');
     $yPosition -= 30;
 }
 ...
@@ -471,7 +492,8 @@ $pdf = Zend_Pdf::load($cheminVersDocument);
 ...
 $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 
-$police = $pdf->extractFont($nomPolice);  /* $pageSource->extractFont($nomPolice) peut aussi être utilisé ici */
+$police = $pdf->extractFont($nomPolice);
+/* $pageSource->extractFont($nomPolice) peut aussi être utilisé ici */
 $page->setFont($police, $taillePolice);
 $page->drawText($texte, $x, $y);
 ...
@@ -495,13 +517,17 @@ $pdf->save($cheminVersDocument, true /* mise à jour de type incrémental */);
 $police = $pdf->extractFont($fontName);
 $policeOriginal = Zend_Pdf_Font::fontWithPath($cheminVersPolices);
 
-$page->setFont($police /* utilisation d'une police extraite */, $taillePolice);
+/* utilisation d'une police extraite */
+$page->setFont($police, $taillePolice);
 $xPosition = $x;
 for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
     $page->drawText($text[$charIndex], $xPosition, $y);
 
     // Use original font for text width calculation
-    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$taillePolice;
+    $width = $originalFont->widthForGlyph(
+                $originalFont->glyphNumberForCharacter($text[$charIndex])
+             );
+    $xPosition += $width / $originalFont->getUnitsPerEm() * $taillePolice;
 }
 ...
 ]]></programlisting></para>
@@ -569,7 +595,9 @@ public function setLineWidth(float $width);
 /**
  * Choisit le modèle de tiret.
  *
- * modele est un tableau de floats: array(longueur_visible, longueur_invisible, longueur_visible, longueur_invisible, ...)
+ * modele est un tableau de floats: array(longueur_visible,
+ * longueur_invisible, longueur_visible, longueur_invisible,
+ * ...)
  * phase est le décalage à partir du début de la ligne.
  *
  * @param array $modele
@@ -655,7 +683,8 @@ public function setLineDashingPattern($pattern, $phase = 0);
 
         <para><programlisting role="php"><![CDATA[
 /**
- * Effectue une rotation de la page autour du point ($x, $y), l'angle est en radians.
+ * Effectue une rotation de la page autour du point ($x, $y),
+ * l'angle est en radians.
  *
  * @param float $angle
  */
@@ -717,7 +746,8 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  * @param array $y  - tableau de float (les coordonnées Y des sommets)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+public function clipPolygon(
+    $x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]></programlisting></para>
 
         <para><programlisting role="php"><![CDATA[
@@ -730,7 +760,8 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);
+public function clipCircle(
+    $x, $y, $radius, $startAngle = null, $endAngle = null);
 ]]></programlisting></para>
 
         <para><programlisting role="php"><![CDATA[
@@ -750,7 +781,8 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);
+public function clipEllipse(
+    $x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);
 ]]></programlisting></para>
     </sect2>
 
@@ -764,7 +796,8 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
 
         <para><programlisting role="php"><![CDATA[
 /**
- * Choisit le style à utiliser pour les futures opérations de dessin sur cette page
+ * Choisit le style à utiliser pour les futures opérations
+ * de dessin sur cette page
  *
  * @param Zend_Pdf_Style $style
  */
@@ -916,7 +949,8 @@ public function getFontSize();
  * $alpha == 1  - opaque
  *
  * Transparency modes, supported by PDF:
- * Normal (default), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
+ * Normal (default), Multiply, Screen, Overlay, Darken,
+ * Lighten, ColorDodge, ColorBurn, HardLight,
  * SoftLight, Difference, Exclusion
  *
  * @param float $alpha
