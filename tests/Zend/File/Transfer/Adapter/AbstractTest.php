@@ -177,18 +177,22 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $validators = array(
             'count' => array('min' => 1, 'max' => 1),
+            'Exists' => 'C:\temp',
             array('validator' => 'Upload', 'options' => array(realpath(__FILE__))),
             new Zend_Validate_File_Extension('jpg'),
         );
         $this->adapter->addValidators($validators);
         $test = $this->adapter->getValidators();
         $this->assertTrue(is_array($test));
-        $this->assertEquals(3, count($test), var_export($test, 1));
+        $this->assertEquals(4, count($test), var_export($test, 1));
         $count = array_shift($test);
         $this->assertTrue($count instanceof Zend_Validate_File_Count);
+        $exists = array_shift($test);
+        $this->assertTrue($exists instanceof Zend_Validate_File_Exists);
         $size = array_shift($test);
         $this->assertTrue($size instanceof Zend_Validate_File_Upload);
-        $ext  = array_shift($test);
+        $ext = array_shift($test);
+        $this->assertTrue($ext instanceof Zend_Validate_File_Extension);
         $orig = array_pop($validators);
         $this->assertSame($orig, $ext);
     }
@@ -200,7 +204,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowPullingValidatorsByFile()
     {
-        $this->adapter->addValidator('Alpha', false, 'foo');
+        $this->adapter->addValidator('Alpha', false, false, 'foo');
         $validators = $this->adapter->getValidators('foo');
         $this->assertEquals(1, count($validators));
         $validator = array_shift($validators);
@@ -238,7 +242,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->testAdapterShouldAllowAddingMultipleValidatorsAtOnceUsingBothInstancesAndPluginLoader();
         $validators = $this->adapter->getValidators();
         $this->assertTrue(is_array($validators));
-        $this->assertEquals(3, count($validators));
+        $this->assertEquals(4, count($validators));
         foreach ($validators as $validator) {
             $this->assertTrue($validator instanceof Zend_Validate_Interface);
         }
@@ -282,7 +286,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testValidationShouldReturnTrueForValidTransfer()
     {
-        $this->adapter->addValidator('Regex', '/([a-z0-9]{13})$/i', 'foo');
+        $this->adapter->addValidator('Count', false, array(1, 3), 'foo');
         $this->assertTrue($this->adapter->isValid('foo'));
     }
 
@@ -293,7 +297,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testValidationShouldReturnFalseForInvalidTransfer()
     {
-        $this->adapter->addValidator('Extension', 'png', 'foo');
+        $this->adapter->addValidator('Extension', false, 'png', 'foo');
         $this->assertFalse($this->adapter->isValid('foo'));
     }
 
