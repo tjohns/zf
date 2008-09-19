@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11174 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Calendar の使用法</title>
     <para>
@@ -117,7 +117,8 @@ $pass = "pa$$w0rd";
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Calendar サービスのインスタンスを作成します
-$service = new Zend_Gdata_Calendar($client);]]>
+$service = new Zend_Gdata_Calendar($client);
+]]>
             </programlisting>
             <para>
                 AuthSub を使用する Calendar サービスを作成するのもほぼ同様ですが、
@@ -134,9 +135,14 @@ function getCurrentUrl()
     global $_SERVER;
 
     // php_self をフィルタリングし、セキュリティを確保します
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri = 
+        htmlentities(substr($_SERVER['REQUEST_URI'],
+                            0,
+                            strcspn($_SERVER['REQUEST_URI'], "\n\r")),
+                            ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) &&
+        strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -152,8 +158,9 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** AuthSub 認証済みの HTTP クライアントを作成し、ログインが必要なら
- *  ユーザを AuthSub サーバにリダイレクトします
+/** 
+ * AuthSub 認証済みの HTTP クライアントを作成し、ログインが必要なら
+ * ユーザを AuthSub サーバにリダイレクトします
  */
 function getAuthSubHttpClient()
 {
@@ -170,7 +177,10 @@ function getAuthSubHttpClient()
 
         // ユーザを AuthSub サーバにリダイレクトします
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, 
+                                                             $scope,
+                                                             $secure,
+                                                             $session);
          header("HTTP/1.0 307 Temporary redirect");
 
          header("Location: " . $authSubUrl);
@@ -194,19 +204,22 @@ function getAuthSubHttpClient()
 
 // -> スクリプトの実行はここから始まります <-
 
-// http://code.google.com/apis/gdata/reference.html#Queries
-// でユーザが有効なセッションを保持していることを確認し、
+// ユーザが有効なセッションを保持していることを確認し、
 // AuthSub セッショントークンを記録します
 session_start();
 
 // Calendar サービスのインスタンスを作成し、
 // 必要に応じてユーザを AuthSub サーバにリダイレクトします
-$service = new Zend_Gdata_Calendar(getAuthSubHttpClient());]]>
+$service = new Zend_Gdata_Calendar(getAuthSubHttpClient());
+]]>
             </programlisting>
             <para>未認証のサーバを作成して、公開フィードへのアクセスや MagicCookie 認証で使用することができます。</para>
-            <programlisting role="php"><![CDATA[// Calendar サービスのインスタンスを、未認証の HTTP クライアントで作成します
+            <programlisting role="php"><![CDATA[
+// Calendar サービスのインスタンスを、
+// 未認証の HTTP クライアントで作成します
 
-$service = new Zend_Gdata_Calendar();]]>
+$service = new Zend_Gdata_Calendar();
+]]>
             </programlisting>
             <para>
                 MagicCookie 認証は HTTP 接続で提供するものではなく、
@@ -238,8 +251,9 @@ $service = new Zend_Gdata_Calendar($client);
 try {
     $listFeed= $service->getCalendarListFeed();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "エラー: " . $e->getResponse();
-}]]>
+    echo "エラー: " . $e->getMessage();
+}
+]]>
         </programlisting>
         <para>
             <code>getCalendarListFeed()</code> をコールすると
@@ -253,9 +267,11 @@ try {
 echo "<h1>カレンダーリストのフィード</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
-    echo "<li>" . $calendar->title . " (Event Feed: " . $calendar->id . ")</li>";
+    echo "<li>" . $calendar->title . 
+         " (Event Feed: " . $calendar->id . ")</li>";
 }
-echo "</ul>";]]>
+echo "</ul>";
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.event_retrieval">
@@ -336,7 +352,8 @@ echo "</ul>";]]>
             <programlisting role="php"><![CDATA[
 $query = $service->newEventQuery();
 $query->setUser('default');
-// MagicCookie 認証の場合は $query->setVisibility('private-magicCookieValue') とします
+// MagicCookie 認証の場合は
+// $query->setVisibility('private-magicCookieValue') とします
 $query->setVisibility('private');
 $query->setProjection('full');
 $query->setOrderby('starttime');
@@ -346,7 +363,7 @@ $query->setFutureevents('true');
 try {
     $eventFeed = $service->getCalendarEventFeed($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "エラー: " . $e->getResponse();
+    echo "エラー: " . $e->getMessage();
 }
 
 // リストの内容を順に取得し、HTML のリストとして出力します
@@ -354,7 +371,8 @@ echo "<ul>";
 foreach ($eventFeed as $event) {
     echo "<li>" . $event->title . " (Event ID: " . $event->id . ")</li>";
 }
-echo "</ul>";]]>
+echo "</ul>";
+]]>
             </programlisting>
             <para>
                 ID や author、when、event status、visibility、web content、
@@ -385,7 +403,8 @@ echo "</ul>";]]>
             </para>
             <programlisting role="php"><![CDATA[
 $query->setStartMin('2006-12-01');
-$query->setStartMax('2006-12-16');]]>
+$query->setStartMax('2006-12-16');
+]]>
             </programlisting>
             <para>
                 <code>startMin</code>
@@ -404,7 +423,8 @@ $query->setStartMax('2006-12-16');]]>
                 メソッドでクエリを作成します。
             </para>
             <programlisting role="php"><![CDATA[
-$query->setQuery("dogfood");]]>
+$query->setQuery("dogfood");
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.event_retrieval.individual">
@@ -427,8 +447,9 @@ $query->setEvent($eventId);
 try {
     $event = $service->getCalendarEventEntry($query);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "エラー: " . $e->getResponse();
-}]]>
+    echo "エラー: " . $e->getMessage();
+}
+]]>
             </programlisting>
             <para>
                 同様に、もしそのイベントの URL がわかっているのなら、
@@ -438,13 +459,15 @@ try {
                 必要な情報は、イベントの URL にすべて含まれているからです。
             </para>
             <programlisting role="php"><![CDATA[
-$eventURL = "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
+$eventURL =
+    "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "エラー: " . $e->getResponse();
-}]]>
+    echo "エラー: " . $e->getMessage();
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -558,7 +581,8 @@ $event= $service->newEventEntry();
 // 各属性は、対応するクラスのインスタンスとして作成されることに注意しましょう
 $event->title = $service->newTitle("My Event");
 $event->where = array($service->newWhere("Mountain View, California"));
-$event->content = $service->newContent(" This is my awesome event. RSVP required.");
+$event->content =
+    $service->newContent(" This is my awesome event. RSVP required.");
 
 // RFC 3339 形式で日付を指定します
 $startDate = "2008-01-20";
@@ -574,7 +598,8 @@ $event->when = array($when);
 
 // イベントをカレンダーサーバにアップロードします
 // サーバに記録したイベントのコピーが返されます
-$newEvent = $service->insertEvent($event);]]>
+$newEvent = $service->insertEvent($event);
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.schedulers_reminders">
@@ -606,7 +631,8 @@ $newEvent = $service->insertEvent($event);]]>
                 形式で指定しなければなりません。
             </para>
             <programlisting role="php"><![CDATA[
-// 2007 年 12 月 5 日の午後 2 時 (UTC-8) から 1 時間のイベントを設定します
+// 2007 年 12 月 5 日の午後 2 時 (UTC-8) から
+// 1 時間のイベントを設定します
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
@@ -615,7 +641,8 @@ $when->endTime="2007-12-05T15:00:00:00-08:00";
 $when->valueString = "This Afternoon";
 
 // when プロパティをイベントに追加します
-$event->when = $when;]]>
+$event->when = $when;
+]]>
             </programlisting>
             <para>
                 <code>when</code> 属性では、
@@ -637,14 +664,16 @@ $event->when = $when;]]>
                 たとえば、1 時間 30 分の場合は 90 分と指定しなければなりません。
             </para>
             <programlisting role="php"><![CDATA[
-// 新しいリマインダーオブジェクトを作成します。予定の 10 分前に、メールでメッセージを送るようにします
+// 新しいリマインダーオブジェクトを作成します。
+// 予定の 10 分前に、メールでメッセージを送るようにします
 $reminder = $service->newReminder();
 $reminder->method = "email";
 $reminder->minutes = "10";
 
 // 既存のイベントの when プロパティにリマインダーを適用します
 $when = $event->when[0];
-$when->reminders = array($reminder);]]>
+$when->reminders = array($reminder);
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.recurring">
@@ -679,7 +708,10 @@ $event= $service->newEventEntry();
 // 各属性は、対応するクラスのインスタンスとして作成されることに注意しましょう
 $event->title = $service->newTitle("My Recurring Event");
 $event->where = array($service->newWhere("Palo Alto, California"));
-$event->content = $service->newContent(" This is my other awesome event, occurring all-day every Tuesday from 2007-05-01 until 207-09-04. No RSVP required.");
+$event->content =
+    $service->newContent(' This is my other awesome event, ' .
+                         ' occurring all-day every Tuesday from .
+                         '2007-05-01 until 207-09-04. No RSVP required.');
 
 // 繰り返しパターンの期間と頻度を指定します
 
@@ -691,7 +723,8 @@ $event->recurrence = $service->newRecurrence($recurrence);
 
 // イベントをカレンダーサーバにアップロードします
 // サーバに記録したイベントのコピーが返されます
-$newEvent = $service->insertEvent($event);]]>
+$newEvent = $service->insertEvent($event);
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.calendar.creating_events.quickadd">
@@ -714,7 +747,8 @@ $event->quickAdd = $service->newQuickAdd("true");
 
 // イベントをカレンダーサーバにアップロードします
 // サーバに記録したイベントのコピーが返されます
-$newEvent = $service->insertEvent($event);]]>
+$newEvent = $service->insertEvent($event);
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -744,8 +778,9 @@ $event->title = $service->newTitle("Woof!");
 try {
     $event->save();
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "エラー: " . $e->getResponse();
-}]]>
+    echo "エラー: " . $e->getMessage();
+}
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.deleting_events">
@@ -769,11 +804,14 @@ try {
         </para>
         <programlisting role="php"><![CDATA[
 // 方法 1: イベントを直接削除します
-$event->delete();]]>
+$event->delete();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
-// 方法 2: カレンダーサービスに、削除したいイベントの編集 URL を渡します
-$service->delete($event->getEditLink()->href);]]>
+// 方法 2: カレンダーサービスに、
+// 削除したいイベントの編集 URL を渡します
+$service->delete($event->getEditLink()->href);
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.gdata.calendar.comments">
@@ -800,15 +838,17 @@ $commentUrl = $event->comments->feedLink->url;
 try {
 $commentFeed = $service->getFeed($commentUrl);
 } catch (Zend_Gdata_App_Exception $e) {
-    echo "エラー: " . $e->getResponse();
+    echo "エラー: " . $e->getMessage();
 }
 
 // 各コメントを HTML のリストで出力します
 echo "<ul>";
 foreach ($commentFeed as $comment) {
-    echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" . $comment->content . "</li>";
+    echo "<li><em>Comment By: " . $comment->author->name "</em><br/>" .
+         $comment->content . "</li>";
 }
-echo "</ul>";]]>
+echo "</ul>";
+]]>
         </programlisting>
     </sect2>
 </sect1>
