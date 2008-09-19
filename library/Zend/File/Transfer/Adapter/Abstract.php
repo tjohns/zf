@@ -608,6 +608,16 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
+     * Are there errors registered?
+     * 
+     * @return boolean
+     */
+    public function hasErrors()
+    {
+        return (!empty($this->_messages));
+    }
+
+    /**
      * Adds a new filter for this class
      *
      * @param  string|array $filter Type of filter to add
