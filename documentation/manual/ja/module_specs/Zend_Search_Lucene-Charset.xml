@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.charset">
     <title>文字セット</title>
 
@@ -85,7 +85,8 @@
 
             <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
-    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());]]>
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
+]]>
             </programlisting>
         </para>
 
@@ -116,11 +117,13 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
              PCRE が UTF-8 に対応しているかどうかを調べるには、次のコードを使用します。
 
             <programlisting role="php"><![CDATA[
+
 if (@preg_match('/\pL/u', 'a') == 1) {
     echo "PCRE は unicode をサポートしています。\n";
 } else {
     echo "PCRE は unicode をサポートしていません。\n";
-}]]>
+}
+]]>
             </programlisting>
         </para>
         
@@ -137,6 +140,7 @@ if (@preg_match('/\pL/u', 'a') == 1) {
             検索の際にはクエリ文字列を小文字に変換します。
         
             <programlisting role="php"><![CDATA[
+
 // インデックス化
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 
@@ -149,13 +153,16 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 $doc = new Zend_Search_Lucene_Document();
 
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', strtolower($contents)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  strtolower($contents)));
 
 // 検索用の Title フィールド (インデックス化しますが保存しません)
-$doc->addField(Zend_Search_Lucene_Field::UnStored('title', strtolower($title)));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('title',
+                                                  strtolower($title)));
 
 // 取得用の Title フィールド (インデックス化せず、保存します)
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));]]>
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('_title', $title));
+]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
@@ -169,7 +176,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
 ...
 
-$hits = $index->find(strtolower($query));]]>
+$hits = $index->find(strtolower($query));
+]]>
             </programlisting>
         </para>
     </sect2>
