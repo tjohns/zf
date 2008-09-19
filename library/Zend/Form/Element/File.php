@@ -268,7 +268,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      * @param  mixed $context 
      * @return bool
      */
-    public function isValid($value, $context = null)
+    public function isValid($value = null, $context = null)
     {
         if ($this->_validated) {
             return true;
@@ -306,7 +306,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      * @param  string $value
      * @return boolean
      */
-    public function receive($value)
+    public function receive($value = null)
     {
         if (!$this->_validated) {
             if (!$this->isValid($value)) {
