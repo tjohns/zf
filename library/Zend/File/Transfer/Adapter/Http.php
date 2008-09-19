@@ -89,8 +89,9 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         $check = $this->_getFiles($files);
         foreach ($check as $file => $content) {
-            $directory = '';
-            if (null !== ($destination = $this->getDestination($file))) {
+            $directory   = '';
+            $destination = $this->getDestination($file);
+            if ($destination !== null) {
                 $directory = $destination . DIRECTORY_SEPARATOR;
             }
 

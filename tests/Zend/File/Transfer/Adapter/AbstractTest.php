@@ -498,16 +498,22 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     public function testTransferDestinationShouldBeMutable()
     {
         $this->testDestinationShouldDefaultToSystemTempDirectory();
-        $this->adapter->setDestination('/var/www/upload');
+        $directory = dirname(__FILE__);
+        $this->adapter->setDestination($directory);
         $destinations = $this->adapter->getDestination();
         $this->assertTrue(is_array($destinations));
         foreach ($destinations as $file => $destination) {
-            $this->assertEquals('/var/www/upload', $destination);
+            $this->assertEquals($directory, $destination);
         }
 
-        $this->adapter->setDestination('/home/tmp', 'foo');
-        $this->assertEquals('/home/tmp', $this->adapter->getDestination('foo'));
-        $this->assertEquals('/var/www/upload', $this->adapter->getDestination('bar'));
+        $newdirectory = dirname(__FILE__)
+                      . DIRECTORY_SEPARATOR . '..'
+                      . DIRECTORY_SEPARATOR . '..'
+                      . DIRECTORY_SEPARATOR . '..'
+                      . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($newdirectory, 'foo');
+        $this->assertEquals($newdirectory, $this->adapter->getDestination('foo'));
+        $this->assertEquals($directory, $this->adapter->getDestination('bar'));
     }
 
     public function testAdapterShouldAllowRetrievingDestinationsForAnArrayOfSpecifiedFiles()
@@ -571,8 +577,11 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingFileName()
     {
-        $path = DIRECTORY_SEPARATOR . 'var' . DIRECTORY_SEPARATOR . 'www'
-              . DIRECTORY_SEPARATOR . 'upload';
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
         $this->adapter->setDestination($path);
         $this->assertEquals($path . DIRECTORY_SEPARATOR . 'foo.jpg', $this->adapter->getFileName('foo'));
     }

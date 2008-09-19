@@ -887,9 +887,16 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @param  string       $destination New destination directory
      * @param  string|array $files       Files to set the new destination for
      * @return Zend_File_Transfer_Abstract
+     * @throws Zend_File_Transfer_Exception when the given destination is not a directory or does not exist
      */
     public function setDestination($destination, $files = null)
     {
+        $destination = rtrim($destination, "/\\");
+        if (!is_dir($destination)) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('The given destination is no directory or does not exist');
+        }
+        
         if ($files === null) {
             foreach ($this->_files as $file => $content) {
                 $this->_files[$file]['destination'] = $destination;
