@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9740 -->
+<!-- EN-Revision: 11091 -->
 <appendix id="coding-standard">
   <title>Zend Framework PHP 標準コーディング規約</title>
     <sect1 id="coding-standard.overview">
@@ -171,7 +171,8 @@ Zend/Db.php
 
 Zend/Controller/Front.php
 
-Zend/View/Helper/FormRadio.php]]>
+Zend/View/Helper/FormRadio.php
+]]>
                 </programlisting>
 
                 ファイル名は、上で説明したとおりの方式でクラス名と対応していなければなりません。
@@ -209,7 +210,8 @@ filterInput()
 
 getElementById()
 
-widgetFactory()]]>
+widgetFactory()
+]]>
                 </programlisting>
             </para>
 
@@ -302,9 +304,12 @@ widgetFactory()]]>
             <para>
                 PHP のコードの区切りには、標準 PHP タグを常に使用しなければなりません。
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
+<?php
 
-?>]]></programlisting>
+?>
+]]>
+                </programlisting>
             </para>
 
             <para>
@@ -327,7 +332,8 @@ widgetFactory()]]>
                     で文字列を囲まなければなりません。
 
                     <programlisting role="php"><![CDATA[
-$a = '文字列の例';]]>
+$a = '文字列の例';
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -341,7 +347,8 @@ $a = '文字列の例';]]>
                     特に SQL 文などでこのような場合がよくあるでしょう。
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]>
+$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";
+]]>
                     </programlisting>
 
                     アポストロフィをエスケープするよりも、上の構文のほうが読みやすくなるのでお勧めです。
@@ -357,7 +364,8 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                     <programlisting role="php"><![CDATA[
 $greeting = "こんにちは $name さん。ようこそ!";
 
-$greeting = "こんにちは {$name} さん。ようこそ!";]]>
+$greeting = "こんにちは {$name} さん。ようこそ!";
+]]>
                     </programlisting>
                 </para>
 
@@ -365,7 +373,8 @@ $greeting = "こんにちは {$name} さん。ようこそ!";]]>
                     一貫性を保つため、以下の形式は許可されません。
 
                     <programlisting role="php"><![CDATA[
-$greeting = "こんにちは ${name} さん。ようこそ!";]]>
+$greeting = "こんにちは ${name} さん。ようこそ!";
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -378,7 +387,8 @@ $greeting = "こんにちは ${name} さん。ようこそ!";]]>
                     "." 演算子の前後には常にスペースを入れなければなりません。
 
                     <programlisting role="php"><![CDATA[
-$company = 'Zend' . ' ' . 'Technologies';]]>
+$company = 'Zend' . ' ' . 'Technologies';
+]]>
                     </programlisting>
                 </para>
 
@@ -391,7 +401,8 @@ $company = 'Zend' . ' ' . 'Technologies';]]>
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
-     . "ORDER BY `name` ASC ";]]>
+     . "ORDER BY `name` ASC ";
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -416,7 +427,8 @@ $sql = "SELECT `id`, `name` FROM `people` "
                     要素を区切るカンマの後にスペースを入れなければなりません。
 
                     <programlisting role="php"><![CDATA[
-$sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
+$sampleArray = array(1, 2, 3, 'Zend', 'Studio');
+]]>
                     </programlisting>
                 </para>
 
@@ -428,7 +440,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]>
                     <programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500);]]>
+                     56.44, $d, 500);
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -444,7 +457,8 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
-                     'secondKey' => 'secondValue');]]>
+                     'secondKey' => 'secondValue');
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -481,7 +495,8 @@ class SampleClass
 {
     // クラスのすべての内容は、
     // 空白 4 文字の字下げを使用します。
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -546,7 +561,8 @@ class Foo
         // 関数のすべての内容は、
         // 空白 4 文字の字下げを使用します。
     }
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -564,7 +580,8 @@ class Foo
      */
     public function bar(&$baz)
     {}
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -598,7 +615,8 @@ class Foo
     {
         return $this->bar;
     }
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -613,7 +631,8 @@ class Foo
                     以下のようになります。
 
                     <programlisting role="php"><![CDATA[
-threeArguments(1, 2, 3);]]>
+threeArguments(1, 2, 3);
+]]>
                     </programlisting>
                 </para>
 
@@ -632,7 +651,8 @@ threeArguments(array(1, 2, 3), 2, 3);
 
 threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
-                     56.44, $d, 500), 2, 3);]]>
+                     56.44, $d, 500), 2, 3);
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -664,7 +684,8 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
     $a = 2;
-}]]>
+}
+]]>
                     </programlisting>
                 </para>
 
@@ -679,14 +700,14 @@ if ($a != 2) {
    $a = 7;
 }
 
-
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
    $a = 4;
 } else {
    $a = 7;
-}]]>
+}
+]]>
                     </programlisting>
                     場合によっては、これらの文で波括弧が必要ない場合もあります。
                     しかし、このコーディング規約では、このような例外を認めません。
@@ -723,7 +744,8 @@ switch ($numPeople) {
 
     default:
         break;
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -786,7 +808,8 @@ switch ($numPeople) {
  * @version    $Id:$
  * @link       http://framework.zend.com/package/PackageName
  * @since      File available since Release 1.5.0
-*/]]>
+*/
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -810,7 +833,8 @@ switch ($numPeople) {
  * @link       http://framework.zend.com/package/PackageName
  * @since      Class available since Release 1.5.0
  * @deprecated Class deprecated in Release 2.0.0
- */]]>
+ */
+]]>
                     </programlisting>
                 </para>
             </sect3>
@@ -839,7 +863,8 @@ switch ($numPeople) {
                     関数/メソッドが例外をスローする場合には、すべての既知の例外クラスに対して @throws を使用します。
 
                     <programlisting role="php"><![CDATA[
-@throws exceptionclass [description]]]>
+@throws exceptionclass [description]
+]]>
                     </programlisting>
                 </para>
             </sect3>
