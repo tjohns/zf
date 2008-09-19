@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10926 -->
+<!-- EN-Revision: 11282 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data エンベロープ</title>
 
@@ -29,7 +29,8 @@
         ...
     ]
 }
-]]></programlisting>
+]]>
+</programlisting>
 
     <para>
         <code>Zend_Dojo_Data</code> は、
@@ -51,7 +52,8 @@
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data('id', $items);
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <example id="zend.dojo.data.usage.mutators">
@@ -61,7 +63,8 @@ $data = new Zend_Dojo_Data('id', $items);
 $data = new Zend_Dojo_Data();
 $data->setIdentifier('id')
      ->addItems($items);
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -78,7 +81,8 @@ $data = new Zend_Dojo_Data($identifier, $items);
 $data->addItem($someItem);
 
 $data->addItems($someMoreItems);
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <note>
@@ -140,7 +144,8 @@ $data->addItems($someMoreItems);
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -154,8 +159,56 @@ $data->setLabel('name');
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
-]]></programlisting>
+]]>
+            </programlisting>
         </example>
+    </sect2>
+
+    <sect2 id="zend.dojo.data.metadata">
+        <title>コンテナへのメタデータの追加</title>
+
+        <para>
+            Dojo コンポーネントの中には、
+            dojo.data の中に追加のメタデータを必要とするものもあります。
+            たとえば <code>dojox.grid.Grid</code> は、データを動的に
+            <code>dojox.data.QueryReadStore</code> から取得することができます。
+            ページ移動を正しく行うには、返されるデータの中に <code>numRows</code>
+            というキーのデータ (中身はクエリが返す行の数) が必要となります。
+            これにより、グリッドが (a) サーバ側へのリクエストをいつ送ったらいいのか、
+            そして (b) いつリクエストが不要になるのか
+            (つまり最終ページに達するのがいつなのか) を知ることができるようになります。
+            このテクニックを使用すると、大規模なデータセットをグリッドに表示させる際に
+            データ全体をいちどに取得する必要はなくなります。
+        </para>
+
+        <para>
+            <code>Zend_Dojo_Data</code> では、
+            このようなプロパティをオブジェクトのメタデータとして設定することができます。
+            以下の使用例をご覧ください。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// "numRows" を 100 に設定します
+$data->setMetadata('numRows', 100);
+
+// 複数の項目をいちどに設定します
+$data->setMetadata(array(
+    'numRows' => 100,
+    'sort'    => 'name',
+));
+
+// メタデータの値を調べます
+$numRows = $data->getMetadata('numRows');
+
+// すべてのメタデータを取得します
+$metadata = $data->getMetadata();
+
+// メタデータを削除します
+$data->clearMetadata('numRows');
+
+// すべてのメタデータを削除します
+$data->clearMetadata();
+]]></programlisting>
     </sect2>
 
     <sect2 id="zend.dojo.data.advanced">
@@ -188,7 +241,8 @@ $item = $data->getItem('foo');
 
 // あるいは配列表記を使用します
 $item = $data['foo'];
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             identifier がわかれば、それを使用してアイテムを取得したり、
@@ -205,7 +259,8 @@ unset($data['foo']);
 // アイテムの確認
 if (isset($data[foo])) {
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             すべてのアイテムをループ処理することもできます。
@@ -216,7 +271,8 @@ if (isset($data[foo])) {
 foreach ($data as $item) {
     echo $item['title'] . ': ' . $item['description'] . "\n";
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             count で、アイテムの総数を調べることも可能です。
@@ -224,7 +280,8 @@ foreach ($data as $item) {
 
         <programlisting role="php"><![CDATA[
 echo count($data), " items found!";
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             また、このクラスは <code>__toString()</code> を実装しているので、
@@ -235,7 +292,8 @@ echo count($data), " items found!";
 echo $data; // JSON 文字列として echo
 
 $json = (string) $data; // 文字列へのキャスト == JSON へのキャスト
-]]></programlisting>
+]]>
+        </programlisting>
 
         <sect3 id="zend.dojo.data.advanced.methods">
             <title>使用可能なメソッド</title>
