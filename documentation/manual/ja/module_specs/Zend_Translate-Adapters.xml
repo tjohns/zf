@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
@@ -28,17 +28,17 @@
                 <row>
                     <entry>Csv</entry>
                     <entry>カンマ区切りファイル (*.csv/*.txt)</entry>
-                    <entry>シンプルなテキスト形式。非常に高速。Unicode 文字で問題が発生する可能性がある。</entry>
+                    <entry>シンプルなテキスト形式。高速。Unicode 文字で問題が発生する可能性がある。</entry>
                 </row>
                 <row>
                     <entry>Gettext</entry>
                     <entry>gettext のバイナリファイル (*.mo)</entry>
-                    <entry>linux における GNU の標準形式。非常に高速。スレッドセーフ。翻訳用ツールが必要。</entry>
+                    <entry>linux における GNU の標準形式。スレッドセーフ。翻訳用ツールが必要。</entry>
                 </row>
                 <row>
                     <entry>Ini</entry>
                     <entry>シンプルな ini ファイル (*.ini)</entry>
-                    <entry>シンプルなテキスト形式。非常に高速。Unicode 文字で問題が発生する可能性がある。</entry>
+                    <entry>シンプルなテキスト形式。高速。Unicode 文字で問題が発生する可能性がある。</entry>
                 </row>
                 <row>
                     <entry>Tbx</entry>
@@ -320,7 +320,10 @@
 
         <programlisting role="php"><![CDATA[
 try {
-    $translate = new Zend_Translate('Company_Translate_Adapter_MyFormat', '/path/to/translate.xx', 'en', array('myoption' => 'myvalue'));
+    $translate = new Zend_Translate('Company_Translate_Adapter_MyFormat',
+                                    '/path/to/translate.xx',
+                                    'en',
+                                    array('myoption' => 'myvalue'));
 } catch (Exception $e) {
     // ファイルが見つからない、アダプタクラスが存在しない、……
     // などの一般的なエラー
@@ -353,9 +356,14 @@ try {
         </para>
 
         <programlisting role="php"><![CDATA[
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 Zend_Translate::setCache($cache);
-$translate = new Zend_Translate('gettext', '/path/to/translate.mo', 'en');
+$translate = new Zend_Translate('gettext',
+                                '/path/to/translate.mo',
+                                'en');
 ]]>
         </programlisting>
 
