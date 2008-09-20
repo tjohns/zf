@@ -76,8 +76,8 @@ abstract class Zend_Cache
     /**
      * Factory
      *
-     * @param string $frontend        frontend name
-     * @param string $backend         backend name
+     * @param mixed  $frontend        frontend name (string) or Zend_Cache_Frontend_ object
+     * @param mixed  $backend         backend name (string) or Zend_Cache_Backend_ object
      * @param array  $frontendOptions associative array of options for the corresponding frontend constructor
      * @param array  $backendOptions  associative array of options for the corresponding backend constructor
      * @param boolean $customFrontendNaming if true, the frontend argument is used as a complete class name ; if false, the frontend argument is used as the end of "Zend_Cache_Frontend_[...]" class name
@@ -88,8 +88,24 @@ abstract class Zend_Cache
      */
     public static function factory($frontend, $backend, $frontendOptions = array(), $backendOptions = array(), $customFrontendNaming = false, $customBackendNaming = false, $autoload = false)
     {
-        $backendObject = self::_makeBackend($backend, $backendOptions, $customBackendNaming, $autoload);
-        $frontendObject = self::_makeFrontend($frontend, $frontendOptions, $customFrontendNaming, $autoload);
+    	if (is_string($backend)) {
+        	$backendObject = self::_makeBackend($backend, $backendOptions, $customBackendNaming, $autoload);
+    	} else {
+    		if ((is_object($backend)) && (in_array('Zend_Cache_Backend_Interface', class_implements($backend)))) {
+    			$backendObject = $backend;
+    		} else {
+    			self::throwException('backend must be a backend name (string) or an object which implements Zend_Cache_Backend_Interface');
+    		}
+    	}
+    	if (is_string($frontend)) {
+        	$frontendObject = self::_makeFrontend($frontend, $frontendOptions, $customFrontendNaming, $autoload);
+    	} else {
+    		if (is_object($frontend)) {
+    			$frontendObject = $frontend;
+    		} else {
+    			self::throwException('frontend must be a frontend name (string) or an object');
+    		}
+    	}
         $frontendObject->setBackend($backendObject);
         return $frontendObject;
     }
