@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11430 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -94,7 +94,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>addValidator($validator, $options = null, $files = null)</code>: Fügt die
+                    <code>addValidator($validator, $breakChainOnFailure, $options = null, $files = null)</code>: Fügt die
                     angegebene Prüfung zu den Prüfungsstapel hinzu (optional nur zu den Datei(en) die
                     spezifiziert wurden). <code>$validator</code> kann entweder eine aktuelle
                     Prüfinstanz sein, oder ein Kurzname der den Prüfungstyp spezifiziert (z.B. 'Count').
@@ -158,10 +158,10 @@
 $upload = new Zend_File_Transfer();
 
 // Setzt eine Dateigröße von 20000 Bytes
-$upload->addValidator('Size', 20000);
+$upload->addValidator('Size', false, 20000);
 
 // Setzt eine Dateigröße von mindestens 20 Bytes und maximal 20000 Bytes
-$upload->addValidator('Size', array(20, 20000));
+$upload->addValidator('Size', false, array(20, 20000));
 
 // Setzt eine Dateigröße von mindestens 20 Bytes und Maximal
 // 20000 Bytes und eine Dateianzahl in einem Schritt
@@ -187,7 +187,7 @@ $upload->setValidators(array(
 $upload = new Zend_File_Transfer();
 
 // Setzt die Dateigröße auf 20000 Bytes und limitiert Sie nur auf 'file2'
-$upload->addValidator('Size', 20000, 'file2');
+$upload->addValidator('Size', false, 20000, 'file2');
 ]]>
             </programlisting>
         </example>
@@ -211,9 +211,9 @@ $upload->addValidator('Size', 20000, 'file2');
 $upload = new Zend_File_Transfer();
 
 // Setzt die Dateigröße auf 20000 Bytes
-$upload->addValidator('Size', 20000)
-       ->addValidator('Count', 2)
-       ->addValidator('Filessize', 25000);
+$upload->addValidator('Size', false, 20000)
+       ->addValidator('Count', false, 2)
+       ->addValidator('Filessize', false, 25000);
 ]]>
             </programlisting>
 
@@ -283,11 +283,11 @@ $upload->addValidator('Size', 20000)
 $upload = new Zend_File_Transfer();
 
 // Die Anzahl der Dateien auf maximal 2 limitieren
-$upload->addValidator('Count', 2);
+$upload->addValidator('Count', false, 2);
 
 // Die Anzahl der Datein auf Maximal 5 limitieren, und mindestens
 // 1 Datei als Rückgabe erwarten
-$upload->addValidator('Count', array(1, 5);
+$upload->addValidator('Count', false, array(1, 5);
 ]]>
             </programlisting>
 
@@ -330,10 +330,10 @@ $upload->addValidator('Count', array(1, 5);
 $upload = new Zend_File_Transfer();
 
 // Das temporäre Verzeichnis für die Prüfung hinzufügen
-$upload->addValidator('Exists', '\temp');
+$upload->addValidator('Exists', false, '\temp');
 
 // Zwei Verzeichnisse hinzufügen inden die Array Schreibweise verwendet wird
-$upload->addValidator('Exists', array('\home\images', '\home\uploads'));
+$upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
 ]]>
             </programlisting>
 
@@ -390,10 +390,10 @@ $upload->addValidator('Exists', array('\home\images', '\home\uploads'));
 $upload = new Zend_File_Transfer();
 
 // Limitiert die Erweiterungen auf jpg und png Dateien
-$upload->addValidator('Extension', 'jpg,png');
+$upload->addValidator('Extension', false, 'jpg,png');
 
 // Limitiert die Erweiterungen auf jpg und png Dateien, verwendet aber die Array Schreibweise
-$upload->addValidator('Extension', array('jpg', 'png'));
+$upload->addValidator('Extension', false, array('jpg', 'png'));
 
 // Abhängig von der Klein/Großschreibung prüfen
 $upload = new Zend_File_Transfer('mo,png', true);
@@ -469,10 +469,10 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
 $upload = new Zend_File_Transfer();
 
 // Limitiert die Größe aller angegebenen Dateien auf 40000 Bytes
-$upload->addValidator('FilesSize', 40000);
+$upload->addValidator('FilesSize', false, 40000);
 
 // Limitiert die Größe aller angegebenen Dateien auf maximal 4MB und minimal 10kB
-$upload->setValidator('FilesSize', array('10kB', '4MB');
+$upload->addValidator('FilesSize', false, array('10kB', '4MB');
 ]]>
             </programlisting>
 
@@ -564,13 +564,13 @@ $upload = new Zend_File_Transfer();
 
 // Begrenzt die Größe eines Bildes auf eine Höhe von 100-200
 // und eine Breite von 40-80 Pixel
-$upload->addValidator('ImageSize', 40, 100, 80, 200);
+$upload->addValidator('ImageSize', false, 40, 100, 80, 200);
 
 // Verwendet die Array Schreibweise
-$upload->setValidator('ImageSize', array(40, 100, 80, 200);
+$upload->addValidator('ImageSize', false, array(40, 100, 80, 200);
 
 // Verwendet die benannte Array Schreibweise
-$upload->setValidator('ImageSize',
+$upload->addValidator('ImageSize', false,
                       array('minwidth' => 40,
                             'maxwidth' => 80,
                             'minheight' => 100,

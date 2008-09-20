@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11358 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller Schnellstart</title>
 
@@ -75,17 +75,19 @@ html/
             </para>
 
             <programlisting role="php"><![CDATA[
-RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
 ]]>
             </programlisting>
 
             <para>
-                Die obige Rewrite-Regel routet alle Anfragen, die nicht nach Ressourcen
-                (also Bilder, Stylesheets und Javascript-Dateien) fragen, zum Front-Controller.
-                Wenn es noch andere Dateitypen gibt, für die der Front Controller nicht aufgerufen werden soll,
-                müssen deren Dateiendungen lediglich in die obige Regel eingefügt werden - oder man schreibt sich
-                seine eigenen Rewrite-Regeln.
+                Die obige Regel routet Anfragen entsprechend auf existierende Ressourcen
+                (existierende Symlinks, nicht-leere Dateien, oder nicht-leere Verzeichnisse),
+                und alle anderen Anfragen an den Front Controller.
             </para>
 
             <note>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11184 -->
+<!-- EN-Revision: 11330 -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
 
@@ -458,6 +458,157 @@ $form->addElement(
         </example>
     </sect3>
 
+    <sect3 id="zend.dojo.form.elements.editor">
+        <title>Editor</title>
+
+        <para>
+            Editor bietet einen WYSIWYG Editor der verwendet werden kann um Rich HTML Inhalte sowohl
+            zu erstellen als auch zu bearbeiten. dijit.Editor ist pluggable und kann mit eigenen Plugins
+            erweitert werden wenn das gewünscht ist; siehe
+            <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/advanced-editing-and-display/editor-rich-text">
+            die dijit.Editor Dokumentation</ulink> für weitere Details.
+        </para>
+
+        <para>
+            Das Editor Form Element bietet eine Anzahl an Zugriffsmethoden und Mutatoren für die
+            Manipulation der verschiedenen dijit Paramter, wie folgt:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis>captureEvents</emphasis> sind Events die auf die Bearbeitungsfläche selbst
+                    verbinden. Die folgenden Zugriffsmethoden und Mutatoren sind für die Manipulation von
+                    Capture Events vorhanden:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para><code>addCaptureEvent($event)</code></para></listitem>
+                    <listitem><para><code>addCaptureEvents(array $events)</code></para></listitem>
+                    <listitem><para><code>setCaptureEvents(array $events)</code></para></listitem>
+                    <listitem><para><code>getCaptureEvents()</code></para></listitem>
+                    <listitem><para><code>hasCaptureEvent($event)</code></para></listitem>
+                    <listitem><para><code>removeCaptureEvent($event)</code></para></listitem>
+                    <listitem><para><code>clearCaptureEvents()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>events</emphasis> sind Standard DOM Events, wie onClick, onKeyUp, usw.
+                    Die folgenden Zugriffsmethoden und Mutatoren sind für die Manipulation von Events
+                    vorhanden:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para><code>addEvent($event)</code></para></listitem>
+                    <listitem><para><code>addEvents(array $events)</code></para></listitem>
+                    <listitem><para><code>setEvents(array $events)</code></para></listitem>
+                    <listitem><para><code>getEvents()</code></para></listitem>
+                    <listitem><para><code>hasEvent($event)</code></para></listitem>
+                    <listitem><para><code>removeEvent($event)</code></para></listitem>
+                    <listitem><para><code>clearEvents()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>plugins</emphasis> fügen dem Editor Funktionalitäten hinzu -- zusätzliche
+                    Tools für die Toolbar, zusätzliche erlaubte Stile, usw. Die folgenden Zugriffsmethoden
+                    und Mutatoren sind für die Manipulation von Plugins vorhanden: 
+                </para>
+
+                <itemizedlist>
+                    <listitem><para><code>addPlugin($plugin)</code></para></listitem>
+                    <listitem><para><code>addPlugins(array $plugins)</code></para></listitem>
+                    <listitem><para><code>setPlugins(array $plugins)</code></para></listitem>
+                    <listitem><para><code>getPlugins()</code></para></listitem>
+                    <listitem><para><code>hasPlugin($plugin)</code></para></listitem>
+                    <listitem><para><code>removePlugin($plugin)</code></para></listitem>
+                    <listitem><para><code>clearPlugins()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>editActionInterval</emphasis> wird verwendet um Events für die Undo
+                    Operationen zu gruppieren. Standardmäßig ist dieser Wert 3 Sekunden. Die Methode
+                    <code>setEditActionInterval($interval)</code> kann verwendet werden um den Wert
+                    zu setzen, wärend <code>getEditActionInterval()</code> ihn zurückgibt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>focusOnLoad</emphasis> wird verwendet um zu erkennen ob dieser spezielle
+                    Editor den Fokus erhält wenn die Seite geladen wurde. Standardmäßig ist er false.
+                    Die Methode <code>setFocusOnLoad($flag)</code> kann verwendet werden um den Wert zu
+                    setzen, wärend <code>getFocusOnLoad()</code> ihn empfängt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>height</emphasis> spezifiziert die Höhe des Editors; standardmäßig ist
+                    sie 300px. Die Methode <code>setHeight($height)</code> kann verwendet werden um den
+                    Wert zu setzen, wärend <code>getHeight()</code> ihn zurückgibt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>inheritWidth</emphasis> wird verwendet um zu erkennen ob der Editor die
+                    Breite des Parent Containers verwendet, oder einfach auf 100% Höhe. Standardmäßig
+                    ist er false (im Normalfall wird der die Breite des Fensters ausfüllen). Die
+                    Methode <code>setInheritWidth($flag)</code> kann verwendet werden um den Wert zu
+                    setzen, wärend <code>getInheritWidth()</code> ihn zurückgibt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>minHeight</emphasis> zeigt die Mindesthöhe des Editors an; standardmäßig
+                    ist sie 1em. Die Methode <code>setMinHeight($height)</code> kann verwendet werden um
+                    den Wert zu setzen, wärend <code>getMinHeight()</code> ihn empfängt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>styleSheets</emphasis> zeigt an welche zusätzlichen CSS Stylesheets verwendet
+                    werden sollen um die Anzeige des Editors zu beeinflussen. Standardmäßig sind keine
+                    registriert, und es verwendet die Seitenstile. Die folgenden Zugriffsmethoden und
+                    Mutatoren sind für die Manipulation von Editor Stylesheets vorhanden:
+                </para>
+
+                <itemizedlist>
+                    <listitem><para><code>addStyleSheet($styleSheet)</code></para></listitem>
+                    <listitem><para><code>addStyleSheets(array $styleSheets)</code></para></listitem>
+                    <listitem><para><code>setStyleSheets(array $styleSheets)</code></para></listitem>
+                    <listitem><para><code>getStyleSheets()</code></para></listitem>
+                    <listitem><para><code>hasStyleSheet($styleSheet)</code></para></listitem>
+                    <listitem><para><code>removeStyleSheet($styleSheet)</code></para></listitem>
+                    <listitem><para><code>clearStyleSheets()</code></para></listitem>
+                </itemizedlist>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.dojo.form.elements.editor.example">
+            <title>Beispiel der Verwendung des Editor dijit Elements</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement('editor', 'content', array(
+    'plugins'            => array('undo', '|', 'bold', 'italic'),
+    'editActionInterval' => 2,
+    'focusOnLoad'        => true,
+    'height'             => '250px',
+    'inheritWidth'       => true,
+    'styleSheets'        => array('/js/custom/editor.css'),
+));
+]]></programlisting>
+        </example>
+    </sect3>
+
     <sect3 id="zend.dojo.form.elements.horizontalSlider">
         <title>HorizontalSlider</title>
 
@@ -809,6 +960,34 @@ $form->addElement(
             'baz' => 'Baz',
         ),
         'value' => 'bar',
+    )
+);
+]]>
+            </programlisting>
+        </example>
+    </sect3>
+
+    <sect3 id="zend.dojo.form.elements.simpletextarea">
+        <title>SimpleTextarea</title>
+
+        <para>
+            SimpleTextarea arbeitet primär wie ein Standard HTML Textarea. Trotzdem unterstützt es
+            weder die rows noch die cols Einstellung. Stattdessen, sollte die Breite von Textarea
+            durch die Verwendung von standard CSS Maßeinheiten definiert werden. Anders als Textarea
+            wird er nicht automatisch wachsen
+        </para>
+
+        <example id="zend.dojo.form.elements.simpletextarea.example">
+            <title>Beispiel der Verwendung des SimpleTextarea Dijit Elements</title>
+
+            <programlisting role="php"><![CDATA[
+$form->addElement(
+    'SimpleTextarea',
+    'simpletextarea',
+    array(
+        'label'    => 'SimpleTextarea',
+        'required' => true,
+        'style'    => 'width: 80em; height: 25em;',
     )
 );
 ]]>

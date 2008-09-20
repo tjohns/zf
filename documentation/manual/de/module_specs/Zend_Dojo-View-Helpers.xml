@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11298 -->
+<!-- EN-Revision: 11330 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -616,6 +616,21 @@ echo $view->dateTextBox(
 
             <listitem>
                 <para>
+                    <emphasis>Editor</emphasis>: dijit.Editor. Bietet einen WYSIGYG Editor über den
+                    Benutzer Inhalte erstellen oder bearbieten können. <code>dijit.Editor</code> ist ein
+                    pluginfähiger, erweiterbarer Editor mit einer Vielzahl an Parametern die für
+                    die Anpassung verwendet werden können; siehe
+                    <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/advanced-editing-and-display/editor-rich-text">
+                    in die dijit.Editor Dokumentation</ulink> für weitere Details.
+                </para>
+
+                <programlisting role="php"><![CDATA[
+echo $view->editor('foo');
+]]></programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis>FilteringSelect</emphasis>: dijit.form.FilteringSelect. Wie die ComboBox ist das
                     ein Select/Text Hybrid der entweder eine angegebenen Liste von Optionen darstellen kann,
                     oder jene vom dojo.data Datenspeicher. Anders als ComboBox, erlaubt FilteringSelect keine
@@ -871,6 +886,25 @@ echo $view->radioButton(
         'bar' => 'Bar',
         'baz' => 'Baz',
     )
+);
+]]>
+                </programlisting>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis>SimpleTextarea</emphasis>: dijit.form.SimpleTextarea. Diese funktionieren
+                    wie normale Textareas, werden aber gestylt indem das aktuelle dijit Thema verwendet
+                    wird. Es müssen weder die rows noch die columns Attribute spezifiziert werden;
+                    verwende stattdessen <code>ems</code> oder Prozente für die Breite und Höhe.
+                </para>
+
+                <programlisting role="php"><![CDATA[
+echo $view->simpleTextarea(
+    'foo',
+    'Bitte ab hier schreiben...',
+    array(),
+    array('style' => 'width: 90%; height: 5ems;')
 );
 ]]>
                 </programlisting>

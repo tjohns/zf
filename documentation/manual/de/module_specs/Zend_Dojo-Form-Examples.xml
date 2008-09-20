@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 11330 -->
 <sect2 id="zend.dojo.form.examples">
     <title>Dojo Formular Beispiele</title>
 
@@ -133,6 +133,23 @@ class My_Form_Test extends Zend_Dojo_Form
                     'style'    => 'width: 200px;',
                 )
             );
+        $editorForm = new Zend_Dojo_Form_SubForm();
+        $editorForm->setAttribs(array(
+            'name'   => 'editortab',
+            'legend' => 'Editor',
+            'dijitParams' => array(
+                'title' => 'Editor'
+            ),
+        ))
+        $editorForm->addElement(
+            'Editor',
+            'wysiwyg',
+            array(
+                'label'        => 'Editor',
+                'inheritWidth' => 'true',
+            )
+        );
+
         $toggleForm = new Zend_Dojo_Form_SubForm();
         $toggleForm->setAttribs(array(
             'name'   => 'toggletab',
@@ -323,6 +340,7 @@ class My_Form_Test extends Zend_Dojo_Form
             );
 
         $this->addSubForm($textForm, 'textboxtab')
+             ->addSubForm($editorForm, 'editortab')
              ->addSubForm($toggleForm, 'toggletab')
              ->addSubForm($selectForm, 'selecttab')
              ->addSubForm($sliderForm, 'slidertab');

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11133 -->
+<!-- EN-Revision: 11391 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -190,7 +190,7 @@ $element->setLabel('Ein Bild hochladen:')
         ->setDestination('/var/www/upload')
         ->addValidator('Count', false, 1)     // Nur 1 Datei sicherstellen
         ->addValidator('Size', false, 102400) // Maximal 100k
-        ->addValidator('Extension' false, 'jpg,png,gif'); // Nur JPEG, PNG, und GIFs
+        ->addValidator('Extension', false, 'jpg,png,gif'); // Nur JPEG, PNG, und GIFs
 $form->addElement($element, 'foo');
 ]]>
             </programlisting>
@@ -206,11 +206,20 @@ $form->setAttrib('enctype', 'multipart/form-data');
             </programlisting>
 
             <para>
-                Wenn das Element erfolgreich geprüft wurde, kann der endgültige Ort durch verwendung von
-                getValue() eruiert werden:
+                Wenn das Formular erfolgreich geprüft wurde, muß man die Datei empfangen um Sie an Ihrem
+                endgültigen Ziel zu speichern indem receive() verwendet wird. Zusätzlich kann man das
+                endgültige Ziel ermittelt werden indem getValue() verwendet wird:
             </para>
 
             <programlisting role="php"><![CDATA[
+if (!$form->isValid) {
+    print "Ohoh... Prüfungsfehler";
+}
+
+if (!$form->foo->receive()) {
+    print "Fehler beim Empfangen der Datei";
+}
+
 $location = $form->foo->getValue();
 ]]>
             </programlisting>
@@ -224,12 +233,6 @@ $location = $form->foo->getValue();
                 Standardmäßig werden Dateien in das Temp Verzeichnis des Systems hochgeladen.
             </para>
         </note>
-
-        <para>
-            Es gibt aktell eine Limitation für das File Uploadelement das in 1.6.0 ausgeliefert wird.
-            Aktuell, können keine Filter spezifiziert werden die den Namen der endgültigen hochgeladenen
-            Datei ändern; diese Funktionalität wird in einem nächsten Release hinzugefügt.
-        </para>
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">

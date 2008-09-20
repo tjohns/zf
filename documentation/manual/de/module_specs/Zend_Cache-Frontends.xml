@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11455 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -560,7 +560,7 @@ $res = $cache->foobar2('1', '2');
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
-            <title>Mögliche Optionen (Für dieses Frontend in der Zend_Cache Factory)</title>
+            <title>Mögliche Optionen</title>
             <table id="zend.cache.frontends.page.options.table">
                 <title>Page Frontend Optionen</title>
                 <tgroup cols="4">
@@ -670,6 +670,25 @@ $res = $cache->foobar2('1', '2');
                                               <code>(boolean, true per Default) make_id_with_cookie_variables</code> :
                                               wenn true, wird die Cache ID vom Inhalt des <code>$_COOKIE</code>
                                               Arrays abhängig sein
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(int, false by default) specific_lifetime</code> :
+                                              wenn nicht false, wird die angegebene Lifetime für das ausgewählte
+                                              Regex verwendet 
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(array, array() by default) tags</code> : Tags für den
+                                              Cache Eintrag
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(int, null by default) priority</code> : Priorität
+                                              (wenn das Backend das unterstützt)
                                           </para>
                                       </listitem>
                                   </itemizedlist>

@@ -1,11 +1,15 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11455 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
+        <para>
+            Es gibt zwei Arten von Backends: Standard und erweiterte. Natürlich bieten erweiterte Backends
+            mehr Features.
+    </para>
 
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            Dieses Backend speichert Cache Datensätze in Dateien (in einem gewählten Verzeichnis).
+            Dieses (erweiterte) Backend speichert Cache Datensätze in Dateien (in einem gewählten Verzeichnis).
         </para>
         <para>
             Mögliche Optionen sind :
@@ -117,7 +121,7 @@
     <sect2 id="zend.cache.backends.sqlite">
         <title>Zend_Cache_Backend_Sqlite</title>
         <para>
-            Dieses Backend speichert die Cache Datensätze in einer SQLite Datenbank.
+            Dieses (erweiterte) Backend speichert die Cache Datensätze in einer SQLite Datenbank.
         </para>
         <para>
             Mögliche Optionen sind :
@@ -162,7 +166,7 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-            Dieses Backend speichert Cache Datensätze in einem Memcached Server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
+            Dieses (erweiterte) Backend speichert Cache Datensätze in einem Memcached Server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
             ist ein hoch-performantes, verteiltes Speicher Objekt Caching System. Um dieses Backend zu benutzen,
             wird ein Memcached Dämon benötigt und <ulink url="http://pecl.php.net/package/memcache">die Memcached PECL Erweiterung</ulink>.
         </para>
@@ -212,7 +216,7 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_Apc</title>
         <para>
-            Dieses Backend speichert Cache Datensätze im Shared Memory durch die
+            Dieses (erweiterte) Backend speichert Cache Datensätze im Shared Memory durch die
             <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternativer PHP Cache) Erweiterung
             (welche natürlich für die Verwendung dieses Backends benötigt wird).
         </para>
@@ -294,6 +298,128 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
         <para>
             Es gibt keine Optionen für dieses Backend.
         </para>
+    </sect2>
+    <sect2 id="zend.cache.backends.twolevels">
+        <title>Zend_Cache_Backend_TwoLevels</title>
+        <para>
+            Dieses (erweiterte) Backend ist ein Hybrides. Es speichert Cache Einträge in zwei anderen
+            Backends: Ein schnelles (aber limitiertes) wie Apc, Memcache... und ein "langsames" wie
+            File, Sqlite...
+        </para>
+        <para>
+            Dieses Backend verwendet den Priority Parameter (der auf Frontend Level angegeben wird wenn ein
+            Eintrag gespeichert wird) und den verbleibenden Platz im schnellen Backend um die Verwendung
+            dieser zwei Backends zu optimieren.
+            FIXME
+        </para>
+        <para>
+            Vorhandene Optionen sind:
+        </para>
+        <table id="zend.cache.backends.twolevels.table">
+            <title>TwoLevels Backend Optionen</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Option</entry>
+                        <entry>Datentyp</entry>
+                        <entry>Standardwert</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>slow_backend</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>File</code></entry>
+                          <entry>
+                              Der "langsame" Backendname 
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>Apc</code></entry>
+                          <entry>
+                              Der "schnelle" Backendname 
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>slow_backend_options</code></entry>
+                          <entry><code>array</code></entry>
+                          <entry><code>array()</code></entry>
+                          <entry>
+                              Die "langsamen" Backendoptionen 
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend_options</code></entry>
+                          <entry><code>array</code></entry>
+                          <entry><code>array()</code></entry>
+                          <entry>
+                              Die "schnellen" Backendoptionen 
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>slow_backend_custom_naming</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              Wenn true, wird das slow_backend Argument als kompletter Klassenname verwendet;
+                              wenn false, wird das frontend Argument als Ende des
+                              "Zend_Cache_Backend_[...]" Klassennamens verwendet
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend_custom_naming</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              Wenn true, wird das fast_backend Argument als kompletter Klassenname verwendet;
+                              wenn false, wird das frontend Argument als Ende des
+                              "Zend_Cache_Backend_[...]" Klassennamens verwendet
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>slow_backend_autoload</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              Wenn true, wird kein require_once für das langsame Backend verwendet
+                              (nur für eigene Backends nützlich) 
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend_autoload</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              Wenn true, wird kein require_once für das langsame Backend verwendet
+                              (nur für eigene Backends nützlich)
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>auto_refresh_fast_cache</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>true</code></entry>
+                          <entry>
+                              Wenn true, wird der schnelle Cache automatisch refresht wenn ein Cache
+                              Eintrag getroffen wird
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>stats_update_factor</code></entry>
+                          <entry><code>integer</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              Ausschalten / Feintunen der Berechnung des Füll-Prozentsatzes des
+                              schnellen Backends (wenn ein Eintrag in den Cache gespeichert wird, die
+                              Berechnung des Füll-Prozentsatzes des schnellen Backends zufällig 1 mal bei
+                              x Cache Schreibvorgängen)
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
     </sect2>
 </sect1>
 <!--

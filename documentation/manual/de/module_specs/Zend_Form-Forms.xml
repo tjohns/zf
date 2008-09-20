@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11315 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -1245,6 +1245,27 @@ $fooBar  = $form->getDecorator('FooBar');
                     <code>clearDecorators()</code>
                 </para></listitem>
         </itemizedlist>
+
+        <para>
+            <code>Zend_Form</code> verwendet auch das Überladen um die Darstellung von speziellen
+            Dekoratoren zu erlauben. <code>__call()</code> interagiert mit Methoden die mit dem Text
+            'render' beginnen und verwendet den Rest des Methodennamens um nach einem Dekorator zu suchen;
+            wenn er gefunden wird, wird dieser <emphasis>einzelne</emphasis> Dekorator dargestellt. Jedes
+            Argument das dem Methodenaufruf übergeben wird, wird als Inhalt an die <code>render()</code>
+            Methode des Dekorators übergeben. Als Beispiel:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Stellt nur den FormElements Dekorator dar:
+echo $form->renderFormElements();
+
+// Stell nur den Fieldset Dekorator dar, und übergibt Inhalte:
+echo $form->renderFieldset("<p>Das ist der Fieldset Inhalt</p>");
+]]></programlisting>
+
+        <para>
+            Wenn der Dekorator nicht existiert, wird eine Exception geworfen.
+        </para>
     </sect2>
 
     <sect2 id="zend.form.forms.validation">

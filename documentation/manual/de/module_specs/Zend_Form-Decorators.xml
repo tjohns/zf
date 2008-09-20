@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11315 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
@@ -329,6 +329,45 @@ class My_Decorator_Errors
             Ausgabe anzupassen. Durch die Benennung des Dekorators nach dem bestehenden Standard
             Dekorator, kann die Dekoration verändert werden ohne das der Dekorator des Elements
             verändert werden muß.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.decorators.individual">
+        <title>Darstellung individueller Dekoratore</title>
+
+        <para>
+            Da Dekoratore verschiedene Metadaten, eines Elements oder Formulars das Sie darstellen,
+            ansprechen, ist es oft nützlich zu bestimmten Zeiten nur einen individuellen Dekorator
+            darzustellen. Glücklicherweise ist dieses Feature über Methodenüberladung in jeder
+            der grundsätzlichen Klassen der Formulartypen möglich (Formulare, Unterformulare,
+            Anzeigegruppen, Elemente).
+        </para>
+
+        <para>
+            Um das zu tun muß einfach <code>render[DecoratorName]()</code> aufgerufen werden, wobei
+            "[DecoratorName]" der "Kurzname" des eigenen Dekorators ist; optional kann Inhalt eingefügt
+            werden der dargestellt werden soll. Zum Beispiel:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Nur den Label Dekorator des Elements darstellen:
+echo $element->renderLabel();
+
+//Nur die Anzeigegruppe Fieldset mit Inhalt darstellen:
+echo $group->renderFieldset('fieldset content');
+
+// Nur das HTML Tag des Forumars mit Inhalt darstellen:
+echo $form->renderHtmlTag('wrap this content');
+]]></programlisting>
+
+        <para>
+            Wenn der Dekorator nicht existiert, wird eine Exception geworfen.
+        </para>
+
+        <para>
+            Das kann speziell dann nützlich sein wenn ein Formular mit dem ViewScript Dekorator
+            dargestellt wird; jedes Element kann seine angehängten Dekoratore verwenden um Inhalte
+            darzustellen, aber mit fein-abgestimmter Kontrolle.
         </para>
     </sect2>
 </sect1>
