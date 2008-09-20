@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11005 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -195,7 +195,8 @@ if (!($data = $cache->load($id2))) {
     $cache->save($data);
 
 }
-echo($data);]]>
+echo($data);
+]]>
             </programlisting>
             <para>
                 特殊な値 (boolean 値に "automatic_serialization" オプションを指定したものなど)

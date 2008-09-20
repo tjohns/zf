@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.cache.introduction">
     <title>導入</title>
     <para>
@@ -67,7 +67,8 @@ $cache = Zend_Cache::factory('Core',
             アンシリアライズしてデータを取得すればよいのです。
         </para>
 
-        <programlisting role="php"><![CDATA[// $cache は先ほどの例で作成したものです
+        <programlisting role="php"><![CDATA[
+// $cache は先ほどの例で作成したものです
 
 // キャッシュがすでに存在するかどうかを調べます
 if(!$result = $cache->load('myresult')) {
@@ -87,7 +88,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);]]>
+print_r($result);
+]]>
         </programlisting>
     </example>
 
@@ -128,7 +130,7 @@ if(!$cache->start('mypage')) {
 
 echo 'これはキャッシュされません ('.time().').';
 ]]>
-       </programlisting>
+        </programlisting>
        <para>
            <code>time()</code> の結果を二度出力していることに注目しましょう。
            動作説明のため、何らかの動的な出力がほしかったのです。これを実行し、

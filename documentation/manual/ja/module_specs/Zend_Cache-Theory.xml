@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11005 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.cache.theory">
     <title>キャッシュの仕組み</title>
     <para>
@@ -36,7 +36,8 @@
             使用可能な <code>Zend_Cache</code> フロントエンドのインスタンスを作成する方法を、
             以下の例で示します。
         </para>
-        <programlisting role="php"><![CDATA[// バックエンドを選びます (例えば 'File' や 'Sqlite'...)
+        <programlisting role="php"><![CDATA[
+// バックエンドを選びます (例えば 'File' や 'Sqlite'...)
 $backendName = '[...]';
 
 // フロントエンドを選びます (例えば 'Core'、'Output'、'Page'...)
@@ -73,7 +74,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             適用するタグを配列で指定することができます。これを使用すると、
             指定したタグが設定されているキャッシュレコードのみを削除するといったことが可能となります。
         </para>
-        <programlisting role="php"><![CDATA[$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[
+$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
+]]>
         </programlisting>
         <note><para>
             <code>save()</code> メソッドには、オプションの第四引数
@@ -87,7 +90,10 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             特定のキャッシュ ID を削除/無効化するには、<code>remove()</code>
             メソッドを使用します。
         </para>
-        <programlisting role="php"><![CDATA[$cache->remove('削除するID');]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$cache->remove('削除するID');
+]]>
+        </programlisting>
         <para>
             一回の操作で複数のキャッシュ ID を削除/無効化するには、<code>clean()</code>
             メソッドを使用します。例えば、すべてのキャッシュレコードを削除するには次のようにします。
@@ -96,12 +102,15 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // 有効期限切れのレコードのみ削除します
-$cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]>
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+]]>
         </programlisting>
         <para>
             タグ 'tagA' および 'tagC' に該当するキャッシュエントリを削除するには、このようにします。
         </para>
-        <programlisting role="php"><![CDATA[$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
         </programlisting>
         <para>
             削除モードとして指定可能な値は <code>CLEANING_MODE_ALL</code>、<code>CLEANING_MODE_OLD</code>、
