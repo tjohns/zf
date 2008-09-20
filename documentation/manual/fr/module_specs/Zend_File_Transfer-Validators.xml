@@ -66,10 +66,10 @@
 
         <itemizedlist>
             <listitem>
-                <para><code>addValidator($validator, $breakChainOnFailure, $options = null, $files = null)</code> : ajoute le validateur à la
-                pile des validateurs (optionnellement seul le(s) fichier(s) spécifié(s)). <code>$validator</code> peut
-                être soit une instance d'un validateur réel, ou un nom court spécifiant le validateur (par exemple,
-                "Count").</para>
+                <para><code>addValidator($validator, $breakChainOnFailure, $options = null, $files = null)</code> :
+                ajoute le validateur à la pile des validateurs (optionnellement seul le(s) fichier(s) spécifié(s)).
+                <code>$validator</code> peut être soit une instance d'un validateur réel, ou un nom court spécifiant le
+                validateur (par exemple, "Count").</para>
             </listitem>
 
             <listitem>
@@ -109,7 +109,7 @@
         </itemizedlist>
 
         <example id="zend.file.transfer.validators.usage.example">
-            <title>Ajouter des validateurs au transfert de fichier</title>
+            <title>Ajouter des validateurs au fichier transféré</title>
 
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer();

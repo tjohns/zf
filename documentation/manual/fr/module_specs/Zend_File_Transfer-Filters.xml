@@ -1,0 +1,250 @@
+<!-- EN-Revision: 11289 -->
+<sect1 id="zend.file.transfer.filters">
+    <title>Filtres pour Zend_File_Transfer</title>
+
+    <para><code>Zend_File_Transfer</code> est fourni avec de multiples filtres qui peuvent être utilisés pour réaliser
+    différentes tâches qui doivent être réalisées souvent sur les fichier. Notez que tout filtre est appliqué après la
+    validation. De plus les filtres de fichiers se comportent légèrement différemment des autres filtres. Ils
+    retourneront toujours le nom de fichier et non le contenu modifié (ce qui serait une mauvaise idée en travaillant
+    avec un fichier d'1Go par exemple). Tous les filtres fournis avec <code>Zend_File_Transfer</code> peuvent être
+    trouvés dans le composant <code>Zend_Filter</code> et sont nommés <code>Zend_Filter_File_*</code>. Les filtres
+    suivants sont actuellement disponibles :</para>
+
+    <itemizedlist>
+        <listitem>
+            <para><code>Rename</code> : ce filtre peut renommer les fichiers, changer leur localisation et même forcer
+            l'écrasement de fichiers existants.</para>
+        </listitem>
+    </itemizedlist>
+
+    <sect2 id="zend.file.transfer.filters.usage">
+        <title>Utiliser les filtres avec <code>Zend_File_Transfer</code></title>
+
+        <para>L'utilisation des filtres est assez simple. Il existe de multiples méthodes pour ajouter et manipuler les
+        filtres.</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><code>addFilter($filter, $options = null, $files = null)</code> : ajoute le filtre à la pile des
+                filtres (optionnellement seul le(s) fichier(s) spécifié(s)). <code>$filter</code> peut être soit une
+                instance d'un filtre réel, ou un nom court spécifiant le filtre (par exemple, "Rename").</para>
+            </listitem>
+
+            <listitem>
+                <para><code>addFilters(array $filters, $files = null)</code> : ajoute les filtres à la pile des filtres.
+                Chaque entrée peut être soit une paire type/options, ou un tableau avec la clé "filter" spécifiant le
+                filtre (tous les autres options seront considérées comme des options du filtre au moment de
+                l'instanciation).</para>
+            </listitem>
+
+            <listitem>
+                <para><code>setFilters(array $filters, $files = null)</code> : surcharge les filtres existants avec les
+                filtres spécifiés. Les filtres doivent respecter la même syntaxe <code>addFilters()</code>.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>hasFilter($name)</code> : indique si le filtre est enregistré.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>getFilter($name)</code> : retourne un filtre préalablement enregistré.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>getFilters($files = null)</code>: retourne les filtres enregistrés ; si <code>$files</code>
+                est fourni, retourne les filtres pour ce fichier en particulier ou pour tous les fichiers.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>removeFilter($name)</code>: enlève le filtre préalablement enregistré.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>clearFilters()</code>: efface tous les filtres.</para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.filters.usage.example">
+            <title>Ajouter les filtres au fichier transféré</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Paramètre un dossier de destination
+$upload->addFilter('Rename', 'C:\image\uploads');
+
+// Paramètre un nouveau dossier de destination
+// et surcharge pour les fichiers existants
+$upload->addFilter('Size', array('C:\image\uploads', true));
+]]></programlisting>
+        </example>
+
+        <example id="zend.file.transfer.filters.usage.exampletwo">
+            <title>Limiter les filtres à des fichiers uniques</title>
+
+            <para><code>addFilter()</code>, <code>addFilters()</code>, and <code>setFilters()</code> accepte chacun un
+            argument final <code>$files</code>. Cet argument peut être utilisé pour spécifier un fichier en particulier
+            ou un tableau de fichiers sur lequel appliqué le filtre donné.</para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Paramètre un nouveau dossier de destination et
+// le limite seulement à "file2"
+$upload->addFilter('Rename', 'C:\image\uploads', 'file2');
+]]></programlisting>
+        </example>
+
+        <para>Généralement vous devriez simplement utiliser la méthode <code>addFilters()</code>, qui peut être appelée
+        plusieurs fois.</para>
+
+        <example id="zend.file.transfer.filters.usage.examplemultiple">
+            <title>Ajouter des filtres multiples</title>
+
+            <para>Souvent il est plus simple d'appeler plusieurs fois <code>addFilter()</code> : un appel pour chaque
+            filtre. Ceci améliore aussi la lisibilité et rend votre code plus maintenable. Comme toutes les méthodes
+            fournissent un interface fluide, vous pouvez enchaîner les appels comme montré ci-dessous :</para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Renommer différemment chacun des fichiers
+$upload->addFilter('Rename', 'file1', 'C:\picture\newjpg')
+       ->addFilter('Rename', 'file2', 'C:\picture\newgif');
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>Notez que même si l'ajout du même filtre plusieurs fois est autorisé, faire ceci peut entraîner des
+            problèmes si vous utilisez différentes options pour le même filtre.</para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.rename">
+        <title>Filtre <emphasis role="strong">Rename</emphasis></title>
+
+        <para>Le filtre <code>Rename</code> vous permet de changer le dossier de destination du fichier uploadé, de
+        changer le nom de fichier et aussi d'écraser des fichiers existants. Il supporte les options suivantes :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><code>oldfile</code> : le nom et le dossier de l'ancien fichier qui doit être renommé.</para>
+
+                <para>Cette option peut être une chaîne de caractères ou un tableau. En fonction de l'option fournie, le
+                comportement de cette option changera.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>newfile</code> : le nouveau dossier ou nom du fichier.</para>
+
+                <para>Cette option est optionnelle et peut être une chaîne, un tableau ou un booléen. En fonction de
+                l'option fournie, le comportement de cette option changera.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>overwrite</code> : paramètre si l'ancien fichier écrase le nouveau fichier s'il existe
+                déjà.</para>
+
+                <para>Cette option est optionnelle et doit être un booléen. La valeur par défaut est
+                <code>false</code>.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>De plus vous pouvez utiliser la méthode <code>setFile()</code> pour paramétrer des fichiers, ce qui
+        effacera ceux précédemment paramétrés, <code>addFile()</code> pour ajouter un nouveau fichier à ceux déjà
+        présent, et <code>getFile()</code> pour récupérer les fichiers actuellement paramétrés. Pour simplifier les
+        choses, ce filtre accepte de multiples notations et ces méthodes et constructeur comprennent les mêmes
+        notations.</para>
+
+        <example id="zend.file.transfer.filters.rename.example">
+            <title>Utiliser le filtre Rename</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+
+// Set a new destination path for all files
+$upload->addFilter('Rename', 'C:\mypics\new');
+
+// Set a new destination path only for uploadfile1
+$upload->addFilter('Rename', 'uploadfile1', 'C:\mypics\newgifs');
+]]></programlisting>
+        </example>
+
+        <para>Vous pouvez utiliser différentes notations. Ci-dessous vous trouverez une table fournissant la description
+        et le but des notations supportées. Notez que quand vous utilisez l'"Adapter" ou le "Form Element", vous ne
+        pourrez pas utiliser toutes les notations décrites.</para>
+
+        <table id="zend.file.transfer.filters.rename.notations">
+            <title>Notations différentes du filtre "Rename" et leurs significations</title>
+
+            <tgroup align="left" cols="2">
+                <thead>
+                    <row>
+                        <entry>notation</entry>
+
+                        <entry>description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry>addFile('C:\uploads')</entry>
+
+                        <entry>Spécifie un nouveau dossier pour tous les fichiers quand la chaîne est un dossier. Notez
+                        que vous aurez une exception si le fichier existe déjà, voir le paramètre d'écrasement.</entry>
+                    </row>
+
+                    <row>
+                        <entry>addFile('C:\uploads\file.ext')</entry>
+
+                        <entry>Spécifie un nouveau dossier et un nom de fichier pour tous les fichiers quand la chaîne
+                        n'est pas un dossier. Notez que vous aurez une exception si le fichier existe déjà, voir le
+                        paramètre d'écrasement.</entry>
+                    </row>
+
+                    <row>
+                        <entry>addFile('C:\uploads\file.ext', true)</entry>
+
+                        <entry>Spécifie un nouveau dossier et un nom de fichier pour tous les fichiers quand la chaîne
+                        n'est pas un dossier et écrase le fichier existant si celui-ci existe. Notez que vous aurez pas
+                        de notification en cas d'écrasement.</entry>
+                    </row>
+
+                    <row>
+                        <entry>addFile('C:\temp\uploads', 'C:\uploads')</entry>
+
+                        <entry>Spécifie un nouveau dossier pour tous les fichiers qui sont présent dans l'ancien dossier
+                        quand la chaîne est un dossier. Notez que vous aurez une exception si le fichier existe déjà,
+                        voir le paramètre d'écrasement.</entry>
+                    </row>
+
+                    <row>
+                        <entry>addFile('C:\temp\uploads', 'C:\uploads', true)</entry>
+
+                        <entry>Spécifie un nouveau dossier pour tous les fichiers qui sont présent dans l'ancien dossier
+                        quand la chaîne est un dossier. Notez que vous aurez pas de notification en cas
+                        d'écrasement.</entry>
+                    </row>
+
+                    <row>
+                        <entry>addFile(array('C:\temp\uploads\file1.gif' =&gt; 'C:\uploads\file.gif'))</entry>
+
+                        <entry>Spécifie de nouveaux dossiers pour les fichiers fournis. Vous devez toujours fournir une
+                        paire clé/valeur correspondant respectivement au fichier source et fichier cible. Notez que vous
+                        aurez une exception si le fichier existe déjà, voir le paramètre d'écrasement.</entry>
+                    </row>
+
+                    <row>
+                        <entry>addFile(array('C:\temp\uploads\file1.gif' =&gt; 'C:\uploads\file.gif'), true)</entry>
+
+                        <entry>Spécifie de nouveaux dossiers pour les fichiers fournis. Vous devez toujours fournir une
+                        paire clé/valeur correspondant respectivement au fichier source et fichier cible. Notez que vous
+                        aurez pas de notification en cas d'écrasement. Optionnellement vous pouvez fournir un dossier
+                        avec la clé "0", celui-ci sera utilisé pour tous les fichiers dont la source n'est pas
+                        fournie.</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </sect2>
+</sect1>
