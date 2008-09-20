@@ -1,3 +1,4 @@
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.config.theory_of_operation">
     <title>動作原理</title>
     <para>
@@ -34,12 +35,12 @@
     <para>
         デフォルトでは、<code>Zend_Config</code>
         で利用できる設定データは読み込み専用です。代入
-        (<code><![CDATA[$config->database->host = 'example.com']]></code> など)
+        (<code>$config->database->host = 'example.com'</code> など)
         を行おうとすると例外がスローされます。しかし、
         コンストラクタでこの振る舞いを変更し、データの変更を許可することも可能です。
         また、変更を許可した場合には、<code>Zend_Config</code>
         は値の設定の解除もサポートしています
-        (<code><![CDATA[unset($config->database->host);]]></code> とします)。
+        (<code>unset($config->database->host);</code> とします)。
         <note>
             <para>
                 メモリ上で変更したデータを何らかのメディアに保存しようとする際に、
