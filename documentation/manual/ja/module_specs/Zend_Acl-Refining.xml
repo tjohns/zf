@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.acl.refining">
 
     <title>アクセス制御の洗練</title>
@@ -37,7 +37,8 @@
 
         <programlisting role="php"><![CDATA[
 // 新しいグループ marketing は staff の権限を引き継ぎます
-$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
+$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
+]]>
         </programlisting>
 
         <para>

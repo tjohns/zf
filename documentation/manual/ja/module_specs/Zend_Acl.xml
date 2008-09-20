@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.acl.introduction">
     <title>導入</title>
 
@@ -116,9 +116,6 @@
                 には定義されているという場合、Zend_Acl はそちらを検索します。
             </para>
             <programlisting role="php"><![CDATA[
-            
-            
-            
 $acl = new Zend_Acl();
 
 $acl->addRole(new Zend_Acl_Role('guest'))
@@ -133,7 +130,8 @@ $acl->add(new Zend_Acl_Resource('someResource'));
 $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
-echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
+echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
+]]>
             </programlisting>
             <para>
                 "<code>someUser</code>" ロールおよび
@@ -180,7 +178,8 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$acl = new Zend_Acl();]]>
+$acl = new Zend_Acl();
+]]>
         </programlisting>
 
         <note>
@@ -269,7 +268,8 @@ $acl->addRole(new Zend_Acl_Role('staff'), 'guest');
 $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator はアクセス制御を受け継ぎません
-$acl->addRole(new Zend_Acl_Role('administrator'));]]>
+$acl->addRole(new Zend_Acl_Role('administrator'));
+]]>
         </programlisting>
 
     </sect2>
@@ -324,7 +324,8 @@ $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator は何も引き継ぎませんが、すべての権限が認められています
-$acl->allow('administrator');]]>
+$acl->allow('administrator');
+]]>
         </programlisting>
 
         <para>
