@@ -548,7 +548,7 @@ $result = $cache->foobar2('1', '2');
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
-            <title>Available options (for this frontend in Zend_Cache factory)</title>
+            <title>Available options</title>
             <table id="zend.cache.frontends.page.options.table">
                 <title>Page frontend options</title>
                 <tgroup cols="4">
@@ -658,6 +658,24 @@ $result = $cache->foobar2('1', '2');
                                               <code>(boolean, true by default) make_id_with_cookie_variables</code> :
                                               if true, the cache id will be dependent of the content of the
                                               <code>$_COOKIE</code> array
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(int, false by default) specific_lifetime</code> :
+                                              if not false, the given lifetime will be used for the choosen regexp
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(array, array() by default) tags</code> :
+                                              tags for the cache record
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(int, null by default) priority</code> :
+                                              priority (if the backend supports it)
                                           </para>
                                       </listitem>
                                   </itemizedlist>

@@ -1,10 +1,13 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
-
+	<para>
+        There is two kinds of backends : standard ones and extended ones. Of course, extended backends
+        offer more features.
+    </para>
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            This backends stores cache records into files (in a choosen directory).
+            This (extended) backends stores cache records into files (in a choosen directory).
         </para>
         <para>
             Available options are :
@@ -114,7 +117,7 @@
     <sect2 id="zend.cache.backends.sqlite">
         <title>Zend_Cache_Backend_Sqlite</title>
         <para>
-            This backends stores cache records into a SQLite database.
+            This (extended) backends stores cache records into a SQLite database.
         </para>
         <para>
             Available options are :
@@ -159,7 +162,7 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-            This backends stores cache records into a memcached server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
+            This (extended) backends stores cache records into a memcached server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
             is a high-performance, distributed memory object caching system. To use this backend,
             you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
         </para>
@@ -208,7 +211,7 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_Apc</title>
         <para>
-            This backends stores cache records in shared memory through
+            This (extended) backends stores cache records in shared memory through
             the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
             (which is of course need for using this backend).
         </para>
@@ -286,6 +289,124 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
         <para>
             There are no options for this backend.
         </para>
+    </sect2>
+    <sect2 id="zend.cache.backends.twolevels">
+        <title>Zend_Cache_Backend_TwoLevels</title>
+        <para>
+            This (extend) backend is an hybrid one. It stores cache records in two other backends : a fast
+            one (but limited) like Apc, Memcache... and a "slow" one like File, Sqlite...
+        </para>
+        <para>
+        	This backend will use the priority parameter (given at the frontend level when storing a record) 
+        	and the remaining space in the fast backend to optimize the usage of these two backends.
+        	FIXME
+        </para>
+        <para>
+            Available options are :
+        </para>
+        <table id="zend.cache.backends.twolevels.table">
+            <title>TwoLevels backend options</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Option</entry>
+                        <entry>Data Type</entry>
+                        <entry>Default Value</entry>
+                        <entry>Description</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>slow_backend</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>File</code></entry>
+                          <entry>
+                              the "slow" backend name
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>Apc</code></entry>
+                          <entry>
+                              the "fast" backend name
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>slow_backend_options</code></entry>
+                          <entry><code>array</code></entry>
+                          <entry><code>array()</code></entry>
+                          <entry>
+                              the "slow" backend options
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend_options</code></entry>
+                          <entry><code>array</code></entry>
+                          <entry><code>array()</code></entry>
+                          <entry>
+                              the "fast" backend options
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>slow_backend_custom_naming</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              if true, the slow_backend argument is used as a complete class name ; if false, 
+                              the frontend argument is used as the end of "Zend_Cache_Backend_[...]" 
+                              class name
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fast_backend_custom_naming</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              if true, the fast_backend argument is used as a complete class name ; if false, 
+                              the frontend argument is used as the end of "Zend_Cache_Backend_[...]" 
+                              class name
+                          </entry>
+                      </row>    
+                      <row>
+                          <entry><code>slow_backend_autoload</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              if true, there will no require_once for the slow backend 
+                              (usefull only for custom backends)
+                          </entry>
+                      </row>     
+                      <row>
+                          <entry><code>fast_backend_autoload</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                              if true, there will no require_once for the slow backend 
+                              (usefull only for custom backends)
+                          </entry>
+                      </row>  
+                      <row>
+                          <entry><code>auto_refresh_fast_cache</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>true</code></entry>
+                          <entry>
+                              if true, auto refresh the fast cache when a cache record is hit
+                          </entry>
+                      </row>  
+                      <row>
+                          <entry><code>stats_update_factor</code></entry>
+                          <entry><code>integer</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              disable / tune the computation of the fast backend filling percentage
+                              (hhen saving a record into cache, computation of the fast backend filling percentage
+                              randomly 1 times on x cache writes)
+                          </entry>
+                      </row>                              
+                  </tbody>
+              </tgroup>
+          </table>
     </sect2>
 </sect1>
 <!--
