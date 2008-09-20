@@ -124,17 +124,7 @@ abstract class Zend_Translate_Adapter {
      */
     public function addTranslation($data, $locale = null, array $options = array())
     {
-        if (empty($locale)) {
-            require_once 'Zend/Registry.php';
-            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
-                $locale = Zend_Registry::get('Zend_Locale');
-            }
-        }
-
-        if ($locale === null) {
-            $locale = new Zend_Locale();
-        }
-
+        $locale    = $this->_getRegistryLocale($locale);
         $originate = (string) $locale;
 
         $this->setOptions($options);
@@ -276,6 +266,7 @@ abstract class Zend_Translate_Adapter {
      */
     public function setLocale($locale)
     {
+        $locale = $this->_getRegistryLocale($locale);
         if ($locale === "auto") {
             $this->_automatic = true;
         } else {
@@ -590,6 +581,28 @@ abstract class Zend_Translate_Adapter {
     public static function getCache()
     {
         return self::$_cache;
+    }
+
+    /**
+     * Evaluates the locale from registry or auto
+     *
+     * @param  string|Zend_Locale $locale
+     * @return string
+     */
+    private function _getRegistryLocale($locale)
+    {
+        if (empty($locale)) {
+            require_once 'Zend/Registry.php';
+            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
+                $locale = Zend_Registry::get('Zend_Locale');
+            }
+        }
+
+        if ($locale === null) {
+            $locale = new Zend_Locale();
+        }
+
+        return $locale;
     }
 
     /**
