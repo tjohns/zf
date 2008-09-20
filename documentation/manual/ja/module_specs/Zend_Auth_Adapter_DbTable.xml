@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10943 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>データベースのテーブルでの認証</title>
     <sect2 id="zend.auth.adapter.dbtable.introduction">
@@ -231,7 +231,8 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);]]>
+);
+]]>
         </programlisting>
         <para>
             もうひとつの例として、salt メカニズムの実装を見てみましょう。

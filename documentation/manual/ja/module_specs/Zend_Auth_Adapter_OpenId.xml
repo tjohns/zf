@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10995 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.auth.adapter.openid">
 
     <title>Open ID 認証</title>
@@ -76,6 +76,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
+<?php
 $status = "";
 $auth = Zend_Auth::getInstance();
 if ((isset($_POST['openid_action']) &&
@@ -114,7 +115,8 @@ if ((isset($_POST['openid_action']) &&
 <input type="submit" name="openid_action" value="login">
 <input type="submit" name="openid_action" value="logout">
 </fieldset></form></body></html>
-*/]]>
+*/
+]]>
         </programlisting>
 
         <para>

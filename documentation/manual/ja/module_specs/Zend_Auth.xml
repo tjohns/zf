@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.introduction">
 
     <title>導入</title>
@@ -90,7 +90,8 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
             </programlisting>
 
             docblock コメントで説明しているとおり、
@@ -371,7 +372,8 @@ Zend_Auth::getInstance()->setStorage(new MyStorage());
  */
 
 // 認証と結果の保存、そして成功時に ID を持続させます
-$result = Zend_Auth::getInstance()->authenticate($authAdapter);]]>
+$result = Zend_Auth::getInstance()->authenticate($authAdapter);
+]]>
                     </programlisting>
 
                 </para>
@@ -447,7 +449,10 @@ if ($auth->hasIdentity()) {
             永続ストレージから認証 ID を削除するには、単純に
             <code>clearIdentity()</code> メソッドを使用します。
             これは、アプリケーションの "ログアウト" 処理を実装するためのものです。
-            <programlisting role="php"><![CDATA[Zend_Auth::getInstance()->clearIdentity();]]></programlisting>
+            <programlisting role="php"><![CDATA[
+Zend_Auth::getInstance()->clearIdentity();
+]]>
+            </programlisting>
         </para>
 
         <para>

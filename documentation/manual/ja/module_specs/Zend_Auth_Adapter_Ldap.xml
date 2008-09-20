@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
@@ -67,7 +67,9 @@ if ($log_path) {
             $logger->log("Ldap: $i: $message", Zend_Log::DEBUG);
         }
     }
-}]]></programlisting>
+}
+]]>
+            </programlisting>
             もちろんログを記録するかどうかは自由ですが、
             ロガーを使用することを強く推奨します。
             <code>Zend_Auth_Adapter_Ldap</code> は、皆がほしがるであろう情報をすべて
@@ -110,7 +112,8 @@ ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
 ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
-]]></programlisting>
+]]>
+</programlisting>
             この設定を使用すると、<code>Zend_Auth_Adapter_Ldap</code>
             はまず OpenLDAP サーバ <code>s0.foo.net</code> でのユーザ認証を試みます。
             何らかの理由で認証に失敗した場合は、AD サーバ
@@ -180,7 +183,9 @@ Array
             [bindRequiresDn] => 1
         )
 
-)]]></programlisting>
+)
+]]>
+</programlisting>
             上の各オプションで設定した内容の違いの主な理由は、AD へのバインド時にはユーザ名が
             DN 形式である必要がないということです (以下の <emphasis>サーバのオプション</emphasis>
             における <code>bindRequiresDn</code> の説明を参照ください)。
