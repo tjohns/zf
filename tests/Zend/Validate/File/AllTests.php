@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/Validate/File/CountTest.php';
+require_once 'Zend/Validate/File/ExcludeExtensionTest.php';
 require_once 'Zend/Validate/File/ExistsTest.php';
 require_once 'Zend/Validate/File/ExtensionTest.php';
 require_once 'Zend/Validate/File/FilesSizeTest.php';
@@ -58,6 +59,7 @@ class Zend_Validate_File_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Validate_File');
 
         $suite->addTestSuite('Zend_Validate_File_CountTest');
+        $suite->addTestSuite('Zend_Validate_File_ExcludeExtensionTest');
         $suite->addTestSuite('Zend_Validate_File_ExistsTest');
         $suite->addTestSuite('Zend_Validate_File_ExtensionTest');
         $suite->addTestSuite('Zend_Validate_File_FilesSizeTest');

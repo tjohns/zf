@@ -20,6 +20,14 @@
 
         <listitem>
             <para>
+                <code>ExcludeExtension</code>: This validator checks the extension of files. It will throw an
+                error when an given file has an defined extension. This way you can exclude defined extensions
+                from being validated.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>Exists</code>: This validator checks for the existence of files. It will throw an
                 error when an given file does not exist.
             </para>
@@ -298,6 +306,63 @@ $upload->addValidator('Count', false, array(1, 5);
             <para>
                 Note that this validator stores the number of checked files internally. The file which
                 exceeds the maximum will be returned as error.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludeextension">
+        <title><emphasis role="strong">ExcludeExtension</emphasis> validator</title>
+
+        <para>
+            The <code>ExcludeExtension</code> validator checks the file extension of files which are provided. It
+            supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>extension</code>: Checks if the given file does not use this file extension.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: Sets if validation should be done case sensitive. Default is not
+                    case sensitive. Note the this option is used for all used extensions.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            This validator accepts multiple extensions either as a comma-delimited string, or as an
+            array. You may also use the methods <code>setExtension()</code>, <code>addExtension()</code>,
+            and <code>getExtension()</code> to set and retrieve extensions.
+        </para>
+
+        <para>
+            In some cases it is usefull to test case sensitive. Therefor the constructor allows a
+            second parameter <code>$case</code> which, if set to true, will validate the extension case
+            sensitive.
+        </para>
+
+        <example id="zend.file.transfer.validators.excludeextension.example">
+            <title>Using the ExcludeExtension validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Do not allow files with extension php or exe
+$upload->addValidator('ExcludeExtension', false, 'php,exe');
+
+// Do not allow files with extension php or exe but use array notation
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Note that this validator just checks the file extension. It does not check the actual file MIME type.
             </para>
         </note>
     </sect2>
