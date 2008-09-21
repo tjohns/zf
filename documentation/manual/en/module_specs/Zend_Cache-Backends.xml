@@ -1,7 +1,7 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
 	<para>
-        There is two kinds of backends : standard ones and extended ones. Of course, extended backends
+        There is two kinds of backends: standard ones and extended ones. Of course, extended backends
         offer more features.
     </para>
     <sect2 id="zend.cache.backends.file">
@@ -400,7 +400,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>10</code></entry>
                           <entry>
                               disable / tune the computation of the fast backend filling percentage
-                              (hhen saving a record into cache, computation of the fast backend filling percentage
+                              (when saving a record into cache, computation of the fast backend filling percentage
                               randomly 1 times on x cache writes)
                           </entry>
                       </row>                              
