@@ -239,7 +239,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
 
         <table id="zend.file.transfer.filters.rename.notations">
 
-            <title>Different notations of the rename filer and their meaning</title>
+            <title>Different notations of the rename filter and their meaning</title>
 
             <tgroup cols="2" align="left">
                 <thead>
@@ -279,7 +279,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                         </entry>
                         <entry>
                             Specifies a new location and filename for all files when the given string is
-                            not detected as directory and overwrites and existing file with the same target name.
+                            not detected as directory and overwrites an existing file with the same target name.
                             Note, that you will get no notification that a file was overwritten.
                         </entry>
                     </row>
