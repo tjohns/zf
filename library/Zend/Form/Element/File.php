@@ -49,6 +49,11 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     protected $_adapter;
 
     /**
+     * @var boolean Already validated ?
+     */
+    protected $_validated = false;
+
+    /**
      * Set plugin loader
      * 
      * @param  Zend_Loader_PluginLoader_Interface $loader 
@@ -168,7 +173,9 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function addValidator($validator, $breakChainOnFailure = false, $options = array())
     {
         $adapter = $this->getTransferAdapter();
-        $adapter->addValidator($validator, $options);
+        $adapter->addValidator($validator, $breakChainOnFailure, $options);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -182,6 +189,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->addValidators($validators);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -195,6 +204,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->setValidators($validators);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -231,6 +242,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->removeValidator($name);
+        $this->_validated = false;
+
         return $this;
     }
 
@@ -243,20 +256,26 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         $adapter->clearValidators();
+        $this->_validated = false;
+
         return $this;
     }
 
     /**
      * Validate upload
      * 
-     * @param  string $value 
-     * @param  mixed $context 
+     * @param  string $value   File, can be optional, give null to validate all files
+     * @param  mixed  $context 
      * @return bool
      */
     public function isValid($value, $context = null)
     {
+        if ($this->_validated) {
+            return true;
+        }
+
         $adapter = $this->getTransferAdapter();
-        $this->setValue($adapter->getFileName($this->getName()));
+        $this->setValue($adapter->getFileName($this->getFullyQualifiedName()));
 
         if (!$this->isRequired()) {
             $adapter->setOptions(array('ignoreNoFile' => true));
@@ -272,7 +291,31 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             }
         }
 
-        if($adapter->receive($value)) {
+        if($adapter->isValid($this->getFullyQualifiedName())) {
+            $this->_validated = true;
+            return true;
+        }
+
+        $this->_validated = false;
+        return false;
+    }
+
+    /**
+     * Receive the uploaded file
+     *
+     * @param  string $value
+     * @return boolean
+     */
+    public function receive($value = null)
+    {
+        if (!$this->_validated) {
+            if (!$this->isValid($value)) {
+                return false;
+            }
+        }
+
+        $adapter = $this->getTransferAdapter();
+        if ($adapter->receive($this->getFullyQualifiedName())) {
             return true;
         }
 
@@ -287,6 +330,16 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getErrors()
     {
         return $this->getTransferAdapter()->getErrors();
+    }
+
+    /**
+     * Are there errors registered?
+     * 
+     * @return bool
+     */
+    public function hasErrors()
+    {
+        return (!empty($this->_messages) || !$this->getTransferAdapter()->hasErrors());
     }
 
     /**

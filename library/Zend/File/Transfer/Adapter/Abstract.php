@@ -37,28 +37,44 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**@-*/
 
     /**
+     * Internal list of breaks
+     *
+     * @var array
+     */
+    protected $_break = array();
+
+    /**
+     * Internal list of filters
+     *
+     * @var array
+     */
+    protected $_filters = array();
+
+    /**
      * Plugin loaders for filter and validation chains
+     *
      * @var array
      */
     protected $_loaders = array();
 
     /**
-     * Internal list of validators
-     * @var array
-     */
-    protected $_validators = array();
-
-    /**
      * Internal list of messages
+     *
      * @var array
      */
     protected $_messages = array();
 
     /**
-     * Internal list of filters
-     * @var array
+     * @var Zend_Translate
      */
-    protected $_filters = array();
+    protected $_translator;
+
+    /**
+     * Is translation disabled?
+     *
+     * @var bool
+     */
+    protected $_translatorDisabled = false;
 
     /**
      * Internal validation flag
@@ -66,6 +82,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @var boolean
      */
     protected $_validated = false;
+
+    /**
+     * Internal list of validators
+     * @var array
+     */
+    protected $_validators = array();
 
     /**
      * Internal list of files
@@ -278,24 +300,26 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Adds a new validator for this class
      *
-     * @param  string|array $validator Type of validator to add
-     * @param  string|array $options   Options to set for the validator
-     * @param  string|array $files     Files to limit this validator to
+     * @param  string|array $validator           Type of validator to add
+     * @param  boolean      $breakChainOnFailure If the validation chain should stop an failure
+     * @param  string|array $options             Options to set for the validator
+     * @param  string|array $files               Files to limit this validator to
      * @return Zend_File_Transfer_Adapter
      */
-    public function addValidator($validator, $options = null, $files = null)
+    public function addValidator($validator, $breakChainOnFailure = false, $options = null, $files = null)
     {
         if ($validator instanceof Zend_Validate_Interface) {
-            $class = get_class($validator);
+            $name = get_class($validator);
         } elseif (is_string($validator)) {
-            $class     = $this->getPluginLoader(self::VALIDATE)->load($validator);
-            $validator = new $class($options);
+            $name      = $this->getPluginLoader(self::VALIDATE)->load($validator);
+            $validator = new $name($options);
         } else {
             require_once 'Zend/File/Transfer/Exception.php';
-            throw new Zend_File_Transfer_Exception('Invalid validator specified');
+            throw new Zend_File_Transfer_Exception('Invalid validator provided to addValidator; must be string or Zend_Validate_Interface');
         }
 
-        $this->_validators[$class] = $validator;
+        $this->_validators[$name] = $validator;
+        $this->_break[$name]      = $breakChainOnFailure;
 
         if ($files === null) {
             $files = array_keys($this->_files);
@@ -316,7 +340,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             if (!array_key_exists($file, $this->_files)) {
                 continue;
             }
-            $this->_files[$file]['validators'][] = $class;
+            $this->_files[$file]['validators'][] = $name;
         }
         
         $this->_validated = false;
@@ -325,42 +349,62 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Add Multiple validators at once
-     * 
+     *
      * @param  array $validators 
      * @param  string|array $files 
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function addValidators(array $validators, $files = null)
     {
-        foreach ($validators as $key => $spec) {
-            if ($spec instanceof Zend_Validate_Interface) {
-                $this->addValidator($spec, null, $files);
-                continue;
-            }
-
-            if (is_string($key)) {
-                $this->addValidator($key, $spec, $files);
-                continue;
-            }
-
-            if (is_int($key)) {
-                if (is_string($spec)) {
-                    $this->addValidator($spec, null, $files);
-                    continue;
+        foreach ($validators as $name => $validatorInfo) {
+            if ($validatorInfo instanceof Zend_Validate_Interface) {
+                $this->addValidator($validatorInfo, null, null, $files);
+            } else if (is_string($validatorInfo)) {
+                if (!is_int($name)) {
+                    $this->addValidator($name, null, $validatorInfo, $files);
+                } else {
+                    $this->addValidator($validatorInfo, null, null, $files);
                 }
-
-                if (is_array($spec)) {
-                    if (!array_key_exists('validator', $spec)) {
-                        continue;
+            } else if (is_array($validatorInfo)) {
+                $argc                = count($validatorInfo);
+                $breakChainOnFailure = false;
+                $options             = array();
+                if (isset($validatorInfo['validator'])) {
+                    $validator = $validatorInfo['validator'];
+                    if (isset($validatorInfo['breakChainOnFailure'])) {
+                        $breakChainOnFailure = $validatorInfo['breakChainOnFailure'];
                     }
 
-                    $validator = $spec['validator'];
-                    unset($spec['validator']);
-                    $this->addValidator($validator, $spec, $files);
-                    continue;
-                }
+                    if (isset($validatorInfo['options'])) {
+                        $options = $validatorInfo['options'];
+                    }
 
-                continue;
+                    $this->addValidator($validator, $breakChainOnFailure, $options, $files);
+                } else {
+                    if (is_string($name)) {
+                        $validator = $name;
+                        $options   = $validatorInfo;
+                        $this->addValidator($validator, $breakChainOnFailure, $options, $files);
+                    } else {
+                        switch (true) {
+                            case (0 == $argc):
+                                break;
+                            case (1 <= $argc):
+                                $validator  = array_shift($validatorInfo);
+                            case (2 <= $argc):
+                                $breakChainOnFailure = array_shift($validatorInfo);
+                            case (3 <= $argc):
+                                $options = array_shift($validatorInfo);
+                            case (4 <= $argc):
+                                $files = array_shift($validatorInfo);
+                            default:
+                                $this->addValidator($validator, $breakChainOnFailure, $options, $files);                                break;
+                        }
+                    }
+                }
+            } else {
+                require_once 'Zend/Form/Exception.php';
+                throw new Zend_Form_Exception('Invalid validator passed to addValidators()');
             }
         }
 
@@ -517,18 +561,25 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         $check           = $this->_getFiles($files);
         $this->_messages = array();
+        $break           = false;
         foreach ($check as $content) {
             $uploaderror = false;
             $fileerrors  = array();
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
                     $validator = $this->_validators[$class];
+
                     if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
                     if (($class === 'Zend_Validate_File_Upload') and (count($this->_messages) > 0)) {
                             $uploaderror = true;
+                    }
+
+                    if ($this->_break[$class]) {
+                        $break = true;
+                        break;
                     }
                 }
             }
@@ -538,6 +589,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             }
 
             $this->_messages += $fileerrors;
+            if ($break) {
+                break;
+            }
         }
 
         if (count($this->_messages) > 0) {
@@ -567,6 +621,16 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     public function getErrors()
     {
         return array_keys($this->_messages);
+    }
+
+    /**
+     * Are there errors registered?
+     * 
+     * @return boolean
+     */
+    public function hasErrors()
+    {
+        return (!empty($this->_messages));
     }
 
     /**
@@ -784,7 +848,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Retrieve filename of transferred file
      *
-     * Returns final target destnation of transferred file.
+     * Returns final target destination of transferred file.
      * 
      * @param  string $file 
      * @return string
@@ -849,9 +913,16 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @param  string       $destination New destination directory
      * @param  string|array $files       Files to set the new destination for
      * @return Zend_File_Transfer_Abstract
+     * @throws Zend_File_Transfer_Exception when the given destination is not a directory or does not exist
      */
     public function setDestination($destination, $files = null)
     {
+        $destination = rtrim($destination, "/\\");
+        if (!is_dir($destination)) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('The given destination is no directory or does not exist');
+        }
+        
         if ($files === null) {
             foreach ($this->_files as $file => $content) {
                 $this->_files[$file]['destination'] = $destination;
@@ -912,6 +983,64 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
 
         return $this->_files[$files]['destination'];
+    }
+
+    /**
+     * Set translator object for localization
+     *
+     * @param  Zend_Translate|null $translator 
+     * @return Zend_File_Transfer_Abstract
+     */
+    public function setTranslator($translator = null)
+    {
+        if (null === $translator) {
+            $this->_translator = null;
+        } elseif ($translator instanceof Zend_Translate_Adapter) {
+            $this->_translator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            $this->_translator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('Invalid translator specified');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Retrieve localization translator object
+     * 
+     * @return Zend_Translate_Adapter|null
+     */
+    public function getTranslator()
+    {
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
+        return $this->_translator;
+    }
+
+    /**
+     * Indicate whether or not translation should be disabled
+     * 
+     * @param  bool $flag 
+     * @return Zend_File_Transfer_Abstract
+     */
+    public function setDisableTranslator($flag)
+    {
+        $this->_translatorDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     * 
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        return $this->_translatorDisabled;
     }
 
     /**
