@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11455 -->
 <sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
@@ -476,8 +476,7 @@ $frontendOptions = array(
 
 // l'appel caché
 $res = $cache->foobar('1', '2');
-]]></programlisting> Pour mettre en cache des appels classiques aux méthodes :
-            <programlisting role="php"><![CDATA[
+]]></programlisting> Pour mettre en cache des appels classiques aux méthodes : <programlisting role="php"><![CDATA[
 class test {
 
     private $_string = 'hello !';
@@ -584,7 +583,7 @@ $res = $cache->foobar2('1', '2');
         </sect3>
 
         <sect3 id="zend.cache.frontends.page.options">
-            <title>Options disponibles (pour ce frontend dans la fabrique Zend_Cache)</title>
+            <title>Options disponibles</title>
 
             <table id="zend.cache.frontends.page.options.table">
                 <title>Options du frontend Page</title>
@@ -696,6 +695,21 @@ $res = $cache->foobar2('1', '2');
                                         <para><code>(boolean, true par défaut) make_id_with_cookie_variables</code> : si
                                         <code>true</code>, l'identifiant du cache sera dépendant du contenu du tableau
                                         <code>$_COOKIE</code></para>
+                                    </listitem>
+
+                                    <listitem>
+                                        <para><code>(int, false par défaut) specific_lifetime</code> : si true, la durée
+                                        de vie fournie sera utilisée pour l'expression régulière choisie</para>
+                                    </listitem>
+
+                                    <listitem>
+                                        <para><code>(array, array() par défaut) tags</code> : balises pour
+                                        l'enregistrement en cache</para>
+                                    </listitem>
+
+                                    <listitem>
+                                        <para><code>(int, null par défaut) priority</code> : priorité (si le backend le
+                                        supporte)</para>
                                     </listitem>
                                 </itemizedlist></entry>
                         </row>

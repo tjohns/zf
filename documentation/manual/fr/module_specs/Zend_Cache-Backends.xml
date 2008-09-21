@@ -1,11 +1,15 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11462 -->
 <sect1 id="zend.cache.backends">
     <title>Les backends Zend_Cache</title>
+
+    <para>Il existe deux types de backends : les standards et les étendus. Bien sûr, les backends étendus offrent des
+    fonctionnalités supplémentaires.</para>
 
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
 
-        <para>Ces backends stockent les enregistrements de cache dans des fichiers (dans un dossier choisi).</para>
+        <para>Ces backends (étendus) stockent les enregistrements de cache dans des fichiers (dans un dossier
+        choisi).</para>
 
         <para>Les options disponibles sont :</para>
 
@@ -136,7 +140,7 @@
     <sect2 id="zend.cache.backends.sqlite">
         <title>Zend_Cache_Backend_Sqlite</title>
 
-        <para>Ce backend stocke les enregistrements de cache dans une base de donnée SQLite.</para>
+        <para>Ce backend (étendu) stocke les enregistrements de cache dans une base de donnée SQLite.</para>
 
         <para>Les options disponibles sont :</para>
 
@@ -188,7 +192,7 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
 
-        <para>Ces backends stockent les enregistrements de cache dans un serveur memcached. <ulink
+        <para>Ce backend (étendu) stocke les enregistrements de cache dans un serveur memcached. <ulink
         url="http://www.danga.com/memcached/">Memcached</ulink> est un système de cache en mémoire distribuée, de haute
         performance. Pour utiliser ce backend, vous devez avoir un démon memcached et l'extension PECL <ulink
         url="http://pecl.php.net/package/memcache">memcache</ulink>.</para>
@@ -246,7 +250,7 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_Apc</title>
 
-        <para>Ce backend stocke les enregistrements de cache en mémoire partagée grâce à l'extension <ulink
+        <para>Ce backend (étendu) stocke les enregistrements de cache en mémoire partagée grâce à l'extension <ulink
         url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) qui est requise pour utiliser ce
         backend.</para>
 
@@ -268,7 +272,7 @@
         <para>Les options disponibles sont :</para>
 
         <table id="zend.cache.backends.xcache.table">
-            <title>Xcache backend options</title>
+            <title>Options du backend Xcache</title>
 
             <tgroup cols="4">
                 <thead>
@@ -326,5 +330,146 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
 ]]></programlisting>
 
         <para>Il n'y a pas d'options pour ce backend.</para>
+    </sect2>
+
+    <sect2 id="zend.cache.backends.twolevels">
+        <title>Zend_Cache_Backend_TwoLevels</title>
+
+        <para>Ce backend (étendu) est un hybride. Il stocke les enregistrements de cache dans deux autres backends : un
+        rapide (mais limité) comme Apc, Memcache... et un plus "lent" comme File, Sqlite...</para>
+
+        <para>Ce backend utilise le paramètre priorité (fourni au niveau du frontend au moment d'un enregistrement) et
+        l'espace restant dans le backend rapide pour optimiser l'utilisation de ces deux backends.</para>
+
+        <para>Les options disponibles sont :</para>
+
+        <table id="zend.cache.backends.twolevels.table">
+            <title>Options du backend TwoLevels</title>
+
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Option</entry>
+
+                        <entry>Type de données</entry>
+
+                        <entry>Valeur par défaut</entry>
+
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+                    <row>
+                        <entry><code>slow_backend</code></entry>
+
+                        <entry><code>string</code></entry>
+
+                        <entry><code>File</code></entry>
+
+                        <entry>le nom du backend "lent"</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>fast_backend</code></entry>
+
+                        <entry><code>string</code></entry>
+
+                        <entry><code>Apc</code></entry>
+
+                        <entry>le nom du backend "rapide"</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>slow_backend_options</code></entry>
+
+                        <entry><code>array</code></entry>
+
+                        <entry><code>array()</code></entry>
+
+                        <entry>les options du backend "lent"</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>fast_backend_options</code></entry>
+
+                        <entry><code>array</code></entry>
+
+                        <entry><code>array()</code></entry>
+
+                        <entry>les options du backend "rapide"</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>slow_backend_custom_naming</code></entry>
+
+                        <entry><code>boolean</code></entry>
+
+                        <entry><code>false</code></entry>
+
+                        <entry>si <code>true</code>, l'argument <code>slow_backend</code> est utilisé en tant que nom
+                        complet de classe ; si <code>false</code>, l'argument frontend est utilisé concaténé à
+                        "Zend_Cache_Backend_[...]"</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>fast_backend_custom_naming</code></entry>
+
+                        <entry><code>boolean</code></entry>
+
+                        <entry><code>false</code></entry>
+
+                        <entry>si <code>true</code>, l'argument <code>fast_backend</code> est utilisé en tant que nom
+                        complet de classe ; si <code>false</code>, l'argument frontend est utilisé concaténé à
+                        "Zend_Cache_Backend_[...]"</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>slow_backend_autoload</code></entry>
+
+                        <entry><code>boolean</code></entry>
+
+                        <entry><code>false</code></entry>
+
+                        <entry>si <code>true</code>, il n'y aura pas de require_once pour le <code>slow_backend</code>
+                        (utile seulement pour les backends personnalisés)</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>fast_backend_autoload</code></entry>
+
+                        <entry><code>boolean</code></entry>
+
+                        <entry><code>false</code></entry>
+
+                        <entry>si <code>true</code>, il n'y aura pas de require_once pour le <code>fast_backend</code>
+                        (utile seulement pour les backends personnalisés)</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>auto_refresh_fast_cache</code></entry>
+
+                        <entry><code>boolean</code></entry>
+
+                        <entry><code>true</code></entry>
+
+                        <entry>si <code>true</code>, rafraîchissement automatique du cache rapide quand un
+                        enregistrement est appelé</entry>
+                    </row>
+
+                    <row>
+                        <entry><code>stats_update_factor</code></entry>
+
+                        <entry><code>integer</code></entry>
+
+                        <entry><code>10</code></entry>
+
+                        <entry>désactive / personnalise le calcul du pourcentage de remplissage du backend rapide (lors
+                        d'une sauvegarde d'un enregistrement dans le cache, le calcul du remplissage est effectué
+                        aléatoirement 1 fois sur x écritures de cache)</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
     </sect2>
 </sect1>
