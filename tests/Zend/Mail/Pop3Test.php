@@ -233,13 +233,13 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Pop3($this->_params);
 
         $count = $mail->countMessages();
-        $this->assertEquals(6, $count);
+        $this->assertEquals(7, $count);
     }
 
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Pop3($this->_params);
-        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101, 139);
 
 
         $sizes = $mail->getSize();
@@ -343,7 +343,7 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
         $mail->login($this->_params['user'], $this->_params['password']);
 
         $uids = $mail->uniqueid();
-        $this->assertEquals(count($uids), 6);
+        $this->assertEquals(count($uids), 7);
 
         $this->assertEquals($uids[1], $mail->uniqueid(1));
     }
@@ -415,5 +415,15 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
         unset($mail[2]);
         $this->assertEquals($mail->countMessages(), --$count);
+    }
+    
+    public function testDotMessage()
+    {
+        $mail = new Zend_Mail_Storage_Pop3($this->_params);
+        $content = '';
+        $content .= "Before the dot\r\n";
+        $content .= ".\r\n";
+        $content .= "is after the dot\r\n";
+        $this->assertEquals($mail->getMessage(7)->getContent(), $content);
     }
 }

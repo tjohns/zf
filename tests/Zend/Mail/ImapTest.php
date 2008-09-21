@@ -294,13 +294,13 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Imap($this->_params);
 
         $count = $mail->countMessages();
-        $this->assertEquals(6, $count);
+        $this->assertEquals(7, $count);
     }
 
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Imap($this->_params);
-        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101, 139);
 
 
         $sizes = $mail->getSize();
@@ -732,7 +732,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $protocol->login($this->_params['user'], $this->_params['password']);
         $status = $protocol->select('INBOX');
         $this->assertTrue(is_array($status['flags']));
-        $this->assertEquals($status['exists'], 6);
+        $this->assertEquals($status['exists'], 7);
     }
 
 
@@ -742,7 +742,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $protocol->login($this->_params['user'], $this->_params['password']);
         $status = $protocol->examine('INBOX');
         $this->assertTrue(is_array($status['flags']));
-        $this->assertEquals($status['exists'], 6);
+        $this->assertEquals($status['exists'], 7);
     }
 
     public function testClosedSocketNewlineToken()
@@ -778,10 +778,10 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
         $protocol->login($this->_params['user'], $this->_params['password']);
         $protocol->select('INBOX');
 
-        $range = array_combine(range(1, 6), range(1, 6));
+        $range = array_combine(range(1, 7), range(1, 7));
         $this->assertEquals($protocol->fetch('UID', 1, INF), $range);
-        $this->assertEquals($protocol->fetch('UID', 1, 6), $range);
-        $this->assertEquals($protocol->fetch('UID', range(1, 6)), $range);
+        $this->assertEquals($protocol->fetch('UID', 1, 7), $range);
+        $this->assertEquals($protocol->fetch('UID', range(1, 7)), $range);
         $this->assertTrue(is_numeric($protocol->fetch('UID', 1)));
 
         $result = $protocol->fetch(array('UID', 'FLAGS'), 1, INF);

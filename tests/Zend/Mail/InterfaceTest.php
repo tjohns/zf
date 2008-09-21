@@ -37,7 +37,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = count($list);
-        $this->assertEquals(6, $count);
+        $this->assertEquals(7, $count);
     }
 
     public function testIsset()
@@ -104,7 +104,7 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
             ++$count;
         }
 
-        $this->assertEquals(6, $count);
+        $this->assertEquals(7, $count);
     }
 
     public function testIterationWithSeek()
@@ -124,11 +124,11 @@ class Zend_Mail_InterfaceTest extends PHPUnit_Framework_TestCase
         $list = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = 0;
-        foreach (new LimitIterator($list, 3, 6) as $key => $message) {
+        foreach (new LimitIterator($list, 3, 7) as $key => $message) {
             ++$count;
         }
 
-        $this->assertEquals(4, $count);
+        $this->assertEquals(5, $count);
     }
 
     public function testFallback()

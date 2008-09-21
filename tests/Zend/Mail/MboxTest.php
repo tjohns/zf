@@ -176,13 +176,13 @@ class Zend_Mail_MboxTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
 
         $count = $mail->countMessages();
-        $this->assertEquals(6, $count);
+        $this->assertEquals(7, $count);
     }
 
     public function testSize()
     {
         $mail = new Zend_Mail_Storage_Mbox(array('filename' => $this->_mboxFile));
-        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 103);
+        $shouldSizes = array(1 => 397, 89, 694, 452, 497, 101, 139);
 
 
         $sizes = $mail->getSize();

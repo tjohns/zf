@@ -103,3 +103,12 @@ To: foo@example.com
 Subject: no body
 Date: Sun, 01 Jan 2000 01:00:00 +0000
 From: short@example.com
+From next-message@example.com  Mon Jan 00 00:00:00 0000
+To: to@example.com
+Subject: Dot Test
+Date: Sun, 01 Jan 2000 01:00:00 +0000
+From: from@example.com
+
+Before the dot
+.
+is after the dot
