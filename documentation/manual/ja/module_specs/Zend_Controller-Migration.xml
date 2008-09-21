@@ -666,7 +666,7 @@ $action = $this->getRequest()->getActionName();
 // これは変わっていません。_getParams() メソッドおよび _getParam() メソッドは
 // 現在は単なるリクエストオブジェクトへのプロキシです。
 $params = $this->_getParams();
-// パラメータ 'foo' を取得します。見つからなかった場合はデフォルト値 'default' を設定します]]>
+// パラメータ 'foo' を取得します。見つからなかった場合はデフォルト値 'default' を設定します
 $foo = $this->_getParam('foo', 'default');
 ]]>
                         </programlisting>
