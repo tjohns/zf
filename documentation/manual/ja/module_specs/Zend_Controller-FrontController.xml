@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.front">
     <title>フロントコントローラ</title>
 
@@ -55,8 +55,10 @@
                 <code>dispatch()</code> をコールする前のどこかで以下のようにします。
             </para>
 
-            <programlisting role="php"><![CDATA[// ErrorHandler プラグインを無効にします
-$front->setParam('noErrorHandler', true);]]>
+            <programlisting role="php"><![CDATA[
+// ErrorHandler プラグインを無効にします
+$front->setParam('noErrorHandler', true);
+]]>
             </programlisting>
 
             <para>
@@ -64,8 +66,10 @@ $front->setParam('noErrorHandler', true);]]>
                 <code>dispatch()</code> をコールする前に以下を実行します。
             </para>
 
-            <programlisting role="php"><![CDATA[// ViewRenderer ヘルパーを無効にします
-$front->setParam('noViewRenderer', true);]]>
+            <programlisting role="php"><![CDATA[
+// ViewRenderer ヘルパーを無効にします
+$front->setParam('noViewRenderer', true);
+]]>
             </programlisting>
         </note>
     </sect2>
@@ -87,7 +91,9 @@ $front->setParam('noViewRenderer', true);]]>
                 フロントコントローラのインスタンスを作成する唯一の方法はこのメソッドをコールすることとなります。
             </para>
 
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();]]>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+]]>
             </programlisting>
         </sect3>
 
@@ -119,7 +125,8 @@ $front->setControllerDirectory(array(
 ));
 
 // 'foo' モジュールのディレクトリを追加します
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');
+]]>
             </programlisting>
 
             <note>
@@ -236,9 +243,11 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
                 フロントコントローラのカスタマイズが不要な場合に便利なメソッドです。
             </para>
 
-            <programlisting role="php"><![CDATA[// フロントコントローラを作成してコントローラディレクトリを設定し、
+            <programlisting role="php"><![CDATA[
+// フロントコントローラを作成してコントローラディレクトリを設定し、
 // ディスパッチするまでをいちどでお手軽に行います
-Zend_Controller_Front::run('../application/controllers');]]>
+Zend_Controller_Front::run('../application/controllers');
+]]>
             </programlisting>
         </sect3>
     </sect2>

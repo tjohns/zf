@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect3 id="zend.controller.actionhelpers.json">
     <title>JSON</title>
 
@@ -37,7 +37,8 @@
         <code>sendJson()</code> といったメソッドをコールするだけです。
     </para>
 
-    <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+    <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -52,7 +53,8 @@
         $json = $this->_helper->json->encodeJson($data);
     }
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <note>
         <title>レイアウトの維持</title>
@@ -66,7 +68,8 @@
             <code>true</code> を渡すと、レイアウト機能を有効なままにします。
         </para>
 
-        <programlisting role="php"><![CDATA[class FooController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class FooController extends Zend_Controller_Action
 {
     public function barAction()
     {
@@ -74,7 +77,8 @@
         $json = $this->_helper->json->encodeJson($data, true);
     }
 }
-}]]></programlisting>
+]]>
+        </programlisting>
     </note>
 </sect3>
 <!--

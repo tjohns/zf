@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.date.basic">
 
     <title>基本メソッド</title>
@@ -38,10 +38,12 @@
 
         <example id="zend.date.basic.creation.example-1">
             <title>現在の日付の作成</title>
-            <programlisting role="php"><![CDATA[$date = new Zend_Date();
+            <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
 
 // 現在のタイムスタンプを出力します
-print $date;]]>
+print $date;
+]]>
             </programlisting>
         </example>
 
@@ -70,10 +72,12 @@ print $date;]]>
 
             <example id="zend.date.simple.functions.get.example-1">
                 <title>get() - 日付の出力</title>
-                <programlisting role="php"><![CDATA[$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
 
 // 指定した日付を出力します
-print $date->get();]]>
+print $date->get();
+]]>
                 </programlisting>
             </example>
 
@@ -92,11 +96,13 @@ print $date->get();]]>
 
             <example id="zend.date.simple.functions.set.example-1">
                 <title>set() - 日付の設定</title>
-                <programlisting role="php"><![CDATA[$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
 
 // 新しい時刻を設定します
 $date->set('13:00:00',Zend_Date::TIMES);
-print $date->get(Zend_Date::W3C);]]>
+print $date->get(Zend_Date::W3C);
+]]>
                 </programlisting>
             </example>
 
@@ -117,7 +123,8 @@ print $date->get(Zend_Date::W3C);]]>
 
             <example id="zend.date.simple.functions.add.example-1">
                 <title>add() - 日付の加算</title>
-                <programlisting role="php"><![CDATA[$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
 
 // $date に 12 時間加算します
 $date->add('12:00:00', Zend_Date::TIMES);
@@ -125,7 +132,8 @@ $date->add('12:00:00', Zend_Date::TIMES);
 echo "get() で取得した日付 = ", $date->get(Zend_Date::W3C), "\n";
 
 // マジックメソッド __toString() から、Zend_Date の toString() をコールします
-echo "toString() で取得した日付 = ", $date, "\n";]]>
+echo "toString() で取得した日付 = ", $date, "\n";
+]]>
                 </programlisting>
             </example>
 
@@ -146,14 +154,16 @@ echo "toString() で取得した日付 = ", $date, "\n";]]>
 
             <example id="zend.date.simple.functions.compare.example-1">
                 <title>compare() - 日付の比較</title>
-                <programlisting role="php"><![CDATA[$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
 
 // 二つの時刻を比較します
 if ($date->compare(10, Zend_Date::MINUTE) == -1) {
     print "This hour is less than 10 minutes old";
 } else {
     print "This hour is at least 10 minutes old";
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 
@@ -164,14 +174,16 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
 
             <example id="zend.date.simple.functions.compare.example-2">
                 <title>equals() - 日付あるいはその一部の同一性</title>
-                <programlisting role="php"><![CDATA[$date = new Zend_Date();
+                <programlisting role="php"><![CDATA[
+$date = new Zend_Date();
 
 // 二つの日付を比較します
 if ($date->equals(10, Zend_Date::HOUR)) {
     print "十時です。仕事を始める時間です。";
 } else {
     print "十時ではありません。もうちょっと寝ていましょう。";
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>プラグイン</title>
 
@@ -83,10 +83,12 @@
             をインクルードしてそれを継承するだけです。
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     // ...
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -113,7 +115,8 @@
             次の例は、コントローラチェインでプラグインを使用する方法を示すものです。
         </para>
 
-        <programlisting role="php"><![CDATA[class MyPlugin extends Zend_Controller_Plugin_Abstract
+        <programlisting role="php"><![CDATA[
+class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
@@ -150,7 +153,8 @@ $front = Zend_Controller_Front::getInstance();
 $front->setControllerDirectory('/path/to/controllers')
       ->setRouter(new Zend_Controller_Router_Rewrite())
       ->registerPlugin(new MyPlugin());
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
 
         <para>
@@ -164,7 +168,8 @@ $front->dispatch();]]>
 <p>dispatchLoopStartup() がコールされました</p>
 <p>preDispatch() がコールされました</p>
 <p>postDispatch() がコールされました</p>
-<p>dispatchLoopShutdown() がコールされました</p>]]>
+<p>dispatchLoopShutdown() がコールされました</p>
+]]>
         </programlisting>
 
         <note>

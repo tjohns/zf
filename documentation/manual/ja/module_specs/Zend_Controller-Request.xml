@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -240,7 +240,8 @@ $front->setRequest($request);
                 独自のベース URL を設定する例を示します。
             </para>
 
-            <programlisting role="php"><![CDATA[/**
+            <programlisting role="php"><![CDATA[
+/**
  * Zend_Controller_Front で独自のベース URL を指定することによるリクエストのディスパッチ
  */
 $router     = new Zend_Controller_Router_Rewrite();
@@ -248,7 +249,8 @@ $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
            ->setBaseUrl('/projects/myapp'); // ベース URL を指定します!
-$response   = $controller->dispatch();]]>
+$response   = $controller->dispatch();
+]]>
             </programlisting>
 
         </sect3>
@@ -403,7 +405,8 @@ abstract class Zend_Controller_Request_Abstract
      * @return boolean
      */
     public function isDispatched();
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

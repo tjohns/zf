@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10935 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.console.getopt.rules">
     <title>Getopt の規則の宣言</title>
     <para>
@@ -37,7 +37,10 @@
         </para>
         <example id="zend.console.getopt.rules.short.example">
             <title>短い形式の構文の使用</title>
-            <programlisting role="php"><![CDATA[$opts = new Zend_Console_Getopt('abp:');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$opts = new Zend_Console_Getopt('abp:');
+]]>
+            </programlisting>
         </example>
         <para>
             上の例は、<code>Zend_Console_Getopt</code> を用いて、

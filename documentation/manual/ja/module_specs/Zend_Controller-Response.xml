@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.controller.response">
     <title>レスポンスオブジェクト</title>
 
@@ -18,7 +18,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
         </programlisting>
 
         <para>
@@ -27,7 +28,8 @@ $front->throwExceptions(true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <note>
@@ -40,12 +42,14 @@ $response->sendResponse();]]>
                 と設定することでこの振る舞いを変更できます。
             </para>
 
-            <programlisting role="php"><![CDATA[$front->returnResponse(true);
+            <programlisting role="php"><![CDATA[
+$front->returnResponse(true);
 $response = $front->dispatch();
 
 // 何かの処理、たとえばログの記録などを行ってから
 // 結果を出力します
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
             </programlisting>
         </note>
 
@@ -60,7 +64,8 @@ $response->sendResponse();]]>
 // ヘッダを設定します
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);]]>
+    ->appendBody($content);
+]]>
         </programlisting>
 
         <para>
@@ -109,7 +114,8 @@ $response = $front->dispatch();
 // 何かの処理...
 
 // 最後に結果を表示します
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <para>
@@ -131,7 +137,8 @@ $response->sendResponse();
 
 // あるいは
 $front->throwExceptions(true);
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
     </sect2>
 
@@ -253,7 +260,8 @@ $front->dispatch();]]>
             最後に <code>postDispatch()</code> フックメソッドでフッタを追加することを考えてみましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[// このプラグインクラスがフロントコントローラで登録済みであると仮定します
+        <programlisting role="php"><![CDATA[
+// このプラグインクラスがフロントコントローラで登録済みであると仮定します
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
@@ -282,7 +290,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -290,11 +299,13 @@ class MyController extends Zend_Controller_Action
             レスポンスオブジェクトに最終的に格納されるコンテンツは次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[array(
+        <programlisting role="php"><![CDATA[
+array(
     'header'  => ..., // ヘッダの内容
     'default' => ..., // MyController::fooAction() が作成した本文
     'footer'  => ...  // フッタの内容
-);]]>
+);
+]]>
         </programlisting>
 
         <para>
