@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 10887 -->
+<!-- EN-Revision: 11289 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -157,6 +157,9 @@
         <title>Zend_File</title>
         <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml" />
         <xi:include href="module_specs/Zend_File_Transfer-Validators.xml" />
+        <xi:include href="module_specs/Zend_File_Transfer-Filters.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Filters.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
