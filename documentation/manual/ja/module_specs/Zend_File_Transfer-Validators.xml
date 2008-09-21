@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11430 -->
+<!-- EN-Revision: 11467 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -18,6 +18,14 @@
             <para>
                 <code>Count</code>: このバリデータはファイルの数をチェックします。
                 最小値と最大値を指定し、そのいずれかに違反した場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ExcludeExtension</code>: このバリデータはファイルの拡張子をチェックします。
+                渡されたファイルの拡張子が定義済みのものだった場合にエラーをスローします。
+                これにより、特定の拡張子だけを除外できるようになります。
             </para>
         </listitem>
 
@@ -310,6 +318,68 @@ $upload->addValidator('Count', false, array(1, 5);
             <para>
                 このバリデータは、チェックしたファイルの数を内部に保存することに注意しましょう。
                 最大値を超えたファイルはエラーを返します。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludeextension">
+        <title><emphasis role="strong">ExcludeExtension</emphasis> バリデータ</title>
+
+        <para>
+            <code>ExcludeExtension</code> バリデータは、
+            渡されたファイルの拡張子をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>extension</code>: 指定したファイルがこの拡張子を使用していないかどうかをチェックします。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: 検証時に大文字小文字を区別するかどうかを設定します。
+                    デフォルトでは大文字小文字を区別しません。
+                    このオプションはすべての拡張子に対して適用されることに注意しましょう。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数の拡張子を指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setExtension()</code>、<code>addExtension()</code> および
+            <code>getExtension()</code> といったメソッドで拡張子の設定や取得が可能です。
+        </para>
+
+        <para>
+            大文字小文字を区別したチェックが有用なこともあります。
+            そのため、コンストラクタの 2 番目のパラメータ
+            <code>$case</code> を指定できるようになっています。これを true
+            に設定すると、大文字小文字を区別して拡張子を検証します。
+        </para>
+
+        <example id="zend.file.transfer.validators.excludeextension.example">
+            <title>ExcludeExtension バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// 拡張子 php あるいは exe のファイルは許可しません
+$upload->addValidator('ExcludeExtension', false, 'php,exe');
+
+// 拡張子 php あるいは exe のファイルを許可しない設定を配列記法で行います
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                このバリデータがチェックするのはファイルの拡張子のみであることに注意しましょう。
+                実際の MIME タイプなどはチェックしません。
             </para>
         </note>
     </sect2>
