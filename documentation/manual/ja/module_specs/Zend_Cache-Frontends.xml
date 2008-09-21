@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11455 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -568,7 +568,7 @@ $result = $cache->foobar2('1', '2');
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
-            <title>(Zend_Cache ファクトリで、このフロントエンドを使用する際に) 使用可能なオプション</title>
+            <title>使用可能なオプション</title>
             <table id="zend.cache.frontends.page.options.table">
                 <title>Page フロントエンドのオプション</title>
                 <tgroup cols="4">
@@ -669,6 +669,24 @@ $result = $cache->foobar2('1', '2');
                                           <para>
                                               <code>(boolean, デフォルトは true) make_id_with_cookie_variables</code> :
                                               true の場合は、キャッシュ ID が <code>$_COOKIE</code> 配列の内容に依存するようになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(int, デフォルトは false) specific_lifetime</code> :
+                                              false でない場合は、選択した正規表現に対して指定した有効期限を使用します。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(配列, デフォルトは array()) tags</code> :
+                                              キャッシュレコード用のタグ。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(int, デフォルトは null) priority</code> :
+                                              優先度 (バックエンドが優先度をサポートしている場合)。
                                           </para>
                                       </listitem>
                                   </itemizedlist>
