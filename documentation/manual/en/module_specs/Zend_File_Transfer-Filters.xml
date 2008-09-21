@@ -225,7 +225,7 @@ $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addFilter('Rename', 'C:\mypics\new');
 
 // Set a new destination path only for uploadfile1
-$upload->addFilter('Rename', 'uploadfile1', 'C:\mypics\newgifs');
+$upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
 ]]>
             </programlisting>
 
