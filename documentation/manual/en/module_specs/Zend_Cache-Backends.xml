@@ -374,7 +374,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>false</code></entry>
                           <entry>
                               if true, there will no require_once for the slow backend 
-                              (usefull only for custom backends)
+                              (useful only for custom backends)
                           </entry>
                       </row>     
                       <row>
@@ -382,8 +382,8 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
-                              if true, there will no require_once for the slow backend 
-                              (usefull only for custom backends)
+                              if true, there will no require_once for the fast backend 
+                              (useful only for custom backends)
                           </entry>
                       </row>  
                       <row>
