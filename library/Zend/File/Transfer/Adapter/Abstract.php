@@ -560,6 +560,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     public function isValid($files = null)
     {
         $check           = $this->_getFiles($files);
+        $translator      = $this->getTranslator();
         $this->_messages = array();
         $break           = false;
         foreach ($check as $content) {
@@ -568,6 +569,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
                     $validator = $this->_validators[$class];
+                    if (method_exists($validator, 'setTranslator')) {
+                        $validator->setTranslator($translator);
+                    }
 
                     if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content)) {
                         $fileerrors += $validator->getMessages();
