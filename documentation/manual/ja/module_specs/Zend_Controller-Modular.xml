@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.controller.modular">
     <title>モジュラーディレクトリ構造の規約の使用</title>
 
@@ -11,7 +11,8 @@
             このディレクトリ構造は、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting>
+<![CDATA[
 docroot/
     index.php
 application/
@@ -45,7 +46,8 @@ application/
                 index/
                 list/
             helpers/
-            filters/]]>
+            filters/
+]]>
         </programlisting>
 
         <para>
@@ -99,10 +101,12 @@ application/
             次の例のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[$front->setControllerDirectory(array(
-      'default' => '/path/to/application/controllers',
-      'blog'    => '/path/to/application/blog/controllers'
-));]]>
+        <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    'default' => '/path/to/application/controllers',
+    'blog'    => '/path/to/application/blog/controllers'
+));
+]]>
         </programlisting>
 
         <para>
@@ -112,7 +116,10 @@ application/
             次の例のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        <programlisting role="php"><![CDATA[
+$front->addControllerDirectory('/path/to/application/news/controllers',
+                               'news');
+]]>
         </programlisting>
 
         <para>
@@ -121,7 +128,7 @@ application/
             これを行うのが <code>addModuleDirectory()</code> メソッドです。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
  * 次のような構造を想定しています
  * application/
@@ -133,7 +140,8 @@ application/
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');]]>
+$front->addModuleDirectory('/path/to/application/modules');
+]]>
         </programlisting>
 
         <para>
@@ -148,7 +156,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             <code>setModuleControllerDirectoryName()</code> を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
  * コントローラのディレクトリを、次のように 'con' に変更します
  * application/
@@ -161,7 +169,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');]]>
+$front->addModuleDirectory('/path/to/application/modules');
+]]>
         </programlisting>
 
         <note><para>
@@ -213,8 +222,9 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             <code>useDefaultControllerAlways</code> を指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);]]>
+        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
+]]>
         </programlisting>
     </sect2>
 </sect1>

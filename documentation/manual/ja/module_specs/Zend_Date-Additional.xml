@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.date.additional">
 
     <title>動作例</title>
@@ -57,7 +57,8 @@
 
         <example id="zend.date.additional.checking.example-1">
             <title>日付の確認</title>
-            <programlisting role="php"><![CDATA[// 日付を確認します
+            <programlisting role="php"><![CDATA[
+// 日付を確認します
 $date = '01.03.2000';
 if (Zend_Date::isDate($date)) {
     print "文字列 $date は日付です";
@@ -79,7 +80,8 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
     print "文字列 $date は日付です";
 } else {
     print "文字列 $date は日付ではありません";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -111,8 +113,10 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
 
         <example id="zend.date.additional.sunrise-sunset.example-1">
             <title>利用可能な都市の取得</title>
-            <programlisting role="php"><![CDATA[// 利用可能な都市の一覧を出力します
-print_r (Zend_Date_Cities::getCityList());]]>
+            <programlisting role="php"><![CDATA[
+// 利用可能な都市の一覧を出力します
+print_r (Zend_Date_Cities::getCityList());
+]]>
             </programlisting>
         </example>
 
@@ -172,7 +176,8 @@ print_r (Zend_Date_Cities::getCityList());]]>
 
         <example id="zend.date.additional.sunrise-sunset.example-2">
             <title>都市の位置の取得</title>
-            <programlisting role="php"><![CDATA[// 定義済みの都市の位置を取得します
+            <programlisting role="php"><![CDATA[
+// 定義済みの都市の位置を取得します
 // 水平線を指定していないので、effective horizon を使用します
 print_r (Zend_Date_Cities::City('Vienna'));
 
@@ -180,7 +185,8 @@ print_r (Zend_Date_Cities::City('Vienna'));
 print_r (Zend_Date_Cities::City('Vienna', 'nautic'));
 
 // 位置情報を指定します
-$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
+$mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
+]]>
             </programlisting>
         </example>
 
@@ -196,7 +202,8 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);]]>
 
         <example id="zend.date.additional.sunrise-sunset.example-3">
             <title>太陽の情報の算出</title>
-            <programlisting role="php"><![CDATA[// 定義済みの都市の位置を取得します
+            <programlisting role="php"><![CDATA[
+// 定義済みの都市の位置を取得します
 $city = Zend_Date_Cities::City('Vienna');
 
 // 太陽の情報を算出したい日付についての date オブジェクトを作成します
@@ -210,7 +217,8 @@ print $sunset->get(Zend_Date::ISO_8601);
 $info = $date->getSunInfo($city);
 foreach ($info as $sun) {
     print "\n" . $sun->get(Zend_Date::ISO_8601);
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -255,7 +263,9 @@ foreach ($info as $sun) {
 
         <example id="zend.date.additional.timezones.example-1">
             <title>タイムゾーンの処理</title>
-            <programlisting role="php"><![CDATA[// デフォルトのタイムゾーンを設定します。これは、起動ファイルか php.ini で設定します。
+            <programlisting role="php"><![CDATA[
+// デフォルトのタイムゾーンを設定します。
+// これは、起動ファイルか php.ini で設定します。
 // ここで設定しているのは、単体でサンプルとして完結させるためです。
 date_default_timezone_set('Europe/Vienna');
 
@@ -275,7 +285,8 @@ $date->setTimezone('America/Chicago');
 print $date->getTimezone();
 
 // 変更された date オブジェクトの内容を確認します
-print $date->getIso();]]>
+print $date->getIso();
+]]>
             </programlisting>
         </example>
 
@@ -299,7 +310,9 @@ print $date->getIso();]]>
 
         <example id="zend.date.additional.timezones.example-2">
             <title>複数のタイムゾーン</title>
-            <programlisting role="php"><![CDATA[// デフォルトのタイムゾーンを設定します。これは、起動ファイルか php.ini で設定します。
+            <programlisting role="php"><![CDATA[
+// デフォルトのタイムゾーンを設定します。
+// これは、起動ファイルか php.ini で設定します。
 // ここで設定しているのは、単体でサンプルとして完結させるためです。
 date_default_timezone_set('Europe/Vienna');
 
@@ -324,7 +337,8 @@ $lastdate = clone $date;
 $lastdate->setTimezone();
 
 // date オブジェクトの内容を確認します
-print $lastdate->getIso();]]>
+print $lastdate->getIso();
+]]>
             </programlisting>
         </example>
 

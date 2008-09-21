@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect3 id="zend.controller.plugins.standard.errorhandler">
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
@@ -107,13 +107,15 @@
             を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -149,7 +151,8 @@
             最初のふたつの型であった場合に、404 ページを返せばいいわけです。
         </para>
 
-        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -159,7 +162,8 @@
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 エラー -- コントローラあるいはアクションが見つかりません
-                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+                $this->getResponse()
+                     ->setRawHeader('HTTP/1.1 404 Not Found');
 
                 // ... 何か、表示する内容を作成します ...
                 break;
@@ -169,7 +173,8 @@
                 break;
         }
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -178,7 +183,9 @@
             <code>exception</code> を使用します。
         </para>
 
-        <programlisting role="php"><![CDATA[public function errorAction()
+        <programlisting role="php">
+<![CDATA[
+public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
 
@@ -187,7 +194,8 @@
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 エラー -- コントローラあるいはアクションが見つかりません
-                $this->getResponse()->setRawHeader('HTTP/1.1 404 Not Found');
+                $this->getResponse()
+                     ->setRawHeader('HTTP/1.1 404 Not Found');
 
                 // ... 何か、表示する内容を作成します ...
                 break;
@@ -199,11 +207,17 @@
 
                 // 例外をログに記録します
                 $exception = $errors->exception;
-                $log = new Zend_Log(new Zend_Log_Writer_Stream('/tmp/applicationException.log'));
-                $log->debug($exception->getMessage() . "\n" .  $exception->getTraceAsString());
+                $log = new Zend_Log(
+                    new Zend_Log_Writer_Stream(
+                        '/tmp/applicationException.log'
+                    )
+                );
+                $log->debug($exception->getMessage() . "\n" . 
+                            $exception->getTraceAsString());
                 break;
         }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 
@@ -225,7 +239,10 @@
             ビューのレンダリング前に以前の内容を消去しておく必要があります。
         </para>
 
-        <programlisting role="php"><![CDATA[$this->getResponse()->clearBody();]]></programlisting>
+        <programlisting role="php"><![CDATA[
+$this->getResponse()->clearBody();
+]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.plugins.standard.errorhandler.examples">
@@ -233,31 +250,37 @@
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
             <title>標準的な使用法</title>
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
-$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());]]>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
+]]>
             </programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
             <title>別のエラーハンドラの設定</title>
-            <programlisting role="php"><![CDATA[$front = Zend_Controller_Front::getInstance();
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
     'module'     => 'mystuff',
     'controller' => 'static',
     'action'     => 'error'
-)));]]>
+)));
+]]>
             </programlisting>
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
             <title>アクセス用メソッドの使用</title>
-            <programlisting role="php"><![CDATA[$plugin = new Zend_Controller_Plugin_ErrorHandler();
+            <programlisting role="php"><![CDATA[
+$plugin = new Zend_Controller_Plugin_ErrorHandler();
 $plugin->setErrorHandlerModule('mystuff')
        ->setErrorHandlerController('static')
        ->setErrorHandlerAction('error');
 
 $front = Zend_Controller_Front::getInstance();
-$front->registerPlugin($plugin);]]>
+$front->registerPlugin($plugin);
+]]>
             </programlisting>
         </example>
     </sect4>
@@ -269,7 +292,8 @@ $front->registerPlugin($plugin);]]>
             エラーコントローラが必要です。以下にシンプルな例を示します。
         </para>
 
-        <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
+        <programlisting role="php"><![CDATA[
+class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
@@ -300,7 +324,8 @@ EOH;
 
         $this->view->content = $content;
     }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 </sect3>
