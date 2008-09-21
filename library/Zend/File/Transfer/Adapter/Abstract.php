@@ -37,34 +37,44 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**@-*/
 
     /**
-     * Plugin loaders for filter and validation chains
-     * @var array
-     */
-    protected $_loaders = array();
-
-    /**
-     * Internal list of validators
-     * @var array
-     */
-    protected $_validators = array();
-
-    /**
      * Internal list of breaks
+     *
      * @var array
      */
     protected $_break = array();
 
     /**
+     * Internal list of filters
+     *
+     * @var array
+     */
+    protected $_filters = array();
+
+    /**
+     * Plugin loaders for filter and validation chains
+     *
+     * @var array
+     */
+    protected $_loaders = array();
+
+    /**
      * Internal list of messages
+     *
      * @var array
      */
     protected $_messages = array();
 
     /**
-     * Internal list of filters
-     * @var array
+     * @var Zend_Translate
      */
-    protected $_filters = array();
+    protected $_translator;
+
+    /**
+     * Is translation disabled?
+     *
+     * @var bool
+     */
+    protected $_translatorDisabled = false;
 
     /**
      * Internal validation flag
@@ -72,6 +82,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @var boolean
      */
     protected $_validated = false;
+
+    /**
+     * Internal list of validators
+     * @var array
+     */
+    protected $_validators = array();
 
     /**
      * Internal list of files
@@ -544,6 +560,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     public function isValid($files = null)
     {
         $check           = $this->_getFiles($files);
+        $translator      = $this->getTranslator();
         $this->_messages = array();
         $break           = false;
         foreach ($check as $content) {
@@ -552,6 +569,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
                     $validator = $this->_validators[$class];
+                    if (method_exists($validator, 'setTranslator')) {
+                        $validator->setTranslator($translator);
+                    }
 
                     if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content)) {
                         $fileerrors += $validator->getMessages();
@@ -967,6 +987,64 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
 
         return $this->_files[$files]['destination'];
+    }
+
+    /**
+     * Set translator object for localization
+     *
+     * @param  Zend_Translate|null $translator 
+     * @return Zend_File_Transfer_Abstract
+     */
+    public function setTranslator($translator = null)
+    {
+        if (null === $translator) {
+            $this->_translator = null;
+        } elseif ($translator instanceof Zend_Translate_Adapter) {
+            $this->_translator = $translator;
+        } elseif ($translator instanceof Zend_Translate) {
+            $this->_translator = $translator->getAdapter();
+        } else {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('Invalid translator specified');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Retrieve localization translator object
+     * 
+     * @return Zend_Translate_Adapter|null
+     */
+    public function getTranslator()
+    {
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
+        return $this->_translator;
+    }
+
+    /**
+     * Indicate whether or not translation should be disabled
+     * 
+     * @param  bool $flag 
+     * @return Zend_File_Transfer_Abstract
+     */
+    public function setDisableTranslator($flag)
+    {
+        $this->_translatorDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     * 
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        return $this->_translatorDisabled;
     }
 
     /**
