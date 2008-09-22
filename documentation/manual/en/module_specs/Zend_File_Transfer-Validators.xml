@@ -28,6 +28,14 @@
 
         <listitem>
             <para>
+                <code>ExcludeMimeType</code>: This validator can validate the mimetype of files. It is 
+                also able to validate types of mimetypes and will throw error when the mimetype of a given
+                file matches.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>Exists</code>: This validator checks for the existence of files. It will throw an
                 error when an given file does not exist.
             </para>
@@ -416,6 +424,66 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
         <note>
             <para>
                 Note that this validator just checks the file extension. It does not check the actual file MIME type.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludemimetype">
+        <title><emphasis role="strong">ExcludeMimeType</emphasis> validator</title>
+
+        <para>
+            The <code>ExcludeMimeType</code> validator checks for the mimetype of transferred files.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: Set the mimetype type to validate against.
+                </para>
+
+                <para>
+                    With this option you can define the mimetype of files which will not be accepted.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            This validator accepts multiple mimetype either as a comma-delimited string, or as an
+            array. You may also use the methods <code>setMimeType()</code>, <code>addMimeType()</code>,
+            and <code>getMimeType()</code> to set and retrieve mimetype.
+        </para>
+
+        <example id="zend.file.transfer.validators.excludemimetype.example">
+            <title>Using the ExcludeMimeType validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Does not allow mimetype of gif images for all files
+$upload->addValidator('ExcludeMimeType', false, 'image/gif');
+
+// Does not allow mimetype of gif and jpg images for all given files
+$upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg');
+
+// Does not allow mimetype of the group images for all given files
+$upload->addValidator('ExcludeMimeType', false, 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            The above example shows that it is also possible to limit disallow mimetypes to a group of
+            mimetypes. To disallow all images just use 'image' as mimetype. This can be used for all groups
+            of mimetypes like 'image', 'audio', 'video', 'text, and so on.
+        </para>
+
+        <note>
+            <para>
+                Note that disallowing groups of mimetypes will disallow all members of this group even if this
+                was not your intention. When you disallow 'image' you will disallow all types of image like
+                'image/jpeg' or 'image/vasa'. When you are not sure if you want to disallow all types
+                you should better disallow only defined mimetypes instead of the complete group.
             </para>
         </note>
     </sect2>
