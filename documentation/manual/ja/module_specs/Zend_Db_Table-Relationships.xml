@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.table.relationships">
 
     <title>導入</title>
@@ -92,7 +92,8 @@ class BugsProducts extends Zend_Db_Table_Abstract
         )
     );
 
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -226,8 +227,10 @@ class BugsProducts extends Zend_Db_Table_Abstract
             使用するメソッドは、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[
-$row->findDependentRowset($table, [$rule]);]]>
+        <programlisting role="php">
+<![CDATA[
+$row->findDependentRowset($table, [$rule]);
+]]>
         </programlisting>
 
         <para>
@@ -252,12 +255,14 @@ $row->findDependentRowset($table, [$rule]);]]>
                 テーブルから探す方法を示します。
             </para>
 
-            <programlisting role="php"><![CDATA[
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
+            <programlisting role="php">
+<![CDATA[
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
-$bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
+$bugsReportedByUser = $user1234->findDependentRowset('Bugs');
+]]>
             </programlisting>
 
         </example>
@@ -291,11 +296,12 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]>
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
+]]>
             </programlisting>
 
         </example>
@@ -318,13 +324,16 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]>
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
-$select             = $accountsTable->select()->order('name ASC')
-                                              ->limit(3);
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
+$select = $accountsTable->select()->order('name ASC')
+                                  ->limit(3);
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select);]]>
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 
+                                                     'Engineer',
+                                                     $select);
+]]>
                 </programlisting>
 
             </example>
@@ -385,15 +394,16 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
             </para>
 
             <programlisting role="php"><![CDATA[
-$accountsTable    = new Accounts();
-$accountsRowset   = $accountsTable->find(1234);
-$user1234         = $accountsRowset->current();
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
 // デフォルトの参照ルールを使用します
-$bugsReportedBy   = $user1234->findBugs();
+$bugsReportedBy = $user1234->findBugs();
 
 // 参照ルールを指定します
-$bugsAssignedTo   = $user1234->findBugsByEngineer();]]>
+$bugsAssignedTo = $user1234->findBugsByEngineer();
+]]>
             </programlisting>
 
         </example>
@@ -411,7 +421,8 @@ $bugsAssignedTo   = $user1234->findBugsByEngineer();]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$row->findParentRow($table, [$rule]);]]>
+$row->findParentRow($table, [$rule]);
+]]>
         </programlisting>
 
         <para>
@@ -438,11 +449,12 @@ $row->findParentRow($table, [$rule]);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
+$bug1 = $bugsRowset->current();
 
-$reporter          = $bug1->findParentRow('Accounts');]]>
+$reporter = $bug1->findParentRow('Accounts');
+]]>
             </programlisting>
 
         </example>
@@ -475,11 +487,12 @@ $reporter          = $bug1->findParentRow('Accounts');]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1 = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
+$engineer = $bug1->findParentRow('Accounts', 'Engineer');
+]]>
             </programlisting>
 
         </example>
@@ -536,15 +549,16 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1 = $bugsRowset->current();
 
 // デフォルトの参照ルールを使用します
-$reporter          = $bug1->findParentAccounts();
+$reporter = $bug1->findParentAccounts();
 
 // 参照ルールを指定します
-$engineer          = $bug1->findParentAccountsByEngineer();]]>
+$engineer = $bug1->findParentAccountsByEngineer();
+]]>
             </programlisting>
 
         </example>
@@ -563,8 +577,16 @@ $engineer          = $bug1->findParentAccountsByEngineer();]]>
             使用するメソッドは、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[
-$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);]]>
+        <programlisting role="php">
+<![CDATA[
+$row->findManyToManyRowset($table, 
+                           $intersectionTable,
+                           [$rule1,
+                               [$rule2,
+                                   [Zend_Db_Table_Select $select]
+                               ]
+                           ]);
+]]>
         </programlisting>
 
         <para>
@@ -599,11 +621,13 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_D
             </para>
 
             <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]]>
+$productsRowset = $bug1234->findManyToManyRowset('Products',
+                                                 'BugsProducts');
+]]>
             </programlisting>
 
         </example>
@@ -653,12 +677,16 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]
                 これは、そのバグに関連する製品を表すものです。
             </para>
 
-            <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+            <programlisting role="php">
+<![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');]]>
+$productsRowset = $bug1234->findManyToManyRowset('Products',
+                                                 'BugsProducts',
+                                                 'Bug');
+]]>
             </programlisting>
 
         </example>
@@ -723,16 +751,18 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', '
                 そのバグに関連する製品を見つけます。
             </para>
 
-            <programlisting role="php"><![CDATA[
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+            <programlisting role="php">
+<![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
 // デフォルトの参照ルールを使用します
-$products          = $bug1234->findProductsViaBugsProducts();
+$products = $bug1234->findProductsViaBugsProducts();
 
 // 参照ルールを指定します
-$products          = $bug1234->findProductsViaBugsProductsByBug();]]>
+$products = $bug1234->findProductsViaBugsProductsByBug();
+]]>
             </programlisting>
 
         </example>
@@ -792,14 +822,16 @@ $products          = $bug1234->findProductsViaBugsProductsByBug();]]>
                 自動的に削除するように設定されています。
             </para>
 
-            <programlisting role="php"><![CDATA[
-$productsTable  = new Products();
+            <programlisting role="php">
+<![CDATA[
+$productsTable = new Products();
 $productsRowset = $productsTable->find(1234);
-$product1234    = $productsRowset->current();
+$product1234 = $productsRowset->current();
 
 $product1234->delete();
 // 自動的に Bugs テーブルにも連鎖し、
 // 従属する行が削除されます
+]]>
             </programlisting>
 
         </example>
@@ -855,7 +887,7 @@ $product1234->delete();
 class BugsProducts extends Zend_Db_Table_Abstract
 {
     ...
-    protected $_referenceMap    = array(
+    protected $_referenceMap = array(
         'Product' => array(
             'columns'           => array('product_id'),
             'refTableClass'     => 'Products',
@@ -865,7 +897,8 @@ class BugsProducts extends Zend_Db_Table_Abstract
         ),
         ...
     );
-}]]>
+}
+]]>
             </programlisting>
 
         </example>

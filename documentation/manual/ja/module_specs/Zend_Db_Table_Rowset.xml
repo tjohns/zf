@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -34,7 +34,9 @@
 
             <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
-$rowset = $bugs->fetchAll("bug_status = 'NEW'");]]></programlisting>
+$rowset = $bugs->fetchAll("bug_status = 'NEW'");
+]]>
+            </programlisting>
 
         </example>
 
@@ -71,7 +73,9 @@ if ($rowCount > 0) {
     echo "見つかった行数は $rowCount です";
 } else {
     echo 'クエリにマッチする行がありません';
-}]]></programlisting>
+}
+]]>
+            </programlisting>
 
         </example>
 
@@ -88,7 +92,9 @@ if ($rowCount > 0) {
             <programlisting role="php"><![CDATA[
 $bugs   = new Bugs();
 $rowset = $bugs->fetchAll("bug_id = 1");
-$row    = $rowset->current();]]></programlisting>
+$row    = $rowset->current();
+]]>
+            </programlisting>
 
         </example>
 
@@ -128,7 +134,9 @@ foreach ($rowset as $row) {
 
     // 変更をデータベースに書き出します
     $row->save();
-}]]></programlisting>
+}
+]]>
+            </programlisting>
 
         </example>
 
@@ -160,7 +168,9 @@ $row9 = $rowset->current();
 
 // そして使用します
 $row9->assigned_to = 'mmouse';
-$row9->save();]]></programlisting>
+$row9->save();
+]]>
+            </programlisting>
 
         </example>
 
@@ -188,7 +198,9 @@ $row9->getRow(8);
 
 // そして使用します
 $row9->assigned_to = 'mmouse';
-$row9->save();]]></programlisting>
+$row9->save();
+]]>
+            </programlisting>
 
 
 
@@ -228,7 +240,9 @@ foreach ($rowsetArray as $rowArray) {
     }
     ++$rowCount;
     echo "\n";
-}]]></programlisting>
+}
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -265,7 +279,9 @@ $rowset = $bugs->fetchAll();
 // オブジェクトをシリアライズします
 $serializedRowset = serialize($rowset);
 
-// これで、$serializedRowset をファイルなどに書き出すことができます]]></programlisting>
+// これで、$serializedRowset をファイルなどに書き出すことができます
+]]>
+            </programlisting>
 
         </example>
 
@@ -292,7 +308,9 @@ $rowsetDisconnected = unserialize($serializedRowset);
 
 // これでオブジェクトのプロパティを使用できますが、読み込み専用です
 $row = $rowsetDisconnected->current();
-echo $row->bug_description;]]></programlisting>
+echo $row->bug_description;
+]]>
+            </programlisting>
 
         </example>
 
@@ -336,7 +354,9 @@ $row = $rowset->current();
 
 // これで、行の内容を変更して保存することができます
 $row->bug_status = 'FIXED';
-$row->save();]]></programlisting>
+$row->save();
+]]>
+            </programlisting>
 
         </example>
 
@@ -377,7 +397,9 @@ class Products extends Zend_Db_Table_Abstract
 
 // あるいは、テーブルクラスの特定のインスタンスでのみ
 // 独自の行セットクラスを使用するように設定します
-$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));]]></programlisting>
+$bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
+]]>
+            </programlisting>
         </example>
 
         <para>
@@ -413,7 +435,9 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_rowsetClass = 'MyBugsRowset';
-}]]></programlisting>
+}
+]]>
+            </programlisting>
         </example>
 
     </sect2>

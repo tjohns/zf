@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -120,12 +120,14 @@
 
             <example id="zend.db.adapter.connecting.constructor.example">
                 <title>アダプタのコンストラクタの使用</title>
-                <programlisting role="php"><![CDATA[$db = new Zend_Db_Adapter_Pdo_Mysql(array(
+                <programlisting role="php"><![CDATA[
+$db = new Zend_Db_Adapter_Pdo_Mysql(array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
 
@@ -164,7 +166,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
 
@@ -179,17 +182,20 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
             <example id="zend.db.adapter.connecting.factory.example2">
                 <title>自作のアダプタクラスをアダプタのファクトリメソッドで使用する方法</title>
-                <programlisting role="php"><![CDATA[// アダプタのクラスファイルの読み込みは不要です
+                <programlisting role="php"><![CDATA[
+// アダプタのクラスファイルの読み込みは不要です
 // Zend_Db の factory メソッドが読み込みます
 
-// 自動的に MyProject_Db_Adapter_Pdo_Mysql クラスを読み込み、インスタンスを作成します
+// 自動的に MyProject_Db_Adapter_Pdo_Mysql クラスを読み込み、
+// インスタンスを作成します
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'             => '127.0.0.1',
     'username'         => 'webuser',
     'password'         => 'xxxxxxxx',
     'dbname'           => 'test',
     'adapterNamespace' => 'MyProject_Db_Adapter'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
 
@@ -224,7 +230,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                     や <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>
                     などを用いて外部ファイルからデータを読み込むこともできます。
                 </para>
-                <programlisting role="php"><![CDATA[$config = new Zend_Config(
+                <programlisting role="php"><![CDATA[
+$config = new Zend_Config(
     array(
         'database' => array(
             'adapter' => 'Mysqli',
@@ -237,7 +244,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
     )
 );
 
-$db = Zend_Db::factory($config->database);]]>
+$db = Zend_Db::factory($config->database);
+]]>
                 </programlisting>
             </example>
 
@@ -335,7 +343,8 @@ $db = Zend_Db::factory($config->database);]]>
                     <code>Zend_Db::CASE_UPPER</code> および
                     <code>Zend_Db::CASE_LOWER</code> のいずれかです。
                 </para>
-                <programlisting role="php"><![CDATA[$options = array(
+                <programlisting role="php"><![CDATA[
+$options = array(
     Zend_Db::CASE_FOLDING => Zend_Db::CASE_UPPER
 );
 
@@ -347,7 +356,8 @@ $params = array(
     'options'        => $options
 );
 
-$db = Zend_Db::factory('Db2', $params);]]>
+$db = Zend_Db::factory('Db2', $params);
+]]>
                 </programlisting>
             </example>
 
@@ -365,7 +375,8 @@ $db = Zend_Db::factory('Db2', $params);]]>
                     クォートすべき文字を使用している場合は、自分で
                     <code>quoteIdentifier()</code> メソッドをコールする必要があります。
                 </para>
-                <programlisting role="php"><![CDATA[$options = array(
+                <programlisting role="php"><![CDATA[
+$options = array(
     Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
 );
 
@@ -377,13 +388,15 @@ $params = array(
     'options'        => $options
 );
 
-$db = Zend_Db::factory('Pdo_Mysql', $params);]]>
+$db = Zend_Db::factory('Pdo_Mysql', $params);
+]]>
                 </programlisting>
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example3">
                 <title>ファクトリでの PDO ドライバのオプションの指定</title>
-                <programlisting role="php"><![CDATA[$pdoParams = array(
+                <programlisting role="php"><![CDATA[
+$pdoParams = array(
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
 );
 
@@ -397,7 +410,9 @@ $params = array(
 
 $db = Zend_Db::factory('Pdo_Mysql', $params);
 
-echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);]]>
+echo $db->getConnection()
+        ->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
+]]>
                 </programlisting>
             </example>
 
@@ -437,14 +452,16 @@ echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);]]>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
                 <title>接続時の例外処理</title>
-                <programlisting role="php"><![CDATA[try {
+                <programlisting role="php"><![CDATA[
+try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
     $db->getConnection();
 } catch (Zend_Db_Adapter_Exception $e) {
     // ID かパスワードが間違っている、あるいは RDBMS が起動していないなど……
 } catch (Zend_Exception $e) {
     // factory() が指定したアダプタクラスを読み込めなかったなど……
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 
@@ -523,7 +540,8 @@ CREATE TABLE bugs_products (
   bug_id            INTEGER NOT NULL REFERENCES bugs,
   product_id        INTEGER NOT NULL REFERENCES products,
   PRIMARY KEY       (bug_id, product_id)
-);]]>
+);
+]]>
         </programlisting>
 
         <para>
@@ -578,9 +596,11 @@ CREATE TABLE bugs_products (
 
             <example id="zend.db.adapter.select.fetchall.example">
                 <title>fetchAll() の使用</title>
-                <programlisting role="php"><![CDATA[$sql = 'SELECT * FROM bugs WHERE bug_id = ?';
+                <programlisting role="php"><![CDATA[
+$sql = 'SELECT * FROM bugs WHERE bug_id = ?';
 
-$result = $db->fetchAll($sql, 2);]]>
+$result = $db->fetchAll($sql, 2);
+]]>
                 </programlisting>
             </example>
 
@@ -666,12 +686,14 @@ $result = $db->fetchAll($sql, 2);]]>
 
             <example id="zend.db.adapter.select.fetch-mode.example">
                 <title>setFetchMode() の使用</title>
-                <programlisting role="php"><![CDATA[$db->setFetchMode(Zend_Db::FETCH_OBJ);
+                <programlisting role="php"><![CDATA[
+$db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAll('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
 // $result はオブジェクトの配列となります
-echo $result[0]->bug_description;]]>
+echo $result[0]->bug_description;
+]]>
                 </programlisting>
             </example>
 
@@ -689,12 +711,14 @@ echo $result[0]->bug_description;]]>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
                 <title>fetchAssoc() の使用</title>
-                <programlisting role="php"><![CDATA[$db->setFetchMode(Zend_Db::FETCH_OBJ);
+                <programlisting role="php"><![CDATA[
+$db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAssoc('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
 // $result は、フェッチモードの指定とは関係なく連想配列の配列となります
-echo $result[0]['bug_description'];]]>
+echo $result[0]['bug_description'];
+]]>
                 </programlisting>
             </example>
 
@@ -717,12 +741,15 @@ echo $result[0]['bug_description'];]]>
 
             <example id="zend.db.adapter.select.fetchcol.example">
                 <title>fetchCol() の使用</title>
-                <programlisting role="php"><![CDATA[$db->setFetchMode(Zend_Db::FETCH_OBJ);
+                <programlisting role="php"><![CDATA[
+$db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
+$result = $db->fetchCol(
+    'SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
 
 // bug_description を含み、bug_id は含みません
-echo $result[0];]]>
+echo $result[0];
+]]>
                 </programlisting>
             </example>
 
@@ -747,11 +774,13 @@ echo $result[0];]]>
 
             <example id="zend.db.adapter.select.fetchpairs.example">
                 <title>fetchPairs() の例</title>
-                <programlisting role="php"><![CDATA[$db->setFetchMode(Zend_Db::FETCH_OBJ);
+                <programlisting role="php"><![CDATA[
+$db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchPairs('SELECT bug_id, bug_status FROM bugs');
 
-echo $result[2];]]>
+echo $result[2];
+]]>
                 </programlisting>
             </example>
         </sect3>
@@ -768,12 +797,14 @@ echo $result[2];]]>
 
             <example id="zend.db.adapter.select.fetchrow.example">
                 <title>fetchRow() の使用</title>
-                <programlisting role="php"><![CDATA[$db->setFetchMode(Zend_Db::FETCH_OBJ);
+                <programlisting role="php"><![CDATA[
+$db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchRow('SELECT * FROM bugs WHERE bug_id = 2');
 
 // $result はオブジェクトの配列ではなく、単なるオブジェクトとなります
-echo $result->bug_description;]]>
+echo $result->bug_description;
+]]>
                 </programlisting>
             </example>
         </sect3>
@@ -792,10 +823,12 @@ echo $result->bug_description;]]>
 
             <example id="zend.db.adapter.select.fetchone.example">
                 <title>fetchOne() の使用法</title>
-                <programlisting role="php"><![CDATA[$result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
+                <programlisting role="php"><![CDATA[
+$result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
 
 // これは単なる文字列となります
-echo $result;]]>
+echo $result;
+]]>
                 </programlisting>
             </example>
         </sect3>
@@ -826,13 +859,15 @@ echo $result;]]>
 
             <example id="zend.db.adapter.write.insert.example">
                 <title>テーブルへのデータの挿入</title>
-                <programlisting role="php"><![CDATA[$data = array(
+                <programlisting role="php"><![CDATA[
+$data = array(
     'created_on'      => '2007-03-22',
     'bug_description' => 'Something wrong',
     'bug_status'      => 'NEW'
 );
 
-$db->insert('bugs', $data);]]>
+$db->insert('bugs', $data);
+]]>
                 </programlisting>
             </example>
 
@@ -860,13 +895,15 @@ $db->insert('bugs', $data);]]>
 
             <example id="zend.db.adapter.write.insert.example2">
                 <title>テーブルへの式の挿入</title>
-                <programlisting role="php"><![CDATA[$data = array(
+                <programlisting role="php"><![CDATA[
+$data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
     'bug_description' => 'Something wrong',
     'bug_status'      => 'NEW'
 );
 
-$db->insert('bugs', $data);]]>
+$db->insert('bugs', $data);
+]]>
                 </programlisting>
             </example>
 
@@ -895,10 +932,12 @@ $db->insert('bugs', $data);]]>
 
             <example id="zend.db.adapter.write.lastinsertid.example-1">
                 <title>自動インクリメントのキーにおける lastInsertId() の使用法</title>
-                <programlisting role="php"><![CDATA[$db->insert('bugs', $data);
+                <programlisting role="php"><![CDATA[
+$db->insert('bugs', $data);
 
 // 自動インクリメントのカラムで最後に生成された値を返します
-$id = $db->lastInsertId();]]>
+$id = $db->lastInsertId();
+]]>
                 </programlisting>
             </example>
 
@@ -918,13 +957,15 @@ $id = $db->lastInsertId();]]>
 
             <example id="zend.db.adapter.write.lastinsertid.example-2">
                 <title>シーケンスにおける lastInsertId() の使用法</title>
-                <programlisting role="php"><![CDATA[$db->insert('bugs', $data);
+                <programlisting role="php"><![CDATA[
+$db->insert('bugs', $data);
 
 // シーケンス 'bugs_bug_id_seq' が最後に生成した値を返します
 $id = $db->lastInsertId('bugs', 'bug_id');
 
 // これは、シーケンス 'bugs_seq' が最後に生成した値を返します
-$id = $db->lastInsertId('bugs');]]>
+$id = $db->lastInsertId('bugs');
+]]>
                 </programlisting>
             </example>
 
@@ -936,10 +977,12 @@ $id = $db->lastInsertId('bugs');]]>
 
             <example id="zend.db.adapter.write.lastinsertid.example-3">
                 <title>lastSequenceId() の使用法</title>
-                <programlisting role="php"><![CDATA[$db->insert('bugs', $data);
+                <programlisting role="php"><![CDATA[
+$db->insert('bugs', $data);
 
 // シーケンス 'bugs_id_gen' が最後に生成した値を返します
-$id = $db->lastSequenceId('bugs_id_gen');]]>
+$id = $db->lastSequenceId('bugs_id_gen');
+]]>
                 </programlisting>
             </example>
 
@@ -1023,12 +1066,14 @@ $id = $db->lastSequenceId('bugs_id_gen');]]>
 
             <example id="zend.db.adapter.write.update.example">
                 <title>行の更新</title>
-                <programlisting role="php"><![CDATA[$data = array(
+                <programlisting role="php"><![CDATA[
+$data = array(
     'updated_on'      => '2007-03-23',
     'bug_status'      => 'FIXED'
 );
 
-$n = $db->update('bugs', $data, 'bug_id = 2');]]>
+$n = $db->update('bugs', $data, 'bug_id = 2');
+]]>
                 </programlisting>
             </example>
 
@@ -1043,7 +1088,8 @@ $n = $db->update('bugs', $data, 'bug_id = 2');]]>
 
             <example id="zend.db.adapter.write.update.example-array">
                 <title>式の配列を指定することによる行の更新</title>
-                <programlisting role="php"><![CDATA[$data = array(
+                <programlisting role="php"><![CDATA[
+$data = array(
     'updated_on'      => '2007-03-23',
     'bug_status'      => 'FIXED'
 );
@@ -1055,7 +1101,8 @@ $n = $db->update('bugs', $data, $where);
 
 // 実行される SQL は、このようになります
 //  UPDATE "bugs" SET "update_on" = '2007-03-23', "bug_status" = 'FIXED'
-//  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')]]>
+//  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')
+]]>
                 </programlisting>
             </example>
 
@@ -1084,7 +1131,9 @@ $n = $db->update('bugs', $data, $where);
 
             <example id="zend.db.adapter.write.delete.example">
                 <title>行の削除</title>
-                <programlisting role="php"><![CDATA[$n = $db->delete('bugs', 'bug_id = 3');]]>
+                <programlisting role="php"><![CDATA[
+$n = $db->delete('bugs', 'bug_id = 3');
+]]>
                 </programlisting>
             </example>
 
@@ -1117,7 +1166,8 @@ $name = "O'Reilly";
 $sql = "SELECT * FROM bugs WHERE reported_by = '$name'";
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O'Reilly']]>
+// SELECT * FROM bugs WHERE reported_by = 'O'Reilly'
+]]>
             </programlisting>
         </para>
 
@@ -1159,14 +1209,16 @@ echo $sql;
 
             <example id="zend.db.adapter.quoting.quote.example">
                 <title>quote() の使用法</title>
-                <programlisting role="php"><![CDATA[$name = $db->quote("O'Reilly");
+                <programlisting role="php"><![CDATA[
+$name = $db->quote("O'Reilly");
 echo $name;
 // 'O\'Reilly'
 
 $sql = "SELECT * FROM bugs WHERE reported_by = $name";
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly']]>
+// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
+]]>
                 </programlisting>
             </example>
 
@@ -1187,7 +1239,8 @@ echo $sql;
                 <code>INTEGER</code> であるものとします。
 
                 <programlisting role="php"><![CDATA[
-SELECT * FROM atable WHERE intColumn = '123']]>
+SELECT * FROM atable WHERE intColumn = '123'
+]]>
                 </programlisting>
             </para>
 
@@ -1199,7 +1252,8 @@ SELECT * FROM atable WHERE intColumn = '123']]>
 
             <example id="zend.db.adapter.quoting.quote.example-2">
                 <title>quote() での SQL データ型の指定</title>
-                <programlisting role="php"><![CDATA[$value = '1234';
+                <programlisting role="php"><![CDATA[
+$value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
      . $db->quote($value, 'INTEGER');
 ]]>
@@ -1251,10 +1305,12 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
 
             <example id="zend.db.adapter.quoting.quote-into.example">
                 <title>quoteInto() の使用法</title>
-                <programlisting role="php"><![CDATA[$sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
+                <programlisting role="php"><![CDATA[
+$sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly']]>
+// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
+]]>
                 </programlisting>
             </example>
 
@@ -1266,10 +1322,13 @@ echo $sql;
 
             <example id="zend.db.adapter.quoting.quote-into.example-2">
                 <title>quoteInto() での SQL データ型の指定</title>
-                <programlisting role="php"><![CDATA[$sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
+                <programlisting role="php"><![CDATA[
+$sql = $db
+    ->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 1234]]>
+// SELECT * FROM bugs WHERE reported_by = 1234
+]]>
                 </programlisting>
             </example>
 
@@ -1314,13 +1373,15 @@ echo $sql;
 
             <example id="zend.db.adapter.quoting.quote-identifier.example">
                 <title>quoteIdentifier() の使用法</title>
-                <programlisting role="php"><![CDATA[// テーブル名に、SQL の予約語を使用します
+                <programlisting role="php"><![CDATA[
+// テーブル名に、SQL の予約語を使用します
 $tableName = $db->quoteIdentifier("order");
 
 $sql = "SELECT * FROM $tableName";
 
 echo $sql
-// SELECT * FROM "order"]]>
+// SELECT * FROM "order"
+]]>
                 </programlisting>
             </example>
 
@@ -1398,7 +1459,8 @@ echo $sql
 
         <example id="zend.db.adapter.transactions.example">
             <title>一貫性を保持するためのトランザクション管理</title>
-            <programlisting role="php"><![CDATA[// トランザクションを明示的に開始します
+            <programlisting role="php"><![CDATA[
+// トランザクションを明示的に開始します
 $db->beginTransaction();
 
 try {
@@ -1418,7 +1480,8 @@ try {
     // すべて適用されるか、ひとつも適用されないかのいずれかです。
     $db->rollBack();
     echo $e->getMessage();
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1592,7 +1655,9 @@ try {
 
         <example id="zend.db.adapter.closing.example">
             <title>データベースとの接続の解除</title>
-            <programlisting role="php"><![CDATA[$db->closeConnection();]]>
+            <programlisting role="php"><![CDATA[
+$db->closeConnection();
+]]>
             </programlisting>
         </example>
 
@@ -1656,7 +1721,9 @@ try {
 
         <example id="zend.db.adapter.other-statements.example">
             <title>PDO アダプタによる、プリペアド形式ではないクエリの実行</title>
-            <programlisting role="php"><![CDATA[$result = $db->getConnection()->exec('DROP TABLE bugs');]]>
+            <programlisting role="php"><![CDATA[
+$result = $db->getConnection()->exec('DROP TABLE bugs');
+]]>
             </programlisting>
         </example>
 

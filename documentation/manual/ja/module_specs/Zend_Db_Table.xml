@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -51,7 +51,8 @@
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -69,7 +70,8 @@ class Bugs extends Zend_Db_Table_Abstract
 class bugs extends Zend_Db_Table_Abstract
 {
     // テーブル名とクラス名が一致します
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -110,7 +112,8 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name   = 'bug_db.bugs';
     protected $_schema = 'ignored';
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -143,7 +146,9 @@ $tableBugs = new Bugs(array('name' => 'bug_db.bugs');
 // スキーマを 'name' と 'schema' の両方で指定した場合は、
 // 'name' で指定したものが優先されます
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');]]>
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs',
+                            'schema' => 'ignored');
+]]>
                 </programlisting>
 
             </example>
@@ -176,7 +181,8 @@ class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_name = 'bugs';
     protected $_primary = 'bug_id';
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -217,7 +223,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>_setupTableName() メソッドのオーバーライドの例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
@@ -225,7 +232,8 @@ class Bugs extends Zend_Db_Table_Abstract
         $this->_name = 'bugs';
         parent::_setupTableName();
     }
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -293,7 +301,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
                     <title>init() メソッドの使用例</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting role="php">
+<![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_observer;
@@ -302,7 +311,8 @@ class Bugs extends Zend_Db_Table_Abstract
     {
         $this->_observer = new MyObserverClass();
     }
-}]]>
+}
+]]>
                     </programlisting>
 
                 </example>
@@ -341,10 +351,12 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>アダプタオブジェクトを使用した、テーブルの作成の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
-$table = new Bugs(array('db' => $db));]]>
+$table = new Bugs(array('db' => $db));
+]]>
                 </programlisting>
 
             </example>
@@ -370,13 +382,15 @@ $table = new Bugs(array('db' => $db));]]>
 
                 <title>デフォルトアダプタを使用した、テーブルの作成の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
 // その後...
 
-$table = new Bugs();]]>
+$table = new Bugs();
+]]>
                 </programlisting>
 
             </example>
@@ -406,13 +420,15 @@ $table = new Bugs();]]>
 
                 <title>レジストリのキーを使用した、テーブルの作成の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Registry::set('my_db', $db);
 
 // その後...
 
-$table = new Bugs(array('db' => 'my_db'));]]>
+$table = new Bugs(array('db' => 'my_db'));
+]]>
                 </programlisting>
 
             </example>
@@ -455,7 +471,8 @@ $data = array(
     'bug_status'      => 'NEW'
 );
 
-$table->insert($data);]]>
+$table->insert($data);
+]]>
             </programlisting>
 
         </example>
@@ -478,7 +495,8 @@ $data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
     'bug_description' => '何かおかしい',
     'bug_status'      => 'NEW'
-);]]>
+);
+]]>
             </programlisting>
 
         </example>
@@ -517,7 +535,8 @@ class Bugs extends Zend_Db_Table_Abstract
     // これは Zend_Db_Table_Abstract クラスのデフォルト設定です。
     // 特に定義する必要はありません。
     protected $_sequence = true;
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -567,7 +586,8 @@ class Bugs extends Zend_Db_Table_Abstract
     protected $_name = 'bugs';
 
     protected $_sequence = 'bug_sequence';
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -617,7 +637,8 @@ class BugStatus extends Zend_Db_Table_Abstract
     protected $_name = 'bug_status';
 
     protected $_sequence = false;
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -664,7 +685,8 @@ $data = array(
 
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1234);
 
-$table->update($data, $where);]]>
+$table->update($data, $where);
+]]>
             </programlisting>
 
         </example>
@@ -712,7 +734,8 @@ $table = new Bugs();
 
 $where = $table->getAdapter()->quoteInto('bug_id = ?', 1235);
 
-$table->delete($where);]]>
+$table->delete($where);
+]]>
             </programlisting>
 
         </example>
@@ -769,7 +792,8 @@ $rows = $table->find(1234);
 
 // 複数の行を探し、
 // こちらも Rowset を返します
-$rows = $table->find(array(1234, 5678));]]>
+$rows = $table->find(array(1234, 5678));
+]]>
             </programlisting>
 
         </example>
@@ -831,7 +855,8 @@ $rows = $table->find(1234, 'ABC');
 
 // 複数の行を複合主キーで探し、
 // こちらも Rowset を返します
-$rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]>
+$rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
+]]>
             </programlisting>
 
         </example>
@@ -864,16 +889,19 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]>
 
                     <para>
 
-                        <programlisting role="php"><![CDATA[// 行セットを取得します
-    $rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
-    $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
-                                             ->order('bug_id ASC')
-                                             ->limit(10, 0));
+                        <programlisting role="php">
+<![CDATA[
+// 行セットを取得します
+$rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
+$rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
+                                         ->order('bug_id ASC')
+                                         ->limit(10, 0));
 
-    // 単一の行を取得します
-    $row = $table->fetchRow('bug_status = "NEW"', 'bug_id ASC');
-    $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
-                                            ->order('bug_id ASC'));]]>
+// 単一の行を取得します
+$row = $table->fetchRow('bug_status = "NEW"', 'bug_id ASC');
+$row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
+                                        ->order('bug_id ASC'));
+]]>
                         </programlisting>
 
                     </para>
@@ -935,13 +963,15 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]>
 
                     <title>単純な使用法</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
 $select->where('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                     </programlisting>
 
                 </example>
@@ -959,10 +989,13 @@ $rows = $table->fetchAll($select);]]>
 
                     <title>流れるようなインターフェイスの例</title>
 
-                    <programlisting role="php"><![CDATA[
+                    <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
-$rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));]]>
+$rows =
+    $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));
+]]>
                     </programlisting>
 
                 </example>
@@ -986,12 +1019,14 @@ $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW'));]]>
 
                 <title>式から行を取得する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $select = $table->select()->where('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                 </programlisting>
 
             </example>
@@ -1008,7 +1043,8 @@ $rows = $table->fetchAll($select);]]>
 
                 <title>式を使用した行の検索の例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $order  = 'bug_id';
@@ -1021,7 +1057,8 @@ $select = $table->select()->where(array('bug_status = ?' => 'NEW'))
                           ->order($order)
                           ->limit($count, $offset);
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                 </programlisting>
 
             </example>
@@ -1060,7 +1097,8 @@ $select = $table->select();
 $select->from($table, array('bug_id', 'bug_description'))
        ->where('bug_status = ?', 'NEW');
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                     </programlisting>
 
                 </example>
@@ -1098,11 +1136,13 @@ $rows = $table->fetchAll($select);]]>
 $table = new Bugs();
 
 $select = $table->select();
-$select->from($table, array('COUNT(reported_by) as `count`', 'reported_by'))
+$select->from($table,
+              array('COUNT(reported_by) as `count`', 'reported_by'))
        ->where('bug_status = ?', 'NEW')
        ->group('reported_by');
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                     </programlisting>
 
                 </example>
@@ -1127,7 +1167,8 @@ $select->where('bug_status = ?', 'NEW')
        ->join('accounts', 'accounts.account_name = bugs.reported_by')
        ->where('accounts.account_name = ?', 'Bob');
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                     </programlisting>
 
                 </example>
@@ -1155,10 +1196,13 @@ $table = new Bugs();
 
 $select = $table->select()->setIntegrityCheck(false);
 $select->where('bug_status = ?', 'NEW')
-       ->join('accounts', 'accounts.account_name = bugs.reported_by', 'account_name')
+       ->join('accounts',
+              'accounts.account_name = bugs.reported_by',
+              'account_name')
        ->where('accounts.account_name = ?', 'Bob');
 
-$rows = $table->fetchAll($select);]]>
+$rows = $table->fetchAll($select);
+]]>
                 </programlisting>
 
             </example>
@@ -1186,7 +1230,8 @@ $table = new Bugs();
 $select  = $table->select()->where('bug_status = ?', 'NEW')
                            ->order('bug_id');
 
-$row = $table->fetchRow($select);]]>
+$row = $table->fetchRow($select);
+]]>
             </programlisting>
 
         </example>
@@ -1213,12 +1258,14 @@ $row = $table->fetchRow($select);]]>
 
             <title>テーブル名を取得する例</title>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 $table = new Bugs();
 
 $info = $table->info();
 
-echo "テーブル名は " . $info['name'] . " です\n";]]>
+echo "テーブル名は " . $info['name'] . " です\n";
+]]>
             </programlisting>
 
         </example>
@@ -1357,7 +1404,8 @@ echo "テーブル名は " . $info['name'] . " です\n";]]>
                 次のコードは、デフォルトのメタデータキャッシュをすべてのテーブルオブジェクトで使用する方法を示すものです。
             </para>
 
-            <programlisting role="php"><![CDATA[<// まずキャッシュを作成します
+            <programlisting role="php"><![CDATA[<
+// まずキャッシュを作成します
 $frontendOptions = array(
     'automatic_serialization' => true
     );
@@ -1366,7 +1414,10 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 
 // 次に、それをすべてのテーブルオブジェクトで使用するように設定します
@@ -1381,7 +1432,8 @@ class Bugs extends Zend_Db_Table_Abstract
 
 
 // Bugs の各インスタンスは、これでデフォルトのメタデータキャッシュを用いるようになります
-$bugs = new Bugs();]]>
+$bugs = new Bugs();
+]]>
             </programlisting>
 
         </example>
@@ -1394,7 +1446,8 @@ $bugs = new Bugs();]]>
                 次のコードは、メタデータキャッシュを特定のテーブルオブジェクトに設定する方法を示すものです。
             </para>
 
-            <programlisting role="php"><![CDATA[// まずキャッシュを作成します
+            <programlisting role="php"><![CDATA[
+// まずキャッシュを作成します
 $frontendOptions = array(
     'automatic_serialization' => true
     );
@@ -1403,7 +1456,10 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core', 
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // テーブルクラスも必要です
 class Bugs extends Zend_Db_Table_Abstract
@@ -1412,7 +1468,8 @@ class Bugs extends Zend_Db_Table_Abstract
 }
 
 // インスタンスを設定します
-$bugs = new Bugs(array('metadataCache' => $cache));]]>
+$bugs = new Bugs(array('metadataCache' => $cache));
+]]>
             </programlisting>
 
         </example>
@@ -1491,7 +1548,8 @@ $where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
 
 // My_Rowset 型のオブジェクトを返します。
 // その中には My_Row 型のオブジェクトの配列が含まれます。
-$rows = $table->fetchAll($where);]]>
+$rows = $table->fetchAll($where);
+]]>
                 </programlisting>
 
             </example>
@@ -1524,7 +1582,8 @@ $table->setRowsetClass('My_Rowset');
 // その中には My_Row 型のオブジェクトの配列が含まれます。
 $rowsCustom = $table->fetchAll($where);
 
-// $rowsStandard オブジェクトはまだ存在しますが、なにも変更されていません</programlisting>
+// $rowsStandard オブジェクトはまだ存在しますが、なにも変更されていません
+]]>
                 </programlisting>
 
             </example>
@@ -1574,7 +1633,8 @@ class Bugs extends Zend_Db_Table_Abstract
         }
         return parent::update($data, $where);
     }
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -1614,7 +1674,8 @@ class Bugs extends Zend_Db_Table_Abstract
         $where = $this->getAdapter()->quoteInto('bug_status = ?', $status);
         return $this->fetchAll($where, 'bug_id');
     }
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>
@@ -1685,7 +1746,8 @@ abstract class MyAbstractTable extends Zend_Db_Table_Abstract
 
 class BugsProducts extends MyAbstractTable
 {
-}]]>
+}
+]]>
                 </programlisting>
 
             </example>

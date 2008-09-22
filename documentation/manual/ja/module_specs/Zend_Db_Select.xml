@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11118 -->
 <sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
@@ -74,8 +74,10 @@
 
             <title>データベースアダプタの select() メソッドの例</title>
 
-            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
-$select = $db->select();]]>
+            <programlisting role="php"><![CDATA[
+$db = Zend_Db::factory( ...options... );
+$select = $db->select();
+]]>
             </programlisting>
         </example>
 
@@ -88,8 +90,10 @@ $select = $db->select();]]>
 
             <title>新しい Select オブジェクトの作成の例</title>
 
-            <programlisting role="php"><![CDATA[$db = Zend_Db::factory( ...options... );
-$select = new Zend_Db_Select($db);]]>
+            <programlisting role="php"><![CDATA[
+$db = Zend_Db::factory( ...options... );
+$select = new Zend_Db_Select($db);
+]]>
             </programlisting>
         </example>
 
@@ -109,7 +113,8 @@ $select = new Zend_Db_Select($db);]]>
 
             <title>メソッドを使用して句を追加する例</title>
 
-            <programlisting role="php"><![CDATA[// Zend_Db_Select オブジェクトを作成します
+            <programlisting role="php"><![CDATA[
+// Zend_Db_Select オブジェクトを作成します
 $select = $db->select();
 
 // FROM 句を追加します
@@ -119,7 +124,8 @@ $select->from( ...テーブルとカラムを指定します... )
 $select->where( ...検索条件を指定します... )
 
 // ORDER BY 句を追加します
-$select->order( ...ソート条件を指定します... );]]>
+$select->order( ...ソート条件を指定します... );
+]]>
             </programlisting>
         </example>
 
@@ -134,10 +140,12 @@ $select->order( ...ソート条件を指定します... );]]>
 
             <title>流れるようなインターフェイスの使用例</title>
 
-            <programlisting role="php"><![CDATA[$select = $db->select()
+            <programlisting role="php"><![CDATA[
+$select = $db->select()
     ->from( ...テーブルとカラムを指定します... )
     ->where( ...検索条件を指定します... )
-    ->order( ...ソート条件を指定します... );]]>
+    ->order( ...ソート条件を指定します... );
+]]>
             </programlisting>
 
         </example>
@@ -164,12 +172,15 @@ $select->order( ...ソート条件を指定します... );]]>
 
                 <title>from() メソッドの例</title>
 
-                <programlisting role="php"><![CDATA[// できあがるクエリは、このようになります
+                <programlisting role="php">
+<![CDATA[
+// できあがるクエリは、このようになります
 //   SELECT *
 //   FROM "products"
 
 $select = $db->select()
-    ->from( 'products' );]]>
+             ->from( 'products' );
+]]>
                 </programlisting>
 
             </example>
@@ -187,13 +198,15 @@ $select = $db->select()
 
                 <title>テーブルの相関名を指定する例</title>
 
-                <programlisting role="php"><![CDATA[
+                <programlisting role="php">
+<![CDATA[
 // できあがるクエリは、このようになります
 //   SELECT p.*
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from( array('p' => 'products') );]]>
+             ->from( array('p' => 'products') );
+]]>
                 </programlisting>
 
             </example>
@@ -218,12 +231,13 @@ $select = $db->select()
 //   FROM "myschema"."products"
 
 $select = $db->select()
-    ->from( 'myschema.products' );
+             ->from( 'myschema.products' );
 
 // あるいは
 
 $select = $db->select()
-    ->from('products', '*', 'myschema');]]>
+             ->from('products', '*', 'myschema');
+]]>
                 </programlisting>
 
             </example>
@@ -276,24 +290,25 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id', 'product_name'));
+             ->from(array('p' => 'products'),
+                    array('product_id', 'product_name'));
 
 // 同じクエリを、相関名を指定して作成します
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('p.product_id', 'p.product_name'));
+             ->from(array('p' => 'products'),
+                    array('p.product_id', 'p.product_name'));
 
 // このクエリを、カラムのひとつにエイリアスを指定して作成します
 //   SELECT p."product_id" AS prodno, p."product_name"
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('prodno' => 'product_id', 'product_name'));]]>
+             ->from(array('p' => 'products'),
+                    array('prodno' => 'product_id', 'product_name'));
+]]>
                 </programlisting>
 
             </example>
@@ -344,24 +359,30 @@ $select = $db->select()
 // Zend_Db_Expr として扱われます
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id', 'LOWER(product_name)'));
+             ->from(array('p' => 'products'),
+                    array('product_id', 'LOWER(product_name)'));
 
 // できあがるクエリは、このようになります
 //   SELECT p."product_id", (p.cost * 1.08) AS cost_plus_tax
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id', 'cost_plus_tax' => '(p.cost * 1.08)'));
+             ->from(array('p' => 'products'),
+                    array('product_id',
+                          'cost_plus_tax' => '(p.cost * 1.08)')
+                   );
 
 // このクエリを、明示的に Zend_Db_Expr を指定して作成します
 //   SELECT p."product_id", p.cost * 1.08 AS cost_plus_tax
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id', 'cost_plus_tax' => new Zend_Db_Expr('p.cost * 1.08')));]]>
+             ->from(array('p' => 'products'),
+                    array('product_id',
+                          'cost_plus_tax' =>
+                              new Zend_Db_Expr('p.cost * 1.08'))
+                    );
+]]>
                 </programlisting>
 
             </example>
@@ -404,8 +425,11 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('origin' => '(p.' . $db->quoteIdentifier('from') . ' + 10)'));]]>
+             ->from(array('p' => 'products'),
+                    array('origin' =>
+                              '(p.' . $db->quoteIdentifier('from') . ' + 10)')
+                   );
+]]>
                 </programlisting>
 
             </example>
@@ -438,16 +462,17 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'), 'product_id')
-    ->columns('product_name');
+             ->from(array('p' => 'products'), 'product_id')
+             ->columns('product_name');
 
 // 同じクエリを、相関名を指定して作成します
 //   SELECT p."product_id", p."product_name"
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->from(array('p' => 'products'), 'p.product_id')
-    ->columns('product_name', 'p'); // あるいは columns('p.product_name')]]>
+             ->from(array('p' => 'products'), 'p.product_id')
+             ->columns('product_name', 'p');
+             // あるいは columns('p.product_name')]]>
                 </programlisting>
 
             </example>
@@ -478,10 +503,11 @@ $select = $db->select()
 //     ON p.product_id = l.product_id
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id', 'product_name'))
-    ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id');]]>
+             ->from(array('p' => 'products'),
+                    array('product_id', 'product_name'))
+             ->join(array('l' => 'line_items'),
+                    'p.product_id = l.product_id');
+]]>
                 </programlisting>
 
             </example>
@@ -531,11 +557,12 @@ $select = $db->select()
 //     ON p.product_id = l.product_id
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id', 'product_name'))
-    ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id',
-        array() ); // 空のカラムリスト]]>
+             ->from(array('p' => 'products'),
+                    array('product_id', 'product_name'))
+             ->join(array('l' => 'line_items'),
+                    'p.product_id = l.product_id',
+                    array() ); // 空のカラムリスト
+]]>
                 </programlisting>
 
                 <para>
@@ -694,9 +721,9 @@ $select = $db->select()
 //   WHERE column2 = 'foo'
 
 $select = $db->select()
-    ->from('table1')
-    ->joinUsing('table2', 'column1')
-    ->where('column2 = ?', 'foo');]]>
+             ->from('table1')
+             ->joinUsing('table2', 'column1')
+             ->where('column2 = ?', 'foo');]]>
                 </programlisting>
 
             </example>
@@ -757,10 +784,9 @@ $select = $db->select()
 //   WHERE price > 100.00
 
 $select = $db->select()
-    ->from(
-        'products',
-        array('product_id', 'product_name', 'price'))
-    ->where('price > 100.00');]]>
+             ->from('products',
+                    array('product_id', 'product_name', 'price'))
+             ->where('price > 100.00');]]>
                 </programlisting>
 
             </example>
@@ -803,10 +829,10 @@ $select = $db->select()
 $minimumPrice = 100;
 
 $select = $db->select()
-    ->from(
-        'products',
-        array('product_id', 'product_name', 'price'))
-    ->where('price > ?', $minimumPrice);]]>
+             ->from('products',
+                    array('product_id', 'product_name', 'price'))
+             ->where('price > ?', $minimumPrice);
+]]>
                 </programlisting>
 
             </example>
@@ -832,10 +858,11 @@ $minimumPrice = 100;
 $maximumPrice = 500;
 
 $select = $db->select()
-    ->from('products',
-        array('product_id', 'product_name', 'price'))
-    ->where('price > ?', $minimumPrice)
-    ->where('price < ?', $maximumPrice);]]>
+             ->from('products',
+                    array('product_id', 'product_name', 'price'))
+             ->where('price > ?', $minimumPrice)
+             ->where('price < ?', $maximumPrice);
+]]>
                 </programlisting>
 
             </example>
@@ -864,10 +891,11 @@ $minimumPrice = 100;
 $maximumPrice = 500;
 
 $select = $db->select()
-    ->from('products',
-        array('product_id', 'product_name', 'price'))
-    ->where('price < ?', $minimumPrice)
-    ->orWhere('price > ?', $maximumPrice);]]>
+             ->from('products',
+                    array('product_id', 'product_name', 'price'))
+             ->where('price < ?', $minimumPrice)
+             ->orWhere('price > ?', $maximumPrice);
+]]>
                 </programlisting>
 
             </example>
@@ -895,10 +923,11 @@ $maximumPrice = 500;
 $prod = 'Apple';
 
 $select = $db->select()
-    ->from('products',
-        array('product_id', 'product_name', 'price'))
-    ->where("price < $minimumPrice OR price > $maximumPrice")
-    ->where('product_name = ?', $prod);]]>
+             ->from('products',
+                    array('product_id', 'product_name', 'price'))
+             ->where("price < $minimumPrice OR price > $maximumPrice")
+             ->where('product_name = ?', $prod);
+]]>
                 </programlisting>
 
             </example>
@@ -944,12 +973,13 @@ $select = $db->select()
 //   GROUP BY p.product_id
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id'))
-    ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id',
-        array('line_items_per_product' => 'COUNT(*)'))
-    ->group('p.product_id');]]>
+             ->from(array('p' => 'products'),
+                    array('product_id'))
+             ->join(array('l' => 'line_items'),
+                    'p.product_id = l.product_id',
+                    array('line_items_per_product' => 'COUNT(*)'))
+             ->group('p.product_id');
+]]>
                 </programlisting>
 
             </example>
@@ -1002,13 +1032,14 @@ $select = $db->select()
 //   HAVING line_items_per_product > 10
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id'))
-    ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id',
-        array('line_items_per_product' => 'COUNT(*)'))
-    ->group('p.product_id')
-    ->having('line_items_per_product > 10');]]>
+             ->from(array('p' => 'products'),
+                    array('product_id'))
+             ->join(array('l' => 'line_items'),
+                    'p.product_id = l.product_id',
+                    array('line_items_per_product' => 'COUNT(*)'))
+             ->group('p.product_id')
+             ->having('line_items_per_product > 10');
+]]>
                 </programlisting>
 
             </example>
@@ -1070,13 +1101,15 @@ $select = $db->select()
 //   ORDER BY "line_items_per_product" DESC, "product_id"
 
 $select = $db->select()
-    ->from(array('p' => 'products'),
-        array('product_id'))
-    ->join(array('l' => 'line_items'),
-        'p.product_id = l.product_id',
-        array('line_items_per_product' => 'COUNT(*)'))
-    ->group('p.product_id')
-    ->order(array('line_items_per_product DESC', 'product_id'));]]>
+             ->from(array('p' => 'products'),
+                    array('product_id'))
+             ->join(array('l' => 'line_items'),
+                    'p.product_id = l.product_id',
+                    array('line_items_per_product' => 'COUNT(*)'))
+             ->group('p.product_id')
+             ->order(array('line_items_per_product DESC',
+                           'product_id'));
+]]>
                 </programlisting>
 
             </example>
@@ -1114,8 +1147,10 @@ $select = $db->select()
 //   LIMIT 10, 20
 
 $select = $db->select()
-    ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limit(10, 20);]]>
+             ->from(array('p' => 'products'),
+                    array('product_id', 'product_name'))
+             ->limit(10, 20);
+]]>
                 </programlisting>
 
             </example>
@@ -1153,8 +1188,10 @@ $select = $db->select()
 //   LIMIT 10, 20
 
 $select = $db->select()
-    ->from(array('p' => 'products'), array('product_id', 'product_name'))
-    ->limitPage(2, 10);]]>
+             ->from(array('p' => 'products'),
+                    array('product_id', 'product_name'))
+             ->limitPage(2, 10);
+]]>
                 </programlisting>
 
             </example>
@@ -1180,8 +1217,9 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->distinct()
-    ->from(array('p' => 'products'), 'product_name');]]>
+             ->distinct()
+             ->from(array('p' => 'products'), 'product_name');
+]]>
                 </programlisting>
 
             </example>
@@ -1207,8 +1245,9 @@ $select = $db->select()
 //   FROM "products" AS p
 
 $select = $db->select()
-    ->forUpdate()
-    ->from(array('p' => 'products'));]]>
+             ->forUpdate()
+             ->from(array('p' => 'products'));
+]]>
                 </programlisting>
 
             </example>
@@ -1248,7 +1287,7 @@ $select = $db->select()
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
-  ->from('products');
+             ->from('products');
 
 $stmt = $db->query($select);
 $result = $stmt->fetchAll();
@@ -1279,7 +1318,7 @@ $result = $stmt->fetchAll();
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
-    ->from('products');
+             ->from('products');
 
 $stmt = $select->query();
 $result = $stmt->fetchAll();
@@ -1306,7 +1345,7 @@ $result = $stmt->fetchAll();
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
-    ->from('products');
+             ->from('products');
 
 $sql = $select->__toString();
 echo "$sql\n";
@@ -1436,8 +1475,8 @@ echo "$sql\n";
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
-    ->from('products')
-    ->order('product_id');
+             ->from('products')
+             ->order('product_id');
 
 // 文字列リテラルを使用して指定することができます
 $orderData = $select->getPart( 'order' );
@@ -1490,8 +1529,8 @@ print_r( $orderData );
 //   ORDER BY "product_name"
 
 $select = $db->select()
-    ->from(array('p' => 'products')
-    ->order('product_name');
+             ->from(array('p' => 'products')
+             ->order('product_name');
 
 // 条件を変更し、別のカラムで並べ替えます
 //   SELECT p.*
@@ -1505,7 +1544,8 @@ $select->reset( Zend_Db_Select::ORDER );
 $select->order('product_id');
 
 // クエリ全体を消去します
-$select->reset();]]>
+$select->reset();
+]]>
                 </programlisting>
 
             </example>
