@@ -398,7 +398,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                             case (4 <= $argc):
                                 $files = array_shift($validatorInfo);
                             default:
-                                $this->addValidator($validator, $breakChainOnFailure, $options, $files);                                break;
+                                $this->addValidator($validator, $breakChainOnFailure, $options, $files);
+                                break;
                         }
                     }
                 }
@@ -581,7 +582,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                             $uploaderror = true;
                     }
 
-                    if ($this->_break[$class]) {
+                    if (($this->_break[$class]) and (count($this->_messages) > 0)) {
                         $break = true;
                         break;
                     }

@@ -76,6 +76,47 @@ if (!$adapter->receive()) {
             causes severe security issues. You should always use validators to increase security.
         </para>
     </note>
+
+    <sect2 id="zend.file.transfer.introduction.adapters">
+
+        <title>Supported adapters for Zend_File_Transfer</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> is build to support different adapters and also directions.
+            It is designed to allow uploading, downloading and even forwarding (upload one adapter and
+            download with another adapter at the same time) of files.
+            But with Zend Framework 1.6 there is only one adapter available, the Http adapter.
+        </para>
+
+        <para>
+            Because there is only one adapter available at this time, the base class is not ready for use.
+            So if you want to use <code>Zend_File_Transfer</code> you will have to use the adapter
+            directly.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.options">
+
+        <title>Options for Zend_File_Transfer</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> and their adapters support different options. You can set all
+            options eighter by giving them in the constructor, or by usage of <code>setOptions($options)</code>.
+            <code>getOptions()</code> will return you the actually set options. Attached you will find a
+            listing of all supported options.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">ignoreNoFile</emphasis>: If this option is set to true,
+                    all validators will ignore if the file has not been uploaded by the form. This
+                    option defaults to false which throws an error of the file was not given.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:
