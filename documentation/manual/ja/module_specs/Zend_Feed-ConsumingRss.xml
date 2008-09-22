@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.feed.consuming-rss">
     <title>RSS フィードの使用</title>
     <para>
@@ -6,7 +6,8 @@
         <code>Zend_Feed_Rss</code> のインスタンスを作成するのと同じくらい簡単です。
     </para>
     <programlisting role="php"><![CDATA[
-$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
+$channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
+]]>
     </programlisting>
     <para>
         フィードの取得時にエラーが発生した場合は
@@ -18,7 +19,8 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');]]>
         プロパティに対して直接アクセスできるようになります。
     </para>
     <programlisting role="php"><![CDATA[
-echo $channel->title();]]>
+echo $channel->title();
+]]>
     </programlisting>
     <para>
         関数の構文に注意しましょう。"getter" 方式の構文 (<code>$obj->property</code>)
@@ -33,7 +35,8 @@ echo $channel->title();]]>
         の配列構文を使用してそれらにアクセスすることができます。
     </para>
     <programlisting role="php"><![CDATA[
-echo $channel->category['domain'];]]>
+echo $channel->category['domain'];
+]]>
     </programlisting>
     <para>
         XML の属性は子を持つことができないので、
@@ -50,7 +53,8 @@ echo $channel->category['domain'];]]>
     <programlisting role="php"><![CDATA[<?php
 foreach ($channel as $item) {
     echo $item->title() . "\n";
-}]]>
+}
+]]>
     </programlisting>
     <para>
         RSS にあまり詳しくない方のために、RSS チャネルおよび個々の RSS
@@ -137,7 +141,8 @@ foreach ($channel as $item) {
     <programlisting role="php"><![CDATA[
 if ($item->propname()) {
     // ... 続行できます
-}]]>
+}
+]]>
     </programlisting>
 
     <para>

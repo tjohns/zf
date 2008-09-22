@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.exception.using">
 
     <title>例外の使用法</title>
@@ -11,14 +11,15 @@
     <example id="zend.exception.using.example">
         <title>例外をキャッチする例</title>
         <programlisting role="php"><![CDATA[
-
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "キャッチした例外: " . get_class($e) . "\n";
     echo "メッセージ: " . $e->getMessage() . "\n";
     // その他、失敗から復帰するためのコード
-}]]></programlisting>
+}
+]]>
+        </programlisting>
     </example>
 
     <para>
