@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 11474 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -92,6 +92,53 @@ if (!$adapter->receive()) {
             常にバリデータを使用してセキュリティを向上させるようにしなければなりません。
         </para>
     </note>
+
+    <sect2 id="zend.file.transfer.introduction.adapters">
+
+        <title>Zend_File_Transfer がサポートするアダプタ</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> は、
+            さまざまなアダプタと転送方向をサポートするように作られています。
+            ファイルのアップロードやダウンロードだけでなく、転送
+            (あるアダプタでのアップロードと別のアダプタでのダウンロードを同時に行う)
+            にも対応できるように設計されています。
+            しかし、Zend Framework 1.6 の時点で存在するアダプタは
+            Http アダプタひとつだけです。
+        </para>
+
+        <para>
+            現時点ではひとつだけしかアダプタが存在しないので、
+            基底クラスはまだ使えるようになっていません。
+            <code>Zend_File_Transfer</code> を使いたい場合は、
+            アダプタを直接使用する必要があります。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.options">
+
+        <title>Zend_File_Transfer のオプション</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> やそのアダプタはさまざまなオプションをサポートしています。
+            オプションはコンストラクタで指定することもできますし、
+            <code>setOptions($options)</code> で指定することもできます。
+            <code>getOptions()</code> は、実際に設定されているオプションを返します。
+            サポートするオプションは次のとおりです。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">ignoreNoFile</emphasis>: このオプションを true にすると、
+                    ファイルがフォームからアップロードされなかったときにバリデータは何も行いません。
+                    このオプションのデフォルトは false で、
+                    この場合はファイルがアップロードされなければエラーとなります。
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

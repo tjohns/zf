@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11467 -->
+<!-- EN-Revision: 11474 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -102,6 +102,15 @@
         </para>        
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    <code>isValid($files = null)</code>:
+                    指定したファイルがすべてのバリデータを使用したかどうかを調べます。
+                    <code>$files</code> には、実際のファイル名あるいは要素名、
+                    またはテンポラリファイル名を指定します。
+                </para>
+            </listitem>
+
             <listitem>
                 <para>
                     <code>addValidator($validator, $breakChainOnFailure, $options = null, $files =
@@ -239,6 +248,7 @@ $upload->addValidator('Size', false, 20000)
             </programlisting>
 
         </example>
+
         <note>
             <para>
                 同じバリデータを複数回設定することもできます。
@@ -246,6 +256,52 @@ $upload->addValidator('Size', false, 20000)
                 同じバリデータに異なるオプションを設定したときにおかしなことになるので注意しましょう。
             </para>
         </note>
+
+        <para>
+            最後に、単純にファイルをチェックするには <code>isValid()</code> を使用します。
+        </para>
+
+        <example id="zend.file.transfer.validators.usage.exampleisvalid">
+            <title>ファイルの検証</title>
+
+            <para>
+                <code>isValid()</code> には、
+                アップロードあるいはダウンロードされるファイル名だけでなく、
+                テンポラリファイル名やフォーム要素の名前を指定することもできます。
+                パラメータを省略したり null を指定したりした場合は、
+                すべてのファイルが検証対象となります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイルサイズを 20000 バイトに設定します
+$upload->addValidator('Size', false, 20000)
+       ->addValidator('Count', false, 2)
+       ->addValidator('Filessize', false, 25000);
+
+if ($upload->isValid()) {
+    print "検証に失敗";
+}
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                <code>isValid()</code> は、
+                ファイルを受け取った際にそれまでコールされていなければ自動的にコールされることに注意しましょう。
+            </para>
+        </note>
+
+        <para>
+            検証に失敗した場合は、何が問題だったのかについての情報を取得したくなることでしょう。
+            <code>getMessages()</code> を使うとすべての検証メッセージを配列で取得できます。
+            また <code>getErrors()</code> はすべてのエラーコードを返し、
+            <code>hasErrors()</code> は検証エラーが見つかった時点で true を返します。
+        </para>
+
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
