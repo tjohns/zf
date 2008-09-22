@@ -13,7 +13,7 @@
     <sect2 id="zend.gdata.calendar.connecting">
         <title>Connecting To The Calendar Service</title>
         <para>
-            The Google Calendar API, like all GData APIs, is based off of the Atom Publishing Protoco (APP),
+            The Google Calendar API, like all GData APIs, is based off of the Atom Publishing Protocol (APP),
             an XML based format for managing web-based resources. Traffic between a client and the Google
             Calendar servers occurs over HTTP and allows for both authenticated and unauthenticated connections.
         </para>

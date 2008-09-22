@@ -9,7 +9,7 @@
 
     <para>
         <code>Zend_Json</code> includes a static function called <code>Zend_Json::fromXml()</code>.
-        This function will generate JSON from a given XML input. This function takes any aribitrary
+        This function will generate JSON from a given XML input. This function takes any arbitrary
         XML string as an input parameter. It also takes an optional boolean input parameter to instruct the
         conversion logic to ignore or not ignore the XML attributes during the conversion process. If this
         optional input parameter is not given, then the default behavior is to ignore the XML attributes.

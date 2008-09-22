@@ -401,7 +401,7 @@ $upload->addValidator('Count', false, array(1, 5);
         </para>
 
         <para>
-            In some cases it is usefull to test case sensitive. Therefor the constructor allows a
+            In some cases it is useful to test case sensitive. Therefor the constructor allows a
             second parameter <code>$case</code> which, if set to true, will validate the extension case
             sensitive.
         </para>
@@ -563,7 +563,7 @@ $upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
         </para>
 
         <para>
-            In some cases it is usefull to test case sensitive. Therefor the constructor allows a
+            In some cases it is useful to test case sensitive. Therefor the constructor allows a
             second parameter <code>$case</code> which, if set to true, will validate the extension case
             sensitive.
         </para>
@@ -726,7 +726,7 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB');
         </para>
 
         <para>
-            For your convinience there is also a <code>setImageWidth</code> and <code>setImageHeight</code>
+            For your convenience there is also a <code>setImageWidth</code> and <code>setImageHeight</code>
             method which will set the minimum and maximum height and width. Of course also the related
             <code>getImageWidth</code> and <code>getImageHeight</code> methods are available. 
         </para>

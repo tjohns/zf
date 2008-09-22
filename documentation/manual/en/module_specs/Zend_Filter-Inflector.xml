@@ -465,7 +465,7 @@ $inflector->addRules(array(
 
             <listitem><para>
                     <code>targetReplacementIdentifier</code> specifies the
-                    character to use when identifiying replacement variables in
+                    character to use when identifying replacement variables in
                     the target string.
             </para></listitem>
 

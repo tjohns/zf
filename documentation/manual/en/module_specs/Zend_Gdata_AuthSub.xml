@@ -45,7 +45,7 @@
             Google URL that performs authentication.  The static function
             <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code>
             provides the correct URL.  The arguments to this function include
-            the URL to your PHP applicaion so that Google can redirect the
+            the URL to your PHP application so that Google can redirect the
             user's browser back to your application after the user's
             credentials have been verified.
         </para>

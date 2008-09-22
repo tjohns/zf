@@ -101,7 +101,7 @@ if (!$adapter->receive()) {
 
         <para>
             <code>Zend_File_Transfer</code> and their adapters support different options. You can set all
-            options eighter by giving them in the constructor, or by usage of <code>setOptions($options)</code>.
+            options either by giving them in the constructor, or by usage of <code>setOptions($options)</code>.
             <code>getOptions()</code> will return you the actually set options. Attached you will find a
             listing of all supported options.
         </para>

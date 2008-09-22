@@ -23,7 +23,7 @@
             returned in a structured array, with well-defined keys for each part of the date. In addition, the array
             will contain a key 'date_format' showing the format string used to parse the input date string. Since a
             localized date string may not contain all parts of a date/time, the key-value pairs are optional. For
-            example, if only the year, month, and day is given, then all time values are supressed from the returned
+            example, if only the year, month, and day is given, then all time values are suppressed from the returned
             array, and vice-versa if only hour, minute, and second were given as input. If no date or time can be found
             within the given input, an exception will be thrown.
         </para>

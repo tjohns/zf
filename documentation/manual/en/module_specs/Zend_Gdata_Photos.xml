@@ -4,7 +4,7 @@
     <para>
         Picasa Web Albums is a service which allows users to maintain albums of
         their own pictures, and browse the albums and pictures of others.
-        The API offers a programatic interface to this service, allowing
+        The API offers a programmatic interface to this service, allowing
         users to add to, update, and remove from their albums, as well as
         providing the ability to tag and comment on photos.
     </para>

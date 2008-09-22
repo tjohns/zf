@@ -282,7 +282,7 @@ $client->setAuth('shahar', 'myPassword!');
             reset and are not reused in the next request.
         </para>
         <note>
-            <title>Reseting parameters</title>
+            <title>Resetting parameters</title>
             <para>
                 Note that non-request specific headers are not reset when the
                 resetParameters method is used. As a matter of fact, only the

@@ -14,7 +14,7 @@
     </para>
     <para>
         Decoding JSON objects poses an additional difficulty, however, since
-        Javascript objects correspond most closesly to PHP's associative array.
+        Javascript objects correspond most closely to PHP's associative array.
         Some suggest that a class identifier should be passed, and an object
         instance of that class should be created and populated with the
         key/value pairs of the JSON object; others feel this could pose a

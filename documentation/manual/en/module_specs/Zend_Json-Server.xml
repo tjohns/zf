@@ -8,7 +8,7 @@
         <ulink url="http://json-rpc.org/wiki/specification">JSON-RPC
             version 1 specification</ulink> as well as the 
         <ulink url="http://groups.google.com/group/json-rpc/web/json-rpc-1-2-proposal">version 2 specification</ulink>; 
-        additionally, it provides a PHP implemention of the 
+        additionally, it provides a PHP implementation of the 
         <ulink url="http://groups.google.com/group/json-schema/web/service-mapping-description-proposal">Service
             Mapping Description (SMD) specification</ulink> 
         for providing service metadata to service consumers.
@@ -519,7 +519,7 @@ $server->handle();
                         will be formatted to comply with the format that Dojo's
                         JSON-RPC client expects.</para></listitem>
                 <listitem><para><code>isDojoCompatible()</code>: Returns the
-                        value of the Dojo compatability flag (false, by
+                        value of the Dojo compatibility flag (false, by
                         default).</para></listitem>
                 <listitem><para><code>addService($service)</code>: Add a service
                         to the map. May be an array of information to pass to
@@ -566,7 +566,7 @@ $server->handle();
                         current transport.</para></listitem>
                 <listitem><para><code>setTarget($target)</code>: Set the URL
                         endpoint of the service (typically, this will be the
-                        same as the overal SMD to which the service is
+                        same as the overall SMD to which the service is
                         attached).</para></listitem>
                 <listitem><para><code>getTarget()</code>: Get the URL endpoint
                         of the service.</para></listitem>

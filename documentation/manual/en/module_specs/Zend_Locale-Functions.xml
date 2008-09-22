@@ -101,7 +101,7 @@ print_r($found2);
         </example>
 
         <para>
-            To obtain only the default locales relevent to the
+            To obtain only the default locales relevant to the
             <link linkend="zend.locale.selection"><code>BROWSER</code>, <code>ENVIRONMENT</code>, or <code>FRAMEWORK</code>
             </link>
             , use the corresponding method:
@@ -217,7 +217,7 @@ print $locale->getTranslation('de', 'language', 'zh');
         </example>
 
         <para>
-            You can receive this informations for all languages. But not all of the informations are completly
+            You can receive this informations for all languages. But not all of the informations are completely
             available for all languages. Some of these types are also available through an own function for
             simplicity. See this list for detailed informations.
         </para>
@@ -235,13 +235,13 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">Language</emphasis></entry>
                         <entry>Returns a localized list of all languages. The language part of the locale
-                            is returned as key and the translation as value. For your convinience use the
+                            is returned as key and the translation as value. For your convenience use the
                             <code>getLanguageTranslationList()</code> method</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">Script</emphasis></entry>
                         <entry>Returns a localized list of all scripts. The script is returned as key and the
-                            translation as value. For your convinience use the
+                            translation as value. For your convenience use the
                             <code>getScriptTranslationList()</code> method</entry>
                     </row>
                     <row>
@@ -251,7 +251,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                             use '1' as value. To get only countries use '2' as value. The country part of
                             the locale is used as key where applicable. In the other case the official ISO
                             code for this territory is used. The translated territory is returned as value.
-                            For your convinience use the <code>getCountryTranslationList()</code> method
+                            For your convenience use the <code>getCountryTranslationList()</code> method
                             to receive all countries and the <code>getTerritoryTranslationList()</code>
                             method to receive all territories without countries. When you omit the value
                             you will get a list with both.</entry>
@@ -295,7 +295,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">Months</emphasis></entry>
                         <entry>Returns a list of all month representations within this locale. There are
-                            several different represenations which are all returned as sub array. If you omit
+                            several different representations which are all returned as sub array. If you omit
                             the value you will get a list of all months from the 'gregorian' calendar returned.
                             You can give any known calendar as value to get a list of months from this calendar
                             returned. Use <link linkend="zend.date.introduction">Zend_Date</link> for
@@ -314,7 +314,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">Days</emphasis></entry>
                         <entry>Returns a list of all day representations within this locale. There are
-                            several different represenations which are all returned as sub array. If you omit
+                            several different representations which are all returned as sub array. If you omit
                             the value you will get a list of all days from the 'gregorian' calendar returned.
                             You can give any known calendar as value to get a list of days from this calendar
                             returned. Use <link linkend="zend.date.introduction">Zend_Date</link> for
@@ -338,7 +338,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">Quarters</emphasis></entry>
                         <entry>Returns a list of all quarter representations within this locale. There are
-                            several different represenations which are all returned as sub array. If you omit
+                            several different representations which are all returned as sub array. If you omit
                             the value you will get a list of all quarters from the 'gregorian' calendar returned.
                             You can give any known calendar as value to get a list of quarters from this calendar
                             returned</entry>
@@ -460,7 +460,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry><emphasis role="strong">RegionToCurrency</emphasis></entry>
                         <entry>Returns a list of regions where a currency is used . The ISO4217 value ('currency')
                             is used as array key and the ISO3166 value ('region') as array value. When a currency
-                            is used in several regions these regions are seperated with a whitespace. Use
+                            is used in several regions these regions are separated with a whitespace. Use
                             <link linkend="zend.currency.introduction">Zend_Currency</link> for simplicity</entry>
                     </row>
                     <row>
@@ -468,38 +468,38 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry>Returns a list of territories with the countries or sub territories which are
                             included within that territory. The ISO territory code ('territory') is used as
                             array key and the ISO3166 value ('region') as array value. When a territory contains
-                            several regions these regions are seperated with a whitespace</entry>
+                            several regions these regions are separated with a whitespace</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">TerritoryToRegion</emphasis></entry>
                         <entry>Returns a list of regions and the territories where these regions are located.
                             The ISO3166 code ('region') is used as array key and the ISO territory code
                             ('territory') as array value. When a region is located in several territories
-                            these territories are seperated with a whitespace</entry>
+                            these territories are separated with a whitespace</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">ScriptToLanguage</emphasis></entry>
                         <entry>Returns a list of scripts which are used within a language. The language code
                             is used as array key and the script code as array value. When a language contains
-                            several scripts these scripts are seperated with a whitespace</entry>
+                            several scripts these scripts are separated with a whitespace</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">LanguageToScript</emphasis></entry>
                         <entry>Returns a list of languages which are using a script. The script code
                             is used as array key and the language code as array value. When a script is used
-                            in several languages these languages are seperated with a whitespace</entry>
+                            in several languages these languages are separated with a whitespace</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">TerritoryToLanguage</emphasis></entry>
                         <entry>Returns a list of countries which are using a language. The country code
                             is used as array key and the language code as array value. When a language is used in
-                            several countries these countries are seperated with a whitespace</entry>
+                            several countries these countries are separated with a whitespace</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">LanguageToTerritory</emphasis></entry>
                         <entry>Returns a list of countries and the languages spoken within these countries.
                             The country code is used as array key and the language code as array value. When
-                            a territory is using several languages these languages are seperated with a
+                            a territory is using several languages these languages are separated with a
                             whitespace</entry>
                     </row>
                     <row>
@@ -571,13 +571,13 @@ print $locale->getTranslation('de', 'language', 'zh');
                     <row>
                         <entry><emphasis role="strong">Language</emphasis></entry>
                         <entry>Returns a translation for a language. To select the wished translation
-                            you must give the language code as value. For your convinience use the
+                            you must give the language code as value. For your convenience use the
                             <code>getLanguageTranslation($value)</code> method</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">Script</emphasis></entry>
                         <entry>Returns a translation for a script. To select the wished translation you
-                            must give the script code as value. For your convinience use the
+                            must give the script code as value. For your convenience use the
                             <code>getScriptTranslation($value)</code> method</entry>
                     </row>
                     <row>
@@ -585,7 +585,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                             <emphasis role="strong">Country</emphasis></entry>
                         <entry>Returns a translation for a territory. This can be countries, continents
                             and territories. To select the wished variant you must give the territory
-                            code as value. For your convinience use the
+                            code as value. For your convenience use the
                             <code>getCountryTranslation($value)</code> method.</entry>
                     </row>
                     <row>
@@ -812,34 +812,34 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry><emphasis role="strong">RegionToCurrency</emphasis></entry>
                         <entry>Returns the regions where a currency is used. The currency has to be given
                             as ISO4217 code for example 'EUR' for euro. When a currency is used in multiple
-                            regions, these regions are seperated with a whitespace character. Use
+                            regions, these regions are separated with a whitespace character. Use
                             <link linkend="zend.currency.introduction">Zend_Currency</link> for simplicity</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">RegionToTerritory</emphasis></entry>
                         <entry>Returns the regions for a given territory. The territory has to be given as
                             ISO4217 string for example '001' for world. The regions within this territory
-                            are seperated with a whitespace character</entry>
+                            are separated with a whitespace character</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">TerritoryToRegion</emphasis></entry>
                         <entry>Returns the territories where a given region is located. The region has to be
                             given in ISO3166 string for example 'AT' for austria. When a region is located in
-                            multiple territories then these territories are seperated with a whitespace
+                            multiple territories then these territories are separated with a whitespace
                             character</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">ScriptToLanguage</emphasis></entry>
                         <entry>Returns the scripts which are used within a given language. The language has
                             to be given as ISO language code for example 'en' for english. When multiple
-                            scripts are used within a language then these scripts are seperated with a
+                            scripts are used within a language then these scripts are separated with a
                             whitespace character</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">LanguageToScript</emphasis></entry>
                         <entry>Returns the languages which are used within a given script. The script has to be
                             given as ISO script code for example 'Latn' for latin. When a script is used in
-                            multiple languages then these languages are seperated with a whitespace
+                            multiple languages then these languages are separated with a whitespace
                             character</entry>
                     </row>
                     <row>
@@ -847,13 +847,13 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry>Returns the territories where a given language is used. The language has
                             to be given as ISO language code for example 'en' for english. When multiple
                             territories exist where this language is used then these territories are
-                            seperated with a whitespace character</entry>
+                            separated with a whitespace character</entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong">LanguageToTerritory</emphasis></entry>
                         <entry>Returns the languages which are used within a given territory. The territory
                             has to be given as ISO3166 code for example 'IT' for italia. When a language
-                            is used in multiple territories then these territories are seperated with a
+                            is used in multiple territories then these territories are separated with a
                             whitespace character</entry>
                     </row>
                     <row>

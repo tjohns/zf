@@ -24,7 +24,7 @@
 
         <listitem><para>
             Rendering of the entire form, either via a single decorator that
-            peforms custom rendering or by iterating over each item in the form
+            performs custom rendering or by iterating over each item in the form
         </para></listitem>
     </itemizedlist>
 
@@ -133,7 +133,7 @@ $form = new Zend_Form($config);
             <listitem><para>
                 <code>addElementPrefixPath($prefix, $path, $type = null)</code>:
                 Just like <code>addPrefixPath()</code>, you must specify a class
-                prefix and a path. <code>$type</code>, when speified, must be
+                prefix and a path. <code>$type</code>, when specified, must be
                 one of the plugin loader types specified by
                 <code>Zend_Form_Element</code>; see the <link
                     linkend="zend.form.elements.loaders">element plugins

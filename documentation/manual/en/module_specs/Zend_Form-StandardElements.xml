@@ -155,7 +155,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             property of the checkbox. You can query this using
             <code>isChecked()</code> or simply accessing the property. Using the
             <code>setChecked($flag)</code> method will both set the state of the
-            flag as well as set the approriate checked or unchecked value in the
+            flag as well as set the appropriate checked or unchecked value in the
             element. Please use this method when setting the checked state of a
             checkbox element to ensure the value is set properly.
         </para>

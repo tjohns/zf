@@ -345,7 +345,7 @@ class My_Decorator_Errors
         <title>Rendering Individual Decorators</title>
 
         <para>
-            Since decorators can target distince metadata of the element or form
+            Since decorators can target distinct metadata of the element or form
             they decorate, it's often useful to render an individual decorator
             at a time. Fortunately, this feature is possible via method
             overloading in each major form class type (forms, sub form, display

@@ -4,7 +4,7 @@
     <para>
         Google Apps is a service which allows domain administrators to offer
         their users managed access to Google services such as Mail, Calendar,
-        and Docs &amp; Spreadsheets. The Provisioning API offers a programatic
+        and Docs &amp; Spreadsheets. The Provisioning API offers a programmatic
         interface to configure this service. Specifically, this API allows
         administrators the ability to create, retrieve, update, and delete
         user accounts, nicknames, and email lists.
@@ -778,7 +778,7 @@ $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
 
             <para>
                 The convenience method <code>retrieveAllRecipients()</code>
-                can be used retrieve teh list of subscribers to an email list:
+                can be used to retrieve the list of subscribers to an email list:
             </para>
 
             <programlisting role="php"><![CDATA[

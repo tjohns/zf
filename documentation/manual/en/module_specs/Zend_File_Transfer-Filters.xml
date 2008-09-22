@@ -309,7 +309,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                         </entry>
                         <entry>
                             Specifies new locations for given files. You must always give a key-value pair of
-                            source and targetfile. Note that you will get an exception when the file
+                            source and target file. Note that you will get an exception when the file
                             already exists, see the overwriting parameter.
                         </entry>
                     </row>
@@ -319,7 +319,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                         </entry>
                         <entry>
                             Specifies new locations for given files. You must always give a key-value pair of
-                            source and targetfile and overwrites and existing file with the same target name.
+                            source and target file and overwrites and existing file with the same target name.
                             Note, that you will get no notification that a file was overwritten.
                             Optionally you can give one directory with the key 0 which will then be used for
                             all files where no source is defined.

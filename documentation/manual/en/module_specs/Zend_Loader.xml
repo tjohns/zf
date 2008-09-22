@@ -72,7 +72,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 
         <para>
             The static method <code>Zend_Loader::loadClass($class, $dirs)</code>
-            loads a PHP file and then checks for the existance of the class.
+            loads a PHP file and then checks for the existence of the class.
         </para>
 
         <example id="zend.loader.load.class.example">

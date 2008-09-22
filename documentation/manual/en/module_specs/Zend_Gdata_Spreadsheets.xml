@@ -19,7 +19,7 @@
         <title>Create a Spreadsheet</title>
         <para>
             The Spreadsheets data API does not currently provide a way to
-            programatically create or delete a spreadsheet.
+            programmatically create or delete a spreadsheet.
         </para>
     </sect2>
 

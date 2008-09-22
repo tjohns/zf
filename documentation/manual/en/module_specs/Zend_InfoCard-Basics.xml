@@ -3,7 +3,7 @@
 
     <para>
         The <code>Zend_InfoCard</code> component implements relying-party
-        support for Information Cards.  Infomation Cards are used for identity
+        support for Information Cards. Information Cards are used for identity
         management on the internet and authentication of users to web sites
         (called relying parties). 
     </para>
@@ -208,7 +208,7 @@ if (isset($_POST['xmlToken'])) {
 
         <para>
             In the example above we use the <code>Zend_InfoCard</code> component
-            indepdently to validate the token provided by the user. As was the
+            independently to validate the token provided by the user. As was the
             case with the <code>Zend_Auth_Adapter_InfoCard</code>, we create an
             instance of <code>Zend_InfoCard</code> and then set one or more SSL
             certificate public/private key pairs used by the web server. Once
@@ -228,7 +228,7 @@ if (isset($_POST['xmlToken'])) {
             <code>Zend_InfoCard_Claims</code> object. This object contains the
             assertions (a.k.a. claims) made by the submitting user based on the
             data requested by your web site when the user authenticated. As
-            shown in the examples above, the validitiy of the information card
+            shown in the examples above, the validity of the information card
             can be ascertained by calling the
             <code>Zend_InfoCard_Claims::isVaild()</code> method. Claims
             themselves can either be retrieved by simply accessing the
@@ -240,7 +240,7 @@ if (isset($_POST['xmlToken'])) {
             In most cases you will never need to use the <code>getClaim()</code>
             method. However, if your <code>requiredClaims</code> mandate that
             you request claims from multiple different sources/namespaces then
-            you will need to extract them explictally using this method (simply
+            you will need to extract them explicitly using this method (simply
             pass it the full URI of the claim to retrieve its value from within
             the information card). Generally speaking however, the
             <code>Zend_InfoCard</code> component will set the default URI for

@@ -230,7 +230,7 @@ echo "$acctname\n";
                         <entry>
                             The LDAP search filter used to search for accounts. This string is a
                             <ulink url="http://php.net/printf"><code>printf()</code></ulink> style expression that must
-                            contain one '<code>%s</code>' to accomodate the username. The default value is
+                            contain one '<code>%s</code>' to accommodate the username. The default value is
                             '<code>(&amp;(objectClass=user)(sAMAccountName=%s))</code>' unless
                             <code>bindRequiresDn</code> is set to <code>true</code>, in which case the default is
                             '<code>(&amp;(objectClass=posixAccount)(uid=%s))</code>'. Users of custom schemas may need

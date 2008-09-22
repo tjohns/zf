@@ -99,7 +99,7 @@ $client->setConfig(array(
                         <row>
                             <entry>keepalive</entry>
                             <entry>Whether to enable keep-alive connections with the server. Useful and might improve performance if several
-                            consecutive requests to the same server are performned.</entry>
+                            consecutive requests to the same server are performed.</entry>
                             <entry>boolean</entry>
                             <entry>false</entry>
                         </row>
