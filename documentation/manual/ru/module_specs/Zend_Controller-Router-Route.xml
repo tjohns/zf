@@ -12,12 +12,12 @@
     <para>
         Давайте представим себе некое приложение, в котором нужно разместить
         несколько информационных страниц об авторах. Мы хотим, чтобы адрес
-	<code>http://domain.com/author/martel</code> вел
+        <code>http://domain.com/author/martel</code> вел
         на страницу с информацией об авторе с именем "martel". Маршрут для
-	обеспечения такой функциональности может выглядеть следующим образом:
+        обеспечения такой функциональности может выглядеть следующим образом:
     </para>
     
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'author/:username', 
     array(
@@ -26,7 +26,8 @@ $route = new Zend_Controller_Router_Route(
     )
 );
 
-$router->addRoute('user', $route);]]>
+$router->addRoute('user', $route);
+]]>
     </programlisting>
 
     <para>
@@ -61,12 +62,13 @@ $router->addRoute('user', $route);]]>
         следующего массива пар ключ/значение:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $values = array(
     'username'   => 'martel',
     'controller' => 'profile',
     'action'     => 'userinfo'
-);]]>
+);
+]]>
     </programlisting>
 
     <para>
@@ -78,14 +80,15 @@ $values = array(
         <code>Zend_Controller_Request::getParam()</code>.
     </para>
     
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 public function userinfoAction() 
 {
     $request = $this->getRequest();
     $username = $request->getParam('username');
 
     $username = $this->_getParam('username');
-}]]>
+}
+]]>
     </programlisting>
 
     <para>
@@ -96,12 +99,13 @@ public function userinfoAction()
         приближенно воспроизводит поведение маршрута Module:
     </para>
     
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     ':module/:controller/:action/*', 
     array('module' => 'default')
 );
-$router->addRoute('default', $route);]]>
+$router->addRoute('default', $route);
+]]>
     </programlisting>
         
     <sect4 id="zend.controller.router.routes.standard.variable-defaults">
@@ -115,12 +119,13 @@ $router->addRoute('default', $route);]]>
             значениями в качестве значений переменных по умолчанию:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'archive/:year', 
     array('year' => 2006)
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -141,7 +146,7 @@ $router->addRoute('archive', $route);]]>
             умолчанию:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'archive/:year', 
     array(
@@ -150,7 +155,8 @@ $route = new Zend_Controller_Router_Route(
         'action'     => 'show'
     )
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -170,7 +176,7 @@ $router->addRoute('archive', $route);]]>
             регулярных выражений:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'archive/:year', 
     array(
@@ -180,7 +186,8 @@ $route = new Zend_Controller_Router_Route(
     ),
     array('year' => '\d+')
 );
-$router->addRoute('archive', $route);]]>
+$router->addRoute('archive', $route);
+]]>
         </programlisting>
 
         <para>
@@ -192,6 +199,63 @@ $router->addRoute('archive', $route);]]>
             соответствовать этому маршруту, вместо этого будет произведен
             переход к следующему маршруту в цепочке.
         </para>
+    </sect4>
+
+    <sect4 id="zend.controller.router.routes.standard.hostname-routing">
+        <title>Маршрутизация по имени хоста</title>
+
+        <para>
+            Вы также можете использовать имя хоста для определения
+            соответсвующего маршрута. Для простого соответствия
+            используется статическая опция:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
+    array(
+        'host' => 'blog.mysite.com',
+        'path' => 'archive'
+    ),
+    array(
+        'module'     => 'blog',
+        'controller' => 'archive',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
+]]>
+        </programlisting>
+
+        <para>
+            Если вы хотите использовать имя хоста для получения параметров,
+            то может использоваться опция с регулярным выражением. В
+            следующем примере поддомен используется в качестве параметра,
+            содержащего имя пользователя. При сборке маршрута вы просто
+            передаете имя пользователя как параметр, так же, как вы это сделали
+            бы с параметрами для пути в URL:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+$route = new Zend_Controller_Router_Route(
+    array(
+        'host' => array(
+            'regex'   => '([a-z]+).mysite.com',
+            'reverse' => '%s.mysite.com'
+            'params'  => array(
+                1 => 'username'
+            ) 
+        ),
+        'path' => ''
+    ),
+    array(
+        'module'     => 'users',
+        'controller' => 'profile',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('profile', $route);
+]]>
+        </programlisting>
     </sect4>
 </sect3>        
 <!--

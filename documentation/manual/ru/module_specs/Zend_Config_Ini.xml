@@ -32,10 +32,12 @@
             изменения ключа <code>'nestSeparator'</code> в массиве
             <code>$options</code> при создании объекта <code>Zend_Config_Ini</code>.
             Например:
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
+            <programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
-$config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
+$config = new Zend_Config_Ini('/path/to/config.ini',
+                              'staging',
+                              $options);
+]]>
             </programlisting>
         </para>
     </note>
@@ -54,7 +56,8 @@ $config = new Zend_Config_Ini('/path/to/config.ini', 'staging', $options);]]>
             более сложных случаях. Допустим, конфигурационные данные
             находятся в файле <code>/path/to/config.ini</code>:
         </para>
-        <programlisting role="ini"><![CDATA[; Конфигурационные данные производственного сайта
+        <programlisting role="ini"><![CDATA[
+; Конфигурационные данные производственного сайта
 [production]
 webhost                  = www.example.com
 database.adapter         = pdo_mysql
@@ -68,20 +71,20 @@ database.params.dbname   = dbname
 [staging : production]
 database.params.host     = dev.example.com
 database.params.username = devuser
-database.params.password = devsecret]]>
-        </programlisting>
+database.params.password = devsecret
+]]>
+</programlisting>
         <para>
             Далее предположим, что разработчику приложения нужны "промежуточные"
             конфигурационные данные из файла INI. Загрузить эти данные,
             указав файл INI и нужный раздел, довольно просто:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config/Ini.php';
-
+        <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
 
 echo $config->database->params->host;   // выведет "dev.example.com"
-echo $config->database->params->dbname; // выведет "dbname"]]>
+echo $config->database->params->dbname; // выведет "dbname"
+]]>
         </programlisting>
     </example>
     <note>

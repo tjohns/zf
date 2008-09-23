@@ -4,7 +4,8 @@
     <para>
         JSON быстро становится предпочтительным форматом для использования с
         AJAX-запросами, которые подразумевают ответы с данными. Синтаксический
-        разбор JSON может производиться сразу на стороне клиента, что приводит к большей производительности.
+        разбор JSON может производиться сразу на стороне клиента, что приводит
+        к большей производительности.
     </para>
 
     <para>
@@ -21,7 +22,8 @@
         </para></listitem>
 
         <listitem><para>
-                Устанавливает заголовок ответа 'Content-Type' со значением  'application/json'.
+                Устанавливает заголовок ответа 'Content-Type' со значением
+                'application/json'.
         </para></listitem>
 
         <listitem><para>
@@ -37,7 +39,7 @@
         <code>sendJson()</code>:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -54,7 +56,8 @@ class FooController extends Zend_Controller_Action
         $json = $this->_helper->json->encodeJson($data);
     }
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <note>
         <title>Использование с макетами</title>
@@ -67,7 +70,7 @@ class FooController extends Zend_Controller_Action
             значения <code>true</code> сохранит макеты включенными:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -76,7 +79,8 @@ class FooController extends Zend_Controller_Action
         $json = $this->_helper->json->encodeJson($data, true);
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </note>
 </sect3>
 <!--

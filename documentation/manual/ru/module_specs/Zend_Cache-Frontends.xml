@@ -152,7 +152,7 @@
                 булевы значения), вы можете использовать более компактную
                 конструкцию, как показано ниже:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // предполагается, что переменная $cache уже установлена
 
 $id = 'myBigLoop'; // идентификатор того, что мы хотим закэшировать
@@ -169,13 +169,14 @@ if (!($data = $cache->load($id))) {
 
 }
 
-// [...] делаем что-либо с данными (отображение, передача и т.д.)]]>
+// [...] делаем что-либо с данными (отображение, передача и т.д.)
+]]>
             </programlisting>
             <para>
                 Если вы хотите закэшировать несколько блоков или экземпляров
                 данных, то принцип будет тот же:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // убедитесь, что используете уникальные идентификаторы:
 $id1 = 'foo';
 $id2 = 'bar';
@@ -211,6 +212,50 @@ if (!($data = $cache->load($id2))) {
 }
 echo($data);]]>
             </programlisting>
+            <para>
+                Если вы хотите кэшировать специальные значения (булево
+                значение через опцию "automatic_serialization") или пустую
+                строку, то компактная форма, приведенная выше, уже не
+                подходит. Проверка на наличие записи кэша должна производиться
+                созданным для этого методом.
+            </para>
+            <programlisting role="php"><![CDATA[
+// Копмпактная форма. Не подходит, если могут кэшироваться
+// пустые строки и значения булевого типа
+if (!($data = $cache->load($id))) {
+
+    // промах кэша
+
+    // [...] получаем данные и присваиваем их переменной $data
+
+    $cache->save($data);
+
+}
+
+// делаем что-либо с данными
+
+// [...]
+
+// Полная форма, будет работать в любом случае
+if (!($cache->test($id))) {
+
+    // промах кэша
+
+    // [...] получаем данные и присваиваем их переменной $data
+
+    $cache->save($data);
+
+} else {
+
+    // попадание в кэш
+
+    $data = $cache->load($id);
+
+}
+
+// делаем что-либо с данными
+]]>
+            </programlisting>
         </sect3>
     </sect2>
 
@@ -239,7 +284,7 @@ echo($data);]]>
                 Пример был дан в самом начале данного руководства. Здесь
                 он с небольшими изменениями:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // если имеет место промах кэша,
 // то начинается буферизация вывода
 if (!($cache->start('mypage'))) {
@@ -252,7 +297,8 @@ if (!($cache->start('mypage'))) {
 
 }
 
-echo 'This is never cached ('.time().').';]]>
+echo 'This is never cached ('.time().').';
+]]>
             </programlisting>
             <para>
                 Используя эту форму, довольно легко установить кэширование
@@ -323,17 +369,16 @@ echo 'This is never cached ('.time().').';]]>
             <para>
                 Функция <code>call()</code> используется так же, как и
                 <code>call_user_func_array()</code> в PHP:
-<!--
-                Using the <code>call()</code> function is the same as using
-                <code>call_user_func_array()</code> in PHP:
--->
             </para>
-           <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-# $params является массивом
-# например, если нужно вызвать (с кэшированием) veryExpensiveFunc(1, 'foo', 'bar'),
-# то вы должны использовать $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))]]>
+// $params является массивом
+// Например, если нужно вызвать с кэшированием
+// veryExpensiveFunc(1, 'foo', 'bar'),
+// то вы должны использовать
+// $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+]]>
             </programlisting>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> достаточно
@@ -428,9 +473,9 @@ $cache->call('veryExpensiveFunc', $params);
                 Кэширование статических вызовов:
             </para>
             <programlisting role="php"><![CDATA[<?php
-class test {
+class Test {
 
-    # статический метод
+    // Статический метод
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";
@@ -440,18 +485,19 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => 'test' // имя класса
+    'cached_entity' => 'Test' // имя класса
 );
 // [...]
 
-# кэшируемый вызов
-$res = $cache->foobar('1', '2');]]>
+// Кэшируемый вызов
+$result = $cache->foobar('1', '2');
+]]>
             </programlisting>
             <para>
                 Кэширование обычных вызовов методов:
             </para>
-            <programlisting role="php"><![CDATA[<?php
-class test {
+            <programlisting role="php"><![CDATA[
+class Test {
 
     private $_string = 'hello !';
 
@@ -465,12 +511,13 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cached_entity' => new test() // экземпляр класса
+    'cached_entity' => new Test() // экземпляр класса
 );
 // [...]
 
-# кэшируемый вызов
-$res = $cache->foobar2('1', '2');]]>
+// Кэшируемый вызов
+$result = $cache->foobar2('1', '2');
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -603,119 +650,149 @@ $res = $cache->foobar2('1', '2');]]>
                                   <itemizedlist>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, true</code> по
-                                            умолчанию) <code>cache</code>:
-                                            если <code>true</code>, то
-                                            кэширование включено
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, true</code> по
+                                              умолчанию) <code>cache</code>:
+                                              если <code>true</code>, то
+                                              кэширование включено
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, false</code> по
-                                            умолчанию)
-                                            <code>cache_with_get_variables</code>:
-                                            если <code>true</code>, кэширование
-                                            включено, даже если в массиве
-                                            <code>$_GET</code> есть переменные
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, false</code> по
+                                              умолчанию)
+                                              <code>cache_with_get_variables</code>:
+                                              если <code>true</code>, кэширование
+                                              включено, даже если в массиве
+                                              <code>$_GET</code> есть переменные
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, false</code> по
-                                            умолчанию)
-                                            <code>cache_with_post_variables</code>:
-                                            если <code>true</code>, кэширование
-                                            включено, даже если в массиве
-                                            <code>$_POST</code> есть переменные
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, false</code> по
+                                              умолчанию)
+                                              <code>cache_with_post_variables</code>:
+                                              если <code>true</code>, кэширование
+                                              включено, даже если в массиве
+                                              <code>$_POST</code> есть переменные
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, false</code> по
-                                            умолчанию)
-                                            <code>cache_with_session_variables</code>:
-                                            если <code>true</code>, кэширование
-                                            включено, даже если в массиве
-                                            <code>$_SESSION</code> есть
-                                            переменные
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, false</code> по
+                                              умолчанию)
+                                              <code>cache_with_session_variables</code>:
+                                              если <code>true</code>, кэширование
+                                              включено, даже если в массиве
+                                              <code>$_SESSION</code> есть
+                                              переменные
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, false</code> по
-                                            умолчанию)
-                                            <code>cache_with_files_variables</code>:
-                                            если <code>true</code>, кэширование
-                                            включено, даже если в массиве
-                                            <code>$_FILES</code> есть переменные
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, false</code> по
+                                              умолчанию)
+                                              <code>cache_with_files_variables</code>:
+                                              если <code>true</code>, кэширование
+                                              включено, даже если в массиве
+                                              <code>$_FILES</code> есть переменные
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, false</code> по
-                                            умолчанию)
-                                            <code>cache_with_cookie_variables</code>:
-                                            если <code>true</code>, кэширование
-                                            включено, даже если в массиве
-                                            <code>$_COOKIE</code> есть
-                                            переменные
-                                        </para>
-                                    </listitem>
-                                    <listitem>
-                                        <para>
-                                            (<code>boolean, true</code> по
-                                            умолчанию)
-                                            <code>make_id_with_get_variables</code>:
-                                            если <code>true</code>, то
-                                            идентификатор кэша будет зависеть
-                                            от содержимого массива
-                                            <code>$_GET</code>
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, false</code> по
+                                              умолчанию)
+                                              <code>cache_with_cookie_variables</code>:
+                                              если <code>true</code>, кэширование
+                                              включено, даже если в массиве
+                                              <code>$_COOKIE</code> есть
+                                              переменные
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, true</code> по
-                                            умолчанию)
-                                            <code>make_id_with_post_variables</code>:
-                                            если <code>true</code>, то
-                                            идентификатор кэша будет зависеть
-                                            от содержимого массива
-                                            <code>$_POST</code>
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, true</code> по
+                                              умолчанию)
+                                              <code>make_id_with_get_variables</code>:
+                                              если <code>true</code>, то
+                                              идентификатор кэша будет зависеть
+                                              от содержимого массива
+                                              <code>$_GET</code>
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, true</code> по
-                                            умолчанию)
-                                            <code>make_id_with_session_variables</code>:
-                                            если <code>true</code>, то
-                                            идентификатор кэша будет зависеть
-                                            от содержимого массива
-                                            <code>$_SESSION</code>
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, true</code> по
+                                              умолчанию)
+                                              <code>make_id_with_post_variables</code>:
+                                              если <code>true</code>, то
+                                              идентификатор кэша будет зависеть
+                                              от содержимого массива
+                                              <code>$_POST</code>
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, true</code> по
-                                            умолчанию)
-                                            <code>make_id_with_files_variables</code> :
-                                            если <code>true</code>, то
-                                            идентификатор кэша будет зависеть от
-                                            содержимого массива
-                                            <code>$_FILES</code>
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, true</code> по
+                                              умолчанию)
+                                              <code>make_id_with_session_variables</code>:
+                                              если <code>true</code>, то
+                                              идентификатор кэша будет зависеть
+                                              от содержимого массива
+                                              <code>$_SESSION</code>
+                                          </para>
+                                      </listitem>
                                       <listitem>
                                           <para>
-                                            (<code>boolean, true</code> по
-                                            умолчанию)
-                                            <code>make_id_with_cookie_variables</code>:
-                                            если <code>true</code>, то
-                                            идентификатор кэша будет зависеть от
-                                            содержимого массива
-                                            <code>$_COOKIE</code>
-                                        </para>
-                                    </listitem>
+                                              (<code>boolean, true</code> по
+                                              умолчанию)
+                                              <code>make_id_with_files_variables</code>:
+                                              если <code>true</code>, то
+                                              идентификатор кэша будет зависеть от
+                                              содержимого массива
+                                              <code>$_FILES</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              (<code>boolean, true</code> по
+                                              умолчанию)
+                                              <code>make_id_with_cookie_variables</code>:
+                                              если <code>true</code>, то
+                                              идентификатор кэша будет зависеть от
+                                              содержимого массива
+                                              <code>$_COOKIE</code>
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              (<code>int, false</code> по
+                                              умолчанию)
+                                              <code>specific_lifetime</code>:
+                                              если не <code>false</code>,
+                                              то значение этой опции,
+                                              обозначающей время жизни кэша,
+                                              будет использоваться для выбранного
+                                              регулярного выражения
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              (<code>array, array()</code> по
+                                              умолчанию)
+                                              <code>tags</code>:
+                                              теги для записи в кэше
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              (<code>int, null</code> по
+                                              умолчанию)
+                                              <code>priority</code>:
+                                              приоритет. Действует только
+                                              если выбранный бэкэнд поддерживает
+                                              приоритеты.
+                                          </para>
+                                      </listitem>
                                   </itemizedlist>
                               </entry>
                          </row>
@@ -738,64 +815,115 @@ $res = $cache->foobar2('1', '2');]]>
                                   из них.
                               </entry>
                          </row>
+                         <row>
+                              <entry><code>memorize_headers</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>
+                                   Массив строк с именами HTTP-заголовков.
+                                   Перечисленные заголовки будут сохранены в
+                                   кэше и будут замещены при попадании в кэш.
+                              </entry>
+                         </row>
                       </tbody>
                   </tgroup>
               </table>
         </sect3>
         <sect3 id="zend.cache.frontends.page.examples">
-            <title>Пример</title>
+            <title>Примеры</title>
             <para>
                 Использование <code>Zend_Cache_Frontend_Page</code> довольно
                 простое:
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // [...]
 
 $cache->start();
 // если есть попадание в кэш, то результат отправляется броузеру
 // и выполнение скрипта на этом прекращается
 
-// остальная часть страницы ...]]>
+// остальная часть страницы ...
+]]>
             </programlisting>
             <para>
                 Более сложный пример, показывающий способ создания
                 централизованного управления кэшированием в загрузочном файле
                 (например, для использования с <code>Zend_Controller</code>).
             </para>
-            <programlisting role="php"><![CDATA[<?php
-
-// [...] вы должны избегать слишком большого количества строк кода перед участком кэша
-// [...] например, для наибольшей производительности "require_once" или "Zend_Loader::loadClass"
-// [...] должны находиться после кэшируемого участка
-
-require_once 'Zend/Cache.php';
+            <programlisting role="php"><![CDATA[
+/*
+ * Вы должны избегать слишком большого количества строк кода перед этим участком
+ * кэша. Например, для наибольшей производительности "require_once" или
+ * "Zend_Loader::loadClass" должны находиться после кэшируемого участка
+ */
 
 $frontendOptions = array(
    'lifetime' => 7200,
    'debug_header' => true, // для отладки
    'regexps' => array(
-       '^/$' => array('cache' => true),         // кэширование всего IndexController;
-       '^/index/' => array('cache' => true),    // кэширование всего IndexController;
-       '^/article/' => array('cache' => false), // не кэшируем ArticleController...
-       '^/article/view/' => array(              // ...но кэшируем действие "view"
-           'cache' => true,                     // контроллера ArticleController;
-           'cache_with_post_variables' => true,    // кэшируем, даже если есть переменные $_POST
-           'make_id_with_post_variables' => true,   // (но кэш будет зависеть от массива $_POST)
+       // кэширование всего IndexController
+       '^/$' => array('cache' => true),
+       
+       // кэширование всего IndexController
+       '^/index/' => array('cache' => true),
+       
+       // не кэшируем ArticleController...
+       '^/article/' => array('cache' => false),
+       
+       // ...но кэшируем действие "view" контроллера ArticleController
+       '^/article/view/' => array(
+           'cache' => true,
+           
+           // кэшируем, даже если есть переменные $_POST
+           'cache_with_post_variables' => true,
+           
+           // но кэш будет зависеть от массива $_POST
+           'make_id_with_post_variables' => true,
        )
    )
 );
+
 $backendOptions = array(
     'cache_dir' => '/tmp/'
 );
 
 // получение объекта Zend_Cache_Frontend_Page
-$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Page',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 $cache->start();
 // если есть попадание в кэш, результат отправляется броузеру,
 // и выполнение скрипта на этом завершается
 
-// [...] конец загрузочного файла (этот код не исполняется, если есть попадание в кэш)]]>
+// [...] конец загрузочного файла
+// (этот код не исполняется, если есть попадание в кэш)
+]]>
+            </programlisting>
+        </sect3>
+        <sect3 id="zend.cache.frontends.page.cancel">
+            <title>Специальный метод отмены</title>
+            <para>
+                В некоторых случаях может потребоваться отменить текущий
+                процесс кэширования - например, если используется код
+                возврата, отличный от HTTP/200. Поэтому мы добавили метод
+                <code>cancel()</code>:
+            </para>
+            <programlisting role="php"><![CDATA[
+// [...]
+
+$cache->start();
+
+// [...]
+
+if ($someTest) {
+    $cache->cancel();
+    // [...]
+}
+
+// [...]
+]]>
             </programlisting>
         </sect3>
     </sect2>

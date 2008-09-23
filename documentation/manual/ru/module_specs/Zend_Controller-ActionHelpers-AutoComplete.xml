@@ -24,7 +24,7 @@
         Базовое использование одинаково для всех реализаций:
     </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -35,13 +35,16 @@ class FooController extends Zend_Controller_Action
         $this->_helper->autoCompleteDojo($data);
 
         // То же самое явным образом:
-        $response = $this->_helper->autoCompleteDojo->sendAutoCompletion($data);
+        $response = $this->_helper->autoCompleteDojo
+                                  ->sendAutoCompletion($data);
 
         // Или просто подготовьте ответ для автодополнения:
-        $response = $this->_helper->autoCompleteDojo->prepareAutoCompletion($data);
+        $response = $this->_helper->autoCompleteDojo
+                                  ->prepareAutoCompletion($data);
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
     <para>
         По умолчанию этот помощник делает следующее:
@@ -120,7 +123,7 @@ class FooController extends Zend_Controller_Action
         <title>Автодополнение c Dojo</title>
 
         <para>
-            В Dojo нет собственно виджета для автодополнения, но он имеет два
+            В Dojo нет собственно виджета для автодополнения, но есть два
             виджета, которые могут производить автодополнение: ComboBox и
             FilteringSelect. В обоих случаях они требуют использования хранилища
             данных, который реализует QueryReadStore, читайте документацию по
@@ -133,10 +136,11 @@ class FooController extends Zend_Controller_Action
             пригодном для использования с хранилищем в Dojo:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// within a controller action:
+        <programlisting role="php"><![CDATA[
+// в контроллере действий:
 $this->_helper->autoCompleteDojo($data);
-]]></programlisting>
+]]>
+        </programlisting>
         
         <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
             <title>Автодополнение с Dojo и Zend MVC</title>
@@ -170,7 +174,8 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
         return this.inherited("fetch", arguments);
     }
 });
-]]></programlisting>
+]]>
+</programlisting>
             
             <para>
                 Этот класс просто наследует от класса QueryReadStore фреймворка
@@ -184,7 +189,7 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
                 автодополнение:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class TestController extends Zend_Controller_Action
 {
     protected $_form;
@@ -192,10 +197,11 @@ class TestController extends Zend_Controller_Action
     public function getForm()
     {   
         if (null === $this->_form) {
-            require_once 'Zend/Form.php';
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
-                ->setAction($this->getRequest()->getBaseUrl() . '/test/process')
+                ->setAction(
+                    $this->getRequest()->getBaseUrl() . '/test/process'
+                )
                 ->addElements(array(
                     'test' => array('type' => 'text', 'options' => array(
                         'filters'        => array('StringTrim'),
@@ -205,13 +211,15 @@ class TestController extends Zend_Controller_Action
                         'hasDownArrow'   => 'true',
                         'label' => 'Your input:',
                     )),
-                    'go' => array('type' => 'submit', 'options' => array('label' => 'Go!'))
+                    'go' => array('type' => 'submit',
+                                  'options' => array('label' => 'Go!'))
                 ));
         }
         return $this->_form;
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 Здесь мы просто создаем форму с методами 'test' и 'go'. Метод
@@ -231,7 +239,7 @@ class TestController extends Zend_Controller_Action
                 автодополнения:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class TestController extends Zend_Controller_Action
 {
     // ...
@@ -264,7 +272,8 @@ class TestController extends Zend_Controller_Action
         $this->_helper->autoCompleteDojo($matches);
     }
 }
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 В методе <code>autocompleteAction()</code> мы делаем несколько
@@ -288,7 +297,8 @@ class TestController extends Zend_Controller_Action
             <programlisting role="php"><![CDATA[
 <? // установка хранилища данных: ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax" requestMethod="get"></div>
+    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    requestMethod="get"></div>
 
 <? // рендеринг формы: ?>
 <?= $this->form ?>
@@ -299,7 +309,8 @@ class TestController extends Zend_Controller_Action
 @import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
 <? $this->headStyle()->captureEnd() ?>
 
-<? // подключение javascript в HTML-заголовке, включая библиотеки для Dojo: ?>
+<? // подключение javascript в HTML-заголовке, включая все
+   // необходимые библиотеки для Dojo: ?>
 <? $this->headScript()
         ->setAllowArbitraryAttributes(true)
         ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js', 

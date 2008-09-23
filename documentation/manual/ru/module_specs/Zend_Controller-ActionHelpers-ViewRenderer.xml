@@ -89,11 +89,12 @@
                         помощников:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
                     </programlisting>
                 </listitem>
 
@@ -103,10 +104,11 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                         <code>ViewRenderer</code> через брокер помощников:
                     </para>
 
-                    <programlisting role="php"><![CDATA[<?php
+                    <programlisting role="php"><![CDATA[
 $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
-             ->setViewSuffix('php');]]>
+             ->setViewSuffix('php');
+]]>
                     </programlisting>
                 </listitem>
             </itemizedlist>
@@ -124,8 +126,9 @@ $viewRenderer->setView($view)
             помощников:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+]]>
         </programlisting>
 
         <para>
@@ -150,7 +153,7 @@ Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');]]>
             В качестве примера рассмотрим следующий класс:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Класс контроллера, модуль foo:
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -171,7 +174,8 @@ class Foo_BarController extends Zend_Controller_Action
 ...
 
 // в одном из ваших скриптов вида:
-<?php $this->foo(); // call Foo_View_Helper_Foo::foo()]]>
+$this->foo(); // вызывает Foo_View_Helper_Foo::foo()
+]]>
         </programlisting>
 
         <para>
@@ -261,7 +265,7 @@ class Foo_BarController extends Zend_Controller_Action
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options</code> может
+                    <code>initView($path, $prefix, $options)</code> может
                     вызываться для указания базового пути вида, префикса классов
                     помощников и фильтров, опций помощника
                     <code>ViewRenderer</code>. Вы можете передавать любые из
@@ -312,7 +316,8 @@ $this->_helper->viewRenderer('form', 'html', true);
         <programlisting role="php"><![CDATA[
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
+$viewRenderer =
+    new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]>
         </programlisting>
 
@@ -453,7 +458,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>:module</code>: СловаНачинающиесяСЗаглавнойБуквы
+                        <code>:module</code>: СловаРазделенныеРегистром
                         (CamelCase) разделяются тире и вся строка приводится к
                         нижнему регистру. Например: "FooBarBaz" преобразуется в
                         "foo-bar-baz".
@@ -469,7 +474,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:controller</code>:
-                        СловаНачинающиесяСЗаглавнойБуквы (CamelCase) разделяются
+                        СловаРазделенныеРегистром (CamelCase) разделяются
                         тире, знаки подчеркивания преобразуются в разделители
                         директорий и вся строка приводится к нижнему регистру.
                         Например: "FooBar" преобразуется в "foo-bar";
@@ -487,7 +492,7 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 <listitem>
                     <para>
                         <code>:action</code>: 
-                        СловаНачинающиесяСЗаглавнойБуквы (CamelCase) разделяются
+                        СловаРазделенныеРегистром (CamelCase) разделяются
                         тире, символы, не являющиеся буквенно-цифровыми,
                         переводятся в тире и
                         вся строка приводится к нижнему регистру.
@@ -635,13 +640,12 @@ $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
                 переменные в своих методах действий.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // В вашем файле загрузки:
 Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 
 ...
 
-<?php
 // Модуль 'foo', контроллер 'bar':
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -671,7 +675,8 @@ class Foo_BarController extends Zend_Controller_Action
     {
         $this->_redirect('/index');
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -720,7 +725,7 @@ class Foo_BarController extends Zend_Controller_Action
                 (<code>setNoRender()</code>).
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Класс контроллера baz, модуль bar:
 class Bar_BazController extends Zend_Controller_Action
 {
@@ -739,7 +744,8 @@ class Bar_BatController extends Zend_Controller_Action
         // Не производить авторендеринг во всех действиях этого контроллера
         $this->_helper->viewRenderer->setNoRender();
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
         
@@ -768,7 +774,7 @@ class Bar_BatController extends Zend_Controller_Action
                 вызов метода <code>setRender()</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Класс контроллера bar, модуль foo:
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -796,7 +802,8 @@ class Foo_BarController extends Zend_Controller_Action
         // иначе продолжение обработки...
     }
 
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -812,7 +819,7 @@ class Foo_BarController extends Zend_Controller_Action
                 тот же объект.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Класс контроллера bar, модуль foo:
 class Foo_BarController extends Zend_Controller_Action
 {
@@ -829,7 +836,8 @@ class Foo_BarController extends Zend_Controller_Action
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>
@@ -863,7 +871,7 @@ class Foo_BarController extends Zend_Controller_Action
                 скрипта вида.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 /**
  * В вашем файле загрузки:
  */
@@ -876,7 +884,8 @@ $viewRenderer->setViewBasePathSpec('/opt/vendor/templates')
              ->setViewScriptPathSpec(':module/:controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
             </programlisting>
         </example>
 
@@ -889,13 +898,14 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                 сделайте несколько вызовов метода <code>render()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class SearchController extends Zend_Controller_Action
 {
     public function resultsAction()
     {
         // Предполагается, что $this->model - текущая модель
-        $this->view->results = $this->model->find($this->_getParam('query', '');
+        $this->view->results = 
+            $this->model->find($this->_getParam('query', '');
 
         // render() по умолчанию использует ViewRenderer
         // Рендеринг формы поиска и затем результатов поиска
@@ -908,7 +918,8 @@ class SearchController extends Zend_Controller_Action
         // Ничего не делается. ViewRenderer автоматически производит
         // рендеринг скрипта вида
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>

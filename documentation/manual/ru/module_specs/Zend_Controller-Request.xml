@@ -194,10 +194,10 @@
                     умолчанию.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Request/Apache404.php';
+                <programlisting role="php"><![CDATA[
 $request = new Zend_Controller_Request_Apache404();
-$front->setRequest($request);]]>
+$front->setRequest($request);
+]]>
                 </programlisting>
 
                 <para>
@@ -258,7 +258,7 @@ $front->setRequest($request);]]>
                 базового URL: 
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 /**
  * Обработка запроса со своим базовым URL через Zend_Controller_Front
  */
@@ -267,7 +267,8 @@ $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
            ->setRouter($router)
            ->setBaseUrl('/projects/myapp'); // установка базового URL!
-$response   = $controller->dispatch();]]>
+$response   = $controller->dispatch();
+]]>
             </programlisting>
 
         </sect3>
@@ -420,7 +421,8 @@ abstract class Zend_Controller_Request_Abstract
      * @return boolean
      */
     public function isDispatched();
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

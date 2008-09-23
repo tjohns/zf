@@ -19,8 +19,8 @@
 
         <para>
             Для CMS из нашего примера было установлено, что хотя группа
-            'сотрудник' удовлетворяет нуждам большинства пользователей,
-            но возникла необходимость в новой группе 'маркетинг', которая имеет
+            'сотрудник' подходит большинству пользователей,
+            возникла необходимость в новой группе 'маркетинг', которая имела бы
             доступ к подписке и последним новостям в CMS.
             Группа в некоторой степени самодостаточна и будет иметь возможность
             публиковать и удалять как подписки, так и последние новости.
@@ -35,46 +35,60 @@
        </para>
 
         <para>
-            В первую очередь мы внесем изменение в реестр ролей для отражения
+            В первую очередь мы модифицируем реестр ролей для отражения
             этих изменений. Мы определили,
             что группа 'маркетинг' имеет те же базовые права, что и 'сотрудник',
             поэтому мы определим 'маркетинг' таким образом, чтобы она
             наследовала права группы 'сотрудник':
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Новая группа 'маркетинг' наследует права от группы 'сотрудник'
-$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');]]>
+$acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
+]]>
         </programlisting>
 
         <para>
-            Далее, обратите внимание, что указанные выше права доступа имеют
+            Далее обратите внимание, что указанные выше права доступа имеют
             отношение к особым ресурсам (например, "подписка", "последние
-            новости"). Теперь мы добавим эти ресурсы:
+            новости"). Теперь добавим эти ресурсы:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Создаем ресурсы для этих ролей
-require_once 'Zend/Acl/Resource.php';
-$acl->add(new Zend_Acl_Resource('newsletter'));           // подписка
-$acl->add(new Zend_Acl_Resource('news'));                 // новости
-$acl->add(new Zend_Acl_Resource('latest'), 'news');       // последние новости
-$acl->add(new Zend_Acl_Resource('announcement'), 'news'); // объявления]]>
+
+// подписка
+$acl->add(new Zend_Acl_Resource('newsletter'));
+
+// новости
+$acl->add(new Zend_Acl_Resource('news'));
+
+// последние новости
+$acl->add(new Zend_Acl_Resource('latest'), 'news');
+
+// объявления
+$acl->add(new Zend_Acl_Resource('announcement'), 'news');
+]]>
         </programlisting>
 
         <para>
             Затем определяются более точные правила для целевых областей ACL.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Маркетинг должен иметь возможность публиковать и удалять подписку и последние новости
-$acl->allow('marketing', array('newsletter', 'latest'), array('publish', 'archive'));
+        <programlisting role="php"><![CDATA[
+// Маркетинг должен иметь возможность публиковать и удалять подписку
+// и последние новости
+$acl->allow('marketing',
+            array('newsletter', 'latest'),
+            array('publish', 'archive'));
 
-// Пользователю (и маркетингу, через наследование), запрещено редактировать последние новости
+// Пользователю (и маркетингу через наследование), запрещено редактировать
+// последние новости
 $acl->deny('staff', 'latest', 'revise');
 
-// Всем, включая администраторов, запрещено удалять объявления
-$acl->deny(null, 'announcement', 'archive');]]>
+// Всем, включая администраторов, не разрешается удалять объявления
+$acl->deny(null, 'announcement', 'archive');
+]]>
         </programlisting>
 
         <para>
@@ -82,30 +96,39 @@ $acl->deny(null, 'announcement', 'archive');]]>
             изменений:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 echo $acl->isAllowed('staff', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // denied (запрещен)
+     "разрешен" : "запрещен";
+// запрещен
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // allowed (разрешен)
+     "разрешен" : "запрещен";
+// разрешен
 
 echo $acl->isAllowed('staff', 'latest', 'publish') ?
-     "allowed" : "denied"; // denied (запрещен)
+     "разрешен" : "запрещен";
+// запрещен
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
-     "allowed" : "denied"; // allowed (разрешен)
+     "разрешен" : "запрещен";
+// разрешен
 
 echo $acl->isAllowed('marketing', 'latest', 'archive') ?
-     "allowed" : "denied"; // allowed (разрешен)
+     "разрешен" : "запрещен";
+// разрешен
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
-     "allowed" : "denied"; // denied (запрещен)
+     "разрешен" : "запрещен";
+// запрещен
 
 echo $acl->isAllowed('editor', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied (запрещен)
+     "разрешен" : "запрещен";
+// запрещен
 
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
-     "allowed" : "denied"; // denied (запрещен)]]>
+     "разрешен" : "запрещен";
+// запрещен
+]]>
         </programlisting>
 
     </sect2>
@@ -123,21 +146,28 @@ echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
             всем ролям, ресурсам, и/или привилегиям:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Удаляем запрет на редактирование последних новостей для 'пользователя' (и маркетинга, через наследование)
+        <programlisting role="php"><![CDATA[
+// Убираем запрет на редактирование последних новостей для 'пользователя'
+// (и маркетинга через наследование)
 $acl->removeDeny('staff', 'latest', 'revise');
 
 echo $acl->isAllowed('marketing', 'latest', 'revise') ?
-     "allowed" : "denied"; // allowed (разрешен)
+     "разрешен" : "запрещен";
+// разрешен
 
-// Удаляем разрешение на публикацию и удаление подписки для маркетинга
-$acl->removeAllow('marketing', 'newsletter', array('publish', 'archive'));
+// Убираем разрешение на публикацию и удаление подписки для маркетинга
+$acl->removeAllow('marketing',
+                  'newsletter',
+                  array('publish', 'archive'));
 
 echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
-     "allowed" : "denied"; // denied (запрещен)
+     "разрешен" : "запрещен";
+// запрещен
 
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
-     "allowed" : "denied"; // denied (запрещен)]]>
+     "разрешен" : "запрещен";
+// запрещен
+]]>
         </programlisting>
 
         <para>
@@ -145,18 +175,22 @@ echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
             для привилегий переопределяет такой порядок изменений:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Разрешить маркетингу все для действий над последними новостями
+        <programlisting role="php"><![CDATA[
+// Разрешить маркетингу все действия над последними новостями
 $acl->allow('marketing', 'latest');
 
 echo $acl->isAllowed('marketing', 'latest', 'publish') ?
-     "allowed" : "denied"; // allowed (разрешен)
+     "разрешен" : "запрещен";
+// разрешен
 
 echo $acl->isAllowed('marketing', 'latest', 'archive') ?
-     "allowed" : "denied"; // allowed (разрешен)
+     "разрешен" : "запрещен";
+// разрешен
 
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
-     "allowed" : "denied"; // allowed (разрешен)]]>
+     "разрешен" : "запрещен";
+// разрешен
+]]>
         </programlisting>
 
     </sect2>

@@ -2,7 +2,7 @@
     <title>Фронт-контроллер</title>
 
     <sect2 id="zend.controller.front.overview">
-        <title>Обзор<!--Overview--></title>
+        <title>Обзор</title>
 
         <para>
             <code>Zend_Controller_Front</code> реализует
@@ -57,9 +57,10 @@
                 следующее до вызова метода <code>dispatch()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Отключение плагина ErrorHandler:
-$front->setParam('noErrorHandler', true);]]>
+$front->setParam('noErrorHandler', true);
+]]>
             </programlisting>
 
             <para>
@@ -67,9 +68,10 @@ $front->setParam('noErrorHandler', true);]]>
                 следующее до вызова метода <code>dispatch()</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Отключение помощника ViewRenderer:
-$front->setParam('noViewRenderer', true);]]>
+$front->setParam('noViewRenderer', true);
+]]>
             </programlisting>
         </note>
         
@@ -94,8 +96,9 @@ $front->setParam('noViewRenderer', true);]]>
                 инстанцирования объекта фронт-контроллера.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-$front = Zend_Controller_Front::getInstance();]]>
+            <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+]]>
             </programlisting>
         </sect3>
 
@@ -128,7 +131,8 @@ $front->setControllerDirectory(array(
 ));
 
 // Добавление директории модуля 'foo':
-$front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
+$front->addControllerDirectory('../modules/foo/controllers', 'foo');
+]]>
             </programlisting>
 
             <note>
@@ -148,6 +152,41 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
             </para>
         </sect3>
             
+        <sect3 id="zend.controller.front.methods.primary.addmoduledirectory">
+            <title>addModuleDirectory() и getModuleDirectory()</title>
+
+            <para>
+                Одной из возможностей фронт-контроллера является то, что вы
+                можете <link
+                    linkend="zend.controller.modular">определять модульную
+                структуру директорий</link> для создания отдельных компонент,
+                которые называются "модулями".
+            </para>
+
+            <para>
+                Каждый модуль должен находиться в собственной директории и
+                отражать структуру директорий используемого по умолчанию
+                модуля - т.е., он должен содержать, как минимум, поддиректорию
+                "controllers"; с ней, как правило, присутствует поддиректория
+                "views" и другие поддиректории приложения.
+            </para>
+
+            <para>
+                Метод <code>addModuleDirectory()</code> позволяет передавать имя
+                директории, содержащей один или более директорий модулей.
+                Он их сканирует и добавляет в качестве директорий контроллеров
+                во фронт-контроллер.
+            </para>
+
+            <para>
+                Если вы хотите получить путь к определенному модулю или к
+                текущему модулю, то можете использовать метод
+                <code>getModuleDirectory()</code>, при передаче имени модуля он
+                возвращает путь к нему, иначе возвращается путь к текущему
+                модулю.
+            </para>
+        </sect3>
+
         <sect3 id="zend.controller.front.methods.primary.dispatch">
             <title>dispatch()</title>
 
@@ -224,10 +263,11 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');]]>
                 требующего специальной настройки фронт-контроллера.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Инстанцирование фронт-контроллера, установка директории контроллера и
-// выполнение диспетчеризации одной строкой:
-Zend_Controller_Front::run('../application/controllers');]]>
+// выполнение диспетчеризации в одном вызове:
+Zend_Controller_Front::run('../application/controllers');
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -265,7 +305,7 @@ Zend_Controller_Front::run('../application/controllers');]]>
 
             <listitem>
                 <para>
-                    <code>(set|get)DefaultActionName()</code> позволяют
+                    <code>(set|get)DefaultAction()</code> позволяют
                     установить другое имя используемого по умолчанию действия
                     (иначе используется 'index') и получить текущее
                     значение. Они служат посредниками к

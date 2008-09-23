@@ -29,7 +29,7 @@
             (и удалит его).
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class SomeController extends Zend_Controller_Action
 {
     /**
@@ -41,15 +41,16 @@ class SomeController extends Zend_Controller_Action
     
     public function init()
     {
-        $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
+        $this->_flashMessenger =
+            $this->_helper->getHelper('FlashMessenger');
         $this->initView();
     }
     
     public function myAction()
     {
         /**
-         * default method of getting Zend_Controller_Action_Helper_FlashMessenger
-         * instance on-demand
+         * используемый по умолчанию метод для получения экземпляра
+         * Zend_Controller_Action_Helper_FlashMessenger
          */
         $this->_flashMessenger->addMessage('Record Saved!');
     }
@@ -59,7 +60,8 @@ class SomeController extends Zend_Controller_Action
         $this->view->messages = $this->_flashMessenger->getMessages();
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
     </sect4>
 </sect3>

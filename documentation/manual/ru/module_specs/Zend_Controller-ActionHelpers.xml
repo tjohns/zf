@@ -48,9 +48,10 @@
                     передайте ему имя, и будет возвращен объект помощника:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->getHelper('FlashMessenger');
-$flashMessenger->addMessage('We did something in the last request');]]>
+$flashMessenger->addMessage('We did something in the last request');
+]]>
                 </programlisting>
             </listitem>
 
@@ -61,9 +62,10 @@ $flashMessenger->addMessage('We did something in the last request');]]>
                     помощника так же, как если бы он был свойством этого брокера:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $flashMessenger = $this->_helper->FlashMessenger;
-$flashMessenger->addMessage('We did something in the last request');]]>
+$flashMessenger->addMessage('We did something in the last request');
+]]>
                 </programlisting>
             </listitem>
 
@@ -76,8 +78,9 @@ $flashMessenger->addMessage('We did something in the last request');]]>
                     <code>addMessage()</code>:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$this->_helper->FlashMessenger('We did something in the last request');]]>
+                <programlisting role="php"><![CDATA[
+$this->_helper->FlashMessenger('We did something in the last request');
+]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -111,8 +114,9 @@ $this->_helper->FlashMessenger('We did something in the last request');]]>
             <code>addHelper</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
+        <programlisting role="php"><![CDATA[
+Zend_Controller_Action_HelperBroker::addHelper($helper);
+]]>
         </programlisting>
 
         <para>
@@ -131,9 +135,11 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);]]>
                     соглашениям по именованию классов Zend Framework-а.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-// Добавление помощников, начинающихся с My_Action_Helpers в My/Action/Helpers/
-Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
+                <programlisting role="php"><![CDATA[
+// Добавление помощников, начинающихся
+// с My_Action_Helpers в My/Action/Helpers/
+Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');
+]]>
                 </programlisting>
             </listitem>
 
@@ -146,9 +152,11 @@ Zend_Controller_Action_HelperBroker::addPrefix('My_Action_Helpers');]]>
                     директориям собственные префиксы классов.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Добавление помощников, начинающихся с Helper в Plugins/Helpers/
-Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
+Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
+                                             'Helper');
+]]>
                 </programlisting>
             </listitem>
         </itemizedlist>
@@ -164,11 +172,12 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers', 'Helper');]]>
             <code>hasHelper($name)</code>, где <code>$name</code> - короткое имя помощника (без префикса):
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Check if 'redirector' helper is registered with the broker:
+        <programlisting role="php"><![CDATA[
+// Проверка, зарегистрирован ли помощник 'redirector' в брокере:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     echo 'Redirector helper registered';
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -189,15 +198,21 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             который является коротким именем помощника (без префикса).
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Проверка того, что помощник 'redirector' зарегистрирован в брокере, и его извлечение:
+        <programlisting role="php"><![CDATA[
+// Проверка, зарегистрирован ли помощник 'redirector' в брокере,
+// и его извлечение:
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
-    $redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+    $redirector =
+        Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
 }
 
-// Или просто извлеките его, не заботясь о том, был ли он ранее зарегистрирован:
-$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-}]]></programlisting>
+// Или просто извлеките его, не заботясь о том,
+// был ли он ранее зарегистрирован:
+$redirector =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+}
+]]>
+        </programlisting>
 
         <para>
             Наконец, для удаления зарегистрированного помощника из брокера
@@ -205,11 +220,13 @@ $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector')
             - короткое имя помощника (без префикса):
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-// Удаление помощника 'redirector' из брокера, помещенное в условную конструкцию
+        <programlisting role="php"><![CDATA[
+// Удаление помощника 'redirector' из брокера, помещенное
+// в условную конструкцию
 if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     Zend_Controller_Action_HelperBroker::removeHelper('redirector')
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -334,9 +351,10 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             образом:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Перенаправление на /blog/view/item/id/42
-$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));]]>
+$this->_helper->redirector('item', 'view', 'blog', array('id' => 42));
+]]>
         </programlisting>
         
         <para>

@@ -8,6 +8,41 @@
         архитектуру.
     </para>
 
+    <sect2 id="zend.controller.migration.fromoneohtoonesix">
+        <title>Переход с 1.5.x на 1.6.0 и более поздние версии</title>
+
+        <sect3 id="zend.controller.migration.fromoneohtoonesix.dispatcher">
+            <title>Изменения в интерфейсе диспетчера</title>
+
+            <para>
+                Пользователи обратили наше внимание на тот факт, что
+                <code>Zend_Controller_Front</code> и
+                <code>Zend_Controller_Router_Route_Module</code> используют
+                методы диспетчера, которые не определены в его интерфейсе.
+                Мы добавили следующие три метода в его интерфейс для того,
+                чтобы гарантировать работу созданного вами диспетчера с
+                классами, входящими в поставку Zend Framework:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>getDefaultModule()</code>: должен возвращать имя
+                    используемого по умолчанию модуля.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultControllerName()</code>: должен возвращать
+                    имя используемого по умолчанию контроллера.
+                </para></listitem>
+
+                <listitem><para>
+                    <code>getDefaultAction()</code>: должен возвращать имя
+                    используемого по умолчанию действия.
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromoneohtoonefive">
         <title>Переход с 1.0.x на 1.5.0 и более поздние версии</title>
 
@@ -80,8 +115,9 @@
                     имени действия знаком тире:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $inflector = $viewRenderer->getInflector();
 $inflector->setFilterRule(':action', array(
     new Zend_Filter_PregReplace(
@@ -90,7 +126,8 @@ $inflector->setFilterRule(':action', array(
     ),
     'StringToLower'
 ));
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     Приведенный выше код изменит инфлектор таким образом, чтобы
@@ -115,9 +152,10 @@ $inflector->setFilterRule(':action', array(
                     новый флаг фронт-контроллера 'useCaseSensitiveActions':
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $front->setParam('useCaseSensitiveActions', true);
-?>]]></programlisting>
+]]>
+</programlisting>
 
                 <para>
                     Это позволит вам использовать camelCase в URL-ах и они будут
@@ -158,8 +196,9 @@ $front->setParam('useCaseSensitiveActions', true);
             <code>noErrorHandler</code> во фронт-контроллере:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('noErrorHandler', true);]]>
+        <programlisting role="php"><![CDATA[
+$front->setParam('noErrorHandler', true);
+]]>
         </programlisting>
 
         <para>
@@ -179,9 +218,10 @@ $front->setParam('noErrorHandler', true);]]>
             начала процесса диспетчеризации:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // $front является экземпляром Zend_Controller_Front
-$front->setParam('noViewRenderer', true);]]>
+$front->setParam('noViewRenderer', true);
+]]>
         </programlisting>
 
         <para>
@@ -219,7 +259,8 @@ $front->setParam('noViewRenderer', true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$this->_helper->viewRenderer->setNoRender();]]>
+$this->_helper->viewRenderer->setNoRender();
+]]>
         </programlisting>
 
         <para>
@@ -235,7 +276,8 @@ public function preDispatch()
     // отключение авторендеринга скриптов вида
     $this->_helper->viewRenderer->setNoRender()
     // ... еще код ..
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -292,10 +334,11 @@ public function preDispatch()
                     До начала диспетчеризации экземпляра фронт-контроллера:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 // Предполагается, что $view уже определен
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+]]>
                 </programlisting>
             </listitem>
 
@@ -304,8 +347,9 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);]]>
                     В любой точке процесса загрузки (bootstrap process):
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+                <programlisting role="php"><![CDATA[
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view);]]>
                 </programlisting>
             </listitem>
@@ -381,8 +425,8 @@ $viewRenderer->setView($view);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
+Zend_Controller_Front::run('/path/to/controllers');
+]]>
         </programlisting>
 
         <para>
@@ -442,7 +486,11 @@ Zend_Controller_Front::run('/path/to/controllers');]]>
                 </para>
 
                 <programlisting role="php"><![CDATA[
-final protected function _forward($action, $controller = null, $module = null, array $params = null);]]>
+final protected function _forward($action,
+                                  $controller = null,
+                                  $module = null,
+                                  array $params = null);
+]]>
                 </programlisting>
 
                 <para>
@@ -468,15 +516,17 @@ final protected function _forward($action, $controller = null, $module = null, a
         </para>
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/controllers');]]>
+Zend_Controller_Front::run('/path/to/controllers');
+]]>
         </programlisting>
 
         <programlisting role="php"><![CDATA[
 /* -- создание маршрутизатора -- */
 $router = new Zend_Controller_RewriteRouter();
-$router->addRoute('user', 'user/:username', array('controller' => 'user',
-'action' => 'info'));
+$router->addRoute('user',
+                  'user/:username',
+                  array('controller' => 'user', 'action' => 'info')
+);                  
 
 /* -- установка его во фронт-контроллере -- */
 $ctrl = Zend_Controller_Front::getInstance();
@@ -484,7 +534,8 @@ $ctrl->setRouter($router);
 
 /* -- установка директории контроллеров и запуск диспетчеризации -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
-$ctrl->dispatch();]]>
+$ctrl->dispatch();
+]]>
         </programlisting>
 
         <para>
@@ -525,7 +576,8 @@ $ctrl->dispatch();]]>
                             фронт-контроллере:
                         </para>
                         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
                         </programlisting>
                     </listitem>
 
@@ -543,7 +595,8 @@ $front->dispatch();
 $front->returnResponse(true);
 $response = $front->dispatch();
 $response->renderExceptions(true);
-echo $response;]]>
+echo $response;
+]]>
                         </programlisting>
                     </listitem>
                 </itemizedlist>
@@ -644,10 +697,6 @@ $controller = $this->getRequest()->getControllerName();
 // Ранее доступ был через $this->_action->getActionName().
 $action = $this->getRequest()->getActionName();
 
-// Retrieve the request parameters
-// This hasn't changed; the _getParams() and _getParam() methods simply proxy to
-// the request object now.
-
 // Извлечение параметров запроса
 // Оно не изменилось; _getParams() и _getParam() просто вызывают аналогичные
 // методы объекта запроса
@@ -677,7 +726,8 @@ public function __call($method, $args)
     }
 
     throw new Zend_Controller_Exception('Invalid method called');
-}]]>
+}
+]]>
                         </programlisting>
                     </listitem>
                 </itemizedlist>

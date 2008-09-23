@@ -78,13 +78,14 @@
                     ErrorHandler. Например:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $front->throwExceptions(true);
 try {
     $front->dispatch();
 } catch (Exception $e) {
     // самостоятельная обработка исключения
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -126,7 +127,7 @@ try {
                     метод <code>getException()</code>. Например:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $front->returnResponse(true);
 $response = $front->dispatch();
 if ($response->isException()) {
@@ -135,7 +136,8 @@ if ($response->isException()) {
 } else {
     $response->sendHeaders();
     $response->outputBody();
-}]]>
+}
+]]>
                 </programlisting>
 
                 <para>
@@ -186,11 +188,13 @@ if ($response->isException()) {
                             следующую директиву:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
+                        <programlisting role="php"><![CDATA[
 $front->setParam('useDefaultControllerAlways', true);
 
 // или
-$dispatcher->setParam('useDefaultControllerAlways', true);]]>
+
+$dispatcher->setParam('useDefaultControllerAlways', true);
+]]>
                         </programlisting>
 
                         <para>
@@ -239,7 +243,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);]]>
                             Например:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
+                        <programlisting role="php"><![CDATA[
 class My_Controller_Action extends Zend_Controller_Action
 {
     public function __call($method, $args)
@@ -252,7 +256,8 @@ class My_Controller_Action extends Zend_Controller_Action
 
         throw new Exception('Invalid method');
     }
-}]]>
+}
+]]>
                         </programlisting>
                         <para>
                             Пример выше перехватывает любые вызовы
@@ -270,7 +275,7 @@ class My_Controller_Action extends Zend_Controller_Action
                             запрошенное действие. Например:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
+                        <programlisting role="php"><![CDATA[
 class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 {
     public function getAction($request)
@@ -292,7 +297,8 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
         return $action;
     }
-}]]>
+}
+]]>
                         </programlisting>
 
                         <para>
@@ -346,28 +352,33 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                             Например:
                         </para>
 
-                        <programlisting role="php"><![CDATA[<?php
+                        <programlisting role="php"><![CDATA[
 class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
+        $dispatcher = 
+            Zend_Controller_Front::getInstance()->getDispatcher();
         $controller = $dispatcher->getController($request);
         if (!$controller) {
-            $controller = $dispatcher->getDefaultControllerName($request);
+            $controller = 
+                $dispatcher->getDefaultControllerName($request);
         }
         $action     = $dispatcher->getAction($request);
 
         if (!method_exists($controller, $action)) {
             $defaultAction = $dispatcher->getDefaultAction();
             $controllerName = $request->getControllerName();
-            $response = Zend_Controller_Front::getInstance()->getResponse();
-            $response->setRedirect('/' . $controllerName . '/' . $defaultAction);
+            $response =
+                Zend_Controller_Front::getInstance()->getResponse();
+            $response->setRedirect('/' . $controllerName . 
+                                   '/' . $defaultAction);
             $response->sendHeaders();
             exit;
         }
     }
-}]]>
+}
+]]>
                         </programlisting>
 
                         <para>

@@ -56,7 +56,8 @@ application/
         filters/
 html/
     .htaccess
-    index.php]]>
+    index.php
+]]>
             </programlisting>
 
         </sect3>
@@ -80,17 +81,20 @@ html/
             </para>
 
             <programlisting role="php"><![CDATA[
-RewriteEngine on
-RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+]]>
             </programlisting>
             
             <para>
-                Эти правила будут направлять запросы, не адресованные к ресурсам
-                (изображения, css), ко фронт-контроллеру.
-                Если есть файлы с другими расширениями, которые вы не хотите
-                адресовать фронт-контроллеру (файлы PDF, текстовые файлы и
-                т.д.), то добавьте также эти расширения в соответствующее
-                правило или создайте собственные правила перезаписи.
+                Этим правила перезаписи соотвественно направляют запросы к
+                существующим ресурсам (существующие символьные
+                ссылки, непустые файлы и директории), все остальные запросы
+                перенаправляются к фронт-контроллеру.
             </para>
 
             <note>
@@ -113,9 +117,9 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]>
                 и добавьте следующие строки:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Controller/Front.php';
-Zend_Controller_Front::run('/path/to/app/controllers');]]>
+            <programlisting role="php"><![CDATA[
+Zend_Controller_Front::run('/path/to/app/controllers');
+]]>
             </programlisting>
             
             <para>
@@ -171,16 +175,15 @@ Zend_Controller_Front::run('/path/to/app/controllers');]]>
                 введите следующее:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 /** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
 class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -229,7 +232,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <body>
     <h1>Hello, World!</h1>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
@@ -245,16 +249,14 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 <code>ErrorController</code> с методом <code>errorAction</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
+            <programlisting role="php"><![CDATA[
 class ErrorController extends Zend_Controller_Action
 {
     public function errorAction()
     {
     }
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -279,12 +281,13 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <h1>An error occurred</h1>
     <p>An error occurred; please try again later.</p>
 </body>
-</html>]]>
+</html>
+]]>
             </programlisting>
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.finish">
-            <title>Смотрим сайт!<!--View the site!--></title>
+            <title>Смотрим сайт!</title>
 
             <para>
                 Теперь, имея свои первые контроллер и вид, вы можете

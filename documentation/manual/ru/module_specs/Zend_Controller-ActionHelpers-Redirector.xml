@@ -11,7 +11,7 @@
             <code>_redirect()</code>, такие, как возможность предварительной
             конфигурации поведения на стороне сайта в объекте Redirector или
             использование встроенного интерфейса
-            <code>goto($action, $controller, $module, $params)</code>, подобного
+            <code>gotoSimple($action, $controller, $module, $params)</code>, подобного
             интерфейсу <code>Zend_Controller_Action::_forward()</code>.
         </para>
 
@@ -38,12 +38,12 @@
 
             <listitem>
                 <para>
-                    <code>setGoto()</code> может использоваться для установки
-                    URL, используемого по умолчанию, если методу
-                    <code>goto()</code> не был передан URL. Использует
+                    <code>setGotoSimple()</code> может использоваться для
+                    установки URL, используемого по умолчанию, если методу
+                    <code>gotoSimple()</code> не был передан URL. Использует
                     интерфейс
                     <code>Zend_Controller_Action::_forward()</code>:
-                    setgoto($action, $controller = null, $module = null, array
+                    setGotoSimple($action, $controller = null, $module = null, array
                     $params = array());
                 </para>
             </listitem>
@@ -100,8 +100,9 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>goto()</code> использует <code>setGoto()</code>
-                    (интерфейс, подобный <code>_forward()</code>) для построения
+                    <code>gotoSimple()</code> использует
+                    <code>setGotoSimple()</code> (интерфейс, подобный
+                    <code>_forward()</code>) для построения
                     URL и перенаправления на него.
                 </para>
             </listitem>
@@ -141,7 +142,7 @@
                 перенаправлении.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class SomeController extends Zend_Controller_Action
 {
     /**
@@ -156,11 +157,13 @@ class SomeController extends Zend_Controller_Action
         $this->_redirector = $this->_helper->getHelper('Redirector');
         
         // Установка опций по умолчанию для редиректора
-        // Поскольку объект зарегистрирован в брокере помощников, то эти опции
-        // будут действительными для всех последующих действий
-        $this->_redirector->setCode('303')
+        // Поскольку объект зарегистрирован в брокере помощников,
+        // то эти опции будут действительными для всех
+        // последующих действий
+        $this->_redirector->setCode(303)
                           ->setExit(false)
-                          ->setGoto("this-action", "some-controller");
+                          ->setGotoSimple("this-action",
+                                          "some-controller");
     }
     
     public function myAction()
@@ -173,7 +176,7 @@ class SomeController extends Zend_Controller_Action
         return; // никогда не будет достигнуто
     }
 }
-}]]>
+]]>
             </programlisting>
         </example>
 
@@ -186,7 +189,7 @@ class SomeController extends Zend_Controller_Action
                 производиться выход <code>exit()</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // АЛЬТЕРНАТИВНЫЙ ПРИМЕР
 class AlternativeController extends Zend_Controller_Action
 {
@@ -206,7 +209,8 @@ class AlternativeController extends Zend_Controller_Action
     {
         /* делаем что-то */
 
-        $this->_redirector->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
+        $this->_redirector
+            ->gotoUrl('/my-controller/my-action/param1/test/param2/test2');
         // это место никогда не будет достигнуто,
         // т.к. по умолчанию производится переход и завершение выполнения
         return; 
@@ -216,10 +220,10 @@ class AlternativeController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-3">
-            <title>Использование интерфейса _forward() для goto()</title>
+            <title>Использование интерфейса _forward() для gotoSimple()</title>
 
             <para>
-                Метод <code>goto()</code> копирует интерфейс метода
+                Метод <code>gotoSimple()</code> копирует интерфейс метода
                 <code>Zend_Controller_Action::_forward()</code>. Основное
                 отличие состоит в том, что он строит URL из переданных
                 параметров и использует формат
@@ -228,7 +232,7 @@ class AlternativeController extends Zend_Controller_Action
                 действия в цепочку.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class ForwardController extends Zend_Controller_Action
 {
     /**
@@ -250,9 +254,16 @@ class ForwardController extends Zend_Controller_Action
         // Перенаправление на действие 'my-action' контроллера 'my-controller'
         // в текущем модуле с использованием параметров param1 => test и
         // param2 => test2
-        $this->_redirector->goto('my-action', 'my-controller', null, array('param1' => 'test', 'param2' => 'test2'));
+        $this->_redirector->gotoSimple('my-action',
+                                       'my-controller',
+                                       null,
+                                       array('param1' => 'test',
+                                             'param2' => 'test2'
+                                             )
+                                       );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -267,12 +278,15 @@ class ForwardController extends Zend_Controller_Action
                 следующий маршрут:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $route = new Zend_Controller_Router_Route(
     'blog/:year/:month/:day/:id',
-    array('controller' => 'archive', 'module' => 'blog', 'action' => 'view')
+    array('controller' => 'archive',
+          'module' => 'blog',
+          'action' => 'view')
 );
-$router->addRoute('blogArchive', $route);]]>
+$router->addRoute('blogArchive', $route);
+]]>
             </programlisting>
 
             <para>
@@ -281,7 +295,7 @@ $router->addRoute('blogArchive', $route);]]>
                 URL <code>/blog/2006/4/24/42</code>.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class BlogAdminController extends Zend_Controller_Action
 {
     /**
@@ -304,11 +318,15 @@ class BlogAdminController extends Zend_Controller_Action
         // /blog/2006/4/24/42
         
         $this->_redirector->gotoRoute(
-            array('year' => 2006, 'month' => 4, 'day' => 24, 'id' => 42),
+            array('year' => 2006,
+                  'month' => 4,
+                  'day' => 24,
+                  'id' => 42),
             'blogArchive'
         );
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect4>

@@ -31,32 +31,29 @@
         то бэкэнд автоматически извлечет запись из кэша.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>Фабричный метод <code>Zend_Cache</code><!--The <code>Zend_Cache</code> factory method--></title>
+        <title>Фабричный метод <code>Zend_Cache</code></title>
         <para>
             Корректным способом создания рабочего экземпляра
             фронтэнда <code>Zend_Cache</code> является код показанный в
             следующем примере:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-
-# Загружаем фабрику Zend_Cache
-require 'Zend/Cache.php';
-
-# Выбираем бэкэнд (например, 'File' или 'Sqlite'...)
+        <programlisting role="php"><![CDATA[
+// Выбираем бэкэнд (например, 'File' или 'Sqlite'...)
 $backendName = '[...]';
 
-# Выбираем фронтэнд (например, 'Core', 'Output', 'Page'...)
+// Выбираем фронтэнд (например, 'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# Устанавливаем массив опций для выбранного фронтэнда
+// Устанавливаем массив опций для выбранного фронтэнда
 $frontendOptions = array([...]);
 
-# Устанавливаем массив опций для выбранного бэкэнда
+// Устанавливаем массив опций для выбранного бэкэнда
 $backendOptions = array([...]);
 
-# Создаем экземпляр
-# (два последних аргумента являются необязательными)
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);]]>
+// Создаем экземпляр
+// (два последних аргумента являются необязательными)
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+]]>
         </programlisting>
         <para>
             В последующих примерах мы предполагаем, что переменная
@@ -79,8 +76,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             установить массив тегов к данной записи. После этого вы можете
             удалить все записи кэша, помеченные данным тегом (тегами).
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[
+$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
+]]>
         </programlisting>
         <note>
             <para>
@@ -98,26 +96,29 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));]]>
             определенным идентификатором, вы можете использовать метод
             <code>remove()</code>:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache->remove('idToRemove');]]>
+        <programlisting role="php"><![CDATA[
+$cache->remove('idToRemove');
+]]>
         </programlisting>
         <para>
             Для того, чтобы одновременно удалить или сделать
             недействительными несколько записей кэша, вы можете использовать
             метод <code>clean()</code>. Например, чтобы удалить все записи кэша:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // удаление всех записей
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
 // удаление только устаревших записей
-$cache->clean(Zend_Cache::CLEANING_MODE_OLD);]]>
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+]]>
         </programlisting>
         <para>
             Если вы хотите удалить записи кэша, помеченные тегами 'tagA' и 'tagC':
         </para>
-        <programlisting role="php"><![CDATA[<?php
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));]]>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
         </programlisting>
         <para>
             Доступные режимы очищения: <code>CLEANING_MODE_ALL</code> (удалить

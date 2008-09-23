@@ -16,7 +16,8 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-$front->throwExceptions(true);]]>
+$front->throwExceptions(true);
+]]>
         </programlisting>
 
         <para>
@@ -25,7 +26,8 @@ $front->throwExceptions(true);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <note>
@@ -40,13 +42,14 @@ $response->sendResponse();]]>
                 <code>Zend_Controller_Front::returnResponse(true)</code>:
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 $front->returnResponse(true);
 $response = $front->dispatch();
 
-// производим необходимые манипуляции с данными (например, журналирование),
-// затем отправляем выходные данные:
-$response->sendResponse();]]>
+// производим необходимые манипуляции с данными (например,
+// журналирование), затем отправляем выходные данные:
+$response->sendResponse();
+]]>
             </programlisting>
         </note>
             
@@ -61,7 +64,8 @@ $response->sendResponse();]]>
 // Установка заголовка
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
-    ->appendBody($content);]]>
+    ->appendBody($content);
+]]>
         </programlisting>
 
         <para>
@@ -113,7 +117,8 @@ $response = $front->dispatch();
 // Производим какие-либо манипуляции...
 
 // В конце выводим ответ
-$response->sendResponse();]]>
+$response->sendResponse();
+]]>
         </programlisting>
 
         <para>
@@ -136,7 +141,8 @@ $response->sendResponse();
 
 // или:
 $front->throwExceptions(true);
-$front->dispatch();]]>
+$front->dispatch();
+]]>
         </programlisting>
     </sect2>
 
@@ -271,7 +277,7 @@ $front->dispatch();]]>
             страницы:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Предполагается, что класс плагина зарегистрирован во фронт-контроллере
 class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
@@ -301,7 +307,8 @@ class MyController extends Zend_Controller_Action
     {
         $this->render();
     }
-}]]>
+}
+]]>
         </programlisting>
         
         <para>
@@ -310,12 +317,13 @@ class MyController extends Zend_Controller_Action
             структуру:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 array(
     'header'  => ..., // содержимое верха страницы
     'default' => ..., // содержимое тела страницы из MyController::fooAction()
     'footer'  => ...  // содержимое низа страницы
-);]]>
+);
+]]>
         </programlisting>
 
         <para>

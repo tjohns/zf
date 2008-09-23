@@ -40,7 +40,7 @@
         В качестве примера рассмотрим следующий контроллер:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 class NewsController extends Zend_Controller_Action
 {
     /**
@@ -65,7 +65,8 @@ class NewsController extends Zend_Controller_Action
     {
     }
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
     
     <para>
         Предположим, нам нужно, чтобы действие <code>listAction()</code> было
@@ -74,7 +75,7 @@ class NewsController extends Zend_Controller_Action
         возвращать и ответ в формате XML:
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php"><![CDATA[
 class NewsController extends Zend_Controller_Action
 {
     public function init()
@@ -86,7 +87,8 @@ class NewsController extends Zend_Controller_Action
 
     // ...
 }
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Этим будет:
@@ -165,9 +167,10 @@ class NewsController extends Zend_Controller_Action
                     автоматической сериализации JSON:
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
-?>]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -312,7 +315,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
             контроллера:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function listAction()
@@ -331,7 +334,8 @@ class FooController extends Zend_Controller_Action
     {
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Предположим, что мы хотим добавить контекст XML к действию 'list',
@@ -339,7 +343,7 @@ class FooController extends Zend_Controller_Action
             можем добавить следующий код в метод <code>init()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public function init()
@@ -350,14 +354,15 @@ class FooController extends Zend_Controller_Action
              ->initContext();
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Мы можем также просто определить свойство <code>$contexts</code>
             в контроллере:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class FooController extends Zend_Controller_Action
 {
     public $contexts = array(
@@ -370,7 +375,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Этот способ менее трудоемкий, но заключает в себе больше
@@ -465,7 +471,7 @@ class FooController extends Zend_Controller_Action
             вызвать метод <code>initContext()</code> в контроллере действий:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class NewsController extends Zend_Controller_Action
 {
     public function init()
@@ -473,7 +479,8 @@ class NewsController extends Zend_Controller_Action
         $this->_helper->contextSwitch()->initContext();
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             В некоторых случаях может потребоваться принудительное использование
@@ -482,9 +489,10 @@ class NewsController extends Zend_Controller_Action
             передачей контекста методу <code>initContext()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $contextSwitch->initContext('xml');
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect4>
 
     <sect4 id="zend.controller.actionhelpers.contextswitch.misc">
@@ -506,10 +514,11 @@ $contextSwitch->initContext('xml');
                     это нужно делать до вызова <code>initContext()</code>.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $contextSwitch->setAutoJsonSerialization(false);
 $contextSwitch->initContext();
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     Вы можете получить значение этого флага через метод
@@ -752,7 +761,7 @@ $contextSwitch->initContext();
                 JSON.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class CommentController extends Zend_Controller_Action
 {
     public function init()
@@ -785,7 +794,8 @@ class CommentController extends Zend_Controller_Action
         // переменным вида и эти значения будет возвращены в формате JSON.
     }
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 На клиентской стороне посредством AJAX-библиотеки производятся

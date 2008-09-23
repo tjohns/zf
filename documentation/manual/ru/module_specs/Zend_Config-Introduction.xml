@@ -1,7 +1,7 @@
 <sect1 id="zend.config.introduction">
     <title>Введение</title>
     <para>
-        <code>Zend_Config</code> спроектирован для того, чтобы сделать более
+        <code>Zend_Config</code> создан для того, чтобы сделать более
         простым доступ и использование конфигурационных данных внутри приложения.
         Он предоставляет основанный на вложенных свойствах объектов пользовательский
         интерфейс для доступа к конфигурационным данным внутри приложения.
@@ -23,7 +23,7 @@
             чтобы использовать преимущества простого объектно-ориентированного
             интерфейса.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Массив конфигурационных данных
 $configArray = array(
     'webhost'  => 'www.example.com',
@@ -51,7 +51,8 @@ $db = Zend_Db::factory($config->database->adapter,
 
 // Альтернативный способ - просто передавайте объект Zend_Config.
 // Фабрика Zend_Db знает, как его интерпретировать.
-$db = Zend_Db::factory($config->database);]]>
+$db = Zend_Db::factory($config->database);
+]]>
         </programlisting>
     </example>
     <para>
@@ -65,17 +66,18 @@ $db = Zend_Db::factory($config->database);]]>
         который будет возвращать значение по умолчанию, если элемент
         данных не существует. Например:
     </para>
-    <programlisting role="php"><![CDATA[<?php
-$host = $config->database->get('host', 'localhost');]]>
+    <programlisting role="php"><![CDATA[
+$host = $config->database->get('host', 'localhost');
+]]>
     </programlisting>
     <example id="zend.config.introduction.example.file.php">
-        <title>Использование Zend_Config с конфигурационным файлом PHP<!--Using Zend_Config with a PHP Configuration File--></title>
+        <title>Использование Zend_Config с конфигурационным файлом PHP</title>
         <para>
             Часто требуется использовать конфигурационный файл,
             основанный на "чистом" PHP. Следующий код показывает, как просто
             этого достичь.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // config.php
 return array(
     'webhost'  => 'www.example.com',
@@ -89,13 +91,15 @@ return array(
         )
     )
 );]]></programlisting>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Использование конфигурации
 require_once 'Zend/Config.php';
 $config = new Zend_Config(require 'config.php');
 
 // Вывод элемента конфигурационных данных (результатом будет 'www.example.com')
-echo $config->webhost;]]></programlisting>
+echo $config->webhost;
+]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

@@ -25,9 +25,7 @@
             связывает их. В этом первом примере мы будем использовать
             фронтэнд <code>Core</code> с бэкэндом <code>File</code>.
        </para>
-       <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Cache.php';
-
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
    'lifetime' => 7200, // время жизни кэша - 2 часа
    'automatic_serialization' => true
@@ -38,7 +36,11 @@ $backendOptions = array(
 );
 
 // получение объекта Zend_Cache_Core
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);]]>
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
+]]>
         </programlisting>
     </example>
     
@@ -47,7 +49,8 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
         <para>
             Некоторые фронтэнды и бэкэнды имеют имена, состоящие из нескольких
             слов, например, 'ZendPlatform'. Когда задаете их через фабрику,
-            разделяйте слова с помощью разделителей, таких, как пробел (' '), тире ('-'), или точка ('.').
+            разделяйте слова с помощью разделителей, таких, как пробел (' '),
+            тире ('-'), или точка ('.').
         </para>
     </note>
 
@@ -61,7 +64,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             в кэш не нужно будет даже подключаться к базе данных: записи
             извлекаются из кэша и выполняется процедура, обратная сериализации.
        </para>
-       <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // $cache определен в предыдущем примере
 
 // проверка, есть ли уже запись в кэше:
@@ -83,7 +86,8 @@ if(!$result = $cache->load('myresult')) {
 
 }
 
-print_r($result);]]>
+print_r($result);
+]]>
         </programlisting>
     </example>
     
@@ -101,15 +105,18 @@ print_r($result);]]>
             запуске весь участок кода будет пропущен, вместо этого извлекаются
             данные из кэша (до тех пор, пока записи действительны).
        </para>
-       <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $frontendOptions = array(
-   'lifetime' => 30,                  // время жизни кэша - половина минуты
+   'lifetime' => 30,                   // время жизни кэша - 30 секунд
    'automatic_serialization' => false  // уже установлено по умолчанию
 );
 
 $backendOptions = array('cache_dir' => './tmp/');
 
-$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Output',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
 // передаем уникальный идентификатор методу start()
 if(!$cache->start('mypage')) {
@@ -121,7 +128,8 @@ if(!$cache->start('mypage')) {
     $cache->end(); // выходные данные сохранены и отправлены броузеру
 }
 
-echo 'This is never cached ('.time().').';]]>
+echo 'This is never cached ('.time().').';
+]]>
        </programlisting>
        <para>
            Обратите внимание, что мы выводим результат <code>time()</code>

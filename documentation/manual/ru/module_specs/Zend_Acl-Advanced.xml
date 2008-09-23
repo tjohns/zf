@@ -51,13 +51,13 @@
             интерфейса:
          </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl/Assert/Interface.php';
-
+        <programlisting role="php"><![CDATA[
 class CleanIPAssertion implements Zend_Acl_Assert_Interface
 {
-    public function assert(Zend_Acl $acl, Zend_Acl_Role_Interface $role = null,
-                           Zend_Acl_Resource_Interface $resource = null, $privilege = null)
+    public function assert(Zend_Acl $acl,
+                           Zend_Acl_Role_Interface $role = null,
+                           Zend_Acl_Resource_Interface $resource = null,
+                           $privilege = null)
     {
         return $this->_isCleanIP($_SERVER['REMOTE_ADDR']);
     }
@@ -66,7 +66,8 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
     {
         // ...
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -76,11 +77,10 @@ class CleanIPAssertion implements Zend_Acl_Assert_Interface
             только тогда, когда метод утверждения возвращает true.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Acl.php';
-
+        <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-$acl->allow(null, null, null, new CleanIPAssertion());]]>
+$acl->allow(null, null, null, new CleanIPAssertion());
+]]>
         </programlisting>
 
         <para>

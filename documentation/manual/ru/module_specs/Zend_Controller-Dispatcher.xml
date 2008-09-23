@@ -27,19 +27,20 @@
                 При создании приложения, состоящего из модулей, вы можете
                 захотеть, чтобы для вашего модуля, используемого по умолчанию,
                 тоже использовалось свое пространство имен (по умолчанию для
-		этого модуля оно не используется). Начиная с
+                этого модуля оно не используется). Начиная с
                 версии 1.5.0, вы можете устанавливать параметр
                 <code>prefixDefaultModule</code> в true, используя
                 фронт-контроллер или диспетчер.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php 
+            <programlisting role="php"><![CDATA[
 // Через фронт-контроллер:
 $front->setParam('prefixDefaultModule', true);
 
 // Через диспетчер:
 $dispatcher->setParam('prefixDefaultModule', true);
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 Это позволяет повторно использовать существующий модуль в
@@ -75,7 +76,7 @@ $dispatcher->setParam('prefixDefaultModule', true);
             действию.
         </para>
         
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 public function fooAction()
 {
     // переход к другому действию в текущем контроллере и модуле:
@@ -85,7 +86,7 @@ public function fooAction()
 public function barAction()
 {
     // переход к действию в другом контроллере FooController::bazAction()
-    // в текущем модуле
+    // в текущем модуле:
     $this->_forward('baz', 'foo', null, array('baz' => 'bogus'));
 }
 
@@ -94,7 +95,8 @@ public function bazAction()
     // переход к действию в другом контроллере в другом модуле
     // Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -248,7 +250,29 @@ interface Zend_Controller_Dispatcher_Interface
      * @return boolean
      */
     public function isValidModule($module);
-}]]>
+
+    /**
+     * Возвращает используемое по умолчанию имя модуля
+     * 
+     * @return string
+     */
+    public function getDefaultModule();
+
+    /**
+     * Возвращает используемое по умолчанию имя контроллера
+     * 
+     * @return string
+     */
+    public function getDefaultControllerName();
+
+    /**
+     * Возвращает имя используемого по умолчанию действия
+     * 
+     * @return string
+     */
+    public function getDefaultAction();
+}
+]]>
         </programlisting>
 
         <para>

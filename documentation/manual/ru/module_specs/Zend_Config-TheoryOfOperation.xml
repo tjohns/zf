@@ -1,5 +1,5 @@
 <sect1 id="zend.config.theory_of_operation">
-    <title>Основы работы<!--Theory of Operation--></title>
+    <title>Теоретические основы работы с Zend_Config</title>
     <para>
         Конфигурационные данные передаются конструктору <code>Zend_Config</code>
         в виде ассоциативного массива, который может быть многомерным, что
@@ -33,13 +33,13 @@
     <para>
         По умолчанию через <code>Zend_Config</code> конфигурационные данные
         доступны только для чтения, и операция присваивания (например,
-        <code><![CDATA[$config->database->host = 'example.com']]></code>)
+        <code>$config->database->host = 'example.com'</code>)
         вызовет исключение. Тем не менее, это поведение
         может быть отменено при вызове конструктора, и тогда
         можно будет изменять конфигурационные данные.
         Если модификации разрешены, то также <code>Zend_Config</code>
         поддерживает уничтожение значений
-        (т.е. <code><![CDATA[unset($config->database->host);]]></code>).
+        (т.е. <code>unset($config->database->host);</code>).
         <note>
             <para>
                 Важно не путать изменение данных в памяти с сохранением

@@ -10,7 +10,8 @@
             пример такой структуры:
         </para>
 
-        <programlisting role="php"><![CDATA[
+        <programlisting>
+<![CDATA[
 docroot/
     index.php
 application/
@@ -44,7 +45,8 @@ application/
                 index/
                 list/
             helpers/
-            filters/]]>
+            filters/
+]]>
         </programlisting>
 
         <para>
@@ -98,11 +100,12 @@ application/
             присутствовать ключ <code>default</code>. Например:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $front->setControllerDirectory(array(
       'default' => '/path/to/application/controllers',
       'blog'    => '/path/to/application/blog/controllers'
-));]]>
+));
+]]>
         </programlisting>
 
         <para>
@@ -112,8 +115,10 @@ $front->setControllerDirectory(array(
             добавлен в пространство имен <code>default</code>. Например:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->addControllerDirectory('/path/to/application/news/controllers', 'news');]]>
+        <programlisting role="php"><![CDATA[
+$front->addControllerDirectory('/path/to/application/news/controllers',
+                               'news');
+]]>
         </programlisting>
 
         <para>
@@ -124,7 +129,7 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
             <code>addModuleDirectory()</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
  * Предполагается следующая структура директорий:
  * application/
@@ -136,7 +141,8 @@ $front->addControllerDirectory('/path/to/application/news/controllers', 'news');
  *         bar/
  *             controllers/
  */
-$front->addModuleDirectory('/path/to/application/modules');]]>
+$front->addModuleDirectory('/path/to/application/modules');
+]]>
         </programlisting>
 
         <para>
@@ -151,7 +157,7 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             модулей</code>:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 /**
  * Изменяем поддиректорию для контроллеров на 'con'
  * application/
@@ -164,7 +170,8 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
  *             con/
  */
 $front->setModuleControllerDirectoryName('con');
-$front->addModuleDirectory('/path/to/application/modules');]]>
+$front->addModuleDirectory('/path/to/application/modules');
+]]>
         </programlisting>
 
         <note><para>
@@ -222,8 +229,9 @@ $front->addModuleDirectory('/path/to/application/modules');]]>
             фронт-контроллере:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$front->setParam('useDefaultControllerAlways', true);]]>
+        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
+]]>
         </programlisting>
     </sect2>
 </sect1>
