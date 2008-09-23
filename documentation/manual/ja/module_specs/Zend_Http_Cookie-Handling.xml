@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie および Zend_Http_CookieJar</title>
 
@@ -87,16 +87,23 @@
                <title>Zend_Http_Cookie のインスタンスの作成</title>
                <programlisting role="php"><![CDATA[
 // まずはコンストラクタを使用します。このクッキーの有効期限は二時間です。
-$cookie = new Zend_Http_Cookie('foo', 'bar', '.example.com', time() + 7200, '/path');
+$cookie = new Zend_Http_Cookie('foo',
+                               'bar',
+                               '.example.com',
+                               time() + 7200,
+                               '/path');
 
 // HTTP レスポンスヘッダ Set-Cookie を設定して使用することもできます。
 // このクッキーは先ほどのものとほとんど同じですが、有効期限はありません。
 // また、セキュア接続時にのみ送信されます。
-$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/path; secure');
+$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; ' .
+                                       'path=/path; secure');
 
 // クッキーのドメインが設定されていない場合は、手動で設定する必要があります。
-$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.com/path');]]>
-                </programlisting>
+$cookie = Zend_Http_Cookie::fromString('foo=bar; secure;',
+                                       'http://www.example.com/path');
+]]>
+               </programlisting>
             </example>
             <note>
                 <para>
@@ -116,7 +123,11 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
                <title>Zend_Http_Cookie オブジェクトの文字列化</title>
                <programlisting role="php"><![CDATA[
 // 新しいクッキーを作成します。
-$cookie = new Zend_Http_Cookie('foo', 'two words', '.example.com', time() + 7200, '/path');
+$cookie = new Zend_Http_Cookie('foo', 
+                               'two words',
+                               '.example.com',
+                               time() + 7200,
+                               '/path');
 
 // これは 'foo=two+words;' を表示します。
 echo $cookie->__toString();
@@ -125,8 +136,9 @@ echo $cookie->__toString();
 echo (string) $cookie;
 
 // PHP 5.2 以降では、これでもかまいません。
-echo $cookie;]]>
-                </programlisting>
+echo $cookie;
+]]>
+               </programlisting>
             </example>
         </para>
     </sect2>
@@ -195,7 +207,12 @@ echo $cookie;]]>
                 <title>Zend_Http_Cookie のゲッターメソッドの使用法</title>
                 <programlisting role="php"><![CDATA[
 // まずクッキーを作成します
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure; expires=Wednesday, 28-Feb-05 20:41:22 UTC');
+$cookie =
+    Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                 'domain=.example.com; ' +
+                                 'path=/somedir; ' +
+                                 'secure; ' +
+                                 'expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // これは 'foo' を表示します
 echo $cookie->getValue();  // これは 'two words' を表示します
@@ -212,7 +229,8 @@ echo ($cookie->isExpired(strtotime('2005-01-01') ? 'Yes' : 'No');
 // これは 'No' を表示します
 
 echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
-// これは 'No' を表示します]]>
+// これは 'No' を表示します
+]]>
                 </programlisting>
             </example>
         </para>
@@ -255,7 +273,10 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
                 <title>クッキーがマッチするかどうかの確認</title>
                 <programlisting role="php"><![CDATA[
 // まずクッキーオブジェクトを作成します。これはセキュアなセッションクッキーです。
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=.example.com; path=/somedir; secure;');
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=.example.com; ' +
+                                       'path=/somedir; ' +
+                                       'secure;');
 
 $cookie->match('https://www.example.com/somedir/foo.php');
 // これは true を返します。
@@ -275,20 +296,26 @@ $cookie->match('https://www.example.com/somedir/foo.php', false);
 $cookie->match('https://sub.domain.example.com/somedir/otherdir/foo.php');
 // これは true を返します。
 
-// 別のクッキーオブジェクトを作成します。今度はセキュアではなく、二時間で有効期限切れとなります。
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; domain=www.example.com; expires=' . date(DATE_COOKIE, time() + 7200));
+// 別のクッキーオブジェクトを作成します。今度はセキュアではなく、
+// 二時間で有効期限切れとなります。
+$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
+                                       'domain=www.example.com; ' +
+                                       'expires=' 
+                                       . date(DATE_COOKIE, time() + 7200));
 
 $cookie->match('http://www.example.com/');
 // これは true を返します。
 
 $cookie->match('https://www.example.com/');
-// これは true を返します。セキュアでないクッキーは、セキュアな通信でも送信されます!
+// これは true を返します。セキュアでないクッキーは、
+// セキュアな通信でも送信されます!
 
 $cookie->match('http://subdomain.example.com/');
 // これは false を返します。ドメインが違っているからです。
 
 $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
-// これは false を返します。今から三時間後を時刻を指定したからです。]]>
+// これは false を返します。今から三時間後の時刻を指定したからです。
+]]>
                 </programlisting>
             </example>
         </para>

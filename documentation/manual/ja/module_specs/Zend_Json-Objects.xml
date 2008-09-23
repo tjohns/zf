@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.json.objects">
     <title>JSON オブジェクト</title>
     <para>
@@ -29,7 +29,8 @@
     </para>
     <programlisting role="php"><![CDATA[
 // JSONオブジェクトをPHPオブジェクトにデコードします
-$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);]]>
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
+]]>
     </programlisting>
     <para>
         このようにしてデコードされたオブジェクトは <code>StdClass</code>

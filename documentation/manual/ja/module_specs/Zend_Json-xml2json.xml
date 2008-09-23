@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9221 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.json.xml2json">
     <title>XML から JSON への変換</title>
     <para>
@@ -20,8 +20,9 @@
         XML の属性を無視します。この関数の使用法は、以下のようになります。
     </para>
     <programlisting role="php"><![CDATA[
-        // fromXml 関数の入力には、XML を含む文字列を渡します
-        $jsonContents = Zend_Json::fromXml($xmlStringContents, true);?>]]>
+// fromXml 関数の入力には、XML を含む文字列を渡します
+$jsonContents = Zend_Json::fromXml($xmlStringContents, true);
+]]>
     </programlisting>
 
     <para>
@@ -71,7 +72,8 @@
         <author><first>Jack</first><last>Herrington</last></author>
         <publisher>O'Reilly</publisher>
     </book>
-</books> ?>]]>
+</books> 
+]]>
     </programlisting>
 
     <para>
@@ -108,7 +110,8 @@
          "publisher" : "O'Reilly"
       }
    ]}
-}  ?>]]>
+}  
+]]>
     </programlisting>
 
     <para>

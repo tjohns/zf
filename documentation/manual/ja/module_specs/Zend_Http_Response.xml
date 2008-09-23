@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10967 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.http.response">
     <title>Zend_Http_Response</title>
 
@@ -29,7 +29,8 @@ fwrite($sock, $req);
 while ($buff = fread($sock, 1024))
     $str .= $sock;
 
-$response = Zend_Http_Response::factory($str);]]>
+$response = Zend_Http_Response::factory($str);
+]]>
                 </programlisting>
             </example>
         </para>
@@ -103,9 +104,11 @@ $response = Zend_Http_Response::factory($str);]]>
                 <programlisting role="php"><![CDATA[
 if ($response->isError()) {
   echo "データ転送エラー。\n"
-  echo "サーバからの応答: " . $response->getStatus() . " " . $response->getMessage() . "\n";
+  echo "サーバからの応答: " . $response->getStatus() .
+       " " . $response->getMessage() . "\n";
 }
-// .. ここでレスポンスを処理します...]]>
+// .. ここでレスポンスを処理します...
+]]>
                 </programlisting>
             </example>
         </para>
@@ -175,7 +178,8 @@ if ($response->getStatus() == 200) {
 } else {
   echo "データの取得時にエラーが発生しました。<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
-}]]>
+}
+]]>
                 </programlisting>
             </example>
             <note>
@@ -198,7 +202,8 @@ if ($ctype == 'text/html' || $ctype == 'text/xml') {
   $body = htmlentities($body);
 }
 
-echo $body;]]>
+echo $body;
+]]>
                 </programlisting>
             </example>
         </para>

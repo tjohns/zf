@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - 接続アダプタ</title>
 
@@ -149,7 +149,8 @@ $config = array(
 $client = Zend_Http_Client('https://www.example.com', $config);
 
 // これ以降のリクエストは、TLS セキュア接続上で行われます
-$response = $client->request();]]>
+$response = $client->request();
+]]>
             </programlisting>
         </example>
         <para>
@@ -255,7 +256,8 @@ $config = array(
 // クライアントオブジェクトのインスタンスを作成します
 $client = Zend_Http_Client('http://www.example.com', $config);
 
-// 作業を続けます...]]>
+// 作業を続けます...
+]]>
             </programlisting>
         </example>
         <para>
@@ -300,7 +302,8 @@ $adapter->setResponse(
     "Content-type: text/xml" . "\r\n" .
                                "\r\n" .
     '<?xml version="1.0" encoding="UTF-8"?>' .
-    '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
+    '<rss version="2.0" ' .
+    '     xmlns:content="http://purl.org/rss/1.0/modules/content/"' .
     '     xmlns:wfw="http://wellformedweb.org/CommentAPI/"' .
     '     xmlns:dc="http://purl.org/dc/elements/1.1/">' .
     '  <channel>' .
@@ -309,7 +312,8 @@ $adapter->setResponse(
     '</rss>');
 
 $response = $client->request('GET');
-// .. $response の処理を続けます...]]>
+// .. $response の処理を続けます...
+]]>
             </programlisting>
         </example>
         <para>
@@ -356,7 +360,8 @@ $adapter->addResponse(
     '</html>');
 
 // HTTP クライアントオブジェクト ($client) をテスト対象の
-// オブジェクトに注入し、オブジェクトの動きを以下でテストします]]>
+// オブジェクトに注入し、オブジェクトの動きを以下でテストします
+]]>
             </programlisting>
         </example>
         <para>
@@ -401,7 +406,8 @@ $adapter->addResponse(
         <example id="zend.http.client.adapters.extending.example-1">
             <title>独自の接続アダプタの作成</title>
             <programlisting role="php"><![CDATA[
-class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapter_Interface
+class MyApp_Http_Client_Adapter_BananaProtocol
+    implements Zend_Http_Client_Adapter_Interface
 {
     /**
      * アダプタの設定配列を設定する
@@ -436,10 +442,15 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
      * @param string        $body
      * @return string Request as text
      */
-    public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '')
+    public function write($method,
+                          $url,
+                          $http_ver = '1.1',
+                          $headers = array(),
+                          $body = '')
     {
         // リクエストをリモートサーバに送信します。
-        // この関数は、リクエスト全体 (ヘッダおよび本文) を文字列で返します。
+        // この関数は、リクエスト全体 (ヘッダおよび本文)
+        // を文字列で返します。
     }
 
     /**
@@ -465,7 +476,8 @@ class MyApp_Http_Client_Adapter_BananaProtocol implements Zend_Http_Client_Adapt
 // そして、このアダプタを使用します
 $client = new Zend_Http_Client(array(
     'adapter' => 'MyApp_Http_Client_Adapter_BananaProtocol'
-));]]>
+));
+]]>
             </programlisting>
         </example>
     </sect2>
