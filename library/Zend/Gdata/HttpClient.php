@@ -62,6 +62,14 @@ class Zend_Gdata_HttpClient extends Zend_Http_Client
     private $_authSubToken = null;
 
     /**
+     * Token for ClientLogin authentication.  
+     * If only this token is set, ClientLogin authentication is used.
+     *
+     * @var string
+     */
+    private $_clientLoginToken = null;
+
+    /**
      * Token for ClientLogin authentication.
      * If this token is set, and the AuthSub key is not set,
      * ClientLogin authentication is used
