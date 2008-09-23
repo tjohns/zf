@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.feed.custom-feed">
     <title>独自のフィードクラスおよびエントリクラス</title>
 
@@ -30,7 +30,8 @@ class MyEntry extends Zend_Feed_Entry_Atom
     {
         parent::__construct($uri, $xml);
 
-        Zend_Feed::registerNamespace('myns', 'http://www.example.com/myns/1.0');
+        Zend_Feed::registerNamespace('myns',
+                                     'http://www.example.com/myns/1.0');
     }
 
     public function __get($var)
@@ -69,7 +70,8 @@ class MyEntry extends Zend_Feed_Entry_Atom
                 return parent::__call($var, $unused);
         }
     }
-}]]>
+}
+]]>
         </programlisting>
         <para>
             そしてこのクラスを使用すると、インスタンスを作成したらすぐに
@@ -82,7 +84,8 @@ $entry->myUpdated = '2005-04-19T15:30';
 // メソッド型のコールは __call 関数が処理します
 $entry->myUpdated();  
 // プロパティ型のコールは __get 関数が処理します
-$entry->myUpdated;]]>
+$entry->myUpdated;
+]]>
         </programlisting>
     </example>
 

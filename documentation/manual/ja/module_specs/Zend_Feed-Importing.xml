@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.feed.importing">
 
     <title>フィードの読み込み</title>
@@ -10,7 +10,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[
-$feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');
+]]>
     </programlisting>
 
     <para>
@@ -23,7 +24,8 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');]]>
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
 // PHP の文字列変数からフィードを読み込みます
-$feedFromPHP = Zend_Feed::importString($feedString);]]>
+$feedFromPHP = Zend_Feed::importString($feedString);
+]]>
     </programlisting>
 
     <para>
@@ -57,11 +59,13 @@ $feedFromPHP = Zend_Feed::importString($feedString);]]>
 // フィードを配列から読み込みます
 $atomFeedFromArray = Zend_Feed::importArray($array);
 
-// この行は、上と同じ意味です。デフォルトで Zend_Feed_Atom のインスタンスを返します
+// この行は、上と同じ意味です。
+// デフォルトで Zend_Feed_Atom のインスタンスを返します
 $atomFeedFromArray = Zend_Feed::importArray($array, 'atom');
 
 // rss フィードを配列から読み込みます
-$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');]]>
+$rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
+]]>
             </programlisting>
 
             <para>
@@ -78,13 +82,16 @@ array(
       'description' => 'フィードについての短い説明', // 任意
       'author'      => 'フィードの作者/公開者', // 任意
       'email'       => '作者のメールアドレス', // 任意
-      'webmaster'   => '技術的な問題の担当者のメールアドレス' // 任意、atom を使用している場合は無視されます
+      'webmaster'   =>     // 任意、atom を使用している場合は無視されます
+                       '技術的な問題の担当者のメールアドレス',
       'copyright'   => '著作権に関する情報', // 任意
       'image'       => '画像への url', // 任意
       'generator'   => '作成したツール', // 任意
       'language'    => 'フィードで使用している言語', // 任意
-      'ttl'         => 'フィードを何分間キャッシュするか', // 任意、atom を使用している場合は無視されます
-      'rating'      => 'チャネルの PICS レート', // 任意、atom を使用している場合は無視されます
+      'ttl'         =>     // 任意、atom を使用している場合は無視されます
+                       'フィードを何分間キャッシュするか',
+      'rating'      =>     // 任意、atom を使用している場合は無視されます
+                       'チャネルの PICS レート',
       'cloud'       => array(
                              'domain'            => 'クラウドのドメイン、たとえば rpc.sys.com' // 必須
                              'port'              => '接続するポート' // 任意、デフォルトは 80
@@ -164,7 +171,8 @@ array(
                                    // 二番目のエントリ以降のデータ
                                    )
                              )
-       );]]>
+       );
+]]>
             </programlisting>
 
             <para>
@@ -231,13 +239,18 @@ array(
 
             <programlisting role="php"><![CDATA[
 // 独自のビルダソースからフィードを読み込みます
-$atomFeedFromArray = Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
+$atomFeedFromArray = 
+    Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
-// この行は、上と同じ意味です。デフォルトで Zend_Feed_Atom のインスタンスを返します
-$atomFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
+// この行は、上と同じ意味です。
+// デフォルトで Zend_Feed_Atom のインスタンスを返します
+$atomFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'atom');
 
 // 独自のビルダ配列から rss フィードを読み込みます
-$rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');]]>
+$rssFeedFromArray =
+    Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss');
+]]>
             </programlisting>
 
         </sect3>
@@ -251,14 +264,16 @@ $rssFeedFromArray = Zend_Feed::importArray(new Zend_Feed_Builder($array), 'rss')
                 <code>send()</code> メソッドあるいは <code>saveXml()</code> メソッドを使用します。
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php">
+<![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // フィードを標準出力に出力します
 print $feed->saveXML();
 
 // http ヘッダを送信し、フィードを出力します
-$feed->send();]]>
+$feed->send();
+]]>
             </programlisting>
 
         </sect3>
