@@ -70,7 +70,6 @@
 $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
 ]]>
         </programlisting>
-        </programlisting>
 
         <para>
             Captcha を登録するには <code>setCaptcha()</code>
