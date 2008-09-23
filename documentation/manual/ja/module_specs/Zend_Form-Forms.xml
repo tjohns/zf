@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -45,7 +45,8 @@ $form = new Zend_Form();
 
 // 独自のフォームオブジェクト
 $form = new My_Form()
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         オプションで設定を渡すことができます。
@@ -55,7 +56,8 @@ $form = new My_Form()
     <programlisting role="php"><![CDATA[
 // 設定オプションを渡します
 $form = new Zend_Form($config);
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         <code>Zend_Form</code> は順次処理が可能です。
@@ -196,7 +198,8 @@ $form->addElement('text', 'foo');
 
 // 要素の label オプションを渡します
 $form->addElement('text', 'foo', array('label' => 'Foo:'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <title>addElement() における「流れるようなインターフェイス」の実装</title>
@@ -236,7 +239,8 @@ $foo = $form->getElement('foo');
 
 // オブジェクトのプロパティとして
 $foo = $form->foo;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             時には、フォームにアタッチせずに要素を作成したいこともあるでしょう
@@ -248,7 +252,8 @@ $foo = $form->foo;
         <programlisting role="php"><![CDATA[
 // $username は Zend_Form_Element_Text オブジェクトとなります
 $username = $form->createElement('text', 'username');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <sect3 id="zend.form.forms.elements.values">
             <title>値の設定と取得</title>
@@ -267,7 +272,8 @@ $values = $form->getValues();
 
 // 'foo' 要素の値のみを取得します
 $value = $form->getValue('foo');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 レンダリング前に、フォームに特定の値を設定したいこともあるでしょう。
@@ -278,7 +284,8 @@ $value = $form->getValue('foo');
             <programlisting role="php"><![CDATA[
 $form->setDefaults($data);
 $form->populate($data);
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 逆に、値を設定したり検証したりした後でフォームをクリアしたいこともあるでしょう。
@@ -287,7 +294,8 @@ $form->populate($data);
 
             <programlisting role="php"><![CDATA[
 $form->reset();
-]]></programlisting>
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.elements.global">
@@ -315,14 +323,21 @@ $form->reset();
 $form->addElementPrefixPath('My_Foo', 'My/Foo/');
 
 // フィルタのパスのみ:
-$form->addElementPrefixPath('My_Foo_Filter', 'My/Foo/Filter', 'filter');
+$form->addElementPrefixPath('My_Foo_Filter',
+                            'My/Foo/Filter',
+                            'filter');
 
 // バリデータのパスのみ:
-$form->addElementPrefixPath('My_Foo_Validate', 'My/Foo/Validate', 'validate');
+$form->addElementPrefixPath('My_Foo_Validate',
+                            'My/Foo/Validate',
+                            'validate');
 
 // デコレータのパスのみ:
-$form->addElementPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator', 'decorator');
-?>]]></programlisting>
+$form->addElementPrefixPath('My_Foo_Decorator',
+                            'My/Foo/Decorator',
+                            'decorator');
+]]>
+                </programlisting>
             </example>
 
             <example id="zend.form.forms.elements.global.decorators">
@@ -343,7 +358,8 @@ $form->setElementDecorators(array(
     'ViewHelper',
     'Label'
 ));
-?>]]></programlisting>
+]]>
+                </programlisting>
             </example>
 
             <example id="zend.form.forms.elements.global.decoratorsFilter">
@@ -380,7 +396,8 @@ $form->setElementDecorators(
         'bar'
     )
 );
-]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     一方、この例では、ViewHelper デコレータと Label
@@ -400,7 +417,8 @@ $form->setElementDecorators(
     ),
     false
 );
-]]></programlisting>
+]]>
+                </programlisting>
             </example>
 
                 <note>
@@ -438,7 +456,8 @@ $form->setElementDecorators(
 
         <programlisting role="php"><![CDATA[
 $form->setElementFilters(array('StringTrim'));
-?>]]></programlisting>
+]]>
+        </programlisting>
             </example>
         </sect3>
 
@@ -557,7 +576,8 @@ $form->setElementFilters(array('StringTrim'));
 
         <programlisting role="php"><![CDATA[
 $form->addDisplayGroup(array('username', 'password'), 'login');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             表示グループにアクセスするには、
@@ -571,7 +591,8 @@ $login = $form->getDisplayGroup('login');
 
 // オーバーロードの使用
 $login = $form->login;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <title>読み込み不要なデフォルトのデコレータ</title>
@@ -589,7 +610,8 @@ $form->addDisplayGroup(
     'foobar', 
     array('disableLoadDefaultDecorators' => true)
 );
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 このオプションは、他のオプションと混用することもできます。
@@ -617,7 +639,8 @@ $form->addDisplayGroup(
 
                 <programlisting role="php"><![CDATA[
 $form->addDisplayGroupPrefixPath('My_Foo_Decorator', 'My/Foo/Decorator');
-?>]]></programlisting>
+]]>
+                </programlisting>
             </example>
 
             <example id="zend.form.forms.displaygroups.global.decorators">
@@ -639,7 +662,8 @@ $form->setDisplayGroupDecorators(array(
     'FormElements',
     'Fieldset'
 ));
-?>]]></programlisting>
+]]>
+                </programlisting>
             </example>
         </sect3>
 
@@ -664,7 +688,8 @@ $form->addDisplayGroup(
     'user',
     array('displayGroupClass' => 'My_DisplayGroup')
 );
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 そのクラスがまだ読み込まれていない場合は、<code>Zend_Form</code>
@@ -680,7 +705,8 @@ $form->addDisplayGroup(
             <programlisting role="php"><![CDATA[
 // すべての表示グループで 'My_DisplayGroup' クラスを使用します
 $form->setDefaultDisplayGroupClass('My_DisplayGroup');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 これは、設定項目
@@ -912,7 +938,8 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
 
         <programlisting role="php"><![CDATA[
 $form->addSubForm($subForm, 'subform');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             サブフォームを取得するには、
@@ -925,7 +952,8 @@ $subForm = $form->getSubForm('subform');
 
 // オーバーロードの使用
 $subForm = $form->subform;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             サブフォームは、親フォームの要素のひとつとして順次処理することができます。
@@ -951,7 +979,8 @@ $form->setSubFormDecorators(array(
     'FormElements',
     'Fieldset'
 ));
-?>]]></programlisting>
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.form.forms.subforms.methods">
@@ -1020,7 +1049,8 @@ $form->setName('registration');
 
 // 名前を取得します
 $name = $form->getName();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             アクション (フォームを送信したときに進む URL)
@@ -1033,7 +1063,8 @@ $name = $form->getName();
 // アクションとメソッドを設定します
 $form->setAction('/user/login')
      ->setMethod('post');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             フォームのエンコード形式を設定するには
@@ -1051,7 +1082,8 @@ $form->setAction('/user/login')
 $form->setAction('/user/login')
      ->setMethod('post')
      ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <para>
@@ -1067,7 +1099,8 @@ $form->setAction('/user/login')
 
         <programlisting role="php"><![CDATA[
 $numItems = count($form);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             任意のメタデータを設定するには attribs アクセサを使用します。
@@ -1093,7 +1126,8 @@ $form->removeAttrib('onSubmit');
 
 // すべての属性を削除します
 $form->clearAttribs();
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.forms.decorators">
@@ -1128,7 +1162,8 @@ $form->setDecorators(array(
     array('HtmlTag', array('tag' => 'dl')),
     'Form'
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             これは、次のような出力をします。
@@ -1140,7 +1175,8 @@ $form->setDecorators(array(
 ...
 </dl>
 </form>
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             フォームオブジェクトに設定した任意の属性は、
@@ -1159,7 +1195,8 @@ $form->setDecorators(array(
 
             <programlisting role="php"><![CDATA[
 $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
-]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 このオプションは、他のオプションと混用することもできます。
@@ -1192,7 +1229,8 @@ $form->addDecorator(array('FooBar' => 'HtmlTag'), array('tag' => 'div'));
 
 // 後で、このように取得できます
 $form = $element->getDecorator('FooBar');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 <code>addDecorators()</code> メソッドおよび
@@ -1213,7 +1251,8 @@ $form->addDecorators(
 // 後で、このように取得できます
 $htmlTag = $form->getDecorator('HtmlTag');
 $fooBar  = $form->getDecorator('FooBar');
-?>]]></programlisting>
+]]>
+            </programlisting>
         </note>
 
         <para>
@@ -1256,6 +1295,29 @@ $fooBar  = $form->getDecorator('FooBar');
                     <code>clearDecorators()</code>
                 </para></listitem>
         </itemizedlist>
+
+        <para>
+            <code>Zend_Form</code> は、
+            オーバーロードを使用して特定のデコレータをレンダリングすることもできます。
+            'render' で始まる名前のメソッドを <code>__call()</code>
+            で捕捉し、メソッド名の残りの部分にもとづいてデコレータを探します。
+            見つかった場合は、そのデコレータ
+            <emphasis>だけ</emphasis> をレンダリングします。
+            引数を渡すと、それがデコレータの
+            <code>render()</code> メソッドにコンテンツとして渡されます。次の例を参照ください。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// FormElements デコレータのみをレンダリングします
+echo $form->renderFormElements();
+
+// fieldset デコレータのみ、コンテンツを渡してレンダリングします
+echo $form->renderFieldset("<p>This is fieldset content</p>");
+]]></programlisting>
+
+        <para>
+            デコレータが存在しない場合は、例外が発生します。
+        </para>
     </sect2>
 
     <sect2 id="zend.form.forms.validation">
@@ -1278,7 +1340,8 @@ $fooBar  = $form->getDecorator('FooBar');
 if (!$form->isValid($_POST)) {
     // 検証に失敗しました
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             <code>isValid()</code> はすべての必須要素の検証を行います。
@@ -1294,7 +1357,8 @@ if (!$form->isValid($_POST)) {
 if (!$form->isValidPartial($data)) {
     // 検証に失敗しました
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             <code>isValidPartial()</code> は、
@@ -1310,7 +1374,8 @@ if (!$form->isValidPartial($data)) {
 
         <programlisting role="php"><![CDATA[
 $json = $form->processAjax($data);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             こうすれば、単純に JSON レスポンスをクライアントに返すことができます。
@@ -1329,7 +1394,8 @@ $json = $form->processAjax($data);
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors();
 $messages = $form->getMessage();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <para>
@@ -1346,7 +1412,8 @@ $messages = $form->getMessage();
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors('username');
 $messages = $form->getMessages('username');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note>
             <para>
@@ -1727,7 +1794,8 @@ decorators.elements.decorator = "FormElements"
 decorators.fieldset.decorator = "FieldSet"
 decorators.fieldset.decorator.options.class = "zend_form"
 decorators.form.decorator = "Form"
-?>]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             これは、XML や PHP の配列形式の設定ファイルにも簡単に置き換えることができます。
@@ -1777,23 +1845,28 @@ class My_Form_Login extends Zend_Form
         $username->class = 'formtext';
         $username->setLabel('Username:')
                  ->setDecorators(array(
-                     array('ViewHelper', array('helper' => 'formText')),
-                     array('Label', array('class' => 'label'))
+                     array('ViewHelper',
+                           array('helper' => 'formText')),
+                     array('Label',
+                           array('class' => 'label'))
                  ));
 
         $password = new Zend_Form_Element_Password('password');
         $password->class = 'formtext';
         $password->setLabel('Username:')
                  ->setDecorators(array(
-                     array('ViewHelper', array('helper' => 'formPassword')),
-                     array('Label', array('class' => 'label'))
+                     array('ViewHelper',
+                           array('helper' => 'formPassword')),
+                     array('Label',
+                           array('class' => 'label'))
                  ));
 
         $submit = new Zend_Form_Element_Submit('login');
         $submit->class = 'formsubmit';
         $submit->setValue('Login')
                ->setDecorators(array(
-                   array('ViewHelper', array('helper' => 'formSubmit'))
+                   array('ViewHelper',
+                   array('helper' => 'formSubmit'))
                ));
 
         $this->addElements(array(
@@ -1809,7 +1882,8 @@ class My_Form_Login extends Zend_Form
         ));
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             このフォームのインスタンスを作成するのは、次のように簡単です。
@@ -1817,7 +1891,8 @@ class My_Form_Login extends Zend_Form
 
         <programlisting role="php"><![CDATA[
 $form = new My_Form_Login();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             そして、すべての機能はすでに準備済みの状態で、
@@ -1843,7 +1918,8 @@ class My_Form_Login extends Zend_Form
         ));
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 </sect1>
 <!--

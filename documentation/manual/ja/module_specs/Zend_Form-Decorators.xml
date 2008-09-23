@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.form.decorators">
     <title>Zend_Form_Decorator による独自のフォームマークアップの作成</title>
 
@@ -160,7 +160,8 @@ interface Zend_Decorator_Interface
     public function clearOptions();
     public function render($content);
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             よりお手軽に作成するには、<code>Zend_Decorator_Abstract</code>
@@ -190,7 +191,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
             $label .= '*';
         }
         $label .= ':';
-        return $element->getView()->formLabel($element->getName(), $label);
+        return $element->getView()
+                       ->formLabel($element->getName(), $label);
     }
 
     public function buildInput()
@@ -212,7 +214,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         if (empty($messages)) {
             return '';
         }
-        return '<div class="errors">' . $element->getView()->formErrors($messages) . '</div>';
+        return '<div class="errors">' .
+               $element->getView()->formErrors($messages) . '</div>';
     }
 
     public function buildDescription()
@@ -258,7 +261,8 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         }
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             そして、これをデコレータのパスに配置します。
@@ -266,11 +270,16 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
 
         <programlisting role="php"><![CDATA[
 // 特定の要素向け
-$element->addPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
+$element->addPrefixPath('My_Decorator',
+                        'My/Decorator/',
+                        'decorator');
 
 // すべての要素向け
-$form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
-?>]]></programlisting>
+$form->addElementPrefixPath('My_Decorator',
+                            'My/Decorator/',
+                            'decorator');
+]]>
+        </programlisting>
 
         <para>
             そうすれば、このデコレータを 'Composite'
@@ -280,7 +289,8 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
         <programlisting role="php"><![CDATA[
 // 既存のデコレータをこのひとつで置き換えます
 $element->setDecorators(array('Composite'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             この例では複数の要素のプロパティをもとに複雑な出力を作成するデコレータの
@@ -318,7 +328,8 @@ class My_Decorator_Errors
         }
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     
         <para>
             この例では、デコレータ名の最後の部分である 'Errors' が
@@ -327,6 +338,46 @@ class My_Decorator_Errors
             つまり、特にデコレータを変更しなくても出力が変わるということです
             既存のデコレータとあわせた名前のデコレータを作成すれば、
             要素のデコレータを変更しなくても出力を変更することができます。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.decorators.individual">
+        <title>個々のデコレータのレンダリング</title>
+
+        <para>
+            デコレータは特定の要素のメタデータやフォームを対象にしてデコレートすることが可能なので、
+            個別のデコレータをレンダリングすることができると便利です。
+            幸いにも、各フォーム形式
+            (フォーム、サブフォーム、表示グループ、要素)
+            のメソッドをオーバーロードすることでこれが可能となっています。
+        </para>
+
+        <para>
+            そのためには <code>render[DecoratorName]()</code> をコールします。
+            ここで、"[DecoratorName]" の部分はデコレータの "短い名前"
+            となります。オプションで、デコレートしたいコンテンツを渡すこともできます。
+            たとえば次のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// 要素ラベルデコレータのみをレンダリングします
+echo $element->renderLabel();
+
+// 表示グループ fieldset とそのコンテンツをレンダリングします
+echo $group->renderFieldset('fieldset content');
+
+// form HTML タグとそのコンテンツをレンダリングします
+echo $form->renderHtmlTag('wrap this content');
+]]></programlisting>
+
+        <para>
+            デコレータが存在しない場合は、例外が発生します。
+        </para>
+
+        <para>
+            これは、ViewScript デコレータを使用してフォームをレンダリングする際に特に有用です。
+            各要素にアタッチされているデコレータでコンテンツを生成させることで、
+            より手の込んだ制御が可能となります。
         </para>
     </sect2>
 </sect1>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.form.i18n">
     <title>Zend_Form の国際化</title>
 
@@ -57,7 +57,8 @@
                 <programlisting role="php"><![CDATA[
 // 'Zend_Translate' キーを使用します。$translate は Zend_Translate オブジェクトです
 Zend_Registry::set('Zend_Translate', $translate);
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     これは、<code>Zend_Form</code> や
@@ -75,7 +76,8 @@ Zend_Registry::set('Zend_Translate', $translate);
                 <programlisting role="php"><![CDATA[
 // すべてのバリデーションクラスに、指定した翻訳アダプタを使用させます
 Zend_Validate_Abstract::setDefaultTranslator($translate);
-?>]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -89,7 +91,8 @@ Zend_Validate_Abstract::setDefaultTranslator($translate);
 // すべてのフォームクラスで特定の翻訳アダプタを使用させます。
 // このアダプタは、検証エラーメッセージの翻訳にも用いられます。
 Zend_Form::setDefaultTranslator($translate);
-?>]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
 
             <listitem>
@@ -108,7 +111,8 @@ $form->setTranslator($translate);
 // 「この」要素のインスタンスで特定の翻訳アダプタを使用させます。
 // このアダプタは、この要素の検証エラーメッセージの翻訳にも用いられます。
 $element->setTranslator($translate);
-?>]]></programlisting>
+]]>
+                </programlisting>
             </listitem>
         </itemizedlist>
     </sect2>

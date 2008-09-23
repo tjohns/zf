@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -17,7 +17,8 @@
 
         <programlisting role="php"><![CDATA[
 $form = new Zend_Form;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             より高度に使いこなす際には <code>Zend_Form</code>
@@ -35,7 +36,8 @@ $form = new Zend_Form;
         <programlisting role="php"><![CDATA[
 $form->setAction('/resource/process')
      ->setMethod('post');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             このコードは、フォームのアクションをパーシャル URL
@@ -52,7 +54,8 @@ $form->setAction('/resource/process')
 
         <programlisting role="php"><![CDATA[
 $form->setAttrib('id', 'login');
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.elements">
@@ -128,7 +131,8 @@ $form->addElement(new Zend_Form_Element_Text('username'));
 
 // フォーム要素の型をフォームオブジェクトに渡します
 $form->addElement('text', 'username');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             デフォルトでは、バリデータやフィルタは一切含まれません。
@@ -155,7 +159,8 @@ $username->addValidator(new Zend_Validate_Alnum());
 
 // バリデータ名を渡します
 $username->addValidator('alnum');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             2 番目の方法を使用する場合、
@@ -166,7 +171,8 @@ $username->addValidator('alnum');
         <programlisting role="php"><![CDATA[
 // 正規表現パターンを渡します
 $username->addValidator('regex', false, array('/^[a-z]/i'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (2 番目のパラメータの意味は、
@@ -184,7 +190,8 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
         <programlisting role="php"><![CDATA[
 // この要素は必須です
 $username->setRequired(true);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             要素が必須な場合は、'NotEmpty' バリデータが
@@ -199,7 +206,8 @@ $username->setRequired(true);
 
         <programlisting role="php"><![CDATA[
 $username->addFilter('StringtoLower');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             これまでの内容をまとめると、要素の設定はこのようになります。
@@ -217,7 +225,8 @@ $username->addValidators(array('alnum',
     ))
     ->setRequired(true)
     ->addFilters(array('StringToLower'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
 
         <para>
@@ -241,7 +250,8 @@ $form->addElement('text', 'username', array(
     'required' => true,
     'filters'  => array('StringToLower'),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <note><para>
             同じオプションを指定した要素をいろんな場所で使用するような場合は、
@@ -268,7 +278,8 @@ echo $form->render($view);
 
 // 事前に setView() でビューオブジェクトが設定されているものとします
 echo $form;
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             デフォルトでは、<code>Zend_Form</code> と
@@ -282,7 +293,8 @@ echo $form;
 
         <programlisting role="php"><![CDATA[
 <?= $this->form ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             水面下では、<code>Zend_Form</code> は "デコレータ"
@@ -304,7 +316,8 @@ $element->addDecorators(array(
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             (&lt;HELPERNAME&gt; は使用しているビューヘルパーの名前で、
@@ -324,7 +337,8 @@ $element->addDecorators(array(
         <li>'123-abc' does not match against pattern '/^[a-z]/i'</li>
     </ul>
 </dd>
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             (フォーマットは異なるかもしれません)
@@ -353,7 +367,8 @@ $element->addDecorators(array(
 
         <programlisting role="php"><![CDATA[
 $element->setOrder(10);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             あるいは、要素を作成する際にオプションとして指定します。
@@ -361,7 +376,8 @@ $element->setOrder(10);
 
         <programlisting role="php"><![CDATA[
 $form->addElement('text', 'username', array('order' => 10));
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.validate">
@@ -388,7 +404,8 @@ if ($form->isValid($_POST)) {
 } else {
     // 失敗!
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             AJAX リクエストの場合は、特定の要素や要素群だけを検証することもあります。
@@ -403,7 +420,8 @@ if ($form->isValidPartial($_POST)) {
 } else {
     // いくつかの要素がバリデーションに失敗しました
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             さらに、<code>processAjax()</code>
@@ -420,7 +438,8 @@ if ($form->isValidPartial($_POST)) {
 
         <programlisting role="php"><![CDATA[
 $values = $form->getValues();
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             フィルタリング前の値を取得したい場合は次のようにします。
@@ -428,7 +447,8 @@ $values = $form->getValues();
 
         <programlisting role="php"><![CDATA[
 $unfiltered = $form->getUnfilteredValues();
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.form.quickstart.errorstatus">
@@ -449,7 +469,8 @@ if (!$form->isValid($_POST)) {
     $this->view->form = $form;
     return $this->render('form');
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             エラーの内容を調べるには二通りの方法があります。
@@ -492,8 +513,6 @@ if (!$form->isValid($_POST)) {
         </para>
 
         <programlisting role="php"><![CDATA[
-
-
 $form = new Zend_Form();
 $form->setAction('/user/login')
      ->setMethod('post');
@@ -516,7 +535,8 @@ $form->addElement($username)
      ->addElement($password)
      // addElement() をファクトリとして使用して 'Login' ボタンを作成します
      ->addElement('submit', 'login', array('label' => 'Login'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             次に、これを処理するためのコントローラを作成します。
@@ -554,7 +574,8 @@ class UserController extends Zend_Controller_Action
         // ここで認証処理を行います
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             フォームを表示するためのビュースクリプトは次のようになります。
@@ -563,7 +584,8 @@ class UserController extends Zend_Controller_Action
 <programlisting role="php"><![CDATA[
 <h2>Please login:</h2>
 <?= $this->form ?>
-]]></programlisting>
+]]>
+ </programlisting>
 
         <para>
             コントローラのコードをご覧になってお気づきの通り、
@@ -616,7 +638,8 @@ user.login.elements.password.options.required = true
 
 ; submit 要素
 user.login.elements.submit.type = "submit"
-]]></programlisting>
+]]>
+</programlisting>
 
         <para>
             そしてこれをフォームのコンストラクタに渡します。
@@ -625,7 +648,8 @@ user.login.elements.submit.type = "submit"
         <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini($configFile, 'development');
 $form   = new Zend_Form($config->user->login);
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             これでフォームの定義が完了しました。

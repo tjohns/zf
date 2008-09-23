@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -33,11 +33,14 @@ $inflector->setRules(array(
 ));
 
 $string   = 'camelCasedWords';
-$filtered = $inflector->filter(array('page' => $string)); // pages/camel-cased-words.html
+$filtered = $inflector->filter(array('page' => $string));
+// pages/camel-cased-words.html
 
 $string   = 'this_is_not_camel_cased';
-$filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_camel_cased.html
-?>]]></programlisting>
+$filtered = $inflector->filter(array('page' => $string));
+// pages/this_is_not_camel_cased.html
+]]>
+        </programlisting>
     </example>
 
     <sect2 id="zend.filter.inflector.operation">
@@ -91,7 +94,8 @@ $filtered = $inflector->filter(array('page' => $string)); // pages/this_is_not_c
         <programlisting role="php"><![CDATA[
 // ルールとして Zend_Filter_Word_CamelCaseToDash を使用します
 $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             別のパスを使用するには、プラグインローダへのプロキシとして
@@ -101,7 +105,8 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
             
         <programlisting role="php"><![CDATA[
 $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             あるいは、プラグインローダをインフレクタから取得して、
@@ -111,7 +116,8 @@ $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
         <programlisting role="php"><![CDATA[
 $loader = $inflector->getPluginLoader();
 $loader->addPrefixPath('My_Filter', 'My/Filter/');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             フィルタのパスを変更するための詳細なオプションは、<link
@@ -144,7 +150,8 @@ $inflector = new Zend_Filter_Inflector('#foo/#bar.#sfx', null, '#');
 
 // アクセサ経由
 $inflector->setTargetReplacementIdentifier('#');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             普通はコンストラクタでターゲットを指定することになるでしょう。
@@ -158,7 +165,8 @@ $inflector->setTargetReplacementIdentifier('#');
         <programlisting role="php"><![CDATA[
 $inflector = $layout->getInflector();
 $inflector->setTarget('layouts/:script.phtml');
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             さらに、クラスのメンバーを用意して
@@ -198,7 +206,8 @@ class Foo
         return $this;
     }
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.filter.inflector.rules">
@@ -239,7 +248,8 @@ $inflector->setStaticRule('suffix', 'phtml');
 
 // あとで変更します
 $inflector->setStaticRule('suffix', 'php');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 ターゲットと同様、静的ルールも参照で指定することができます。
@@ -280,7 +290,8 @@ class Foo
         return $this;
     }
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.filter.inflector.rules.filters">
@@ -337,7 +348,8 @@ $inflector->setFilterRule('script', array(
     'Word_CamelCaseToDash',
     new Zend_Filter_StringToLower()
 ));
-?>]]></programlisting>
+]]>
+            </programlisting>
         </sect3>
 
         <sect3 id="zend.filter.inflector.rules.multiple">
@@ -382,7 +394,8 @@ $inflector->addRules(array(
     // 静的なルール
     'suffix'      => 'phtml'
 ));
-?>]]></programlisting>
+]]>
+                </programlisting>
             </example>
         </sect3>
     </sect2>
@@ -487,7 +500,8 @@ $inflector = new Zend_Filter_Inflector($config);
 // あるいは setConfig() で
 $inflector = new Zend_Filter_Inflector();
 $inflector->setConfig($config);
-?>]]></programlisting>
+]]>
+            </programlisting>
         </example>
     </sect2>
 </sect1>

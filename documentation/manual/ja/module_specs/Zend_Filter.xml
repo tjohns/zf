@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.filter.introduction">
 
     <title>導入</title>
@@ -62,7 +62,8 @@
 $htmlEntities = new Zend_Filter_HtmlEntities();
 
 echo $htmlEntities->filter('&'); // &amp;
-echo $htmlEntities->filter('"'); // &quot;]]>
+echo $htmlEntities->filter('"'); // &quot;
+]]>
             </programlisting>
 
         </para>
@@ -83,7 +84,10 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             <code>get()</code> メソッドは自動的にクラスを読み込んでそのインスタンスを作成し、
             指定した入力に対して <code>filter()</code> メソッドを適用します。
 
-            <programlisting role="php"><![CDATA[echo Zend_Filter::get('&', 'HtmlEntities');]]></programlisting>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('&', 'HtmlEntities');
+]]>
+            </programlisting>
 
         </para>
 
@@ -91,7 +95,9 @@ echo $htmlEntities->filter('"'); // &quot;]]>
             フィルタクラスのコンストラクタにオプションを指定する必要がある場合は、
             それを配列で渡すことができます。
 
-            <programlisting role="php"><![CDATA[echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));]]>
+            <programlisting role="php"><![CDATA[
+echo Zend_Filter::get('"', 'HtmlEntities', array(ENT_QUOTES));
+]]>
             </programlisting>
 
         </para>

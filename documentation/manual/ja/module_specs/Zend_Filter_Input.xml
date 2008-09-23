@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -122,7 +122,8 @@ $filters = array(
 
 $validators = array(
     'account' => 'Alpha'
-);]]>
+);
+]]>
         </programlisting>
 
         <para>
@@ -142,7 +143,8 @@ $validators = array(
                     <programlisting role="php"><![CDATA[
 $validators = array(
     'month'   => 'Digits',
-);]]>
+);
+]]>
                     </programlisting>
                 </para>
             </listitem>
@@ -155,7 +157,8 @@ $digits = new Zend_Validate_Digits();
 
 $validators = array(
     'month'   => $digits
-);]]>
+);
+]]>
                     </programlisting>
                 </para>
             </listitem>
@@ -174,7 +177,8 @@ $validators = array(
         new Zend_Validate_Int(), // オブジェクトのインスタンス
         array('Between', 1, 12)  // 文字列とコンストラクタの引数
     )
-);]]>
+);
+]]>
                     </programlisting>
                 </para>
             </listitem>
@@ -201,7 +205,8 @@ $validators = array(
 $filters = array(
     '*'     => 'StringTrim',
     'month' => 'Digits'
-);]]>
+);
+]]>
         </programlisting>
 
     </sect2>
@@ -218,7 +223,8 @@ $filters = array(
         </para>
 
         <programlisting role="php"><![CDATA[
-$input = new Zend_Filter_Input($filters, $validators);]]>
+$input = new Zend_Filter_Input($filters, $validators);
+]]>
         </programlisting>
 
         <para>
@@ -234,7 +240,8 @@ $input = new Zend_Filter_Input($filters, $validators);]]>
         <programlisting role="php"><![CDATA[
 $data = $_GET;
 
-$input = new Zend_Filter_Input($filters, $validators, $data);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data);
+]]>
         </programlisting>
 
         <para>
@@ -244,7 +251,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data);]]>
 
         <programlisting role="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators);
-$input->setData($newData);]]>
+$input->setData($newData);
+]]>
         </programlisting>
 
         <para>
@@ -282,7 +290,8 @@ $input->setData($newData);]]>
             <programlisting role="php"><![CDATA[
 if ($input->isValid()) {
   echo "OK\n";
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -296,7 +305,8 @@ if ($input->isValid()) {
             <programlisting role="php"><![CDATA[
 if ($input->isValid('month')) {
   echo "'month' フィールドの内容は正しい形式です\n";
-}]]>
+}
+]]>
             </programlisting>
 
         </sect3>
@@ -337,7 +347,8 @@ if ($input->hasInvalid() || $input->hasMissing()) {
   $messages = $input->getMessages();
 }
 
-// getMessages() は単に、getInvalid() と getMissing() をマージしたものを返します
+// getMessages() は単に、getInvalid() と getMissing() を
+// マージしたものを返します
 
 if ($input->hasInvalid()) {
   $invalidFields = $input->getInvalid();
@@ -349,7 +360,8 @@ if ($input->hasMissing()) {
 
 if ($input->hasUnknown()) {
   $unknownFields = $input->getUnknown();
-}]]>
+}
+]]>
             </programlisting>
 
             <para>
@@ -392,7 +404,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 // もうひとつの方法
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setOptions($options);]]>
+$input->setOptions($options);
+]]>
             </programlisting>
 
             <para>
@@ -420,7 +433,8 @@ $input->setOptions($options);]]>
             <programlisting role="php"><![CDATA[
 $m = $input->month;                 // エスケープ済み (マジックメソッド)
 $m = $input->getEscaped('month');   // エスケープ済み
-$m = $input->getUnescaped('month'); // エスケープ前]]>
+$m = $input->getUnescaped('month'); // エスケープ前
+]]>
             </programlisting>
 
             <para>
@@ -450,7 +464,8 @@ $m = $input->getUnescaped('month'); // エスケープ前]]>
 
             <programlisting role="php"><![CDATA[
 $options = array('escapeFilter' => 'StringTrim');
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+]]>
             </programlisting>
 
             <para>
@@ -461,7 +476,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
 
             <programlisting role="php"><![CDATA[
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());]]>
+$input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
+]]>
             </programlisting>
 
             <para>
@@ -530,7 +546,8 @@ $filters = array(
         'Digits',        // 数値インデックスのフィルタ名 [0] 
         'fields' => 'mo' // 文字列インデックスのフィールド名 ['fields'] 
     ) 
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -567,7 +584,9 @@ $validators = array(
     )
 );
 // 仮想クラス Zend_Validate_StringEquals に、
-// ふたつのフィールド 'password1' および 'password2' の値を含む配列を渡します]]>
+// ふたつのフィールド 'password1' および 'password2'
+// の値を含む配列を渡します
+]]>
             </programlisting>
 
             <para>
@@ -602,7 +621,8 @@ $validators = array(
         'digits',
         'presence' => 'required'
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -646,7 +666,8 @@ $validators = array(
 $data = array();
 
 $input = new Zend_Filter_Input(null, $validators, $data);
-echo $input->month; // 1 を出力します]]>
+echo $input->month; // 1 を出力します
+]]>
             </programlisting>
 
             <para>
@@ -696,7 +717,8 @@ $validators = array(
         'Alnum',
         'allowEmpty' => true
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -724,7 +746,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 // 別の方法
 
 $input = new Zend_Filter_Input($filters, $validators, $data);
-$input->setOptions($options);]]>
+$input->setOptions($options);
+]]>
             </programlisting>
 
         </sect3>
@@ -762,7 +785,8 @@ $validators = array(
         'breakChainOnFailure' => true
     )
 );
-$input = new Zend_Filter_Input(null, $validators);]]>
+$input = new Zend_Filter_Input(null, $validators);
+]]>
             </programlisting>
 
             <para>
@@ -782,7 +806,8 @@ $input = new Zend_Filter_Input(null, $validators);]]>
             </para>
 
             <programlisting role="php"><![CDATA[
-// breakChainOnFailure 属性を個別に設定したバリデータチェインを作成します
+// breakChainOnFailure 属性を個別に設定した
+// バリデータチェインを作成します
 $chain = new Zend_Validate();
 $chain->addValidator(new Zend_Validate_Digits(), true);
 $chain->addValidator(new Zend_Validate_Between(1,12), false);
@@ -792,7 +817,8 @@ $chain->addValidator(new Zend_Validate_GreaterThan(0), true);
 $validators = array(
     'month' => $chain
 );
-$input = new Zend_Filter_Input(null, $validators);]]>
+$input = new Zend_Filter_Input(null, $validators);
+]]>
             </programlisting>
 
         </sect3>
@@ -824,7 +850,8 @@ $validators = array(
         'digits',
         'messages' => '月として指定できるのは数字のみです'
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -851,7 +878,8 @@ $validators = array(
             1 => '月として指定できるのは 1 から 12 までの値です'
         )
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -872,13 +900,16 @@ $validators = array(
             '月として指定できるのは数字のみです',
             array(
                 Zend_Validate_Between::NOT_BETWEEN =>
-                    '月の値 %value% は、%min% 以上 %max% 以下の値でなければなりません',
+                    '月の値 %value% は、' .
+                    '%min% 以上 %max% 以下の値でなければなりません',
                 Zend_Validate_Between::NOT_BETWEEN_STRICT =>
-                    '月の値 %value% は、%min% より大きく、かつ %max% より小さい値でなければなりません'
+                    '月の値 %value% は、%min% より大きく、' .
+                    'かつ %max% より小さい値でなければなりません'
             )
         )
     )
-);]]>
+);
+]]>
             </programlisting>
 
             <para>
@@ -915,7 +946,8 @@ $validators = array(
     )
 );
 
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+]]>
             </programlisting>
 
             <para>
@@ -949,7 +981,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
 
         <programlisting role="php"><![CDATA[
 $options = array('inputNamespace' => 'My_Namespace');
-$input = new Zend_Filter_Input($filters, $validators, $data, $options);]]>
+$input = new Zend_Filter_Input($filters, $validators, $data, $options);
+]]>
         </programlisting>
 
         <para>
@@ -963,7 +996,8 @@ $input->addNamespace('Other_Namespace');
 // 1. My_Namespace
 // 2. Other_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate]]>
+// 4. Zend_Validate
+]]>
         </programlisting>
 
         <para>
