@@ -275,7 +275,6 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         }
 
         $adapter = $this->getTransferAdapter();
-        $this->setValue($adapter->getFileName($this->getFullyQualifiedName()));
 
         if (!$this->isRequired()) {
             $adapter->setOptions(array('ignoreNoFile' => true));
@@ -372,5 +371,19 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getDestination()
     {
         return $this->getTransferAdapter()->getDestination($this->getName());
+    }
+
+    /**
+     * Get the final filename
+     * 
+     * @param  string $value (Optional) Element or file to return
+     * @return string
+     */
+    public function getFileName($value = null)
+    {
+        if (empty($value)) {
+            $value = $this->getName();
+        }
+        return $this->getTransferAdapter()->getFileName($value);
     }
 }
