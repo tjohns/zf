@@ -47,7 +47,7 @@
                     <entry>Zend_Measure_Binary</entry>
                     <entry>Byte | <code>b</code>
                     </entry>
-                    <entry><code>Zend_Measure_Binary</code> covers binary convertions.</entry>
+                    <entry><code>Zend_Measure_Binary</code> covers binary conversions.</entry>
                 </row>
                 <row>
                     <entry>Capacitance</entry>
@@ -267,7 +267,7 @@
         <para>
             Some popular binary conventions, include terms like kilo-, mega-, giga, etc. in normal language use imply
             base 10, such as 1000 or 10³. However, in the binary format for computers these terms have to be seen for a
-            convertion factor of 1024 instead of 1000. To preclude confusions a few years ago the notation BI was
+            conversion factor of 1024 instead of 1000. To preclude confusions a few years ago the notation BI was
             introduced. Instead of kilobyte, kibibyte for kilo-binary-byte should be used.
         </para>
 
@@ -285,7 +285,7 @@
         <title>Hints for Zend_Measure_Number</title>
 
         <para>
-            The best known number format is the decimal system. Additionaly this class supports the octal system, the
+            The best known number format is the decimal system. Additionally this class supports the octal system, the
             hexadecimal system, the binary system, the roman number system and some other less popular systems. Note
             that only the decimal part of numbers is handled. Any fractional part will be stripped.
         </para>
@@ -297,7 +297,7 @@
         <title>Roman numbers</title>
 
         <para>
-            For the roman numbersystem digits greater 4000 are supported. In reality these digits are shown with a
+            For the roman number system digits greater 4000 are supported. In reality these digits are shown with a
             crossbeam on top of the digit. As the crossbeam can not be shown within the computer, an underline has to be
             used instead of it.
         </para>

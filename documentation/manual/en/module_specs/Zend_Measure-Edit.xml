@@ -116,7 +116,7 @@ echo $sum; // outputs "300 cm"
         <note>
             <title>Automatic conversion</title>
             <para>
-                Adding one object to another will automatically convert it to the correct unit. It is not neccessary to
+                Adding one object to another will automatically convert it to the correct unit. It is not necessary to
                 call
                 <link linkend="zend.measure.edit.convert"><code>convertTo()</code>
                 </link>

@@ -5,7 +5,7 @@
       <title>Introduction</title>
 
       <para><code>Zend_Mime_Message</code> represents a MIME compliant message
-      that can contain one or more seperate Parts (Represented as <link
+      that can contain one or more separate Parts (Represented as <link
       linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> objects). With
       <code>Zend_Mime_Message</code>, MIME compliant multipart messages can be generated from
       <code>Zend_Mime_Part</code> objects. Encoding and Boundary handling are handled transparently

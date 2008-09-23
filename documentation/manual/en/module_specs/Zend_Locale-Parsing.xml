@@ -5,7 +5,7 @@
     <para>
         <code>Zend_Locale_Format</code> is a internal component used by Zend_Locale. All locale aware classes use
         <code>Zend_Locale_Format</code> for normalization and localization of numbers and dates. Normalization involves
-        parsing input from a variety of data respresentations, like dates, into a standardized, structured
+        parsing input from a variety of data representations, like dates, into a standardized, structured
         representation, such as a PHP array with year, month, and day elements.
     </para>
 
@@ -160,8 +160,8 @@ print $number;
         <para>
             Using the option 'number_format' a self defined format for generating a number can be defined.
             The format itself has to be given in CLDR format as described below. The locale is used to get
-            seperation, precission and other number formatting signs from it. German for example defines
-            ',' as precission seperation and in english the '.' sign is used.
+            separation, precision and other number formatting signs from it. German for example defines
+            ',' as precision separation and in English the '.' sign is used.
         </para>
 
         <table id="zend.locale.number.localize.table-1">
@@ -179,31 +179,31 @@ print $number;
                 <tbody>
                     <row>
                         <entry>#0</entry>
-                        <entry>Generates a number without precission and seperation</entry>
+                        <entry>Generates a number without precision and separation</entry>
                         <entry>#0</entry>
                         <entry>1234567</entry>
                     </row>
                     <row>
                         <entry>,</entry>
-                        <entry>Generates a seperation with the length from seperation to next seperation or to 0</entry>
+                        <entry>Generates a separation with the length from separation to next separation or to 0</entry>
                         <entry>#,##0</entry>
                         <entry>1,234,567</entry>
                     </row>
                     <row>
                         <entry>#,##,##0</entry>
-                        <entry>Generates a standard seperation of 3 and all following seperations with 2</entry>
+                        <entry>Generates a standard separation of 3 and all following separations with 2</entry>
                         <entry>#,##,##0</entry>
                         <entry>12,34,567</entry>
                     </row>
                     <row>
                         <entry>.</entry>
-                        <entry>Generates a precission</entry>
+                        <entry>Generates a precision</entry>
                         <entry>#0.#</entry>
                         <entry>1234567.1234</entry>
                     </row>
                     <row>
                         <entry>0</entry>
-                        <entry>Generates a precission with a defined length</entry>
+                        <entry>Generates a precision with a defined length</entry>
                         <entry>#0.00</entry>
                         <entry>1234567.12</entry>
                     </row>

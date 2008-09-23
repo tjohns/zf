@@ -44,7 +44,7 @@ public $charset;
 
     <para>
         <code>getHeaders()</code> returns the Mime-Headers for the
-        MimePart as generated from the information in the publicly accessable
+        MimePart as generated from the information in the publicly accessible
         attributes. The attributes of the object need to be set correctly before
         this method is called.
         <itemizedlist>

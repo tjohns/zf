@@ -211,7 +211,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
         </example>
 
         <para>
-            The seach algorithm used by <code>Zend_Locale</code> for automatic selection of a locale uses three sources
+            The search algorithm used by <code>Zend_Locale</code> for automatic selection of a locale uses three sources
             of information:
             <orderedlist>
                 <listitem>
@@ -270,7 +270,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                     <para>
                         If a user provides more than one locale within his browser, <code>Zend_Locale</code>
                         will use the first found locale. If the user does not provide a locale or the script is
-                        being called from the commandline the automatic locale <code>'environment'</code>
+                        being called from the command line the automatic locale <code>'environment'</code>
                         will automatically be used and returned.
                     </para>
                 </listitem>
@@ -290,11 +290,11 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                     <para>
                         <code>'auto'</code> - <code>Zend_Locale</code> should automatically detect any locale
                         which can be worked with. It will first search for a users locale and then, if not
-                        successfull, search for the host locale.
+                        successful, search for the host locale.
                     </para>
                     <para>
                         If no locale can be detected, it will throw an exception and tell you that the
-                        automatical detection has been failed.
+                        automatic detection has been failed.
                     </para>
                 </listitem>
             </orderedlist>
@@ -321,13 +321,13 @@ $date = new Zend_Date('auto');
 
         <para>
             In some environments it is not possible to detect a locale automatically. You can expect this
-            behaviour when you get an request from commandline or the requesting browser has no language tag
-            set and additionally your server has the default locale 'C' set or another properitary locale.
+            behaviour when you get an request from command line or the requesting browser has no language tag
+            set and additionally your server has the default locale 'C' set or another proprietary locale.
         </para>
 
         <para>
             In such cases <code>Zend_Locale</code> will normally throw an exception with a message that
-            the automatic detection of any locale was not successfull. You have two options to handle such
+            the automatic detection of any locale was not successful. You have two options to handle such
             a situation. Either through setting a new locale per hand, or defining a default locale.
         </para>
 

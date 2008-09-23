@@ -41,7 +41,7 @@
 
         <para>
             The OpenID authentication process is initiated by the end-user by
-            filling in their identification into the appropriate form and submiting
+            filling in their identification into the appropriate form and submitting
             it. The following example shows a simple form that accepts an OpenID
             identifier. Note that the example shows only a login.
         </para>
@@ -101,7 +101,7 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         <para>
             On success, <code>Zend_OpenId_Consumer::login()</code> never
             returns, because it performs an HTTP redirection, however in case of error
-            it may return false. Errors may occure due to an invalid identity, dead
+            it may return false. Errors may occur due to an invalid identity, dead
             provider, communication error, etc
         </para>
 
@@ -185,11 +185,11 @@ if (isset($_POST['openid_action']) &&
         </example>
 
         <para>
-            In addition, this code differenciates between canceled and wrong
-            authentication responses. The provider retuns a canceled responce in cases
+            In addition, this code differentiates between canceled and wrong
+            authentication responses. The provider returns a canceled response in cases
             when an identity provider doesn't know the supplied identity or the user
             is not logged-in or they don't trust the site. A wrong response assumes
-            that the responce is wrong or incorrectly signed.
+            that the response is wrong or incorrectly signed.
         </para>
     </sect2>
 
@@ -238,7 +238,7 @@ if (!$consumer->login($_POST['openid_identifier'],
     <sect2 id="zend.openid.consumer.check">
         <title>Immediate Check</title>
         <para>
-            In some situations it is necissary to see if a user is already
+            In some situations it is necessary to see if a user is already
             logged-in into a trusted OpenID server without any interaction with the
             user. The <code>Zend_OpenId_Consumer::check</code> method does precisely
             that. It is executed with exactly the same arguments as
@@ -289,15 +289,15 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
         <para>
             The following example demonstrates a simple storage that uses
             <code>Zend_Db</code> as the backend containing three groups of functions.
-            the first is for working with associations, the second is to cache
-            discovery information and the third is to check responce uniqueness. The
+            The first is for working with associations, the second is to cache
+            discovery information and the third is to check response uniqueness. The
             class is implemented in such a way that it can be easily used with
             existing or new databases. If necessary, it will create database tables if
             they don't exist.
         </para>
 
         <example id="zend.openid.consumer.example-5">
-            <title>Databse Storage</title>
+            <title>Database Storage</title>
             <programlisting role="php"><![CDATA[
 class DbStorage extends Zend_OpenId_Consumer_Storage
 {
@@ -664,7 +664,7 @@ if ($consumer->verify($_GET, $id, $sreg)) {
             with <code>Zend_OpenId_Consumer</code>. The following example shows how
             <code>OpenIdAdapter</code> implements
             the <code>Zend_Auth_Adapter_Interface</code> with the
-            <code>authenticate</code> method.This performs an authentication query and
+            <code>authenticate</code> method. This performs an authentication query and
             verification.
         </para>
 
