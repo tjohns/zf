@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11501 -->
 <sect1 id="zend.config.theory_of_operation">
     <title>Aspect théorique</title>
 
@@ -25,7 +25,10 @@
     (lecture seule), et une affectation (par exemple, <code>$config-&gt;database-&gt;host = 'example.com'</code>) lèvera
     une exception. Ce comportement par défaut peut cependant être surchargé par le constructeur pour permettre la
     modification des valeurs de données. De plus, quand les modifications sont autorisées, <code>Zend_Config</code>
-    supporte l'effacement de valeurs (c'est-à-dire <code>unset($config-&gt;database-&gt;host);</code>). <note>
+    supporte l'effacement de valeurs (c'est-à-dire <code>unset($config-&gt;database-&gt;host);</code>). La méthode
+    <code>readOnly()</code> peut être utilisée pour déterminer si les modifications sont autorisés pour un objet
+    <code>Zend_Config</code> donné et la méthode <code>setReadOnly()</code> peut être utilisée pour empêcher toute
+    nouvelle modification d'un objet <code>Zend_Config</code> qui aurait été créé en autorisant le modifications. <note>
             <para>Il est important de ne pas confondre des modifications en cours de script avec l'enregistrement des
             données de configuration dans le support de stockage spécifique. Les outils pour créer et modifier des
             données de configuration pour différents supports de stockage ne concernent pas <code>Zend_Config</code>.
@@ -52,5 +55,9 @@
     la fonction <code>merge()</code>. Par exemple, prenons <code>$config</code> et <code>$localConfig</code>, vous
     pouvez fusionner <code>$localConfig</code> dans <code>$config</code> en utilisant
     <code>$config-&gt;merge($localConfig);</code>. Les éléments de <code>$localConfig</code> surchargeront les éléments
-    nommés de la même manière dans <code>$config</code>.</para>
+    nommés de la même manière dans <code>$config</code>. <note>
+            <para>L'objet <code>Zend_Config</code> qui réalise la fusion doit avoir été construit en autorisant les
+            modifications, en fournissant <code>true</code> en tant que second paramètre du constructeur. La méthode
+            setReadOnly() peut être utilisée pour empêcher toute nouvelle modification après la fin de la fusion.</para>
+        </note></para>
 </sect1>

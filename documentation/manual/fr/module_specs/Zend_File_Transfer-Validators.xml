@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11430 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.file.transfer.validators">
     <title>Validateurs pour Zend_File_Transfer</title>
 
@@ -12,6 +12,18 @@
         <listitem>
             <para><code>Count</code> : ce validateur vérifie le nombre de fichiers. Il est possible de définir un
             minimum et un maximum et une erreur sera lancée s'ils sont dépassés.</para>
+        </listitem>
+
+        <listitem>
+            <para><code>ExcludeExtension</code> : ce validateur vérifie l'extension des fichiers. Il lancera une erreur
+            quand un fichier aura une extension non souhaitée. Ainsi vous pouvez empêcher la validation de certaines
+            extensions.</para>
+        </listitem>
+
+        <listitem>
+            <para><code>ExcludeMimeType</code> : ce validateur vérifie le type MIME des fichiers. Il est aussi capable
+            de valider un groupe de type MIME et générera une erreur quand le type MIME d'un fichier donné
+            correspond.</para>
         </listitem>
 
         <listitem>
@@ -65,6 +77,12 @@
         les validateurs.</para>
 
         <itemizedlist>
+            <listitem>
+                <para><code>isValid($files = null)</code> : vérifie le(s) fichier(s) fourni(s) avec tout le jeu de
+                validateurs paramétrés. <code>$files</code> peut être soit un vrai nom de fichier, soit des noms
+                d'éléments de formulaire ou des noms de fichiers temporaires.</para>
+            </listitem>
+
             <listitem>
                 <para><code>addValidator($validator, $breakChainOnFailure, $options = null, $files = null)</code> :
                 ajoute le validateur à la pile des validateurs (optionnellement seul le(s) fichier(s) spécifié(s)).
@@ -170,6 +188,41 @@ $upload->addValidator('Size', false, 20000)
             <para>Notez que même si l'ajout du même validateur plusieurs fois est autorisé, faire ceci peut entraîner
             des problèmes si vous utilisez différentes options pour le même validateur.</para>
         </note>
+
+        <para>Et pour finir vous pouvez tout simplement vérifier le(s) fichier(s) en appelant
+        <code>isValid()</code>.</para>
+
+        <example id="zend.file.transfer.validators.usage.exampleisvalid">
+            <title>Valider les fichiers</title>
+
+            <para><code>isValid()</code> accepte les fichiers uploadés ou télécharger, le nom de fichier temporaire et
+            bien sûr le nom de l'élément de formulaire. Si aucun paramètre ou <code>null</code> est fourni, tous les
+            fichiers seront vérifiés.</para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Set a filesize with 20000 bytes
+$upload->addValidator('Size', false, 20000)
+       ->addValidator('Count', false, 2)
+       ->addValidator('Filessize', false, 25000);
+
+if ($upload->isValid()) {
+    print "Validation failure";
+}
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>Notez que <code>isValid()</code> sera automatiquement appelé quand vous recevez les fichiers et qu'il
+            n'a pas été appelé auparavant.</para>
+        </note>
+
+        <para>Quand une validation a échouée, c'est probablement intéressant d'avoir des informations sur les problèmes
+        rencontrés. A cette fin, vous pouvez utiliser la méthode <code>getMessages()</code> qui retourne tous les
+        messages de validation sous la forme d'un tableau, <code>getErrors()</code> qui retourne tous les codes
+        d'erreurs et <code>hasErrors()</code> qui retourne <code>true</code> dès qu'une erreur de validation est
+        rencontrée.</para>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
@@ -223,6 +276,101 @@ $upload->addValidator('Count', false, array(1, 5);
         <note>
             <para>Notez que ce validateur stocke le nombre de fichiers vérifiés en interne. Le fichier qui excédera le
             maximum sera retourné en tant qu'erreur.</para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludeextension">
+        <title>&gt;Validateur <emphasis role="strong">ExcludeExtension</emphasis></title>
+
+        <para>Le validateur <code>ExcludeExtension</code> vérifie l'extension des fichiers fournis. Il supporte les
+        options suivantes :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><code>extension</code> : vérifie qu'un fichier n'utilise pas cette extension.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>case</code> : paramètre une validation qui tient compte de la casse. Par défaut, ce n'est
+                pas sensible à la casse. Notez que cette option est utilisée pour toutes les extensions.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Ce validateur accepte des extensions multiples soit sous la forme d'une chaîne utilisant le caractère
+        virgule (",") comme séparateur ou sous la forme d'un tableau. Vous pouvez aussi utiliser les méthodes
+        <code>setExtension()</code>, <code>addExtension()</code>, et <code>getExtension()</code> pour paramétrer et
+        récupérer les extensions.</para>
+
+        <para>Dans certains cas, il est utile vérifier aussi la casse. A cette fin le constructeur autorise un second
+        paramètre <code>$case</code> qui, s'il est réglé à <code>true</code>, validera l'extension en vérifiant aussi la
+        casse.</para>
+
+        <example id="zend.file.transfer.validators.excludeextension.example">
+            <title>Utiliser le validateur ExcludeExtension</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Refuser les fichiers avec l'extension php ou exe
+$upload->addValidator('ExcludeExtension', false, 'php,exe');
+
+// Refuser les fichiers avec l'extension php ou exe en utilisant
+// la notation de type tableau
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>Notez que ce validateur ne vérifie que l'extension de fichier. Il ne vérifie pas le type MIME réel du
+            fichier.</para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludemimetype">
+        <title>&gt;Validateur <emphasis role="strong">ExcludeMimeType</emphasis></title>
+
+        <para>Le validateur <code>ExcludeMimeType</code> vérifie le type MIME des fichiers transférés. Il supporte les
+        options suivantes :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><code>MimeType</code>: paramètre le type MIME à vérifier.</para>
+
+                <para>Avec cette option vous pouvez définir le(s) type(s) MIME que vous souhaitez exclure.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Ce validateur accepte des types MIME multiples soit sous la forme d'une chaîne utilisant le caractère
+        virgule (",") comme séparateur ou sous la forme d'un tableau. Vous pouvez aussi utiliser les méthodes
+        <code>setMimeType()</code>, <code>addMimeType()</code>, et <code>getMimeType()</code> pour paramétrer et
+        récupérer les types MIME.</para>
+
+        <example id="zend.file.transfer.validators.excludemimetype.example">
+            <title>Utiliser le validateur ExcludeMimeType</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Refuser le type MIME d'image gif pour tous les fichiers
+$upload->addValidator('ExcludeMimeType', false, 'image/gif');
+
+// Refuser le type MIME d'image gif et jpg pour tous les fichiers
+$upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg');
+
+// Refuser les types MIME du groupe image pour tous les fichiers
+$upload->addValidator('ExcludeMimeType', false, 'image');
+]]></programlisting>
+        </example>
+
+        <para>L'exemple ci-dessus montre qu'il est aussi possible de limiter le type MIME accepté à un groupe de type
+        MIME. Pour refuser toutes les images utilisez simplement "image" en tant que type MIME. Ceci peut être appliqué
+        à tous les groupes de type MIME comme "image", "audio", "video", "text" et plus encore.</para>
+
+        <note>
+            <para>Notez que refuser un groupe de type MIME refusera tous les membres de ce groupe même si ce n'est pas
+            votre intention. Par exemple quand vous refusez "image", vous refusez donc "image/jpeg" ou "image/vasa".
+            Quand vous n'êtes pas sûr de vouloir refuser tous les types, vous devriez définir individuellement les types
+            MIME plutôt que le groupe complet.</para>
         </note>
     </sect2>
 
@@ -485,7 +633,7 @@ $upload->addValidator('MimeType', false, 'image');
         appliqué à tous les groupes de type MIME comme "image", "audio", "video", "text" et plus encore.</para>
 
         <note>
-            <para>Notez qu'autoriser un groupe de type MIME acceptera tous les membres e ce groupe même si votre
+            <para>Notez qu'autoriser un groupe de type MIME acceptera tous les membres de ce groupe même si votre
             application ne les supporte pas. Par exemple quand vous autorisez "image", vous autorisez donc
             "image/xpixmap" ou "image/vasa", ce qui peut être problématique. Quand vous n'êtes pas sûr que votre
             application supporte tous les types, vous devriez définir individuellement les types MIME plutôt que le
