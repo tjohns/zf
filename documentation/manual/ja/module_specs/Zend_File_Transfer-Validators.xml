@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11474 -->
+<!-- EN-Revision: 11476 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -26,6 +26,14 @@
                 <code>ExcludeExtension</code>: このバリデータはファイルの拡張子をチェックします。
                 渡されたファイルの拡張子が定義済みのものだった場合にエラーをスローします。
                 これにより、特定の拡張子だけを除外できるようになります。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ExcludeMimeType</code>: このバリデータはファイルの mimetype をチェックします。
+                mimetype の種類を検証し、指定したファイルの mimetype
+                がそれと一致するときにエラーをスローします。
             </para>
         </listitem>
 
@@ -436,6 +444,70 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
             <para>
                 このバリデータがチェックするのはファイルの拡張子のみであることに注意しましょう。
                 実際の MIME タイプなどはチェックしません。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludemimetype">
+        <title><emphasis role="strong">ExcludeMimeType</emphasis> バリデータ</title>
+
+        <para>
+            <code>ExcludeMimeType</code> バリデータは、
+            転送されるファイルの mimetype をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: 検証したい mimetype 形式を設定します。
+                </para>
+
+                <para>
+                    このオプションで、許可したくないファイルの mimetype を定義することができます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            このバリデータで複数の mimetype を指定するには、
+            カンマ区切りの文字列あるいは配列を使用します。
+            <code>setMimeType()</code>、<code>addMimeType()</code> および
+            <code>getMimeType()</code> といったメソッドで mimetype の設定や取得が可能です。
+        </para>
+
+        <example id="zend.file.transfer.validators.excludemimetype.example">
+            <title>ExcludeMimeType バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// すべてのファイルで gif 画像の mimetype を許可しません
+$upload->addValidator('ExcludeMimeType', false, 'image/gif');
+
+// すべてのファイルで gif 画像および jpg 画像の mimetype を許可しません
+$upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg');
+
+// すべてのファイルで画像を許可しません
+$upload->addValidator('ExcludeMimeType', false, 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            上の例で示したように、複数の mimetype をひとつのグループとして扱うこともできます。
+            画像ファイルならすべて許可したいという場合は、mimetype に 'image' と指定します。
+            'image' 以外にも 'audio'、'video'、'text などが使用可能です。
+        </para>
+
+        <note>
+            <para>
+                mimetype のグループを拒否してしまうと、意図していないものも含めて
+                そのグループのすべての形式のファイルを拒否してしまうことに注意しましょう。
+                たとえば 'image' を拒否したら 'image/jpeg' や 'image/vasa'
+                などすべての画像形式を拒否することになります。
+                すべての形式を拒否していいのかどうか不安な場合は、
+                グループ指定ではなく個別の mimetype を指定するようにしましょう。
             </para>
         </note>
     </sect2>
