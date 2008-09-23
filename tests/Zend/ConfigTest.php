@@ -411,5 +411,31 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('parent', $parent->key->nested, '$parent has been overridden');
         
     }
+    
+    /**
+     * @group ZF-3575
+     *
+     */
+    public function testMergeHonoursAllowModificationsFlagAtAllLevels()
+    {
+        $config = new Zend_Config(array('key' => array('nested' => 'yes'), 'key2'=>'yes'), false);
+        $config2 = new Zend_Config(array(), true);
+
+        $config2->merge($config);
+        try {
+            $config2->key2 = 'no';
+        }  catch (Zend_Config_Exception $e) {
+            $this->fail('Unexpected exception at top level has been raised: ' . $e->getMessage());
+        }
+        $this->assertEquals('no', $config2->key2);
+
+        try {
+            $config2->key->nested = 'no';
+        }  catch (Zend_Config_Exception $e) {
+            $this->fail('Unexpected exception on nested object has been raised: ' . $e->getMessage());
+        }
+        $this->assertEquals('no', $config2->key->nested);
+        
+    }
 }
 

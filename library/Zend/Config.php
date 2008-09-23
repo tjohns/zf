@@ -325,12 +325,16 @@ class Zend_Config implements Countable, Iterator
         foreach($merge as $key => $item) {
             if(array_key_exists($key, $this->_data)) {
                 if($item instanceof Zend_Config && $this->$key instanceof Zend_Config) {
-                    $this->$key = $this->$key->merge($item);
+                    $this->$key = $this->$key->merge(new Zend_Config($item->toArray(), !$this->readOnly()));
                 } else {
                     $this->$key = $item;
                 }
             } else {
-                $this->$key = $item;
+                if($item instanceof Zend_Config) {
+                    $this->$key = new Zend_Config($item->toArray(), !$this->readOnly());
+                } else {
+                    $this->$key = $item;
+                }
             }
         }
 
@@ -347,7 +351,17 @@ class Zend_Config implements Countable, Iterator
     {
         $this->_allowModifications = false;
     }
-
+    
+    /**
+     * Returns if this Zend_Config object is read only or not.
+     *
+     * @return boolean
+     */
+    public function readOnly()
+    {
+        return !$this->_allowModifications;
+    }
+    
     /**
      * Throws an exception if $extendingSection may not extend $extendedSection,
      * and tracks the section extension if it is valid.
