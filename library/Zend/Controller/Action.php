@@ -18,22 +18,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/** Zend_Controller_Exception */
-require_once 'Zend/Controller/Action/Exception.php';
-
 /** Zend_Controller_Action_HelperBroker */
 require_once 'Zend/Controller/Action/HelperBroker.php';
 
 /** Zend_Controller_Front */
 require_once 'Zend/Controller/Front.php';
-
-/** Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Response_Abstract */
-require_once 'Zend/Controller/Response/Abstract.php';
-
 
 /**
  * @category   Zend
@@ -175,6 +164,7 @@ abstract class Zend_Controller_Action
         }
         $baseDir = dirname($dirs[$module]) . DIRECTORY_SEPARATOR . 'views';
         if (!file_exists($baseDir) || !is_dir($baseDir)) {
+            require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Exception('Missing base view directory ("' . $baseDir . '")');
         }
 
@@ -269,6 +259,7 @@ abstract class Zend_Controller_Action
         if (null === $action) {
             $action = $request->getActionName();
         } elseif (!is_string($action)) {
+            require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Exception('Invalid action specifier for view render');
         }
 
@@ -474,6 +465,7 @@ abstract class Zend_Controller_Action
         if ('Action' == substr($methodName, -6)) {
             require_once 'Zend/Controller/Action/Exception.php';
             $action = substr($methodName, 0, strlen($methodName) - 6);
+            require_once 'Zend/Controller/Action/Exception.php';
             throw new Zend_Controller_Action_Exception(sprintf('Action "%s" does not exist and was not trapped in __call()', $action), 404);
         }
 

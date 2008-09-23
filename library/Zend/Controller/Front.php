@@ -31,18 +31,6 @@ require_once 'Zend/Controller/Exception.php';
 /** Zend_Controller_Plugin_Broker */
 require_once 'Zend/Controller/Plugin/Broker.php';
 
-/** Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Router_Interface */
-require_once 'Zend/Controller/Router/Interface.php';
-
-/** Zend_Controller_Dispatcher_Interface */
-require_once 'Zend/Controller/Dispatcher/Interface.php';
-
-/** Zend_Controller_Response_Abstract */
-require_once 'Zend/Controller/Response/Abstract.php';
-
 /**
  * @category   Zend
  * @package    Zend_Controller
