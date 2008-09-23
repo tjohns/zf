@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base の使用法</title>
     <para>
@@ -104,7 +104,8 @@
             <para>
                 以下の例は、ClientAuth 認証を使用した Base サービスクラスを作成するものです。
             </para>
-            <programlisting role="php"><![CDATA[// ClientAuth 認証用のパラメータ
+            <programlisting role="php"><![CDATA[
+// ClientAuth 認証用のパラメータ
 $service = Zend_Gdata_Gbase::AUTH_SERVICE_NAME;
 $user = "sample.user@gmail.com";
 $pass = "pa$$w0rd";
@@ -113,8 +114,9 @@ $pass = "pa$$w0rd";
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 
 // Base サービスのインスタンスを作成します
-$service = new Zend_Gdata_Gbase($client);]]>
-</programlisting>
+$service = new Zend_Gdata_Gbase($client);
+]]>
+            </programlisting>
 <para>AuthSub を使用した Base サービスの作成方法も同様ですが、少し冗長になります。</para>
 <programlisting role="php"><![CDATA[
 
@@ -127,9 +129,14 @@ function getCurrentUrl()
     global $_SERVER;
 
     // php_self をフィルタリングし、セキュリティ脆弱性を避けます
-    $php_request_uri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $php_request_uri =
+        htmlentities(substr($_SERVER['REQUEST_URI'],
+                            0,
+                            strcspn($_SERVER['REQUEST_URI'], "\n\r")),
+                     ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) &&
+        strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
@@ -145,8 +152,9 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** AuthSub 認証済みの HTTP を取得し、必要に応じて
- *  AuthSub サーバにリダイレクトします
+/**
+ * AuthSub 認証済みの HTTP を取得し、必要に応じて
+ * AuthSub サーバにリダイレクトします
  */
 function getAuthSubHttpClient()
 {
@@ -163,7 +171,10 @@ function getAuthSubHttpClient()
 
         // ユーザを AuthSub サーバにリダイレクトし、サインインさせます
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session);
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
+                                                             $scope,
+                                                             $secure,
+                                                             $session);
          header("HTTP/1.0 307 Temporary redirect");
 
          header("Location: " . $authSubUrl);
@@ -194,12 +205,15 @@ session_start();
 
 // Base サービスのインスタンスを作成し、必要に応じて
 // AuthSub サーバにリダイレクトします
-$service = new Zend_Gdata_Gbase(getAuthSubHttpClient());]]>
-</programlisting>
+$service = new Zend_Gdata_Gbase(getAuthSubHttpClient());
+]]>
+ </programlisting>
 <para>最後に、snippets フィード用の未認証のサーバを作成する方法を示します。</para>
-<programlisting role="php"><![CDATA[// Base サービスのインスタンスを、未認証の HTTP クライアントで作成します
-$service = new Zend_Gdata_Gbase();]]>
-            </programlisting>
+<programlisting role="php"><![CDATA[
+// Base サービスのインスタンスを、未認証の HTTP クライアントで作成します
+$service = new Zend_Gdata_Gbase();
+]]>
+ </programlisting>
         </sect3>
     </sect2>
     <sect2 id="zend.gdata.gbase.retrieve">
@@ -238,7 +252,8 @@ $query->setBq('[title:Programming]');
 $query->setOrderBy('modification_time');
 $query->setSortOrder('descending');
 $query->setMaxResults('5');
-$feed = $service->getGbaseItemFeed($query);]]>
+$feed = $service->getGbaseItemFeed($query);
+]]>
                 </programlisting>
                 <para>
                     使用できるパラメータの一覧は、Customer Items フィードのドキュメントにある
@@ -260,7 +275,8 @@ $query->setBq('[title:Programming]');
 $query->setOrderBy('modification_time');
 $query->setSortOrder('descending');
 $query->setMaxResults('5');
-$feed = $service->getGbaseSnippetFeed($query);]]>
+$feed = $service->getGbaseSnippetFeed($query);
+]]>
                 </programlisting>
                 <para>
                     使用できるパラメータの一覧は、Snippets フィードのドキュメントにある
@@ -286,7 +302,8 @@ foreach ($feed->entries as $entry) {
   foreach ($baseAttributes as $attr) {
     echo "属性 " . $attr->name . " : " . $attr->text . "<br>";
   }
-}]]>
+}
+]]>
             </programlisting>
             <para>
                 あるいは、特定の属性の名前を指定してそれにマッチする結果を取得することもできます。
@@ -298,7 +315,8 @@ foreach ($feed->entries as $entry) {
   foreach ($baseAttributes as $attr) {
     echo "主原料: " . $attr->text . "<br>";
   }
-}]]>
+}
+]]>
             </programlisting>
         </sect3>
     </sect2>
@@ -352,7 +370,8 @@ $newEntry->addGbaseAttribute("year", "2007", "number");
 $newEntry->addGbaseAttribute("payment_accepted", "Google Checkout", "text");
 
 $dryRun = true;
-$createdEntry = $service->insertGbaseItem($newEntry, $dryRun);]]>
+$createdEntry = $service->insertGbaseItem($newEntry, $dryRun);
+]]>
             </programlisting>
         </sect3>
         <sect3 id="zend.gdata.gbase.crud.modify">
@@ -420,7 +439,8 @@ $entry->save($dryRun);
             </para>
             <programlisting role="php"><![CDATA[
 $dryRun = false;
-$service->deleteGbaseItem($entry, $dryRun);]]>
+$service->deleteGbaseItem($entry, $dryRun);
+]]>
             </programlisting>
             <para>
                 あるいは、<code>Zend_Gdata_Gbase_ItemEntry</code> オブジェクトの
@@ -428,7 +448,8 @@ $service->deleteGbaseItem($entry, $dryRun);]]>
             </para>
             <programlisting role="php"><![CDATA[
 $dryRun = false;
-$entry->delete($dryRun);]]>
+$entry->delete($dryRun);
+]]>
             </programlisting>
         </sect3>
     </sect2>

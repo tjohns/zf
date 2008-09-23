@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.gdata.docs">
     <title>Google Documents List Data API の使用法</title>
 
@@ -32,7 +32,8 @@
 $service = Zend_Gdata_Docs::AUTH_SERVICE_NAME;
 $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
 $docs = new Zend_Gdata_Docs($client);
-$feed = $docs->getDocumentListFeed();]]>
+$feed = $docs->getDocumentListFeed();
+]]>
         </programlisting>
 
         <para>
@@ -100,7 +101,8 @@ function uploadDocument($docs, $html, $originalFileName,
   }
   echo $newDocumentEntry->title."\n";
   if ($html) {echo "</a>\n";}
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 

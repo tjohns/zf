@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.gdata.authsub">
     <title>AuthSub による認証</title>
 
@@ -78,7 +78,8 @@ $my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
         // single-use トークンをセッショントークンに変換します
-        $session_token =  Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
+        $session_token = 
+            Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
         // セッショントークンをセッションに保存します
         $_SESSION['cal_token'] = $session_token;
     } else {
@@ -86,7 +87,8 @@ if (!isset($_SESSION['cal_token'])) {
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
             $my_calendar, 0, 1);
-        echo "<a href='$googleUri'>ここ</a> をクリックして認証を行います。";
+        echo "<a href='$googleUri'>ここ</a> " .
+             "をクリックして認証を行います。";
         exit();
     }
 }
@@ -95,7 +97,8 @@ if (!isset($_SESSION['cal_token'])) {
 $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['cal_token']);
 
 // 認証済み Http クライアントを使用して Gdata オブジェクトを作成します
-$cal = new Zend_Gdata_Calendar($client);]]>
+$cal = new Zend_Gdata_Calendar($client);
+]]>
         </programlisting>
 
     </sect2>
@@ -111,14 +114,18 @@ $cal = new Zend_Gdata_Calendar($client);]]>
 
         <programlisting role="php"><![CDATA[
 // アプリケーションのセキュリティ問題を避けるため、注意してこの値を作成します
-$php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0, strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
+$php_self = htmlentities(substr($_SERVER['PHP_SELF'],
+                         0,
+                         strcspn($_SERVER['PHP_SELF'], "\n\r")),
+                         ENT_QUOTES);
 
 if (isset($_GET['logout'])) {
     Zend_Gdata_AuthSub::AuthSubRevokeToken($_SESSION['cal_token']);
     unset($_SESSION['cal_token']);
     header('Location: ' . $php_self);
     exit();
-}]]>
+}
+]]>
         </programlisting>
 
     <note>

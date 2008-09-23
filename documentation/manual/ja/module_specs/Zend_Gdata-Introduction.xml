@@ -244,7 +244,8 @@ $cell->setRow('1');
 $cell->setColumn('3');
 $entry->cell = $cell;
 
-// ... $entry を使用して、Google Spreadsheet の内容を更新します]]>
+// ... $entry を使用して、Google Spreadsheet の内容を更新します
+]]>
         </programlisting>
 
         <para>
@@ -317,7 +318,8 @@ $entry->cell = $cell;
 $client = new Zend_Http_Client();
 $client->setConfig( ...オプション... );
 
-$gdata = new Zend_Gdata($client);]]>
+$gdata = new Zend_Gdata($client);
+]]>
         </programlisting>
 
         <para>
@@ -435,7 +437,8 @@ $gdata = new Zend_Gdata($client);]]>
         <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Query();
 $query->setMaxResults(10);
-echo $query->getMaxResults();   // 10 を返します]]>
+echo $query->getMaxResults();   // 10 を返します
+]]>
         </programlisting>
 
         <para>
@@ -447,7 +450,8 @@ echo $query->getMaxResults();   // 10 を返します]]>
         <programlisting role="php"><![CDATA[
 $query = new Zend_Gdata_Query();
 $query->maxResults = 10;
-echo $query->maxResults;        // 10 を返します]]>
+echo $query->maxResults;        // 10 を返します
+]]>
         </programlisting>
 
         <para>
@@ -462,7 +466,8 @@ $query->maxResults = 10;
 // ...フィードを取得します...
 
 $gdata->resetParameters();      // すべてのパラメータを消去します
-// ...別のフィードを取得します...]]>
+// ...別のフィードを取得します...
+]]>
         </programlisting>
 
     </sect2>
@@ -481,7 +486,8 @@ $gdata = new Zend_Gdata();
 $query = new Zend_Gdata_Query(
         'http://www.blogger.com/feeds/blogID/posts/default');
 $query->setMaxResults(10);
-$feed = $gdata->getFeed($query);]]>
+$feed = $gdata->getFeed($query);
+]]>
         </programlisting>
 
         <para>
@@ -512,7 +518,8 @@ function getNextPage($feed) {
     } else {
         return null;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -528,7 +535,8 @@ function getNextPage($feed) {
 $gdata = new Zend_Gdata();
 $query = new Zend_Gdata_Query(
         'http://www.blogger.com/feeds/blogID/posts/default');
-$feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));]]>
+$feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
+]]>
         </programlisting>
 
         <para>
@@ -562,7 +570,8 @@ foreach ($feed as $entry) {
     echo 'Title: ' . $entry->title->text;
     // 定義されているアクセス用メソッドを使用します
     echo 'Content: ' . $entry->getContent()->getText();
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -588,7 +597,8 @@ foreach ($feed as $entry) {
     // エントリの内容を更新します
     $newEntry = $entry->save();
     echo 'New Title: ' . $newEntry->title->text;
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 
@@ -621,14 +631,16 @@ $gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $entry = $gdata->newEntry();
 $entry->title = $gdata->newTitle('Playing football at the park');
-$content = $gdata->newContent('We will visit the park and play a few football matches');
+$content = 
+    $gdata->newContent('We will visit the park and play football');
 $content->setType('text');
 $entry->content = $content;
 
 $entryResult = $gdata->insertEntry($entry,
         'http://www.blogger.com/feeds/blogID/posts/default');
 
-echo 'この結果のエントリの <id> は、' . $entryResult->id->text;]]>
+echo 'この結果のエントリの <id> は、' . $entryResult->id->text;
+]]>
         </programlisting>
 
         <para>
@@ -664,9 +676,11 @@ $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
     // 方法 1 - エントリを直接削除します
     $feedEntry->delete();
-    // 方法 2 - 編集用 URL を $gdata->delete() に渡してエントリを削除します
+    // 方法 2 - 編集用 URL を $gdata->delete()
+    // に渡してエントリを削除します
     // $gdata->delete($feedEntry->getEditLink()->href);
-}]]>
+}
+]]>
         </programlisting>
 
         <para>

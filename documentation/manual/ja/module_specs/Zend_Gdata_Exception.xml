@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata の例外処理</title>
 
@@ -10,11 +10,13 @@
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password);
+    $client =
+        Zend_Gdata_ClientLogin::getHttpClient($username, $password);
 } catch(Zend_Gdata_App_Exception $ex) {
     // 例外の内容をユーザに報告します
     die($ex->getMessage());
-}]]>
+}
+]]>
     </programlisting>
 
     <para>
@@ -81,14 +83,17 @@ try {
 
     <programlisting role="php"><![CDATA[
 try {
-    $client = Zend_Gdata_ClientLogin::getHttpClient($username, $password, $service);
+    $client = Zend_Gdata_ClientLogin::getHttpClient($username,
+                                                    $password,
+                                                    $service);
 } catch(Zend_Gdata_App_AuthException $authEx) {
     // ユーザの認証に失敗しました
     // もう一度認証を行うなどの処置が適切でしょう
     ...
 } catch(Zend_Gdata_App_HttpException $httpEx) {
     // Google Data のサーバに接続できませんでした
-    die($httpEx->getMessage);}]]>
+    die($httpEx->getMessage);}
+]]>
     </programlisting>
 
 </sect1>

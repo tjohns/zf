@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.gdata.gapps">
     <title>Google Apps Provisioning の使用法</title>
     
@@ -59,7 +59,8 @@
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
-?>]]></programlisting>
+]]>
+            </programlisting>
         
         </sect3>
         
@@ -77,7 +78,8 @@ $gdata = new Zend_Gdata_Gapps($client, $domain);
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 サービスクラスのファクトリメソッドでクエリを作成する際は、
@@ -90,7 +92,8 @@ $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 $query = $gdata->newUserQuery($arg);
-?>]]></programlisting>
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -117,7 +120,8 @@ $query = $gdata->newUserQuery($arg);
             
             <programlisting role="php"><![CDATA[
 $gdata->createUser('foo', 'Random', 'User', '••••••••');
-?>]]></programlisting>
+]]>
+            </programlisting>
                         
             <para>
                 あるいは UserEntry のインスタンスから作成することもできます。
@@ -135,7 +139,8 @@ $user->name = $gdata->newName();
 $user->name->givenName = 'Random';
 $user->name->familyName = 'User';
 $user = $gdata->insertUser($user);
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 ユーザのパスワードは、通常はプレーンテキストで指定しなければなりません。
@@ -163,9 +168,12 @@ echo '名前: ' . $user->login->givenName . "\n";
 echo '苗字: ' . $user->login->familyName . "\n";
 echo '凍結中？: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo '管理者？: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
-echo 'パスワードの変更が必要？: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
-echo '規約に同意した？: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-?>]]></programlisting>
+echo 'パスワードの変更が必要？: ' .
+     ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
+echo '規約に同意した？: ' .
+     ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
+]]>
+            </programlisting>
             
             <para>
                 もうひとつの方法は、まず
@@ -184,9 +192,12 @@ echo '名前: ' . $user->login->givenName . "\n";
 echo '苗字: ' . $user->login->familyName . "\n";
 echo '凍結中？: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 echo '管理者？: ' . ($user->login->admin ? 'Yes' : 'No') . "\n"
-echo 'パスワードの変更が必要？: ' . ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
-echo '規約に同意した？: ' . ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-?>]]></programlisting>
+echo 'パスワードの変更が必要？: ' .
+     ($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
+echo '規約に同意した？: ' .
+     ($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
+]]>
+            </programlisting>
             
             <para>
                 指定したユーザが発見できない場合は ServiceException
@@ -214,7 +225,8 @@ foreach ($feed as $user) {
     echo "  * " . $user->login->username . ' (' . $user->name->givenName .
         ' ' . $user->name->familyName . ")\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 これは Zend_Gdata_Gapps_UserFeed オブジェクトを作成します。
@@ -239,7 +251,8 @@ foreach ($feed as $user) {
         ' ' . $user->name->familyName . ")\n";
 }
 
-?>]]></programlisting>
+]]>
+            </programlisting>
                         
         </sect3>
         
@@ -259,7 +272,8 @@ $user = $gdata->retrieveUser('foo');
 $user->name->givenName = 'Foo';
 $user->name->familyName = 'Bar';
 $user = $user->save();
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <sect4 id="zend.gdata.gapps.users.updating.resettingPassword">
                 <title>ユーザのパスワードのリセット</title>
@@ -273,7 +287,8 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->password = '••••••••';
 $user = $user->save();
-?>]]></programlisting>
+]]>
+                </programlisting>
                 
                 <para>
                     現在のパスワードをこの方式で取得することはできません。
@@ -296,7 +311,8 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->changePasswordAtNextLogin = true;
 $user = $user->save();
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     同様に、強制しないようにするなら
@@ -320,7 +336,8 @@ $user = $user->save();
                 <programlisting role="php"><![CDATA[
 $gdata->suspendUser('foo');
 $gdata->restoreUser('foo');
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     あるいは、UserEntry のプロパティ
@@ -332,7 +349,8 @@ $gdata->restoreUser('foo');
 $user = $gdata->retrieveUser('foo');
 $user->login->suspended = true;
 $user = $user->save();
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     アクセス制限を解除するには、同様に
@@ -355,7 +373,8 @@ $user = $user->save();
 $user = $gdata->retrieveUser('foo');
 $user->login->admin = true;
 $user = $user->save();
-?>]]></programlisting>
+]]>
+                </programlisting>
 
                 <para>
                     だいたい予想はつくでしょうが、
@@ -378,7 +397,8 @@ $user = $user->save();
             <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->delete();
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 そのアカウントの UserEntry オブジェクトが手元にないのなら、
@@ -387,7 +407,8 @@ $user->delete();
             
             <programlisting role="php"><![CDATA[
 $gdata->deleteUser('foo');
-?>]]></programlisting>
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -419,7 +440,8 @@ $gdata->deleteUser('foo');
 
             <programlisting role="php"><![CDATA[
 $gdata->createNickname('foo', 'bar');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 あるいは NicknameEntry のインスタンスから作成することもできます。
@@ -433,7 +455,8 @@ $nickname = $gdata->newNicknameEntry();
 $nickname->login = $gdata->newLogin('foo');
 $nickname->nickname = $gdata->newNickname('bar');
 $nickname = $gdata->insertNickname($nickname);
-?>]]></programlisting>
+]]>
+            </programlisting>
         
         </sect3>
         
@@ -452,7 +475,8 @@ $nickname = $gdata->retrieveNickname('bar');
 
 echo 'ニックネーム: ' . $nickname->nickname->name . "\n";
 echo '所有者: ' . $nickname->login->username . "\n";
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 もうひとつの方法は、まず
@@ -468,7 +492,8 @@ $nickname = $gdata->getNicknameEntry($query);
 
 echo 'ニックネーム: ' . $nickname->nickname->name . "\n";
 echo '所有者: ' . $nickname->login->username . "\n";
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 ユーザの場合と同様、指定したニックネームが発見できない場合は
@@ -495,7 +520,8 @@ $feed = $gdata->retrieveNicknames('foo');
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 これは Zend_Gdata_Gapps_NicknameFeed オブジェクトを作成します。
@@ -517,7 +543,8 @@ $feed = $gdata->getNicknameFeed($query);
 foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -535,7 +562,8 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' . 
         $nickname->login->username . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 これは Zend_Gdata_Gapps_NicknameFeed オブジェクトを作成します。
@@ -554,7 +582,8 @@ foreach ($feed as $nickname) {
     echo '  * ' . $nickname->nickname->name . ' => ' . 
         $nickname->login->username . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -569,7 +598,8 @@ foreach ($feed as $nickname) {
             <programlisting role="php"><![CDATA[
 $nickname = $gdata->retrieveNickname('bar');
 $nickname->delete();
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 そのニックネームの NicknameEntry オブジェクトが手元にないのなら、
@@ -578,7 +608,8 @@ $nickname->delete();
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteNickname('bar');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
             
@@ -609,7 +640,8 @@ $gdata->deleteNickname('bar');
 
             <programlisting role="php"><![CDATA[
 $gdata->createEmailList('friends');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 あるいは EmailListEntry のインスタンスから作成することもできます。
@@ -622,7 +654,8 @@ $gdata->createEmailList('friends');
 $list = $gdata->newEmailListEntry();
 $list->emailList = $gdata->newEmailList('friends');
 $list = $gdata->insertEmailList($list);
-?>]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
         
@@ -640,7 +673,8 @@ $feed = $gdata->retrieveEmailLists('baz@somewhere.com');
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 これは Zend_Gdata_Gapps_EmailListFeed オブジェクトを作成します。
@@ -662,7 +696,8 @@ $feed = $gdata->getEmailListFeed($query);
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
 
@@ -680,7 +715,8 @@ $feed = $gdata->retrieveAllEmailLists();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
 
             <para>
                 これは Zend_Gdata_Gapps_EmailListFeed オブジェクトを作成します。
@@ -698,7 +734,8 @@ $feed = $gdata->getEmailListFeed();
 foreach ($feed as $list) {
     echo '  * ' . $list->emailList->name . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -712,7 +749,8 @@ foreach ($feed as $list) {
 
             <programlisting role="php"><![CDATA[
 $gdata->deleteEmailList('friends');
-?>]]></programlisting>
+]]>
+            </programlisting>
 
         </sect3>
         
@@ -738,7 +776,8 @@ $gdata->deleteEmailList('friends');
             
             <programlisting role="php"><![CDATA[
 $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
-?>]]></programlisting>
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -756,7 +795,8 @@ $feed = $gdata->retrieveAllRecipients('friends');
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 あるいは、新しい EmailListRecipientQuery
@@ -773,7 +813,8 @@ $feed = $gdata->getEmailListRecipientFeed($query);
 foreach ($feed as $recipient) {
     echo '  * ' . $recipient->who->email . "\n";
 }
-?>]]></programlisting>
+]]>
+            </programlisting>
             
             <para>
                 これは Zend_Gdata_Gapps_EmailListRecipientFeed オブジェクトを作成します。
@@ -792,7 +833,8 @@ foreach ($feed as $recipient) {
             
             <programlisting role="php"><![CDATA[
 $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
-?>]]></programlisting>
+]]>
+            </programlisting>
             
         </sect3>
         
@@ -850,7 +892,8 @@ function retrieveUser ($username) {
     }
     return $user;
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
         
     </sect2>
     
