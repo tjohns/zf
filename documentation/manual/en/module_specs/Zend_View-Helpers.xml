@@ -212,7 +212,7 @@ echo $this->formCheckbox('foo',
             </listitem>
 
             <listitem><para>
-                <code>formFile($name, $value, $attribs):</code> Creates an
+                <code>formFile($name, $attribs):</code> Creates an
                 &lt;input type="file" /&gt; element.
             </para></listitem>
 
