@@ -29,7 +29,10 @@
         <code><![CDATA[$config->database->host = 'example.com']]></code>)
         results in a thrown exception. This default behavior may be overridden through the constructor,
         however, to allow modification of data values. Also, when modifications are allowed, <code>Zend_Config</code>
-        supports unsetting of values (i.e. <code><![CDATA[unset($config->database->host);]]></code>).
+        supports unsetting of values (i.e. <code>unset($config->database->host);</code>). The 
+        <code>readOnly()</code> method can be used to determine if modifications to a given <code>Zend_Config</code>
+        object are allowed and the <code>setReadOnly()</code> method can be used to stop any further
+        modifications to a <code>Zend_Config</code> object that was created allowing modifications.
         <note>
             <para>
                 It is important not to confuse such in-memory modifications with saving configuration
@@ -64,7 +67,15 @@
         object using the <code>merge()</code> function. For example, given <code>$config</code> and
         <code>$localConfig</code>, you can merge data from <code>$localConfig</code> to <code>$config</code> using
         <code>$config->merge($localConfig);</code>. The items in <code>$localConfig</code> will override
-        any items with the same name in <code>$config</code>.
+        any items with the same name in <code>$config</code>. 
+        <note>
+            <para>
+                The <code>Zend_Config</code> object that is performing the merge must have been constructed
+                to allow modifications, by passing <code>true</code> as the second parameter of the constructor.
+                The <code>setReadOnly()</code> method can then be used to prevent any futher modifications
+                after the merge is complete.   
+            </para>
+        </note>
     </para>
 </sect1>
 <!--
