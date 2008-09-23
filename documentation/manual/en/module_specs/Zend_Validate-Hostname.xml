@@ -41,7 +41,7 @@ if ($validator->isValid($hostname)) {
     <para>
         You may find you also want to match IP addresses, Local hostnames, or a combination of all
         allowed types. This can be done by passing a parameter to Zend_Validate_Hostname when you
-        instantiate it. The paramter should be an integer which determines what types of hostnames
+        instantiate it. The parameter should be an integer which determines what types of hostnames
         are allowed. You are encouraged to use the Zend_Validate_Hostname constants to do this.
     </para>
 

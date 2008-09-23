@@ -41,7 +41,7 @@
         <para>
             You may specify the doctype at any time. However, helpers that 
             depend on the doctype for their output will recognize it only after 
-            you have set it, so the easyest approach is to specify it in your 
+            you have set it, so the easiest approach is to specify it in your 
             bootstrap:
         </para>
 

@@ -358,7 +358,7 @@ PHP^4 framework
             </para>
             <para>
                 That implies each term is optional by default. It may or may not be present within document, but documents with this term
-                will recieve a higher score.
+                will receive a higher score.
             </para>
             <para>
                 To search for documents that requires "PHP framework" and may contain "Zend Framework" use the query:

@@ -101,13 +101,13 @@ foreach ($registry as $index => $value) {
             The registry instance you access through the
             static methods is simply one such instance, and it is
             for convenience that it is stored statically, so you
-            can access it from anywhere in your appliation.
+            can access it from anywhere in your application.
         </para>
 
         <para>
             Use a traditional <code>new</code> constructor to create
             an instance of the registry.  This gives you the opportunity
-            to initialize the entries in the registry as an associatve
+            to initialize the entries in the registry as an associative
             array.
         </para>
 

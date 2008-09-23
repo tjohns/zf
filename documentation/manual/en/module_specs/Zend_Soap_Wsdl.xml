@@ -390,7 +390,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
     </sect2>
     
     <sect2 id="zend.soap.wsdl.retrieve">
-        <title>Get finilised WSDL document.</title>
+        <title>Get finalized WSDL document.</title>
         <para>
             <code>toXML()</code>, <code>toDomDocument()</code> and <code>dump($filename = false)</code> methods may be used to get
             WSDL document as an XML, DOM structure or a file. 

@@ -88,7 +88,7 @@ $this->headMeta()->appendName('keywords', 'framework php productivity');
         </programlisting>
 
         <para>
-            If you wishedto set some client-side caching rules, you'd set
+            If you wished to set some client-side caching rules, you'd set
             http-equiv tags with the rules you wish to enforce:
         </para>
 

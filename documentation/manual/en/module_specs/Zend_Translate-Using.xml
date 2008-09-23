@@ -84,7 +84,7 @@ print $translate->_("Here is line one")."\n";
         </programlisting>
 
         Some strings do not needed to be translated.
-        The seperating line is always a seperating line,
+        The separating line is always a separating line,
         even in other languages.
     </para>
 
@@ -613,7 +613,7 @@ $translate->addTranslation('path/to/other.ini', 'it');
         </para>
 
         <para>
-            You can set options temporary when using <code>addTranslation($data, $locale, array $options = array())</code>.
+            You can set options temporary when using <code>addTranslation($data, $locale, array $options = array())</code>
             as third and optional parameter. And you can use the <code>setOptions()</code> function to
             set the options fix.
         </para>
@@ -684,7 +684,7 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                         <entry>Csv</entry>
                         <entry>delimiter</entry>
                         <entry><emphasis role="strong">;</emphasis></entry>
-                        <entry>Defines which sign is used as delimiter for seperating source and translation</entry>
+                        <entry>Defines which sign is used as delimiter for separating source and translation</entry>
                     </row>
                     <row>
                         <entry>Csv</entry>
@@ -727,7 +727,7 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
         </para>
 
         <para>
-            The <code>getLocale()</code> method can be used to get the actual set language. It can eigther hold
+            The <code>getLocale()</code> method can be used to get the actual set language. It can either hold
             an instance of <code>Zend_Locale</code> or the identifier of a locale.
         </para>
 
@@ -962,7 +962,7 @@ $translate = new Zend_Translate('gettext',
                     You should be aware if you have several subdirectories under the same
                     structure. Expect we have a structure like
                     <code>/language/module/de/en/file.mo</code>. The path contains in this case
-                    multiple strings which would be detected as locale. It could be eigther
+                    multiple strings which would be detected as locale. It could be either
                     <code>de</code> or <code>en</code>. As the behaviour is, in this case,
                     not declared it is recommended that you use file detection in such situations.
                 </para>
@@ -1044,8 +1044,8 @@ $translate = new Zend_Translate('gettext',
                 <title>Filename tokens</title>
 
                 <para>
-                    Zend_Translate is also captable of detecting the language if it is included within the
-                    filename. But if you use this way you will have to seperate the language with a token.
+                    Zend_Translate is also capable of detecting the language if it is included within the
+                    filename. But if you use this way you will have to separate the language with a token.
                     There are three supported tokens which can be used: A point '.', a underline '_', or
                     a hyphen '-'.
                 </para>

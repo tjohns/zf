@@ -258,7 +258,7 @@ $index->addDocument($doc);
         <para>
             <code>Zend_Search_Lucene_Document_Html</code> class uses the <code>DOMDocument::loadHTML()</code> and
             <code>DOMDocument::loadHTMLFile()</code> methods to parse the source HTML, so it doesn't need HTML to be well formed or
-            to be XHTML. On the other hand, it's sensitive to the encoding specied by the "meta http-equiv" header tag.
+            to be XHTML. On the other hand, it's sensitive to the encoding specified by the "meta http-equiv" header tag.
         </para>
 
         <para>

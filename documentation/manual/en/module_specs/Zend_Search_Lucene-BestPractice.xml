@@ -453,7 +453,7 @@ $hits = $index->find($queryStr);
 
         <para>
             Indexes should not be used for data storage. They do not provide partial backup/restore functionality, journaling, logging, transactions
-            and many other feautures associated with database management systems.
+            and many other features associated with database management systems.
         </para>
 
         <para>
@@ -465,7 +465,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            If index corruption occures for any reason, the corrupted index should be restored or completely rebuilt.
+            If index corruption occurs for any reason, the corrupted index should be restored or completely rebuilt.
         </para>
 
         <para>

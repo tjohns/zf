@@ -154,7 +154,7 @@ echo $foo['bar'];
                 <para>
                     <code>captureStart()</code> locks capturing until
                     <code>captureEnd()</code> is called; you cannot nest
-                    capturing with the same placholder container. Doing so will
+                    capturing with the same placeholder container. Doing so will
                     raise an exception.
                 </para>
             </listitem>

@@ -45,7 +45,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
         <para>
             All slide shows in the <code>Zend_Service_SlideShare</code> component are represented
             using the <code>Zend_Service_SlideShare_SlideShow</code> object (both when retrieving
-            and uploading new	slide shows). For your reference a pesudo-code version of this class
+            and uploading new	slide shows). For your reference a pseudo-code version of this class
             is provided below.
         </para>
 
@@ -274,7 +274,7 @@ print "Number of views: {$slideshow->getNumViews()}<br/>\n";
 
                 <para>
                     You can retrieve slide shows which are a member of a specific group using the
-                    <code>getSlideShowsByGroup</code> method and providng the name of the group
+                    <code>getSlideShowsByGroup</code> method and providing the name of the group
                     which the slide show must belong to in order to be retrieved
                 </para>
             </listitem>

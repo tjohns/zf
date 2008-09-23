@@ -80,7 +80,7 @@ echo $this->translate('simple');
 
     <para>
         If you are more familiar with the fluent interface, then you can also
-        create an instace within your view and initiate the helper afterwards.
+        create an instance within your view and initiate the helper afterwards.
     </para>
 
     <example id="zend.view.helpers.initial.translate.afterwards">

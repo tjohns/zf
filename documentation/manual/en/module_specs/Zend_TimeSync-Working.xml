@@ -37,7 +37,7 @@ print $server->getDate()->getIso();
         <para>
             So what is happening in the background of <code>Zend_TimeSync</code>? First the syntax of the
             given server is checked. So in our example '<code>0.pool.ntp.org</code>' is checked and
-            recognised as possible correct adress for a timeserver. Then when calling
+            recognised as possible correct address for a timeserver. Then when calling
             <code>getDate()</code> the actual set timeserver is requested and it will return it's own
             time. <code>Zend_TimeSync</code> then calculates the difference to the actual time of the
             server running the script and returns a <code>Zend_Date</code> object with the actual,
@@ -63,7 +63,7 @@ print $server->getDate()->getIso();
 
         <para>
             As simple solution <code>Zend_TimeSync</code> can handle multiple timeservers and supports a
-            automatic fallback machanism. There are two supported ways. You can either give an array
+            automatic fallback mechanism. There are two supported ways. You can either give an array
             of timeservers when creating the instance. Or you can add additionally timeservers afterwards
             with the <code>addServer()</code> method.
         </para>
@@ -79,7 +79,7 @@ print $server->getDate()->getIso();
         </programlisting>
 
         <para>
-            There is no limitation in the ammount of timeservers you can add. When a timeserver can not
+            There is no limitation in the amount of timeservers you can add. When a timeserver can not
             be reached <code>Zend_TimeSync</code> will fallback and try to connect to the next given timeserver.
         </para>
 
@@ -119,7 +119,7 @@ print $server->getDate()->getIso();
         <para>
             You can set the proper protocol within the address of the timeserver. Actual there are two
             protocols which are supported by <code>Zend_TimeSync</code>. The default protocol is
-            <emphasis role="strong">NTP</emphasis>. If you are only using NTP you can ommit the protocol
+            <emphasis role="strong">NTP</emphasis>. If you are only using NTP you can omit the protocol
             within the address as show in the previous examples.
         </para>
 

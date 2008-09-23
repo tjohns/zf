@@ -292,7 +292,7 @@
             </para>
 
             <para>
-                This adapter sould only be used when source files already exist.
+                This adapter should only be used when source files already exist.
                 The files are human readable and system-independent.
             </para>
         </sect3>

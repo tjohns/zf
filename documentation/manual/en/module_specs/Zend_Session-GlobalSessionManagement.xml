@@ -451,7 +451,7 @@ if (!isset($defaultNamespace->initialized)) {
             This method does absolutely nothing more than toggle a flag in Zend_Session to prevent further writing to
             the session data store. We are specifically requesting feedback on this feature. Potential uses/abuses might
             include temporarily disabling the use of <code>Zend_Session_Namespace</code> instances or
-            <code>Zend_Session</code> methods to write to the session data store, while execution is transfered to view-
+            <code>Zend_Session</code> methods to write to the session data store, while execution is transferred to view-
             related code. Attempts to perform actions involving writes via these instances or methods will throw an
             exception.
         </para>

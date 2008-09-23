@@ -36,7 +36,7 @@
     <para>
         In all cases, <code>$content</code> is the actual CSS declarations.
         <code>$attributes</code> are any additional attributes you wish to provide to the
-        <code>style</code> tag: lang, title, media, or dir are all permissable.
+        <code>style</code> tag: lang, title, media, or dir are all permissible.
     </para>
 
     <para>

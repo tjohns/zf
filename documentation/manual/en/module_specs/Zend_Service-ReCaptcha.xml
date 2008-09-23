@@ -11,7 +11,7 @@
             helps to digitize books." Each reCAPTCHA requires the user to input
             two words, the first of which is the actual captcha, and the second
             of which is a word from some scanned text that Optical Character
-            Recognition (OCR) software has been unable to identifiy. 
+            Recognition (OCR) software has been unable to identify. 
             The assumption is that if a user correctly provides the first
             word, the second is likely correctly entered as well, and can be
             used to improve OCR software for digitizing books.

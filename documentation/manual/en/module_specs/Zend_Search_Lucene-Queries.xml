@@ -256,8 +256,8 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            If optional subqueries are added to a query with required suqueries,
-            both queries will have the same result set but the optional suqueries may affect the score of the matched documents.
+            If optional subqueries are added to a query with required subqueries,
+            both queries will have the same result set but the optional subqueries may affect the score of the matched documents.
         </para>
 
         <para>

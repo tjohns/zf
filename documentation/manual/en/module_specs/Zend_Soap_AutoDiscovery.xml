@@ -130,7 +130,7 @@ $autodiscover->handle();
                     <para>Each class method is registered as a corresponding port operation.</para>
                 </listitem>
                 <listitem>
-                    <para>Each method prototype genrerates corresponding Request/Response messages.</para>
+                    <para>Each method prototype generates corresponding Request/Response messages.</para>
                     <para>Method may have several prototypes if some method parameters are optional.</para>
                 </listitem>
             </itemizedlist>
@@ -198,7 +198,7 @@ $autodiscover->handle();
                     <para>Each function is registered as a corresponding port operation.</para>
                 </listitem>
                 <listitem>
-                    <para>Each function prototype genrerates corresponding Request/Response messages.</para>
+                    <para>Each function prototype generates corresponding Request/Response messages.</para>
                     <para>Function may have several prototypes if some method parameters are optional.</para>
                 </listitem>
             </itemizedlist>
