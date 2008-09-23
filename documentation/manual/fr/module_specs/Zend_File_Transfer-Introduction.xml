@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.file.transfer.introduction">
     <title>Zend_File_Transfer</title>
 
@@ -13,9 +13,9 @@
 
         <para>L'implémentation actuelle de <code>Zend_File_Transfer</code> embarquée en version 1.6.0 est limitée aux
         uploads de type HTTP Post. Le téléchargement de fichiers et les autres adaptateurs seront ajoutés dans les
-        prochaines versions. Les méthodes non implémentées pour le moment lèveront une exception. Donc réellement vous devriez
-        directement utiliser une instance de <code>Zend_File_Transfer_Adapter_Http</code>. Ceci changera dans le futur,
-        dès qu'il existera des adaptateurs disponibles.</para>
+        prochaines versions. Les méthodes non implémentées pour le moment lèveront une exception. Donc réellement vous
+        devriez directement utiliser une instance de <code>Zend_File_Transfer_Adapter_Http</code>. Ceci changera dans le
+        futur, dès qu'il existera des adaptateurs disponibles.</para>
     </note>
 
     <para>L'utilisation de <code>Zend_File_Transfer</code> est assez simple. Il consiste en deux parties. Le formulaire
@@ -60,13 +60,44 @@ if (!$adapter->receive()) {
         <para>Comme vous le voyez, l'utilisation la plus simple est de définir une destination avec la méthode
         <code>setDestination</code> et d'appeler la méthode <code>receive()</code>. S'il apparaît des erreurs au cours
         de l'upload, alors vous les récupérerez grâce à une exception qui sera retournée.</para>
-
     </example>
+
     <note>
         <title>Attention</title>
 
         <para>Maintenez à l'esprit qu'il s'agit de l'utilisation la plus simple. Vous <emphasis>ne devez
-        jamais</emphasis> utiliser cet exemple en environnement de production car il causerait de graves problèmes
-        de sécurité. Vous devez toujours utiliser des validateurs pour accroître la sécurité.</para>
+        jamais</emphasis> utiliser cet exemple en environnement de production car il causerait de graves problèmes de
+        sécurité. Vous devez toujours utiliser des validateurs pour accroître la sécurité.</para>
     </note>
+
+    <sect2 id="zend.file.transfer.introduction.adapters">
+        <title>Adaptateurs supportés par Zend_File_Transfer</title>
+
+        <para><code>Zend_File_Transfer</code> est construit pur supporter différents adaptateurs et différentes
+        directions. Il est conçu pour permettre l'upload, le téléchargement et même l'envoi bidirectionnel (ulpoad avec
+        un adaptateur et télécharge avec un autre adaptateur en même temps) de fichiers. Cependant avec la version 1.6
+        du Zend Framework, il n'y a qu'un seul adaptateur disponible, l'adaptateur Http.</para>
+
+        <para>Puisqu'il n'y a qu'un seul adaptateur disponible pour le moment, la classe principale n'est pas prête à
+        l'utilisation. Si vous souhaitez utiliser <code>Zend_File_Transfer</code>, vous devez utiliser l'adaptateur
+        directement.</para>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.options">
+        <title>Options de Zend_File_Transfer</title>
+
+        <para><code>Zend_File_Transfer</code> et ses adaptateurs supportent plusieurs options. Vous pouvez paramétrer
+        toutes les options soit en les fournissant au constructeur, ou en utilisant <code>setOptions($options)</code>.
+        <code>getOptions()</code> retournera les options actuellement paramétrées. Ci-dessous, vous trouverez la liste
+        des options supportées :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="strong">ignoreNoFile</emphasis> : si cette option vaut <code>true</code>, tous les
+                validateurs ignoreront le fait que le fichier à été uploadé ou non par le formulaire. Cette option vaut
+                par défaut <code>false</code>, ce qui lance une erreur indiquant que le fichier n'a pas été
+                fourni.</para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
 </sect1>
