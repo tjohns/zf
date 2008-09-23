@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11455 -->
+<!-- EN-Revision: 11462 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
         <para>
@@ -393,7 +393,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
-                              Wenn true, wird kein require_once für das langsame Backend verwendet
+                              Wenn true, wird kein require_once für das schnelle Backend verwendet
                               (nur für eigene Backends nützlich)
                           </entry>
                       </row>

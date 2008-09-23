@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11289 -->
+<!-- EN-Revision: 11461 -->
 <sect1 id="zend.file.transfer.filters">
 
     <title>Filter für Zend_File_Transfer</title>
@@ -220,7 +220,7 @@ $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addFilter('Rename', 'C:\mypics\new');
 
 // Setzt einen neuen Zielpfad nur für uploadfile1
-$upload->addFilter('Rename', 'uploadfile1', 'C:\mypics\newgifs');
+$upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
 ]]>
             </programlisting>
 
