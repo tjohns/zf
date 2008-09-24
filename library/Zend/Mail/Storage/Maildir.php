@@ -150,14 +150,14 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
      */
     public function getSize($id = null)
     {
-    	// TODO: get size from filename in maildir++
         if ($id !== null) {
-            return filesize($this->_getFileData($id, 'filename'));
+        	$filedata = $this->_getFileData($id);
+        	return isset($filedata['size']) ? $filedata['size'] : filesize($filedata['filename']);
         }
 
         $result = array();
-        foreach ($this->_files as $num => $pos) {
-            $result[$num + 1] = filesize($this->_files[$num]['filename']);
+        foreach ($this->_files as $num => $data) {
+            $result[$num + 1] = isset($data['size']) ? $data['size'] : filesize($data['filename']);
         }
 
         return $result;
@@ -357,6 +357,13 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
             }
 
             @list($uniq, $info) = explode(':', $entry, 2);
+            @list(,$size) = explode(',', $uniq, 2);
+            if ($size && $size[0] == 'S' && $size[1] == '=') {
+            	$size = substr($size, 2);
+            }
+            if (!ctype_digit($size)) {
+            	$size = null;
+            }
             @list($version, $flags) = explode(',', $info, 2);
             if ($version != 2) {
                 $flags = '';
@@ -369,10 +376,14 @@ class Zend_Mail_Storage_Maildir extends Zend_Mail_Storage_Abstract
                 $named_flags[$flag] = isset(self::$_knownFlags[$flag]) ? self::$_knownFlags[$flag] : $flag;
             }
 
-            $this->_files[] = array('uniq'       => $uniq,
-                                    'flags'      => $named_flags,
-                                    'flaglookup' => array_flip($named_flags),
-                                    'filename'   => $dirname . $entry);
+            $data = array('uniq'       => $uniq,
+                          'flags'      => $named_flags,
+                          'flaglookup' => array_flip($named_flags),
+                          'filename'   => $dirname . $entry);
+            if ($size !== null) {
+            	$data['size'] = (int)$size;
+            }
+            $this->_files[] = $data;
         }
     }
 

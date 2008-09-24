@@ -603,5 +603,52 @@ class Zend_Mail_MaildirWritableTest extends PHPUnit_Framework_TestCase
         $mail->selectFolder($target);
         $this->assertEquals($toCount + 1, $mail->countMessages());
     }
+    
+    public function testInitExisting()
+    {
+    	// this should be a noop
+	    Zend_Mail_Storage_Writable_Maildir::initMaildir($this->_params['dirname']);
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $this->assertEquals($mail->countMessages(), 5);
+    }
 
+    public function testInit()
+    {
+    	$this->tearDown();
+
+    	// should fail now
+    	$e = null;
+        try {
+            $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        } catch (Exception $e) {
+        }
+
+		if ($e === null) {
+	        $this->fail('empty maildir should not be accepted');
+	    }
+	    
+	    Zend_Mail_Storage_Writable_Maildir::initMaildir($this->_params['dirname']);
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $this->assertEquals($mail->countMessages(), 0);
+    }
+
+    public function testCreate()
+    {
+    	$this->tearDown();
+
+    	// should fail now
+    	$e = null;
+        try {
+            $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        } catch (Exception $e) {
+        }
+
+		if ($e === null) {
+	        $this->fail('empty maildir should not be accepted');
+	    }
+	    
+	    $this->_params['create'] = true;
+        $mail = new Zend_Mail_Storage_Writable_Maildir($this->_params);
+        $this->assertEquals($mail->countMessages(), 0);
+    }
 }

@@ -176,6 +176,6 @@ class Zend_Mail_MaildirMessageOldTest extends PHPUnit_Framework_TestCase
 	public function testPartSize()
 	{
         $mail = new Zend_Mail_Storage_Maildir_OldMessage(array('dirname' => $this->_maildir));
-        $this->assertEquals($mail->getMessage(4)->getPart(2)->getSize(), 88);
+        $this->assertEquals($mail->getMessage(4)->getPart(2)->getSize(), 80);
 	}
 }

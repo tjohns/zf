@@ -113,6 +113,9 @@ class Zend_Mail_Part_File extends Zend_Mail_Part
         while (!feof($this->_fh) && ($endPos === null || $pos < $endPos)) {
         	$line = fgets($this->_fh);
         	if ($line === false) {
+        		if (feof($this->_fh)) {
+        			break;
+        		}
 				/**
 				 * @see Zend_Mail_Exception
 				 */

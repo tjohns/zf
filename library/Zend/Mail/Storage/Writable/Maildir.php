@@ -42,11 +42,83 @@ require_once 'Zend/Mail/Storage/Writable/Interface.php';
 class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Maildir
                                          implements Zend_Mail_Storage_Writable_Interface
 {
+	// TODO: init maildir (+ constructor option create if not found)
+
 	/**
 	 * use quota and size of quota if given
 	 * @var bool|int
 	 */
 	protected $_quota;
+	
+	/**
+	 * create a new maildir
+	 *
+	 * If the given dir is already a valid maildir this will not fail.
+	 *
+	 * @param string $dir directory for the new maildir (may already exist)
+	 * @return null
+	 * @throws Zend_Mail_Storage_Exception
+	 */
+	public static function initMaildir($dir)
+	{
+		if (file_exists($dir)) {
+			if (!is_dir($dir)) {
+				/**
+				 * @see Zend_Mail_Storage_Exception
+				 */
+				require_once 'Zend/Mail/Storage/Exception.php';
+				throw new Zend_Mail_Storage_Exception('maildir must be a directory if already exists');
+			}
+		} else {
+			if (!mkdir($dir)) {
+				/**
+				 * @see Zend_Mail_Storage_Exception
+				 */
+				require_once 'Zend/Mail/Storage/Exception.php';
+				$dir = dirname($dir);
+				if (!file_exists($dir)) {
+					throw new Zend_Mail_Storage_Exception("parent $dir not found");
+				} else if (!is_dir($dir)) {
+					throw new Zend_Mail_Storage_Exception("parent $dir not a directory");
+				} else {
+					throw new Zend_Mail_Storage_Exception('cannot create maildir');
+				}
+			}
+		}
+		
+		foreach (array('cur', 'tmp', 'new') as $subdir) {
+			if (!@mkdir($dir . DIRECTORY_SEPARATOR . $subdir)) {
+				// ignore if dir exists (i.e. was already valid maildir or two processes try to create one)
+				if (!file_exists($dir . DIRECTORY_SEPARATOR . $subdir)) {
+					/**
+					 * @see Zend_Mail_Storage_Exception
+					 */
+					require_once 'Zend/Mail/Storage/Exception.php';
+					throw new Zend_Mail_Storage_Exception('could not create subdir ' . $subdir);
+				}
+			}
+		}
+	}
+	
+    /**
+     * Create instance with parameters
+     * Additional parameters are (see parent for more):
+     *   - create if true a new maildir is create if none exists
+     *
+     * @param  $params array mail reader specific parameters
+     * @throws Zend_Mail_Storage_Exception
+     */
+    public function __construct($params) {
+        if (is_array($params)) {
+            $params = (object)$params;
+        }
+        
+    	if (!empty($params->create) && isset($params->dirname) && !file_exists($params->dirname . DIRECTORY_SEPARATOR . 'cur')) {
+    		self::initMaildir($params->dirname);
+    	}
+    	
+    	parent::__construct($params);
+    }
 
     /**
      * create a new folder
@@ -574,7 +646,7 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         if ($size !== false) {
             $info = ',S=' . $size . $info;
         }
-        // TODO: support MDA with recent flag -> move to new
+
         $new_file = $temp_file['dirname'] . DIRECTORY_SEPARATOR . 'cur' . DIRECTORY_SEPARATOR . $temp_file['uniq'] . $info;
 
         // we're throwing any exception after removing our temp file and saving it to this variable instead
@@ -652,7 +724,7 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         if ($size !== false) {
             $info = ',S=' . $size . $info;
         }
-        // TODO: support MDA with recent flag -> move to new
+
         $new_file = $temp_file['dirname'] . DIRECTORY_SEPARATOR . 'cur' . DIRECTORY_SEPARATOR . $temp_file['uniq'] . $info;
 
         // we're throwing any exception after removing our temp file and saving it to this variable instead
@@ -691,8 +763,8 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
         $info = $this->_getInfoString($flags);
         $filedata = $this->_getFileData($id);
 
-        // TODO: move file from new to cur
-        $new_filename = dirname($filedata['filename']) . DIRECTORY_SEPARATOR . "$filedata[uniq]$info";
+		// NOTE: double dirname to make sure we always move to cur. if recent flag has been set (message is in new) it will be moved to cur.
+        $new_filename = dirname(dirname($filedata['filename'])) . DIRECTORY_SEPARATOR . 'cur' . DIRECTORY_SEPARATOR . "$filedata[uniq]$info";
 
         if (!@rename($filedata['filename'], $new_filename)) {
             /**
@@ -902,7 +974,6 @@ class Zend_Mail_Storage_Writable_Maildir extends    Zend_Mail_Storage_Folder_Mai
 				$maildirsize = '';
 			}
 		}
-    	
     	if (!$fh) {
     		$result = $this->_calculateMaildirsize();
     		$total_size = $result['size'];

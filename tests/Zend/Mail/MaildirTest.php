@@ -413,4 +413,26 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
         $this->assertEquals($mail->getMessage(4)->getPart(2)->getSize(), 88);
 	}
+
+    public function testSizePlusPlus()
+    {
+    	rename($this->_maildir . '/cur/1000000000.P1.example.org:2,S', $this->_maildir . '/cur/1000000000.P1.example.org,S=123:2,S');
+    	rename($this->_maildir . '/cur/1000000001.P1.example.org:2,FS', $this->_maildir . '/cur/1000000001.P1.example.org,S=456:2,FS');
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+        $shouldSizes = array(1 => 123, 456, 694, 452, 497);
+
+
+        $sizes = $mail->getSize();
+        $this->assertEquals($shouldSizes, $sizes);
+    }
+
+    public function testSingleSizePlusPlus()
+    {
+    	rename($this->_maildir . '/cur/1000000001.P1.example.org:2,FS', $this->_maildir . '/cur/1000000001.P1.example.org,S=456:2,FS');
+        $mail = new Zend_Mail_Storage_Maildir(array('dirname' => $this->_maildir));
+
+        $size = $mail->getSize(2);
+        $this->assertEquals(456, $size);
+    }
+
 }
