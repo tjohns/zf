@@ -565,7 +565,6 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $this->_messages = array();
         $break           = false;
         foreach ($check as $content) {
-            $uploaderror = false;
             $fileerrors  = array();
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
@@ -574,12 +573,16 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $validator->setTranslator($translator);
                     }
 
-                    if (!$uploaderror and !$validator->isValid($content['tmp_name'], $content)) {
+                    if (!$validator->isValid($content['tmp_name'], $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
-                    if (($class === 'Zend_Validate_File_Upload') and (count($this->_messages) > 0)) {
-                            $uploaderror = true;
+                    if ($this->_options['ignoreNoFile'] and (isset($fileerrors['fileUploadErrorNoFile']))) {
+                        unset($fileerrors['fileUploadErrorNoFile']);
+                    }
+
+                    if (($class === 'Zend_Validate_File_Upload') and (count($fileerrors) > 0)) {
+                        break;
                     }
 
                     if (($this->_break[$class]) and (count($fileerrors) > 0)) {
@@ -587,10 +590,6 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         break;
                     }
                 }
-            }
-
-            if ($this->_options['ignoreNoFile'] and (isset($fileerrors['fileUploadErrorNoFile']))) {
-                $fileerrors = array();
             }
 
             $this->_messages += $fileerrors;
