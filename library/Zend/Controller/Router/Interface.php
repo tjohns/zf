@@ -18,10 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/** Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
 /**
  * @package    Zend_Controller
  * @subpackage Router

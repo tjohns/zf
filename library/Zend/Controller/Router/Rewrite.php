@@ -28,9 +28,6 @@ require_once 'Zend/Controller/Router/Abstract.php';
 /** Zend_Controller_Router_Route */
 require_once 'Zend/Controller/Router/Route.php';
 
-/** Zend_Controller_Router_Route_Static */
-require_once 'Zend/Controller/Router/Route/Static.php';
-
 /**
  * Ruby routing based Router.
  *

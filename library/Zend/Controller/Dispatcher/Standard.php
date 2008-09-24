@@ -25,15 +25,6 @@ require_once 'Zend/Loader.php';
 /** Zend_Controller_Dispatcher_Abstract */
 require_once 'Zend/Controller/Dispatcher/Abstract.php';
 
-/** Zend_Controller_Request_Abstract */
-require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Response_Abstract */
-require_once 'Zend/Controller/Response/Abstract.php';
-
-/** Zend_Controller_Action */
-require_once 'Zend/Controller/Action.php';
-
 /**
  * @category   Zend
  * @package    Zend_Controller
@@ -110,6 +101,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
                 $this->addControllerDirectory($path, $module);
             }
         } else {
+            require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Exception('Controller directory spec must be either a string or an array');
         }
 

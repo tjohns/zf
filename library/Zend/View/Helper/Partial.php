@@ -69,6 +69,7 @@ class Zend_View_Helper_Partial extends Zend_View_Helper_Abstract
 
         $view = $this->cloneView();
         if ((null !== $module) && is_string($module)) {
+            require_once 'Zend/Controller/Front.php';
             $moduleDir = Zend_Controller_Front::getInstance()->getControllerDirectory($module);
             if (null === $moduleDir) {
                 require_once 'Zend/View/Helper/Partial/Exception.php';

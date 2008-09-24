@@ -26,11 +26,6 @@
 require_once 'Zend/Controller/Action/Exception.php';
 
 /**
- * @see Zend_Controller_Action_Helper_Abstract
- */
-require_once 'Zend/Controller/Action/Helper/Abstract.php';
-
-/**
  * @see Zend_Controller_Action_HelperBroker_PriorityStack
  */
 require_once 'Zend/Controller/Action/HelperBroker/PriorityStack.php';

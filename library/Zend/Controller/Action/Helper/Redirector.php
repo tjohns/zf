@@ -245,7 +245,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      */
     public function setGotoSimple($action, $controller = null, $module = null, array $params = array())
     {
-        $dispatcher = Zend_Controller_Front::getInstance()->getDispatcher();
+        $dispatcher = $this->getFrontController()->getDispatcher();
         $request    = $this->getRequest();
         $curModule  = $request->getModuleName();
         $useDefaultController = false;

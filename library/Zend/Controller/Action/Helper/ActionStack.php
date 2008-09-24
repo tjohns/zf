@@ -26,11 +26,6 @@
 require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
- * @see Zend_Registry
- */
-require_once 'Zend/Registry.php';
-
-/**
  * Add to action stack
  *
  * @uses       Zend_Controller_Action_Helper_Abstract
