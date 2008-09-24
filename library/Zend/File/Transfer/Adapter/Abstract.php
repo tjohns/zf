@@ -582,7 +582,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                             $uploaderror = true;
                     }
 
-                    if (($this->_break[$class]) and (count($this->_messages) > 0)) {
+                    if (($this->_break[$class]) and (count($fileerrors) > 0)) {
                         $break = true;
                         break;
                     }

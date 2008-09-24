@@ -338,7 +338,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function hasErrors()
     {
-        return (!empty($this->_messages) || !$this->getTransferAdapter()->hasErrors());
+        return $this->getTransferAdapter()->hasErrors();
     }
 
     /**
