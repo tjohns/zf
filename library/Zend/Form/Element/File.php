@@ -408,6 +408,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      * Set a multifile element
      *
      * @param integer $count Number of file elements
+     * @return Zend_Form_Element_File Provides fluid interface
      */
     public function setMultiFile($count)
     {
@@ -418,6 +419,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             $this->setIsArray(true);
             $this->_counter = (integer) $count;
         }
+
+        return $this;
     }
 
     /**

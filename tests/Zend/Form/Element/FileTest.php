@@ -9,6 +9,8 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'Zend/Form/Element/File.php';
 require_once 'Zend/File/Transfer/Adapter/Abstract.php';
 require_once 'Zend/Validate/File/Upload.php';
+require_once 'Zend/Form/SubForm.php';
+require_once 'Zend/View.php';
 
 /**
  * Test class for Zend_Form_Element_File
@@ -173,6 +175,57 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->element->setDestination('/var/www/upload');
         $this->assertEquals('/var/www/upload', $this->element->getDestination());
         $this->assertEquals('/var/www/upload', $this->element->getTransferAdapter()->getDestination('foo'));
+    }
+
+    public function testSettingMultipleFiles()
+    {
+        $this->element->setMultiFile(3);
+        $this->assertTrue(3, $this->element->getMultiFile());
+    }
+
+    public function testFileInSubSubSubform()
+    {
+        $form = new Zend_Form();
+        $element = new Zend_Form_Element_File('file1');
+        $element2 = new Zend_Form_Element_File('file2');
+
+        $subform0 = new Zend_Form_SubForm();
+        $subform0->addElement($element);
+        $subform0->addElement($element2);
+        $subform1 = new Zend_Form_SubForm();
+        $subform1->addSubform($subform0, 'subform0');
+        $subform2 = new Zend_Form_SubForm();
+        $subform2->addSubform($subform1, 'subform1');
+        $subform3 = new Zend_Form_SubForm();
+        $subform3->addSubform($subform2, 'subform2');
+        $form->addSubform($subform3, 'subform3');
+
+        $form->setView(new Zend_View());
+        $output = (string) $form;
+        $this->assertContains('name="file1"', $output);
+        $this->assertContains('name="file2"', $output);
+    }
+
+    public function testMultiFileInSubSubSubform()
+    {
+        $form = new Zend_Form();
+        $element = new Zend_Form_Element_File('file');
+        $element->setMultiFile(2);
+
+        $subform0 = new Zend_Form_SubForm();
+        $subform0->addElement($element);
+        $subform1 = new Zend_Form_SubForm();
+        $subform1->addSubform($subform0, 'subform0');
+        $subform2 = new Zend_Form_SubForm();
+        $subform2->addSubform($subform1, 'subform1');
+        $subform3 = new Zend_Form_SubForm();
+        $subform3->addSubform($subform2, 'subform2');
+        $form->addSubform($subform3, 'subform3');
+
+        $form->setView(new Zend_View());
+        $output = (string) $form;
+        $this->assertContains('name="file[]"', $output);
+        $this->assertEquals(2, substr_count($output, 'file[]'));
     }
 }
 
