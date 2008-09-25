@@ -156,7 +156,6 @@ abstract class Zend_Translate_Adapter {
                         if (Zend_Locale::isLocale((string) $filename)) {
                             $locale = (string) $filename;
                         } else {
-                            $found = false;
                             $parts  = explode('.', $filename);
                             $parts2 = array();
                             foreach($parts as $token) {
@@ -196,7 +195,7 @@ abstract class Zend_Translate_Adapter {
                 $this->setLocale($locale);
             }
         }
-        if ((isset($translate[$originate]) === true) and (count($this->_translate[$originate]) > 0)) {
+        if ((isset($this->_translate[$originate]) === true) and (count($this->_translate[$originate]) > 0)) {
             $this->setLocale($originate);
         }
         return $this;
@@ -307,7 +306,7 @@ abstract class Zend_Translate_Adapter {
     {
         $list = array_keys($this->_translate);
         $result = null;
-        foreach($list as $key => $value) {
+        foreach($list as $value) {
             if (!empty($this->_translate[$value])) {
                 $result[$value] = $value;
             }
