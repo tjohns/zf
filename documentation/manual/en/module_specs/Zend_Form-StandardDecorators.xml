@@ -156,6 +156,18 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.file">
+        <title>Zend_Form_Decorator_File</title>
+
+        <para>
+            File Elements have special notation when you use multiple
+            file elements or subforms. The File decorator is used by
+            <code>Zend_Form_Element_File</code> and allows to set multiple
+            file elements with only a single methodcall. It is used
+            automatically and fixes the elements name.
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.form">
         <title>Zend_Form_Decorator_Form</title>
 

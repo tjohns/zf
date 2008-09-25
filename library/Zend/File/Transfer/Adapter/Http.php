@@ -167,13 +167,14 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             if (is_array($content['name'])) {
                 foreach ($content as $param => $file) {
                     foreach ($file as $number => $target) {
-                        $result[$form . '__' . $number][$param] = $target;
+                        $result[$form . '_' . $number . '_'][$param] = $target;
                     }
                 }
             } else {
                 $result[$form] = $content;
             }
         }
+
         return $result;
     }
 }

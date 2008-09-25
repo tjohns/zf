@@ -54,6 +54,23 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     protected $_validated = false;
 
     /**
+     * @var integer Internal multifile counter
+     */
+    protected $_counter = 1;
+
+    /**
+     * Constructor
+     *
+     * @param  string|array|Zend_Config $spec 
+     * @return void
+     */
+    public function __construct($spec, $options = null)
+    {
+        parent::__construct($spec, $options);
+        $this->addDecorator('File');
+    }
+
+    /**
      * Set plugin loader
      * 
      * @param  Zend_Loader_PluginLoader_Interface $loader 
@@ -385,5 +402,31 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             $value = $this->getName();
         }
         return $this->getTransferAdapter()->getFileName($value);
+    }
+
+    /**
+     * Set a multifile element
+     *
+     * @param integer $count Number of file elements
+     */
+    public function setMultiFile($count)
+    {
+        if ((integer) $count < 2) {
+            $this->setIsArray(false);
+            $this->_counter = 1;
+        } else {
+            $this->setIsArray(true);
+            $this->_counter = (integer) $count;
+        }
+    }
+
+    /**
+     * Returns the multifile element number
+     *
+     * @return integer
+     */
+    public function getMultiFile()
+    {
+        return $this->_counter;
     }
 }

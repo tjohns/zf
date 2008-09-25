@@ -174,7 +174,8 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             fields to your form. It utilizes <link
                 linkend="zend.file.transfer.introduction">Zend_File_Transfer</link>
             internally to provide this functionality, and the
-            <code>FormFile</code> view helper to display the form element.
+            <code>FormFile</code> view helper as also the <code>File</code>
+            decorator to display the form element.
         </para>
 
         <para>
@@ -217,7 +218,7 @@ $form->setAttrib('enctype', 'multipart/form-data');
             <para>
                 When the form has successfully validated, you have to receive the file
                 to store it in the final destination using receive(). Additionally you
-                can determinate the final location using getValue():
+                can determinate the final location using getFileName():
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -229,7 +230,7 @@ if (!$form->foo->receive()) {
     print "Error receiving the file";
 }
 
-$location = $form->foo->getValue();
+$location = $form->foo->getFileName();
 ]]>
             </programlisting>
 
@@ -242,6 +243,67 @@ $location = $form->foo->getValue();
                 By default, files are uploaded to the system temp directory.
             </para>
         </note>
+
+        <note>
+            <title>File values</title>
+
+            <para>
+                Within HTTP a file element has no value. Therefor you will get no
+                output when calling getValue().
+            </para>
+        </note>
+
+        <para>
+            <code>Zend_Form_Element_File</code> supports also multiple files.
+            By calling the <code>setMultiFile($count)</code> method you can set
+            the ammount of file elements you want to create. This prevents you
+            from setting the same settings multiple times.
+        </para>
+
+        <example id="zend.form.standardElements.file.multiusage">
+            <title>Setting multiple files</title>
+
+            <para>
+                Creating a multifile element is the same like setting a single
+                element. Just call <code>setMultiFile()</code> additionally after
+                creation:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Count', false, array(1, 3)) // ensure minimum 1, maximum 3 files
+        ->addValidator('Size', false, 102400) // limit to 100K
+        ->addValidator('Extension', false, 'jpg,png,gif') // only JPEG, PNG, and GIFs
+        ->setMultiFile(3); // defines 3 identical file elements
+$form->addElement($element, 'foo');
+]]>
+            </programlisting>
+
+            <para>
+                In your view you will not get 3 identical file upload elements which
+                all share the same settings. To get the set multifile number simply call
+                <code>getMultiFile()</code>.
+            </para>
+
+        </example>
+
+        <note>
+            <title>File elements in Subforms</title>
+
+            <para>
+                When you use file elements in subforms you must set unique names.
+                So when you named you file element in subform1 "file", you must give
+                it a different name in subform2.
+            </para>
+
+            <para>
+                As soon as there are 2 identical named file elements, the second
+                element would not be displayed or submitted.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">
