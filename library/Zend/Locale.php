@@ -686,7 +686,7 @@ class Zend_Locale
      *
      * @param  string|Zend_Locale $locale Locale to check for
      * @param  boolean            $strict (Optional) If true, no rerouting will be done when checking
-     * @return false|string False if given locale is not a locale, else the locale identifier is returned
+     * @return boolean If the locale is known dependend on the settings
      */
     public static function isLocale($locale, $strict = false)
     {
