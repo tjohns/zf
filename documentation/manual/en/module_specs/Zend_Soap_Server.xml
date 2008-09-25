@@ -347,7 +347,7 @@ $response = $server->handle();
 $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
-$response = $server->getLastResyponse();
+$response = $server->getLastResponse();
 ...
 ]]>
                 </programlisting>
