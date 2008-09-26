@@ -131,7 +131,7 @@ class Zend_Cache_MemcachedBackendTest extends Zend_Cache_CommonExtendedBackendTe
         $this->_instance->setDirectives(array('logging' => true));
     }
     
-    public function testGetMetadatas()
+    public function testGetMetadatas($notag = false)
     {
         parent::testGetMetadatas(true);
     }
