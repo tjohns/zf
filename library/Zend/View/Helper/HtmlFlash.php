@@ -39,26 +39,7 @@ class Zend_View_Helper_HtmlFlash extends Zend_View_Helper_HtmlObject
      *
      */
     const TYPE = 'application/x-shockwave-flash';
-
-    /**
-     * Object classid
-     *
-     */
-    const ATTRIB_CLASSID  = 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000';
-
-    /**
-     * Object Codebase
-     *
-     */
-    const ATTRIB_CODEBASE = 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab';
-
-    /**
-     * Default attributes
-     *
-     * @var array
-     */
-    protected $_attribs = array('classid'  => self::ATTRIB_CLASSID,
-                                'codebase' => self::ATTRIB_CODEBASE);
+    
     /**
      * Output a flash movie object tag
      *
@@ -70,11 +51,9 @@ class Zend_View_Helper_HtmlFlash extends Zend_View_Helper_HtmlObject
      */
     public function htmlFlash($data, array $attribs = array(), array $params = array(), $content = null)
     {
-        // Attrs
-        $attribs = array_merge($this->_attribs, $attribs);
-
         // Params
-        $params = array_merge(array('movie' => $data), $params);
+        $params = array_merge(array('movie'   => $data,
+                                    'quality' => 'high'), $params);
 
         return $this->htmlObject($data, self::TYPE, $attribs, $params, $content);
     }
