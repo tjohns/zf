@@ -52,10 +52,7 @@ class Zend_View_Helper_HtmlFlashTest extends PHPUnit_Framework_TestCase
     {
         $htmlFlash = $this->helper->htmlFlash('/path/to/flash.swf');
 
-        $objectStartElement = '<object data="/path/to/flash.swf"'
-                            . ' type="application/x-shockwave-flash"'
-                            . ' classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"'
-                            . ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">';
+        $objectStartElement = '<object data="/path/to/flash.swf" type="application/x-shockwave-flash">';
   
         $this->assertContains($objectStartElement, $htmlFlash);
         $this->assertContains('</object>', $htmlFlash);
