@@ -535,6 +535,28 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('ignoreNoFile' => true), $this->adapter->getOptions());
     }
 
+    public function testGetAllAdditionalFileInfos()
+    {
+        $files = $this->adapter->getFileInfo();
+        $this->assertEquals(3, count($files));
+        $this->assertEquals('baz.text', $files['baz']['name']);
+    }
+
+    public function testGetAdditionalFileInfosForSingleFile()
+    {
+        $files = $this->adapter->getFileInfo('baz');
+        $this->assertEquals(1, count($files));
+        $this->assertEquals('baz.text', $files['baz']['name']);
+    }
+
+    /**
+     * @expectedException Zend_File_Transfer_Exception
+     */
+    public function testGetAdditionalFileInfosForUnknownFile()
+    {
+        $files = $this->adapter->getFileInfo('unknown');
+    }
+    
     /**
      * @expectedException Zend_File_Transfer_Exception
      */

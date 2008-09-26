@@ -579,6 +579,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
                     if ($this->_options['ignoreNoFile'] and (isset($fileerrors['fileUploadErrorNoFile']))) {
                         unset($fileerrors['fileUploadErrorNoFile']);
+                        break;
                     }
 
                     if (($class === 'Zend_Validate_File_Upload') and (count($fileerrors) > 0)) {
@@ -866,6 +867,17 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         $directory = $this->getDestination($file);
         return $directory . DIRECTORY_SEPARATOR . $this->_files[$file]['name'];
+    }
+
+    /**
+     * Retrieve additional internal file informations for files
+     * 
+     * @param  string $file (Optional) File to get informations for
+     * @return array
+     */
+    public function getFileInfo($file = null)
+    {
+        return $this->_getFiles($file);
     }
 
     /**
