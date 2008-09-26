@@ -25,6 +25,9 @@
  */
 class InstallationChecker {
 
+    const CSS_WARNING = '.warning { color: #fff; background-color: #AF0007;}';
+    const CSS_SUCCESS = '.success { color: #000; background-color: #69FF4F;}';
+    const CSS_ERROR = '.error { color: #fff; background-color: #FF9FA3;}';
     const PHP_EXTENSION_ERRORS = 'PHP Extension Errors';
     const PHP_MANUAL_LINK_FRAGMENT = 'http://us.php.net/manual/en/book.';
     const PHP_REQUIREMENT_CHECKER_ID = 'PHP Requirement checker v0.1';
@@ -119,18 +122,22 @@ class InstallationChecker {
             if (!extension_loaded($requiredExtension)) {
                 $requiredExtensionError = $requiredExtension .
                     ' extension missing';
-                $referToLink = null;
+                $documentationLink = null;
                 if ($requiredExtension != 'standard') {
-                    $referToLink  = ' - refer to ' .
-                        self::PHP_MANUAL_LINK_FRAGMENT .
+                    $documentationLink = self::PHP_MANUAL_LINK_FRAGMENT .
                         $requiredExtension . '.php';
+                        $documentationLink =
+                            $this->checkAndAddHTMLLink($documentationLink);
                 } else {
-                    $referToLink = ' - refer to ' .
-                        self::PHP_MANUAL_LINK_FRAGMENT . 'spl.php';
+                    $documentationLink = self::PHP_MANUAL_LINK_FRAGMENT .
+                        'spl.php';
+                    $documentationLink =
+                        $this->checkAndAddHTMLLink($documentationLink);
                 }
+
                 if ($referToLink) {
                     $phpExtensionErrors[] = $requiredExtensionError .
-                        $referToLink;
+                        ' - refer to ' . $documentationLink;
                 }
             }
         }
@@ -173,12 +180,13 @@ class InstallationChecker {
             $yt = new Zend_Gdata_YouTube();
             $videoEntry = $yt->newVideoEntry();
             if (!method_exists($videoEntry, 'setVideoTitle')) {
-                $zendFrameworkInstallationErrors[] = 'Your version of the ' .
+                $zendFrameworkMessage = 'Your version of the ' .
                     'Zend Framework ' . Zend_Version::VERSION . ' is too old' .
                     ' to run the YouTube demo application and does not' .
                     ' contain the new helper methods. Please check out a' .
                     ' newer version from Zend\'s repository: ' .
-                    self::ZEND_SUBVERSION_URI;
+                    checkAndAddHTMLLink(self::ZEND_SUBVERSION_URI);
+                $zendFrameworkInstallationErrors[] = $zendFrameworkMessage;
             }
         } else {
             if (count($zendFrameworkInstallationErrors) < 1) {
@@ -189,6 +197,7 @@ class InstallationChecker {
                     ini_get('include_path');
             }
         }
+
         $this->_allErrors[self::ZEND_GDATA_INSTALL_ERRORS]['tested'] = true;
 
         if (count($zendFrameworkInstallationErrors) > 0) {
@@ -197,6 +206,32 @@ class InstallationChecker {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Create HTML link from an input string if not in CLI mode.
+     *
+     * @param string The error message to be converted to a link.
+     * @return string Either the original error message or an HTML version.
+     */
+    private function checkAndAddHTMLLink($inputString) {
+        if (!$this->runningInCLIMode()) {
+            return $this->makeHTMLLink($inputString);
+        } else {
+            return $inputString;
+        }
+    }
+
+    /**
+     * Create an HTML link from a string.
+     *
+     * @param string The string to be made into link text and anchor target.
+     * @return string HTML link.
+     */
+    private function makeHTMLLink($inputString)
+    {
+        return '<a href="'. $inputString . '" target="_blank">' .
+            $inputString . '</a>';
     }
 
     /**
@@ -231,7 +266,7 @@ class InstallationChecker {
 
     /**
      * Validate that we can connect to the YouTube API.
-     * 
+     *
      * @return boolean False if there were errors.
      */
     private function validateYouTubeAPIConnectivity()
@@ -315,7 +350,12 @@ class InstallationChecker {
     {
         $html = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" " .
             "\"http://www.w3.org/TR/html4/strict.dtd\">\n".
-            "<html><head>\n<title>PHP Verification checker</title></head>\n" .
+            "<html><head>\n<title>PHP Verification checker</title>\n" .
+            "<style type=\"text/css\">\n" .
+            self::CSS_WARNING . "\n" .
+            self::CSS_SUCCESS . "\n" .
+            self::CSS_ERROR . "\n" .
+            "</style></head>\n" .
             "<body>\n<table class=\"verification_table\">" .
             "<caption>Ran PHP Verification checker on " .
             gmdate('c') . "</caption>\n";
@@ -324,18 +364,17 @@ class InstallationChecker {
         foreach($this->_allErrors as $key => $value) {
             $html .= "<tr><td class=\"verification_type\">" . $key . "</td>";
             if (($value['tested'] == true) && (count($value['errors']) == 0)) {
-                $html .= "<td class=\"tested_ok\">Tested</td></tr>\n" .
+                $html .= "<td class=\"success\">Tested</td></tr>\n" .
                     "<tr><td colspan=\"2\">No errors found</td></tr>\n";
             } elseif ($value['tested'] == true) {
-                $html .= "<td class=\"tested_errors\">Tested</td></tr>\n";
+                $html .= "<td class=\"warning\">Tested</td></tr>\n";
                 $error_count = 0;
                 foreach ($value['errors'] as $error) {
-                    $html .= "<tr><td>" . $error_count . "</td>" .
-                        "<td>" . $error . "</td></tr>\n";
+                    $html .= "<tr><td class=\"error\">" . $error_count . "</td>" .
+                        "<td class=\"error\">" . $error . "</td></tr>\n";
                 }
             } else {
-                $html .= "<td class=\"untested\">Not tested</td></tr>\n";
-
+                $html .= "<td class=\"warning\">Not tested</td></tr>\n";
             }
             $error_count++;
         }
@@ -345,4 +384,3 @@ class InstallationChecker {
 }
 
 $installationChecker = new InstallationChecker();
-
