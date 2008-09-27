@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11496 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -155,12 +155,19 @@ echo $this->formCheckbox('foo', null, null, array(
 
 // 'bar' および 'baz' でチェック状態と未チェック状態を表します。これはチェックされています
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => true), array('bar', 'baz');
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => true),
+                         array('bar', 'baz');
 
 // 'bar' および 'baz' でチェック状態と未チェック状態を表します。これはチェックされていません
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
-echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'baz');
-]]></programlisting>
+echo $this->formCheckbox('foo',
+                         null,
+                         array('checked' => false),
+                         array('bar', 'baz');
+]]>
+                </programlisting>
 
                 <para>
                     どの場合についても、マークアップの先頭に hidden
@@ -205,7 +212,7 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
             </listitem>
 
             <listitem><para>
-                <code>formFile($name, $value, $attribs):</code> &lt;input
+                <code>formFile($name, $attribs):</code> Creates an
                 type="file" /&gt; 要素を作成します。
             </para></listitem>
 
@@ -312,22 +319,24 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
 ?>
 <form action="action.php" method="post">
     <p><label>メールアドレス:
-        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+<?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
     </label></p>
     <p><label>国:
-        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+<?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
     </label></p>
     <p><label>メールを受け取りますか?
-        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+<?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
     </label></p>
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <para>
             ビュースクリプトの出力結果は、次のようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
+        <programlisting role="php"><![CDATA[
+<form action="action.php" method="post">
     <p><label>メールアドレス:
         <input type="text" name="email" value="you@example.com" size="32" />
     </label></p>
@@ -342,7 +351,8 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
         <input type="hidden" name="opt_in" value="no" />
         <input type="checkbox" name="opt_in" value="yes" checked="checked" />
     </label></p>
-</form>]]>
+</form>
+]]>
         </programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
@@ -379,7 +389,8 @@ echo $this->formCheckbox('foo', null, array('checked' => false), array('bar', 'b
 $view = new Zend_View();
 
 // パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' と設定します
-$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');]]>
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
+]]>
         </programlisting>
 
 
@@ -399,9 +410,13 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // $this->helperName() をコールすると、Zend_View は
-// まず最初に "/path/to/some/helpers/HelperName" で "Your_View_Helper_HelperName" という名前のクラスを探し、
-// 次に "/other/path/to/helpers/HelperName.php" で "My_View_Helper_HelperName" という名前のクラスを探し、
-// そして最後に "Zend/View/Helpers/HelperName.php" で "Zend_View_Helper_HelperName" という名前のクラスを探します。]]>
+// まず最初に "/path/to/some/helpers/HelperName" で
+// "Your_View_Helper_HelperName" という名前のクラスを探し、
+// 次に "/other/path/to/helpers/HelperName.php" で
+// "My_View_Helper_HelperName" という名前のクラスを探し、
+// そして最後に "Zend/View/Helpers/HelperName.php" で
+// "Zend_View_Helper_HelperName" という名前のクラスを探します。
+]]>
         </programlisting>
 
     </sect2>
@@ -480,7 +495,8 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
         return htmlspecialchars($output);
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             そして、ビュースクリプト内で <code>SpecialPurpose</code>
@@ -492,15 +508,18 @@ class My_View_Helper_SpecialPurpose extends Zend_View_Helper_Abstract
 // ビュースクリプト内では、$this は Zend_View インスタンスを指すことを覚えておきましょう。
 echo $this->specialPurpose();
 echo $this->specialPurpose();
-echo $this->specialPurpose();]]>
+echo $this->specialPurpose();
+]]>
         </programlisting>
 
         <para>
             出力結果は、次のようになります。
         </para>
-        <programlisting role="php"><![CDATA['The Jerk' を 1 回見ました。
+        <programlisting role="php"><![CDATA[
+'The Jerk' を 1 回見ました。
 'The Jerk' を 2 回見ました。
-'The Jerk' を 3 回見ました。]]>
+'The Jerk' を 3 回見ました。
+]]>
         </programlisting>
 
         <para>
@@ -525,7 +544,8 @@ class My_View_Helper_ScriptPath
     {
         return $this->view->getScriptPath($script);
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
