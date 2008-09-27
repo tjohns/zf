@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11501 -->
 <sect1 id="zend.config.theory_of_operation">
     <title>動作原理</title>
     <para>
@@ -41,6 +41,11 @@
         また、変更を許可した場合には、<code>Zend_Config</code>
         は値の設定の解除もサポートしています
         (<code>unset($config->database->host);</code> とします)。
+        <code>readOnly()</code> メソッドを使用すると、
+        指定した <code>Zend_Config</code> オブジェクトの変更が許可されているかどうかを取得することができます。
+        また <code>setReadOnly()</code> メソッドを使用すると、
+        変更を許可する設定だった <code>Zend_Config</code>
+        オブジェクトに対してそれ以降の変更を禁じることができます。
         <note>
             <para>
                 メモリ上で変更したデータを何らかのメディアに保存しようとする際に、
@@ -82,6 +87,15 @@
         に統合するには <code>$config->merge($localConfig);</code> とします。
         <code>$localConfig</code> の中に <code>$config</code>
         と同名の項目がある場合は、もとの値は上書きされます。
+        <note>
+            <para>
+                <code>Zend_Config</code> オブジェクトをまとめる場合は、
+                変更を許可する設定で作成する必要があります。つまり、
+                コンストラクタの 2 番目のパラメータに <code>true</code> を渡します。
+                まとめが完了した後で <code>setReadOnly()</code>
+                メソッドを使用すると、それ以降の変更を禁じることができます。
+            </para>
+        </note>
     </para>
 </sect1>
 <!--
