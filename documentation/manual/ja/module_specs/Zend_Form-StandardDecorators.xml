@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11518 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Zend Framework に同梱されている標準のデコレータ</title>
 
@@ -160,6 +160,18 @@ class Util
             その内容で元のコンテンツを上書きします。
             元の項目に設定されていた属性は、すべて fieldset
             の HTML 属性として設定されます。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.standardDecorators.file">
+        <title>Zend_Form_Decorator_File</title>
+
+        <para>
+            File 要素には特殊な記法があり、
+            複数の file 要素やサブフォームを利用する際にそれを使用します。
+            File デコレータは <code>Zend_Form_Element_File</code>
+            が使用するもので、複数の file 要素を一度のメソッドコールで設定することができます。
+            自動的に使用され、要素名を自動的に修正します。
         </para>
     </sect2>
 

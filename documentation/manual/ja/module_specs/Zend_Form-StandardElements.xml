@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10477 -->
+<!-- EN-Revision: 11518 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -183,7 +183,8 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             <link
                 linkend="zend.file.transfer.introduction">Zend_File_Transfer</link>
             を内部で使用してこの機能を実現しており、
-            <code>FormFile</code> ビューヘルパーでフォーム要素を表示しています。
+            <code>FormFile</code> ビューヘルパーと
+            <code>File</code> デコレータでフォーム要素を表示しています。
         </para>
 
         <para>
@@ -227,7 +228,7 @@ $form->setAttrib('enctype', 'multipart/form-data');
             <para>
                 フォームの検証が成功したら、receive()
                 でファイルを受信して最終的な場所に保存しなければなりません。
-                さらに、最終的な場所を取得するには getValue() を使用します。
+                さらに、最終的な場所を取得するには getFileName() を使用します。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -239,7 +240,7 @@ if (!$form->foo->receive()) {
     print "ファイル受信エラー";
 }
 
-$location = $form->foo->getValue();
+$location = $form->foo->getFileName();
 ]]>
             </programlisting>
 
@@ -253,6 +254,66 @@ $location = $form->foo->getValue();
                 temp ディレクトリにファイルがアップロードされます。
             </para>
         </note>
+
+        <note>
+            <title>File の値</title>
+
+            <para>
+                HTTP 内で、file 要素は値を持ちません。
+                したがって、getValue() をコールしても出力は何も得られません。
+            </para>
+        </note>
+
+        <para>
+            <code>Zend_Form_Element_File</code> は複数のファイルもサポートしています。
+            <code>setMultiFile($count)</code> メソッドをコールすると、
+            作成したい file 要素の数を設定することができます。
+            これを使えば、同じ設定を何度も行う手間が省けます。
+        </para>
+
+        <example id="zend.form.standardElements.file.multiusage">
+            <title>複数のファイルの設定</title>
+
+            <para>
+                複数の要素を作成する方法は、単一の要素を作成する場合と同じで、
+                作成した後にさらに <code>setMultiFile()</code> をコールするだけです。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Count', false, array(1, 3)) // ファイルの数を最小で 1、最大で 3 とします
+        ->addValidator('Size', false, 102400) // 100K までに制限します
+        ->addValidator('Extension', false, 'jpg,png,gif') // JPEG, PNG, および GIF のみを有効とします
+        ->setMultiFile(3); // 3 つの file 要素を作成します
+$form->addElement($element, 'foo');
+]]>
+            </programlisting>
+
+            <para>
+                ビューにおいて、同じ設定のファイルアップロード要素が 3 つ取得できます。
+                現在設定されている値を取得するには
+                <code>getMultiFile()</code> をコールします。
+            </para>
+
+        </example>
+
+        <note>
+            <title>サブフォームにおける File 要素</title>
+
+            <para>
+                file 要素をサブフォーム内で使う場合は、一意な名前を設定する必要があります。
+                subform1 の file 要素を "file" という名前にしたのなら、
+                subform2 ではそれと違う名前にしなければなりません。
+            </para>
+
+            <para>
+                同名の file 要素が複数存在した場合、
+                後から登場した要素は表示 (送信) されません。
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">
