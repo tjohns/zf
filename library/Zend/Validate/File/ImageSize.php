@@ -48,11 +48,11 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
      * @var array Error message template
      */
     protected $_messageTemplates = array(
-        self::WIDTH_TOO_BIG    => "Width of the image '%value%' is bigger than allowed",
-        self::WIDTH_TOO_SMALL  => "Width of the image '%value%' is smaller than allowed",
-        self::HEIGHT_TOO_BIG   => "Height of the image '%value%' is bigger than allowed",
-        self::HEIGHT_TOO_SMALL => "Height of the image '%value%' is smaller than allowed",
-        self::NOT_DETECTED     => "Size of the image '%value%' could not be detected",
+        self::WIDTH_TOO_BIG    => "Maximum allowed width for image '%value%' should be '%maxwidth%' but '%width%' detected",
+        self::WIDTH_TOO_SMALL  => "Minimum expected width for image '%value%' should be '%minwidth%' but '%width%' detected",
+        self::HEIGHT_TOO_BIG   => "Maximum allowed height for image '%value%' should be '%maxheight%' but '%height%' detected",
+        self::HEIGHT_TOO_SMALL => "Minimum expected height for image '%value%' should be '%minheight%' but '%height%' detected",
+        self::NOT_DETECTED     => "The size of image '%value%' could not be detected",
         self::NOT_READABLE     => "The image '%value%' can not be read"
     );
 
@@ -63,7 +63,9 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
         'minwidth'  => '_minwidth',
         'maxwidth'  => '_maxwidth',
         'minheight' => '_minheight',
-        'maxheight' => '_maxheight'
+        'maxheight' => '_maxheight',
+        'width'     => '_width',
+        'height'    => '_height'
     );
 
     /**
@@ -93,6 +95,20 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
      * @var integer
      */
     protected $_maxheight;
+
+    /**
+     * Detected width
+     *
+     * @var integer
+     */
+    protected $_width;
+
+    /**
+     * Detected height
+     *
+     * @var integer
+     */
+    protected $_height;
 
     /**
      * Sets validator options
@@ -293,19 +309,21 @@ class Zend_Validate_File_ImageSize extends Zend_Validate_Abstract
             return false;
         }
 
-        if ($size[0] < $this->_minwidth) {
+        $this->_width  = $size[0];
+        $this->_height = $size[1];
+        if ($this->_width < $this->_minwidth) {
             $this->_throw($file, self::WIDTH_TOO_SMALL);
         }
 
-        if ($size[1] < $this->_minheight) {
-            $this->_throw($file, self::HEIGHT_TOO_SMALL);
-        }
-
-        if (($this->_maxwidth !== null) and ($this->_maxwidth < $size[0])) {
+        if (($this->_maxwidth !== null) and ($this->_maxwidth < $this->_width)) {
             $this->_throw($file, self::WIDTH_TOO_BIG);
         }
 
-        if (($this->_maxheight !== null) and ($this->_maxheight < $size[1])) {
+        if ($this->_height < $this->_minheight) {
+            $this->_throw($file, self::HEIGHT_TOO_SMALL);
+        }
+
+        if (($this->_maxheight !== null) and ($this->_maxheight < $this->_height)) {
             $this->_throw($file, self::HEIGHT_TOO_BIG);
         }
 

@@ -45,8 +45,8 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
      * @var array Error message templates
      */
     protected $_messageTemplates = array(
-        self::TOO_BIG      => "The files in sum exceed the maximum allowed size",
-        self::TOO_SMALL    => "All files are in sum smaller than required",
+        self::TOO_BIG      => "All files in sum should have a maximum size of '%max%' but '%size%' were detected",
+        self::TOO_SMALL    => "All files in sum should have a minimum size of '%min%' but '%size%' were detected",
         self::NOT_READABLE => "One or more files can not be read"
     );
 
@@ -54,8 +54,9 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
      * @var array Error message template variables
      */
     protected $_messageVariables = array(
-        'min' => '_min',
-        'max' => '_max'
+        'min'  => '_min',
+        'max'  => '_max',
+        'size' => '_size'
     );
 
     /**
@@ -134,9 +135,7 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
             }
 
             // limited to 2GB files
-            $size         = @filesize($files);
-            $this->_size += $size;
-            $this->_setValue($this->_size);
+            $this->_size += @filesize($files);
             if (($this->_max !== null) && ($this->_max < $this->_size)) {
                 $this->_throw($file, self::TOO_BIG);
             }
