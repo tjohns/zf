@@ -46,8 +46,8 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
      * @var array Error message templates
      */
     protected $_messageTemplates = array(
-        self::TOO_BIG   => "The file '%value%' is bigger than allowed",
-        self::TOO_SMALL => "The file '%value%' is smaller than allowed",
+        self::TOO_BIG   => "Maximum allowed size for file '%value%' is '%max%' but '%size%' detected",
+        self::TOO_SMALL => "Minimum expected size for file '%value%' is '%min%' but '%size%' detected",
         self::NOT_FOUND => "The file '%value%' could not be found"
     );
 
@@ -55,8 +55,9 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
      * @var array Error message template variables
      */
     protected $_messageVariables = array(
-        'min' => '_min',
-        'max' => '_max'
+        'min'  => '_min',
+        'max'  => '_max',
+        'size' => '_size'
     );
 
     /**
@@ -73,6 +74,13 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
      * @var integer|null
      */
     protected $_max;
+
+    /**
+     * Detected size
+     *
+     * @var integer
+     */
+    protected $_size;
 
     /**
      * Sets validator options
@@ -208,16 +216,15 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
         }
 
         // limited to 4GB files
-        $size = sprintf("%u",@filesize($value));
-        $this->_setValue($size);
+        $this->_size = sprintf("%u",@filesize($value));
 
         // Check to see if it's smaller than min size
-        if (($this->_min !== null) && ($size < $this->_min)) {
+        if (($this->_min !== null) && ($this->_size < $this->_min)) {
             $this->_throw($file, self::TOO_SMALL);
         }
 
         // Check to see if it's larger than max size
-        if (($this->_max !== null) && ($this->_max < $size)) {
+        if (($this->_max !== null) && ($this->_max < $this->_size)) {
             $this->_throw($file, self::TOO_BIG);
         }
 
@@ -237,7 +244,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
     protected function _toByteString($size) 
     {
         $sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-        for ($i=0; $size > 1024 && $i < 9; $i++) {
+        for ($i=0; $size >= 1024 && $i < 9; $i++) {
             $size /= 1024;
         }
         return round($size, 2).$sizes[$i];

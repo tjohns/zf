@@ -45,16 +45,17 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      * @var array Error message templates
      */
     protected $_messageTemplates = array(
-        self::TOO_MUCH => "Too much files, only '%value%' are allowed",
-        self::TOO_LESS => "Too less files, minimum '%value%' must be given"
+        self::TOO_MUCH => "Too much files, maximum '%max%' are allowed but '%count%' are given",
+        self::TOO_LESS => "Too less files, minimum '%min%' are expected but '%count%' are given"
     );
 
     /**
      * @var array Error message template variables
      */
     protected $_messageVariables = array(
-        'min' => '_min',
-        'max' => '_max'
+        'min'   => '_min',
+        'max'   => '_max',
+        'count' => '_count'
     );
 
     /**
@@ -74,6 +75,13 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      * @var integer|null
      */
     protected $_max;
+
+    /**
+     * Actual filecount
+     *
+     * @var integer
+     */
+    protected $_count;
 
     /**
      * Internal file array
@@ -212,14 +220,13 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
             }
         }
 
-        if (($this->_max !== null) && (count($this->_files) > $this->_max)) {
-            $this->_value = $this->_max;
+        $this->_count = count($this->_files);
+        if (($this->_max !== null) && ($this->_count > $this->_max)) {
             $this->_error(self::TOO_MUCH);
             return false;
         }
 
-        if (($this->_min !== null) && (count($this->_files) < $this->_min)) {
-            $this->_value = $this->_min;
+        if (($this->_min !== null) && ($this->_count < $this->_min)) {
             $this->_error(self::TOO_LESS);
             return false;
         }

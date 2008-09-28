@@ -760,7 +760,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
     }
 
     /**
-     * Return elment type
+     * Return element type
      * 
      * @return string
      */
