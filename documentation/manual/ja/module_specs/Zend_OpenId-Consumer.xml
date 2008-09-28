@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11495 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer の基本</title>
     <para>
@@ -48,12 +48,14 @@
 
         <example id="zend.openid.consumer.example-1">
             <title>シンプルな OpenID ログインフォーム</title>
-            <programlisting role="php"><![CDATA[<html><body>
+            <programlisting role="php"><![CDATA[
+<html><body>
 <form method="post" action="example-1_2.php"><fieldset>
 <legend>OpenID ログイン</legend>
 <input type="text" name="openid_identifier">
 <input type="submit" name="openid_action" value="login">
-</fieldset></form></body></html>]]>
+</fieldset></form></body></html>
+]]>
             </programlisting>
         </example>
 
@@ -184,7 +186,8 @@ if (isset($_POST['openid_action']) &&
 <legend>OpenID ログイン</legend>
 <input type="text" name="openid_identifier" value="">
 <input type="submit" name="openid_action" value="login">
-</fieldset></form></body></html>]]>
+</fieldset></form></body></html>
+]]>
             </programlisting>
         </example>
 
@@ -228,7 +231,9 @@ if (isset($_POST['openid_action']) &&
             <title>指定したレルムへの認証リクエスト</title>
             <programlisting role="php"><![CDATA[
 $consumer = new Zend_OpenId_Consumer();
-if (!$consumer->login($_POST['openid_identifier'], 'example-3_3.php', 'http://*.php.net/')) {
+if (!$consumer->login($_POST['openid_identifier'],
+                      'example-3_3.php',
+                      'http://*.php.net/')) {
     die("OpenID でのログインに失敗しました。");
 }
 ]]>
@@ -355,20 +360,31 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         }
     }
 
-    public function addAssociation($url, $handle, $macFunc, $secret, $expires)
+    public function addAssociation($url,
+                                   $handle,
+                                   $macFunc,
+                                   $secret,
+                                   $expires)
     {
         $table = $this->_association_table;
         $secret = base64_encode($secret);
-        $this->_db->query("insert into $table (url, handle, macFunc, secret, expires) " .
-                          "values ('$url', '$handle', '$macFunc', '$secret', $expires)");
+        $this->_db
+             ->query('insert into ' .
+                     $table (url, handle, macFunc, secret, expires) " .
+                     "values ('$url', '$handle', '$macFunc', '$secret', $expires)");
         return true;
     }
 
-    public function getAssociation($url, &$handle, &$macFunc, &$secret, &$expires)
+    public function getAssociation($url,
+                                   &$handle,
+                                   &$macFunc,
+                                   &$secret,
+                                   &$expires)
     {
         $table = $this->_association_table;
         $this->_db->query("delete from $table where expires < " . time());
-        $res = $this->_db->fetchRow("select handle, macFunc, secret, expires from $table where url = '$url'");
+        $res = $this->_db->fetchRow('select handle, macFunc, secret, expires ' . 
+                                    "from $table where url = '$url'");
         if (is_array($res)) {
             $handle  = $res['handle'];
             $macFunc = $res['macFunc'];
@@ -379,11 +395,17 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         return false;
     }
 
-    public function getAssociationByHandle($handle, &$url, &$macFunc, &$secret, &$expires)
+    public function getAssociationByHandle($handle,
+                                           &$url,
+                                           &$macFunc,
+                                           &$secret,
+                                           &$expires)
     {
         $table = $this->_association_table;
         $this->_db->query("delete from $table where expires < " . time());
-        $res = $this->_db->fetchRow("select url, macFunc, secret, expires from $table where handle = '$handle'");
+        $res = $this->_db
+                    ->fetchRow('select url, macFunc, secret, expires ' .
+                               "from $table where handle = '$handle'");
         if (is_array($res)) {
             $url     = $res['url'];
             $macFunc = $res['macFunc'];
@@ -401,19 +423,30 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         return true;
     }
 
-    public function addDiscoveryInfo($id, $realId, $server, $version, $expires)
+    public function addDiscoveryInfo($id,
+                                     $realId,
+                                     $server,
+                                     $version,
+                                     $expires)
     {
         $table = $this->_discovery_table;
-        $this->_db->query("insert into $table (id, realId, server, version, expires) " .
-                          "values ('$id', '$realId', '$server', $version, $expires)");
+        $this->_db
+             ->query("insert into $table (id, realId, server, version, expires) " .
+                     "values ('$id', '$realId', '$server', $version, $expires)");
         return true;
     }
 
-    public function getDiscoveryInfo($id, &$realId, &$server, &$version, &$expires)
+    public function getDiscoveryInfo($id,
+                                     &$realId,
+                                     &$server,
+                                     &$version,
+                                     &$expires)
     {
         $table = $this->_discovery_table;
         $this->_db->query("delete from $table where expires < " . time());
-        $res = $this->_db->fetchRow("select realId, server, version, expires from $table where id = '$id'");
+        $res = $this->_db
+                    ->fetchRow('select realId, server, version, expires ' .
+                               "from $table where id = '$id'");
         if (is_array($res)) {
             $realId  = $res['realId'];
             $server  = $res['server'];
@@ -435,7 +468,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     {
         $table = $this->_nonce_table;
         try {
-            $ret = $this->_db->query("insert into $table (nonce) values ('$nonce')");
+            $ret = $this->_db
+                        ->query("insert into $table (nonce) values ('$nonce')");
         } catch (Zend_Db_Statement_Exception $e) {
             return false;
         }
@@ -450,7 +484,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
 $db = Zend_Db::factory('Pdo_Sqlite',
     array('dbname'=>'/tmp/openid_consumer.db'));
 $storage = new DbStorage($db);
-$consumer = new Zend_OpenId_Consumer($storage);]]>
+$consumer = new Zend_OpenId_Consumer($storage);
+]]>
             </programlisting>
         </example>
 
@@ -557,7 +592,10 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
     'email'=>false,
     'fullname'=>false), null, 1.1);
 $consumer = new Zend_OpenId_Consumer();
-if (!$consumer->login($_POST['openid_identifier'], 'example-6_3.php', null, $sreg)) {
+if (!$consumer->login($_POST['openid_identifier'],
+                      'example-6_3.php',
+                      null, 
+                      $sreg)) {
     die("OpenID でのログインに失敗しました。");
 }
 ]]>

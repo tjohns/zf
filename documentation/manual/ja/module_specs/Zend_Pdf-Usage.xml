@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.pdf.usage">
     <title>Zend_Pdf モジュールの使用例</title>
     <para>
@@ -29,7 +29,8 @@ if (!isset($argv[1])) {
 try {
     $pdf = Zend_Pdf::load($argv[1]);
 } catch (Zend_Pdf_Exception $e) {
-    if ($e->getMessage() == 'Can not open \'' . $argv[1] . '\' file for reading.') {
+    if ($e->getMessage() == 'Can not open \'' . $argv[1] . 
+                            '\' file for reading.') {
         // ファイルが存在しない場合は新しい PDF を作成します
         $pdf = new Zend_Pdf();
 
@@ -43,7 +44,7 @@ try {
     }
 }
 
-//------------------------------------------------------------------------------------
+//--------------------------------------------------------------------
 // ページの並び順を反転します。
 $pdf->pages = array_reverse($pdf->pages);
 
@@ -53,11 +54,14 @@ $style->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
+$style->setFont(Zend_Pdf_Font::fontWithName(
+                    Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32
+               );
 
 try {
     // 新しい画像オブジェクトを作成します。
-    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . 
+                                                '/stamp.jpg');
 } catch (Zend_Pdf_Exception $e) {
     // 画像読み込み時の例外処理の例
     if ($e->getMessage() != 'Image extension is not installed.' &&
@@ -89,7 +93,8 @@ $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
 // Zend_Pdf_Page オブジェクトが作成した新しいページを追加します。
 // (ページは、ドキュメントにアタッチされません)
-$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE));
+$pdf->pages[] = 
+    ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 
 // 新しいフォントを作成します。
 $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
@@ -103,7 +108,10 @@ $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
 // 別のフォントを使用します。
-$page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
+$page2->setFont(
+    Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32
+);
+
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
 // 矩形を描画します。
@@ -147,13 +155,14 @@ $page2->drawPolygon($x, $y,
 // 直線を描画します。
 $page2->setLineWidth(0.5);
 $page2->drawLine(60, 375, 400, 375);
-//------------------------------------------------------------------------------------
+//--------------------------------------------------------------------
 
 if (isset($argv[2])) {
     $pdf->save($argv[2]);
 } else {
     $pdf->save($argv[1], true /* 更新 */);
-}]]>
+}
+]]>
         </programlisting>
     </example>
 

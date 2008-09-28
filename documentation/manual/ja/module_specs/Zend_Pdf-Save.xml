@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.pdf.save">
     <title>PDF ドキュメントへの変更内容の保存</title>
     <para>
@@ -34,7 +34,8 @@ $pdf->save($newFileName);
 // PDF ドキュメントを文字列で返します。
 $pdfString = $pdf->render();
 
-...]]>
+...
+]]>
         </programlisting>
     </example>
 

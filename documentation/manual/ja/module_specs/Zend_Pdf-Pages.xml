@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.pdf.pages">
     <title>ドキュメントのページ</title>
     <sect2 id="zend.pdf.pages.creation">
@@ -63,19 +63,20 @@
         <example id="zend.pdf.pages.example-1">
             <title>PDF ドキュメントのページの操作</title>
             <programlisting role="php"><![CDATA[
-    ...
-    // ページの並び順を反転します
-    $pdf->pages = array_reverse($pdf->pages);
-    ...
-    // 新しいページを追加します
-    $pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
-    // 新しいページを追加します
-    $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+...
+// ページの並び順を反転します
+$pdf->pages = array_reverse($pdf->pages);
+...
+// 新しいページを追加します
+$pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
+// 新しいページを追加します
+$pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
-    // 指定したページを削除します
-    unset($pdf->pages[$id]);
+// 指定したページを削除します
+unset($pdf->pages[$id]);
 
-    ...]]>
+...
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -90,24 +91,25 @@
         <example id="zend.pdf.pages.example-2">
             <title>既存のページの複製</title>
             <programlisting role="php"><![CDATA[
-    ...
-    // テンプレートページを別の変数に格納します
-    $template = $pdf->pages[$templatePageIndex];
-    ...
-    // 新しいページを追加します
-    $page1 = new Zend_Pdf_Page($template);
-    $pdf->pages[] = $page1;
-    ...
+...
+// テンプレートページを別の変数に格納します
+$template = $pdf->pages[$templatePageIndex];
+...
+// 新しいページを追加します
+$page1 = new Zend_Pdf_Page($template);
+$pdf->pages[] = $page1;
+...
 
-    // 別のページを追加します
-    $page2 = new Zend_Pdf_Page($template);
-    $pdf->pages[] = $page2;
-    ...
+// 別のページを追加します
+$page2 = new Zend_Pdf_Page($template);
+$pdf->pages[] = $page2;
+...
 
-    // テンプレートページをドキュメントから削除します
-    unset($pdf->pages[$templatePageIndex]);
+// テンプレートページをドキュメントから削除します
+unset($pdf->pages[$templatePageIndex]);
 
-    ...]]>
+...
+]]>
             </programlisting>
         </example>
 

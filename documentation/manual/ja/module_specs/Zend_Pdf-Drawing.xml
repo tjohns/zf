@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.pdf.drawing">
     <title>描画</title>
 
@@ -14,7 +14,8 @@
         <para>
             <programlisting role="php"><![CDATA[
 $width  = $pdfPage->getWidth();
-$height = $pdfPage->getHeight();]]>
+$height = $pdfPage->getHeight();
+]]>
             </programlisting>
         </para>
     </sect2>
@@ -37,15 +38,18 @@ $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 $color2 = new Zend_Pdf_Color_Rgb($r, $g, $b);
 
 // $c, $m, $y, $k (float 型の数値)。0.0 (最小の強度) - 1.0 (最大の強度)
-$color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);]]>
+$color3 = new Zend_Pdf_Color_Cmyk($c, $m, $y, $k);
+]]>
         </programlisting>
 
         <para>
         HTML 形式の色指定も <code>Zend_Pdf_Color_Html</code> クラスで使用できます。
         </para>
-        <programlisting role="php"><![CDATA[$color1 = new Zend_Pdf_Color_Html('#3366FF');
+        <programlisting role="php"><![CDATA[
+$color1 = new Zend_Pdf_Color_Html('#3366FF');
 $color2 = new Zend_Pdf_Color_Html('silver');
-$color3 = new Zend_Pdf_Color_Html('forestgreen');]]>
+$color3 = new Zend_Pdf_Color_Html('forestgreen');
+]]>
         </programlisting>
     </sect2>
 
@@ -67,7 +71,8 @@ $color3 = new Zend_Pdf_Color_Html('forestgreen');]]>
  * @param float $x2
  * @param float $y2
  */
-public function drawLine($x1, $y1, $x2, $y2);]]>
+public function drawLine($x1, $y1, $x2, $y2);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -75,8 +80,8 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  *
  * 描画方法
  * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - 輪郭を描画して塗りつぶします (デフォルト)
- * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - 輪郭を描画します
- * Zend_Pdf_Page::SHAPE_DRAW_FILL        - 矩形を塗りつぶします
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE          - 輪郭を描画します
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL            - 矩形を塗りつぶします
  *
  * @param float $x1
  * @param float $y1
@@ -84,7 +89,9 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]>
+public function drawRectangle($x1, $y1, $x2, $y2,
+                    $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -101,8 +108,11 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHA
  * @param integer $fillMethod
  */
 public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
-                            $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
+                            $fillType =
+                                Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                            $fillMethod =
+                                Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -130,7 +140,13 @@ public function drawPolygon($x, $y,
  * @param mixed $param5
  * @param mixed $param6
  */
-public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);]]>
+public function  drawCircle($x,
+                            $y,
+                            $radius,
+                            $param4 = null,
+                            $param5 = null,
+                            $param6 = null);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -152,7 +168,8 @@ public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $pa
  * @param mixed $param6
  * @param mixed $param7
  */
-public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);]]>
+public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
+]]>
         </programlisting>
     </sect2>
 
@@ -176,14 +193,16 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  *   デフォルトは現在のロケールです。
  * @throws Zend_Pdf_Exception
  */
-public function drawText($text, $x, $y, $charEncoding = '');]]>
+public function drawText($text, $x, $y, $charEncoding = '');
+]]>
         </programlisting>
         <example id="zend.pdf.drawing.text-drawing.example-1">
             <title>ページ上への文字列の描画</title>
             <programlisting role="php"><![CDATA[
 ...
 $pdfPage->drawText('Hello world!', 72, 720);
-...]]>
+...
+]]>
             </programlisting>
         </example>
         <para>
@@ -205,7 +224,8 @@ $unicodeString = fread($fp, 1024);
 
 // 文字列をページ上に描画します
 $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
-...]]>
+...
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -224,7 +244,8 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
+]]>
         </programlisting>
         <para>
         PDF ドキュメントは、PostScript Type 1 フォントおよび TrueType フォントだけでなく、
@@ -249,7 +270,8 @@ $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // フォントを適用します。
 $pdfPage->setFont($font, 36);
-...]]>
+...
+]]>
             </programlisting>
         </example>
         <para>
@@ -320,7 +342,8 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
 
 // フォントを適用します
 $pdfPage->setFont($goodDogCoolFont, 36);
-...]]>
+...
+]]>
             </programlisting>
         </example>
         <para>
@@ -339,7 +362,8 @@ $goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
 
 // フォントを適用します
 $pdfPage->setFont($goodDogCoolFont, 36);
-...]]>
+...
+]]>
             </programlisting>
         </example>
         <para>
@@ -360,9 +384,12 @@ $pdfPage->setFont($goodDogCoolFont, 36);
             <title>埋め込みが禁止されているフォントで、例外をスローさせないようにする</title>
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
-                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
-...]]>
+$font = Zend_Pdf_Font::fontWithPath(
+           '/path/to/unEmbeddableFont.ttf',
+           Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION
+        );
+...
+]]>
             </programlisting>
         </example>
         <para>
@@ -381,7 +408,8 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
 ...
 $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS);
-...]]>
+...
+]]>
             </programlisting>
         </example>
         <para>
@@ -391,10 +419,12 @@ $font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
             <title>フォントの埋め込みオプションを組み合わせる</title>
             <programlisting role="php"><![CDATA[
 ...
-$font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
-                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
-                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
-...]]>
+$font = Zend_Pdf_Font::fontWithPath(
+            $someUserSelectedFontPath,
+            (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+            Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+...
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -419,6 +449,7 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
         <example id="zend.pdf.drawing.extracting-fonts.example-1">
             <title>読み込んだドキュメントからのフォントの抽出</title>
             <programlisting role="php"><![CDATA[
+
 ...
 $pdf = Zend_Pdf::load($documentPath);
 ...
@@ -428,20 +459,23 @@ $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 $yPosition = 700;
 foreach ($fontList as $font) {
     $page->setFont($font, 15);
-    $page->drawText($font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') 
-                  . ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $page->drawText(
+       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') .
+       ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
     $yPosition -= 30;
 }
 ...
 // ドキュメントの最初のページで用いられているフォントを取得します
 $firstPage = reset($pdf->pages);
 $firstPageFonts = $firstPage->extractFonts();
-...]]>
+...
+]]>
             </programlisting>
         </example>
         <example id="zend.pdf.drawing.extracting-fonts.example-2">
             <title>フォント名の指定による、読み込んだドキュメントからのフォントの抽出</title>
             <programlisting role="php"><![CDATA[
+
 ...
 $pdf = new Zend_Pdf();
 ...
@@ -452,23 +486,30 @@ $page->setFont($font, $fontSize);
 $page->drawText($text, $x, $y);
 ...
 // フォント名をどこかに保存しておきます...
-$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8');
+$fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
+                               'en',
+                               'UTF-8');
 ...
 $pdf->save($docPath);
-...]]>
+...
+]]>
             </programlisting>
             <programlisting role="php"><![CDATA[
+
 ...
 $pdf = Zend_Pdf::load($docPath);
 ...
 $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 
-$font = $pdf->extractFont($fontName);  /* $srcPage->extractFont($fontName) としてもかまいません */
+/* $srcPage->extractFont($fontName) としてもかまいません */
+$font = $pdf->extractFont($fontName);
+
 $page->setFont($font, $fontSize);
 $page->drawText($text, $x, $y);
 ...
 $pdf->save($docPath, true /* インクリメンタル更新モード */);
-...]]>
+...
+]]>
             </programlisting>
         </example>
 
@@ -482,6 +523,7 @@ $pdf->save($docPath, true /* インクリメンタル更新モード */);
                         つまり、抽出されたフォントは元のフォントメトリクス
                         (テキストの幅の計算に使用するもの) と同じものになりません。
             <programlisting role="php"><![CDATA[
+
 ...
 $font = $pdf->extractFont($fontName);
 $originalFont = Zend_Pdf_Font::fontWithPath($fontPath);
@@ -492,9 +534,13 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
     $page->drawText($text[$charIndex], xPosition, $y);
 
     // テキストの幅の計算には元のフォントを使用します
-    $xPosition += $originalFont->widthForGlyph($originalFont->glyphNumberForCharacter($text[$charIndex]))/$originalFont->getUnitsPerEm()*$fontSize;
+    $width = $originalFont->widthForGlyph(
+                 $originalFont->glyphNumberForCharacter($text[$charIndex])
+             );
+    $xPosition += $width/$originalFont->getUnitsPerEm()*$fontSize;
 }
-...]]>
+...
+]]>
             </programlisting>
                     </para>
                 </listitem>
@@ -520,7 +566,8 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
  * @param float $x2
  * @param float $y2
  */
-public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]>
+public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
+]]>
         </programlisting>
         <para>
         画像オブジェクトは、<code>Zend_Pdf_Image::imageWithPath($filePath)</code>
@@ -535,7 +582,8 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);]]
 $image = Zend_Pdf_Image::imageWithPath('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
-...]]>
+...
+]]>
             </programlisting>
         </example>
 
@@ -567,20 +615,22 @@ public function setLineWidth(float $width);
 /**
  * 破線のパターンを設定します。
  *
- * pattern は float の配列です: array(on_length, off_length, on_length, off_length, ...)
+ * pattern は float の配列です:
+ *     array(on_length, off_length, on_length, off_length, ...)
  * phase は線の開始位置から移動する距離です。
  *
  * @param array $pattern
  * @param array $phase
  */
-public function setLineDashingPattern($pattern, $phase = 0);]]>
+public function setLineDashingPattern($pattern, $phase = 0);
+]]>
         </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.fill-style">
         <title>塗りつぶしのスタイル</title>
         <para>
-        <code>Zend_Pdf_Page::drawRectangle()</code>、<code>Zend_Pdf_Page::drawPoligon()</code>、
+        <code>Zend_Pdf_Page::drawRectangle()</code>、<code>Zend_Pdf_Page::drawPolygon()</code>、
         <code>Zend_Pdf_Page::drawCircle()</code> および <code>Zend_Pdf_Page::drawEllipse()</code>
         メソッドは、オプションのパラメータとして <code>$fillType</code>
         を受け取ります。これは以下のいずれかの値となります。
@@ -599,7 +649,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
         </itemizedlist>
 
         <para>
-        <code>Zend_Pdf_Page::drawPoligon()</code> メソッドには、さらにパラメータ
+        <code>Zend_Pdf_Page::drawPolygon()</code> メソッドには、さらにパラメータ
         <code>$fillMethod</code> を指定することができます。
         </para>
         <itemizedlist>
@@ -674,7 +724,8 @@ nonzero winding number ルールに対するもうひとつのルールが even-
  *
  * @param float $angle
  */
-public function rotate($x, $y, $angle);]]>
+public function rotate($x, $y, $angle);
+]]>
         </programlisting>
     </sect2>
 
@@ -701,7 +752,8 @@ public function saveGS();
 /**
  * 直近の saveGS() で保存されたグラフィックの状態を復元します。
  */
-public function restoreGS();]]>
+public function restoreGS();
+]]>
         </programlisting>
     </sect2>
 
@@ -725,7 +777,8 @@ public function restoreGS();]]>
  * @param float $x2
  * @param float $y2
  */
-public function clipRectangle($x1, $y1, $x2, $y2);]]>
+public function clipRectangle($x1, $y1, $x2, $y2);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -735,7 +788,11 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
  * @param array $y  - float の配列 (頂点の Y 座標)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
+public function clipPolygon($x,
+                            $y,
+                            $fillMethod = 
+                                Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -747,7 +804,12 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);]]>
+public function clipCircle($x,
+                           $y,
+                           $radius,
+                           $startAngle = null,
+                           $endAngle = null);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -766,7 +828,13 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
  * @param float $startAngle
  * @param float $endAngle
  */
-public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);]]>
+public function clipEllipse($x1,
+                            $y1,
+                            $x2,
+                            $y2,
+                            $startAngle = null,
+                            $endAngle = null);
+]]>
         </programlisting>
     </sect2>
 
@@ -792,7 +860,8 @@ public function setStyle(Zend_Pdf_Style $style);
  *
  * @return Zend_Pdf_Style|null
  */
-public function getStyle();]]>
+public function getStyle();
+]]>
         </programlisting>
 
         <para>
@@ -805,7 +874,8 @@ public function getStyle();]]>
  *
  * @param Zend_Pdf_Color $color
  */
-public function setLineColor(Zend_Pdf_Color $color);]]>
+public function setLineColor(Zend_Pdf_Color $color);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -813,7 +883,8 @@ public function setLineColor(Zend_Pdf_Color $color);]]>
  *
  * @return Zend_Pdf_Color|null
  */
-public function getLineColor();]]>
+public function getLineColor();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -821,7 +892,8 @@ public function getLineColor();]]>
  *
  * @param float $width
  */
-public function setLineWidth($width);]]>
+public function setLineWidth($width);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -829,7 +901,8 @@ public function setLineWidth($width);]]>
  *
  * @return float
  */
-public function getLineWidth();]]>
+public function getLineWidth();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -838,7 +911,8 @@ public function getLineWidth();]]>
  * @param array $pattern
  * @param float $phase
  */
-public function setLineDashingPattern($pattern, $phase = 0);]]>
+public function setLineDashingPattern($pattern, $phase = 0);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -846,7 +920,8 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
  *
  * @return array
  */
-public function getLineDashingPattern();]]>
+public function getLineDashingPattern();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -854,7 +929,8 @@ public function getLineDashingPattern();]]>
  *
  * @return float
  */
-public function getLineDashingPhase();]]>
+public function getLineDashingPhase();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -862,7 +938,8 @@ public function getLineDashingPhase();]]>
  *
  * @param Zend_Pdf_Color $color
  */
-public function setFillColor(Zend_Pdf_Color $color);]]>
+public function setFillColor(Zend_Pdf_Color $color);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -870,7 +947,8 @@ public function setFillColor(Zend_Pdf_Color $color);]]>
  *
  * @return Zend_Pdf_Color|null
  */
-public function getFillColor();]]>
+public function getFillColor();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -879,7 +957,8 @@ public function getFillColor();]]>
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -887,7 +966,8 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
  *
  * @param float $fontSize
  */
-public function setFontSize($fontSize);]]>
+public function setFontSize($fontSize);
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -895,7 +975,8 @@ public function setFontSize($fontSize);]]>
  *
  * @return Zend_Pdf_Resource_Font $font
  */
-public function getFont();]]>
+public function getFont();
+]]>
         </programlisting>
         <programlisting role="php"><![CDATA[
 /**
@@ -903,7 +984,8 @@ public function getFont();]]>
  *
  * @return float $fontSize
  */
-public function getFontSize();]]>
+public function getFontSize();
+]]>
         </programlisting>
     </sect2>
 
@@ -915,6 +997,7 @@ public function getFontSize();]]>
         <para>
         透明度を設定するには <code>Zend_Pdf_Page::setAlpha()</code> メソッドを使用します。
         <programlisting role="php"><![CDATA[
+
 /**
  * 透明度を設定します
  *
@@ -922,14 +1005,15 @@ public function getFontSize();]]>
  * $alpha == 1  - 不透明
  *
  * PDF でサポートするモードは次のとおりです
- * Normal (デフォルト), Multiply, Screen, Overlay, Darken, Lighten, ColorDodge, ColorBurn, HardLight,
- * SoftLight, Difference, Exclusion
+ * Normal (デフォルト), Multiply, Screen, Overlay, Darken, Lighten,
+ * ColorDodge, ColorBurn, HardLight, SoftLight, Difference, Exclusion
  *
  * @param float $alpha
  * @param string $mode
  * @throws Zend_Pdf_Exception
  */
-public function setAlpha($alpha, $mode = 'Normal');]]>
+public function setAlpha($alpha, $mode = 'Normal');
+]]>
         </programlisting>
         </para>
     </sect2>

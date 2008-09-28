@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11495 -->
 <sect1 id="zend.mime.part">
     <title>Zend_Mime_Part</title>
 
@@ -30,7 +30,8 @@ public $id;
 public $disposition;
 public $filename;
 public $description;
-public $charset;]]>
+public $charset;
+]]>
     </programlisting>
     </sect2>
 

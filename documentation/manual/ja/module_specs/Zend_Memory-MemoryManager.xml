@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.memory.memory-manager">
     <title>メモリマネージャ</title>
 
@@ -28,7 +28,8 @@ $backendOptions = array(
     'cache_dir' => './tmp/' // スワップしたメモリブロックを配置するディレクトリ
 );
 
-$memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
+$memoryManager = Zend_Memory::factory('File', $backendOptions);
+]]>
         </programlisting>
 
         <para>
@@ -41,7 +42,8 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);]]>
             '<code>None</code>' をバックエンド名として使用することもできます。
 
             <programlisting role="php"><![CDATA[
-$memoryManager = Zend_Memory::factory('None');]]>
+$memoryManager = Zend_Memory::factory('None');
+]]>
             </programlisting>
         </para>
 
@@ -76,7 +78,8 @@ $memoryManager = Zend_Memory::factory('None');]]>
                 を作成するには、<code>Zend_Memory_Manager::create([$data])</code>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[
-$memObject = $memoryManager->create($data);]]>
+$memObject = $memoryManager->create($data);
+]]>
                 </programlisting>
 
             </para>
@@ -98,7 +101,8 @@ $memObject = $memoryManager->create($data);]]>
                 を作成するには、<code>Zend_Memory_Manager::createLocked([$data])</code>
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[
-$memObject = $memoryManager->createLocked($data);]]>
+$memObject = $memoryManager->createLocked($data);
+]]>
                 </programlisting>
             </para>
 
@@ -140,7 +144,8 @@ function foo()
     ...
     // $memObject1 はここで破棄されますが、
     // $memObject3 オブジェクトはまだ $memList に参照されており、破棄されていません
-}]]>
+}
+]]>
                 </programlisting>
             </para>
 
@@ -178,7 +183,8 @@ function foo()
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[
 $oldLimit = $memoryManager->getMemoryLimit();  // メモリの制限バイト数を取得します
-$memoryManager->setMemoryLimit($newLimit);     // メモリの制限バイト数を設定します]]>
+$memoryManager->setMemoryLimit($newLimit);     // メモリの制限バイト数を設定します
+]]>
                 </programlisting>
             </para>
 
@@ -211,7 +217,8 @@ $memoryManager->setMemoryLimit($newLimit);     // メモリの制限バイト数
                 メソッドを使用します。
                 <programlisting role="php"><![CDATA[
 $oldMinSize = $memoryManager->getMinSize();  // MinSize をバイト数で取得します
-$memoryManager->setMinSize($newSize);        // MinSize をバイト数で設定します]]>
+$memoryManager->setMinSize($newSize);        // MinSize をバイト数で設定します
+]]>
                 </programlisting>
             </para>
 
