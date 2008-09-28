@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -51,8 +51,11 @@ $options = array(
     'baseDn' => 'OU=Sales,DC=foo,DC=net',
 );
 $ldap = new Zend_Ldap($options);
-$acctname = $ldap->getCanonicalAccountName('abaker', Zend_Ldap::ACCTNAME_FORM_DN);
-echo "$acctname\n";]]></programlisting>
+$acctname = $ldap->getCanonicalAccountName('abaker',
+                                           Zend_Ldap::ACCTNAME_FORM_DN);
+echo "$acctname\n";
+]]>
+            </programlisting>
 
         </para>
 
@@ -70,8 +73,11 @@ $options = array(
     'baseDn' => 'CN=Users,DC=w,DC=net',
 );
 $ldap = new Zend_Ldap($options);
-$acctname = $ldap->getCanonicalAccountName('bcarter', Zend_Ldap::ACCTNAME_FORM_DN);
-echo "$acctname\n";]]></programlisting>
+$acctname = $ldap->getCanonicalAccountName('bcarter',
+                                           Zend_Ldap::ACCTNAME_FORM_DN);
+echo "$acctname\n";
+]]>
+            </programlisting>
 
             ここでは、<code>getCanonicalAccountName()</code> メソッドでアカウントの DN
             を取得していることに注意しましょう。
@@ -112,8 +118,11 @@ $options = array(
 );
 $ldap = new Zend_Ldap($options);
 $ldap->bind('abaker', 'moonbike55');
-$acctname = $ldap->getCanonicalAccountName('abaker', Zend_Ldap::ACCTNAME_FORM_DN);
-echo "$acctname\n";]]></programlisting>
+$acctname = $ldap->getCanonicalAccountName('abaker',
+                                           Zend_Ldap::ACCTNAME_FORM_DN);
+echo "$acctname\n";
+]]>
+                </programlisting>
 
                 この例において <code>bind()</code> をコールすると、
                 ユーザ名 '<code>abaker</code>' が DN 形式でないことと
@@ -404,7 +413,9 @@ foreach ($multiOptions as $name => $options) {
             continue;
         }
     }
-}]]></programlisting>
+}
+]]>
+                </programlisting>
 
                 何らかの理由でバインドに失敗すると、その次のオプションでのバインドを試みます。
             </para>

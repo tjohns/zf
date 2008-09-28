@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.mail.multiple-emails">
     <title>SMTP 接続による複数のメールの送信</title>
 
@@ -23,7 +23,9 @@ for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
     $mail->addTo('studio@peptolab.com', 'Test');
     $mail->setFrom('studio@peptolab.com', 'Test');
-    $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail->setSubject(
+        'Demonstration - Sending Multiple Mails per SMTP Connection'
+    );
     $mail->setBodyText('...Your message here...');
     $mail->send($transport);
 }
@@ -59,7 +61,9 @@ for ($i = 0; $i > 5; $i++) {
     $mail = new Zend_Mail();
     $mail->addTo('studio@peptolab.com', 'Test');
     $mail->setFrom('studio@peptolab.com', 'Test');
-    $mail->setSubject('Demonstration - Sending Multiple Mails per SMTP Connection');
+    $mail->setSubject(
+        'Demonstration - Sending Multiple Mails per SMTP Connection'
+    );
     $mail->setBodyText('...Your message here...');
 
     // 手動で接続を制御します

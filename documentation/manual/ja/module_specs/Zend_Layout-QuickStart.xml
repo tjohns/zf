@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.layout.quickstart">
     <title>Zend_Layout クイックスタート</title>
 
@@ -49,7 +49,8 @@
 ?>
 </body>
 </html>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             <code>Zend_Layout</code> は <code>Zend_View</code>
@@ -84,7 +85,8 @@
     <?= $this->render('footer.phtml') ?>
 </body>
 </html>
-]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.mvc">
@@ -121,7 +123,8 @@
         <programlisting role="php"><![CDATA[
 // 起動ファイル内で
 Zend_Layout::startMvc();
-?>]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             <code>startMvc()</code> には、オプションの配列あるいは
@@ -151,7 +154,8 @@ class FooController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('foobaz');
     };
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             ビュースクリプトでは、<code>layout</code>
@@ -163,7 +167,8 @@ class FooController extends Zend_Controller_Action
 
         <programlisting role="php"><![CDATA[
 <?php $this->layout()->setLayout('foo'); // 別のレイアウトを設定します ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             MVC に登録した <code>Zend_Layout</code>
@@ -174,7 +179,8 @@ class FooController extends Zend_Controller_Action
         <programlisting role="php"><![CDATA[
 // startMvc() がまだコールされていない場合は null を返します
 $layout = Zend_Layout::getMvcInstance(); 
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             最後に、<code>Zend_Layout</code>
@@ -208,7 +214,8 @@ $layout = Zend_Layout::getMvcInstance();
     <!-- /foo/index + /comment/fetch のレンダリング -->
     <div id="content"><?= $this->layout()->content ?></div>
 </body>
-]]></programlisting>
+]]>
+        </programlisting>
         
         <para>
             この機能は、ActionStack <link linkend="zend.controller.actionhelpers.actionstack">
@@ -262,7 +269,8 @@ $layout->setLayout('foo');
 
 // 最終的なレイアウトをレンダリングします
 echo $layout->render();
-?>]]></programlisting>
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.layout.quickstart.example">

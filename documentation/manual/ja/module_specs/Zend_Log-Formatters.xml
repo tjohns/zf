@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.log.formatters">
   <title>フォーマッタ</title>
   <para>
@@ -23,7 +23,8 @@
 
       <programlisting role="php"><![CDATA[
 $format = '%timestamp% %priorityName% (%priority%): %message%' . PHP_EOL;
-$formatter = new Zend_Log_Formatter_Simple($format);]]>
+$formatter = new Zend_Log_Formatter_Simple($format);
+]]>
       </programlisting>
     </para>
 
@@ -41,7 +42,8 @@ $logger->addWriter($writer);
 
 $logger->info('there');
 
-// "hello there" と出力します]]>
+// "hello there" と出力します
+]]>
       </programlisting>
     </para>
 
@@ -70,7 +72,8 @@ $writer->setFormatter($formatter);
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('通知メッセージ');]]>
+$logger->info('通知メッセージ');
+]]>
       </programlisting>
     </para>
 
@@ -83,8 +86,9 @@ $logger->info('通知メッセージ');]]>
   <message>通知メッセージ</message>
   <priority>6</priority>
   <priorityName>INFO</priorityName>
-</logEntry>]]>
-      </programlisting>
+</logEntry>
+]]>
+</programlisting>
     </para>
 
     <para>
@@ -95,13 +99,17 @@ $logger->info('通知メッセージ');]]>
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');
-$formatter = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'level' => 'priorityName'));
+$formatter = new Zend_Log_Formatter_Xml('log',
+                                        array('msg' => 'message',
+                                              'level' => 'priorityName')
+                                       );
 $writer->setFormatter($formatter);
 
 $logger = new Zend_Log();
 $logger->addWriter($writer);
 
-$logger->info('通知メッセージ');]]>
+$logger->info('通知メッセージ');
+]]>
       </programlisting>
 
       上のコードは、ルート要素の名前をデフォルトの
@@ -113,8 +121,9 @@ $logger->info('通知メッセージ');]]>
 <log>
   <msg>通知メッセージ</msg>
   <level>INFO</level>
-</log>]]>
-      </programlisting>
+</log>
+]]>
+</programlisting>
     </para>
 
   </sect2>

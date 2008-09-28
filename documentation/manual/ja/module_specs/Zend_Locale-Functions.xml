@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11477 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale の使用法</title>
@@ -37,7 +37,10 @@ $stringLocale = $locale->toString();
 $copiedLocale = clone $locale;
 
 print "copied: ", $copiedLocale->toString();
-print "copied: ", $copiedLocale; // PHP は、__toString() 経由で自動的に toString() をコールします]]>
+
+// PHP は、__toString() 経由で自動的に toString() をコールします
+print "copied: ", $copiedLocale;
+]]>
             </programlisting>
         </example>
 
@@ -62,7 +65,8 @@ $mylocale = new Zend_Locale('en_US');
 // ロケールが同一かどうかを調べます
 if ($locale->equals($mylocale)) {
     print "これらのロケールは同一です";
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -98,7 +102,8 @@ print_r($found);
 
 // ブラウザのロケールのみを返します
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
-print_r($found2);]]>
+print_r($found2);
+]]>
             </programlisting>
         </example>
 
@@ -150,7 +155,8 @@ print $locale->toString();
 
 // 新しいロケール
 $locale->setLocale('aa_DJ');
-print $locale->toString();]]>
+print $locale->toString();
+]]>
             </programlisting>
         </example>
 
@@ -176,7 +182,8 @@ $locale = new Zend_Locale();
 print $locale->getLanguage();
 
 // ロケールが 'ja_JP' の場合は、地域として 'JP' が返されます
-print $locale->getRegion();]]>
+print $locale->getRegion();
+]]>
             </programlisting>
         </example>
 
@@ -211,7 +218,8 @@ print_r ($list);
 
 // これらのキーのいずれかを getTranslation() メソッドで使用します
 print $locale->getTranslation('de', 'language', 'zh');
-// これは、言語 'de' を中国語で表した文字列を返します]]>
+// これは、言語 'de' を中国語で表した文字列を返します
+]]>
             </programlisting>
         </example>
 
@@ -1279,7 +1287,8 @@ print $locale->getTranslation('de', 'language', 'zh');
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('en_US');
 // すべての国名をドイツ語で表示します
-print_r($locale->getTranslationList('country', 'de'));]]>
+print_r($locale->getTranslationList('country', 'de'));
+]]>
             </programlisting>
         </example>
 
@@ -1297,7 +1306,8 @@ $code2name = $locale->getLanguageTranslationList();
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
 echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
-// 出力は、「フランス語」を表すドイツ語の名前になります]]>
+// 出力は、「フランス語」を表すドイツ語の名前になります
+]]>
             </programlisting>
         </example>
 
@@ -1315,7 +1325,8 @@ $lists = $locale->getTranslationList();
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1348,7 +1359,8 @@ foreach($list as $language => $content) {
     } catch (Exception $e) {
         continue;
     }
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1423,7 +1435,8 @@ Array
 
     [yesexpr] => ^([jJ][aA]?)|([jJ]?)
     [noexpr] => ^([nN]([eE][iI][nN])?)|([nN]?)
-)]]>
+)
+]]>
             </programlisting>
         </example>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>ライター</title>
   <para>
@@ -24,7 +24,8 @@
 $writer = new Zend_Log_Writer_Stream('php://output');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
     </para>
 
@@ -37,7 +38,8 @@ $logger->info('Informational message');]]>
 $writer = new Zend_Log_Writer_Stream('/path/to/logfile');
 $logger = new Zend_Log($writer);
 
-$logger->info('Informational message');]]>
+$logger->info('Informational message');
+]]>
       </programlisting>
 
       デフォルトでは、ストリームを追記モード (<code>"a"</code>) でオープンします。
@@ -58,7 +60,8 @@ if (! $stream) {
 $writer = new Zend_Log_Writer_Stream($stream);
 $logger = new Zend_Log($writer);
 
-$logger->info('通知メッセージ');]]>
+$logger->info('通知メッセージ');
+]]>
       </programlisting>
 
       既存のストリームリソースに対してモードを指定することはできません。
@@ -88,7 +91,8 @@ $writer = new Zend_Log_Writer_Db($db, 'log_table_name', $columnMapping);
 
 $logger = new Zend_Log($writer);
 
-$logger->info('通知メッセージ');]]>
+$logger->info('通知メッセージ');
+]]>
       </programlisting>
 
       上の例は、一行ぶんのログデータを <code>log_table_name</code>
@@ -112,7 +116,8 @@ $writer = new Zend_Log_Writer_Null;
 $logger = new Zend_Log($writer);
 
 // どこにも出力されません
-$logger->info('通知メッセージ');]]>
+$logger->info('通知メッセージ');
+]]>
       </programlisting>
     </para>
   </sect2>
@@ -137,7 +142,8 @@ var_dump($mock->events[0]);
 //    [message] => 通知メッセージ
 //    [priority] => 6
 //    [priorityName] => INFO
-// )]]>
+// )
+]]>
       </programlisting>
     </para>
 
@@ -164,7 +170,8 @@ $logger->addWriter($writer1);
 $logger->addWriter($writer2);
 
 // 両方のライターに書き出されます
-$logger->info('通知メッセージ');]]>
+$logger->info('通知メッセージ');
+]]>
       </programlisting>
     </para>
   </sect2>

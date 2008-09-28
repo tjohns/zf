@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.log.filters">
     <title>フィルタ</title>
 
@@ -26,7 +26,8 @@ $logger->addFilter($filter);
 $logger->info('通知メッセージ');
 
 // 記録されます
-$logger->emerg('緊急メッセージ');]]>
+$logger->emerg('緊急メッセージ');
+]]>
         </programlisting>
 
         ログオブジェクトにフィルタを追加すると、
@@ -58,7 +59,8 @@ $writer2->addFilter($filter);
 $logger->info('通知メッセージ');
 
 // 両方のライターに記録されます
-$logger->emerg('緊急メッセージ');]]>
+$logger->emerg('緊急メッセージ');
+]]>
         </programlisting>
     </para>
   </sect2>

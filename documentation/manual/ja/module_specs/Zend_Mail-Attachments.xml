@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.mail.attachments">
     <title>ファイルの添付</title>
     <para>
@@ -14,7 +14,10 @@
 $mail = new Zend_Mail();
 // メッセージを作成します...
 $mail->createAttachment($someBinaryString);
-$mail->createAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+$mail->createAttachment($myImage,
+                        'image/gif',
+                        Zend_Mime::DISPOSITION_INLINE,
+                        Zend_Mime::ENCODING_8BIT);
 ]]>
         </programlisting>
     </example>
@@ -33,7 +36,8 @@ $at->disposition = Zend_Mime::DISPOSITION_INLINE;
 $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
-$mail->send();]]>
+$mail->send();
+]]>
     </programlisting>
     <para>
         もうひとつの方法は、<code>Zend_Mime_Part</code> のインスタンスを作成して
