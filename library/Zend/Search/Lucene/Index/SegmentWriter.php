@@ -493,7 +493,8 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         $this->_tisFile->writeLong($this->_termCount);
 
         $this->_tiiFile->seek(4);
-        $this->_tiiFile->writeLong(ceil(($this->_termCount + 2)/self::$indexInterval));
+        // + 1 is used to count an additional special index entry (empty term at the start of the list)
+        $this->_tiiFile->writeLong(($this->_termCount - $this->_termCount % self::$indexInterval)/self::$indexInterval + 1);
     }
 
 
