@@ -241,7 +241,7 @@ class Zend_Validate_File_SizeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('100MB', $validator->getMax());
 
         $validator->setMax('1 GB');
-        $this->assertEquals('1024MB', $validator->getMax());
+        $this->assertEquals('1GB', $validator->getMax());
 
         $validator->setMax('0.001 TB');
         $this->assertEquals('1.02GB', $validator->getMax());

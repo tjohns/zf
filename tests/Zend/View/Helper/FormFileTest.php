@@ -55,7 +55,6 @@ class Zend_View_Helper_FormFileTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->helper->formFile(array(
             'name'    => 'foo',
-            'value'   => 'bar',
             'attribs' => array('disable' => true)
         ));
 
@@ -69,7 +68,6 @@ class Zend_View_Helper_FormFileTest extends PHPUnit_Framework_TestCase
     {
         $html = $this->helper->formFile(array(
             'name'    => 'foo',
-            'value'   => 'bar',
             'attribs' => array('disable' => true)
         ));
 
@@ -81,7 +79,6 @@ class Zend_View_Helper_FormFileTest extends PHPUnit_Framework_TestCase
     {
         $test = $this->helper->formFile(array(
             'name'    => 'foo',
-            'value'   => 'bar',
         ));
         $this->assertNotContains(' />', $test);
     }
@@ -91,7 +88,6 @@ class Zend_View_Helper_FormFileTest extends PHPUnit_Framework_TestCase
         $this->view->doctype('XHTML1_STRICT');
         $test = $this->helper->formFile(array(
             'name'    => 'foo',
-            'value'   => 'bar',
         ));
         $this->assertContains(' />', $test);
     }

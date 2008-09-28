@@ -31,6 +31,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Zend/Validate/File/CountTest.php';
 require_once 'Zend/Validate/File/ExcludeExtensionTest.php';
+require_once 'Zend/Validate/File/ExcludeMimeTypeTest.php';
 require_once 'Zend/Validate/File/ExistsTest.php';
 require_once 'Zend/Validate/File/ExtensionTest.php';
 require_once 'Zend/Validate/File/FilesSizeTest.php';
