@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11497 -->
 <sect1 id="zend.search.lucene.best-practice">
     <title>ベストプラクティス</title>
 
@@ -51,7 +51,8 @@ foreach ($hits as $hit) {
 
     // 'title' フィールドもこの方法で取得できます
     $title = $hit->getDocument()->title;
-}]]>
+}
+]]>
             </programlisting>
         </para>
     </sect2>
@@ -87,7 +88,8 @@ foreach ($hits as $hit) {
             <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
-$index->optimize();]]>
+$index->optimize();
+]]>
             </programlisting>
         </para>
 
@@ -330,7 +332,8 @@ unset($index);]]>
             <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
-$index->commit();]]>
+$index->commit();
+]]>
             </programlisting>
             これについては、このドキュメントの
             "<link linkend="zend.search.lucene.advanced.static">応用: 静的プロパティとしてのインデックスの使用</link>"
@@ -384,7 +387,8 @@ foreach ($docIds as $id) {
     $title    = $doc->title;
     $contents = $doc->contents;
     ...
-}]]>
+}
+]]>
             </programlisting>
         </para>
     </sect2>
@@ -471,8 +475,13 @@ foreach ($docIds as $id) {
             フィールドを作成するメソッドで、エンコーディングをオプションのパラメータによって指定することができます。
             <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
-$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
+$doc->addField(Zend_Search_Lucene_Field::Text('title',
+                                              $title,
+                                              'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  $contents,
+                                                  'utf-8'));
+]]>
             </programlisting>
             エンコーディングの指定をはっきりさせるという意味で、これが最も良い方法です。
         </para>
@@ -488,7 +497,8 @@ setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
 
 setlocale(LC_ALL, 'ja_JP.UTF-8');
-...]]>
+...
+]]>
             </programlisting>
         </para>
 
@@ -505,9 +515,11 @@ setlocale(LC_ALL, 'ja_JP.UTF-8');
             検索の前にクエリのパースを行なう場合、
             エンコーディングはオプションのパラメータとして指定することができます。
             <programlisting role="php"><![CDATA[
-$query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
+$query =
+    Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
 $hits = $index->find($query);
-...]]>
+...
+]]>
             </programlisting>
         </para>
 
@@ -517,7 +529,8 @@ $hits = $index->find($query);
             <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
-...]]>
+...
+]]>
             </programlisting>
             空の文字列は、'現在のロケール' を意味します。
         </para>

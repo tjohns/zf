@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11497 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
@@ -103,7 +103,8 @@ $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
 
 // フィールドはトークン化されてインデックス化されますが、インデックスには保存されません。
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
-                                                  'My document content'));]]>
+                                                  'My document content'));
+]]>
             </programlisting>
 
             <para>
@@ -119,8 +120,13 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 
                 <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
-$doc->addField(Zend_Search_Lucene_Field::Text('title', $title, 'iso-8859-1'));
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'));]]>
+$doc->addField(Zend_Search_Lucene_Field::Text('title',
+                                              $title,
+                                              'iso-8859-1'));
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
+                                                  $contents,
+                                                  'utf-8'));
+]]>
                 </programlisting>
             </para>
 
@@ -130,7 +136,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents, 'utf-8'
                 <programlisting role="php"><![CDATA[
 setlocale(LC_ALL, 'de_DE.iso-8859-1');
 ...
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
+]]>
                 </programlisting>
             </para>
 
@@ -210,7 +217,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));]]>
 
                 <table id="zend.search.lucene.index-creation.understanding-field-types.table">
                     <title>Zend_Search_Lucene_Field の型</title>
-                    <tgroup cols="4">
+                    <tgroup cols="5">
                         <thead>
                             <row>
                                 <entry>フィールド型</entry>
@@ -273,7 +280,8 @@ $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
 $index->addDocument($doc);
 ...
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
             </programlisting>
         </para>
 
@@ -327,7 +335,8 @@ $doc->addField(Zend_Search_Lucene_Field::UnIndexed('updated',
                                                    time()));
 $doc->addField(Zend_Search_Lucene_Field::Text('annotation',
                                               'Document annotation text'));
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
             </programlisting>
         </para>
 
@@ -339,7 +348,8 @@ $index->addDocument($doc);]]>
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
-$headerLinksArray = $doc->getHeaderLinks();]]>
+$headerLinksArray = $doc->getHeaderLinks();
+]]>
             </programlisting>
         </para>
 

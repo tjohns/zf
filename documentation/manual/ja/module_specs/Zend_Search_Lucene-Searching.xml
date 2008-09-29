@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.searching">
     <title>インデックスの検索</title>
 
@@ -105,14 +105,17 @@ $index->find($query);
                 <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 
-$pathTerm  = new Zend_Search_Lucene_Index_Term('/data/doc_dir/' . $filename, 'path');
+$pathTerm  = new Zend_Search_Lucene_Index_Term(
+                     '/data/doc_dir/' . $filename, 'path'
+                 );
 $pathQuery = new Zend_Search_Lucene_Search_Query_Term($pathTerm);
 
 $query = new Zend_Search_Lucene_Search_Query_Boolean();
 $query->addSubquery($userQuery, true /* required */);
 $query->addSubquery($pathQuery, true /* required */);
 
-$hits = $index->find($query);]]>
+$hits = $index->find($query);
+]]>
                 </programlisting>
             </para>
 
@@ -121,7 +124,9 @@ $hits = $index->find($query);]]>
                 メソッドはオプションのパラメータでエンコーディングを受け取ることができます。
                 ここで、クエリ文字列のエンコーディングを指定します。
             <programlisting role="php"><![CDATA[
-$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');]]>
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr,
+                                                          'iso-8859-5');
+]]>
             </programlisting>
             </para>
 
@@ -136,7 +141,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5
                 <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
-$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);]]>
+$userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
+]]>
                 </programlisting>
             </para>
 
@@ -240,7 +246,8 @@ foreach ($hits as $hit) {
             <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
 
-Zend_Search_Lucene::setResultSetLimit($newLimit);]]>
+Zend_Search_Lucene::setResultSetLimit($newLimit);
+]]>
             </programlisting>
             0 (デフォルト値) は、'制限しない' という意味です。
         </para>
@@ -277,7 +284,8 @@ $hits = $index->find($query);
 foreach ($hits as $hit) {
     echo $hit->id;
     echo $hit->score;
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -295,13 +303,15 @@ foreach ($hits as $hit) {
             検索結果は、デフォルトではスコアで並べ替えられます。
             これを変更するには、並べ替え用の (ひとつあるいは複数の)
             フィールドと並べ替えの形式、そして並べ替えの方向をパラメータで指定します。
-            and sort order parameters.
         </para>
 
         <para>
             <code>$index->find()</code> のコール時に、オプションのパラメータを指定することができます。
             <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);]]>
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] 
+                    [, $sortField2 [, $sortType [, $sortOrder]]]
+             ...);
+]]>
             </programlisting>
         </para>
 
@@ -325,13 +335,16 @@ $index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [
         <para>
             例を以下に示します。
             <programlisting role="php"><![CDATA[
-$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]>
             </programlisting>
             <programlisting role="php"><![CDATA[
-$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);]]>
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
+]]>
             </programlisting>
             <programlisting role="php"><![CDATA[
-$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]]>
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]>
             </programlisting>
         </para>
 
@@ -351,7 +364,8 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);]
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
 $hits = $index->find($query);
 ...
-$highlightedHTML = $query->highlightMatches($sourceHTML);]]>
+$highlightedHTML = $query->highlightMatches($sourceHTML);
+]]>
             </programlisting>
         </para>
 

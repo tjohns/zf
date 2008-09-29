@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.search.lucene.extending">
     <title>拡張性</title>
 
@@ -35,7 +35,8 @@
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
-$index->addDocument($doc);]]>
+$index->addDocument($doc);
+]]>
         </programlisting>
 
         <para>
@@ -60,7 +61,10 @@ $index->addDocument($doc);]]>
             <example id="zend.search.lucene.extending.analysis.example-1">
                 <title>独自のテキスト解析器</title>
                 <programlisting role="php"><![CDATA[
-/** これは独自のテキスト解析器で、数字つきの単語をひとつの言葉として扱います */
+/**
+ * これは独自のテキスト解析器で、数字つきの単語をひとつの言葉として
+ * 扱います
+ */
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
@@ -110,7 +114,8 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
             $token = new Zend_Search_Lucene_Analysis_Token(
                                       substr($this->_input,
                                              $termStartPosition,
-                                             $this->_position - $termStartPosition),
+                                             $this->_position - 
+                                             $termStartPosition),
                                       $termStartPosition,
                                       $this->_position);
             $token = $this->normalize($token);
@@ -185,20 +190,25 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             は、定義済み解析器あるいは独自の解析器でこのように使用します。
             <programlisting role="php"><![CDATA[
 $stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
-$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
+$stopWordsFilter =
+    new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
 
-$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer =
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+]]>
             </programlisting>
             <programlisting role="php"><![CDATA[
 $shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
 
-$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer =
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($shortWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+]]>
             </programlisting>
         </para>
 
@@ -210,10 +220,12 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
 $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
 $stopWordsFilter->loadFromFile($my_stopwords_file);
 
-$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer =
+   new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
-Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);]]>
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+]]>
             </programlisting>
             ファイル形式は一般的なテキストファイルで、各文字列にひとつの単語が含まれるものとなります。
             '#' を指定すると、その文字列はコメントであるとみなします。
@@ -328,7 +340,8 @@ class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
 }
 
 $mySimilarity = new MySimilarity();
-Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);]]>
+Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
+]]>
         </programlisting>
     </sect2>
 
@@ -447,8 +460,9 @@ abstract function touchFile($filename);
  */
 abstract function getFileObject($filename);
 
-}]]>
-        </programlisting>
+}
+]]>
+</programlisting>
 
         <para>
         Zend_Search_Lucene_Storage_Directory クラスの
@@ -497,8 +511,9 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
     protected function _fread($length=1) {
         ...
     }
-}]]>
-        </programlisting>
+}
+]]>
+</programlisting>
 
     </sect2>
 </sect1>

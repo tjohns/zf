@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10235 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Java Lucene との相互運用</title>
 
@@ -81,8 +81,9 @@ FileInputStream is = new FileInputStream(f);
 Reader reader = new BufferedReader(new InputStreamReader(is));
 doc.add(Field.Text("contents", reader));
 
-indexWriter.addDocument(doc);]]>
-        </programlisting>
+indexWriter.addDocument(doc);
+]]>
+</programlisting>
     </sect2>
 </sect1>
 

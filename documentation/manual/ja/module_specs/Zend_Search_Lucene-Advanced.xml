@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>応用</title>
 
@@ -125,7 +125,8 @@ class Searcher {
     }
 }
 
-Searcher::initIndex();]]>
+Searcher::initIndex();
+]]>
             </programlisting>
         </para>
 
@@ -181,7 +182,8 @@ Searcher::initIndex();
 // スクリプトの終了処理
 ...
 Searcher::commit();
-...]]>
+...
+]]>
             </programlisting>
         </para>
     </sect2>
