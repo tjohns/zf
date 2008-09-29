@@ -144,7 +144,6 @@ echo $result->firstname() .' '. $result->lastname();
 </tapi>
 ]]>
 </programlisting>
-            </programlisting>
         </example>
 
         <para>
