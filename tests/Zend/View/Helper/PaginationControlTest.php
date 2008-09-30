@@ -74,7 +74,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
     }
 
     // ZF-4153
-    public function testFindsPaginatorInView()
+    public function testUsesPaginatorFromViewIfNoneSupplied()
     {
         $this->_viewHelper->view->paginator = $this->_paginator;
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
@@ -86,6 +86,17 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertContains('pagination control', $output, $output);
+    }
+    
+    // ZF-4328
+    public function testUsesPaginatorFromViewOnlyIfNoneSupplied()
+    {
+        $this->_viewHelper->view->paginator  = $this->_paginator;
+        $paginator = Zend_Paginator::factory(range(1, 30));
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
+
+        $output = $this->_viewHelper->paginationControl($paginator);
+        $this->assertContains('page count (3)', $output, $output);
     }
 
     // ZF-4153
@@ -106,15 +117,15 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
     {
         // First we'll make sure the base case works
         $output = $this->_viewHelper->paginationControl($this->_paginator, 'All', 'testPagination.phtml');
-        $this->assertContains('page count (11) equals page range (11)', $output, $output);
+        $this->assertContains('page count (11) equals pages in range (11)', $output, $output);
 
         Zend_Paginator::setDefaultScrollingStyle('All');
         $output = $this->_viewHelper->paginationControl($this->_paginator, null, 'testPagination.phtml');        
-        $this->assertContains('page count (11) equals page range (11)', $output, $output);
+        $this->assertContains('page count (11) equals pages in range (11)', $output, $output);
         
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('testPagination.phtml');
         $output = $this->_viewHelper->paginationControl($this->_paginator);        
-        $this->assertContains('page count (11) equals page range (11)', $output, $output);
+        $this->assertContains('page count (11) equals pages in range (11)', $output, $output);
     }
 
     public function testUsesDefaultViewPartialIfNoneSupplied()
