@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11089 -->
 <sect1 id="zend.service.yahoo">
     <title>Zend_Service_Yahoo</title>
     <sect2 id="zend.service.yahoo.introduction">
@@ -35,7 +35,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.imagesearch">
@@ -59,7 +59,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.videosearch">
@@ -80,7 +80,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
@@ -101,7 +101,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.newssearch">
@@ -121,7 +121,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.inlinkdatasearch">
@@ -142,7 +142,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.pagedatasearch">
@@ -163,7 +163,7 @@ foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
 ]]>
-            </programlisting>
+</programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.classes">

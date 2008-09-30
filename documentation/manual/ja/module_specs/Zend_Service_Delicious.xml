@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.service.delicious">
     <title>Zend_Service_Delicious</title>
     <sect2 id="zend.service.delicious.introduction">
@@ -13,14 +13,16 @@
         </para>
         <example id="zend.service.delicious.introduction.getAllPosts">
             <title>すべての投稿の取得</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 $posts = $delicious->getAllPosts();
 
 foreach ($posts as $post) {
     echo "--\n";
     echo "タイトル: {$post->getTitle()}\n";
     echo "URL: {$post->getUrl()}\n";
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -33,8 +35,10 @@ foreach ($posts as $post) {
             これらはすべて <code>Zend_Service_Delicious_PostList</code>
             のインスタンスを返します。ここに、取得したすべての投稿が含まれます。
         </para>
-        <programlisting role="php"><![CDATA[/**
- * 引数にマッチする投稿を取得する。日付や url を省略した場合は、直近の日付を使用する
+        <programlisting role="php"><![CDATA[
+/**
+ * 引数にマッチする投稿を取得する。日付や url を省略した場合は
+ * 直近の日付を使用する
  *
  * @param string $tag オプションで、タグによる絞込みを行う
  * @param Zend_Date $dt オプションで、日付による絞込みを行う
@@ -58,7 +62,8 @@ public function getRecentPosts($tag = null, $count = 15);
  * @param string $tag オプションで、タグによる絞込みを行う
  * @return Zend_Service_Delicious_PostList
  */
-public function getAllPosts($tag = null);]]>
+public function getAllPosts($tag = null);
+]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.service.delicious.postlist">
@@ -75,7 +80,8 @@ public function getAllPosts($tag = null);]]>
         </para>
         <example id="zend.service.delicious.postlist.accessing_post_lists">
             <title>投稿一覧へのアクセス</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 $posts = $delicious->getAllPosts();
 
 // 投稿数を数えます
@@ -89,7 +95,8 @@ foreach ($posts as $post) {
 }
 
 // 配列風のアクセス方式で投稿を取得します
-echo $posts[0]->getTitle();]]>
+echo $posts[0]->getTitle();
+]]>
             </programlisting>
         </example>
         <note>
@@ -111,14 +118,16 @@ echo $posts[0]->getTitle();]]>
                 ひとつのタグでだけ絞り込みを行う際に便利なように、
                 <code>withTag()</code> も用意されています。
             </para>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 $posts = $delicious->getAllPosts();
 
 // タグ "php" および "zend" が指定されている投稿のみを表示します
 foreach ($posts->withTags(array('php', 'zend')) as $post) {
     echo "タイトル: {$post->getTitle()}\n";
     echo "URL: {$post->getUrl()}\n";
-}]]>
+}
+]]>
             </programlisting>
         </example>
         <example id="zend.service.delicious.postlist.example.byUrl">
@@ -127,14 +136,16 @@ foreach ($posts->withTags(array('php', 'zend')) as $post) {
                 指定した正規表現にマッチする URL で投稿を絞り込むには
                 <code>withUrl()</code> メソッドを使用します。
             </para>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 $posts = $delicious->getAllPosts();
 
 // URL に "help" を含む投稿のみを表示します
 foreach ($posts->withUrl('/help/') as $post) {
     echo "タイトル: {$post->getTitle()}\n";
     echo "URL: {$post->getUrl()}\n";
-}]]>
+}
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -142,13 +153,15 @@ foreach ($posts->withUrl('/help/') as $post) {
         <title>投稿の編集</title>
         <example id="zend.service.delicious.editing_posts.post_editing">
             <title>投稿の編集</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 $posts = $delicious->getPosts();
 
 // タイトルを設定します
 $posts[0]->setTitle('新しいタイトル');
 // 変更を保存します
-$posts[0]->save();]]>
+$posts[0]->save();
+]]>
             </programlisting>
         </example>
         <example id="zend.service.delicious.editing_posts.method_call_chaining">
@@ -157,12 +170,14 @@ $posts[0]->save();]]>
                すべての設定用メソッドは post オブジェクトを返すので、
                「流れるようなインターフェイス」を使用してメソッドコールを連結することができます。
             </para>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 $posts = $delicious->getPosts();
 
 $posts[0]->setTitle('新しいタイトル')
          ->setNotes('新しいメモ')
-         ->save();]]>
+         ->save();
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -175,7 +190,8 @@ $posts[0]->setTitle('新しいタイトル')
         </para>
         <example id="zend.service.delicious.deleting_posts.deleting_posts">
             <title>投稿の削除</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 
 // URL を指定します
 $delicious->deletePost('http://framework.zend.com');
@@ -185,7 +201,8 @@ $posts = $delicious->getPosts();
 $posts[0]->delete();
 
 // deletePost() を使用する、もうひとつの方法
-$delicious->deletePost($posts[0]->getUrl());]]>
+$delicious->deletePost($posts[0]->getUrl());
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -199,7 +216,8 @@ $delicious->deletePost($posts[0]->getUrl());]]>
         </para>
         <example id="zend.service.delicious.adding_posts.adding_a_post">
             <title>投稿の追加</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 
 // 新しい投稿を作成し、保存します (メソッドコールの連結を使用します)
 $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
@@ -207,9 +225,11 @@ $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
           ->save();
 
 // 新しい投稿を作成し、保存します (メソッドコールの連結を使用しません)
-$newPost = $delicious->createNewPost('Zend Framework', 'http://framework.zend.com');
+$newPost = $delicious->createNewPost('Zend Framework',
+                                     'http://framework.zend.com');
 $newPost->setNotes('Zend Framework Homepage');
-$newPost->save();]]>
+$newPost->save();
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -217,13 +237,15 @@ $newPost->save();]]>
         <title>タグ</title>
         <example id="zend.service.delicious.tags.tags">
             <title>タグ</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 
 // すべてのタグを取得します
 print_r($delicious->getTags());
 
 // タグ ZF の名前を zendFramework に変更します
-$delicious->renameTag('ZF', 'zendFramework');]]>
+$delicious->renameTag('ZF', 'zendFramework');
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -231,7 +253,8 @@ $delicious->renameTag('ZF', 'zendFramework');]]>
         <title>バンドル</title>
         <example id="zend.service.delicious.bundles.example">
             <title>バンドル</title>
-            <programlisting role="php"><![CDATA[$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
+            <programlisting role="php"><![CDATA[
+$delicious = new Zend_Service_Delicious('ユーザ名', 'パスワード');
 
 // すべてのバンドルを取得します
 print_r($delicious->getBundles());
@@ -240,7 +263,8 @@ print_r($delicious->getBundles());
 $delicious->deleteBundle('someBundle');
 
 // バンドルを追加します
-$delicious->addBundle('newBundle', array('tag1', 'tag2'));]]>
+$delicious->addBundle('newBundle', array('tag1', 'tag2'));
+]]>
             </programlisting>
         </example>
     </sect2>
@@ -251,7 +275,7 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));]]>
         </para>
         <table id="zend.service.delicious.public_data.functions_for_retrieving_public_data">
             <title>公開データを取得するためのメソッド</title>
-            <tgroup cols="2">
+            <tgroup cols="3">
                 <thead>
                     <row>
                         <entry>名前</entry>
@@ -292,7 +316,8 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));]]>
         </note>
         <example id="zend.service.delicious.public_data.retrieving_public_data">
             <title>公開データの取得</title>
-            <programlisting role="php"><![CDATA[// ユーザ名とパスワードは不要です
+            <programlisting role="php"><![CDATA[
+// ユーザ名とパスワードは不要です
 $delicious = new Zend_Service_Delicious();
 
 // someUser のファンを取得します
@@ -302,7 +327,8 @@ print_r($delicious->getUserFans('someUser'));
 print_r($delicious->getUserNetwork('someUser'));
 
 // someUser のタグを取得します
-print_r($delicious->getUserTags('someUser'));]]>
+print_r($delicious->getUserTags('someUser'));
+]]>
             </programlisting>
         </example>
         <sect3 id="zend.service.delicious.public_data.posts">
@@ -360,8 +386,10 @@ print_r($delicious->getUserTags('someUser'));]]>
         </para>
         <example id="zend.service.delicious.httpclient.changing">
             <title><code>Zend_Rest_Client</code> の HTTP クライアントの変更</title>
-            <programlisting role="php"><![CDATA[$myHttpClient = new My_Http_Client();
-Zend_Rest_Client::setHttpClient($myHttpClient);]]>
+            <programlisting role="php"><![CDATA[
+$myHttpClient = new My_Http_Client();
+Zend_Rest_Client::setHttpClient($myHttpClient);
+]]>
             </programlisting>
         </example>
         <para>
@@ -370,9 +398,11 @@ Zend_Rest_Client::setHttpClient($myHttpClient);]]>
         </para>
         <example id="zend.service.delicious.httpclient.keepalive">
             <title>HTTP クライアントを、接続を保持し続けるように設定する</title>
-            <programlisting role="php"><![CDATA[Zend_Rest_Client::getHttpClient()->setConfig(array(
+            <programlisting role="php"><![CDATA[
+Zend_Rest_Client::getHttpClient()->setConfig(array(
         'keepalive' => true
-));]]>
+));
+]]>
             </programlisting>
         </example>
         <note>

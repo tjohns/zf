@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11497 -->
 <sect1 id="zend.service.slideshare">
 
     <title>導入</title>
@@ -31,8 +31,13 @@
             オブジェクトのインスタンスを作成し、それぞれの値を次のように指定しましょう。
         </para>
 
-        <programlisting role="php"><![CDATA[// このコンポーネントの新しいインスタンスを作成します
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD'); ]]>
+        <programlisting role="php"><![CDATA[
+// このコンポーネントの新しいインスタンスを作成します
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD'); 
+]]>
         </programlisting>
 
     </sect2>
@@ -183,7 +188,8 @@ class Zend_Service_SlideShare_SlideShow {
     public function getNumViews() {
         return $this->_numViews;
     }
-}]]>
+}
+]]>
         </programlisting>
 
         <note>
@@ -217,13 +223,16 @@ class Zend_Service_SlideShare_SlideShow {
 
         <programlisting role="php"><![CDATA[
 // このコンポーネントの新しいインスタンスを作成します
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 
 $slideshow = $ss->getSlideShow(123456);
 
 print "スライドショーのタイトル: {$slideshow->getTitle()}<br/>\n";
 print "閲覧回数: {$slideshow->getNumViews()}<br/>\n";
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -280,8 +289,12 @@ print "閲覧回数: {$slideshow->getNumViews()}<br/>\n";
             各メソッドの使用例を以下に示します。
         </para>
 
-        <programlisting role="php"><![CDATA[// このコンポーネントの新しいインスタンスを作成します
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+        <programlisting role="php"><![CDATA[
+// このコンポーネントの新しいインスタンスを作成します
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 
 $starting_offset = 0;
 $limit = 10;
@@ -295,7 +308,7 @@ $ss_group = $ss->getSlideShowsByGroup('mygroup', $starting_offset, $limit);
 foreach($ss_user as $slideshow) {
    print "スライドショーのタイトル: {$slideshow->getTitle}<br/>\n";
 }
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -313,19 +326,26 @@ foreach($ss_user as $slideshow) {
             <code>setCacheObject</code> メソッドでこのように指定します。
         </para>
 
-        <programlisting role="php"><![CDATA[$frontendOptions = array(
+        <programlisting role="php"><![CDATA[
+$frontendOptions = array(
                         'lifetime' => 7200,
                         'automatic_serialization' => true);
 $backendOptions  = array(
                         'cache_dir' => '/webtmp/');
 
-$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory('Core',
+                             'File',
+                             $frontendOptions,
+                             $backendOptions);
 
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 $ss->setCacheObject($cache);
 
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+]]>
         </programlisting>
 
     </sect2>
@@ -342,13 +362,17 @@ $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
             たとえば接続のタイムアウト秒数をデフォルトから変更したい場合などに便利です。
         </para>
 
-        <programlisting role="php"><![CDATA[$client = new Zend_Http_Client();
+        <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client();
 $client->setConfig(array('timeout' => 5));
 
-$ss = new Zend_Service_SlideShare('APIKEY', 'SHAREDSECRET', 'USERNAME', 'PASSWORD');
+$ss = new Zend_Service_SlideShare('APIKEY',
+                                  'SHAREDSECRET',
+                                  'USERNAME',
+                                  'PASSWORD');
 $ss->setHttpClient($client);
 $ss_user = $ss->getSlideShowsByUser('username', $starting_offset, $limit);
-?>]]>
+]]>
         </programlisting>
 
     </sect2>

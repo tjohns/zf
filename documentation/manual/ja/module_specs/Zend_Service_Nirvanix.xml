@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -126,7 +126,8 @@
             には、これら 3 つの操作のための便利なメソッドが用意されています。
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -137,7 +138,8 @@ $imfs->putContents('/foo.txt', 'contents to store');
 
 echo $imfs->getContents('/foo.txt');
 
-$imfs->unlink('/foo.txt');]]>
+$imfs->unlink('/foo.txt');
+]]>
         </programlisting>
 
         <para>
@@ -205,7 +207,8 @@ $imfs->unlink('/foo.txt');]]>
             <code>Zend_Service_Nirvanix</code> には用意されていません。
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -213,7 +216,8 @@ $nirvanix = new Zend_Service_Nirvanix($auth);
 $imfs = $nirvanix->getService('IMFS');
 
 $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
-                                  'newFileName' => 'bar.txt'));]]>
+                                  'newFileName' => 'bar.txt'));
+]]>
         </programlisting>        
 
         <para>
@@ -258,7 +262,9 @@ $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
             などを使用することです。
         </para>
 
-        <programlisting role="php"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="php"><![CDATA[
+<?php
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 
@@ -277,7 +283,9 @@ Zend_Service_Nirvanix_Response Object
             [ResponseCode] => 0
             [FilesUploaded] => 1
             [BytesUploaded] => 14
-        ))]]>
+        )
+)
+]]>
         </programlisting>
 
         <para>
@@ -314,8 +322,9 @@ Zend_Service_Nirvanix_Response Object
         <programlisting role="xml"><![CDATA[
 <Response>
    <ResponseCode>0</ResponseCode>
-</Response>]]>
-        </programlisting>
+</Response>
+]]>
+</programlisting>
     
         <para>
             上の例のように <code>ResponseCode</code> がゼロの場合は、
@@ -333,7 +342,8 @@ Zend_Service_Nirvanix_Response Object
             <code>Zend_Service_Nirvanix_Exception</code> がスローされます。
         </para>
 
-        <programlisting role="xml"><![CDATA[$auth = array('username' => 'your-username',
+        <programlisting role="xml"><![CDATA[
+$auth = array('username' => 'your-username',
               'password' => 'your-password',
               'appKey'   => 'your-app-key');
 $nirvanix = new Zend_Service_Nirvanix($auth);
@@ -346,8 +356,9 @@ try {
 } catch (Zend_Service_Nirvanix_Exception $e) {
   echo $e->getMessage() . "\n";
   echo $e->getCode();
-}]]>
-        </programlisting>
+}
+]]>
+</programlisting>
 
         <para>
             上の例で使用している <code>unlink()</code> は、REST API の

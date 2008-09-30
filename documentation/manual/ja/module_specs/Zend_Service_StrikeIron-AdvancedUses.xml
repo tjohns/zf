@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11146 -->
 <sect1 id="zend.service.strikeiron.advanced-uses">
     <title>Zend_Service_StrikeIron: 応用編</title>
 
@@ -24,16 +24,21 @@
         <code>getService()</code> のオプションに
         <code>class</code> ではなく <code>wsdl</code> を指定します。
 
-        <programlisting role="php"><![CDATA[$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+        <programlisting role="php"><![CDATA[
+$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
                                                 'password' => 'あなたのパスワード'));
 
 // Reverse Phone Lookup サービス用の汎用クライアントを取得します
-$phone = $strikeIron->getService(array('wsdl' => 'http://ws.strikeiron.com/ReversePhoneLookup?WSDL'));
+$phone = $strikeIron->getService(
+                          array('wsdl' =>
+                                'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
+                      );
 
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;
 
-// Zend Technologies USA Inc]]>
+// Zend Technologies USA Inc
+]]>
         </programlisting>
       </para>
 
@@ -93,9 +98,10 @@ echo $result->listingName;
         のような適切なメソッドをコールします。
 
         <programlisting role="php"><![CDATA[
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
-                                                'password' => 'あなたのパスワード',
-                                                'options'  => array('trace' => true)));
+$strikeIron =
+    new Zend_Service_StrikeIron(array('username' => 'あなたのユーザ名',
+                                      'password' => 'あなたのパスワード',
+                                      'options'  => array('trace' => true)));
 
 // Sales & Use Tax Basic サービス用のクライアントを取得します
 $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
