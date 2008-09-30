@@ -66,9 +66,24 @@ Zend_Loader::loadClass('Zend_Gdata_AuthSub');
 Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 
 /**
+ * @see Zend_Gdata_HttpClient
+ */
+Zend_Loader::loadClass('Zend_Gdata_HttpClient');
+
+/**
  * @see Zend_Gdata_Calendar
  */
 Zend_Loader::loadClass('Zend_Gdata_Calendar');
+
+/**
+ * @var string Location of AuthSub key file.  include_path is used to find this
+ */
+$_authSubKeyFile = null; // Example value for secure use: 'mykey.pem'
+
+/**
+ * @var string Passphrase for AuthSub key file.
+ */
+$_authSubKeyFilePassphrase = null;
 
 /**
  * Returns the full URL of the current page, based upon env variables
@@ -117,10 +132,15 @@ function getCurrentUrl()
  */
 function getAuthSubUrl() 
 {
+  global $_authSubKeyFile;
   $next = getCurrentUrl();
   $scope = 'http://www.google.com/calendar/feeds/';
-  $secure = false;
   $session = true;
+  if ($_authSubKeyFile != null) {
+    $secure = true;
+  } else {
+    $secure = false;
+  }
   return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, 
       $session);
 }
@@ -152,12 +172,17 @@ function requestUserLogin($linkText)
  */
 function getAuthSubHttpClient() 
 {
-  global $_SESSION, $_GET;
+  global $_SESSION, $_GET, $_authSubKeyFile, $_authSubKeyFilePassphrase;
+  $client = new Zend_Gdata_HttpClient();
+  if ($_authSubKeyFile != null) {
+    // set the AuthSub key
+    $client->setAuthSubPrivateKeyFile($_authSubKeyFile, $_authSubKeyFilePassphrase, true);
+  }
   if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
     $_SESSION['sessionToken'] = 
-        Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
+        Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token'], $client);
   } 
-  $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
+  $client->setAuthSubToken($_SESSION['sessionToken']);
   return $client;
 }
 
