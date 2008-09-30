@@ -87,15 +87,17 @@ class Zend_View_Helper_PaginationControl
      */
     public function paginationControl(Zend_Paginator $paginator = null, $scrollingStyle = null, $partial = null, $params = null)
     {
-        if (isset($this->view->paginator) and $this->view->paginator !== null) {
-            $paginator = $this->view->paginator;
-        } else if ($paginator === null) {
-            /**
-             * @see Zend_View_Exception
-             */
-            require_once 'Zend/View/Exception.php';
+        if ($paginator === null) {
+            if (isset($this->view->paginator) and $this->view->paginator !== null) {
+                $paginator = $this->view->paginator;
+            } else {
+                /**
+                 * @see Zend_View_Exception
+                 */
+                require_once 'Zend/View/Exception.php';
 
-            throw new Zend_View_Exception('No paginator instance provided nor found');
+                throw new Zend_View_Exception('No paginator instance provided nor found');
+            }
         }
         
         if ($partial === null) {
