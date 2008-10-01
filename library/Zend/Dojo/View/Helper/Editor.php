@@ -83,7 +83,6 @@ class Zend_Dojo_View_Helper_Editor extends Zend_Dojo_View_Helper_Textarea
         );
         $attribs['id'] = $textareaId;
 
-        $this->dojo->registerDojoStylesheet(true);
         $this->_createGetParentFormFunction();
         $this->_createEditorOnSubmit($hiddenId, $textareaId);
 

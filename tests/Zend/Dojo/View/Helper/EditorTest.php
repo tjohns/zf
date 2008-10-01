@@ -171,10 +171,10 @@ class Zend_Dojo_View_Helper_EditorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($found, var_export($javascript, 1));
     }
 
-    public function testHelperShouldRegisterDojoStylesheet()
+    public function testHelperShouldNotRegisterDojoStylesheet()
     {
         $this->helper->editor('foo');
-        $this->assertTrue($this->view->dojo()->registerDojoStylesheet());
+        $this->assertFalse($this->view->dojo()->registerDojoStylesheet());
     }
 }
 
