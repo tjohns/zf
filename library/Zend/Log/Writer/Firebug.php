@@ -22,6 +22,9 @@
 /** Zend_Log */
 require_once 'Zend/Log.php';
 
+/** Zend_Log_Exception */
+require_once 'Zend/Log/Exception.php';
+
 /** Zend_Log_Writer_Abstract */
 require_once 'Zend/Log/Writer/Abstract.php';
 
