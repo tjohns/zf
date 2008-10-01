@@ -93,9 +93,19 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
     const DUMP = 'DUMP';
   
     /**
+     * Start a group in the Firebug Console
+     */
+    const GROUP_START = 'GROUP_START';
+  
+    /**
+     * End a group in the Firebug Console
+     */
+    const GROUP_END = 'GROUP_END';
+  
+    /**
      * The plugin URI for this plugin
      */
-    const PLUGIN_URI = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/0.1';
+    const PLUGIN_URI = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
     
     /**
      * The protocol URI for this plugin
@@ -230,6 +240,27 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
     }
             
     /**
+     * Starts a group in the Firebug Console
+     * 
+     * @param string $title The title of the group
+     * @return TRUE if the group instruction was added to the response headers or buffered.
+     */
+    public static function group($title)
+    {
+        return self::send(null, $title, self::GROUP_START);
+    }
+    
+    /**
+     * Ends a group in the Firebug Console
+     * 
+     * @return TRUE if the group instruction was added to the response headers or buffered.
+     */
+    public static function groupEnd()
+    {
+        return self::send(null, null, self::GROUP_END);
+    }
+            
+    /**
      * Logs variables to the Firebug Console
      * via HTTP response headers and the FirePHP Firefox Extension.
      *
@@ -325,6 +356,8 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
             case self::TRACE:
             case self::TABLE:
             case self::DUMP:
+            case self::GROUP_START:
+            case self::GROUP_END:
                 break;
             default:
                 throw new Zend_Wildfire_Exception('Log style "'.$style.'" not recognized!');
@@ -339,13 +372,15 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
           
         } else {
           
+          $meta = array('Type'=>$style);
+ 
           if ($label!=null) {
-            $var = array($label,$var);
+              $meta['Label'] = $label;
           }
           
           return self::$_instance->_recordMessage(self::STRUCTURE_URI_FIREBUGCONSOLE,
                                                   array('data'=>$var,
-                                                        'meta'=>array('Type'=>$style)));
+                                                        'meta'=>$meta));
         }
     }
     
@@ -367,7 +402,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
                 if (!isset($data['key'])) {
                     throw new Zend_Wildfire_Exception('You must supply a key.');
                 }
-                if (!isset($data['data'])) {
+                if (!array_key_exists('data',$data)) {
                     throw new Zend_Wildfire_Exception('You must supply data.');
                 }
                 
@@ -384,7 +419,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
                       
                     throw new Zend_Wildfire_Exception('You must supply a "Type" in the meta information.');
                 }
-                if (!isset($data['data'])) {
+                if (!array_key_exists('data',$data)) {
                     throw new Zend_Wildfire_Exception('You must supply data.');
                 }
               

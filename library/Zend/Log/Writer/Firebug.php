@@ -162,7 +162,6 @@ class Zend_Log_Writer_Firebug extends Zend_Log_Writer_Abstract
      */
     public function setFormatter($formatter)
     {
-        require_once 'Zend/Log/Exception.php';
         throw new Zend_Log_Exception(get_class() . ' does not support formatting');
     }
 
