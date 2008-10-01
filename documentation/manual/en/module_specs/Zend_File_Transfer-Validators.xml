@@ -65,6 +65,22 @@
 
         <listitem>
             <para>
+                <code>IsCompressed</code>: This validator checks if the file is compressed. It is based on
+                the <code>MimeType</code> validator and validates for compression archives like zip or arc.
+                You can also limit it to special archives.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>IsImage</code>: This validator checks if the file is an image. It is based on
+                the <code>MimeType</code> validator and validates for image files like jpg or gif.
+                You can also limit it to special image types.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>MimeType</code>: This validator can validate the mimetype of files. It is also able to
                 validate types of mimetypes and will throw error when the mimetype of a given file does not
                 match.
@@ -625,6 +641,18 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
                     filesize of individual files.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>bytestring</code>: Defines if a failure is returned with a userfriendly number, or
+                    with the plain filesize.
+                </para>
+
+                <para>
+                    With this option you can define if the user get's '10864' or '10MB'. Default value is true
+                    which returns '10MB'.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -654,6 +682,9 @@ $upload->addValidator('FilesSize', false, 40000);
 
 // Limit the size of all given files to maximum 4MB and mimimum 10kB
 $upload->addValidator('FilesSize', false, array('10kB', '4MB');
+
+// As before, but returns the plain filesize instead of a userfriendly string
+$upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
 ]]>
             </programlisting>
 
@@ -763,6 +794,80 @@ $upload->setImageWidth(20, 200);
         </example>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.iscompressed">
+        <title><emphasis role="strong">IsCompressed</emphasis> validator</title>
+
+        <para>
+            The <code>IsCompressed</code> validator checks if a transferred file is a compression archive
+            like zip or arc. This validator is based on the <code>MimeType</code> validator and supports
+            the same methods and options. You can limit this validator to special compression types with
+            the methods described there.
+        </para>
+
+        <example id="zend.file.transfer.validators.iscompressed.example">
+            <title>Using the IsCompressed validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the uploaded file is a compression archive
+$upload->addValidator('IsCompressed', false);
+
+// Limits this validator to zip files only
+$upload->addValidator('IsCompressed', false, array('application/zip'));
+
+// Limits this validator to zip files only but uses a simpler notation
+$upload->addValidator('IsCompressed', false, 'zip');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Note that there is no check if you set a file type which is not a compression type. So it
+                would be possible to define gif files to be accepted by this validator even if this is not
+                logically.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.isimage">
+        <title><emphasis role="strong">IsImage</emphasis> validator</title>
+
+        <para>
+            The <code>IsImage</code> validator checks if a transferred file is a image file like gif or
+            jpeg. This validator is based on the <code>MimeType</code> validator and supports
+            the same methods and options. You can limit this validator to special image types with
+            the methods described there.
+        </para>
+
+        <example id="zend.file.transfer.validators.isimage.example">
+            <title>Using the IsImage validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the uploaded file is a image file
+$upload->addValidator('IsImage', false);
+
+// Limits this validator to gif files only
+$upload->addValidator('IsImage', false, array('application/gif'));
+
+// Limits this validator to jpeg files only but uses a simpler notation
+$upload->addValidator('IsImage', false, 'jpeg');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Note that there is no check if you set a file type which is not a image type. So it
+                would be possible to define zip files to be accepted by this validator even if this is not
+                logically.
+            </para>
+        </note>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.mimetype">
         <title><emphasis role="strong">MimeType</emphasis> validator</title>
 
@@ -820,6 +925,20 @@ $upload->addValidator('MimeType', false, 'image');
                 'image/xpixmap' or 'image/vasa' which could be problematic. When you are not sure if your
                 application supports all types you should better allow only defined mimetypes instead
                 of the complete group.
+            </para>
+        </note>
+
+        <note>
+            <para>
+                This component will use the <code>fileinfo</code> extension if it is available. If it's not,
+                it will degrade to the <code>mime_content_type</code> function. And if the functioncall fails
+                it will use the mimetype which is given by HTTP.
+            </para>
+
+            <para>
+                You should be aware of possible security problems when you have wether <code>fileinfo</code>
+                nor <code>mime_content_type</code> available. The mimetype given by HTTP is not secure and
+                can be easily manipulated.
             </para>
         </note>
     </sect2>
@@ -900,6 +1019,18 @@ $upload->addValidator('NotExists', false,
                     With this option you can limit the filesize of a single file you transfer.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>bytestring</code>: Defines if a failure is returned with a userfriendly number, or
+                    with the plain filesize.
+                </para>
+
+                <para>
+                    With this option you can define if the user get's '10864' or '10MB'. Default value is true
+                    which returns '10MB'.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -927,9 +1058,9 @@ $upload = new Zend_File_Transfer();
 // Limit the size of a file to 40000 bytes
 $upload->addValidator('Size', false, 40000);
 
-// Limit the size a given file to maximum 4MB and mimimum 10kB and
-// limits this validator to the file "uploadfile"
-$upload->addValidator('Size', false, array('10kB', '4MB', 'uploadfile');
+// Limit the size a given file to maximum 4MB and mimimum 10kB
+// Additionally returns the plain number in case of an error instead of a userfriendly one
+$upload->addValidator('Size', false, array('10kB', '4MB', false));
 ]]>
             </programlisting>
         </example>

@@ -42,8 +42,8 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::FALSE_TYPE   => "The file '%value%' has a false mimetype",
-        self::NOT_DETECTED => "The mimetype of file '%value%' has not been detected",
+        self::FALSE_TYPE   => "The file '%value%' has a false mimetype of '%type%'",
+        self::NOT_DETECTED => "The mimetype of file '%value%' could not been detected",
         self::NOT_READABLE => "The file '%value%' can not be read"
     );
 
@@ -51,8 +51,13 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageVariables = array(
-        'mimetype' => '_mimetype'
+        'type' => '_type'
     );
+
+    /**
+     * @var string
+     */
+    protected $_type;
 
     /**
      * Mimetypes
@@ -159,19 +164,29 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
         }
 
         if ($file !== null) {
-            $info['type'] = $file['type'];
-        } else {
+            if (class_exists('fileinfo')) {
+                $mime = finfo(FILEINFO_MIME);
+                $this->_type = $mime->file($value);
+                $mime->close();
+            } else if (function_exists('mime_content_type')) {
+                $this->_type = mime_content_type($value);
+            } else {
+                $this->_type = $file['type'];
+            }
+        }
+
+        if (empty($this->_type)) {
             $this->_throw($file, self::NOT_DETECTED);
             return false;
         }
 
         $mimetype = $this->getMimeType(true);
-        if (in_array($info['type'], $mimetype)) {
+        if (in_array($this->_type, $mimetype)) {
             return true;
         }
 
         foreach($mimetype as $mime) {
-            $types = explode('/', $info['type']);
+            $types = explode('/', $this->_type);
             if (in_array($mime, $types)) {
                 return true;
             }

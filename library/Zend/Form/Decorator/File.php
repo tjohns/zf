@@ -21,7 +21,7 @@
 
 /** Zend_Form_Decorator_Abstract */
 require_once 'Zend/Form/Decorator/Abstract.php';
- 
+
 /**
  * Zend_Form_Decorator_File
  *
@@ -42,19 +42,19 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
         if (!$element instanceof Zend_Form_Element) {
             return $content;
         }
- 
+
         $view = $element->getView();
         if (!$view instanceof Zend_View_Interface) {
             return $content;
         }
- 
+
         $name    = $element->getName();
         $attribs = $element->getAttribs();
         if (!array_key_exists('id', $attribs)) {
             $attribs['id'] = $name;
         }
         $separator = $this->getSeparator();
- 
+
         $markup = array();
         if ($element->isArray()) {
             $name .= "[]";
