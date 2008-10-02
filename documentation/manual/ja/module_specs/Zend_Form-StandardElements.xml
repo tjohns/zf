@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11518 -->
+<!-- EN-Revision: 11598 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -314,6 +314,39 @@ $form->addElement($element, 'foo');
             </para>
         </note>
 
+        <para>
+            クライアントからアップロードされるファイルのサイズを制限するには、
+            フォームで受け付けるファイルサイズの最大値も設定しなければなりません。
+            受け付けるサイズをクライアント側で制限するには、form のオプション
+            <code>MAX_FILE_SIZE</code> を設定します。この値を
+            <code>setMaxFileSize($size)</code> メソッドで設定すると、
+            それが file 要素のレンダリング時に用いられます。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Size', false, 102400) // 100K までに制限します
+        ->setMaxFileSize(102400); // ファイルサイズをクライアント側で制限します
+$form->addElement($element, 'foo');
+]]>
+        </programlisting>
+
+        <note>
+            <title>複数の file 要素がある場合の MaxFileSize</title>
+
+            <para>
+                複数の file 要素をフォームで使用する場合は、
+                <code>MAX_FILE_SIZE</code> を設定する必要があるのは一度だけです。
+                複数回設定すると、後から設定した値がそれまでの値を上書きします。
+            </para>
+
+            <para>
+                また、複数のフォームを使用する場合であっても
+                <code>MAX_FILE_SIZE</code> を設定するのは一度だけであることに注意しましょう。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">
