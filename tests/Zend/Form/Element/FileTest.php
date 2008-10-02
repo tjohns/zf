@@ -172,15 +172,15 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
 
     public function testDestinationMutatorsShouldProxyToTransferAdapter()
     {
-        $this->element->setDestination('/var/www/upload');
-        $this->assertEquals('/var/www/upload', $this->element->getDestination());
-        $this->assertEquals('/var/www/upload', $this->element->getTransferAdapter()->getDestination('foo'));
+        $this->element->setDestination(dirname(__FILE__));
+        $this->assertEquals(dirname(__FILE__), $this->element->getDestination());
+        $this->assertEquals(dirname(__FILE__), $this->element->getTransferAdapter()->getDestination('foo'));
     }
 
     public function testSettingMultipleFiles()
     {
         $this->element->setMultiFile(3);
-        $this->assertTrue(3, $this->element->getMultiFile());
+        $this->assertEquals(3, $this->element->getMultiFile());
     }
 
     public function testFileInSubSubSubform()
