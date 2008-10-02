@@ -223,7 +223,7 @@ class Zend_Db_Select
             require_once 'Zend/Db/Select/Exception.php';
             throw new Zend_Db_Select_Exception("No table has been specified for the FROM clause");
         }
-        
+
         $this->_tableCols($correlationName, $cols);
 
         return $this;
@@ -243,7 +243,7 @@ class Zend_Db_Select
         if (!is_array($select)) {
             $select = array();
         }
-        
+
         if (!in_array($type, self::$_unionTypes)) {
             require_once 'Zend/Db/Select/Exception.php';
             throw new Zend_Db_Select_Exception("Invalid union type '{$type}'");
@@ -795,8 +795,8 @@ class Zend_Db_Select
             throw new Zend_Db_Select_Exception("You can only perform a joinUsing after specifying a FROM table");
         }
 
-        $join  = $this->_adapter->quoteIdentifier(key($this->_parts[self::FROM]));
-        $from  = $this->_adapter->quoteIdentifier($this->_uniqueCorrelation($name));
+        $join  = $this->_adapter->quoteIdentifier(key($this->_parts[self::FROM]), true);
+        $from  = $this->_adapter->quoteIdentifier($this->_uniqueCorrelation($name), true);
 
         $cond1 = $from . '.' . $cond;
         $cond2 = $join . '.' . $cond;
@@ -892,7 +892,7 @@ class Zend_Db_Select
                 $cond = self::SQL_OR . ' ';
             }
         }
-        
+
         return $cond . "($condition)";
     }
 
