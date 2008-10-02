@@ -64,7 +64,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     /**
      * @var Zend_Db_Table_Abstract
      */
-    private $_table;
+    protected $_table;
     
     /**
      * Prepares the environment before running a test.

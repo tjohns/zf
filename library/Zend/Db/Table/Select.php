@@ -60,6 +60,13 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     protected $_integrityCheck = true;
 
     /**
+     * Table instance that created this select object
+     *
+     * @var Zend_Db_Table_Abstract
+     */
+    protected $_table;
+    
+    /**
      * Class constructor
      *
      * @param Zend_Db_Table_Abstract $adapter
@@ -71,6 +78,16 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     }
 
     /**
+     * Return the table that created this select object
+     *
+     * @return Zend_Db_Table_Abstract
+     */
+    public function getTable()
+    {
+        return $this->_table;
+    }
+    
+    /**
      * Sets the primary table name and retrieves the table schema.
      *
      * @param Zend_Db_Table_Abstract $adapter
@@ -80,6 +97,8 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     {
         $this->_adapter = $table->getAdapter();
         $this->_info    = $table->info();
+        $this->_table   = $table;
+        
         return $this;
     }
 
