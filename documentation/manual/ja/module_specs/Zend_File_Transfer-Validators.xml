@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 11565 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -64,6 +64,24 @@
             <para>
                 <code>ImageSize</code>: このバリデータは画像のサイズをチェックします。
                 幅と高さについて、最小値と最大値を検証することができます。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>IsCompressed</code>: このバリデータはファイルが圧縮されているかどうかをチェックします。
+                <code>MimeType</code> バリデータにもとづいて、
+                zip や arc といった圧縮アーカイブ形式かどうかを判断します。
+                特定のアーカイブ形式のみに制限することもできます。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>IsImage</code>: このバリデータはファイルが画像であるかどうかをチェックします。
+                <code>MimeType</code> バリデータにもとづいて、
+                jpg や gif といった画像ファイルであるかどうかを判断します。
+                特定の画像形式のみに制限することもできます。
             </para>
         </listitem>
 
@@ -657,6 +675,19 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
                     個別のファイルのサイズはチェックしません。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>bytestring</code>: 失敗したときに返す情報を、
+                    人間が読みやすい形式にするかファイルサイズそのものにするかを設定します。
+                </para>
+
+                <para>
+                    このオプションで、ユーザが受け取る結果が '10864' あるいは '10MB'
+                    のどちらの形式になるのかを指定することができます。デフォルト値は
+                    true で、'10MB' 形式となります。
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -691,6 +722,9 @@ $upload->addValidator('FilesSize', false, 40000);
 
 // ファイルサイズの合計を最大 4MB、最小 10kB に制限します
 $upload->addValidator('FilesSize', false, array('10kB', '4MB');
+
+// さきほどと同じですが、結果をプレーンなファイルサイズで返します
+$upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
 ]]>
             </programlisting>
 
@@ -803,6 +837,86 @@ $upload->setImageWidth(20, 200);
         </example>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.iscompressed">
+        <title><emphasis role="strong">IsCompressed</emphasis> バリデータ</title>
+
+        <para>
+            <code>IsCompressed</code> バリデータは、
+            転送されたファイルが zip や arc のような圧縮アーカイブ形式であるかどうかをチェックします。
+            このバリデータは <code>MimeType</code> バリデータを使用しており、
+            同じメソッドとオプションをサポートしています。
+            このバリデータを特定の圧縮形式のみに制限するには、
+            そのメソッドを使用します。
+        </para>
+
+        <example id="zend.file.transfer.validators.iscompressed.example">
+            <title>IsCompressed バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// アップロードされたファイルが圧縮アーカイブであるかどうかチェックします
+$upload->addValidator('IsCompressed', false);
+
+// zip ファイルのみを対象とするようこのバリデータを制限します
+$upload->addValidator('IsCompressed', false, array('application/zip'));
+
+// よりシンプルな記法で、zip ファイルのみを対象とするようこのバリデータを制限します
+$upload->addValidator('IsCompressed', false, 'zip');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                指定したファイルタイプが compression
+                型であるかどうかのチェックは行われないことに注意しましょう。
+                論理的にはおかしな話ですが、gif
+                ファイルがこのバリデータを通過するように設定することも可能です。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.isimage">
+        <title><emphasis role="strong">IsImage</emphasis> バリデータ</title>
+
+        <para>
+            <code>IsImage</code> バリデータは、
+            転送されたファイルが gif や jpeg のような画像ファイルであるかどうかをチェックします。
+            このバリデータは <code>MimeType</code> バリデータを使用しており、
+            同じメソッドとオプションをサポートしています。
+            このバリデータを特定の画像形式のみに制限するには、
+            そのメソッドを使用します。
+        </para>
+
+        <example id="zend.file.transfer.validators.isimage.example">
+            <title>IsImage バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// アップロードされたファイルが画像ファイルであるかどうかチェックします
+$upload->addValidator('IsImage', false);
+
+// gif ファイルのみを対象とするようこのバリデータを制限します
+$upload->addValidator('IsImage', false, array('application/gif'));
+
+// よりシンプルな記法で、gif ファイルのみを対象とするようこのバリデータを制限します
+$upload->addValidator('IsImage', false, 'jpeg');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                指定したファイルタイプが image
+                型であるかどうかのチェックは行われないことに注意しましょう。
+                論理的にはおかしな話ですが、zip
+                ファイルがこのバリデータを通過するように設定することも可能です。
+            </para>
+        </note>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.mimetype">
         <title><emphasis role="strong">MimeType</emphasis> バリデータ</title>
 
@@ -863,6 +977,22 @@ $upload->addValidator('MimeType', false, 'image');
                 も受け付けることになりますが、おそらくこれは問題となるでしょう。
                 アプリケーション側ですべての形式を処理できるかどうか不安なら、
                 グループ指定ではなく個別の mimetype を指定するようにしましょう。
+            </para>
+        </note>
+
+        <note>
+            <para>
+                このコンポーネントは、もし <code>fileinfo</code>
+                拡張モジュールが使用可能ならそれを使用します。使用できない場合は
+                <code>mime_content_type</code> 関数を使用します。
+                この関数コールが失敗した場合は、HTTP で渡された mimetype を使用します。
+            </para>
+
+            <para>
+                <code>fileinfo</code> も <code>mime_content_type</code>
+                も使えない場合は、セキュリティの問題に注意する必要があります。
+                HTTP から取得する mimetype はセキュアではなく、
+                容易に改ざんすることができます。
             </para>
         </note>
     </sect2>
@@ -946,6 +1076,19 @@ $upload->addValidator('NotExists', false,
                     このオプションで、転送されるファイルの個々のサイズを制限することができます。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>bytestring</code>: 失敗したときに返す情報を、
+                    人間が読みやすい形式にするかファイルサイズそのものにするかを設定します。
+                </para>
+
+                <para>
+                    このオプションで、ユーザが受け取る結果が '10864' あるいは '10MB'
+                    のどちらの形式になるのかを指定することができます。デフォルト値は
+                    true で、'10MB' 形式となります。
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -979,8 +1122,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 40000);
 
 // 指定したファイルのサイズを最大 4MB、最小 10kB に制限し、
-// このバリデータをファイル "uploadfile" に適用します
-$upload->addValidator('Size', false, array('10kB', '4MB', 'uploadfile');
+// さらにエラー時に返す結果をユーザに優しい形式ではなくプレーンな数値とします
+$upload->addValidator('Size', false, array('10kB', '4MB', false));
 ]]>
             </programlisting>
         </example>
