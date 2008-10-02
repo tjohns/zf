@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * @category   Zend
  * @package    Zend_Search_Lucene
@@ -10,6 +10,11 @@
  * Zend_Search_Lucene_Document
  */
 require_once 'Zend/Search/Lucene/Document.php';
+
+/**
+ * Zend_Search_Lucene_Document_Docx
+ */
+require_once 'Zend/Search/Lucene/Document/Docx.php';
 
 /**
  * PHPUnit test case
@@ -118,5 +123,13 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($doc2 instanceof Zend_Search_Lucene_Document_Html);
         $this->assertTrue(array_values($doc2->getLinks()) == array('link1.html'));
     }
-}
 
+    public function testDocx()
+    {
+		$docxDocument = Zend_Search_Lucene_Document_Docx::loadDocxFile(dirname(__FILE__) . '/_openXmlDocuments/test.docx', true);
+
+        $this->assertTrue($docxDocument instanceof Zend_Search_Lucene_Document_Docx);
+		$this->assertEquals($docxDocument->getFieldValue('title'), 'Test document');
+		$this->assertEquals($docxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
+    }
+}
