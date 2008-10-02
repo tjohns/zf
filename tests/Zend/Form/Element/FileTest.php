@@ -227,6 +227,13 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertContains('name="file[]"', $output);
         $this->assertEquals(2, substr_count($output, 'file[]'));
     }
+
+    public function testSettingMaxFileSize()
+    {
+        $this->assertEquals(0, $this->element->getMaxFileSize());
+        $this->element->setMaxFileSize(3000);
+        $this->assertEquals(3000, $this->element->getMaxFileSize());
+    }
 }
 
 class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract

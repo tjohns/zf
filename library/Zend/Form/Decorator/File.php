@@ -56,6 +56,12 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
         $separator = $this->getSeparator();
 
         $markup = array();
+        $size   = $element->getMaxFileSize();
+        if ($size > 0) {
+            $element->setMaxFileSize(0);
+            $markup[] = $view->formHidden('MAX_FILE_SIZE', $size);
+        }
+
         if ($element->isArray()) {
             $name .= "[]";
             $count = $element->getMultiFile();

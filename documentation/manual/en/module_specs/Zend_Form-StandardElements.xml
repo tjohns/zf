@@ -304,6 +304,39 @@ $form->addElement($element, 'foo');
             </para>
         </note>
 
+        <para>
+            To limit the size of the file, which is uploaded by the client, you should
+            additionally set the maximum file size the form accepts. This will limit
+            the size on the client side by setting the <code>MAX_FILE_SIZE</code>
+            option on the form. As soon as you set this value by using the
+            <code>setMaxFileSize($size)</code> method, it will be rendered with the
+            file element.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Size', false, 102400) // limit to 100K
+        ->setMaxFileSize(102400); // limits the filesize on the client side
+$form->addElement($element, 'foo');
+]]>
+        </programlisting>
+
+        <note>
+            <title>MaxFileSize with multiple file elements</title>
+
+            <para>
+                When you use multiple file elements in your form you will have to set
+                the <code>MAX_FILE_SIZE</code> only once. Setting it again will
+                overwrite the previous set value.
+            </para>
+
+            <para>
+                Note, that you can set <code>MAX_FILE_SIZE</code> only once, even if you
+                use multiple forms.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.form.standardElements.hidden">
