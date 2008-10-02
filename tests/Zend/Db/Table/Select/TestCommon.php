@@ -184,4 +184,16 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
         $this->assertEquals($select1->assemble(), $select2->assemble());
     }
 
+    /**
+     * Test to see if a Zend_Db_Table_Select object returns the table it's been
+     * instantiated from.
+     *
+     */
+    public function testDbSelectHasTableInstance()
+    {
+        $table = $this->_getSelectTable('products');
+        $select = $table->select();
+        
+        $this->assertType('Zend_Db_Table_TableProducts', $select->getTable());
+    }
 }
