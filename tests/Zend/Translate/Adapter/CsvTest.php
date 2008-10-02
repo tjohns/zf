@@ -130,12 +130,11 @@ class Zend_Translate_Adapter_CsvTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Translate_Exception $e) {
             $this->assertContains('does not exist', $e->getMessage());
         }
-        try {
-            $adapter->setLocale('de');
-            $this->fail("exception expected");
-        } catch (Zend_Translate_Exception $e) {
-            $this->assertContains('has to be added before it can be used', $e->getMessage());
-        }
+
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $adapter->setLocale('de');
+        restore_error_handler();
+        $this->assertEquals('de', $adapter->getLocale());
     }
 
     public function testList()

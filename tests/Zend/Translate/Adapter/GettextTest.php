@@ -133,12 +133,11 @@ class Zend_Translate_Adapter_GettextTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Translate_Exception $e) {
             $this->assertContains('does not exist', $e->getMessage());
         }
-        try {
-            $adapter->setLocale('de');
-            $this->fail("exception expected");
-        } catch (Zend_Translate_Exception $e) {
-            $this->assertContains('has to be added before it can be used', $e->getMessage());
-        }
+
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $adapter->setLocale('de');
+        restore_error_handler();
+        $this->assertEquals('de', $adapter->getLocale());
     }
 
     public function testList()
@@ -209,6 +208,21 @@ class Zend_Translate_Adapter_GettextTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/failed3.mo', 'en');
         $this->assertContains('No adapter information available', current($adapter->getAdapterInfo()));
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 

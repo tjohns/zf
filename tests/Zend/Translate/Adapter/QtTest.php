@@ -134,12 +134,10 @@ class Zend_Translate_Adapter_QtTest extends PHPUnit_Framework_TestCase
             $this->assertContains('does not exist', $e->getMessage());
         }
 
-        try {
-            $adapter->setLocale('it');
-            $this->fail("exception expected");
-        } catch (Zend_Translate_Exception $e) {
-            $this->assertContains('has to be added before it can be used', $e->getMessage());
-        }
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $adapter->setLocale('it');
+        restore_error_handler();
+        $this->assertEquals('it', $adapter->getLocale());
     }
 
     public function testList()
@@ -177,6 +175,21 @@ class Zend_Translate_Adapter_QtTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Message 1 (en)', $adapter->_('Message 1'));
         $this->assertEquals(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel (en)'), $adapter->translate('Cooking furniture'));
         $this->assertEquals('Cooking furniture (en)', $adapter->translate(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel')));
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 
