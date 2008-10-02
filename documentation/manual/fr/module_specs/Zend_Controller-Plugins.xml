@@ -34,7 +34,7 @@
                 <para><code>preDispatch()</code> est appelée avant qu'une action ne soit dispatchée par <link
                 linkend="zend.controller.dispatcher">le dispatcheur</link>. Cette méthode permet un filtrage ou un
                 proxy. En jouant sur la requête à ce niveau là, vous êtes capable de changer le processus, et en vous
-                aidant de <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), vous supprimez l'ordre
+                aidant de <code>Zend_Controller_Request_Abstract::setDispatched(true)</code>), vous supprimez l'ordre
                 de dispatching de celle-ci.</para>
             </listitem>
 
@@ -42,8 +42,8 @@
                 <para><code>postDispatch()</code> est appelée après qu'une action n'ait été dispatchée par <link
                 linkend="zend.controller.dispatcher">le dispatcheur</link>. Cette méthode permet un filtrage ou un
                 proxy. En jouant sur la requête à ce niveau là, vous êtes capable de changer le processus, et en vous
-                aidant de <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), vous supprimez l'ordre
-                de dispatching de celle-ci.</para>
+                aidant de <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), vous ordonnez un redispatching
+                de celle-ci.</para>
             </listitem>
 
             <listitem>
