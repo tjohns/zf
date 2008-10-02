@@ -99,6 +99,24 @@ class Zend_Form_Decorator_FileTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render(null);
         $this->assertRegexp('#foo\[\]#s', $test);
     }
+
+    public function setupElementWithMaxFileSize()
+    {
+        $element = new Zend_Form_Element_File('foo');
+        $element->addValidator('Count', 1)
+                ->setView($this->getView())
+                ->setMaxFileSize(3000);
+        $this->element = $element;
+        $this->decorator->setElement($element);
+    }
+
+    public function testRenderMaxFileSize()
+    {
+        $this->setupElementWithMaxFileSize();
+        $test = $this->decorator->render(null);
+        $this->assertRegexp('#MAX_FILE_SIZE#s', $test);
+        $this->assertRegexp('#3000#s', $test);
+    }
 }
 
 // Call Zend_Form_Decorator_FileTest::main() if this source file is executed directly.

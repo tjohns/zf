@@ -59,6 +59,11 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     protected $_counter = 1;
 
     /**
+     * @var integer Maximum file size for MAX_FILE_SIZE attribut of form
+     */
+    protected static $_maxFileSize = 0;
+
+    /**
      * Constructor
      *
      * @param  string|array|Zend_Config $spec 
@@ -431,5 +436,27 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getMultiFile()
     {
         return $this->_counter;
+    }
+
+    /**
+     * Sets the maximum file size of the form
+     *
+     * @param  integer $size
+     * @return integer
+     */
+    public function setMaxFileSize($size)
+    {
+        self::$_maxFileSize = $size;
+        return $this;
+    }
+
+    /**
+     * Sets the maximum file size of the form
+     *
+     * @return integer
+     */
+    public function getMaxFileSize()
+    {
+        return self::$_maxFileSize;
     }
 }

@@ -36,6 +36,8 @@ require_once 'Zend/Validate/File/ExistsTest.php';
 require_once 'Zend/Validate/File/ExtensionTest.php';
 require_once 'Zend/Validate/File/FilesSizeTest.php';
 require_once 'Zend/Validate/File/ImageSizeTest.php';
+require_once 'Zend/Validate/File/IsCompressedTest.php';
+require_once 'Zend/Validate/File/IsImageTest.php';
 require_once 'Zend/Validate/File/MimeTypeTest.php';
 require_once 'Zend/Validate/File/NotExistsTest.php';
 require_once 'Zend/Validate/File/SizeTest.php';
@@ -65,6 +67,8 @@ class Zend_Validate_File_AllTests
         $suite->addTestSuite('Zend_Validate_File_ExtensionTest');
         $suite->addTestSuite('Zend_Validate_File_FilesSizeTest');
         $suite->addTestSuite('Zend_Validate_File_ImageSizeTest');
+        $suite->addTestSuite('Zend_Validate_File_IsCompressedTest');
+        $suite->addTestSuite('Zend_Validate_File_IsImageTest');
         $suite->addTestSuite('Zend_Validate_File_MimeTypeTest');
         $suite->addTestSuite('Zend_Validate_File_NotExistsTest');
         $suite->addTestSuite('Zend_Validate_File_SizeTest');
