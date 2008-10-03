@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11430 -->
+<!-- EN-Revision: 11467 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -17,6 +17,14 @@
             <para>
                 <code>Count</code>: Diese Prüfung checkt die Anzahl der Dateien. Er bietet ein Minimum und ein
                 Maximum an und wirft einen Fehler wenn einer der zwei Werte überschritten werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ExcludeExtension</code>: Diese Prüfung checkt die Dateierweiterung. Sie wirft einen Fehler
+                wenn die angegebene Datei eine definierte Erweiterung hat. Auf diesem Weg können definierte
+                Erweiterungen von der Prüfung ausgenommen werden.
             </para>
         </listitem>
 
@@ -297,6 +305,65 @@ $upload->addValidator('Count', false, array(1, 5);
             <para>
                 Beachte das diese Prüfung die Anzahl der geprüften Dateien intern speichert. Die Datei
                 welche das Maximum überschrietet wird als Fehler zurückgegeben.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludeextension">
+        <title><emphasis role="strong">ExcludeExtension</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>ExcludeExtension</code> Prüfung checkt die Dateierweiterung von Dateien dir angegeben
+            werden. Sie unterstützt die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>extension</code>: Checkt ob die angegebene Datei diese Dateierweiterung nicht verwendet.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>case</code>: Definiert of die Prüfung auf die Klein/Großschreibung achten soll.
+                    Standardmäßig ist die Klein/Großschreibung egal. Es ist zu beachten das diese Option
+                    für alle verwendeten Erweiterungen verwendet wird.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Dieser Prüfer akzeptiert mehrere Erweiterungen entweder als komma-getrennten String, oder als
+            ein Array. Man kann auch die <code>setExtension()</code>, <code>addExtension()</code> und
+            <code>getExtension()</code> Methoden verwenden um Erweiterungen zu setzen und zu erhalten.
+        </para>
+
+        <para>
+            In einigen Fällen ist es nützlich auch auf Klein/Großschreibung zu testen. Hierfür erlaubt
+            der Constructor einen zweiten Parameter <code>$case</code> der, wenn er auf true gesetzt
+            wird, die Erweiterungen abhängig von der Klein/Großschreibung prüft.
+        </para>
+
+        <example id="zend.file.transfer.validators.excludeextension.example">
+            <title>Die ExcludeExtension Prüfung verwenden</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Dateien mit der Erweiterung php oder exe nicht erlauben
+$upload->addValidator('ExcludeExtension', false, 'php,exe');
+
+// Dateien mit der Erweiterung php oder exe nicht erlauben aber die Array Schreibweise verwenden
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+]]>
+            </programlisting>
+
+        </example>
+        <note>
+            <para>
+                Es ist zu beachten das diese Prüfung nur die Dateierweiterung prüft. Sie prüft nicht
+                den MIME Typ der aktuellen Datei.
             </para>
         </note>
     </sect2>
