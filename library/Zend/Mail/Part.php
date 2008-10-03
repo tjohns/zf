@@ -220,6 +220,9 @@ class Zend_Mail_Part implements RecursiveIterator, Zend_Mail_Part_Interface
             throw new Zend_Mail_Exception('no boundary found in content type to split message');
         }
         $parts = Zend_Mime_Decode::splitMessageStruct($this->_content, $boundary);
+        if ($parts === null) {
+        	return;
+        }
         $counter = 1;
         foreach ($parts as $part) {
             $this->_parts[$counter++] = new self(array('headers' => $part['header'], 'content' => $part['body']));
