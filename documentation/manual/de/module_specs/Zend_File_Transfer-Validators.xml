@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11467 -->
+<!-- EN-Revision: 11476 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -25,6 +25,14 @@
                 <code>ExcludeExtension</code>: Diese Prüfung checkt die Dateierweiterung. Sie wirft einen Fehler
                 wenn die angegebene Datei eine definierte Erweiterung hat. Auf diesem Weg können definierte
                 Erweiterungen von der Prüfung ausgenommen werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>ExcludeMimeType</code>: Diese Prüfung kann den Mimetyp von Dateien überprüfen. Sie ist auch
+                fähig Arten von Mimetypen zu prüfen und wirft einen Fehler wenn der MimeTyp einer angegebenen
+                Datei passt.
             </para>
         </listitem>
 
@@ -61,8 +69,8 @@
         <listitem>
             <para>
                 <code>MimeType</code>: Diese Prüfung kann den Mimetyp von Dateien überprüfen. Sie ist auch
-                fähig Typen von Mimetypen zu prüfen und wirft einen Fehler wenn eine angegebene Datei nicht
-                passt.
+                fähig Arten von Mimetypen zu prüfen und wirft einen Fehler wenn der MimeTyp einer angegebenen
+                Datei nicht passt.
             </para>
         </listitem>
 
@@ -100,6 +108,14 @@
         </para>        
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    <code>isValid($files = null)</code>: Prüft die angegebenen Dateien indem alle gesetzten
+                    Prüfer verwendet werden. <code>$files</code> kann entweder ein richtiger Dateiname, oder
+                    der Name des Elements, oder der Name der temporären Datei sein.
+                </para>
+            </listitem>
+
             <listitem>
                 <para>
                     <code>addValidator($validator, $breakChainOnFailure, $options = null, $files = null)</code>: Fügt die
@@ -234,6 +250,51 @@ $upload->addValidator('Size', false, 20000)
                 Prüfung verwendet werden.
             </para>
         </note>
+
+        <para>
+            Und letztendlich können Dateien einfach geprüft werden indem <code>isValid()</code> verwendet wird. 
+        </para>
+
+        <example id="zend.file.transfer.validators.usage.exampleisvalid">
+            <title>Prüfen der Dateien</title>
+
+            <para>
+                <code>isValid()</code> akzeptiert die hoch- oder heruntergeladenen Dateinamen, den temporären
+                Dateinamen und natürlich den Namen des Formularelements. Wenn kein Parameter oder null angegeben
+                wird, werden alle gefundenen Dateien geprüft.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Setzt die Dateigröße auf 20000 Bytes
+$upload->addValidator('Size', false, 20000)
+       ->addValidator('Count', false, 2)
+       ->addValidator('Filessize', false, 25000);
+
+if ($upload->isValid()) {
+    print "Prüfung fehlgeschlagen";
+}
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das <code>isValid()</code> automatisch aufgerufen wird, wenn die Dateien
+                empfangen werden und es zuvor noch nicht aufgerufen wurde.
+            </para>
+        </note>
+
+        <para>
+            Wenn Prüfungen fehlgeschlagen sind, ist es normalerweise eine gute Idee Informationen über die
+            gefundenen Probleme zu erhalten. Hierfür können die Methoden <code>getMessages()</code>,
+            welche alle Prüfmeldungen als Array zurückgibt, <code>getErrors()</code> welche alle Fehlercodes
+            zurückgibt, und <code>hasErrors()</code> welche true zurückgibt sobald ein Prüffehler gefunden wurde,
+            verwendet werden.
+        </para>
+
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
@@ -364,6 +425,68 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
             <para>
                 Es ist zu beachten das diese Prüfung nur die Dateierweiterung prüft. Sie prüft nicht
                 den MIME Typ der aktuellen Datei.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.excludemimetype">
+        <title><emphasis role="strong">ExcludeMimeType</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>MimeType</code> Prüfung checkt den Mimetyp von übertragenen Dateien. Sie unterstützt
+            die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>MimeType</code>: Setzt die Art des Mimetyps der geprüft werden soll.
+                </para>
+
+                <para>
+                    Mit dieser Option kann der Mimetyp von Dateien definiert werden der akzeptiert werden soll.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Diese Prüfung akzeptiert viele Mimetypen entweder als Komma-getrennter String, oder als
+            Array. Man kan auch die Methoden <code>setMimeType()</code>, <code>addMimeType()</code>,
+            und  <code>getMimeType()</code> verwenden um Mimetypen zu setzen und zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.excludemimetype.example">
+            <title>Verwendung der ExcludeMimeType Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Verweigert den Mimetyp gif für alle gegebenen Dateien
+$upload->addValidator('ExcludeMimeType', 'image/gif');
+
+// Verweigert den Mimetyp gif und jpeg für alle gegebenen Dateien
+$upload->setValidator('ExcludeMimeType', array('image/gif', 'image/jpeg');
+
+// Verweigert die Mimetyp Gruppe image für alle Dateien
+$upload->setValidator('ExcludeMimeType', 'image');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Das obige Beispiel zeigt das es auch möglich ist den verweigerten Mimetyp auf eine Gruppe von
+            Mimetypen zu begrenzen. Um alle Bilder zu verweigern kann einfach 'image' als Mimetyp verwendet
+            werden. Das kann für alle Gruppen wie 'image', 'audio', 'video', 'test', und so weiter
+            gemacht werden.
+        </para>
+
+        <note>
+            <para>
+                Es ist zu beachten das bei Verwendung von Mimetyp-Gruppen alle Mitglieder dieser Gruppe
+                verweigert werden, selbst wenn das nicht gewünscht ist. Wenn man 'image' verweigert,
+                werden alle Typen von Bildern verweigert wie 'image/jpeg' oder 'image/vasa'. Wenn man
+                nicht sicher ist ob man alle Typen verweigern will ist es besser nur
+                definierte Mimetypen zu verweigern statt der kompletten Gruppe.
             </para>
         </note>
     </sect2>

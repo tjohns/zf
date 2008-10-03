@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 11474 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -87,6 +87,49 @@ if (!$adapter->receive()) {
             Sicherheit zu erhöhen.
         </para>
     </note>
+
+    <sect2 id="zend.file.transfer.introduction.adapters">
+
+        <title>Von Zend_File_Transfer unterstützte Adapter</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> wurde erstellt um verschiedene Adapter und auch Richtungen zu
+            unterstützen. Es wurde designt um das Hochladen, Herunterladen und sogar das Weiterleiten
+            (Hochladen mit einem Adapter und Herunterladen mit einem anderen Adapter zur gleichen Zeit)
+            von Dateien zu erlauben. Aber mit Zend Framework 1.6 ist aktuell nur ein Adapter vorhanden,
+            der Http Adapter.
+        </para>
+
+        <para>
+            Weil aktuell nur ein Adapter vorhanden ist, kann die Basisklasse aktuell noch nicht verwendet werden.
+            Deshalb muß man, wenn man <code>Zend_File_Transfer</code> verwenden will, den Adapter direkt
+            verwenden.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.options">
+
+        <title>Optionen für Zend_File_Transfer</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> und dessen Adapter unterstützen verschiedene Optionen. Alle Optionen
+            können gesetzt werden indem Sie entweder dem Constructor übergeben werden, oder durch Verwendung  von
+            <code>setOptions($options)</code>. <code>getOptions()</code> gibt die aktuell gesetzten Optionen
+            zurück. Anbei ist eine Liste aller unterstützten Optionen zu finden.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">ignoreNoFile</emphasis>: Wenn diese Option auf true gesetzt ist,
+                    ignorieren alle Prüfer die Datei wenn Sie nicht vom Formular hochgeladen wurde. Diese
+                    Option ist standardmäßig false, was heißt das ein Fehler geworfen wird, wenn die Datei
+                    nicht angegeben wurde.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:
