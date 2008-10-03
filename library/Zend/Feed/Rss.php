@@ -496,7 +496,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
             throw new Zend_Feed_Exception('Cannot send RSS because headers have already been sent.');
         }
 
-        header('Content-type: application/rss+xml; charset: ' . $this->_element->ownerDocument->actualEncoding);
+        header('Content-Type: application/rss+xml; charset=' . $this->_element->ownerDocument->actualEncoding);
 
         echo $this->saveXml();
     }
