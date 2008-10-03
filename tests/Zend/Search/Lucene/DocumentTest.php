@@ -126,6 +126,10 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
 
     public function testDocx()
     {
+    	if (!class_exists('ZipArchive')) {
+    		$this->markTestSkipped('ZipArchive class (Zip extension) is not loaded');
+    	}
+
 		$docxDocument = Zend_Search_Lucene_Document_Docx::loadDocxFile(dirname(__FILE__) . '/_openXmlDocuments/test.docx', true);
 
         $this->assertTrue($docxDocument instanceof Zend_Search_Lucene_Document_Docx);
