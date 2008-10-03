@@ -137,9 +137,9 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
      *
      * @return bool The requested attribute.
      */
-    public function getSpecialzied()
+    public function getSpecialized()
     {
-        return $this->_specizlied;
+        return $this->_specialized;
     }
 
     /**
@@ -148,7 +148,7 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
      * @param bool $value The desired value for this attribute.
      * @return Zend_Gdata_Extension_RecurrenceException The element being modified.
      */
-    public function setSpecizlied($value)
+    public function setSpecialized($value)
     {
         $this->_specialized = $value;
         return $this;
