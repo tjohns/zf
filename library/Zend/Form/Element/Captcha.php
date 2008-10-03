@@ -195,13 +195,13 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
                 $cPrefix = rtrim($prefix, '_') . '_Captcha';
                 $cPath   = rtrim($path, '/\\') . '/Captcha';
                 $loader->addPrefixPath($cPrefix, $cPath);
-                return parent::addPrefixPath($prefix, $path, $type);
+                return parent::addPrefixPath($prefix, $path);
             case self::CAPTCHA:
                 $loader = $this->getPluginLoader($type);
                 $loader->addPrefixPath($prefix, $path);
                 return $this;
             default:
-                return parent::addPrefixPath($prefix, $path, $type = null);
+                return parent::addPrefixPath($prefix, $path, $type);
         }
     }
     

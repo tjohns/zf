@@ -132,9 +132,9 @@ class Zend_Loader
          * Try finding for the plain filename in the include_path.
          */
         if ($once) {
-            include_once $filename;
+            $return = @include_once $filename;
         } else {
-            include $filename;
+            $return = @include $filename;
         }
 
         /**
@@ -144,7 +144,7 @@ class Zend_Loader
             set_include_path($incPath);
         }
 
-        return true;
+        return ($return) ? true : false;
     }
 
     /**
