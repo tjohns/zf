@@ -244,7 +244,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
     public function testZF3679()
     {
-        require_once 'Zend/locale.php';
+        require_once 'Zend/Locale.php';
         $locale = new Zend_Locale('de_AT');
         require_once 'Zend/Registry.php';
         Zend_Registry::set('Zend_Locale', $locale);
