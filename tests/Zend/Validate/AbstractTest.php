@@ -90,7 +90,9 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     public function testCanSetTranslator()
     {
         $this->testTranslatorNullByDefault();
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $translator = new Zend_Translate('array', array(), 'en');
+        restore_error_handler();
         $this->validator->setTranslator($translator);
         $this->assertSame($translator->getAdapter(), $this->validator->getTranslator());
     }
@@ -98,7 +100,9 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     public function testCanSetTranslatorToNull()
     {
         $this->testCanSetTranslator();
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $this->validator->setTranslator(null);
+        restore_error_handler();
         $this->assertNull($this->validator->getTranslator());
     }
 
@@ -110,7 +114,9 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     public function testCanSetGlobalDefaultTranslator()
     {
         $this->testGlobalDefaultTranslatorNullByDefault();
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $translator = new Zend_Translate('array', array(), 'en');
+        restore_error_handler();
         Zend_Validate_Abstract::setDefaultTranslator($translator);
         $this->assertSame($translator->getAdapter(), Zend_Validate_Abstract::getDefaultTranslator());
     }
@@ -123,7 +129,9 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testGlobalTranslatorFromRegistryUsedWhenNoLocalTranslatorSet()
     {
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $translate = new Zend_Translate('array', array());
+        restore_error_handler();
         Zend_Registry::set('Zend_Translate', $translate);
         $this->assertSame($translate->getAdapter(), $this->validator->getTranslator());
     }
@@ -131,7 +139,9 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     public function testLocalTranslatorPreferredOverGlobalTranslator()
     {
         $this->testCanSetGlobalDefaultTranslator();
+        set_error_handler(array($this, 'errorHandlerIgnore'));
         $translator = new Zend_Translate('array', array(), 'en');
+        restore_error_handler();
         $this->validator->setTranslator($translator);
         $this->assertNotSame(Zend_Validate_Abstract::getDefaultTranslator(), $this->validator->getTranslator());
     }
@@ -189,6 +199,21 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $message = $messages['fooMessage'];
         $this->assertNotContains('foobar', $message);
         $this->assertContains('******', $message);
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 
