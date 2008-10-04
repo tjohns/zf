@@ -19,24 +19,67 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Db/Select/TestCommon.php';
+require_once 'Zend/Db/Select/OracleTest.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 class Zend_Db_Select_Pdo_OciTest extends Zend_Db_Select_TestCommon
 {
 
-    public function testSelectFromQualified()
+    protected function _selectColumnWithColonQuotedParameter ()
+    {
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $select = $this->_db->select()
+                            ->from('zfproducts')
+                            ->where($product_name . ' = ?', "as'as:x");
+        return $select;
+    }
+
+    public function testSelectFromSelectObject ()
+    {
+        $select = $this->_selectFromSelectObject();
+        $query = $select->assemble();
+        $cmp = 'SELECT ' . $this->_db->quoteIdentifier('t') . '.* FROM (SELECT '
+                         . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '
+                         . $this->_db->quoteIdentifier('subqueryTable') . ') '
+                         . $this->_db->quoteIdentifier('t');
+        $this->assertEquals($query, $cmp);
+    }
+
+    public function testSelectFromQualified ()
     {
         $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
     }
 
-    public function testSelectJoinQualified()
+    public function testSelectJoinQualified ()
     {
         $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
     }
 
-    public function getDriver()
+    public function testSelectWhereOr ()
+    {
+        $select = $this->_selectWhereOr();
+        $select->order('product_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(1, $result[0]['product_id']);
+        $this->assertEquals(2, $result[1]['product_id']);
+    }
+
+    public function testSelectWhereOrWithParameter ()
+    {
+        $select = $this->_selectWhereOrWithParameter();
+        $select->order('product_id');
+        $stmt = $this->_db->query($select);
+        $result = $stmt->fetchAll();
+        $this->assertEquals(2, count($result));
+        $this->assertEquals(1, $result[0]['product_id']);
+        $this->assertEquals(2, $result[1]['product_id']);
+    }
+
+    public function getDriver ()
     {
         return 'Pdo_Oci';
     }
