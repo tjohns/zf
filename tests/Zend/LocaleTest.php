@@ -218,10 +218,9 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetLanguageTranslationList()
     {
-        $value = new Zend_Locale();
-        $list = $value->getLanguageTranslationList();
+        $list = Zend_Locale::getLanguageTranslationList();
         $this->assertTrue(is_array($list));
-        $list = $value->getLanguageTranslationList('de');
+        $list = Zend_Locale::getLanguageTranslationList('de');
         $this->assertTrue(is_array($list));
     }
 
@@ -231,11 +230,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetLanguageTranslation()
     {
-        $value = new Zend_Locale('de_AT');
-        $this->assertEquals('Deutsch', $value->getLanguageTranslation('de'));
-        $this->assertEquals('German',  $value->getLanguageTranslation('de', 'en'));
-        $this->assertFalse($value->getLanguageTranslation('xyz'));
-        $this->assertTrue(is_string($value->getLanguageTranslation('de', 'auto')));
+        $this->assertEquals('Deutsch', Zend_Locale::getLanguageTranslation('de', 'de_AT'));
+        $this->assertEquals('German',  Zend_Locale::getLanguageTranslation('de', 'en'));
+        $this->assertFalse(Zend_Locale::getLanguageTranslation('xyz'));
+        $this->assertTrue(is_string(Zend_Locale::getLanguageTranslation('de', 'auto')));
     }
 
     /**
@@ -244,11 +242,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetScriptTranslationList()
     {
-        $value = new Zend_Locale();
-        $list = $value->getScriptTranslationList();
+        $list = Zend_Locale::getScriptTranslationList();
         $this->assertTrue(is_array($list));
 
-        $list = $value->getScriptTranslationList('de');
+        $list = Zend_Locale::getScriptTranslationList('de');
         $this->assertTrue(is_array($list));
     }
 
@@ -258,10 +255,9 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetScriptTranslation()
     {
-        $value = new Zend_Locale('de_AT');
-        $this->assertEquals('Arabisch', $value->getScriptTranslation('Arab'));
-        $this->assertEquals('Arabic',   $value->getScriptTranslation('Arab', 'en'));
-        $this->assertFalse($value->getScriptTranslation('xyz'));
+        $this->assertEquals('Arabisch', Zend_Locale::getScriptTranslation('Arab', 'de_AT'));
+        $this->assertEquals('Arabic', Zend_Locale::getScriptTranslation('Arab', 'en'));
+        $this->assertFalse(Zend_Locale::getScriptTranslation('xyz'));
     }
 
     /**
@@ -270,11 +266,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetCountryTranslationList()
     {
-        $value = new Zend_Locale();
-        $list = $value->getCountryTranslationList();
+        $list = Zend_Locale::getCountryTranslationList();
         $this->assertTrue(is_array($list));
 
-        $list = $value->getCountryTranslationList('de');
+        $list = Zend_Locale::getCountryTranslationList('de');
         $this->assertEquals("Vereinigte Staaten", $list['US']);
     }
 
@@ -284,10 +279,9 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetCountryTranslation()
     {
-        $value = new Zend_Locale('de_DE');
-        $this->assertEquals('Deutschland', $value->getCountryTranslation('DE'));
-        $this->assertEquals('Germany',     $value->getCountryTranslation('DE', 'en'));
-        $this->assertFalse($value->getCountryTranslation('xyz'));
+        $this->assertEquals('Deutschland', Zend_Locale::getCountryTranslation('DE', 'de_DE'));
+        $this->assertEquals('Germany', Zend_Locale::getCountryTranslation('DE', 'en'));
+        $this->assertFalse(Zend_Locale::getCountryTranslation('xyz'));
     }
 
     /**
@@ -296,11 +290,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetTerritoryTranslationList()
     {
-        $value = new Zend_Locale();
-        $list = $value->getTerritoryTranslationList();
+        $list = Zend_Locale::getTerritoryTranslationList();
         $this->assertTrue(is_array($list));
 
-        $list = $value->getTerritoryTranslationList('de');
+        $list = Zend_Locale::getTerritoryTranslationList('de');
         $this->assertTrue(is_array($list));
     }
 
@@ -310,11 +303,10 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetTerritoryTranslation()
     {
-        $value = new Zend_Locale('de_DE');
-        $this->assertEquals('Afrika', $value->getTerritoryTranslation('002'));
-        $this->assertEquals('Africa', $value->getTerritoryTranslation('002', 'en'));
-        $this->assertFalse($value->getTerritoryTranslation('xyz'));
-        $this->assertTrue(is_string($value->getTerritoryTranslation('002', 'auto')));
+        $this->assertEquals('Afrika', Zend_Locale::getTerritoryTranslation('002', 'de_AT'));
+        $this->assertEquals('Africa', Zend_Locale::getTerritoryTranslation('002', 'en'));
+        $this->assertFalse(Zend_Locale::getTerritoryTranslation('xyz'));
+        $this->assertTrue(is_string(Zend_Locale::getTerritoryTranslation('002', 'auto')));
     }
 
     /**
@@ -323,89 +315,88 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetTranslation()
     {
-        $value = new Zend_Locale('de_DE');
         try {
-            $temp = $value->getTranslation('xx');
+            $temp = Zend_Locale::getTranslation('xx');
             $this->fail();
         } catch (Zend_Locale_Exception $e) {
             $this->assertContains('Unknown detail (', $e->getMessage());
         }
 
-        $this->assertEquals('Deutsch', $value->getTranslation('de', 'language'));
-        $this->assertEquals('German',  $value->getTranslation('de', 'language', 'en'));
-        $this->assertFalse($value->getTranslation('xx', 'language'));
+        $this->assertEquals('Deutsch', Zend_Locale::getTranslation('de', 'language', 'de_DE'));
+        $this->assertEquals('German', Zend_Locale::getTranslation('de', 'language', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xx', 'language'));
 
-        $this->assertEquals('Lateinisch', $value->getTranslation('Latn', 'script'));
-        $this->assertEquals('Latin',      $value->getTranslation('Latn', 'script', 'en'));
-        $this->assertFalse($value->getTranslation('xyxy', 'script'));
+        $this->assertEquals('Lateinisch', Zend_Locale::getTranslation('Latn', 'script', 'de_DE'));
+        $this->assertEquals('Latin', Zend_Locale::getTranslation('Latn', 'script', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xyxy', 'script'));
 
-        $this->assertEquals('Österreich', $value->getTranslation('AT', 'country'));
-        $this->assertEquals('Austria',    $value->getTranslation('AT', 'country', 'en'));
-        $this->assertFalse($value->getTranslation('xx', 'country'));
+        $this->assertEquals('Österreich', Zend_Locale::getTranslation('AT', 'country', 'de_DE'));
+        $this->assertEquals('Austria', Zend_Locale::getTranslation('AT', 'country', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xx', 'country'));
 
-        $this->assertEquals('Afrika', $value->getTranslation('002', 'territory'));
-        $this->assertEquals('Africa', $value->getTranslation('002', 'territory', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'territory'));
+        $this->assertEquals('Afrika', Zend_Locale::getTranslation('002', 'territory', 'de_DE'));
+        $this->assertEquals('Africa', Zend_Locale::getTranslation('002', 'territory', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'territory'));
 
-        $this->assertEquals('Januar',  $value->getTranslation('1', 'month'));
-        $this->assertEquals('January', $value->getTranslation('1', 'month', 'en'));
-        $this->assertFalse($value->getTranslation('x', 'month'));
+        $this->assertEquals('Januar', Zend_Locale::getTranslation('1', 'month', 'de_DE'));
+        $this->assertEquals('January', Zend_Locale::getTranslation('1', 'month', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('x', 'month'));
 
-        $this->assertEquals('Jan', $value->getTranslation(array('gregorian', 'format', 'abbreviated', '1'), 'month'));
-        $this->assertEquals('Jan', $value->getTranslation(array('gregorian', 'format', 'abbreviated', '1'), 'month', 'en'));
-        $this->assertFalse($value->getTranslation(array('gregorian', 'format', 'abbreviated', 'x'), 'month'));
+        $this->assertEquals('Jan', Zend_Locale::getTranslation(array('gregorian', 'format', 'abbreviated', '1'), 'month', 'de_DE'));
+        $this->assertEquals('Jan', Zend_Locale::getTranslation(array('gregorian', 'format', 'abbreviated', '1'), 'month', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation(array('gregorian', 'format', 'abbreviated', 'x'), 'month'));
 
-        $this->assertEquals('J', $value->getTranslation(array('gregorian', 'stand-alone', 'narrow', '1'), 'month'));
-        $this->assertEquals('J', $value->getTranslation(array('gregorian', 'stand-alone', 'narrow', '1'), 'month', 'en'));
-        $this->assertFalse($value->getTranslation(array('gregorian', 'stand-alone', 'narrow', 'x'), 'month'));
+        $this->assertEquals('J', Zend_Locale::getTranslation(array('gregorian', 'stand-alone', 'narrow', '1'), 'month', 'de_DE'));
+        $this->assertEquals('J', Zend_Locale::getTranslation(array('gregorian', 'stand-alone', 'narrow', '1'), 'month', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation(array('gregorian', 'stand-alone', 'narrow', 'x'), 'month'));
 
-        $this->assertEquals('Sonntag', $value->getTranslation('sun', 'day'));
-        $this->assertEquals('Sunday',  $value->getTranslation('sun', 'day', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'day'));
+        $this->assertEquals('Sonntag', Zend_Locale::getTranslation('sun', 'day', 'de_DE'));
+        $this->assertEquals('Sunday', Zend_Locale::getTranslation('sun', 'day', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'day'));
 
-        $this->assertEquals('So.',  $value->getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day'));
-        $this->assertEquals('Sun', $value->getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day', 'en'));
-        $this->assertFalse($value->getTranslation(array('gregorian', 'format', 'abbreviated', 'xxx'), 'day'));
+        $this->assertEquals('So.', Zend_Locale::getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day', 'de_DE'));
+        $this->assertEquals('Sun', Zend_Locale::getTranslation(array('gregorian', 'format', 'abbreviated', 'sun'), 'day', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation(array('gregorian', 'format', 'abbreviated', 'xxx'), 'day'));
 
-        $this->assertEquals('S', $value->getTranslation(array('gregorian', 'stand-alone', 'narrow', 'sun'), 'day'));
-        $this->assertEquals('S', $value->getTranslation(array('gregorian', 'stand-alone', 'narrow', 'sun'), 'day', 'en'));
-        $this->assertFalse($value->getTranslation(array('gregorian', 'stand-alone', 'narrow', 'xxx'), 'day'));
+        $this->assertEquals('S', Zend_Locale::getTranslation(array('gregorian', 'stand-alone', 'narrow', 'sun'), 'day', 'de_DE'));
+        $this->assertEquals('S', Zend_Locale::getTranslation(array('gregorian', 'stand-alone', 'narrow', 'sun'), 'day', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation(array('gregorian', 'stand-alone', 'narrow', 'xxx'), 'day'));
 
-        $this->assertEquals('EEEE, d. MMMM yyyy', $value->getTranslation('full', 'date'));
-        $this->assertEquals('EEEE, MMMM d, yyyy', $value->getTranslation('full', 'date', 'en'));
-        $this->assertFalse($value->getTranslation('xxxx', 'date'));
+        $this->assertEquals('EEEE, d. MMMM yyyy', Zend_Locale::getTranslation('full', 'date', 'de_DE'));
+        $this->assertEquals('EEEE, MMMM d, yyyy', Zend_Locale::getTranslation('full', 'date', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxxx', 'date'));
 
-        $this->assertEquals("HH:mm:ss v",  $value->getTranslation('full', 'time'));
-        $this->assertEquals('h:mm:ss a v', $value->getTranslation('full', 'time', 'en'));
-        $this->assertFalse($value->getTranslation('xxxx', 'time'));
+        $this->assertEquals("HH:mm:ss v", Zend_Locale::getTranslation('full', 'time', 'de_DE'));
+        $this->assertEquals('h:mm:ss a v', Zend_Locale::getTranslation('full', 'time', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxxx', 'time'));
 
-        $this->assertEquals('Wien',       $value->getTranslation('Europe/Vienna', 'citytotimezone'));
-        $this->assertEquals("St. John's", $value->getTranslation('America/St_Johns', 'citytotimezone', 'en'));
-        $this->assertFalse($value->getTranslation('xxxx', 'citytotimezone'));
+        $this->assertEquals('Wien', Zend_Locale::getTranslation('Europe/Vienna', 'citytotimezone', 'de_DE'));
+        $this->assertEquals("St. John's", Zend_Locale::getTranslation('America/St_Johns', 'citytotimezone', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxxx', 'citytotimezone'));
 
-        $this->assertEquals('Euro', $value->getTranslation('EUR', 'nametocurrency'));
-        $this->assertEquals('Euro', $value->getTranslation('EUR', 'nametocurrency', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'nametocurrency'));
+        $this->assertEquals('Euro', Zend_Locale::getTranslation('EUR', 'nametocurrency', 'de_DE'));
+        $this->assertEquals('Euro', Zend_Locale::getTranslation('EUR', 'nametocurrency', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'nametocurrency'));
 
-        $this->assertEquals('EUR', $value->getTranslation('Euro', 'currencytoname'));
-        $this->assertEquals('EUR', $value->getTranslation('Euro', 'currencytoname', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'currencytoname'));
+        $this->assertEquals('EUR', Zend_Locale::getTranslation('Euro', 'currencytoname', 'de_DE'));
+        $this->assertEquals('EUR', Zend_Locale::getTranslation('Euro', 'currencytoname', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'currencytoname'));
 
-        $this->assertEquals('SFr.', $value->getTranslation('CHF', 'currencysymbol'));
-        $this->assertEquals('Fr.',  $value->getTranslation('CHF', 'currencysymbol', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'currencysymbol'));
+        $this->assertEquals('SFr.', Zend_Locale::getTranslation('CHF', 'currencysymbol', 'de_DE'));
+        $this->assertEquals('Fr.',  Zend_Locale::getTranslation('CHF', 'currencysymbol', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'currencysymbol'));
 
-        $this->assertEquals('EUR', $value->getTranslation('AT', 'currencytoregion'));
-        $this->assertEquals('EUR', $value->getTranslation('AT', 'currencytoregion', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'currencytoregion'));
+        $this->assertEquals('EUR', Zend_Locale::getTranslation('AT', 'currencytoregion', 'de_DE'));
+        $this->assertEquals('EUR', Zend_Locale::getTranslation('AT', 'currencytoregion', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'currencytoregion'));
 
-        $this->assertEquals('011 014 015 017 018', $value->getTranslation('002', 'regiontoterritory'));
-        $this->assertEquals('011 014 015 017 018', $value->getTranslation('002', 'regiontoterritory', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'regiontoterritory'));
+        $this->assertEquals('011 014 015 017 018', Zend_Locale::getTranslation('002', 'regiontoterritory', 'de_DE'));
+        $this->assertEquals('011 014 015 017 018', Zend_Locale::getTranslation('002', 'regiontoterritory', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'regiontoterritory'));
 
-        $this->assertEquals('AT BE CH DE LI LU', $value->getTranslation('de', 'territorytolanguage'));
-        $this->assertEquals('AT BE CH DE LI LU', $value->getTranslation('de', 'territorytolanguage', 'en'));
-        $this->assertFalse($value->getTranslation('xxx', 'territorytolanguage'));
+        $this->assertEquals('AT BE CH DE LI LU', Zend_Locale::getTranslation('de', 'territorytolanguage', 'de_DE'));
+        $this->assertEquals('AT BE CH DE LI LU', Zend_Locale::getTranslation('de', 'territorytolanguage', 'en'));
+        $this->assertFalse(Zend_Locale::getTranslation('xxx', 'territorytolanguage'));
     }
 
     /**
@@ -414,76 +405,76 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetTranslationList()
     {
-        $value = new Zend_Locale('de_DE');
         try {
-            $temp = $value->getTranslationList();
+            $temp = Zend_Locale::getTranslationList();
             $this->fail();
         } catch (Zend_Locale_Exception $e) {
             $this->assertContains('Unknown list (', $e->getMessage());
         }
 
-        $this->assertTrue(in_array('Deutsch', $value->getTranslationList('language')));
-        $this->assertTrue(in_array('German', $value->getTranslationList('language', 'en')));
+        $this->assertTrue(in_array('Deutsch', Zend_Locale::getTranslationList('language', 'de_DE')));
+        $this->assertTrue(in_array('German', Zend_Locale::getTranslationList('language', 'en')));
 
-        $this->assertTrue(in_array('Lateinisch', $value->getTranslationList('script')));
-        $this->assertTrue(in_array('Latin', $value->getTranslationList('script', 'en')));
+        $this->assertTrue(in_array('Lateinisch', Zend_Locale::getTranslationList('script', 'de_DE')));
+        $this->assertTrue(in_array('Latin', Zend_Locale::getTranslationList('script', 'en')));
 
-        $this->assertTrue(in_array('Afrika', $value->getTranslationList('territory')));
-        $this->assertTrue(in_array('Africa', $value->getTranslationList('territory', 'en')));
+        $this->assertTrue(in_array('Afrika', Zend_Locale::getTranslationList('territory', 'de_DE')));
+        $this->assertTrue(in_array('Africa', Zend_Locale::getTranslationList('territory', 'en')));
 
-        $this->assertTrue(in_array('Chinesischer Kalender', $value->getTranslationList('type', null, 'calendar')));
-        $this->assertTrue(in_array('Chinese Calendar', $value->getTranslationList('type', 'en', 'calendar')));
+        $this->assertTrue(in_array('Chinesischer Kalender', Zend_Locale::getTranslationList('type', 'de_DE', 'calendar')));
+        $this->assertTrue(in_array('Chinese Calendar', Zend_Locale::getTranslationList('type', 'en', 'calendar')));
 
-        $this->assertTrue(in_array('Januar', $value->getTranslationList('month')));
-        $this->assertTrue(in_array('January', $value->getTranslationList('month', 'en')));
+        $this->assertTrue(in_array('Januar', Zend_Locale::getTranslationList('month', 'de_DE')));
+        $this->assertTrue(in_array('January', Zend_Locale::getTranslationList('month', 'en')));
 
-        $this->assertTrue(in_array('Jan', $value->getTranslationList('month', null, array('gregorian', 'format', 'abbreviated'))));
-        $this->assertTrue(in_array('Jan', $value->getTranslationList('month', 'en', array('gregorian', 'format', 'abbreviated'))));
+        $this->assertTrue(in_array('Jan', Zend_Locale::getTranslationList('month', 'de_DE', array('gregorian', 'format', 'abbreviated'))));
+        $this->assertTrue(in_array('Jan', Zend_Locale::getTranslationList('month', 'en', array('gregorian', 'format', 'abbreviated'))));
 
-        $this->assertTrue(in_array('J', $value->getTranslationList('month', null, array('gregorian', 'stand-alone', 'narrow'))));
-        $this->assertTrue(in_array('J', $value->getTranslationList('month', 'en', array('gregorian', 'stand-alone', 'narrow'))));
+        $this->assertTrue(in_array('J', Zend_Locale::getTranslationList('month', 'de_DE', array('gregorian', 'stand-alone', 'narrow'))));
+        $this->assertTrue(in_array('J', Zend_Locale::getTranslationList('month', 'en', array('gregorian', 'stand-alone', 'narrow'))));
 
-        $this->assertTrue(in_array('Sonntag', $value->getTranslationList('day')));
-        $this->assertTrue(in_array('Sunday', $value->getTranslationList('day', 'en')));
+        $this->assertTrue(in_array('Sonntag', Zend_Locale::getTranslationList('day', 'de_DE')));
+        $this->assertTrue(in_array('Sunday', Zend_Locale::getTranslationList('day', 'en')));
 
-        $this->assertTrue(in_array('So.', $value->getTranslationList('day', null, array('gregorian', 'format', 'abbreviated'))));
-        $this->assertTrue(in_array('Sun', $value->getTranslationList('day', 'en', array('gregorian', 'format', 'abbreviated'))));
+        $this->assertTrue(in_array('So.', Zend_Locale::getTranslationList('day', 'de_DE', array('gregorian', 'format', 'abbreviated'))));
+        $this->assertTrue(in_array('Sun', Zend_Locale::getTranslationList('day', 'en', array('gregorian', 'format', 'abbreviated'))));
 
-        $this->assertTrue(in_array('S', $value->getTranslationList('day', null, array('gregorian', 'stand-alone', 'narrow'))));
-        $this->assertTrue(in_array('S', $value->getTranslationList('day', 'en', array('gregorian', 'stand-alone', 'narrow'))));
+        $this->assertTrue(in_array('S', Zend_Locale::getTranslationList('day', 'de_DE', array('gregorian', 'stand-alone', 'narrow'))));
+        $this->assertTrue(in_array('S', Zend_Locale::getTranslationList('day', 'en', array('gregorian', 'stand-alone', 'narrow'))));
 
-        $this->assertTrue(in_array('EEEE, d. MMMM yyyy', $value->getTranslationList('date')));
-        $this->assertTrue(in_array('EEEE, MMMM d, yyyy', $value->getTranslationList('date', 'en')));
+        $this->assertTrue(in_array('EEEE, d. MMMM yyyy', Zend_Locale::getTranslationList('date', 'de_DE')));
+        $this->assertTrue(in_array('EEEE, MMMM d, yyyy', Zend_Locale::getTranslationList('date', 'en')));
 
-        $this->assertTrue(in_array("HH:mm:ss v", $value->getTranslationList('time')));
-        $this->assertTrue(in_array("h:mm:ss a z", $value->getTranslationList('time', 'en')));
+        $this->assertTrue(in_array("HH:mm:ss v", Zend_Locale::getTranslationList('time', 'de_DE')));
+        $this->assertTrue(in_array("h:mm:ss a z", Zend_Locale::getTranslationList('time', 'en')));
 
-        $this->assertTrue(in_array('Wien', $value->getTranslationList('citytotimezone')));
-        $this->assertTrue(in_array("St. John's", $value->getTranslationList('citytotimezone', 'en')));
+        $this->assertTrue(in_array('Wien', Zend_Locale::getTranslationList('citytotimezone', 'de_DE')));
+        $this->assertTrue(in_array("St. John's", Zend_Locale::getTranslationList('citytotimezone', 'en')));
 
-        $this->assertTrue(in_array('Euro', $value->getTranslationList('nametocurrency')));
-        $this->assertTrue(in_array('Euro', $value->getTranslationList('nametocurrency', 'en')));
+        $this->assertTrue(in_array('Euro', Zend_Locale::getTranslationList('nametocurrency', 'de_DE')));
+        $this->assertTrue(in_array('Euro', Zend_Locale::getTranslationList('nametocurrency', 'en')));
 
-        $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoname')));
-        $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoname', 'en')));
+        $this->assertTrue(in_array('EUR', Zend_Locale::getTranslationList('currencytoname', 'de_DE')));
+        $this->assertTrue(in_array('EUR', Zend_Locale::getTranslationList('currencytoname', 'en')));
 
-        $this->assertTrue(in_array('SFr.', $value->getTranslationList('currencysymbol')));
-        $this->assertTrue(in_array('Fr.', $value->getTranslationList('currencysymbol', 'en')));
+        $this->assertTrue(in_array('SFr.', Zend_Locale::getTranslationList('currencysymbol', 'de_DE')));
+        $this->assertTrue(in_array('Fr.', Zend_Locale::getTranslationList('currencysymbol', 'en')));
 
-        $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoregion')));
-        $this->assertTrue(in_array('EUR', $value->getTranslationList('currencytoregion', 'en')));
+        $this->assertTrue(in_array('EUR', Zend_Locale::getTranslationList('currencytoregion', 'de_DE')));
+        $this->assertTrue(in_array('EUR', Zend_Locale::getTranslationList('currencytoregion', 'en')));
 
-        $this->assertTrue(in_array('AU NF NZ', $value->getTranslationList('regiontoterritory')));
-        $this->assertTrue(in_array('AU NF NZ', $value->getTranslationList('regiontoterritory', 'en')));
+        $this->assertTrue(in_array('AU NF NZ', Zend_Locale::getTranslationList('regiontoterritory', 'de_DE')));
+        $this->assertTrue(in_array('AU NF NZ', Zend_Locale::getTranslationList('regiontoterritory', 'en')));
 
-        $this->assertTrue(in_array('CZ', $value->getTranslationList('territorytolanguage')));
-        $this->assertTrue(in_array('CZ', $value->getTranslationList('territorytolanguage', 'en')));
+        $this->assertTrue(in_array('CZ', Zend_Locale::getTranslationList('territorytolanguage', 'de_DE')));
+        $this->assertTrue(in_array('CZ', Zend_Locale::getTranslationList('territorytolanguage', 'en')));
 
-        $char = $value->getTranslationList('characters');
+        $char = Zend_Locale::getTranslationList('characters', 'de_DE');
         $this->assertEquals("[a ä b-o ö p-s ß t u ü v-z]", $char['characters']);
         $this->assertEquals("[á à ă â å ä ā æ ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ö ø ō œ ß ú ù ŭ û ü ū ÿ]", $char['auxiliary']);
         $this->assertEquals("[a-z]", $char['currencySymbol']);
-        $char = $value->getTranslationList('characters', 'en');
+
+        $char = Zend_Locale::getTranslationList('characters', 'en');
         $this->assertEquals("[a-z]", $char['characters']);
         $this->assertEquals("[á à ă â å ä ā æ ç é è ĕ ê ë ē í ì ĭ î ï ī ñ ó ò ŏ ô ö ø ō œ ß ú ù ŭ û ü ū ÿ]", $char['auxiliary']);
         $this->assertEquals("[a-c č d-l ł m-z]", $char['currencySymbol']);
@@ -508,16 +499,15 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testgetQuestion()
     {
-        $value = new Zend_Locale();
-        $list = $value->getQuestion();
+        $list = Zend_Locale::getQuestion();
         $this->assertTrue(isset($list['yes']));
 
-        $list = $value->getQuestion('de');
+        $list = Zend_Locale::getQuestion('de');
         $this->assertEquals('ja', $list['yes']);
 
-        $this->assertTrue(is_array($value->getQuestion('auto')));
-        $this->assertTrue(is_array($value->getQuestion('browser')));
-        $this->assertTrue(is_array($value->getQuestion('environment')));
+        $this->assertTrue(is_array(Zend_Locale::getQuestion('auto')));
+        $this->assertTrue(is_array(Zend_Locale::getQuestion('browser')));
+        $this->assertTrue(is_array(Zend_Locale::getQuestion('environment')));
     }
 
     /**
