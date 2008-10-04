@@ -319,7 +319,7 @@ class InstallationChecker {
      */
     private function getResultsInText()
     {
-        $output = "== Ran PHP Verification using CLI ==\n";
+        $output = "== Ran PHP Installation Checker using CLI ==\n";
 
         $error_count = 0;
         foreach($this->_allErrors as $key => $value) {
@@ -350,14 +350,14 @@ class InstallationChecker {
     {
         $html = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" " .
             "\"http://www.w3.org/TR/html4/strict.dtd\">\n".
-            "<html><head>\n<title>PHP Verification checker</title>\n" .
+            "<html><head>\n<title>PHP Installation Checker</title>\n" .
             "<style type=\"text/css\">\n" .
             self::CSS_WARNING . "\n" .
             self::CSS_SUCCESS . "\n" .
             self::CSS_ERROR . "\n" .
             "</style></head>\n" .
             "<body>\n<table class=\"verification_table\">" .
-            "<caption>Ran PHP Verification checker on " .
+            "<caption>Ran PHP Installation Checker on " .
             gmdate('c') . "</caption>\n";
 
         $error_count = 0;
