@@ -84,7 +84,11 @@ class Zend_Validate_File_IsImageTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_IsImage($element[0]);
-            $this->assertEquals($element[1], $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg', $files));
+            $this->assertEquals(
+                $element[1],
+                $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg', $files),
+                "Tested with " . var_export($element, 1)
+            );
         }
     }
 

@@ -84,7 +84,11 @@ class Zend_Validate_File_ExcludeMimeTypeTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_ExcludeMimeType($element[0]);
-            $this->assertEquals($element[1], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files));
+            $this->assertEquals(
+                $element[1],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files),
+                "Tested with " . var_export($element, 1)
+            );
         }
     }
 

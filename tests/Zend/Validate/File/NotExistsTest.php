@@ -80,8 +80,16 @@ class Zend_Validate_File_NotExistsTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_NotExists($element[0]);
-            $this->assertEquals($element[2], $validator->isValid($element[1]));
-            $this->assertEquals($element[2], $validator->isValid($element[1], $files));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid($element[1]),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid($element[1], $files),
+                "Tested with " . var_export($element, 1)
+                );
         }
 
         $valuesExpected = array(
@@ -100,8 +108,16 @@ class Zend_Validate_File_NotExistsTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_NotExists($element[0]);
-            $this->assertEquals($element[2], $validator->isValid($element[1]));
-            $this->assertEquals($element[3], $validator->isValid($element[1], $files));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid($element[1]),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid($element[1], $files),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         $valuesExpected = array(
@@ -111,8 +127,16 @@ class Zend_Validate_File_NotExistsTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_NotExists();
-            $this->assertEquals($element[2], $validator->isValid($element[1]));
-            $this->assertEquals($element[3], $validator->isValid($element[1], $files));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid($element[1]),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid($element[1], $files),
+                "Tested with " . var_export($element, 1)
+            );
         }
     }
 

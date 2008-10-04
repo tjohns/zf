@@ -75,7 +75,11 @@ class Zend_Validate_File_ExtensionTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_Extension($element[0]);
-            $this->assertEquals($element[1], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
+            $this->assertEquals(
+                $element[1],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         $validator = new Zend_Validate_File_Extension('mo');

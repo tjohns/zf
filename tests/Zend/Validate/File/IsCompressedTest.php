@@ -84,7 +84,11 @@ class Zend_Validate_File_IsCompressedTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_IsCompressed($element[0]);
-            $this->assertEquals($element[1], $validator->isValid(dirname(__FILE__) . '/_files/test.zip', $files));
+            $this->assertEquals(
+                $element[1],
+                $validator->isValid(dirname(__FILE__) . '/_files/test.zip', $files),
+                "Tested with " . var_export($element, 1)
+            );
         }
     }
 

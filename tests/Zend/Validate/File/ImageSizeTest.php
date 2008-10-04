@@ -75,17 +75,29 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_ImageSize($element[0], $element[1], $element[2], $element[3]);
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'));
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_ImageSize(array($element[0], $element[1], $element[2], $element[3]));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'));
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_ImageSize(array('minwidth' => $element[0], 'minheight' => $element[1], 'maxwidth' => $element[2], 'maxheight' => $element[3]));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'));
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);

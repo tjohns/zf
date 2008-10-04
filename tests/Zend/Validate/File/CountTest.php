@@ -70,26 +70,74 @@ class Zend_Validate_File_CountTest extends PHPUnit_Framework_TestCase
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_Count($element[0], $element[1]);
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
-            $this->assertEquals($element[3], $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'));
-            $this->assertEquals($element[5], $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[5],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_Count(array($element[0], $element[1]));
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
-            $this->assertEquals($element[3], $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'));
-            $this->assertEquals($element[5], $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[5],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_File_Count(array('min' => $element[0], 'max' => $element[1]));
-            $this->assertEquals($element[2], $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
-            $this->assertEquals($element[3], $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
-            $this->assertEquals($element[4], $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'));
-            $this->assertEquals($element[5], $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'));
+            $this->assertEquals(
+                $element[2],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[3],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[4],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
+                "Tested with " . var_export($element, 1)
+            );
+            $this->assertEquals(
+                $element[5],
+                $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'),
+                "Tested with " . var_export($element, 1)
+            );
         }
 
         $validator = new Zend_Validate_File_Count(array(1));
