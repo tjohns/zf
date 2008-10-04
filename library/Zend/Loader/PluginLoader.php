@@ -132,24 +132,16 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
         $prefix = $this->_formatPrefix($prefix);
         $path   = rtrim($path, '/\\') . '/';
 
-        /*
         if ($this->_useStaticRegistry) {
-            self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix][] = $path;
-        } else {
-            $this->_prefixToPaths[$prefix][] = $path;
-        }
-         */
-
-        if ($this->_useStaticRegistry) {
-            if (!isset(self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
+            if (!array_key_exists($prefix, self::$_staticPrefixToPaths[$this->_useStaticRegistry])) {
                 self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix] = array($path);
-            } elseif (!in_array($path, self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix])) {
+            } else {
                 self::$_staticPrefixToPaths[$this->_useStaticRegistry][$prefix][] = $path;
             }
         } else {
-            if (!isset($this->_prefixToPaths[$prefix])) {
+            if (!array_key_exists($prefix, $this->_prefixToPaths)) {
                 $this->_prefixToPaths[$prefix] = array($path);
-            } elseif (!in_array($path, $this->_prefixToPaths[$prefix])) {
+            } else {
                 $this->_prefixToPaths[$prefix][] = $path;
             }
         }
@@ -380,15 +372,15 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
 
             $paths = array_reverse($paths, true);
             foreach ($paths as $key => $path) {
-                if (preg_match('/^[a-z0-9_]/i', $path)) {
+                if (preg_match('/^[a-z0-9_](?!:' . preg_quote('\\') . ')/i', $path)) {
                     foreach ($incPaths as $index => $incPath) {
                         $incPaths[$index] .= DIRECTORY_SEPARATOR . $path;
                     }
                     unset($paths[$key]);
                 }
             }
-            $paths = $paths + $incPaths;
-            if (Zend_Loader::loadFile($classFile, $paths)) {
+            $paths = array_merge($paths, $incPaths);
+            if (Zend_Loader::loadFile($classFile, $paths, true)) {
                 if (class_exists($className, false)) {
                     $found = true;
                     break;
@@ -398,9 +390,9 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
 
         if ($found) {
             if ($this->_useStaticRegistry) {
-                self::$_staticLoadedPlugins[$this->_useStaticRegistry][$name]     = $className;
+                self::$_staticLoadedPlugins[$this->_useStaticRegistry][$name] = $className;
             } else {
-                $this->_loadedPlugins[$name]     = $className;
+                $this->_loadedPlugins[$name] = $className;
             }
             return $className;
         }
