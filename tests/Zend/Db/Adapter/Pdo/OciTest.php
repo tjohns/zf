@@ -137,6 +137,63 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
     }
 
     /**
+     * Test that quote() takes an array and returns
+     * an imploded string of comma-separated, quoted elements.
+     */
+    public function testAdapterQuoteArray()
+    {
+        $array = array("it's", 'all', 'right!');
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+    }
+
+    /**
+     * test that quote() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteDoubleQuote()
+    {
+        $string = 'St John"s Wort';
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John\"s Wort'", $value);
+    }
+
+    /**
+     * test that quote() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteSingleQuote()
+    {
+        $string = "St John's Wort";
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John''s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoDoubleQuote()
+    {
+        $string = 'id=?';
+        $param = 'St John"s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id='St John\"s Wort'", $value);
+    }
+
+    /**
+     * test that quoteInto() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoSingleQuote()
+    {
+        $string = 'id = ?';
+        $param = 'St John\'s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id = 'St John''s Wort'", $value);
+    }
+
+    /**
      * test that quoteTableAs() accepts a string and an alias,
      * and returns each as delimited identifiers.
      * Oracle does not want the 'AS' in between.
