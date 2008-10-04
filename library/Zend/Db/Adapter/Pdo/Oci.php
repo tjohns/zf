@@ -177,13 +177,15 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
                 ON (CC.CONSTRAINT_NAME = C.CONSTRAINT_NAME AND CC.TABLE_NAME = C.TABLE_NAME AND C.CONSTRAINT_TYPE = 'P'))
               ON TC.TABLE_NAME = CC.TABLE_NAME AND TC.COLUMN_NAME = CC.COLUMN_NAME
             JOIN ALL_TABLES TB ON (TB.TABLE_NAME = TC.TABLE_NAME AND TB.OWNER = TC.OWNER)
-            WHERE TC.TABLE_NAME = ".$this->quote($tableName);
+            WHERE TC.TABLE_NAME = :TBNAME";
+        $bind[':TBNAME'] = $tableName;
         if ($schemaName) {
-            $sql .= " AND TB.OWNER = ".$this->quote($schemaName);
+            $sql .= ' AND TB.OWNER = :SCNAME';
+            $bind[':SCNAME'] = $schemaName;
         }
         $sql .= ' ORDER BY TC.COLUMN_ID';
 
-        $stmt = $this->query($sql);
+        $stmt = $this->query($sql, $bind);
 
         /**
          * Use FETCH_NUM so we are not dependent on the CASE attribute of the PDO connection
