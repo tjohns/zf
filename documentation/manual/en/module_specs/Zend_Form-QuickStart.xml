@@ -283,7 +283,7 @@ echo $form;
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->form ?>
+<?php echo $this->form ?>
 ]]>
         </programlisting>
 
