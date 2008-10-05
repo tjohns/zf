@@ -195,7 +195,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function addValidator($validator, $breakChainOnFailure = false, $options = array())
     {
         $adapter = $this->getTransferAdapter();
-        $adapter->addValidator($validator, $breakChainOnFailure, $options);
+        $adapter->addValidator($validator, $breakChainOnFailure, $options, $this->getName());
         $this->_validated = false;
 
         return $this;
@@ -210,7 +210,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function addValidators(array $validators)
     {
         $adapter = $this->getTransferAdapter();
-        $adapter->addValidators($validators);
+        $adapter->addValidators($validators, $this->getName());
         $this->_validated = false;
 
         return $this;
@@ -225,7 +225,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function setValidators(array $validators)
     {
         $adapter = $this->getTransferAdapter();
-        $adapter->setValidators($validators);
+        $adapter->setValidators($validators, $this->getName());
         $this->_validated = false;
 
         return $this;
@@ -251,7 +251,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getValidators()
     {
         $adapter = $this->getTransferAdapter();
-        return $adapter->getValidators();
+        return $adapter->getValidators($this->getName());
     }
 
     /**
@@ -279,6 +279,99 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         $adapter = $this->getTransferAdapter();
         $adapter->clearValidators();
         $this->_validated = false;
+
+        return $this;
+    }
+
+    /**
+     * Add Filter; proxy to adapter
+     * 
+     * @param  string|array $filter  Type of filter to add
+     * @param  string|array $options Options to set for the filter
+     * @return Zend_Form_Element_File
+     */
+    public function addFilter($filter, $options = null)
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->addFilter($filter, $options, $this->getName());
+
+        return $this;
+    }
+
+    /**
+     * Add Multiple filters at once; proxy to adapter
+     * 
+     * @param  array $filters 
+     * @return Zend_Form_Element_File
+     */
+    public function addFilters(array $filters)
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->addFilters($filters, $this->getName());
+
+        return $this;
+    }
+
+    /**
+     * Sets a filter for the class, erasing all previous set; proxy to adapter
+     *
+     * @param  string|array $filter Filter to set
+     * @return Zend_Form_Element_File
+     */
+    public function setFilters(array $filters)
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->setFilters($filters, $this->getName());
+
+        return $this;
+    }
+
+    /**
+     * Retrieve individual filter; proxy to adapter
+     * 
+     * @param  string $name 
+     * @return Zend_Filter_Interface|null
+     */
+    public function getFilter($name)
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->getFilter($name);
+    }
+
+    /**
+     * Returns all set filters; proxy to adapter
+     *
+     * @return null|array List of set filters
+     */
+    public function getFilters()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->getFilters($this->getName());
+    }
+
+    /**
+     * Remove an individual filter; proxy to adapter 
+     * 
+     * @param  string $name 
+     * @return Zend_Form_Element_File
+     */
+    public function removeFilter($name)
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->removeFilter($name);
+
+        return $this;
+    }
+
+    /**
+     * Remove all filters; proxy to adapter
+     * 
+     * @return Zend_Form_Element_File
+     */
+    public function clearFilters()
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->clearFilters();
 
         return $this;
     }
@@ -312,7 +405,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             }
         }
 
-        if($adapter->isValid($this->getFullyQualifiedName())) {
+        if($adapter->isValid($this->getName())) {
             $this->_validated = true;
             return true;
         }
@@ -336,7 +429,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         }
 
         $adapter = $this->getTransferAdapter();
-        if ($adapter->receive($this->getFullyQualifiedName())) {
+        if ($adapter->receive($this->getName())) {
             return true;
         }
 

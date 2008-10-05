@@ -164,8 +164,8 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     public function testCanTranslateMessagesInsteadOfKeys()
     {
         $translator = new Zend_Translate(
-            'array', 
-            array('%value% was passed' => 'This is the translated message for %value%'), 
+            'array',
+            array('%value% was passed' => 'This is the translated message for %value%'),
             'en'
         );
         $this->validator->setTranslator($translator);
