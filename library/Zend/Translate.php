@@ -35,15 +35,15 @@ class Zend_Translate {
     /**
      * Adapter names constants
      */
-    const AN_ARRAY   = 'array';
-    const AN_CSV     = 'csv';
-    const AN_GETTEXT = 'gettext';
-    const AN_INI     = 'ini';
-    const AN_QT      = 'qt';
-    const AN_TBX     = 'tbx';
-    const AN_TMX     = 'tmx';
-    const AN_XLIFF   = 'xliff';
-    const AN_XMLTM   = 'xmltm';
+    const AN_ARRAY   = 'Array';
+    const AN_CSV     = 'Csv';
+    const AN_GETTEXT = 'Gettext';
+    const AN_INI     = 'Ini';
+    const AN_QT      = 'Qt';
+    const AN_TBX     = 'Tbx';
+    const AN_TMX     = 'Tmx';
+    const AN_XLIFF   = 'Xliff';
+    const AN_XMLTM   = 'XmlTm';
 
     const LOCALE_DIRECTORY = 'directory';
     const LOCALE_FILENAME  = 'filename';
@@ -55,7 +55,6 @@ class Zend_Translate {
      */
     private $_adapter;
     private static $_cache = null;
-
 
     /**
      * Generates the standard translation object
@@ -71,7 +70,6 @@ class Zend_Translate {
     {
         $this->setAdapter($adapter, $data, $locale, $options);
     }
-
 
     /**
      * Sets a new adapter
@@ -98,7 +96,6 @@ class Zend_Translate {
             throw new Zend_Translate_Exception("Adapter " . $adapter . " does not extend Zend_Translate_Adapter");
         }
     }
-
 
     /**
      * Returns the adapters name and it's options

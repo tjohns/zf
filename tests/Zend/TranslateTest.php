@@ -85,13 +85,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $lang = new Zend_Translate(Zend_Translate::AN_XLIFF , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.xliff', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Xliff);
 
-        $lang = new Zend_Translate('qt' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en2.ts', 'en');
+        $lang = new Zend_Translate('Qt' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en2.ts', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Qt);
 
-        $lang = new Zend_Translate('xmltm' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.xmltm', 'en');
+        $lang = new Zend_Translate('XmlTm' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.xmltm', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_XmlTm);
 
-        $lang = new Zend_Translate('tbx' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.tbx', 'en');
+        $lang = new Zend_Translate('Tbx' , dirname(__FILE__) . '/Translate/Adapter/_files/translation_en.tbx', 'en');
         $this->assertTrue($lang->getAdapter() instanceof Zend_Translate_Adapter_Tbx);
     }
 
