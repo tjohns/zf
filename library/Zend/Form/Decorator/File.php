@@ -36,6 +36,12 @@ require_once 'Zend/Form/Decorator/Abstract.php';
  */
 class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
 {
+    /**
+     * Render a form file
+     * 
+     * @param  string $content 
+     * @return string
+     */
     public function render($content)
     {
         $element = $this->getElement();
@@ -53,10 +59,10 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
         if (!array_key_exists('id', $attribs)) {
             $attribs['id'] = $name;
         }
-        $separator = $this->getSeparator();
 
-        $markup = array();
-        $size   = $element->getMaxFileSize();
+        $separator = $this->getSeparator();
+        $markup    = array();
+        $size      = $element->getMaxFileSize();
         if ($size > 0) {
             $element->setMaxFileSize(0);
             $markup[] = $view->formHidden('MAX_FILE_SIZE', $size);
@@ -66,13 +72,14 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
             $name .= "[]";
             $count = $element->getMultiFile();
             for ($i = 0; $i < $count; ++$i) {
-                $htmlAttribs = $attribs;
+                $htmlAttribs        = $attribs;
                 $htmlAttribs['id'] .= '-' . $i;
                 $markup[] = $view->formFile($name, $htmlAttribs);
             }
         } else {
             $markup[] = $view->formFile($name, $attribs);
         }
+
         $markup = implode($separator, $markup);
         return $markup;
     }
