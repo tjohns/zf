@@ -64,15 +64,23 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     protected static $_maxFileSize = 0;
 
     /**
-     * Constructor
-     *
-     * @param  string|array|Zend_Config $spec 
+     * Load default decorators
+     * 
      * @return void
      */
-    public function __construct($spec, $options = null)
+    public function loadDefaultDecorators()
     {
-        parent::__construct($spec, $options);
-        $this->addDecorator('File');
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return;
+        }
+
+        $decorators = $this->getDecorators();
+        if (empty($decorators)) {
+            $this->addDecorator('File')
+                 ->addDecorator('Errors')
+                 ->addDecorator('HtmlTag', array('tag' => 'dd'))
+                 ->addDecorator('Label', array('tag' => 'dt'));
+        }
     }
 
     /**
