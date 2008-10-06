@@ -99,7 +99,7 @@ class Zend_Validate_File_IsCompressed extends Zend_Validate_File_MimeType
             return false;
         }
 
-        if (class_exists('fileinfo')) {
+        if (class_exists('fileinfo', false)) {
             $info = finfo(FILEINFO_MIME);
             $this->_type = $info->file($value);
             $info->close();

@@ -164,7 +164,7 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
         }
 
         if ($file !== null) {
-            if (class_exists('fileinfo')) {
+            if (class_exists('fileinfo', false)) {
                 $mime = finfo(FILEINFO_MIME);
                 $this->_type = $mime->file($value);
                 $mime->close();
