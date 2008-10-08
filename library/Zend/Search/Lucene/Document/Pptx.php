@@ -26,7 +26,7 @@ require_once 'Zend/Search/Lucene/Document/OpenXml.php';
 if (class_exists('ZipArchive')) {
 
 /**
- * Docx document.
+ * Pptx document.
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
@@ -34,14 +34,28 @@ if (class_exists('ZipArchive')) {
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenXml
+class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenXml
 {
     /**
-     * Xml Schema - WordprocessingML
+     * Xml Schema - PresentationML
      *
      * @var string
      */
-    const SCHEMA_WORDPROCESSINGML = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+    const SCHEMA_PRESENTATIONML = 'http://schemas.openxmlformats.org/presentationml/2006/main';
+    
+    /**
+     * Xml Schema - DrawingML
+     *
+     * @var string
+     */
+    const SCHEMA_DRAWINGML = 'http://schemas.openxmlformats.org/drawingml/2006/main';    
+    
+    /**
+     * Xml Schema - Slide relation
+     *
+     * @var string
+     */
+    const SCHEMA_SLIDERELATION = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide';
 
     /**
      * Object constructor
@@ -52,7 +66,8 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenX
     private function __construct($fileName, $storeContent)
     {
         // Document data holders
-        $documentBody = array();
+        $slides = array();
+    	$documentBody = array();
         $coreProperties = array();
 
         // Open OpenXML package
@@ -63,24 +78,36 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenX
         $relations = simplexml_load_string($package->getFromName("_rels/.rels"));
         foreach ($relations->Relationship as $rel) {
             if ($rel["Type"] == Zend_Search_Lucene_Document_OpenXml::SCHEMA_OFFICEDOCUMENT) {
-                // Found office document! Read in contents...
-                $contents = simplexml_load_string(
-                    $package->getFromName(dirname($rel["Target"]) . "/" . basename($rel["Target"]))
-                );
-
-                $contents->registerXPathNamespace("w", Zend_Search_Lucene_Document_Docx::SCHEMA_WORDPROCESSINGML);
-                $paragraphs = $contents->xpath('//w:body/w:p');
-
-                foreach($paragraphs as $paragraph) {
-                    $runs = $paragraph->xpath('//w:r/w:t');
-                    foreach ($runs as $run) {
-                        $documentBody[] = (string)$run;
-                    }
-                }
-                
-                break;
+            	// Found office document! Search for slides...
+            	$slideRelations = simplexml_load_string($package->getFromName(dirname($rel["Target"]) . "/_rels/" . basename($rel["Target"]) . ".rels"));
+            	foreach ($slideRelations->Relationship as $slideRel) {
+            		if ($slideRel["Type"] == Zend_Search_Lucene_Document_Pptx::SCHEMA_SLIDERELATION) {
+            			// Found slide!
+            			$slides[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
+		                    $package->getFromName(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . basename($slideRel["Target"]))
+		                );
+            		}
+            	}
+            	
+            	break;
             }
         }
+        
+        // Sort slides
+        ksort($slides);
+        
+        // Extract contents from slides
+        foreach ($slides as $slide) {
+        	// Register namespaces
+        	$slide->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
+        	$slide->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
+        	
+        	// Fetch all text
+        	$textElements = $slide->xpath('//a:t');
+        	foreach ($textElements as $textElement) {
+        		$documentBody[] = (string)$textElement;
+        	}
+        }   
         
         // Read core properties
         $coreProperties = $this->extractMetaData($package);
@@ -91,7 +118,7 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenX
         // Store filename
         $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName));
 
-        // Store contents
+            // Store contents
         if ($storeContent) {
             $this->addField(Zend_Search_Lucene_Field::Text('body', implode(' ', $documentBody)));
         } else {
@@ -112,15 +139,15 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenX
     }
 
     /**
-     * Load Docx document from a file
+     * Load Pptx document from a file
      *
      * @param string  $fileName
      * @param boolean $storeContent
-     * @return Zend_Search_Lucene_Document_Docx
+     * @return Zend_Search_Lucene_Document_Pptx
      */
-    public static function loadDocxFile($fileName, $storeContent = false)
+    public static function loadPptxFile($fileName, $storeContent = false)
     {
-        return new Zend_Search_Lucene_Document_Docx($fileName, $storeContent);
+        return new Zend_Search_Lucene_Document_Pptx($fileName, $storeContent);
     }
 }
 

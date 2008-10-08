@@ -17,6 +17,11 @@ require_once 'Zend/Search/Lucene/Document.php';
 require_once 'Zend/Search/Lucene/Document/Docx.php';
 
 /**
+ * Zend_Search_Lucene_Document_Pptx
+ */
+require_once 'Zend/Search/Lucene/Document/Pptx.php';
+
+/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -136,5 +141,19 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($docxDocument->getFieldValue('title'), 'Test document');
 		$this->assertEquals($docxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
 		$this->assertTrue($docxDocument->getFieldValue('body') != '');
+    }
+    
+    public function testPptx()
+    {
+    	if (!class_exists('ZipArchive')) {
+    		$this->markTestSkipped('ZipArchive class (Zip extension) is not loaded');
+    	}
+
+		$pptxDocument = Zend_Search_Lucene_Document_Pptx::loadPptxFile(dirname(__FILE__) . '/_openXmlDocuments/test.pptx', true);
+
+        $this->assertTrue($pptxDocument instanceof Zend_Search_Lucene_Document_Pptx);
+		$this->assertEquals($pptxDocument->getFieldValue('title'), 'Test document');
+		$this->assertEquals($pptxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
+		$this->assertTrue($pptxDocument->getFieldValue('body') != '');
     }
 }

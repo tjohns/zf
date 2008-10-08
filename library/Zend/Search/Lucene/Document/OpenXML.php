@@ -26,7 +26,7 @@ require_once 'Zend/Search/Lucene/Document.php';
 if (class_exists('ZipArchive')) {
 
 /**
- * Docx document.
+ * OpenXML document.
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
