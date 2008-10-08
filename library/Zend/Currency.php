@@ -423,6 +423,17 @@ class Zend_Currency
     }
 
     /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        $cache = Zend_Locale_Data::getCache();
+        return $cache;
+    }
+
+    /**
      * Sets a cache for Zend_Currency
      *
      * @param  Zend_Cache_Core $cache Cache to set
@@ -434,14 +445,33 @@ class Zend_Currency
     }
 
     /**
-     * Returns the set cache
+     * Returns true when a cache is set
      *
-     * @return Zend_Cache_Core The set cache
+     * @return boolean
      */
-    public static function getCache()
+    public static function hasCache()
     {
-        $cache = Zend_Locale_Data::getCache();
-        return $cache;
+        return Zend_Locale_Data::hasCache();
+    }
+
+    /**
+     * Removes any set cache
+     *
+     * @return void
+     */
+    public static function removeCache()
+    {
+        Zend_Locale_Data::removeCache();
+    }
+
+    /**
+     * Clears all set cache data
+     *
+     * @return void
+     */
+    public static function clearCache()
+    {
+        Zend_Locale_Data::clearCache();
     }
 
     /**

@@ -525,8 +525,9 @@ print $currency->toCurrency(1000);
             The work of <code>Zend_Currency</code> can be speed up by the usage of <code>Zend_Cache</code>.
             By using the static method <code>Zend_Currency::setCache($cache)</code> which accepts one option, an
             <code>Zend_Cache</code> adapter. When you set it, the localization data of the methods from
-            Zend_Currency are cached. For convenience there is also static method
-            <code>Zend_Currency::getCache()</code>.
+            Zend_Currency are cached. For convenience there are the static methods
+            <code>getCache()</code>, <code>hasCache()</code>, <code>clearCache()</code> and
+            <code>removeCache()</code>.
         </para>
 
         <example id="zend.currency.usage.cache.example">
