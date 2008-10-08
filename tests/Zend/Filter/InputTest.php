@@ -1050,14 +1050,14 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertThat($messages, $this->arrayHasKey('field1'));
         $this->assertEquals("'abc' contains not only digit characters", current($messages['field1']));
     }
-    
+
     public function testGetPluginLoader()
     {
     	$input = new Zend_Filter_Input(null, null);
-    	
+
     	$loader = $input->getPluginLoader(Zend_Filter_Input::VALIDATE);
         $this->assertType('Zend_Loader_PluginLoader', $loader,
-            'Expected object of type Zend_Loader_PluginLoader, got ' , get_class($loader));    	
+            'Expected object of type Zend_Loader_PluginLoader, got ' , get_class($loader));
 
         try {
     		$loader = $input->getPluginLoader('foo');
@@ -1074,18 +1074,18 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
     public function testSetPluginLoader()
     {
     	$input = new Zend_Filter_Input(null, null);
-    	
+
     	$loader = new Zend_Loader_PluginLoader();
-    	
+
     	$input->setPluginLoader($loader, Zend_Filter_Input::VALIDATE);
     }
 
     public function testSetPluginLoaderInvalidType()
     {
     	$input = new Zend_Filter_Input(null, null);
-    	
+
     	$loader = new Zend_Loader_PluginLoader();
-    	
+
         try {
         	$input->setPluginLoader($loader, 'foo');
             $this->fail('Expected to catch Zend_Filter_Exception');
@@ -1113,7 +1113,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Loader_PluginLoader_Exception', $e,
                 'Expected object of type Zend_Filter_Exception, got '.get_class($e));
-            $this->assertEquals("Plugin by name MyDigits was not found in the registry.",
+            $this->assertContains("Plugin by name MyDigits was not found in the registry",
                 $e->getMessage());
         }
     }
