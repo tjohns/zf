@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 11750 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
@@ -564,7 +564,8 @@ print $currency->toCurrency(1000);
             に <code>Zend_Cache</code> アダプタを指定します。そうすると、
             Zend_Currency のメソッドで地域化したデータがキャッシュされるようになります。
             利便性を考慮して、静的メソッド
-            <code>Zend_Currency::getCache()</code> も用意されています。
+            <code>getCache()</code>、<code>hasCache()</code>、<code>clearCache()</code> および
+            <code>removeCache()</code> も用意されています。
         </para>
 
         <example id="zend.currency.usage.cache.example">
