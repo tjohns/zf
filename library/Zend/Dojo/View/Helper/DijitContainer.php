@@ -67,7 +67,8 @@ abstract class Zend_Dojo_View_Helper_DijitContainer extends Zend_Dojo_View_Helpe
             'attribs' => $attribs,
         );
 
-        return ob_start();
+        ob_start();
+        return;
     }
 
     /**

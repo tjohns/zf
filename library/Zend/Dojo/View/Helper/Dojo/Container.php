@@ -599,7 +599,8 @@ class Zend_Dojo_View_Helper_Dojo_Container
         }
 
         $this->_captureLock = true;
-        return ob_start();
+        ob_start();
+        return;
     }
 
     /**
@@ -836,7 +837,8 @@ EOJ;
         }
 
         $this->_captureLock = true;
-        return ob_start();
+        ob_start();
+        return;
     }
 
     /**

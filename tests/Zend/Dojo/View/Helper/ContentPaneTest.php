@@ -125,6 +125,16 @@ class Zend_Dojo_View_Helper_ContentPaneTest extends PHPUnit_Framework_TestCase
         $html = $this->view->contentPane('pane1', 'This is the pane content', array('id' => 'pane', 'title' => 'Pane 1'));
         $this->assertNotContains('name="/', $html, $html);
     }
+
+    /**
+     * @group ZF-4522
+     */
+    public function testCaptureStartShouldReturnVoid()
+    {
+        $test = $this->view->contentPane()->captureStart('pane1');
+        $this->view->contentPane()->captureEnd('pane1');
+        $this->assertNull($test);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_ContentPaneTest::main() if this source file is executed directly.
