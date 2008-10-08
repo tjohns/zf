@@ -33,7 +33,7 @@ require_once 'Zend/PaginatorTest.php';
 
 require_once 'Zend/Paginator/Adapter/ArrayTest.php';
 require_once 'Zend/Paginator/Adapter/DbSelectTest.php';
-require_once 'Zend/Paginator/Adapter/TableSelectTest.php';
+require_once 'Zend/Paginator/Adapter/DbTableSelectTest.php';
 require_once 'Zend/Paginator/Adapter/IteratorTest.php';
 require_once 'Zend/Paginator/Adapter/NullTest.php';
 
@@ -65,7 +65,7 @@ class Zend_Paginator_AllTests
         
         $suite->addTestSuite('Zend_Paginator_Adapter_ArrayTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_DbSelectTest');
-        $suite->addTestSuite('Zend_Paginator_Adapter_TableSelectTest');
+        $suite->addTestSuite('Zend_Paginator_Adapter_DbTableSelectTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_IteratorTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_NullTest');
         
