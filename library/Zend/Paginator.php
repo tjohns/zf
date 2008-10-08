@@ -32,6 +32,13 @@ require_once 'Zend/Loader/PluginLoader.php';
  */
 class Zend_Paginator implements Countable, IteratorAggregate
 {
+	/**
+     * Specifies that the factory should try to detect the proper adapter type first
+     *
+     * @var string
+     */
+    const INTERNAL_ADAPTER = 'Zend_Paginator_Adapter_Internal';
+    
     /**
      * Config file
      *
@@ -180,57 +187,50 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return self::$_scrollingStyleLoader;
     }
-
+    
     /**
-     * Factory.
+     * Factory
      *
-     * @param  array|Zend_Db_Select|Iterator $data
+     * @param mixed $data
+     * @param string $adapter
+     * @param array $prefixPaths
      * @return Zend_Paginator
-     * @throws Zend_Paginator_Exception
      */
-    public static function factory($data)
+	public static function factory($data, $adapter = self::INTERNAL_ADAPTER,
+								   array $prefixPaths = array('Zend_Paginator_Adapter' => 'Zend/Paginator/Adapter'))
     {
-        if (is_array($data)) {
-            /**
-             * @see Zend_Paginator_Adapter_Array
-             */
-            require_once 'Zend/Paginator/Adapter/Array.php';
-            
-            $paginator = new self(new Zend_Paginator_Adapter_Array($data));
-        } else if ($data instanceof Zend_Db_Select) {
-            /**
-             * @see Zend_Paginator_Adapter_DbSelect
-             */
-            require_once 'Zend/Paginator/Adapter/DbSelect.php';
-            
-            $paginator = new self(new Zend_Paginator_Adapter_DbSelect($data));
-        } else if ($data instanceof Iterator) {
-            /**
-             * @see Zend_Paginator_Adapter_Iterator
-             */
-            require_once 'Zend/Paginator/Adapter/Iterator.php';
-            
-            $paginator = new self(new Zend_Paginator_Adapter_Iterator($data));
-        } else if (is_integer($data)) {
-            /**
-             * @see Zend_Paginator_Adapter_Null
-             */
-            require_once 'Zend/Paginator/Adapter/Null.php';
-            
-            $paginator = new self(new Zend_Paginator_Adapter_Null($data));
-        } else {
-            $type = (is_object($data)) ? get_class($data) : gettype($data);
-            
-            /**
-             * @see Zend_Paginator_Exception
-             */
-            require_once 'Zend/Paginator/Exception.php';
-            
-            throw new Zend_Paginator_Exception('No adapter for type ' . $type);
+        if ($adapter == self::INTERNAL_ADAPTER) {
+        	if (is_array($data)) {
+        		$adapter = 'Array';
+	        } else if ($data instanceof Zend_Db_Select) {
+	            $adapter = 'DbSelect';
+	        } else if ($data instanceof Iterator) {
+	            $adapter = 'Iterator';
+	        } else if (is_integer($data)) {
+	            $adapter = 'Null';
+	        } else {
+	            $type = (is_object($data)) ? get_class($data) : gettype($data);
+	            
+	            /**
+	             * @see Zend_Paginator_Exception
+	             */
+	            require_once 'Zend/Paginator/Exception.php';
+	            
+	            throw new Zend_Paginator_Exception('No adapter for type ' . $type);
+	        }
         }
-
-        return $paginator;
+        
+        /**
+         * @see Zend_Loader_PluginLoader
+         */
+        require_once 'Zend/Loader/PluginLoader.php';
+        
+        $pluginLoader     = new Zend_Loader_PluginLoader($prefixPaths);
+        $adapterClassName = $pluginLoader->load($adapter);
+        
+        return new self(new $adapterClassName($data));
     }
+    
     
     /**
      * Set a global config
