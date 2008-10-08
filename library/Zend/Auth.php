@@ -47,7 +47,7 @@ class Zend_Auth
      *
      * @return void
      */
-    private function __construct()
+    protected function __construct()
     {}
 
     /**
@@ -55,7 +55,7 @@ class Zend_Auth
      *
      * @return void
      */
-    private function __clone()
+    protected function __clone()
     {}
 
     /**

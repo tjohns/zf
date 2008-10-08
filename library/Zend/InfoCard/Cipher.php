@@ -63,7 +63,7 @@ class Zend_InfoCard_Cipher
      * @return void
      * @codeCoverageIgnoreStart
      */
-    private function __construct()
+    protected function __construct()
     {
     }
     // @codeCoverageIgnoreEnd
