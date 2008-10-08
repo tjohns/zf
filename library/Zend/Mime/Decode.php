@@ -19,7 +19,7 @@
  */
 
 /**
- * Zend_Mime
+ * @see Zend_Mime
  */
 require_once 'Zend/Mime.php';
 
@@ -139,7 +139,12 @@ class Zend_Mime_Decode
             @list($headers, $body) = @preg_split("%([\r\n]+)\\1%U", $message, 2);
         }
 
-        $headers = iconv_mime_decode_headers($headers, ICONV_MIME_DECODE_CONTINUE_ON_ERROR);
+        $headers = iconv_mime_decode_headersiconv_mime_decode_headersiconv_mime_decode_headers($headers, ICONV_MIME_DECODE_CONTINUE_ON_ERROR);
+
+        if ($headers === false ) {
+        	// an error occurs during the decoding
+        	return;
+        }
 
         // normalize header names
         foreach ($headers as $name => $header) {
