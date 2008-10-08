@@ -30,7 +30,7 @@ require_once 'Zend/Paginator/Adapter/DbSelect.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Paginator_Adapter_TableSelect extends Zend_Paginator_Adapter_DbSelect
+class Zend_Paginator_Adapter_DbTableSelect extends Zend_Paginator_Adapter_DbSelect
 {
     /**
      * Returns a Zend_Db_Table_Rowset_Abstract of items for a page.

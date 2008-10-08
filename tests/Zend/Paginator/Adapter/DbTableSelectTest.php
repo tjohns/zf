@@ -21,9 +21,9 @@
  */
 
 /**
- * @see Zend_Paginator_Adapter_TableSelect
+ * @see Zend_Paginator_Adapter_DbTableSelect
  */
-require_once 'Zend/Paginator/Adapter/TableSelect.php';
+require_once 'Zend/Paginator/Adapter/DbTableSelect.php';
 
 require_once dirname(__FILE__) . '/DbSelectTest.php';
 
@@ -34,14 +34,14 @@ require_once dirname(__FILE__) . '/DbSelectTest.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Paginator_Adapter_TableSelectTest extends Zend_Paginator_Adapter_DbSelectTest 
+class Zend_Paginator_Adapter_DbTableSelectTest extends Zend_Paginator_Adapter_DbSelectTest 
 {
     // ZF-3775
     public function testSelectDoesReturnZendDbTableRowset()
     {
         $query = $this->_table->select();
         
-        $adapter = new Zend_Paginator_Adapter_TableSelect($query);
+        $adapter = new Zend_Paginator_Adapter_DbTableSelect($query);
         
         $items = $adapter->getItems(0, 10);
         
