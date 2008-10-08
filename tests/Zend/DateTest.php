@@ -5151,6 +5151,17 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2020-05-25 14:00:00', $date->get('YYYY-MM-dd HH:mm:ss'));
     }
 
+    public function testGetFullYear()
+    {
+        $this->assertSame(1970, Zend_Date::getFullYear(70));
+        $this->assertSame(1999, Zend_Date::getFullYear(99));
+        $this->assertSame(2000, Zend_Date::getFullYear(0));
+        $this->assertSame(2037, Zend_Date::getFullYear(37));
+        $this->assertSame(2069, Zend_Date::getFullYear(69));
+        $this->assertSame(-4, Zend_Date::getFullYear(-4));
+        $this->assertSame(100, Zend_Date::getFullYear(100));
+    }
+
     /**
      * Test for ZF-3677
      */

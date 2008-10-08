@@ -1169,7 +1169,6 @@ class Zend_Date extends Zend_Date_DateObject
         }
     }
 
-
     /**
      * Counts the exact year number
      * < 70 - 2000 added, >70 < 100 - 1900, others just returned
@@ -1177,7 +1176,7 @@ class Zend_Date extends Zend_Date_DateObject
      * @param  integer  $value year number
      * @return integer  Number of year
      */
-    private static function _century($value)
+    public static function getFullYear($value)
     {
         if ($value >= 0) {
             if ($value < 70) {
@@ -1188,7 +1187,6 @@ class Zend_Date extends Zend_Date_DateObject
         }
         return $value;
     }
-
 
     /**
      * Sets the given date as new date or a given datepart as new datepart returning the new datepart
@@ -1966,7 +1964,7 @@ class Zend_Date extends Zend_Date_DateObject
                 if (is_numeric($date)) {
                     $date = intval($date);
                     if (($calc == 'set') || ($calc == 'cmp')) {
-                        $date = self::_century($date);
+                        $date = self::getFullYear($date);
                     }
                     if ($calc === 'add') {
                         $date += $year;
@@ -1987,7 +1985,7 @@ class Zend_Date extends Zend_Date_DateObject
                 if (is_numeric($date)) {
                     $date = intval($date);
                     if (($calc === 'set') || ($calc === 'cmp')) {
-                        $date = self::_century($date);
+                        $date = self::getFullYear($date);
                     }
                     if ($calc === 'add') {
                         $date += $year;
@@ -2175,7 +2173,7 @@ class Zend_Date extends Zend_Date_DateObject
                     $datematch[2] = 1;
                     $datematch[3] = 1;
                 } else if (strlen($datematch[1]) == 2) {
-                    $datematch[1] = self::_century($datematch[1]);
+                    $datematch[1] = self::getFullYear($datematch[1]);
                 }
                 if (empty($timematch)) {
                     $timematch[1] = 0;
@@ -2321,7 +2319,7 @@ class Zend_Date extends Zend_Date_DateObject
                     $format = Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'short'));
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'format_type' => 'iso', 'locale' => $locale));
 
-                    $parsed['year'] = self::_century($parsed['year']);
+                    $parsed['year'] = self::getFullYear($parsed['year']);
 
                     if (($calc == 'set') || ($calc == 'cmp')) {
                         --$parsed['month'];
@@ -2453,7 +2451,7 @@ class Zend_Date extends Zend_Date_DateObject
                 $match[0] = substr($match[0], strpos($match[0], ' ')+1);
 
                 $months    = $this->getDigitFromName($match[2]);
-                $match[3] = self::_century($match[3]);
+                $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
@@ -2477,7 +2475,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
 
                 $months    = $this->getDigitFromName($match[2]);
-                $match[3] = self::_century($match[3]);
+                $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
@@ -2499,7 +2497,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
 
                 $months    = $this->getDigitFromName($match[2]);
-                $match[3] = self::_century($match[3]);
+                $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
@@ -2542,7 +2540,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
 
                 $months  = $this->getDigitFromName($match[2]);
-                $match[3] = self::_century($match[3]);
+                $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
@@ -2587,7 +2585,7 @@ class Zend_Date extends Zend_Date_DateObject
                         }
                         $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $part, 'locale' => $locale, 'fix_date' => true, 'format_type' => 'iso'));
                         if ((strpos(strtoupper($part), 'YY') !== false) and (strpos(strtoupper($part), 'YYYY') === false)) {
-                            $parsed['year'] = self::_century($parsed['year']);
+                            $parsed['year'] = self::getFullYear($parsed['year']);
                         }
                         if (($calc == 'set') || ($calc == 'cmp')) {
                             if (isset($parsed['month'])) {
@@ -2890,7 +2888,7 @@ class Zend_Date extends Zend_Date_DateObject
                 try {
                     $parsed = Zend_Locale_Format::getDate($date, array('date_format' => $format, 'locale' => $locale, 'format_type' => 'iso'));
                     if ((strpos(strtoupper($format), 'YY') !== false) and (strpos(strtoupper($format), 'YYYY') === false)) {
-                        $parsed['year'] = self::_century($parsed['year']);
+                        $parsed['year'] = self::getFullYear($parsed['year']);
                     }
                 } catch (Zend_Locale_Exception $e) {
                     require_once 'Zend/Date/Exception.php';
@@ -4632,7 +4630,7 @@ class Zend_Date extends Zend_Date_DateObject
 
             if (isset($parsed['year']) and ((strpos(strtoupper($format), 'YY') !== false) and
                 (strpos(strtoupper($format), 'YYYY') === false))) {
-                $parsed['year'] = self::_century($parsed['year']);
+                $parsed['year'] = self::getFullYear($parsed['year']);
             }
         } catch (Zend_Locale_Exception $e) {
             // Date can not be parsed
