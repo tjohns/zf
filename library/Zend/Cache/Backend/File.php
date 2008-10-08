@@ -135,7 +135,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         }
     	if (isset($options['cache_file_umask']) && is_string($options['cache_file_umask'])) {
         	// See #ZF-4422
-        	$this->_options['cache_file_umask'] = octdec($this->_options['hashed_directory_umask']);    	
+        	$this->_options['cache_file_umask'] = octdec($this->_options['cache_file_umask']);    	
         }
     }
 
