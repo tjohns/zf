@@ -175,7 +175,7 @@ class Zend_Session extends Zend_Session_Abstract
     /**
      * Constructor overriding - make sure that a developer cannot instantiate
      */
-    private function __construct()
+    protected function __construct()
     {
     }
 
