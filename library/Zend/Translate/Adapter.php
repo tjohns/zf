@@ -561,6 +561,16 @@ abstract class Zend_Translate_Adapter {
     }
 
     /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        return self::$_cache;
+    }
+
+    /**
      * Sets a cache for all Zend_Translate_Adapters
      *
      * @param Zend_Cache_Core $cache Cache to store to
@@ -571,13 +581,37 @@ abstract class Zend_Translate_Adapter {
     }
 
     /**
-     * Returns the set cache
+     * Returns true when a cache is set
      *
-     * @return Zend_Cache_Core The set cache
+     * @return boolean
      */
-    public static function getCache()
+    public static function hasCache()
     {
-        return self::$_cache;
+        if (self::$_cache !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Removes any set cache
+     *
+     * @return void
+     */
+    public static function removeCache()
+    {
+        self::$_cache = null;
+    }
+
+    /**
+     * Clears all set cache data
+     *
+     * @return void
+     */
+    public static function clearCache()
+    {
+        self::$_cache->clean();
     }
 
     /**

@@ -220,7 +220,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Nachricht 8', $lang->translate('Message 8'));
     }
 
-    public function testSetAndGetCache()
+    public function testTestingCacheHandling()
     {
         require_once 'Zend/Cache.php';
         $cache = Zend_Cache::factory('Core', 'File',
@@ -230,6 +230,11 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $cache = Zend_Translate::getCache();
         $this->assertTrue($cache instanceof Zend_Cache_Core);
+        $this->assertTrue(Zend_Translate::hasCache());
+        Zend_Translate::clearCache();
+        $this->assertTrue(Zend_Translate::hasCache());
+        Zend_Translate::removeCache();
+        $this->assertFalse(Zend_Translate::hasCache());
     }
 
     public function testExceptionWhenNoAdapterClassWasSet()
@@ -251,6 +256,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
 
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'message1'), 'de_AT');
         $this->assertEquals('de_AT', $lang->getLocale());
+        Zend_Registry::_unsetInstance();
     }
 }
 
