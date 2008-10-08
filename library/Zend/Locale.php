@@ -726,6 +726,19 @@ class Zend_Locale
     }
 
     /**
+     * Returns the set cache
+     *
+     * @return Zend_Cache_Core The set cache
+     */
+    public static function getCache()
+    {
+        require_once 'Zend/Locale/Data.php';
+        $cache = Zend_Locale_Data::getCache();
+
+        return $cache;
+    }
+
+    /**
      * Sets a cache
      *
      * @param  Zend_Cache_Core $cache Cache to set
@@ -738,15 +751,36 @@ class Zend_Locale
     }
 
     /**
-     * Returns the set cache
+     * Returns true when a cache is set
      *
-     * @return Zend_Cache_Core The set cache
+     * @return boolean
      */
-    public static function getCache()
+    public static function hasCache()
     {
         require_once 'Zend/Locale/Data.php';
-        $cache = Zend_Locale_Data::getCache();
-        return $cache;
+        return Zend_Locale_Data::hasCache();
+    }
+
+    /**
+     * Removes any set cache
+     *
+     * @return void
+     */
+    public static function removeCache()
+    {
+        require_once 'Zend/Locale/Data.php';
+        Zend_Locale_Data::removeCache();
+    }
+
+    /**
+     * Clears all set cache data
+     *
+     * @return void
+     */
+    public static function clearCache()
+    {
+        require_once 'Zend/Locale/Data.php';
+        Zend_Locale_Data::clearCache();
     }
 
     /**
