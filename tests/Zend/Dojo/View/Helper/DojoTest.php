@@ -815,6 +815,26 @@ function() {
         $this->assertNotContains('"parseOnLoad":true', $matches[1]);
     }
 
+    /**
+     * @group ZF-4522
+     */
+    public function testOnLoadCaptureStartShouldReturnVoid()
+    {
+        $test = $this->helper->onLoadCaptureStart();
+        $this->helper->onLoadCaptureEnd();
+        $this->assertNull($test);
+    }
+
+    /**
+     * @group ZF-4522
+     */
+    public function testJavascriptCaptureStartShouldReturnVoid()
+    {
+        $test = $this->helper->javascriptCaptureStart();
+        $this->helper->javascriptCaptureEnd();
+        $this->assertNull($test);
+    }
+
     public function setupDojo()
     {
         $this->helper->requireModule('dijit.layout.ContentPane')
