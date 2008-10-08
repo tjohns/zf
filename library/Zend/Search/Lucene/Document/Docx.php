@@ -20,8 +20,8 @@
  */
 
 
-/** Zend_Search_Lucene_Document */
-require_once 'Zend/Search/Lucene/Document.php';
+/** Zend_Search_Lucene_Document_OpenXml */
+require_once 'Zend/Search/Lucene/Document/OpenXml.php';
 
 if (class_exists('ZipArchive')) {
 
@@ -34,49 +34,14 @@ if (class_exists('ZipArchive')) {
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document
+class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenXml
 {
-    /**
-     * Xml Schema - Relationships
-     *
-     * @var string
-     */
-    const SCHEMA_RELATIONSHIP = 'http://schemas.openxmlformats.org/package/2006/relationships';
-
-    /**
-     * Xml Schema - Office document
-     *
-     * @var string
-     */
-    const SCHEMA_OFFICEDOCUMENT = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument';
-
     /**
      * Xml Schema - WordprocessingML
      *
      * @var string
      */
     const SCHEMA_WORDPROCESSINGML = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
-
-    /**
-     * Xml Schema - Core properties
-     *
-     * @var string
-     */
-    const SCHEMA_COREPROPERTIES = 'http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties';
-
-    /**
-     * Xml Schema - Dublin Core
-     *
-     * @var string
-     */
-    const SCHEMA_DUBLINCORE = 'http://purl.org/dc/elements/1.1/';
-
-    /**
-     * Xml Schema - Dublin Core Terms
-     *
-     * @var string
-     */
-    const SCHEMA_DUBLINCORETERMS = 'http://purl.org/dc/terms/';
 
     /**
      * Object constructor
@@ -86,7 +51,7 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document
      */
     private function __construct($fileName, $storeContent)
     {
-        // Document data holders
+            // Document data holders
         $documentBody = '';
         $coreProperties = array();
 
@@ -94,10 +59,10 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document
         $package = new ZipArchive();
         $package->open($fileName);
 
-        // Read relations and search for officeDocument or core properties
+        // Read relations and search for officeDocument
         $relations = simplexml_load_string($package->getFromName("_rels/.rels"));
         foreach ($relations->Relationship as $rel) {
-            if ($rel["Type"] == Zend_Search_Lucene_Document_Docx::SCHEMA_OFFICEDOCUMENT) {
+            if ($rel["Type"] == Zend_Search_Lucene_Document_OpenXml::SCHEMA_OFFICEDOCUMENT) {
                 // Found office document! Read in contents...
                 $contents = simplexml_load_string(
                     $package->getFromName(dirname($rel["Target"]) . "/" . basename($rel["Target"]))
@@ -113,24 +78,10 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document
                     }
                 }
             }
-
-            if ($rel["Type"] == Zend_Search_Lucene_Document_Docx::SCHEMA_COREPROPERTIES) {
-                // Found core properties! Read in contents...
-                $contents = simplexml_load_string(
-                    $package->getFromName(dirname($rel["Target"]) . "/" . basename($rel["Target"]))
-                );
-
-                foreach ($contents->children(Zend_Search_Lucene_Document_Docx::SCHEMA_DUBLINCORE) as $child) {
-                    $coreProperties[$child->getName()] = (string)$child;
-                }
-                foreach ($contents->children(Zend_Search_Lucene_Document_Docx::SCHEMA_COREPROPERTIES) as $child) {
-                    $coreProperties[$child->getName()] = (string)$child;
-                }
-                foreach ($contents->children(Zend_Search_Lucene_Document_Docx::SCHEMA_DUBLINCORETERMS) as $child) {
-                    $coreProperties[$child->getName()] = (string)$child;
-                }
-            }
         }
+        
+        // Read core properties
+        $coreProperties = $this->extractMetaData($package);
 
         // Close file
         $package->close();

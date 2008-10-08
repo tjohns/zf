@@ -131,9 +131,10 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
     	}
 
 		$docxDocument = Zend_Search_Lucene_Document_Docx::loadDocxFile(dirname(__FILE__) . '/_openXmlDocuments/test.docx', true);
-
+		
         $this->assertTrue($docxDocument instanceof Zend_Search_Lucene_Document_Docx);
 		$this->assertEquals($docxDocument->getFieldValue('title'), 'Test document');
 		$this->assertEquals($docxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
+		$this->assertTrue($docxDocument->getFieldValue('body') != '');
     }
 }
