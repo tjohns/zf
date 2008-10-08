@@ -47,6 +47,13 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected static $_config = null;
     
     /**
+     * Default prefix paths
+     *
+     * @var array
+     */
+    protected static $_defaultPrefixPaths = array('Zend_Paginator_Adapter' => 'Zend/Paginator/Adapter');
+    
+    /**
      * Default scrolling style
      *
      * @var string
@@ -170,7 +177,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
             }
         }
     }
-    
+        
     /**
      * Returns the scrolling style loader.  If it doesn't exist it's
      * created.
@@ -197,8 +204,12 @@ class Zend_Paginator implements Countable, IteratorAggregate
      * @return Zend_Paginator
      */
 	public static function factory($data, $adapter = self::INTERNAL_ADAPTER,
-								   array $prefixPaths = array('Zend_Paginator_Adapter' => 'Zend/Paginator/Adapter'))
+								   array $prefixPaths = null)
     {
+    	if (null == $prefixPaths) {
+    		$prefixPaths = self::$_defaultPrefixPaths;
+    	}
+    	
         if ($adapter == self::INTERNAL_ADAPTER) {
         	if (is_array($data)) {
         		$adapter = 'Array';
@@ -252,6 +263,16 @@ class Zend_Paginator implements Countable, IteratorAggregate
         if ($prefixPaths != null) {
             self::addScrollingStylePrefixPaths($prefixPaths->prefixpath->toArray());
         }
+    }
+    
+	/**
+     * Set the default prefix paths
+     *
+     * @param array $paths
+     */
+    public static function setDefaultPrefixPaths(array $paths)
+    {
+    	self::$_defaultPrefixPaths = $paths;
     }
 
     /**
