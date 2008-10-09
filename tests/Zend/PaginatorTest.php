@@ -182,6 +182,8 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         
         $this->assertArrayHasKey('prefix1_', $paths);
         $this->assertEquals($paths['prefix1_'], array('path1/'));
+        
+        $loader->clearPaths('prefix1');
     }
     
     public function testAddsSingleScrollingStylePrefixPathWithArray()
@@ -193,6 +195,8 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         
         $this->assertArrayHasKey('prefix2_', $paths);
         $this->assertEquals($paths['prefix2_'], array('path2/'));
+        
+        $loader->clearPaths('prefix2');
     }
     
     public function testAddsMultipleScrollingStylePrefixPaths()
@@ -211,7 +215,55 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($paths[$prefix], array('path' . $i . '/'));
         }
         
-        $loader->clearPaths();
+        $loader->clearPaths('prefix3');
+        $loader->clearPaths('prefix4');
+        $loader->clearPaths('prefix5');
+    }
+    
+	public function testAddsSingleAdapterPrefixPath()
+    {
+        Zend_Paginator::addAdapterPrefixPath('prefix1', 'path1');
+        $loader = Zend_Paginator::getAdapterLoader();
+        $paths = $loader->getPaths();
+        
+        $this->assertArrayHasKey('prefix1_', $paths);
+        $this->assertEquals($paths['prefix1_'], array('path1/'));
+        
+        $loader->clearPaths('prefix1');
+    }
+    
+    public function testAddsSingleAdapterPrefixPathWithArray()
+    {
+        Zend_Paginator::addAdapterPrefixPaths(array('prefix' => 'prefix2',
+                                                    'path'   => 'path2'));
+        $loader = Zend_Paginator::getAdapterLoader();
+        $paths = $loader->getPaths();
+        
+        $this->assertArrayHasKey('prefix2_', $paths);
+        $this->assertEquals($paths['prefix2_'], array('path2/'));
+        
+        $loader->clearPaths('prefix2');
+    }
+    
+    public function testAddsMultipleAdapterPrefixPaths()
+    {
+        $paths = array('prefix3' => 'path3',
+                       'prefix4' => 'path4',
+                       'prefix5' => 'path5');
+        
+        Zend_Paginator::addAdapterPrefixPaths($paths);
+        $loader = Zend_Paginator::getAdapterLoader();
+        $paths = $loader->getPaths();
+        
+        for ($i = 3; $i <= 5; $i++) {
+            $prefix = 'prefix' . $i . '_';
+            $this->assertArrayHasKey($prefix, $paths);
+            $this->assertEquals($paths[$prefix], array('path' . $i . '/'));
+        }
+        
+        $loader->clearPaths('prefix3');
+        $loader->clearPaths('prefix4');
+        $loader->clearPaths('prefix5');
     }
     
     public function testGetsAndSetsDefaultScrollingStyle()
@@ -226,6 +278,20 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     {
         $paginator = Zend_Paginator::factory(range(1, 101));
         $this->assertEquals(11, $paginator->count());
+    }
+    
+	public function testAddCustomAdapterPathsInConstructor()
+    {
+    	$paginator = Zend_Paginator::factory(range(1, 101), Zend_Paginator::INTERNAL_ADAPTER, array('My_Paginator_Adapter' => 'My/Paginator/Adapter'));
+    	    	
+    	$loader = Zend_Paginator::getAdapterLoader();
+        $paths = $loader->getPaths();
+        
+        $this->assertEquals(2, count($paths));
+        $this->assertEquals(array('Zend_Paginator_Adapter_' => array('Zend/Paginator/Adapter/'),
+        						  'My_Paginator_Adapter_' => array('My/Paginator/Adapter/')), $paths);
+        
+        $loader->clearPaths('My_Paginator_Adapter');
     }
     
     public function testLoadsFromConfig()
@@ -247,6 +313,23 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey($prefix, $paths);
             $this->assertEquals($paths[$prefix], array('path' . $i . '/'));
         }
+        
+        $loader->clearPaths('prefix6');
+        $loader->clearPaths('prefix7');
+        $loader->clearPaths('prefix8');
+        
+    	$loader = Zend_Paginator::getAdapterLoader();
+        $paths = $loader->getPaths();
+        
+        for ($i = 6; $i <= 8; $i++) {
+            $prefix = 'prefix' . $i . '_';
+            $this->assertArrayHasKey($prefix, $paths);
+            $this->assertEquals($paths[$prefix], array('path' . $i . '/'));
+        }
+        
+        $loader->clearPaths('prefix6');
+        $loader->clearPaths('prefix7');
+        $loader->clearPaths('prefix8');
         
         $paginator = Zend_Paginator::factory(range(1, 101));
         $this->assertEquals(3, $paginator->getItemCountPerPage());
