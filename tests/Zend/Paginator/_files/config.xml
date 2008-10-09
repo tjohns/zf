@@ -20,6 +20,20 @@
 	            <path>path8</path>
 	        </prefixpath>
 	    </prefixpaths>
+		<adapterpaths>
+	        <adapterpath>
+	            <prefix>prefix6</prefix>
+	            <path>path6</path>
+	        </adapterpath>
+	        <adapterpath>
+	            <prefix>prefix7</prefix>
+	            <path>path7</path>
+	        </adapterpath>
+	        <adapterpath>
+	            <prefix>prefix8</prefix>
+	            <path>path8</path>
+	        </adapterpath>
+	    </adapterpaths>
 	    <itemcountperpage>3</itemcountperpage>
 	    <pagerange>7</pagerange>
     </testing>
