@@ -30,7 +30,17 @@
                         <entry>DbSelect</entry>
                         <entry>
                             Use a <link linkend="zend.db.select"><code>Zend_Db_Select</code></link> 
-                            instance
+                            instance, which will return an array
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>DbTableSelect</entry>
+                        <entry>
+                            Use a <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link> 
+                            instance, which will return an instance of 
+                            <code>Zend_Db_Table_Rowset_Abstract</code>.
+                            This provides additional information about the 
+                            result set, such as column names.
                         </entry>
                     </row>
                     <row>
@@ -83,9 +93,10 @@ $paginator = Zend_Paginator::factory($array);
         </note>
         
         <para>
-            Although the instance is technically usable in this state, you'll 
-            need to tell the paginator what page number the user requested in 
-            order to allow him to advance through the paginated data:
+            Although the instance is technically usable in this state, in your
+            controller action you'll need to tell the paginator what page 
+            number the user requested. This allows him to advance through the
+            paginated data.
         </para>
 
         <para>
@@ -187,18 +198,17 @@ $this->view->paginator = $paginator;
         </para>
         
         <para>
-            Notice the view helper call near the end.  PaginationControl takes
-            the paginator instance, an optional scrolling style, and an 
-            optional view partial.
+            Notice the view helper call near the end.  PaginationControl 
+            accepts up to four parameters: the paginator instance, a scrolling 
+            style, a view partial, and an array of additional parameters.
         </para>
         
         <para>
-            Despite being optional, the latter two parameters are very 
-            important.  Whereas the view partial is used to determine how the
-            pagination control should <emphasis>look</emphasis>, the scrolling
-            style is used to control how it should <emphasis>behave</emphasis>.
-            Say the view partial is in the style of a search pagination 
-            control, like the one below:
+            The second and third parameters are very important.  Whereas the 
+            view partial is used to determine how the pagination control should
+            <emphasis>look</emphasis>, the scrolling style is used to control 
+            how it should <emphasis>behave</emphasis>.  Say the view partial is
+            in the style of a search pagination control, like the one below:
         </para>
         
         <para>
@@ -270,9 +280,17 @@ $this->view->paginator = $paginator;
         </table>
         
         <para>
-            By setting the default view partial, default scrolling style, and 
-            view instance, you can eliminate the calls to PaginationControl
-            completely:
+            The fourth and final parameter is reserved for an optional 
+            associative array of additional variables that you want available
+            in your view partial (available via <code>$this</code>).  For 
+            instance, these values could include extra URL parameters for 
+            pagination links.
+        </para>
+        
+        <para>
+            By setting the default view partial, default 
+            scrolling style, and view instance, you can eliminate the calls to 
+            PaginationControl completely:
         </para>
         
         <para>
