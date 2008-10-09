@@ -123,6 +123,7 @@ xmlns:app='http://purl.org/atom/app#'>
       <gml:pos>37.398529052734375 -122.0635986328125</gml:pos>
     </gml:Point>
   </georss:where>
+  <yt:recorded>2008-09-25</yt:recorded>
   <gd:comments>
     <gd:feedLink href='http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments' />
   </gd:comments>

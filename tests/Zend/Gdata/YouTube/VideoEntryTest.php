@@ -143,6 +143,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments', $videoEntry->comments->feedLink->href);
 
         $this->assertEquals('37.398529052734375 -122.0635986328125', $videoEntry->where->point->pos->text);
+        $this->assertEquals('2008-09-25', $videoEntry->getVideoRecorded());
     }
 
     private function verifyAllPrivateSamplePropertiesAreCorrect ($videoEntry) {
@@ -230,6 +231,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments', $videoEntry->comments->feedLink->href);
 
         $this->assertEquals('37.398529052734375 -122.0635986328125', $videoEntry->where->point->pos->text);
+        $this->assertEquals('2008-09-25', $videoEntry->getVideoRecorded());
     }
 
     public function testGetVideoId() {
