@@ -59,13 +59,24 @@ class Zend_Validate_BarcodeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($barcode->isValid('0075678164124'));
     }
 
+    /**
+     * Test if EAN-13 contains only numeric characters
+     *
+     * @group ZF-3297
+     */
+    public function testEan13ContainsOnlyNumeric()
+    {
+        $barcode = new Zend_Validate_Barcode('ean-13');
+        $this->assertFalse($barcode->isValid('3RH1131-1BB40'));
+    }
+
     public function testNoneExisting()
     {
         try {
             $barcode = new Zend_Validate_Barcode('Zend');
             $this->fail("'Zend' is not a valid barcode type'");
         } catch (Exception $e) {
-            // success
+            $this->assertContains("'Zend' is not supported", $e->getMessage());
         }
     }
 
