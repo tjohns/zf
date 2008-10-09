@@ -22,9 +22,9 @@
 require_once 'Zend/Gdata.php';
 
 /**
- * @see Zend_Gdata_Dublincore
+ * @see Zend_Gdata_DublinCore
  */
-require_once 'Zend/Gdata/Dublincore.php';
+require_once 'Zend/Gdata/DublinCore.php';
 
 /**
  * @see Zend_Gdata_Books_CollectionEntry

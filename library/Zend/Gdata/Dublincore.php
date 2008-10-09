@@ -33,7 +33,7 @@ require_once 'Zend/Gdata.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Dublincore extends Zend_Gdata
+class Zend_Gdata_DublinCore extends Zend_Gdata
 {
 
     public static $namespaces = array(
@@ -41,7 +41,7 @@ class Zend_Gdata_Dublincore extends Zend_Gdata
     );
 
     /**
-     * Create Zend_Gdata_Dublincore object
+     * Create Zend_Gdata_DublinCore object
      * 
      * @param Zend_Http_Client $client (optional) The HTTP client to use when
      *          when communicating with the Google servers.
@@ -49,8 +49,8 @@ class Zend_Gdata_Dublincore extends Zend_Gdata
      */
     public function __construct($client = null, $applicationId = 'MyCompany-MyApp-1.0')
     {
-        $this->registerPackage('Zend_Gdata_Dublincore');
-        $this->registerPackage('Zend_Gdata_Dublincore_Extension');
+        $this->registerPackage('Zend_Gdata_DublinCore');
+        $this->registerPackage('Zend_Gdata_DublinCore_Extension');
         parent::__construct($client, $applicationId);
     }
 
