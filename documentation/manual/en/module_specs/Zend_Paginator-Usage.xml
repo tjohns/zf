@@ -62,6 +62,22 @@
             </tgroup>
         </table>
 
+        <note>
+            <para>
+                Instead of selecting every matching row of a given query, the
+                DbSelect and DbTableSelect adapters retrieve only the smallest 
+                amount of data necessary for displaying the current page.
+            </para>
+            
+            <para>
+                Because of this, a second query is dynamically generated to 
+                determine the total number of matching rows.  However, it is 
+                possible to directly supply a count or count query yourself.  
+                See the <code>setRowCount()</code> method in the DbSelect 
+                adapter for more information.
+            </para>
+        </note>
+
         <para>
             To create an instance of <code>Zend_Paginator</code>, you must 
             supply an adapter to the constructor:
@@ -88,8 +104,10 @@ $paginator = Zend_Paginator::factory($array);
         </para>
 
         <note>
-            <para>In the case of the Null adapter, in lieu of a data collection you 
-            must supply an item count to its constructor.</para>
+            <para>
+                In the case of the Null adapter, in lieu of a data collection 
+                you must supply an item count to its constructor.
+            </para>
         </note>
         
         <para>
@@ -313,6 +331,32 @@ $paginator->setView($view);
 ]]>
             </programlisting>
         </para>
+
+        <note>
+            <para>
+                Of course, it's possible to use <code>Zend_Paginator</code> 
+                with other template engines.  For example, with Smarty you 
+                might do the following:
+            </para>
+            
+            <para>
+                <programlisting role="php"><![CDATA[
+$smarty->assign('pages', $paginator->getPages());
+]]>
+                </programlisting>
+            </para>
+
+            <para>
+                You could then access paginator values from a template like so:
+            </para>
+            
+            <para>
+                <programlisting role="php"><![CDATA[
+{$pages.pageCount}
+]]>
+                </programlisting>
+            </para>
+        </note>
         
         <sect3 id="zend.paginator.usage.rendering.example-controls">
             <title>Example pagination controls</title>
