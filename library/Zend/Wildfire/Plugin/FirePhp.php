@@ -516,10 +516,10 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
               } else {
                   if (method_exists($property,'setAccessible')) {
                       $property->setAccessible(true);
-                      $return[$name] = $this->_encodeObject($property->getValue(), $depth + 1);
+                      $return[$name] = $this->_encodeObject($property->getValue($object), $depth + 1);
                   } else
                   if ($property->isPublic()) {
-                      $return[$name] = $this->_encodeObject($property->getValue(), $depth + 1);
+                      $return[$name] = $this->_encodeObject($property->getValue($object), $depth + 1);
                   } else {
                       $return[$name] = '** Need PHP 5.3 to get value **';
                   }
