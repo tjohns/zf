@@ -147,6 +147,24 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
     protected $_messages = array();
     
     /**
+     * The maximum depth to traverse objects when encoding
+     * @var int
+     */    
+    protected $_maxObjectDepth = 10;
+    
+    /**
+     * The maximum depth to traverse nested arrays when encoding
+     * @var int
+     */    
+    protected $_maxArrayDepth = 20;
+    
+    /**
+     * A stack of objects used during encoding to detect recursion
+     * @var array
+     */
+    protected $_objectStack = array();
+    
+    /**
      * Create singleton instance.
      *
      * @param string $class OPTIONAL Subclass of Zend_Wildfire_Plugin_FirePhp
@@ -409,7 +427,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
                 return $this->_channel->getProtocol(self::PROTOCOL_URI)->
                            recordMessage($this,
                                          $structure,
-                                         array($data['key']=>$data['data']));
+                                         array($data['key']=>$this->_encodeObject($data['data'])));
                 
             case self::STRUCTURE_URI_FIREBUGCONSOLE:
             
@@ -427,7 +445,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
                            recordMessage($this,
                                          $structure,
                                          array($data['meta'],
-                                               $data['data']));
+                                               $this->_encodeObject($data['data'])));
 
             default:
                 throw new Zend_Wildfire_Exception('Structure of name "'.$structure.'" is not recognized.');
@@ -436,6 +454,118 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
         return false;      
     }
 
+    /**
+     * Encode an object by generating an array containing all object members.
+     * 
+     * All private and protected members are included. Some meta info about
+     * the object class is added.
+     * 
+     * @param mixed $object The object/array/value to be encoded
+     * @return array The encoded object
+     */
+    protected function _encodeObject($object, $depth = 1)
+    {
+        $return = array();
+        
+        if (is_object($object)) {
+
+            if ($depth > $this->_maxObjectDepth) {
+                return '** Max Depth **';
+            }
+            
+            foreach ($this->_objectStack as $refVal) {
+                if ($refVal === $object) {
+                    return '** Recursion ('.get_class($object).') **';
+                }
+            }
+            array_push($this->_objectStack, $object);
+                    
+            $return['__className'] = $class = get_class($object);
+    
+            $reflectionClass = new ReflectionClass($class);  
+            $properties = array();
+            foreach ( $reflectionClass->getProperties() as $property) {
+                $properties[$property->getName()] = $property;
+            }
+                
+            $members = (array)$object;
+                
+            foreach ($properties as $raw_name => $property) {
+    
+              $name = $raw_name;
+              if ($property->isStatic()) {
+                  $name = 'static:'.$name;
+              }
+              if ($property->isPublic()) {
+                  $name = 'public:'.$name;
+              } else
+              if ($property->isPrivate()) {
+                  $name = 'private:'.$name;
+                  $raw_name = "\0".$class."\0".$raw_name;
+              } else
+              if ($property->isProtected()) {
+                  $name = 'protected:'.$name;
+                  $raw_name = "\0".'*'."\0".$raw_name;
+              }
+              
+              if (isset($members[$raw_name])
+                  && !$property->isStatic()) {
+                
+                  $return[$name] = $this->_encodeObject($members[$raw_name], $depth + 1);      
+              
+              } else {
+                  if (method_exists($property,'setAccessible')) {
+                      $property->setAccessible(true);
+                      $return[$name] = $this->_encodeObject($property->getValue(), $depth + 1);
+                  } else
+                  if ($property->isPublic()) {
+                      $return[$name] = $this->_encodeObject($property->getValue(), $depth + 1);
+                  } else {
+                      $return[$name] = '** Need PHP 5.3 to get value **';
+                  }
+              }
+            }
+            
+            // Include all members that are not defined in the class
+            // but exist in the object
+            foreach($members as $name => $value) {
+                if ($name{0} == "\0") {
+                    $parts = explode("\0", $name);
+                    $name = $parts[2];
+                }
+                if (!isset($properties[$name])) {
+                    $name = 'undeclared:'.$name;
+                    $return[$name] = $this->_encodeObject($value, $depth + 1);
+                }
+            }
+            
+            array_pop($this->_objectStack);
+            
+        } elseif (is_array($object)) {
+          
+            if ($depth > $this->_maxArrayDepth) {
+                return '** Max Depth **';
+            }
+
+            foreach ($object as $key => $val) {
+              
+              // Encoding the $GLOBALS PHP array causes an infinite loop
+              // if the recursion is not reset here as it contains
+              // a reference to itself. This is the only way I have come up
+              // with to stop infinite recursion in this case.
+              if ($key=='GLOBALS'
+                  && is_array($val)
+                  && array_key_exists('GLOBALS',$val)) {
+                  
+                  $val['GLOBALS'] = '** Recursion (GLOBALS) **';
+              }
+              $return[$key] = $this->_encodeObject($val, $depth + 1);
+            }
+        } else {
+            return $object;
+        }
+        return $return;
+    }    
     
     
     /*

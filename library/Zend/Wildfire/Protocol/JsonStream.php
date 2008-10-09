@@ -28,8 +28,8 @@ require_once 'Zend/Wildfire/Plugin/Interface.php';
 /** Zend_Wildfire_Channel_Interface */
 require_once 'Zend/Wildfire/Channel/Interface.php';
 
-/** Zend_Json_Encoder */
-require_once 'Zend/Json/Encoder.php';
+/** Zend_Json */
+require_once 'Zend/Json.php';
 
 /**
  * Encodes messages into the Wildfire JSON Stream Communication Protocol.
@@ -147,7 +147,7 @@ class Zend_Wildfire_Protocol_JsonStream
      */
     protected function _encode($value)
     {
-        return Zend_Json_Encoder::encode($value, true, array('silenceCyclicalExceptions'=>true));
+        return Zend_Json::encode($value, true, array('silenceCyclicalExceptions'=>true));
     }
 
     /**
