@@ -103,7 +103,9 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit_Framework_TestCase
         }
     }
     
-    // ZF-4151
+    /**
+     * @group ZF-4151
+     */
     public function testDoesNotThrowOutOfBoundsExceptionIfIteratorIsEmpty()
     {
         $this->_paginator = Zend_Paginator::factory(new ArrayIterator(array()));

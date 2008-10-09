@@ -36,14 +36,14 @@ require_once dirname(__FILE__) . '/DbSelectTest.php';
  */
 class Zend_Paginator_Adapter_DbTableSelectTest extends Zend_Paginator_Adapter_DbSelectTest 
 {
-    // ZF-3775
+    /**
+     * @group ZF-3775
+     */
     public function testSelectDoesReturnZendDbTableRowset()
     {
-        $query = $this->_table->select();
-        
+        $query   = $this->_table->select();
         $adapter = new Zend_Paginator_Adapter_DbTableSelect($query);
-        
-        $items = $adapter->getItems(0, 10);
+        $items   = $adapter->getItems(0, 10);
         
         $this->assertType('Zend_Db_Table_Rowset', $items);
     }

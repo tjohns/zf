@@ -146,7 +146,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     {
         $expression = new Zend_Db_Expr('COUNT(*) AS ' . Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN);
         
-        $rowCount   = clone $this->_query;
+        $rowCount = clone $this->_query;
         $rowCount->reset(Zend_Db_Select::COLUMNS)
                  ->reset(Zend_Db_Select::ORDER) // ZF-3740
                  ->reset(Zend_Db_Select::LIMIT_OFFSET) // ZF-3727
@@ -183,20 +183,23 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(500, $count);
     }
     
-    // ZF-4001
+    /**
+     * @group ZF-4001
+     */
     public function testGroupByQueryReturnsOneRow()
     {
         $query = $this->_db->select()->from('test')
                            ->order('number ASC')
                            ->limit(1000, 0)
                            ->group('number');
-        
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(500, $adapter->count());
     }
     
-    // ZF-4001
+    /**
+     * @group ZF-4001
+     */
     public function testGroupByQueryOnEmptyTableReturnsRowCountZero()
     {
         $db = new Zend_Db_Adapter_Pdo_Sqlite(array(
@@ -206,55 +209,58 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         $query = $db->select()->from('test')
                               ->order('number ASC')
                               ->limit(1000, 0);
-        
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(0, $adapter->count());
     }
     
-    // ZF-4001
+    /**
+     * @group ZF-4001
+     */
     public function testGroupByQueryReturnsCorrectResult()
     {
         $query = $this->_db->select()->from('test')
                                      ->order('number ASC')
                                      ->limit(1000, 0)
                                      ->group('testgroup');
-        
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(2, $adapter->count());
     }
     
-    // ZF-4032
+    /**
+     * @group ZF-4032
+     */
     public function testDistinctColumnQueryReturnsCorrectResult()
     {
         $query = $this->_db->select()->from('test', 'testgroup')
                                      ->order('number ASC')
                                      ->limit(1000, 0)
                                      ->distinct();
-
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(2, $adapter->count());
     }
     
-    // ZF-4094
+    /**
+     * @group ZF-4094
+     */
     public function testSelectSpecificColumns()
     {
         $query = $this->_db->select()->from('test', array('testgroup', 'number'))
                                      ->where('number >= ?', '1');
-        
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(500, $adapter->count());                       
     }
     
-    // ZF-4177
+    /**
+     * @group ZF-4177
+     */
     public function testSelectDistinctAllUsesRegularCountAll()
     {
         $query = $this->_db->select()->from('test')
                                      ->distinct();
-        
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
         
         $this->assertEquals(500, $adapter->count());  
