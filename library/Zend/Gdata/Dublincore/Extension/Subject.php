@@ -34,14 +34,14 @@ require_once 'Zend/Gdata/Extension.php';
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_DublinCore_Extension_Subject extends Zend_Gdata_Extension
+class Zend_Gdata_Dublincore_Extension_Subject extends Zend_Gdata_Extension
 {
 
     protected $_rootNamespace = 'dc';
     protected $_rootElement = 'subject';
 
     /**
-     * Constructor for Zend_Gdata_DublinCore_Extension_Subject which
+     * Constructor for Zend_Gdata_Dublincore_Extension_Subject which
      * Topic of the resource
      *
      * @param DOMElement $element (optional) DOMElement from which this
@@ -49,7 +49,7 @@ class Zend_Gdata_DublinCore_Extension_Subject extends Zend_Gdata_Extension
      */
     public function __construct($value = null)
     {
-        foreach (Zend_Gdata_DublinCore::$namespaces as $nsPrefix => $nsUri) {
+        foreach (Zend_Gdata_Dublincore::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
         parent::__construct();

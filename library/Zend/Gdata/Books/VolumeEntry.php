@@ -31,19 +31,19 @@ require_once 'Zend/Gdata/Entry.php';
 require_once 'Zend/Gdata/Extension/Comments.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Creator
+ * @see Zend_Gdata_Dublincore_Extension_Creator
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Creator.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Creator.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Date
+ * @see Zend_Gdata_Dublincore_Extension_Date
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Date.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Date.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Description
+ * @see Zend_Gdata_Dublincore_Extension_Description
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Description.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Description.php';
 
 /**
  * @see Zend_Gdata_Books_Extension_Embeddability
@@ -51,24 +51,24 @@ require_once 'Zend/Gdata/DublinCore/Extension/Description.php';
 require_once 'Zend/Gdata/Books/Extension/Embeddability.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Format
+ * @see Zend_Gdata_Dublincore_Extension_Format
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Format.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Format.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Identifier
+ * @see Zend_Gdata_Dublincore_Extension_Identifier
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Identifier.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Identifier.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Language
+ * @see Zend_Gdata_Dublincore_Extension_Language
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Language.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Language.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Publisher
+ * @see Zend_Gdata_Dublincore_Extension_Publisher
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Publisher.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Publisher.php';
 
 /**
  * @see Zend_Gdata_Extension_Rating
@@ -81,14 +81,14 @@ require_once 'Zend/Gdata/Extension/Rating.php';
 require_once 'Zend/Gdata/Books/Extension/Review.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Subject
+ * @see Zend_Gdata_Dublincore_Extension_Subject
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Subject.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Subject.php';
 
 /**
- * @see Zend_Gdata_DublinCore_Extension_Title
+ * @see Zend_Gdata_Dublincore_Extension_Title
  */
-require_once 'Zend/Gdata/DublinCore/Extension/Title.php';
+require_once 'Zend/Gdata/Dublincore/Extension/Title.php';
 
 /**
  * @see Zend_Gdata_Books_Extension_Viewability
@@ -241,47 +241,47 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
         case $this->lookupNamespace('dc') . ':' . 'creator':
-            $creators = new Zend_Gdata_DublinCore_Extension_Creator();
+            $creators = new Zend_Gdata_Dublincore_Extension_Creator();
             $creators->transferFromDOM($child);
             $this->_creators[] = $creators;
             break;
         case $this->lookupNamespace('dc') . ':' . 'date':
-            $dates = new Zend_Gdata_DublinCore_Extension_Date();
+            $dates = new Zend_Gdata_Dublincore_Extension_Date();
             $dates->transferFromDOM($child);
             $this->_dates[] = $dates;
             break;
         case $this->lookupNamespace('dc') . ':' . 'description':
-            $descriptions = new Zend_Gdata_DublinCore_Extension_Description();
+            $descriptions = new Zend_Gdata_Dublincore_Extension_Description();
             $descriptions->transferFromDOM($child);
             $this->_descriptions[] = $descriptions;
             break;
         case $this->lookupNamespace('dc') . ':' . 'format':
-            $formats = new Zend_Gdata_DublinCore_Extension_Format();
+            $formats = new Zend_Gdata_Dublincore_Extension_Format();
             $formats->transferFromDOM($child);
             $this->_formats[] = $formats;
             break;
         case $this->lookupNamespace('dc') . ':' . 'identifier':
-            $identifiers = new Zend_Gdata_DublinCore_Extension_Identifier();
+            $identifiers = new Zend_Gdata_Dublincore_Extension_Identifier();
             $identifiers->transferFromDOM($child);
             $this->_identifiers[] = $identifiers;
             break;
         case $this->lookupNamespace('dc') . ':' . 'language':
-            $languages = new Zend_Gdata_DublinCore_Extension_Language();
+            $languages = new Zend_Gdata_Dublincore_Extension_Language();
             $languages->transferFromDOM($child);
             $this->_languages[] = $languages;
             break;
         case $this->lookupNamespace('dc') . ':' . 'publisher':
-            $publishers = new Zend_Gdata_DublinCore_Extension_Publisher();
+            $publishers = new Zend_Gdata_Dublincore_Extension_Publisher();
             $publishers->transferFromDOM($child);
             $this->_publishers[] = $publishers;
             break;
         case $this->lookupNamespace('dc') . ':' . 'subject':
-            $subjects = new Zend_Gdata_DublinCore_Extension_Subject();
+            $subjects = new Zend_Gdata_Dublincore_Extension_Subject();
             $subjects->transferFromDOM($child);
             $this->_subjects[] = $subjects;
             break;
         case $this->lookupNamespace('dc') . ':' . 'title':
-            $titles = new Zend_Gdata_DublinCore_Extension_Title();
+            $titles = new Zend_Gdata_Dublincore_Extension_Title();
             $titles->transferFromDOM($child);
             $this->_titles[] = $titles;
             break;
