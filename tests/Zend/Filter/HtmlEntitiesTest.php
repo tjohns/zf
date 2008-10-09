@@ -120,4 +120,15 @@ class Zend_Filter_HtmlEntitiesTest extends PHPUnit_Framework_TestCase
         $this->_filter->setCharSet('UTF-8');
         $this->assertEquals('UTF-8', $this->_filter->getCharSet());
     }
+
+    /**
+     * Ensure that fluent interfaces are supported
+     *
+     * @group ZF-3172
+     */
+    public function testFluentInterface()
+    {
+        $instance = $this->_filter->setCharSet('UTF-8')->setQuoteStyle(ENT_QUOTES);
+        $this->assertTrue($instance instanceof Zend_Filter_HtmlEntities);
+    }
 }
