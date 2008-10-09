@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11496 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -204,7 +204,7 @@ echo $this->formCheckbox('foo',
             </listitem>
 
             <listitem><para>
-                <code>formFile($name, $value, $attribs)</code>: Erstellt ein
+                <code>formFile($name, $attribs)</code>: Erstellt ein
                 &lt;input type="file" /&gt; Element.
             </para></listitem>
 
