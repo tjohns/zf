@@ -372,7 +372,7 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
 
             $paths = array_reverse($paths, true);
             foreach ($paths as $key => $path) {
-                if (preg_match('/^[a-z0-9_](?!:' . preg_quote('\\') . ')/i', $path)) {
+                if (preg_match('/^[a-z0-9_](?!(:\/))(?!:' . preg_quote('\\') . ')/i', $path)) {
                     foreach ($incPaths as $index => $incPath) {
                         $incPaths[$index] .= DIRECTORY_SEPARATOR . $path;
                     }
