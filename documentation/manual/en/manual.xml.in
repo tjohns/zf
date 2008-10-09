@@ -180,14 +180,15 @@
         <title>Zend_Gdata</title>
         <xi:include href="module_specs/Zend_Gdata-Introduction.xml" />
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Books.xml" />
         <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml" />
         <xi:include href="module_specs/Zend_Gdata_Calendar.xml" />
         <xi:include href="module_specs/Zend_Gdata_Docs.xml" />
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml" />
         <xi:include href="module_specs/Zend_Gdata_Gapps.xml" />
         <xi:include href="module_specs/Zend_Gdata_Gbase.xml" />
-        <xi:include href="module_specs/Zend_Gdata_YouTube.xml" />
         <xi:include href="module_specs/Zend_Gdata_Photos.xml" />
+        <xi:include href="module_specs/Zend_Gdata_YouTube.xml" />
         <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
