@@ -68,7 +68,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     public function testRetrieveUserVideos()
     {
         $feed = $this->gdata->getUserUploads($this->ytAccount);
-        $this->assertEquals('Videos of zfgdata', $feed->title->text);
+        $this->assertEquals('Videos uploaded by zfgdata', $feed->title->text);
         $this->assertTrue(count($feed->entry) === 1);
     }
 

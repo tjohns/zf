@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  * Zend Framework
@@ -58,9 +58,7 @@ class Zend_Gdata_Books extends Zend_Gdata
 {
     const VOLUME_FEED_URI = 'http://books.google.com/books/feeds/volumes';
     const MY_LIBRARY_FEED_URI = 'http://books.google.com/books/feeds/users/me/collections/library/volumes';
-    const MY_ANNOTATIONS_FEED_URI = 'http://books.google.com/books/feeds/users/me/volumes';
-    const MY_RECOMMENDATIONS_FEED_URI = 'http://books.google.com/books/feeds/users/me/recommendations';
-
+    const MY_ANNOTATION_FEED_URI = 'http://books.google.com/books/feeds/users/me/volumes';
     const AUTH_SERVICE_NAME = 'print';
 
     public static $namespaces = array(
@@ -148,10 +146,10 @@ class Zend_Gdata_Books extends Zend_Gdata
      * @return Zend_Gdata_Books_VolumeFeed The feed of volumes found at the
      *         specified URL.
      */
-    public function getUserAnnotationsFeed($location = null)
+    public function getUserAnnotationFeed($location = null)
     {
         if ($location == null) {
-            $uri = self::MY_ANNOTATIONS_FEED_URI;
+            $uri = self::MY_ANNOTATION_FEED_URI;
         } else {
             $uri = $location;
         }
@@ -172,6 +170,7 @@ class Zend_Gdata_Books extends Zend_Gdata
         } else {
             $uri = $location;
         }
+        print $uri;
         return parent::insertEntry(
             $entry, $uri, 'Zend_Gdata_Books_VolumeEntry');
     }

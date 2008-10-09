@@ -37,6 +37,9 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Dublincore_Extension_Format extends Zend_Gdata_Extension
 {
 
+    protected $_rootNamespace = 'dc';
+    protected $_rootElement = 'format';
+
     /**
      * Constructor for Zend_Gdata_Dublincore_Extension_Format which
      * File format, physical medium, or dimensions of the resource

@@ -164,6 +164,10 @@ require_once 'Zend/Gdata/YouTube/CommentEntryTest.php';
 require_once 'Zend/Gdata/YouTube/ContactFeedTest.php';
 require_once 'Zend/Gdata/YouTube/ContactEntryTest.php';
 
+require_once 'Zend/Gdata/Books/CollectionFeedTest.php';
+require_once 'Zend/Gdata/Books/CollectionEntryTest.php';
+require_once 'Zend/Gdata/Books/VolumeFeedTest.php';
+require_once 'Zend/Gdata/Books/VolumeEntryTest.php';
 
 /**
  * Tests that do require online access to servers
@@ -177,6 +181,7 @@ require_once 'Zend/Gdata/DocsOnlineTest.php';
 require_once 'Zend/Gdata/PhotosOnlineTest.php';
 require_once 'Zend/Gdata/GappsOnlineTest.php';
 require_once 'Zend/Gdata/YouTubeOnlineTest.php';
+require_once 'Zend/Gdata/BooksOnlineTest.php';
 require_once 'Zend/Gdata/SkipTests.php';
 
 class Zend_Gdata_AllTests
@@ -323,6 +328,11 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_YouTube_ContactFeedTest');
         $suite->addTestSuite('Zend_Gdata_YouTube_ContactEntryTest');
 
+        $suite->addTestSuite('Zend_Gdata_Books_CollectionEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Books_CollectionFeedTest');
+        $suite->addTestSuite('Zend_Gdata_Books_VolumeEntryTest');
+        $suite->addTestSuite('Zend_Gdata_Books_VolumeFeedTest');
+
         $skippingOnlineTests = true;
         if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_ONLINE_ENABLED') == true &&
@@ -361,6 +371,11 @@ class Zend_Gdata_AllTests
             if (defined('TESTS_ZEND_GDATA_PHOTOS_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_GDATA_PHOTOS_ONLINE_ENABLED') == true) {
                 $suite->addTestSuite('Zend_Gdata_PhotosOnlineTest');
+            }
+
+            if (defined('TESTS_ZEND_GDATA_BOOKS_ONLINE_ENABLED') &&
+            constant('TESTS_ZEND_GDATA_BOOKS_ONLINE_ENABLED') == true) {
+                $suite->addTestSuite('Zend_Gdata_BooksOnlineTest');
             }
         } 
         if (defined('TESTS_ZEND_GDATA_ONLINE_ENABLED') &&

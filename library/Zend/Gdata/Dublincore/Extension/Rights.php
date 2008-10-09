@@ -37,6 +37,9 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Dublincore_Extension_Rights extends Zend_Gdata_Extension
 {
 
+    protected $_rootNamespace = 'dc';
+    protected $_rootElement = 'rights';
+
     /**
      * Constructor for Zend_Gdata_Dublincore_Extension_Rights which
      * Information about rights held in and over the resource

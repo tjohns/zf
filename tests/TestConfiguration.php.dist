@@ -248,6 +248,12 @@ define('TESTS_ZEND_GDATA_GBASE_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_YOUTUBE_ONLINE_ENABLED', false);
 
 /*
+ * This indicates that online tests for the Books Search data API
+ * should be performed.
+ */
+define('TESTS_ZEND_GDATA_BOOKS_ONLINE_ENABLED', false);
+
+/*
  * This is the username to use for retrieving subscriptions, etc
  */
 define('TESTS_ZEND_GDATA_YOUTUBE_ACCOUNT', 'zfgdata');

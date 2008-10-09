@@ -37,6 +37,8 @@ require_once 'Zend/Gdata/Extension.php';
 class Zend_Gdata_Books_Extension_Viewability extends Zend_Gdata_Extension
 {
 
+    protected $_rootNamespace = 'gbs';
+    protected $_rootElement = 'viewability';
     protected $_value = null;
 
     /**

@@ -110,6 +110,7 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
     const THUMBNAIL_LINK_REL = 'http://schemas.google.com/books/2008/thumbnail';
     const PREVIEW_LINK_REL = 'http://schemas.google.com/books/2008/preview';
     const INFO_LINK_REL = 'http://schemas.google.com/books/2008/info';
+    const ANNOTATION_LINK_REL = 'http://schemas.google.com/books/2008/annotation';
 
     protected $_comments = null;
     protected $_creators = array();
@@ -648,7 +649,7 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
      */
     public function getThumbnailLink()
     {
-        return $this->getLink(THUMBNAIL_LINK_REL);
+        return $this->getLink(self::THUMBNAIL_LINK_REL);
     }
 
     /**
@@ -658,7 +659,7 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
      */
     public function getPreviewLink()
     {
-        return $this->getLink(PREVIEW_LINK_REL);
+        return $this->getLink(self::PREVIEW_LINK_REL);
     }
 
     /**
@@ -668,7 +669,17 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
      */
     public function getInfoLink()
     {
-        return $this->getLink(INFO_LINK_REL);
+        return $this->getLink(self::INFO_LINK_REL);
+    }
+
+    /**
+     * Gets the annotations link
+     *
+     * @return Zend_Gdata_App_Extension_link The annotations link
+     */
+    public function getAnnotationLink()
+    {
+        return $this->getLink(self::ANNOTATION_LINK_REL);
     }
 
 }
