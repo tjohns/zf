@@ -268,7 +268,6 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
     /**
      * At this point UTF-8 characters are not supported as Zend_Json_Decoder
      * does not support them.
-     * Once ZF-4054 is resolved this test must be updated.
      */
     public function testUTF8Logging()
     {
@@ -276,7 +275,11 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
      
         $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
  
-        $message = 'Отладочный';
+        $encodedMessage = $message = 'Отладочный';
+        
+        if(function_exists('json_encode')) {
+          $encodedMessage = '\u041e\u0442\u043b\u0430\u0434\u043e\u0447\u043d\u044b\u0439';
+        }
            
         $firephp->send($message);
         
@@ -286,7 +289,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
-        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"'.$message.'"]|';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},"'.$encodedMessage.'"]|';
         $headers['X-Wf-1-Index'] = '1';
 
         $this->assertTrue($this->_response->verifyHeaders($headers));      
@@ -312,7 +315,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
-        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","child":"* RECURSION (Zend_Wildfire_WildfireTest_JsonEncodingTestClass) *"}}]|';
+        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_JsonEncodingTestClass","undeclared:child":"** Recursion (Zend_Wildfire_WildfireTest_JsonEncodingTestClass) **"}}]|';
         $headers['X-Wf-1-Index'] = '1';
 
         $this->assertTrue($this->_response->verifyHeaders($headers));      
@@ -664,7 +667,6 @@ class Zend_Wildfire_WildfireTest_Response extends Zend_Controller_Response_Http
 
     public function verifyHeaders($headers)
     {
-
         $response_headers = $this->getHeaders();
         if (!$response_headers) {
             return false;
