@@ -512,7 +512,9 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(15, $this->_paginator->getPageRange());
     }
     
-    // ZF-3720
+    /**
+     * @group ZF-3720
+     */
     public function testGivesCorrectItemCount()
     {
         $paginator = Zend_Paginator::factory(range(1, 101));
@@ -523,7 +525,9 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $paginator->getCurrentItems());
     }
     
-    // ZF-3737
+    /**
+     * @group ZF-3737
+     */
     public function testKeepsCurrentPageNumberAfterItemCountPerPageSet()
     {
         $paginator = Zend_Paginator::factory(array('item1', 'item2'));
@@ -534,15 +538,10 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('item2', $items[0]);
     }
-    
-    // ZF-4207
-    public function testAcceptsTraversableInstanceFromAdapter()
-    {
-        $paginator = new Zend_Paginator(new Zf4207());
-        $this->assertType('ArrayObject', $paginator->getCurrentItems());
-    }
-    
-    // ZF-4193
+
+    /**
+     * @group ZF-4193
+     */
     public function testCastsIntegerValuesToInteger()
     {
         // Current page number
@@ -556,5 +555,14 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         // Page range
         $this->_paginator->setPageRange(3.3);
         $this->assertTrue($this->_paginator->getPageRange() == 3);
+    }
+    
+    /**
+     * @group ZF-4207
+     */
+    public function testAcceptsTraversableInstanceFromAdapter()
+    {
+        $paginator = new Zend_Paginator(new Zf4207());
+        $this->assertType('ArrayObject', $paginator->getCurrentItems());
     }
 }

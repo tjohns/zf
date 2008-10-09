@@ -119,6 +119,23 @@ class Zend_View_Helper_PaginationControl
             $pages = array_merge($pages, (array) $params);
         }
 
+        if (is_array($partial)) {
+            if (count($partial) != 2) {
+                /**
+                 * @see Zend_View_Exception
+                 */
+                require_once 'Zend/View/Exception.php';
+
+                throw new Zend_View_Exception('A view partial supplied as an array must contain two values: the filename and its module');
+            }
+
+            if ($partial[1] !== null) {
+                return $this->view->partial($partial[0], $partial[1], $pages);
+            }
+            
+            $partial = $partial[0];
+        }
+        
         return $this->view->partial($partial, $pages);
     }
 }
