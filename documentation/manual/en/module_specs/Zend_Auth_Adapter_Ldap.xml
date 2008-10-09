@@ -97,7 +97,7 @@ ldap.server1.bindRequiresDn = true
 
 ; Typical options for Active Directory
 ldap.server2.host = dc1.w.net
-ldap.server2.useSsl = true
+ldap.server2.useStartTls = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
@@ -147,7 +147,7 @@ Array
     [server2] => Array
         (
             [host] => dc1.w.net
-            [useSsl] => 1
+            [useStartTls] => 1
             [accountDomainName] => w.net
             [accountDomainNameShort] => W
             [accountCanonicalForm] => 3
@@ -264,12 +264,23 @@ Array
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">useSsl</emphasis></entry>
+                    <entry>useStartTls</entry>
                     <entry>
-                        If <code>true</code>, this value indicates that the LDAP client should use SSL / TLS encrypted
-                        transport. A value of <code>true</code> is strongly favored in production environments to
-                        prevent passwords from be transmitted in clear text. The default value is <code>false</code>,
-                        as servers frequently require that a certificate be installed separately after installation.
+                        Whether or not the LDAP client should use TLS (aka SSLv2) encrypted transport. A value of
+                        <code>true</code> is strongly favored in production environments to prevent passwords from
+                        be transmitted in clear text. The default value is <code>false</code>, as servers
+                        frequently require that a certificate be installed separately after installation.
+                        The <code>useSsl</code> and <code>useStartTls</code> options are mutually exclusive.
+                        The <code>useStartTls</code> option should be favored over <code>useSsl</code> but
+                        not all servers support this newer mechanism.
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>useSsl</entry>
+                    <entry>
+                        Whether or not the LDAP client should use SSL encrypted transport. The <code>useSsl</code>
+                        and <code>useStartTls</code> options are mutually exclusive but <code>useStartTls</code>
+                        should be favored if the server and LDAP client library support it.
                         This value also changes the default <emphasis role="strong">port</emphasis> value (see
                         <emphasis role="strong">port</emphasis> description above).
                     </entry>
@@ -386,6 +397,13 @@ Array
                         <code>accountFilterFormat = '(&amp;(objectClass=user)(sAMAccountName=%s))</code>'.
                     </entry>
                   </row>
+                  <row>
+                    <entry><emphasis role="strong">optReferrals</emphasis></entry>
+                    <entry>
+                        If set to <code>true</code>, this option indicates to the LDAP client that referrals should
+                        be followed. The default value is <code>false</code>.
+                    </entry>
+                  </row>
                 </tbody>
               </tgroup>
             </table>
@@ -393,7 +411,8 @@ Array
 
         <note>
             <para>
-                If you enable <code>useSsl = true</code> you may find that the LDAP client generates an error
+                If you enable <code>useStartTls = true</code> or <code>useSsl = true</code> you may find that
+                the LDAP client generates an error
                 claiming that it cannot validate the server's certificate. Assuming the PHP LDAP extension is
                 ultimately linked to the OpenLDAP client libraries, to resolve this issue you can set
                 "<code>TLS_REQCERT never</code>" in the OpenLDAP client <code>ldap.conf</code> (and restart the web
@@ -484,10 +503,16 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
                         <entry>
                             For the sake of security, this should be <code>true</code> if the server has the necessary
                             certificate installed.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry>
+                            Possibly used as an alternative to <code>useStartTls</code> (see above).
                         </entry>
                       </row>
                       <row>
@@ -568,10 +593,16 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
                         <entry>
                             For the sake of security, this should be <code>true</code> if the server has the necessary
                             certificate installed.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry>
+                            Possibly used as an alternative to <code>useStartTls</code> (see above).
                         </entry>
                       </row>
                       <row>

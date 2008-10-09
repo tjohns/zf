@@ -247,6 +247,13 @@ echo "$acctname\n";
                             empty string password to be submitted during the bind.
                         </entry>
                       </row>
+                      <row>
+                        <entry>optReferrals</entry>
+                        <entry>
+                            If set to <code>true</code>, this option indicates to the LDAP client that referrals should
+                            be followed. The default value is <code>false</code>.
+                        </entry>
+                      </row>
                     </tbody>
                   </tgroup>
                 </table>

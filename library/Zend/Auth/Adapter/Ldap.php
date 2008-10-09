@@ -169,6 +169,21 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     }
 
     /**
+     * Returns a domain name for the current LDAP options. This is used
+     * for skipping redundant operations (e.g. authentications).
+     *
+     * @return string
+     */
+    protected function _getAuthorityName()
+    {
+        $options = $this->getLdap()->getOptions();
+        $name = $options['accountDomainName'];
+        if (!$name)
+            $name = $options['accountDomainNameShort'];
+        return $name ? $name : '';
+    }
+
+    /**
      * Authenticate the user
      *
      * @throws Zend_Auth_Adapter_Exception
@@ -206,6 +221,7 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
 
         $code = Zend_Auth_Result::FAILURE;
         $messages[0] = "Authority not found: $username";
+        $failedAuthorities = array();
 
         /* Iterate through each server and try to authenticate the supplied
          * credentials against it.
@@ -220,15 +236,30 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
                 throw new Zend_Auth_Adapter_Exception('Adapter options array not in array');
             }
             $ldap->setOptions($options);
+            $dname = '';
 
             try {
-
-                $canonicalName = $ldap->getCanonicalAccountName($username);
-
                 if ($messages[1])
                     $messages[] = $messages[1];
                 $messages[1] = '';
                 $messages[] = $this->_optionsToString($options);
+
+                $dname = $this->_getAuthorityName();
+                if (isset($failedAuthorities[$dname])) {
+                    /* If multiple sets of server options for the same domain
+                     * are supplied, we want to skip redundant authentications
+                     * where the identity or credentials where found to be
+                     * invalid with another server for the same domain. The
+                     * $failedAuthorities array tracks this condition (and also
+                     * serves to supply the original error message).
+                     * This fixes issue ZF-4093.
+                     */
+                    $messages[1] = $failedAuthorities[$dname];
+                    $messages[] = "Skipping previously failed authority: $dname";
+                    continue;
+                }
+
+                $canonicalName = $ldap->getCanonicalAccountName($username);
 
                 $ldap->bind($canonicalName, $password);
 
@@ -256,9 +287,11 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
                 } else if ($err == Zend_Ldap_Exception::LDAP_NO_SUCH_OBJECT) {
                     $code = Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND;
                     $messages[0] = "Account not found: $username";
+                    $failedAuthorities[$dname] = $zle->getMessage();
                 } else if ($err == Zend_Ldap_Exception::LDAP_INVALID_CREDENTIALS) {
                     $code = Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID;
                     $messages[0] = 'Invalid credentials';
+                    $failedAuthorities[$dname] = $zle->getMessage();
                 } else {
                     $line = $zle->getLine();
                     $messages[] = $zle->getFile() . "($line): " . $zle->getMessage();

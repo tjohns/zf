@@ -150,6 +150,7 @@ class Zend_Ldap
      *  accountFilterFormat
      *  allowEmptyPassword
      *  useStartTls
+     *  optRefferals
      *
      * @param  array $options Options used in connecting, binding, etc.
      * @return Zend_Ldap Provides a fluent interface
@@ -170,7 +171,8 @@ class Zend_Ldap
             'accountDomainNameShort'    => null,
             'accountFilterFormat'       => null,
             'allowEmptyPassword'        => null,
-            'useStartTls'                => null,
+            'useStartTls'               => null,
+            'optReferrals'              => null,
         );
 
         $diff = array_diff_key($options, $permittedOptions);
@@ -196,6 +198,7 @@ class Zend_Ldap
                     case 'bindRequiresDn':
                     case 'allowEmptyPassword':
                     case 'useStartTls':
+                    case 'optReferrals':
                         $val = $options[$key];
                         $options[$key] = $val === true ||
                                 $val === '1' ||
@@ -627,8 +630,10 @@ class Zend_Ldap
 
             $this->_resource = $resource;
 
+            $optReferrals = $this->_options['optReferrals'] ? 1 : 0;
+
             if (@ldap_set_option($resource, LDAP_OPT_PROTOCOL_VERSION, 3) &&
-                        @ldap_set_option($resource, LDAP_OPT_REFERRALS, 0)) {
+                        @ldap_set_option($resource, LDAP_OPT_REFERRALS, $optReferrals)) {
                 if ($useSsl ||
                             $this->_options['useStartTls'] !== true ||
                             @ldap_start_tls($resource)) {
