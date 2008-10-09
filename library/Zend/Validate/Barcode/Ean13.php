@@ -48,6 +48,12 @@ class Zend_Validate_Barcode_Ean13 extends Zend_Validate_Abstract
     const INVALID_LENGTH = 'invalidLength';
 
     /**
+     * Validation failure message key for when the value
+     * does not only contain numeric characters
+     */
+    const NOT_NUMERIC = 'ean13NotNumeric';
+
+    /**
      * Validation failure message template definitions
      *
      * @var array
@@ -55,6 +61,7 @@ class Zend_Validate_Barcode_Ean13 extends Zend_Validate_Abstract
     protected $_messageTemplates = array(
         self::INVALID        => "'%value%' is an invalid EAN-13 barcode",
         self::INVALID_LENGTH => "'%value%' should be 13 characters",
+        self::NOT_NUMERIC    => "'%value%' should contain only numeric characters",
     );
 
     /**
@@ -67,6 +74,11 @@ class Zend_Validate_Barcode_Ean13 extends Zend_Validate_Abstract
      */
     public function isValid($value)
     {
+        if (false === ctype_digit($value)) {
+            $this->_error(self::NOT_NUMERIC);
+            return false;
+        }
+
         $valueString = (string) $value;
         $this->_setValue($valueString);
 
