@@ -268,6 +268,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
     /**
      * At this point UTF-8 characters are not supported as Zend_Json_Decoder
      * does not support them.
+     * Once ZF-4054 is resolved this test must be updated.
      */
     public function testUTF8Logging()
     {
