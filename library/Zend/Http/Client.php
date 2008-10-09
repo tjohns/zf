@@ -85,6 +85,12 @@ class Zend_Http_Client
     const HTTP_0 = '1.0';
 
     /**
+     * Content attributes
+     */
+    const CONTENT_TYPE   = 'Content-Type';
+    const CONTENT_LENGTH = 'Content-Length';
+
+    /**
      * POST data encoding methods
      */
     const ENC_URLENCODED = 'application/x-www-form-urlencoded';
@@ -639,7 +645,7 @@ class Zend_Http_Client
      *    will be read and sent. Will try to guess the content type using mime_content_type().
      * 2. $data is set - $filename is sent as the file name, but $data is sent as the file
      *    contents and no file is read from the file system. In this case, you need to
-     *    manually set the content-type ($ctype) or it will default to
+     *    manually set the Content-Type ($ctype) or it will default to
      *    application/octet-stream.
      *
      * @param string $filename Name of file to upload, or name to save as
@@ -720,8 +726,8 @@ class Zend_Http_Client
         $this->raw_post_data = null;
 
         // Clear outdated headers
-        if (isset($this->headers['content-type'])) unset($this->headers['content-type']);
-        if (isset($this->headers['content-length'])) unset($this->headers['content-length']);
+        if (isset($this->headers[self::CONTENT_TYPE])) unset($this->headers[self::CONTENT_TYPE]);
+        if (isset($this->headers[self::CONTENT_LENGTH])) unset($this->headers[self::CONTENT_LENGTH]);
 
         return $this;
     }
@@ -931,16 +937,16 @@ class Zend_Http_Client
         	}
         }
         
-        // Set the content-type header
+        // Set the Content-Type header
         if ($this->method == self::POST &&
-           (! isset($this->headers['content-type']) && isset($this->enctype))) {
+           (! isset($this->headers[self::CONTENT_TYPE]) && isset($this->enctype))) {
 
-            $headers[] = "Content-type: {$this->enctype}";
+            $headers[] = self::CONTENT_TYPE . ': ' . $this->enctype;
         }
         
         // Set the user agent header
         if (! isset($this->headers['user-agent']) && isset($this->config['useragent'])) {
-            $headers[] = "User-agent: {$this->config['useragent']}";
+            $headers[] = "User-Agent: {$this->config['useragent']}";
         }
 
         // Set HTTP authentication if needed
@@ -984,7 +990,7 @@ class Zend_Http_Client
 
         // If we have raw_post_data set, just use it as the body.
         if (isset($this->raw_post_data)) {
-            $this->setHeaders('Content-length', strlen($this->raw_post_data));
+            $this->setHeaders(self::CONTENT_LENGTH, strlen($this->raw_post_data));
             return $this->raw_post_data;
         }
 
@@ -999,7 +1005,7 @@ class Zend_Http_Client
                 case self::ENC_FORMDATA:
                     // Encode body as multipart/form-data
                     $boundary = '---ZENDHTTPCLIENT-' . md5(microtime());
-                    $this->setHeaders('Content-type', self::ENC_FORMDATA . "; boundary={$boundary}");
+                    $this->setHeaders(self::CONTENT_TYPE, self::ENC_FORMDATA . "; boundary={$boundary}");
 
                     // Get POST parameters and encode them
                     $params = $this->_getParametersRecursive($this->paramsPost);
@@ -1009,7 +1015,7 @@ class Zend_Http_Client
 
                     // Encode files
                     foreach ($this->files as $name => $file) {
-                        $fhead = array('Content-type' => $file[1]);
+                        $fhead = array(self::CONTENT_TYPE => $file[1]);
                         $body .= self::encodeFormData($boundary, $name, $file[2], $file[0], $fhead);
                     }
 
@@ -1018,7 +1024,7 @@ class Zend_Http_Client
 
                 case self::ENC_URLENCODED:
                     // Encode body as application/x-www-form-urlencoded
-                    $this->setHeaders('Content-type', self::ENC_URLENCODED);
+                    $this->setHeaders(self::CONTENT_TYPE, self::ENC_URLENCODED);
                     $body = http_build_query($this->paramsPost, '', '&');
                     break;
 
@@ -1031,9 +1037,9 @@ class Zend_Http_Client
             }
         }
         
-        // Set the content-length if we have a body or if request is POST/PUT
+        // Set the Content-Length if we have a body or if request is POST/PUT
         if ($body || $this->method == self::POST || $this->method == self::PUT) {
-            $this->setHeaders('Content-length', strlen($body));
+            $this->setHeaders(self::CONTENT_LENGTH, strlen($body));
         }
 
         return $body;
@@ -1122,12 +1128,12 @@ class Zend_Http_Client
      * @param string $name
      * @param mixed $value
      * @param string $filename
-     * @param array $headers Associative array of optional headers @example ("Content-transfer-encoding" => "binary")
+     * @param array $headers Associative array of optional headers @example ("Content-Transfer-Encoding" => "binary")
      * @return string
      */
     public static function encodeFormData($boundary, $name, $value, $filename = null, $headers = array()) {
         $ret = "--{$boundary}\r\n" .
-            'Content-disposition: form-data; name="' . $name .'"';
+            'Content-Disposition: form-data; name="' . $name .'"';
 
         if ($filename) $ret .= '; filename="' . $filename . '"';
         $ret .= "\r\n";
