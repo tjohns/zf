@@ -81,6 +81,7 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
     public function setQuoteStyle($quoteStyle)
     {
         $this->_quoteStyle = $quoteStyle;
+        return $this;
     }
 
     /**
