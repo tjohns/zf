@@ -74,14 +74,14 @@ HTML;
         if ($embeddability ==
             "http://schemas.google.com/books/2008#embeddable") {
             $preview_link = '<a href="javascript:load_viewport(\''.
-                ${preview}.'\',\'viewport\');">'.
+                $preview.'\',\'viewport\');">'.
                 '<img class="previewbutton" src="http://code.google.com/' .
                 'apis/books/images/gbs_preview_button1.png" />' .
                 '</a><br>';
         } else {
             $preview_link = '';
         }
-        $thumbnail_img = (!$thumbnail) ? '' : '<a href="'.${preview}.
+        $thumbnail_img = (!$thumbnail) ? '' : '<a href="'.$preview.
             '"><img src="'.$thumbnail.'"/></a>';
 
         print <<<HTML
