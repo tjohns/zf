@@ -126,7 +126,7 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->element->addValidator('Count', false, 1)
                       ->addValidators(array(
                           'Extension' => 'jpg',
-                          new Zend_Validate_File_Upload,
+                          new Zend_Validate_File_Upload(),
                       ));
         $validators = $this->element->getValidators();
         $test       = $this->element->getTransferAdapter()->getValidators();
