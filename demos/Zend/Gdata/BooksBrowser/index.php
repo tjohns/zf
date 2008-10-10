@@ -62,7 +62,11 @@ HTML;
     foreach ($feed as $entry) {
         $title = printArray($entry->getTitles());
         $volumeId = $entry->getVolumeId();
-        $thumbnail = $entry->getThumbnailLink()->href;
+        if ($thumbnailLink = $entry->getThumbnailLink()) {
+            $thumbnail = $thumbnailLink->href;
+        } else {
+            $thumbnail = null;
+        }
         $preview = $entry->getPreviewLink()->href;
         $embeddability = $entry->getEmbeddability()->getValue();
         $creators = printArray($entry->getCreators());
