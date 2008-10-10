@@ -19,7 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
- 
+
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Log_AllTests::main');
 }
@@ -57,7 +57,7 @@ class Zend_Log_AllTests
     public static function suite()
     {
         // hack to allow us to view code coverage for Log.php
-        PHPUnit_Util_Filter::removeFileFromFilter('Log.php', 'PEAR');
+        PHPUnit_Util_Filter::removeFileFromFilter(dirname(__FILE__) . '/../../../library/Zend/Log.php', 'PEAR');
 
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Log');
 
@@ -73,7 +73,7 @@ class Zend_Log_AllTests
         $suite->addTestSuite('Zend_Log_Writer_MockTest');
         $suite->addTestSuite('Zend_Log_Writer_NullTest');
         $suite->addTestSuite('Zend_Log_Writer_StreamTest');
-       
+
         return $suite;
     }
 }
