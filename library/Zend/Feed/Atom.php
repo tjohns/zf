@@ -383,7 +383,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
             throw new Zend_Feed_Exception('Cannot send ATOM because headers have already been sent.');
         }
 
-        header('Content-type: application/atom+xml; charset: ' . $this->_element->ownerDocument->actualEncoding);
+        header('Content-Type: application/atom+xml; charset=' . $this->_element->ownerDocument->actualEncoding);
 
         echo $this->saveXML();
     }

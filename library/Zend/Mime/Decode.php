@@ -19,7 +19,7 @@
  */
 
 /**
- * Zend_Mime
+ * @see Zend_Mime
  */
 require_once 'Zend/Mime.php';
 
@@ -141,6 +141,11 @@ class Zend_Mime_Decode
 
         $headers = iconv_mime_decode_headers($headers, ICONV_MIME_DECODE_CONTINUE_ON_ERROR);
 
+        if ($headers === false ) {
+        	// an error occurs during the decoding
+        	return;
+        }
+
         // normalize header names
         foreach ($headers as $name => $header) {
             $lower = strtolower($name);
@@ -191,7 +196,7 @@ class Zend_Mime_Decode
             $field = strtok($field, ';');
             return $field[0] == '"' ? substr($field, 1, -1) : $field;
         }
-        
+
         $field = $firstName . '=' . $field;
         if (!preg_match_all('%([^=\s]+)\s*=("[^"]+"|[^;]+)(;\s*|$)%', $field, $matches)) {
             throw new Zend_Exception('not a valid header field');
