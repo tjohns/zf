@@ -62,24 +62,24 @@ class Zend_Gdata_Books_VolumeFeedTest extends PHPUnit_Framework_TestCase
 
     public function testEmptyEntryShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->feed->extensionElements));
-        $this->assertEquals(0, $this->feed->extensionElements);
+        $this->assertEquals(0, count($this->feed->extensionElements));
     }
 
     public function testEmptyEntryShouldHaveNoExtensionAttributes() {
         $this->assertTrue(is_array($this->feed->extensionAttributes));
-        $this->assertEquals(0, $this->feed->extensionAttributes);
+        $this->assertEquals(0, count($this->feed->extensionAttributes));
     }
 
     public function testSampleEntryShouldHaveNoExtensionElements() {
         $this->feed->transferFromXML($this->feedText);
         $this->assertTrue(is_array($this->feed->extensionElements));
-        $this->assertEquals(0, $this->feed->extensionElements);
+        $this->assertEquals(0, count($this->feed->extensionElements));
     }
 
     public function testSampleEntryShouldHaveNoExtensionAttributes() {
         $this->feed->transferFromXML($this->feedText);
         $this->assertTrue(is_array($this->feed->extensionAttributes));
-        $this->assertEquals(0, $this->feed->extensionAttributes);
+        $this->assertEquals(0, count($this->feed->extensionAttributes));
     }
 
     public function testEmptyVolumeFeedToAndFromStringShouldMatch() {
