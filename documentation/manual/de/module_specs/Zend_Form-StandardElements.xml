@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 11518 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -167,7 +167,8 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             Das File Formularelement bietet einen Mechanismus um File Upload-felder in eigenen Formularen
             zu Unterstützen. Es verwendet intern
             <link linkend="zend.file.transfer.introduction">Zend_File_Transfer</link> um diese Funktionalität
-            zu bieten, und den <code>FormFile</code> Viewhelfer um das Formularelement anzuzeigen.
+            zu bieten, und den <code>FormFile</code> Viewhelfer sowie den <code>File</code> Decorator um das
+            Formularelement anzuzeigen.
         </para>
 
         <para>
@@ -208,7 +209,7 @@ $form->setAttrib('enctype', 'multipart/form-data');
             <para>
                 Wenn das Formular erfolgreich geprüft wurde, muß man die Datei empfangen um Sie an Ihrem
                 endgültigen Ziel zu speichern indem receive() verwendet wird. Zusätzlich kann man das
-                endgültige Ziel ermittelt werden indem getValue() verwendet wird:
+                endgültige Ziel ermittelt werden indem getFileName() verwendet wird:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -220,7 +221,7 @@ if (!$form->foo->receive()) {
     print "Fehler beim Empfangen der Datei";
 }
 
-$location = $form->foo->getValue();
+$location = $form->foo->getFileName();
 ]]>
             </programlisting>
 
@@ -231,6 +232,65 @@ $location = $form->foo->getValue();
 
             <para>
                 Standardmäßig werden Dateien in das Temp Verzeichnis des Systems hochgeladen.
+            </para>
+        </note>
+
+        <note>
+            <title>Datei Werte</title>
+
+            <para>
+                In HTTP hat das File Element keinen Wert. Deshalb gibt es keine Ausgabe wenn man
+                getValue() aufruft.
+            </para>
+        </note>
+
+        <para>
+            <code>Zend_Form_Element_File</code> unterstützt auch mehrere Dateien. Durch den Aufruf der
+            <code>setMultiFile($count)</code> Methode kann die Anzahl an File Elementen die man erstellen
+            will festgelegt werden. Das verhindert das die selben Einstellungen mehrere Male durchgeführt
+            werden müssen.
+        </para>
+
+        <example id="zend.form.standardElements.file.multiusage">
+            <title>Mehrere Dateien setzen</title>
+
+            <para>
+                Die Erstellung eines Multifile Elements ist das gleiche wie das Erstellen eines einzelnen
+                Elements. Nach der Erstellung muß nur zusätzlich <code>setMultiFile()</code> aufgerufen werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Ein Bild hochladen:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Count', false, array(1, 3)) // Mindestens 1 und maximal 3 Dateien sicherstellen
+        ->addValidator('Size', false, 102400) // Auf 100k limitieren
+        ->addValidator('Extension', false, 'jpg,png,gif') // Nur JPEG, PNG, und GIFs
+        ->setMultiFile(3); // 3 identische Dateielemente definieren
+$form->addElement($element, 'foo');
+]]>
+            </programlisting>
+
+            <para>
+                In der View erhält man nun 3 identische File Upload Elemente welche alle die gleichen
+                Einstellungen verwenden. Um die Multifile Anzahl zu erhalten kann man einfach
+                <code>getMultiFile()</code> aufrufen.
+            </para>
+
+        </example>
+
+        <note>
+            <title>File Elemente in Subformularen</title>
+
+            <para>
+                Wenn File Elemente in Subformularen verwendet werden muß man eindeutige Namen setzen.
+                Sodas ein File Element in Subform1 das "file" heißt, in Subform2 einen anderen Namen
+                erhalten muß.
+            </para>
+
+            <para>
+                Sobald es 2 identisch benannte File Elemente gibt, wird das zweite Element entweder
+                nicht dargestellt oder nicht übertragen.
             </para>
         </note>
     </sect2>

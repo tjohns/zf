@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11516 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
     
@@ -374,7 +374,7 @@ $response = $server->handle();
 $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
-$response = $server->getLastResyponse();
+$response = $server->getLastResponse();
 ...
 ]]>
                 </programlisting>

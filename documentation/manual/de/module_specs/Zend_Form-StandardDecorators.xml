@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11518 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Form Dekoratore die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -147,6 +147,17 @@ class Util
             wird in ein HTML Fieldset eingebettet, wobei der originale Inhalt ersetzt wird. Alle
             Attribute die in den angezeigten Elementen gesetzt sind werden dem Fieldset als HTML
             Attribute übergeben.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.form.standardDecorators.file">
+        <title>Zend_Form_Decorator_File</title>
+
+        <para>
+            File Elemente haben eine spezielle Schreibweise wenn man mehrere File Elemente oder Subformulare
+            verwendet. Der File Decorator wird von <code>Zend_Form_Element_File</code> verwendet und erlaubt
+            es mehrere File Elemente mit einem einzelnen Methodenaufruf zu setzen. Er wird automatisch
+            verwendet und bestimmt den Namen des Elements.
         </para>
     </sect2>
 
