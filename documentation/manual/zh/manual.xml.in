@@ -28,7 +28,7 @@
         -->
     </bookinfo>
     <chapter id="introduction">
-        <title>Introduction to Zend Framework</title>
+        <title>Zend Framework简介</title>
         <xi:include href="ref/overview.xml">
             <xi:fallback><xi:include href="../en/ref/overview.xml" /></xi:fallback>
         </xi:include>
