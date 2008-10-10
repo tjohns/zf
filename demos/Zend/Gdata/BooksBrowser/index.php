@@ -109,19 +109,27 @@ include 'interface.html';
 if ($queryType === null) {
     /* display the entire interface */
 } else {
-    /* display a list of volumes */
-    $searchTerm = $_GET['searchTerm'];
-    $startIndex = $_GET['startIndex'];
-    $maxResults = $_GET['maxResults'];
-    $minViewability = $_GET['min_viewability'];
-
     $books = new Zend_Gdata_Books();
     $query = $books->newVolumeQuery();
-    $query->setQuery($searchTerm);
-    $query->setStartIndex($startIndex);
-    $query->setMaxResults($maxResults);
-    $query->setMinViewability($min_viewability);
-
+    
+    /* display a list of volumes */
+    if (isset($_GET['searchTerm'])) {
+        $searchTerm = $_GET['searchTerm'];
+        $query->setQuery($searchTerm);
+    }
+    if (isset($_GET['startIndex'])) {
+        $startIndex = $_GET['startIndex'];
+        $query->setStartIndex($startIndex);
+    }
+    if (isset($_GET['maxResults'])) {
+        $maxResults = $_GET['maxResults'];
+        $query->setMaxResults($maxResults);
+    }
+    if (isset($_GET['minViewability'])) {
+        $minViewability = $_GET['minViewability'];
+        $query->setMinViewability($minViewability);
+    }
+    
     /* check for one of the restricted feeds, or list from 'all' videos */
     switch ($queryType) {
     case 'full_view':
