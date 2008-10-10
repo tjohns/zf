@@ -79,24 +79,24 @@ class Zend_Gdata_Books_VolumeEntryTest extends PHPUnit_Framework_TestCase
 
     public function testEmptyEntryShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertEquals(0, $this->entry->extensionElements);
     }
 
     public function testEmptyEntryShouldHaveNoExtensionAttributes() {
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertEquals(0, $this->entry->extensionAttributes);
     }
 
     public function testSampleEntryShouldHaveNoExtensionElements() {
         $this->entry->transferFromXML($this->entryText);
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertEquals(0, $this->entry->extensionElements);
     }
 
     public function testSampleEntryShouldHaveNoExtensionAttributes() {
         $this->entry->transferFromXML($this->entryText);
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertEquals(0, $this->entry->extensionAttributes);
     }
 
     public function testEmptyVolumeEntryToAndFromStringShouldMatch() {
@@ -104,7 +104,7 @@ class Zend_Gdata_Books_VolumeEntryTest extends PHPUnit_Framework_TestCase
         $newVolumeEntry = new Zend_Gdata_Books_VolumeEntry();
         $newVolumeEntry->transferFromXML($entryXml);
         $newVolumeEntryXml = $newVolumeEntry->saveXML();
-        $this->assertTrue($entryXml == $newVolumeEntryXml);
+        $this->assertEquals($entryXml, $newVolumeEntryXml);
     }
 
     public function testSamplePropertiesAreCorrect () {

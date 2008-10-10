@@ -53,7 +53,7 @@ class Zend_Gdata_BooksOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($feed instanceof Zend_Gdata_Books_VolumeFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Books_VolumeEntry);
-            $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
+            $this->assertEquals($feed->getHttpClient(), $entry->getHttpClient());
         }
 
         $this->assertEquals(5, $feed->startIndex->text);
@@ -72,8 +72,8 @@ class Zend_Gdata_BooksOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($feed instanceof Zend_Gdata_Books_VolumeFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Books_VolumeEntry);
-            $this->assertTrue(
-                $entry->getHttpClient() == $feed->getHttpClient());
+            $this->assertEquals(
+                $feed->getHttpClient(), $entry->getHttpClient());
         }
 
         $entry = new Zend_Gdata_Books_VolumeEntry();
@@ -89,8 +89,8 @@ class Zend_Gdata_BooksOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($feed instanceof Zend_Gdata_Books_VolumeFeed);
         foreach ($feed->entries as $entry) {
             $this->assertTrue($entry instanceof Zend_Gdata_Books_VolumeEntry);
-            $this->assertTrue(
-                $entry->getHttpClient() == $feed->getHttpClient());
+            $this->assertEquals(
+                $feed->getHttpClient(), $entry->getHttpClient());
         }
 
         $entry = new Zend_Gdata_Books_VolumeEntry();
