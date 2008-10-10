@@ -35,7 +35,7 @@ require_once 'Zend/Gdata/Atom/Extension/Category.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Books_Extension_BooksCategory extends
-    Zend_Gdata_Atom_Extension_Category
+    Zend_Gdata_App_Extension_Category
 {
 
     /**
