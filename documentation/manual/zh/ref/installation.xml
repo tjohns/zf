@@ -3,7 +3,7 @@
     <title>安装</title>
 
     <para>
-        Zend Framework 要求 PHP 5.1.4 或更高版本，但 Zend 强烈建议 5.2.3 或更高，因为在这两个版本之间有
+        Zend Framework 要求 PHP版本不低于5.1.4，但强烈建议使用 5.2.3 或更高版本，因为在这两个版本之间有
         许多重大安全和性能方面的改善和提高。请查阅 <link linkend="requirements">附录 需求</link> 了解更多信息。
     </para>
 
@@ -21,16 +21,16 @@
             <listitem>
                 <para>
                     <ulink url="http://framework.zend.com/download/snapshot">下载最新的每日快照（nightly snapshot）。
-                    </ulink>对于用于面对艰难险阻的人更加适用。每日快照可以体现出 Zend Framework 的开发进度。
+                    </ulink>对于用于勇于面对困难的人更加适用。每日快照可以体现出 Zend Framework 的开发进展。
                     快照同时含有英文版本和其他可用语言的文档。
-                    如果希望使用最新的 Zend Framework 进行开发，请考虑使用 SVN （Subversion）客户端。
+                    如果希望使用最新的 Zend Framework 进行开发，请使用 SVN （Subversion）客户端下载最新的代码。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     使用 <ulink url="http://subversion.tigris.org">Subversion</ulink>（SVN）客户端。Zend Framework
-                    是开源软件，开发所使用的 Subversionu 仓库也是可公开访问的。如果已经在开发中使用了 SVN 
-                    ，或者希望对框架有所贡献，再或者比发布版本更快的更新使用的框架，则可以考虑从 SVN 中获得
+                    是开源软件，开发所使用的 Subversionu 仓库也是可公开访问的。如果已经在开发中使用了 SVN 的代码，
+					或者希望对框架有所贡献，或者想使用比公开发布版本更新的代码，则可以考虑从 SVN 中获得
                     Zend Framework。
                 </para>
                 <para>
@@ -56,20 +56,20 @@
     </para>
 
     <para>
-        当拥有了一个可用的 Zend Framework 副本时，应用程序需要能够访问框架的类。虽然有
-        <ulink url="http://www.php.net/manual/zh/configuration.changes.php">许多的方法来做到这个</ulink>，PHP 的 
+        当拥有了一个可用的 Zend Framework 副本时，应用程序需要能够访问到框架中的类。虽然有
+        <ulink url="http://www.php.net/manual/zh/configuration.changes.php">许多的方法来达到这个目的</ulink>，PHP 的 
         <ulink url="http://www.php.net/manual/zh/ini.core.php#ini.include-path"><code>include_path</code></ulink>
         必须含有 Zend Framework 库的路径。
     </para>
 
     <para>
-    	  Zend 提供了 <ulink url="http://framework.zend.com/docs/quickstart">QuickStart</ulink> 可以让你尽快入门。
+    	  Zend 提供了 <ulink url="http://framework.zend.com/docs/quickstart">快速入门指南</ulink> 可以让你尽快入门。
     	  这是一个极好的用实际的例子来学习 Zend Framework的方法。
     </para>
 
     <para>
         因为 Zend Framework 的组件是松耦合的， 在你的程序里可以使用一些独一无二的它们的组合。
-        下面的每章节提供基于组件的 Zend Framework 全面的参考文档。
+        本文档下面的章节基于组件划分，全面介绍了 Zend Framework 的使用。
     </para>
 
 </sect1>
