@@ -94,7 +94,7 @@ class Zend_OpenId_Consumer
      *
      * @var string $_error
      */
-    private $_erro = '';
+    private $_error = '';
 
     /**
      * Constructs a Zend_OpenId_Consumer object with given $storage.
@@ -305,7 +305,7 @@ class Zend_OpenId_Consumer
                         (isset($params['openid_op_endpoint']) &&
                          $params['openid_op_endpoint'] != $discovered_server) ||
                         $discovered_version != $version) {
-                        $this->_setError("Dscovery information verification failed");
+                        $this->_setError("Discovery information verification failed");
                         return false;
                     }
                 }
@@ -329,7 +329,7 @@ class Zend_OpenId_Consumer
 
             if (!Zend_OpenId::normalize($id) ||
                 !$this->_discovery($id, $server, $discovered_version)) {
-                $this->_setError("Dscovery failed");
+                $this->_setError("Discovery failed");
                 return false;
             }
 
@@ -339,7 +339,7 @@ class Zend_OpenId_Consumer
                 (isset($params['openid_op_endpoint']) &&
                  $params['openid_op_endpoint'] != $server) ||
                 $discovered_version != $version) {
-                $this->_setError("Dscovery information verification failed");
+                $this->_setError("Discovery information verification failed");
                 return false;
             }
 

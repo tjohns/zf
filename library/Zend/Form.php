@@ -303,7 +303,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
 
         if (isset($options['displayGroupPrefixPath'])) {                          
             $this->addDisplayGroupPrefixPaths($options['displayGroupPrefixPath']);      
-            unset($options['elementPrefixPath']);                             
+            unset($options['displayGroupPrefixPath']);                             
         }
 
         if (isset($options['elements'])) {
@@ -1622,7 +1622,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
      * 
      * @param  array $elements 
      * @param  string $name 
-     * @param  int $order 
+     * @param  array|Zend_Config $options 
      * @return Zend_Form
      * @throws Zend_Form_Exception if no valid elements provided
      */
@@ -2611,7 +2611,9 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $return = $this->render();
             return $return;
         } catch (Exception $e) {
-            trigger_error($e->getMessage(), E_USER_WARNING);
+            $message = "Exception caught by form: " . $e->getMessage()
+                     . "\nStack Trace:\n" . $e->getTraceAsString();
+            trigger_error($message, E_USER_WARNING);
             return '';
         }
     }

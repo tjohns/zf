@@ -94,7 +94,7 @@ class Zend_Controller_Response_HttpTestCase extends Zend_Controller_Response_Htt
             return $this->outputBody();
         } elseif (true === $spec) {
             return $this->_body;
-        } elseif (is-string($spec) && isset($this->_body[$spec])) {
+        } elseif (is_string($spec) && isset($this->_body[$spec])) {
             return $this->_body[$spec];
         }
 

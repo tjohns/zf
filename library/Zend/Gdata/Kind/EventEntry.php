@@ -246,7 +246,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setWhen($value)
     {
@@ -261,7 +261,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setWhere($value)
     {
@@ -276,7 +276,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setWho($value)
     {
@@ -291,7 +291,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setRecurrence($value)
     {
@@ -306,7 +306,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setEventStatus($value)
     {
@@ -321,7 +321,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setComments($value)
     {
@@ -336,7 +336,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param Zend_Gdata_Transparency $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setTransparency($value)
     {
@@ -351,15 +351,11 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param Zend_Gdata_Visibility $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setVisibility($value)
     {
         $this->_visibility = $value;
-    /**
-     * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
-     */
         return $this;
     }
 
@@ -370,7 +366,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setRecurrenceException($value)
     {
@@ -385,7 +381,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param array $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setExtendedProperty($value)
     {
@@ -400,7 +396,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
 
     /**
      * @param Zend_Gdata_Extension_OriginalEvent $value
-     * @return Zend_Gdata_Extension_EventEntry Provides a fluent interface
+     * @return Zend_Gdata_Kind_EventEntry Provides a fluent interface
      */
     public function setOriginalEvent($value)
     {

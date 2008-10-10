@@ -195,6 +195,7 @@ abstract class Zend_Cache
         if (!$fh = @fopen($filename, 'r', true)) {
             return false;
         }
+        @fclose($fh);
         return true;
     }
 
