@@ -122,13 +122,42 @@ class World
             would modify your services-config.xml file to set the channel
             endpoint uri attribute to this value.
         </para>
+        <para>
+        	If you have never created a service-config.xml file you can do so by opening your
+        	project in your Navigator window. Right click on the project name and select
+        	‘properties’. In the Project properties dialog go into ‘Flex Build Path’ menu,
+        	‘Library path’ tab and be sure the ‘rpc.swc’ file is added to your projects path
+        	and Press Ok to close the window.
+        </para>
+        <para>
+        	You will also need to tell the compiler to use the service-config.xml to find
+        	the RemoteObject endpoint. To do this open your project properties panel again by
+        	right clicking on the project folder from your Navigator and selecting properties.
+        	From the properties popup select ‘Flex Compiler’ and add the
+        	string: -services “services-config.xml”. Press Apply then OK to return to update
+        	the option. What you have just done is told the Flex compiler to look to the
+        	services-config.xml file for runtime variables that will be used by the
+        	RemotingObject class.
+        </para>
+        <para>
+        	We now need to tell Flex which services configuration file to use for connecting to
+        	our remote methods. For this reason create a new ‘services-config.xml’ file into your
+        	Flex project src folder. To do this right click on the project folder and select
+        	‘new’ ‘File’ which will popup a new window. Select the project folder and then name
+        	the file ‘services-config.xml’ and press finish.
+        </para>
+        <para>
+        Flex has created the new services-config.xml and has it open. Use the following example
+        text for your services-config.xml file. Make sure that you update your endpoint to match
+        that of your testing server. Make sure you save the file.
+        </para>
 
         <programlisting role="xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <services-config>
 	<services>
-        <service id="zend-service" 
-            class="flex.messaging.services.RemotingService" 
+        <service id="zend-service"
+            class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 			<destination id="zend">
 				<channels>
@@ -141,9 +170,9 @@ class World
 		</service>
 	</services>
 	<channels>
-        <channel-definition id="zend-endpoint" 
+        <channel-definition id="zend-endpoint"
             class="mx.messaging.channels.AMFChannel">
-            <endpoint uri="http://example.com/server.php" 
+            <endpoint uri="http://example.com/server.php"
                 class="flex.messaging.endpoints.AMFEndpoint"/>
 		</channel-definition>
 	</channels>
@@ -157,8 +186,8 @@ class World
         </para>
 
         <programlisting role="xml"><![CDATA[
-<channel-definition id="zend-endpoint" 
-    <endpoint uri="http://example.com/server.php" 
+<channel-definition id="zend-endpoint"
+    <endpoint uri="http://example.com/server.php"
         class="flex.messaging.endpoints.AMFEndpoint"/>
 </channel-definition>
 ]]></programlisting>
@@ -175,17 +204,17 @@ class World
         </para>
 
         <programlisting role="xml"><![CDATA[
-<mx:RemoteObject id="myservice" 
-    fault="faultHandler(event)" 
+<mx:RemoteObject id="myservice"
+    fault="faultHandler(event)"
     showBusyCursor="true"
-    source="RoundTrip" 
+    source="RoundTrip"
     destination="zend">
 ]]></programlisting>
 
         <para>
             Here, we've defined a new remote object identified by "myservice"
             bound to the service destination "zend" we defined in the
-            <code>services-config.xml</code> file. We then call methods on it in 
+            <code>services-config.xml</code> file. We then call methods on it in
             in our ActionScript by simply calling "myservice.&lt;method&gt;".
             (The source "RoundTrip" in this case is the name of our Flex
             application.) As an example:
@@ -356,8 +385,54 @@ class Contact
         </itemizedlist>
 
         <para>
-            On the Flex side, you will also need to do some mapping.
+            Although we have created the ContactVO on the server we now need to make
+            it's corresponding class in AS3 for the server object to be mapped to.
         </para>
+        <para>
+        	Right click on the src folder of the Flex project and select New -> ActionScript
+        	File. Name the file ContactVO and press finish to see the new file. Copy the
+        	following code into the file to finish creating the class.
+        </para>
+        <programlisting role="as"><![CDATA[
+package
+{
+	[Bindable]
+	[RemoteClass(alias="ContactVO")]
+	public class ContactVO
+	{
+		public var id:int;
+		public var firstname:String;
+		public var lastname:String;
+		public var email:String;
+		public var mobile:String;
+		public function ProductVO():void {
+		}
+	}
+}
+]]></programlisting>
+		<para>
+			The class is syntactically equivalent to the PHP of the same name.
+			The variable names are exactly the same and need to be in the same case
+			to work properly. There are two unique AS3 meta tags in this class.
+			The first is bindable which makes fire a change event when it is updated.
+			The second tag is the RemoteClass tag which defines that this class can
+			have a a remote object mapped with the alias name in this case <code>ContactVO</code>
+			It is mandatory that this tag the value that was set is the PHP class are stricktly
+			equivelent.
+		</para>
+<programlisting role="as"><![CDATA[
+[Bindable]
+private var myContact:ContactVO;
+
+private function getContactHandler(event:ResultEvent):void {
+	myContact = ContactVO(event.result);
+}
+]]></programlisting>
+		<para>
+			The following result event from the serice call is cast instantly onto the Flex
+			ContactVO. Anything that is bound to myContact will be updated with the returned
+			ContactVO data.
+		</para>
     </sect2>
 </sect1>
 <!--
