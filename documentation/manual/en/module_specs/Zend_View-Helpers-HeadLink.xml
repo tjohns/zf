@@ -27,8 +27,8 @@
 
     <para>
         The <code>$media</code> value defaults to 'screen', but may be any valid
-        media value. <code>$conditionalStylesheet</code> is a boolean, and will
-        be used at rendering time to determine if special comments should be
+        media value. <code>$conditionalStylesheet</code> is a string or boolean false,
+        and will be used at rendering time to determine if special comments should be
         included to prevent loading of the stylesheet on certain platforms.
     </para>
 
@@ -56,7 +56,7 @@
     </para>
 
     <para>
-        The <code>HeadLink</code> helper is a concrete implementation of the 
+        The <code>HeadLink</code> helper is a concrete implementation of the
         <link linkend="zend.view.helpers.initial.placeholder">Placeholder
             helper</link>.
     </para>
