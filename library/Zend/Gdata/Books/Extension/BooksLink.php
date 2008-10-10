@@ -34,7 +34,7 @@ require_once 'Zend/Gdata/Extension/Link.php';
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Gdata_Books_Extension_BooksLink extends Zend_Gdata_Extension_Link
+class Zend_Gdata_Books_Extension_BooksLink extends Zend_Gdata_App_Extension_Link
 {
 
     /**
@@ -44,18 +44,14 @@ class Zend_Gdata_Books_Extension_BooksLink extends Zend_Gdata_Extension_Link
      * @param DOMElement $element (optional) DOMElement from which this
      *          object should be constructed.
      */
-    public function __construct($href = null, $rel = null, $title = null,
-        $type = null, $value = null)
+    public function __construct($href = null, $rel = null, $type = null,
+            $hrefLang = null, $title = null, $length = null, $value = null)
     {
         foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct();
-        $this->_href = $href;
-        $this->_rel = $rel;
-        $this->_title = $title;
-        $this->_type = $type;
-        $this->_text = $value;
+        parent::__construct($href, $rel, $type, $hrefLang, $title, $length);
+        $this->setText($title);
     }
 
 
