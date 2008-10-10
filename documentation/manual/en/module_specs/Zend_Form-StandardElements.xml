@@ -282,7 +282,7 @@ $form->addElement($element, 'foo');
             </programlisting>
 
             <para>
-                In your view you will not get 3 identical file upload elements which
+                In your view you will now get 3 identical file upload elements which
                 all share the same settings. To get the set multifile number simply call
                 <code>getMultiFile()</code>.
             </para>
