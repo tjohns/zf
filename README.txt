@@ -1,12 +1,12 @@
-Welcome to Zend Framework 1.6.1! This is the first maintenance release in the 
+Welcome to Zend Framework 1.6.2! This is the second maintenance release in the 
 Zend Framework 1.6 series. This release maintains backwards compatibility
 with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.6.1 ([INSERT REV NUM HERE]).
-Released on 2008-09-15.
+Zend Framework 1.6.2 ([INSERT REV NUM HERE]).
+Released on 2008-10-13.
 
 NEW FEATURES
 ------------
@@ -42,7 +42,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10852
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10862
 
 SYSTEM REQUIREMENTS
 -------------------
