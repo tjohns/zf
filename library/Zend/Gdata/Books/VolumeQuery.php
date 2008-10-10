@@ -42,6 +42,9 @@ class Zend_Gdata_Books_VolumeQuery extends Zend_Gdata_Query
 
     /**
      * Create Gdata_Books_VolumeQuery object
+     *
+     * @param string|null $url If non-null, pre-initializes the instance to
+     *        use a given URL.
      */
     public function __construct($url = null)
     {
@@ -51,7 +54,7 @@ class Zend_Gdata_Books_VolumeQuery extends Zend_Gdata_Query
     /**
      * Sets the minimum level of viewability of volumes to return in the search results
      *
-     * @param string $value The minimum viewability - 'full' or 'partial'
+     * @param string|null $value The minimum viewability - 'full' or 'partial'
      * @return Zend_Gdata_Books_VolumeQuery Provides a fluent interface
      */
     public function setMinViewability($value = null)
@@ -73,7 +76,7 @@ class Zend_Gdata_Books_VolumeQuery extends Zend_Gdata_Query
     /**
      * Minimum viewability of volumes to include in search results
      *
-     * @return string min-viewability
+     * @return string|null min-viewability
      */
     public function getMinViewability()
     {
