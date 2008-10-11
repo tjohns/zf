@@ -30,7 +30,7 @@ require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_Standalone
 {
     /**
@@ -58,14 +58,14 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
                 $this->append($title);
             }
         }
-        
+
         return $this;
     }
 
     /**
      * Turn helper into string
-     * 
-     * @param  string|null $indent 
+     *
+     * @param  string|null $indent
      * @return string
      */
     public function toString($indent = null)
@@ -80,13 +80,21 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
         }
 
         $separator = ($this->_autoEscape) ? $this->_escape($this->getSeparator()) : $this->getSeparator();
+        $output = '';
+        if($prefix = $this->getPrefix()) {
+            $output  .= ($this->_autoEscape) ? $this->_escape($prefix) : $prefix;
+        }
+        $output .= implode($separator, $items);
+        if($postfix = $this->getPostfix()) {
+            $output .= ($this->_autoEscape) ? $this->_escape($postfix) : $postfix;
+        }
 
-        return $indent . '<title>' . implode($separator, $items) . '</title>';
+        return $indent . '<title>' . $output . '</title>';
     }
 
     /**
      * Cast to string
-     * 
+     *
      * @return string
      */
     public function __toString()
