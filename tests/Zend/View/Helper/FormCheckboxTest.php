@@ -11,13 +11,13 @@ require_once 'Zend/View.php';
 require_once 'Zend/Registry.php';
 
 /**
- * Zend_View_Helper_FormCheckboxTest 
+ * Zend_View_Helper_FormCheckboxTest
  *
  * Tests formCheckbox helper
- * 
+ *
  * @uses PHPUnit_Framework_TestCase
  */
-class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -67,6 +67,19 @@ class Zend_View_Helper_FormCheckboxTest extends PHPUnit_Framework_TestCase
             'attribs'=> array('disable' => true)
         ));
         $this->assertRegexp('/<input[^>]*?(disabled="disabled")/', $html);
+    }
+
+    /**
+     * ZF-3505
+     */
+    public function testCheckboxNotDisabled()
+    {
+        $html = $this->helper->formCheckbox(array(
+            'name'   => 'foo',
+            'value'  => 'bar',
+            'attribs'=> array('disable' => false)
+        ));
+        $this->assertNotContains('disabled="disabled"', $html);
     }
 
     public function testCanSelectCheckbox()

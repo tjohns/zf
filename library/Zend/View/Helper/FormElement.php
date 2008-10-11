@@ -81,18 +81,18 @@ abstract class Zend_View_Helper_FormElement extends Zend_View_Helper_HtmlElement
         settype($info['attribs'], 'array');
 
         // Normalize readonly tag
-        if (isset($info['attribs']['readonly']) 
-            && $info['attribs']['readonly'] != 'readonly') 
+        if (isset($info['attribs']['readonly'])
+            && $info['attribs']['readonly'] != 'readonly')
         {
             $info['attribs']['readonly'] = 'readonly';
         }
 
         // Disable attribute
-        if (isset($info['attribs']['disable']) 
-            && is_scalar($info['attribs']['disable'])) 
+        if (isset($info['attribs']['disable'])
+            && is_scalar($info['attribs']['disable']))
         {
             // disable the element
-            $info['disable'] = true;
+            $info['disable'] = (bool)$info['attribs']['disable'];
             unset($info['attribs']['disable']);
         } elseif (isset($info['attribs']['disable'])
             && is_array($info['attribs']['disable']))
@@ -127,7 +127,7 @@ abstract class Zend_View_Helper_FormElement extends Zend_View_Helper_HtmlElement
             $info['listsep'] = (string) $info['attribs']['listsep'];
         }
 
-        // Remove attribs that might overwrite the other keys. We do this LAST 
+        // Remove attribs that might overwrite the other keys. We do this LAST
         // because we needed the other attribs values earlier.
         foreach ($info as $key => $val) {
             if (isset($info['attribs'][$key])) {
