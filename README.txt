@@ -20,7 +20,8 @@ NEW FEATURES
 * ZendX_JQuery
 * Support for dijit editor
 * Metadata API in Zend_Cache
-* Performance enhancements 
+* Google book search API
+* Performance enhancements
 
 A detailed list of all features and bug fixes in this release may be found at:
 
