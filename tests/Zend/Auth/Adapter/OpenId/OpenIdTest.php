@@ -101,7 +101,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
 
         $response = new Zend_OpenId_ResponseHelper(true);
-        
+
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
         $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
@@ -148,7 +148,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
 
         $response = new Zend_OpenId_ResponseHelper(true);
-        
+
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
         $adapter = new Zend_Auth_Adapter_OpenId(null, $storage);
@@ -196,7 +196,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
 
         $response = new Zend_OpenId_ResponseHelper(true);
-        
+
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
         $adapter = new Zend_Auth_Adapter_OpenId(self::ID);
@@ -244,7 +244,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
 
         $response = new Zend_OpenId_ResponseHelper(true);
-        
+
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
         $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
@@ -292,7 +292,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
 
         $response = new Zend_OpenId_ResponseHelper(true);
-        
+
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
         $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
@@ -436,7 +436,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
 
         $response = new Zend_OpenId_ResponseHelper(true);
-        
+
         $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
 
         $adapter = new Zend_Auth_Adapter_OpenId(self::ID, $storage);
@@ -493,7 +493,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
                           "Host: id.myopenid.com\r\n".
                           "Connection: close\r\n".
                           "Accept-encoding: gzip, deflate\r\n".
-                          "User-agent: Zend_OpenId\r\n\r\n",
+                          "User-Agent: Zend_OpenId\r\n\r\n",
                           $http->getLastRequest());
     }
 

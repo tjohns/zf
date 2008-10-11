@@ -320,7 +320,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n\r\n",
+                           "User-Agent: Zend_OpenId\r\n\r\n",
                            $http->getLastRequest() );
 
         // Test POST request without parameters
@@ -329,9 +329,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "User-agent: Zend_OpenId\r\n" . 
-                           "Content-length: 0\r\n\r\n",
+                           "Content-Type: application/x-www-form-urlencoded\r\n" .
+                           "User-Agent: Zend_OpenId\r\n" .
+                           "Content-Length: 0\r\n\r\n",
                            $http->getLastRequest() );
 
         // Test GET request with parameters
@@ -340,7 +340,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n\r\n",
+                           "User-Agent: Zend_OpenId\r\n\r\n",
                            $http->getLastRequest() );
 
         // Test POST request with parameters
@@ -349,9 +349,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 7\r\n\r\n" .
+                           "User-Agent: Zend_OpenId\r\n" .
+                           "Content-Type: application/x-www-form-urlencoded\r\n" .
+                           "Content-Length: 7\r\n\r\n" .
                            "a=b&c=d",
                            $http->getLastRequest() );
 
@@ -361,7 +361,7 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n\r\n",
+                           "User-Agent: Zend_OpenId\r\n\r\n",
                            $http->getLastRequest() );
 
         // Test GET and POST parameters combination
@@ -370,9 +370,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 5\r\n\r\n" .
+                           "User-Agent: Zend_OpenId\r\n" .
+                           "Content-Type: application/x-www-form-urlencoded\r\n" .
+                           "Content-Length: 5\r\n\r\n" .
                            "c=x+y",
                            $http->getLastRequest() );
     }
@@ -404,9 +404,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                                "Host: www.myopenid.com\r\n" .
                                "Connection: close\r\n" .
                                "Accept-encoding: gzip, deflate\r\n" .
-                               "User-agent: Zend_OpenId\r\n" .
-                               "Content-type: application/x-www-form-urlencoded\r\n" .
-                               "Content-length: 510\r\n\r\n" .
+                               "User-Agent: Zend_OpenId\r\n" .
+                               "Content-Type: application/x-www-form-urlencoded\r\n" .
+                               "Content-Length: 510\r\n\r\n" .
                                "openid.mode=associate&" .
                                "openid.assoc_type=HMAC-SHA1&" .
                                "openid.session_type=DH-SHA1&".
@@ -422,9 +422,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                                "Host: www.myopenid.com\r\n" .
                                "Connection: close\r\n" .
                                "Accept-encoding: gzip, deflate\r\n" .
-                               "User-agent: Zend_OpenId\r\n" .
-                               "Content-type: application/x-www-form-urlencoded\r\n" .
-                               "Content-length: 567\r\n\r\n" .
+                               "User-Agent: Zend_OpenId\r\n" .
+                               "Content-Type: application/x-www-form-urlencoded\r\n" .
+                               "Content-Length: 567\r\n\r\n" .
                                "openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&" .
                                "openid.mode=associate&" .
                                "openid.assoc_type=HMAC-SHA256&" .
@@ -908,9 +908,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 445\r\n\r\n" .
+                           "User-Agent: Zend_OpenId\r\n" .
+                           "Content-Type: application/x-www-form-urlencoded\r\n" .
+                           "Content-Length: 445\r\n\r\n" .
                            "openid.return_to=http%3A%2F%2Fwww.zf-test.com%2Ftest.php&" .
                            "openid.assoc_handle=d41d8cd98f00b204e9800998ecf8427e&" .
                            "openid.claimed_id=http%3A%2F%2Fid.myopenid.com%2F&" .
@@ -962,9 +962,9 @@ class Zend_OpenId_ConsumerTest extends PHPUnit_Framework_TestCase
                            "Host: www.myopenid.com\r\n" .
                            "Connection: close\r\n" .
                            "Accept-encoding: gzip, deflate\r\n" .
-                           "User-agent: Zend_OpenId\r\n" .
-                           "Content-type: application/x-www-form-urlencoded\r\n" .
-                           "Content-length: 672\r\n\r\n" .
+                           "User-Agent: Zend_OpenId\r\n" .
+                           "Content-Type: application/x-www-form-urlencoded\r\n" .
+                           "Content-Length: 672\r\n\r\n" .
                            "openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&" .
                            "openid.return_to=http%3A%2F%2Fwww.zf-test.com%2Ftest.php&" .
                            "openid.assoc_handle=d41d8cd98f00b204e9800998ecf8427e&" .
