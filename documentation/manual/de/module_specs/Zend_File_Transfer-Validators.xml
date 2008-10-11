@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 11565 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -63,6 +63,22 @@
             <para>
                 <code>ImageSize</code>: Diese Prüfung checkt die Größe von Bildern. Sie prüft die Breite
                 und Höhe und bietet sowohl eine Mindest- als auch eine Maximalgröße.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>IsCompressed</code>: Diese Prüfung checkt ob die Datei komprimiert ist. Sie basiert
+                auf der <code>MimeType</code> Prüfung und validiert Komprimierungsarchiven wie Zip
+                oder Arc. Sie kann auch auf spezielle Archive begrenzt werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>IsImage</code>: Diese Prüfung checkt ob die Datei ein Bild ist. Sie basiert auf der
+                <code>MimeType</code> Prüfung und validiert Bildedateien wie Jpg oder Gif. Sie kann auch
+                auf spezielle Bildtypen begrenzt werden.
             </para>
         </listitem>
 
@@ -633,6 +649,18 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
                     limitiert werden, aber nicht die Dateigröße von einzelnen Dateien.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>bytestring</code>: Definiert ob im Fehlerfall eine Benutzerfreundliche Nummer, oder
+                    die reine Dateigröße zurückgegeben wird.
+                </para>
+
+                <para>
+                    Mit dieser Option kann definiert werden ob der Benutzer '10864' oder '10MB' erhält. Der
+                    Standardwert ist true was '10MB' zurückgibt.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -663,6 +691,9 @@ $upload->addValidator('FilesSize', false, 40000);
 
 // Limitiert die Größe aller angegebenen Dateien auf maximal 4MB und minimal 10kB
 $upload->addValidator('FilesSize', false, array('10kB', '4MB');
+
+// Wie zuvor, gibt aber die reine Dateigröße statt einem benutzerfreundlichen String zurück
+$upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
 ]]>
             </programlisting>
 
@@ -774,6 +805,80 @@ $upload->setImageWidth(20, 200);
         </example>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.iscompressed">
+        <title><emphasis role="strong">IsCompressed</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>IsCompressed</code> Prüfung checkt ob eine übertragene Datei komprimiert ist wie zum
+            Beispiel Zip oder Arc. Diese Prüfung basiert auf der <code>MimeType</code> Prüfung und unterstützt
+            die gleichen Methoden und Optionen. Diese Prüfung kann mit den dort beschriebenen Methoden auf
+            spezielle Komprimierungstypen limitiert werden.
+        </para>
+
+        <example id="zend.file.transfer.validators.iscompressed.example">
+            <title>Verwenden der IsCompressed Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checkt ob die hochgeladene Datei komprimiert ist
+$upload->addValidator('IsCompressed', false);
+
+// Limitiert diese Prüfung auf Zip Dateien
+$upload->addValidator('IsCompressed', false, array('application/zip'));
+
+// Limitiert diese Prüfung auf Zip Dateien, verwendet aber eine einfachere Schreibweise
+$upload->addValidator('IsCompressed', false, 'zip');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das nicht geprüft wird ob ein gesetzter Dateityp ein Komprimierungstyp ist
+                oder nicht. Man könnte also definieren das Gif Dateien von dieser Prüfung akzeptiert
+                werden auch wenn das nicht logisch ist.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.isimage">
+        <title><emphasis role="strong">IsImage</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>IsImage</code> Prüfung checkt ob eine übertragene Datei eine Bilddatei ist wie zum
+            Beispiel Gif oder Jpeg. Diese Prüfung basiert auf der <code>MimeType</code> Prüfung und unterstützt
+            die gleichen Methoden und Optionen. Diese Prüfung kann mit den dort beschriebenen Methoden auf
+            spezielle Bildarten limitiert werden.
+        </para>
+
+        <example id="zend.file.transfer.validators.isimage.example">
+            <title>Verwenden der IsImage Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checkt ob die hochgeladene Datei ein Bild ist
+$upload->addValidator('IsImage', false);
+
+// Limitiert diese Prüfung auf Gif Dateien
+$upload->addValidator('IsImage', false, array('application/gif'));
+
+// Limitiert diese Prüfung auf Jpeg Dateien, verwendet aber eine einfachere Schreibweise
+$upload->addValidator('IsImage', false, 'jpeg');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das nicht geprüft wird ob ein gesetzter Dateityp ein Bildtyp ist
+                oder nicht. Man könnte also definieren das Zip Dateien von dieser Prüfung akzeptiert
+                werden auch wenn das nicht logisch ist.
+            </para>
+        </note>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.mimetype">
         <title><emphasis role="strong">MimeType</emphasis> Prüfung</title>
 
@@ -832,6 +937,20 @@ $upload->setValidator('MimeType', 'image');
                 erhält man auch 'image/xpixmap' oder 'image/vasa' was problematisch sein könnte. Wenn man
                 nicht sicher ist ob die eigene Anwendung alle Typen unterstützt ist es besser nur
                 definierte Mimetypen zu erlauben statt der kompletten Gruppe.
+            </para>
+        </note>
+
+        <note>
+            <para>
+                Diese Komponente verwendet die <code>fileinfo</code> Erweiterung wenn Sie vorhanden ist.
+                Wenn nicht wird Sie die <code>mime_content_type</code> Funktion verwenden. Und wenn dieser
+                Funktionsaufruf fehlschlägt wird der Mimetyp verwendet der von HTTP angegeben wurde.
+            </para>
+
+            <para>
+                Man sollte sich vor möglichen Sicherheitsproblemen vorsehen wenn weder <code>fileinfo</code>
+                noch <code>mime_content_type</code> vorhanden sind. Der von HTTP angegebene Mimetyp ist nicht
+                sicher und kann einfach manipuliert werden.
             </para>
         </note>
     </sect2>
@@ -914,6 +1033,18 @@ $upload->addValidator('NotExists',
                     Mit dieser Option kann die Dateigröße für einzelne Dateien die übertragen werden limitieren.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>bytestring</code>: Definiert ob ein Fehler mit einer Benutzerfreundlichen Nummer
+                    zurückgegeben wird, oder mit der reinen Dateigröße.
+                </para>
+
+                <para>
+                    Mit dieser Option kann definiert werden ob der Benutzer '10864' oder '10MB' erhält.
+                    Der Standardwert ist true was '10MB' zurückgibt.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -942,9 +1073,9 @@ $upload = new Zend_File_Transfer();
 // Limitiert die Größe einer Datei auf 40000 Bytes
 $upload->addValidator('Size', 40000);
 
-// Limitiert die Größe der angegebenen Datei auf maximal 4MB und
-// minimal 10kB, und limitiert diese Prüfung auf die Datei 'uploadfile'
-$upload->addValidator('Size', array('10kB', '4MB', 'uploadfile');
+// Limitiert die Größe der angegebenen Datei auf maximal 4MB und  minimal 10kB
+// zusätzlich wird im Fall eines Fehlers die reine Zahl statt einer Benutzerfreudnlichen zurückgegeben
+$upload->addValidator('Size', array('10kB', '4MB', false);
 ]]>
             </programlisting>
         </example>
