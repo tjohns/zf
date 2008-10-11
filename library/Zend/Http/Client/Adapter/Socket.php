@@ -219,11 +219,11 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         // First, read headers only
         $response = '';
         $gotStatus = false;
-        while ($line = @fgets($this->socket)) {
+        while (($line = @fgets($this->socket)) !== false) {
             $gotStatus = $gotStatus || (strpos($line, 'HTTP') !== false);
             if ($gotStatus) {
                 $response .= $line;
-                if (!chop($line)) break;
+                if (rtrim($line) === '') break;
             }
         }
 
@@ -266,11 +266,15 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                         $line = @fread($this->socket, $left_to_read);
                         $chunk .= $line;
                         $left_to_read -= strlen($line);
+                        
+                        // Break if the connection ended prematurely
+                        if (feof($this->socket)) break;
                     }
 
                     $chunk .= @fgets($this->socket);
                     $response .= $chunk;
                 } while ($chunksize > 0);
+                
             } else {
                 throw new Zend_Http_Client_Adapter_Exception('Cannot handle "' .
                     $headers['transfer-encoding'] . '" transfer encoding');
@@ -284,6 +288,9 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 $chunk = @fread($this->socket, $left_to_read);
                 $left_to_read -= strlen($chunk);
                 $response .= $chunk;
+                
+                // Break if the connection ended prematurely
+                if (feof($this->socket)) break;
             }
             
         // If the connection is set to close, just read until socket closes
