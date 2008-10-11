@@ -22,7 +22,7 @@ require_once 'Zend/Registry.php';
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_View_Helper_HeadTitle
@@ -145,7 +145,7 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('    <title>', $string);
     }
-    
+
     public function testAutoEscapeIsHonored()
     {
         $this->helper->headTitle('Some Title &copyright;');
@@ -155,8 +155,17 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
         $this->helper->headTitle()->setAutoEscape(false);
         $this->assertFalse($this->helper->headTitle()->getAutoEscape());
 
-        
+
         $this->assertEquals('<title>Some Title &copyright;</title>', $this->helper->toString());
+    }
+
+    public function testZF2918()
+    {
+        $this->helper->headTitle('Some Title');
+        $this->helper->setPrefix('Prefix: ');
+        $this->helper->setPostfix(' :Postfix');
+
+        $this->assertEquals('<title>Prefix: Some Title :Postfix</title>', $this->helper->toString());
     }
 }
 
