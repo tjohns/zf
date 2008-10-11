@@ -33,12 +33,12 @@ if (extension_loaded('soap')) {
 
 /**
  * Zend_Soap_Client_Local
- * 
+ *
  * Class is intended to be used as local SOAP client which works
  * with a provided Server object.
- * 
+ *
  * Could be used for development or testing purposes.
- * 
+ *
  * @category   Zend
  * @package    Zend_Soap
  */
@@ -58,7 +58,7 @@ class Zend_Soap_Client_Local extends Zend_Soap_Client
      * @param string $wsdl
      * @param array $options
      */
-    function __construct(Zend_Soap_Server $server, $wsdl, $options)
+    function __construct(Zend_Soap_Server $server, $wsdl, $options = null)
     {
     	$this->_server = $server;
 
@@ -87,7 +87,7 @@ class Zend_Soap_Client_Local extends Zend_Soap_Client
         $this->_server->handle($request);
         $response = ob_get_contents();
         ob_end_clean();
-        
+
         return $response;
     }
 }
