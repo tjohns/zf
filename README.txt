@@ -22,6 +22,8 @@ NEW FEATURES
 * Metadata API in Zend_Cache
 * Google book search API
 * Performance enhancements
+* Application-wide locale with other i18n enhancements
+* File upload form element enhancements
 
 A detailed list of all features and bug fixes in this release may be found at:
 
