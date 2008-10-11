@@ -48,14 +48,13 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
      * @param string|null $value A programmatic value representing the book's
      *        embeddability.
      */
-    public function __construct($value = null, $value = null)
+    public function __construct($value = null)
     {
         foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
         parent::__construct();
         $this->_value = $value;
-        $this->_text = $value;
     }
 
     /**
