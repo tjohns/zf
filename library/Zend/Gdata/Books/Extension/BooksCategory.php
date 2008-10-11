@@ -49,19 +49,12 @@ class Zend_Gdata_Books_Extension_BooksCategory extends
      * @param string|null $label A human-readable label for display in
      *        end-user applications.
      */
-    public function __construct($term = null, $scheme = null, $label = null,
-        $value = null)
+    public function __construct($term = null, $scheme = null, $label = null)
     {
         foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
             $this->registerNamespace($nsPrefix, $nsUri);
         }
-        parent::__construct();
-        $this->_label = $label;
-        $this->_scheme = $scheme;
-        $this->_term = $term;
-        $this->_text = $value;
+        parent::__construct($term, $scheme, $label);
     }
 
-
 }
-
