@@ -23,7 +23,7 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /** @see Zend_Service_ReCaptcha_Response */
 require_once 'Zend/Service/ReCaptcha/Response.php';

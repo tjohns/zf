@@ -22,7 +22,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /**
  * Start output buffering to prevent problems using session

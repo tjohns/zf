@@ -44,7 +44,7 @@ error_reporting( E_ALL | E_STRICT );
  * Determine the root, library, and tests directories of the framework
  * distribution.
  */
-$zfRoot        = dirname(__FILE__) . '/..';
+$zfRoot        = dirname(dirname(dirname(__FILE__)));
 $zfCoreLibrary = "$zfRoot/library";
 $zfCoreTests   = "$zfRoot/tests";
 
@@ -72,10 +72,10 @@ set_include_path(implode(PATH_SEPARATOR, $path));
  * Load the user-defined test configuration file, if it exists; otherwise, load
  * the default configuration.
  */
-if (is_readable($zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
-    require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
+if (is_readable('Zend/TestConfiguration.php')) {
+    require_once 'Zend/TestConfiguration.php';
 } else {
-    require_once $zfCoreTests . DIRECTORY_SEPARATOR . 'TestConfiguration.php.dist';
+    require_once 'Zend/TestConfiguration.php.dist';
 }
 
 /*

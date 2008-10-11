@@ -3,7 +3,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Amf_TypeloaderTest::main');
 }
 
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 require_once 'Zend/Amf/Parse/TypeLoader.php';
 
 class Zend_Amf_TypeloaderTest extends PHPUnit_Framework_TestCase

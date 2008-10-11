@@ -25,7 +25,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 /** Test helper */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /** Zend_Validate_Abstract */
 require_once 'Zend/Validate/Abstract.php';
