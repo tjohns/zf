@@ -42,10 +42,14 @@ class Zend_Gdata_Books_Extension_BooksCategory extends
      * Constructor for Zend_Gdata_Books_Extension_BooksCategory which
      * Describes a books category
      *
-     * @param DOMElement $element (optional) DOMElement from which this
-     *          object should be constructed.
+     * @param string|null $term An identifier representing the category within
+     *        the categorization scheme.
+     * @param string|null $scheme A string containing a URI identifying the
+     *        categorization scheme.
+     * @param string|null $label A human-readable label for display in
+     *        end-user applications.
      */
-    public function __construct($label = null, $scheme = null, $term = null,
+    public function __construct($term = null, $scheme = null, $label = null,
         $value = null)
     {
         foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {

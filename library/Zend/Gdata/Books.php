@@ -84,8 +84,9 @@ class Zend_Gdata_Books extends Zend_Gdata
     /**
      * Retrieves a feed of volumes.
      *
-     * @param mixed $location (optional) The URL to query or a
-     *         Zend_Gdata_Query object from which a URL can be determined
+     * @param Zend_Gdata_Query|string|null $location (optional) The URL to
+     *        query or a Zend_Gdata_Query object from which a URL can be
+     *        determined.
      * @return Zend_Gdata_Books_VolumeFeed The feed of volumes found at the
      *         specified URL.
      */
@@ -104,9 +105,10 @@ class Zend_Gdata_Books extends Zend_Gdata
     /**
      * Retrieves a specific volume entry.
      *
-     * @param mixed $volumeId The volumeId of interest
-     * @param mixed $location (optional) The URL to query or a
-     *         Zend_Gdata_Query object from which a URL can be determined
+     * @param string|null $volumeId The volumeId of interest.
+     * @param Zend_Gdata_Query|string|null $location (optional) The URL to
+     *        query or a Zend_Gdata_Query object from which a URL can be
+     *        determined.
      * @return Zend_Gdata_Books_VolumeEntry The feed of volumes found at the
      *         specified URL.
      */
@@ -123,9 +125,10 @@ class Zend_Gdata_Books extends Zend_Gdata
     }
 
     /**
-     * Retrieves a feed of volumes, by default the User library feed 
+     * Retrieves a feed of volumes, by default the User library feed.
      *
-     * @param mixed $location (optional) The URL to query
+     * @param Zend_Gdata_Query|string|null $location (optional) The URL to
+     *        query.
      * @return Zend_Gdata_Books_VolumeFeed The feed of volumes found at the
      *         specified URL.
      */
@@ -142,7 +145,8 @@ class Zend_Gdata_Books extends Zend_Gdata
     /**
      * Retrieves a feed of volumes, by default the User annotation feed 
      *
-     * @param mixed $location (optional) The URL to query
+     * @param Zend_Gdata_Query|string|null $location (optional) The URL to
+     *        query.
      * @return Zend_Gdata_Books_VolumeFeed The feed of volumes found at the
      *         specified URL.
      */
@@ -160,8 +164,9 @@ class Zend_Gdata_Books extends Zend_Gdata
      * Insert a Volume / Annotation
      *
      * @param Zend_Gdata_Books_VolumeEntry $entry
-     * @param mixed $location (optional) The URL to query
-     * @return VolumeEntry The inserted volume entry
+     * @param Zend_Gdata_Query|string|null $location (optional) The URL to
+     *        query
+     * @return Zend_Gdata_Books_VolumeEntry The inserted volume entry.
      */
     public function insertVolume($entry, $location = null)
     {

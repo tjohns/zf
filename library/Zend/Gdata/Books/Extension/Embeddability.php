@@ -43,10 +43,10 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
 
     /**
      * Constructor for Zend_Gdata_Books_Extension_Embeddability which
-     * Describes an embeddability
+     * Describes an embeddability.
      *
-     * @param DOMElement $element (optional) DOMElement from which this
-     *          object should be constructed.
+     * @param string|null $value A programmatic value representing the book's
+     *        embeddability.
      */
     public function __construct($value = null, $value = null)
     {
@@ -98,7 +98,7 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
      * Returns the programmatic value that describes the embeddability of a
      * volume in Google Book Search
      *
-     * @return string The value
+     * @return string|null The value
      */
     public function getValue()
     {
@@ -106,12 +106,11 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
     }
 
     /**
-     * Sets the programmatic value that describes the embeddability of a volume
-     * in Google Book Search
+     * Sets the programmatic value that describes the embeddability of a
+     * volume in Google Book Search
      *
-     * @param string $value
-     * programmatic value that describes the embeddability of a volume in Google
-     * Book Search
+     * @param string|null $value Programmatic value that describes the
+     *        embeddability of a volume in Google Book Search
      * @return Zend_Gdata_Books_Extension_Embeddability Provides a fluent
      *     interface
      */
@@ -120,7 +119,6 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
         $this->_value = $value;
         return $this;
     }
-
 
 }
 

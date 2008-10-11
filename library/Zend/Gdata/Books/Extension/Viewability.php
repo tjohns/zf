@@ -45,8 +45,8 @@ class Zend_Gdata_Books_Extension_Viewability extends Zend_Gdata_Extension
      * Constructor for Zend_Gdata_Books_Extension_Viewability which
      * Describes a viewability
      *
-     * @param DOMElement $element (optional) DOMElement from which this
-     *          object should be constructed.
+     * @param string|null $value A programmatic value representing the book's
+     *        viewability mode.
      */
     public function __construct($value = null, $value = null)
     {

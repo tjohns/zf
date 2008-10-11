@@ -46,8 +46,10 @@ class Zend_Gdata_Books_Extension_Review extends Zend_Gdata_Extension
      * Constructor for Zend_Gdata_Books_Extension_Review which
      * User-provided review
      *
-     * @param DOMElement $element (optional) DOMElement from which this
-     *          object should be constructed.
+     * @param string|null $lang Review language.
+     * @param string|null $type Type of text construct (typically text, html,
+     *        or xhtml).
+     * @param string|null $value Text content of the review.
      */
     public function __construct($lang = null, $type = null, $value = null)
     {

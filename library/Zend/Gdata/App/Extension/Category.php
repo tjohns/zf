@@ -81,7 +81,7 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Term
+     * @return string|null
      */
     public function getTerm()
     {
@@ -89,7 +89,7 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Term $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Extension_Category Provides a fluent interface
      */
     public function setTerm($value)
@@ -99,7 +99,7 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Scheme
+     * @return string|null
      */
     public function getScheme()
     {
@@ -107,7 +107,7 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Scheme $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Extension_Category Provides a fluent interface
      */
     public function setScheme($value)
@@ -117,9 +117,7 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-
-    /**
-     * @return Zend_Gdata_App_Extension_Label
+     * @return string|null
      */
     public function getLabel()
     {
@@ -127,7 +125,7 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Label $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Extension_Category Provides a fluent interface
      */
     public function setLabel($value)

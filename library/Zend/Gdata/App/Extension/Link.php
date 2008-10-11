@@ -106,7 +106,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Href
+     * @return string|null
      */
     public function getHref()
     {
@@ -114,7 +114,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Href $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setHref($value)
@@ -124,7 +124,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Rel
+     * @return string|null
      */
     public function getRel()
     {
@@ -132,7 +132,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Rel $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setRel($value)
@@ -142,7 +142,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Type
+     * @return string|null
      */
     public function getType()
     {
@@ -150,7 +150,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Type $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setType($value)
@@ -160,7 +160,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_HrefLang
+     * @return string|null
      */
     public function getHrefLang()
     {
@@ -168,7 +168,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_HrefLang $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setHrefLang($value)
@@ -178,7 +178,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Title
+     * @return string|null
      */
     public function getTitle()
     {
@@ -186,7 +186,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Title $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setTitle($value)
@@ -196,7 +196,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Length
+     * @return string|null
      */
     public function getLength()
     {
@@ -204,7 +204,7 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Length $value
+     * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setLength($value)

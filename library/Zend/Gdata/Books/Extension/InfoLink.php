@@ -42,8 +42,12 @@ class Zend_Gdata_Books_Extension_InfoLink extends
      * Constructor for Zend_Gdata_Books_Extension_InfoLink which
      * Describes an info link
      *
-     * @param DOMElement $element (optional) DOMElement from which this
-     *          object should be constructed.
+     * @param string|null $href Linked resource URI
+     * @param string|null $rel Forward relationship
+     * @param string|null $type Resource MIME type
+     * @param string|null $hrefLang Resource language
+     * @param string|null $title Human-readable resource title
+     * @param string|null $length Resource length in octets
      */
     public function __construct($href = null, $rel = null, $type = null,
             $hrefLang = null, $title = null, $length = null, $value = null)
