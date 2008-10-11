@@ -242,16 +242,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         // Check headers to see what kind of connection / transfer encoding we have
         $headers = Zend_Http_Response::extractHeaders($response);
 
-        // if the connection is set to close, just read until socket closes
-        if (isset($headers['connection']) && $headers['connection'] == 'close') {
-            while ($buff = @fread($this->socket, 8192)) {
-                $response .= $buff;
-            }
-
-            $this->close();
-
-        // Else, if we got a transfer-encoding header (chunked body)
-        } elseif (isset($headers['transfer-encoding'])) {
+        // If we got a 'transfer-encoding: chunked' header
+        if (isset($headers['transfer-encoding'])) {
             if ($headers['transfer-encoding'] == 'chunked') {
                 do {
                     $chunk = '';
@@ -283,7 +275,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 throw new Zend_Http_Client_Adapter_Exception('Cannot handle "' .
                     $headers['transfer-encoding'] . '" transfer encoding');
             }
-
+            
         // Else, if we got the content-length header, read this number of bytes
         } elseif (isset($headers['content-length'])) {
             $left_to_read = $headers['content-length'];
@@ -293,10 +285,18 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 $left_to_read -= strlen($chunk);
                 $response .= $chunk;
             }
+            
+        // If the connection is set to close, just read until socket closes
+        } elseif (isset($headers['connection']) && $headers['connection'] == 'close') {
+            while (($buff = @fread($this->socket, 8192)) !== false) {
+                $response .= $buff;
+            }
+
+            $this->close();
         
         // Fallback: just read the response (should not happen)
         } else {
-            while ($buff = @fread($this->socket, 8192)) {
+            while (($buff = @fread($this->socket, 8192)) !== false) {
                 $response .= $buff;
             }
 
