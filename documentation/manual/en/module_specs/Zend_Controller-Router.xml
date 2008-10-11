@@ -120,7 +120,7 @@ $router->addRoute('user',
         </programlisting>
 
         <para>
-            Rewrite Router comes with four basic types of routes (one of which
+            Rewrite Router comes with five basic types of routes (one of which
             is special):
         </para>
 
@@ -128,6 +128,7 @@ $router->addRoute('user',
             <listitem><para><xref linkend="zend.controller.router.routes.standard" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.hostname" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
 

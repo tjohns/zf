@@ -193,61 +193,6 @@ $router->addRoute('archive', $route);
             control will be passed to the next route in the chain instead.
         </para>
     </sect4>
-    
-    <sect4 id="zend.controller.router.routes.standard.hostname-routing">
-        <title>Hostname routing</title>
-
-        <para>
-            You can also use the hostname for route matching. For simple
-            matching there is a static hostname option:
-        </para>
-
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => 'blog.mysite.com',
-        'path' => 'archive'
-    ),
-    array(
-        'module'     => 'blog',
-        'controller' => 'archive',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('archive', $route);
-]]>
-        </programlisting>
-
-        <para>
-            If you want to match parameters in the hostname, there is a regex
-            option. In the following example, the subdomain is used as username
-            parameter for the action controller. When assembling the route, you
-            simply give the username as parameter, as you would with the other
-            path parameters:
-        </para>
-        
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => array(
-            'regex'   => '([a-z]+).mysite.com',
-            'reverse' => '%s.mysite.com'
-            'params'  => array(
-                1 => 'username'
-            ) 
-        ),
-        'path' => ''
-    ),
-    array(
-        'module'     => 'users',
-        'controller' => 'profile',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('profile', $route);
-]]>
-        </programlisting>
-    </sect4>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:
