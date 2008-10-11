@@ -54,12 +54,37 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
         $this->_testValidUri('http://www.zend.com');
     }
 
+    /**
+     * Test that fromString() works proprerly for simple valid URLs
+     *
+     */
     public function testSimpleFromString()
     {
-        $uri = 'http://www.zend.com';
+        $tests = array(
+            'http://www.zend.com',
+            'https://www.zend.com',
+            'http://www.zend.com/path',
+            'http://www.zend.com/path?query=value'
+        );
 
-        $obj = Zend_Uri_Http::fromString($uri);
-        $this->assertEquals($uri, $obj->getUri(), 'getUri() returned value that differs from input');
+        foreach ($tests as $uri) {
+            $obj = Zend_Uri_Http::fromString($uri);
+            $this->assertEquals($uri, $obj->getUri(), 
+                "getUri() returned value that differs from input for $uri");
+        }
+    }
+    
+    /**
+     * Make sure an exception is thrown when trying to use fromString() with a
+     * non-HTTP scheme
+     * 
+     * @see http://framework.zend.com/issues/browse/ZF-4395
+     * 
+     * @expectedException Zend_Uri_Exception
+     */
+    public function testFromStringInvalidScheme()
+    {
+       Zend_Uri_Http::fromString('ftp://example.com/file');
     }
 
     public function testAllParts()
