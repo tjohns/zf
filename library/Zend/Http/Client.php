@@ -726,8 +726,10 @@ class Zend_Http_Client
         $this->raw_post_data = null;
 
         // Clear outdated headers
-        if (isset($this->headers[self::CONTENT_TYPE])) unset($this->headers[self::CONTENT_TYPE]);
-        if (isset($this->headers[self::CONTENT_LENGTH])) unset($this->headers[self::CONTENT_LENGTH]);
+        if (isset($this->headers[strtolower(self::CONTENT_TYPE)]))
+            unset($this->headers[strtolower(self::CONTENT_TYPE)]);
+        if (isset($this->headers[strtolower(self::CONTENT_LENGTH)]))
+            unset($this->headers[strtolower(self::CONTENT_LENGTH)]);
 
         return $this;
     }
@@ -939,7 +941,7 @@ class Zend_Http_Client
         
         // Set the Content-Type header
         if ($this->method == self::POST &&
-           (! isset($this->headers[self::CONTENT_TYPE]) && isset($this->enctype))) {
+           (! isset($this->headers[strtolower(self::CONTENT_TYPE)]) && isset($this->enctype))) {
 
             $headers[] = self::CONTENT_TYPE . ': ' . $this->enctype;
         }
