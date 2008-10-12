@@ -1,0 +1,1430 @@
+<sect1 id="zend.db.table">
+
+    <title>Zend_Db_Table</title>
+
+    <sect2 id="zend.db.table.introduction">
+
+        <title>Класс таблицы - введение</title>
+
+        <para>
+            Класс Zend_Db_Table является объектно-ориентированным интерфейсом к
+            таблицам баз данных. Он предоставляет методы для многих общих
+            операций над таблицами. Базовый класс является расширяемым, поэтому
+            вы можете добавлять свою логику.
+        </para>
+
+        <para>
+            Решением Zend_Db_Table является реализация паттерна
+            <ulink url="http://www.martinfowler.com/eaaCatalog/tableDataGateway.html">Table Data Gateway</ulink>.
+            Это решение также включает в себя класс, реализующий паттерн
+            <ulink url="http://www.martinfowler.com/eaaCatalog/rowDataGateway.html">Row Data Gateway</ulink>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.defining">
+        <title>Определение класса таблицы</title>
+
+        <para>
+            Для каждой таблицы в БД, к которой нужен доступ, определяется класс,
+            наследующий от Zend_Db_Table_Abstract.
+        </para>
+
+        <sect3 id="zend.db.table.defining.table-schema">
+
+            <title>Определение имени и схемы таблицы</title>
+
+            <para>
+                Указывайте таблицу, для которой определен этот класс, используя
+                защищенную переменную <code>$_name</code>. Переменная
+                должна содержать имя таблицы в том же виде, в котором она
+                представлена в БД.
+            </para>
+
+            <example id="zend.db.table.defining.table-schema.example1">
+                <title>Объявление класса таблицы с явным определением имени таблицы</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+}
+]]></programlisting>
+            </example>
+
+            <para>
+                Если вы не определили имя таблицы, то по умолчанию оно равно
+                имени класса. Если вы предпочитаете этот путь, то имя класса
+                должно иметь то же написание, что и имя таблицы в БД.
+            </para>
+
+            <example id="zend.db.table.defining.table-schema.example">
+                <title>Объявление класса таблицы с неявным определением имени таблицы</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class bugs extends Zend_Db_Table_Abstract
+{
+    // имя таблицы соответствует имени класса
+}]]></programlisting>
+            </example>
+
+            <para>
+                Вы можете также объявить схему таблицы в защищенной переменной
+                <code>$_schema</code> или через добавленное
+                перед именем таблицы имя схемы в свойстве <code>$_name</code>.
+                Схема, указанная с помощью свойства <code>$_name</code>,
+                имеет более высокий приоритет, чем схема, объявленная с помощью
+                свойства  <code>$_schema</code>. В некоторых СУРБД вместо
+                термина "схема" используются термины "база данных" или
+                "пространство таблиц", они используются аналогичным образом.
+            </para>
+
+            <example id="zend.db.table.defining.table-schema.example3">
+                <title>Объявление класса таблицы со схемой</title>
+                <programlisting role="php"><![CDATA[<?php
+
+// Первый способ:
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_schema = 'bug_db';
+    protected $_name   = 'bugs';
+}
+
+// Второй способ:
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bug_db.bugs';
+}
+
+// Если в обеих свойствах $_name м $_schema была объявлена схема,
+// то указанная в $_name имеет больший приоритет:
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name   = 'bug_db.bugs';
+    protected $_schema = 'ignored';
+}]]></programlisting>
+            </example>
+
+            <para>
+                Схема и таблица могут быть указаны через конфигурационные
+                директивы конструктора, которые замещают собой любые значения по
+                умолчанию, определенные с помощью свойств <code>$_name</code> и
+                <code>$_schema</code>. Спецификация схемы, данная через
+                директиву <code>name</code>, замещает собой любое значение,
+                переданное через опцию <code>schema</code>.
+            </para>
+
+            <example id="zend.db.table.defining.table-schema.example.constructor">
+
+                <title>Объявление имен таблицы и схемы во время инстанцирования</title>
+
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+}
+
+// Первый способ:
+
+$tableBugs = new Bugs(array('name' => 'bugs', 'schema' => 'bug_db'));
+
+// Второй способ:
+
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs');
+
+// Если в обоих опциях 'name' и 'schema' была объявлена схема,
+// то указанная в 'name' имеет больший приоритет:
+
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs', 'schema' => 'ignored');]]></programlisting>
+
+            </example>
+
+            <para>
+                Если вы не указали имя схемы, то по умолчанию это будет
+                схема, к которой подключен ваш экземпляр адаптера БД.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.defining.primary-key">
+
+            <title>Определение первичного ключа таблицы</title>
+
+            <para>
+                Каждая таблица должна иметь первичный ключ. Вы можете объявить
+                столбец для первичного ключа, используя защищенную переменную
+                <code>$_primary</code>. Это может быть строка с именем одного
+                столбца или массив имен столбцов, если первичный ключ является
+                составным.
+            </para>
+
+            <example id="zend.db.table.defining.primary-key.example">
+                <title>Пример определения первичного ключа</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+    protected $_primary = 'bug_id';
+}]]></programlisting>
+            </example>
+
+            <para>
+                Если вы не задали первичный ключ, то Zend_Db_Table_Abstract
+                пытается определить его, основываясь на данных, полученных
+                через метод <code>describeTable()</code>.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.defining.setup">
+
+            <title>Переопределение методов установки таблицы</title>
+
+            <para>
+                Когда создается экземпляр класса таблицы, конструктор вызывает
+                ряд защищенных методов, инициализирующих метаданные для таблицы.
+                Вы можете расширить любые из этих методов для того, чтобы явно
+                определить эти метаданные. Помните, что в конце должен
+                вызываться родительский метод.
+            </para>
+
+            <example id="zend.db.table.defining.setup.example">
+                <title>Пример переопределения метода _setupTableName()</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected function _setupTableName()
+    {
+        $this->_name = 'bugs';
+        parent::_setupTableName();
+    }
+}]]></programlisting>
+            </example>
+
+            <para>
+                Методы установки могут быть переопределены следующим образом:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>_setupDatabaseAdapter()</code> проверяет, был ли
+                        предоставлен адаптер БД, и извлекает используемый по
+                        умолчанию адаптер из реестра, если необходимо.
+                        Переопределив этот метод, вы можете
+                        установить адаптер БД из других источников.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>_setupTableName()</code> по умолчанию получает имя
+                        таблицы из имени класса. Переопределив
+                        этот метод, вы можете установить имя таблицы до того,
+                        как будут произведены эти действия по умолчанию.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>_setupMetadata()</code> устанавливает схему, если
+                        имя таблицы содержит структуру "schema.table", вызывает
+                        <code>describeTable()</code> для получения метаданных,
+                        по умолчанию определяет массив столбцов
+                        <code>$_cols</code>, полученных
+                        через <code>describeTable()</code>. Переопределелив этот
+                        метод, вы можете устанавливать столбцы самостоятельно.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>_setupPrimaryKey()</code> по умолчанию
+                        устанавливает столбцы первичного ключа, полученные через
+                        <code>describeTable()</code>, и проверяет, входят ли
+                        столбцы первичного ключа в массив <code>$_cols</code>.
+                        Переопределив этот метод, вы можете устанавливать
+                        столбцы первичного ключа.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.constructing">
+
+        <title>Создание экземпляра класса таблицы</title>
+
+        <para>
+            До того, как начать использование класса таблицы, создайте его
+            экземпляр, используя конструктор. Единственным аргументом
+            конструктора является массив опций. Наиболее важной опцией для
+            конструктора является экземпляр адаптера БД, представляющий текущее
+            соединение к какой-либо СУРБД. Есть три способа передачи адаптера БД
+            классу таблицы, и эти три способа описаны ниже:
+        </para>
+
+        <sect3 id="zend.db.table.constructing.adapter">
+
+            <title>Установка адаптера БД</title>
+
+            <para>
+                Первым способом предоставления адаптера БД классу таблицы
+                является передача объекта типа Zend_Db_Adapter_Abstract в
+                массиве опций под ключом <code>'db'</code>.
+            </para>
+
+            <example id="zend.db.table.constructing.adapter.example">
+                <title>Пример создания экземпляра таблицы с использованием объекта адаптера</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory('PDO_MYSQL', $options);
+
+$table = new Bugs(array('db' => $db));]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.constructing.default-adapter">
+
+            <title>Установка используемого по умолчанию адаптера БД</title>
+
+            <para>
+                Вторым способом предоставления адаптера БД классу таблицы
+                является декларирование объекта типа Zend_Db_Adapter_Abstract
+                как используемого по умолчанию для всех экземпляров таблиц в
+                вашем приложении. Вы можете делать это через статический метод
+                <code>Zend_Db_Table_Abstract::setDefaultAdapter()</code>. Его
+                аргументом является объект типа Zend_Db_Adapter_Abstract.
+            </para>
+
+            <example id="zend.db.table.constructing.default-adapter.example">
+                <title>Пример создания экземпляра таблицы с адаптером, используемым по умолчанию</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory('PDO_MYSQL', $options);
+Zend_Db_Table_Abstract::setDefaultAdapter($db);
+
+// Далее...
+
+$table = new Bugs();]]></programlisting>
+            </example>
+
+            <para>
+                Может быть удобным создавать объект адаптера БД в центральной
+                части вашего приложения - например, в загрузочном коде - и затем
+                сохранять его как адаптер, используемый по умолчанию. Это дает
+                возможность быть уверенным в том, что во всем приложении
+                используется один и тот же экземпляр адаптера. Но установка
+                адаптера, используемого по умолчанию, ограничена одним
+                экземпляром адаптера.
+            </para>
+
+        </sect3>
+
+
+        <sect3 id="zend.db.table.constructing.registry">
+
+            <title>Хранение адаптера БД в реестре</title>
+
+            <para>
+                Третий способ передачи адаптера БД классу таблицы -
+                передача строки в массиве опций под ключом <code>'db'</code>.
+                Эта строка используется как ключ для статического экземпляра
+                Zend_Registry, в котором под этим ключом должен храниться объект
+                типа Zend_Db_Adapter_Abstract.
+            </para>
+
+            <example id="zend.db.table.constructing.registry.example">
+                <title>Пример создания экземпляра таблицы с использованием ключа реестра</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$db = Zend_Db::factory('PDO_MYSQL', $options);
+Zend_Registry::set('my_db', $db);
+
+// Далее...
+
+$table = new Bugs(array('db' => 'my_db'));]]></programlisting>
+            </example>
+
+            <para>
+                Как и в случае установки адаптера, используемого по умолчанию,
+                это дает возможность быть уверенным в том, что во всем
+                приложении используется один и тот же адаптер, но использование
+                реестра является более гибким, т.к. вы можете хранить в
+                нем более одного экземпляра адаптера. Экземпляр адаптера
+                является индивидуальным для конкретной СУРБД и экземпляра БД.
+                Если в вашем приложении необходимо подключаться к нескольким БД
+                или даже различным СУРБД, то вам нужно использовать несколько
+                адаптеров.
+            </para>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.insert">
+
+        <title>Добавление строк в таблицу</title>
+
+        <para>
+            Вы можете использовать объект таблицы для добавления строк в таблицу
+            БД, на которой основан объект таблицы. Для этого используйте метод
+            <code>insert()</code> в объекте таблицы. Аргументом является
+            ассоциативный массив, содержащий имена столбцов и соответствующие им
+            значения.
+        </para>
+
+        <example id="zend.db.table.insert.example">
+            <title>Пример добавления строк в таблицу</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$data = array(
+    'created_on'      => '2007-03-22',
+    'bug_description' => 'Something wrong',
+    'bug_status'      => 'NEW'
+);
+
+$table->insert($data);]]></programlisting>
+        </example>
+
+        <para>
+            По умолчанию значения в вашем массиве данных добавляются как
+            буквенные значения, с использованием параметров. Если вам нужно,
+            чтобы они интерпретировались как выражения SQL, то необходимо
+            обозначить их отличие от простых строк. Для этого используйте
+            объекты типа Zend_Db_Expr.
+        </para>
+
+        <example id="zend.db.table.insert.example-expr">
+            <title>Пример добавления выражений в таблицу</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$data = array(
+    'created_on'      => new Zend_Db_Expr('CURDATE()'),
+    'bug_description' => 'Something wrong',
+    'bug_status'      => 'NEW'
+);
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            В примере добавления строки выше предполагается, что таблица имеет
+            автоинкрементный первичный ключ. Это принятое по умолчанию поведение
+            Zend_Db_Table_Abstract, но есть и другие типы первичных ключей.
+            Следующий раздел описывает, как поддерживаются различные типы
+            первичных ключей.
+        </para>
+
+        <sect3 id="zend.db.table.insert.key-auto">
+
+            <title>Использование таблицы с автоинкрементным ключом</title>
+
+            <para>
+                Автоинкрементный первичный ключ генерирует уникальное
+                целочисленное значение, если вы опустите столбец для
+                первичного ключа в своем операторе <code>INSERT</code>.
+            </para>
+
+            <para>
+                Если защищенная переменная в Zend_Db_Table_Abstract
+                <code>$_sequence</code> имеет булево значение <code>true</code>,
+                то класс предполагает, что таблица имеет автоинкрементный
+                столбец.
+            </para>
+
+            <example id="zend.db.table.insert.key-auto.example">
+                <title>Пример объявления таблицы с автоинкрементным первичным ключом</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+
+    // Это значение по умолчанию присутствует в Zend_Db_Table_Abstract,
+    // устанавливать его не обязательно
+    protected $_sequence = true;
+}]]></programlisting>
+            </example>
+
+            <para>
+                Примерами СУРБД, поддерживающих автоинкрементные первичные ключи
+                являются MySQL, Microsoft SQL Server и SQLite.
+            </para>
+
+            <para>
+                PostgreSQL имеет нотацию <code>SERIAL</code>, которая неявно
+                определяет последовательность, основанную на имени таблицы и
+                столбца, и использует ее для генерации значений ключа при
+                добавлении новых строк. IBM DB2 имеет нотацию
+                <code>IDENTITY</code> которая работает аналогичным образом.
+                Если вы используете одну из этих нотаций, то интерпретируйте
+                свой класс Zend_Db_Table как имеющий автоинкрементный столбец,
+                при этом члена <code>$_sequence</code> должен иметь значение
+                <code>true</code>.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.insert.key-sequence">
+
+            <title>Использование таблицы с последовательностью</title>
+
+            <para>
+                Последовательность (sequence) является объектом базы данных,
+                генерирующим уникальные значения, которые могут
+                использоваться как значения уникальных ключей в одной и более
+                таблицах БД.
+            </para>
+
+            <para>
+                Если вы присвоили <code>$_sequence</code> строковое значение,
+                то Zend_Db_Table_Abstract считает строку именем объекта
+                последовательности в БД. Последовательность запускается для
+                генерации нового значения, и это значение используется в
+                операции
+                <code>INSERT</code>.
+            </para>
+
+            <example id="zend.db.table.insert.key-sequence.example">
+                <title>Пример объявления таблицы с последовательностью</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+
+    protected $_sequence = 'bug_sequence';
+}]]></programlisting>
+            </example>
+
+            <para>
+                Примерами СУРБД, поддерживающих объекты последовательностей
+                являются Oracle, PostgreSQL и IBM DB2.
+            </para>
+
+            <para>
+                PostgreSQL и IBM DB2 также имеют синтаксис, который неявно
+                определяет последовательности и связывает их со столбцами.
+                Если вы используете эту нотацию, то интерпретируйте таблицу
+                как имеющую автоинкрементный ключевой столбец. Задавайте имя
+                последовательности в виде строки только в тех случаях, когда вы
+                собираетесь явно вызывать последовательности для получения
+                следующего значения ключа.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.insert.key-natural">
+
+            <title>Использование таблицы с естественным ключом</title>
+
+            <para>
+                Некоторые таблицы имеют естественные ключи. Это означает, что
+                ключ не генерируется автоматически таблицей или
+                последовательностью. В этом случае вы должны установить значение
+                первичного ключа.
+            </para>
+
+            <para>
+                Если вы присвоили <code>$_sequence</code> булево значение
+                <code>false</code>, то Zend_Db_Table_Abstract считает, что
+                таблица имеет естественный первичный ключ. Вы должны
+                предоставлять значения для столбцов первичного ключа в массиве
+                данных для метода <code>insert()</code>, иначе метод бросает
+                исключение Zend_Db_Table_Exception.
+            </para>
+
+            <example id="zend.db.table.insert.key-natural.example">
+                <title>Пример объявления таблицы с естественным ключом</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class BugStatus extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bug_status';
+
+    protected $_sequence = false;
+}]]></programlisting>
+            </example>
+
+            <note>
+                <para>
+                    Все СУРБД поддерживают таблицы с естественными ключами.
+                    Примеры таблиц, часто объявляемых как имеющие естественные
+                    ключи: справочные таблицы, таблицы пересечений в отношениях
+                    "многие-ко-многим", большинство таблиц с составными
+                    ключами.
+                </para>
+            </note>
+
+        </sect3>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.update">
+
+        <title>Обновление строк в таблице</title>
+
+        <para>
+            Вы можете обновлять строки в таблице БД, используя метод
+            <code>update</code> класса таблицы. Этот метод принимает два
+            аргумента: первым является ассоциативный массив столбцов, которые
+            требуется изменить, и новых значений, присваиваемых этим столбцам;
+            вторым - выражение SQL, которое используется в предложении
+            <code>WHERE</code> в качестве условия изменения строки в операции
+            <code>UPDATE</code>.
+        </para>
+
+        <example id="zend.db.table.update.example">
+            <title>Пример обновления строк в таблице</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$data = array(
+    'updated_on'      => '2007-03-23',
+    'bug_status'      => 'FIXED'
+);
+
+$where = $table->getAdapter()->quoteInto('bug_id = ?', 1234);
+
+$table->update($data, $where);]]></programlisting>
+        </example>
+
+        <para>
+            Поскольку метод таблицы <code>update()</code> в свою очередь
+            использует метод адаптера БД
+            <link linkend="zend.db.adapter.update"><code>update()</code></link>,
+            то второй аргумент может быть массивом SQL-выражений. Выражения
+            объединяются как булевы условия через оператор <code>AND</code>.
+        </para>
+
+        <note>
+            <para>
+                Значения и идентификаторы в SQL-выражении не заключаются в
+                кавычки автоматически. Если имеются значения или идентификаторы,
+                которые требуют заключения в кавычки, то вы должны произвести
+                его сами. Используйте методы <code>quote()</code>,
+                <code>quoteInto()</code> и <code>quoteIdentifier()</code>
+                адаптера БД.
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.delete">
+
+        <title>Удаление строк из таблицы</title>
+
+        <para>
+            Вы можете удалять строки из таблицы базы данных, используя метод
+            <code>delete()</code>. Этот метод принимает один аргумент,
+            являющийся SQL-выражением, который используется в предложении
+            <code>WHERE</code> в качестве условия, по которому удаляются строки.
+        </para>
+
+        <example id="zend.db.table.delete.example">
+            <title>Пример удаления строк из таблицы</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = $table->getAdapter()->quoteInto('bug_id = ?', 1235);
+
+$table->delete($where);]]></programlisting>
+        </example>
+
+        <para>
+            Поскольку метод таблицы в свою очередь использует метод
+            <code>delete()</code> адаптера БД, то второй аргумент может быть
+            массивом SQL-выражений. Выражения объединяются как булевы условия
+            через оператор <code>AND</code>.
+        </para>
+
+        <note>
+            <para>
+                Значения и идентификаторы в SQL-выражении не заключаются в
+                кавычки автоматически. Если имеются значения или идентификаторы,
+                которые требуют заключения в кавычки, то вы должны произвести
+                его сами. Используйте методы <code>quote()</code>,
+                <code>quoteInto()</code> и <code>quoteIdentifier()</code>
+                адаптера БД.
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.find">
+
+        <title>Извлечение строк по первичному ключу</title>
+
+        <para>
+            Вы можете запрашивать у таблицы БД строки, соответствующие
+            определенным значениям в первичном ключе, используя метод
+            <code>find()</code>. Первым аргументом этого метода является
+            единственное значение или массив значений, сопоставляемых с
+            первичным ключом таблицы.
+        </para>
+
+        <example id="zend.db.table.find.example">
+            <title>Пример извлечения строк по значениям первичного ключа</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+// Запрашивает единственную строку
+// Возвращает набор строк (Rowset)
+$rows = $table->find(1234);
+
+// Запрашивает несколько строк
+// Также возвращает набор строк (Rowset)
+$rows = $table->find(array(1234, 5678));]]></programlisting>
+        </example>
+
+        <para>
+            Если вы задали одно значение, то метод вернет максимум одну
+            строку, потому что первичный ключ не может содержать повторяющиеся
+            значения и должна быть максимум одна строка в таблице БД,
+            соответствующая данному значению. Если вы задали несколько
+            значений, то метод вернет максимум столько строк, сколько
+            несовпадающих значений было задано.
+        </para>
+
+        <para>
+            Метод <code>find()</code> может возвращать меньше строк, чем было
+            задано значений для первичного ключа, если для некоторых значений
+            нет соответствующих строк в таблице БД. Метод может даже вернуть
+            нулевое количество строк. Поскольку количество возвращаемых строк
+            является переменным, то метод <code>find()</code> возвращает объект
+            типа Zend_Db_Table_Rowset_Abstract (набор строк).
+        </para>
+
+        <para>
+            Если первичный ключ является составным, т.e. он состоит из
+            нескольких столбцов, то можно задать добавочные столбцы как
+            дополнительные аргументы метода <code>find()</code>. Вы должны
+            передать столько аргументов, сколько столбцов в первичном
+            ключе таблицы.
+        </para>
+
+        <para>
+            Для того чтобы найти несколько строк с составным первичным ключом,
+            передавайте массив для каждого из аргументов. Все эти массивы должны
+            иметь одно и то же количество элементов. Значения из всех массивов
+            объединяются в "кортежи" в порядке следования; например, первые
+            элементы каждого массива определяют значение первого составного
+            первичного ключа, вторые элементы - второго составного ключа и т.д.
+        </para>
+
+        <example id="zend.db.table.find.example-compound">
+            <title>Пример извлечения строк по значениям составного первичного ключа</title>
+            <para>
+                Вызов метода <code>find()</code> ниже для поиска нескольких
+                строк может соответствовать двум строкам в БД. Первая строка
+                должна иметь значение первичного ключа (1234, 'ABC'), вторая -
+                (5678, 'DEF').
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+
+class BugsProducts extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs_products';
+    protected $_primary = array('bug_id', 'product_id');
+}
+
+$table = new BugsProducts();
+
+// Запрашивает единственную строку через составной первичный ключ
+// Возвращает набор строк (Rowset)
+$rows = $table->find(1234, 'ABC');
+
+// Запрашивает несколько строк через составной первичный ключ
+// Также возвращает набор строк (Rowset)
+$rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.fetch-all">
+
+        <title>Получение набора строк</title>
+
+        <para>
+            Вы можете запрашивать набор строк, используя любые условия, отличные
+            от значений первичного ключа, используя метод
+            <code>fetchAll()</code> класса таблицы. Этот метод возвращает объект
+            типа Zend_Db_Table_Rowset_Abstract.
+        </para>
+
+        <example id="zend.db.table.fetch-all.example1">
+            <title>Пример извлечения строк по выражению</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
+
+$rows = $table->fetchAll($where);]]></programlisting>
+        </example>
+
+        <para>
+            Первым аргументом этого метода является SQL-выражение, которое затем
+            используется в предложении <code>WHERE</code> так же, как в методах
+            <code>update()</code> и <code>delete()</code>, описанных выше.
+        </para>
+
+        <para>
+            Аргумент для предложения <code>WHERE</code> может быть строкой, как
+            показано в предыдущем примере, или массивом. Для каждого элемента
+            массива, если ключ имеет строковой тип, то он является выражением
+            SQL, содержащим метки заполнения, а значение элемента является
+            значением, которое нужно вставить в это выражение вместо метки
+            заполнения.
+        </para>
+
+        <example id="zend.db.table.fetch-all.example1b">
+            <title>Пример поиска строк по массиву выражений</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = array('bug_status = ?' => 'NEW');
+
+$rows = $table->fetchAll($where);]]></programlisting>
+        </example>
+
+        <para>
+            Если массив имеет несколько элементов, то элементы объединяются в запросе в выражения <code>AND</code>.
+        </para>
+
+        <example id="zend.db.table.fetch-all.example1c">
+            <title>Пример поиска строк по массиву выражений с несколькими термами</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = array(
+            'bug_status = ?'  => 'NEW',
+            'reported_by = ?' => 'dduck'
+        );
+
+$rows = $table->fetchAll($where);
+// генерируемый SQL-код:
+// WHERE bug_status = 'NEW' AND reported_by = 'dduck'
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>
+                Значения и идентификаторы в SQL-выражении не заключаются
+                автоматически в кавычки. Если имеются значения или
+                идентификаторы, требующие заключения в кавычки, то вы должны
+                произвести его сами. Используйте методы <code>quote()</code>,
+                <code>quoteInto()</code> и <code>quoteIdentifier()</code>
+                адаптера БД.
+            </para>
+        </note>
+
+        <para>
+            Вторым аргументом является выражение или массив выражений,
+            используемых в качестве условия сортировки в предложении
+            <code>ORDER BY</code>.
+        </para>
+
+        <para>
+            Третьим и четвертым аргументами являются целочисленные значения
+            количества и смещения, используемые для того, чтобы запрос возвращал
+            определенное подмножество строк. Эти значения используются в
+            предложении <code>LIMIT</code> или эквивалентной логике для тех
+            СУРБД, которые не поддерживают синтаксис <code>LIMIT</code>.
+        </para>
+
+        <example id="zend.db.table.fetch-all.example2">
+            <title>Пример поиска строк по выражению</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where  = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
+
+$order  = 'bug_id';
+
+// Вернуть строки начиная с 21-ой и кончая 30-й
+$count  = 10;
+$offset = 20;
+
+$rows = $table->fetchAll($where, $order, $count, $offset);]]></programlisting>
+        </example>
+
+        <para>
+            Все эти аргументы являются опциональными. Если вы их опустите, то
+            возвращаемый результат будет включать в себя все строки таблицы в
+            произвольном порядке.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.fetch-row">
+
+        <title>Запрос единственной строки</title>
+
+        <para>
+            Вы можете запрашивать единственную строку, используя любое условие,
+            отличное от значений первичного ключа, используя метод
+            <code>fetchRow()</code> класса таблицы. Использование этого метода
+            аналогично методу <code>fetchAll()</code> в том, что его аргументы
+            включают в себя выражение <code>WHERE</code> и условия сортировки.
+        </para>
+
+        <example id="zend.db.table.fetch-row.example1">
+            <title>Пример поиска единственной строки по выражению</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where  = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW');
+
+$order  = 'bug_id';
+
+$row = $table->fetchRow($where, $order);]]></programlisting>
+        </example>
+
+        <para>
+            Этот метод возвращает объект типа Zend_Db_Table_Row_Abstract. Если
+            по заданному вами условию поиска не найдено ни одной строки в
+            таблице БД, то <code>fetchRow()</code> вернет значение
+            <code>null</code>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.info">
+
+        <title>Получение метаданных таблицы</title>
+
+        <para>
+            Класс Zend_Db_Table_Abstract предоставляет некоторую информацию о
+            его метаданных. Метод <code>info()</code> возвращает массив с
+            данными о таблице, ее столбцах, первичном ключе и другие метаданные.
+        </para>
+
+        <example id="zend.db.table.info.example">
+            <title>Пример получения имени таблицы</title>
+            <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$info = $table->info();
+
+echo "The table name is " . $info['name'] . "\n";
+
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Ключи массива, возвращаемого методом <code>info()</code>, описаны
+            ниже.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">name</emphasis> => имя таблицы
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">cols</emphasis> =>
+                    массив имен столбцов в таблице
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">primary</emphasis> =>
+                    массив имен столбцов в первичном ключе
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">metadata</emphasis> =>
+                    ассоциативный массив, включающий в себя имена столбцов и
+                    соответствующие им данные о столбцах. Это информация,
+                    возвращаемая методом <code>describeTable()</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">rowClass</emphasis> => имя
+                    определенного класса, используемого для объектов строк,
+                    возвращаемых методами данного экземпляра таблицы. По
+                    умолчанию это Zend_Db_Table_Row.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">rowsetClass</emphasis> =>
+                    имя определенного класса, используемого для объектов
+                    наборов строк, возвращаемых методами данного экземпляра
+                    таблицы. По умолчанию это Zend_Db_Table_Rowset.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">referenceMap</emphasis> =>
+                    ассоциативный массив с данными о ссылках на другие таблицы.
+                    См. <xref linkend="zend.db.table.relationships.defining" />.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">dependentTables</emphasis> =>
+                    массив имен классов таблиц, на которые ссылается данная
+                    таблица. См.
+                    <xref linkend="zend.db.table.relationships.defining" />.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">schema</emphasis> =>
+                    имя схемы (базы данных, пространства таблиц) для данной
+                    таблицы.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.metadata.caching">
+
+        <title>Кэширование метаданных таблицы</title>
+
+        <para>
+            По умолчанию <code>Zend_Db_Table_Abstract</code> производит запрос к
+            БД для определения <link linkend="zend.db.table.info">метаданных
+            таблицы</link> во время инстанцирования объекта таблицы. Т.е. когда
+            создается новый объект таблицы, поведением по умолчанию является
+            извлечение метаданных таблицы из БД через метод
+            <code>describeTable()</code>.
+        </para>
+
+        <para>
+            В некоторых условиях, особенно когда к одной и той же таблице БД
+            создается много объектов таблиц, произведение запросов для
+            получения метаданных для каждого экземпляря может быть нежелательным
+            с точки зрения производительности. В таких случаях можно производить
+            кэширование метаданных таблицы, полученных из БД.
+        </para>
+
+        <para>
+            Есть два основных способа произведения кэширования:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Вызов метода
+                        Zend_Db_Table_Abstract::setDefaultMetadataCache()</emphasis>
+                        - Это позволяет разработчику единовременно установить
+                        объект кэша, используемый в всех классах таблиц.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">Конфигурирование
+                        Zend_Db_Table_Abstract::__construct()</emphasis> - Это
+                        позволяет разработчику установить объект кэша для
+                        определенного экземпляра класса таблицы.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            В обоих случаях определением кэша может быть <code>null</code>
+            (т.е. не используется кэширование) или экземпляр класса
+            <link linkend="zend.cache.frontends.core"><code>Zend_Cache_Core</code></link>.
+            Эти методы могут использоваться вместе для того, чтобы
+            использовать по умолчанию определенный объект кэша и при этом иметь
+            возможность изменять его для конкретного объекта таблицы.
+        </para>
+
+        <example id="zend.db.table.metadata.caching-default">
+
+            <title>Кэширование метаданных по умолчанию для всех объектов таблиц</title>
+
+            <para>
+                Следующий код показывает, как установить объект кэша,
+                используемый по умолчанию во всех объектах таблиц:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+// Сначала создается объект кэша
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+    'automatic_serialization' => true
+    );
+
+$backendOptions  = array(
+    'cacheDir'                => 'cacheDir'
+    );
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+
+// Далее, объект кэша устанавливается в качестве используемого
+// во всех объектах таблиц
+
+require_once 'Zend/Db/Table/Abstract.php';
+
+Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
+
+
+// Класс таблицы
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    // ...
+}
+
+
+// Каждый экземпляр таблицы Bugs теперь использует
+// кэширование метаданных по умолчанию
+
+$bugs = new Bugs();]]></programlisting>
+
+        </example>
+
+        <example id="zend.db.table.metadata.caching-instance">
+
+            <title>Кэширование метаданных для одного конкретного объекта таблицы</title>
+
+            <para>
+                Следующий код показывает, как устанавливается кэширование
+                метаданных для одного конкретного объекта таблицы:
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+
+// Сначала создается объект кэша
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+    'automatic_serialization' => true
+    );
+
+$backendOptions  = array(
+    'cacheDir'                => 'cacheDir'
+    );
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+
+// Класс таблицы
+
+require_once 'Zend/Db/Table/Abstract.php';
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    // ...
+}
+
+
+// Экземпляр конфигурируется при инстанцировании
+
+$bugs = new Bugs(array('metadataCache' => $cache));]]></programlisting>
+
+        </example>
+
+        <note>
+
+            <title>Автоматическая сериализация через фронтэнд кэша</title>
+
+            <para>
+                Поскольку информация, возвращаемая методом адаптера
+                describeTable(), является массивом, то убедитесь, что опция
+                <code>automatic_serialization</code> установлена в
+                <code>true</code> для фронтэнда <code>Zend_Cache_Core</code>.
+            </para>
+
+        </note>
+
+        <para>
+            Несмотря на то, что в примерах выше используется
+            <code>Zend_Cache_Backend_File</code>, разработчики могут
+            использовать другие бэкэнды, наиболее подходящие в данной ситуации.
+            За более подробной информацией см.
+            <link linkend="zend.cache">Zend_Cache</link>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.extending">
+
+        <title>Расширение класса таблицы</title>
+
+        <sect3 id="zend.db.table.extending.row-rowset">
+
+            <title>Использование собственных классов строки и набора строк</title>
+
+            <para>
+                По умолчанию методы класса таблицы возвращают наборы строк в
+                экземплярах класса Zend_Db_Table_Rowset, и эти наборы строк
+                содержат в себе коллекции экземпляров класса Zend_Db_Table_Row.
+                Вы можете указать альтернативные классы, используемые вместо
+                них, но они должны наследовать от классов
+                Zend_Db_Table_Rowset_Abstract и Zend_Db_Table_Row_Abstract
+                соответственно.
+            </para>
+
+            <para>
+                Вы можете указать классы строки и набора строк в
+                массиве опций конструктора таблицы под ключами
+                <code>'rowClass'</code> и <code>'rowsetClass'</code>
+                соответственно. Задавайте имена классов в виде обычных строк.
+            </para>
+
+            <example id="zend.db.table.extending.row-rowset.example">
+                <title>Пример указания классов строки и набора строк</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class My_Row extends Zend_Db_Table_Row_Abstract
+{
+    ...
+}
+
+class My_Rowset extends Zend_Db_Table_Rowset_Abstract
+{
+    ...
+}
+
+$table = new Bugs(
+    array(
+        'rowClass'    => 'My_Row',
+        'rowsetClass' => 'My_Rowset'
+    )
+);
+
+$where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
+
+// Возвращает объект типа My_Rowset,
+// содержащий массив объектов типа My_Row
+$rows = $table->fetchAll($where);]]></programlisting>
+            </example>
+
+            <para>
+                Вы можете сменить используемые классы, указав их через методы
+                <code>setRowClass()</code> и <code>setRowsetClass()</code>.
+                Это применяется к создаваемым впоследствии строкам и наборам
+                строк и не влияет на класс объектов строк и наборов строк,
+                созданных ранее.
+            </para>
+
+            <example id="zend.db.table.extending.row-rowset.example2">
+                <title>Пример смены используемых для строк и наборов строк классов</title>
+                <programlisting role="php"><![CDATA[<?php
+
+$table = new Bugs();
+
+$where = $table->getAdapter()->quoteInto('bug_status = ?', 'NEW')
+
+// Возвращает объект типа Zend_Db_Table_Rowset,
+// содержащий массив объектов типа Zend_Db_Table_Row.
+$rowsStandard = $table->fetchAll($where);
+
+$table->setRowClass('My_Row');
+$table->setRowsetClass('My_Rowset');
+
+// Возвращает объект типа My_Rowset,
+// содержащий массив объектов типа My_Row.
+$rowsCustom = $table->fetchAll($where);
+
+// Объект $rowsStandard по прежнему существует и не изменился.]]></programlisting>
+            </example>
+
+            <para>
+                За более подробной информацией о классах строки и набора строк
+                см. <xref linkend="zend.db.table.row" /> и
+                <xref linkend="zend.db.table.rowset" />.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.extending.insert-update">
+
+            <title>Определение собственной логики для добавления и обновления строк</title>
+
+            <para>
+                Вы можете переопределить методы <code>insert()</code> в своем
+                классе таблицы. Это дает возможность реализовать собственный
+                код, который исполняется до того, как будет выполнена операция с
+                БД. Всегда вызывайте метод родительского класса после своих
+                действий.
+            </para>
+
+            <example id="zend.db.table.extending.insert-update.example">
+                <title>Собственная логика для управления отметками времени</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+
+    public function insert(array $data)
+    {
+        // добавление timestamp
+        if (empty($data['created_on'])) {
+            $data['created_on'] = time();
+        }
+        return parent::insert($data);
+    }
+
+    public function update(array $data, $where)
+    {
+        // добавление timestamp
+        if (empty($data['updated_on'])) {
+            $data['updated_on'] = time();
+        }
+        return parent::update($data, $where);
+    }
+}]]></programlisting>
+            </example>
+
+            <para>
+                Вы можете также переопределить метод <code>delete()</code>.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.extending.finders">
+
+            <title>Определение собственных методов для поиска</title>
+
+            <para>
+                Вы можете реализовать собственные методы запросов в своем классе
+                таблицы, если приходится часто делать запросы к таблице с одними
+                и теми же условиями. Большинство запросов могут быть написаны с
+                использованием <code>fetchAll()</code>, но это требует написания
+                повторяющегося кода для формирования условий запроса в том
+                случае, если вам нужно выполнять запрос в нескольких местах
+                вашего приложения. Поэтому будет удобным добавить метод в класс
+                таблицы для выполнения часто используемых запросов к таблице.
+            </para>
+
+            <example id="zend.db.table.extending.finders.example">
+                <title>Метод для поиска ошибок с определенным статусом</title>
+                <programlisting role="php"><![CDATA[<?php
+
+class Bugs extends Zend_Db_Table_Abstract
+{
+    protected $_name = 'bugs';
+
+    public function findByStatus($status)
+    {
+        $where = $this->getAdapter()->quoteInto('bug_status = ?', $status);
+        return $this->fetchAll($where, 'bug_id');
+    }
+}]]></programlisting>
+            </example>
+
+        </sect3>
+
+        <sect3 id="zend.db.table.extending.inflection">
+
+            <title>Определение инфлекции в Zend_Db_Table</title>
+
+            <para>
+                Некоторые разработчики предпочитают, чтобы имя класса таблицы
+                сопоставлялось с именем таблицы в СУРБД с применением
+                преобразования, называемой <emphasis>инфлекцией</emphasis>.
+            </para>
+
+            <para>
+                Например, если имя вашего класса таблицы -
+                "<code>BugsProducts</code>", то класс должен соответствовать
+                физической таблице в БД с названием
+                "<code>bugs_products</code>", если вы не произвели явное
+                объявление свойства класса <code>$_name</code>. В данном
+                преобразовании имя класса в формате "CamelCase" должно
+                приводиться к нижнему регистру с разделением слов символом
+                подчеркивания.
+            </para>
+
+            <para>
+                Вы можете указать имя таблицы БД независимо то имени класса,
+                объявив его в свойстве <code>$_name</code> во всех классах этой
+                таблицы.
+            </para>
+
+            <para>
+                Zend_Db_Table_Abstract не производит инфлекцию при получении
+                имени таблицы. Если вы опустите
+                объявление свойства <code>$_name</code> в своем классе таблицы,
+                то класс будет соответствовать таблице в БД с точно таким же
+                именем, как и у него.
+            </para>
+
+            <para>
+                Было бы неуместным использовать преобразование идентификаторов
+                из БД, поскольку это может привести к неоднозначности или
+                сделать некоторые идентификаторы недоступными.
+                Использование SQL-идентификаторов в том виде, в котором они
+                присутствуют в БД, делает Zend_Db_Table_Abstract проще и гибче в
+                использовании.
+            </para>
+
+            <para>
+                Если вы предпочитаете использовать инфлекцию, то должны
+                реализовать преобразование сами, переопределив метод
+                <code>_setupTableName()</code> в своем классе таблицы. Одним из
+                возможных способов является определение абстрактного класса,
+                наследующего от Zend_Db_Table_Abstract, и объявление
+                классов остальных таблиц как наследующих от этого нового
+                класса.
+            </para>
+
+            <example id="zend.db.table.extending.inflection.example">
+                <title>Пример абстрактного класса таблицы, реализующего инфлекцию</title>
+                <programlisting role="php"><![CDATA[<?php
+
+abstract class MyAbstractTable extends Zend_Db_Table_Abstract
+{
+    protected function _setupTableName()
+    {
+        if (!$this->_name) {
+            $this->_name = myCustomInflector(get_class($this));
+        }
+        parent::_setupTableName();
+    }
+}
+
+class BugsProducts extends MyAbstractTable
+{
+}
+
+?>]]></programlisting>
+            </example>
+
+            <para>
+                Реализация функций для произведения инфлекционного
+                преобразования возлагается на разработчика. Zend Framework не
+                предоставляет для этих целей готовых функций.
+            </para>
+
+        </sect3>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

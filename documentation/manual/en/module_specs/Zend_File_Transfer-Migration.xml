@@ -1,0 +1,62 @@
+<sect1 id="zend.file.transfer.migration">
+
+    <title>Migrating from previous versions</title>
+
+    <para>
+        The API of <code>Zend_File_Transfer</code> has changed from time to time.
+        If you started to use <code>Zend_File_Transfer</code> and it's subcomponents
+        in earlier versions follow the guidelines below to migrate your scripts to
+        use the new API.
+    </para>
+
+    <sect2 id="zend.file.transfer.migration.fromonesixonetoonesixtwo">
+        <title>Migrating from 1.6.1 to 1.6.2 or newer</title>
+        <sect3 id="zend.file.transfer.migration.fromonesixonetoonesixtwo.validators">
+            <title>Changes when using validators</title>
+
+            <para>
+                As noted by users, the validators from <code>Zend_File_Transfer</code>
+                do not work the same way like the default ones from <code>Zend_Form</code>.
+                <code>Zend_Form</code> allows the usage of a <code>breakChainOnFailure</code>
+                parameter which breaks the validation for all further validators when an
+                validation error has occured.
+            </para>
+
+            <para>
+                So we added this parameter also to all existing validators from
+                <code>Zend_File_Transfer</code>.
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    Old method API: <code>addValidator($validator, $options, $files)</code>.
+                </para></listitem>
+
+                <listitem><para>
+                    New method API: <code>addValidator($validator, $breakChainOnFailure, $options, $files)</code>.
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                To migrate your scripts to the new API, simply add a <code>false</code>
+                after defining the wished validator.
+            </para>
+
+            <example id="zend.file.transfer.migration.fromonesixonetoonesixtwo.example">
+                <title>How to change your file validators from 1.6.1 to 1.6.2</title>
+
+                <programlisting role="php"><![CDATA[
+// Example for 1.6.1
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', array('1B', '100kB'));
+
+// Same example for 1.6.2 and newer
+// Note the added boolean false
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', false, array('1B', '100kB'));
+]]>
+            </programlisting>
+        </example>
+        </sect3>
+    </sect2>
+</sect1>

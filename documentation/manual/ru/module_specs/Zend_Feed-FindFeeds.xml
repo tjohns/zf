@@ -1,0 +1,42 @@
+<sect1 id="zend.feed.findFeeds">
+    <title>
+        Получение лент из веб-страниц
+        <!-- Retrieving Feeds from Web Pages -->
+    </title>
+    <para>
+       Веб-страницы часто содержат теги <code>&lt;link&gt;</code>, которые ссылаются на
+       ленты с соответсвующим данной странице содержимым. <code>Zend_Feed</code>
+       дает возможность извлечь все ленты, на которые ссылается веб-страница,
+       одним простым вызовом метода:
+<!--
+        Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant to
+        the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
+        page with one simple method call:
+-->
+    </para>
+    <programlisting role="php"><![CDATA[
+<?php
+
+$feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
+
+?>]]></programlisting>
+    <para>
+        Здесь метод <code>findFeeds()</code> возвращает массив объектов лент
+        <code>Zend_Feed_Abstract</code>, на которые ссылались теги
+        <code>&lt;link&gt;</code> в коде веб-страницы <code>news.html</code>. В зависимости от
+        типа ленты, каждый элемент массива <code>$feedArray</code>
+        может быть экземпляром <code>Zend_Feed_Rss</code> или <code>Zend_Feed_Atom</code>.
+        <code>Zend_Feed</code> будет генерировать исключение <code>Zend_Feed_Exception</code>
+        в случае ошибки, такой, как возврат HTTP-кода 404 или плохо сформированная лента.
+<!--
+        Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
+        objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on
+        the type of each feed, each respective entry in the <code>$feedArray</code> array may be a
+        <code>Zend_Feed_Rss</code> or <code>Zend_Feed_Atom</code> instance. <code>Zend_Feed</code> will throw a
+        <code>Zend_Feed_Exception</code> upon failure, such as an HTTP 404 response code or a malformed feed.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
