@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11580 -->
 <sect1 id="zend.form.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
@@ -586,7 +586,7 @@ class RegistrationController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[
-class My_Form_Registration extends Zend_Form
+class RegistrationController extends Zend_Form
 {
     // ...
     

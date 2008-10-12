@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 11683 -->
 <sect1 id="zend.form.quickstart">
     <title>Schnellstart mit Zend_Form</title>
 
@@ -275,7 +275,7 @@ echo $form;
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->form ?>
+<?php $this->form ?>
 ]]>
         </programlisting>
 

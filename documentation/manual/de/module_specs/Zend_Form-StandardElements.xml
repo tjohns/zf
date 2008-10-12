@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11518 -->
+<!-- EN-Revision: 11598 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -291,6 +291,38 @@ $form->addElement($element, 'foo');
             <para>
                 Sobald es 2 identisch benannte File Elemente gibt, wird das zweite Element entweder
                 nicht dargestellt oder nicht übertragen.
+            </para>
+        </note>
+
+        <para>
+            Um die Größe der Datei zu begrenzen, die vom Client hochgeladen wird, sollte man zusätzlich die
+            maximale Dateigröße setzen die das Formular akzeptiert. Das begrenzt die Größe auf der
+            Clientseite durch das Setzen der <code>MAX_FILE_SIZE</code> Option im Formular. Sobald der
+            Wert, durch die Verwendung der <code>setMaxFileSize($size)</code> Methode, gesetzt ist, wird er
+            mit dem File Element dargestellt.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Ein Bild hochladen:')
+        ->setDestination('/var/www/upload')
+        ->addValidator('Size', false, 102400) // Limitiert auf 100k
+        ->setMaxFileSize(102400); // Limitiert die Dateigröße auf der Clientseite
+$form->addElement($element, 'foo');
+]]>
+        </programlisting>
+
+        <note>
+            <title>MaxFileSize mit mehreren File Elementen</title>
+
+            <para>
+                Wenn mehrere File Elemente im Formular verwendet werden muß man <code>MAX_FILE_SIZE</code>
+                nur einmal setzen. Wenn man es nochmals setzt überschreibt der vorher gesetzte Wert überschrieben.
+            </para>
+
+            <para>
+                Es ist zu beachten das man <code>MAX_FILE_SIZE</code> nur einmal setzen kann, selbst wenn man
+                mehrere Formuare verwendet.
             </para>
         </note>
     </sect2>
