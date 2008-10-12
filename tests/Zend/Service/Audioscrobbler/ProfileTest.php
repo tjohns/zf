@@ -86,8 +86,6 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
 
     public function testGetBadProfileInfo()
     {
-        $this->markTestSkipped('Skipped . See [ZF-4560]');
-
         $as = new Zend_Service_Audioscrobbler();
         $as->set('user', 'kljadsfjllkj');
 
