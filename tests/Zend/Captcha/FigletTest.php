@@ -64,10 +64,10 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         }
 
         $this->element = new Zend_Form_Element_Captcha(
-            'captchaF', 
+            'captchaF',
             array(
                 'captcha' => array(
-                    'Figlet', 
+                    'Figlet',
                     'sessionClass' => 'Zend_Captcha_FigletTest_SessionContainer'
                 )
             )
@@ -89,7 +89,7 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->element->getCaptcha() instanceof Zend_Captcha_Adapter);
     }
-    
+
     public function getView()
     {
         require_once 'Zend/View.php';
@@ -97,7 +97,7 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $view->addHelperPath(dirname(__FILE__) . '/../../../../library/Zend/View/Helper');
         return $view;
     }
-    
+
     public function testCaptchaIsRendered()
     {
         $html = $this->element->render($this->getView());
@@ -112,7 +112,7 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $expect = sprintf('type="text" name="%s\[input\]"', $this->element->getName());
         $this->assertRegexp("/<input[^>]*?$expect/", $html, $html);
     }
-    
+
     public function testTimeoutPopulatedByDefault()
     {
         $ttl = $this->captcha->getTimeout();
@@ -135,7 +135,7 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_string($id));
         $this->id = $id;
     }
-    
+
     public function testGetWordReturnsWord()
     {
         $this->captcha->generate();
@@ -158,27 +158,27 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterElementName()
     {
-        $this->assertEquals($this->captcha->getName(), 
+        $this->assertEquals($this->captcha->getName(),
                     $this->element->getName());
     }
-    
+
     public function testGenerateIsRandomised()
     {
         $id1 = $this->captcha->generate();
         $word1 = $this->captcha->getWord();
         $id2 = $this->captcha->generate();
         $word2 = $this->captcha->getWord();
-        
+
         $this->assertFalse(empty($id1));
         $this->assertFalse(empty($id2));
         $this->assertFalse($id1 == $id2);
         $this->assertFalse($word1 == $word2);
     }
-    
+
     public function testRenderSetsValue()
     {
         $this->testCaptchaIsRendered();
-        $this->assertEquals($this->captcha->getId(), 
+        $this->assertEquals($this->captcha->getId(),
                 $this->element->getValue());
     }
 
@@ -202,7 +202,7 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $input = array($this->element->getName() => array("id" => $this->captcha->getId(), "input" => $this->captcha->getWord()));
         $this->assertTrue($this->element->isValid("", $input));
     }
-    
+
     public function testMissingNotValid()
     {
         $this->testCaptchaIsRendered();
@@ -210,7 +210,7 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $input = array($this->element->getName() => array("input" => "blah"));
         $this->assertFalse($this->element->isValid("", $input));
     }
-    
+
     public function testWrongWordNotValid()
     {
         $this->testCaptchaIsRendered();
@@ -242,6 +242,24 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $this->captcha->setName('foo')
                       ->setWordLen(14);
         $id = $this->captcha->generate();
+    }
+
+    public function testShouldNotValidateEmptyInputAgainstEmptySession()
+    {
+        // Regression Test for ZF-4245
+        $this->captcha->setName('foo')
+                      ->setWordLen(6)
+                      ->setTimeout(300);
+        $id = $this->captcha->generate();
+        // Unset the generated word
+        // we have to reset $this->captcha for that
+        $this->captcha->getSession()->word = null;
+        $this->setUp();
+        $this->captcha->setName('foo')
+                      ->setWordLen(6)
+                      ->setTimeout(300);
+        $empty = array($this->captcha->getName() => array('id' => $id, 'input' => ''));
+        $this->assertEquals(false, $this->captcha->isValid(null, $empty));
     }
 }
 
