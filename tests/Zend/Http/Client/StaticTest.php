@@ -1,6 +1,6 @@
 <?php
 
-require_once "Zend/TestHelper.php";
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';

@@ -3,14 +3,14 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Http_Client_AllTests::main');
 }
 
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 // Read local configuration
 if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
     is_readable('TestConfiguration.php')) {
 
     require_once 'TestConfiguration.php';
 }
-
-require_once "Zend/TestHelper.php";
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
