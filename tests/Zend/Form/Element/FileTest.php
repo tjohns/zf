@@ -123,6 +123,7 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
 
     public function testValidatorAccessAndMutationShouldProxyToAdapter()
     {
+        $this->testElementShouldAllowSpecifyingAdapterUsingConcreteInstance();
         $this->element->addValidator('Count', false, 1)
                       ->addValidators(array(
                           'Extension' => 'jpg',
@@ -130,7 +131,7 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
                       ));
         $validators = $this->element->getValidators();
         $test       = $this->element->getTransferAdapter()->getValidators();
-        $this->assertSame($validators, $test);
+        $this->assertEquals($validators, $test);
         $this->assertTrue(is_array($test));
         $this->assertEquals(3, count($test));
 
@@ -248,18 +249,21 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
                 'type'     => 'image/jpeg',
                 'size'     => 126976,
                 'tmp_name' => '/tmp/489127ba5c89c',
+                'validators' => array(),
             ),
             'bar' => array(
                 'name'     => 'bar.png',
                 'type'     => 'image/png',
                 'size'     => 91136,
                 'tmp_name' => '/tmp/489128284b51f',
+                'validators' => array(),
             ),
             'baz' => array(
                 'name'     => 'baz.text',
                 'type'     => 'text/plain',
                 'size'     => 1172,
                 'tmp_name' => '/tmp/4891286cceff3',
+                'validators' => array(),
             ),
         );
     }

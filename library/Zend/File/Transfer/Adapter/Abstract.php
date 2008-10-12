@@ -477,8 +477,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
         $validators = array_unique($validators);
 
+        $result = array();
         foreach ($validators as $validator) {
-            $result[] = $this->_validators[$validator];
+            $result[$validator] = $this->_validators[$validator];
         }
         return $result;
     }
