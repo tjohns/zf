@@ -297,6 +297,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         } elseif (isset($headers['connection']) && $headers['connection'] == 'close') {
             while (($buff = @fread($this->socket, 8192)) !== false) {
                 $response .= $buff;
+                if (feof($this->socket)) break;
             }
 
             $this->close();
@@ -305,6 +306,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         } else {
             while (($buff = @fread($this->socket, 8192)) !== false) {
                 $response .= $buff;
+                if (feof($this->socket)) break;
             }
 
             $this->close();
