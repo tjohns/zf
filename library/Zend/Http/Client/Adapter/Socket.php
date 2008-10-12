@@ -292,23 +292,19 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 // Break if the connection ended prematurely
                 if (feof($this->socket)) break;
             }
-            
-        // If the connection is set to close, just read until socket closes
-        } elseif (isset($headers['connection']) && $headers['connection'] == 'close') {
-            while (($buff = @fread($this->socket, 8192)) !== false) {
-                $response .= $buff;
-                if (feof($this->socket)) break;
-            }
-
-            $this->close();
-        
-        // Fallback: just read the response (should not happen)
+                    
+        // Fallback: just read the response until EOF
         } else {
             while (($buff = @fread($this->socket, 8192)) !== false) {
                 $response .= $buff;
                 if (feof($this->socket)) break;
             }
 
+            $this->close();
+        }
+        
+        // Close the connection if requested to do so by the server
+        if (isset($headers['connection']) && $headers['connection'] == 'close') {
             $this->close();
         }
 
