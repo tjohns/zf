@@ -30,7 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /**
  * PHPUnit_Framework_TestSuite

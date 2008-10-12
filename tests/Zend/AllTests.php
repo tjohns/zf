@@ -24,7 +24,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_AllTests::main');
@@ -104,12 +104,23 @@ class Zend_AllTests
 {
     public static function main()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $parameters = array();
+
+        if (TESTS_GENERATE_REPORT && extension_loaded('xdebug')) {
+            $parameters['reportDirectory'] = TESTS_GENERATE_REPORT_TARGET;
+        }
+
+        if (defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE') && TESTS_ZEND_LOCALE_FORMAT_SETLOCALE) {
+            // run all tests in a special locale
+            setlocale(LC_ALL, TESTS_ZEND_LOCALE_FORMAT_SETLOCALE);
+        }
+
+        PHPUnit_TextUI_TestRunner::run(self::suite(), $parameters);
     }
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework');
 
         $suite->addTestSuite('Zend_AclTest');
         $suite->addTest(Zend_Amf_AllTests::suite());

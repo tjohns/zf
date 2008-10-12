@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_View_Helper_ValidationTextBoxTest::main");
 }
 
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /** Zend_Dojo_View_Helper_ValidationTextBox */
 require_once 'Zend/Dojo/View/Helper/ValidationTextBox.php';

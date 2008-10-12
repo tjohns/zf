@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id:$
+ * @version    $Id$
  */
 
 // Call Zend_Dojo_Form_Element_VerticalSliderTest::main() if this source file is executed directly.
@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_Form_Element_VerticalSliderTest::main");
 }
 
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /** Zend_Dojo_Form_Element_VerticalSlider */
 require_once 'Zend/Dojo/Form/Element/VerticalSlider.php';

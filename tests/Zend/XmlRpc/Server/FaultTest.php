@@ -1,7 +1,7 @@
 <?php
 // Call Zend_XmlRpc_Server_FaultTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once dirname(__FILE__) . '/../../../TestHelper.php';
+    require_once 'Zend/TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Server_FaultTest::main");
 }
 

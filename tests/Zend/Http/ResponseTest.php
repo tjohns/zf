@@ -12,7 +12,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /**
  * Zend_Http_Response

@@ -9,7 +9,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_Route_ChainTest::main');
 }
 
-require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 /** Zend_Controller_Router_Route_Chain */
 require_once 'Zend/Controller/Router/Route/Chain.php';

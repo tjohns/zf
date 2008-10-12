@@ -2,9 +2,9 @@
 
 // Read local configuration
 if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
-    is_readable('TestConfiguration.php')) {
+    is_readable('Zend/TestConfiguration.php')) {
 
-    require_once 'TestConfiguration.php';
+    require_once 'Zend/TestConfiguration.php';
 }
 
 require_once 'Zend/Http/Client.php';
