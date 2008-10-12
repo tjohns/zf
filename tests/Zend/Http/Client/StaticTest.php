@@ -1,22 +1,24 @@
 <?php
 
+require_once "Zend/TestHelper.php";
+
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * This Testsuite includes all Zend_Http_Client tests that do not rely
  * on performing actual requests to an HTTP server. These tests can be
- * executed once, and do not need to be tested with different servers / 
+ * executed once, and do not need to be tested with different servers /
  * client setups.
  *
  * @category   Zend
  * @package    Zend_Http_Client
  * @subpackage UnitTests
  * @version    $Id$
- * @copyright 
+ * @copyright
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase 
+class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Common HTTP client
@@ -24,7 +26,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	 * @var Zend_Http_Client
 	 */
 	protected $client = null;
-	
+
 	/**
 	 * Set up the test suite before each test
 	 *
@@ -33,25 +35,25 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	{
 		$this->client = new Zend_Http_Client('http://www.example.com');
 	}
-	
+
 	/**
 	 * URI Tests
 	 */
-	
+
 	/**
 	 * Test we can SET and GET a URI as string
 	 *
-	 */	
-	public function testSetGetUriString() 
+	 */
+	public function testSetGetUriString()
 	{
 		$uristr = 'http://www.zend.com:80/';
-		
+
 		$this->client->setUri($uristr);
-		
+
 		$uri = $this->client->getUri();
 		$this->assertTrue($uri instanceof Zend_Uri_Http, 'Returned value is not a Uri object as expected');
 		$this->assertEquals($uri->__toString(), $uristr, 'Returned Uri object does not hold the expected URI');
-			
+
 		$uri = $this->client->getUri(true);
 		$this->assertTrue(is_string($uri), 'Returned value expected to be a string, ' . gettype($uri) . ' returned');
 		$this->assertEquals($uri, $uristr, 'Returned string is not the expected URI');
@@ -61,12 +63,12 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	 * Test we can SET and GET a URI as object
 	 *
 	 */
-	public function testSetGetUriObject() 
+	public function testSetGetUriObject()
 	{
 		$uriobj = Zend_Uri::factory('http://www.zend.com:80/');
-		
+
 		$this->client->setUri($uriobj);
-		
+
 		$uri = $this->client->getUri();
 		$this->assertTrue($uri instanceof Zend_Uri_Http, 'Returned value is not a Uri object as expected');
 		$this->assertEquals($uri, $uriobj, 'Returned object is not the excepted Uri object');
@@ -76,7 +78,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	 * Test that passing an invalid URI string throws an exception
 	 *
 	 */
-	public function testInvalidUriStringException() 
+	public function testInvalidUriStringException()
 	{
 		try {
 			$this->client->setUri('http://__invalid__.com');
@@ -85,7 +87,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We're good
 		}
 	}
-	
+
 	/**
 	 * Test that passing an invalid URI object throws an exception
 	 *
@@ -102,18 +104,18 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
                 // URI is currently unimplemented
                 $this->markTestIncomplete('Zend_Uri_Mailto is not implemented yet');
             }
-		
+
 	}
-	
+
 	/**
 	 * Header Tests
 	 */
-	
+
 	/**
 	 * Make sure an exception is thrown if an invalid header name is used
 	 *
 	 */
-	public function testInvalidHeaderExcept() 
+	public function testInvalidHeaderExcept()
 	{
 		try {
 			$this->client->setHeaders('Ina_lid* Hea%der', 'is not good');
@@ -122,55 +124,55 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We're good
 		}
 	}
-	
+
 	/**
 	 * Make sure non-strict mode disables header name validation
 	 *
 	 */
-	public function testInvalidHeaderNonStrictMode() 
+	public function testInvalidHeaderNonStrictMode()
 	{
 	    // Disable strict validation
 	    $this->client->setConfig(array('strict' => false));
-	    
+
 		try {
 			$this->client->setHeaders('Ina_lid* Hea%der', 'is not good');
 		} catch (Zend_Http_Client_Exception $e) {
 			$this->fail('Invalid header names should be allowed in non-strict mode');
 		}
 	}
-	
+
 	/**
 	 * Test we can get already set headers
 	 *
 	 */
-	public function testGetHeader() 
+	public function testGetHeader()
 	{
 		$this->client->setHeaders(array(
 			'Accept-encoding' => 'gzip,deflate',
 			'Accept-language' => 'en,de,*',
 		));
-		
+
 		$this->assertEquals($this->client->getHeader('Accept-encoding'), 'gzip,deflate', 'Returned value of header is not as expected');
 		$this->assertEquals($this->client->getHeader('X-Fake-Header'), null, 'Non-existing header should not return a value');
 	}
-	
+
 	public function testUnsetHeader()
 	{
 		$this->client->setHeaders('Accept-Encoding', 'gzip,deflate');
 		$this->client->setHeaders('Accept-Encoding', null);
 		$this->assertNull($this->client->getHeader('Accept-encoding'), 'Returned value of header is expected to be null');
 	}
-	
+
 	/**
 	 * Authentication tests
 	 */
-	
+
 	/**
 	 * Test setAuth (dynamic method) fails when trying to use an unsupported
 	 * authentication scheme
 	 *
 	 */
-	public function testExceptUnsupportedAuthDynamic() 
+	public function testExceptUnsupportedAuthDynamic()
 	{
 		try {
 			$this->client->setAuth('shahar', '1234', 'SuperStrongAlgo');
@@ -179,13 +181,13 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We're good!
 		}
 	}
-	
+
 	/**
-	 * Test encodeAuthHeader (static method) fails when trying to use an 
+	 * Test encodeAuthHeader (static method) fails when trying to use an
 	 * unsupported authentication scheme
 	 *
 	 */
-	public function testExceptUnsupportedAuthStatic() 
+	public function testExceptUnsupportedAuthStatic()
 	{
 		try {
 			Zend_Http_Client::encodeAuthHeader('shahar', '1234', 'SuperStrongAlgo');
@@ -194,39 +196,39 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We're good!
 		}
 	}
-	
+
 	/**
 	 * Cookie and Cookie Jar tests
 	 */
-	
+
 	/**
 	 * Test we can properly set a new cookie jar
 	 *
 	 */
-	public function testSetNewCookieJar() 
+	public function testSetNewCookieJar()
 	{
 		$this->client->setCookieJar();
 		$this->client->setCookie('cookie', 'value');
 		$this->client->setCookie('chocolate', 'chips');
 		$jar = $this->client->getCookieJar();
-		
+
 		// Check we got the right cookiejar
 		$this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of Zend_Http_CookieJar as expected');
 		$this->assertEquals(count($jar->getAllCookies()), 2, '$jar does not contain 2 cookies as expected');
 	}
-	
+
 	/**
 	 * Test we can properly set an existing cookie jar
 	 *
 	 */
-	public function testSetReadyCookieJar() 
+	public function testSetReadyCookieJar()
 	{
 		$jar = new Zend_Http_CookieJar();
 		$jar->addCookie('cookie=value', 'http://www.example.com');
 		$jar->addCookie('chocolate=chips; path=/foo', 'http://www.example.com');
-		
+
 		$this->client->setCookieJar($jar);
-		
+
 		// Check we got the right cookiejar
 		$this->assertEquals($jar, $this->client->getCookieJar(), '$jar is not the client\'s cookie jar as expected');
 	}
@@ -242,18 +244,18 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 		$this->client->setCookie('cookie', 'value');
 		$this->client->setCookie('chocolate', 'chips');
 		$jar = $this->client->getCookieJar();
-		
+
 		// Try unsetting the cookiejar
 		$this->client->setCookieJar(null);
-		
+
 		$this->assertNull($this->client->getCookieJar(), 'Cookie jar is expected to be null but it is not');
 	}
-	
+
 	/**
 	 * Make sure using an invalid cookie jar object throws an exception
 	 *
 	 */
-	public function testSetInvalidCookieJar() 
+	public function testSetInvalidCookieJar()
 	{
 		try {
 			$this->client->setCookieJar('cookiejar');
@@ -262,20 +264,20 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We're good
 		}
 	}
-	
+
 	/**
 	 * Other Tests
 	 */
-	
+
 	/**
-	 * Check we get an exception when trying to send a POST request with an 
+	 * Check we get an exception when trying to send a POST request with an
 	 * invalid content-type header
 	 */
 	public function testInvalidPostContentType()
 	{
 		$this->client->setEncType('x-foo/something-fake');
 		$this->client->setParameterPost('parameter', 'value');
-		
+
 		try {
 			$this->client->request('POST');
 			$this->fail('Building the body with an unknown content-type for POST values should have failed, it didn\'t');
@@ -283,7 +285,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			// We are ok!
 		}
 	}
-	
+
 	/**
 	 * Check we get an exception if there's an error in the socket
 	 *
@@ -293,17 +295,17 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 		$this->client->setUri('http://255.255.255.255');
 		// Reduce timeout to 3 seconds to avoid waiting
 		$this->client->setConfig(array('timeout' => 3));
-		
+
 		try {
 			$this->client->request();
 			$this->fail('Expected connection error exception was not thrown');
-		} catch (Zend_Http_Client_Adapter_Exception $e) { 
+		} catch (Zend_Http_Client_Adapter_Exception $e) {
 			// We're good!
 		}
 	}
-	
+
 	/**
-	 * Check that we can set methods which are not documented in the RFC. 
+	 * Check that we can set methods which are not documented in the RFC.
 	 * Also, check that an exception is thrown if non-word characters are
 	 * used in the request method.
 	 *
@@ -318,7 +320,7 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 			'Some_Characters',
 			'X-MS-ENUMATTS'
 		);
-		
+
 		foreach ($goodMethods as $method) {
 			try {
 				$this->client->setMethod($method);
@@ -326,14 +328,14 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 				$this->fail("An unexpected exception was thrown when setting request method to '{$method}'");
 			}
 		}
-		
+
 		$badMethods = array(
 			'N@5TYM3T#0D',
 			'TWO WORDS',
 			'GET http://foo.com/?',
 			"Injected\nnewline"
 		);
-		
+
 		foreach ($badMethods as $method) {
 			try {
 				$this->client->setMethod($method);
