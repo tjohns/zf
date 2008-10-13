@@ -159,7 +159,6 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
 
         // Load the expected response.
         $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/numberAmf3Response.bin');
-        file_put_contents('/tmp/test_amf3.log', $testResponse);
 
         // Check that the response matches the expected serialized value
         $this->assertEquals($mockResponse, $testResponse);
@@ -671,7 +670,7 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
 
     public function testZendDateSerializedToAmf0Date()
     {
-        $date = new Zend_Date('October 23, 1978');
+        $date = new Zend_Date('October 23, 1978', null, 'en_US');
         $date->set('4:20:00',Zend_Date::TIMES);
 
         $newBody = new Zend_Amf_Value_MessageBody('/1/onResult',null,$date);
