@@ -528,7 +528,7 @@ class Zend_OpenId_Provider
             }
             if ($immediate) {
                 $params2['openid.mode'] = 'checkid_setup';
-                $ret['openid.mode'] = ($version >= 2.0) ? 'setup_needed': 'cancel';
+                $ret['openid.mode'] = ($version >= 2.0) ? 'setup_needed': 'id_res';
                 $ret['openid.user_setup_url'] = $this->_loginUrl
                     . (strpos($this->_loginUrl, '?') === false ? '?' : '&')
                     . Zend_OpenId::paramsToQuery($params2);
@@ -600,7 +600,7 @@ class Zend_OpenId_Provider
             }
             if ($immediate) {
                 $params2['openid.mode'] = 'checkid_setup';
-                $ret['openid.mode'] = ($version >= 2.0) ? 'setup_needed': 'cancel';
+                $ret['openid.mode'] = ($version >= 2.0) ? 'setup_needed': 'id_res';
                 $ret['openid.user_setup_url'] = $this->_trustUrl
                     . (strpos($this->_trustUrl, '?') === false ? '?' : '&')
                     . Zend_OpenId::paramsToQuery($params2);
