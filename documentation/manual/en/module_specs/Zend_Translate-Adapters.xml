@@ -354,7 +354,7 @@ try {
             <code>Zend_Cache</code> as only parameter. Also if you use any adapter direct you
             can use the <code>setCache()</code> method. For convenience there are also the static methods
             <code>getCache()</code>, <code>hasCache()</code>, <code>clearCache()</code> and
-            <code>removeCache()</code>, .
+            <code>removeCache()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[
