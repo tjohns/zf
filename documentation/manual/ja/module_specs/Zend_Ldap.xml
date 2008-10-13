@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 11765 -->
 <sect1 id="zend.ldap.using">
 
     <title>導入</title>
@@ -264,6 +264,14 @@ echo "$acctname\n";
                             そのため、空のパスワードは明示的に無効にしています。
                             この値を <code>true</code> にすると、
                             バインド時に空文字列のパスワードを使用できるようになります。
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>optReferrals</entry>
+                        <entry>
+                            <code>true</code> に設定すると、
+                            参照先を追跡するよう LDAP クライアントに指示します。
+                            デフォルト値は <code>false</code> です。
                         </entry>
                       </row>
                     </tbody>
