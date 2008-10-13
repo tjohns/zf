@@ -293,7 +293,8 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
             $sequenceName .= $this->foldCase('_seq');
             return $this->lastSequenceId($sequenceName);
         }
-        return $this->_connection->lastInsertId($tableName);
+        // No support for IDENTITY columns; return null
+        return null;
     }
 
     /**
