@@ -560,4 +560,15 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         return self::$_maxFileSize;
     }
+
+    /**
+     * Overwrites the base method
+     * File elements do not have a value
+     *
+     * @return null
+     */
+    public function getValue()
+    {
+        return null;
+    }
 }
