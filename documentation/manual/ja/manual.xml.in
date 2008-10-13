@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 11679 -->
+<!-- EN-Revision: 11834 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -38,6 +38,15 @@
         <xi:include href="module_specs/Zend_Acl.xml" />
         <xi:include href="module_specs/Zend_Acl-Refining.xml" />
         <xi:include href="module_specs/Zend_Acl-Advanced.xml" />
+    </chapter>
+    <chapter id="zend.amf">
+        <title>Zend_Amf</title>
+        <xi:include href="module_specs/Zend_Amf.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Amf-Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf-Server.xml" /></xi:fallback>
+        </xi:include>
     </chapter>
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
@@ -187,14 +196,17 @@
         <title>Zend_Gdata</title>
         <xi:include href="module_specs/Zend_Gdata-Introduction.xml" />
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Books.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Books.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml" />
         <xi:include href="module_specs/Zend_Gdata_Calendar.xml" />
         <xi:include href="module_specs/Zend_Gdata_Docs.xml" />
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml" />
         <xi:include href="module_specs/Zend_Gdata_Gapps.xml" />
         <xi:include href="module_specs/Zend_Gdata_Gbase.xml" />
-        <xi:include href="module_specs/Zend_Gdata_YouTube.xml" />
         <xi:include href="module_specs/Zend_Gdata_Photos.xml" />
+        <xi:include href="module_specs/Zend_Gdata_YouTube.xml" />
         <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
