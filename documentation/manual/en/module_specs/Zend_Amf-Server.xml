@@ -106,7 +106,7 @@ class World
         </para>
     </note>
 
-    <sect2 ide="zend.amf.server.flex">
+    <sect2 id="zend.amf.server.flex">
         <title>Connecting to the server from Flex</title>
 
         <para>
