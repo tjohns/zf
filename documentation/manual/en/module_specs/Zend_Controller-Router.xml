@@ -329,6 +329,7 @@ $request->setBaseUrl('/~user/application-root/');
         <xi:include href="Zend_Controller-Router-Route.xml" />
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
+        <xi:include href="Zend_Controller-Router-Route-Hostname.xml" />
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">
