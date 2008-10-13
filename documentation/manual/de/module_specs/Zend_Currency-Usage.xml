@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 11750 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -554,7 +554,8 @@ print $currency->toCurrency(1000);
             wird. Durch die Verwendung der statischen Methode <code>Zend_Currency::setCache($cache)</code>
             welche eine Option akzeptiert, nämlich einen <code>Zend_Cache</code> Adapter. Wenn dieser
             gesetzt wird, werden die Lokalisierungsdaten der Methoden von Zend_Currency gecached. Der
-            Bequemlichkeit halber gibt es auch die statische Methode <code>Zend_Currency::getCache()</code>.
+            Bequemlichkeit halber gibt es auch die statischen Methoden <code>Zend_Currency::getCache()</code>,
+            <code>hasCache()</code>, <code>clearCache()</code> und <code>removeCache()</code>.
         </para>
 
         <example id="zend.currency.usage.cache.example">

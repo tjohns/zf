@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11495 -->
+<!-- EN-Revision: 11751 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -557,7 +557,8 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
             <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code> aufgerufen wird. Wenn beide
             Klassen verwendet werden sollte nur für <code>Zend_Locale</code> ein Cache gesetzt werden, da der
             zuletzt gesetzte Cache den vorher gesetzten Cache überschreibt. Der Bequemlichkeit halber gibt es
-            auch eine statische Methode <code>Zend_Locale::getCache()</code>.
+            auch die statischen Methoden <code>Zend_Locale::getCache()</code>, <code>hasCache()</code>,
+            <code>clearCache()</code> und <code>removeCache()</code>.
         </para>
 
     </sect2>
