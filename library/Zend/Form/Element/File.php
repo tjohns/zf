@@ -247,7 +247,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getValidator($name)
     {
-        $adapter = $this->getTransferAdapter();
+        $adapter    = $this->getTransferAdapter();
         return $adapter->getValidator($name);
     }
 
@@ -259,7 +259,12 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getValidators()
     {
         $adapter = $this->getTransferAdapter();
-        return $adapter->getValidators($this->getName());
+        $validators = $adapter->getValidators($this->getName());
+        if ($validators === null) {
+            $validators = array();
+        }
+
+        return $validators;
     }
 
     /**
@@ -349,12 +354,17 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     /**
      * Returns all set filters; proxy to adapter
      *
-     * @return null|array List of set filters
+     * @return array List of set filters
      */
     public function getFilters()
     {
         $adapter = $this->getTransferAdapter();
-        return $adapter->getFilters($this->getName());
+        $filters = $adapter->getFilters($this->getName());
+
+        if ($filters === null) {
+            $filters = array();
+        }
+        return $filters;
     }
 
     /**
