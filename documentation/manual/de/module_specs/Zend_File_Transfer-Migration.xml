@@ -1,0 +1,62 @@
+<!-- EN-Revision: 11679 -->
+<sect1 id="zend.file.transfer.migration">
+
+    <title>Migration von vorhergehenden Versionen</title>
+
+    <para>
+        Die API von <code>Zend_File_Transfer</code> wurde von Zeit zu Zeit verändert. Wenn man bereits
+        angefangen hat <code>Zend_File_Transfer</code> und dessen Subkomponenten in vorhergehenden Versionen
+        zu verwenden sollte man den anbei beschriebenen Richtlinien folgen um eigene Skripts auf die neue
+        API zu migrieren.
+    </para>
+
+    <sect2 id="zend.file.transfer.migration.fromonesixonetoonesixtwo">
+        <title>Migration von 1.6.1 zu 1.6.2 oder neuer</title>
+        <sect3 id="zend.file.transfer.migration.fromonesixonetoonesixtwo.validators">
+            <title>Änderungen bei der Verwendung von Prüfungen</title>
+
+            <para>
+                Wie von Benutzern festgestellt wurde, haben die Prüfungen von <code>Zend_File_Transfer</code>
+                nicht auf die gleiche Art und Weise funktioniert wie standardmäßigen von <code>Zend_Form</code>.
+                <code>Zend_Form</code> erlaubt die Verwendung eines <code>breakChainOnFailure</code> Parameters
+                der die Prüfung für alle weitere Prüfer unterbricht wenn ein Prüffehler aufgetreten ist.
+            </para>
+
+            <para>
+                Deshalb wurde dieser Parameter bei allen bestehenden Prüfungen von <code>Zend_File_Transfer</code>
+                hinzugefügt.
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    Alte API der Methode: <code>addValidator($validator, $options, $files)</code>.
+                </para></listitem>
+
+                <listitem><para>
+                    Neue API der Methode: <code>addValidator($validator, $breakChainOnFailure, $options, $files)</code>.
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                Um also eigene Skripte auf die neue API zu migrieren, muß einfach ein <code>false</code> nach
+                der Definition der gewünschten Prüfung hinzugefügt werden.
+            </para>
+
+            <example id="zend.file.transfer.migration.fromonesixonetoonesixtwo.example">
+                <title>Wie man eigene Dateiprüfungen von 1.6.1 auf 1.6.2 ändert</title>
+
+                <programlisting role="php"><![CDATA[
+// Beispiel für 1.6.1
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', array('1B', '100kB'));
+
+// Selbes Beispiel für 1.6.2 und neuer
+// Beachte das hinzugefügte boolsche false
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', false, array('1B', '100kB'));
+]]>
+            </programlisting>
+        </example>
+        </sect3>
+    </sect2>
+</sect1>

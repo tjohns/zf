@@ -1,0 +1,296 @@
+<sect1 id="zend.timesync.working">
+
+    <title>Working with Zend_TimeSync</title>
+
+    <para>
+        <code>Zend_TimeSync</code> can return the actual time from any given
+        <emphasis role="strong">NTP</emphasis> or <emphasis role="strong">SNTP</emphasis> timeserver.
+        It can automatically handle multiple servers and provides a simple interface.
+    </para>
+
+    <note>
+        <para>
+            In all examples within this chapter we are using one of the available public generic timeservers.
+            In our case <emphasis role="strong">0.europe.pool.ntp.org</emphasis>. For your environment
+            it is recommended that you are using a public generic timeserver which is nearly to the location
+            of your server. See <ulink url="http://www.pool.ntp.org">http://www.pool.ntp.org</ulink> for
+            details.
+        </para>
+    </note>
+
+    <sect2 id="zend.timesync.working.generic">
+
+        <title>Generic timeserver request</title>
+
+        <para>
+            Requesting the time from a timeserver is quite simple. All you have to give is the timeserver
+            from which you want to have the time.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync('0.pool.ntp.org');
+
+print $server->getDate()->getIso();
+]]>
+        </programlisting>
+
+        <para>
+            So what is happening in the background of <code>Zend_TimeSync</code>? First the syntax of the
+            given server is checked. So in our example '<code>0.pool.ntp.org</code>' is checked and
+            recognised as possible correct address for a timeserver. Then when calling
+            <code>getDate()</code> the actual set timeserver is requested and it will return it's own
+            time. <code>Zend_TimeSync</code> then calculates the difference to the actual time of the
+            server running the script and returns a <code>Zend_Date</code> object with the actual,
+            corrected time.
+        </para>
+
+        <para>
+            For details about <code>Zend_Date</code> and it's methods you can refer to
+            <link linkend="zend.date.introduction">Zend_Date</link>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.multiple">
+
+        <title>Multiple timeservers</title>
+
+        <para>
+            Not all timeservers are always available and will return their time. Servers will have a time
+            where they can not be reached, for example when having a maintenance. In such cases, when the
+            time can not be requested from the timeserver, you would get an exception.
+        </para>
+
+        <para>
+            As simple solution <code>Zend_TimeSync</code> can handle multiple timeservers and supports a
+            automatic fallback mechanism. There are two supported ways. You can either give an array
+            of timeservers when creating the instance. Or you can add additionally timeservers afterwards
+            with the <code>addServer()</code> method.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync(array('0.pool.ntp.org',
+                                  '1.pool.ntp.org',
+                                  '2.pool.ntp.org'));
+$server->addServer('3.pool.ntp.org');
+
+print $server->getDate()->getIso();
+]]>
+        </programlisting>
+
+        <para>
+            There is no limitation in the amount of timeservers you can add. When a timeserver can not
+            be reached <code>Zend_TimeSync</code> will fallback and try to connect to the next given timeserver.
+        </para>
+
+        <para>
+            When you give more than one timeserver, which should be your default behaviour, you should name
+            your servers. You can either name your servers with the array key, but also with the second
+            parameter at initiation or addition of an other timeserver.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync(array('generic'  => '0.pool.ntp.org',
+                                  'fallback' => '1.pool.ntp.org',
+                                  'reserve'  => '2.pool.ntp.org'));
+$server->addServer('3.pool.ntp.org', 'additional');
+
+print $server->getDate()->getIso();
+]]>
+        </programlisting>
+
+        <para>
+            Naming the timeservers gives you the ability to request a specific timeserver as we will see
+            later in this chapter.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.protocol">
+
+        <title>Protocols of timeservers</title>
+
+        <para>
+            There are different types of timeservers. The most public timeservers are using
+            <emphasis role="strong">NTP</emphasis> as protocol. But there are different other
+            protocols available.
+        </para>
+
+        <para>
+            You can set the proper protocol within the address of the timeserver. Actual there are two
+            protocols which are supported by <code>Zend_TimeSync</code>. The default protocol is
+            <emphasis role="strong">NTP</emphasis>. If you are only using NTP you can omit the protocol
+            within the address as show in the previous examples.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
+                                  'fallback' => 'ntp:\\1.pool.ntp.org',
+                                  'reserve'  => 'ntp:\\2.pool.ntp.org'));
+$server->addServer('sntp:\\internal.myserver.com', 'additional');
+
+print $server->getDate()->getIso();
+]]>
+        </programlisting>
+
+        <para>
+            <code>Zend_TimeSync</code> is able to handle mixed timeservers. So you are not restricted to
+            only one protocol, but you can add any server independently from it's protocol.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.ports">
+
+        <title>Using ports for timeservers</title>
+
+        <para>
+            As every protocol within the world wide web, the <emphasis role="strong">NTP</emphasis> and
+            <emphasis role="strong">SNTP</emphasis> protocols are using standard ports. NTP uses port
+            <emphasis role="strong">123</emphasis> and SNTP uses <emphasis role="strong">37</emphasis>.
+        </para>
+
+        <para>
+            But sometimes the used port differ from the standard one. You can define the port which
+            has to be used for each server within the address. Just add the number of the port behind the
+            address. If no port is defined, then <code>Zend_TimeSync</code> will use the standard port.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org:200',
+                                  'fallback' => 'ntp:\\1.pool.ntp.org'));
+$server->addServer('sntp:\\internal.myserver.com:399', 'additional');
+
+print $server->getDate()->getIso();
+]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.options">
+
+        <title>Options for timeservers</title>
+
+        <para>
+            Actually there is only one option within <code>Zend_TimeSync</code> which will be used internally.
+            But you can set any self defined option you are in need for and request it.
+        </para>
+
+        <para>
+            The option <emphasis role="strong">timeout</emphasis> defines the number of seconds after which
+            a connection is detected as broken when there was no response. The default value is
+            <emphasis role="strong">1</emphasis>, which means that <code>Zend_TimeSync</code> will
+            fallback to the next timeserver is the actual requested timeserver does not respond in one second.
+        </para>
+
+        <para>
+            With the <code>setOptions()</code> method, you can set any option. It accepts an array where the
+            key is the option to set and the value is the value of that option. Any previous set option will
+            be overwritten by the new value. If you want to know which options are set, use the
+            <code>getOptions()</code> method. It accepts either a key which returns the given option if set
+            or, if no key is set, it will return all set options.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+Zend_TimeSync::setOptions(array('timeout' => 3, 'myoption' => 'timesync'));
+$server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
+                                  'fallback' => 'ntp:\\1.pool.ntp.org'));
+$server->addServer('sntp:\\internal.myserver.com', 'additional');
+
+print $server->getDate()->getIso();
+print_r(Zend_TimeSync::getOptions();
+print "Timeout = " . Zend_TimeSync::getOptions('timeout');
+]]>
+        </programlisting>
+
+        <para>
+            As you can see the options for <code>Zend_TimeSync</code> are static, which means that each
+            instance of <code>Zend_TimeSync</code> will act with the same options.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.different">
+
+        <title>Using different timeservers</title>
+
+        <para>
+            The default behaviour for requesting a time is to request it from the first given server.
+            But sometimes it is useful to set a different timeserver from which to request the time.
+            This can be done with the <code>setServer()</code> method. To define the used timeserver
+            just set the alias as parameter within the method. And to get the actual used timeserver
+            just call the <code>getServer()</code> method. It accepts an alias as parameter which
+            defined the timeserver to be returned. If no parameter is given, the current timeserver will
+            be returned.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
+                                  'fallback' => 'ntp:\\1.pool.ntp.org'));
+$server->addServer('sntp:\\internal.myserver.com', 'additional');
+
+$actual = $server->getServer();
+$server = $server->setServer('additional');
+]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.informations">
+
+        <title>Informations from timeservers</title>
+
+        <para>
+            Timeservers offer not only the time itself but also additionally informations. You can
+            get these informations with the <code>getInfo()</code> method.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server = new Zend_TimeSync(array('generic'  => 'ntp:\\0.pool.ntp.org',
+                                  'fallback' => 'ntp:\\1.pool.ntp.org'));
+
+print_r ($server->getInfo());
+]]>
+        </programlisting>
+
+        <para>
+            The returned informations differ with the used protocols and they can also differ with the used
+            servers.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.timesync.working.exceptions">
+
+        <title>Taking care of exceptions</title>
+
+        <para>
+            Exceptions are collected for all timeserver and will be returned as array. So you are able
+            to iterate through all throwed exceptions like shown in the following example:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$serverlist = array(
+        // invalid servers
+        'invalid_a'  => 'ntp://a.foo.bar.org',
+        'invalid_b'  => 'sntp://b.foo.bar.org',
+);
+
+$server = new Zend_TimeSync($serverlist);
+
+try {
+    $result = $server->getDate();
+    echo $result->getIso();
+} catch (Zend_TimeSync_Exception $e) {
+
+    $exceptions = $e->get();
+
+    foreach ($exceptions as $key => $myException) {
+        echo $myException->getMessage();
+        echo '<br />';
+    }
+}
+]]>
+        </programlisting>
+    </sect2>
+</sect1>
