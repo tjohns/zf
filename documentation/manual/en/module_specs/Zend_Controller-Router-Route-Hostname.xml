@@ -2,7 +2,7 @@
     <title>Zend_Controller_Router_Route_Hostname</title>
 
     <para>
-        <code>Zend_Controller_Router_Hostname</code> is the hostname route of
+        <code>Zend_Controller_Router_Route_Hostname</code> is the hostname route of
         the framework. It works similar to the standard route, but it works on
         the with the hostname of the called URL instead with the path.
     </para>
