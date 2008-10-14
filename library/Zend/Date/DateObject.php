@@ -987,7 +987,7 @@ abstract class Zend_Date_DateObject {
      * If no timezone can be detected or the given timezone is wrong UTC will be set.
      *
      * @param  string  $zone      OPTIONAL timezone for date calculation; defaults to date_default_timezone_get()
-     * @return Zend_Date_DateObject Provides a fluid interface
+     * @return Zend_Date_DateObject Provides fluent interface
      * @throws Zend_Date_Exception
      */
     public function setTimezone($zone = null)

@@ -35,14 +35,13 @@ require_once 'Zend/Locale/Math.php';
  */
 class Zend_Date extends Zend_Date_DateObject
 {
-
     private $_locale  = null;
 
     // Fractional second variables
-    private $_Fractional = 0;
-    private $_Precision  = 3;
+    private $_fractional = 0;
+    private $_precision  = 3;
 
-    private static $_Options = array(
+    private static $_options = array(
         'format_type'  => 'iso',      // format for date strings 'iso' or 'php'
         'fix_dst'      => true,       // fix dst on summer/winter time change
         'extend_month' => false,      // false - addMonth like SQL, true like excel
@@ -235,12 +234,12 @@ class Zend_Date extends Zend_Date_DateObject
     public static function setOptions(array $options = array())
     {
         if (empty($options)) {
-            return self::$_Options;
+            return self::$_options;
         }
         foreach ($options as $name => $value) {
             $name  = strtolower($name);
 
-            if (array_key_exists($name, self::$_Options)) {
+            if (array_key_exists($name, self::$_options)) {
                 switch($name) {
                     case 'format_type' :
                         if ((strtolower($value) != 'php') && (strtolower($value) != 'iso')) {
@@ -277,7 +276,7 @@ class Zend_Date extends Zend_Date_DateObject
                         parent::$_defaultOffset = $date['offset'];
                         break;
                 }
-                self::$_Options[$name] = $value;
+                self::$_options[$name] = $value;
             }
             else {
                 require_once 'Zend/Date/Exception.php';
@@ -423,7 +422,7 @@ class Zend_Date extends Zend_Date_DateObject
 
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale) . ' ' . Zend_Locale_Format::getTimeFormat($locale);
-        } else if (((self::$_Options['format_type'] == 'php') && ($type === null)) or ($type == 'php')) {
+        } else if (((self::$_options['format_type'] == 'php') && ($type === null)) or ($type == 'php')) {
             $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
 
@@ -968,7 +967,7 @@ class Zend_Date extends Zend_Date_DateObject
                 break;
 
             case self::MILLISECOND :
-                return $this->_Fractional;
+                return $this->_fractional;
                 break;
 
 
@@ -1124,7 +1123,7 @@ class Zend_Date extends Zend_Date_DateObject
      * @return integer  Number of this month
      * @throws Zend_Date_Exception
      */
-    private function getDigitFromName($name)
+    private function _getDigitFromName($name)
     {
         switch($name) {
             case "Jan":
@@ -1378,7 +1377,7 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         // dst-correction if 'fix_dst' = true and dst !== false but only for non UTC and non GMT
-        if ((self::$_Options['fix_dst'] === true) and ($dst !== false) and ($this->_dst === true)) {
+        if ((self::$_options['fix_dst'] === true) and ($dst !== false) and ($this->_dst === true)) {
             $hour = $this->get(self::HOUR);
             if ($hour != $dst) {
                 if (($dst == ($hour + 1)) or ($dst == ($hour - 23))) {
@@ -1745,7 +1744,7 @@ class Zend_Date extends Zend_Date_DateObject
                     if ($calc == 'add') {
                         $date += $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_options['extend_month'] == false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1754,7 +1753,7 @@ class Zend_Date extends Zend_Date_DateObject
                     } else if ($calc == 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_options['extend_month'] == false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1776,7 +1775,7 @@ class Zend_Date extends Zend_Date_DateObject
                     if ($calc == 'add') {
                         $date += $month;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_options['extend_month'] == false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1785,7 +1784,7 @@ class Zend_Date extends Zend_Date_DateObject
                     } else if ($calc == 'sub') {
                         $date = $month - $date;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] == false) {
+                        if (self::$_options['extend_month'] == false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1817,7 +1816,7 @@ class Zend_Date extends Zend_Date_DateObject
                     if ($calc == 'add') {
                         $date += $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] === false) {
+                        if (self::$_options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1826,7 +1825,7 @@ class Zend_Date extends Zend_Date_DateObject
                     } else if ($calc == 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] === false) {
+                        if (self::$_options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1848,7 +1847,7 @@ class Zend_Date extends Zend_Date_DateObject
                     if ($calc === 'add') {
                         $date += $month;
                         $calc  = 'set';
-                        if (self::$_Options['extend_month'] === false) {
+                        if (self::$_options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1857,7 +1856,7 @@ class Zend_Date extends Zend_Date_DateObject
                     } else if ($calc === 'sub') {
                         $date = $month - $date;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] === false) {
+                        if (self::$_options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1896,7 +1895,7 @@ class Zend_Date extends Zend_Date_DateObject
                     if ($calc === 'add') {
                         $date += $found;
                         $calc  = 'set';
-                        if (self::$_Options['extend_month'] === false) {
+                        if (self::$_options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -1905,7 +1904,7 @@ class Zend_Date extends Zend_Date_DateObject
                     } else if ($calc === 'sub') {
                         $date = $month - $found;
                         $calc = 'set';
-                        if (self::$_Options['extend_month'] === false) {
+                        if (self::$_options['extend_month'] === false) {
                             $parts = $this->getDateParts($this->mktime(0, 0, 0, $date, $day, $year, false));
                             if ($parts['mday'] != $day) {
                                 $fixday -= $parts['mday'];
@@ -2200,7 +2199,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("no RFC 2822 format ($date)", $date);
                 }
 
-                $months  = $this->getDigitFromName($match[2]);
+                $months  = $this->_getDigitFromName($match[2]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
@@ -2450,7 +2449,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
                 $match[0] = substr($match[0], strpos($match[0], ' ')+1);
 
-                $months    = $this->getDigitFromName($match[2]);
+                $months    = $this->_getDigitFromName($match[2]);
                 $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
@@ -2474,7 +2473,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 822 date format expected", $date);
                 }
 
-                $months    = $this->getDigitFromName($match[2]);
+                $months    = $this->_getDigitFromName($match[2]);
                 $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
@@ -2496,7 +2495,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 850 date format expected", $date);
                 }
 
-                $months    = $this->getDigitFromName($match[2]);
+                $months    = $this->_getDigitFromName($match[2]);
                 $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
@@ -2518,7 +2517,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("invalid date ($date) operand, RFC 1123 date format expected", $date);
                 }
 
-                $months  = $this->getDigitFromName($match[2]);
+                $months  = $this->_getDigitFromName($match[2]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
                     --$months;
@@ -2539,7 +2538,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("invalid date ($date) operand, RSS date format expected", $date);
                 }
 
-                $months  = $this->getDigitFromName($match[2]);
+                $months  = $this->_getDigitFromName($match[2]);
                 $match[3] = self::getFullYear($match[3]);
 
                 if (($calc == 'set') || ($calc == 'cmp')) {
@@ -2576,7 +2575,7 @@ class Zend_Date extends Zend_Date_DateObject
             default:
                 if (!is_numeric($date) || !empty($part)) {
                     try {
-                        if (self::$_Options['format_type'] == 'php') {
+                        if (self::$_options['format_type'] == 'php') {
                             $part = Zend_Locale_Format::convertPhpToIsoFormat($part);
                         }
                         if (empty($part)) {
@@ -2738,7 +2737,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("no hour, minute or second given in array");
                 }
             } else {
-                if (self::$_Options['format_type'] == 'php') {
+                if (self::$_options['format_type'] == 'php') {
                     $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
                 }
                 try {
@@ -2835,7 +2834,6 @@ class Zend_Date extends Zend_Date_DateObject
         return $this->_time('cmp', $time, $format, $locale);
     }
 
-
     /**
      * Returns a clone of $this, with the time part set to 00:00:00.
      *
@@ -2846,7 +2844,6 @@ class Zend_Date extends Zend_Date_DateObject
     {
         return $this->copyPart(self::DATE_FULL, $locale);
     }
-
 
     /**
      * Returns the calculated date
@@ -2882,7 +2879,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("no day,month or year given in array");
                 }
             } else {
-                if (self::$_Options['format_type'] == 'php') {
+                if (self::$_options['format_type'] == 'php') {
                     $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
                 }
                 try {
@@ -3356,7 +3353,6 @@ class Zend_Date extends Zend_Date_DateObject
         return $day == $tomorrow;
     }
 
-
     /**
      * Returns the actual date as new date object
      *
@@ -3367,7 +3363,6 @@ class Zend_Date extends Zend_Date_DateObject
     {
         return new Zend_Date(time(), self::TIMESTAMP, $locale);
     }
-
 
     /**
      * Calculate date details
@@ -4292,7 +4287,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function getFractionalPrecision()
     {
-        return $this->_Precision;
+        return $this->_precision;
     }
 
 
@@ -4309,7 +4304,7 @@ class Zend_Date extends Zend_Date_DateObject
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10", $precision);
         }
-        $this->_Precision = (int) $precision;
+        $this->_precision = (int) $precision;
     }
 
 
@@ -4320,7 +4315,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function getMilliSecond()
     {
-        return $this->_Fractional;
+        return $this->_fractional;
     }
 
 
@@ -4344,15 +4339,15 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         if ($precision === null) {
-            $precision = $this->_Precision;
+            $precision = $this->_precision;
         } else if (!is_int($precision) || $precision < 1 || $precision > 9) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10", $precision);
         }
 
-        $this->_Fractional = 0;
+        $this->_fractional = 0;
         $this->addMilliSecond($milli, $precision);
-        return $this->_Fractional;
+        return $this->_fractional;
     }
 
 
@@ -4374,42 +4369,42 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         if ($precision === null) {
-            $precision = $this->_Precision;
+            $precision = $this->_precision;
         } else if (!is_int($precision) || $precision < 1 || $precision > 9) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10", $precision);
         }
 
-        if ($precision != $this->_Precision) {
-            if ($precision > $this->_Precision) {
-                $diff = $precision - $this->_Precision;
+        if ($precision != $this->_precision) {
+            if ($precision > $this->_precision) {
+                $diff = $precision - $this->_precision;
                 $milli = (int) ($milli / (10 * $diff));
             } else {
-                $diff = $this->_Precision - $precision;
+                $diff = $this->_precision - $precision;
                 $milli = (int) ($milli * (10 * $diff));
             }
         }
 
-        $this->_Fractional += $milli;
+        $this->_fractional += $milli;
         // Add/sub milliseconds + add/sub seconds
 
-        $max = pow(10, $this->_Precision);
+        $max = pow(10, $this->_precision);
         // Milli includes seconds
-        if ($this->_Fractional >= $max) {
-            while ($this->_Fractional >= $max) {
+        if ($this->_fractional >= $max) {
+            while ($this->_fractional >= $max) {
                 $this->addSecond(1);
-                $this->_Fractional -= $max;
+                $this->_fractional -= $max;
             }
         }
 
-        if ($this->_Fractional < 0) {
-            while ($this->_Fractional < 0) {
+        if ($this->_fractional < 0) {
+            while ($this->_fractional < 0) {
                 $this->subSecond(1);
-                $this->_Fractional += $max;
+                $this->_fractional += $max;
             }
         }
 
-        return $this->_Fractional;
+        return $this->_fractional;
     }
 
 
@@ -4443,7 +4438,7 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         if ($precision === null) {
-            $precision = $this->_Precision;
+            $precision = $this->_precision;
         } else if (!is_int($precision) || $precision < 1 || $precision > 9) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10", $precision);
@@ -4454,17 +4449,17 @@ class Zend_Date extends Zend_Date_DateObject
             throw new Zend_Date_Exception('precision is 0');
         }
 
-        if ($precision != $this->_Precision) {
-            if ($precision > $this->_Precision) {
-                $diff = $precision - $this->_Precision;
+        if ($precision != $this->_precision) {
+            if ($precision > $this->_precision) {
+                $diff = $precision - $this->_precision;
                 $milli = (int) ($milli / (10 * $diff));
             } else {
-                $diff = $this->_Precision - $precision;
+                $diff = $this->_precision - $precision;
                 $milli = (int) ($milli * (10 * $diff));
             }
         }
 
-        $comp = $this->_Fractional - $milli;
+        $comp = $this->_fractional - $milli;
         if ($comp < 0) {
             return -1;
         } else if ($comp > 0) {
@@ -4554,7 +4549,7 @@ class Zend_Date extends Zend_Date_DateObject
      *
      * @param  string|Zend_Locale $locale (Optional) Locale for parsing input
      * @throws Zend_Date_Exception When the given locale does not exist
-     * @return Zend_Date Provides a fluid interface
+     * @return Zend_Date Provides fluent interface
      */
     public function setLocale($locale = null)
     {
@@ -4619,7 +4614,7 @@ class Zend_Date extends Zend_Date_DateObject
         $locale = (string) $locale;
         if ($format === null) {
             $format = Zend_Locale_Format::getDateFormat($locale);
-        } else if (self::$_Options['format_type'] == 'php') {
+        } else if (self::$_options['format_type'] == 'php') {
             $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
 
