@@ -473,7 +473,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 require_once 'Zend/File/Transfer/Exception.php';
                 throw new Zend_File_Transfer_Exception('Unknown file');
             }
-            $validators += $this->_files[$file]['validators'];
+
+            if (!empty($this->_files[$file]['validators'])) {
+                $validators += $this->_files[$file]['validators'];
+            }
         }
         $validators = array_unique($validators);
 
@@ -793,7 +796,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 require_once 'Zend/File/Transfer/Exception.php';
                 throw new Zend_File_Transfer_Exception('Unknown file');
             }
-            $filters += $this->_files[$file]['filters'];
+
+            if (!empty($this->_files[$file]['filters'])) {
+                $filters += $this->_files[$file]['filters'];
+            }
         }
         $filters = array_unique($filters);
 

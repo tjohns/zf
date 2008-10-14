@@ -247,7 +247,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getValidator($name)
     {
-        $adapter = $this->getTransferAdapter();
+        $adapter    = $this->getTransferAdapter();
         return $adapter->getValidator($name);
     }
 
@@ -259,7 +259,12 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getValidators()
     {
         $adapter = $this->getTransferAdapter();
-        return $adapter->getValidators($this->getName());
+        $validators = $adapter->getValidators($this->getName());
+        if ($validators === null) {
+            $validators = array();
+        }
+
+        return $validators;
     }
 
     /**
@@ -349,12 +354,17 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     /**
      * Returns all set filters; proxy to adapter
      *
-     * @return null|array List of set filters
+     * @return array List of set filters
      */
     public function getFilters()
     {
         $adapter = $this->getTransferAdapter();
-        return $adapter->getFilters($this->getName());
+        $filters = $adapter->getFilters($this->getName());
+
+        if ($filters === null) {
+            $filters = array();
+        }
+        return $filters;
     }
 
     /**
@@ -514,7 +524,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      * Set a multifile element
      *
      * @param integer $count Number of file elements
-     * @return Zend_Form_Element_File Provides fluid interface
+     * @return Zend_Form_Element_File Provides fluent interface
      */
     public function setMultiFile($count)
     {
@@ -559,5 +569,16 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function getMaxFileSize()
     {
         return self::$_maxFileSize;
+    }
+
+    /**
+     * Overwrites the base method
+     * File elements do not have a value
+     *
+     * @return null
+     */
+    public function getValue()
+    {
+        return null;
     }
 }
