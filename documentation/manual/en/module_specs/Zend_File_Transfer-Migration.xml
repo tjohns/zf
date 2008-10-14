@@ -19,7 +19,7 @@
                 do not work the same way like the default ones from <code>Zend_Form</code>.
                 <code>Zend_Form</code> allows the usage of a <code>breakChainOnFailure</code>
                 parameter which breaks the validation for all further validators when an
-                validation error has occured.
+                validation error has occurred.
             </para>
 
             <para>

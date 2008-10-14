@@ -9,7 +9,7 @@
 
     <para>
         Let's use the example from the standard route and see how it would look
-        like in a hostname bawsed way. Instead of calling the user via a path,
+        like in a hostname based way. Instead of calling the user via a path,
         we'd want to have a user to be able to call
         <code>http://martel.users.example.com</code> to see the information
         about the user "martel":
