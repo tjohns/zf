@@ -17,6 +17,7 @@ NEW FEATURES
 ------------
 
 * Zend_AMF
+* Dojo Toolkit 1.2.0
 * ZendX_JQuery
 * Support for dijit editor
 * Metadata API in Zend_Cache
