@@ -37,7 +37,7 @@ require_once 'Zend/Loader.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Db_Table_Row_Abstract
+abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
 {
 
     /**
@@ -236,6 +236,52 @@ abstract class Zend_Db_Table_Row_Abstract
     {
         $this->_connected = false;
     }
+    
+    /**
+     * Proxy to __isset
+     * Required by the ArrayAccess implementation
+     *
+     * @param string $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+    	return $this->__isset($offset);
+    }
+    
+    /**
+     * Proxy to __get
+     * Required by the ArrayAccess implementation
+     *
+     * @param string $offset
+     * @return string
+     */
+ 	public function offsetGet($offset)
+ 	{
+ 		return $this->__get($offset);
+ 	}
+ 	
+ 	/**
+ 	 * Proxy to __set
+ 	 * Required by the ArrayAccess implementation
+ 	 *
+ 	 * @param string $offset
+ 	 * @param mixed $value
+ 	 */
+ 	public function offsetSet($offset, $value)
+ 	{
+ 		$this->__set($offset, $value);
+ 	}
+ 	
+ 	/**
+ 	 * Does nothing
+ 	 * Required by the ArrayAccess implementation
+ 	 *
+ 	 * @param string $offset
+ 	 */
+ 	public function offsetUnset($offset)
+ 	{
+ 	}
 
     /**
      * Initialize object
