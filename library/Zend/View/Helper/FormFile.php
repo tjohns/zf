@@ -60,7 +60,7 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement
         if ($disable) {
             $disabled = ' disabled="disabled"';
         } 
-        
+
         // XHTML or HTML end tag?
         $endTag = ' />';
         if (($this->view instanceof Zend_View_Abstract) && !$this->view->doctype()->isXhtml()) {
