@@ -235,6 +235,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
     
+    // ZF-2013
 	public function testTableRowOffsetGet()
     {
         $table = $this->_table['bugs'];
@@ -256,12 +257,9 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         } catch (Zend_Exception $e) {
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
-
-        if (!isset($row1->offsetGet($bug_id))) {
-            $this->fail('Column "id" is set but isset() returns false');
-        }
     }
 
+    // ZF-2013
     public function testTableRowOffsetSet()
     {
         $table = $this->_table['bugs'];
