@@ -200,7 +200,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
 
         if (file_exists($newfile)) {
             require_once 'Zend/Filter/Exception.php';
-            throw new Zend_Filter_Exception("File $value could not be renamed. It already exists.");
+            throw new Zend_Filter_Exception(sprintf("File '%s' could not be renamed. It already exists.", $value));
         }
 
         $result = rename($value, $newfile);
@@ -210,6 +210,6 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
         }
 
         require_once 'Zend/Filter/Exception.php';
-        throw new Zend_Filter_Exception("File $value could not be renamed.");
+        throw new Zend_Filter_Exception(sprintf("File '%s' could not be renamed. An error occured while processing the file.", $value));
     }
 }
