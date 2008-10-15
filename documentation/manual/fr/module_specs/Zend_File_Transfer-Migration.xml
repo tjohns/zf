@@ -1,0 +1,53 @@
+<!-- EN-Revision: 11959 -->
+<sect1 id="zend.file.transfer.migration">
+    <title>Migrer à partir des versions précédentes</title>
+
+    <para>L'API de <code>Zend_File_Transfer</code> a changé au cours du temps. Si vous avez commencé à utiliser
+    <code>Zend_File_Transfer</code> et ses sous-composants avec les versions précédentes, suivez les lignes directrices
+    ci-dessous pour migrer vos scripts et ainsi utiliser la nouvelle API.</para>
+
+    <sect2 id="zend.file.transfer.migration.fromonesixonetoonesixtwo">
+        <title>Migrer de la version 1.6.1 vers 1.6.2 ou plus récent</title>
+
+        <sect3 id="zend.file.transfer.migration.fromonesixonetoonesixtwo.validators">
+            <title>Changements quand vous utilisez des validateurs</title>
+
+            <para>Certaines remarques des utilisateurs indiquaient que les validateurs de
+            <code>Zend_File_Transfer</code> ne fonctionnaient pas comme ceux par défaut fournis avec
+            <code>Zend_Form</code>. <code>Zend_Form</code> permet par exemple l'utilisation du paramètre
+            <code>breakChainOnFailure</code> qui stoppe la validation de tous les validateurs suivants dès qu'une erreur
+            de validation apparaît.</para>
+
+            <para>Nous avons donc ajouter ce paramètre à tous les validateurs existants pour
+            <code>Zend_File_Transfer</code>.</para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>Ancienne API : <code>addValidator($validator, $options, $files)</code>.</para>
+                </listitem>
+
+                <listitem>
+                    <para>Nouvelle API : <code>addValidator($validator, $breakChainOnFailure, $options,
+                    $files)</code>.</para>
+                </listitem>
+            </itemizedlist>
+
+            <para>Pour migrer vos scripts vers la nouvelle API, ajoutez simplement un a <code>false</code> après voir
+            défini le validateur souhaité.</para>
+
+            <example id="zend.file.transfer.migration.fromonesixonetoonesixtwo.example">
+                <title>Comment changer les validateurs de fichiers de 1.6.1 vers 1.6.2</title>
+
+                <programlisting role="php"><![CDATA[
+// Exemple pour 1.6.1
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', array('1B', '100kB'));
+
+// Même exemple pour 1.6.2 et plus récent
+// Notez l'ajout du booléen false
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', false, array('1B', '100kB'));]]></programlisting>
+            </example>
+        </sect3>
+    </sect2>
+</sect1>

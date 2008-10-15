@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11835 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>L'aide de vue HeadLink</title>
 
@@ -29,9 +29,9 @@
     </itemizedlist>
 
     <para>La valeur par défaut de <code>$media</code> vaut <code>screen</code>, mais peut être n'importe quelle valeur
-    de média valide. <code>$conditionalStylesheet</code> est un booléen, et sera utilisé au moment du rendu pour
-    déterminer si des commentaires spéciaux doivent être inclus pour empêcher le chargement de la feuille de style sur
-    certaines plate-formes.</para>
+    de média valide. <code>$conditionalStylesheet</code> est une chaîne ou le booléen <code>false</code>, et sera
+    utilisé au moment du rendu pour déterminer si des commentaires spéciaux doivent être inclus pour empêcher le
+    chargement de la feuille de style sur certaines plate-formes.</para>
 
     <para>De plus, l'aide <code>HeadLink</code> possède des méthodes pour ajouter des liens alternatifs dans sa pile
     :</para>
