@@ -102,7 +102,7 @@ class Calculator
     }
 
     /**
-     * Return the product of division of two variables
+     * Return the division of two variables
      * 
      * @param  int $x 
      * @param  int $y 
