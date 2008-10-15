@@ -234,6 +234,53 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
     }
+    
+	public function testTableRowOffsetGet()
+    {
+        $table = $this->_table['bugs'];
+        $bug_id = $this->_db->foldCase('bug_id');
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status = $this->_db->foldCase('bug_status');
+
+        $rowset = $table->find(1);
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
+
+        try {
+            $this->assertEquals(1, $row1->offsetGet($bug_id));
+            $this->assertEquals('System needs electricity to run', $row1->offsetGet($bug_description));
+            $this->assertEquals('NEW', $row1->offsetGet($bug_status));
+        } catch (Zend_Exception $e) {
+            $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
+        }
+
+        if (!isset($row1->offsetGet($bug_id))) {
+            $this->fail('Column "id" is set but isset() returns false');
+        }
+    }
+
+    public function testTableRowOffsetSet()
+    {
+        $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
+
+        $rowset = $table->find(1);
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
+
+        try {
+            $row1->offsetSet($bug_description, 'foo');
+            $this->assertEquals('foo', $row1->offsetGet($bug_description));
+        } catch (Zend_Exception $e) {
+            $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
+        }
+    }
 
     public function testTableRowSetFromArray()
     {
