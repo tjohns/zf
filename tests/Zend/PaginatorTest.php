@@ -92,13 +92,15 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     protected $_config = null;
     
+    protected $_adapter = null;
+    
     protected function setUp()
     {
-        $db = new Zend_Db_Adapter_Pdo_Sqlite(array(
+        $this->_adapter = new Zend_Db_Adapter_Pdo_Sqlite(array(
             'dbname' => dirname(__FILE__) . '/Paginator/_files/test.sqlite'
         ));
         
-        $this->_query = $db->select()->from('test');
+        $this->_query = $this->_adapter->select()->from('test');
         
         $this->_testCollection = range(1, 101);
         $this->_paginator = Zend_Paginator::factory($this->_testCollection);
@@ -147,9 +149,10 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Paginator_Adapter_DbSelect', $paginator->getAdapter());
     }
     
+    // ZF-4607
 	public function testFactoryReturnsDbTableSelectAdapter()
     {
-    	$table = new TestTable();
+    	$table = new TestTable($this->_adapter);
     	
         $paginator = Zend_Paginator::factory($table->select());
         
