@@ -232,6 +232,8 @@ class Zend_Paginator implements Countable, IteratorAggregate
         if ($adapter == self::INTERNAL_ADAPTER) {
         	if (is_array($data)) {
         		$adapter = 'Array';
+        	} else if ($data instanceof Zend_Db_Table_Select) {
+        		$adapter = 'DbTableSelect';
 	        } else if ($data instanceof Zend_Db_Select) {
 	            $adapter = 'DbSelect';
 	        } else if ($data instanceof Iterator) {
