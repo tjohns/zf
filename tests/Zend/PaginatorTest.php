@@ -66,6 +66,11 @@ require_once 'Zend/View/Helper/PaginationControl.php';
 require_once 'Zend/Paginator/_files/Zf4207.php';
 
 /**
+ * @see TestTable
+ */
+require_once 'Zend/Paginator/_files/TestTable.php';
+
+/**
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
@@ -138,6 +143,15 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     public function testFactoryReturnsDbSelectAdapter()
     {
         $paginator = Zend_Paginator::factory($this->_query);
+        
+        $this->assertType('Zend_Paginator_Adapter_DbSelect', $paginator->getAdapter());
+    }
+    
+	public function testFactoryReturnsDbTableSelectAdapter()
+    {
+    	$table = new TestTable();
+    	
+        $paginator = Zend_Paginator::factory($table->select());
         
         $this->assertType('Zend_Paginator_Adapter_DbSelect', $paginator->getAdapter());
     }
