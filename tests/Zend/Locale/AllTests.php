@@ -39,10 +39,8 @@ if (!defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE')) {
     }
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
-error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 // define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
 
 require_once 'Zend/Locale/DataTest.php';

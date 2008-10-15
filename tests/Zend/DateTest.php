@@ -22,7 +22,7 @@
 /**
  * Test helper
  */
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * These const values control some testing behavior.
