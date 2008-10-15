@@ -1163,7 +1163,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
                 if ($found === null) {
                     require_once 'Zend/File/Transfer/Exception.php';
-                    throw new Zend_File_Transfer_Exception(sprintf('"%s" not found by file transfer adapter', $file));
+                    throw new Zend_File_Transfer_Exception(sprintf('"%s" not found by file transfer adapter', $find));
                 }
 
                 $check[$found] = $this->_files[$found];
