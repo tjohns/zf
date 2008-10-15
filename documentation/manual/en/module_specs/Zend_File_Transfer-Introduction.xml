@@ -72,7 +72,7 @@ if (!$adapter->receive()) {
         <title>Attention</title>
         <para>
             Keep in mind that this is just the simplest usage. You should
-            <emphasis role="strong">never</emphasis> just this example is an living environment as it
+            <emphasis role="strong">never</emphasis> just use this example as is in an living environment as it
             causes severe security issues. You should always use validators to increase security.
         </para>
     </note>
