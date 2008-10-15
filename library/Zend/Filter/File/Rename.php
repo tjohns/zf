@@ -209,6 +209,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
             return $newfile;
         }
 
-        return false;
+        require_once 'Zend/Filter/Exception.php';
+        throw new Zend_Filter_Exception("File $value could not be renamed.");
     }
 }
