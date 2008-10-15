@@ -5,7 +5,7 @@
  * @subpackage UnitTests
  */
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Controller_Router_Route_Regex */
 require_once 'Zend/Controller/Router/Route/Regex.php';

@@ -30,7 +30,8 @@ if (!defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE')) {
      * Read in user-defined test configuration if available; otherwise, read default test configuration.
      * This facilitates running "php AllTests.php" in this subdirectory or "phpunit Zend_Locale_AllTests".
      */
-    $_test_configuration = 'Zend/TestConfiguration.php';
+    $_test_configuration = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..'
+        . DIRECTORY_SEPARATOR .  'TestConfiguration.php';
     if (is_readable($_test_configuration)) {
         include_once $_test_configuration;
     } else if (is_readable("$_test_configuration.dist")) {

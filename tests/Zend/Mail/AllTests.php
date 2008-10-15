@@ -4,10 +4,10 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 if (!defined('TESTS_ZEND_MAIL_POP3_ENABLED')) {
-    if (is_readable('Zend/TestConfiguration.php')) {
-        require_once 'Zend/TestConfiguration.php';
+    if (is_readable('TestConfiguration.php')) {
+        require_once 'TestConfiguration.php';
     } else {
-        require_once 'Zend/TestConfiguration.php.dist';
+        require_once 'TestConfiguration.php.dist';
     }
 }
 

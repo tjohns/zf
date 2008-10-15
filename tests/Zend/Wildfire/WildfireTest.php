@@ -20,7 +20,7 @@
  * @version    $Id: VersionTest.php 8064 2008-02-16 10:58:39Z thomas $
  */
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /** Zend_Wildfire_Channel_HttpHeaders */
 require_once 'Zend/Wildfire/Channel/HttpHeaders.php';

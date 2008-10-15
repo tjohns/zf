@@ -24,7 +24,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube/VideoEntry.php';
 require_once 'Zend/Gdata/YouTube/Extension/State.php';
