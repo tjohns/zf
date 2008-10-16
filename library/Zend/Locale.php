@@ -218,6 +218,9 @@ class Zend_Locale
 
     /**
      * Sets a new default locale
+     * If provided you can set a quality between 0 and 1 (or 2 and 100)
+     * which represents the percent of quality the browser
+     * requested within HTTP
      *
      * @param  string|Zend_Locale $locale  Locale to set
      * @param  float              $quality The quality to set from 0 to 1
@@ -233,9 +236,13 @@ class Zend_Locale
             throw new Zend_Locale_Exception('Only full qualified locales can be used as default!');
         }
 
-        if (($quality < 0.1) or ($quality > 1)) {
+        if (($quality < 0.1) or ($quality > 100)) {
             require_once 'Zend/Locale/Exception.php';
-            throw new Zend_Locale_Exception("Quality must be between 0.1 and 1");
+            throw new Zend_Locale_Exception("Quality must be between 0.1 and 100");
+        }
+
+        if ($quality > 1) {
+            $quality /= 100;
         }
 
         if (isset(self::$_localeData[(string) $locale]) === true) {
