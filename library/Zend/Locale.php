@@ -628,19 +628,19 @@ class Zend_Locale
         $quest['yesarray'] = $yes;
         $quest['no']       = $no[0];
         $quest['noarray']  = $no;
-        $quest['yesexpr']  = self::_getRegex($yes);
-        $quest['noexpr']   = self::_getRegex($no);
+        $quest['yesexpr']  = self::_prepareQuestionString($yes);
+        $quest['noexpr']   = self::_prepareQuestionString($no);
 
         return $quest;
     }
 
     /**
-     * Internal function for creating a regex
+     * Internal function for preparing the returned question regex string
      *
      * @param  string $input Regex to parse
      * @return string
      */
-    private static function _getRegex($input)
+    private static function _prepareQuestionString($input)
     {
         $regex = '';
         if (is_array($input) === true) {
