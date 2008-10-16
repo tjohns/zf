@@ -55,19 +55,19 @@ class Zend_Dojo_View_Helper_Dojo_Container
      * Base CDN url to utilize
      * @var string
      */
-    protected $_cdnBase = Zend_Dojo::CDN_BASE_AOL;
+    protected $_cdnBase = Zend_Dojo::CDN_BASE_GOOGLE;
 
     /**
      * Path segment following version string of CDN path
      * @var string
      */
-    protected $_cdnDojoPath = Zend_Dojo::CDN_DOJO_PATH_AOL;
+    protected $_cdnDojoPath = Zend_Dojo::CDN_DOJO_PATH_GOOGLE;
 
     /**
      * Dojo version to use from CDN
      * @var string
      */
-    protected $_cdnVersion = '1.1.1';
+    protected $_cdnVersion = '1.2.0';
 
     /**
      * Has the dijit loader been registered?
