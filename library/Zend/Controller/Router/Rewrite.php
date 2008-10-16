@@ -140,15 +140,57 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         }
         
         foreach ($config as $name => $info) {
-
-            $class = (isset($info->type)) ? $info->type : 'Zend_Controller_Router_Route';
-            Zend_Loader::loadClass($class);
-
-            $route = call_user_func(array($class, 'getInstance'), $info);
-            $this->addRoute($name, $route);
+            $route = $this->_getRouteFromConfig($info);
+            
+            if (isset($info->chains) && $info->chains instanceof Zend_Config) {
+                $this->_addChainRoutesFromConfig($name, $route, $info->chains);
+            } else {
+                $this->addRoute($name, $route);
+            }
         }
 
         return $this;
+    }
+    
+    /**
+     * Get a route frm a config instance
+     *
+     * @param  Zend_Config $info
+     * @return Zend_Controller_Router_Route_Interface
+     */
+    protected function _getRouteFromConfig(Zend_Config $info)
+    {
+        $class = (isset($info->type)) ? $info->type : 'Zend_Controller_Router_Route';
+        Zend_Loader::loadClass($class);
+       
+        $route = call_user_func(array($class, 'getInstance'), $info);
+
+        return $route;
+    }
+    
+    /**
+     * Add chain routes from a config route
+     *
+     * @todo   Add recursive chaining (not required yet, but later when path
+     *         route chaining is done) 
+     * 
+     * @param  string                                 $name
+     * @param  Zend_Controller_Router_Route_Interface $route
+     * @param  Zend_Config                            $childRoutesInfo
+     * @return void
+     */
+    protected function _addChainRoutesFromConfig($name,
+                                                 Zend_Controller_Router_Route_Interface $route,
+                                                 Zend_Config $childRoutesInfo)
+    {
+        foreach ($childRoutesInfo as $childRouteName => $childRouteInfo) {
+            $childRoute = $this->_getRouteFromConfig($childRouteInfo);
+            
+            $chainRoute = $route->chain($childRoute);
+            $chainName  = $name . '-' . $childRouteName;
+            
+            $this->addRoute($chainName, $chainRoute);
+        }
     }
 
     /**
