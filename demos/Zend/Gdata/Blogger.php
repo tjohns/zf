@@ -28,7 +28,7 @@
 * be run from the command line.
 *
 * To run the sample:
-* php Blogger.php -- --user=email@email.com --pass=password
+* php Blogger.php --user=email@email.com --pass=password
 */
 
 /**
@@ -366,7 +366,7 @@ foreach ($argv as $argument) {
 }
 
 if (($user == null) || ($pass == null)) {
-    exit("php Blogger.php -- --user=[username] --pass=[password]\n");
+    exit("php Blogger.php --user=[username] --pass=[password]\n");
 }
 
 $sample = new SimpleCRUD($user, $pass); 
