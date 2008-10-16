@@ -135,7 +135,15 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
             // has the exception correctly been overwritten by getRow() ?
             $this->assertRegExp('#No row could be found at position \d+#',$e->getMessage());
         } 
+    }
+    
+    public function testTableRowSetArrayAccess()
+    {
+        $table = $this->_table['bugs'];
+        $rowset = $table->fetchAll();
         
+        $this->assertTrue(isset($rowset[0]));
+        $this->assertType('Zend_Db_Table_Row', $rowset[0]);
     }
 
     public function testTableRowsetEmpty()
