@@ -155,27 +155,27 @@ class World
         <programlisting role="xml"><![CDATA[
 <?xml version="1.0" encoding="UTF-8"?>
 <services-config>
-	<services>
+    <services>
         <service id="zend-service"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
-			<destination id="zend">
-				<channels>
-					<channel ref="zend-endpoint"/>
-				</channels>
-				<properties>
-					<source>*</source>
-				</properties>
-			</destination>
-		</service>
-	</services>
-	<channels>
+            <destination id="zend">
+                <channels>
+                    <channel ref="zend-endpoint"/>
+                </channels>
+                <properties>
+                    <source>*</source>
+                </properties>
+            </destination>
+        </service>
+    </services>
+    <channels>
         <channel-definition id="zend-endpoint"
             class="mx.messaging.channels.AMFChannel">
             <endpoint uri="http://example.com/server.php"
                 class="flex.messaging.endpoints.AMFEndpoint"/>
-		</channel-definition>
-	</channels>
+        </channel-definition>
+    </channels>
 </services-config>
 ]]></programlisting>
 
@@ -396,43 +396,43 @@ class Contact
         <programlisting role="as"><![CDATA[
 package
 {
-	[Bindable]
-	[RemoteClass(alias="ContactVO")]
-	public class ContactVO
-	{
-		public var id:int;
-		public var firstname:String;
-		public var lastname:String;
-		public var email:String;
-		public var mobile:String;
-		public function ProductVO():void {
-		}
-	}
+    [Bindable]
+    [RemoteClass(alias="ContactVO")]
+    public class ContactVO
+    {
+        public var id:int;
+        public var firstname:String;
+        public var lastname:String;
+        public var email:String;
+        public var mobile:String;
+        public function ProductVO():void {
+        }
+    }
 }
 ]]></programlisting>
-		<para>
-			The class is syntactically equivalent to the PHP of the same name.
-			The variable names are exactly the same and need to be in the same case
-			to work properly. There are two unique AS3 meta tags in this class.
-			The first is bindable which makes fire a change event when it is updated.
-			The second tag is the RemoteClass tag which defines that this class can
-			have a a remote object mapped with the alias name in this case <code>ContactVO</code>
-			It is mandatory that this tag the value that was set is the PHP class are stricktly
-			equivelent.
-		</para>
+        <para>
+            The class is syntactically equivalent to the PHP of the same name.
+            The variable names are exactly the same and need to be in the same case
+            to work properly. There are two unique AS3 meta tags in this class.
+            The first is bindable which makes fire a change event when it is updated.
+            The second tag is the RemoteClass tag which defines that this class can
+            have a a remote object mapped with the alias name in this case <code>ContactVO</code>
+            It is mandatory that this tag the value that was set is the PHP class are stricktly
+            equivelent.
+        </para>
 <programlisting role="as"><![CDATA[
 [Bindable]
 private var myContact:ContactVO;
 
 private function getContactHandler(event:ResultEvent):void {
-	myContact = ContactVO(event.result);
+    myContact = ContactVO(event.result);
 }
 ]]></programlisting>
-		<para>
-			The following result event from the serice call is cast instantly onto the Flex
-			ContactVO. Anything that is bound to myContact will be updated with the returned
-			ContactVO data.
-		</para>
+        <para>
+            The following result event from the serice call is cast instantly onto the Flex
+            ContactVO. Anything that is bound to myContact will be updated with the returned
+            ContactVO data.
+        </para>
     </sect2>
 </sect1>
 <!--
