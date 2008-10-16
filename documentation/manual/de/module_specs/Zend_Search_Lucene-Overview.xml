@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 11825 -->
 <sect1 id="zend.search.lucene.overview">
     <title>Überblick</title>
 
@@ -358,7 +358,202 @@ $headerLinksArray = $doc->getHeaderLinks();
         </para>
     </sect2>
 
+    <sect2 id="zend.search.lucene.index-creation.docx-documents">
+        <title>Word 2007 Dokumente</title>
+        <para>
+            Zend_Search_Lucene bietet ein Word 2007 parsing Feature. Dokumente können direkt aus einer
+            Word 2007 Datei heraus erstellt werden:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Docx</code> Klasse verwendet die
+            <code>ZipArchive</code> Klasse und <code>simplexml</code> Methoden um das Quelldokument
+            zu parsen. Wenn die <code>ZipArchive</code> Klasse (vom Modul php_zip) nicht vorhanden
+            ist, wird <code>Zend_Search_Lucene_Document_Docx</code> auch nicht für die
+            Verwendung mit dem Zend Framework zur Verfügung stehen.
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Docx</code> Klasse erkennt die Metadaten und den
+            Text des Dokuments. Metadaten bestehen, abhängig vom Inhalt des Dokuments, aus
+            Dateinamen, Titel, Untertitel, Ersteller, Schlüsselwörter, Beschreibung, zuletzt
+            geändert von, Version, Geändert und Erstellt.
+        </para>
+
+        <para>
+            Das Feld 'filename' ist der aktuelle Word 2007 Dateiname.
+        </para>
+
+        <para>
+            Das Feld 'title' ist der aktuelle Titel des Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'subject' ist der aktuelle Untertitel des Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'creator' ist der Ersteller des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'keywords' enthält die Schlüsselwörter des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'description' ist die Beschreibung des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'lastModifiedBy' ist der Benutzername der Person die das aktuelle Dokument
+            als letztes geändert hat.
+        </para>
+
+        <para>
+            Das Feld 'revision' ist die Versionsnummer des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'modified' ist das Datum / die Uhrzeit der letzten Änderung des
+            aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'created' ist das Datum / die Uhrzeit der Erstellung des aktuellen
+            Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'body' ist der aktuelle Inhalt des Word 2007 Dokuments. Es enthält nur
+            normalen Text, Kommentare und Versionen sind nicht enthalten.
+        </para>
+
+        <para>
+            Die Methode <code>loadDocxFile()</code> der <code>Zend_Search_Lucene_Document_Docx</code>
+            Klasse hat auch ein zweites optionales Argument. Wenn es auf true gesetzt wird, wird der
+            Inhalt auch mit einem Index gespeichert und kann vom Index empfangen werden. Standardmäßig
+            wird der Inhalt gesplittet und indiziert, aber nicht gespeichert.
+        </para>
+    
+        <para>
+            Eingelesene Dokumente können vom Programierer mit jedem anderen Feld argumentiert werden:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time())
+);
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Anmerkungstext des Dokuments')
+);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.pptx-documents">
+        <title>Powerpoint 2007 Dokumente</title>
+        <para>
+            Zend_Search_Lucene bietet ein Parsing Feature für Powerpoint 2007. Dokumente können direkt
+            auf einer Powerpoint 2007 Datei heraus erstellt werden:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Pptx</code> Klasse verwendet die
+            <code>ZipArchive</code> Klasse und <code>simplexml</code> Methoden um das Quelldokument
+            zu parsen. Wenn die <code>ZipArchive</code> Klasse (vom Modul php_zip) nicht vorhanden
+            ist, wird <code>Zend_Search_Lucene_Document_Docx</code> auch nicht für die
+            Verwendung mit dem Zend Framework zur Verfügung stehen.
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Docx</code> Klasse erkennt die Metadaten und den
+            Text des Dokuments. Metadaten bestehen, abhängig vom Inhalt des Dokuments, aus
+            Dateinamen, Titel, Untertitel, Ersteller, Schlüsselwörter, Beschreibung, zuletzt
+            geändert von, Version, Geändert und Erstellt.
+        </para>
+
+        <para>
+            Das Feld 'filename' ist der aktuelle Powerpoint 2007 Dateiname.
+        </para>
+
+        <para>
+            Das Feld 'title' ist der aktuelle Titel des Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'subject' ist der aktuelle Untertitel des Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'creator' ist der Ersteller des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'keywords' enthält die Schlüsselwörter des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'description' ist die Beschreibung des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'lastModifiedBy' ist der Benutzername der Person die das aktuelle Dokument
+            als letztes geändert hat.
+        </para>
+
+        <para>
+            Das Feld 'revision' ist die Versionsnummer des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'modified' ist das Datum / die Uhrzeit der letzten Änderung des
+            aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'created' ist das Datum / die Uhrzeit der Erstellung des aktuellen
+            Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'body' ist der aktuelle Inhalt aller Slides und Slidenotizen im
+            Powerpoint 2007 Dokument.
+        </para>
+
+        <para>
+            Die Methode <code>loadPptxFile()</code> der <code>Zend_Search_Lucene_Document_Pptx</code>
+            Klasse hat auch ein zweites optionales Argument. Wenn es auf true gesetzt wird, wird der
+            Inhalt auch mit einem Index gespeichert und kann vom Index empfangen werden. Standardmäßig
+            wird der Inhalt gesplittet und indiziert, aber nicht gespeichert.
+        </para>
+
+        <para>
+            Eingelesene Dokumente können vom Programierer mit jedem anderen Feld argumentiert werden:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time()));
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Anmerkungstext des Dokuments'));
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->

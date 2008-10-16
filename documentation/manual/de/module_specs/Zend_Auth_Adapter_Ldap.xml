@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11765 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP Authentifizierung</title>
@@ -104,7 +104,7 @@ ldap.server1.bindRequiresDn = true
 
 ; Typische Optionen für Active Directory
 ldap.server2.host = dc1.w.net
-ldap.server2.useSsl = true
+ldap.server2.useStartTls = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
@@ -159,7 +159,7 @@ Array
     [server2] => Array
         (
             [host] => dc1.w.net
-            [useSsl] => 1
+            [useStartTls] => 1
             [accountDomainName] => w.net
             [accountDomainNameShort] => W
             [accountCanonicalForm] => 3
@@ -293,14 +293,25 @@ Array
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">useSsl</emphasis></entry>
+                    <entry>useStartTls</entry>
                     <entry>
-                        Wenn er <code>true</code> ist, zeigt dieser Wert an das der LDAP Client
-                        SSL / TSL verschlüsselten Transport verwenden sollte. Ein Wert von
-                        <code>true</code> wird stark favorisiert in Produktionsumgebungen um zu
-                        verhindern das Passwörter in Klartext übermittelt werden. Der Standardwert
-                        ist <code>false</code>, da Server es oft erfordern das ein Zertifikat nach
-                        der Installation seperat nachinstalliert wird. Dieser Wert ändert auch den
+                        Ob der LDAP Client einen TSL (aka SSLv2) verschlüsselten Transport verwenden soll
+                        oder nicht. Der Wert <code>true</code> wird in einer Produktionsumgebung strengstens
+                        empfohlen um zu verhindern das Passwörter im Klartext übertragen werden. Der
+                        Standardwert ist <code>false</code>, da Server typischerweise nach deren Installation
+                        erwarten das ein Zertifikat installiert wird. Die <code>useSsl</code> und
+                        <code>useStartTls</code> Optionen schließen sich gegenseitig aus. Die
+                        <code>useStartTls</code> Option sollte über <code>useSsl</code> favorisiert werden,
+                        aber nicht alle Server unterstützen diesen neueren Mechanismus.
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>useSsl</entry>
+                    <entry>
+                        Ob der LDAP Client einen SSL verschlüsselten Transport verwenden soll. Die
+                        <code>useSsl</code> und <code>useStartTls</code> Optionen schließen sich gegenseitig
+                        aus, aber <code>useStartTls</code> sollte favorisiert werden wenn der Server und die
+                        LDAP Bibliothek des Clients diese unterstützen. Dieser Wert ändert auch den
                         Standardwert von <emphasis role="strong">port</emphasis> (siehe die
                         <emphasis role="strong">port</emphasis> Beschreibung weiter oben).
                     </entry>
@@ -447,6 +458,13 @@ Array
                         gesetzt werden.
                     </entry>
                   </row>
+                  <row>
+                    <entry><emphasis role="strong">optReferrals</emphasis></entry>
+                    <entry>
+                        Wenn sie auf <code>true</code> gesetzt wird, zeigt diese Option dem LDAP Client an,
+                        das Referenzen gefolgt werden soll. Der Standardwert ist <code>false</code>.
+                    </entry>
+                  </row>
                 </tbody>
               </tgroup>
             </table>
@@ -454,7 +472,8 @@ Array
 
         <note>
             <para>
-                Wenn <code>useSsl = true</code> aktiviert ist, erzeugt der LDAP Client einen Fehler
+                Wenn <code>useStartTls = true</code> oder <code>useSsl = true</code> aktiviert ist,
+                erzeugt der LDAP Client einen Fehler
                 der aussagt das er das Zertifikat des Servers nicht überprüfen kann. Angenommen die
                 PHP LDAP Erweiterung ist ultimativ verlinkt mit der OpenLDAP Client Bibliothek, muß
                 man um dieses Problem zu lösen "<code>TLS_REQCERT niemals</code>" im OpenLDAP
@@ -552,10 +571,16 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
                         <entry>
                             Zum Zwecke der Sicherheit, sollte das <code>true</code> sein wenn der
                             Server das notwendige Zertifikat installiert hat.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry>
+                            Möglicherweise als Alternative zu <code>useStartTls</code> zu verwenden (siehe davor).
                         </entry>
                       </row>
                       <row>
@@ -644,10 +669,16 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
                         <entry>
                             Zum Zwecke der Sicherheit, sollte das <code>true</code> sein wenn der
                             Server das notwendige Zertifikat installiert hat.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry>
+                            Möglicherweise als Alternative zu <code>useStartTls</code> zu verwenden (siehe davor).
                         </entry>
                       </row>
                       <row>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 11765 -->
 <sect1 id="zend.ldap.using">
 
     <title>Einleitung</title>
@@ -260,6 +260,13 @@ echo "$acctname\n";
                             Aus diesem Grund sind leere Passwörter explizit nicht erlaubt. Wenn dieser
                             Wert auf <code>true</code> gesetzt wird ist die Übermittlung eines leeres Passwortes
                             wärend des Bindens erlaubt. 
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>optReferrals</entry>
+                        <entry>
+                            Auf <code>true</code> gesetzt, zeigt diese Option dem LDAP Client das Referenzen
+                            gefolgt werden soll. Der Standardwert ist <code>false</code>.
                         </entry>
                       </row>
                     </tbody>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 11679 -->
+<!-- EN-Revision: 11784 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -369,6 +369,9 @@
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_AuthSub.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_Books.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Books.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_ClientLogin.xml" /></xi:fallback>
         </xi:include>
@@ -387,11 +390,11 @@
         <xi:include href="module_specs/Zend_Gdata_Gbase.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gbase.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Gdata_YouTube.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_YouTube.xml" /></xi:fallback>
-        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Photos.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Photos.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_YouTube.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_YouTube.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Exception.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Exception.xml" /></xi:fallback>

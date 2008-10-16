@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11224 -->
+<!-- EN-Revision: 11769 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -10,7 +10,7 @@
             Zugriffs auf diese Daten haben. Für diesen Zweck, läuft jeder Datenzugriff über Datenquellen
             Adapter. Verschiedene Adapter werden mit dem Zend Framework standardmäßig ausgeliefert:
         </para>
-            
+
         <table id="zend.paginator.usage.paginating.adapters">
             <title>Adapter für <code>Zend_Paginator</code></title>
 
@@ -30,7 +30,17 @@
                         <entry>DbSelect</entry>
                         <entry>
                             Verwendet eine Instanz von
-                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>
+                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>,
+                            welche ein Array zurückgibt
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>DbTableSelect</entry>
+                        <entry>
+                            Verwendet eine Instanz von
+                            <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link>,
+                            welche eine Instanz von <code>Zend_Db_Table_Rowset_Abstract</code> zurückgibt.
+                            Das gibt zusätzliche Information pber das Ergebnisset, wie z.B. die Namen der Spalten.
                         </entry>
                     </row>
                     <row>
@@ -50,6 +60,21 @@
                 </tbody>
             </tgroup>
         </table>
+
+        <note>
+            <para>
+                Statt jede passende Zeile einer gegebenen Abfrage auszuwählen, empfangen die DbSelect und
+                DbTableSelect Adapter nur die kleinste Anzahl an Daten die für die Darstellung der aktuellen
+                Seite notwendig sind.
+            </para>
+
+            <para>
+                Deswegen wird dynamisch eine zweite Abfrage erzeugt um die komplette Anzahl an passenden
+                Zeilen festzustellen. Trotzdem ist es möglich die Anzahl oder die Abfrage für die Anzahl
+                selbst direkt zu übergeben. Siehe die <code>setRowCount()</code> Methode im DbSelect
+                Adapter für weitere Informationen.
+            </para>
+        </note>
 
         <para>
             Um eine Instanz von <code>Zend_Paginator</code> zu erstellen, muß ein Adapter an den Konstruktor
@@ -83,9 +108,9 @@ $paginator = Zend_Paginator::factory($array);
         </note>
         
         <para>
-            Auch wenn die Instanz in diesem Fall technische zu verwenden ist, muß der Seitendarstellung die
-            Seitennummer die der Benutzer anfragt mitgeteilt werden um Ihm zu erlauben auf die seitenweisen
-            Daten zuzugreifen:
+            Auch wenn die Instanz in diesem Fall technische zu verwenden ist, muß in der Controller Aktion
+            der Seitendarstellung mitgeteilt werden welche Seitennummer der Benutzer angefragt hat. Das
+            erlaubt Ihm auf die seitenweisen Daten zuzugreifen.
         </para>
 
         <para>
@@ -182,16 +207,16 @@ $this->view->paginator = $paginator;
         </para>
         
         <para>
-            Der Aufruf des View Helfers fast am Ende ist zu beachten. PaginationControl nimmt die Paginator
-            Instanz, einen optionalen Scroll Stil, und eine optionale teilweise View.
+            Der Aufruf des View Helfers fast am Ende ist zu beachten. PaginationControl nimmt bis zu vier
+            Parameter: die Paginator Instanz, einen Scrolling Stil, eine partielle View und ein Array von
+            zusätzlichen Parametern.
         </para>
         
         <para>
-            Auch wenn die letzteren zwei Parameter optional sind, sind Sie doch sehr wichtig. Wobei die
-            partielle View verwendet wird um festzustellen wie die Seitenkontrollen <emphasis>aussehen</emphasis>
-            sollten, und der Scrolling Stil verwendet wird um zu kontrollieren wie er sich
-            <emphasis>verhalten</emphasis> sollte. Angenommen die partielle View ist im Stil einer Suchseiten
-            Kontrolle, wie anbei:
+            Die zweiten und dritten Parameter sind sehr wichtig. Wobei die partielle View verwendet wird
+            um festzustellen wie die Seitenkontrollen <emphasis>aussehen</emphasis> sollten, und der
+            Scrolling Stil verwendet wird um zu kontrollieren wie er sich <emphasis>verhalten</emphasis>
+            sollte. Angenommen die partielle View ist im Stil einer Suchseiten Kontrolle, wie anbei:
         </para>
         
         <para>
@@ -256,12 +281,18 @@ $this->view->paginator = $paginator;
                 </tbody>
             </tgroup>
         </table>
-        
+
         <para>
-            Durch das Setzen des standard View Partials, den standard Scrolling Stils, und der View Instanz
-            kann der Aufruf von PaginatingControl komplett entfallen:
+            Der vierte und letzte Parameter ist reserviert für ein assoziatives Array an zusätzlichen
+            Variablen das in der partiellen View vorhanden sein sill (über <code>$this</code>). Für
+            Instanzen, können diese Werte extra URL Parameter für Seitendarstellungslinks enthalten.
         </para>
-        
+
+        <para>
+            Durch das Setzen von einer standardmäßigen partiellen View, einem standardmäßigen Scrolling Stil
+            und einer View Instanz kann dei Aufruf der PaginationControl komplett eliminiert werden:
+        </para>
+
         <para>
             <programlisting role="php"><![CDATA[
 Zend_Paginator::setDefaultScrollingStyle('Sliding');
@@ -270,7 +301,7 @@ $paginator->setView($view);
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             Wenn alle diese Werte gesetzt sind, kann die Seitenkontrolle im View Skript mit einem einfachen
             echo Statement dargestellt werden:
@@ -282,7 +313,32 @@ $paginator->setView($view);
 ]]>
             </programlisting>
         </para>
-        
+
+        <note>
+            <para>
+                Natürlich ist es möglich <code>Zend_Paginator</code> mit anderen Template Engines zu
+                verwenden. Mit Smarty zum Beispiel, würde man das folgendermaßen bewerkstelligen:
+            </para>
+            
+            <para>
+                <programlisting role="php"><![CDATA[
+$smarty->assign('pages', $paginator->getPages());
+]]>
+                </programlisting>
+            </para>
+
+            <para>
+                Man könnte die Seitenverte von einem Template wie folgt erhalten:
+            </para>
+            
+            <para>
+                <programlisting role="php"><![CDATA[
+{$pages.pageCount}
+]]>
+                </programlisting>
+            </para>
+        </note>
+
         <sect3 id="zend.paginator.usage.rendering.example-controls">
             <title>Beispiel der Seitenkontrolle</title>
             
