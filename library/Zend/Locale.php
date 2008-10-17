@@ -122,6 +122,14 @@ class Zend_Locale
     const ZFDEFAULT   = 'default';
 
     /**
+     * Defines if old behaviour should be supported
+     * Old behaviour throws notices and will be deleted in future releases
+     *
+     * @var boolean
+     */
+    public static $compatibilityMode = true;
+
+    /**
      * Actual set locale
      *
      * @var string Locale
@@ -703,12 +711,24 @@ class Zend_Locale
             return false; 
         }
 
-        if (isset(self::$_localeData[$locale]) === true) {
-            return true;
-        } else if (!$strict) {
-            $locale = explode('_', $locale);
-            if (isset(self::$_localeData[$locale[0]]) === true) {
+        if (self::$compatibilityMode === true) {
+            trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_WARNING);
+            if (isset(self::$_localeData[$locale]) === true) {
+                return $locale;
+            } else if (!$strict) {
+                $locale = explode('_', $locale);
+                if (isset(self::$_localeData[$locale[0]]) === true) {
+                    return $locale[0];
+                }
+            }
+        } else {
+            if (isset(self::$_localeData[$locale]) === true) {
                 return true;
+            } else if (!$strict) {
+                $locale = explode('_', $locale);
+                if (isset(self::$_localeData[$locale[0]]) === true) {
+                    return true;
+                }
             }
         }
 

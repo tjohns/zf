@@ -58,6 +58,9 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
                  array('lifetime' => 120, 'automatic_serialization' => true),
                  array('cache_dir' => dirname(__FILE__) . '/_files/'));
         Zend_Locale::setCache($this->_cache);
+
+        // compatibilityMode is true until 1.8 therefor we have to change it
+        Zend_Locale::$compatibilityMode = false;
     }
 
     public function tearDown()
@@ -83,6 +86,12 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         $locale = new Zend_Locale('auto');
         $this->assertTrue(new Zend_Locale($locale) instanceof Zend_Locale);
+
+        // compatibility tests
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        Zend_Locale::$compatibilityMode = true;
+        $this->assertEquals('de', Zend_Locale::isLocale('de'));
+        restore_error_handler();
     }
 
     /**
@@ -559,6 +568,21 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Locale::isLocale('auto'));
         $this->assertTrue(Zend_Locale::isLocale('browser'));
         $this->assertTrue(Zend_Locale::isLocale('environment'));
+
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        Zend_Locale::$compatibilityMode = true;
+        $this->assertEquals('ar', Zend_Locale::isLocale($locale));
+        $this->assertEquals('de', Zend_Locale::isLocale('de'));
+        $this->assertEquals('de_AT', Zend_Locale::isLocale('de_AT'));
+        $this->assertEquals('de', Zend_Locale::isLocale('de_xx'));
+        $this->assertFalse(Zend_Locale::isLocale('yy'));
+        $this->assertFalse(Zend_Locale::isLocale(1234));
+        $this->assertFalse(Zend_Locale::isLocale('', true));
+        $this->assertTrue(is_string(Zend_Locale::isLocale('', false)));
+        $this->assertTrue(is_string(Zend_Locale::isLocale('auto')));
+        $this->assertTrue(is_string(Zend_Locale::isLocale('browser')));
+        $this->assertTrue(is_string(Zend_Locale::isLocale('environment')));
+        restore_error_handler();
     }
 
     /**
@@ -604,6 +628,21 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testZF3617() {
         $value = new Zend_Locale('en-US');
         $this->assertEquals('en_US', $value->toString());
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccurred = true;
     }
 }
 
