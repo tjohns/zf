@@ -104,7 +104,13 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
         return $value;
     }
 
-    public function setRequest(Zend_Controller_Request_Abstract $request)
+    /**
+     * Set the request object for this and the child routes
+     * 
+     * @param  Zend_Controller_Request_Abstract|null $request
+     * @return void
+     */
+    public function setRequest($request)
     {
         $this->_request = $request;
 
