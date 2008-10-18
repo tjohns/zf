@@ -49,6 +49,15 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Acl-Advanced.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+    <chapter id="zend.amf">
+        <title>Zend_Amf</title>
+        <xi:include href="module_specs/Zend_Amf.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Amf-Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf-Server.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
         <xi:include href="module_specs/Zend_Auth.xml">
