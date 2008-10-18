@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NullTest.php 3980 2007-03-15 21:38:38Z mike $
+ * @version    $Id$
  */
 
 /** PHPUnit_Framework_TestCase */
@@ -47,7 +47,7 @@ require_once 'Zend/Controller/Response/Http.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NullTest.php 3980 2007-03-15 21:38:38Z mike $
+ * @version    $Id$
  */
 class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
 {

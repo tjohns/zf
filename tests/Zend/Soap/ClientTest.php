@@ -32,7 +32,7 @@ require_once 'Zend/Soap/Client.php';
  *
  * @category   Zend
  * @package    UnitTests
- * @version    $Id: ServerTest.php 8064 2008-02-16 10:58:39Z thomas $
+ * @version    $Id$
  */
 class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 {

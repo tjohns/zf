@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DataTest.php 3776 2007-03-06 22:50:56Z thomas $
+ * @version    $Id$
  */
 
 /**
