@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11358 -->
+<!-- EN-Revision: 11947 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router</title>
     <sect2 id="zend.controller.router.introduction">
@@ -118,7 +118,7 @@ $router->addRoute('user',
         </programlisting>
 
         <para>
-            Der Rewrite Router kommt mit vier Basistypen von Routen (eine von denen ist speziell):
+            Der Rewrite Router kommt mit fünf Basistypen von Routen (eine von denen ist speziell):
             is special):
         </para>
 
@@ -126,6 +126,7 @@ $router->addRoute('user',
             <listitem><para><xref linkend="zend.controller.router.routes.standard" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.hostname" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
 
@@ -319,6 +320,9 @@ $request->setBaseUrl('/~user/application-root/');
         </xi:include>
         <xi:include href="Zend_Controller-Router-Route-Regex.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Router-Route-Regex.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-Router-Route-Hostname.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Router-Route-Hostname.xml" /></xi:fallback>
         </xi:include>
     </sect2>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11769 -->
+<!-- EN-Revision: 11855 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -115,7 +115,7 @@ $paginator = Zend_Paginator::factory($array);
 
         <para>
             <programlisting role="php"><![CDATA[
-$paginator->setCurrentPageNumber($pageNumber);
+$paginator->setCurrentPageNumber($page);
 ]]>
             </programlisting>
         </para>
@@ -132,12 +132,12 @@ $paginator->setCurrentPageNumber($pageNumber);
         
         <para>
             <programlisting role="php"><![CDATA[
-routes.example.route = articles/:articleName/:pageNumber
+routes.example.route = articles/:articleName/:page
 routes.example.defaults.controller = articles
 routes.example.defaults.action = view
-routes.example.defaults.pageNumber = 1
+routes.example.defaults.page = 1
 routes.example.reqs.articleName = \w+
-routes.example.reqs.pageNumber = \d+
+routes.example.reqs.page = \d+
 ]]>
             </programlisting>
         </para>
@@ -149,7 +149,7 @@ routes.example.reqs.pageNumber = \d+
         
         <para>
             <programlisting role="php"><![CDATA[
-$paginator->setCurrentPageNumber($this->_getParam('pageNumber'));
+$paginator->setCurrentPageNumber($this->_getParam('page'));
 ]]>
             </programlisting>
         </para>
