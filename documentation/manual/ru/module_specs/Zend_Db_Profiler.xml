@@ -1,4 +1,4 @@
-<sect1 id="zend.db.profiler">
+<sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
 
@@ -23,16 +23,15 @@
             адаптеру для включения.
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
-
+        <programlisting role="php"><![CDATA[
 $params = array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
     'profiler' => true  // включение профилировщика;
-                        // для отключения устанавливайте в false (значение по умолчанию)
+                        // для отключения устанавливайте в false
+                        // (значение по умолчанию)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
@@ -41,7 +40,8 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 $db->getProfiler()->setEnabled(false);
 
 // включение профилировщика:
-$db->getProfiler()->setEnabled(true);]]>
+$db->getProfiler()->setEnabled(true);
+]]>
         </programlisting>
 
         <para>
@@ -58,7 +58,8 @@ $db->getProfiler()->setEnabled(true);]]>
             профилировщика <code>Zend_Db_Profiler</code>.
             <programlisting role="php"><![CDATA[
 $params['profiler'] = true;
-$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+]]>
             </programlisting>
         </para>
 
@@ -70,7 +71,8 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
 $profiler = MyProject_Db_Profiler();
 $profiler->setEnabled(true);
 $params['profiler'] = $profiler;
-$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+]]>
             </programlisting>
         </para>
 
@@ -90,7 +92,8 @@ $params['profiler'] = array(
     'enabled' => true,
     'class'   => 'MyProject_Db_Profiler'
 );
-$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+]]>
             </programlisting>
         </para>
 
@@ -102,7 +105,8 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             <programlisting role="ini"><![CDATA[
 [main]
 db.profiler.class   = "MyProject_Db_Profiler"
-db.profiler.enabled = true]]>
+db.profiler.enabled = true
+]]>
             </programlisting>
 
             Эта конфигурация может быть применена так, как показано в коде ниже:
@@ -110,7 +114,8 @@ db.profiler.enabled = true]]>
             <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('config.ini', 'main');
 $params['profiler'] = $config->db->profiler;
-$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+]]>
             </programlisting>
 
             Свойство '<code>instance</code>' может быть использовано следующим
@@ -123,7 +128,8 @@ $configData = array(
     );
 $config = new Zend_Config($configData);
 $params['profiler'] = $config;
-$db = Zend_Db::factory('PDO_MYSQL', $params);]]>
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+]]>
             </programlisting>
 
         </para>
@@ -139,8 +145,9 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);]]>
             метод <code>getProfiler()</code> адаптера:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
-$profiler = $db->getProfiler();]]>
+        <programlisting role="php"><![CDATA[
+$profiler = $db->getProfiler();
+]]>
         </programlisting>
 
         <para>
@@ -221,10 +228,11 @@ $profiler = $db->getProfiler();]]>
             последним:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $query = $profiler->getLastQueryProfile();
 
-echo $query->getQuery();]]>
+echo $query->getQuery();
+]]>
         </programlisting>
 
         <para>
@@ -234,7 +242,7 @@ echo $query->getQuery();]]>
             тот, который выполняется дольше всех:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
@@ -247,11 +255,14 @@ foreach ($profiler->getQueryProfiles() as $query) {
     }
 }
 
-echo 'Executed ' . $queryCount . ' queries in ' . $totalTime . ' seconds' . "\n";
-echo 'Average query length: ' . $totalTime / $queryCount . ' seconds' . "\n";
+echo 'Executed ' . $queryCount . ' queries in ' . $totalTime . 
+     ' seconds' . "\n";
+echo 'Average query length: ' . $totalTime / $queryCount .
+     ' seconds' . "\n";
 echo 'Queries per second: ' . $queryCount / $totalTime . "\n";
 echo 'Longest query length: ' . $longestTime . "\n";
-echo "Longest query: \n" . $longestQuery . "\n";]]>
+echo "Longest query: \n" . $longestQuery . "\n";
+]]>
         </programlisting>
 
     </sect2>
@@ -278,12 +289,13 @@ echo "Longest query: \n" . $longestQuery . "\n";]]>
                 null.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
-// Профилировать только те запросы, которые отнимают по меньшей мере 5 секунд:
+            <programlisting role="php"><![CDATA[
+// Профилировать только те запросы, которые отнимают не менее 5 секунд:
 $profiler->setFilterElapsedSecs(5);
 
 // Профилировать все запросы безотносительно времени выполнения:
-$profiler->setFilterElapsedSecs(null);]]>
+$profiler->setFilterElapsedSecs(null);
+]]>
             </programlisting>
         </sect3>
 
@@ -354,18 +366,21 @@ $profiler->setFilterElapsedSecs(null);]]>
                 качестве единственного аргумента.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // профилирование только запросов SELECT
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
 // профилирование запросов SELECT, INSERT и UPDATE
-$profiler->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+$profiler->setFilterQueryType(Zend_Db_Profiler::SELECT |
+                              Zend_Db_Profiler::INSERT |
+                              Zend_Db_Profiler::UPDATE);
 
-// профилирование запросов DELETE (так мы можем определить, почему теряются данные)
+// профилирование запросов DELETE
 $profiler->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // удалить все фильтры
-$profiler->setFilterQueryType(null);]]>
+$profiler->setFilterQueryType(null);
+]]>
             </programlisting>
 
         </sect3>
@@ -385,21 +400,38 @@ $profiler->setFilterQueryType(null);]]>
                 <xref linkend="zend.db.profiler.advanced.filtertype" />.
             </para>
 
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Получение только профилей запросов SELECT
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
 // Получение только профилей запросов SELECT, INSERT и UPDATE
-$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT |
+                                        Zend_Db_Profiler::INSERT |
+                                        Zend_Db_Profiler::UPDATE);
 
-// Получение профилей запросов DELETE (так мы можем определить, почему теряются данные)
-$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);]]>
+// Получение профилей запросов DELETE
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
+]]>
             </programlisting>
 
         </sect3>
 
     </sect2>
 
+    <sect2 id="zend.db.profiler.profilers">
+        <title>Специализированные профилировщики</title>
+
+        <para>
+            Специализированный профилировщик - это объект, который наследует от
+            <code>Zend_Db_Profiler</code>. Специализированные профилировщики
+            предназначены для специальной обработки данных профилирования.
+        </para>
+
+        <xi:include href="Zend_Db_Profiler-Firebug.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Db_Profiler-Firebug.xml" /></xi:fallback>
+        </xi:include>
+
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
