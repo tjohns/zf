@@ -37,6 +37,34 @@ require_once 'Zend/Form/Decorator/Abstract.php';
 class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
 {
     /**
+     * Attributes that should not be passed to helper
+     * @var array
+     */
+    protected $_attribBlacklist = array('helper', 'value');
+
+    /**
+     * Get attributes to pass to file helper
+     * 
+     * @return array
+     */
+    public function getAttribs()
+    {
+        $attribs = $this->getOptions();
+
+        if (null !== ($element = $this->getElement())) {
+            $attribs = array_merge($attribs, $element->getAttribs());
+        }
+
+        foreach ($this->_attribBlacklist as $key) {
+            if (array_key_exists($key, $attribs)) {
+                unset($attribs[$key]);
+            }
+        }
+
+        return $attribs;
+    }
+
+    /**
      * Render a form file
      * 
      * @param  string $content 
@@ -55,7 +83,7 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
         }
 
         $name    = $element->getName();
-        $attribs = $element->getAttribs();
+        $attribs = $this->getAttribs();
         if (!array_key_exists('id', $attribs)) {
             $attribs['id'] = $name;
         }
