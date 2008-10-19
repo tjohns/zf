@@ -37,11 +37,12 @@ if ($locale = Zend_Locale::isLocale($locale)) {
     // do something
 }
 
+// Same example for 1.7
+
 // You should change the compatiblity mode to prevent user warnings
 // But you can do this in your bootstrap
 Zend_Locale::compatibilityMode = false;
 
-// Same example for 1.7
 if (Zend_Locale::isLocale($locale)) {
 }
 ]]>
@@ -58,11 +59,12 @@ if ($locale = Zend_Locale::isLocale($locale, false)) {
     // do something
 }
 
+// Same example for 1.7
+
 // You should change the compatiblity mode to prevent user warnings
 // But you can do this in your bootstrap
 Zend_Locale::compatibilityMode = false;
 
-// Same example for 1.7
 if (Zend_Locale::isLocale($locale, false)) {
     if (Zend_Locale::isLocale($locale, true)) {
         // no locale at all
