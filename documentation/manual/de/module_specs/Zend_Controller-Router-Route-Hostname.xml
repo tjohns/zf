@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11960 -->
+<!-- EN-Revision: 11997 -->
 <sect3 id="zend.controller.router.routes.hostname">
     <title>Zend_Controller_Router_Route_Hostname</title>
 
@@ -62,10 +62,50 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
         <title>Hostnamerouten über Zend_Config</title>
 
         <para>
-            Momentan ist es nicht möglich Hostnamerouten und Pfadrouten über Zend_Config miteinander
-            zu verknüpfen, aber man kann sie im Code miteinander verknüpfen. Die Config-Implementation
-            wird in einer späteren Version vom Zend Framework folgen.
+            Um Hostnamerouten und Pfadrouten zu verknüpfen gibt es einen zusätzlichen Parameter für die
+            Konfiguration der <code>chains</code> heißt. Das ist einfach eine Liste von Routen, welche
+            mit der Elternkette verknüpft werden. Weder die Eltern-, noch die Kindkette werden direkt
+            dem Router hinzugefügt, sondern nur die verkettete Route. Der Name der verketteten Route im
+            Router ist der Name der Elternroute und der Name der Kindrote verknüpft mit einem
+            Bindestrich (-). Eine einfache Konfiguration in XML würde so aussehen:
         </para>
+
+        <programlisting role="xml"><![CDATA[
+<routes>
+    <www type="Zend_Controller_Router_Route_Hostname">
+        <route>www.example.com</route>
+        <chains>
+            <index type="Zend_Controller_Rotuer_Route_Static">
+                <route></route>
+                <defaults module="default" controller="index" action="index" />
+            </index>
+            <imprint type="Zend_Controller_Rotuer_Route_Static">
+                <route>imprint</route>
+                <defaults module="default" controller="index" action="index" />
+            </imprint>
+        </chains>
+    </www>
+    <users type="Zend_Controller_Router_Route_Hostname">
+        <route>users.example.com</route>
+        <chains>
+            <profile type="Zend_Controller_Rotuer_Route">
+                <route>:username</route>
+                <defaults module="users" controller="profile" action="index" />
+            </index>
+        </chains>
+    </users>
+    <misc type="Zend_Controller_Router_Route_Static">
+        <route>misc</route>
+    </misc>
+</routes>
+]]>
+        </programlisting>
+
+        <para>
+            Das führt zu den drei Routen <code>www-index</code>, <code>www-imprint</code> und
+            <code>users-profile</code> welche nur anhand des Hostnamens und der Route <code>misc</code>
+            entsprechen, welche bei jedem Hostnamen passt.
+        </para>    
     </sect4>
 </sect3>
 <!--

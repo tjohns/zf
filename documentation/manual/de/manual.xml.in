@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 11784 -->
+<!-- EN-Revision: 12003 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -497,6 +497,9 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Locale-AppendixLanguages.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-AppendixLanguages.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Locale-Migration.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-Migration.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.log">
