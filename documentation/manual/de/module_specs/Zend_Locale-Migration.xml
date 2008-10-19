@@ -42,7 +42,7 @@ if ($locale = Zend_Locale::isLocale($locale)) {
 
 // Man sollte den Kompatibilitätsmodus ändern um User Warnings zu verhindern
 // Aber man kann das in der Bootstrap tun
-Zend_Locale::compatibilityMode = false;
+Zend_Locale::$compatibilityMode = false;
 
 if (Zend_Locale::isLocale($locale)) {
 }
@@ -64,7 +64,7 @@ if ($locale = Zend_Locale::isLocale($locale, false)) {
 
 // Man sollte den Kompatibilitätsmodus ändern um User Warnings zu verhindern
 // Aber man kann das in der Bootstrap tun
-Zend_Locale::compatibilityMode = false;
+Zend_Locale::$compatibilityMode = false;
 
 if (Zend_Locale::isLocale($locale, false)) {
     if (Zend_Locale::isLocale($locale, true)) {
