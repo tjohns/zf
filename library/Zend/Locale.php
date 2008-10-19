@@ -130,6 +130,13 @@ class Zend_Locale
     public static $compatibilityMode = true;
 
     /**
+     * Internal variable
+     *
+     * @var boolean
+     */
+    private static $_breakChain = false;
+
+    /**
      * Actual set locale
      *
      * @var string Locale
@@ -221,6 +228,16 @@ class Zend_Locale
      */
     public static function getDefault()
     {
+        if ((self::$compatibilityMode === true) or (func_num_args() > 0)) {
+            if (!self::$_breakChain) {
+                self::$_breakChain = true;
+                trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_WARNING);
+                return self::getOrder(func_get_arg(0));
+            }
+
+            self::$_breakChain = false;
+        }
+
         return self::$_default;
     }
 

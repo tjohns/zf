@@ -127,7 +127,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     {
         Zend_Locale::setDefault('de');
         $value = new Zend_Locale();
-        $default = $value->getDefault();
+        $default = $value->getOrder();
         $this->assertTrue(array_key_exists('de', $default));
 
         $default = $value->getOrder(Zend_Locale::BROWSER);
@@ -619,6 +619,20 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Locale_Exception $e) {
             $this->assertContains("Unknown locale", $e->getMessage());
         }
+    }
+
+    /**
+     * Test getDefault
+     */
+    public function testgetDefault() {
+        Zend_Locale::setDefault('de');
+        $this->assertTrue(array_key_exists('de', Zend_Locale::getDefault()));
+
+        // compatibility tests
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        Zend_Locale::$compatibilityMode = true;
+        $this->assertTrue(array_key_exists('de', Zend_Locale::getDefault(Zend_Locale::BROWSER)));
+        restore_error_handler();
     }
 
     /**
