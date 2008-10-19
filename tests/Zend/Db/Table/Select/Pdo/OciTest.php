@@ -26,14 +26,31 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Select_Pdo_OciTest extends Zend_Db_Table_Select_TestCommon
 {
 
-    public function testSelectFromQualified()
+    /**
+     * ZF-4330: this test must be done on string field
+     */
+    protected function _selectColumnWithColonQuotedParameter ()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $select = $this->_db->select()
+                            ->from('zfproducts')
+                            ->where($product_name . ' = ?', "as'as:x");
+        return $select;
     }
 
-    public function testSelectJoinQualified()
+    /**
+     * ZF-4330 : Oracle doesn't use 'AS' to identify table alias
+     */
+    public function testSelectFromSelectObject ()
     {
-        $this->markTestIncomplete($this->getDriver() . ' does not report its schema as we expect.');
+        $select = $this->_selectFromSelectObject();
+        $query = $select->assemble();
+        $cmp = 'SELECT ' . $this->_db->quoteIdentifier('t') . '.* FROM (SELECT '
+                         . $this->_db->quoteIdentifier('subqueryTable') . '.* FROM '
+                         . $this->_db->quoteIdentifier('subqueryTable') . ') '
+                         . $this->_db->quoteIdentifier('t');
+        $this->assertEquals($query, $cmp);
     }
 
     public function getDriver()

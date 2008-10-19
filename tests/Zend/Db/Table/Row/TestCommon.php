@@ -90,7 +90,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowConstructor()
     {
         $table = $this->_table['bugs'];
-        
+
         $config = array(
                 'db'    => $this->_db,
                 'table' => $table,
@@ -153,12 +153,12 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $a = $row1->toArray();
 
         $this->assertTrue(is_array($a));
-        
+
         // fix for #ZF-1898
         $arrayObject = new ArrayObject($row1->toArray(),ArrayObject::ARRAY_AS_PROPS);
         $arrayObject->bug_status = 'foobar';
         $this->assertNotEquals('foobar',$row1->bug_status);
-        
+
         $cols = array(
             'bug_id',
             'bug_description',
@@ -234,7 +234,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
     }
-    
+
     // ZF-2013
 	public function testTableRowOffsetGet()
     {
@@ -378,11 +378,11 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->fail("Caught exception of type \"".get_class($e)."\" where no exception was expected.  Exception message: \"".$e->getMessage()."\"\n");
         }
     }
-    
+
     public function testTableRowSaveInvalidTable()
     {
         $table = $this->_table['bugs'];
-        
+
         $row = $this->_testTableRow();
 
         try {
@@ -411,7 +411,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowSaveUpdateInvalidInfo()
     {
         $table = $this->_table['bugs'];
-        
+
         $row = $this->_testTableRow();
 
         $bug_status      = $this->_db->foldCase('bug_status');
@@ -445,7 +445,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $table = $this->_table['bugs'];
 
         $bug_status = $this->_db->foldCase('bug_status');
-        
+
         $row = $this->_testTableRow();
         $row->$bug_status = 'VALID';
 
@@ -487,7 +487,7 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableRowSetInvalidTable()
     {
         $table = $this->_table['bugs'];
-        
+
         $row = $this->_testTableRow();
 
         try {
@@ -716,9 +716,18 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertFalse($connected);
     }
 
+    /**
+     * Allow adapters with sequences to declare them
+     * @return Zend_Db_Table_Abstract
+     */
+    protected function _testTableRowSetReadOnlyGetTableBugs()
+    {
+        return $this->_table['bugs'];
+    }
+
     public function testTableRowSetReadOnly()
     {
-        $table = $this->_table['bugs'];
+        $table = $this->_testTableRowSetReadOnlyGetTableBugs();
         $bug_status = $this->_db->foldCase('bug_status');
 
         $rowset = $table->find(1);

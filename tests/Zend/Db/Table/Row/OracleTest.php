@@ -31,6 +31,15 @@ class Zend_Db_Table_Row_OracleTest extends Zend_Db_Table_Row_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support auto-increment keys.');
     }
 
+    /**
+     * ZF-4330: Oracle need sequence
+     */
+    protected function _testTableRowSetReadOnlyGetTableBugs()
+    {
+        return $this->_getTable('Zend_Db_Table_TableBugs',
+                                array(Zend_Db_Table_Abstract::SEQUENCE => 'zfbugs_seq'));
+    }
+
     public function getDriver()
     {
         return 'Oracle';

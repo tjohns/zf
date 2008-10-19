@@ -346,11 +346,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $db = $table->getAdapter();
         $this->assertSame($this->_db, $db);
     }
-    
+
     public function testTableWithNoAdapterAndNoDefaultAdapter()
     {
         Zend_Db_Table_Abstract::setDefaultAdapter(null);
-        $this->assertNull(Zend_Db_Table_Abstract::getDefaultAdapter());     
+        $this->assertNull(Zend_Db_Table_Abstract::getDefaultAdapter());
         try {
             $table = new Zend_Db_Table_TableBugs();
             $this->fail('Zend_Db_Table_Exception should be thrown');
@@ -715,7 +715,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         // insert a lot of rows
         $n = 100000;
-        for ($i = 1; $i <= $n; $i++) 
+        for ($i = 1; $i <= $n; $i++)
         {
             $table->insert(array('product_name' => "product$i"));
             if ($i % 1000 == 0) {
@@ -1123,7 +1123,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $select = $table->select()
             ->order('bug_id ASC')
             ->limit(2, 1);
-        
+
         $rowset = $table->fetchAll($select);
         $this->assertType('Zend_Db_Table_Rowset', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset, got '.get_class($rowset));
@@ -1381,8 +1381,9 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $row2->delete();
 
         $table = $this->_table['bugs_products'];
+        $product_id = $this->_db->quoteIdentifier('product_id', true);
         $select = $table->select()
-            ->where('product_id = ?', 2);
+            ->where($product_id . ' = ?', 2);
 
         $rows = $table->fetchAll($select);
         $this->assertEquals(0, count($rows));
@@ -1447,7 +1448,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
         $cacheFrontend->clean(Zend_Cache::CLEANING_MODE_ALL);
-        
+
         rmdir($folder);
 
         return $cacheFrontend;
