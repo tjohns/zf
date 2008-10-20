@@ -166,7 +166,7 @@ $model = array(
 ]]></programlisting>
 
         <programlisting role="html"><![CDATA[
-<dl></dl>
+<dl>
     <dt>Mammal</dt>
     <dd>Camel</dd>
 
