@@ -51,7 +51,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorWithValidStream()
     {
-        $stream = fopen('php://memory', 'a');
+        $stream = fopen('php://memory', 'w+');
         new Zend_Log_Writer_Stream($stream);
     }
     
@@ -62,9 +62,9 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
 
     public function testConstructorThrowsWhenModeSpecifiedForExistingStream()
     {
-        $stream = fopen('php://memory', 'a');
+        $stream = fopen('php://memory', 'w+');
         try {
-            new Zend_Log_Writer_Stream($stream, 'w');
+            new Zend_Log_Writer_Stream($stream, 'w+');
             $this->fail();
         } catch (Exception $e) {
             $this->assertType('Zend_Log_Exception', $e);
@@ -85,7 +85,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
     
     public function testWrite()
     {
-        $stream = fopen('php://memory', 'a');
+        $stream = fopen('php://memory', 'w+');
         $fields = array('message' => 'message-to-log');
 
         $writer = new Zend_Log_Writer_Stream($stream);
@@ -100,7 +100,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
     
     public function testWriteThrowsWhenStreamWriteFails()
     {
-        $stream = fopen('php://memory', 'a');
+        $stream = fopen('php://memory', 'w+');
         $writer = new Zend_Log_Writer_Stream($stream);
         fclose($stream);
         
@@ -115,7 +115,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
 
     public function testShutdownClosesStreamResource()
     {
-        $writer = new Zend_Log_Writer_Stream('php://memory', 'a');
+        $writer = new Zend_Log_Writer_Stream('php://memory', 'w+');
         $writer->write(array('message' => 'this write should succeed'));
         
         $writer->shutdown();
@@ -131,7 +131,7 @@ class Zend_Log_Writer_StreamTest extends PHPUnit_Framework_TestCase
 
     public function testSettingNewFormatter()
     {
-        $stream = fopen('php://memory', 'a');
+        $stream = fopen('php://memory', 'w+');
         $writer = new Zend_Log_Writer_Stream($stream);
         $expected = 'foo';
         
