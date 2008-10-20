@@ -206,6 +206,51 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that unwise characters in the query string are not valid
+     *
+     */
+    public function testExceptionUnwiseQueryString()
+    {
+        $unwise = array(
+            'http://example.com/?q={',
+            'http://example.com/?q=}',
+            'http://example.com/?q=|',
+            'http://example.com/?q=\\',
+            'http://example.com/?q=^',
+            'http://example.com/?q=`',
+        ); 
+        
+        foreach ($unwise as $uri) {
+            $this->assertFalse(Zend_Uri::check($uri), "failed for URI $uri");
+        }
+    }
+    
+    /**
+     * Test that after setting 'allow_unwise' to true unwise characters are
+     * accepted
+     *
+     */
+    public function testAllowUnwiseQueryString()
+    {
+        $unwise = array(
+            'http://example.com/?q={',
+            'http://example.com/?q=}',
+            'http://example.com/?q=|',
+            'http://example.com/?q=\\',
+            'http://example.com/?q=^',
+            'http://example.com/?q=`',
+        ); 
+        
+        Zend_Uri::setConfig(array('allow_unwise' => true));
+        
+        foreach ($unwise as $uri) {
+            $this->assertTrue(Zend_Uri::check($uri), "failed for URI $uri");
+        }
+        
+        Zend_Uri::setConfig(array('allow_unwise' => false));
+    }
+    
+    /**
      * Test a known valid URI
      *
      * @param string $uri

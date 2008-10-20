@@ -120,7 +120,11 @@ class Zend_Uri_Http extends Zend_Uri
                                     . '|[:@&=+$,;])*)';
         $this->_regex['path']       = '(?:\/' . $this->_regex['segment'] . '?)+';
         $this->_regex['uric']       = '(?:' . $this->_regex['reserved'] . '|' . $this->_regex['unreserved'] . '|'
-                                    . $this->_regex['escaped'] . ')';
+                                    . $this->_regex['escaped'] . 
+                                    
+                                    // If allow_unwise is enabled, allow unwise characters 
+                                    (self::$_config['allow_unwise'] ? '|[\{\}\|\\\\\^`]' : '') . ')';
+                                    
         // If no scheme-specific part was supplied, the user intends to create
         // a new URI with this object.  No further parsing is required.
         if (strlen($schemeSpecific) === 0) {
