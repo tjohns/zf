@@ -511,7 +511,7 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
 Zend_Locale_Format::setOptions(array('locale' => 'en_US',
                                      'date_format' => 'dd.MMMM.YYYY'));
 // overriding the global set date format
-$date = Zend_Locale_Format::getDate('2007-04-20,
+$date = Zend_Locale_Format::getDate('2007-04-20',
                                     array('date_format' =>
                                               Zend_Locale_Format::STANDARD);
 
