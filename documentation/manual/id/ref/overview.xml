@@ -3,7 +3,7 @@
     <title>Gambaran Umum</title>
 
     <para>
-        Zend Framework (ZF) adalah framework open source untuk mengembangkan aplikasi web
+        Zend Framework (ZF) adalah framework open source yang dibuat untuk mengembangkan aplikasi web
         dan service dengan PHP 5. ZF diimplementasikan dalam 100% kode-kode object-oriented.
         Struktur komponen ZF terbilang unik; tiap komponen didesain dengan kebergantungan
         sekecil mungkin dengan komponen lain. Arsitektur yang dikenal sebagai "loosely coupled" ini
@@ -12,36 +12,30 @@
     </para>
     <para>
         Biarpun bisa dipakai secara terpisah, komponen-komponen Zend Framework dalam bentuk library standar
-        yang utuh merupakan framework aplikasi web yang mumpuni dan extensible. ZF menawarkan
+        yang utuh merupakan framework aplikasi web yang mumpuni dan ekstensibel. ZF menawarkan
         implementasi MVC dengan performa prima, abstraksi database yang mudah digunakan, dan komponen
-        form yang mengimplementasikan form HTML, validasi, dan filtering sehingga developer dapat
-        
-        
-        While they can be used separately, Zend Framework components in the standard library
-        form a powerful and extensible web application framework when combined. ZF offers a
-        robust and performant MVC implementation, a database abstraction that is simple to
-        use, and a forms component that implements HTML form rendering, validation, and filtering
-        so that developers can consolidate all of these operations using one easy-to-use, object
-        oriented interface. Other components, such as Zend_Auth and Zend_Acl, provide user
-        authentication and authorization against all common credential stores. Still others
-        implement client libraries to simply access to the most popular web services available.
-        Whatever your application needs are, you're likely to find a Zend Framework component
-        that can be used to dramatically reduce development time with a thoroughly tested
-        foundation.
+        form yang mengimplementasikan form HTML, validasi, dan filtering sekaligus sehingga developer dapat
+        mengimplementasikan keseluruhan fungsionalitas ini dalam satu langkah mudah.
+        Komponen lainnya seperti Zend_Auth dan Zend_Acl menyediakan fungsionalitas otentikasi dan otorisasi 
+        terhadap semua model credential yang umum dipakai. Komponen lain mengimplementasikan library client untuk
+        mengakses web service populer yang ada saat ini. Apapun yang dibutuhkan aplikasi anda, anda akan
+        sering mendapati Zend Framework mampu digunakan untuk mempersingkat waktu development anda.
+        Dan lagi ZF dibangun dengan pondasi testing yang menyeluruh. Sehingga anda tidak perlu khawatir 
+        dengan stabilitas framework ini.
     </para>
     <para>
-        The principal sponsor of the Zend Framework project is <ulink url="http://www.zend.com">
-        Zend Technologies</ulink>, but many companies have contributed components or significant features
-        to the framework. Companies such as Google, Microsoft, and StrikeIron have partnered
-        with Zend to provide interfaces to web services and other technologies that they wish to make
-        available to Zend Framework developers.
+    		Sponsor utama Zend Framework adalah <ulink url="http://www.zend.com">Zend Technologies</ulink>,
+        tapi banyak perusahaan besar telah memberikan kontribusinya dalam bentuk komponen atau fitur yang signifikan
+        untuk ZF. Perusahaan seperti Google, Microsoft, dan StrikeIron telah bekerjasama dengan Zend
+        untuk menyediakan interface ke web service mereka atau teknologi lain yang ingin mereka dedikasikan
+        untuk pengembang Zend Framework.
     </para>
     <para>
-        Zend Framework could not deliver and support all of these features without the help of the vibrant
-        ZF community. Community members, including contributors, make themselves available
-        on <ulink url="http://framework.zend.com/archives">mailing lists</ulink>, <ulink url="http://www.zftalk.com">
-        IRC channels</ulink>, and other forums. Whatever question you have about ZF, the community
-        is always available to address it.
+        Zend Framework tidak dapat menyediakan dan mendukung semua fitur yang ada saat ini tanpa bantuan komunitas 
+        pengembang dan pengguna ZF yang penuh semangat dan dedikasi tinggi. Anggota komunitas, termasuk kontributor, 
+        menyediakan waktu mereka di <ulink url="http://framework.zend.com/archives">mailing list</ulink>, 
+        <ulink url="http://www.zftalk.com">channel IRC</ulink>, dan berbagai forum lain. Apapun pertanyaan yang 
+        mungkin anda miliki untuk ZF, komunitas ZF akan selalu bersedia membantu anda.
     </para>
 </sect1>
 <!--
