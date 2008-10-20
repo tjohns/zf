@@ -258,6 +258,9 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
      */
     public function testVeryLongUriZF3712()
     {
+        $this->markTestSkipped("Causes PHP to crash on some systems, " . 
+	                       "enable at your own risk");
+
         $uri = 'http://localhost:4444/selenium-server/driver/?cmd=type&1=ban' .
                'ner_code&2=if+%28+typeof%28+globalseed+%29+%3D%3D+%22undefin' .
                'ed%22%29+%7B%0A%09var+globalseed++%3D+Math.round%28Math.rand' .
