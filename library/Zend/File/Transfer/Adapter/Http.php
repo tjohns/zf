@@ -97,7 +97,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
             // Should never return false when it's tested by the upload validator
             if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
-                if (isset($this->_options['ignoreNoFile'])) {
+                if ($this->_options['ignoreNoFile']) {
                     continue;
                 }
 
