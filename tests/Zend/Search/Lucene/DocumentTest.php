@@ -22,6 +22,11 @@ require_once 'Zend/Search/Lucene/Document/Docx.php';
 require_once 'Zend/Search/Lucene/Document/Pptx.php';
 
 /**
+ * Zend_Search_Lucene_Document_Xlsx
+ */
+require_once 'Zend/Search/Lucene/Document/Xlsx.php';
+
+/**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -155,5 +160,20 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($pptxDocument->getFieldValue('title'), 'Test document');
 		$this->assertEquals($pptxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
 		$this->assertTrue($pptxDocument->getFieldValue('body') != '');
+    }
+    
+    public function testXlsx()
+    {
+    	if (!class_exists('ZipArchive')) {
+    		$this->markTestSkipped('ZipArchive class (Zip extension) is not loaded');
+    	}
+
+		$xlsxDocument = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile(dirname(__FILE__) . '/_openXmlDocuments/test.xlsx', true);
+
+        $this->assertTrue($xlsxDocument instanceof Zend_Search_Lucene_Document_Xlsx);
+		$this->assertEquals($xlsxDocument->getFieldValue('title'), 'Test document');
+		$this->assertEquals($xlsxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
+		$this->assertTrue($xlsxDocument->getFieldValue('body') != '');
+		$this->assertTrue( strpos($xlsxDocument->getFieldValue('body'), 'ipsum') !== false );
     }
 }
