@@ -205,4 +205,10 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testDefaultRegistryArrayAsPropsZF4654()
+    {
+        $registry = Zend_Registry::getInstance();
+        $registry->bar = "baz";
+        $this->assertEquals('baz', Zend_Registry::get('bar'));
+    }
 }
