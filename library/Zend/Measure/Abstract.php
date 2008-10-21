@@ -81,7 +81,7 @@ abstract class Zend_Measure_Abstract
      */
     public function __construct($value, $type = null, $locale = null)
     {
-        if (($type !== null) and (Zend_Locale::isLocale($type))) {
+        if (($type !== null) and (Zend_Locale::isLocale($type, null, false))) {
             $locale = $type;
             $type = null;
         }
@@ -97,8 +97,8 @@ abstract class Zend_Measure_Abstract
             $locale = new Zend_Locale();
         }
 
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 require_once 'Zend/Measure/Exception.php';
                 throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
             }
@@ -145,7 +145,7 @@ abstract class Zend_Measure_Abstract
      */
     public function setValue($value, $type = null, $locale = null)
     {
-        if (($type !== null) and (Zend_Locale::isLocale($type))) {
+        if (($type !== null) and (Zend_Locale::isLocale($type, null, false))) {
             $locale = $type;
             $type = null;
         }
@@ -154,8 +154,8 @@ abstract class Zend_Measure_Abstract
             $locale = $this->_locale;
         }
 
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 require_once 'Zend/Measure/Exception.php';
                 throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
             }
