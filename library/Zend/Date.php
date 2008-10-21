@@ -157,11 +157,11 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function __construct($date = null, $part = null, $locale = null)
     {
-        if (($date !== null) and !($date instanceof Zend_TimeSync_Protocol) and (Zend_Locale::isLocale($date, true))) {
+        if (($date !== null) and !($date instanceof Zend_TimeSync_Protocol) and (Zend_Locale::isLocale($date, true, false))) {
             $locale = $date;
             $date = null;
             $part = null;
-        } else if (($part !== null) and (Zend_Locale::isLocale($part))) {
+        } else if (($part !== null) and (Zend_Locale::isLocale($part, null, false))) {
             $locale = $part;
             $part   = null;
         }
@@ -406,12 +406,12 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function toString($format = null, $type = null, $locale = null)
     {
-        if ((strlen($format) != 2) and ($format !== null) and (Zend_Locale::isLocale($format))) {
+        if ((strlen($format) != 2) and ($format !== null) and (Zend_Locale::isLocale($format, null, false))) {
             $locale = $format;
             $format = null;
         }
 
-        if (($type !== null) and (Zend_Locale::isLocale($type))) {
+        if (($type !== null) and (Zend_Locale::isLocale($type, null, false))) {
             $locale = $type;
             $type = null;
         }
@@ -795,7 +795,7 @@ class Zend_Date extends Zend_Date_DateObject
             $locale = $this->getLocale();
         }
 
-        if (($part !== null) and (Zend_Locale::isLocale($part))) {
+        if (($part !== null) and (Zend_Locale::isLocale($part, null, false))) {
             $locale = $part;
             $part = null;
         }
@@ -1409,7 +1409,7 @@ class Zend_Date extends Zend_Date_DateObject
             throw new Zend_Date_Exception('parameter $date must be set, null is not allowed');
         }
 
-        if (($part !== null) and (Zend_Locale::isLocale($part))) {
+        if (($part !== null) and (Zend_Locale::isLocale($part, null, false))) {
             $locale = $part;
             $part   = null;
         }
@@ -4553,8 +4553,8 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function setLocale($locale = null)
     {
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception("Given locale ({$locale}) does not exist", (string) $locale);
             }
@@ -4590,7 +4590,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public static function isDate($date, $format = null, $locale = null)
     {
-        if (($format !== null) and (Zend_Locale::isLocale($format))) {
+        if (($format !== null) and (Zend_Locale::isLocale($format, null, false))) {
             $locale = $format;
             $format = null;
         }
@@ -4602,8 +4602,8 @@ class Zend_Date extends Zend_Date_DateObject
             }
         }
 
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 require_once 'Zend/Date/Exception.php';
                 throw new Zend_Date_Exception("Given locale ({$locale}) does not exist", (string) $locale);
             }
