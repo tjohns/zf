@@ -82,7 +82,7 @@ class Zend_View_Helper_Translate extends Zend_View_Helper_Abstract
         $count  = count($options);
         $locale = null;
         if ($count > 0) {
-            if (Zend_Locale::isLocale($options[($count - 1)]) !== false) {
+            if (Zend_Locale::isLocale($options[($count - 1)], null, false) !== false) {
                 $locale = array_pop($options);
             }
         }
