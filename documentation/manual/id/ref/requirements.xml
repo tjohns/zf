@@ -1,32 +1,32 @@
 <appendix id="requirements">
 
-    <title>Syarat-Syarat Yang Dibutuhkan Zend Framework</title>
+    <title>Kebutuhan Zend Framework</title>
 
     <para>
-        Zend Framework requires a PHP 5 interpreter with a web server configured
-        to handle PHP scripts correctly. Some features require additional extensions or
-        web server features; in most cases the framework can be used without them, although
-        performance may suffer or ancillary features may not be fully functional. An example
-        of such a dependency is mod_rewrite in an Apache environment, which can be used to
-        implement "pretty URL's" like "http://www.example.com/user/edit". If mod_rewrite is
-        not enabled, ZF can be configured to support URL's such as "http://www.example.com?controller=user&amp;action=edit".
-        Pretty URL's may be used to shorten URL's for textual representation or search engine optimization (SEO),
-        but they do not directly affect the functionality of the application.
-        
-        Zend Framework membutuhkan PHP 5 dengan web server yang terkonfigurasi untuk 
+        Zend Framework membutuhkan PHP 5 dengan web server yang terkonfigurasi untuk menjalankan
+        skrip PHP dengan benar. Beberapa fitur membutuhkan tambahan extension atau fitur web server;
+        umumnya Zend Framework dapat digunakan tanpa tambahan tersebut, walaupun
+        performanya bisa jadi berkurang atau beberapa fitur tidak berjalan sempurna.
+        Sebagai contoh, mod_rewrite di Apache, dibutuhkan untuk mengimplementasikan
+        "URL cantik" seperti "http://www.example.com/user/edit". Jika mod_rewrite tidak diaktifkan,
+        ZF dapat dikonfigurasi untuk mendukung URL seperti "http://www.example.com?controller=user&amp;action=edit".
+        URL cantik dapat digunakan untuk memperpendek URL yang dibutuhkan untuk representasi tekstual
+        atau search engine optimization (SEO), namun ini tidak mempengaruhi secara langsung
+        fungsionalitas dari aplikasi.
     </para>
 
     <sect1 id="requirements.version">
 
-        <title>PHP Version</title>
+        <title>Versi PHP</title>
 
         <para>
-            Zend recommends PHP 5.2.3 or higher for critical security and performance enhancements, although
-            Zend Framework requires only PHP 5.1.4 or later.
+            Zend merekomendasikan PHP 5.2.4 atau yang lebih baru dengan pertimbangan keamanan dan performansi,
+            walaupun sebenarnya ZF membutuhkan PHP minimal versi 5.1.4 untuk dapat digunakan.
         </para>
 
         <para>
-            Zend Framework has an extensive collection of unit tests, which you can run using PHPUnit 3.0 or later.
+            Zend Framework memiliki koleksi unit test yang lengkap, yang dapat anda jalankan menggunakan
+            PHPUnit 3.0 atau yang lebih baru.
         </para>
 
     </sect1>
@@ -36,24 +36,25 @@
         <title>PHP Extensions</title>
 
         <para>
-            You will find a table listing all extensions typically found in PHP
-            and how they are used in Zend Framework below. You should verify that the extensions on
-            which ZF components you'll be using in your application are available in your PHP environments.
-            Many applications will not require every extension listed below.
+            Anda akan melihat di table berikut daftar extension PHP yang biasanya
+            tersedia dan bagaimana extension tersebut digunakan oleh Zend Framework.
+            Anda harus memastikan extension yang dibutuhkan komponen ZF yang anda perlukan
+            telah tersedia di instalasi PHP anda. Tidak semua aplikasi membutuhkan semua 
+            extension di table tersebut.
         </para>
 
         <para>
-            A dependency of type "hard" indicates that the components or classes
-            cannot function properly if the respective extension is not available,
-            while a dependency of type "soft" indicates that the component may use
-            the extension if it is available but will function properly if it is not.
-            Many components will automatically use certain extensions if they are available
-            to optimize performance but will execute code with similar functionality in the
-            component itself if the extensions are unavailable.
+            Tipe kebergantungan "hard" mengindikasikan komponen atau class
+            tidak dapat berfungsi dengan benar jika extension tersebut tidak tersedia,
+            sementara tipe kebergantungan "soft" berarti komponen dapat menggunakan extension
+            bersangkutan jika memang tersedia namun dapat berfungsi baik kalaupun tidak tersedia.
+            Kebanyakan komponen secara otomatis akan menggunakan extension yang dibutuhkan jika
+            tersedia untuk mengoptimalkan performansi namun tetap jalan seperti biasa jika
+            extension tersebut tidak tersedia (meski performansi tidak optimal).
         </para>
 
         <table frame='all' id="requirements.extensions.table-1">
-            <title>PHP Extensions Used in Zend Framework by Component</title>
+            <title>Extension PHP yang Digunakan Komponen Zend Framework</title>
             <tgroup cols='3'>
                 <!-- <colspec colwidth='1in'/>
                 <colspec colwidth='1in'/>
@@ -61,8 +62,8 @@
                 <thead>
                     <row>
                         <entry>Extension</entry>
-                        <entry>Dependency Type</entry>
-                        <entry>Used by Zend Framework Components</entry>
+                        <entry>Tipe Kebergantungan</entry>
+                        <entry>Digunakan oleh komponen Zend Framework</entry>
                     </row>
                 </thead>
                 <tbody>
@@ -611,28 +612,27 @@
 
     <sect1 id="requirements.zendcomponents">
 
-        <title>Zend Framework Components</title>
+        <title>Komponen Zend Framework</title>
 
         <para>
-            Below is a table that lists all available Zend Framework Components
-            and which PHP extension they need. This can help guide you
-            to know which extensions are required for your application.
-            Not all extensions used by Zend Framework are required for every
-            application.
+            Berikut adalah daftar komponen Zend Framework dan extension PHP yang dibutuhkan.
+            Daftar ini dapat memandu anda untuk mengetahui extension PHP apa yang
+            diperlukan untuk aplikasi yang anda buat.
+            Tidak semua extension digunakan Zend Framework untuk tiap aplikasi.
         </para>
 
         <para>
-            A dependency of type "hard" indicates that the components or classes
-            cannot function properly if the respective extension is not available,
-            while a dependency of type "soft" indicates that the component may use
-            the extension if it is available but will function properly if it is not.
-            Many components will automatically use certain extensions if they are available
-            to optimize performance but will execute code with similar functionality in the
-            component itself if the extensions are unavailable.
+            Tipe kebergantungan "hard" mengindikasikan komponen atau class bersangkutan
+            tidak dapat berfungsi dengan benar jika extension tersebut tidak tersedia,
+            sementara tipe kebergantungan "soft" berarti komponen dapat menggunakan
+            extension tersebut jika tersedia namun dapat tetap jalan kalaupun tidak tersedia.
+            Kebanyakan komponen akan secara otomatis menggunakan extension tertentu jika
+            memang tersedia untuk mengoptimalkan performansi namun tetap jalan seperti biasa
+            kalaupun tidak.
         </para>
 
         <table frame='all' id="requirements.zendcomponents.table-1">
-            <title>Zend Framework Components and the PHP Extensions they use</title>
+            <title>Komponen Zend Framework dan extension PHP yang digunakan</title>
             <tgroup cols='4'>
                 <!-- <colspec colwidth='3in'/>
                 <colspec colwidth='1in'/>
@@ -640,15 +640,15 @@
                 <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
-                        <entry>Zend Framework Components</entry>
-                        <entry>Dependency Type</entry>
+                        <entry>Komponen Zend Framework</entry>
+                        <entry>Tipe Kebergantungan</entry>
                         <entry>Subclass</entry>
-                        <entry>PHP Extension</entry>
+                        <entry>Extension PHP</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry morerows="2" valign="middle"><emphasis role="strong">All Components</emphasis></entry>
+                        <entry morerows="2" valign="middle"><emphasis role="strong">Seluruh Komponen</emphasis></entry>
                         <entry morerows="2" valign="middle">Hard</entry>
                         <entry morerows="2" valign="middle">---</entry>
                         <entry><ulink url="http://www.php.net/manual/en/ref.pcre.php"><code>pcre</code></ulink></entry>
@@ -1169,42 +1169,42 @@
 
     <sect1 id="requirements.dependencies">
 
-        <title>Zend Framework Dependencies</title>
+        <title>Kebergantungan Zend Framework</title>
 
         <para>
-            Below you can find a table listing Zend Framework Components
-            and their dependencies to other Zend Framework Components. This
-            can help you if you need to have only single components instead
-            of the complete Zend Framework.
+            Berikut adalah daftar komponen Zend Framework dan kebergantungannya terhadap
+            komponen lain. Daftar ini dapat membantu anda manakala anda
+            hanya ingin menggunakan sebagian komponen ZF saja pada aplikasi yang anda buat, 
+            tidak seluruhnya.
         </para>
 
         <para>
-            A dependency of type "hard" indicates that the components or classes
-            cannot function properly if the respective dependent component is not available,
-            while a dependency of type "soft" indicates that the component may need
-            the dependent component in special situations or with special adapters.
+            Tipe kebergantungan "hard" mengindikasikan komponen atau class bersangkutan
+            tidak dapat berfungsi dengan benar jika komponen yang diperlukan tidak tersedia,
+            sementara tipe kebergantungan "soft" berarti komponen tersebut dapat menggunakan
+            komponen yang dibutuhkan dalam situasi tertentu atau adapter spesial.
         </para>
 
         <note>
             <para>
-                Even if it's possible to seperate single components for
-                usage from the complete Zend Framework you should keep
-                in mind that this can lead to problems when files are missed
-                or components are used dynamically.
+                Biarpun dimungkinkan sebuah komponen digunakan secara terpisah dari Zend Framewok
+                yang lain, namun perlu diingat ini bisa menimbulkan masalah manakala
+                beberapa file ada yang hilang atau komponen tersebut digunakan
+                secara dinamis.
             </para>
         </note>
 
         <table frame='all' id="requirements.dependencies.table-1">
-            <title>Zend Framework Components and their dependency to other Zend Framework Components</title>
+            <title>Komponen Zend Framework dan Kebergantungannya Dengan Komponen Lain</title>
             <tgroup cols='3'>
                 <colspec colwidth='2in'/>
                 <colspec colwidth='1in'/>
                 <colspec colwidth='4in'/>
                 <thead>
                     <row>
-                        <entry>Zend Framework Component</entry>
-                        <entry>Dependency Type</entry>
-                        <entry>Dependent Zend Framework Component</entry>
+                        <entry>Komponen Zend Framework</entry>
+                        <entry>Tipe Kebergantungan</entry>
+                        <entry>Komponen Zend Framework Yang Diperlukan</entry>
                     </row>
                 </thead>
                 <tbody>
