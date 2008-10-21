@@ -48,6 +48,17 @@ interface Zend_Controller_Dispatcher_Interface
     public function formatControllerName($unformatted);
 
     /**
+     * Formats a string into a module name.  This is used to take a raw
+     * module name, such as one that would be packaged inside a request
+     * object, and reformat it to a proper directory/class name that a class extending
+     * Zend_Controller_Action would use.
+     *
+     * @param string $unformatted
+     * @return string
+     */
+    public function formatModuleName($unformatted);
+
+    /**
      * Formats a string into an action name.  This is used to take a raw
      * action name, such as one that would be packaged inside a request
      * object, and reformat into a proper method name that would be found
