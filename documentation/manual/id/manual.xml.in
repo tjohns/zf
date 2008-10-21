@@ -7,9 +7,9 @@
 ]>
 <book id="manual" lang="id">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>Panduan Referensi Programmer</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>Panduan Referensi Programmer untuk Zend Framework</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
