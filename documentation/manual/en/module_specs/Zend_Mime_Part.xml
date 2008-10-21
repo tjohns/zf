@@ -23,13 +23,16 @@
     attributes directly:</para>
 
     <programlisting role="php"><![CDATA[
-public $type = ZMime::TYPE_OCTETSTREAM;
-public $encoding = ZMime::ENCODING_8BIT;
+public $type = Zend_Mime::TYPE_OCTETSTREAM;
+public $encoding = Zend_Mime::ENCODING_8BIT;
 public $id;
 public $disposition;
 public $filename;
 public $description;
 public $charset;
+public $boundary;
+public $location;
+public $language;
 ]]>
     </programlisting>
     </sect2>
@@ -39,7 +42,7 @@ public $charset;
 
     <para><code>getContent()</code> returns the encoded content of the
     MimePart as a string using the encoding specified in the attribute
-    $encoding. Valid values are ZMime::ENCODING_* Characterset conversions are
+    $encoding. Valid values are Zend_Mime::ENCODING_* Characterset conversions are
     not performed.</para>
 
     <para>
@@ -77,6 +80,24 @@ public $charset;
                 <para>
                     <code>$description</code>
                     is only used for informational purposes.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$boundary</code>
+                    defines string as boundary.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$location</code>
+                    can be used as resource URI that has relation to the content.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$language</code>
+                    defines languages in the content.
                 </para>
             </listitem>
         </itemizedlist>
