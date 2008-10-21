@@ -1150,25 +1150,31 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         if (is_array($files)) {
             foreach ($files as $find) {
-                $found = null;
+                $found = array();
                 foreach ($this->_files as $file => $content) {
                     if ($content['name'] === $find) {
-                        $found = $file;
+                        $found[] = $file;
                         break;
                     }
 
                     if ($file === $find) {
-                        $found = $file;
+                        $found[] = $file;
                         break;
+                    }
+
+                    if (strpos($file, ($find . '_')) !== false) {
+                        $found[] = $file;
                     }
                 }
 
-                if ($found === null) {
+                if (empty($found)) {
                     require_once 'Zend/File/Transfer/Exception.php';
                     throw new Zend_File_Transfer_Exception(sprintf('"%s" not found by file transfer adapter', $find));
                 }
 
-                $check[$found] = $this->_files[$found];
+                foreach ($found as $checked) {
+                    $check[$checked] = $this->_files[$checked];
+                }
             }
         }
 
