@@ -231,7 +231,7 @@ class Zend_Locale
         if ((self::$compatibilityMode === true) or (func_num_args() > 0)) {
             if (!self::$_breakChain) {
                 self::$_breakChain = true;
-                trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_WARNING);
+                trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_NOTICE);
                 $params = func_get_args();
                 $param = null;
                 if (isset($params[0])) {
@@ -735,7 +735,7 @@ class Zend_Locale
         }
 
         if (($compatible === true) and (self::$compatibilityMode === true)) {
-            trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_WARNING);
+            trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_NOTICE);
             if (isset(self::$_localeData[$locale]) === true) {
                 return $locale;
             } else if (!$strict) {
