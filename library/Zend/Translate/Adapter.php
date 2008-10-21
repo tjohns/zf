@@ -141,7 +141,7 @@ abstract class Zend_Translate_Adapter {
 
                 if ($info->isDir()) {
                     // pathname as locale
-                    if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale($file, true))) {
+                    if (($this->_options['scan'] === self::LOCALE_DIRECTORY) and (Zend_Locale::isLocale($file, true, false))) {
                         if (strlen($prev) <= strlen($file)) {
                             $locale = $file;
                             $prev   = (string) $locale;
@@ -153,7 +153,7 @@ abstract class Zend_Translate_Adapter {
                         $filename = explode('.', $file);
                         array_pop($filename);
                         $filename = implode('.', $filename);
-                        if (Zend_Locale::isLocale((string) $filename, true)) {
+                        if (Zend_Locale::isLocale((string) $filename, true, false)) {
                             $locale = (string) $filename;
                         } else {
                             $parts  = explode('.', $filename);
@@ -170,7 +170,7 @@ abstract class Zend_Translate_Adapter {
                             $parts = array_unique($parts);
                             $prev  = '';
                             foreach($parts as $token) {
-                                if (Zend_Locale::isLocale($token, true)) {
+                                if (Zend_Locale::isLocale($token, true, false)) {
                                     if (strlen($prev) <= strlen($token)) {
                                         $locale = $token;
                                         $prev   = $token;
@@ -273,8 +273,8 @@ abstract class Zend_Translate_Adapter {
             $this->_automatic = false;
         }
 
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 /**
                  * @see Zend_Translate_Exception
                  */
@@ -406,8 +406,8 @@ abstract class Zend_Translate_Adapter {
      */
     private function _addTranslationData($data, $locale, array $options = array())
     {
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 /**
                  * @see Zend_Translate_Exception
                  */
@@ -470,8 +470,8 @@ abstract class Zend_Translate_Adapter {
         if ($locale === null) {
             $locale = $this->_options['locale'];
         }
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 // language does not exist, return original string
                 return $messageId;
             }
@@ -533,8 +533,8 @@ abstract class Zend_Translate_Adapter {
             $locale = $this->_options['locale'];
         }
 
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 // language does not exist, return original string
                 return false;
             }
