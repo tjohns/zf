@@ -777,7 +777,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * Returns all set filters
      *
      * @param  string|array $files (Optional) Returns the filter for this files
-     * @return null|array List of set filters
+     * @return array List of set filters
      * @throws Zend_File_Transfer_Exception When file not found
      */
     public function getFilters($files = null)
@@ -801,11 +801,13 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 $filters += $this->_files[$file]['filters'];
             }
         }
-        $filters = array_unique($filters);
 
+        $filters = array_unique($filters);
+        $result  = array();
         foreach ($filters as $filter) {
             $result[] = $this->_filters[$filter];
         }
+
         return $result;
     }
 
