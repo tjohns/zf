@@ -271,7 +271,7 @@ class Zend_Locale_Data
             $locale = new Zend_Locale();
         }
 
-        if (!(Zend_Locale::isLocale((string) $locale))) {
+        if (!(Zend_Locale::isLocale((string) $locale, null, false))) {
             require_once 'Zend/Locale/Exception.php';
             throw new Zend_Locale_Exception("Locale (" . (string) $locale . ") is a unknown locale");
         }

@@ -165,7 +165,7 @@ class Zend_Locale_Format
                 case 'locale' :
                     if (gettype($value) === 'string' && strtolower($value) == 'standard') {
                         $options['locale'] = new Zend_Locale();
-                    } else if (!empty($value) && (!Zend_Locale::isLocale($value))) {
+                    } else if (!empty($value) && (!Zend_Locale::isLocale($value, null, false))) {
                         require_once 'Zend/Locale/Exception.php';
                         throw new Zend_Locale_Exception("'" .
                             (gettype($value) === 'object' ? get_class($value) : $value)
@@ -919,7 +919,7 @@ class Zend_Locale_Format
         if ($monthlist && $monthlist[1] != 1) {
             foreach($monthlist as $key => $name) {
                 if (($position = iconv_strpos($number, $name)) !== false) {
-                    $number   = str_replace($name, $key, $number);
+                    $number   = str_ireplace($name, $key, $number);
                     return $position;
                 }
             }

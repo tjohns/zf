@@ -232,7 +232,12 @@ class Zend_Locale
             if (!self::$_breakChain) {
                 self::$_breakChain = true;
                 trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_WARNING);
-                return self::getOrder(func_get_arg(0));
+                $params = func_get_args();
+                $param = null;
+                if (isset($params[0])) {
+                    $param = $params[0];
+                }
+                return self::getOrder($param);
             }
 
             self::$_breakChain = false;
@@ -716,11 +721,12 @@ class Zend_Locale
      * "en_XX" refers to "en", which returns true
      * "XX_yy" refers to "root", which returns false
      *
-     * @param  string|Zend_Locale $locale Locale to check for
-     * @param  boolean            $strict (Optional) If true, no rerouting will be done when checking
+     * @param  string|Zend_Locale $locale     Locale to check for
+     * @param  boolean            $strict     (Optional) If true, no rerouting will be done when checking
+     * @param  boolean            $compatible (DEPRECIATED) Only for internal usage, brakes compatibility mode
      * @return boolean If the locale is known dependend on the settings
      */
-    public static function isLocale($locale, $strict = false)
+    public static function isLocale($locale, $strict = false, $compatible = true)
     {
         try {
             $locale = self::_prepareLocale($locale, $strict);
@@ -728,7 +734,7 @@ class Zend_Locale
             return false; 
         }
 
-        if (self::$compatibilityMode === true) {
+        if (($compatible === true) and (self::$compatibilityMode === true)) {
             trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_WARNING);
             if (isset(self::$_localeData[$locale]) === true) {
                 return $locale;
@@ -844,6 +850,7 @@ class Zend_Locale
         if (empty(self::$_auto) === true) {
             self::$_browser     = self::getBrowser();
             self::$_environment = self::getEnvironment();
+            self::$_breakChain  = true;
             self::$_auto        = self::getBrowser() + self::getEnvironment() + self::getDefault();
         }
 
@@ -895,15 +902,18 @@ class Zend_Locale
     {
         switch ($order) {
             case self::ENVIRONMENT:
-                $languages = self::getEnvironment() + self::getBrowser() + self::getDefault();
+                self::$_breakChain = true;
+                $languages         = self::getEnvironment() + self::getBrowser() + self::getDefault();
                 break;
 
             case self::ZFDEFAULT:
-                $languages = self::getDefault() + self::getEnvironment() + self::getBrowser();
+                self::$_breakChain = true;
+                $languages         = self::getDefault() + self::getEnvironment() + self::getBrowser();
                 break;
 
             default:
-                $languages = self::getBrowser() + self::getEnvironment() + self::getDefault();
+                self::$_breakChain = true;
+                $languages         = self::getBrowser() + self::getEnvironment() + self::getDefault();
                 break;
         }
 
