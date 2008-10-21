@@ -45,6 +45,19 @@ class Zend_Db_Select_Pdo_PgsqlTest extends Zend_Db_Select_TestCommon
         return 'Pdo_Pgsql';
     }
 
+    /**
+     * This test must be done on string field
+     */
+    protected function _selectColumnWithColonQuotedParameter ()
+    {
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $select = $this->_db->select()
+                            ->from('zfproducts')
+                            ->where($product_name . ' = ?', "as'as:x");
+        return $select;
+    }
+
     public function testSelectGroupByExpr()
     {
         $this->markTestSkipped($this->getDriver() . ' does not support expressions in GROUP BY');
