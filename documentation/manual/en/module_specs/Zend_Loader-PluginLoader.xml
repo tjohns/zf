@@ -20,6 +20,19 @@
         plugins, and thus override plugins from paths registered earlier. 
     </para>
 
+    <note>
+        <title>Use the file path cache in production</title>
+
+        <para>
+            <code>Zend_Loader_PluginLoader</code> makes heavy use of
+            <code>Zend_Loader::loadFile()</code>, which can lead to performance
+            degradation, particularly when the first path scanned does not match.
+            We recommend using <link
+                linkend="zend.loader.load.file.cache">the file path cache</link>
+            when pushing your code to production.
+        </para>
+    </note>
+
     <sect2 id="zend.loader.pluginloader.usage">
         <title>Basic Use Case</title>
 

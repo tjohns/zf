@@ -30,6 +30,11 @@
 class Zend_Loader
 {
     /**
+     * @var Zend_Cache
+     */
+    protected static $_fileMapCache;
+
+    /**
      * Loads a class from a PHP file.  The filename must be formatted
      * as "$class.php".
      *
@@ -125,7 +130,17 @@ class Zend_Loader
                 $dirs = implode(PATH_SEPARATOR, $dirs);
             }
             $incPath = get_include_path();
-            set_include_path($dirs . PATH_SEPARATOR . $incPath);
+            $modPath = $dirs . PATH_SEPARATOR . $incPath;
+            if (null !== ($cache = self::getFileMapCache())) {
+                $cacheId = md5($modPath . $filename);
+                if ($result = $cache->load($cacheId)) {
+                    $result = (bool) str_replace($filename, '', $result);
+                    if (!$result) {
+                        return $result;
+                    }
+                }
+            }
+            set_include_path($modPath);
         }
 
         /**
@@ -141,6 +156,10 @@ class Zend_Loader
          * If searching in directories, reset include_path
          */
         if ($incPath) {
+            if ((null !== $cache) && !$result) {
+                $result = $filename . (($return) ? 1 : 0);
+                $cache->save($result, $cacheId);
+            }
             set_include_path($incPath);
         }
 
@@ -213,6 +232,32 @@ class Zend_Loader
         } else {
             spl_autoload_unregister(array($class, 'autoload'));
         }
+    }
+
+    /**
+     * Set file map cache
+     * 
+     * @param  null|Zend_Cache_Core $cache 
+     * @return void
+     */
+    public static function setFileMapCache($cache)
+    {
+        if ((null !== $cache) && (!$cache instanceof Zend_Cache_Core)) {
+            require_once 'Zend/Loader/Exception.php';
+            throw new Zend_Loader_Exception('Only Zend_Cache_Core or null arguments may be passed to ' . __METHOD__);
+        }
+
+        self::$_fileMapCache = $cache;
+    }
+
+    /**
+     * Retrieve file map cache
+     * 
+     * @return null|Zend_Cache
+     */
+    public static function getFileMapCache()
+    {
+        return self::$_fileMapCache;
     }
 
     /**
