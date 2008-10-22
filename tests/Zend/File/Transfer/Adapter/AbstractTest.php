@@ -658,6 +658,11 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
         return $this->received;
     }
 
+    public function isUploaded($files = null)
+    {
+        return true;
+    }
+
     public function getProgress()
     {
         return;

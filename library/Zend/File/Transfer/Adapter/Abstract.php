@@ -467,21 +467,14 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getValidators($files = null)
     {
+        $files = $this->_getFiles($files, true);
+
         if ($files === null) {
             return $this->_validators;
         }
 
-        if (!is_array($files)) {
-            $files = array($files);
-        }
-
         $validators = array();
         foreach ($files as $file) {
-            if (!isset($this->_files[$file])) {
-                require_once 'Zend/File/Transfer/Exception.php';
-                throw new Zend_File_Transfer_Exception('Unknown file');
-            }
-
             if (!empty($this->_files[$file]['validators'])) {
                 $validators += $this->_files[$file]['validators'];
             }
@@ -1149,10 +1142,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * Returns found files based on internal file array and given files
      *
      * @param  string|array $files (Optional) Files to return
+     * @param  boolean      $names  (Optional) Returns only names on true, else complete info
      * @return array Found files
      * @throws Zend_File_Transfer_Exception On false filename
      */
-    protected function _getFiles($files)
+    protected function _getFiles($files, $names = false)
     {
         $check = null;
 
@@ -1192,6 +1186,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         if ($files === null) {
             $check = $this->_files;
+        }
+
+        if ($names) {
+            $check = array_keys($check);
         }
 
         return $check;
