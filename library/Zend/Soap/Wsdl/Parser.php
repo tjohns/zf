@@ -23,7 +23,7 @@ require_once 'Zend/Soap/Wsdl/Parser/Result.php';
 
 /**
  * Zend_Soap_Wsdl_Parser
- * 
+ *
  * @category   Zend
  * @package    Zend_Soap
  */
@@ -45,13 +45,13 @@ class Zend_Soap_Wsdl_Parser {
             $wsdl_result = new Zend_Soap_Wsdl_Parser_Result($wsdl);
             $wsdl = file_get_contents($wsdl);
         } else {
-            $tmp = new tempnam(ini_get('upload_tmp_dir'), 'ZF_Temp_');
+            $tmp = tempnam(ini_get('upload_tmp_dir'), 'ZF_Temp_');
             file_put_contents($tmp, $wsdl);
             $wsdl_result = new Zend_Soap_Wsdl_Parser_Result($tmp);
         }
 
         self::$xml = simplexml_load_string($wsdl);
-        
+
         /* This is done so that we have a known prefix to the WSDL elements
             for XPath queries */
 
