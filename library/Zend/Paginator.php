@@ -25,6 +25,11 @@
 require_once 'Zend/Loader/PluginLoader.php';
 
 /**
+ * @see Zend_Json
+ */
+require_once 'Zend/Json.php';
+
+/**
  * @category   Zend
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
@@ -791,6 +796,16 @@ class Zend_Paginator implements Countable, IteratorAggregate
         return $view->paginationControl($this);
     }
 
+    /**
+     * Return the items of the current page as a JSON string
+     *
+     * @return string
+     */
+    public function toJson()
+    {
+    	return Zend_Json::encode($this->getCurrentItems());
+    }
+    
     /**
      * Calculate the page count
      *

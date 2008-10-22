@@ -697,4 +697,15 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals(array(), $pageItems);
     }
+    
+    public function testToJson()
+    {
+    	$this->_paginator->setCurrentPageNumber(1);
+    	
+    	$json = $this->_paginator->toJson();
+    	
+    	$expected = '{"0":1,"1":2,"2":3,"3":4,"4":5,"5":6,"6":7,"7":8,"8":9,"9":10}';
+    	
+    	$this->assertEquals($expected, $json);
+    }
 }
