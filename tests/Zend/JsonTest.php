@@ -427,6 +427,15 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $this->assertContains("Class.create('Zend_JsonTest_Object'", $encoded);
         $this->assertContains("Class.create('Zend_JsonTest'", $encoded);
     }
+    
+    public function testToJsonSerialization()
+    {
+    	$toJsonObject = new ToJsonClass();
+    	
+    	$result = Zend_Json::encode($toJsonObject);
+    	
+    	$this->assertEquals('{"firstName":"John","lastName":"Doe","email":"john@doe.com"}', $result);
+    }
 }
 
 /**
@@ -458,5 +467,25 @@ class Zend_JsonTest_Object
 
     protected function baz()
     {
+    }
+}
+
+class ToJsonClass 
+{
+    private $_firstName = 'John';
+    
+    private $_lastName = 'Doe';
+    
+    private $_email = 'john@doe.com';
+    
+    public function toJson()
+    {
+        $data = array(
+            'firstName' => $this->_firstName,
+            'lastName'  => $this->_lastName,
+            'email'     => $this->_email
+        );
+        
+        return Zend_Json::encode($data);
     }
 }
