@@ -40,7 +40,13 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
      * Attributes that should not be passed to helper
      * @var array
      */
-    protected $_attribBlacklist = array('helper', 'value');
+    protected $_attribBlacklist = array('helper', 'placement', 'separator', 'value');
+
+    /**
+     * Default placement: append
+     * @var string
+     */
+    protected $_placement = 'APPEND';
 
     /**
      * Get attributes to pass to file helper
@@ -49,7 +55,7 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
      */
     public function getAttribs()
     {
-        $attribs = $this->getOptions();
+        $attribs   = $this->getOptions();
 
         if (null !== ($element = $this->getElement())) {
             $attribs = array_merge($attribs, $element->getAttribs());
@@ -82,13 +88,14 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
             return $content;
         }
 
-        $name    = $element->getName();
-        $attribs = $this->getAttribs();
+        $name      = $element->getName();
+        $attribs   = $this->getAttribs();
         if (!array_key_exists('id', $attribs)) {
             $attribs['id'] = $name;
         }
 
         $separator = $this->getSeparator();
+        $placement = $this->getPlacement();
         $markup    = array();
         $size      = $element->getMaxFileSize();
         if ($size > 0) {
@@ -109,6 +116,13 @@ class Zend_Form_Decorator_File extends Zend_Form_Decorator_Abstract
         }
 
         $markup = implode($separator, $markup);
-        return $markup;
+
+        switch ($placement) {
+            case self::PREPEND:
+                return $markup . $separator . $content;
+            case self::APPEND:
+            default:
+                return $content . $separator . $markup;
+        }
     }
 }
