@@ -80,6 +80,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
     public function setMasterFile($masterFile)
     {
     	clearstatcache();
+    	$this->_specificOptions['master_file'] = $masterFile;
     	if (!($this->_masterFile_mtime = @filemtime($masterFile))) {
             Zend_Cache::throwException('Unable to read master_file : '.$masterFile);
         }
