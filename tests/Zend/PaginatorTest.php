@@ -665,4 +665,36 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $paginator = new Zend_Paginator(new Zf4207());
         $this->assertType('ArrayObject', $paginator->getCurrentItems());
     }
+    
+    public function testClearPageItemCache()
+    {
+    	$this->_paginator->setCurrentPageNumber(1)->getCurrentItems();
+    	$this->_paginator->setCurrentPageNumber(2)->getCurrentItems();
+    	$this->_paginator->setCurrentPageNumber(3)->getCurrentItems();
+    	
+    	$pageItems = $this->_paginator->getPageItemCache();
+    	
+    	$expected = array(
+    	   1 => new ArrayIterator(range(1, 10)),
+    	   2 => new ArrayIterator(range(11, 20)),
+    	   3 => new ArrayIterator(range(21, 30))
+    	);
+    	
+    	$this->assertEquals($expected, $pageItems);
+    	
+    	$this->_paginator->clearPageItemCache(2);
+    	$pageItems = $this->_paginator->getPageItemCache();
+    	
+    	$expected = array(
+           1 => new ArrayIterator(range(1, 10)),
+           3 => new ArrayIterator(range(21, 30))
+        );
+        
+        $this->assertEquals($expected, $pageItems);
+        
+        $this->_paginator->clearPageItemCache();
+        $pageItems = $this->_paginator->getPageItemCache();
+        
+        $this->assertEquals(array(), $pageItems);
+    }
 }

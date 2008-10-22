@@ -404,6 +404,23 @@ class Zend_Paginator implements Countable, IteratorAggregate
     }
     
     /**
+     * Clear the page item cache
+     *
+     * @param int $pageNumber
+     * @return Zend_Paginator
+     */
+    public function clearPageItemCache($pageNumber = null)
+    {
+    	if (null === $pageNumber) {
+    		$this->_pageItems = array();
+    	} else if (isset($this->_pageItems[$pageNumber])) {
+    		unset($this->_pageItems[$pageNumber]);
+    	}
+    	
+    	return $this;
+    }
+    
+    /**
      * Get the absolute item number for the specified item
      *
      * @param  integer $relativeItemNumber Relative item number
@@ -667,6 +684,16 @@ class Zend_Paginator implements Countable, IteratorAggregate
         }
         
         return $pages;
+    }
+    
+    /**
+     * Get the page item cache.
+     *
+     * @return array
+     */
+    public function getPageItemCache()
+    {
+        return $this->_pageItems;
     }
     
     /**
