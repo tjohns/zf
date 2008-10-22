@@ -76,8 +76,8 @@ class Zend_Amf_Server implements Zend_Server_Interface
 
     /**
      * Set production flag
-     * 
-     * @param  bool $flag 
+     *
+     * @param  bool $flag
      * @return Zend_Amf_Server
      */
     public function setProduction($flag)
@@ -88,7 +88,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
 
     /**
      * Whether or not the server is in production
-     * 
+     *
      * @return bool
      */
     public function isProduction()
@@ -192,7 +192,6 @@ class Zend_Amf_Server implements Zend_Server_Interface
         $response->setObjectEncoding($objectEncoding);
 
         $responseBody = $request->getAmfBodies();
-        $bodyCount    = count($responseBody);
 
         // Iterate through each of the service calls in the AMF request
         foreach($responseBody as $body)
@@ -224,8 +223,20 @@ class Zend_Amf_Server implements Zend_Server_Interface
                         $return = new Zend_Amf_Value_Messaging_AcknowledgeMessage($message);
                         $return->body = $this->_dispatch($message->operation, $message->body, $message->source);
                     } else {
-                        require_once 'Zend/Amf/Server/Exception.php';
-                        throw new Zend_Amf_Server_Exception('unknown message type: ' . get_class($message));
+                        // Amf3 message sent with netConnection
+                        $targetURI = $body->getTargetURI();
+
+                        // Split the target string into its values.
+                        $source = substr($targetURI, 0, strrpos($targetURI, '.'));
+
+                        if ($source) {
+                            // Break off method name from namespace into source
+                            $method = substr(strrchr($targetURI, '.'), 1);
+                            $return = $this->_dispatch($method, array($body->getData()), $source);
+                        } else {
+                            // Just have a method name.
+                            $return = $this->_dispatch($targetURI, $body->getData());
+                        }
                     }
                 }
                 $responseType = Zend_AMF_Constants::RESULT_METHOD;
@@ -366,9 +377,9 @@ class Zend_Amf_Server implements Zend_Server_Interface
     /**
      * Attach a class or object to the server
      *
-     * Class may be either a class name or an instantiated object. Reflection 
-     * is done on the class or object to determine the available public 
-     * methods, and each is attached to the server as and available method. If 
+     * Class may be either a class name or an instantiated object. Reflection
+     * is done on the class or object to determine the available public
+     * methods, and each is attached to the server as and available method. If
      * a $namespace has been provided, that namespace is used to prefix
      * AMF service call.
      *
