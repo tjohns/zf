@@ -1,10 +1,32 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12064 -->
 <sect1 id="zend.controller.migration">
     <title>Migrer depuis des versions précédentes</title>
 
     <para>L'API des composants MVC a changé plusieurs fois. Si vous avez débuté avec des versions antérieures du Zend
     Framework, suivez les recommandations suivantes pour migrer vos scripts afin d'utiliser la nouvelle
     architecture.</para>
+
+    <sect2 id="zend.controller.migration.fromonesixtooneseven">
+        <title>Migrer de la version 1.6.x vers 1.7.0 ou plus récent</title>
+
+        <sect3 id="zend.controller.migration.fromonesixtooneseven.dispatcher">
+            <title>Changement dans l'interface Dispatcher</title>
+
+            <para>Les utilisateurs ont portés l'attention sur le fait que
+            <code>Zend_Controller_Action_Helper_ViewRenderer</code> utilisait une méthode de la classe abstraite du
+            dispatcheur standard qui n'était pas présente dans l'interface Dispatcher.La méthode suivante a donc été
+            ajoutée pour s'assurer que les dispatcheurs personnalisés continueront à fonctionner avec les
+            implémentations embarquées :</para>
+
+            <itemizedlist>
+                <listitem>
+                    <para><code>formatModuleName()</code> : devrait être utilisé pour prendre un nom de contrôleur brut,
+                    comme un qui aurait été embarqué dans un objet requête, et pour le formater en un nom de classe
+                    approprié qu'une classe étendant <code>Zend_Controller_Action</code> pourra utiliser.</para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonesix">
         <title>Migrer de la version 1.5.x vers 1.6.0 ou plus récent</title>

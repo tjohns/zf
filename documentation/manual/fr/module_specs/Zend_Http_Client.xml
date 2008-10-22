@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12037 -->
 <sect1 id="zend.http.client">
     <title>Zend_Http_Client - Introduction</title>
 
@@ -11,9 +11,10 @@
         retournent un objet Zend_Http_Response, avec lequel on pourra accéder au corps ou aux en-têtes de la réponse
         HTTP (voyez <xref linkend="zend.http.response" />).</para>
 
-        <para>Le constructeur de classe accepte deux paramètres : l'URI (ou un objet Zend_Uri_Http), et un tableau de
-        configuration. Ils peuvent aussi être définis avec des méthodes plus tard : <code>setUri()</code> et
-        <code>setConfig()</code>. <example id="zend.http.client.introduction.example-1">
+        <para>Le constructeur de classe accepte deux paramètres : l'URI (ou un objet
+        <code><code>Zend_Uri_Http</code></code>), et un tableau de configuration. Ils peuvent aussi être définis avec
+        des méthodes plus tard : <code>setUri()</code> et <code>setConfig()</code>. <example
+                id="zend.http.client.introduction.example-1">
                 <title>Instanciation d'un objet Zend_Http_Client</title>
 
                 <programlisting role="php"><![CDATA[
@@ -29,6 +30,12 @@ $client->setConfig(array(
     'timeout'      => 30));
 ]]></programlisting>
             </example></para>
+
+        <note>
+             Zend_Http_Client utilise Zend_Uri_Http pour valider les URLs. Ce qui veut dire que certains caractères comme les pipes ("|") ou le symbole "^" ne seront pas acceptés par défaut dans les URLs. Ceci peut être modifié par le réglage de l'option "allow_unwise" de Zend_Uri à "true". Voir 
+            <xref linkend="zend.uri.validation.allowunwise" />
+             pour de plus amples informations. 
+        </note>
     </sect2>
 
     <sect2 id="zend.http.client.configuration">
@@ -66,12 +73,13 @@ $client->setConfig(array(
                         <row>
                             <entry>strict</entry>
 
-                            <entry>Validation faite ou non sur les noms d'entêtes. Si à false, des fonctions de
-                            validation n'interviendront pas. Habituellement ceci ne devrait pas être changé</entry>
+                            <entry>Validation faite ou non sur les noms d'en-têtes. Si à <code>false</code>, des
+                            fonctions de validation n'interviendront pas. Habituellement ceci ne devrait pas être
+                            changé</entry>
 
                             <entry>booléen</entry>
 
-                            <entry>true</entry>
+                            <entry><code>true</code></entry>
                         </row>
 
                         <row>
@@ -82,7 +90,7 @@ $client->setConfig(array(
 
                             <entry>booléen</entry>
 
-                            <entry>false</entry>
+                            <entry><code>false</code></entry>
                         </row>
 
                         <row>
@@ -134,19 +142,19 @@ $client->setConfig(array(
 
                             <entry>booléen</entry>
 
-                            <entry>false</entry>
+                            <entry><code>false</code></entry>
                         </row>
 
                         <row>
                             <entry>storeresponse</entry>
 
                             <entry>Stockage ou non de la dernière réponse pour une récupération ultérieure avec
-                            getLastResponse(). Si réglez à <code>false</code>, getLastResponse() retournera
-                            <code>null</code>.</entry>
+                            <code>getLastResponse()</code>. Si réglez à <code>false</code>,
+                            <code>getLastResponse()</code> retournera <code>null</code>.</entry>
 
-                            <entry>boolean</entry>
+                            <entry>booléen</entry>
 
-                            <entry>true</entry>
+                            <entry><code>true</code></entry>
                         </row>
                     </tbody>
                 </tgroup>
