@@ -139,18 +139,26 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Is file sent?
      * 
-     * @param  array|string|null $file 
+     * @param  array|string|null $files 
      * @return bool
      */
-    abstract public function isSent($file = null);
+    abstract public function isSent($files = null);
 
     /**
      * Is file received?
      * 
-     * @param  array|string|null $file 
+     * @param  array|string|null $files 
      * @return bool
      */
-    abstract public function isReceived($file = null);
+    abstract public function isReceived($files = null);
+
+    /**
+     * Has a file been uploaded ?
+     *
+     * @param  array|string|null $files 
+     * @return bool
+     */
+    abstract public function isUploaded($files = null);
 
     /**
      * Retrieve progress of transfer
@@ -872,6 +880,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $file = (string) $file;
         if (!array_key_exists($file, $this->_files)) {
              return null;
+        }
+
+        if (empty($this->_files[$file]['name'])) {
+            return null;
         }
 
         $directory = $this->getDestination($file);

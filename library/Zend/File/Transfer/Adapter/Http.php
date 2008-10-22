@@ -119,7 +119,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      * @return bool
      * @throws Zend_File_Transfer_Exception Not implemented
      */
-    public function isSent($file = null)
+    public function isSent($files = null)
     {
         require_once 'Zend/File/Transfer/Exception.php';
         throw new Zend_File_Transfer_Exception('Method not implemented');
@@ -136,6 +136,24 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
         $validate = new Zend_Validate_File_Upload();
         if (!$validate->isValid($files)) {
             return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Has a file been uploaded ?
+     *
+     * @param  array|string|null $file 
+     * @return bool
+     */
+    public function isUploaded($files = null)
+    {
+        $files = $this->_getFiles($files);
+        foreach ($files as $file) {
+            if (empty($file['name'])) {
+                return false;
+            }
         }
 
         return true;
