@@ -49,6 +49,13 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
      * @var string
      */
     protected $_imgUrl = "/images/captcha/";
+    
+    /**
+     * Image's alt tag content
+     *
+     * @var string
+     */
+    protected $_imgAlt = "";
 
     /**
      * Image suffix (including dot)
@@ -84,7 +91,14 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
      * @var string
      */
     protected $_font;
-	
+
+    /**
+     * Image to use as starting point
+     * Default is blank image. If ptovided, should be PNG image.
+     *
+     * @var string
+     */
+    protected $_startImage;
     /**
      * How frequently to execute garbage collection
      *
@@ -99,7 +113,49 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
      */
     protected $_expiration = 600;
 
-	/**
+    /**
+     * Number of noise dots on image 
+     * Used twice - before and after transform
+     *
+     * @var int
+     */
+    protected $_dotNoiseLevel = 100;
+    /**
+     * Number of noise lines on image
+     * Used twice - before and after transform
+     *
+     * @var int
+     */
+    protected $_lineNoiseLevel = 5;
+    /**
+     * @return string
+     */
+    public function getImgAlt ()
+    {
+        return $this->_imgAlt;
+    }
+    /**
+     * @return string
+     */
+    public function getStartImage ()
+    {
+        return $this->_startImage;
+    }
+    /**
+     * @return int
+     */
+    public function getDotNoiseLevel ()
+    {
+        return $this->_dotNoiseLevel;
+    }
+    /**
+     * @return int
+     */
+    public function getLineNoiseLevel ()
+    {
+        return $this->_lineNoiseLevel;
+    }
+ 	/**
      * Get captcha expiration
      *
 	 * @return int
@@ -118,31 +174,6 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     {
 		return $this->_gcFreq;
 	}
-	
-	/**
-     * Set captcha expiration
-     *
-	 * @param int $expiration
-     * @return Zend_Captcha_Image
-	 */
-    public function setExpiration($expiration)
-    {
-		$this->_expiration = $expiration;
-		return $this;
-	}
-	
-	/**
-     * Set garbage collection frequency
-     *
-	 * @param int $gcFreq
-     * @return Zend_Captcha_Image
-	 */
-    public function setGcFreq($gcFreq) 
-    {
-		$this->_gcFreq = $gcFreq;
-		return $this;
-	}
-
     /**
      * Get font to use when generating captcha
      *
@@ -182,7 +213,6 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     {
 		return $this->_imgDir;
 	}
-	
 	/**
      * Get captcha image base URL
      *
@@ -192,7 +222,6 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     {
 		return $this->_imgUrl;
 	}
-	
 	/**
      * Get captcha image file suffix
      *
@@ -202,7 +231,6 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     {
 		return $this->_suffix;
 	}
-	
 	/**
      * Get captcha image width
      *
@@ -212,8 +240,56 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     {
 		return $this->_width;
 	}
+    /**
+     * @param string $startImage
+     */
+    public function setStartImage ($startImage)
+    {
+        $this->_startImage = $startImage;
+        return $this;
+    }
+	/**
+     * @param int $dotNoiseLevel
+     */
+    public function setDotNoiseLevel ($dotNoiseLevel)
+    {
+        $this->_dotNoiseLevel = $dotNoiseLevel;
+        return $this;
+    }
+   /**
+     * @param int $lineNoiseLevel
+     */
+    public function setLineNoiseLevel ($lineNoiseLevel)
+    {
+        $this->_lineNoiseLevel = $lineNoiseLevel;
+        return $this;
+    }
 	
 	/**
+     * Set captcha expiration
+     *
+	 * @param int $expiration
+     * @return Zend_Captcha_Image
+	 */
+    public function setExpiration($expiration)
+    {
+		$this->_expiration = $expiration;
+		return $this;
+	}
+	
+	/**
+     * Set garbage collection frequency
+     *
+	 * @param int $gcFreq
+     * @return Zend_Captcha_Image
+	 */
+    public function setGcFreq($gcFreq) 
+    {
+		$this->_gcFreq = $gcFreq;
+		return $this;
+	}
+
+    /**
      * Set captcha font
      *
 	 * @param  string $font
@@ -272,6 +348,14 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
 		$this->_imgUrl = rtrim($imgUrl, "/\\") . '/';
 		return $this;
 	}
+    /**
+     * @param string $imgAlt
+     */
+    public function setImgAlt ($imgAlt)
+    {
+        $this->_imgAlt = $imgAlt;
+        return $this;
+    }
 	
 	/**
      * Set captch image filename suffix
@@ -382,7 +466,17 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
         $fsize = $this->getFontSize();
         
         $img_file   = $this->getImgDir() . $id . $this->getSuffix();
-        $img        = imagecreatetruecolor($w, $h);
+        if(empty($this->_startImage)) {
+            $img        = imagecreatetruecolor($w, $h);
+        } else {
+            $img = imagecreatefrompng($this->_startImage);
+            if(!$img) {
+               require_once 'Zend/Form/Exception.php';
+                throw new Zend_Form_Exception("Can not load start image");                
+            }
+            $w = imagesx($img);
+            $h = imagesy($img);
+        }
         $text_color = imagecolorallocate($img, 0, 0, 0);
         $bg_color   = imagecolorallocate($img, 255, 255, 255);
         imagefilledrectangle($img, 0, 0, $w-1, $h-1, $bg_color);
@@ -392,10 +486,10 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
         imagefttext($img, $fsize, 0, $x, $y, $text_color, $font, $word);
         
        // generate noise
-        for ($i=0; $i<100; $i++) {
+        for ($i=0; $i<$this->_dotNoiseLevel; $i++) {
            imagefilledellipse($img, mt_rand(0,$w), mt_rand(0,$h), 2, 2, $text_color);
         }
-        for($i=0; $i<5; $i++) {
+        for($i=0; $i<$this->_lineNoiseLevel; $i++) {
            imageline($img, mt_rand(0,$w), mt_rand(0,$h), mt_rand(0,$w), mt_rand(0,$h), $text_color);
         }
         
@@ -453,10 +547,10 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
         }
        
         // generate noise
-        for ($i=0; $i<100; $i++) {
+        for ($i=0; $i<$this->_dotNoiseLevel; $i++) {
             imagefilledellipse($img2, mt_rand(0,$w), mt_rand(0,$h), 2, 2, $text_color);
         }
-        for ($i=0; $i<5; $i++) {
+        for ($i=0; $i<$this->_lineNoiseLevel; $i++) {
            imageline($img2, mt_rand(0,$w), mt_rand(0,$h), mt_rand(0,$w), mt_rand(0,$h), $text_color);
         }
         
@@ -488,8 +582,8 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
 	 * @param mixed $element
 	 * @return string
 	 */
-	public function render(Zend_View $view, $element = null)
+	public function render(Zend_View_Interface $view, $element = null)
     {
-        return '<img src="' . $this->getImgUrl() . $this->getId() . $this->getSuffix() . '"/><br/>';
+        return '<img alt="'.$this->getImgAlt().'" src="' . $this->getImgUrl() . $this->getId() . $this->getSuffix() . '"/><br/>';
     }
 }

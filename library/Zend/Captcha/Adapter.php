@@ -46,11 +46,11 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
 	/**
 	 * Display the captcha
 	 *
-	 * @param  Zend_View $view
+	 * @param  Zend_View_Interface $view
 	 * @param  mixed $element
      * @return string
 	 */
-	public function render(Zend_View $view, $element = null);
+	public function render(Zend_View_Interface $view, $element = null);
 
 	/**
 	 * Set captcha name

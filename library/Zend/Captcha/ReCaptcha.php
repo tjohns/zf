@@ -252,7 +252,7 @@ class Zend_Captcha_ReCaptcha extends Zend_Captcha_Base
      * @param  mixed $element 
      * @return string
      */
-    public function render(Zend_View $view, $element = null)
+    public function render(Zend_View_Interface $view, $element = null)
     {
         return $this->getService()->getHTML();
     }
