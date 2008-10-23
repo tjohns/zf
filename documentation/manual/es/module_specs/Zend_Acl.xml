@@ -1,9 +1,8 @@
 <sect1 id="zend.acl.introduction">
-    <title>Introducci&#243;n</title>
+    <title>Introducción</title>
 
     <para>
-	    Zend_Acl proporciona la funcionalidad de Listas de Control de Acceso (ACL por sus siglas en ingles) y privilegios de administraci&#243;n de una forma flexible y ligera. En general, una aplicacion puede utilizar esta funcionalidad para controlar el acceso a ciertos objetos que estan protegidos cuando otros objetos intentan acceder a estos.
-    </para>
+Zend_Acl provee la implementación de un sistema simple y flexible de Listas de Control de Acceso (ACL, por sus siglas en inglés) para la administración de privilegios. En general, una aplicación puede utilizar las ACL para controlar el acceso a ciertos objetos protegidos, que son requeridos por otros objetos. </para>
 
     <para>
 	Para los propositos de esta documentaci&#243;n,
