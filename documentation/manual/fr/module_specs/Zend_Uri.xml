@@ -112,11 +112,10 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
             </example>
 
             <note>
-                 
-
-                <code>Zend_Uri::setConfig()</code>
-
-                 paramètre les options de configuration de manière globale. Il est recommandé de réinitialiser l'option "allow_unwise" à "false" comme dans l'example ci-dessus, à moins d'être certain de vouloir utiliser les caractères "imprudents" de manière globale.
+                <para><code>Zend_Uri::setConfig()</code> paramètre les options de configuration de manière globale. Il
+                est recommandé de réinitialiser l'option <code>allow_unwise</code> à <code>false</code> comme dans
+                l'exemple ci-dessus, à moins d'être certain de vouloir utiliser les caractères "imprudents" de manière
+                globale.</para>
             </note>
         </sect3>
     </sect2>

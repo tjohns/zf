@@ -32,9 +32,11 @@ $client->setConfig(array(
             </example></para>
 
         <note>
-             Zend_Http_Client utilise Zend_Uri_Http pour valider les URLs. Ce qui veut dire que certains caractères comme les pipes ("|") ou le symbole "^" ne seront pas acceptés par défaut dans les URLs. Ceci peut être modifié par le réglage de l'option "allow_unwise" de Zend_Uri à "true". Voir 
-            <xref linkend="zend.uri.validation.allowunwise" />
-             pour de plus amples informations. 
+            <para><code>Zend_Http_Client</code> utilise <code>Zend_Uri_Http</code> pour valider les URLs. Ce qui veut
+            dire que certains caractères comme les pipes ("|") ou le symbole "^" ne seront pas acceptés par défaut dans
+            les URLs. Ceci peut être modifié par le réglage de l'option "allow_unwise" de <code>Zend_Uri</code> à
+            <code>true</code>. Voir <xref linkend="zend.uri.validation.allowunwise" /> pour de plus amples
+            informations.</para>
         </note>
     </sect2>
 
