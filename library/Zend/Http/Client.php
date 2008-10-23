@@ -50,6 +50,7 @@ require_once 'Zend/Http/Response.php';
  * redirections, as well as more advanced features like proxy settings, HTTP
  * authentication and cookie persistance (using a Zend_Http_CookieJar object)
  *
+ * @todo Implement proxy settings
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
@@ -100,7 +101,7 @@ class Zend_Http_Client
      *
      * @var array
      */
-    protected $_config = array(
+    protected $config = array(
         'maxredirects'    => 5,
         'strictredirects' => false,
         'useragent'       => 'Zend_Http_Client',
@@ -117,56 +118,56 @@ class Zend_Http_Client
      *
      * @var Zend_Http_Client_Adapter_Interface
      */
-    protected $_adapter = null;
+    protected $adapter = null;
 
     /**
      * Request URI
      *
      * @var Zend_Uri_Http
      */
-    protected $_uri;
+    protected $uri;
 
     /**
      * Associative array of request headers
      *
      * @var array
      */
-    protected $_headers = array();
+    protected $headers = array();
 
     /**
      * HTTP request method
      *
      * @var string
      */
-    protected $_method = self::GET;
+    protected $method = self::GET;
 
     /**
      * Associative array of GET parameters
      *
      * @var array
      */
-    protected $_paramsGet = array();
+    protected $paramsGet = array();
 
     /**
      * Assiciative array of POST parameters
      *
      * @var array
      */
-    protected $_paramsPost = array();
+    protected $paramsPost = array();
 
     /**
      * Request body content type (for POST requests)
      *
      * @var string
      */
-    protected $_enctype = null;
+    protected $enctype = null;
 
     /**
      * The raw post data to send. Could be set by setRawData($data, $enctype).
      *
      * @var string
      */
-    protected $_rawPostData = null;
+    protected $raw_post_data = null;
 
     /**
      * HTTP Authentication settings
@@ -180,7 +181,7 @@ class Zend_Http_Client
      *
      * @var array|null
      */
-    protected $_auth;
+    protected $auth;
 
     /**
      * File upload arrays (used in POST requests)
@@ -190,35 +191,35 @@ class Zend_Http_Client
      *
      * @var array
      */
-    protected $_files = array();
+    protected $files = array();
 
     /**
      * The client's cookie jar
      *
      * @var Zend_Http_CookieJar
      */
-    protected $_cookieJar = null;
+    protected $cookiejar = null;
 
     /**
      * The last HTTP request sent by the client, as string
      *
      * @var string
      */
-    protected $_lastRequest = null;
+    protected $last_request = null;
 
     /**
      * The last HTTP response received by the client
      *
      * @var Zend_Http_Response
      */
-    protected $_lastResponse = null;
+    protected $last_response = null;
 
     /**
      * Redirection counter
      *
      * @var int
      */
-    protected $_redirectCounter = 0;
+    protected $redirectCounter = 0;
 
     /**
      * Fileinfo magic database resource
@@ -267,7 +268,7 @@ class Zend_Http_Client
             $uri->setPort(($uri->getScheme() == 'https' ? 443 : 80));
         }
 
-        $this->_uri = $uri;
+        $this->uri = $uri;
 
         return $this;
     }
@@ -280,10 +281,10 @@ class Zend_Http_Client
      */
     public function getUri($as_string = false)
     {
-        if ($as_string && $this->_uri instanceof Zend_Uri_Http) {
-            return $this->_uri->__toString();
+        if ($as_string && $this->uri instanceof Zend_Uri_Http) {
+            return $this->uri->__toString();
         } else {
-            return $this->_uri;
+            return $this->uri;
         }
     }
 
@@ -303,11 +304,11 @@ class Zend_Http_Client
         }
 
         foreach ($config as $k => $v)
-            $this->_config[strtolower($k)] = $v;
+            $this->config[strtolower($k)] = $v;
 
         // Pass configuration options to the adapter if it exists
-        if ($this->_adapter instanceof Zend_Http_Client_Adapter_Interface) {
-            $this->_adapter->setConfig($config);
+        if ($this->adapter instanceof Zend_Http_Client_Adapter_Interface) {
+            $this->adapter->setConfig($config);
         }
         
         return $this;
@@ -330,13 +331,13 @@ class Zend_Http_Client
         if (! preg_match($regex, $method)) {
             /** @see Zend_Http_Client_Exception */
             require_once 'Zend/Http/Client/Exception.php';
-            throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request _method.");
+            throw new Zend_Http_Client_Exception("'{$method}' is not a valid HTTP request method.");
         }
 
-        if ($method == self::POST && $this->_enctype === null)
+        if ($method == self::POST && $this->enctype === null)
             $this->setEncType(self::ENC_URLENCODED);
 
-        $this->_method = $method;
+        $this->method = $method;
 
         return $this;
     }
@@ -377,7 +378,7 @@ class Zend_Http_Client
                 list($name, $value) = explode(':', $name, 2);
 
             // Make sure the name is valid if we are in strict mode
-            if ($this->_config['strict'] && (! preg_match('/^[a-zA-Z0-9-]+$/', $name))) {
+            if ($this->config['strict'] && (! preg_match('/^[a-zA-Z0-9-]+$/', $name))) {
                 /** @see Zend_Http_Client_Exception */
                 require_once 'Zend/Http/Client/Exception.php';
                 throw new Zend_Http_Client_Exception("{$name} is not a valid HTTP header name");
@@ -387,13 +388,13 @@ class Zend_Http_Client
 
             // If $value is null or false, unset the header
             if ($value === null || $value === false) {
-                unset($this->_headers[$normalized_name]);
+                unset($this->headers[$normalized_name]);
 
             // Else, set the header
             } else {
                 // Header names are storred lowercase internally.
                 if (is_string($value)) $value = trim($value);
-                $this->_headers[$normalized_name] = array($name, $value);
+                $this->headers[$normalized_name] = array($name, $value);
             }
         }
 
@@ -412,8 +413,8 @@ class Zend_Http_Client
     public function getHeader($key)
     {
         $key = strtolower($key);
-        if (isset($this->_headers[$key])) {
-            return $this->_headers[$key][1];
+        if (isset($this->headers[$key])) {
+            return $this->headers[$key][1];
         } else {
             return null;
         }
@@ -471,10 +472,10 @@ class Zend_Http_Client
         $type = strtolower($type);
         switch ($type) {
             case 'get':
-                $parray = &$this->_paramsGet;
+                $parray = &$this->paramsGet;
                 break;
             case 'post':
-                $parray = &$this->_paramsPost;
+                $parray = &$this->paramsPost;
                 break;
         }
 
@@ -492,7 +493,7 @@ class Zend_Http_Client
      */
     public function getRedirectionsCount()
     {
-        return $this->_redirectCounter;
+        return $this->redirectCounter;
     }
 
     /**
@@ -522,7 +523,7 @@ class Zend_Http_Client
     {
         // If we got false or null, disable authentication
         if ($user === false || $user === null) {
-            $this->_auth = null;
+            $this->auth = null;
 
         // Else, set up authentication
         } else {
@@ -533,7 +534,7 @@ class Zend_Http_Client
                 throw new Zend_Http_Client_Exception("Invalid or not supported authentication type: '$type'");
             }
 
-            $this->_auth = array(
+            $this->auth = array(
                 'user' => (string) $user,
                 'password' => (string) $password,
                 'type' => $type
@@ -559,11 +560,11 @@ class Zend_Http_Client
             require_once 'Zend/Http/CookieJar.php';
 
         if ($cookiejar instanceof Zend_Http_CookieJar) {
-            $this->_cookieJar = $cookiejar;
+            $this->cookiejar = $cookiejar;
         } elseif ($cookiejar === true) {
-            $this->_cookieJar = new Zend_Http_CookieJar();
+            $this->cookiejar = new Zend_Http_CookieJar();
         } elseif (! $cookiejar) {
-            $this->_cookieJar = null;
+            $this->cookiejar = null;
         } else {
             /** @see Zend_Http_Client_Exception */
             require_once 'Zend/Http/Client/Exception.php';
@@ -580,7 +581,7 @@ class Zend_Http_Client
      */
     public function getCookieJar()
     {
-        return $this->_cookieJar;
+        return $this->cookiejar;
     }
 
     /**
@@ -611,12 +612,12 @@ class Zend_Http_Client
 
         if ($value !== null) $value = urlencode($value);
 
-        if (isset($this->_cookieJar)) {
+        if (isset($this->cookiejar)) {
             if ($cookie instanceof Zend_Http_Cookie) {
-                $this->_cookieJar->addCookie($cookie);
+                $this->cookiejar->addCookie($cookie);
             } elseif (is_string($cookie) && $value !== null) {
-                $cookie = Zend_Http_Cookie::fromString("{$cookie}={$value}", $this->_uri);
-                $this->_cookieJar->addCookie($cookie);
+                $cookie = Zend_Http_Cookie::fromString("{$cookie}={$value}", $this->uri);
+                $this->cookiejar->addCookie($cookie);
             }
         } else {
             if ($cookie instanceof Zend_Http_Cookie) {
@@ -633,8 +634,8 @@ class Zend_Http_Client
 
             $value = addslashes($value);
 
-            if (! isset($this->_headers['cookie'])) $this->_headers['cookie'] = array('Cookie', '');
-            $this->_headers['cookie'][1] .= $cookie . '=' . $value . '; ';
+            if (! isset($this->headers['cookie'])) $this->headers['cookie'] = array('Cookie', '');
+            $this->headers['cookie'][1] .= $cookie . '=' . $value . '; ';
         }
 
         return $this;
@@ -675,7 +676,7 @@ class Zend_Http_Client
         // Force enctype to multipart/form-data
         $this->setEncType(self::ENC_FORMDATA);
 
-        $this->_files[$formname] = array(basename($filename), $ctype, $data);
+        $this->files[$formname] = array(basename($filename), $ctype, $data);
 
         return $this;
     }
@@ -688,7 +689,7 @@ class Zend_Http_Client
      */
     public function setEncType($enctype = self::ENC_URLENCODED)
     {
-        $this->_enctype = $enctype;
+        $this->enctype = $enctype;
 
         return $this;
     }
@@ -707,7 +708,7 @@ class Zend_Http_Client
      */
     public function setRawData($data, $enctype = null)
     {
-        $this->_rawPostData = $data;
+        $this->raw_post_data = $data;
         $this->setEncType($enctype);
 
         return $this;
@@ -724,16 +725,16 @@ class Zend_Http_Client
     public function resetParameters()
     {
         // Reset parameter data
-        $this->_paramsGet     = array();
-        $this->_paramsPost    = array();
-        $this->_files         = array();
-        $this->_rawPostData = null;
+        $this->paramsGet     = array();
+        $this->paramsPost    = array();
+        $this->files         = array();
+        $this->raw_post_data = null;
 
         // Clear outdated headers
-        if (isset($this->_headers[strtolower(self::CONTENT_TYPE)]))
-            unset($this->_headers[strtolower(self::CONTENT_TYPE)]);
-        if (isset($this->_headers[strtolower(self::CONTENT_LENGTH)]))
-            unset($this->_headers[strtolower(self::CONTENT_LENGTH)]);
+        if (isset($this->headers[strtolower(self::CONTENT_TYPE)]))
+            unset($this->headers[strtolower(self::CONTENT_TYPE)]);
+        if (isset($this->headers[strtolower(self::CONTENT_LENGTH)]))
+            unset($this->headers[strtolower(self::CONTENT_LENGTH)]);
 
         return $this;
     }
@@ -745,7 +746,7 @@ class Zend_Http_Client
      */
     public function getLastRequest()
     {
-        return $this->_lastRequest;
+        return $this->last_request;
     }
 
     /**
@@ -758,7 +759,7 @@ class Zend_Http_Client
      */
     public function getLastResponse()
     {
-        return $this->_lastResponse;
+        return $this->last_response;
     }
 
     /**
@@ -791,10 +792,10 @@ class Zend_Http_Client
             throw new Zend_Http_Client_Exception('Passed adapter is not a HTTP connection adapter');
         }
 
-        $this->_adapter = $adapter;
-        $config = $this->_config;
+        $this->adapter = $adapter;
+        $config = $this->config;
         unset($config['adapter']);
-        $this->_adapter->setConfig($config);
+        $this->adapter->setConfig($config);
     }
 
     /**
@@ -806,27 +807,27 @@ class Zend_Http_Client
      */
     public function request($method = null)
     {
-        if (! $this->_uri instanceof Zend_Uri_Http) {
+        if (! $this->uri instanceof Zend_Uri_Http) {
             /** @see Zend_Http_Client_Exception */
             require_once 'Zend/Http/Client/Exception.php';
             throw new Zend_Http_Client_Exception('No valid URI has been passed to the client');
         }
 
         if ($method) $this->setMethod($method);
-        $this->_redirectCounter = 0;
+        $this->redirectCounter = 0;
         $response = null;
 
         // Make sure the adapter is loaded
-        if ($this->_adapter == null) $this->setAdapter($this->_config['adapter']);
+        if ($this->adapter == null) $this->setAdapter($this->config['adapter']);
 
         // Send the first request. If redirected, continue.
         do {
             // Clone the URI and add the additional GET parameters to it
-            $uri = clone $this->_uri;
-            if (! empty($this->_paramsGet)) {
+            $uri = clone $this->uri;
+            if (! empty($this->paramsGet)) {
                 $query = $uri->getQuery();
                    if (! empty($query)) $query .= '&';
-                $query .= http_build_query($this->_paramsGet, null, '&');
+                $query .= http_build_query($this->paramsGet, null, '&');
 
                 $uri->setQuery($query);
             }
@@ -835,13 +836,13 @@ class Zend_Http_Client
             $headers = $this->_prepareHeaders();
 
             // Open the connection, send the request and read the response
-            $this->_adapter->connect($uri->getHost(), $uri->getPort(),
+            $this->adapter->connect($uri->getHost(), $uri->getPort(),
                 ($uri->getScheme() == 'https' ? true : false));
 
-            $this->_lastRequest = $this->_adapter->write($this->_method,
-                $uri, $this->_config['httpversion'], $headers, $body);
+            $this->last_request = $this->adapter->write($this->method,
+                $uri, $this->config['httpversion'], $headers, $body);
 
-            $response = $this->_adapter->read();
+            $response = $this->adapter->read();
             if (! $response) {
                 /** @see Zend_Http_Client_Exception */
                 require_once 'Zend/Http/Client/Exception.php';
@@ -849,10 +850,10 @@ class Zend_Http_Client
             }
 
             $response = Zend_Http_Response::fromString($response);
-            if ($this->_config['storeresponse']) $this->_lastResponse = $response;
+            if ($this->config['storeresponse']) $this->last_response = $response;
 
             // Load cookies into cookie jar
-            if (isset($this->_cookieJar)) $this->_cookieJar->addCookiesFromResponse($response, $uri);
+            if (isset($this->cookiejar)) $this->cookiejar->addCookiesFromResponse($response, $uri);
 
             // If we got redirected, look for the Location header
             if ($response->isRedirect() && ($location = $response->getHeader('location'))) {
@@ -860,7 +861,7 @@ class Zend_Http_Client
                 // Check whether we send the exact same request again, or drop the parameters
                 // and send a GET request
                 if ($response->getStatus() == 303 ||
-                   ((! $this->_config['strictredirects']) && ($response->getStatus() == 302 ||
+                   ((! $this->config['strictredirects']) && ($response->getStatus() == 302 ||
                        $response->getStatus() == 301))) {
 
                     $this->resetParameters();
@@ -880,28 +881,28 @@ class Zend_Http_Client
                     } else {
                         $query = '';
                     }
-                    $this->_uri->setQuery($query);
+                    $this->uri->setQuery($query);
 
                     // Else, if we got just an absolute path, set it
                     if(strpos($location, '/') === 0) {
-                        $this->_uri->setPath($location);
+                        $this->uri->setPath($location);
 
                         // Else, assume we have a relative path
                     } else {
                         // Get the current path directory, removing any trailing slashes
-                        $path = $this->_uri->getPath();
+                        $path = $this->uri->getPath();
                         $path = rtrim(substr($path, 0, strrpos($path, '/')), "/");
-                        $this->_uri->setPath($path . '/' . $location);
+                        $this->uri->setPath($path . '/' . $location);
                     }
                 }
-                ++$this->_redirectCounter;
+                ++$this->redirectCounter;
 
             } else {
                 // If we didn't get any location, stop redirecting
                 break;
             }
 
-        } while ($this->_redirectCounter < $this->_config['maxredirects']);
+        } while ($this->redirectCounter < $this->config['maxredirects']);
 
         return $response;
     }
@@ -916,26 +917,26 @@ class Zend_Http_Client
         $headers = array();
 
         // Set the host header
-        if (! isset($this->_headers['host'])) {
-            $host = $this->_uri->getHost();
+        if (! isset($this->headers['host'])) {
+            $host = $this->uri->getHost();
 
             // If the port is not default, add it
-            if (! (($this->_uri->getScheme() == 'http' && $this->_uri->getPort() == 80) ||
-                  ($this->_uri->getScheme() == 'https' && $this->_uri->getPort() == 443))) {
-                $host .= ':' . $this->_uri->getPort();
+            if (! (($this->uri->getScheme() == 'http' && $this->uri->getPort() == 80) ||
+                  ($this->uri->getScheme() == 'https' && $this->uri->getPort() == 443))) {
+                $host .= ':' . $this->uri->getPort();
             }
 
             $headers[] = "Host: {$host}";
         }
 
         // Set the connection header
-        if (! isset($this->_headers['connection'])) {
-            if (! $this->_config['keepalive']) $headers[] = "Connection: close";
+        if (! isset($this->headers['connection'])) {
+            if (! $this->config['keepalive']) $headers[] = "Connection: close";
         }
 
         // Set the Accept-encoding header if not set - depending on whether
         // zlib is available or not.
-        if (! isset($this->_headers['accept-encoding'])) {
+        if (! isset($this->headers['accept-encoding'])) {
         	if (function_exists('gzinflate')) {
         		$headers[] = 'Accept-encoding: gzip, deflate';
         	} else {
@@ -944,33 +945,33 @@ class Zend_Http_Client
         }
         
         // Set the Content-Type header
-        if ($this->_method == self::POST &&
-           (! isset($this->_headers[strtolower(self::CONTENT_TYPE)]) && isset($this->_enctype))) {
+        if ($this->method == self::POST &&
+           (! isset($this->headers[strtolower(self::CONTENT_TYPE)]) && isset($this->enctype))) {
 
-            $headers[] = self::CONTENT_TYPE . ': ' . $this->_enctype;
+            $headers[] = self::CONTENT_TYPE . ': ' . $this->enctype;
         }
         
         // Set the user agent header
-        if (! isset($this->_headers['user-agent']) && isset($this->_config['useragent'])) {
-            $headers[] = "User-Agent: {$this->_config['useragent']}";
+        if (! isset($this->headers['user-agent']) && isset($this->config['useragent'])) {
+            $headers[] = "User-Agent: {$this->config['useragent']}";
         }
 
         // Set HTTP authentication if needed
-        if (is_array($this->_auth)) {
-            $auth = self::encodeAuthHeader($this->_auth['user'], $this->_auth['password'], $this->_auth['type']);
+        if (is_array($this->auth)) {
+            $auth = self::encodeAuthHeader($this->auth['user'], $this->auth['password'], $this->auth['type']);
             $headers[] = "Authorization: {$auth}";
         }
 
         // Load cookies from cookie jar
-        if (isset($this->_cookieJar)) {
-            $cookstr = $this->_cookieJar->getMatchingCookies($this->_uri,
+        if (isset($this->cookiejar)) {
+            $cookstr = $this->cookiejar->getMatchingCookies($this->uri,
                 true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
 
             if ($cookstr) $headers[] = "Cookie: {$cookstr}";
         }
 
         // Add all other user defined headers
-        foreach ($this->_headers as $header) {
+        foreach ($this->headers as $header) {
         	list($name, $value) = $header;
             if (is_array($value))
                 $value = implode(', ', $value);
@@ -990,37 +991,37 @@ class Zend_Http_Client
     protected function _prepareBody()
     {
         // According to RFC2616, a TRACE request should not have a body.
-        if ($this->_method == self::TRACE) {
+        if ($this->method == self::TRACE) {
             return '';
         }
 
         // If we have raw_post_data set, just use it as the body.
-        if (isset($this->_rawPostData)) {
-            $this->setHeaders(self::CONTENT_LENGTH, strlen($this->_rawPostData));
-            return $this->_rawPostData;
+        if (isset($this->raw_post_data)) {
+            $this->setHeaders(self::CONTENT_LENGTH, strlen($this->raw_post_data));
+            return $this->raw_post_data;
         }
 
         $body = '';
 
         // If we have files to upload, force enctype to multipart/form-data
-        if (count ($this->_files) > 0) $this->setEncType(self::ENC_FORMDATA);
+        if (count ($this->files) > 0) $this->setEncType(self::ENC_FORMDATA);
 
         // If we have POST parameters or files, encode and add them to the body
-        if (count($this->_paramsPost) > 0 || count($this->_files) > 0) {
-            switch($this->_enctype) {
+        if (count($this->paramsPost) > 0 || count($this->files) > 0) {
+            switch($this->enctype) {
                 case self::ENC_FORMDATA:
                     // Encode body as multipart/form-data
                     $boundary = '---ZENDHTTPCLIENT-' . md5(microtime());
                     $this->setHeaders(self::CONTENT_TYPE, self::ENC_FORMDATA . "; boundary={$boundary}");
 
                     // Get POST parameters and encode them
-                    $params = $this->_getParametersRecursive($this->_paramsPost);
+                    $params = $this->_getParametersRecursive($this->paramsPost);
                     foreach ($params as $pp) {
                         $body .= self::encodeFormData($boundary, $pp[0], $pp[1]);
                     }
 
                     // Encode files
-                    foreach ($this->_files as $name => $file) {
+                    foreach ($this->files as $name => $file) {
                         $fhead = array(self::CONTENT_TYPE => $file[1]);
                         $body .= self::encodeFormData($boundary, $name, $file[2], $file[0], $fhead);
                     }
@@ -1031,20 +1032,20 @@ class Zend_Http_Client
                 case self::ENC_URLENCODED:
                     // Encode body as application/x-www-form-urlencoded
                     $this->setHeaders(self::CONTENT_TYPE, self::ENC_URLENCODED);
-                    $body = http_build_query($this->_paramsPost, '', '&');
+                    $body = http_build_query($this->paramsPost, '', '&');
                     break;
 
                 default:
                     /** @see Zend_Http_Client_Exception */
                     require_once 'Zend/Http/Client/Exception.php';
-                    throw new Zend_Http_Client_Exception("Cannot handle content type '{$this->_enctype}' automatically." .
+                    throw new Zend_Http_Client_Exception("Cannot handle content type '{$this->enctype}' automatically." .
                         " Please use Zend_Http_Client::setRawData to send this kind of content.");
                     break;
             }
         }
         
         // Set the Content-Length if we have a body or if request is POST/PUT
-        if ($body || $this->_method == self::POST || $this->_method == self::PUT) {
+        if ($body || $this->method == self::POST || $this->method == self::PUT) {
             $this->setHeaders(self::CONTENT_LENGTH, strlen($body));
         }
 

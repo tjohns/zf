@@ -45,7 +45,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      *
      * @var array
      */
-    protected $_config = array();
+    protected $config = array();
 
     /**
      * Buffer of responses to be returned by the read() method.  Can be
@@ -53,14 +53,14 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      *
      * @var array
      */
-    protected $_responses = array("HTTP/1.1 400 Bad Request\r\n\r\n");
+    protected $responses = array("HTTP/1.1 400 Bad Request\r\n\r\n");
 
     /**
      * Current position in the response buffer
      *
      * @var integer
      */
-    protected $_responseIndex = 0;
+    protected $responseIndex = 0;
 
     /**
      * Adapter constructor, currently empty. Config is set using setConfig()
@@ -83,7 +83,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
         }
 
         foreach ($config as $k => $v) {
-            $this->_config[strtolower($k)] = $v;
+            $this->config[strtolower($k)] = $v;
         }
     }
 
@@ -137,10 +137,10 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      */
     public function read()
     {
-        if ($this->_responseIndex >= count($this->_responses)) {
-            $this->_responseIndex = 0;
+        if ($this->responseIndex >= count($this->responses)) {
+            $this->responseIndex = 0;
         }
-        return $this->_responses[$this->_responseIndex++];
+        return $this->responses[$this->responseIndex++];
     }
 
     /**
@@ -161,8 +161,8 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
             $response = $response->asString();
         }
 
-        $this->_responses = (array)$response;
-        $this->_responseIndex = 0;
+        $this->responses = (array)$response;
+        $this->responseIndex = 0;
     }
 
     /**
@@ -172,7 +172,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      */
     public function addResponse($response)
     {
-        $this->_responses[] = $response;
+        $this->responses[] = $response;
     }
 
     /**
@@ -183,11 +183,11 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      */
     public function setResponseIndex($index)
     {
-        if ($index < 0 || $index >= count($this->_responses)) {
+        if ($index < 0 || $index >= count($this->responses)) {
             require_once 'Zend/Http/Client/Adapter/Exception.php';
             throw new Zend_Http_Client_Adapter_Exception(
                 'Index out of range of response buffer size');
         }
-        $this->_responseIndex = $index;
+        $this->responseIndex = $index;
     }
 }
