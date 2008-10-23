@@ -20,19 +20,6 @@
         plugins, and thus override plugins from paths registered earlier. 
     </para>
 
-    <note>
-        <title>Use the file path cache in production</title>
-
-        <para>
-            <code>Zend_Loader_PluginLoader</code> makes heavy use of
-            <code>Zend_Loader::loadFile()</code>, which can lead to performance
-            degradation, particularly when the first path scanned does not match.
-            We recommend using <link
-                linkend="zend.loader.load.file.cache">the file path cache</link>
-            when pushing your code to production.
-        </para>
-    </note>
-
     <sect2 id="zend.loader.pluginloader.usage">
         <title>Basic Use Case</title>
 
@@ -210,6 +197,72 @@ if ($loader->isLoaded('Adapter')) {
 }
 ]]>
         </programlisting>
+    </sect2>
+
+    <sect2 id="zend.loader.pluginloader.performance">
+        <title>Getting Better Performance for Plugins</title>
+
+        <para>
+            Plugin loading can be an expensive operation. At its heart, it needs
+            to loop through each prefix, then each path on the prefix, until it
+            finds a file that matches -- and which defines the class expected.
+            In cases where the file exists but does not define the class, an
+            error will be added to the PHP error stack, which is also an
+            expensive operation. The question then turns to: how can you keep
+            the flexibility of plugins and also address performance?
+        </para>
+
+        <para>
+            <code>Zend_Loader_PluginLoader</code> offers an opt-in feature for
+            just this situation, a class file include cache. When enabled, it
+            will create a file that contains all successful includes which you
+            can then call from your bootstrap. Using this strategy, you can
+            greatly improve your performance for your production servers.
+        </para>
+
+        <example id="zend.loader.pluginloader.performance.example">
+            <title>Using the PluginLoader class file include cache</title>
+
+            <para>
+                To use the class file include cache, simply drop in the
+                following code into your bootstrap:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+]]></programlisting>
+
+            <para>
+                Obviously, the path and filename will vary based on your needs.
+                This code should come as early as possible, to ensure that
+                plugin-based components can make use of it.
+            </para>
+
+            <para>
+                During development, you may wish to disable the cache. One
+                method for doing so is to use a configuration key for
+                determining whether or not the plugin loader should cache. 
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+if ($config->enablePluginLoaderCache) {
+    Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+}
+]]></programlisting>
+
+            <para>
+                This technique allows you to keep your modifications to your
+                configuration file rather than code.
+            </para>
+        </example>
     </sect2>
 </sect1>
 <!--

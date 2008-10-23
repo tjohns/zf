@@ -57,16 +57,6 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
-    public function setUp()
-    {
-        Zend_Loader::setFileMapCache(null);
-    }
-
-    public function tearDown()
-    {
-        Zend_Loader::setFileMapCache(null);
-    }
-
     /**
      * Tests that a class can be loaded from a well-formed PHP file
      */
@@ -367,65 +357,6 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             . ' Zend/Loader/AutoloadDoesNotHideParseError.php 2>&1';
         $output = shell_exec($command);
         $this->assertRegexp('/error, unexpected T_STRING, expecting T_FUNCTION/i', $output, $output);
-    }
-
-    /**
-     * @group ZF-4670
-     */
-    public function testFilePathCacheShouldBeNullByDefault()
-    {
-        $this->assertNull(Zend_Loader::getFileMapCache());
-    }
-
-    /**
-     * @group ZF-4670
-     */
-    public function testCacheObjectMayBePassedToSetFileMapCache()
-    {
-        require_once 'Zend/Cache.php';
-        $cache = Zend_Cache::factory('Core', 'Test');
-        Zend_Loader::setFileMapCache($cache);
-        $this->assertSame($cache, Zend_Loader::getFileMapCache());
-    }
-
-    /**
-     * @group ZF-4670
-     */
-    public function testNullMayBePassedToSetFileMapCache()
-    {
-        $this->testCacheObjectMayBePassedToSetFileMapCache();
-        Zend_Loader::setFileMapCache(null);
-        $this->assertNull(Zend_Loader::getFileMapCache());
-    }
-
-    /**
-     * @group ZF-4670
-     */
-    public function testFileMapCacheShouldBePopulatedAfterCallToLoadFile()
-    {
-        $this->testCacheObjectMayBePassedToSetFileMapCache();
-
-        $paths = dirname(__FILE__) . '/Loader/_files';
-        $path  = $paths . PATH_SEPARATOR . get_include_path();
-        $id    = md5($path . 'NotFound.php');
-
-        Zend_Loader::loadFile('NotFound.php', $paths);
-
-        $cache = Zend_Loader::getFileMapCache();
-        $logs  = $cache->getBackend()->getAllLogs();
-
-        $found = false;
-        foreach ($logs as $log) {
-            $args  = $log['args'];
-            if (empty($args) || (2 > count($args))) {
-                continue;
-            }
-            if (in_array($id, $args)) {
-                $found = true;
-                break;
-            }
-        }
-        $this->assertTrue($found, "Searching for $id in " . var_export($logs, 1));
     }
 }
 
