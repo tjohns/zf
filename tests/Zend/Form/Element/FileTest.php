@@ -289,6 +289,11 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
         return $this->received;
     }
 
+    public function isUploaded($files = null)
+    {
+        return true;
+    }
+
     public function getProgress()
     {
         return;
