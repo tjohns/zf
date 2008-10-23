@@ -306,6 +306,11 @@ class Zend_Http_Client
         foreach ($config as $k => $v)
             $this->config[strtolower($k)] = $v;
 
+        // Pass configuration options to the adapter if it exists
+        if ($this->adapter instanceof Zend_Http_Client_Adapter_Interface) {
+            $this->adapter->setConfig($config);
+        }
+        
         return $this;
     }
 
