@@ -861,26 +861,31 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Retrieve filename of transferred file
+     * Retrieves the filename of transferred files. 
      *
-     * Returns final target destination of transferred file.
-     * 
-     * @param  string $file 
-     * @return string
+     * @param  string  $fileelement (Optional) Element to return the filename for
+     * @param  boolean $path        (Optional) Should the path also be returned ?
+     * @return string|array
      */
-    public function getFileName($file)
+    public function getFileName($file = null, $path = true)
     {
-        $file = (string) $file;
-        if (!array_key_exists($file, $this->_files)) {
-             return null;
+        $files = $this->_getFiles($file, true);
+
+        $result    = array();
+        $directory = "";
+        foreach($files as $file) {
+            if ($path === true) {
+                $directory = $this->getDestination($file) . DIRECTORY_SEPARATOR;
+            }
+
+            $result[$file] = $directory . $this->_files[$file]['name'];
         }
 
-        if (empty($this->_files[$file]['name'])) {
-            return null;
+        if (count($result) == 1) {
+            return current($result);
         }
 
-        $directory = $this->getDestination($file);
-        return $directory . DIRECTORY_SEPARATOR . $this->_files[$file]['name'];
+        return $result;
     }
 
     /**

@@ -607,6 +607,43 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->adapter->setDestination($path);
         $this->assertEquals($path . DIRECTORY_SEPARATOR . 'foo.jpg', $this->adapter->getFileName('foo'));
     }
+
+    public function testAdapterShouldAllowRetrievingFileNameWithoutPath()
+    {
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($path);
+        $this->assertEquals('foo.jpg', $this->adapter->getFileName('foo', false));
+    }
+
+    public function testAdapterShouldAllowRetrievingAllFileNames()
+    {
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($path);
+        $files = $this->adapter->getFileName();
+        $this->assertTrue(is_array($files));
+        $this->assertEquals($path . DIRECTORY_SEPARATOR . 'bar.png', $files['bar']);
+    }
+
+    public function testAdapterShouldAllowRetrievingAllFileNamesWithoutPath()
+    {
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($path);
+        $files = $this->adapter->getFileName(null, false);
+        $this->assertTrue(is_array($files));
+        $this->assertEquals('bar.png', $files['bar']);
+    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract

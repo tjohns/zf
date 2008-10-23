@@ -193,6 +193,69 @@ $upload->receive();
 
         </example>
     </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.informations">
+
+        <title>Additional file informations</title>
+        
+        <para>
+            <code>Zend_File_Transfer</code> can return several additional informations on files.
+            The following methods are available:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileName($file = null, $path = true)</emphasis>: This method
+                    will return the real filename of an transfered file.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileInfo($file = null)</emphasis>: This method will return all
+                    internal informations for the given transfered file.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            <code>getFileName()</code> accepts the name of the element as first parameter. If no name is given,
+            all known filenames will be returned in an array. If the file is an multifile, you will also get
+            an array. If there is only a single file a string will be returned.
+        </para>
+
+        <para>
+            Per default filenames will be returned with their complete path. If you need only the filename
+            without path, you can set the second parameter <code>$path</code> which will truncate the
+            filepath when set to false.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example1">
+            <title>Getting the filename</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Returns the file names from all files
+$names = $upload->getFileName();
+
+// Returns the file names from the 'foo' form element
+$names = $upload->getFileName('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that the filename can change when you receive the file. This is due to the fact that
+                after receiving all filters will be applied. So you should call <code>getFileName()</code>
+                always after you have received the files.
+            </para>
+        </note>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:
