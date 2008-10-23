@@ -360,12 +360,12 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 	    // test that config passes when we set the adapter
 	    $this->client->setConfig(array('param' => 'value1'));
 	    $this->client->setAdapter($adapter);
-	    $adapterCfg = $this->getObjectAttribute($adapter, 'config');
+	    $adapterCfg = $this->getObjectAttribute($adapter, '_config');
 	    $this->assertEquals('value1', $adapterCfg['param']);
 	    
 	    // test that adapter config value changes when we set client config
 	    $this->client->setConfig(array('param' => 'value2'));
-	    $adapterCfg = $this->getObjectAttribute($adapter, 'config');
+	    $adapterCfg = $this->getObjectAttribute($adapter, '_config');
 	    $this->assertEquals('value2', $adapterCfg['param']);
 	}
 }
