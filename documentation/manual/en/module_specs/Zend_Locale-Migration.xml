@@ -115,15 +115,15 @@ $locale = Zend_Locale::getOrder(Zend_Locale::BROWSER);
                 </para>
             </example>
 
-        </sect3>
+            <note>
+                <para>
+                    Per default the old behaviour is still active, but throws a user warning.
+                    When you have changed your code to the new behaviour you should also change
+                    the compatibility mode to false so that no warning is thrown anymore.
+                </para>
+            </note>
 
-        <note>
-            <para>
-                Per default the old behaviour is still active, but throws a user warning.
-                When you have changed your code to the new behaviour you should also change
-                the compatibility mode to false so that no warning is thrown anymore.
-            </para>
-        </note>
+        </sect3>
 
     </sect2>
 </sect1>
