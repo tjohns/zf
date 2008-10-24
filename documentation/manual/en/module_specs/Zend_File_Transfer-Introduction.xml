@@ -25,8 +25,8 @@
         <para>
             When you are using <code>Zend_Form</code> you should read and use the examples described in the
             chapter of <code>Zend_Form</code> and not use <code>Zend_File_Transfer</code> manually. But the
-            information you can read in this chapter will be helpfull, even if you do not use it directly.
-            All asumptions, descriptions and solutions are the same when you are using
+            information you can read in this chapter will be helpful, even if you do not use it directly.
+            All assumptions, descriptions and solutions are the same when you are using
             <code>Zend_File_Transfer</code> through <code>Zend_Form</code>.
         </para>
     </note>
@@ -135,7 +135,7 @@ if (!$adapter->receive()) {
         
         <para>
             <code>Zend_File_Transfer</code> has several method which check for different assumptions which
-            are usefull when you have to process files after they have been uploaded. 
+            are useful when you have to process files after they have been uploaded. 
         </para>
 
         <itemizedlist>
@@ -151,7 +151,7 @@ if (!$adapter->receive()) {
             <listitem>
                 <para>
                     <emphasis role="strong">isUploaded($files = null)</emphasis>: This method will check if the
-                    given files have been uploaded by the user. This is usefull when you have defined several
+                    given files have been uploaded by the user. This is useful when you have defined several
                     files to be uploaded optionally. When no files are given, all files will be checked.
                 </para>
             </listitem>
@@ -207,14 +207,14 @@ $upload->receive();
             <listitem>
                 <para>
                     <emphasis role="strong">getFileName($file = null, $path = true)</emphasis>: This method
-                    will return the real filename of an transfered file.
+                    will return the real filename of an transferred file.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <emphasis role="strong">getFileInfo($file = null)</emphasis>: This method will return all
-                    internal informations for the given transfered file.
+                    internal informations for the given transferred file.
                 </para>
             </listitem>
         </itemizedlist>

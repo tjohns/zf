@@ -434,8 +434,8 @@ package
             The first is bindable which makes fire a change event when it is updated.
             The second tag is the RemoteClass tag which defines that this class can
             have a a remote object mapped with the alias name in this case <code>ContactVO</code>
-            It is mandatory that this tag the value that was set is the PHP class are stricktly
-            equivelent.
+            It is mandatory that this tag the value that was set is the PHP class are strictly
+            equivalent.
         </para>
         <programlisting role="as"><![CDATA[
 [Bindable]
@@ -447,7 +447,7 @@ private function getContactHandler(event:ResultEvent):void {
 ]]>
         </programlisting>
         <para>
-            The following result event from the serice call is cast instantly onto the Flex
+            The following result event from the service call is cast instantly onto the Flex
             ContactVO. Anything that is bound to myContact will be updated with the returned
             ContactVO data.
         </para>
@@ -579,7 +579,7 @@ private function onFault(fault:Object):void {
 ]]>
         </programlisting>
         <para>
-            Adding in the ActionScript to make the remoting connection is now complete. Runnign the
+            Adding in the ActionScript to make the remoting connection is now complete. Running the
             ZendExample file now makes a connection to Zend Amf. In review you have added the required
             variables to open a connection to the remote server, defined what methods should be used
             when your application receives a response from the server, and finally displayed the returned
