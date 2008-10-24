@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12067 -->
+<!-- EN-Revision: 12092 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Chargeur de Plugins</title>
 
@@ -10,15 +10,6 @@
     séparateurs de dossiers. Il accepte aussi qu'un préfixe optionnel lui soit passé, afin de charger une classe. Tous
     les chemins sont analysés en ordre LIFO. Grâce à ces deux spécificités, vous pouvez "namespacer" vos plugins, et
     écraser les plugins enregistrés plus tôt.</para>
-
-    <note>
-        <title>Utiliser le cache de chemins de fichiers en production</title>
-
-        <para><code>Zend_Loader_PluginLoader</code> utilise largement <code>Zend_Loader::loadFile()</code>, ce qui peut
-        entraîner des dégradations de performance, particulièrement quand le premier chemin scanné ne correspond pas.
-        Nous recommandons l'utilisation du <link linkend="zend.loader.load.file.cache">cache de chemins de
-        fichiers</link> quand vous passez votre code en production.</para>
-    </note>
 
     <sect2 id="zend.loader.pluginloader.usage">
         <title>Utilisation basique</title>

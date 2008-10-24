@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12067 -->
+<!-- EN-Revision: 12092 -->
 <sect1 id="zend.loader.load">
     <title>Charger les fichiers et les classes dynamiquement</title>
 
@@ -46,53 +46,6 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
         utilise la fonction PHP <ulink url="http://php.net/include"><code>include_once()</code></ulink> pour charger le
         fichier sinon la fonction PHP <ulink url="http://php.net/include"><code>include()</code></ulink> est
         utilisée.</para>
-
-        <sect3 id="zend.loader.load.file.cache">
-            <title>Mise en cache des chemins de fichiers</title>
-
-            <para><code>loadFile()</code> peut être une opération très coûteuse quand le fichier n'existe pas. Dans ce
-            cas, même les erreurs sont désactivées, une erreur est malgré tout ajoutées à la pile des erreurs PHP, ce
-            qui est une opération coûteuse. Malheureusement certaines classes comme <link
-            linkend="zend.loader.pluginloader">Zend_Loader_PluginLoader</link> utilise largement <code>loadFile()</code>
-            pour l'utilisation des plugins.</para>
-
-            <para>Pour répondre à ce problème, à partir de la version 1.7.0, <code>Zend_Loader</code> vous permet
-            d'attacher optionnellement un cache des chemins de fichiers. Ce cache permettra à <code>loadFile()</code> de
-            retourner rapidement quand un chemin de fichier est connu comme étant mauvais. Dans une application Zend
-            Framework typique, l'utilisation du backend File de <code>Zend_Cache</code>, pourrait permettre de diviser
-            les temps de réponse de moitié ; les backends de cache basés en mémoire comme memcached, APC, et Zend
-            Platform pourrait améliorer encore plus cette réponse.</para>
-
-            <para>Pour activer le cache des noms de fichiers, attachez simplement un frontend <code>Zend_Cache</code> à
-            la classe <code>Zend_Loader</code> en utilisant la méthode statique <code>setFilePathCache()</code> :</para>
-
-            <programlisting role="php"><![CDATA[
-Zend_Loader::setFilePathCache($cache);
-]]></programlisting>
-
-            <para>Vous pouvez à tout moment désactiver le cache en fournissant <code>null</code> :</para>
-
-            <programlisting role="php"><![CDATA[
-Zend_Loader::setFilePathCache(null);
-]]></programlisting>
-
-            <note>
-                <title>Mettre le cache à "on" ou "off" en fonction de l'environnement</title>
-
-                <para><code>Zend_Cache_Core</code> a une option, "caching", qui peut être paramétrée à la valeur
-                <code>false</code> pour désactiver la mise en cache. Nous recommandons d'installer votre cache de chemin
-                de fichiers au plus tôt, et de simplement changer l'option "caching" en fonction de votre environnement.
-                Ceci vous permet de tester de nouveaux plugins et des chemins associés durant le développement, tandis
-                que vous activez le cache en production pour un maximum de performance.</para>
-            </note>
-
-            <note>
-                <title>Le backend Sqlite n'est pas recommandé</title>
-
-                <para>Nous ne recommandons pas le backend Sqlite de <code>Zend_Cache</code> pour cette utilisation,
-                puisque lors de nos tests, il a dégradé réellement l'exécution dans la plupart des exemples.</para>
-            </note>
-        </sect3>
     </sect2>
 
     <sect2 id="zend.loader.load.class">
