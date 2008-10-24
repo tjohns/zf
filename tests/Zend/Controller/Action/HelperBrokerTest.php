@@ -154,7 +154,7 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
         
         $this->front->returnResponse(true);
         $response = $this->front->dispatch($request);
-        $this->assertEquals('Action Helper by name NonExistentHelper not found.', $response->getBody());
+        $this->assertContains('not found', $response->getBody());
     }
     
     public function testCustomHelperRegistered()
@@ -277,6 +277,29 @@ class Zend_Controller_Action_HelperBrokerTest extends PHPUnit_Framework_TestCase
 
         $urlHelper = Zend_Controller_Action_HelperBroker::getStaticHelper('url');
         $this->assertTrue($urlHelper instanceof MyApp_Url);
+    }
+
+    /**
+     * @group ZF-4704
+     */
+    public function testPluginLoaderShouldHaveDefaultPrefixPath()
+    {
+        $loader = Zend_Controller_Action_HelperBroker::getPluginLoader();
+        $paths  = $loader->getPaths('Zend_Controller_Action_Helper');
+        $this->assertFalse(empty($paths));
+    }
+
+    /**
+     * @group ZF-4704
+     */
+    public function testBrokerShouldAcceptCustomPluginLoaderInstance()
+    {
+        $loader = Zend_Controller_Action_HelperBroker::getPluginLoader();
+        $custom = new Zend_Loader_PluginLoader();
+        Zend_Controller_Action_HelperBroker::setPluginLoader($custom);
+        $test   = Zend_Controller_Action_HelperBroker::getPluginLoader();
+        $this->assertNotSame($loader, $test);
+        $this->assertSame($custom, $test);
     }
 }
 
