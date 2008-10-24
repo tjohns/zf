@@ -434,6 +434,134 @@ private function getContactHandler(event:ResultEvent):void {
             ContactVO data.
         </para>
     </sect2>
+    <sect3 id="zend.amf.server.flash">
+        <title>Connecting to the server from Flash</title>
+
+        <para>
+            Connecting to your <code>Zend_Amf_Server</code> from your Flash
+            project is slightly different than from Flex. However once the connection Flash functions
+            with <code>Zend_Amf_Server</code> the same way is flex. The following example can
+            also be used from a Flex AS3 file. We will reuse the same <code>Zend_Amf_Server</code>
+            configuration along with the World class for our connection.
+        </para>
+        <para>
+        Open Flash CS and create and new Flash File (ActionScript 3). Name the document ZendExample.fla
+        and save the document into a folder that you will use for this example. Create a new AS3 file
+        in the same directory and call the file Main.as. Have both files open in your editor. We are
+        now going to connect the two files via the document class. Select ZendExample and click on
+        the stage. From the stage properties panel change the Document class to Main. This links the
+        Main.as ActionScript file with the user interface in ZendExample.fla. When you run the Flash
+        file ZendExample the Main.as class will now be run. Next we will add ActionScript to make the
+        AMF call.
+        </para>
+        <para>
+        We now are going to make a Main class so that we can send the data to the server and display
+        the result. Copy the following code into your Main.as file and then we will walk through the
+        code to describe what each element's role is.
+        </para>
+<programlisting role="as">
+package {
+  import flash.display.MovieClip;
+  import flash.events.*;
+  import flash.net.NetConnection;
+  import flash.net.Responder;
+
+  public class Main extends MovieClip {
+    private var gateway:String = "http://example.com/server.php";
+    private var connection:NetConnection;
+    private var responder:Responder;
+
+    public function Main() {
+      responder = new Responder(onResult, onFault);
+      connection = new NetConnection;
+      connection.connect(gateway);
+    }
+
+    public function onComplete( e:Event ):void{
+      var params = "Sent to Server";
+      connection.call("World.hello", responder, params);
+    }
+
+    private function onResult(result:Object):void {
+      // Display the returned data
+      trace(String(result));
+    }
+    private function onFault(fault:Object):void {
+      trace(String(fault.description));
+    }
+  }
+}
+</programlisting>
+
+
+        <para>
+        We first need to import two ActionScript libraries that perform the bulk of the work.
+        The first is NetConnection which acts like a by directional pipe between the client and the server.
+        The second is a Responder object which handles the return values from the server related to
+        the success or failure of the call.
+        </para>
+        <programlisting role="as">
+        import flash.net.NetConnection;
+		import flash.net.Responder;
+        </programlisting>
+        <para>
+        In the class we need three variables to represent the NetConnection, Responder, and
+        the gateway URL to our <code>Zend_Amf_Server</code> installation.
+        </para>
+        <programlisting role="as">
+        private var gateway:String = "http://example.com/server.php";
+    	private var connection:NetConnection;
+    	private var responder:Responder;
+        </programlisting>
+        <para>
+        In the Main constructor we create a responder and a new connection to the
+        <code>Zend_Amf_Server</code> endpoint. The responder defines two different methods for
+        handling the response from the server. For simplicity I have called these onResult and onFault.
+        </para>
+        <programlisting role="as">
+        responder = new Responder(onResult, onFault);
+		connection = new NetConnection;
+		connection.connect(gateway);
+		</programlisting>
+		<para>
+		In the onComplete function which is run as soon as the construct has completed we send
+		the data to the server. We need to add one more line that makes a call to the
+		<code>Zend_Amf_Server</code> World->hello function
+		</para>
+		<programlisting role="as">
+		connection.call("World.hello", responder, params);
+		</programlisting>
+		<para>
+		When we created the responder variable we defined an onResult and onFault function to handle
+		the response from the server. We added this function for the successful result from the server.
+		A successful event handler is run every time the connection is handled properly to the server.
+		</para>
+		<programlisting role="as">
+		private function onResult(result:Object):void {
+			// Display the returned data
+      		trace(String(result));
+    	}
+		</programlisting>
+		<para>
+		The onFault function, is called if there was an invalid response from the server. This happens
+		when there is an error on the server, the URL to the server is invalid, the remote service or
+		method does not exist, and any other connection related issues.
+		</para>
+		<programlisting role="as">
+		private function onFault(fault:Object):void {
+     		trace(String(fault.description));
+    	}
+		</programlisting>
+		<para>
+		Adding in the ActionScript to make the remoting connection is now complete. Runnign the
+		ZendExample file now makes a connection to Zend Amf. In review you have added the required
+		variables to open a connection to the remote server, defined what methods should be used
+		when your application receives a response from the server, and finally displayed the returned
+		data to output via trace().
+		</para>
+
+    </sect3>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
