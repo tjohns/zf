@@ -410,9 +410,9 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         $adapter = $this->getTransferAdapter();
 
         if (!$this->isRequired()) {
-            $adapter->setOptions(array('ignoreNoFile' => true));
+            $adapter->setOptions(array('ignoreNoFile' => true), $this->getName());
         } else {
-            $adapter->setOptions(array('ignoreNoFile' => false));
+            $adapter->setOptions(array('ignoreNoFile' => false), $this->getName());
             if ($this->autoInsertNotEmptyValidator() and
                    !$this->getValidator('NotEmpty'))
             {

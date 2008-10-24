@@ -114,7 +114,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected $_tmpDir;
 
     /**
-     * Options for file transfers
+     * Available options for file transfers
      */
     protected $_options = array(
         'ignoreNoFile' => false
@@ -531,16 +531,21 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Sets Options for adapters
      *
-     * @param array $options
+     * @param array $options Options to set
+     * @param array $files   (Optional) Files to set the options for
      */
-    public function setOptions($options = array()) {
+    public function setOptions($options = array(), $files = null) {
+        $file = $this->_getFiles($files);
+
         if (is_array($options)) {
             foreach ($options as $name => $value) {
-                if (array_key_exists($name, $this->_options)) {
-                    $this->_options[$name] = (boolean) $value;
-                } else {
-                    require_once 'Zend/File/Transfer/Exception.php';
-                    throw new Zend_File_Transfer_Exception("Unknown option: $name = $value");
+                foreach ($file as $key => $content) {
+                    if (array_key_exists($name, $this->_options)) {
+                        $this->_files[$key]['options'][$name] = (boolean) $value;
+                    } else {
+                        require_once 'Zend/File/Transfer/Exception.php';
+                        throw new Zend_File_Transfer_Exception("Unknown option: $name = $value");
+                    }
                 }
             }
         }
@@ -549,12 +554,23 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Returns set options for adapters
+     * Returns set options for adapters or files
      *
-     * @param array $options
+     * @param  array $files (Optional) Files to return the options for
+     * @return array Options for given files
      */
-    public function getOptions() {
-        return $this->_options;
+    public function getOptions($files = null) {
+        $file = $this->_getFiles($files);
+
+        foreach ($file as $key => $content) {
+            if (isset($this->_files[$key]['options'])) {
+                $options[$key] = $this->_files[$key]['options'];
+            } else {
+                $options[$key] = array();
+            }
+        }
+
+        return $options;
     }
 
     /**
@@ -569,7 +585,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $translator      = $this->getTranslator();
         $this->_messages = array();
         $break           = false;
-        foreach ($check as $content) {
+        foreach ($check as $key => $content) {
             $fileerrors  = array();
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
@@ -578,11 +594,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $validator->setTranslator($translator);
                     }
 
-                    if (!$validator->isValid($content['tmp_name'], $content)) {
+                    if (!$validator->isValid($key, $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
-                    if ($this->_options['ignoreNoFile'] and (isset($fileerrors['fileUploadErrorNoFile']))) {
+                    if (!empty($content['options']['ignoreNoFile']) and (isset($fileerrors['fileUploadErrorNoFile']))) {
                         unset($fileerrors['fileUploadErrorNoFile']);
                         break;
                     }

@@ -529,10 +529,28 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testSettingAndRetrievingOptions()
     {
-        $this->assertEquals(array('ignoreNoFile' => false), $this->adapter->getOptions());
+        $this->assertEquals(
+            array(
+                'bar' => array('ignoreNoFile' => false),
+                'baz' => array('ignoreNoFile' => false),
+                'foo' => array('ignoreNoFile' => false),
+            ), $this->adapter->getOptions());
 
         $this->adapter->setOptions(array('ignoreNoFile' => true));
-        $this->assertEquals(array('ignoreNoFile' => true), $this->adapter->getOptions());
+        $this->assertEquals(
+            array(
+                'bar' => array('ignoreNoFile' => true),
+                'baz' => array('ignoreNoFile' => true),
+                'foo' => array('ignoreNoFile' => true),
+            ), $this->adapter->getOptions());
+
+        $this->adapter->setOptions(array('ignoreNoFile' => false), 'foo');
+        $this->assertEquals(
+            array(
+                'bar' => array('ignoreNoFile' => true),
+                'baz' => array('ignoreNoFile' => true),
+                'foo' => array('ignoreNoFile' => false),
+            ), $this->adapter->getOptions());
     }
 
     public function testGetAllAdditionalFileInfos()
@@ -658,18 +676,21 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
                 'type'     => 'image/jpeg',
                 'size'     => 126976,
                 'tmp_name' => '/tmp/489127ba5c89c',
+                'options'  => array('ignoreNoFile' => false),
             ),
             'bar' => array(
                 'name'     => 'bar.png',
                 'type'     => 'image/png',
                 'size'     => 91136,
                 'tmp_name' => '/tmp/489128284b51f',
+                'options'  => array('ignoreNoFile' => false),
             ),
             'baz' => array(
                 'name'     => 'baz.text',
                 'type'     => 'text/plain',
                 'size'     => 1172,
                 'tmp_name' => '/tmp/4891286cceff3',
+                'options'  => array('ignoreNoFile' => false),
             ),
         );
     }

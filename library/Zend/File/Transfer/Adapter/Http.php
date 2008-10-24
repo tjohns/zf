@@ -186,10 +186,12 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 foreach ($content as $param => $file) {
                     foreach ($file as $number => $target) {
                         $result[$form . '_' . $number . '_'][$param] = $target;
+                        $result[$form . '_' . $number . '_'][$param]['options'] = $this->_options;
                     }
                 }
             } else {
                 $result[$form] = $content;
+                $result[$form]['options'] = $this->_options;
             }
         }
 
