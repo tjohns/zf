@@ -22,7 +22,7 @@ require_once 'Zend/Registry.php';
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_View_Helper_HeadScriptTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_HeadScriptTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_View_Helper_HeadScript
@@ -379,6 +379,16 @@ document.write(bar.strlen());');
             $this->assertContains('Cannot nest', $e->getMessage());
         }
         $this->helper->headScript()->captureEnd();
+    }
+
+    /**
+     * @issue ZF-3928
+     * @link http://framework.zend.com/issues/browse/ZF-3928
+     */
+    public function testTurnOffAutoEscapeDoesNotEncodeAmpersand()
+    {
+        $this->helper->setAutoEscape(false)->appendFile('test.js?id=123&foo=bar');
+        $this->assertEquals('<script type="text/javascript" src="test.js?id=123&foo=bar"></script>', $this->helper->toString());
     }
 }
 

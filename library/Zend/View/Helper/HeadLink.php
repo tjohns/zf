@@ -50,7 +50,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
      * Constructor
      *
      * Use PHP_EOL as separator
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -58,11 +58,11 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         parent::__construct();
         $this->setSeparator(PHP_EOL);
     }
-    
+
     /**
      * headLink() - View Helper Method
      *
-     * Returns current object instance. Optionally, allows passing array of 
+     * Returns current object instance. Optionally, allows passing array of
      * values to build link.
      *
      * @return Zend_View_Helper_HeadLink
@@ -99,7 +99,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
      * - offsetSetAlternate($index, $href, $type, $title)
      * - prependAlternate($href, $type, $title)
      * - setAlternate($href, $type, $title)
-     * 
+     *
      * Items that may be added in the future:
      * - Navigation?  need to find docs on this
      *   - public function appendStart()
@@ -118,8 +118,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
      *   - public function appendSection()
      *   - public function appendSubsection()
      *
-     * @param mixed $method 
-     * @param mixed $args 
+     * @param mixed $method
+     * @param mixed $args
      * @return void
      */
     public function __call($method, $args)
@@ -165,8 +165,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
     /**
      * Check if value is valid
-     * 
-     * @param  mixed $value 
+     *
+     * @param  mixed $value
      * @return boolean
      */
     protected function _isValid($value)
@@ -184,7 +184,7 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
         return true;
     }
-    
+
     /**
      * append()
      *
@@ -203,12 +203,12 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
     /**
      * offsetSet()
-     * 
-     * @param  string|int $index 
-     * @param  array $value 
+     *
+     * @param  string|int $index
+     * @param  array $value
      * @return void
      */
-    public function offsetSet($index, $value) 
+    public function offsetSet($index, $value)
     {
         if (!$this->_isValid($value)) {
             require_once 'Zend/View/Exception.php';
@@ -250,24 +250,24 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         return $this->getContainer()->set($value);
     }
 
-    
+
     /**
      * Create HTML link element from data item
-     * 
-     * @param  stdClass $item 
+     *
+     * @param  stdClass $item
      * @return string
      */
     public function itemToString(stdClass $item)
     {
         $attributes = (array) $item;
         $link       = '<link ';
-        
+
         foreach ($this->_itemKeys as $itemKey) {
             if (isset($attributes[$itemKey])) {
-                $link .= $itemKey . '="' . $this->_escape($attributes[$itemKey]) . '" ';
+                $link .= sprintf('%s="%s" ', $itemKey, ($this->_autoEscape) ? $this->_escape($attributes[$itemKey]) : $attributes[$itemKey]);
             }
         }
-        
+
         if ($this->view instanceof Zend_View_Abstract) {
             $link .= ($this->view->doctype()->isXhtml()) ? '/>' : '>';
         } else {
@@ -279,17 +279,17 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         }
 
         if (isset($attributes['conditionalStylesheet'])
-            && (false !== $attributes['conditionalStylesheet'])) 
+            && (false !== $attributes['conditionalStylesheet']))
         {
             $link = '<!--[if ' . $attributes['conditionalStylesheet'] . ']> ' . $link . '<![endif]-->';
         }
-       
+
         return $link;
     }
 
     /**
      * Render link elements as string
-     * 
+     *
      * @param  string|int $indent
      * @return string
      */
@@ -309,8 +309,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
     /**
      * Create data item for stack
-     * 
-     * @param  array $attributes 
+     *
+     * @param  array $attributes
      * @return stdClass
      */
     public function createData(array $attributes)
@@ -321,8 +321,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
     /**
      * Create item for stylesheet link item
-     * 
-     * @param  array $args 
+     *
+     * @param  array $args
      * @return stdClass|false Returns fals if stylesheet is a duplicate
      */
     public function createDataStylesheet(array $args)
@@ -354,8 +354,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
     /**
      * Is the linked stylesheet a duplicate?
-     * 
-     * @param  string $uri 
+     *
+     * @param  string $uri
      * @return bool
      */
     protected function _isDuplicateStylesheet($uri)
@@ -370,8 +370,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
     /**
      * Create item for alternate link item
-     * 
-     * @param  array $args 
+     *
+     * @param  array $args
      * @return stdClass
      */
     public function createDataAlternate(array $args)
