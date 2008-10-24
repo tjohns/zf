@@ -619,6 +619,42 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('2006', $token->getParam('id', false));
     }
+    
+    public function testGlobalParam()
+    {
+        $route = new Zend_Controller_Router_Route(
+            ':lang/articles/:id', 
+            array(
+                'controller' => 'blog',
+                'action'     => 'articles',
+                'id'         => 0,
+            )
+        );
+        $this->_router->addRoute('article-id', $route);
+        $this->_router->setGlobalParam('lang', 'de');
+        
+        $url = $this->_router->assemble(array('id' => 1), 'article-id');
+        
+        $this->assertEquals('/de/articles/1', $url);
+    }
+    
+    public function testGlobalParamOverride()
+    {
+        $route = new Zend_Controller_Router_Route(
+            ':lang/articles/:id', 
+            array(
+                'controller' => 'blog',
+                'action'     => 'articles',
+                'id'         => 0,
+            )
+        );
+        $this->_router->addRoute('article-id', $route);
+        $this->_router->setGlobalParam('lang', 'de');
+        
+        $url = $this->_router->assemble(array('id' => 1, 'lang' => 'en'), 'article-id');
+        
+        $this->assertEquals('/en/articles/1', $url);
+    }
 }
 
 

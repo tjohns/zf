@@ -59,6 +59,13 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     protected $_currentRoute = null;
 
     /**
+     * Global parameters given to all routes
+     * 
+     * @var array
+     */
+    protected $_globalParams = array();
+    
+    /**
      * Add default routes which are used to mimic basic router behaviour
      */
     public function addDefaultRoutes()
@@ -364,13 +371,29 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
             }
         }
         
+        $params = array_merge($this->_globalParams, $userParams);
+        
         $route = $this->getRoute($name);
-        $url   = $route->assemble($userParams, $reset, $encode);
+        $url   = $route->assemble($params, $reset, $encode);
 
         if (!preg_match('|^[a-z]+://|', $url)) {
             $url = rtrim($this->getFrontController()->getBaseUrl(), '/') . '/' . $url;
         }
 
         return $url;
+    }
+    
+    /**
+     * Set a global parameter
+     * 
+     * @param  string $name
+     * @param  mixed $value
+     * @return Zend_Controller_Router_Rewrite
+     */
+    public function setGlobalParam($name, $value)
+    {
+        $this->_globalParams[$name] = $value;
+    
+        return $this;
     }
 }
