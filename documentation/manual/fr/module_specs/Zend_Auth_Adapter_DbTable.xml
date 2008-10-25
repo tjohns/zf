@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>Authentification avec une table de base de données</title>
 

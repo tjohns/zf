@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11496 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Aides de vue</title>
 
@@ -87,29 +87,29 @@ echo $this->formCheckbox('foo');
 // "1" et "0" en tant qu'options cochée/décochée ; cochée
 echo $this->formCheckbox('foo', null, array('checked' => true));
 
-// "bar" et "0" en tant qu'options cochée/décochée ; décochée 
+// "bar" et "0" en tant qu'options cochée/décochée ; décochée
 echo $this->formCheckbox('foo', 'bar');
 
-// "bar" et "0" en tant qu'options cochée/décochée ; cochée 
+// "bar" et "0" en tant qu'options cochée/décochée ; cochée
 echo $this->formCheckbox('foo', 'bar', array('checked' => true));
 
-// "bar" et "baz" en tant qu'options cochée/décochée ; décochée 
+// "bar" et "baz" en tant qu'options cochée/décochée ; décochée
 echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
 
-// "bar" et "baz" en tant qu'options cochée/décochée ; décochée 
+// "bar" et "baz" en tant qu'options cochée/décochée ; décochée
 echo $this->formCheckbox('foo', null, null, array(
-    'checked' => 'bar', 
+    'checked' => 'bar',
     'unChecked' => 'baz'
 ));
 
-// "bar" et "baz" en tant qu'options cochée/décochée ; cochée 
+// "bar" et "baz" en tant qu'options cochée/décochée ; cochée
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
 echo $this->formCheckbox('foo',
                          null,
                          array('checked' => true),
                          array('bar', 'baz');
 
-// "bar" et "baz" en tant qu'options cochée/décochée ; décochée 
+// "bar" et "baz" en tant qu'options cochée/décochée ; décochée
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
 echo $this->formCheckbox('foo',
                          null,
@@ -340,7 +340,7 @@ $view->addHelperPath('/autre/chemin/vers/des/aides',
 // va rechercher en premier /autre/chemin/vers/des/aides/HelperName.php
 // en utilisant la classe "Votre_View_Helper_HelperName", et ensuite
 // dans /chemin/vers/des/aides/HelperName.php en utilisant la classe
-// "Ma_View_Helper_HelperName", et finalement dans 
+// "Ma_View_Helper_HelperName", et finalement dans
 // Zend/View/Helpers/HelperName.php en utilisant la classe
 // "Zend_View_Helper_HelperName"
 ]]></programlisting>

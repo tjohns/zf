@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12092 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Chargeur de Plugins</title>
 
@@ -60,7 +60,7 @@ $formTextClass = $loader->load('FormText');
 
 // charge l'aide 'FormLabel' :
 $formLabelClass = $loader->load('FormLabel');
-// 'Foo_View_Helper_FormLabel' 
+// 'Foo_View_Helper_FormLabel'
 
 // charge l'aide 'FormSubmit' :
 $formSubmitClass = $loader->load('FormSubmit');

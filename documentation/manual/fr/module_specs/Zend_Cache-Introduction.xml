@@ -109,7 +109,7 @@ if(!$cache->start('mypage')) {
 
     echo 'Hello world! ';
     echo 'Ceci est issu du cache('.time().') ';
-    
+
     // la sortie est sauvegardée est envoyé au navigateur
     $cache->end();
 }

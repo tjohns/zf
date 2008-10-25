@@ -349,8 +349,8 @@ class Zend_View_Smarty implements Zend_View_Interface
     /**
      * Affectation de variables au gabarit
      *
-     * Autorise une affectation simple (une clé => une valeur) 
-     * OU 
+     * Autorise une affectation simple (une clé => une valeur)
+     * OU
      * le passage d'un tableau (paire de clé => valeur)
      * à affecter en masse
      *

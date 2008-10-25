@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -135,8 +135,8 @@ class Foo
 
     /**
      * Set target; updates target in inflector
-     * 
-     * @param  string $target 
+     *
+     * @param  string $target
      * @return Foo
      */
     public function setTarget($target)
@@ -202,8 +202,8 @@ class Foo
 
     /**
      * Set suffix; updates suffix static rule in inflector
-     * 
-     * @param  string $suffix 
+     *
+     * @param  string $suffix
      * @return Foo
      */
     public function setSuffix($suffix)

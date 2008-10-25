@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.db.table.relationships">
     <title>Relations Zend_Db_Table</title>
 
@@ -382,7 +382,7 @@ $engineer    = $bug1->findParentAccountsByEngineer();
 
         <programlisting role="php"><![CDATA[
 $row->findManyToManyRowset($table,
-                           $intersectionTable, 
+                           $intersectionTable,
                            [$rule1,
                            [$rule2,
                            [Zend_Db_Table_Select $select]]]);

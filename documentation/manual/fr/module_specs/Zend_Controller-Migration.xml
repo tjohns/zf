@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12064 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.migration">
     <title>Migrer depuis des versions précédentes</title>
 
@@ -507,7 +507,7 @@ echo $response;
 // Récupère le nom de controleur de la requête
 // L'accès se fait via : $this->_action->getControllerName().
 // L'exemple ci-dessous utilise getRequest(), bien que vous pourriez
-// accéder directement à la propriété $_request ; 
+// accéder directement à la propriété $_request ;
 // l'utilisation de getRequest() est recommandée puisque la classe
 // parente peut surcharger l'accès à l'objet requête.
 $controller = $this->getRequest()->getControllerName();
@@ -520,7 +520,7 @@ $action = $this->getRequest()->getActionName();
 // Ceci n'a pas changé ; les méthodes _getParams() et _getParam()
 // relaient simplement l'objet requete maintenant.
 $params = $this->_getParams();
-$foo = $this->_getParam('foo', 'default'); 
+$foo = $this->_getParam('foo', 'default');
 // parametre de la requete 'foo', en utilisant 'default'
 // en tant que valeur par défaut si aucune valeur n'est trouvée
 ]]></programlisting>

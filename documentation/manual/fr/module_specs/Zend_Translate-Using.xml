@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.translate.using">
     <title>Utiliser les adaptateurs de traduction</title>
 
@@ -875,7 +875,7 @@ $translate = new Zend_Translate('gettext',
                 <programlisting><![CDATA[
 /languages
   view_en_de.mo  -> detects english
-  view_en_es.mo  -> detects english and overwrites the first file 
+  view_en_es.mo  -> detects english and overwrites the first file
                     because the same messageids are used
   view_it_it.mo  -> detects italian
 ]]></programlisting>

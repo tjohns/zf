@@ -40,7 +40,7 @@ $monNamespace = new Zend_Session_Namespace('monNamespace');
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
-    $defaultNamespace->numberOfPageRequests++;  
+    $defaultNamespace->numberOfPageRequests++;
     // ceci s'incrémente à chaque chargement de page.
 } else {
     $defaultNamespace->numberOfPageRequests = 1;

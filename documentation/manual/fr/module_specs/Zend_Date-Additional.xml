@@ -81,7 +81,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
             <title>Récupérer toutes les villes disponibles</title>
 
             <programlisting role="php"><![CDATA[
-// Affiche la liste complète de toutes les villes disponibles 
+// Affiche la liste complète de toutes les villes disponibles
 // dans la classe d'aide
 print_r (Zend_Date_Cities::getCityList());
 ]]></programlisting>

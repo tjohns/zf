@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.db.table.row">
     <title>Zend_Db_Table_Row</title>
 
@@ -410,7 +410,7 @@ class MyLoggingRow extends Zend_Db_Table_Row_Abstract
     protected function _insert()
     {
         $log = Zend_Registry::get('database_log');
-        $log->info(Zend_Debug::dump($this->_data, 
+        $log->info(Zend_Debug::dump($this->_data,
                                     "INSERT: $this->_tableClass",
                                     false));
     }

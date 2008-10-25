@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11516 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
 
@@ -132,7 +132,7 @@ class MyClass {
     public function method1($inputParam) {
         ...
     }
-    
+
     /**
      * Cette méthode accepte ...
      *
@@ -143,7 +143,7 @@ class MyClass {
     public function method2($inputParam1, $inputParam2) {
         ...
     }
-    
+
     ...
 }
 ...
@@ -171,7 +171,7 @@ $server->handle();
 function function1($inputParam) {
     ...
 }
-    
+
 /**
  * Cette fonction ...
  *

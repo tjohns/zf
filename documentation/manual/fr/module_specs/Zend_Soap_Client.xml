@@ -96,16 +96,16 @@
                     <code>SOAP_COMPRESSION_DEFLATE</code>, qui peuvent être utilisées de cette manière : <programlisting
                     role="php"><![CDATA[
 // Accepte une response compressée
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
 // Compresse les requêtes avec gzip et un taux de 5
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' =>
             SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
 // Compresse les requêtes en utilisant deflate
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' =>
             SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
 ]]></programlisting></para>
@@ -137,7 +137,7 @@ $client = new SoapClient("some.wsdl",
 //     public function method1($inputParam) {
 //         ...
 //     }
-//     
+//
 //     /**
 //      * Cette méthode utilise ...
 //      *
@@ -148,7 +148,7 @@ $client = new SoapClient("some.wsdl",
 //     public function method2($inputParam1, $inputParam2) {
 //         ...
 //     }
-//     
+//
 //     ...
 // }
 // ...
@@ -164,7 +164,7 @@ $client = new SoapClient("some.wsdl",
 $client = new SoapClient("MyService.wsdl");
 ...
 // $result1 est une chaine
-$result1 = $client->method1(10); 
+$result1 = $client->method1(10);
 ...
 // $result2 est un flottant
 $result2 = $client->method2(22, 'some string');

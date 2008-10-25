@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.pdf.drawing">
     <title>Dessiner</title>
 
@@ -75,7 +75,7 @@ public function drawLine($x1, $y1, $x2, $y2);
  * - remplit le rectangle et dessine le contour (par défaut)
  * Zend_Pdf_Page::SHAPE_DRAW_STROKE
  * - trace uniquement le contour du rectangle
- * Zend_Pdf_Page::SHAPE_DRAW_FILL 
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL
  * - remplit le rectangle
  *
  * @param float $x1

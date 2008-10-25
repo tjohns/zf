@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.session.savehandler.dbtable">
     <title>Zend_Session_SaveHandler_DbTable</title>
 
@@ -35,14 +35,14 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 // ou l'objet $db dans votre tableau $config
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 $config = array(
-    'name'           => 'session', 
-    'primary'        => 'id', 
+    'name'           => 'session',
+    'primary'        => 'id',
     'modifiedColumn' => 'modified',
     'dataColumn'     => 'data',
-    'lifetimeColumn' => 'lifetime' 
-); 
+    'lifetimeColumn' => 'lifetime'
+);
 
-// Création de votre Zend_Session_SaveHandler_DbTable 
+// Création de votre Zend_Session_SaveHandler_DbTable
 // et paramétrage du gestionnaire de sauvegarde à Zend_Session
 Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 
@@ -76,37 +76,37 @@ CREATE TABLE `session` (
 // NOTE : cette configuration est fournie à Zend_Db_Table donc tout élément spécifique à la table peut y être ajouté
 $config = array(
     'name'              => 'session',
-    // Nom de la table comme pour Zend_Db_Table 
-    'primary'           => array( 
+    // Nom de la table comme pour Zend_Db_Table
+    'primary'           => array(
         'session_id',
-        // l'ID de session fourni par PHP 
+        // l'ID de session fourni par PHP
         'save_path',
-        // session.save_path  
+        // session.save_path
         'name',
         // session name
     ),
     'primaryAssignment' => array(
-    // vous devez avertir le gestionnaire de sauvegarde quelles colonnes 
+    // vous devez avertir le gestionnaire de sauvegarde quelles colonnes
     // vous utilisez en tant que clé primaire. L'ORDRE EST IMPORTANT.
         'sessionId',
-        // - la première colonne de la clé primaire est l'ID de session 
+        // - la première colonne de la clé primaire est l'ID de session
         'sessionSavePath',
         // - la seconde colonne de la clé primaire est le "save path"
         'sessionName',
         // - la troisième colonne de la clé primaire est le "session name"
-    ), 
+    ),
     'modifiedColumn'    => 'modified',
     // date de la dernière modification
     'dataColumn'        => 'session_data',
     // donnée sérialisée
     'lifetimeColumn'    => 'lifetime',
-    // durée de vie de l'enregistrement 
+    // durée de vie de l'enregistrement
 );
 
 // Informez Zend_Session d'utiliser votre gestionnaire de sauvegarde
 Zend_Session::setSaveHandler(
     new Zend_Session_SaveHandler_DbTable($config)
-); 
+);
 
 // Démarrage de la session
 Zend_Session::start();

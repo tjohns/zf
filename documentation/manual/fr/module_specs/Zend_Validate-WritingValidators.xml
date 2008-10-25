@@ -178,7 +178,7 @@ class MonValidateur_PasswordStrength extends Zend_Validate_Abstract
     protected $_messageTemplates = array(
         self::LENGTH =>
             "'%value%' doit avoir une longueur d'au moins 8 caractères",
-        self::UPPER  => 
+        self::UPPER  =>
             "'%value%' doit contenir au moins une lettre majuscule",
         self::LOWER  =>
             "'%value%' doit contenir au moins une lettre minuscule",

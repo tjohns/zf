@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11455 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
@@ -361,7 +361,7 @@ echo 'This is never cached ('.time().').';
             <code>call_user_func_array()</code> en PHP : <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-// $params est dans un tableau par exemple, pour appeler 
+// $params est dans un tableau par exemple, pour appeler
 // (avec mise en cache) : veryExpensiveFunc(1, 'foo', 'bar')
 // vous devriez utiliser
 $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));

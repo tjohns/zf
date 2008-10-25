@@ -258,7 +258,7 @@ $acl->addRole(new Zend_Acl_Role('administrateur'));
 // Invité peut uniquement voir le contenu
 $acl->allow($roleinvite, null, 'voir');
 
-/* 
+/*
 ce qui précède peut aussi être écrit :
 $acl->allow('invité', null, 'voir');
 */
@@ -267,7 +267,7 @@ $acl->allow('invité', null, 'voir');
 // privilèges
 $acl->allow('staff', null, array('edit', 'submit', 'relire'));
 
-// Editeur hérite les privilèges voir, modifier, soumettre, 
+// Editeur hérite les privilèges voir, modifier, soumettre,
 // et relire de Staff, mais a aussi besoin de certains privilèges
 $acl->allow('editeur', null, array('publier', 'archiver', 'supprimer'));
 

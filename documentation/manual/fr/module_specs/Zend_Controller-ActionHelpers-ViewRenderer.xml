@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -190,7 +190,7 @@ $this->foo(); // appelle Foo_View_Helper_Foo::foo()
 // Rend 'foo' au lieu du script correspondant à l'action courante
 $this->_helper->viewRenderer('foo');
 
-// rend form.phtml dans le segment 'html' de la réponse sans utiliser le 
+// rend form.phtml dans le segment 'html' de la réponse sans utiliser le
 // sous repertoire contrôleur pour chercher le script de vue :
 $this->_helper->viewRenderer('form', 'html', true);
 ]]></programlisting>
