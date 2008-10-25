@@ -125,6 +125,13 @@ require_once 'Zend/Filter/Word/DashToUnderscoreTest.php';
 require_once 'Zend/Filter/Word/UnderscoreToDashTest.php';
 
 /**
+ * File filter tests
+ */
+require_once 'Zend/Filter/File/LowerCaseTest.php';
+require_once 'Zend/Filter/File/RenameTest.php';
+require_once 'Zend/Filter/File/UpperCaseTest.php';
+
+/**
  * @category   Zend
  * @package    Zend_Filter
  * @subpackage UnitTests
@@ -176,6 +183,9 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_Word_UnderscoreToCamelCaseTest');
         $suite->addTestSuite('Zend_Filter_Word_DashToUnderscoreTest');
         $suite->addTestSuite('Zend_Filter_Word_UnderscoreToDashTest');
+        $suite->addTestSuite('Zend_Filter_File_LowerCaseTest');
+        $suite->addTestSuite('Zend_Filter_File_RenameCaseTest');
+        $suite->addTestSuite('Zend_Filter_File_UpperCaseTest');
 
         return $suite;
     }
