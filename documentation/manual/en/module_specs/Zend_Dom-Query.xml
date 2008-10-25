@@ -13,10 +13,10 @@
         notation for web developers to utilize when querying documents with XML
         structures. The notation should be familiar to anybody who has developed
         Cascading Style Sheets or who utilizes Javascript toolkits that provide
-        functionality for selecting nodes utilizing CSS selectors 
+        functionality for selecting nodes utilizing CSS selectors
         (<ulink url="http://prototypejs.org/api/utility/dollar-dollar">Prototype's
-            $$()</ulink> and 
-        <ulink url="http://api.dojotoolkit.org/jsdoc/dojo/HEAD/dojo.query">Dojo's 
+            $$()</ulink> and
+        <ulink url="http://api.dojotoolkit.org/jsdoc/dojo/HEAD/dojo.query">Dojo's
             dojo.query</ulink> were both inspirations for the component).
     </para>
 
@@ -115,10 +115,10 @@
         <td class="foo">
             <div>
                 Lorem ipsum <span class="bar">
-                    <a href="/foo/bar" id="one">One</a> 
-                    <a href="/foo/baz" id="two">Two</a> 
-                    <a href="/foo/bat" id="three">Three</a> 
-                    <a href="/foo/bla" id="four">Four</a> 
+                    <a href="/foo/bar" id="one">One</a>
+                    <a href="/foo/baz" id="two">Two</a>
+                    <a href="/foo/bat" id="three">Three</a>
+                    <a href="/foo/bla" id="four">Four</a>
                 </span>
             </div>
         </td>

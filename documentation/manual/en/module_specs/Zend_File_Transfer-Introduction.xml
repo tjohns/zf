@@ -54,7 +54,7 @@
 </programlisting>
         <para>
             Note that you should use <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> for your convenience instead of creating
-            the HTML manually. 
+            the HTML manually.
         </para>
         <para>
             The next step is to create the receiver of the upload. In our example the receiver is
@@ -132,10 +132,10 @@ if (!$adapter->receive()) {
     <sect2 id="zend.file.transfer.introduction.checking">
 
         <title>Checking files</title>
-        
+
         <para>
             <code>Zend_File_Transfer</code> has several method which check for different assumptions which
-            are useful when you have to process files after they have been uploaded. 
+            are useful when you have to process files after they have been uploaded.
         </para>
 
         <itemizedlist>
@@ -174,7 +174,7 @@ $upload = new Zend_File_Transfer();
 $files = $upload->getFileInfo();
 
 foreach ($files as $file => $info) {
-    // file uploaded ? 
+    // file uploaded ?
     if (!$upload->isUploaded($file)) {
         print "Why havn't you uploaded the file ?";
         continue;
@@ -197,7 +197,7 @@ $upload->receive();
     <sect2 id="zend.file.transfer.introduction.informations">
 
         <title>Additional file informations</title>
-        
+
         <para>
             <code>Zend_File_Transfer</code> can return several additional informations on files.
             The following methods are available:

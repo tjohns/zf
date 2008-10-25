@@ -46,9 +46,9 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
         like in the example by calling <code>$hostnameRoute->chain($pathRoute);</code>.
         By doing this, <code>$hostnameRoute</code> isn't modified, but a new
         route (<code>Zend_Controller_Router_Route_Chain</code>) is returned,
-        which can then be given to the router. 
+        which can then be given to the router.
     </para>
-    
+
     <note>
         <title>Parameter priority</title>
         <para>
@@ -59,7 +59,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
             of the hostname route will be selected.
         </para>
     </note>
-    
+
     <sect4 id="zend.controller.router.routes.hostname.config">
         <title>Hostname routes via Zend_Config</title>
 
@@ -73,7 +73,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
             name and the child route name concatenated with a dash (-). A simple
             config in XML would look like:
         </para>
-        
+
         <programlisting role="xml"><![CDATA[
 <routes>
     <www type="Zend_Controller_Router_Route_Hostname">
@@ -104,13 +104,13 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
 </routes>
 ]]>
         </programlisting>
-    
+
         <para>
-            This will result in the three routes <code>www-index</code>, 
+            This will result in the three routes <code>www-index</code>,
             <code>www-imprint</code> and <code>users-profile</code> which will
             only match based on the hostname and the route <code>misc</code>,
             which will match with any hostname.
-        </para>    
+        </para>
     </sect4>
 </sect3>
 <!--

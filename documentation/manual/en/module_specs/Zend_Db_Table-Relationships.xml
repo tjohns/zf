@@ -211,8 +211,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
             from dependent tables that reference the current row. Use the method:
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 $row->findDependentRowset($table, [$rule]);
 ]]>
         </programlisting>
@@ -238,8 +237,7 @@ $row->findDependentRowset($table, [$rule]);
                 finding the <code>Bugs</code> reported by that account.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 $accountsTable = new Accounts();
 $accountsRowset = $accountsTable->find(1234);
 $user1234 = $accountsRowset->current();
@@ -309,7 +307,7 @@ $user1234 = $accountsRowset->current();
 $select = $accountsTable->select()->order('name ASC')
                                   ->limit(3);
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
                                                      'Engineer',
                                                      $select);
 ]]>
@@ -537,9 +535,8 @@ $engineer = $bug1->findParentAccountsByEngineer();
             intersection table. Use the method:
         </para>
 
-        <programlisting role="php">
-<![CDATA[
-$row->findManyToManyRowset($table, 
+        <programlisting role="php"><![CDATA[
+$row->findManyToManyRowset($table,
                            $intersectionTable,
                            [$rule1,
                                [$rule2,
@@ -632,8 +629,7 @@ $productsRowset = $bug1234->findManyToManyRowset('Products',
                 <code>Products</code>, representing products related to that bug.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 $bugsTable = new Bugs();
 $bugsRowset = $bugsTable->find(1234);
 $bug1234 = $bugsRowset->current();
@@ -704,8 +700,7 @@ $productsRowset = $bug1234->findManyToManyRowset('Products',
                 relationship representing products related to a given bug.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 $bugsTable = new Bugs();
 $bugsRowset = $bugsTable->find(1234);
 $bug1234 = $bugsRowset->current();
@@ -771,8 +766,7 @@ $products = $bug1234->findProductsViaBugsProductsByBug();
                 configured to automatically delete dependent rows in the <code>Bugs</code> table.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 $productsTable = new Products();
 $productsRowset = $productsTable->find(1234);
 $product1234 = $productsRowset->current();

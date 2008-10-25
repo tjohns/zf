@@ -872,7 +872,7 @@ class SearchController extends Zend_Controller_Action
     public function resultsAction()
     {
         // Assume $this->model is the current model
-        $this->view->results = 
+        $this->view->results =
             $this->model->find($this->_getParam('query', '');
 
         // render() by default proxies to the ViewRenderer

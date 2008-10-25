@@ -254,7 +254,7 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 
     <para>
         Of course there is also a <code>getLocale()</code> method to get the
-        currently set locale. 
+        currently set locale.
     </para>
 
     <example id="zend.view.helpers.initial.translate.getlocale">

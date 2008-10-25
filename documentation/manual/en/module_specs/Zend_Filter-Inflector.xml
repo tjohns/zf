@@ -95,7 +95,7 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
             utility method that proxies to the plugin loader,
             <code>addFilterPrefixPath()</code>:
         </para>
-            
+
         <programlisting role="php"><![CDATA[
 $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
 ]]>
@@ -187,8 +187,8 @@ class Foo
 
     /**
      * Set target; updates target in inflector
-     * 
-     * @param  string $target 
+     *
+     * @param  string $target
      * @return Foo
      */
     public function setTarget($target)
@@ -208,17 +208,17 @@ class Foo
             As mentioned in the introduction, there are two types of rules:
             static and filter-based.
         </para>
-        
+
         <note>
             <para>
-	            It is important to note that regardless of the method in which you add 
-	            rules to the inflector, either one-by-one, or all-at-once; the order is very
-	            important.  More specific names, or names that might contain other rule names,
-	            must be added before least specific names.  For example, assuming the two rule
-	            names 'moduleDir' and 'module', the 'moduleDir' rule should appear before module
-	            since 'module' is contained within 'moduleDir'.  If 'module' were added before
-	            'moduleDir', 'module' will match part of 'moduleDir' and process it leaving 'Dir'
-	            inside of the target uninflected.
+                It is important to note that regardless of the method in which you add
+                rules to the inflector, either one-by-one, or all-at-once; the order is very
+                important.  More specific names, or names that might contain other rule names,
+                must be added before least specific names.  For example, assuming the two rule
+                names 'moduleDir' and 'module', the 'moduleDir' rule should appear before module
+                since 'module' is contained within 'moduleDir'.  If 'module' were added before
+                'moduleDir', 'module' will match part of 'moduleDir' and process it leaving 'Dir'
+                inside of the target uninflected.
             </para>
         </note>
 
@@ -271,8 +271,8 @@ class Foo
 
     /**
      * Set suffix; updates suffix static rule in inflector
-     * 
-     * @param  string $suffix 
+     *
+     * @param  string $suffix
      * @return Foo
      */
     public function setSuffix($suffix)

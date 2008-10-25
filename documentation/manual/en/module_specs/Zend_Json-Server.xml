@@ -4,13 +4,13 @@
     <para>
         <code>Zend_Json_Server</code> is a <ulink
             url="http://groups.google.com/group/json-rpc/">JSON-RPC</ulink>
-        server implementation. It supports both the 
+        server implementation. It supports both the
         <ulink url="http://json-rpc.org/wiki/specification">JSON-RPC
-            version 1 specification</ulink> as well as the 
-        <ulink url="http://groups.google.com/group/json-rpc/web/json-rpc-1-2-proposal">version 2 specification</ulink>; 
-        additionally, it provides a PHP implementation of the 
+            version 1 specification</ulink> as well as the
+        <ulink url="http://groups.google.com/group/json-rpc/web/json-rpc-1-2-proposal">version 2 specification</ulink>;
+        additionally, it provides a PHP implementation of the
         <ulink url="http://groups.google.com/group/json-schema/web/service-mapping-description-proposal">Service
-            Mapping Description (SMD) specification</ulink> 
+            Mapping Description (SMD) specification</ulink>
         for providing service metadata to service consumers.
     </para>
 
@@ -67,9 +67,9 @@ class Calculator
 {
     /**
      * Return sum of two variables
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     *
+     * @param  int $x
+     * @param  int $y
      * @return int
      */
     public function add($x, $y)
@@ -79,9 +79,9 @@ class Calculator
 
     /**
      * Return difference of two variables
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     *
+     * @param  int $x
+     * @param  int $y
      * @return int
      */
     public function subtract($x, $y)
@@ -90,10 +90,10 @@ class Calculator
     }
 
     /**
-     * Return product of two variables 
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     * Return product of two variables
+     *
+     * @param  int $x
+     * @param  int $y
      * @return int
      */
     public function multiply($x, $y)
@@ -103,9 +103,9 @@ class Calculator
 
     /**
      * Return the division of two variables
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     *
+     * @param  int $x
+     * @param  int $y
      * @return float
      */
     public function divide($x, $y)
@@ -461,7 +461,7 @@ $server->handle();
                 such as the name of the service (typically the function or
                 method name), the parameters (names, types, and position), and
                 the return value type. Optionally, each service can have its own
-                target and envelope, though this functionality is rarely used. 
+                target and envelope, though this functionality is rarely used.
             </para>
 
             <para>

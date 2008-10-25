@@ -71,7 +71,7 @@
 </form>
 ]]>
 </programlisting>
-        
+
         <para>
             In this example, the billing and shipping address contain some
             identical fields, which means one would overwrite the other. We can
@@ -117,7 +117,7 @@
                 type="text" value="" /></dd>
 
             <dt><label for="billing-municipality">City:</label></dt>
-            <dd><input name="billing[municipality]" id="billing-municipality" 
+            <dd><input name="billing[municipality]" id="billing-municipality"
                 type="text" value="" /></dd>
 
             <dt><label for="billing-province">State:</label></dt>
@@ -203,7 +203,7 @@
             <code>Zend_Form_Element::setBelongsTo()</code> method.
             To discover what this value is -- whether set explicitly or
             implicitly via the form -- you may use the
-            <code>getBelongsTo()</code> accessor. 
+            <code>getBelongsTo()</code> accessor.
         </para>
     </sect2>
 
@@ -253,7 +253,7 @@ class My_Form_Registration extends Zend_Form
                 'filters'    => array('StringTrim', 'StringToLower'),
                 'validators' => array(
                     'Alnum',
-                    array('Regex', 
+                    array('Regex',
                           false,
                           array('/^[a-z][a-z0-9]{2,}$/'))
                 )
@@ -358,8 +358,8 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Prepare a sub form for display
-     * 
-     * @param  string|Zend_Form_SubForm $spec 
+     *
+     * @param  string|Zend_Form_SubForm $spec
      * @return Zend_Form_SubForm
      */
     public function prepareSubForm($spec)
@@ -380,7 +380,7 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Add form decorators to an individual sub form
-     * 
+     *
      * @param  Zend_Form_SubForm $subForm
      * @return My_Form_Registration
      */
@@ -397,14 +397,14 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Add a submit button to an individual sub form
-     * 
+     *
      * @param  Zend_Form_SubForm $subForm
      * @return My_Form_Registration
      */
     public function addSubmitButton(Zend_Form_SubForm $subForm)
     {
         $subForm->addElement(new Zend_Form_Element_Submit(
-            'save', 
+            'save',
             array(
                 'label'    => 'Save and continue',
                 'required' => false,
@@ -416,8 +416,8 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Add action and method to sub form
-     * 
-     * @param  Zend_Form_SubForm $subForm 
+     *
+     * @param  Zend_Form_SubForm $subForm
      * @return My_Form_Registration
      */
     public function addSubFormActions(Zend_Form_SubForm $subForm)
@@ -482,7 +482,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Get the session namespace we're using
-     * 
+     *
      * @return Zend_Session_Namespace
      */
     public function getSessionNamespace()
@@ -497,7 +497,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Get a list of forms already stored in the session
-     * 
+     *
      * @return array
      */
     public function getStoredForms()
@@ -512,7 +512,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Get list of all subforms available
-     * 
+     *
      * @return array
      */
     public function getPotentialForms()
@@ -522,7 +522,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * What sub form was submitted?
-     * 
+     *
      * @return false|Zend_Form_SubForm
      */
     public function getCurrentSubForm()
@@ -546,7 +546,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Get the next sub form to display
-     * 
+     *
      * @return Zend_Form_SubForm|false
      */
     public function getNextSubForm()
@@ -597,12 +597,12 @@ class RegistrationController extends Zend_Controller_Action
 class RegistrationController extends Zend_Controller_Action
 {
     // ...
-    
+
     /**
      * Is the sub form valid?
-     * 
-     * @param  Zend_Form_SubForm $subForm 
-     * @param  array $data 
+     *
+     * @param  Zend_Form_SubForm $subForm
+     * @param  array $data
      * @return bool
      */
     public function subFormIsValid(Zend_Form_SubForm $subForm,
@@ -619,7 +619,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Is the full form valid?
-     * 
+     *
      * @return bool
      */
     public function formIsValid()
@@ -682,7 +682,7 @@ class RegistrationController extends Zend_Controller_Action
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 As you'll notice, the actual code for processing the form is
                 relatively simple. We check to see if we have a current sub form
@@ -731,7 +731,7 @@ foreach ($this->info as $info):
 endforeach ?>
 ]]>
             </programlisting>
-            
+
             <para>
                 Upcoming releases of Zend Framework will include components to
                 make multi page forms simpler by abstracting the session and

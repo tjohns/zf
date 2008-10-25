@@ -135,7 +135,7 @@ class FooController extends Zend_Controller_Action
 $this->_helper->autoCompleteDojo($data);
 ]]>
         </programlisting>
-        
+
         <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
             <title>AutoCompletion with Dojo Using Zend MVC</title>
 
@@ -169,7 +169,7 @@ dojo.declare("custom.TestNameReadStore", dojox.data.QueryReadStore, {
 });
 ]]>
 </programlisting>
-            
+
             <para>
                 This class is simply an extension of Dojo's own QueryReadStore,
                 which is itself an abstract class. We simply define a method by
@@ -187,7 +187,7 @@ class TestController extends Zend_Controller_Action
     protected $_form;
 
     public function getForm()
-    {   
+    {
         if (null === $this->_form) {
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
@@ -212,7 +212,7 @@ class TestController extends Zend_Controller_Action
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 Here, we simply create a form with 'test' and 'go' methods. The
                 'test' method adds several special, Dojo-specific attributes:
@@ -265,7 +265,7 @@ class TestController extends Zend_Controller_Action
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 In our <code>autocompleteAction()</code> we do a number of
                 things. First, we look to make sure we have a post request, and
@@ -306,8 +306,8 @@ class TestController extends Zend_Controller_Action
    // Dojo libraries: ?>
 <? $this->headScript()
         ->setAllowArbitraryAttributes(true)
-        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js', 
-            'text/javascript', 
+        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
+            'text/javascript',
             array('djConfig' => 'parseOnLoad: true'))
         ->captureStart() ?>
 djConfig.usePlainJson=true;

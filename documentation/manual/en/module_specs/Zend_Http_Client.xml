@@ -33,16 +33,16 @@ $client->setConfig(array(
 ]]>
                 </programlisting>
             </example>
-            
+
             <note>
                 <para>Zend_Http_Client uses Zend_Uri_Http to validate URLs. This means
                 that some special characters like the pipe symbol ('|') or the
                 caret symbol ('^') will not be accepted in the URL by default.
-                
-                This can be modified by setting the 'allow_unwise' option of 
-                Zend_Uri to 'true'. See <xref linkend="zend.uri.validation.allowunwise" /> 
+
+                This can be modified by setting the 'allow_unwise' option of
+                Zend_Uri to 'true'. See <xref linkend="zend.uri.validation.allowunwise" />
                 for more information.</para>
-            </note> 
+            </note>
         </para>
     </sect2>
     <sect2 id="zend.http.client.configuration">

@@ -531,7 +531,7 @@ $router = new Zend_Controller_RewriteRouter();
 $router->addRoute('user',
                   'user/:username',
                   array('controller' => 'user', 'action' => 'info')
-);                  
+);
 
 /* -- set it in a controller -- */
 $ctrl = Zend_Controller_Front::getInstance();

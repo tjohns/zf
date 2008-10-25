@@ -60,17 +60,17 @@ try {
                 <para>
                   <code>Zend_Gdata_App_CaptchaRequiredException</code>
                   is thrown when a ClientLogin attempt receives a
-                  <trademark>CAPTCHA</trademark> challenge from the 
-                  authentication service. This exception contains a token 
-                  ID and a URL to a <trademark>CAPTCHA</trademark> 
-                  challenge image. The image is a visual puzzle that 
+                  <trademark>CAPTCHA</trademark> challenge from the
+                  authentication service. This exception contains a token
+                  ID and a URL to a <trademark>CAPTCHA</trademark>
+                  challenge image. The image is a visual puzzle that
                   should be displayed to the user. After
-                  collecting the user's response to the challenge 
-                  image, the response can be included with the next 
-                  ClientLogin attempt.The user can alternatively be 
+                  collecting the user's response to the challenge
+                  image, the response can be included with the next
+                  ClientLogin attempt.The user can alternatively be
                   directed to this website:
                   <ulink url="https://www.google.com/accounts/DisplayUnlockCaptcha"/>
-                  Further information can be found in the 
+                  Further information can be found in the
                   <link linkend="zend.gdata.clientlogin">ClientLogin documentation</link>.
                 </para>
               </listitem>

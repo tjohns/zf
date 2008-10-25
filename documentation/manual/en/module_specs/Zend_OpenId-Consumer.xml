@@ -368,7 +368,7 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     {
         $table = $this->_association_table;
         $this->_db->query("delete from $table where expires < " . time());
-        $res = $this->_db->fetchRow('select handle, macFunc, secret, expires ' . 
+        $res = $this->_db->fetchRow('select handle, macFunc, secret, expires ' .
                                     "from $table where url = '$url'");
         if (is_array($res)) {
             $handle  = $res['handle'];
@@ -577,7 +577,7 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'],
                       'example-6_3.php',
-                      null, 
+                      null,
                       $sreg)) {
     die("OpenID login failed.");
 }

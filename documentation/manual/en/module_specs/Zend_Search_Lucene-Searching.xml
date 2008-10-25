@@ -284,7 +284,7 @@ foreach ($hits as $hit) {
         <para>
             <code>$index->find()</code> call may take several optional parameters:
             <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] 
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]]
                     [, $sortField2 [, $sortType [, $sortOrder]]]
              ...);
 ]]>

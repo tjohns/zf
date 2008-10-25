@@ -57,7 +57,7 @@
 
         <para>
             We could, and should define further tests, but these will do for
-            now. 
+            now.
         </para>
 
         <para>
@@ -95,9 +95,9 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
      * Constructor
      *
      * Initialize environment, root path, and configuration.
-     * 
-     * @param  string $env 
-     * @param  string|null $root 
+     *
+     * @param  string $env
+     * @param  string|null $root
      * @return void
      */
     public function __construct($env, $root = null)
@@ -115,7 +115,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     /**
      * Route startup
-     * 
+     *
      * @return void
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
@@ -188,7 +188,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 }
 ]]>
         </programlisting>
-        
+
         <para>
             Now let's write tests:
         </para>

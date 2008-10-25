@@ -508,7 +508,7 @@ element.validators.strlen.options.max = 20
         </para>
 
         <para>
-            To validate an element, pass the value to 
+            To validate an element, pass the value to
             <code>isValid()</code>:
         </para>
 
@@ -742,7 +742,7 @@ $messages = $element->getMessages();
 
                 <listitem><para>
                     <code>addErrorMessages(array $messages)</code>: add multiple
-                    error messages to display on form validation errors. 
+                    error messages to display on form validation errors.
                 </para></listitem>
 
                 <listitem><para>
@@ -752,7 +752,7 @@ $messages = $element->getMessages();
                 </para></listitem>
 
                 <listitem><para>
-                    <code>getErrorMessages()</code>: retrieve the list of 
+                    <code>getErrorMessages()</code>: retrieve the list of
                     custom error messages that have been defined.
                 </para></listitem>
 
@@ -861,12 +861,12 @@ $messages = $element->getMessages();
 
             <programlisting role="php"><![CDATA[
 $element = new Zend_Form_Element('foo',
-                                 array('disableLoadDefaultDecorators' => 
+                                 array('disableLoadDefaultDecorators' =>
                                       true)
                                 );
 ]]>
             </programlisting>
-            
+
             <para>
                 This option may be mixed with any other options you pass,
                 both as array options or in a <code>Zend_Config</code> object.
@@ -1015,7 +1015,7 @@ $fooBar  = $element->getDecorator('FooBar');
             name to lookup a decorator; if found, it will then render that
             <emphasis>single</emphasis> decorator. Any arguments passed to the
             method call will be used as content to pass to the decorator's
-            <code>render()</code> method. As an example: 
+            <code>render()</code> method. As an example:
         </para>
 
         <programlisting role="php"><![CDATA[

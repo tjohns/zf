@@ -3,7 +3,7 @@
 
     <para>
         The HTML <code>&lt;style&gt;</code> element is used to include
-        CSS stylesheets inline in the HTML <code>&lt;head&gt;</code> element. 
+        CSS stylesheets inline in the HTML <code>&lt;head&gt;</code> element.
     </para>
 
     <note>
@@ -64,7 +64,7 @@
     </para>
 
     <para>
-        The <code>HeadStyle</code> helper is a concrete implementation of the 
+        The <code>HeadStyle</code> helper is a concrete implementation of the
         <link linkend="zend.view.helpers.initial.placeholder">Placeholder
             helper</link>.
     </para>

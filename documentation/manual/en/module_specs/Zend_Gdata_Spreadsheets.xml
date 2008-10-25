@@ -156,13 +156,13 @@ foreach($rowData as $customEntry) {
 }
 ]]>
             </programlisting>
-            
+
             <para>
               An alternate version of this array, <code>customByName</code>,
               allows direct access to an entry's cells by name. This is
               convenient when trying to access a specific header:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $customEntry = $listFeed->entries[1]->getCustomByName('my_heading');
 echo $customEntry->getColumnName() . " = " . $customEntry->getText();

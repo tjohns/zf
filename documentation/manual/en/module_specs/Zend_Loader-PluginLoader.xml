@@ -17,7 +17,7 @@
         class prefix to prepend when determining if a particular plugin class is
         loaded. Additionally, paths are searched in LIFO order. Due to the LIFO
         search and the class prefixes, this allows you to namespace your
-        plugins, and thus override plugins from paths registered earlier. 
+        plugins, and thus override plugins from paths registered earlier.
     </para>
 
     <sect2 id="zend.loader.pluginloader.usage">
@@ -76,10 +76,10 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
 // load 'FormLabel' helper:
-$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel' 
+$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // load 'FormSubmit' helper:
-$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
+$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
 ]]>
         </programlisting>
 
@@ -245,7 +245,7 @@ Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
             <para>
                 During development, you may wish to disable the cache. One
                 method for doing so is to use a configuration key for
-                determining whether or not the plugin loader should cache. 
+                determining whether or not the plugin loader should cache.
             </para>
 
             <programlisting role="php"><![CDATA[

@@ -380,7 +380,7 @@ Zend_Controller_Front::run('../application/controllers');
 
             <listitem>
                 <para>
-                    <code>unregisterPlugin($plugin)</code> let you 
+                    <code>unregisterPlugin($plugin)</code> let you
                     unregister <link
                         linkend="zend.controller.plugins">plugin objects</link>.
                     <code>$plugin</code> may be either a plugin object or a

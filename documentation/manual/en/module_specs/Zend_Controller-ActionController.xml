@@ -516,7 +516,7 @@ class MyController extends Zend_Controller_Action
                 between page not found and application errors in your error
                 handler.
             </para>
-                
+
             <para>
                 You should override this functionality if you wish to perform
                 other operations.  For instance, if you wish to display an error

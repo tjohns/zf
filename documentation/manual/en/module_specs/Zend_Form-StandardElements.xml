@@ -140,7 +140,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             when it's not checked, nothing is submitted. Internally,
             Zend_Form_Element_Checkbox enforces this state.
         </para>
-            
+
         <para>
             By default, the checked value is '1', and the unchecked value '0'.
             You can specify the values to use using the
@@ -371,7 +371,7 @@ $form->addElement($element, 'foo');
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 ]]>
         </programlisting>
-        
+
         <para>
             You can set the salt later using the <code>setSalt($salt)</code>
             method.
@@ -406,11 +406,11 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
             submitting the image using the <code>setImageValue()</code> accessor
             (or 'imageValue' configuration key). When the value set for the
             element matches the <code>imageValue</code>, then the accessor
-            <code>isChecked()</code> will return true. 
+            <code>isChecked()</code> will return true.
         </para>
 
         <para>
-            The Image element uses the 
+            The Image element uses the
             <link linkend="zend.form.standardDecorators.image">Image
                 Decorator</link> for rendering (as well as the standard Errors,
             HtmlTag, and Label decorators). You can optionally specify a tag to

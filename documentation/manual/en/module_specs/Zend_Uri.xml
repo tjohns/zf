@@ -112,22 +112,22 @@ $valid = Zend_Uri::check('http://uri.in.question');
       which is more convenient than using <code>Zend_Uri::factory()</code>
       and catching the exception.
     </para>
-    
+
     <sect3 id="zend.uri.validation.allowunwise">
         <title>Allowing "Unwise" characters in URIs</title>
-        
+
         <para>
             By default, Zend_Uri will not accept the following characters, defined by
             the RFC as "unwise" and invalid: <code>"{", "}", "|", "\", "^", "`"</code>.
-            However, many implementations do accept these characters as valid.               
+            However, many implementations do accept these characters as valid.
         </para>
-        
+
         <para>
-            Zend_Uri can be set to accept these "unwise" characters by setting the 
-            'allow_unwise' option to boolean TRUE using the Zend_Uri::setConfig() 
-            method:  
+            Zend_Uri can be set to accept these "unwise" characters by setting the
+            'allow_unwise' option to boolean TRUE using the Zend_Uri::setConfig()
+            method:
         </para>
-        
+
         <example id="zend.uri.validation.allowunwise.example-1">
             <title>Allowing special characters in URIs</title>
             <programlisting role="php"><![CDATA[
@@ -143,10 +143,10 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
 ]]>
             </programlisting>
         </example>
-        
+
         <note>
-            <para><code>Zend_Uri::setConfig()</code> sets configuration options globally. 
-            It is recommended to reset the 'allow_unwise' option to 'false' like in 
+            <para><code>Zend_Uri::setConfig()</code> sets configuration options globally.
+            It is recommended to reset the 'allow_unwise' option to 'false' like in
             the example above, unless you are certain you want to always allow
             unwise characters globally.</para>
         </note>

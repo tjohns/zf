@@ -22,8 +22,8 @@
         <programlisting role="php"><![CDATA[
 <?php $this->placeholder('foo')->set("Some text for later") ?>
 
-<?php 
-    echo $this->placeholder('foo'); 
+<?php
+    echo $this->placeholder('foo');
     // outputs "Some text for later"
 ?>
 ]]>
@@ -83,15 +83,15 @@
 
         <programlisting role="php"><![CDATA[
 <!-- later view script -->
-<?php 
+<?php
 $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
-                         ->setSeparator("</li><li>\n") 
+                         ->setSeparator("</li><li>\n")
                          ->setIndent(4)
                          ->setPostfix("</li></ul>\n");
 ?>
 
-<?php 
-    echo $this->placeholder('foo'); 
+<?php
+    echo $this->placeholder('foo');
     // outputs as unordered list with pretty indentation
 ?>
 ]]>
@@ -131,7 +131,7 @@ echo $foo['bar'];
             <listitem>
                 <para>
                     <code>captureStart($type, $key)</code> begins capturing
-                    content. 
+                    content.
                 </para>
 
                 <para>
@@ -168,7 +168,7 @@ echo $foo['bar'];
 
         <programlisting role="php"><![CDATA[
 <!-- Default capture: append -->
-<?php $this->placeholder('foo')->captureStart(); 
+<?php $this->placeholder('foo')->captureStart();
 foreach ($this->data as $datum): ?>
 <div class="foo">
     <h2><?= $datum->title ?></h2>
@@ -183,7 +183,7 @@ foreach ($this->data as $datum): ?>
 
         <programlisting role="php"><![CDATA[
 <!-- Capture to key -->
-<?php $this->placeholder('foo')->captureStart('SET', 'data'); 
+<?php $this->placeholder('foo')->captureStart('SET', 'data');
 foreach ($this->data as $datum): ?>
 <div class="foo">
     <h2><?= $datum->title ?></h2>
@@ -204,7 +204,7 @@ foreach ($this->data as $datum): ?>
             Zend Framework ships with a number of "concrete" placeholder
             implementations. These are for commonly used placeholders: doctype,
             page title, and various &lt;head&gt; elements. In all cases, calling
-            the placeholder with no arguments returns the element itself. 
+            the placeholder with no arguments returns the element itself.
         </para>
 
         <para>

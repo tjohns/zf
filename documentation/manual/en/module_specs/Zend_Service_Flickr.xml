@@ -78,7 +78,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.grouppoolgetphotos">
         <title>Finding photos From a Group Pool</title>
         <para>
-            <code>Zend_Service_Flickr</code> allows to retrieve a group's pool photos based 
+            <code>Zend_Service_Flickr</code> allows to retrieve a group's pool photos based
             on the group ID. Use the <code>groupPoolGetPhotos()</code> method:
         </para>
         <example id="zend.service.flickr.grouppoolgetphotos.example-1">
@@ -97,7 +97,7 @@ $flickr = new Zend_Service_Flickr('MY_API_KEY');
         <note>
             <title>Optional parameter</title>
             <para>
-                <code>groupPoolGetPhotos()</code> accepts an optional second parameter as an array of options. 
+                <code>groupPoolGetPhotos()</code> accepts an optional second parameter as an array of options.
             </para>
         </note>
     </sect2>

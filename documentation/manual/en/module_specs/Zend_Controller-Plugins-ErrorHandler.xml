@@ -181,8 +181,7 @@ class ErrorController extends Zend_Controller_Action
             <code>error_handler</code> object:
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
@@ -210,7 +209,7 @@ public function errorAction()
                         '/tmp/applicationException.log'
                     )
                 );
-                $log->debug($exception->getMessage() . "\n" . 
+                $log->debug($exception->getMessage() . "\n" .
                             $exception->getTraceAsString());
                 break;
         }

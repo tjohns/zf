@@ -217,8 +217,7 @@ $profiler = $db->getProfiler();
             last run:
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 $query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();
@@ -231,8 +230,7 @@ echo $query->getQuery();
             through the queries to find the one that ran longest:
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 $totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
@@ -245,7 +243,7 @@ foreach ($profiler->getQueryProfiles() as $query) {
     }
 }
 
-echo 'Executed ' . $queryCount . ' queries in ' . $totalTime . 
+echo 'Executed ' . $queryCount . ' queries in ' . $totalTime .
      ' seconds' . "\n";
 echo 'Average query length: ' . $totalTime / $queryCount .
      ' seconds' . "\n";
@@ -276,8 +274,7 @@ echo "Longest query: \n" . $longestQuery . "\n";
                 filter, pass the method a null value.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 // Only profile queries that take at least 5 seconds:
 $profiler->setFilterElapsedSecs(5);
 
@@ -382,8 +379,7 @@ $profiler->setFilterQueryType(null);
                 for a list of the query type constants.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 // Retrieve only SELECT query profiles
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 

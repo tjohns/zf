@@ -62,17 +62,17 @@
         </para>
 
         <para>
-          The optional sixth parameter is a string ID for a 
-          <trademark>CAPTCHA</trademark> challenge that has been issued by 
-          the server. It is only necessary when logging in after receiving 
+          The optional sixth parameter is a string ID for a
+          <trademark>CAPTCHA</trademark> challenge that has been issued by
+          the server. It is only necessary when logging in after receiving
           a <trademark>CAPTCHA</trademark> challenge from a previous
           login attempt.
         </para>
 
         <para>
-          The optional seventh parameter is a user's response to a 
-          <trademark>CAPTCHA</trademark> challenge that has been issued by 
-          the server. It is only necessary when logging in after receiving 
+          The optional seventh parameter is a user's response to a
+          <trademark>CAPTCHA</trademark> challenge that has been issued by
+          the server. It is only necessary when logging in after receiving
           a <trademark>CAPTCHA</trademark> challenge from a previous
           login attempt.
         </para>
@@ -92,7 +92,7 @@ try {
    $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
 } catch (Zend_Gdata_App_CaptchaRequiredException $cre) {
     echo 'URL of CAPTCHA image: ' . $cre->getCaptchaUrl() . "\n";
-    echo 'Token ID: ' . $cre->getCaptchaToken() . "\n"; 
+    echo 'Token ID: ' . $cre->getCaptchaToken() . "\n";
 } catch (Zend_Gdata_App_AuthException $ae) {
    echo 'Problem authenticating: ' . $ae->exception() . "\n";
 }

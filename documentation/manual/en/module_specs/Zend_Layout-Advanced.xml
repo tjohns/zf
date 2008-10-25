@@ -15,7 +15,7 @@
         <listitem><para>
                 <emphasis>Custom view objects.</emphasis>
                 <code>Zend_Layout</code> allows you to utilize any class that
-                implements <code>Zend_View_Interface</code>. 
+                implements <code>Zend_View_Interface</code>.
         </para></listitem>
 
         <listitem><para>
@@ -70,7 +70,7 @@ $layout->setView($view);
                 <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>
                 helpers. This is because <code>Zend_Layout</code> makes
                 variables set in the object available via itself and
-                <link linkend="zend.view.helpers.initial.placeholder">placeholders</link>. 
+                <link linkend="zend.view.helpers.initial.placeholder">placeholders</link>.
             </para>
 
             <para>
@@ -181,7 +181,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
 
             <para>
                 The default <code>Zend_Layout</code> inflector uses static
-                references for the target and view script suffix, and 
+                references for the target and view script suffix, and
                 has accessors for setting these values.
             </para>
 

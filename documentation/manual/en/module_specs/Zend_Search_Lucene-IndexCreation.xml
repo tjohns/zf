@@ -52,7 +52,7 @@ $doc = new Zend_Search_Lucene_Document();
 // Store document URL to identify it in search result.
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 // Index document content
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', 
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   $docContent));
 
 // Add document to the index.

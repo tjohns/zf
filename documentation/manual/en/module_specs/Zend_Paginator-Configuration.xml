@@ -5,7 +5,7 @@
         <code>Zend_Paginator</code> has several configuration methods that can
         be called:
     </para>
-        
+
     <table id="zend.paginator.configuration.table">
         <title>Configuration methods for <code>Zend_Paginator</code></title>
 
@@ -34,7 +34,7 @@
                     <entry>setPageRange</entry>
                     <entry>
                         Sets the number of items to display in the pagination
-                        control (default 10). Note: Most of the time this 
+                        control (default 10). Note: Most of the time this
                         number will be adhered to exactly, but scrolling styles
                         do have the option of only using it as a guideline or
                         starting value (e.g., Elastic).

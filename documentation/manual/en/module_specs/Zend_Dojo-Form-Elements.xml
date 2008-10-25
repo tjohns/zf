@@ -36,12 +36,12 @@
 
         <listitem><para>
                 <code>removeDijitParam($key)</code>: remove the given dijit
-                parameter. 
+                parameter.
         </para></listitem>
 
         <listitem><para>
                 <code>clearDijitParams()</code>: clear all currently defined
-                dijit parameters. 
+                dijit parameters.
         </para></listitem>
     </itemizedlist>
 
@@ -294,8 +294,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'ComboBox', 
-    'foo', 
+    'ComboBox',
+    'foo',
     array(
         'label'        => 'ComboBox (select)',
         'value'        => 'blue',
@@ -319,8 +319,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'ComboBox', 
-    'foo', 
+    'ComboBox',
+    'foo',
     array(
         'label'       => 'ComboBox (datastore)',
         'storeId'     => 'stateStore',
@@ -400,13 +400,13 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'CurrencyTextBox', 
-    'foo', 
+    'CurrencyTextBox',
+    'foo',
     array(
         'label'          => 'Currency:',
         'required'       => true,
         'currency'       => 'USD',
-        'invalidMessage' => 'Invalid amount. ' . 
+        'invalidMessage' => 'Invalid amount. ' .
                             'Include dollar sign, commas, and cents.',
         'fractional'     => false,
     )
@@ -476,8 +476,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'DateTextBox', 
-    'foo', 
+    'DateTextBox',
+    'foo',
     array(
         'label'          => 'Date:',
         'required'       => true,
@@ -689,7 +689,7 @@ $form->addElement('editor', 'content', array(
 
             <listitem>
                 <para>
-                    <code>setTopDecorationLabels(array $labels)</code> and 
+                    <code>setTopDecorationLabels(array $labels)</code> and
                     <code>setBottomDecorationLabels(array $labels)</code>: set
                     the labels to use for one of the RuleLabels dijit types.
                     These should be an indexed array; specify a single empty
@@ -700,7 +700,7 @@ $form->addElement('editor', 'content', array(
 
             <listitem>
                 <para>
-                    <code>setTopDecorationParams(array $params)</code> and 
+                    <code>setTopDecorationParams(array $params)</code> and
                     <code>setBottomDecorationParams(array $params)</code>:
                     dijit parameters to use when configuring the given Rule or
                     RuleLabels dijit.
@@ -739,8 +739,8 @@ $form->addElement('editor', 'content', array(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'HorizontalSlider', 
-    'horizontal', 
+    'HorizontalSlider',
+    'horizontal',
     array(
         'label'                     => 'HorizontalSlider',
         'value'                     => 5,
@@ -806,45 +806,45 @@ $form->addElement(
                 timeout, in milliseconds, between when the button is held
                 pressed and the value is changed.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setTimeoutChangeRate($rate)</code> and
                 <code>getTimeoutChangeRate()</code>: set and retrieve the
                 rate, in milliseconds, at which changes will be made when a
                 button is held pressed.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setLargeDelta($delta)</code> and
                 <code>getLargeDelta()</code>: set and retrieve the amount by
                 which the numeric value should change when a button is held
                 pressed.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setSmallDelta($delta)</code> and
                 <code>getSmallDelta()</code>: set and retrieve the delta by
                 which the number should change when a button is pressed once.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setIntermediateChanges($flag)</code> and
                 <code>getIntermediateChanges()</code>: set and retrieve the
                 flag indicating whether or not each value change should be
                 shown when a button is held pressed.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setRangeMessage($message)</code> and
                 <code>getRangeMessage()</code>: set and retrieve the message
                 indicating the range of values available.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setMin($value)</code> and <code>getMin()</code>: set and
                 retrieve the minimum value possible.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setMax($value)</code> and <code>getMax()</code>: set and
                 retrieve the maximum value possible.
@@ -856,8 +856,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'NumberSpinner', 
-    'foo', 
+    'NumberSpinner',
+    'foo',
     array(
         'value'             => '7',
         'label'             => 'NumberSpinner',
@@ -932,8 +932,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'NumberTextBox', 
-    'elevation', 
+    'NumberTextBox',
+    'elevation',
     array(
         'label'          => 'NumberTextBox',
         'required'       => true,
@@ -971,8 +971,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'PasswordTextBox', 
-    'password', 
+    'PasswordTextBox',
+    'password',
     array(
         'label'          => 'Password',
         'required'       => true,
@@ -1017,8 +1017,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'RadioButton', 
-    'foo', 
+    'RadioButton',
+    'foo',
     array(
         'label' => 'RadioButton',
         'multiOptions'  => array(
@@ -1049,8 +1049,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'SimpleTextarea', 
-    'simpletextarea', 
+    'SimpleTextarea',
+    'simpletextarea',
     array(
         'label'    => 'SimpleTextarea',
         'required' => true,
@@ -1066,9 +1066,9 @@ $form->addElement(
         <title>Slider abstract element</title>
 
         <para>
-            Slider is an abstract element from which 
+            Slider is an abstract element from which
             <link linkend="zend.dojo.form.elements.horizontalSlider">HorizontalSlider</link>
-            and 
+            and
             <link linkend="zend.dojo.form.elements.verticalSlider">VerticalSlider</link>
             both derive. It exposes a number of common methods for configuring
             your sliders, including:
@@ -1141,8 +1141,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'SubmitButton', 
-    'foo', 
+    'SubmitButton',
+    'foo',
     array(
         'required'   => false,
         'ignore'     => true,
@@ -1200,8 +1200,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'TextBox', 
-    'foo', 
+    'TextBox',
+    'foo',
     array(
         'value'      => 'some text',
         'label'      => 'TextBox',
@@ -1230,8 +1230,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'Textarea', 
-    'textarea', 
+    'Textarea',
+    'textarea',
     array(
         'label'    => 'Textarea',
         'required' => true,
@@ -1302,8 +1302,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'TimeTextBox', 
-    'foo', 
+    'TimeTextBox',
+    'foo',
     array(
         'label'              => 'TimeTextBox',
         'required'           => true,
@@ -1382,8 +1382,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'ValidationTextBox', 
-    'foo', 
+    'ValidationTextBox',
+    'foo',
     array(
         'label'          => 'ValidationTextBox',
         'required'       => true,
@@ -1422,8 +1422,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'VerticalSlider', 
-    'foo', 
+    'VerticalSlider',
+    'foo',
     array(
         'label'                    => 'VerticalSlider',
         'value'                    => 5,

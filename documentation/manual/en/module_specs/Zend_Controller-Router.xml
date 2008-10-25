@@ -323,7 +323,7 @@ $request->setBaseUrl('/~user/application-root/');
         </programlisting>
 
     </sect2>
-    
+
     <sect2 id="zend.controller.router.global.parameters">
         <title>Global parameters</title>
 
@@ -333,7 +333,7 @@ $request->setBaseUrl('/~user/application-root/');
             <code>setGlobalParam</code>. If a global parameter is set
             but also given to the assemble method directly, the user parameter
             overrides the global parameter. You can set a global parameter this
-            way: 
+            way:
         </para>
 
         <programlisting role="php"><![CDATA[

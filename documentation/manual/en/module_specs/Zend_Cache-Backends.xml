@@ -1,6 +1,6 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
-	<para>
+    <para>
         There is two kinds of backends: standard ones and extended ones. Of course, extended backends
         offer more features.
     </para>
@@ -297,9 +297,9 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
             one (but limited) like Apc, Memcache... and a "slow" one like File, Sqlite...
         </para>
         <para>
-        	This backend will use the priority parameter (given at the frontend level when storing a record) 
-        	and the remaining space in the fast backend to optimize the usage of these two backends.
-        	FIXME
+            This backend will use the priority parameter (given at the frontend level when storing a record)
+            and the remaining space in the fast backend to optimize the usage of these two backends.
+            FIXME
         </para>
         <para>
             Available options are :
@@ -353,8 +353,8 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
-                              if true, the slow_backend argument is used as a complete class name ; if false, 
-                              the frontend argument is used as the end of "Zend_Cache_Backend_[...]" 
+                              if true, the slow_backend argument is used as a complete class name ; if false,
+                              the frontend argument is used as the end of "Zend_Cache_Backend_[...]"
                               class name
                           </entry>
                       </row>
@@ -363,29 +363,29 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
-                              if true, the fast_backend argument is used as a complete class name ; if false, 
-                              the frontend argument is used as the end of "Zend_Cache_Backend_[...]" 
+                              if true, the fast_backend argument is used as a complete class name ; if false,
+                              the frontend argument is used as the end of "Zend_Cache_Backend_[...]"
                               class name
                           </entry>
-                      </row>    
+                      </row>
                       <row>
                           <entry><code>slow_backend_autoload</code></entry>
                           <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
-                              if true, there will no require_once for the slow backend 
+                              if true, there will no require_once for the slow backend
                               (useful only for custom backends)
                           </entry>
-                      </row>     
+                      </row>
                       <row>
                           <entry><code>fast_backend_autoload</code></entry>
                           <entry><code>boolean</code></entry>
                           <entry><code>false</code></entry>
                           <entry>
-                              if true, there will no require_once for the fast backend 
+                              if true, there will no require_once for the fast backend
                               (useful only for custom backends)
                           </entry>
-                      </row>  
+                      </row>
                       <row>
                           <entry><code>auto_refresh_fast_cache</code></entry>
                           <entry><code>boolean</code></entry>
@@ -393,7 +393,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry>
                               if true, auto refresh the fast cache when a cache record is hit
                           </entry>
-                      </row>  
+                      </row>
                       <row>
                           <entry><code>stats_update_factor</code></entry>
                           <entry><code>integer</code></entry>
@@ -403,7 +403,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                               (when saving a record into cache, computation of the fast backend filling percentage
                               randomly 1 times on x cache writes)
                           </entry>
-                      </row>                              
+                      </row>
                   </tbody>
               </tgroup>
           </table>

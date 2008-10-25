@@ -5,10 +5,10 @@
         <code>Zend_Paginator</code> is a flexible component for paginating
         collections of data and presenting that data to users.
     </para>
-    
+
     <para>
         The primary design goals of <code>Zend_Paginator</code> are as follows:
-        
+
         <itemizedlist>
             <listitem>
                 <para>
@@ -28,9 +28,9 @@
             </listitem>
             <listitem>
                 <para>
-                    Loosely couple <code>Zend_Paginator</code> to other Zend 
-                    Framework components so that users who wish to use it 
-                    independently of <code>Zend_View</code>, 
+                    Loosely couple <code>Zend_Paginator</code> to other Zend
+                    Framework components so that users who wish to use it
+                    independently of <code>Zend_View</code>,
                     <code>Zend_Db</code>, etc. can do so
                 </para>
             </listitem>

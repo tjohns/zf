@@ -76,7 +76,7 @@ public function drawLine($x1, $y1, $x2, $y2);
  * Draw a rectangle.
  *
  * Fill types:
- * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fill rectangle 
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fill rectangle
  *                                             and stroke (default)
  * Zend_Pdf_Page::SHAPE_DRAW_STROKE          - stroke rectangle
  * Zend_Pdf_Page::SHAPE_DRAW_FILL            - fill rectangle
@@ -125,7 +125,7 @@ public function drawPolygon($x, $y,
  * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
  *
  *
- * It's not a really circle, because PDF supports only cubic Bezier 
+ * It's not a really circle, because PDF supports only cubic Bezier
  * curves. But very good approximation.
  * It differs from a real circle on a maximum 0.00026 radiuses (at PI/8,
  * 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 and 15*PI/8 angles).
@@ -770,7 +770,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  */
 public function clipPolygon($x,
                             $y,
-                            $fillMethod = 
+                            $fillMethod =
                                 Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>

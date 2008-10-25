@@ -102,8 +102,8 @@
             </para>
             
             <para>
-	            The second constructor parameter (<code>$options</code>) is an array with options to create 
-	            SOAP server object<footnote>
+                The second constructor parameter (<code>$options</code>) is an array with options to create 
+                SOAP server object<footnote>
                                       <para>
                                           Options may be set later using <code>setOptions($options)</code> method.
                                       </para>
@@ -189,13 +189,13 @@ $server->setClass('MyClass');
 $server->handle();
 ]]>
             </programlisting>
-	        <note>
-	            <title>Important!</title>
-	            <para>
-	                You should completely describe each method using method docblock if you plan to use autodiscover functionality
-	                to prepare corresponding Web Service WSDL.
-	            </para>
-	        </note>
+            <note>
+                <title>Important!</title>
+                <para>
+                    You should completely describe each method using method docblock if you plan to use autodiscover functionality
+                    to prepare corresponding Web Service WSDL.
+                </para>
+            </note>
         </para>
         
         <para>

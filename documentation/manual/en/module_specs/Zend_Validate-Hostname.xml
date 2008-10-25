@@ -86,10 +86,10 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
         can be matched by Zend_Validate_Hostname via extended characters that are used in the validation
         process.
     </para>
-    
+
     <para>
         At present the list of supported ccTLDs include:
-   
+
         <itemizedlist>
                 <listitem>
                     <para>at (Austria)</para>
@@ -116,16 +116,16 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
                     <para>se (Sweden)</para>
                 </listitem>
         </itemizedlist>
-    
+
     </para>
-    
+
     <para>
         To match an IDN domain it's as simple as just using the standard Hostname validator since IDN
         matching is enabled by default. If you wish to disable IDN validation this can be done by
         by either passing a parameter to the Zend_Validate_Hostname constructor or via the
         <code>$validator->setValidateIdn()</code> method.
     </para>
-    
+
     <para>
         You can disable IDN validation by passing a second parameter to the Zend_Validate_Hostname
         constructor in the following way.
@@ -144,7 +144,7 @@ $validator =
         doesn't exist in Zend/Validate/Hostname specifying the additional characters a normal
         hostname validation is performed.
     </para>
-    
+
     <para>
         Please note IDNs are only validated if you allow DNS hostnames to be validated.
     </para>
@@ -161,7 +161,7 @@ $validator =
 
         <programlisting role="php"><![CDATA[
 $validator =
-    new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, 
+    new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS,
                                true,
                                false);
 ]]>
@@ -170,7 +170,7 @@ $validator =
         Alternatively you can either pass TRUE or FALSE to
         <code>$validator->setValidateTld()</code> to enable or disable TLD validation.
     </para>
-    
+
     <para>
         Please note TLDs are only validated if you allow DNS hostnames to be validated.
     </para>

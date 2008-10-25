@@ -594,7 +594,7 @@ $translate->addTranslation('path/to/other.ini', 'it');
             These include: null, yes, no, true, and false. Values null, no and false results
             in "", yes and true results in "1". Characters {}|&amp;~![()" must not be used anywhere
             in the key and have a special meaning in the value. Do not use them as you will
-            have unexpected behaviour. 
+            have unexpected behaviour.
         </para>
 
     </sect2>
@@ -864,7 +864,7 @@ $translate->getLocale();
         <para>
             Zend_Translate can detect translation sources automatically. So you don't have
             to declare each source file manually. You can let Zend_Translate do this job and
-            scan the complete directory structure for source files. 
+            scan the complete directory structure for source files.
         </para>
 
         <note>

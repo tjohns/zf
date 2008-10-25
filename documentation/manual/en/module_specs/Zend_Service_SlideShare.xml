@@ -32,7 +32,7 @@
 $ss = new Zend_Service_SlideShare('APIKEY',
                                   'SHAREDSECRET',
                                   'USERNAME',
-                                  'PASSWORD'); 
+                                  'PASSWORD');
 ]]>
         </programlisting>
 
@@ -45,7 +45,7 @@ $ss = new Zend_Service_SlideShare('APIKEY',
         <para>
             All slide shows in the <code>Zend_Service_SlideShare</code> component are represented
             using the <code>Zend_Service_SlideShare_SlideShow</code> object (both when retrieving
-            and uploading new	slide shows). For your reference a pseudo-code version of this class
+            and uploading new    slide shows). For your reference a pseudo-code version of this class
             is provided below.
         </para>
 

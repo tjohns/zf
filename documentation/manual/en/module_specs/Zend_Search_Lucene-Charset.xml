@@ -116,7 +116,7 @@ if (@preg_match('/\pL/u', 'a') == 1) {
         <para>
             If you don't want mbstring extension to be turned on, but need case insensitive search, you may use the following approach: normalize source data before indexing
             and query string before searching by converting them to lowercase:
-        
+
             <programlisting role="php"><![CDATA[
 
 // Indexing

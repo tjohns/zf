@@ -89,7 +89,7 @@ $autodiscover->handle();
         <title>Class autodiscovering.</title>
 
         <para>
-            If class is used to provide SOAP server functionality, then the same class should be provided to 
+            If class is used to provide SOAP server functionality, then the same class should be provided to
             <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
@@ -98,7 +98,7 @@ $autodiscover->handle();
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             The following rules are used while WSDL generation:
             <itemizedlist>
@@ -110,11 +110,11 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
+                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used
                         as an URI where the WSDL is available.
                     </para>
                     <para>
-                         It's also used as a target namespace for all service related names (including 
+                         It's also used as a target namespace for all service related names (including
                          described complex types).
                     </para>
                 </listitem>
@@ -135,16 +135,16 @@ $autodiscover->handle();
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <note>
             <title>Important!</title>
             <para>
-                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
-                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
+                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types.
+                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the
                 only way to determine them.
             </para>
             <para>
-                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class.
             </para>
         </note>
     </sect2>
@@ -154,7 +154,7 @@ $autodiscover->handle();
         <title>Functions autodiscovering.</title>
 
         <para>
-            If set of functions are used to provide SOAP server functionality, then the same set should be provided to 
+            If set of functions are used to provide SOAP server functionality, then the same set should be provided to
             <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
@@ -166,7 +166,7 @@ $autodiscover->handle();
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             The following rules are used while WSDL generation:
             <itemizedlist>
@@ -178,11 +178,11 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
+                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used
                         as an URI where the WSDL is available.
                     </para>
                     <para>
-                         It's also used as a target namespace for all service related names (including 
+                         It's also used as a target namespace for all service related names (including
                          described complex types).
                     </para>
                 </listitem>
@@ -203,16 +203,16 @@ $autodiscover->handle();
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <note>
             <title>Important!</title>
             <para>
-                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
-                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
+                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types.
+                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the
                 only way to determine them.
             </para>
             <para>
-                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class.
             </para>
         </note>
     </sect2>
@@ -265,8 +265,8 @@ $autodiscover->handle();
                     <para>If type is not matched to any of these types by some reason, then <code>xsd:anyType</code> is used.</para>
                 </listitem>
             </itemizedlist>
-            
-            Where <code>xsd:</code> is "http://www.w3.org/2001/XMLSchema" namespace, 
+
+            Where <code>xsd:</code> is "http://www.w3.org/2001/XMLSchema" namespace,
             <code>soap-enc:</code> is a "http://schemas.xmlsoap.org/soap/encoding/" namespace,
             <code>tns:</code> is a "target namespace" for a service.
         </para>

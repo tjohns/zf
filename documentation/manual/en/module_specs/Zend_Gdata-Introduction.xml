@@ -178,7 +178,7 @@
                         XML element used by Google Spreadsheets).  These
                         classes are used purely to store the data retrieved
                         back from services and for constructing data to be
-                        sent to services.  These include getters and setters 
+                        sent to services.  These include getters and setters
                         such as
                         <code>setText()</code> to set the child text
                         node of an element, <code>getText()</code> to retrieve
@@ -509,7 +509,7 @@ $feed = $gdata->getFeed($query);
 
     <sect2 id="zend.gdata.introduction.paging">
         <title>Working with multi-page feeds</title>
-        
+
         <para>
             When retrieving a feed that contains a large number of entries,
             the feed may be broken up into many smaller "pages" of feeds. When
@@ -518,7 +518,7 @@ $feed = $gdata->getFeed($query);
             <code>getLink('next')</code>. The following example shows how to
             retrieve the next page of a feed:
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 function getNextPage($feed) {
     $nextURL = $feed->getLink('next');
@@ -552,7 +552,7 @@ $feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
             time to complete on large feeds. You may need to increase PHP's
             execution time limit by calling <code>set_time_limit()</code>.
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
@@ -640,7 +640,7 @@ $gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $entry = $gdata->newEntry();
 $entry->title = $gdata->newTitle('Playing football at the park');
-$content = 
+$content =
     $gdata->newContent('We will visit the park and play football');
 $content->setType('text');
 $entry->content = $content;

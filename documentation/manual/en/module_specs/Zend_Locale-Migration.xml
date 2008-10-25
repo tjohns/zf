@@ -70,7 +70,7 @@ if (Zend_Locale::isLocale($locale, false)) {
         // no locale at all
     }
 
-    // original string is no locale but can be rerouted    
+    // original string is no locale but can be rerouted
 }
 ]]>
                 </programlisting>

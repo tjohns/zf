@@ -306,7 +306,7 @@ class Util
             helper to utilize; if none is provided, it uses the last segment
             of the element's class name to determine the helper, prepending
             it with the string 'form': e.g., 'Zend_Form_Element_Text' would
-            look for a view helper of 'formText'. 
+            look for a view helper of 'formText'.
         </para>
 
         <para>
@@ -381,18 +381,18 @@ $element->setDecorators(array(array('ViewScript',
                                     array('class' => 'form element'))));
 ]]>
         </programlisting>
-        
+
         <para>
             You could then have a view script something like this:
         </para>
 
         <programlisting role="php"><![CDATA[
 <div class="<?= $this->class ?>">
-    <?= $this->formLabel($this->element->getName(), 
+    <?= $this->formLabel($this->element->getName(),
                          $this->element->getLabel()) ?>
     <?= $this->{$this->element->helper}(
         $this->element->getName(),
-        $this->element->getValue(), 
+        $this->element->getValue(),
         $this->element->getAttribs()
     ) ?>
     <?= $this->formErrors($this->element->getMessages()) ?>

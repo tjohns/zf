@@ -166,8 +166,7 @@ $select = $db->select()
 
                 <title>Example of the from() method</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT *
 //   FROM "products"
@@ -192,8 +191,7 @@ $select = $db->select()
 
                 <title>Example of specifying a table correlation name</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 // Build this query:
 //   SELECT p.*
 //   FROM "products" AS p

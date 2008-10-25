@@ -9,7 +9,7 @@
     </para>
 
     <para>
-        The <code>HeadTitle</code> helper is a concrete implementation of the 
+        The <code>HeadTitle</code> helper is a concrete implementation of the
         <link linkend="zend.view.helpers.initial.placeholder">Placeholder
             helper</link>. It overrides the <code>toString()</code> method to
         enforce generating a <code>&lt;title&gt;</code> element, and adds a

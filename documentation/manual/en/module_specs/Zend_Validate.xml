@@ -149,7 +149,7 @@ if (!$validator->isValid('word')) {
 $validator = new Zend_Validate_StringLength(8, 12);
 
 $validator->setMessages( array(
-    Zend_Validate_StringLength::TOO_SHORT => 
+    Zend_Validate_StringLength::TOO_SHORT =>
         'The string \'%value%\' is too short',
     Zend_Validate_StringLength::TOO_LONG  =>
         'The string \'%value%\' is too long'

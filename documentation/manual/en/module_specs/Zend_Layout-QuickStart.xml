@@ -13,7 +13,7 @@
             In both cases, however, you'll need to create a layout script.
             Layout scripts simply utilize Zend_View (or whatever view
             implementation you are using). Layout variables are registered with
-            a <code>Zend_Layout</code> <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>, 
+            a <code>Zend_Layout</code> <link linkend="zend.view.helpers.initial.placeholder">placeholder</link>,
             and may be accessed via the placeholder helper or by fetching them
             as object properties of the layout object via the layout helper.
         </para>
@@ -32,9 +32,9 @@
     <title>My Site</title>
 </head>
 <body>
-<?php 
+<?php
     // fetch 'content' key using layout helper:
-    echo $this->layout()->content; 
+    echo $this->layout()->content;
 
     // fetch 'foo' key using placeholder helper:
     echo $this->placeholder('Zend_Layout')->foo;
@@ -120,7 +120,7 @@
 Zend_Layout::startMvc();
 ]]>
         </programlisting>
-        
+
         <para>
             <code>startMvc()</code> can take an optional array of options or
             <code>Zend_Config</code> object to customize the instance; these
@@ -171,7 +171,7 @@ class FooController extends Zend_Controller_Action
 
         <programlisting role="php"><![CDATA[
 // Returns null if startMvc() has not first been called
-$layout = Zend_Layout::getMvcInstance(); 
+$layout = Zend_Layout::getMvcInstance();
 ]]>
         </programlisting>
 
@@ -206,7 +206,7 @@ $layout = Zend_Layout::getMvcInstance();
 </body>
 ]]>
         </programlisting>
-        
+
         <para>
             This feature is particularly useful when used in conjunction with
             the ActionStack <link linkend="zend.controller.actionhelpers.actionstack">action

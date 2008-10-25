@@ -360,7 +360,7 @@ echo $response;
                 <programlisting role="php"><![CDATA[
 // Map the ActionScript class 'ContactVO' to the PHP class 'Contact':
 $server->setClassMap('ContactVO', 'Contact');
-]]> 
+]]>
                 </programlisting>
             </listitem>
 

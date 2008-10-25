@@ -28,7 +28,7 @@
 
         <listitem>
             <para>
-                <code>ExcludeMimeType</code>: This validator can validate the mimetype of files. It is 
+                <code>ExcludeMimeType</code>: This validator can validate the mimetype of files. It is
                 also able to validate types of mimetypes and will throw error when the mimetype of a given
                 file matches.
             </para>
@@ -116,7 +116,7 @@
 
         <para>
             The usage of validators is quite simple. There are several methods for adding and manipulating validators.
-        </para>        
+        </para>
 
         <itemizedlist>
             <listitem>
@@ -131,7 +131,7 @@
                 <para>
                     <code>addValidator($validator, $breakChainOnFailure, $options = null, $files =
                     null)</code>: Adds the given validator to the validator
-                    stack (optionally only to the file(s) specified). 
+                    stack (optionally only to the file(s) specified).
                     <code>$validator</code> may be either an actual validator
                     instance, or a short name specifying the validator type
                     (e.g., 'Count').
@@ -160,7 +160,7 @@
 
             <listitem>
                 <para>
-                    <code>hasValidator($name)</code>: Indicates if a 
+                    <code>hasValidator($name)</code>: Indicates if a
                     validator has been registered.
                 </para>
             </listitem>
@@ -209,9 +209,9 @@ $upload->addValidator('Size', false, 20000);
 $upload->addValidator('Size', false, array(20, 20000));
 
 // Set a filesize with 20 bytes minimum and 20000 bytes maximum and
-// a file count in one step 
+// a file count in one step
 $upload->setValidators(array(
-    'Size'  => array(20, 20000), 
+    'Size'  => array(20, 20000),
     'Count' => array(1, 3),
 ));
 ]]>
@@ -268,7 +268,7 @@ $upload->addValidator('Size', false, 20000)
             <para>
                 Note that even though setting the same validator
                 multiple times is allowed, doing so can lead to issues when using
-                different options for the same validator.  
+                different options for the same validator.
             </para>
         </note>
 
@@ -759,7 +759,7 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
         <para>
             For your convenience there is also a <code>setImageWidth</code> and <code>setImageHeight</code>
             method which will set the minimum and maximum height and width. Of course also the related
-            <code>getImageWidth</code> and <code>getImageHeight</code> methods are available. 
+            <code>getImageWidth</code> and <code>getImageHeight</code> methods are available.
         </para>
 
         <para>
@@ -780,10 +780,10 @@ $upload->addValidator('ImageSize', false, 40, 100, 80, 200);
 $upload->addValidator('ImageSize', false, array(40, 100, 80, 200);
 
 // Use the named array notation
-$upload->addValidator('ImageSize', false, 
-                      array('minwidth' => 40, 
-                            'maxwidth' => 80, 
-                            'minheight' => 100, 
+$upload->addValidator('ImageSize', false,
+                      array('minwidth' => 40,
+                            'maxwidth' => 80,
+                            'minheight' => 100,
                             'maxheight' => 200)
                       );
 

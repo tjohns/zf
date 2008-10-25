@@ -33,10 +33,10 @@
                 url="https://addons.mozilla.org/en-US/firefox/addon/6149">https://addons.mozilla.org/en-US/firefox/addon/6149</ulink>.
         </para></listitem>
     </itemizedlist>
-            
+
     <example id="zend.db.profiler.profilers.firebug.example.with_front_controller">
         <title>DB Profiling with <code>Zend_Controller_Front</code></title>
-    
+
         <programlisting role="php"><![CDATA[
 // In your bootstrap file
 
@@ -51,12 +51,12 @@ $db->setProfiler($profiler)
 // All DB queries in your model, view and controller
 // files will now be profiled and sent to Firebug
 ]]>
-        </programlisting>	
+        </programlisting>
     </example>
-              
+
     <example id="zend.db.profiler.profilers.firebug.example.without_front_controller">
         <title>DB Profiling without <code>Zend_Controller_Front</code></title>
-        
+
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
 $profiler->setEnabled(true);
