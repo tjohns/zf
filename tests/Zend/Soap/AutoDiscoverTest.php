@@ -4,6 +4,8 @@
  * @subpackage UnitTests
  */
 
+require_once dirname(__FILE__)."/../TestHelper.php";
+
 /** PHPUnit Test Case */
 require_once 'PHPUnit/Framework/TestCase.php';
 
