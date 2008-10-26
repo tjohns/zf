@@ -1,47 +1,29 @@
 <sect1 id="zend.feed.consuming-rss">
-    <title>
-        Работа с лентой RSS
-        <!--Consuming an RSS Feed-->
-    </title>
+    <title>Работа с лентой RSS</title>
     <para>
         Чтение ленты такое же простое, как создание объекта <code>Zend_Feed_Rss</code>
         с URI ленты:
-<!--
-        Reading an RSS feed is as simple as instantiating a <code>Zend_Feed_Rss</code> object with the URL
-        of the feed:
--->
     </para>
 
     <programlisting role="php"><![CDATA[
-<?php
-
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
-
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Если при извлечении ленты произошла ошибка, то будет сгенерировано исключение
         <code>Zend_Feed_Exception</code>.
-<!--
-        If any errors occur fetching the feed, a <code>Zend_Feed_Exception</code> will be thrown.
--->
     </para>
 
     <para>
         Создав объект ленты, вы можете получить доступ к любым стандартным
-        свойствам канала RSS (channel) непосредственно в объекте.
-<!--
-        Once you have a feed object, you can access any of the standard RSS "channel" properties directly
-        on the object:
--->
+        свойствам канала RSS (channel) непосредственно в объекте:
     </para>
 
     <programlisting role="php"><![CDATA[
-<?php
-
 echo $channel->title();
-
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Обратите внимание на синтаксис функции. <code>Zend_Feed</code> использует соглашение
@@ -50,95 +32,64 @@ echo $channel->title();
         в синтаксисе метода (<code>$obj->property()</code>). Это позволяет получить доступ
         к полному тексту любого отдельного узла, что одновременно дает полный доступ
         и ко всем дочерним элементам.
-<!--
-        Note the function syntax. <code>Zend_Feed</code> uses a convention of treating properties as XML
-        object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
-        strings if they are access with method syntax (<code>$obj->property()</code>). This enables access
-        to the full text of any individual node while still allowing full access to all children.
--->
     </para>
 
     <para>
         Если свойства канала имеют атрибуты, то к ним можно получить доступ, используя
         синтаксис массива PHP:
-<!--
-        If channel properties have attributes, they are accessible using PHP's array syntax:
--->
     </para>
 
     <programlisting role="php"><![CDATA[
-<?php
-
 echo $channel->category['domain'];
-
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
-        Поскольку атрибуты не могут иметь дочерние записи, то нет необходимости в синтаксисе
-        метода для получения значений атрибутов.
-<!--
-        Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
-        values.
--->
+        Поскольку атрибуты не могут иметь дочерние элементы, то нет
+        необходимости в синтаксисе метода для получения значений атрибутов.
     </para>
 
     <para>
-        Весьма возможно, что вы хотите произвести обход ленты и произвести
-        какие-либо операции с ее публикациями. <code>Zend_Feed_Abstract</code> реализует
-        интерфейс PHP <code>Iterator</code>, поэтому вывод заголовков всех статей в канале будет
-        выглядеть следующим образом:
-<!--
-        Most commonly you'll want to loop through the feed and do something with its entries.
-        <code>Zend_Feed_Abstract</code> implements PHP's <code>Iterator</code> interface, so printing all
-        titles of articles in a channel is just a matter of:
--->
+        Скорее всего, вам потребуется произвести обход ленты и выполнить
+        какие-либо операции с ее сообщениями. <code>Zend_Feed_Abstract</code>
+        реализует интерфейс PHP <code>Iterator</code>, поэтому вывод заголовков
+        всех статей в канале будет выглядеть следующим образом:
     </para>
 
     <programlisting role="php"><![CDATA[
-<?php
-
 foreach ($channel as $item) {
     echo $item->title() . "\n";
 }
-
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
-        Если вы не знакомы с RSS, то здесь приведены стандартные элементы, которые должны
-        присутствовать в канале (элемент <code>&lt;channel&gt;</code>) и отдельных публикациях
-        (элемент <code>&lt;item&gt;</code>) RSS.
-<!--
-        If you are not familiar with RSS, here are the standard elements you can expect to be available in
-        an RSS channel and in individual RSS items (entries).
--->
+        На тот случай, если вы не знакомы с RSS, здесь приведены стандартные
+        элементы, которые должны присутствовать в канале (элемент
+        <code>&lt;channel&gt;</code>) и отдельных сообщениях RSS
+        (элемент <code>&lt;item&gt;</code>).
     </para>
 
     <para>
         Обязательные элементы канала:
-<!--
-        Required channel elements:
--->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>title</code> -- имя канала
-                    <!--The name of the channel-->
+                    <code>title</code> - имя канала
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>link</code> -- URL веб-сайта, соответствующего каналу
-                    <!-- The URL of the web site corresponding to the channel -->
+                    <code>link</code> - URL веб-сайта, соответствующего каналу
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>description</code> -- одно или несколько предложений, составляющих
+                    <code>description</code> - одно или несколько предложений, составляющих
                     описание канала
-                    <!-- A sentence or several describing the channel -->
                 </para>
             </listitem>
         </itemizedlist>
@@ -146,30 +97,24 @@ foreach ($channel as $item) {
 
     <para>
         Обычно используемые необязательные элементы канала:
-<!--
-        Common optional channel elements:
--->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>pubDate</code> -- дата публикации канала в формате RFC 822
-                    <!-- The publication date of this set of content, in RFC 822 date format -->
+                    <code>pubDate</code> - дата публикации канала в формате RFC 822
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>language</code> -- язык, на котором написано содержимое канала
-                    <!-- The language the channel is written in -->
+                    <code>language</code> - язык, на котором написано содержимое канала
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>category</code> -- одна или несколько (задается несколькими тегами) категорий,
+                    <code>category</code> - одна или несколько (задается несколькими тегами) категорий,
                     к которым принадлежит канал
-                    <!-- One or more (specified by multiple tags) categories the channel belongs to -->
                 </para>
             </listitem>
         </itemizedlist>
@@ -177,103 +122,78 @@ foreach ($channel as $item) {
 
     <para>
         Элементы <code>&lt;item&gt;</code> не имеют обязательных вложенных элементов.
-        Тем не менее, должны быть представлены <code>&lt;title&gt;</code> (заголовок) или
-        <code>&lt;description&gt;</code> (описание).
-<!--
-        RSS <code>&lt;item&gt;</code> elements do not have any strictly required elements. However, either
-        <code>title</code> or <code>description</code> must be present.
--->
+        Тем не менее, должны быть представлены заголовок
+        <code>&lt;title&gt;</code> или описание
+        <code>&lt;description&gt;</code>.
     </para>
 
     <para>
-        Обычно используемые элементы публикации
-<!--
-        Common item elements:
--->
+        Обычно используемые элементы сообщения:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>title</code> -- заголовок публикации
-                    <!-- The title of the item -->
+                    <code>title</code> - заголовок сообщения
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>link</code> -- URL публикации
-                    <!-- The URL of the item -->
+                    <code>link</code> - URL сообщения
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>description</code> -- краткое описание публикации
-                    <!-- A synopsis of the item -->
+                    <code>description</code> - краткое описание
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>author</code> -- e-mail автора
-                    <!-- The author's email address -->
+                    <code>author</code> - e-mail автора
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>category</code> -- одна или несколько категорий, к которым принадлежит
-                    публикация
-                    <!-- One more more categories that the item belongs to -->
+                    <code>category</code> - одна или несколько категорий,
+                    к которым принадлежит сообщение
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>comments</code> -- URL комментариев к данной публикации
-                    <!-- URL of comments relating to this item -->
+                    <code>comments</code> - URL комментариев к данному сообщению
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>pubDate</code> --  дата публикации в формате RFC 822
-                    <!-- The date the item was published, in RFC 822 date format -->
+                    <code>pubDate</code> - дата публикации в формате RFC 822
                 </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        В своем коде вы можете проверить, имеет ли элемент непустое значение, следующим образом:
-<!--
-        In your code you can always test to see if an element is non-empty with:
--->
+        В своем коде вы можете проверить, имеет ли элемент непустое значение,
+        следующим образом:
     </para>
 
     <programlisting role="php"><![CDATA[
-<?php
-
 if ($item->propname()) {
-    // ... продолжение работы
+    // ... обработка
 }
-
-?>]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         Если вместо этого использовать <code>$item->propname</code>, то всегда будете
-        получать объект, который расценивается как <code>TRUE</code>, поэтому такая проверка
-        будет ошибочной.
-<!--
-        If you use <code>$item->propname</code> instead, you will always get an empty object which will
-        evaluate to <code>TRUE</code>, so your check will fail.
--->
+        получать объект. Пустой объект расценивается как <code>TRUE</code>,
+        поэтому такая проверка будет некорректной.
     </para>
 
     <para>
-        За дополнительной информацией см. официальное описание
+        Для получения более подробной информации читайте официальное описание
         спецификации RSS 2.0:
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
-<!--
-        For further information, the official RSS 2.0 specification is available at:
-        <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
--->
     </para>
 </sect1>
 <!--

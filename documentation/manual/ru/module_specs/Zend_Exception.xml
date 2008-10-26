@@ -1,42 +1,31 @@
 <sect1 id="zend.exception.using">
 
-    <title>Использование исключений<!--Using Exceptions--></title>
+    <title>Использование исключений</title>
 
     <para>
         Все исключения, бросаемые классами Zend Framework, должны быть
         наследниками основного класса Zend_Exception.
-<!--
-        All exceptions thrown by Zend Framework classes should throw
-        an exception that derives from the base class Zend_Exception.
--->
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Пример отлова исключения<!--Example of catching an exception--></title>
-        <programlisting role="php"><![CDATA[<?php
-
+        <title>Пример отлова исключения</title>
+        <programlisting role="php"><![CDATA[
 try {
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
-    // остальной код, обрабатывающий ошибку
+    // other code to recover from the failure.
 }
-
-?>]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <para>
         Более детальную информацию о том, какие методы могут бросать исключения,
-        условия, при которых бросаются исключения, и какие классы исключений
-        наследуют от Zend_Exception, можно найти в документации по
+        условия, при которых бросаются исключения, и о том, какие классы
+        исключений наследуют от Zend_Exception, можно найти в документации по
         соответсвующей компоненте Zend Framework.
-<!--
-        See the documentation for each respective Zend Framework
-        component for more specific information on which methods
-        throw exceptions, the circumstances for the exceptions,
-        and which exception classes derive from Zend_Exception.
--->
     </para>
 
 </sect1>

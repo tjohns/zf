@@ -200,63 +200,6 @@ $router->addRoute('archive', $route);
             переход к следующему маршруту в цепочке.
         </para>
     </sect4>
-
-    <sect4 id="zend.controller.router.routes.standard.hostname-routing">
-        <title>Маршрутизация по имени хоста</title>
-
-        <para>
-            Вы также можете использовать имя хоста для определения
-            соответсвующего маршрута. Для простого соответствия
-            используется статическая опция:
-        </para>
-
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => 'blog.mysite.com',
-        'path' => 'archive'
-    ),
-    array(
-        'module'     => 'blog',
-        'controller' => 'archive',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('archive', $route);
-]]>
-        </programlisting>
-
-        <para>
-            Если вы хотите использовать имя хоста для получения параметров,
-            то может использоваться опция с регулярным выражением. В
-            следующем примере поддомен используется в качестве параметра,
-            содержащего имя пользователя. При сборке маршрута вы просто
-            передаете имя пользователя как параметр, так же, как вы это сделали
-            бы с параметрами для пути в URL:
-        </para>
-        
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => array(
-            'regex'   => '([a-z]+).mysite.com',
-            'reverse' => '%s.mysite.com'
-            'params'  => array(
-                1 => 'username'
-            ) 
-        ),
-        'path' => ''
-    ),
-    array(
-        'module'     => 'users',
-        'controller' => 'profile',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('profile', $route);
-]]>
-        </programlisting>
-    </sect4>
 </sect3>        
 <!--
 vim:se ts=4 sw=4 et:
