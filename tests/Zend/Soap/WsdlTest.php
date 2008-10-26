@@ -468,6 +468,21 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . '</types>'
                           . '</definitions>' . PHP_EOL);
     }
+
+    /**
+     * @group ZF-3910
+     */
+    function testCaseOfDocBlockParamsDosNotMatterForSoapTypeDetectionZf3910()
+    {
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');
+
+        $this->assertEquals("xsd:string", $wsdl->getType("StrIng"));
+        $this->assertEquals("xsd:string", $wsdl->getType("sTr"));
+        $this->assertEquals("xsd:int", $wsdl->getType("iNt"));
+        $this->assertEquals("xsd:int", $wsdl->getType("INTEGER"));
+        $this->assertEquals("xsd:float", $wsdl->getType("FLOAT"));
+        $this->assertEquals("xsd:float", $wsdl->getType("douBLE"));
+    }
 }
 
 
