@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12018 -->
+<!-- EN-Revision: 12089 -->
 <sect1 id="zend.locale.migration">
 
     <title>Migrieren von vorhergehenden Versionen</title>
@@ -117,16 +117,16 @@ $locale = Zend_Locale::getOrder(Zend_Locale::BROWSER);
                     mehr vorhanden ist, aber die zurückgegebenen Werte die gleichen sind.
                 </para>
             </example>
- 
-         </sect3>
 
-        <note>
-            <para>
-                Standardmäßig ist das alte Verhalten noch immer aktiv, wirft aber eine User Notice. Wenn man
-                den eigenen Code zum neuen Verhalten geändert hat sollte man auch den Compatibility Mode auf
-                false setzen damit keine Notices mehr geworfen werden.
-            </para>
-        </note>
+            <note>
+                <para>
+                    Standardmäßig ist das alte Verhalten noch immer aktiv, wirft aber eine User Notice. Wenn man
+                    den eigenen Code zum neuen Verhalten geändert hat sollte man auch den Compatibility Mode auf
+                    false setzen damit keine Notices mehr geworfen werden.
+                </para>
+            </note>
+
+         </sect3>
 
     </sect2>
 </sect1>

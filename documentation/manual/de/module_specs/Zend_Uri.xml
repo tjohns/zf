@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12037 -->
+<!-- EN-Revision: 12089 -->
 <sect1 id="zend.uri.chapter">
   <title>Zend_Uri</title>
 
@@ -128,7 +128,7 @@ $valid = Zend_Uri::check('http://uri.in.question');
         
         <example id="zend.uri.validation.allowunwise.example-1">
             <title>Spezielle Zeichen in URIs erlauben</title>
-            <programlisting role="php">
+            <programlisting role="php"><![CDATA[
 // Normal würde das false zurückgeben:
 $valid = Zend_Uri::check('http://example.com/?q=this|that'); // Enthält '|' Symbol
 
@@ -138,14 +138,15 @@ $valid = Zend_Uri::check('http://example.com/?q=this|that'); // Gibt 'true' zur�
 
 // Setzt den Wert 'allow_unwise' auf das Standardmäßige FALSE zurück
 Zend_Uri::setConfig(array('allow_unwise' => false));
+]]>
             </programlisting>
         </example>
         
-        <note>
+        <note><para>
             <code>Zend_Uri::setConfig()</code> setzt Konfigurationsoptionen global. Es wird empfohlen die
             'allow_unwise' Option auf 'false' zurückzusetzen wie im obigen Beispiel, solange man unwise
             Zeichen immer global erlauben will. 
-        </note>
+        </para></note>
     </sect3>
   </sect2>
 
