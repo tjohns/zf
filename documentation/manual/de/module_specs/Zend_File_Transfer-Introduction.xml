@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11965 -->
+<!-- EN-Revision: 12070 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -19,6 +19,18 @@
             kommenden Release hinzugefügt. Nicht implementierte Methoden werfen eine Ausnahme. Deswegen
             sollte aktuell eine Instanz von <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet
             werden. Das wird sich in Zukunft ändern, sobald mehrere Adapter vorhanden sind.
+        </para>
+    </note>
+
+    <note>
+        <title>Formulare</title>
+        <para>
+            Wenn man <code>Zend_Form</code> verwendet sollte man die Beispiele, die im Kapitel von
+            <code>Zend_Form</code> zu finden sind, lesen und verwenden und <code>Zend_File_Transfer</code>
+            nicht manuell verwenden. Aber die Information die man in diesem Kapitel lesen kann sind sehr
+            nützlich, selbst wenn man Sie nicht direkt verwendet. Alle Annahmen, Beschreibungen und
+            Lösungen sind die gleichen wenn man <code>Zend_File_Transfer</code> über <code>Zend_Form</code>
+            verwendet.
         </para>
     </note>
 
@@ -130,6 +142,73 @@ if (!$adapter->receive()) {
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.file.transfer.introduction.checking">
+
+        <title>Prüfen von Dateien</title>
+        
+        <para>
+            <code>Zend_File_Transfer</code> hat verschiedene Methoden die auf verschiedenste Annahmen
+            prüfen welche nützlich sind wenn man Dateien bearbeiten will nachdem Sie empfangen wurden.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">isValid($files = null)</emphasis>: Diese Methode prüft ob die
+                    angegebene Datei gültig ist, basierend auf den Prüfungen welche dieser Datei
+                    angehängt sind. Wenn keine Dateien angegeben wurden, werden alle Dateien geprüft.
+                    Es ist zu beachten das diese Methode mindestens dann aufgerufen wird, wenn man die
+                    Dateien empfängt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">isUploaded($files = null)</emphasis>: Diese Methode prüft ob die
+                    angegebene Datei vom Benutzer hochgeladen wurde. Das ist nützlich wenn man verschiedene
+                    Dateien definiert hat die optional hochzuladen sind. Wenn keine Dateien angegeben wurden,
+                    werden alle Dateien geprüft.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">isReceived($files = null)</emphasis>: Diese Methode prüft ob die
+                    angegebene Datei bereits empfangen wurde. Wenn keine Dateien angegeben wurden, werden
+                    alle Dateien geprüft.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.introduction.checking.example">
+            <title>Dateien prüfen</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Gibt alle bekannten internen Dateiinformationen zurück
+$files = $upload->getFileInfo();
+
+foreach ($files as $file => $info) {
+    // Datei hochgeladen ? 
+    if (!$upload->isUploaded($file)) {
+        print "Warum hast Du die Datei nicht hochgeladen ?";
+        continue;
+    }
+
+    // Prüfungen sind ok ?
+    if (!$upload->isValid($file)) {
+        print "Sorry, aber die Datei ist nicht das was wir wollten";
+        continue;
+    }
+}
+
+$upload->receive();
+]]>
+            </programlisting>
+
+        </example>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

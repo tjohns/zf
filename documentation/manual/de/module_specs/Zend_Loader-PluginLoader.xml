@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12067 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -17,6 +17,18 @@
         werden. Die LIFO Suche und der Klassen Präfix erlaubt es die Plugins in Namensräumen zu haben, und so
         Plugins zu überladen die vorher registriert wurden.
     </para>
+
+    <note>
+        <title>In Produktion sollte der Dateipfad Cache verwendet werden</title>
+
+        <para>
+            <code>Zend_Loader_PluginLoader</code> verwendet sehr stark <code>Zend_Loader::loadFile()</code>,
+            was zu Performance Einbußen führen kann, speziell wenn der erste gescannte Pfad nicht passt.
+            Wir empfehlen die Verwendung
+            <link linkend="zend.loader.load.file.cache">des Dateipfad Caches</link> wenn der Code in die
+            Produktion geht.
+        </para>
+    </note>
 
     <sect2 id="zend.loader.pluginloader.usage">
         <title>Grundsätzliche Verwendung</title>
