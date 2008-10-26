@@ -184,7 +184,8 @@ class MyClass {
 }
 ...
 $server = new Zend_Soap_Server(null, $options);
-$server->setClass('MyClass');
+$server->setClass('MyClass'); // Bind Class to Soap Server
+$server->setObject(new MyClass()); // Bind already initialized object to Soap Server
 ...
 $server->handle();
 ]]>
