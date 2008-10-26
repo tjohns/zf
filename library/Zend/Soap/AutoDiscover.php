@@ -28,7 +28,7 @@ require_once 'Zend/Uri.php';
 
 /**
  * Zend_Soap_AutoDiscover
- * 
+ *
  * @category   Zend
  * @package    Zend_Soap
  */
@@ -52,10 +52,10 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      * @var boolean
      */
     private $_extractComplexTypes;
-    
+
     /**
      * Constructor
-     * 
+     *
      * @param boolean $extractComplexTypes
      */
     public function __construct($extractComplexTypes = true)
@@ -63,7 +63,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         $this->_reflection = new Zend_Server_Reflection();
         $this->_extractComplexTypes = $extractComplexTypes;
     }
-    
+
     /**
      * Set the Class the SOAP server will use
      *
@@ -76,10 +76,10 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         $uri = Zend_Uri::factory('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
 
         $wsdl = new Zend_Soap_Wsdl($class, $uri, $this->_extractComplexTypes);
-        
+
         $port = $wsdl->addPortType($class . 'Port');
         $binding = $wsdl->addBinding($class . 'Binding', 'tns:' .$class. 'Port');
-        
+
         $wsdl->addSoapBinding($binding, 'rpc');
         $wsdl->addService($class . 'Service', $class . 'Port', 'tns:' . $class . 'Binding', $uri);
         foreach ($this->_reflection->reflectClass($class)->getMethods() as $method) {
@@ -91,7 +91,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
                 //$wsdl->addDocumentation($portOperation, $desc);
             }
             /* </wsdl:portType>'s */
-            
+
             $this->_functions[] = $method->getName();
 
             foreach ($method->getPrototypes() as $prototype) {
@@ -109,13 +109,13 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
 
                 /* <wsdl:binding>'s */
                 $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
-                $wsdl->addSoapOperation($binding, $uri->getUri() . '#' .$method->getName());
+                $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
                 /* </wsdl:binding>'s */
             }
         }
         $this->_wsdl = $wsdl;
     }
-    
+
     /**
      * Add a Single or Multiple Functions to the WSDL
      *
@@ -127,27 +127,27 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         static $port;
         static $operation;
         static $binding;
-        
+
         if (!is_array($function)) {
             $function = (array) $function;
         }
-        
+
         $uri = Zend_Uri::factory('http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
 
         if (!($this->_wsdl instanceof Zend_Soap_Wsdl)) {
             $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
             $name = $parts[0];
             $wsdl = new Zend_Soap_Wsdl($name, $uri, $this->_extractComplexTypes);
-            
+
             $port = $wsdl->addPortType($name . 'Port');
             $binding = $wsdl->addBinding($name . 'Binding', 'tns:' .$name. 'Port');
-            
+
             $wsdl->addSoapBinding($binding, 'rpc');
             $wsdl->addService($name . 'Service', $name . 'Port', 'tns:' . $name . 'Binding', $uri);
         } else {
             $wsdl = $this->_wsdl;
         }
-        
+
         foreach ($function as $func) {
             $method = $this->_reflection->reflectFunction($func);
             foreach ($method->getPrototypes() as $prototype) {
@@ -169,21 +169,21 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
                     //$wsdl->addDocumentation($portOperation, $desc);
                 }
                    /* </wsdl:portType>'s */
-            
+
                 /* <wsdl:binding>'s */
                 $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
-                $wsdl->addSoapOperation($binding, $uri->getUri() . '#' .$method->getName());
+                $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
                 /* </wsdl:binding>'s */
-            
+
                 $this->_functions[] = $method->getName();
-                
+
                 // We will only add one prototype
                 break;
             }
         }
         $this->_wsdl = $wsdl;
     }
-    
+
     /**
      * Action to take when an error occurs
      *
@@ -193,9 +193,9 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      */
     public function fault($fault = null, $code = null)
     {
-        
+
     }
-    
+
     /**
      * Handle the Request
      *
@@ -208,7 +208,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         }
         $this->_wsdl->dump();
     }
-    
+
     /**
      * Return an array of functions in the WSDL
      *
@@ -216,9 +216,9 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      */
     public function getFunctions()
     {
-        return $this->_functions;    
+        return $this->_functions;
     }
-    
+
     /**
      * Load Functions
      *
@@ -227,9 +227,9 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      */
     public function loadFunctions($definition)
     {
-        
+
     }
-    
+
     /**
      * Set Persistance
      *
