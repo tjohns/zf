@@ -148,9 +148,20 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
 
             $this->_functions[] = $method->getName();
 
+            $selectedPrototype = null;
+            $maxNumArgumentsOfPrototype = -1;
             foreach ($method->getPrototypes() as $prototype) {
+                $numParams = count($prototype->getParameters());
+                if($numParams > $maxNumArgumentsOfPrototype) {
+                    $maxNumArgumentsOfPrototype = $numParams;
+                    $selectedPrototype = $prototype;
+                }
+            }
+
+            if($selectedPrototype != null) {
+                $prototype = $selectedPrototype;
                 $args = array();
-                foreach ($prototype->getParameters() as $param) {
+                foreach($prototype->getParameters() as $param) {
                     $args[$param->getName()] = $wsdl->getType($param->getType());
                 }
                 $message = $wsdl->addMessage($method->getName() . 'Request', $args);

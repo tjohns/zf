@@ -341,6 +341,24 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains("http://example.com/service.php", $wsdlOutput);
         $this->assertContains("http://example2.com/service2.php", $wsdlOutput);
     }
+
+    /**
+     * @group ZF-4688
+     * @group ZF-4125
+     *
+     */
+    public function testUsingClassWithMultipleMethodPrototypesProducesValidWsdl()
+    {
+        $server = new Zend_Soap_AutoDiscover();
+        $server->setClass('Zend_Soap_AutoDiscover_TestFixingMultiplePrototypes');
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        var_dump($wsdlOutput);
+    }
 }
 
 /* Test Functions */
@@ -435,6 +453,22 @@ function Zend_Soap_AutoDiscover_TestFunc8()
 function Zend_Soap_AutoDiscover_TestFunc9($foo, $bar)
 {
     return "$foo $bar";
+}
+
+class Zend_Soap_AutoDiscover_TestFixingMultiplePrototypes
+{
+    /**
+     * Test function
+     *
+     * @param integer $a
+     * @param integer $b
+     * @param integer $d
+     * @return integer
+     */
+    function testFunc($a=100, $b=200, $d=300)
+    {
+
+    }
 }
 
 /**
