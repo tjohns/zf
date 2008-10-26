@@ -98,6 +98,31 @@ class Zend_Soap_Wsdl {
     }
 
     /**
+     * Set a new uri for this WSDL
+     *
+     * @param  string|Zend_Uri_Http $uri
+     * @return Zend_Server_Wsdl
+     */
+    public function setUri($uri)
+    {
+        if ($uri instanceof Zend_Uri_Http) {
+            $uri = $uri->getUri();
+        }
+        $oldUri = $this->_uri;
+        $this->_uri = $uri;
+
+        if($this->_dom !== null) {
+            // @todo: This is the worst hack ever, but its needed due to design and non BC issues of WSDL generation
+            $xml = $this->_dom->saveXML();
+            $xml = str_replace($oldUri, $uri, $xml);
+            $this->_dom = new DOMDocument();
+            $this->_dom->loadXML($xml);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add a {@link http://www.w3.org/TR/wsdl#_messages message} element to the WSDL
      *
      * @param string $name Name for the {@link http://www.w3.org/TR/wsdl#_messages message}

@@ -54,14 +54,68 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
     private $_extractComplexTypes;
 
     /**
+     * Url where the WSDL file will be available at.
+     *
+     * @var WSDL Uri
+     */
+    protected $_uri;
+
+    /**
      * Constructor
      *
      * @param boolean $extractComplexTypes
+     * @param string|Zend_Uri $uri
      */
-    public function __construct($extractComplexTypes = true)
+    public function __construct($extractComplexTypes = true, $uri=null)
     {
         $this->_reflection = new Zend_Server_Reflection();
         $this->_extractComplexTypes = $extractComplexTypes;
+
+        if($uri !== null) {
+            $this->setUri($uri);
+        }
+    }
+
+    /**
+     * Set the location at which the WSDL file will be availabe.
+     *
+     * @see Zend_Soap_Exception
+     * @throws Zend_Soap_AutoDiscover_Exception
+     * @param  Zend_Uri|string $uri
+     * @return Zend_Soap_AutoDiscover
+     */
+    public function setUri($uri)
+    {
+        if(is_string($uri)) {
+            $uri = Zend_Uri::factory($uri);
+        } else if(!($uri instanceof Zend_Uri)) {
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
+            throw new Zend_Soap_AutoDiscover_Exception("No uri given to Zend_Soap_AutoDiscover::setUri as string or Zend_Uri instance.");
+        }
+        $this->_uri = $uri;
+
+        // change uri in WSDL file also if existant
+        if($this->_wsdl instanceof Zend_Soap_Wsdl) {
+            $this->_wsdl->setUri($uri);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Return the current Uri that the SOAP WSDL Service will be located at.
+     *
+     * @return Zend_Uri
+     */
+    public function getUri()
+    {
+        if($this->_uri instanceof Zend_Uri) {
+            $uri = $this->_uri;
+        } else {
+            $uri = Zend_Uri::factory('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+            $this->setUri($uri);
+        }
+        return $uri;
     }
 
     /**
@@ -73,7 +127,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      */
     public function setClass($class, $namespace = '', $argv = null)
     {
-        $uri = Zend_Uri::factory('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+        $uri = $this->getUri();
 
         $wsdl = new Zend_Soap_Wsdl($class, $uri, $this->_extractComplexTypes);
 
@@ -132,7 +186,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
             $function = (array) $function;
         }
 
-        $uri = Zend_Uri::factory('http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+        $uri = $this->getUri();
 
         if (!($this->_wsdl instanceof Zend_Soap_Wsdl)) {
             $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));

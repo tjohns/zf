@@ -33,6 +33,21 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                  . 'name="MyService" targetNamespace="http://localhost/MyService.php"/>' . PHP_EOL);
     }
 
+    function testSetUriChangesDomDocumentWsdlStructureTnsAndTargetNamespaceAttributes()
+    {
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');
+        $wsdl->setUri('http://localhost/MyNewService.php');
+
+        $this->assertEquals($wsdl->toXml(),
+                            '<?xml version="1.0"?>' . PHP_EOL .
+                            '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" '
+                                 . 'xmlns:tns="http://localhost/MyNewService.php" '
+                                 . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
+                                 . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+                                 . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                                 . 'name="MyService" targetNamespace="http://localhost/MyNewService.php"/>' . PHP_EOL);
+    }
+
     function testAddMessage()
     {
         $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');

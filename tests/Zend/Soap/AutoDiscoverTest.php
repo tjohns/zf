@@ -269,6 +269,76 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         unlink(dirname(__FILE__).'/_files/addfunction2.wsdl');
     }
+
+    /**
+     * @group ZF-4117
+     */
+    public function testChangeWsdlUriInConstructor()
+    {
+        $scriptUri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+
+        $server = new Zend_Soap_AutoDiscover(true, "http://example.com/service.php");
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertNotContains($scriptUri, $wsdlOutput);
+        $this->assertContains("http://example.com/service.php", $wsdlOutput);
+    }
+
+    /**
+     * @group ZF-4117
+     */
+    public function testChangeWsdlUriViaSetUri()
+    {
+        $scriptUri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+
+        $server = new Zend_Soap_AutoDiscover(true);
+        $server->setUri("http://example.com/service.php");
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertNotContains($scriptUri, $wsdlOutput);
+        $this->assertContains("http://example.com/service.php", $wsdlOutput);
+    }
+
+    /**
+     * @group ZF-4117
+     */
+    public function testChangingWsdlUriAfterGenerationIsPossible()
+    {
+        $scriptUri = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+
+        $server = new Zend_Soap_AutoDiscover(true);
+        $server->setUri("http://example.com/service.php");
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertNotContains($scriptUri, $wsdlOutput);
+        $this->assertContains("http://example.com/service.php", $wsdlOutput);
+
+        $server->setUri("http://example2.com/service2.php");
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertNotContains($scriptUri, $wsdlOutput);
+        $this->assertNotContains("http://example.com/service.php", $wsdlOutput);
+        $this->assertContains("http://example2.com/service2.php", $wsdlOutput);
+    }
 }
 
 /* Test Functions */
