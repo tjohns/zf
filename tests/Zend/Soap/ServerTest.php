@@ -353,6 +353,43 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group ZF-4366
+     */
+    public function testSetObject()
+    {
+        if (!extension_loaded('soap')) {
+           $this->markTestSkipped('SOAP Extension is not loaded');
+        }
+
+        $server = new Zend_Soap_Server();
+
+        try {
+            $server->setObject(465);
+            $this->fail('Non-object value should fail');
+        } catch (Exception $e)  {
+            // success
+        }
+
+        try {
+            $int = 1;
+            $server->setObject($int);
+            $this->fail('Invalid argument should fail');
+        } catch (Exception $e)  {
+            // success
+        }
+
+        // Correct class name should pass
+        $server->setObject(new Zend_Soap_Server_TestClass());
+
+        try {
+            $server->setObject(new Zend_Soap_Server_TestClass());
+            $this->fail('setClass() should pass only once');
+        } catch (Exception $e)  {
+            // success
+        }
+    }
+
     public function testGetFunctions()
     {
         if (!extension_loaded('soap')) {

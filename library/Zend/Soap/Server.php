@@ -55,6 +55,11 @@ class Zend_Soap_Server implements Zend_Server_Interface
     protected $_classArgs = array();
 
     /**
+     * Object registered with this server
+     */
+    protected $_object;
+
+    /**
      * Array of SOAP type => PHP class pairings for handling return/incoming values
      * @var array
      */
@@ -483,6 +488,29 @@ class Zend_Soap_Server implements Zend_Server_Interface
     }
 
     /**
+     * Attach an object to a server
+     *
+     * Accepts an instanciated object to use when handling requests.
+     *
+     * @param object $object
+     * @return Zend_Soap_Server
+     */
+    public function setObject($object)
+    {
+        if(!is_object($object)) {
+            throw new Zend_Soap_Server_Exception('Invalid object argument ('.gettype($object).')');
+        }
+
+        if(isset($this->_object)) {
+            throw new Zend_Soap_Server_Exception('An object has already been registered with this soap server instance');
+        }
+
+        $this->_object = $object;
+
+        return $this;
+    }
+
+    /**
      * Return a server definition array
      *
      * Returns a list of all functions registered with {@link addFunction()},
@@ -650,6 +678,10 @@ class Zend_Soap_Server implements Zend_Server_Interface
             $args = $this->_classArgs;
             array_unshift($args, $this->_class);
             call_user_func_array(array($server, 'setClass'), $args);
+        }
+
+        if (!empty($this->_object)) {
+            $server->setObject($this->_object);
         }
 
         return $server;
