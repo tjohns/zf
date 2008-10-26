@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12037 -->
 <sect1 id="zend.http.client">
     <title>Zend_Http_Client - Einführung</title>
 
@@ -34,6 +34,15 @@ $client->setConfig(array(
 ]]>
                 </programlisting>
             </example>
+            
+            <note>
+                Zend_Http_Client verwendet Zend_Uri_Http um URLs zu prüfen. Das bedeutet das einige spezielle
+                Zeichen wie das Pipe-Symbol ('|') oder das Karet Symbol ('^') in der URL standardmäßig nicht
+                akzeptiert werden.
+
+                Das kann geändert werden indem die 'allow_unwise' Option von Zend_Uri auf 'true' gesetzt
+                wird. Siehe <xref linkend="zend.uri.validation.allowunwise" /> für mehr Informationen.
+            </note> 
         </para>
     </sect2>
     <sect2 id="zend.http.client.configuration">

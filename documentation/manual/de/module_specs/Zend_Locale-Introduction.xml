@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11751 -->
+<!-- EN-Revision: 12035 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -531,7 +531,7 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
 Zend_Locale_Format::setOptions(array('locale' => 'en_US',
                                      'date_format' => 'dd.MMMM.YYYY'));
 // Überladen des global gesetzten Datumsformats
-$date = Zend_Locale_Format::getDate('2007-04-20,
+$date = Zend_Locale_Format::getDate('2007-04-20',
                                     array('date_format' =>
                                               Zend_Locale_Format::STANDARD);
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11986 -->
+<!-- EN-Revision: 12025 -->
 <sect1 id="zend.search.lucene.overview">
     <title>Überblick</title>
 
@@ -545,6 +545,105 @@ $index->addDocument($doc);
             Eingelesene Dokumente können vom Programierer mit jedem anderen Feld argumentiert werden:
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time()));
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Anmerkungstext des Dokuments'));
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.xlsx-documents">
+        <title>Excel 2007 Dokumente</title>
+        <para>
+            Zend_Search_Lucene bietet ein Parsing Feature für Excel 2007. Dokumente können direkt
+            von einer Excel 2007 Datei erstellt werden:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Xlsx</code> Klasse verwendet die
+            <code>ZipArchive</code> Klasse und <code>simplexml</code> Methoden um das Quelldokument
+            zu parsen. Wenn die <code>ZipArchive</code> Klasse (vom Modul php_zip) nicht vorhanden
+            ist, wird <code>Zend_Search_Lucene_Document_Xlsx</code> auch nicht für die
+            Verwendung mit dem Zend Framework zur Verfügung stehen.
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Document_Xlsx</code> Klasse erkennt die Metadaten und den
+            Text des Dokuments. Metadaten bestehen, abhängig vom Inhalt des Dokuments, aus
+            Dateinamen, Titel, Untertitel, Ersteller, Schlüsselwörter, Beschreibung, zuletzt
+            geändert von, Version, Geändert und Erstellt.
+        </para>
+
+        <para>
+            Das Feld 'filename' ist der aktuelle Excel 2007 Dateiname.
+        </para>
+
+        <para>
+            Das Feld 'title' ist der aktuelle Titel des Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'subject' ist der aktuelle Untertitel des Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'creator' ist der Ersteller des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'keywords' enthält die Schlüsselwörter des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'description' ist die Beschreibung des aktuellen Dokuments.
+        </para>
+
+
+        <para>
+            Das Feld 'lastModifiedBy' ist der Benutzername der Person die das aktuelle Dokument
+            als letztes geändert hat.
+        </para>
+
+        <para>
+            Das Feld 'revision' ist die Versionsnummer des aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'modified' ist das Datum / die Uhrzeit der letzten Änderung des
+            aktuellen Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'created' ist das Datum / die Uhrzeit der Erstellung des aktuellen
+            Dokuments.
+        </para>
+
+        <para>
+            Das Feld 'body' ist der aktuelle Inhalt aller Arbeitsblätter im
+            Excel 2007 Dokument.
+        </para>
+
+        <para>
+            Die Methode <code>loadXlsxFile()</code> der <code>Zend_Search_Lucene_Document_Xlsx</code>
+            Klasse hat auch ein zweites optionales Argument. Wenn es auf true gesetzt wird, wird der
+            Inhalt auch mit einem Index gespeichert und kann vom Index empfangen werden. Standardmäßig
+            wird der Inhalt gesplittet und indiziert, aber nicht gespeichert.
+        </para>
+
+        <para>
+            Eingelesene Dokumente können vom Programierer mit jedem anderen Feld argumentiert werden:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed(
     'indexTime',
     time()));

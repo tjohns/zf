@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12064 -->
 <sect1 id="zend.controller.migration">
     <title>Migration von vorhergehenden Versionen</title>
 
@@ -7,6 +7,31 @@
         in einer früheren Version verwendet hat, folgt dem Leitfaden unten, damit dieSkripte die
         neue Archtitekur verwenden.
     </para>
+
+    <sect2 id="zend.controller.migration.fromonesixtooneseven">
+        <title>Migration von 1.6.x zu 1.7.0 oder neuer</title>
+
+        <sect3 id="zend.controller.migration.fromonesixtooneseven.dispatcher">
+            <title>Änderungen im Dispatcher Interface</title>
+
+            <para>
+                Benutzer haben uns darauf aufmerksam gemacht das
+                <code>Zend_Controller_Action_Helper_ViewRenderer </code> Methoden auf der abstrakten
+                Dispatcher Klasse verwendet hat die nicht im Dispatcher Interface waren. Die folgenden
+                Methoden wurden hinzugefügt um sicherzustellen das eigene Dispatcher weiterhin mit den
+                ausgelieferten Implementierungen funktionieren:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>formatModuleName()</code>: sollte verwendet werden um einen rohen Controllernamen
+                    zu nehmen, wie den einen der in einem Anfrageobjekt gepackt ist, und Ihn in einen
+                    richtigen Klassennamen zu reformatieren den eine Klasse, die
+                    <code>Zend_Controller_Action</code> erweitert, verwenden würde
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonesix">
         <title>Migration von 1.5.x zu 1.6.0 oder neuer</title>
