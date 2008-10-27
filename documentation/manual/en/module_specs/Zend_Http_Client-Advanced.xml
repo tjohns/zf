@@ -111,7 +111,8 @@ $client->setHeaders('Host', 'www.example.com');
 // Another way of doing the exact same thing
 $client->setHeaders('Host: www.example.com');
 
-// Setting several values for the same header (useful mostly for Cookie headers):
+// Setting several values for the same header
+// (useful mostly for Cookie headers):
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'

@@ -149,7 +149,9 @@ print $number;
             <title>Number localization with precision</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-$number = Zend_Locale_Format::toNumber(13547.3678, array('precision' => 2, 'locale' => $locale));
+$number = Zend_Locale_Format::toNumber(13547.3678,
+                                       array('precision' => 2,
+                                             'locale' => $locale));
 
 // will return 13.547,37
 print $number;

@@ -48,7 +48,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function appBootstrap()
     {
-        $this->frontController->registerPlugin(new Bugapp_Plugin_Initialize('development'));
+        $this->frontController
+             ->registerPlugin(new Bugapp_Plugin_Initialize('development'));
     }
 
     public function testCallWithoutActionShouldPullFromIndexAction()

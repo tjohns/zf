@@ -1011,7 +1011,8 @@ echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
 // obtain a list of all the translation lists
 $lists = $locale->getTranslationList();
 
-// show all translation lists available (lots of output, all in English language)
+// show all translation lists available
+// (lots of output, all in English language)
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));

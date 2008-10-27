@@ -42,7 +42,10 @@ $backendOptions = array([...]);
 
 // We create an instance of Zend_Cache
 // (of course, the two last arguments are optional)
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory($frontendName,
+                             $backendName,
+                             $frontendOptions,
+                             $backendOptions);
 ]]>
         </programlisting>
         <para>

@@ -150,7 +150,7 @@ $currency = new Zend_Currency('en_US', 'EUR');
 
         <para>
             <code>toCurrency(array $options)</code> accepts an array with options which can be used to temporary set another
-            format or currency representation. For details about which options can be used see 
+            format or currency representation. For details about which options can be used see
             <link linkend="zend.currency.usage.setformat">Changing the format of a currency</link>.
         </para>
 
@@ -259,7 +259,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 <para>
                     <emphasis role="strong">format</emphasis>: Defines which locale has to be used for displaying
                     numbers. This number-format includes for example the thousand separator. If no format is set
-                    the locale from the <code>Zend_Currency</code> object will be used. 
+                    the locale from the <code>Zend_Currency</code> object will be used.
                 </para>
             </listitem>
             <listitem>

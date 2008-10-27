@@ -714,7 +714,8 @@ $result = $cache->foobar2('1', '2');
 // [...] // require, configuration and factory
 
 $cache->start();
-// if the cache is hit, the result is sent to the browser and the script stop here
+// if the cache is hit, the result is sent to the browser
+// and the script stop here
 
 // rest of the page ...
 ]]>

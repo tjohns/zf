@@ -238,7 +238,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'foobar');
     }
 
-    public function testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
+    public function 
+        testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
     {
         $this->loginUser('foobar', 'foobar');
         $this->request->setMethod('GET');

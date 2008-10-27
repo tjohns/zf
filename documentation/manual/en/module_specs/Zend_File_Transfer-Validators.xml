@@ -480,7 +480,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('ExcludeMimeType', false, 'image/gif');
 
 // Does not allow mimetype of gif and jpg images for all given files
-$upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg');
+$upload->addValidator('ExcludeMimeType', false, array('image/gif',
+                                                      'image/jpeg');
 
 // Does not allow mimetype of the group images for all given files
 $upload->addValidator('ExcludeMimeType', false, 'image');
@@ -1059,7 +1060,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 40000);
 
 // Limit the size a given file to maximum 4MB and mimimum 10kB
-// Additionally returns the plain number in case of an error instead of a userfriendly one
+// Additionally returns the plain number in case of an error
+// instead of a userfriendly one
 $upload->addValidator('Size', false, array('10kB', '4MB', false));
 ]]>
             </programlisting>

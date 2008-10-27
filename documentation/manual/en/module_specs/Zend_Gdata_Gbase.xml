@@ -170,7 +170,8 @@ function getAuthSubHttpClient()
 
 // -> Script execution begins here <-
 
-// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat the user has a valid session, so we can record the
+// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat
+// the user has a valid session, so we can record the
 // AuthSub session token once it is available.
 session_start();
 

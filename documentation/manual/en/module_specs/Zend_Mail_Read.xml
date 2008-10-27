@@ -534,7 +534,9 @@ echo '</select>';
 //  INBOX.Archive.2005
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
-echo 'Last folder was ' . $mail->getSelectedFolder() . "new folder is $folder\n";
+echo 'Last folder was '
+   . $mail->getSelectedFolder()
+   . "new folder is $folder\n";
 $mail->selectFolder($folder);
 ]]>
         </programlisting>
@@ -728,7 +730,11 @@ echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";
             <programlisting role="php"><![CDATA[
 $quota = $mail->checkQuota(true);
 echo 'You are ', $quota['over_quota'] ? 'over quota' : 'not over quota', "\n";
-echo 'You have ', $quota['count'], ' of ', $quota['quota']['count'], ' messages and use ';
+echo 'You have ',
+     $quota['count'],
+     ' of ',
+     $quota['quota']['count'],
+     ' messages and use ';
 echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
 ]]>
             </programlisting>

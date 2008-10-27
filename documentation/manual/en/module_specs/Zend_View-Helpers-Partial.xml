@@ -40,7 +40,7 @@
         <programlisting role="php"><![CDATA[
 
 <?= $this->partial('partial.phtml', array(
-    'from' => 'Team Framework', 
+    'from' => 'Team Framework',
     'subject' => 'view partials')); ?>
 ]]>
         </programlisting>
@@ -105,9 +105,9 @@ $view->partial()->setObjectKey('model');
 $view->partialLoop()->setObjectKey('model');
 ]]>
             </programlisting>
-            
+
             <para>
-                This technique is particularly useful when passing 
+                This technique is particularly useful when passing
                 <code>Zend_Db_Table_Rowset</code>s to
                 <code>partialLoop()</code>, as you then have full access to your
                 row objects within the view scripts, allowing you to call

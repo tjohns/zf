@@ -140,7 +140,8 @@ function foo()
 
     ...
     // $memObject1 is destroyed here
-    // but $memObject3 object is still referenced by $memList and is not destroyed
+    // but $memObject3 object is still referenced by $memList
+    // and is not destroyed
 }
 ]]>
                 </programlisting>

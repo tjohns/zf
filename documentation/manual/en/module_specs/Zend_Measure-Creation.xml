@@ -31,7 +31,8 @@
             <title>Creation using integer and floating values</title>
             <programlisting role="php"><![CDATA[
 $measurement = 1234.7;
-$unit = new Zend_Measure_Length((integer)$measurement, Zend_Measure_Length::STANDARD);
+$unit = new Zend_Measure_Length((integer)$measurement,
+                                Zend_Measure_Length::STANDARD);
 echo $unit;
 // outputs '1234 m' (meters)
 
@@ -114,12 +115,16 @@ echo $unit; // outputs "125 m² in size";
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $mystring = "The boat is 1,234.50 long.";
-$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, $locale);
+$unit = new Zend_Measure_Length($mystring,
+                                Zend_Measure_Length::STANDARD,
+                                $locale);
 echo $unit; // outputs "1.234 m"
 
 
 $mystring = "The boat is 1,234.50 long.";
-$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
+$unit = new Zend_Measure_Length($mystring,
+                                Zend_Measure_Length::STANDARD,
+                                'en_US');
 echo $unit; // outputs "1234.50 m"
 ]]>
             </programlisting>
