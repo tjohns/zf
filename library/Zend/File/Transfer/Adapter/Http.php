@@ -38,7 +38,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function __construct($options = array())
     {
-        $this->_files = $this->_prepareFiles($_FILES);
+    	$this->_files = $this->_prepareFiles($_FILES);
         $this->addValidator('Upload', null, $this->_files);
 
         if (is_array($options)) {
@@ -180,14 +180,14 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     protected function _prepareFiles(array $files = array())
     {
-        $result = array();
+    	$result = array();
         foreach ($files as $form => $content) {
             if (is_array($content['name'])) {
                 foreach ($content as $param => $file) {
-                    foreach ($file as $number => $target) {
-                        $result[$form . '_' . $number . '_'][$param] = $target;
-                        $result[$form . '_' . $number . '_'][$param]['options'] = $this->_options;
-                    }
+                	foreach ($file as $number => $target) {
+                		$result[$form . '_' . $number . '_'][$param] = $target;
+                		$result[$form . '_' . $number . '_']['options'] = $this->_options;
+                	}
                 }
             } else {
                 $result[$form] = $content;
