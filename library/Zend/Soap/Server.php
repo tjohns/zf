@@ -804,11 +804,13 @@ class Zend_Soap_Server implements Zend_Server_Interface
             } else {
                 $message = 'Unknown error';
             }
-        } else {
+        } elseif(is_string($fault)) {
             $message = $fault;
+        } else {
+            $message = 'Unknown error';
         }
 
-        return new SoapFault($code, $message);
+        return new SoapFault((string)$code, $message);
     }
 
     /**

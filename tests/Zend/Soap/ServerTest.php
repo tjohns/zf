@@ -673,9 +673,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @todo Implement testFault().
-     */
     public function testFault()
     {
         if (!extension_loaded('soap')) {
@@ -683,11 +680,21 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         }
 
     	$server = new Zend_Soap_Server();
+        $fault = $server->fault("Faultmessage!");
 
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $this->assertTrue($fault instanceof SOAPFault);
+        $this->assertContains("Faultmessage!", $fault->getMessage());
+    }
+
+    /**
+     * @group ZF-3958
+     */
+    public function testFaultWithIntegerFailureCodeDoesNotBreakClassSoapFault()
+    {
+        $server = new Zend_Soap_Server();
+        $fault = $server->fault("Faultmessage!", 5000);
+
+        $this->assertTrue($fault instanceof SOAPFault);
     }
 
     /**
