@@ -205,12 +205,6 @@ class Zend_Rest_Client extends Zend_Service_Abstract
      * $response = $rest->sayHello('Foo', 'Manchu')->get();
      * </code>
      *
-     * You can also use an HTTP request method as a calling method, using the
-     * path as the first argument:
-     * <code>
-     * $rest->get('/sayHello', 'Foo', 'Manchu');
-     * </code>
-     *
      * Or use them together, but in sequential calls:
      * <code>
      * $rest->sayHello('Foo', 'Manchu');
