@@ -82,7 +82,7 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
         // Document data holders
         $sharedStrings = array();
         $worksheets = array();
-    	$documentBody = array();
+        $documentBody = array();
         $coreProperties = array();
         
         // Open OpenXML package
@@ -93,34 +93,34 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
         $relations = simplexml_load_string($package->getFromName("_rels/.rels"));
         foreach ($relations->Relationship as $rel) {
             if ($rel["Type"] == Zend_Search_Lucene_Document_OpenXml::SCHEMA_OFFICEDOCUMENT) {
-            	// Found office document! Read relations for workbook...
-            	$workbookRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/_rels/" . basename($rel["Target"]) . ".rels")) );
-            	$workbookRelations->registerXPathNamespace("rel", Zend_Search_Lucene_Document_OpenXml::SCHEMA_RELATIONSHIP);
-            	
-            	// Read shared strings
-            	$sharedStringsPath = $workbookRelations->xpath("rel:Relationship[@Type='" . Zend_Search_Lucene_Document_Xlsx::SCHEMA_SHAREDSTRINGS . "']");
-            	$sharedStringsPath = (string)$sharedStringsPath[0]['Target'];          	
-				$xmlStrings = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . $sharedStringsPath)) );			
-				if (isset($xmlStrings) && isset($xmlStrings->si)) {
-					foreach ($xmlStrings->si as $val) {
-						if (isset($val->t)) {
-							$sharedStrings[] = (string)$val->t;
-						} elseif (isset($val->r)) {
-							$sharedStrings[] = $this->_parseRichText($val);
-						}
-					}
-				}
+                // Found office document! Read relations for workbook...
+                $workbookRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/_rels/" . basename($rel["Target"]) . ".rels")) );
+                $workbookRelations->registerXPathNamespace("rel", Zend_Search_Lucene_Document_OpenXml::SCHEMA_RELATIONSHIP);
+                
+                // Read shared strings
+                $sharedStringsPath = $workbookRelations->xpath("rel:Relationship[@Type='" . Zend_Search_Lucene_Document_Xlsx::SCHEMA_SHAREDSTRINGS . "']");
+                $sharedStringsPath = (string)$sharedStringsPath[0]['Target'];              
+                $xmlStrings = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . $sharedStringsPath)) );            
+                if (isset($xmlStrings) && isset($xmlStrings->si)) {
+                    foreach ($xmlStrings->si as $val) {
+                        if (isset($val->t)) {
+                            $sharedStrings[] = (string)$val->t;
+                        } elseif (isset($val->r)) {
+                            $sharedStrings[] = $this->_parseRichText($val);
+                        }
+                    }
+                }
 
-            	// Loop relations for workbook and extract worksheets...
-            	foreach ($workbookRelations->Relationship as $workbookRelation) {
-            		if ($workbookRelation["Type"] == Zend_Search_Lucene_Document_Xlsx::SCHEMA_WORKSHEETRELATION) {
-            			$worksheets[ str_replace( 'rId', '', (string)$workbookRelation["Id"]) ] = simplexml_load_string(
-		                    $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($workbookRelation["Target"]) . "/" . basename($workbookRelation["Target"])) )
-		                );
-            		}
-            	}
-            	
-            	break;
+                // Loop relations for workbook and extract worksheets...
+                foreach ($workbookRelations->Relationship as $workbookRelation) {
+                    if ($workbookRelation["Type"] == Zend_Search_Lucene_Document_Xlsx::SCHEMA_WORKSHEETRELATION) {
+                        $worksheets[ str_replace( 'rId', '', (string)$workbookRelation["Id"]) ] = simplexml_load_string(
+                            $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($workbookRelation["Target"]) . "/" . basename($workbookRelation["Target"])) )
+                        );
+                    }
+                }
+                
+                break;
             }
         }
         
@@ -129,65 +129,65 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
         
         // Extract contents from worksheets
         foreach ($worksheets as $sheetKey => $worksheet) {
-        	foreach ($worksheet->sheetData->row as $row) {
-				foreach ($row->c as $c) {
-					// Determine data type
-					$dataType = (string)$c["t"];
-					switch ($dataType) {
-						case "s":
-							// Value is a shared string
-							if ((string)$c->v != '') {
-								$value = $sharedStrings[intval($c->v)];
-							} else {
-								$value = '';
-							}
+            foreach ($worksheet->sheetData->row as $row) {
+                foreach ($row->c as $c) {
+                    // Determine data type
+                    $dataType = (string)$c["t"];
+                    switch ($dataType) {
+                        case "s":
+                            // Value is a shared string
+                            if ((string)$c->v != '') {
+                                $value = $sharedStrings[intval($c->v)];
+                            } else {
+                                $value = '';
+                            }
 
-							break;
-							
-						case "b":
-							// Value is boolean
-							$value = (string)$c->v;
-							if ($value == '0') {
-								$value = false;
-							} else if ($value == '1') {
-								$value = true;
-							} else {
-								$value = (bool)$c->v;
-							}
+                            break;
+                            
+                        case "b":
+                            // Value is boolean
+                            $value = (string)$c->v;
+                            if ($value == '0') {
+                                $value = false;
+                            } else if ($value == '1') {
+                                $value = true;
+                            } else {
+                                $value = (bool)$c->v;
+                            }
 
-							break;
-							
-						case "inlineStr":
-							// Value is rich text inline
-							$value = $this->_parseRichText($c->is);
-										
-							break;
-							
-						case "e":
-							// Value is an error message
-							if ((string)$c->v != '') {
-								$value = (string)$c->v;
-							} else {
-								$value = '';
-							}
+                            break;
+                            
+                        case "inlineStr":
+                            // Value is rich text inline
+                            $value = $this->_parseRichText($c->is);
+                                        
+                            break;
+                            
+                        case "e":
+                            // Value is an error message
+                            if ((string)$c->v != '') {
+                                $value = (string)$c->v;
+                            } else {
+                                $value = '';
+                            }
 
-							break;
+                            break;
 
-						default:
-							// Value is a string
-							$value = (string)$c->v;
+                        default:
+                            // Value is a string
+                            $value = (string)$c->v;
 
-							// Check for numeric values
-							if (is_numeric($value) && $dataType != 's') {
-								if ($value == (int)$value) $value = (int)$value;
-								elseif ($value == (float)$value) $value = (float)$value;
-								elseif ($value == (double)$value) $value = (double)$value;
-							}
-					}
-					
-					$documentBody[] = $value;
-				}
-			}
+                            // Check for numeric values
+                            if (is_numeric($value) && $dataType != 's') {
+                                if ($value == (int)$value) $value = (int)$value;
+                                elseif ($value == (float)$value) $value = (float)$value;
+                                elseif ($value == (double)$value) $value = (double)$value;
+                            }
+                    }
+                    
+                    $documentBody[] = $value;
+                }
+            }
         }   
 
         // Read core properties
@@ -225,19 +225,19 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
      * @param SimpleXMLElement $is
      * @return string
      */
-	private function _parseRichText($is = null) {
-		$value = array();
+    private function _parseRichText($is = null) {
+        $value = array();
 
-		if (isset($is->t)) {
-			$value[] = (string)$is->t;
-		} else {
-			foreach ($is->r as $run) {
-				$value[] = (string)$run->t;
-			}
-		}
+        if (isset($is->t)) {
+            $value[] = (string)$is->t;
+        } else {
+            foreach ($is->r as $run) {
+                $value[] = (string)$run->t;
+            }
+        }
 
-		return implode('', $value);
-	}
+        return implode('', $value);
+    }
 
     /**
      * Load Xlsx document from a file
