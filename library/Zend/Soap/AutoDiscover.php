@@ -112,7 +112,11 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         if($this->_uri instanceof Zend_Uri) {
             $uri = $this->_uri;
         } else {
-            $uri = Zend_Uri::factory('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+            $schema = "http";
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+                $schema = 'https';
+            }
+            $uri = Zend_Uri::factory($schema . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
             $this->setUri($uri);
         }
         return $uri;
