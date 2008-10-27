@@ -17,10 +17,14 @@
             <para>
                 <code>LowerCase</code>: This filter can lowercase the content of a textfile.
             </para>
+        </listitem>
+        <listitem>
             <para>
                 <code>Rename</code>: This filter can rename files, change the location and even force
                 overwriting of existing files.
             </para>
+        </listitem>
+        <listitem>
             <para>
                 <code>UpperCase</code>: This filter can uppercase the content of a textfile.
             </para>
