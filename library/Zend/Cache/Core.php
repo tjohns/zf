@@ -372,7 +372,7 @@ class Zend_Cache_Core
             $data2 = $this->_backend->load($id, true);
             if ($data!=$data2) {
                 $this->_log('Zend_Cache_Core::save() / write_control : written and read data do not match');
-                $this->remove($id);
+                $this->_backend->remove($id);
                 return false;
             }
         }
