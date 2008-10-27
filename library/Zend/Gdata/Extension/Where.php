@@ -53,16 +53,16 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_label != null) {
+        if ($this->_label !== null) {
             $element->setAttribute('label', $this->_label);
         }
-        if ($this->_rel != null) {
+        if ($this->_rel !== null) {
             $element->setAttribute('rel', $this->_rel);
         }
-        if ($this->_valueString != null) {
+        if ($this->_valueString !== null) {
             $element->setAttribute('valueString', $this->_valueString);
         }
-        if ($this->entryLink != null) {
+        if ($this->entryLink !== null) {
             $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));
         }
         return $element;

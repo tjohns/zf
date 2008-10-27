@@ -153,46 +153,46 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_url != null) {
+        if ($this->_url !== null) {
             $element->setAttribute('url', $this->_url);
         }
-        if ($this->_fileSize != null) {
+        if ($this->_fileSize !== null) {
             $element->setAttribute('fileSize', $this->_fileSize);
         }
-        if ($this->_type != null) {
+        if ($this->_type !== null) {
             $element->setAttribute('type', $this->_type);
         }
-        if ($this->_medium != null) {
+        if ($this->_medium !== null) {
             $element->setAttribute('medium', $this->_medium);
         }
-        if ($this->_isDefault != null) {
+        if ($this->_isDefault !== null) {
             $element->setAttribute('isDefault', $this->_isDefault);
         }
-        if ($this->_expression != null) {
+        if ($this->_expression !== null) {
             $element->setAttribute('expression', $this->_expression);
         }
-        if ($this->_bitrate != null) {
+        if ($this->_bitrate !== null) {
             $element->setAttribute('bitrate', $this->_bitrate);
         }
-        if ($this->_framerate != null) {
+        if ($this->_framerate !== null) {
             $element->setAttribute('framerate', $this->_framerate);
         }
-        if ($this->_samplingrate != null) {
+        if ($this->_samplingrate !== null) {
             $element->setAttribute('samplingrate', $this->_samplingrate);
         }
-        if ($this->_channels != null) {
+        if ($this->_channels !== null) {
             $element->setAttribute('channels', $this->_channels);
         }
-        if ($this->_duration != null) {
+        if ($this->_duration !== null) {
             $element->setAttribute('duration', $this->_duration);
         }
-        if ($this->_height != null) {
+        if ($this->_height !== null) {
             $element->setAttribute('height', $this->_height);
         }
-        if ($this->_width != null) {
+        if ($this->_width !== null) {
             $element->setAttribute('width', $this->_width);
         }
-        if ($this->_lang != null) {
+        if ($this->_lang !== null) {
             $element->setAttribute('lang', $this->_lang);
         }
         return $element;

@@ -79,10 +79,10 @@ class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_role != null) {
+        if ($this->_role !== null) {
             $element->setAttribute('role', $this->_role);
         }
-        if ($this->_scheme != null) {
+        if ($this->_scheme !== null) {
             $element->setAttribute('scheme', $this->_scheme);
         }
         return $element;

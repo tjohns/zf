@@ -72,7 +72,7 @@ class Zend_Gdata_Media_Extension_MediaRating extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_scheme != null) {
+        if ($this->_scheme !== null) {
             $element->setAttribute('scheme', $this->_scheme);
         }
         return $element;

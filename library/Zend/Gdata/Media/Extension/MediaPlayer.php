@@ -84,13 +84,13 @@ class Zend_Gdata_Media_Extension_MediaPlayer extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_url != null) {
+        if ($this->_url !== null) {
             $element->setAttribute('url', $this->_url);
         }
-        if ($this->_width != null) {
+        if ($this->_width !== null) {
             $element->setAttribute('width', $this->_width);
         }
-        if ($this->_height != null) {
+        if ($this->_height !== null) {
             $element->setAttribute('height', $this->_height);
         }
         return $element;

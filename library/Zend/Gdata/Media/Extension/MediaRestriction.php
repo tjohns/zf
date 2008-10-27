@@ -79,10 +79,10 @@ class Zend_Gdata_Media_Extension_MediaRestriction extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_relationship != null) {
+        if ($this->_relationship !== null) {
             $element->setAttribute('relationship', $this->_relationship);
         }
-        if ($this->_type != null) {
+        if ($this->_type !== null) {
             $element->setAttribute('type', $this->_type);
         }
         return $element;

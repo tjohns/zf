@@ -54,10 +54,10 @@ class Zend_Gdata_Extension_Comments extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_rel != null) {
+        if ($this->_rel !== null) {
             $element->setAttribute('rel', $this->_rel);
         }
-        if ($this->_feedLink != null) {
+        if ($this->_feedLink !== null) {
             $element->appendChild($this->_feedLink->getDOM($element->ownerDocument));
         }
         return $element;

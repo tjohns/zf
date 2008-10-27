@@ -51,13 +51,13 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_term != null) {
+        if ($this->_term !== null) {
             $element->setAttribute('term', $this->_term);
         }
-        if ($this->_scheme != null) {
+        if ($this->_scheme !== null) {
             $element->setAttribute('scheme', $this->_scheme);
         }
-        if ($this->_label != null) {
+        if ($this->_label !== null) {
             $element->setAttribute('label', $this->_label);
         }
         return $element;

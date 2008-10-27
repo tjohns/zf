@@ -87,22 +87,22 @@ class Zend_Gdata_Extension_Who extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_email != null) {
+        if ($this->_email !== null) {
             $element->setAttribute('email', $this->_email);
         }
-        if ($this->_rel != null) {
+        if ($this->_rel !== null) {
             $element->setAttribute('rel', $this->_rel);
         }
-        if ($this->_valueString != null) {
+        if ($this->_valueString !== null) {
             $element->setAttribute('valueString', $this->_valueString);
         }
-        if ($this->_attendeeStatus != null) {
+        if ($this->_attendeeStatus !== null) {
             $element->appendChild($this->_attendeeStatus->getDOM($element->ownerDocument));
         }
-        if ($this->_attendeeType != null) {
+        if ($this->_attendeeType !== null) {
             $element->appendChild($this->_attendeeType->getDOM($element->ownerDocument));
         }
-        if ($this->_entryLink != null) {
+        if ($this->_entryLink !== null) {
             $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));
         }
         return $element;

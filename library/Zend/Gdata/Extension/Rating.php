@@ -56,16 +56,16 @@ class Zend_Gdata_Extension_Rating extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_min != null) {
+        if ($this->_min !== null) {
             $element->setAttribute('min', $this->_min);
         }
-        if ($this->_max != null) {
+        if ($this->_max !== null) {
             $element->setAttribute('max', $this->_max);
         }
-        if ($this->_numRaters != null) {
+        if ($this->_numRaters !== null) {
             $element->setAttribute('numRaters', $this->_numRaters);
         }
-        if ($this->_average != null) {
+        if ($this->_average !== null) {
             $element->setAttribute('average', $this->_average);
         }
         return $element;

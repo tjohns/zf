@@ -68,7 +68,7 @@ class Zend_Gdata_Media_Extension_MediaHash extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_algo != null) {
+        if ($this->_algo !== null) {
             $element->setAttribute('algo', $this->_algo);
         }
         return $element;

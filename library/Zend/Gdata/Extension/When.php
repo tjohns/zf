@@ -59,16 +59,16 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_startTime != null) {
+        if ($this->_startTime !== null) {
             $element->setAttribute('startTime', $this->_startTime);
         }
-        if ($this->_endTime != null) {
+        if ($this->_endTime !== null) {
             $element->setAttribute('endTime', $this->_endTime);
         }
-        if ($this->_valueString != null) {
+        if ($this->_valueString !== null) {
             $element->setAttribute('valueString', $this->_valueString);
         }
-        if ($this->_reminders != null) {
+        if ($this->_reminders !== null) {
             foreach ($this->_reminders as $reminder) {
                 $element->appendChild(
                         $reminder->getDOM($element->ownerDocument));

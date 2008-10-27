@@ -47,7 +47,7 @@ class Zend_Gdata_Extension_EventStatus extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_value != null) {
+        if ($this->_value !== null) {
             $element->setAttribute('value', $this->_value);
         }
         return $element;

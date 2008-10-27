@@ -70,7 +70,7 @@ class Zend_Gdata_Media_Extension_MediaCopyright extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_url != null) {
+        if ($this->_url !== null) {
             $element->setAttribute('url', $this->_url);
         }
         return $element;

@@ -50,10 +50,10 @@ class Zend_Gdata_Extension_ExtendedProperty extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_name != null) {
+        if ($this->_name !== null) {
             $element->setAttribute('name', $this->_name);
         }
-        if ($this->_value != null) {
+        if ($this->_value !== null) {
             $element->setAttribute('value', $this->_value);
         }
         return $element;

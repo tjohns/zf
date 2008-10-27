@@ -47,7 +47,7 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_src != null) {
+        if ($this->_src !== null) {
             $element->setAttribute('src', $this->_src);
         }
         return $element;

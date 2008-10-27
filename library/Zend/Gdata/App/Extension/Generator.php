@@ -50,10 +50,10 @@ class Zend_Gdata_App_Extension_Generator extends Zend_Gdata_App_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_uri != null) {
+        if ($this->_uri !== null) {
             $element->setAttribute('uri', $this->_uri);
         }
-        if ($this->_version != null) {
+        if ($this->_version !== null) {
             $element->setAttribute('version', $this->_version);
         }
         return $element;

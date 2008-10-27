@@ -61,13 +61,13 @@ class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
     public function getDOM($doc = null)
     {
         $element = parent::getDOM($doc);
-        if ($this->_id != null) {
+        if ($this->_id !== null) {
             $element->setAttribute('id', $this->_id);
         }
-        if ($this->_href != null) {
+        if ($this->_href !== null) {
             $element->setAttribute('href', $this->_href);
         }
-        if ($this->_when != null) {
+        if ($this->_when !== null) {
             $element->appendChild($this->_when->getDOM($element->ownerDocument));
         }
         return $element;
