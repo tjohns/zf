@@ -31,7 +31,7 @@ class Zend_Cache_Core
      *
      * @var object $_backend
      */
-    private $_backend = null;
+    protected $_backend = null;
 
     /**
      * Available options
