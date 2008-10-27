@@ -175,7 +175,6 @@ class Zend_Gdata_Books extends Zend_Gdata
         } else {
             $uri = $location;
         }
-        print $uri;
         return parent::insertEntry(
             $entry, $uri, 'Zend_Gdata_Books_VolumeEntry');
     }
