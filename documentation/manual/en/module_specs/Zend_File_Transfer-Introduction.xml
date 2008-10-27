@@ -217,6 +217,13 @@ $upload->receive();
                     internal informations for the given transferred file.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>: This method
+                    will return a hash of the content for a given transferred file.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -253,6 +260,37 @@ $names = $upload->getFileName('foo');
                 Note that the filename can change when you receive the file. This is due to the fact that
                 after receiving all filters will be applied. So you should call <code>getFileName()</code>
                 always after you have received the files.
+            </para>
+        </note>
+
+        <para>
+            <code>getHash()</code> accepts the name of a hash algorithm as first parameter. For a list of
+            known algorithm look into
+            <ulink url="http://php.net/hash_algos">PHP's hash_algos method</ulink>. If you give no algorithm,
+            the <code>crc32</code> will be used as default algorithm.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example2">
+            <title>Getting the hash of a file</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Returns the hashes from all files as array if more than one file was uploaded
+$hash = $upload->getHash('md5');
+
+// Returns the hash for the 'foo' form element
+$names = $upload->getHash('crc32', 'foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that if the given file or formname contains more than one single file, the returned
+                value will be an array.
             </para>
         </note>
     </sect2>

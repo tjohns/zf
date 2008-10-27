@@ -1095,6 +1095,39 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
+     * Returns the hash for a given file
+     *
+     * @param  string       $hash  Hash algorithm to use
+     * @param  string|array $files Files to return the hash for
+     * @return string|array Hashstring
+     * @throws Zend_File_Transfer_Exception On unknown hash algorithm
+     */
+    public function getHash($hash = 'crc32', $files = null)
+    {
+    	$algorithms = hash_algos();
+    	if (!isset($algorithms[$hash])) {
+    		require_once 'Zend/File/Transfer/Exception.php';
+    		throw new Zend_File_Transfer_Exception('Unknown hash algorithm');
+    	}
+
+        $files  = $this->_getFiles($files);
+        $result = array();
+        foreach($files as $key => $value) {
+            if (file_exists($value['name'])) {
+                $result[$key] = hash_file($hash, $value['name']);
+            } else if (file_exists($value['tmp_name'])) {
+                $result[$key] = hash_file($hash, $value['tmp_name']);
+            }
+        }
+
+        if (count($result) == 1) {
+            return current($result);
+        }
+
+        return $result;
+    }
+
+    /**
      * Internal function to filter all given files
      *
      * @param  string|array $files (Optional) Files to check

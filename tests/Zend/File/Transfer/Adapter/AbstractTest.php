@@ -662,6 +662,16 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($files));
         $this->assertEquals('bar.png', $files['bar']);
     }
+
+    public function testExceptionForUnknownHashValue()
+    {
+        try {
+            $this->adapter->getHash('foo', 'unknown_hash');
+            $this->fail();
+        } catch (Zend_Exception $e) {
+            $this->assertContains('Unknown hash algorithm', $e->getMessage());
+        }
+    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract
