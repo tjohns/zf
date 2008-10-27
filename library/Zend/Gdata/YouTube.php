@@ -79,7 +79,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const STANDARD_RECENTLY_FEATURED_URI = 'http://gdata.youtube.com/feeds/standardfeeds/recently_featured';
     const STANDARD_WATCH_ON_MOBILE_URI = 'http://gdata.youtube.com/feeds/standardfeeds/watch_on_mobile';
 
-    const VIDEO_URI = 'http://gdata.youtube.com/feeds/videos';
+    const USER_URI = 'http://gdata.youtube.com/feeds/api/users';
+    const VIDEO_URI = 'http://gdata.youtube.com/feeds/api/videos';
     const PLAYLIST_REL = 'http://gdata.youtube.com/schemas/2007#playlist';
     const USER_UPLOADS_REL = 'http://gdata.youtube.com/schemas/2007#user.uploads';
     const USER_PLAYLISTS_REL = 'http://gdata.youtube.com/schemas/2007#user.playlists';
@@ -369,7 +370,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getPlaylistListFeed($user = null, $location = null)
     {
         if ($user !== null) {
-            $uri = 'http://gdata.youtube.com/feeds/users/' . $user . '/playlists';
+            $uri = self::USER_URI . '/' . $user . '/playlists';
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -407,7 +408,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getSubscriptionFeed($user = null, $location = null)
     {
         if ($user !== null) {
-            $uri = 'http://gdata.youtube.com/feeds/users/' . $user . '/subscriptions';
+            $uri = self::USER_URI . '/' . $user . '/subscriptions';
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -427,7 +428,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getContactFeed($user = null, $location = null)
     {
         if ($user !== null) {
-            $uri = 'http://gdata.youtube.com/feeds/users/' . $user . '/contacts';
+            $uri = self::USER_URI . '/' . $user . '/contacts';
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -447,7 +448,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getUserUploads($user = null, $location = null)
     {
         if ($user !== null) {
-            $uri = 'http://gdata.youtube.com/feeds/users/' . $user . '/' .
+            $uri = self::USER_URI . '/' . $user . '/' .
                    self::UPLOADS_URI_SUFFIX;
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
@@ -468,7 +469,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getUserFavorites($user = null, $location = null)
     {
         if ($user !== null) {
-            $uri = 'http://gdata.youtube.com/feeds/users/' . $user . '/' .
+            $uri = self::USER_URI . '/' . $user . '/' .
                    self::FAVORITES_URI_SUFFIX;
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
@@ -489,7 +490,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getUserProfile($user = null, $location = null)
     {
         if ($user !== null) {
-            $uri = 'http://gdata.youtube.com/feeds/users/' . $user;
+            $uri = self::USER_URI . '/' . $user;
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
