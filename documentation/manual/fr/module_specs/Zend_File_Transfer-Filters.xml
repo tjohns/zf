@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12156 -->
 <sect1 id="zend.file.transfer.filters">
     <title>Filtres pour Zend_File_Transfer</title>
 
@@ -12,8 +12,16 @@
 
     <itemizedlist>
         <listitem>
+            <para><code>LowerCase </code>: ce filtre peut mettre en minuscule le contenu d'un fichier texte.</para>
+        </listitem>
+
+        <listitem>
             <para><code>Rename</code> : ce filtre peut renommer les fichiers, changer leur localisation et même forcer
             l'écrasement de fichiers existants.</para>
+        </listitem>
+
+        <listitem>
+            <para><code>UpperCase </code>: ce filtre peut mettre en majuscule le contenu d'un fichier texte.</para>
         </listitem>
     </itemizedlist>
 
@@ -32,7 +40,7 @@
 
             <listitem>
                 <para><code>addFilters(array $filters, $files = null)</code> : ajoute les filtres à la pile des filtres.
-                Chaque entrée peut être soit une paire type/options, ou un tableau avec la clé "filter" spécifiant le
+                Chaque entrée peut être soit une paire type/options, ou un tableau avec la clé "filtre" spécifiant le
                 filtre (tous les autres options seront considérées comme des options du filtre au moment de
                 l'instanciation).</para>
             </listitem>
@@ -117,6 +125,33 @@ $upload->addFilter('Rename', 'file1', 'C:\picture\newjpg')
         <note>
             <para>Notez que même si l'ajout du même filtre plusieurs fois est autorisé, faire ceci peut entraîner des
             problèmes si vous utilisez différentes options pour le même filtre.</para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.lowercase">
+        <title>Filtre <emphasis role="strong">LowerCase</emphasis></title>
+
+        <para>Le filtre <code>LowerCase</code> vous permet de mettre en minuscule le contenu d'un fichier. Vous devriez
+        utiliser ce filtre seulement sur les fichiers texte.</para>
+
+        <example id="zend.file.transfer.filters.lowercase.example">
+            <title>Utiliser le filtre LowerCase</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('MimeType', 'text');
+
+// Ajoute un filtre pour mettre en minuscule les fichiers texte uploadés
+$upload->addFilter('LowerCase');
+
+// Ajoute un filtre pour mettre en minuscule seulement le fichier uploadé "uploadfile1"
+$upload->addFilter('LowerCase', null, 'uploadfile1');
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>Notez que comme il n'y pas d'options pour le filtre LowerCase, vous devez fournir un <code>null</code>
+            en second paramètre quand vous souhaitez limiter le filtre à un fichier unique.</para>
         </note>
     </sect2>
 
@@ -246,5 +281,32 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                 </tbody>
             </tgroup>
         </table>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.uppercase">
+        <title>Filtre <emphasis role="strong">UpperCase</emphasis></title>
+
+        <para>Le filtre <code>UpperCase</code> vous permet de mettre en minuscule le contenu d'un fichier. Vous devriez
+        utiliser ce filtre seulement sur les fichiers texte.</para>
+
+        <example id="zend.file.transfer.filters.uppercase.example">
+            <title>Utiliser le filtre UpperCase</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('MimeType', 'text');
+
+// Ajoute un filtre pour mettre en majuscule les fichiers textes uploadés
+$upload->addFilter('UpperCase');
+
+// joute un filtre pour mettre en minuscule seulement le fichier uploadé "uploadfile1"
+$upload->addFilter('UpperCase', null, 'uploadfile1');
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>Notez que comme il n'y pas d'options pour le filtre UpperCase, vous devez fournir un <code>null</code>
+            en second paramètre quand vous souhaitez limiter le filtre à un fichier unique.</para>
+        </note>
     </sect2>
 </sect1>
