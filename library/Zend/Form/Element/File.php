@@ -456,7 +456,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
 
     /**
      * Retrieve error codes; proxy to transfer adapter
-     * 
+     *
      * @return array
      */
     public function getErrors()
@@ -573,13 +573,22 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     }
 
     /**
-     * Overwrites the base method
-     * File elements do not have a value
+     * Processes the file, returns null or the filename only
+     * For the complete path, use getFileName
      *
-     * @return null
+     * @return null|string
      */
     public function getValue()
     {
-        return null;
+    	if (!$this->isValid(null)) {
+    		return null;
+    	}
+
+        if (!$this->receive()) {
+        	return null;
+        }
+
+        $filename = basename($this->getFileName());
+        return $filename;
     }
 }
