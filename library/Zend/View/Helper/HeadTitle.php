@@ -76,18 +76,20 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
 
         $items = array();
         foreach ($this as $item) {
-            $items[] = ($this->_autoEscape) ? $this->_escape($item) : $item;
+            $items[] = $item;
         }
 
-        $separator = ($this->_autoEscape) ? $this->_escape($this->getSeparator()) : $this->getSeparator();
+        $separator = $this->getSeparator();
         $output = '';
-        if($prefix = $this->getPrefix()) {
-            $output  .= ($this->_autoEscape) ? $this->_escape($prefix) : $prefix;
+        if(($prefix = $this->getPrefix())) {
+            $output  .= $prefix;
         }
         $output .= implode($separator, $items);
-        if($postfix = $this->getPostfix()) {
-            $output .= ($this->_autoEscape) ? $this->_escape($postfix) : $postfix;
+        if(($postfix = $this->getPostfix())) {
+            $output .= $postfix;
         }
+
+        $output = ($this->_autoEscape) ? $this->_escape($output) : $output;
 
         return $indent . '<title>' . $output . '</title>';
     }
