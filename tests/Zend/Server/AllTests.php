@@ -1,14 +1,14 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Server_AllTests::main');
-    set_include_path(
-        dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library' 
-        . PATH_SEPARATOR . dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'library' 
-        . PATH_SEPARATOR . get_include_path());
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
+
+require_once 'Zend/Server/DefinitionTest.php';
+require_once 'Zend/Server/Method/DefinitionTest.php';
+require_once 'Zend/Server/Method/CallbackTest.php';
+require_once 'Zend/Server/Method/PrototypeTest.php';
 
 require_once 'Zend/Server/ReflectionTest.php';
 require_once 'Zend/Server/Reflection/ClassTest.php';
@@ -30,6 +30,10 @@ class Zend_Server_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Server');
 
+        $suite->addTestSuite('Zend_Server_DefinitionTest');
+        $suite->addTestSuite('Zend_Server_Method_DefinitionTest');
+        $suite->addTestSuite('Zend_Server_Method_CallbackTest');
+        $suite->addTestSuite('Zend_Server_Method_PrototypeTest');
         $suite->addTestSuite('Zend_Server_ReflectionTest');
         $suite->addTestSuite('Zend_Server_Reflection_ClassTest');
         $suite->addTestSuite('Zend_Server_Reflection_FunctionTest');

@@ -58,9 +58,9 @@ class Zend_XmlRpc_Server_Cache
         }
 
         // Remove system.* methods
-        $methods = $server->getFunctions();
+        $methods = $server->getDispatchTable();
         foreach ($methods as $name => $method) {
-            if ($method->system) {
+            if ('system.' == substr($name, 0, 7)) {
                 unset($methods[$name]);
             }
         }
