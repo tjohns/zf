@@ -40,9 +40,7 @@
     </chapter>
     <chapter id="zend.amf">
         <title>Zend_Amf</title>
-        <xi:include href="module_specs/Zend_Amf.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Amf.xml" />
         <xi:include href="module_specs/Zend_Amf-Server.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Amf-Server.xml" /></xi:fallback>
         </xi:include>
@@ -294,6 +292,9 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Locale-AppendixLanguages.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-AppendixLanguages.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Locale-Migration.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-Migration.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.log">
