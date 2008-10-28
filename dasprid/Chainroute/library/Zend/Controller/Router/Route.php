@@ -37,7 +37,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
     protected $_urlVariable = ':';
     protected $_urlDelimiter = '/';
     protected $_regexDelimiter = '#';
-    protected $_defaultRegex = null;
+    protected $_defaultRegex = '[^\/]+';
 
     /**
      * Holds names of all route's pattern variable names. Array index holds a position in URL.
@@ -85,7 +85,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      * for validation
      * @var int
      */
-    protected $_staticCount = 0;
+    private $_catch = array();
 
     public function getVersion() {
         return 1;
@@ -118,24 +118,57 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
         $route = trim($route, $this->_urlDelimiter);
         $this->_defaults = (array) $defaults;
         $this->_requirements = (array) $reqs;
+        $this->_regex = '';
+        
+        $delim = preg_quote($this->_urlDelimiter);
 
         if ($route != '') {
-
-            foreach (explode($this->_urlDelimiter, $route) as $pos => $part) {
-
+            
+            $parts = preg_split('/(:\w+|\*)/i', $route, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+            $catch = 1;
+            
+            foreach ($parts as $pos => $part) {
+                
+                $optional = false;
+                
                 if (substr($part, 0, 1) == $this->_urlVariable) {
+
                     $name = substr($part, 1);
                     $this->_parts[$pos] = (isset($reqs[$name]) ? $reqs[$name] : $this->_defaultRegex);
                     $this->_variables[$pos] = $name;
+                    $this->_catch[$name] = $catch++;
+                    $regex = '(' . $this->_parts[$pos] . ')';
+                    if (array_key_exists($name, $defaults)) {
+                        $optional = true;
+                        $regex .= '?';
+                    }
+                    
                 } else {
+                    
                     $this->_parts[$pos] = $part;
-                    if ($part != '*') $this->_staticCount++;
+
+                    if ($part == '*') {
+                        $optional = true;
+                        $regex = '(.*)';
+                        $this->_catch['*'] = $catch++; 
+                    } else {
+                        $regex = preg_quote($part);
+                    }
+                    
+                }
+                
+                if ($optional) {
+                    if (substr($this->_regex, -strlen($delim)) == $delim) {
+                        $regex = '?' . $regex;   
+                    }
                 }
 
+                $this->_regex .= $regex; 
+                
             }
 
         }
-
+        
     }
 
     /**
@@ -147,64 +180,31 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      */
     public function match($path)
     {
-
-        $pathStaticCount = 0;
         $values = array();
+        $matches = null;
 
-        $path = trim($path, $this->_urlDelimiter);
+        $path = urldecode(trim($path, $this->_urlDelimiter));
         
-        if ($path != '') {
-
-            $path = explode($this->_urlDelimiter, $path);
-
-            foreach ($path as $pos => $pathPart) {
-
-                // Path is longer than a route, it's not a match
-                if (!array_key_exists($pos, $this->_parts)) {
-                    return false;
-                }
-                
-                // If it's a wildcard, get the rest of URL as wildcard data and stop matching
-                if ($this->_parts[$pos] == '*') {
-                    $count = count($path);
-                    for($i = $pos; $i < $count; $i+=2) {
-                        $var = urldecode($path[$i]);
-                        if (!isset($this->_wildcardData[$var]) && !isset($this->_defaults[$var]) && !isset($values[$var])) {
-                            $this->_wildcardData[$var] = (isset($path[$i+1])) ? urldecode($path[$i+1]) : null;
-                        }
-                    }
-                    break;
-                }
-
-                $name = isset($this->_variables[$pos]) ? $this->_variables[$pos] : null;
-                $pathPart = urldecode($pathPart);
-
-                // If it's a static part, match directly
-                if ($name === null && $this->_parts[$pos] != $pathPart) {
-                    return false;
-                }
-
-                // If it's a variable with requirement, match a regex. If not - everything matches
-                if ($this->_parts[$pos] !== null && !preg_match($this->_regexDelimiter . '^' . $this->_parts[$pos] . '$' . $this->_regexDelimiter . 'iu', $pathPart)) {
-                    return false;
-                }
-
-                // If it's a variable store it's value for later
-                if ($name !== null) {
-                    $values[$name] = $pathPart;
-                } else {
-                    $pathStaticCount++;
-                }
-                
+        $res = preg_match($this->_regexDelimiter . '^' . $this->_regex . '$' . $this->_regexDelimiter . 'iu', $path, $matches);
+        if (!$res) return false;
+        
+        foreach ($this->_catch as $name => $pos) {
+            if (isset($matches[$pos]) && $name != '*' && $matches[$pos] != '') {
+                $values[$name] = $matches[$pos];
             }
-
         }
 
-        // Check if all static mappings have been matched
-        if ($this->_staticCount != $pathStaticCount) {
-            return false;
+        if (isset($this->_catch['*'])) {
+            $innerPath = explode($this->_urlDelimiter, $matches[$this->_catch['*']]);
+            $count = count($innerPath);
+            for($i = 0; $i < $count; $i+=2) {
+                $var = $innerPath[$i];
+                if (!isset($this->_wildcardData[$var]) && !isset($this->_defaults[$var]) && !isset($values[$var])) {
+                    $this->_wildcardData[$var] = (isset($innerPath[$i+1])) ? $innerPath[$i+1] : null;
+                }
+            }
         }
-
+        
         $return = $values + $this->_wildcardData + $this->_defaults;
 
         // Check if all map variables have been initialized
@@ -214,6 +214,8 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
             }
         }
 
+        // var_dump($return);
+        
         $this->_values = $values;
         
         return $return;
@@ -249,8 +251,6 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                     unset($data[$name]);
                 } elseif (!$reset && !$useDefault && isset($this->_values[$name])) {
                     $url[$key] = $this->_values[$name];
-                } elseif (!$reset && !$useDefault && isset($this->_wildcardData[$name])) {
-                    $url[$key] = $this->_wildcardData[$name];
                 } elseif (isset($this->_defaults[$name])) {
                     $url[$key] = $this->_defaults[$name];
                 } else {
@@ -258,6 +258,7 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                     throw new Zend_Controller_Router_Exception($name . ' is not specified');
                 }
 
+                if ($encode) $url[$key] = urlencode($url[$key]);
 
             } elseif ($part != '*') {
                 $url[$key] = $part;
@@ -265,8 +266,9 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                 if (!$reset) $data += $this->_wildcardData;
                 foreach ($data as $var => $value) {
                     if ($value !== null) {
-                        $url[$key++] = $var;
-                        $url[$key++] = $value;
+                        $url[$key++] = $var . $this->_urlDelimiter;
+                        if ($encode) $value = urlencode($value);
+                        $url[$key++] = $value . $this->_urlDelimiter;
                         $flag = true;
                     }
                 }
@@ -277,9 +279,12 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
         $return = '';
 
         foreach (array_reverse($url, true) as $key => $value) {
-            if ($flag || !isset($this->_variables[$key]) || $value !== $this->getDefault($this->_variables[$key])) {
-                if ($encode) $value = urlencode($value);
-                $return = $this->_urlDelimiter . $value . $return;
+            if ($flag 
+                || ($value != $this->_urlDelimiter && !isset($this->_variables[$key])) 
+                || (isset($this->_variables[$key]) && $value !== $this->getDefault($this->_variables[$key]))
+               ) 
+            {
+                $return = $value . $return;
                 $flag = true;
             }
         }
