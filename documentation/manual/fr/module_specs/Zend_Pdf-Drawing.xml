@@ -253,7 +253,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
             <programlisting role="php"><![CDATA[
 ...
 // Crée une nouvelle police
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_HELVETICA);
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Applique la police
 $pdfPage->setFont($font, 36);
