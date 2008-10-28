@@ -68,7 +68,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
             additional parameter for the configuration called <code>chains</code>.
             This one is simply a list of routes, which will be chained with
             the parent route. Neither the parent- nor the child-route will be
-            added directly to the router but only the the chained route. The
+            added directly to the router but only the chained route. The
             name of the chained route in the router will be the parent route
             name and the child route name concatenated with a dash (-). A simple
             config in XML would look like:
