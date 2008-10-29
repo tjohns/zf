@@ -93,14 +93,4 @@ class Zend_View_Helper_HeadTitle extends Zend_View_Helper_Placeholder_Container_
 
         return $indent . '<title>' . $output . '</title>';
     }
-
-    /**
-     * Cast to string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->toString();
-    }
 }
