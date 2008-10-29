@@ -184,7 +184,7 @@ class Zend_Filter_AllTests
         $suite->addTestSuite('Zend_Filter_Word_DashToUnderscoreTest');
         $suite->addTestSuite('Zend_Filter_Word_UnderscoreToDashTest');
         $suite->addTestSuite('Zend_Filter_File_LowerCaseTest');
-        $suite->addTestSuite('Zend_Filter_File_RenameCaseTest');
+        $suite->addTestSuite('Zend_Filter_File_RenameTest');
         $suite->addTestSuite('Zend_Filter_File_UpperCaseTest');
 
         return $suite;

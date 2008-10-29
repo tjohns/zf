@@ -18,7 +18,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once dirname(__FILE__)."/../TestHelper.php";
+require_once dirname(__FILE__)."/../../TestHelper.php";
 
 /** PHPUnit Test Case */
 require_once "PHPUnit/Framework/TestCase.php";
