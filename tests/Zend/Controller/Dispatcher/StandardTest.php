@@ -8,6 +8,7 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Controller/Dispatcher/Standard.php';
 require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'Zend/Controller/Request/Simple.php';
 require_once 'Zend/Controller/Response/Cli.php';

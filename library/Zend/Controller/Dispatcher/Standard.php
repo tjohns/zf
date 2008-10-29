@@ -330,14 +330,10 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
 
         $dispatchDir = $this->getDispatchDirectory();
         $loadFile    = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
-        $dir         = dirname($loadFile);
-        $file        = basename($loadFile);
 
-        try {
-            Zend_Loader::loadFile($file, $dir, true);
-        } catch (Zend_Exception $e) {
+        if (!include_once $loadFile) {
             require_once 'Zend/Controller/Dispatcher/Exception.php';
-            throw new Zend_Controller_Dispatcher_Exception('Cannot load controller class "' . $className . '" from file "' . $file . '" in directory "' . $dir . '"');
+            throw new Zend_Controller_Dispatcher_Exception('Cannot load controller class "' . $className . '" from file "' . $loadFile . "'");
         }
 
         if (!class_exists($finalClass, false)) {
