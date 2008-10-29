@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.uri.chapter">
   <title>Zend_Uri</title>
 
@@ -117,6 +117,45 @@ $valid = Zend_Uri::check('http://uri.in.question');
       これは <code>Zend_Uri::factory()</code>
       を使用して例外を処理するよりも便利です。
     </para>
+
+    <sect3 id="zend.uri.validation.allowunwise">
+        <title>URL 内での "Unwise" 文字の許可</title>
+
+        <para>
+            デフォルトでは、Zend_Uri は次の文字を許可しません。
+            <code>"{", "}", "|", "\", "^", "`"</code>
+            これらは RFC で "unwise" と定義されており無効なものです。
+            しかし、多くの実装ではこれらの文字を妥当なものとして扱います。
+        </para>
+
+        <para>
+            Zend_Uri でもこれらの "unwise" 文字を許可することができます。
+            そのためには、Zend_Uri::setConfig() メソッドで
+            'allow_unwise' オプションを TRUE に設定します。
+        </para>
+
+        <example id="zend.uri.validation.allowunwise.example-1">
+            <title>URI における特殊文字の許可</title>
+            <programlisting role="php"><![CDATA[
+// 通常は、これは false を返します
+$valid = Zend_Uri::check('http://example.com/?q=this|that'); // '|' を含んでいます
+
+// しかし、"unwise" 文字を許可することもできます
+Zend_Uri::setConfig(array('allow_unwise' => true));
+$valid = Zend_Uri::check('http://example.com/?q=this|that'); // これは 'true' を返します
+
+// 'allow_unwise' の値をデフォルトの FALSE に戻します
+Zend_Uri::setConfig(array('allow_unwise' => false));
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para><code>Zend_Uri::setConfig()</code> は、全体の設定オプションを変更します。
+            そのため、上の例のように最後は 'allow_unwise' を 'false'
+            に戻すことを推奨します。unwise な文字を常に許可したいという場合は別です。</para>
+        </note>
+    </sect3>
   </sect2>
 
   <sect2 id="zend.uri.instance-methods">
