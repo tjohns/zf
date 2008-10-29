@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11997 -->
+<!-- EN-Revision: 12172 -->
 <sect3 id="zend.controller.router.routes.hostname">
     <title>Zend_Controller_Router_Route_Hostname</title>
 
@@ -52,7 +52,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
         (<code>Zend_Controller_Router_Route_Chain</code>) が返されます。
         そして、これをルータに渡します。
     </para>
-    
+
     <note>
         <title>パラメータの優先度</title>
         <para>
@@ -63,7 +63,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
             hostname ルートで指定したコントローラが選択されます。
         </para>
     </note>
-    
+
     <sect4 id="zend.controller.router.routes.hostname.config">
         <title>Zend_Config 経由での hostname ルートの使用</title>
 
@@ -77,17 +77,17 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
             親ルートの名前と子ルートの名前をダッシュ (-) でつないだものとなります
             単純な設定を XML で書いたものは次のようになります。
         </para>
-        
+
         <programlisting role="xml"><![CDATA[
 <routes>
     <www type="Zend_Controller_Router_Route_Hostname">
         <route>www.example.com</route>
         <chains>
-            <index type="Zend_Controller_Rotuer_Route_Static">
+            <index type="Zend_Controller_Router_Route_Static">
                 <route></route>
                 <defaults module="default" controller="index" action="index" />
             </index>
-            <imprint type="Zend_Controller_Rotuer_Route_Static">
+            <imprint type="Zend_Controller_Router_Route_Static">
                 <route>imprint</route>
                 <defaults module="default" controller="index" action="index" />
             </imprint>
@@ -96,7 +96,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     <users type="Zend_Controller_Router_Route_Hostname">
         <route>users.example.com</route>
         <chains>
-            <profile type="Zend_Controller_Rotuer_Route">
+            <profile type="Zend_Controller_Router_Route">
                 <route>:username</route>
                 <defaults module="users" controller="profile" action="index" />
             </index>
@@ -108,13 +108,13 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
 </routes>
 ]]>
         </programlisting>
-    
+
         <para>
             この結果、3 つのルート <code>www-index</code>、
             <code>www-imprint</code> および <code>users-profile</code>
             が作られます。これらはホスト名に基づいてのみマッチし、ルート
             <code>misc</code> がすべてのホスト名に対してマッチします。
-        </para>    
+        </para>
     </sect4>
 </sect3>
 <!--
