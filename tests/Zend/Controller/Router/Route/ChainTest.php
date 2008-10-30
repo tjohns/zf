@@ -172,6 +172,22 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('en', $res['lang']);
         $this->assertEquals('1', $res['id']);
     }
+    
+    public function testChainingAssembleWithRoutePlaceholder()
+    {
+        $chain = new Zend_Controller_Router_Route_Chain();
+
+        $foo = new Zend_Controller_Router_Route_Hostname(':account.zend.com');
+        $bar = new Zend_Controller_Router_Route('bar/*');
+
+        $chain->chain($foo)->chain($bar);
+
+        $request = new Zend_Controller_Router_ChainTest_Request('http://foobar.zend.com/bar');
+        $res = $chain->match($request);
+        
+        $this->assertType('array', $res);
+        $this->assertRegexp('#[^a-z0-9]?foobar\.zend\.com/bar/foo/bar#i', $chain->assemble(array('account' => 'foobar', 'foo' => 'bar')));
+    }
 
     public function testChainingAssembleWithStatic()
     {

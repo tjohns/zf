@@ -5,6 +5,15 @@
  * @subpackage UnitTests
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_RouteTest::main');
+}
+
 /** @see Zend_Controller_Request_Http */
 require_once 'Zend/Controller/Request/Http.php';
 
@@ -588,4 +597,8 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     }
     
 
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Controller_Router_RouteTests::main') {
+    Zend_Controller_Router_RouteTests::main();
 }

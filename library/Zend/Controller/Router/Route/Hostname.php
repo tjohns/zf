@@ -306,4 +306,14 @@ class Zend_Controller_Router_Route_Hostname extends Zend_Controller_Router_Route
     public function getDefaults() {
         return $this->_defaults;
     }
+    
+    /**
+     * Get all variables which are used by the route
+     * 
+     * @return array
+     */
+    public function getVariables()
+    {
+        return $this->_variables;
+    }
 }
