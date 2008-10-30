@@ -215,6 +215,10 @@ class Zend_OpenId_Consumer
             }
         }
 
+        if (empty($params['openid_mode'])) {
+            $this->_setError("Missing openid.mode");
+            return false;
+        }
         if (empty($params['openid_return_to'])) {
             $this->_setError("Missing openid.return_to");
             return false;
@@ -225,10 +229,6 @@ class Zend_OpenId_Consumer
         }
         if (empty($params['openid_sig'])) {
             $this->_setError("Missing openid.sig");
-            return false;
-        }
-        if (empty($params['openid_mode'])) {
-            $this->_setError("Missing openid.mode");
             return false;
         }
         if ($params['openid_mode'] != 'id_res') {
