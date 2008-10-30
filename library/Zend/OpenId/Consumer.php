@@ -357,7 +357,6 @@ class Zend_OpenId_Consumer
             $params2['openid.mode'] = 'check_authentication';
             $ret = $this->_httpRequest($server, 'POST', $params2, $status);
             if ($status != 200) {
-                $this->_setError("'Dumb' signature verification HTTP request failed");
                 return false;
             }
             $r = array();
@@ -489,6 +488,7 @@ class Zend_OpenId_Consumer
         try {
             $response = $client->request();
         } catch (Exception $e) {
+            $this->_setError('HTTP Request failed: ' . $e->getMessage());
             return false;
         }
         $status = $response->getStatus();
@@ -496,6 +496,7 @@ class Zend_OpenId_Consumer
         if ($status == 200 || ($status == 400 && !empty($body))) {
             return $body;
         }else{
+            $this->_setError('Bad HTTP response');
             return false;
         }
     }
