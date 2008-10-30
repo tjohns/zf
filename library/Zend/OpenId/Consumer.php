@@ -300,9 +300,9 @@ class Zend_OpenId_Consumer
                     $id = $params['openid_claimed_id'];
                     if (!Zend_OpenId::normalize($id) ||
                         !$this->_discovery($id, $discovered_server, $discovered_version) ||
-                        (isset($params['openid_identity']) &&
+                        (!empty($params['openid_identity']) &&
                          $params["openid_identity"] != $id) ||
-                        (isset($params['openid_op_endpoint']) &&
+                        (!empty($params['openid_op_endpoint']) &&
                          $params['openid_op_endpoint'] != $discovered_server) ||
                         $discovered_version != $version) {
                         $this->_setError("Discovery information verification failed");
