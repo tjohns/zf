@@ -305,6 +305,11 @@ class Zend_Form_Element implements Zend_Validate_Interface
             unset($options['prefixPath']);
         }
 
+        if (isset($options['disableTranslator'])) {
+            $this->setDisableTranslator($options['disableTranslator']);
+            unset($options['disableTranslator']);
+        }
+
         unset($options['options']);
         unset($options['config']);
 
