@@ -96,6 +96,10 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     
     protected function setUp()
     {
+        if (!extension_loaded('pdo_sqlite')) {
+           $this->markTestSkipped('Pdo_Sqlite extension is not loaded');
+        }
+        
         $this->_adapter = new Zend_Db_Adapter_Pdo_Sqlite(array(
             'dbname' => dirname(__FILE__) . '/Paginator/_files/test.sqlite'
         ));
