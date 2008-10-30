@@ -46,8 +46,7 @@ abstract class Zend_Config_Writer
     /**
      * Create a new adapter
      * 
-     * $options may be either be an array or a Zend_Config object which
-     * specifies adapter related options. 
+     * $options can only be passed as array or be omitted 
      *
      * @param null|array $options
      */
@@ -55,8 +54,6 @@ abstract class Zend_Config_Writer
     {
         if (is_array($options)) {
             $this->setOptions($options);
-        } elseif ($options instanceof Zend_Config) {
-            $this->setConfig($options);
         }
     }
     
