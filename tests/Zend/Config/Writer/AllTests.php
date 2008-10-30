@@ -23,15 +23,15 @@
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Config_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Config_Writer_AllTests::main');
 }
 
-require_once 'Zend/Config/Writer/AllTests.php';
-require_once 'Zend/Config/IniTest.php';
-require_once 'Zend/Config/XmlTest.php';
+require_once 'Zend/Config/Writer/ArrayTest.php';
+require_once 'Zend/Config/Writer/IniTest.php';
+require_once 'Zend/Config/Writer/XmlTest.php';
 
 /**
  * @category   Zend
@@ -40,7 +40,7 @@ require_once 'Zend/Config/XmlTest.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Config_AllTests
+class Zend_Config_Writer_AllTests
 {
     public static function main()
     {
@@ -49,17 +49,16 @@ class Zend_Config_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Config');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Config_Writer');
 
-        $suite->addTest(Zend_Config_Writer_AllTests::suite());
-        
-        $suite->addTestSuite('Zend_Config_IniTest');
-        $suite->addTestSuite('Zend_Config_XmlTest');
+        $suite->addTestSuite('Zend_Config_Writer_ArrayTest');
+        $suite->addTestSuite('Zend_Config_Writer_IniTest');
+        $suite->addTestSuite('Zend_Config_Writer_XmlTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Config_AllTests::main') {
-    Zend_Config_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Config_Writer_AllTests::main') {
+    Zend_Config_Writer_AllTests::main();
 }

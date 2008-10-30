@@ -72,6 +72,10 @@
         <xi:include href="module_specs/Zend_Config_Ini.xml" />
         <xi:include href="module_specs/Zend_Config_Xml.xml" />
     </chapter>
+    <chapter id="zend.config.writer">
+        <title>Zend_Config_Writer</title>
+        <xi:include href="module_specs/Zend_Config_Writer.xml" />
+    </chapter>
     <chapter id="zend.console.getopt">
         <title>Zend_Console_Getopt</title>
         <xi:include href="module_specs/Zend_Console_Getopt-Introduction.xml" />
