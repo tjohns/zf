@@ -296,6 +296,12 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $paginator = Zend_Paginator::factory(range(1, 101));
         $this->assertEquals(11, $paginator->count());
     }
+
+    public function testHasCorrectCountOfAllItemsAfterInit()
+    {
+        $paginator = Zend_Paginator::factory(range(1, 101));
+        $this->assertEquals(101, $paginator->countAllItems());
+    }
     
 	public function testAddCustomAdapterPathsInConstructor()
     {

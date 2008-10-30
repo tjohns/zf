@@ -38,6 +38,9 @@
             you're familiar with <code>count()</code>.  As used with
             <code>Zend_Paginator</code>, this is the total number of items
             in the data collection.
+            Additionally, the <code>Zend_Paginator</code> instance provides a method
+            <code>countAllItems()</code> that proxies to the adapter
+            <code>count()</code> method.
         </para>
 
         <para>

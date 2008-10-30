@@ -407,7 +407,18 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $this->_pageCount;
     }
-    
+
+    /**
+     * Return the total number of items
+     * available from the adapter
+     *
+     * @return integer
+     */
+    public function countAllItems()
+    {
+        return count($this->_adapter);
+    }
+
     /**
      * Clear the page item cache
      *
@@ -852,7 +863,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         // Item numbers
         if ($this->getCurrentItems() !== null) {
             $pages->currentItemCount = $this->getCurrentItemCount();
-            $pages->totalItemCount   = $this->_adapter->count();
+            $pages->totalItemCount   = $this->countAllItems();
             $pages->firstItemNumber  = (($currentPageNumber - 1) * $this->_itemCountPerPage) + 1;
             $pages->lastItemNumber   = $pages->firstItemNumber + $pages->currentItemCount - 1;
         }
