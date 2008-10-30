@@ -81,6 +81,39 @@ class Zend_Server_Method_PrototypeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('array', $params[1]);
     }
 
+    public function testPrototypeShouldAllowAddingParameterObjects()
+    {
+        $parameter = new Zend_Server_Method_Parameter(array(
+            'type' => 'string',
+            'name' => 'foo',
+        ));
+        $this->prototype->addParameter($parameter);
+        $this->assertSame($parameter, $this->prototype->getParameter('foo'));
+    }
+
+    public function testPrototypeShouldAllowFetchingParameterByNameOrIndex()
+    {
+        $parameter = new Zend_Server_Method_Parameter(array(
+            'type' => 'string',
+            'name' => 'foo',
+        ));
+        $this->prototype->addParameter($parameter);
+        $test1 = $this->prototype->getParameter('foo');
+        $test2 = $this->prototype->getParameter(0);
+        $this->assertSame($test1, $test2);
+        $this->assertSame($parameter, $test1);
+        $this->assertSame($parameter, $test2);
+    }
+
+    public function testPrototypeShouldAllowRetrievingParameterObjects()
+    {
+        $this->prototype->addParameters(array('string', 'array'));
+        $parameters = $this->prototype->getParameterObjects();
+        foreach ($parameters as $parameter) {
+            $this->assertTrue($parameter instanceof Zend_Server_Method_Parameter);
+        }
+    }
+
     public function testPrototypeShouldAllowAddingMultipleParameters()
     {
         $this->testParametersShouldBeEmptyArrayByDefault();

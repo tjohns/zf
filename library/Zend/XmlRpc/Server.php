@@ -21,9 +21,9 @@
  */
 
 /**
- * Implement Zend_Server_Interface
+ * Extends Zend_Server_Abstract
  */
-require_once 'Zend/Server/Interface.php';
+require_once 'Zend/Server/Abstract.php';
 
 /**
  * Exception this class throws
@@ -54,26 +54,6 @@ require_once 'Zend/XmlRpc/Server/Fault.php';
  * XMLRPC server system methods class
  */
 require_once 'Zend/XmlRpc/Server/System.php';
-
-/**
- * Zend_Server_Definition
- */
-require_once 'Zend/Server/Definition.php';
-
-/**
- * Zend_Server_Method_Definition
- */
-require_once 'Zend/Server/Method/Definition.php';
-
-/**
- * Zend_Server_Method_Callback
- */
-require_once 'Zend/Server/Method/Callback.php';
-
-/**
- * Zend_Server_Method_Prototype
- */
-require_once 'Zend/Server/Method/Prototype.php';
 
 /**
  * Convert PHP to and from xmlrpc native types
@@ -139,7 +119,7 @@ require_once 'Zend/Server/Reflection/Method.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_XmlRpc_Server implements Zend_Server_Interface
+class Zend_XmlRpc_Server extends Zend_Server_Abstract
 {
     /**
      * Character encoding
@@ -505,7 +485,7 @@ class Zend_XmlRpc_Server implements Zend_Server_Interface
      */
     public function getFunctions()
     {
-        return $this->_table;
+        return $this->_table->toArray();
     }
 
     /**
@@ -516,64 +496,6 @@ class Zend_XmlRpc_Server implements Zend_Server_Interface
     public function getSystem()
     {
         return $this->_system;
-    }
-
-    /**
-     * Build callback for method signature
-     * 
-     * @param  Zend_Server_Reflection_Function_Abstract $reflection 
-     * @return Zend_Server_Method_Callback
-     */
-    protected function _buildCallback(Zend_Server_Reflection_Function_Abstract $reflection)
-    {
-        $callback = new Zend_Server_Method_Callback();
-        if ($reflection instanceof Zend_Server_Reflection_Method) {
-            $callback->setType($reflection->isStatic() ? 'static' : 'instance')
-                     ->setClass($reflection->getDeclaringClass()->getName())
-                     ->setMethod($reflection->getName());
-        } elseif ($reflection instanceof Zend_Server_Reflection_Function) {
-            $callback->setType('function')
-                     ->setFunction($reflection->getName());
-        }
-        return $callback;
-    }
-
-    /**
-     * Build a method signature
-     * 
-     * @param  Zend_Server_Reflection_Function_Abstract $reflection 
-     * @param  null|string|object $class
-     * @return void
-     * @throws Zend_XmlRpc_Server_Exception on duplicate entry
-     */
-    protected function _buildSignature(Zend_Server_Reflection_Function_Abstract $reflection, $class = null)
-    {
-        $ns         = $reflection->getNamespace();
-        $name       = $reflection->getName();
-        $method     = empty($ns) ? $name : $ns . '.' . $name;
-
-        if ($this->_table->hasMethod($method)) {
-            throw new Zend_XmlRpc_Server_Exception('Duplicate method registered: ' . $method);
-        }
-
-        $definition = new Zend_Server_Method_Definition();
-        $definition->setName($method)
-                   ->setCallback($this->_buildCallback($reflection))
-                   ->setMethodHelp($reflection->getDescription())
-                   ->setInvokeArguments($reflection->getInvokeArguments());
-
-        foreach ($reflection->getPrototypes() as $proto) {
-            $prototype = new Zend_Server_Method_Prototype();
-            $prototype->setReturnType($this->_fixType($prototype->getReturnType()));
-            foreach ($proto->getParameters() as $parameter) {
-                $prototype->addParameter($this->_fixType($parameter->getType()));
-            }
-            $definition->addPrototype($prototype);
-        }
-        if (is_object($class)) {
-            $definition->setObject($class);
-        }
-        $this->_table->addMethod($definition);
     }
 
     /**
@@ -640,30 +562,7 @@ class Zend_XmlRpc_Server implements Zend_Server_Interface
             throw new Zend_XmlRpc_Server_Exception('Calling parameters do not match signature', 623);
         }
 
-        $callback = $info->getCallback();
-        switch ($callback->getType()) {
-            case 'function':
-                $return = call_user_func_array($callback->getFunction(), $params);
-                break;
-            case 'static':
-                $return = call_user_func_array(array($callback->getClass(), $callback->getMethod()), $params);
-                break;
-            case 'instance':
-                $object = $info->getObject();
-                if (!is_object($object)) {
-                    try {
-                        $class  = $callback->getClass();
-                        $object = new $class;
-                    } catch (Exception $e) {
-                        throw new Zend_XmlRpc_Server_Exception('Error instantiating class ' . $class . ' to invoke method ' . $method, 621);
-                    }
-                }
-                $return = call_user_func_array(array($object, $callback->getMethod()), $params);
-                break;
-            default:
-                throw new Zend_XmlRpc_Server_Exception('Method missing implementation', 622);
-        }
-
+        $return        = $this->_dispatch($info, $params);
         $responseClass = $this->getResponseClass();
         return new $responseClass($return);
     }

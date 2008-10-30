@@ -37,6 +37,11 @@ class Zend_Server_Method_Prototype
     protected $_returnType = 'void';
 
     /**
+     * @var array Map parameter names to parameter index
+     */
+    protected $_parameterNameMap = array();
+
+    /**
      * @var array Method parameters
      */
     protected $_parameters = array();
@@ -84,7 +89,18 @@ class Zend_Server_Method_Prototype
      */
     public function addParameter($parameter)
     {
-        $this->_parameters[] = (string) $parameter;
+        if ($parameter instanceof Zend_Server_Method_Parameter) {
+            $this->_parameters[] = $parameter;
+            if (null !== ($name = $parameter->getName())) {
+                $this->_parameterNameMap[$name] = count($this->_parameters) - 1;
+            }
+        } else {
+            require_once 'Zend/Server/Method/Parameter.php';
+            $parameter = new Zend_Server_Method_Parameter(array(
+                'type' => (string) $parameter,
+            ));
+            $this->_parameters[] = $parameter;
+        }
         return $this;
     }
 
@@ -110,19 +126,54 @@ class Zend_Server_Method_Prototype
      */
     public function setParameters(array $parameters)
     {
-        $this->_parameters = array();
+        $this->_parameters       = array();
+        $this->_parameterNameMap = array();
         $this->addParameters($parameters);
         return $this;
     }
 
     /**
-     * Retrieve parameters
+     * Retrieve parameters as list of types
      *
      * @return array
      */
     public function getParameters()
     {
+        $types = array();
+        foreach ($this->_parameters as $parameter) {
+            $types[] = $parameter->getType();
+        }
+        return $types;
+    }
+
+    /**
+     * Get parameter objects
+     * 
+     * @return array
+     */
+    public function getParameterObjects()
+    {
         return $this->_parameters;
+    }
+
+    /**
+     * Retrieve a single parameter by name or index
+     * 
+     * @param  string|int $index 
+     * @return null|Zend_Server_Method_Parameter
+     */
+    public function getParameter($index)
+    {
+        if (!is_string($index) && !is_numeric($index)) {
+            return null;
+        }
+        if (array_key_exists($index, $this->_parameterNameMap)) {
+            $index = $this->_parameterNameMap[$index];
+        }
+        if (array_key_exists($index, $this->_parameters)) {
+            return $this->_parameters[$index];
+        }
+        return null;
     }
 
     /**

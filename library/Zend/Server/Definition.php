@@ -22,17 +22,23 @@
 /**
  * Server methods metadata
  *
+ * @todo       Implement iterator
  * @category   Zend
  * @package    Zend_Server
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Server_Definition
+class Zend_Server_Definition implements Countable, Iterator
 {
     /**
      * @var array Array of Zend_Server_Method_Definition objects
      */
     protected $_methods = array();
+
+    /**
+     * @var bool Whether or not overwriting existing methods is allowed
+     */
+    protected $_overwriteExistingMethods = false;
 
     /**
      * Constructor
@@ -45,6 +51,18 @@ class Zend_Server_Definition
         if (is_array($methods)) {
             $this->setMethods($methods);
         }
+    }
+
+    /**
+     * Set flag indicating whether or not overwriting existing methods is allowed
+     * 
+     * @param mixed $flag 
+     * @return void
+     */
+    public function setOverwriteExistingMethods($flag)
+    {
+        $this->_overwriteExistingMethods = (bool) $flag;
+        return $this;
     }
 
     /**
@@ -78,7 +96,7 @@ class Zend_Server_Definition
             throw new Zend_Server_Exception('No method name provided');
         }
 
-        if (array_key_exists($name, $this->_methods)) {
+        if (!$this->_overwriteExistingMethods && array_key_exists($name, $this->_methods)) {
             require_once 'Zend/Server/Exception.php';
             throw new Zend_Server_Exception(sprintf('Method by name of "%s" already exists', $name));
         }
@@ -185,5 +203,65 @@ class Zend_Server_Definition
             $methods[$key] = $method->toArray();
         }
         return $methods;
+    }
+
+    /**
+     * Countable: count of methods
+     * 
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->_methods);
+    }
+
+    /**
+     * Iterator: current item
+     * 
+     * @return mixed
+     */
+    public function current()
+    {
+        return current($this->_methods);
+    }
+
+    /**
+     * Iterator: current item key
+     * 
+     * @return int|string
+     */
+    public function key()
+    {
+        return key($this->_methods);
+    }
+
+    /**
+     * Iterator: advance to next method
+     * 
+     * @return void
+     */
+    public function next()
+    {
+        return next($this->_methods);
+    }
+
+    /**
+     * Iterator: return to first method
+     * 
+     * @return void
+     */
+    public function rewind()
+    {
+        return reset($this->_methods);
+    }
+
+    /**
+     * Iterator: is the current index valid?
+     * 
+     * @return bool
+     */
+    public function valid()
+    {
+        return (bool) $this->current();
     }
 }
