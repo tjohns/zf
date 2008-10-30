@@ -678,6 +678,17 @@ class Zend_Db_Select
     }
 
     /**
+     * Gets the Zend_Db_Adapter_Abstract for this
+     * particular Zend_Db_Select object.
+     *
+     * @return Zend_Db_Adapter_Abstract
+     */
+    public function getAdapter()
+    {
+        return $this->_adapter;
+    }
+
+    /**
      * Populate the {@link $_parts} 'join' key
      *
      * Does the dirty work of populating the join key.
