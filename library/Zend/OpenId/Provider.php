@@ -79,6 +79,13 @@ class Zend_OpenId_Provider
     private $_trustUrl;
 
     /**
+     * The OP Endpoint URL
+     *
+     * @var string $_opEndpoint
+     */
+    private $_opEndpoint;
+
+    /**
      * Constructs a Zend_OpenId_Provider object with given parameters.
      *
      * @param string $loginUrl is an URL that provides login screen for
@@ -128,6 +135,17 @@ class Zend_OpenId_Provider
             $this->_storage = $storage;
         }
         $this->_sessionTtl = $sessionTtl;
+    }
+
+    /**
+     * Sets the OP Endpoint URL
+     *
+     * @param string $url the OP Endpoint URL
+     * @return null
+     */
+    public function setOpEndpoint($url)
+    {
+    	$this->_opEndpoint = $url;
     }
 
     /**
@@ -683,7 +701,11 @@ class Zend_OpenId_Provider
         }
 
         if ($version >= 2.0) {
-            $ret['openid.op_endpoint'] = Zend_OpenId::selfUrl();
+        	if (!empty($this->_opEndpoint)) {
+	            $ret['openid.op_endpoint'] = $this->_opEndpoint;
+        	} else {
+	            $ret['openid.op_endpoint'] = Zend_OpenId::selfUrl();
+	        }
         }
         $ret['openid.response_nonce'] = gmdate('Y-m-d\TH:i:s\Z') . uniqid();
         $ret['openid.mode'] = 'id_res';
