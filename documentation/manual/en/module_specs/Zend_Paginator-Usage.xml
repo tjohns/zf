@@ -548,6 +548,11 @@ $('paginationControl').observe('change', function() {
                             <entry>Number of items on this page</entry>
                         </row>
                         <row>
+                            <entry>itemCountPerPage</entry>
+                            <entry>integer</entry>
+                            <entry>Number of items expected on each page</entry>
+                        </row>
+                        <row>
                             <entry>last</entry>
                             <entry>integer</entry>
                             <entry>Last page number</entry>
