@@ -372,6 +372,17 @@ class Zend_Session extends Zend_Session_Abstract
 
 
     /**
+     * Whether or not session has been destroyed via session_destroy()
+     *
+     * @return bool
+     */
+    public static function isDestroyed()
+    {
+        return self::$_destroyed;
+    }
+
+
+    /**
      * start() - Start the session.
      *
      * @param bool|array $options  OPTIONAL Either user supplied options, or flag indicating if start initiated automatically
