@@ -55,12 +55,22 @@ class Zend_Config_Writer_Array extends Zend_Config_Writer
     /**
      * Defined by Zend_Config_Writer
      *
+     * @param  string      $filename
+     * @param  Zend_Config $config
      * @throws Zend_Config_Exception When filename was not set
      * @throws Zend_Config_Exception When filename is not writable
      * @return void
      */
-    public function write()
+    public function write($filename = null, Zend_Config $config = null)
     {
+        if ($filename !== null) {
+            $this->setFilename($filename);
+        }
+        
+        if ($config !== null) {
+            $this->setConfig($config);
+        }
+        
         if ($this->_filename === null) {
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('No filename was set');

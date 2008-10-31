@@ -99,7 +99,17 @@ class Zend_Config_Writer_ArrayTest extends PHPUnit_Framework_TestCase
         $writer = new Zend_Config_Writer_Array(array('config' => $config, 'filename' => $this->_tempName));
         $writer->write();
         
-        $data = include $this->_tempName;
+        $config = new Zend_Config(include $this->_tempName);
+        
+        $this->assertEquals('foo', $config->test);
+    }
+    
+    public function testArgumentOverride()
+    {
+        $config = new Zend_Config(array('test' => 'foo'));
+
+        $writer = new Zend_Config_Writer_Array();
+        $writer->write($this->_tempName, $config);
         
         $config = new Zend_Config(include $this->_tempName);
         
