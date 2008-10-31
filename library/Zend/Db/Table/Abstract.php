@@ -429,7 +429,7 @@ abstract class Zend_Db_Table_Abstract
      * @param  mixed $db Either an Adapter object, or a string naming a Registry key
      * @return void
      */
-    public static final function setDefaultAdapter($db = null)
+    public static function setDefaultAdapter($db = null)
     {
         self::$_defaultDb = self::_setupAdapter($db);
     }
@@ -439,7 +439,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @return Zend_Db_Adapter_Abstract or null
      */
-    public static final function getDefaultAdapter()
+    public static function getDefaultAdapter()
     {
         return self::$_defaultDb;
     }
@@ -448,7 +448,7 @@ abstract class Zend_Db_Table_Abstract
      * @param  mixed $db Either an Adapter object, or a string naming a Registry key
      * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
-    protected final function _setAdapter($db)
+    protected function _setAdapter($db)
     {
         $this->_db = self::_setupAdapter($db);
         return $this;
@@ -459,7 +459,7 @@ abstract class Zend_Db_Table_Abstract
      *
      * @return Zend_Db_Adapter_Abstract
      */
-    public final function getAdapter()
+    public function getAdapter()
     {
         return $this->_db;
     }
@@ -469,7 +469,7 @@ abstract class Zend_Db_Table_Abstract
      * @return Zend_Db_Adapter_Abstract
      * @throws Zend_Db_Table_Exception
      */
-    protected static final function _setupAdapter($db)
+    protected static function _setupAdapter($db)
     {
         if ($db === null) {
             return null;
@@ -540,7 +540,7 @@ abstract class Zend_Db_Table_Abstract
      * @return Zend_Cache_Core
      * @throws Zend_Db_Table_Exception
      */
-    protected static final function _setupMetadataCache($metadataCache)
+    protected static function _setupMetadataCache($metadataCache)
     {
         if ($metadataCache === null) {
             return null;
