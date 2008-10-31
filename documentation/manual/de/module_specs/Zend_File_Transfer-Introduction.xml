@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12070 -->
+<!-- EN-Revision: 12099 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -208,6 +208,71 @@ $upload->receive();
             </programlisting>
 
         </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.informations">
+
+        <title>Zusätzliche Dateiinformationen</title>
+        
+        <para>
+            <code>Zend_File_Transfer</code> kann verschiedene zusätzliche Informationen über Dateien
+            zurückgeben. Die folgenden Methoden sind vorhanden:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileName($file = null, $path = true)</emphasis>: Diese Methode
+                    gibt den wirklichen Namen der übertragenen Datei zurück.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileInfo($file = null)</emphasis>: Diese Methode gibt die
+                    internen Informationen für die angegebene übertragene Datei zurück.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            <code>getFileName()</code> akzeptiert den Namen des Elements als ersten Parameter. Wenn kein Name
+            angegeben wird, werden alle bekannten Dateinamen in einem Array zurückgegeben. Wenn die Datei
+            eine MultiDatei ist, wird auch ein Array zurückgegeben. Wenn nur eine einzelne Datei vorhanden ist
+            wird nur ein String zurückgegeben.
+        </para>
+
+        <para>
+            Standardmäßig werden Dateinamen mit Ihrem kompletten Pfad zurückgegeben. Wenn man nur den Dateinamen
+            ohne Pfad benötigt, kann der zweite Parameter <code>$path</code> gesetzt werden, welcher den
+            Dateinamen ausschneidet wenn er auf false gesetzt wird.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example1">
+            <title>Den Dateinamen bekommen</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Gibt die Dateinamen aller Dateien zurück
+$names = $upload->getFileName();
+
+// Gibt den Dateinamen des Formularelements 'foo' zurück
+$names = $upload->getFileName('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das sich der Dateinamen ändern kann wenn man die Datei empfängt (receive).
+                Das kann geschehen durch den Fakt das beim Empfangen alle Filter ausgeführt werden.
+                Deswegen sollte man <code>getFileName()</code> immer ausführen nachdem man die Dateien
+                empfangen hat.
+            </para>
+        </note>
     </sect2>
 </sect1>
 <!--

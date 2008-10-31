@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11947 -->
+<!-- EN-Revision: 12108 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router</title>
     <sect2 id="zend.controller.router.introduction">
@@ -308,6 +308,22 @@ $request->setBaseUrl('/~user/application-root/');
 ]]>
         </programlisting>
 
+    </sect2>
+    
+    <sect2 id="zend.controller.router.global.parameters">
+        <title>Globale Parameter</title>
+
+        <para>
+            Man kann in einem Router globale Parameter setzen die der Route automatisch zur Verfügung stehen
+            wenn Sie durch <code>setGlobalParam</code> eingefügt werden. Wenn ein globaler Parameter
+            gesetzt ist, aber auch direkt an die Assemble Methode gegeben wird, überschreibt der
+            Benutzer-Parameter den Globalen-Parameter. Globale Parameter können auf folgendem Weg gesetzt werden:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$router->setGlobalParam('lang', 'en');
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.routes">

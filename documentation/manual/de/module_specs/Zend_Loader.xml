@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12067 -->
+<!-- EN-Revision: 12092 -->
 <sect1 id="zend.loader.load">
 
     <title>Dynamisches Laden von Dateien und Klassen</title>
@@ -68,66 +68,6 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
             verwendet.
         </para>
 
-        <sect3 id="zend.loader.load.file.cache">
-            <title>Dateipfad Cachen</title>
-
-            <para>
-                <code>loadFile()</code> kann eine teure Operation sein wenn die Datei nicht existiert. In
-                solchen Fällen, selbst wenn Fehler unterdrückt werden, wird trotzdem ein Fehler in
-                PHP's Fehlerstack hinzugefügt, was eine teure Operation ist. Unglücklicherweise verwenden
-                einige Klassen, wie <link linkend="zend.loader.pluginloader">Zend_Loader_PluginLoader</link>,
-                <code>loadFile()</code> sehr stark um Benutzereigene Plugins zu erlauben.
-            </para>
-
-            <para>
-                Um dieses Problem zu beheben erlaubt jetzt, mit dem Release 1.7.0, <code>Zend_Loader</code>
-                einen optionalen Dateipfad Cache anzuhängen. Diese Cache erlaubt <code>loadFile()</code>
-                früher zurückzukehren wenn ein angegebener Pfad als schlecht bekannt ist. In einer
-                typischen Zend Framework anwendung, wenn das File Backend für <code>Zend_Cache</code>
-                verwendet wird, können die Antwortzeiten auf die Hälfte reduziert werden; speicherbasierte
-                Cache Backends wir Memcached, API und Zend Platform arbeiten sogar noch besser.
-            </para>
-
-            <para>
-                Um den Dateipfad Cache zu aktivieren, muß einfach ein <code>Zend_Cache</code> an die
-                <code>Zend_Loader</code> Klasse angehängt werden indem die statische
-                <code>setFilePathCache()</code> Methode verwendet wird:
-            </para>
-
-            <programlisting role="php"><![CDATA[
-Zend_Loader::setFilePathCache($cache);
-]]></programlisting>
-
-            <para>
-                Der Cache kann durch die Übergabe einer <code>null</code> an die Methode ausgeschaltet werden: 
-            </para>
-
-            <programlisting role="php"><![CDATA[
-Zend_Loader::setFilePathCache(null);
-]]></programlisting>
-
-            <note>
-                <title>Das Cachen Switch caching on and off per environment</title>
-
-                <para>
-                    <code>Zend_Cache_Core</code> hat eine Option, "caching", welche auf den Wert false
-                    gesetzt werden kann um das Caching auszuschalten. Wir empfehlen den Dateipfad Cache
-                    früh zu setzen, und einfach den Wert der Caching Option basierend auf der eigenen
-                    Umgebung zu setzen. Das erlaubt einem neue Plugins und Pfade wärend der Entwicklung
-                    zu testen, wärend in Produktion der Dateipfad Cache für maximale Performance
-                    eingeschaltet wird. 
-                </para>
-            </note>
-
-            <note>
-                <title>Das Sqlite Backend wird nicht empfohlen</title>
-
-                <para>
-                    Wir empfehlen das Sqlite Backend von <code>Zend_Cache</code> nicht für diesen Zweck,
-                    da es in unseren Tests, die Performance in den meisten Fällen, verringert hat.
-                </para>
-            </note>
-        </sect3>
     </sect2>
 
     <sect2 id="zend.loader.load.class">
