@@ -13,7 +13,7 @@
         Currently the following writers are shipped with
         <code>Zend_Config_Writer</code>:
     </para>
-      
+
     <itemizedlist>
         <listitem>
             <para>
@@ -31,14 +31,14 @@
             </para>
         </listitem>
     </itemizedlist>
-      
+
     <para>
         As an exception, <code>Zend_Config_Writer_Ini</code> has an additional
         option parameter <code>nestSeparator</code>, which defines with which
         character the single nodes are separated. The default is a single dot,
         like it is accepted by <code>Zend_Config_Ini</code> by default.
     </para>
-    
+
     <para>
         When modifying or creating a <code>Zend_Config</code> object, there are
         some things to know. To create or modify a value, you simply say set
@@ -49,14 +49,14 @@
         extends another one, you call the <code>setExtend()</code> method
         on the root <code>Zend_Config</code> object.
     </para>
-    
+
     <example id="zend.config.writer.example.using">
         <title>Using Zend_Config_Writer</title>
         <para>
             This example illustrates the basic use of
             <code>Zend_Config_Writer_Xml</code> to create a new config file:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Create the config object
 $config = new Zend_Config(array(), true);
 $config->production = array();
@@ -86,20 +86,20 @@ $writer->setConfig($config)
 // c)
 $writer = new Zend_Config_Writer_Xml();
 $writer->write('config.xml', $config);
-?>]]>
+]]>
         </programlisting>
         <para>
             This will create an XML config file with the sections production
             and staging, where staging extends production.
         </para>
     </example>
-    
+
     <example id="zend.config.writer.modifying">
         <title>Modifying an existing config</title>
         <para>
-            This example demonatrates how to edit an existing config file.
+            This example demonstrates how to edit an existing config file.
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 // Load all sections from an existing config file, while skipping the extends.
 $config = new Zend_Config_Ini('config.ini',
                               null,
@@ -113,17 +113,17 @@ $config->production->hostname = 'foobar';
 $writer = new Zend_Config_Writer_Ini(array('config'   => $config,
                                            'filename' => 'config.ini'));
 $writer->write();
-?>]]>
+]]>
         </programlisting>
     </example>
-    
+
     <note>
         <title>Loading a config file</title>
         <para>
             When loading an existing config file for modifications it is very
             important to load all sections and to skip the extends, so that
             no values are merged. This is done by giving the
-            <code>skipExtends</code> as option to the constructor.  
+            <code>skipExtends</code> as option to the constructor.
         </para>
     </note>
 </sect1>
