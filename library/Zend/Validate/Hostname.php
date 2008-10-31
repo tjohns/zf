@@ -323,9 +323,15 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
                     $labelChars = 'a-z0-9';
                     $utf8 = false;
                     $classFile = 'Zend/Validate/Hostname/' . ucfirst($this->_tld) . '.php';
+                    $isReadable = false;
                     if ($this->_validateIdn) {
-                        if (Zend_Loader::isReadable($classFile)) {
-
+                    	try {
+                    		$isReadable = Zend_Loader::isReadable($classFile);
+                    	} catch (Exception $e){
+                    		// You can not use IDN hostnames.
+                    		$isReadable = false;
+                    	}
+                        if ($isReadable === true) {
                             // Load additional characters
                             $className = 'Zend_Validate_Hostname_' . ucfirst($this->_tld);
                             Zend_Loader::loadClass($className);
