@@ -6,9 +6,11 @@
         adapter-less system and thus is very easy to use. By default
         <code>Zend_Config_Writer</code> ships with three adapters, which all
         work the same. You instantiate a writer with specific options, which
-        should be at least <code>filename</code> and <code>config</code>. Then
+        can be <code>filename</code> and <code>config</code>. Then
         you call the <code>write()</code> method of the writer and the config
-        file is created. Currently the following writers are shipped with
+        file is created. You can also give <code>$filename</code> and
+        <code>$config</code> directly to the <code>write()</code> method.
+        Currently the following writers are shipped with
         <code>Zend_Config_Writer</code>:
     </para>
       
@@ -69,10 +71,21 @@ $config->production->db->username = 'production';
 $config->staging->db = array();
 $config->staging->db->username = 'staging';
 
-// Write the config file
+// Write the config file in one of the following ways:
+// a)
 $writer = new Zend_Config_Writer_Xml(array('config'   => $config,
                                            'filename' => 'config.xml'));
 $writer->write();
+
+// b)
+$writer = new Zend_Config_Writer_Xml();
+$writer->setConfig($config)
+       ->setFilename('config.xml')
+       ->write();
+       
+// c)
+$writer = new Zend_Config_Writer_Xml();
+$writer->write('config.xml', $config);
 ?>]]>
         </programlisting>
         <para>
