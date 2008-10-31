@@ -1,0 +1,69 @@
+<sect1 id="zend.progressbar">
+    <title>Zend_ProgressBar</title>
+    
+    <sect2 id="zend.progressbar.introduction">
+        <title>Introduction</title>
+        <para>
+	        <code>Zend_ProgressBar</code> is a component to create and update
+	        progressbars in different enviroments. It consists of a single
+	        backend, which outputs the progress through one of the multiple
+	        adapters. On every update, it takes an absolute value and optionally
+	        a status message, and then calls the adapter with some precalculated
+	        values like percentage and estimated time left.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.progressbar.basic">
+        <title>Basic usage of Zend_Progressbar</title>
+        <para>
+            <code>Zend_ProgressBar</code> is quite easy in it's usage. You
+            simply create a new instance of Zend_Progressbar, defining a
+            min- and a max-value, and choose an adapter to output the data. If
+            you want to process a file, you would do something like:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+$progressBar = new Zend_ProgressBar(0, $fileSize, $adapter);
+
+while (!feof($fp)) {
+    // Do something
+    
+    $progressBar->update($currentByteCount);
+}
+
+$progressBar->finish();
+]]>
+        </programlisting>
+        
+        <para>
+            In the first step, an instance of <code>Zend_ProgressBar</code> is
+            created, with a min-value of 0, a max-value of the total filesize
+            and a specific adapter. Then a file is processed and in every loop
+            the progressbar is updated with the current byte count. At the end
+            of the loop, the progressbar status is set to finished.  
+        </para>
+        <para>
+            <code>Zend_ProgressBar</code> also has a refresh() method which just
+            recalculates ETA and updates the adapter. This is useful when there
+            is no data update but you want the progressbar to be updated.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.progressbar.adapters">
+        <title>Standard adapters</title>
+	    <para>
+	        <code>Zend_ProgressBar</code> comes with the following two adapters:
+	        
+	        <itemizedlist mark="opencircle">
+	            <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
+	            <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
+	        </itemizedlist>
+	    </para>
+	    
+        <xi:include href="Zend_Progressbar_Adapter_Console.xml" />
+        <xi:include href="Zend_Progressbar_Adapter_JsPush.xml" />
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
