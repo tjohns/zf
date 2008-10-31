@@ -1,4 +1,4 @@
-<sect1 id="zend.config.writer">
+<sect1 id="zend.config.writer.introduction">
     <title>Zend_Config_Writer</title>
     <para>
         <code>Zend_Config_Writer</code> gives you the ability to write config
