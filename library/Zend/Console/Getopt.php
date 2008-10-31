@@ -877,11 +877,17 @@ class Zend_Console_Getopt
     {
         foreach ($rules as $ruleCode => $helpMessage)
         {
-            $tokens = preg_split('/([=-])/',
-                $ruleCode, 2, PREG_SPLIT_DELIM_CAPTURE);
-            $flagList = array_shift($tokens);
-            $delimiter = array_shift($tokens);
-            $paramType = array_shift($tokens);
+            // this may have to translate the long parm type if there
+            // are any complaints that =string will not work (even though that use
+            // case is not documented) 
+            if (in_array(substr($ruleCode, -2, 1), array('-', '='))) {
+                $flagList  = substr($ruleCode, 0, -2);
+                $delimiter = substr($ruleCode, -2, 1);
+                $paramType = substr($ruleCode, -1);
+            } else {
+                $flagList = $ruleCode;
+                $delimiter = $paramType = null;
+            }
             if ($this->_getoptConfig[self::CONFIG_IGNORECASE]) {
                 $flagList = strtolower($flagList);
             }
