@@ -74,7 +74,7 @@ abstract class Zend_Config_Writer
      * Set options via an array
      *
      * @param  array $options
-     * @return Zend_ProgressBar_Adapter
+     * @return Zend_Config_Writer
      */
     public function setOptions(array $options)
     {
