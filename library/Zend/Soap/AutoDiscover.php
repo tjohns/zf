@@ -116,7 +116,8 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
             if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
                 $schema = 'https';
             }
-            $uri = Zend_Uri::factory($schema . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
+            $host = (isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']:$_SERVER['SERVER_NAME']);
+            $uri = Zend_Uri::factory($schema . '://' . $host . $_SERVER['SCRIPT_NAME']);
             $this->setUri($uri);
         }
         return $uri;
