@@ -21,6 +21,7 @@
 
 require_once 'Zend/Server/Interface.php';
 require_once 'Zend/Soap/Wsdl.php';
+require_once 'Zend/Soap/AutoDiscover/Strategy/Default.php';
 require_once 'Zend/Server/Reflection.php';
 require_once 'Zend/Server/Exception.php';
 require_once 'Zend/Server/Abstract.php';
@@ -32,7 +33,7 @@ require_once 'Zend/Uri.php';
  * @category   Zend
  * @package    Zend_Soap
  */
-class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server_Interface {
+class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     /**
      * @var Zend_Soap_Wsdl
      */
@@ -52,6 +53,11 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      * @var boolean
      */
     private $_extractComplexTypes;
+
+    /**
+     * Discovery Strategy
+     */
+    protected $_strategy = null;
 
     /**
      * Url where the WSDL file will be available at.
@@ -74,6 +80,31 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         if($uri !== null) {
             $this->setUri($uri);
         }
+    }
+
+    /**
+     * Set strategy for autodiscovering.
+     *
+     * @param Zend_Soap_AutoDiscover_Strategy_Interface $strategy
+     * @return Zend_Soap_AutoDiscover
+     */
+    public function setDiscoverStrategy(Zend_Soap_AutoDiscover_Strategy_Interface $strategy)
+    {
+        $this->_strategy = $strategy;
+        return $this;
+    }
+
+    /**
+     * Return currently set discovery strategy
+     * 
+     * @return Zend_Soap_AutoDiscover_Strategy_Interface
+     */
+    public function getDiscoverStrategy()
+    {
+        if($this->_strategy === null) {
+            $this->_strategy = new Zend_Soap_AutoDiscover_Strategy_Default();
+        }
+        return $this->_strategy;
     }
 
     /**
@@ -135,53 +166,10 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
 
         $wsdl = new Zend_Soap_Wsdl($class, $uri, $this->_extractComplexTypes);
 
-        $port = $wsdl->addPortType($class . 'Port');
-        $binding = $wsdl->addBinding($class . 'Binding', 'tns:' .$class. 'Port');
-
-        $wsdl->addSoapBinding($binding, 'rpc');
-        $wsdl->addService($class . 'Service', $class . 'Port', 'tns:' . $class . 'Binding', $uri);
-        foreach ($this->_reflection->reflectClass($class)->getMethods() as $method) {
-            /* <wsdl:portType>'s */
-            $portOperation = $wsdl->addPortOperation($port, $method->getName(), 'tns:' .$method->getName(). 'Request', 'tns:' .$method->getName(). 'Response');
-            $desc = $method->getDescription();
-            if (strlen($desc) > 0) {
-                /** @todo check, what should be done for portoperation documentation */
-                //$wsdl->addDocumentation($portOperation, $desc);
-            }
-            /* </wsdl:portType>'s */
-
-            $this->_functions[] = $method->getName();
-
-            $selectedPrototype = null;
-            $maxNumArgumentsOfPrototype = -1;
-            foreach ($method->getPrototypes() as $prototype) {
-                $numParams = count($prototype->getParameters());
-                if($numParams > $maxNumArgumentsOfPrototype) {
-                    $maxNumArgumentsOfPrototype = $numParams;
-                    $selectedPrototype = $prototype;
-                }
-            }
-
-            if($selectedPrototype != null) {
-                $prototype = $selectedPrototype;
-                $args = array();
-                foreach($prototype->getParameters() as $param) {
-                    $args[$param->getName()] = $wsdl->getType($param->getType());
-                }
-                $message = $wsdl->addMessage($method->getName() . 'Request', $args);
-                if (strlen($desc) > 0) {
-                    //$wsdl->addDocumentation($message, $desc);
-                }
-                if ($prototype->getReturnType() != "void") {
-                    $message = $wsdl->addMessage($method->getName() . 'Response', array($method->getName() . 'Return' => $wsdl->getType($prototype->getReturnType())));
-                }
-
-                /* <wsdl:binding>'s */
-                $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
-                $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
-                /* </wsdl:binding>'s */
-            }
-        }
+        $strategy = $this->getDiscoverStrategy();
+        $strategy->setWsdl($wsdl);
+        $strategy->setClass($class, $namespace);
+        
         $this->_wsdl = $wsdl;
     }
 
@@ -193,10 +181,6 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      */
     public function addFunction($function, $namespace = '')
     {
-        static $port;
-        static $operation;
-        static $binding;
-
         if (!is_array($function)) {
             $function = (array) $function;
         }
@@ -217,38 +201,10 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
             $wsdl = $this->_wsdl;
         }
 
+        $strategy = $this->getDiscoverStrategy();
+        $strategy->setWsdl($wsdl);
         foreach ($function as $func) {
-            $method = $this->_reflection->reflectFunction($func);
-            foreach ($method->getPrototypes() as $prototype) {
-                $args = array();
-                foreach ($prototype->getParameters() as $param) {
-                    $args[$param->getName()] = $wsdl->getType($param->getType());
-                }
-                $message = $wsdl->addMessage($method->getName() . 'Request', $args);
-                $desc = $method->getDescription();
-                if (strlen($desc) > 0) {
-                    //$wsdl->addDocumentation($message, $desc);
-                }
-                if ($prototype->getReturnType() != "void") {
-                    $message = $wsdl->addMessage($method->getName() . 'Response', array($method->getName() . 'Return' => $wsdl->getType($prototype->getReturnType())));
-                }
-                 /* <wsdl:portType>'s */
-                   $portOperation = $wsdl->addPortOperation($port, $method->getName(), 'tns:' .$method->getName(). 'Request', 'tns:' .$method->getName(). 'Response');
-                if (strlen($desc) > 0) {
-                    //$wsdl->addDocumentation($portOperation, $desc);
-                }
-                   /* </wsdl:portType>'s */
-
-                /* <wsdl:binding>'s */
-                $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
-                $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
-                /* </wsdl:binding>'s */
-
-                $this->_functions[] = $method->getName();
-
-                // We will only add one prototype
-                break;
-            }
+            $this->getDiscoverStrategy()->addFunction($func);
         }
         $this->_wsdl = $wsdl;
     }
