@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12111 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Action Helfer</title>
 
@@ -145,6 +145,13 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
         <para>
             Da diese Methoden statisch sind, können Sie zu jeder Zeit in der Kontrollerkette aufgerufen werden um
             Helfer dynamisch hinzuzufügen wenn es notwendig wird.
+        </para>
+
+        <para>
+            Intern verwendet der Helfer Broker <link linkend="zend.loader.pluginloader">eine Instanz des
+            PluginLoader's</link> um die Pfade zu verwalten. Man erhlt den PluginLoader indem die statische
+            Methode <code>getPluginLoader()</code> verwendet, oder alternativ, eine eigene PluginLoader
+            Instanz einfügt durch Verwenden von <code>setPluginLoader()</code>.
         </para>
 
         <para>
