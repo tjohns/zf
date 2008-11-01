@@ -468,8 +468,8 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('tns:Zend_Soap_Wsdl_Test', $wsdl->getType('Zend_Soap_Wsdl_Test'));
         $this->assertTrue($wsdl->getComplexTypeStrategy() instanceof Zend_Soap_Wsdl_Strategy_DefaultComplexType);
 
-        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', 'Zend_Soap_Wsdl_Strategy_AnyType');
-        $this->assertEquals('xsd:anyType',             $wsdl->getType('Zend_Soap_Wsdl_Test'));
+        $wsdl2 = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', 'Zend_Soap_Wsdl_Strategy_AnyType');
+        $this->assertEquals('xsd:anyType',             $wsdl2->getType('Zend_Soap_Wsdl_Test'));
         $this->assertTrue($wsdl2->getComplexTypeStrategy() instanceof Zend_Soap_Wsdl_Strategy_AnyType);
     }
 
