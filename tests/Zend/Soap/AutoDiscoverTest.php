@@ -23,12 +23,14 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
+        // This has to be done because some CLI setups don't have $_SERVER variables
+        // to simuulate that we have an actual webserver.
         if(!isset($_SERVER) || !is_array($_SERVER)) {
             $_SERVER = array();
-            $_SERVER['HTTP_HOST'] = 'localhost';
-            $_SERVER['SCRIPT_NAME'] = '/my_script.php';
-            $_SERVER['HTTPS'] = "off";
         }
+        $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
+        $_SERVER['HTTPS'] = "off";
     }
 
     function testSetClass()
@@ -373,6 +375,10 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
      */
     public function testUsingClassWithMultipleMethodPrototypesProducesValidWsdl()
     {
+        $scriptUri = 'http://localhost/my_script.php';
+        $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
+
         $server = new Zend_Soap_AutoDiscover();
         $server->setClass('Zend_Soap_AutoDiscover_TestFixingMultiplePrototypes');
 
