@@ -435,28 +435,81 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
 
     function testGetType()
     {
-        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', true);
 
-        $this->assertEquals($wsdl->getType('string'),  'xsd:string');
-        $this->assertEquals($wsdl->getType('str'),     'xsd:string');
-        $this->assertEquals($wsdl->getType('int'),     'xsd:int');
-        $this->assertEquals($wsdl->getType('integer'), 'xsd:int');
-        $this->assertEquals($wsdl->getType('float'),   'xsd:float');
-        $this->assertEquals($wsdl->getType('double'),  'xsd:float');
-        $this->assertEquals($wsdl->getType('boolean'), 'xsd:boolean');
-        $this->assertEquals($wsdl->getType('bool'),    'xsd:boolean');
-        $this->assertEquals($wsdl->getType('array'),   'soap-enc:Array');
-        $this->assertEquals($wsdl->getType('object'),  'xsd:struct');
-        $this->assertEquals($wsdl->getType('mixed'),   'xsd:anyType');
-        $this->assertEquals($wsdl->getType('void'),    '');
+        $this->assertEquals('xsd:string',       $wsdl->getType('string'),  'xsd:string detection failed.');
+        $this->assertEquals('xsd:string',       $wsdl->getType('str'),     'xsd:string detection failed.');
+        $this->assertEquals('xsd:int',          $wsdl->getType('int'),     'xsd:int detection failed.');
+        $this->assertEquals('xsd:int',          $wsdl->getType('integer'), 'xsd:int detection failed.');
+        $this->assertEquals('xsd:float',        $wsdl->getType('float'),   'xsd:float detection failed.');
+        $this->assertEquals('xsd:float',        $wsdl->getType('double'),  'xsd:float detection failed.');
+        $this->assertEquals('xsd:boolean',      $wsdl->getType('boolean'), 'xsd:boolean detection failed.');
+        $this->assertEquals('xsd:boolean',      $wsdl->getType('bool'),    'xsd:boolean detection failed.');
+        $this->assertEquals('soap-enc:Array',   $wsdl->getType('array'),   'soap-enc:Array detection failed.');
+        $this->assertEquals('xsd:struct',       $wsdl->getType('object'),  'xsd:struct detection failed.');
+        $this->assertEquals('xsd:anyType',      $wsdl->getType('mixed'),   'xsd:anyType detection failed.');
+        $this->assertEquals('',                 $wsdl->getType('void'),    'void  detection failed.');
+    }
 
-        $this->assertEquals($wsdl->getType('Zend_Soap_Wsdl_Test'),
-                            'tns:Zend_Soap_Wsdl_Test');
+    function testGetComplexTypeBasedOnStrategiesBackwardsCompabilityBoolean()
+    {
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', true);
+        $this->assertEquals('tns:Zend_Soap_Wsdl_Test', $wsdl->getType('Zend_Soap_Wsdl_Test'));
 
         $wsdl1 = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', false);
+        $this->assertEquals('xsd:anyType',             $wsdl1->getType('Zend_Soap_Wsdl_Test'));
+    }
 
-        $this->assertEquals($wsdl1->getType('Zend_Soap_Wsdl_Test'), 'xsd:anyType');
+    function testGetComplexTypeBasedOnStrategiesStringNames()
+    {
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', 'Zend_Soap_Wsdl_Strategy_DefaultComplexType');
+        $this->assertEquals('tns:Zend_Soap_Wsdl_Test', $wsdl->getType('Zend_Soap_Wsdl_Test'));
 
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', 'Zend_Soap_Wsdl_Strategy_AnyType');
+        $this->assertEquals('xsd:anyType',             $wsdl->getType('Zend_Soap_Wsdl_Test'));
+    }
+
+    function testSettingUnknownStrategyThrowsException()
+    {
+        try {
+            $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', 'Zend_Soap_Wsdl_Strategy_UnknownStrategyType');
+            $this->fail();
+        } catch(Zend_Soap_Wsdl_Exception $e) {
+            
+        }
+    }
+
+    function testSettingInvalidStrategyObjectThrowsException()
+    {
+        try {
+            $strategy = new Zend_Soap_Wsdl_Test();
+            $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php', $strategy);
+            $this->fail();
+        } catch(Zend_Soap_Wsdl_Exception $e) {
+
+        }
+    }
+
+    function testAddingSameComplexTypeMoreThanOnceThrowsException()
+    {
+        try {
+            $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');
+            $wsdl->addType('Zend_Soap_Wsdl_Test');
+            $wsdl->addType('Zend_Soap_Wsdl_Test');
+            $this->fail();
+        } catch(Zend_Soap_Wsdl_Exception $e) {
+
+        }
+    }
+
+    function testUsingSameComplexTypeTwiceLeadsToReuseOfDefinition()
+    {
+        $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');
+        $wsdl->addComplexType('Zend_Soap_Wsdl_Test');
+        $this->assertEquals(array('Zend_Soap_Wsdl_Test'), $wsdl->getTypes());
+
+        $wsdl->addComplexType('Zend_Soap_Wsdl_Test');
+        $this->assertEquals(array('Zend_Soap_Wsdl_Test'), $wsdl->getTypes());
     }
 
     function testAddComplexType()

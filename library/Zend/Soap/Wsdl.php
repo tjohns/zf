@@ -21,6 +21,9 @@
 
 require_once 'Zend/Server/Exception.php';
 
+require_once "Zend/Soap/Wsdl/Strategy/Interface.php";
+require_once "Zend/Soap/Wsdl/Strategy/Abstract.php";
+
 
 /**
  * Zend_Soap_Wsdl
@@ -28,7 +31,8 @@ require_once 'Zend/Server/Exception.php';
  * @category   Zend
  * @package    Zend_Soap
  */
-class Zend_Soap_Wsdl {
+class Zend_Soap_Wsdl
+{
     /**
      * @var object DomDocument Instance
      */
@@ -57,9 +61,9 @@ class Zend_Soap_Wsdl {
     private $_includedTypes = array();
 
     /**
-     * @var boolean
+     * Strategy for detection of complex types
      */
-    private $_extractComplexTypes;
+    protected $_strategy = null;
 
 
     /**
@@ -67,9 +71,9 @@ class Zend_Soap_Wsdl {
      *
      * @param string  $name Name of the Web Service being Described
      * @param string  $uri URI where the WSDL will be available
-     * @param boolean $extractComplexTypes
+     * @param boolean|string|Zend_Soap_Wsdl_Strategy_Interface $strategy
      */
-    public function __construct($name, $uri, $extractComplexTypes = true)
+    public function __construct($name, $uri, $strategy = true)
     {
         if ($uri instanceof Zend_Uri_Http) {
             $uri = $uri->getUri();
@@ -94,7 +98,7 @@ class Zend_Soap_Wsdl {
             $this->_wsdl = $this->_dom->documentElement;
         }
 
-        $this->_extractComplexTypes = $extractComplexTypes;
+        $this->setComplexTypeStrategy($strategy);
     }
 
     /**
@@ -120,6 +124,50 @@ class Zend_Soap_Wsdl {
         }
 
         return $this;
+    }
+
+    /**
+     * Set a strategy for complex type detection and handling
+     *
+     * @todo Boolean is for backwards compability with extractComplexType object var. Remove it in later versions.
+     * @param boolean|string|Zend_Soap_Wsdl_Strategy_Interface $strategy
+     * @return Zend_Soap_Wsdl
+     */
+    public function setComplexTypeStrategy($strategy)
+    {
+        if($strategy === true) {
+            require_once "Zend/Soap/Wsdl/Strategy/DefaultComplexType.php";
+            $strategy = new Zend_Soap_Wsdl_Strategy_DefaultComplexType();
+        } else if($strategy === false) {
+            require_once "Zend/Soap/Wsdl/Strategy/AnyType.php";
+            $strategy = new Zend_Soap_Wsdl_Strategy_AnyType();
+        } else if(is_string($strategy)) {
+            if(class_exists($strategy)) {
+                $strategy = new $strategy();
+            } else {
+                require_once "Zend/Soap/Wsdl/Exception.php";
+                throw new Zend_Soap_Wsdl_Exception(
+                    sprintf("Strategy with name '%s does not exist.", $strategy
+                ));
+            }
+        }
+
+        if(!($strategy instanceof Zend_Soap_Wsdl_Strategy_Interface)) {
+            require_once "Zend/Soap/Wsdl/Exception.php";
+            throw new Zend_Soap_Wsdl_Exception("Set a strategy that is not of type 'Zend_Soap_Wsdl_Strategy_Interface'");
+        }
+        $this->_strategy = $strategy;
+        return $this;
+    }
+
+    /**
+     * Get the current complex type strategy
+     *
+     * @return Zend_Soap_Wsdl_Strategy_Interface
+     */
+    protected function getComplexTypeStrategy()
+    {
+        return $this->_strategy;
     }
 
     /**
@@ -383,6 +431,44 @@ class Zend_Soap_Wsdl {
     }
 
     /**
+     * Add a complex type name that is part of this WSDL and can be used in signatures.
+     *
+     * @param string $type
+     * @return Zend_Soap_Wsdl
+     */
+    public function addType($type)
+    {
+        if(in_array($type, $this->_includedTypes)) {
+            require_once "Zend/Soap/Wsdl/Exception.php";
+            throw new Zend_Soap_Wsdl_Exception(
+                sprintf("Trying to add a type '%s that is already part of the WSDL.", $type)
+            );
+        }
+        $this->_includedTypes[] = $type;
+        return $this;
+    }
+
+    /**
+     * Return an array of all currently included complex types
+     *
+     * @return array
+     */
+    public function getTypes()
+    {
+        return $this->_includedTypes;
+    }
+
+    /**
+     * Return the Schema node of the WSDL
+     *
+     * @return DOMElement
+     */
+    public function getSchema()
+    {
+        return $this->_schema;
+    }
+
+    /**
      * Return the WSDL as XML
      *
      * @return string WSDL as XML
@@ -454,11 +540,26 @@ class Zend_Soap_Wsdl {
             case 'void':
                 return '';
             default:
-                if (class_exists($type) && $this->_extractComplexTypes)
-                    return $this->addComplexType($type);
-                else
-                    return 'xsd:anyType';
+                // delegate retrieval of complex type to current strategy
+                return $this->addComplexType($type);
             }
+    }
+
+    /**
+     * This function makes sure a complex types section and schema additions are set.
+     *
+     * @return Zend_Soap_Wsdl
+     */
+    public function addSchemaTypeSection()
+    {
+        if ($this->_schema === null) {
+            $this->_schema = $this->_dom->createElement('xsd:schema');
+            $this->_schema->setAttribute('targetNamespace', $this->_uri);
+            $types = $this->_dom->createElement('types');
+            $types->appendChild($this->_schema);
+            $this->_wsdl->appendChild($types);
+        }
+        return $this;
     }
 
     /**
@@ -469,44 +570,14 @@ class Zend_Soap_Wsdl {
      */
     public function addComplexType($type)
     {
-        if (in_array($type, $this->_includedTypes)) {
+        if (in_array($type, $this->getTypes())) {
             return "tns:$type";
         }
+        $this->addSchemaTypeSection();
 
-        if ($this->_schema === null) {
-            $this->_schema = $this->_dom->createElement('xsd:schema');
-            $this->_schema->setAttribute('targetNamespace', $this->_uri);
-            $types = $this->_dom->createElement('types');
-            $types->appendChild($this->_schema);
-            $this->_wsdl->appendChild($types);
-        }
-
-        $class = new ReflectionClass($type);
-
-        $complexType = $this->_dom->createElement('xsd:complexType');
-        $complexType->setAttribute('name', $type);
-
-        $all = $this->_dom->createElement('xsd:all');
-
-        foreach ($class->getProperties() as $property) {
-            if (preg_match_all('/@var\s+([^\s]+)/m', $property->getDocComment(), $matches)) {
-
-            	/**
-            	 * @todo check if 'xsd:element' must be used here (it may not be compatible with using 'complexType'
-            	 * node for describing other classes used as attribute types for current class
-            	 */
-                $element = $this->_dom->createElement('xsd:element');
-                $element->setAttribute('name', $property->getName());
-                $element->setAttribute('type', $this->getType(trim($matches[1][0])));
-                $all->appendChild($element);
-            }
-        }
-
-        $complexType->appendChild($all);
-        $this->_schema->appendChild($complexType);
-
-        $this->_includedTypes[] = $type;
-
-        return "tns:$type";
+        $strategy = $this->getComplexTypeStrategy();
+        $strategy->setContext($this);
+        // delegates the detection of a complex type to the current strategy
+        return $strategy->addComplexType($type);
     }
 }
