@@ -19,7 +19,7 @@
         You can set the adapter options either via the <code>set*</code> methods
         or give an array or a Zend_Config instance with options as first
         parameter to the constructor. The available options are:
-    </para>      
+    </para>
     <itemizedlist>
         <listitem>
             <para>
@@ -31,9 +31,9 @@
             <para>
                 <code>elements</code>: Either <code>NULL</code> for default
                 or an array with at least one of the following constants
-                of <code>Zend_Console_ProgressBar</code> as value: 
+                of <code>Zend_Console_ProgressBar</code> as value:
             </para>
-            
+
             <itemizedlist>
                 <listitem>
                     <para>
@@ -82,7 +82,7 @@
         </listitem>
         <listitem>
             <para>
-                <code>barIndicatorChar</code>: A string which is used for 
+                <code>barIndicatorChar</code>: A string which is used for
                 the indicator in the progressbar. This one can be empty.
             </para>
         </listitem>

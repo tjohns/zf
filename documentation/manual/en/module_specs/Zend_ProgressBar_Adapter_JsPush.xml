@@ -94,7 +94,7 @@
     width: 1px;
     height: 1px;
 }
-        
+
 #zend-progressbar-container {
     width: 100px;
     height: 30px;
@@ -118,7 +118,7 @@ function Zend_ProgressBar_Update(data)
 }
 ]]>
         </programlisting>
-        
+
         <para>
             This will create a simple container with a black border and a block
             block which indicates the current process. You should not hide
@@ -130,12 +130,20 @@ function Zend_ProgressBar_Update(data)
             one of the available JavaScript libraries like Dojo, jQuery etc.
             For example, there are:
         </para>
-	    <itemizedlist>
-	        <listitem>Dojo: http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/user-assistance-and-feedback/progress-bar</listitem>
-	        <listitem>jQuery: http://t.wits.sg/2008/06/20/jquery-progress-bar-11/</listitem>
-	        <listitem>MooTools: http://davidwalsh.name/dw-content/progress-bar.php</listitem>
-	        <listitem>Prototype: http://livepipe.net/control/progressbar</listitem>
-	    </itemizedlist>
+        <itemizedlist>
+            <listitem>
+                <para>Dojo: http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/user-assistance-and-feedback/progress-bar</para>
+            </listitem>
+            <listitem>
+                <para>jQuery: http://t.wits.sg/2008/06/20/jquery-progress-bar-11/</para>
+            </listitem>
+            <listitem>
+                <para>MooTools: http://davidwalsh.name/dw-content/progress-bar.php</para>
+            </listitem>
+            <listitem>
+                <para>Prototype: http://livepipe.net/control/progressbar</para>
+            </listitem>
+        </itemizedlist>
     </example>
     <note>
         <title>Interval of updates</title>

@@ -929,7 +929,7 @@ $upload->addValidator('Hash', false, '315b3cd8273d44912a7', 'md5');
             <para>
                 This validator supports about 34 different hash algorithms. The most known are 'crc32',
                 'md5' and 'sha1'. When you want to know the others see php's
-                <ulink link="http://php.net/hash_algos">hash_algos method</ulink>.
+                <ulink url="http://php.net/hash_algos">hash_algos method</ulink>.
             </para>
         </note>
     </sect2>

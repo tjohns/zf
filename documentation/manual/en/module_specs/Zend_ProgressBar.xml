@@ -1,15 +1,15 @@
-<sect1 id="zend.progressbar">
+<sect1 id="zend.progressbar.introduction" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_ProgressBar</title>
-    
-    <sect2 id="zend.progressbar.introduction">
+
+    <sect2 id="zend.progressbar.whatisit">
         <title>Introduction</title>
         <para>
-	        <code>Zend_ProgressBar</code> is a component to create and update
-	        progressbars in different enviroments. It consists of a single
-	        backend, which outputs the progress through one of the multiple
-	        adapters. On every update, it takes an absolute value and optionally
-	        a status message, and then calls the adapter with some precalculated
-	        values like percentage and estimated time left.
+            <code>Zend_ProgressBar</code> is a component to create and update
+            progressbars in different environments. It consists of a single
+            backend, which outputs the progress through one of the multiple
+            adapters. On every update, it takes an absolute value and optionally
+            a status message, and then calls the adapter with some precalculated
+            values like percentage and estimated time left.
         </para>
     </sect2>
 
@@ -51,15 +51,15 @@ $progressBar->finish();
 
     <sect2 id="zend.progressbar.adapters">
         <title>Standard adapters</title>
-	    <para>
-	        <code>Zend_ProgressBar</code> comes with the following two adapters:
-	        
-	        <itemizedlist mark="opencircle">
-	            <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
-	            <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
-	        </itemizedlist>
-	    </para>
-	    
+        <para>
+            <code>Zend_ProgressBar</code> comes with the following two adapters:
+            
+            <itemizedlist mark="opencircle">
+                <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
+                <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
+            </itemizedlist>
+        </para>
+        
         <xi:include href="Zend_Progressbar_Adapter_Console.xml" />
         <xi:include href="Zend_Progressbar_Adapter_JsPush.xml" />
     </sect2>
