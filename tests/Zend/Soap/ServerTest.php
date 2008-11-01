@@ -38,12 +38,15 @@ require_once 'Zend/Soap/Server.php';
  */
 class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if (!extension_loaded('soap')) {
+           $this->markTestSkipped('SOAP Extension is not loaded');
+        }
+    }
+
     public function testSetOptions()
     {
-    	if (!extension_loaded('soap')) {
-    	   $this->markTestSkipped('SOAP Extension is not loaded');
-    	}
-
         $server = new Zend_Soap_Server();
 
         $this->assertTrue($server->getOptions() == array('soap_version' => SOAP_1_2));
@@ -62,10 +65,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetOptions()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertTrue($server->getOptions() == array('soap_version' => SOAP_1_2));
@@ -80,10 +79,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testEncoding()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getEncoding());
@@ -100,10 +95,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSoapVersion()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertEquals(SOAP_1_2, $server->getSoapVersion());
@@ -119,10 +110,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testValidateUrn()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         try {
@@ -138,10 +125,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetActor()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getActor());
@@ -157,10 +140,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetActor()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getActor());
@@ -170,10 +149,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetUri()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getUri());
@@ -189,10 +164,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetUri()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getUri());
@@ -202,10 +173,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetClassmap()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $classmap = array('TestData1' => 'Zend_Soap_Server_TestData1',
@@ -230,10 +197,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetClassmap()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $classmap = array('TestData1' => 'Zend_Soap_Server_TestData1',
@@ -246,10 +209,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetWsdl()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getWsdl());
@@ -265,10 +224,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetWsdl()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getWsdl());
@@ -278,10 +233,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testAddFunction()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         try {
@@ -323,10 +274,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetClass()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         try {
@@ -358,10 +305,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testSetObject()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
         $server = new Zend_Soap_Server();
 
         try {
@@ -392,10 +335,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetFunctions()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $server->addFunction('Zend_Soap_Server_TestFunc1');
@@ -420,10 +359,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetPersistence()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getPersistence());
@@ -442,10 +377,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetPersistence()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertNull($server->getPersistence());
@@ -455,10 +386,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetLastRequest()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
         $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
         $server->setReturnResponse(true);
@@ -487,10 +414,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testSetReturnResponse()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertFalse($server->getReturnResponse());
@@ -504,10 +427,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetReturnResponse()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         $this->assertFalse($server->getReturnResponse());
@@ -518,10 +437,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testGetLastResponse()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
         $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
         $server->setReturnResponse(true);
@@ -565,10 +480,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testHandle()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
         $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
 
@@ -627,10 +538,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testRegisterFaultException()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         // Remove the following line when you implement this test.
@@ -644,10 +551,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testDeregisterFaultException()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         // Remove the following line when you implement this test.
@@ -661,10 +564,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetFaultExceptions()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         // Remove the following line when you implement this test.
@@ -675,10 +574,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
     public function testFault()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
         $fault = $server->fault("Faultmessage!");
 
@@ -702,10 +597,6 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testHandlePhpErrors()
     {
-        if (!extension_loaded('soap')) {
-           $this->markTestSkipped('SOAP Extension is not loaded');
-        }
-
     	$server = new Zend_Soap_Server();
 
         // Remove the following line when you implement this test.
