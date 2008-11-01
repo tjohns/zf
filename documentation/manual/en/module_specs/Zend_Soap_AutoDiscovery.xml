@@ -245,18 +245,20 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        PHP class &lt;-&gt; <code>tns:$className</code>
+                        PHP class &lt;-&gt; based on complex type strategy
                         <footnote>
                             <para>
-                                If <code>Zend_Soap_AutoDiscover</code> object is created with <code>$extractComplexTypes</code>
-                                parameter turned off, then classes are translated to <code>xsd:anyType</code>.
-                            </para>
-                            <para>
-                                Otherwise, <code>tns:$className</code> is used and type is described in details in &lt;types&gt;
-                                WSDL section.
+                                <code>Zend_Soap_AutoDiscover</code> will be created with the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
+                                class as detection algorithm for complex types. The first parameter of the AutoDiscover constructor takes
+                                any complex type strategy implementing <code>Zend_Soap_Wsdl_Strategy_Interface</code> or a string with the name
+                                of the class. For backwards compability with <code>$extractComplexType</code> boolean variables are parsed
+                                exactly like in Zend_Soap_Wsdl. See the Zend_Soap_Wsdl manual on adding complex types for more information.
                             </para>
                         </footnote>.
                     </para>
+                </listitem>
+                <listitem>
+                    <para>type[] or object[] (ie. int[]) &lt;-&gt; based on complex type strategy</para>
                 </listitem>
                 <listitem>
                     <para>PHP void &lt;-&gt; empty type.</para>

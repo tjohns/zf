@@ -51,7 +51,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     /**
      * @var boolean
      */
-    private $_extractComplexTypes;
+    private $_strategy;
 
     /**
      * Url where the WSDL file will be available at.
@@ -63,13 +63,13 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     /**
      * Constructor
      *
-     * @param boolean $extractComplexTypes
+     * @param boolean|string|Zend_Soap_Wsdl_Strategy_Interface $strategy
      * @param string|Zend_Uri $uri
      */
-    public function __construct($extractComplexTypes = true, $uri=null)
+    public function __construct($strategy = true, $uri=null)
     {
         $this->_reflection = new Zend_Server_Reflection();
-        $this->_extractComplexTypes = $extractComplexTypes;
+        $this->setComplexTypeStrategy($strategy);
 
         if($uri !== null) {
             $this->setUri($uri);
@@ -123,6 +123,22 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     }
 
     /**
+     * Set the strategy that handles functions and classes that are added AFTER this call.
+     *
+     * @param  boolean|string|Zend_Soap_Wsdl_Strategy_Interface $strategy
+     * @return Zend_Soap_AutoDiscover
+     */
+    public function setComplexTypeStrategy($strategy)
+    {
+        $this->_strategy = $strategy;
+        if($this->_wsdl instanceof  Zend_Soap_Wsdl) {
+            $this->_wsdl->setComplexTypeStrategy($strategy);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the Class the SOAP server will use
      *
      * @param string $class Class Name
@@ -133,7 +149,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     {
         $uri = $this->getUri();
 
-        $wsdl = new Zend_Soap_Wsdl($class, $uri, $this->_extractComplexTypes);
+        $wsdl = new Zend_Soap_Wsdl($class, $uri, $this->_strategy);
 
         $port = $wsdl->addPortType($class . 'Port');
         $binding = $wsdl->addBinding($class . 'Binding', 'tns:' .$class. 'Port');
@@ -206,7 +222,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
         if (!($this->_wsdl instanceof Zend_Soap_Wsdl)) {
             $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
             $name = $parts[0];
-            $wsdl = new Zend_Soap_Wsdl($name, $uri, $this->_extractComplexTypes);
+            $wsdl = new Zend_Soap_Wsdl($name, $uri, $this->_strategy);
 
             $port = $wsdl->addPortType($name . 'Port');
             $binding = $wsdl->addBinding($name . 'Binding', 'tns:' .$name. 'Port');
