@@ -165,7 +165,7 @@ class Zend_Soap_Wsdl
      *
      * @return Zend_Soap_Wsdl_Strategy_Interface
      */
-    protected function getComplexTypeStrategy()
+    public function getComplexTypeStrategy()
     {
         return $this->_strategy;
     }
