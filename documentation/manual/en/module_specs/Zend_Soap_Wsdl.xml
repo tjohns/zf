@@ -27,8 +27,10 @@
                 </listitem>
                 <listitem>
                     <simpara>
-                        <code>$extractComplexTypes</code> - optional flag used to identify that complex types (objects)
-                        should be extracted.
+                        <code>$strategy</code> - optional flag used to identify the strategy for complex types (objects)
+                        detection. This was a boolean <code>$extractComplexTypes</code> before version 1.7 and can
+                        still be set as a boolean for backwards compability. By default the 1.6 detection behaviour
+                        is set. To read more on complex type detection strategies go to
                     </simpara>
                 </listitem>
             </orderedlist>
@@ -335,24 +337,53 @@ $soapMyClassType = $wsdl->getType('MyClass');
         </sect3>
 
         <sect3 id="zend.soap.wsdl.types.add_complex">
-            <title>Retrieving type information.</title>
+            <title>Adding complex type information.</title>
             <para>
                 <code>addComplexType($type)</code> method is used to add complex types (PHP classes) to a WSDL document.
             </para>
 
             <para>
-                It's automatically used by <code>getType()</code> method to add corresponding complex type
-                if <code>$extractComplexTypes</code> parameter of the constructor is set to <code>true</code>
-                (otherwise classes are mapped to 'xsd:anyType' SOAP type).
+                It's automatically used by <code>getType()</code> method to add corresponding complex types
+                of method parameters or return types.
             </para>
+
+            <para>
+                Its detection and building algorithm is based on the currently
+                active detection strategy for complex types. You can set the detection strategy either by
+                specifiying the the class name as string or instance of a <code>Zend_Soap_Wsdl_Strategy_Interface</code>
+                implementation as the third parameter of the constructor or using the <code>setComplexTypeStrategy($strategy)</code>
+                function of Zend_Soap_Wsdl. The following detection strategies currently exist:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>Class <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>: Enabled by default (when no
+                    third constructor parameter is set). Iterates over the public attributes of a class type and
+                    registeres them as subtypes of the complex object type.</para>
+                </listitem>
+                <listitem>
+                    <para>Class <code>Zend_Soap_Wsdl_Strategy_AnyType</code>: Casts all complex types into the
+                    simple XSD type xsd:anyType. Be careful this shortcut for complex type detection can probably only
+                    be handled successfully by weakly typed languages such as PHP.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>Class <code>Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence</code>: This strategy allows
+                    to specifiy return parameters of the type: <code>int[]</code> or <code>string[]</code>. It can only
+                    handle simple PHP types such as int, string, boolean, float and so on, but allows to specifiy
+                    nested arrays of arrays of type.</para>
+                </listitem>
+                <listitem>
+                    <para>Class <code>Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex</code>: This strategy allows
+                    to detect very complex arrays of objects. Objects types are detected based on the
+                    <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> and an array is wrapped
+                    around that definition.</para>
+                </listitem>
+            </itemizedlist>
 
             <para>
                 <code>addComplexType()</code> method creates '/definitions/types/xsd:schema/xsd:complexType' element for
                 each described complex type with name of the specified PHP class.
-            </para>
-
-            <para>
-                All class public properties are described as corresponding elements of 'xsd:all' node attached to 'xsd:complexType'.
             </para>
 
             <para>
@@ -372,6 +403,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
             <para>
                 See <ulink url="http://www.w3.org/TR/wsdl#_types"/> for the details.
             </para>
+            
         </sect3>
     </sect2>
 
