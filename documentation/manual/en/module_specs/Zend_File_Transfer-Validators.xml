@@ -20,6 +20,13 @@
 
         <listitem>
             <para>
+                <code>Crc32</code>: This validator checks for the crc32 hash value of the content from a file.
+                It is based on the <code>Hash</code> validator and allows a simpler usage by only supporting Crc32.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>ExcludeExtension</code>: This validator checks the extension of files. It will throw an
                 error when an given file has an defined extension. This way you can exclude defined extensions
                 from being validated.
@@ -88,6 +95,13 @@
 
         <listitem>
             <para>
+                <code>Md5</code>: This validator checks for the md5 hash value of the content from a file.
+                It is based on the <code>Hash</code> validator and allows a simpler usage by only supporting Md5.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>MimeType</code>: This validator can validate the mimetype of files. It is also able to
                 validate types of mimetypes and will throw error when the mimetype of a given file does not
                 match.
@@ -98,6 +112,13 @@
             <para>
                 <code>NotExists</code>: This validator checks for the existence of files. It will throw an
                 error when an given file does exist.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Sha1</code>: This validator checks for the sha1 hash value of the content from a file.
+                It is based on the <code>Hash</code> validator and allows a simpler usage by only supporting Sha1.
             </para>
         </listitem>
 
@@ -392,6 +413,44 @@ $upload->addValidator('Count', false, array(1, 5);
                 exceeds the maximum will be returned as error.
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.crc32">
+        <title><emphasis role="strong">Crc32</emphasis> validator</title>
+
+        <para>
+            The <code>Crc32</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php with the crc32 algorithm.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Sets the hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by giving them as array. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.crc32.example">
+            <title>Using the Crc32 validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Crc32', false, '3b3652f');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
@@ -934,6 +993,44 @@ $upload->addValidator('Hash', false, '315b3cd8273d44912a7', 'md5');
         </note>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.md5">
+        <title><emphasis role="strong">Md5</emphasis> validator</title>
+
+        <para>
+            The <code>Md5</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php with the md5 algorithm.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Sets the hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by giving them as array. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.md5.example">
+            <title>Using the Md5 validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Md5', false, '3b3652f336522365223');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.mimetype">
         <title><emphasis role="strong">MimeType</emphasis> validator</title>
 
@@ -1055,6 +1152,44 @@ $upload->addValidator('NotExists', false,
                 The validation will fail if the file does exist in any of the given directories.
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.sha1">
+        <title><emphasis role="strong">Sha1</emphasis> validator</title>
+
+        <para>
+            The <code>Sha1</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php with the md5 algorithm.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Sets the hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by giving them as array. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.sha1.example">
+            <title>Using the Sha1 validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Sha1', false, '3b3652f336522365223');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">

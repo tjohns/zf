@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/Validate/File/CountTest.php';
+require_once 'Zend/Validate/File/Crc32Test.php';
 require_once 'Zend/Validate/File/ExcludeExtensionTest.php';
 require_once 'Zend/Validate/File/ExcludeMimeTypeTest.php';
 require_once 'Zend/Validate/File/ExistsTest.php';
@@ -39,8 +40,10 @@ require_once 'Zend/Validate/File/HashTest.php';
 require_once 'Zend/Validate/File/ImageSizeTest.php';
 require_once 'Zend/Validate/File/IsCompressedTest.php';
 require_once 'Zend/Validate/File/IsImageTest.php';
+require_once 'Zend/Validate/File/Md5Test.php';
 require_once 'Zend/Validate/File/MimeTypeTest.php';
 require_once 'Zend/Validate/File/NotExistsTest.php';
+require_once 'Zend/Validate/File/Sha1Test.php';
 require_once 'Zend/Validate/File/SizeTest.php';
 require_once 'Zend/Validate/File/UploadTest.php';
 
@@ -63,6 +66,7 @@ class Zend_Validate_File_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Validate_File');
 
         $suite->addTestSuite('Zend_Validate_File_CountTest');
+        $suite->addTestSuite('Zend_Validate_File_Crc32Test');
         $suite->addTestSuite('Zend_Validate_File_ExcludeExtensionTest');
         $suite->addTestSuite('Zend_Validate_File_ExistsTest');
         $suite->addTestSuite('Zend_Validate_File_ExtensionTest');
@@ -71,8 +75,10 @@ class Zend_Validate_File_AllTests
         $suite->addTestSuite('Zend_Validate_File_ImageSizeTest');
         $suite->addTestSuite('Zend_Validate_File_IsCompressedTest');
         $suite->addTestSuite('Zend_Validate_File_IsImageTest');
+        $suite->addTestSuite('Zend_Validate_File_Md5Test');
         $suite->addTestSuite('Zend_Validate_File_MimeTypeTest');
         $suite->addTestSuite('Zend_Validate_File_NotExistsTest');
+        $suite->addTestSuite('Zend_Validate_File_Sha1Test');
         $suite->addTestSuite('Zend_Validate_File_SizeTest');
         $suite->addTestSuite('Zend_Validate_File_UploadTest');
 
