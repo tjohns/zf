@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12200 -->
 <sect1 id="zend.paginator.advanced">
     <title>Utilisation avancée</title>
 
@@ -28,7 +28,9 @@
         <para>Si vous avez déjà utilisé l'interface SPL <ulink
         url="http://www.php.net/~helly/php/ext/spl/interfaceCountable.html"><code>Countable</code></ulink>, vous êtes
         familier avec <code>count()</code>. Utilisé avec <code>Zend_Paginator</code>, il s'agit du nombre total
-        d'éléments dans la collection de données.</para>
+        d'éléments dans la collection de données. De plus, l'instance <code>Zend_Paginator</code> fournit une méthode
+        <code>countAllItems()</code> qui proxie vers la méthode <code>count()</code> de l'adaptateur.
+</para>
 
         <para>La méthode <code>getItems()</code> est seulement légèrement plus compliquée. Pour ceci, les paramètres
         sont un point de départ et un nombre d'éléments à afficher par page. Vous devez retourner la portion appropriée
