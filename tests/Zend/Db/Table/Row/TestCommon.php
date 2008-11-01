@@ -310,6 +310,41 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
 
+    /**
+     * ZF-2243: Zend_Db_Table::createRow and Zend_Db_Table_Row::setFromArray have same behaviour
+     */
+    public function testTableRowSetFromBigArray()
+    {
+        $table = $this->_table['bugs'];
+        $bug_description = $this->_db->foldCase('bug_description');
+        $bug_status = $this->_db->foldCase('bug_status');
+
+        // Data issued from form object
+        $data = array(
+            $bug_description => 'New Description',
+            $bug_status      => 'INVALID',
+            'btnAccept'      => 1           // Button value
+        );
+
+        $rowset = $table->find(1);
+        $this->assertType('Zend_Db_Table_Rowset_Abstract', $rowset,
+            'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($rowset));
+        $row1 = $rowset->current();
+        $this->assertType('Zend_Db_Table_Row_Abstract', $row1,
+            'Expecting object of type Zend_Db_Table_Row_Abstract, got '.get_class($row1));
+
+        $row1->setFromArray($data);
+
+        try {
+            $button = $row1->btnAccept;
+            $this->fail('Expected to catch Zend_Db_Table_Row_Exception');
+        } catch (Zend_Exception $e) {
+            $this->assertType('Zend_Db_Table_Row_Exception', $e,
+                'Expecting object of type Zend_Db_Table_Row_Exception, got '.get_class($e));
+            $this->assertEquals("Specified column \"btnAccept\" is not in the row", $e->getMessage());
+        }
+    }
+
     public function testTableRowSaveInsert()
     {
         $table = $this->_table['bugs'];

@@ -73,7 +73,7 @@ abstract class Zend_Db_Table_Abstract
     const DEFAULT_NONE     = 'defaultNone';
     const DEFAULT_CLASS    = 'defaultClass';
     const DEFAULT_DB       = 'defaultDb';
-    
+
     /**
      * Default Zend_Db_Adapter_Abstract object.
      *
@@ -204,10 +204,10 @@ abstract class Zend_Db_Table_Abstract
      */
     protected $_dependentTables = array();
 
-    
+
     protected $_defaultSource = self::DEFAULT_NONE;
     protected $_defaultValues = array();
-    
+
     /**
      * Constructor.
      *
@@ -386,11 +386,11 @@ abstract class Zend_Db_Table_Abstract
         if (!in_array($defaultSource, array(self::DEFAULT_CLASS, self::DEFAULT_DB, self::DEFAULT_NONE))) {
             $defaultSource = self::DEFAULT_NONE;
         }
-        
+
         $this->_defaultSource = $defaultSource;
         return $this;
     }
-    
+
     /**
      * returns the default source flag that determines where defaultSources come from
      *
@@ -400,7 +400,7 @@ abstract class Zend_Db_Table_Abstract
     {
         return $this->_defaultSource;
     }
-    
+
     /**
      * set the default values for the table class
      *
@@ -416,13 +416,13 @@ abstract class Zend_Db_Table_Abstract
         }
         return $this;
     }
-    
+
     public function getDefaultValues()
     {
         return $this->_defaultValues;
     }
-    
-    
+
+
     /**
      * Sets the default Zend_Db_Adapter_Abstract for all Zend_Db_Table objects.
      *
@@ -806,16 +806,16 @@ abstract class Zend_Db_Table_Abstract
             self::DEPENDENT_TABLES => $this->_dependentTables,
             self::SEQUENCE         => $this->_sequence
         );
-        
+
         if ($key === null) {
             return $info;
         }
-        
+
         if (!array_key_exists($key, $info)) {
             require_once 'Zend/Db/Table/Exception.php';
             throw new Zend_Db_Table_Exception('There is no table information for the key "' . $key . '"');
         }
-        
+
         return $info[$key];
     }
 
@@ -1179,22 +1179,22 @@ abstract class Zend_Db_Table_Abstract
     public function createRow(array $data = array(), $defaultSource = null)
     {
         $defaults = array_combine($this->_cols, array_fill(0, count($this->_cols), null));
-        
+
         // nothing provided at call-time, take the class value
         if ($defaultSource == null) {
             $defaultSource = $this->_defaultSource;
         }
-        
+
         if (!in_array($defaultSource, array(self::DEFAULT_CLASS, self::DEFAULT_DB, self::DEFAULT_NONE))) {
             $defaultSource = self::DEFAULT_NONE;
         }
-        
+
         if ($defaultSource == self::DEFAULT_DB) {
             foreach ($this->_metadata as $metadataName => $metadata) {
-                if (($metadata['DEFAULT'] != null) && 
-                    ($metadata['NULLABLE'] !== true || ($metadata['NULLABLE'] === true && isset($this->_defaultValues[$metadataName]) && $this->_defaultValues[$metadataName] === true)) && 
+                if (($metadata['DEFAULT'] != null) &&
+                    ($metadata['NULLABLE'] !== true || ($metadata['NULLABLE'] === true && isset($this->_defaultValues[$metadataName]) && $this->_defaultValues[$metadataName] === true)) &&
                     (!(isset($this->_defaultValues[$metadataName]) && $this->_defaultValues[$metadataName] === false))) {
-                    $defaults[$metadataName] = $metadata['DEFAULT']; 
+                    $defaults[$metadataName] = $metadata['DEFAULT'];
                 }
             }
         } elseif ($defaultSource == self::DEFAULT_CLASS && $this->_defaultValues) {
@@ -1204,8 +1204,7 @@ abstract class Zend_Db_Table_Abstract
                 }
             }
         }
-        
-        $data = array_intersect_key($data, $defaults);
+
         $config = array(
             'table'    => $this,
             'data'     => $defaults,
