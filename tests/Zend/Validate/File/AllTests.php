@@ -35,6 +35,7 @@ require_once 'Zend/Validate/File/ExcludeMimeTypeTest.php';
 require_once 'Zend/Validate/File/ExistsTest.php';
 require_once 'Zend/Validate/File/ExtensionTest.php';
 require_once 'Zend/Validate/File/FilesSizeTest.php';
+require_once 'Zend/Validate/File/HashTest.php';
 require_once 'Zend/Validate/File/ImageSizeTest.php';
 require_once 'Zend/Validate/File/IsCompressedTest.php';
 require_once 'Zend/Validate/File/IsImageTest.php';
@@ -66,6 +67,7 @@ class Zend_Validate_File_AllTests
         $suite->addTestSuite('Zend_Validate_File_ExistsTest');
         $suite->addTestSuite('Zend_Validate_File_ExtensionTest');
         $suite->addTestSuite('Zend_Validate_File_FilesSizeTest');
+        $suite->addTestSuite('Zend_Validate_File_HashTest');
         $suite->addTestSuite('Zend_Validate_File_ImageSizeTest');
         $suite->addTestSuite('Zend_Validate_File_IsCompressedTest');
         $suite->addTestSuite('Zend_Validate_File_IsImageTest');

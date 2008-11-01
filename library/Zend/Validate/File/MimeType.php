@@ -85,7 +85,7 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
      * Returns the set mimetypes
      *
      * @param  boolean $asArray Returns the values as array, when false an concated string is returned
-     * @return integer
+     * @return string|array
      */
     public function getMimeType($asArray = false)
     {
