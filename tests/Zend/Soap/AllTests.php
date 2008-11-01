@@ -12,6 +12,8 @@ require_once 'Zend/Soap/AutoDiscoverTest.php';
 require_once 'Zend/Soap/ClientTest.php';
 require_once 'Zend/Soap/ServerTest.php';
 require_once 'Zend/Soap/WsdlTest.php';
+require_once "Zend/Soap/Wsdl/ArrayOfTypeComplexStrategyTest.php";
+require_once "Zend/Soap/Wsdl/ArrayOfTypeSequenceStrategyTest.php";
 
 class Zend_Soap_AllTests
 {
@@ -28,6 +30,8 @@ class Zend_Soap_AllTests
         $suite->addTestSuite('Zend_Soap_ClientTest');
         $suite->addTestSuite('Zend_Soap_ServerTest');
         $suite->addTestSuite('Zend_Soap_WsdlTest');
+        $suite->addTestSuite('Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest');
+        $suite->addTestSuite('Zend_Soap_Wsdl_ArrayOfTypeSequenceStrategyTest');
 
         return $suite;
     }
