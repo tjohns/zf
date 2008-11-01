@@ -21,6 +21,16 @@ require_once 'Zend/Soap/AutoDiscover.php';
  */
 class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if(!isset($_SERVER) || !is_array($_SERVER)) {
+            $_SERVER = array();
+            $_SERVER['HTTP_HOST'] = 'localhost';
+            $_SERVER['SCRIPT_NAME'] = '/my_script.php';
+            $_SERVER['HTTPS'] = "off";
+        }
+    }
+
     function testSetClass()
     {
         $scriptUri = 'http://localhost/my_script.php';
