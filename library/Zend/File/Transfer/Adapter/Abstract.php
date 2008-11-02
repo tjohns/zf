@@ -77,13 +77,6 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected $_translatorDisabled = false;
 
     /**
-     * Internal validation flag
-     *
-     * @var boolean
-     */
-    protected $_validated = false;
-
-    /**
      * Internal list of validators
      * @var array
      */
@@ -122,32 +115,32 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Send file
-     * 
-     * @param  mixed $options 
+     *
+     * @param  mixed $options
      * @return bool
      */
     abstract public function send($options = null);
 
     /**
      * Receive file
-     * 
-     * @param  mixed $options 
+     *
+     * @param  mixed $options
      * @return bool
      */
     abstract public function receive($options = null);
 
     /**
      * Is file sent?
-     * 
-     * @param  array|string|null $files 
+     *
+     * @param  array|string|null $files
      * @return bool
      */
     abstract public function isSent($files = null);
 
     /**
      * Is file received?
-     * 
-     * @param  array|string|null $files 
+     *
+     * @param  array|string|null $files
      * @return bool
      */
     abstract public function isReceived($files = null);
@@ -155,22 +148,30 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Has a file been uploaded ?
      *
-     * @param  array|string|null $files 
+     * @param  array|string|null $files
      * @return bool
      */
     abstract public function isUploaded($files = null);
 
     /**
+     * Has the file been filtered ?
+     *
+     * @param array|string|null $files
+     * @return bool
+     */
+    abstract public function isFiltered($files = null);
+
+    /**
      * Retrieve progress of transfer
-     * 
+     *
      * @return float
      */
     abstract public function getProgress();
 
     /**
      * Set plugin loader to use for validator or filter chain
-     * 
-     * @param  Zend_Loader_PluginLoader_Interface $loader 
+     *
+     * @param  Zend_Loader_PluginLoader_Interface $loader
      * @param  string $type 'filter', or 'validate'
      * @return Zend_File_Transfer_Adapter_Abstract
      * @throws Zend_File_Transfer_Exception on invalid type
@@ -192,10 +193,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Retrieve plugin loader for validator or filter chain
      *
-     * Instantiates with default rules if none available for that type. Use 
+     * Instantiates with default rules if none available for that type. Use
      * 'filter' or 'validate' for $type.
-     * 
-     * @param  string $type 
+     *
+     * @param  string $type
      * @return Zend_Loader_PluginLoader
      * @throws Zend_File_Transfer_Exception on invalid type.
      */
@@ -226,14 +227,14 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Add prefix path for plugin loader
      *
-     * If no $type specified, assumes it is a base path for both filters and 
+     * If no $type specified, assumes it is a base path for both filters and
      * validators, and sets each according to the following rules:
      * - filters:    $prefix = $prefix . '_Filter'
      * - validators: $prefix = $prefix . '_Validate'
      *
      * Otherwise, the path prefix is set on the appropriate plugin loader.
-     * 
-     * @param  string $path 
+     *
+     * @param  string $path
      * @return Zend_File_Transfer_Adapter_Abstract
      * @throws Zend_File_Transfer_Exception for invalid type
      */
@@ -265,15 +266,15 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Add many prefix paths at once
-     * 
-     * @param  array $spec 
+     *
+     * @param  array $spec
      * @return Zend_File_Transfer_Exception
      */
     public function addPrefixPaths(array $spec)
     {
         if (isset($spec['prefix']) && isset($spec['path'])) {
             return $this->addPrefixPath($spec['prefix'], $spec['path']);
-        } 
+        }
         foreach ($spec as $type => $paths) {
             if (is_numeric($type) && is_array($paths)) {
                 $type = null;
@@ -349,17 +350,17 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 continue;
             }
             $this->_files[$file]['validators'][] = $name;
+            $this->_files[$file]['validated']    = false;
         }
-        
-        $this->_validated = false;
+
         return $this;
     }
 
     /**
      * Add Multiple validators at once
      *
-     * @param  array $validators 
-     * @param  string|array $files 
+     * @param  array $validators
+     * @param  string|array $files
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function addValidators(array $validators, $files = null)
@@ -435,8 +436,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Determine if a given validator has already been registered
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return bool
      */
     public function hasValidator($name)
@@ -446,8 +447,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve individual validator
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return Zend_Validate_Interface|null
      */
     public function getValidator($name)
@@ -469,7 +470,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     {
         $files = $this->_getFiles($files, true);
 
-        if ($files === null) {
+        if (empty($files)) {
             return $this->_validators;
         }
 
@@ -489,9 +490,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Remove an individual validator 
-     * 
-     * @param  string $name 
+     * Remove an individual validator
+     *
+     * @param  string $name
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function removeValidator($name)
@@ -506,15 +507,15 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 continue;
             }
             unset($this->_files[$file]['validators'][$index]);
+            $this->_files[$file]['validated'] = false;
         }
 
-        $this->_validated = false;
         return $this;
     }
 
     /**
      * Remove all validators
-     * 
+     *
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function clearValidators()
@@ -522,9 +523,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $this->_validators = array();
         foreach (array_keys($this->_files) as $file) {
             $this->_files[$file]['validators'] = array();
+            $this->_files[$file]['validated']  = false;
         }
 
-        $this->_validated = false;
         return $this;
     }
 
@@ -587,6 +588,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $break           = false;
         foreach ($check as $key => $content) {
             $fileerrors  = array();
+            if ($content['validated'] === true) {
+                continue;
+            }
+
             if (array_key_exists('validators', $content)) {
                 foreach ($content['validators'] as $class) {
                     $validator = $this->_validators[$class];
@@ -614,6 +619,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 }
             }
 
+            if (count($fileerrors) > 0) {
+                $this->_files[$key]['validated'] = false;
+            } else {
+                $this->_files[$key]['validated'] = true;
+            }
+
             $this->_messages += $fileerrors;
             if ($break) {
                 break;
@@ -621,11 +632,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
 
         if (count($this->_messages) > 0) {
-            $this->_validated = false;
             return false;
         }
 
-        $this->_validated = true;
         return true;
     }
 
@@ -641,7 +650,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve error codes
-     * 
+     *
      * @return array
      */
     public function getErrors()
@@ -651,7 +660,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Are there errors registered?
-     * 
+     *
      * @return boolean
      */
     public function hasErrors()
@@ -704,15 +713,15 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
             $this->_files[$file]['filters'][] = $class;
         }
-        
+
         return $this;
     }
 
     /**
      * Add Multiple filters at once
-     * 
-     * @param  array $filters 
-     * @param  string|array $files 
+     *
+     * @param  array $filters
+     * @param  string|array $files
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function addFilters(array $filters, $files = null)
@@ -767,8 +776,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Determine if a given filter has already been registered
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return bool
      */
     public function hasFilter($name)
@@ -778,8 +787,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve individual filter
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return Zend_Filter_Interface|null
      */
     public function getFilter($name)
@@ -829,9 +838,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Remove an individual filter 
-     * 
-     * @param  string $name 
+     * Remove an individual filter
+     *
+     * @param  string $name
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function removeFilter($name)
@@ -852,7 +861,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Remove all filters
-     * 
+     *
      * @return Zend_File_Transfer_Adapter_Abstract
      */
     public function clearFilters()
@@ -877,7 +886,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Retrieves the filename of transferred files. 
+     * Retrieves the filename of transferred files.
      *
      * @param  string  $fileelement (Optional) Element to return the filename for
      * @param  boolean $path        (Optional) Should the path also be returned ?
@@ -906,7 +915,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve additional internal file informations for files
-     * 
+     *
      * @param  string $file (Optional) File to get informations for
      * @return array
      */
@@ -973,7 +982,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             require_once 'Zend/File/Transfer/Exception.php';
             throw new Zend_File_Transfer_Exception('The given destination is no directory or does not exist');
         }
-        
+
         if ($files === null) {
             foreach ($this->_files as $file => $content) {
                 $this->_files[$file]['destination'] = $destination;
@@ -993,8 +1002,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve destination directory value
-     * 
-     * @param  null|string|array $files 
+     *
+     * @param  null|string|array $files
      * @return null|string|array
      */
     public function getDestination($files = null)
@@ -1039,7 +1048,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     /**
      * Set translator object for localization
      *
-     * @param  Zend_Translate|null $translator 
+     * @param  Zend_Translate|null $translator
      * @return Zend_File_Transfer_Abstract
      */
     public function setTranslator($translator = null)
@@ -1060,7 +1069,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve localization translator object
-     * 
+     *
      * @return Zend_Translate_Adapter|null
      */
     public function getTranslator()
@@ -1074,8 +1083,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Indicate whether or not translation should be disabled
-     * 
-     * @param  bool $flag 
+     *
+     * @param  bool $flag
      * @return Zend_File_Transfer_Abstract
      */
     public function setDisableTranslator($flag)
@@ -1086,7 +1095,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Is translation disabled?
-     * 
+     *
      * @return bool
      */
     public function translatorIsDisabled()
@@ -1104,11 +1113,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getHash($hash = 'crc32', $files = null)
     {
-    	$algorithms = hash_algos();
-    	if (!isset($algorithms[$hash])) {
-    		require_once 'Zend/File/Transfer/Exception.php';
-    		throw new Zend_File_Transfer_Exception('Unknown hash algorithm');
-    	}
+        $algorithms = hash_algos();
+        if (!isset($algorithms[$hash])) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('Unknown hash algorithm');
+        }
 
         $files  = $this->_getFiles($files);
         $result = array();
@@ -1161,7 +1170,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Determine system TMP directory
-     * 
+     *
      * @return string
      * @throws Zend_File_Transfer_Exception if unable to determine directory
      */
@@ -1202,7 +1211,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     protected function _getFiles($files, $names = false)
     {
-        $check = null;
+        $check = array();
 
         if (is_string($files)) {
             $files = array($files);
@@ -1251,8 +1260,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve internal identifier for a named validator
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return string
      */
     protected function _getValidatorIdentifier($name)
@@ -1272,8 +1281,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
     /**
      * Retrieve internal identifier for a named filter
-     * 
-     * @param  string $name 
+     *
+     * @param  string $name
      * @return string
      */
     protected function _getFilterIdentifier($name)

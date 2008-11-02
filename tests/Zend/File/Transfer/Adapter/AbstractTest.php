@@ -574,7 +574,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $files = $this->adapter->getFileInfo('unknown');
     }
-    
+
     /**
      * @expectedException Zend_File_Transfer_Exception
      */
@@ -682,11 +682,14 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
     {
         $this->_files = array(
             'foo' => array(
-                'name'     => 'foo.jpg',
-                'type'     => 'image/jpeg',
-                'size'     => 126976,
-                'tmp_name' => '/tmp/489127ba5c89c',
-                'options'  => array('ignoreNoFile' => false),
+                'name'      => 'foo.jpg',
+                'type'      => 'image/jpeg',
+                'size'      => 126976,
+                'tmp_name'  => '/tmp/489127ba5c89c',
+                'options'   => array('ignoreNoFile' => false),
+                'validated' => false,
+                'received'  => false,
+                'filtered'  => false,
             ),
             'bar' => array(
                 'name'     => 'bar.png',
@@ -694,6 +697,9 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
                 'size'     => 91136,
                 'tmp_name' => '/tmp/489128284b51f',
                 'options'  => array('ignoreNoFile' => false),
+                'validated' => false,
+                'received'  => false,
+                'filtered'  => false,
             ),
             'baz' => array(
                 'name'     => 'baz.text',
@@ -701,6 +707,9 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
                 'size'     => 1172,
                 'tmp_name' => '/tmp/4891286cceff3',
                 'options'  => array('ignoreNoFile' => false),
+                'validated' => false,
+                'received'  => false,
+                'filtered'  => false,
             ),
         );
     }
@@ -727,6 +736,11 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
     }
 
     public function isUploaded($files = null)
+    {
+        return true;
+    }
+
+    public function isFiltered($files = null)
     {
         return true;
     }

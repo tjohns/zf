@@ -38,7 +38,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function __construct($options = array())
     {
-    	$this->_files = $this->_prepareFiles($_FILES);
+        $this->_files = $this->_prepareFiles($_FILES);
         $this->addValidator('Upload', null, $this->_files);
 
         if (is_array($options)) {
@@ -81,10 +81,8 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function receive($files = null)
     {
-        if (!$this->_validated) {
-            if (!$this->isValid($files)) {
-                return false;
-            }
+        if (!$this->isValid($files)) {
+            return false;
         }
 
         $check = $this->_getFiles($files);
@@ -98,15 +96,22 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             // Should never return false when it's tested by the upload validator
             if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
                 if ($this->_options['ignoreNoFile']) {
+                    $this->_files[$file]['received'] = true;
+                    $this->_files[$file]['filtered'] = true;
                     continue;
                 }
 
+                $this->_files[$file]['received'] = false;
                 return false;
             }
 
+            $this->_files[$file]['received'] = true;
             if (!$this->_filter($file)) {
+                $this->_files[$file]['filtered'] = false;
                 return false;
             }
+
+            $this->_files[$file]['filtered'] = true;
         }
 
         return true;
@@ -133,9 +138,29 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function isReceived($files = null)
     {
-        $validate = new Zend_Validate_File_Upload();
-        if (!$validate->isValid($files)) {
-            return false;
+        $files = $this->_getFiles($files);
+        foreach ($files as $key => $content) {
+            if ($content['received'] !== true) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if the file was already filtered
+     *
+     * @param  string|array $files (Optional) Files to check
+     * @return bool
+     */
+    public function isFiltered($files = null)
+    {
+        $files = $this->_getFiles($files);
+        foreach ($files as $key => $content) {
+            if ($content['filtered'] !== true) {
+                return false;
+            }
         }
 
         return true;
@@ -144,7 +169,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     /**
      * Has a file been uploaded ?
      *
-     * @param  array|string|null $file 
+     * @param  array|string|null $file
      * @return bool
      */
     public function isUploaded($files = null)
@@ -180,18 +205,24 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     protected function _prepareFiles(array $files = array())
     {
-    	$result = array();
+        $result = array();
         foreach ($files as $form => $content) {
             if (is_array($content['name'])) {
                 foreach ($content as $param => $file) {
-                	foreach ($file as $number => $target) {
-                		$result[$form . '_' . $number . '_'][$param] = $target;
-                		$result[$form . '_' . $number . '_']['options'] = $this->_options;
-                	}
+                    foreach ($file as $number => $target) {
+                        $result[$form . '_' . $number . '_'][$param]      = $target;
+                        $result[$form . '_' . $number . '_']['options']   = $this->_options;
+                        $result[$form . '_' . $number . '_']['validated'] = false;
+                        $result[$form . '_' . $number . '_']['received']  = false;
+                        $result[$form . '_' . $number . '_']['filtered']  = false;
+                    }
                 }
             } else {
-                $result[$form] = $content;
-                $result[$form]['options'] = $this->_options;
+                $result[$form]              = $content;
+                $result[$form]['options']   = $this->_options;
+                $result[$form]['validated'] = false;
+                $result[$form]['received']  = false;
+                $result[$form]['filtered']  = false;
             }
         }
 
