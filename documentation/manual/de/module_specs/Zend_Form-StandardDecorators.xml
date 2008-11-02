@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11518 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Form Dekoratore die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -59,7 +59,7 @@ class Util
             Eine variante des Captcha Dekorators, 'Captcha_Word', wird auch üblicherweise verwendet, und
             erstellt zwei Elemente, eine Id und eine Eingabe. Die Id zeigt den Identifikator der Session
             gegen den Verglichen wird, und die Eingabe ist für die Benutzerverifikation des Captchas.
-            Beide werden als einzelnes Element geprüft. 
+            Beide werden als einzelnes Element geprüft.
         </para>
     </sect2>
 
@@ -306,7 +306,7 @@ class Util
 
         <para>
             Standardmäßig fügt dieser Dekorator Inhalt hinten an; es kann die 'placement' Option
-            verwendet werden um eine alternative Platzierung zu spezifizieren. 
+            verwendet werden um eine alternative Platzierung zu spezifizieren.
         </para>
     </sect2>
 
@@ -381,7 +381,7 @@ $element->setDecorators(array(array('ViewScript',
                          $this->element->getLabel()) ?>
     <?= $this->{$this->element->helper}(
         $this->element->getName(),
-        $this->element->getValue(), 
+        $this->element->getValue(),
         $this->element->getAttribs()
     ) ?>
     <?= $this->formErrors($this->element->getMessages()) ?>
@@ -397,7 +397,7 @@ $element->setDecorators(array(array('ViewScript',
                 Es kann für das View Skript nützlich sein den Inhalt der dem Dekorator angeboten
                 wird zu ersetzen -- zum Beispiel wenn man Ihn wrappen will. Das kann man erreichen
                 indem ein boolscher false Wert für die 'placement' Option des Dekorators
-                spezifiziert wird: 
+                spezifiziert wird:
             </para>
 
             <programlisting role="php"><![CDATA[

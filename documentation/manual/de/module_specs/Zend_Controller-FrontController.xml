@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.front">
     <title>Der Front Controller</title>
 
@@ -210,7 +210,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <para>
                 Das Routing geschieht genau einmal: Wenn <code>dispatch()</code> aufgerufen wird.
                 Es werden die Werte aus dem Anfrage-Objekt benutzt, die zum Zeitpunkt des Aufrufes von
-                <code>dispatch()</code> vorhanden waren.                
+                <code>dispatch()</code> vorhanden waren.
                 Das Dispatchen geschieht in einer Schleife; eine Anfrage kann entweder melden, dass es mehrere
                 Aktionen gibt, die ausgeführt werden sollen, oder der Controller oder ein Plugin können das
                 Anfrage-Objekt zurücksetzen, um zu erzwingen, dass noch zusätzliche Aktionen ausgeführt werdne sollen.
@@ -295,7 +295,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     Mit <code>(set|get)Router()</code> kann auf die gleiche Art der Klassenname bzw. das Objekt
                     übergeben bzw. zurückgegeben werden, das beim dispatchen als
-                    <link linkend="zend.controller.router">Router</link> verwendet wird. 
+                    <link linkend="zend.controller.router">Router</link> verwendet wird.
                 </para>
 
                 <para>
@@ -323,7 +323,7 @@ Zend_Controller_Front::run('../application/controllers');
 
                 <para>
                     Wenn die <code>getDispatcher()</code>-Methode aufgerufen wird, wird erst überprüft,
-                    ob bereits ein Dispatcher existiert, wenn nicht, wird der Standard-Dispatcher instanziert und 
+                    ob bereits ein Dispatcher existiert, wenn nicht, wird der Standard-Dispatcher instanziert und
                     zurückgegeben.
                 </para>
             </listitem>
@@ -344,7 +344,7 @@ Zend_Controller_Front::run('../application/controllers');
                     Plugins ausgeführt werden.
                 </para>
             </listitem>
-            
+
             <listitem>
                 <para>
                     <code>unregisterPlugin($plugin)</code> kann registrierte <link
@@ -358,7 +358,7 @@ Zend_Controller_Front::run('../application/controllers');
                     Mit <code>throwExceptions($flag)</code> wird festgelegt, ob Exceptions (Ausnahmen), die während
                     des Dispatch-Prozesses von Plugins, Controllern, Hilfsklassen etc. geworfen werden.
                     Als Standardeinstellung werden Exceptions gefangen und im <link
-                        linkend="zend.controller.response">Antwort-Objekt</link> gespeichert. 
+                        linkend="zend.controller.response">Antwort-Objekt</link> gespeichert.
                     Das einschalten von throwExceptions() verändert dieses Verhalten; der Front-Controller wird dann
                     die Exception werfen.
                 </para>
@@ -484,7 +484,7 @@ Zend_Controller_Front::run('../application/controllers');
         <title>Klassen vom Front-Controller ableiten</title>
 
         <para>
-            Um Klassen vom Front-Controller abzuleiten, muss als Minimalanforderung auf jeden Fall die Methode 
+            Um Klassen vom Front-Controller abzuleiten, muss als Minimalanforderung auf jeden Fall die Methode
             <code>getInstance()</code> überschrieben werden:
         </para>
 

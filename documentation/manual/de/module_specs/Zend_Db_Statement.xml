@@ -19,7 +19,7 @@
     <sect2 id="zend.db.statement.creating">
 
         <title>Erzeugung von Statement Objekten</title>
-        
+
         <para>
             Normalerweise wird ein Statement Objekt von der <code>query()</code> Methode der Datenbank
             Adapterklasse zurück gegeben. Diese Methode ist der grundsätzliche Weg um ein beliebiges SQL Statement
@@ -262,7 +262,7 @@ echo $rows[0][0];
                 <code>fetchColumn()</code> wird verwendet mm eine einzelne Spalte eines Ergebnissatzes zurück zu
                 geben. Das optionale Argument ist der Integer Index der Spalte die zurück gegeben werden soll. Der
                 Standardwert ist 0. Diese Methode gibt einen scalaren Wert zurück, oder <code>false</code> wenn alle
-                Zeilen des Ergebnissatzes bereits geholt wurden. 
+                Zeilen des Ergebnissatzes bereits geholt wurden.
             </para>
 
             <para>

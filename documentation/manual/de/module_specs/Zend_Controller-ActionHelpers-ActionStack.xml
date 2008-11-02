@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.controller.actionhelpers.actionstack">
     <title>ActionStack</title>
 
@@ -70,7 +70,7 @@ class FooController extends Zend_Controller_Action
         // (FooController::bazAction() mit der Anfrage var bar == baz)
         $request = clone $this->getRequest();
         // Kontroller oder Modul nicht setzen, verwende aktuelle Werte
-        $request->setActionName('baz') 
+        $request->setActionName('baz')
                 ->setParams(array('bar' => 'baz'));
         $this->_helper->actionStack($request);
 
@@ -78,7 +78,7 @@ class FooController extends Zend_Controller_Action
         // (BarController::batAction())
         $request = clone $this->getRequest();
         // Modul nicht setzen, verwende aktuelle Werte
-        $request->setActionName('bat') 
+        $request->setActionName('bat')
                 ->setControllerName('bar');
         $this->_helper->actionStack($request);
     }

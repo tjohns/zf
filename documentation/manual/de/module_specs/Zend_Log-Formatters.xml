@@ -49,7 +49,7 @@ $logger->info('dort');
       Format String. Dieser String enthält Schlüssel die durch Prozentzeichen begrenzt sind
       (z.B. <code>%message%</code>). Der Format String kann jeden Schlüssel des Event Data Arrays enthalten.
       Die Standardschlüssel können durch Verwendung der DEFAULT_FORMAT Konstante von
-      <code>Zend_Log_Formatter_Simple</code> empfangen werden. 
+      <code>Zend_Log_Formatter_Simple</code> empfangen werden.
     </para>
   </sect2>
 

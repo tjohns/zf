@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11330 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
@@ -141,7 +141,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
             Die Familie der dijit.layout Elemente sind für die Erstellung von eigenen, vorhersagbaren
             Layouts für die eigene Site. Für alle Fragen über die generelle Verwendung
             <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/layout">lesen Sie hierüber
-            im Dojo Handbuch nach</ulink>. 
+            im Dojo Handbuch nach</ulink>.
         </para>
 
         <para>
@@ -162,8 +162,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->accordionContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'duration' => 200,
     ),
@@ -183,8 +183,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->accordionPane(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'title' => 'Titel des Ausschnittes',
     ),
@@ -205,8 +205,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->borderContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'design' => 'headline',
     ),
@@ -226,8 +226,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->contentPane(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'title'  => 'Titel des Ausschnittes',
         'region' => 'left',
@@ -249,8 +249,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->splitContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'orientation'  => 'horizontal',
         'sizerWidth'   => 7,
@@ -273,8 +273,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->stackContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(),
     array(
         'style' => 'width: 400px; height: 500px; border: 1px;',
@@ -293,8 +293,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->tabContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(),
     array(
         'style' => 'width: 400px; height: 500px; border: 1px;',
@@ -312,7 +312,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>captureStart($id, array $params = array(), array $attribs = array())</code>: 
+                    <code>captureStart($id, array $params = array(), array $attribs = array())</code>:
                     Beginnt die Erfassung von Inhalt um Ihn in einem Container einzufügen. <code>$params</code>
                     referiert auf die Dijit Parameters die mit dem Container verwendet werden, wärend
                     <code>$attribs</code> auf alle generellen HTML Attribute die verwendet werden, zeigt.
@@ -405,8 +405,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->button(
-    'foo', 
-    'Zeig mich!', 
+    'foo',
+    'Zeig mich!',
     array('iconClass' => 'myButtons'),
 ); ?>
 ]]>
@@ -437,8 +437,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->checkBox(
-    'foo', 
-    'bar', 
+    'foo',
+    'bar',
     array(),
     array(),
     array('checkedValue' => 'foo', 'unCheckedValue' => 'bar')
@@ -525,8 +525,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
                 <programlisting role="php"><![CDATA[
 // Als Select Element:
 echo $view->comboBox(
-    'foo', 
-    'bar', 
+    'foo',
+    'bar',
     array(
         'autocomplete' => false,
     ),
@@ -540,8 +540,8 @@ echo $view->comboBox(
 
 // Als dojo-aktiviertes Element:
 echo $view->comboBox(
-    'foo', 
-    'bar', 
+    'foo',
+    'bar',
     array(
         'autocomplete' => false,
         'store'        => 'stateStore',

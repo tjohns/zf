@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11838 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -134,7 +134,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             nicht angehackt sind, wird nichts übertragen. Intern erzwingt
             Zend_Form_Element_Checkbox diesen Status.
         </para>
-            
+
         <para>
             Standardmäßg ist der angehackte Wert '1', und der nicht angehackte Wert '0'. Dieser
             Wert kann spezifiziert werden indem die <code>setCheckedValue()</code> und
@@ -143,7 +143,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             entspricht, er gesetzt, aber jeder andere Wert bewirkt das der nicht angehackte Wert
             gesetzt wird.
         </para>
- 
+
          <para>
             Zusätzlich setzt, das Setzen des Werte, die <code>checked</code> Eigenschaft der
             Checkbox. Das kann abgefragt werden indem <code>isChecked()</code> verwendet wird oder
@@ -160,7 +160,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         </para>
     </sect2>
 
-    <sect2 id="zend.form.standardElements.file"> 
+    <sect2 id="zend.form.standardElements.file">
         <title>Zend_Form_Element_File</title>
 
         <para>
@@ -434,7 +434,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             Die verschiedenen Checkbox Optionen können mit den folgenden Methoden manipuliert
-            werden: 
+            werden:
         </para>
 
         <itemizedlist>
@@ -588,7 +588,7 @@ $element->setValue(array('bar', 'bat'));
         <para>
             Reset Buttons werden typischerweise verwendet um eine Form zu löschen, und sind nicht
             Teil der übermittelten Daten. Da Sie trotzdem einen Zweck in der Anzeige bieten, sind
-            Sie in den Standardelementen enthalten.  
+            Sie in den Standardelementen enthalten.
         </para>
 
         <para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>Beispiele</title>
 
@@ -91,9 +91,9 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
      * Constructor
      *
      * Umgebung, Root Pfad und Konfiguration initialisieren
-     * 
-     * @param  string $env 
-     * @param  string|null $root 
+     *
+     * @param  string $env
+     * @param  string|null $root
      * @return void
      */
     public function __construct($env, $root = null)
@@ -111,7 +111,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     /**
      * Route beginnen
-     * 
+     *
      * @return void
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
@@ -183,7 +183,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 }
 ]]>
         </programlisting>
-        
+
         <para>
             Jetzt schreiben wir Tests:
         </para>
@@ -272,7 +272,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
             Es ist zu beachten das die Tests knapp sind und, für die meisten von Ihnen, nicht den aktuellen
             Inhalt berücksichtigen. Stattdessen sehen Sie nach Teilen in der Anfrage -- Anfrage Codes und Header
             sowie DOM Knoten. Das erlaubt es schnell zu prüfen das die Strukturen wie erwartet sind -- und
-            verhinter das die Tests jedesmal wenn der Site neue Inhalte hinzugefügt werden darin ersticken. 
+            verhinter das die Tests jedesmal wenn der Site neue Inhalte hinzugefügt werden darin ersticken.
         </para>
 
         <para>

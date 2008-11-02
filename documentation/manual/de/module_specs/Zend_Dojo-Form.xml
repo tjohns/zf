@@ -28,7 +28,7 @@
                 <code>Zend_Dojo_Form</code> und <code>Zend_Dojo_Form_SubForm</code>. Diese können als
                 sofort verwendbarer Ersatz für <code>Zend_Form</code> und <code>Zend_Form_SubForm</code>
                 verwendet werden, enthalten alle notwendigen Dekorator und Elementpfade, setzen die
-                Dojo-spezifische Standard-DisplayGroup-Klasse, und machen die View dojo-verwendbar. 
+                Dojo-spezifische Standard-DisplayGroup-Klasse, und machen die View dojo-verwendbar.
             </para>
         </listitem>
 

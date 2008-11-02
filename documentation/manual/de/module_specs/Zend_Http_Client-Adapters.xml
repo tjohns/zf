@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
 
@@ -108,16 +108,16 @@
                     zu dem gleichen Server sehr oft verbindet, und man sicher ist das der Server eine
                     große Anzahl an gleichzeitigen Verbindungen behandeln kann. In jedem Fall wird
                     empfohlen das der Effekt von persistenten Verbindungen auf beiden, der Geschwindigkeit
-                    des Clients und dem Serverload gemessen wird bevor diese Option verwendet wird. 
+                    des Clients und dem Serverload gemessen wird bevor diese Option verwendet wird.
                 </para>
                 <para>
                     Zusätzlich, wenn persistente Verbindungen verwendet werden, sollte man Keep-Alive
                     HTTP Anfragen aktivieren wie in <xref linkend="zend.http.client.configuration" />
                     beschrieben - andernfalls werden persistente Verbindungen nur wenig oder gar keinen
                     Effekt haben.
-                </para> 
+                </para>
             </note>
-             
+
             <note>
                 <title>HTTPS SSL Stream Parameter</title>
                 <para>
@@ -131,7 +131,7 @@
                     Transport Layer und Optionen lesen das
                     <ulink url="http://www.php.net/manual/en/transports.php#transports.inet">hier</ulink>
                     zu finden ist.
-                </para> 
+                </para>
             </note>
         </para>
         <example id="zend.http.client.adapters.socket.example-1">

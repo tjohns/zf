@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.mail.multiple-emails">
     <title>Versand von mehreren E-Mails über eine SMTP Verbindung</title>
 
@@ -6,7 +6,7 @@
         Standardmäßig erstelle ein einzelner SMTP Transport eine einzelne Verbindung und verwendet Sie wieder
         wärend der Laufzeit der Skriptausführung. Es können mehrere E-Mails über diese SMTP Verbindung gesendet
         werden. Ein RSET Kommando wird vor jeder Ausführung angewendet um sicherzustellen das der korrekte
-        SMTP Handschlag folgt. 
+        SMTP Handschlag folgt.
     </para>
 
     <example id="zend.mail.multiple-emails.example-1">
@@ -32,12 +32,12 @@ for ($i = 0; $i > 5; $i++) {
         </programlisting>
 
     </example>
-    
+
     <para>
         Wenn man eine separate Verbindung für jeden Mailtransport haben will, muß der Transport vor und nach
         jedem Aufruf der <function>send()</function> Methode erstellt und gelöscht werden. Oder alternativ kann
         die Verbindung zwischen jedem Transport, durch Zugriff auf das Protokoll Objekt des Transportes,
-        manipuliert werden. 
+        manipuliert werden.
     </para>
 
     <example id="zend.mail.multiple-emails.example-2">

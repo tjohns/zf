@@ -52,15 +52,15 @@
             </para></listitem>
 
             <listitem><para>
-                <code>assertQueryCount($path, $count, $message = '')</code>:  Nimmt an das exakt 
-                <code>$count</code> DOM Elemente dem angegebenen CSS Selektor entsprechen. Wenn eine 
+                <code>assertQueryCount($path, $count, $message = '')</code>:  Nimmt an das exakt
+                <code>$count</code> DOM Elemente dem angegebenen CSS Selektor entsprechen. Wenn eine
                 <code>$message</code> vorhanden ist, wird diese jeder fehlgeschlagenen Ausnahmemeldung
                 vorangestellt.
             </para></listitem>
 
             <listitem><para>
                 <code>assertQueryCountMin($path, $count, $message = '')</code>: Nimmt an das zumindest
-                <code>$count</code> DOM Element dem angegebenen CSS Selektor entsprechen. Wenn eine 
+                <code>$count</code> DOM Element dem angegebenen CSS Selektor entsprechen. Wenn eine
                 <code>$message</code> vorhanden ist, wird diese jeder fehlgeschlagenen Ausnahmemeldung
                 vorangestellt. <emphasis>Achtung:</emphasis> Die Spezifizierung eines Wertes von 1 für
                 <code>$count</code> ist das Gleiche wie die einfache Verwendung von <code>assertQuery()</code>.
@@ -233,7 +233,7 @@
             </para></listitem>
             <listitem><para>
                 <code>assertRoute($route, $message = '')</code>: Nimmt an das die angegebene benannte Route
-                dem Router entsprochen hat. 
+                dem Router entsprochen hat.
             </para></listitem>
         </itemizedlist>
 

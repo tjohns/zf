@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.filter.inflector">
     <title>Zend_Filter_Inflector</title>
 
@@ -61,7 +61,7 @@ $filtered = $inflector->filter(array('page' => $string));
             verweisen. Statische Regeln werden den angegebenen Text ersetzen. Andernfalls wird eine Klasse
             verwendet die auf die Regel passt die angegeben wurde, um den Text zu beugen. Klasse werden
             typischerweise spezifiziert indem ein Kurzname verwendet wird, der den Filternamen indiziert,
-            wobei jeglicher üblicher Präfix entfernt wurde. 
+            wobei jeglicher üblicher Präfix entfernt wurde.
         </para>
 
         <para>
@@ -92,7 +92,7 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
             Um einen alternativen Pfad zu setzen hat <code>Zend_Filter_Inflector</code> eine Utility Methode
             die den Plugin Lader verwendet, <code>addFilterPrefixPath()</code>:
         </para>
-            
+
         <programlisting role="php"><![CDATA[
 $inflector->addFilterPrefixPath('My_Filter', 'My/Filter/');
 ]]>
@@ -178,8 +178,8 @@ class Foo
 
     /**
      * Setzt das Ziel; Aktualisiert das Ziel für die Beugung
-     * 
-     * @param  string $target 
+     *
+     * @param  string $target
      * @return Foo
      */
     public function setTarget($target)
@@ -198,7 +198,7 @@ class Foo
         <para>
             Wie bereits in der Einführung erwähnt, gibt es zwei Typen von Regeln: statische und filter-basierende.
         </para>
-        
+
         <note>
             <para>
                 Es ist wichtig festzustellen das unabhängig von der Methode in welche Regeln dem
@@ -260,8 +260,8 @@ class Foo
 
     /**
      * Suffix setzen; aktualisiert die statische Suffix Regel im Beugungsmechanismus
-     * 
-     * @param  string $suffix 
+     *
+     * @param  string $suffix
      * @return Foo
      */
     public function setSuffix($suffix)
@@ -297,7 +297,7 @@ class Foo
                     <para>
                         <emphasis>String</emphasis>. Der String kann ein Klassenname eines Filters, oder ein
                         Segment des Klassennamens ohne jeglichem Präfix sein der im Beugungs Plugin Lader
-                        gesetzt ist (standardmäßig, ohne den 'Zend_Filter' Präfix). 
+                        gesetzt ist (standardmäßig, ohne den 'Zend_Filter' Präfix).
                     </para>
                 </listitem>
 
@@ -403,7 +403,7 @@ $inflector->addRules(array(
 
             <listitem>
                 <para>
-                    <code>setThrowTargetExceptionsOn()</code> kann verwendet werden um zu kontrollieren ob 
+                    <code>setThrowTargetExceptionsOn()</code> kann verwendet werden um zu kontrollieren ob
                     <code>filter()</code> eine Ausnahme wirft, oder nicht, wenn ein übergegebener Identifizierer
                     der ersetzt werden soll nicht im Ziel gefunden wird. Standardmäßig wird keine Ausnahme
                     geworfen. <code>isThrowTargetExceptionsOn()</code> zeigt wie der aktuelle Wert ist.
@@ -475,7 +475,7 @@ $inflector->addRules(array(
             <listitem>
                 <para>
                     <code>rules</code> spezifiziert ein Array von Beugungsregeln; es sollte aus Schlüsseln
-                    bestehen die entweder Werte oder Arrays von Werten spezifizieren, die mit 
+                    bestehen die entweder Werte oder Arrays von Werten spezifizieren, die mit
                     <code>addRules()</code> übereinstimmen.
                 </para>
             </listitem>

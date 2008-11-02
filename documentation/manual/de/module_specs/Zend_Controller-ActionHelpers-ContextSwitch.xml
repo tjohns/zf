@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.controller.actionhelpers.contextswitch">
     <title>ContextSwitch und AjaxContext</title>
 
@@ -66,7 +66,7 @@ class NewsController extends Zend_Controller_Action
 }
 ]]>
     </programlisting>
-    
+
     <para>
         Angenommen wir wollen das <code>listAction()</code> auch im XML Format vorhanden ist. Statt
         der Erstellung einer anderen Aktion, kann angezeigt werden das eine XML Antwort
@@ -211,7 +211,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
                 Logik auszuführen die stattfinden soll. Als Beispiel verwendet der JSON Kontext
                 einen Callback um den ViewRenderer auszuschalten wenn auto-JSON Serialisierung
                 eingeschaltet ist.</para>
-                
+
                 <para>Nachbearbeitung tritt wärend der <code>postDispatch()</code> Routine der
                 Aktion auf, und kann verwendet werden um spezielle Logik auszuführen. Als Beispiel
                 verwendet der JSON Kontext einen Callback um festzustellen ob auto-JSON
@@ -650,7 +650,7 @@ $contextSwitch->initContext();
                     <code>getCurrentContext()</code> kann verwendet werden um festzustellen welcher
                     Kontext erkannt wurde, wenn überhaupt. Er gibt null zurück wenn keine
                     Kontextumschaltung stattgefunden hat, oder wenn er aufgerufen wurde bevor
-                    <code>initContext()</code> stattgefunden hat. 
+                    <code>initContext()</code> stattgefunden hat.
                 </para>
             </listitem>
         </itemizedlist>
@@ -739,7 +739,7 @@ class CommentController extends Zend_Controller_Action
                 '/comment/form/format/html', '/comment/process/format/json'. (Oder der Parameter
                 kann über GET übergeben werden: z.B. , "?format=json".)
             </para>
-                
+
             <para>
                 Angenommen die Bibliothek übergibt den 'X-Requested-With: XmlHttpRequest'
                 Header, dann werden diese Aktionen das richtige Antwortformat zurückgeben.

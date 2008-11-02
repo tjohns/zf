@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.layout.quickstart">
     <title>Zend_Layout Schnellstart</title>
 
@@ -15,7 +15,7 @@
             mit einem <code>Zend_Layout</code>
             <link linkend="zend.view.helpers.initial.placeholder">Platzhalter</link> registriert, und es kann
             auf Sie über den Platzhalter Helfer zugegriffen werden oder dadurch das Sie als Objekt Eigenschaften
-            vom Layout Objekt über den Layout Helfer geholt werden. 
+            vom Layout Objekt über den Layout Helfer geholt werden.
         </para>
 
         <para>
@@ -32,9 +32,9 @@
     <title>Meine Seite</title>
 </head>
 <body>
-<?php 
+<?php
     // Holt den 'content' Schlüssel durch Verwendung des Layout Helfers:
-    echo $this->layout()->content; 
+    echo $this->layout()->content;
 
     // Holt den 'foo' Schlüssel durch Verwendung des Platzhalter Helfers:
     echo $this->placeholder('Zend_Layout')->foo;
@@ -52,7 +52,7 @@
         <para>
             Weil <code>Zend_Layout</code> <code>Zend_View</code> für die Darstellung verwendet, kann auch jeder
             registrierte View Helfer verwendet werden, und auch auf jede zuvor zugeordnete View Variable kann
-            zugegriffen werden. Sehr hilfreich sind die verschiedenen 
+            zugegriffen werden. Sehr hilfreich sind die verschiedenen
             <link linkend="zend.view.helpers.initial.placeholder">Platzhalter Helfer</link>, da diese das
             Empfangen von Inhalt für einen Bereich wie die &lt;head&gt; Sektion, Navigation usw. erlauben:
         </para>
@@ -104,7 +104,7 @@
         </para>
 
         <para>
-            Zuerst sehen wir uns an wie Zend_Layout initialisiert wird um es mit dem MVC zu verwenden: 
+            Zuerst sehen wir uns an wie Zend_Layout initialisiert wird um es mit dem MVC zu verwenden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -112,10 +112,10 @@
 Zend_Layout::startMvc();
 ]]>
         </programlisting>
-        
+
         <para>
             <code>startMvc()</code> kann ein optionales Array von Optionen oder ein <code>Zend_Config</code>
-            Objekt entgegennehmen um die Instanz anzupassen; diese Optionen werden detailiert in 
+            Objekt entgegennehmen um die Instanz anzupassen; diese Optionen werden detailiert in
             <xref linkend="zend.layout.options" /> beschrieben.
         </para>
 
@@ -161,7 +161,7 @@ $this->layout()->setLayout('foo'); // alternatives Layout setzen
 
         <programlisting role="php"><![CDATA[
 // Gibt null zurück wenn startMvc() nicht zuerst aufgerufen wurde
-$layout = Zend_Layout::getMvcInstance(); 
+$layout = Zend_Layout::getMvcInstance();
 ]]>
         </programlisting>
 
@@ -192,9 +192,9 @@ $layout = Zend_Layout::getMvcInstance();
 </body>
 ]]>
         </programlisting>
-        
+
         <para>
-            Dieses Feature ist teilweise nützlich wenn es in Verbindung mit dem ActionStack 
+            Dieses Feature ist teilweise nützlich wenn es in Verbindung mit dem ActionStack
             <link linkend="zend.controller.actionhelpers.actionstack">Action Helfer</link> und
             <link linkend="zend.controller.plugins.standard.actionstack">Plugin</link> verwendet wird, welche
             verwendet werden können um einen Stack von Aktionen zu definieren der durchgelaufen wird, und welcher

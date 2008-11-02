@@ -88,7 +88,7 @@ irgendeinBenutzer:Irgendein Bereich:fde17b91c3a510ecbaf7dbd37f59d4f8
             Der Digest Authentifizierungs Adapter gibt ein <code>Zend_Auth_Result</code> Objekt zurück, welches
             mit der Identität wird wobei dieses als Arry mit Schlüssel von <code>Bereich</code>
             und <code>Benutzername</code> veröffentlicht wird. Die entsprechenden Array Werte die diesen
-            Schlüsseln zugeordnet sind korrespondieren mit den Werte die vorher durch den Aufruf von 
+            Schlüsseln zugeordnet sind korrespondieren mit den Werte die vorher durch den Aufruf von
             <code>authenticate()</code> gesetzt wurden.
         </para>
 

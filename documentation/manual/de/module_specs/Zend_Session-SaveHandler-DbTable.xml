@@ -1,9 +1,9 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.session.savehandler.dbtable">
     <title>Zend_Session_SaveHandler_DbTable</title>
     <para>
         The basic setup for Zend_Session_SaveHandler_DbTable must at least
-        have four columns, denoted in the config array/Zend_Config object: 
+        have four columns, denoted in the config array/Zend_Config object:
         primary, which is the primary key and defaults to just the session
         id which by default is a string of length 32;
         modified, which is the unix timestamp of the last modified date;
@@ -35,18 +35,18 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 //or you can pass the db connection straight to the save handler $config
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 $config = array(
-    'name'           => 'session', 
-    'primary'        => 'id', 
+    'name'           => 'session',
+    'primary'        => 'id',
     'modifiedColumn' => 'modified',
     'dataColumn'     => 'data',
-    'lifetimeColumn' => 'lifetime' 
-); 
+    'lifetimeColumn' => 'lifetime'
+);
 
-//create your Zend_Session_SaveHandler_DbTable and 
+//create your Zend_Session_SaveHandler_DbTable and
 //set the save handler for Zend_Session
 Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 
-//start your session! 
+//start your session!
 Zend_Session::start();
 
 //now you can use Zend_Session like any other time
@@ -76,25 +76,25 @@ CREATE TABLE `session` (
 //NOTE: this config is also passed to Zend_Db_Table so anything specific
 //to the table can be put in the config as well
 $config = array(
-    'name'              => 'session', //table name as per Zend_Db_Table 
-    'primary'           => array( 
-        'session_id',   //the sessionID given by php 
-        'save_path',    //session.save_path  
+    'name'              => 'session', //table name as per Zend_Db_Table
+    'primary'           => array(
+        'session_id',   //the sessionID given by php
+        'save_path',    //session.save_path
         'name',         //session name
     ),
     'primaryAssignment' => array( //you must tell the save handler which columns you
                                   //are using as the primary key. ORDER IS IMPORTANT
-        'sessionId',          //first column of the primary key is of the sessionID 
-        'sessionSavePath',    //second column of the primary key is the save path 
-        'sessionName',        //third column of the primary key is the session name 
-    ), 
-    'modifiedColumn'    => 'modified',     //time the session should expire 
+        'sessionId',          //first column of the primary key is of the sessionID
+        'sessionSavePath',    //second column of the primary key is the save path
+        'sessionName',        //third column of the primary key is the session name
+    ),
+    'modifiedColumn'    => 'modified',     //time the session should expire
     'dataColumn'        => 'session_data', //serialized data
-    'lifetimeColumn'    => 'lifetime',     //end of life for a specific record 
+    'lifetimeColumn'    => 'lifetime',     //end of life for a specific record
 );
 
 //Tell Zend_Session to use your Save Handler
-Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config)); 
+Zend_Session::setSaveHandler(new Zend_Session_SaveHandler_DbTable($config));
 
 //start your session
 Zend_Session::start();

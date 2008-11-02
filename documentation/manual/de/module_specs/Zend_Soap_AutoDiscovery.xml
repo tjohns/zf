@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -70,7 +70,7 @@
 
         <para>
             Die Zend_Soap_AutoDiscovery Klasse unterstützt auch das Mapping von Datentypen von PHP zu
-            <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD Typen</ulink>. 
+            <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD Typen</ulink>.
         </para>
 
         <para>

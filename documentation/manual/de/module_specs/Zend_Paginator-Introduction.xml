@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10200 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.paginator.introduction">
     <title>Einführung</title>
 
@@ -6,10 +6,10 @@
         <code>Zend_Paginator</code> ist eine flexible Komponente für die seitenweise Verarbeitung
         von Sammlungen von Daten und deren Darstellung zum Benutzer.
     </para>
-    
+
     <para>
         Die primären Designziele von <code>Zend_Paginator</code> sind wie folgt:
-        
+
         <itemizedlist>
             <listitem>
                 <para>

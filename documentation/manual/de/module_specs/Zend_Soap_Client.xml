@@ -1,7 +1,7 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12118 -->
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
-    
+
     <para>
         Die <code>Zend_Soap_Client</code> Klasse vereinfacht die Entwicklung von SOAP Clients für
         PHP Programmierern.
@@ -13,9 +13,9 @@
 
     <para>
         Im WSDL Modus verwendet die Zend_Soap_Client Komponente ein bereits vorbereitetes
-        WSDL Dokument um die Optionen des Transport Layers zu definieren. 
+        WSDL Dokument um die Optionen des Transport Layers zu definieren.
     </para>
-    
+
     <para>
         Die WSDL Beschreibung wird normalerweise vom Web Service bereitgestellt auf das der Client zugreift.
         Wenn die WSDL Beschreibung nicht verfügbar gemacht wurde, kann man Zend_Soap_Client im nicht-WSDL
@@ -39,11 +39,11 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            
+
             Beide Parameter können später gesetzt werden indem die <code>setWsdl($wsdl)</code> und
             <code>setOptions($options)</code> Methoden verwendet werden.
         </para>
-        
+
         <note>
             <title>Wichtig!</title>
             <para>
@@ -51,7 +51,7 @@
                 <emphasis>müssen</emphasis> die 'location' und 'uri' Optionen gesetzt werden.
             </para>
         </note>
-        
+
         <para>
             Die folgenden Optionen werden erkannt:
             <itemizedlist>
@@ -100,18 +100,18 @@
                 <listitem>
                     <para>
                         'style' - Anfrage Stil (funktioniert nicht im WSDL Modus): <code>SOAP_RPC</code> oder
-                        <code>SOAP_DOCUMENT</code>. 
+                        <code>SOAP_DOCUMENT</code>.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
                         'use' - Methode zum Verschlüsseln von Nachrichten (funktioniert nicht im WSDL
-                        Modus): <code>SOAP_ENCODED</code> oder <code>SOAP_LITERAL</code>. 
+                        Modus): <code>SOAP_ENCODED</code> oder <code>SOAP_LITERAL</code>.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'login' und 'password' - Login und Passwort für eine HTTP Authentifizierung. 
+                        'login' und 'password' - Login und Passwort für eine HTTP Authentifizierung.
                     </para>
                 </listitem>
                 <listitem>
@@ -133,17 +133,17 @@
                         können:
                         <programlisting role="php"><![CDATA[
 // Komprimierung der Antworten akzeptieren
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
 
 // Anfragen komprimieren durch Verwendung von gzip mit Komprimierungs-Level 5
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
 
 // Anfragen komprimieren durch Verwendung der Deflate Komprimierung
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
 ]]>
                         </programlisting>
@@ -152,20 +152,20 @@ $client = new SoapClient("some.wsdl",
             </itemizedlist>
         </para>
     </sect2>
-    
 
-    <sect2 id="zend.soap.client.calls"> 
+
+    <sect2 id="zend.soap.client.calls">
         <title>SOAP Anfragen durchführen.</title>
-        
+
         <para>
             Nachdem ein <code>Zend_Soap_Client</code> Objekt erstellt wurde sind wir bereit um
             SOAP Anfragen durchzuführen.
         </para>
         <para>
             Jede Methode des Web Services wird auf eine virtuelle <code>Zend_Soap_Client</code> Objekt-Methode
-            gemappt welche Parameter mit üblichen PHP Typen entgegen nimmt. 
+            gemappt welche Parameter mit üblichen PHP Typen entgegen nimmt.
         </para>
-        
+
         <para>
             Es ist wie im folgenden Beispiel zu verwenden:
             <programlisting role="php"><![CDATA[
@@ -182,7 +182,7 @@ $client = new SoapClient("some.wsdl",
 //     public function method1($inputParam) {
 //         ...
 //     }
-//     
+//
 //     /**
 //      * Diese Methode nimmt ...
 //      *
@@ -193,7 +193,7 @@ $client = new SoapClient("some.wsdl",
 //     public function method2($inputParam1, $inputParam2) {
 //         ...
 //     }
-//     
+//
 //     ...
 // }
 // ...
@@ -210,7 +210,7 @@ $client = new SoapClient("MyService.wsdl");
 ...
 
 // $result1 ist ein String
-$result1 = $client->method1(10); 
+$result1 = $client->method1(10);
 ...
 
 // $result2 ist ein Float

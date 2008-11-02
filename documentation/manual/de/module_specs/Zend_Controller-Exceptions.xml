@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.exceptions">
     <title>MVC Ausnahmen</title>
 
@@ -67,7 +67,7 @@
                 <para>
                     Durch die Übergabe eines boolschen True Wertes an diese Methode, kann dem Front Controller
                     mitgeteilt werden das, statt der Ansammlung der Ausnahmen im Antwortobjekt oder der Verwendung
-                    des Error Handler Plugin's, man diese Ausnahmen selbst behandeln will. Als Beispiel: 
+                    des Error Handler Plugin's, man diese Ausnahmen selbst behandeln will. Als Beispiel:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -188,7 +188,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                         <para>
                             Die Ausnahme die von <code>dispatch()</code> geworfen wird, ist eine
                             <code>Zend_Controller_Dispatcher_Exception</code> die den Text
-                            'Invalid controller specified' enthält. Eine der Methoden die in 
+                            'Invalid controller specified' enthält. Eine der Methoden die in
                             <link linkend="zend.controller.exceptions.handling">der vorhergehenden Sektion</link>
                             beschrieben wurden können verwendet werden um die Ausnahme zu fangen und dann zu
                             einer generellen Fehlerseite oder der Homepage umzuleiten.

@@ -13,7 +13,7 @@
         Standardmäßig wird keine Internationalisiernug (I18n) durchgeführt. Um I18n Features in
         <code>Zend_Form</code> einzuschalten, muß ein <code>Zend_Translate</code> Objekt mit einem
         gewünschten Adapter instanziert werden, und es mit <code>Zend_Form</code> und/oder
-        <code>Zend_Validate</code> verbunden werden. Siehe in die 
+        <code>Zend_Validate</code> verbunden werden. Siehe in die
         <link linkend="zend.translate">Dokumentation zu Zend_Translate</link> für weitere
         Informationen darüber wie ein Übersetzungsobjekt und Übersetzungsdateien erstellt werden.
     </para>
@@ -118,7 +118,7 @@ $element->setTranslator($translate);
 
         <para>
             Was kann nun standardmäßig übersetzt werden nachdem nun ein Übersetzungs Objekt
-            angehängt wurde? 
+            angehängt wurde?
         </para>
 
         <itemizedlist>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.locale.migration">
 
     <title>Migrieren von vorhergehenden Versionen</title>
@@ -71,7 +71,7 @@ if (Zend_Locale::isLocale($locale, false)) {
         // gar kein Gebietsschema
     }
 
-    // Original String ist kein Gebietsschema, kann aber Reroutet werden    
+    // Original String ist kein Gebietsschema, kann aber Reroutet werden
 }
 ]]>
                 </programlisting>
@@ -87,7 +87,7 @@ if (Zend_Locale::isLocale($locale, false)) {
                 Die Bedeutung der getDefault() Methode wurde verändert durch den Fakt das Framework-weite
                 Gebietsschemata integriert wurden welche mit setDefault() gesetzt werden können. Deswegen
                 gibe es nicht mehr die Kette der Gebietsschemata zurück sondern nur die gesetzten
-                Framework-weiten Gebietsschemata. 
+                Framework-weiten Gebietsschemata.
             </para>
 
             <para>

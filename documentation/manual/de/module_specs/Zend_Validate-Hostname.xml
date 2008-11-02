@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.validate.set.hostname">
 
     <title>Hostname</title>
@@ -90,10 +90,10 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
         mit Zend_Validate_Hostname geprüft werden, mit Hilfe von erweiterten Zeichen die im Prüfprozess
         verwendet werden.
     </para>
-    
+
     <para>
         Zur Zeit beinhaltet die Liste der unterstützten ccTLDs:
-   
+
         <itemizedlist>
             <listitem>
                 <para>at (Österreich)</para>
@@ -121,14 +121,14 @@ $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS |
             </listitem>
         </itemizedlist>
     </para>
-    
+
     <para>
         Eine IDN Domain zu prüfen ist genauso einfach wie die Verwendung des standard Hostnamen Prüfers
         da IDN Prüfung standardmäßig eingeschaltet ist. Wenn IDN Prüfung ausgeschaltet werden soll, kann das
         entweder durch die Übergabe eines Parameters im Zend_Validate_Hostname Konstruktor, oder über die
         <code>$validator->setValidateIdn()</code> Methode gemacht werden.
     </para>
-    
+
     <para>
         Die IDN Prüfung kann ausgeschaltet werden durch die Übergabe eines zweiten Parameters an den
         Zend_Validate_Hostname Konstruktor auf die folgende Art und Weise.
@@ -147,7 +147,7 @@ $validator =
         Zend/Validate/Hostname existiert, welche die zusätzlichen Zeichen definiert, wird eine normale
         Hostnamen Prüfung durchgeführt.
     </para>
-    
+
     <para>
         Es sollte beachtet werden das IDNs nur geprüft werden wenn es erlaubt ist DNS Hostnamen zu prüfen.
     </para>
@@ -173,7 +173,7 @@ $validator =
         Alternativ kann entweder TRUE oder FALSE übergeben an <code>$validator->setValidateTld()</code>
         übergeben werden um die TLD Prüfung ein- oder auszuschalten.
     </para>
-    
+
     <para>
         Es sollte beachtet werden das TLDs nur geprüft werden wenn es erlaubt ist DNS Hostnamen zu prüfen.
     </para>

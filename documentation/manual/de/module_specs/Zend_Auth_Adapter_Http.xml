@@ -10,7 +10,7 @@
         <para>
             <code>Zend_Auth_Adapter_Http</code> bietet die am meisten entsprechende Implementation von
             <ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink>,
-            <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basis</ulink> und 
+            <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basis</ulink> und
             <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Digest</ulink> HTTP
             Authentifizierung. Digest Authentifizierung ist eine Methode der HTTP Authentifikation die die
             Basis Authentifizierung erweitert indem ein Weg angeboten wird um sich zu authentifizieren ohne
@@ -118,7 +118,7 @@
                             <entry>Ja</entry>
                             <entry>
                                 Setzt das Authentifizierungs-Bereich; Benutzernamen sollten im angegebenen
-                                Bereich einmalig sein. 
+                                Bereich einmalig sein.
                             </entry>
                         </row>
                         <row>

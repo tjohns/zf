@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12035 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -302,7 +302,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                         <code>'auto'</code> - <code>Zend_Locale</code> soll automatisch jedes beliebige
                         Gebietsschema erkennen mit dem gearbeitet werden kann. Zuerst wird nach dem
                         Gebietsschema des Benutzers gesucht und anschließend, wenn das nicht erfolgreich war,
-                        nach dem Gebietsschema des Hosts. 
+                        nach dem Gebietsschema des Hosts.
                     </para>
                     <para>
                         Wenn kein Gebietsschema gefunden werden konnte, wird eine Ausnahme geworfen und

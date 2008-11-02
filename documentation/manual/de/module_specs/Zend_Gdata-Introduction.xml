@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.introduction">
     <title>Einführung zu Gdata</title>
     <para>
@@ -9,7 +9,7 @@
         modifizieren von Daten und löschen von Daten wobei Standard HTTP und das Atom Syndication Format verwendet
         wird. Die Zend_Gdata Komponente ist ein PHP 5 Interface für den Zugriff auf Daten von Google von PHP
         aus. Die Zend_Gdata Komponente unterstützt auch den Zugriff auf andere Services die das Atom
-        Publishing Protokoll implementieren.  
+        Publishing Protokoll implementieren.
     </para>
 
     <para>
@@ -31,7 +31,7 @@
                 <para>
                     <link linkend="zend.gdata.spreadsheets">Google Tabellenkalkulation</link> bietet ein
                     gemeinschaftliches online Tabellenkalkulations Tool welches als einfacher Datenspeicher
-                    für eigene Anwendungen verwendet werden kann. 
+                    für eigene Anwendungen verwendet werden kann.
                 </para>
             </listitem>
             <listitem>
@@ -92,7 +92,7 @@
         <title>Nicht unterstützte Services</title>
         <para>
             Zend_Gdata bietet kein Interface zu irgendwelchen anderen Google Services wie Search, Gmail,
-            Translation oder Maps. Nur Services die das Google Data API unterstützen werden unterstützt. 
+            Translation oder Maps. Nur Services die das Google Data API unterstützen werden unterstützt.
         </para>
     </note>
 
@@ -223,7 +223,7 @@ $entry->cell = $cell;
         <para>
             Jede Service Klasse im abgeleiteten Baum ist dafür verantwortlich das die richtigen 'Pakete'
             (Verzeichnisse) registriert werden, in welchen dann durch den Aufruf der matischen Fabriksmethode,
-            gesucht wird. 
+            gesucht wird.
         </para>
     </sect2>
 
@@ -302,7 +302,7 @@ $gdata = new Zend_Gdata($client);
             Parametern welche an das spezielle Service und die Feeds angepasst sind. Tabellenkalkulationen
             beinhalten eine CellQuery Klasse um den Zellen Feed abzufragen und eine ListQuery Klasse um den
             Listen Feed abzufragen, da verschiedene Abfrageparameter für jeder dieser Feedtypen möglich sind.
-            Die GData-weiten Parameter werden anbei beschrieben. 
+            Die GData-weiten Parameter werden anbei beschrieben.
         </para>
 
         <itemizedlist>
@@ -323,7 +323,7 @@ $gdata = new Zend_Gdata($client);
                     sein. Wenn dieser Parameter nicht spezifiziert wird, ist der Standard Feedtyp
                     <code>atom</code>. <code>Zend_Http_Client</code> könnte verwendet werden um Feeds in anderen
                     Formaten zu empfangen, indem die von der <code>Zend_Gdata_Query</code> Klasse oder deren
-                    Subklassen erzeugten Abfrage URLs verwendet werden. 
+                    Subklassen erzeugten Abfrage URLs verwendet werden.
                 </para>
                 <para>
                     Dieser Parameter kann mit der <code>setAlt()</code> Methode gesetzt werden.
@@ -334,7 +334,7 @@ $gdata = new Zend_Gdata($client);
                 <para>
                     Der <code>maxResults</code> Parameter begrenzt die Anzahl an Einträgen im Feed. Der Wert
                     dieses Parameters ist ein Integer. Die zurückgegebene Anzahl an Einträgen im Feed wird
-                    diesen Wert nicht überschreiten. 
+                    diesen Wert nicht überschreiten.
                 </para>
                 <para>
                     Dieser Parameter kann mit der <code>setMaxResults()</code> Methode gesetzt werden.
@@ -439,7 +439,7 @@ $feed = $gdata->getFeed($query);
 
     <sect2 id="zend.gdata.introduction.paging">
         <title>Mit Mehrfach-Seiten Feeds arbeiten</title>
-        
+
         <para>
             Wenn man einen Feed empfängt der eine große Anzahl an Einträgen enthält, kann dieser Feed in viele
             kleinere "Seiten" von Feeds gebrochen werden. Wenn das passiert, enthält jede Seite einen Link zur
@@ -447,7 +447,7 @@ $feed = $gdata->getFeed($query);
             zugegriffen werden. Das folgende Beispiel zeigt wie auf die nächste Seite eines Feeds empfangen
             werden kann:
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 function getNextPage($feed) {
     $nextURL = $feed->getLink('next');
@@ -480,7 +480,7 @@ $feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
             kann im große Feeds zu komplettieren. Es kann notwendig sein PHP's Limit der Ausführungszeit zu
             vergrößern mithilfe von <code>set_time_limit()</code> zu vergrößern.
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
@@ -489,7 +489,7 @@ $feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
         <para>
             Nachdem ein Feed empfangen wurde, können die Daten von dem Feed oder den Einträgen die in dem
             Feed enthalten sind, gelesen werden, indem entweder die in jeder Daten Modell Klasse definierten
-            Zugriffsmethoden oder die magischen Zugriffsmethoden verwendet werden. Hier ist ein Beispiel: 
+            Zugriffsmethoden oder die magischen Zugriffsmethoden verwendet werden. Hier ist ein Beispiel:
         </para>
 
         <programlisting role="php"><![CDATA[

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.layout.advanced">
     <title>Erweiterte Verwendung von Zend_Layout</title>
 
@@ -113,7 +113,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
             Jede Plugin Klasse die für diesen Zweck geschrieben wird, muß
             <code>Zend_Controller_Plugin_Abstract</code> erweitern, und sollte eine Instanz eines Layout Objektes
             als Instanz für den Konstruktor akzeptieren. Andernfalls sind die Details der Implementation in
-            eigenen Händen. 
+            eigenen Händen.
         </para>
 
         <para>
@@ -169,7 +169,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
             der Beugung die mit der <code>Zend_Layout</code> Instanz gekoppelt ist, oder Erstellung einer
             eigenen Beugungsinstanz und dessen Übergabe an <code>Zend_Layout::setInflector()</code>.
          </para>
- 
+
         <example id="zend.layout.advanced.inflector.accessors">
             <title>Verwenden von Zend_Layout Zugriffsmethoden zur Änderung der Beugung</title>
 

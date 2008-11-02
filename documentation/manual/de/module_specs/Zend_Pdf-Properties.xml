@@ -9,7 +9,7 @@
     <para>
         Historisch wird diese Information durch das Verwenden einer speziellen Info Struktur gespeichert.
         Diese struktur kann als assoziatives Array mithilfe der öffentlichen <code>properties</code> Eigenschaft
-        des Zend_Pdf Objektes gelesen und geschrieben werden: 
+        des Zend_Pdf Objektes gelesen und geschrieben werden:
             <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 
@@ -56,7 +56,7 @@ $pdf->save($pdfPath);
             </listitem>
             <listitem>
                 <para>
-                    <emphasis>Producer</emphasis> - String, optional, wenn das Dokument von einem anderen 
+                    <emphasis>Producer</emphasis> - String, optional, wenn das Dokument von einem anderen
                     Format zu PDF konvertiert wurde, der Name der Anwendung (zum Beispiel, Acrobat Distiller)
                     die es zu PDF konvertiert hat.
                 </para>
@@ -157,7 +157,7 @@ $pdf->save($pdfPath);
                                 <emphasis>null</emphasis> - Entweder ist nicht bekannt ob das Dokument
                                 eingeschlossen wurde, oder es wurde bisher erst teilweise aber noch nicht
                                 vollständig eingeschlosssen; etwas zusätzliches Einschließen ist trotzdem noch
-                                notwendig. 
+                                notwendig.
                             </para>
                         </listitem>
                     </itemizedlist>

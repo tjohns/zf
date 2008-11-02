@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11565 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -121,7 +121,7 @@
         <para>
             Die Verwendung von Prüfungen ist sehr einfach. Es gibt verschiedene Methoden für das
             Hinzufügen und Manipulieren von Prüfungen.
-        </para>        
+        </para>
 
         <itemizedlist>
             <listitem>
@@ -206,7 +206,7 @@ $upload->addValidator('Size', false, array(20, 20000));
 // Setzt eine Dateigröße von mindestens 20 Bytes und Maximal
 // 20000 Bytes und eine Dateianzahl in einem Schritt
 $upload->setValidators(array(
-    'Size'  => array(20, 20000), 
+    'Size'  => array(20, 20000),
     'Count' => array(1, 3),
 ));
 ]]>
@@ -268,7 +268,7 @@ $upload->addValidator('Size', false, 20000)
         </note>
 
         <para>
-            Und letztendlich können Dateien einfach geprüft werden indem <code>isValid()</code> verwendet wird. 
+            Und letztendlich können Dateien einfach geprüft werden indem <code>isValid()</code> verwendet wird.
         </para>
 
         <example id="zend.file.transfer.validators.usage.exampleisvalid">
@@ -624,7 +624,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
 
         <para>
             Die <code>FilesSize</code> Prüfung checkt die komplette Größe aller übertragenen Dateien.
-            Sie unterstützt die folgenden Optionen: 
+            Sie unterstützt die folgenden Optionen:
         </para>
 
         <itemizedlist>

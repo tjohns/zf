@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.dojo.form.decorators">
     <title>Dijit-Spezifische Formular Dekoratore</title>
 
@@ -6,7 +6,7 @@
         Die meisten Formular Elemente können den DijitElement Dekorator verwenden, welche die Dijit Parameter
         von den Elementen nimmt und Sie, und andere Metadaten, dem View Helfer übergibt der vom Element
         spezifiziert wurde. Für die Dekoration von Formularen, Unterformularen und Anzeigegruppen gibt es
-        trotzdem ein Set von Dekoratoren die den verschiedenen Layout Dijits entsprechen. 
+        trotzdem ein Set von Dekoratoren die den verschiedenen Layout Dijits entsprechen.
     </para>
 
     <para>
@@ -107,11 +107,11 @@ $element->setDecorators(array(
 $form->setDecorators(array(
     'FormElements',
     array('TabContainer', array(
-        'id'          => 'tabContainer', 
+        'id'          => 'tabContainer',
         'style'       => 'width: 600px; height: 500px;',
         'dijitParams' => array(
             'tabPosition' => 'top'
-        ), 
+        ),
     )),
     'DijitForm',
 ));

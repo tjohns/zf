@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -401,7 +401,7 @@ $viewRenderer =
 
             <para>
                 Der <code>ViewRenderer</code> führt einige Pfad Normalisierungen durch um das Eruieren
-                von View Skripten einfacher zu machen. Die Standardregeln sind wie folgt: 
+                von View Skripten einfacher zu machen. Die Standardregeln sind wie folgt:
             </para>
 
             <itemizedlist>

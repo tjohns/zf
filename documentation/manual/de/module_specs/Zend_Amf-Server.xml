@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12113 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.amf.server">
     <title>Zend_Amf_Server</title>
 
@@ -124,7 +124,7 @@ class World
             <code>server.php</code> Datei im Anwendungsroot platziert, und die URI deswegen
             <code>http://example.com/server.php</code> ist. In diesem Fall würde man die
             services-config.xml Datei so modifizieren das das channel endpoint URI Attribut
-            auf diesen Wert gesetzt ist. 
+            auf diesen Wert gesetzt ist.
         </para>
 
         <para>
@@ -263,7 +263,7 @@ myservice.world.hello("Wade");
             Standardmäßig werden alle Exceptions die in den angehängten Klassen oder Funktionen
             geworfen werden gefangen und als AMF Fehlermeldungen zurückgegeben. Trotzdem wird der
             Inhalt des ErrorMessage Objekts variieren basierend darauf ob der Server im "Produktions"
-            Modus ist (der Standardzustand) oder nicht. 
+            Modus ist (der Standardzustand) oder nicht.
         </para>
 
         <para>
@@ -484,7 +484,7 @@ private function getContactHandler(event:ResultEvent):void {
         <para>
             Jetzt werden wir eine Main Klasse erstellen damit wir die Daten zum Server schicken und das
             Ergebnis anzeigen lassen können. Kopiere den folgenden Code in die Main.as Datei und wird werden
-            den Code anschauen um zu erklären was die Rolle eines jeden Elements ist. 
+            den Code anschauen um zu erklären was die Rolle eines jeden Elements ist.
         </para>
 
         <programlisting role="as"><![CDATA[

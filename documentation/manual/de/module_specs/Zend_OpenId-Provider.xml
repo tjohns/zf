@@ -362,7 +362,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
             <listitem>
                 <para>
                     ein Set von Methoden um End-Benutzer GUI Interfaces zu erstellen die dem Benutzer erlauben sich
-                    zu registrieren, und Ihre vertrauten Seiten und Profile zu managen. 
+                    zu registrieren, und Ihre vertrauten Seiten und Profile zu managen.
                 </para>
             </listitem>
             <listitem>´
@@ -376,7 +376,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
             <listitem>
                 <para>
                     einen Abtraktions Benutzer-Assoziierungs Layer der Web-Browser von End-Benutzern mit eingeloggten
-                    Identitäten verknüpfen kann. 
+                    Identitäten verknüpfen kann.
                 </para>
             </listitem>
         </itemizedlist>

@@ -237,7 +237,7 @@ class ErrorController extends Zend_Controller_Action
             <para>
                 In der bereits angesprochenen Ordnerstruktur gehört dieser Code in die Datei
                 <code>application/controllers/ErrorController.php</code>.
-                Außerdem muss auch ein View-Script 
+                Außerdem muss auch ein View-Script
                 <code>application/views/scripts/error/error.phtml</code> erstellt werden; Beispielhaft
                 könnte sein Inhalt so aussehen:
             </para>

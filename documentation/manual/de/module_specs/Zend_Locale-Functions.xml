@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale verwenden</title>
@@ -446,7 +446,7 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry><emphasis role="strong">NameToCurrency</emphasis></entry>
                         <entry>Gibt eine lokalisierte Liste von Namen für Währungen zurück. Die Währung wird
                             hierbei als Schlüssel und der übersetzte Name als Wert zurückgegeben. Der
-                            Einfachheit halber sollte 
+                            Einfachheit halber sollte
                             <link linkend="zend.currency.introduction">Zend_Currency</link> verwendet werden
                         </entry>
                     </row>
@@ -607,7 +607,7 @@ print $locale->getTranslation('de', 'language', 'zh');
         </note>
 
         <para>
-            Siehe die folgende Tabelle für detailierte Informationen: 
+            Siehe die folgende Tabelle für detailierte Informationen:
         </para>
 
         <table id="zend.locale.getdata.table-2">
@@ -1155,7 +1155,7 @@ foreach($list as $language => $content) {
             <listitem>
                 <para>
                     <emphasis role="strong">yes und no</emphasis>: Eine generelle Stringrepräsentation für
-                    Ja und Nein Antworten. Es enthält die erste und generellste Antwort von yesarray und noarray. 
+                    Ja und Nein Antworten. Es enthält die erste und generellste Antwort von yesarray und noarray.
                 </para>
 
                 <para>

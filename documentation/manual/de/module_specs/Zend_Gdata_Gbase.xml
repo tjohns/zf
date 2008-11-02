@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base verwenden</title>
     <para>
@@ -22,7 +22,7 @@
         Notwendigkeit sich zu Authentifizieren. Der benutzerdefinierte Feed für Elemente ist ein benutzer
         spezifisches Subset an Daten und nur ein Benutzer/Eigentümer kann auf diesen Feed zugreifen um
         eigene Daten einzufügen, zu aktualisieren oder zu löschen. Abfragen werden für beide Typen von Feeds
-        auf dem selben Weg erstellt. 
+        auf dem selben Weg erstellt.
     </para>
     <para>
         Siehe <ulink url="http://code.google.com/apis/base/">http://code.google.com/apis/base</ulink> für
@@ -39,7 +39,7 @@
         <para>
             Bevor irgendeine Transaktion stattfinden kann, muß diese Verbindung hergestellt werden. Das
             Erstellen einer Verbindung zu den Base Server enthält zwei Schritte: Erstellen eines HTTP Clients
-            und das Binden einer <code>Zend_Gdata_Gbase</code> Serviceinstanz an diesen Client. 
+            und das Binden einer <code>Zend_Gdata_Gbase</code> Serviceinstanz an diesen Client.
         </para>
         <sect3 id="zend.gdata.gbase.connect.authentication">
             <title>Authentifizierung</title>
@@ -93,7 +93,7 @@
                 von <code>Zend_Http_Client</code> als einziges Argument. Das bietet ein Interface für
                 AuthSub und ClientAuth Authentifizierungen, da beide einen speziellen authentifizierten
                 HTTP Client für die Erstellung benötigen. Wenn keine Argumente angegeben wurden, wird
-                automatisch eine nicht authentifizierte Instanz von <code>Zend_Http_Client</code> erstellt. 
+                automatisch eine nicht authentifizierte Instanz von <code>Zend_Http_Client</code> erstellt.
             </para>
             <para>
                 Das nachfolgende Beispiel zeigt wir eine Base Service Klasse erstellt wird indem die
@@ -126,7 +126,7 @@ function getCurrentUrl()
     global $_SERVER;
 
     // Filtert php_self um Sicherheits Risiken zu vermeiden
-    $php_request_uri = 
+    $php_request_uri =
         htmlentities(substr($_SERVER['REQUEST_URI'],
                             0,
                             strcspn($_SERVER['REQUEST_URI'], "\n\r")),
@@ -330,8 +330,8 @@ foreach ($feed->entries as $entry) {
             Daten übertragen werden sollen, muß es auf <code>false</code> gesetzt werden um die Operation
             durchzuführen.
         </para>
-		<sect3 id="zend.gdata.gbase.crud.insert">
-			<title>Ein Element einfügen</title>
+        <sect3 id="zend.gdata.gbase.crud.insert">
+            <title>Ein Element einfügen</title>
             <para>
                 Elemente können hinzugefügt werden durch Verwenden der <code>insertGbaseItem()</code>
                 Methode des Base Services:
@@ -427,8 +427,8 @@ $entry->save($dryRun);
                 Objekt aufgerufen werden um die Änderungen abzuspeichern.
             </para>
         </sect3>
-		<sect3 id="zend.gdata.gbase.crud.delete">
-			<title>Ein Element löschen</title>
+        <sect3 id="zend.gdata.gbase.crud.delete">
+            <title>Ein Element löschen</title>
             <para>
                 ein Element kann gelöscht werden indem die <code>deleteGbaseItem()</code> Methode aufgerufen wird:
             </para>

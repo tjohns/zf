@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12064 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.migration">
     <title>Migration von vorhergehenden Versionen</title>
 
@@ -44,7 +44,7 @@
                 als auch <code>Zend_Controller_Router_Route_Module</code> Methoden des Dispatchers verwenden
                 die nicht im Dispatcher Interface waren. Wir haben jetzt die folgenden drei Methoden
                 hinzugefügt um sicherzustellen das eigene Dispatcher weiterhin mit der ausgelieferten
-                Implementation arbeiten: 
+                Implementation arbeiten:
             </para>
 
             <itemizedlist>
@@ -82,7 +82,7 @@
             camelCase schreiben und der Dispatcher würde diese auf den gleichen Platz auflösen.
             Zum Beispiel, 'camel-cased' würde durch den Dispatcher zu 'camelCasedAction' werden;
             trotzdem, durch den Fall der unabhängigen Schreibweise in PHP, würden beide die selbe
-            Methode ausführen. 
+            Methode ausführen.
         </para>
 
         <para>
@@ -157,7 +157,7 @@ $inflector->setFilterRule(':action', array(
                 <para>
                     Die am wenigsten zu empfehlende Option: Man kann den Dispatcher dazu zwingen
                     camelCase Aktionsnamen mit einem neuen Front Kontroller Flag
-                    'useCaseSensitiveActions' zu bearbeiten: 
+                    'useCaseSensitiveActions' zu bearbeiten:
                 </para>
 
                 <programlisting role="php"><![CDATA[

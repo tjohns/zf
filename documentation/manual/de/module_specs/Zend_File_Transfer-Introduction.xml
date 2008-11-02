@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12099 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -145,7 +145,7 @@ if (!$adapter->receive()) {
     <sect2 id="zend.file.transfer.introduction.checking">
 
         <title>Prüfen von Dateien</title>
-        
+
         <para>
             <code>Zend_File_Transfer</code> hat verschiedene Methoden die auf verschiedenste Annahmen
             prüfen welche nützlich sind wenn man Dateien bearbeiten will nachdem Sie empfangen wurden.
@@ -190,7 +190,7 @@ $upload = new Zend_File_Transfer();
 $files = $upload->getFileInfo();
 
 foreach ($files as $file => $info) {
-    // Datei hochgeladen ? 
+    // Datei hochgeladen ?
     if (!$upload->isUploaded($file)) {
         print "Warum hast Du die Datei nicht hochgeladen ?";
         continue;
@@ -213,7 +213,7 @@ $upload->receive();
     <sect2 id="zend.file.transfer.introduction.informations">
 
         <title>Zusätzliche Dateiinformationen</title>
-        
+
         <para>
             <code>Zend_File_Transfer</code> kann verschiedene zusätzliche Informationen über Dateien
             zurückgeben. Die folgenden Methoden sind vorhanden:

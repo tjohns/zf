@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12118 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -449,7 +449,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             jedes Mal in ein Dokument hinzugefügt und möglicherweise eingebetten werden, wenn es aktualisiert
             werden soll.
         </para>
-        
+
         <para>
             Die <code>Zend_Pdf</code> und <code>Zend_Pdf_Page</code> Objekte bieten spezielle Methoden um alle
             genannten Schriften innerhalb eines Dokuments oder einer Seite zu extrahieren:
@@ -468,7 +468,7 @@ $yPosition = 700;
 foreach ($fontList as $font) {
     $page->setFont($font, 15);
     $page->drawText(
-       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') . 
+       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') .
        ':  Der schnelle braune Fuchs springt über den lahmen Hund', 100, $yPosition, 'UTF-8');
     $yPosition -= 30;
 }
@@ -553,7 +553,7 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
             </programlisting>
                     </para>
                 </listitem>
-            </itemizedlist> 
+            </itemizedlist>
         </para>
     </sect2>
 

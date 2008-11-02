@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.service.recaptcha">
     <title>Zend_Service_ReCaptcha</title>
 
@@ -20,7 +20,7 @@
             Um den reCAPTCHA Service zu verwenden muß man
             <ulink url="http://recaptcha.net/whyrecaptcha.html">einen Account unterzeichnen</ulink>
             und eine oder mehrere Domains beim Service registrieren um öffentliche und private Schlüssel
-            zu erzeugen. 
+            zu erzeugen.
         </para>
     </sect2>
 
@@ -54,7 +54,7 @@ echo $recaptcha->getHTML();
 
         <programlisting role="php"><![CDATA[
 $result = $recaptcha->verify(
-    $_POST['recaptcha_challenge_field'], 
+    $_POST['recaptcha_challenge_field'],
     $_POST['recaptcha_response_field']
 );
 ]]>
@@ -72,7 +72,7 @@ if (!$result->isValid()) {
 }
 ]]>
         </programlisting>
-        
+
         <para>
             Noch einfacher zu verwenden ist
             <link linkend="zend.captcha.adapters.recaptcha">der ReCaptcha</link> <code>Zend_Captcha</code>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -204,14 +204,14 @@ $imfs = $nirvanix->getService('IMFS');
 $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
                                   'newFileName' => 'bar.txt'));
 ]]>
-        </programlisting>        
+        </programlisting>
 
         <para>
             Oben wird ein Proxy für den <code>IMFS</code> erstellt. Eine Methode,
             <code>renameFile()</code>, wird dann vom Proxy aufgerufen. Diese Methode existiert
             nicht als bequeme Methode im PHP Code, deswegen wird Sie durch <code>__call()</code>
             gefangen und in eine POST Anfrage für die REST API umgewandelt wo das assoziative
-            Array als POST Parameter verwendet wird. 
+            Array als POST Parameter verwendet wird.
         </para>
 
         <para>

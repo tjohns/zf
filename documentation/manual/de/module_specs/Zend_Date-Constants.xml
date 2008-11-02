@@ -1111,7 +1111,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
                 groß. ISO verwendet den Bezeichner <emphasis role="strong">m</emphasis> für die
                 Minute, anders als PHP welches <emphasis role="strong">i</emphasis> verwendet.
                 Wenn man also keine Minute erhält dann sollte man sein Format darauf prüfen, ob
-                der richtige Bezeichner verwendet wurde. 
+                der richtige Bezeichner verwendet wurde.
             </para>
         </note>
     </sect2>

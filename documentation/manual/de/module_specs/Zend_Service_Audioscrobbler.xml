@@ -13,7 +13,7 @@
             Albums, Lieder, tags, Gruppen und Foren. Die Methoden der <code>Zend_Service_Audioscrobbler</code> Klasse
             beginnt mit einem dieser Bezeichner. Der Syntax und der Namensraum des Audioscrobbler Web Services sind in
             <code>Zend_Service_Audioscrobbler</code> gespiegelt. Für weitere Informationen über das Audioscrobbler
-            REST Web Service, siehe die 
+            REST Web Service, siehe die
             <ulink url="http://www.audioscrobbler.net/data/webservices/">Audioscrobbler Web Service Seite</ulink>.
         </para>
 
@@ -71,7 +71,7 @@
                     <para>
                         <code>userGetTopTagsForAlbum()</code>: Erfordert das ein Album über
                         <code>setAlbum()</code> gesetzt wurde. Gibt ein SimpleXML Objekt zurück das die Tags
-                        enthält die am meisten dem aktuellen Album durch den aktuellen Benutzer zugeordnet 
+                        enthält die am meisten dem aktuellen Album durch den aktuellen Benutzer zugeordnet
                         worden sind.
                     </para>
                 </listitem>
@@ -356,7 +356,7 @@ foreach ($relatedArtists as $artist) {
                 <listitem>
                     <para>
                         <code>groupGetWeeklyChart()</code>: Gibt ein SimpleXML Objekt zurück das eine Liste der
-                        Wochen enthält für die ein wöchentliches Chart der aktuellen Gruppe existiert. 
+                        Wochen enthält für die ein wöchentliches Chart der aktuellen Gruppe existiert.
                     </para>
                 </listitem>
                 <listitem>

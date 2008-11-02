@@ -439,7 +439,7 @@ $index->addDocument($doc);
             Inhalt auch mit einem Index gespeichert und kann vom Index empfangen werden. Standardmäßig
             wird der Inhalt gesplittet und indiziert, aber nicht gespeichert.
         </para>
-    
+
         <para>
             Eingelesene Dokumente können vom Programierer mit jedem anderen Feld argumentiert werden:
             <programlisting role="php"><![CDATA[

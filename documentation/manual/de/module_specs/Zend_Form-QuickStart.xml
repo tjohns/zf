@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11683 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.quickstart">
     <title>Schnellstart mit Zend_Form</title>
 
@@ -201,7 +201,7 @@ $username->addFilter('StringtoLower');
         </programlisting>
 
         <para>
-            Das endgültige Setup des Elements könnte also wie folgt aussehen: 
+            Das endgültige Setup des Elements könnte also wie folgt aussehen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -244,7 +244,7 @@ $form->addElement('text', 'username', array(
             Wenn man sieht das man Elemente konfiguriert die die gleichen Optionen in vielen
             Plätzen verwenden, kann es gewünscht sein eine eigene <code>Zend_Form_Element</code>
             Subklasse zu erstellen und diese Klasse stattdessen anzupassen; das spart viel
-            Tipparbeit im weiteren Verlauf. 
+            Tipparbeit im weiteren Verlauf.
         </para></note>
     </sect2>
 
@@ -347,7 +347,7 @@ $element->setOrder(10);
         </programlisting>
 
         <para>
-            Oder bei der Erstellung des Elements durch Übergabe als Option: 
+            Oder bei der Erstellung des Elements durch Übergabe als Option:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -538,7 +538,7 @@ class UserController extends Zend_Controller_Action
             $this->view->form = $form;
             return $this->render('form');
         }
-        
+
         $values = $form->getValues();
         // Jetzt versuchen zu Authentifizieren...
     }

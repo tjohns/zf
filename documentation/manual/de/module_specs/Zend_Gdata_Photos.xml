@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.photos">
     <title>Picasa Web Alben verwenden</title>
 
@@ -38,11 +38,11 @@
             Client und den Servers tritt über HTTP auf, und erlaubt sowohl authentifizierte als auch
             nicht authentifizierte Verbindungen.
         </para>
-        
+
         <para>
             Bevor irgendeine Transaktion stattfinden kann muß diese Verbindung hergestellt werden. Die
             Erstellung einer Verbindung zum Picasa Servern beinhaltet zwei Schritte:
-            Erstellung eines HTTP Clients und Binden einer <code>Zend_Gdata_Photos</code> Instanz an diesen Client. 
+            Erstellung eines HTTP Clients und Binden einer <code>Zend_Gdata_Photos</code> Instanz an diesen Client.
         </para>
 
         <sect3 id="zend.gdata.photos.connecting.authentication">
@@ -130,7 +130,7 @@ session_start();
 
 /**
  * Gibt die komplette URL der aktuellen Seite zurück, basierend auf den env Variablen
- * 
+ *
  * Verwendete Env Variablen:
  * $_SERVER['HTTPS'] = (on|off|)
  * $_SERVER['HTTP_HOST'] = Wert des Hosts: header
@@ -139,7 +139,7 @@ session_start();
  *
  * @return string Current URL
  */
-function getCurrentUrl() 
+function getCurrentUrl()
 {
     global $_SERVER;
 
@@ -173,19 +173,19 @@ function getCurrentUrl()
  *
  * @return string AuthSub URL
  */
-function getAuthSubUrl() 
+function getAuthSubUrl()
 {
     $next = getCurrentUrl();
     $scope = 'http://picasaweb.google.com/data';
     $secure = false;
     $session = true;
-    return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, 
+    return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure,
         $session);
 }
 
 /**
  * Gibt ein HTTP Client Objekt mit den richtigen Headern für die Kommunikation with Google zurück wobei
- * AuthSub Authentifizierung verwendet wird 
+ * AuthSub Authentifizierung verwendet wird
  *
  * Verwendet $_SESSION['sessionToken'] um das AuthSub Session Token zu speichern nachdem es erhalten wurde.
  * Das einmal verwendbare Token das in der URL bei der Umleitung angeboten wird nachdem der Benutzer auf
@@ -193,13 +193,13 @@ function getAuthSubUrl()
  *
  * @return Zend_Http_Client
  */
-function getAuthSubHttpClient() 
+function getAuthSubHttpClient()
 {
     global $_SESSION, $_GET;
     if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
-        $_SESSION['sessionToken'] = 
+        $_SESSION['sessionToken'] =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
-    } 
+    }
     $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
     return $client;
 }
@@ -210,7 +210,7 @@ function getAuthSubHttpClient()
 $service = new Zend_Gdata_Photos(getAuthSubHttpClient());
 ]]>
             </programlisting>
-            
+
             <para>
                 Zuletzt kann ein nicht authentifizierter Server für die Verwendung mit öffentlichen Feeds
                 erstellt werden:
@@ -252,7 +252,7 @@ $service = new Zend_Gdata_Photos();
                 </para>
             </listitem>
         </itemizedlist>
-        
+
         <para>Eine neue <code>UserQuery</code> kann wie folgt erstellt werden:</para>
         <programlisting role="php"><![CDATA[
 $service = Zend_Gdata_Photos::AUTH_SERVICE_NAME;
@@ -394,7 +394,7 @@ try {
 }
 ]]>
             </programlisting>
-        
+
             <para>
                 Die Erstellung einer Abfrage bietet auch die Möglichkeit ein Benutzer Eintrags Objekt abzufragen:
             </para>
@@ -645,7 +645,7 @@ $service->insertPhotoEntry($entry, $albumEntry);
 ]]>
             </programlisting>
         </sect3>
-    
+
         <sect3 id="zend.gdata.photos.comment_creation">
             <title>Erstellen eines Kommentars</title>
             <para>Das Service unterstützt die Erstellung von neuen Kommentaren für ein Photo:</para>
@@ -670,7 +670,7 @@ $service->insertCommentEntry($entry, $photoEntry);
 ]]>
             </programlisting>
         </sect3>
-    
+
         <sect3 id="zend.gdata.photos.tag_creation">
             <title>Erstellen eines Tags</title>
             <para>Das Service unterstützt die Erstellung von neuen Tags für ein Photo:</para>
@@ -764,7 +764,7 @@ $service->deleteCommentEntry($entry, true);
 ]]>
             </programlisting>
         </sect3>
-    
+
         <sect3 id="zend.gdata.photos.tag_deletion">
             <title>Deleting A Tag</title>
             <para>The service supports deleting a tag for an authenticated user:</para>

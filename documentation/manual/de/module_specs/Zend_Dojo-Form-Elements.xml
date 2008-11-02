@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11330 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.dojo.form.elements">
     <title>Dijit-Specifische Fomularelemente</title>
 
@@ -34,11 +34,11 @@
         </para></listitem>
 
         <listitem><para>
-                <code>removeDijitParam($key)</code>: Entfernt den angegebenen Dijit Parameter. 
+                <code>removeDijitParam($key)</code>: Entfernt den angegebenen Dijit Parameter.
         </para></listitem>
 
         <listitem><para>
-                <code>clearDijitParams()</code>: Löscht alle aktuell definierten Dijit Parameter. 
+                <code>clearDijitParams()</code>: Löscht alle aktuell definierten Dijit Parameter.
         </para></listitem>
     </itemizedlist>
 
@@ -219,7 +219,7 @@ $form->addElement(
             <listitem><para>
                 <code>setStoreId($identifier)</code>: Setzt die Identifikatorvariable des Speichers
                 (normalerweise wird darauf durch das Attribut 'jsId' in Dojo referiert). Das sollte
-                ein gültiger Name für eine Javascriptvariable sein. 
+                ein gültiger Name für eine Javascriptvariable sein.
             </para></listitem>
 
             <listitem><para>
@@ -257,7 +257,7 @@ $form->addElement(
             </para></listitem>
         </itemizedlist>
 
-        <para> 
+        <para>
             Standardmäßig, wenn kein dojo.data Speicher im Element registriert wurde, registriert dieses
             Element eine <code>InArray</code> Prüfung welche die Arrayschlüssel gegen registrierte Optionen
             prüft. Dieses Verhalten kann deaktiviert werden indem entweder
@@ -270,8 +270,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'ComboBox', 
-    'foo', 
+    'ComboBox',
+    'foo',
     array(
         'label'        => 'ComboBox (select)',
         'value'        => 'blue',
@@ -295,8 +295,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'ComboBox', 
-    'foo', 
+    'ComboBox',
+    'foo',
     array(
         'label'       => 'ComboBox (datastore)',
         'storeId'     => 'stateStore',
@@ -328,7 +328,7 @@ $form->addElement(
         </para>
 
         <para>
-            Intern ist die CurrencyTextBox abgeleitet von 
+            Intern ist die CurrencyTextBox abgeleitet von
             <link linkend="zend.dojo.form.elements.numberTextBox">NumberTextBox</link>,
             <link linkend="zend.dojo.form.elements.validationTextBox">ValidationTextBox</link>,
             und <link linkend="zend.dojo.form.elements.textBox">TextBox</link>; alle vorhandenen
@@ -372,8 +372,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'CurrencyTextBox', 
-    'foo', 
+    'CurrencyTextBox',
+    'foo',
     array(
         'label'          => 'Währung:',
         'required'       => true,
@@ -444,8 +444,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'DateTextBox', 
-    'foo', 
+    'DateTextBox',
+    'foo',
     array(
         'label'          => 'Datum:',
         'required'       => true,
@@ -515,7 +515,7 @@ $form->addElement(
                 <para>
                     <emphasis>plugins</emphasis> fügen dem Editor Funktionalitäten hinzu -- zusätzliche
                     Tools für die Toolbar, zusätzliche erlaubte Stile, usw. Die folgenden Zugriffsmethoden
-                    und Mutatoren sind für die Manipulation von Plugins vorhanden: 
+                    und Mutatoren sind für die Manipulation von Plugins vorhanden:
                 </para>
 
                 <itemizedlist>
@@ -643,7 +643,7 @@ $form->addElement('editor', 'content', array(
 
             <listitem>
                 <para>
-                    <code>setTopDecorationLabels(array $labels)</code> und 
+                    <code>setTopDecorationLabels(array $labels)</code> und
                     <code>setBottomDecorationLabels(array $labels)</code>: Setzt die Labels die für eine der
                     RuleLabel Dijit Typen verwendet werden sollen. Diese sollten ein indiziertes Array sein;
                     spezifiziere eine einzelnes Leerzeichen um eine gegebene Labelposition zu überspringen
@@ -653,7 +653,7 @@ $form->addElement('editor', 'content', array(
 
             <listitem>
                 <para>
-                    <code>setTopDecorationParams(array $params)</code> und 
+                    <code>setTopDecorationParams(array $params)</code> und
                     <code>setBottomDecorationParams(array $params)</code>: Dijit Parameter die verwendet
                     werden sollen wenn die gegebene Rule oder RuleLabels Dijits konfiguriert werden
                 </para>
@@ -683,13 +683,13 @@ $form->addElement('editor', 'content', array(
                 Das folgende erzeugt eine horizontale Schieberauswahl mit Integerwerten die von -10 bis 10
                 reichen. Oben sind Labels bei den 20%, 40%, 60% und 80% Marken. Unten sind Regeln bei 0, 50%
                 und 100%. Jedesmal wenn der Wert geändert wird, wird das versteckte Element das den Wert
-                speichert aktualisiert. 
+                speichert aktualisiert.
             </para>
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'HorizontalSlider', 
-    'horizontal', 
+    'HorizontalSlider',
+    'horizontal',
     array(
         'label'                     => 'HorizontalSlider',
         'value'                     => 5,
@@ -754,40 +754,40 @@ $form->addElement(
                 den Standardtimeout, in Millisekunden, zurück der zwischen dem gedrückt halten des Buttons
                 und der Änderung des Wertes ist.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setTimeoutChangeRate($rate)</code> und <code>getTimeoutChangeRate()</code>: Setzt und
                 gibe die Rate, in Millisekunden, zurück mit der Änderungen durchgeführt werden wenn ein
                 Button gedrückt gehalten wird.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setLargeDelta($delta)</code> und <code>getLargeDelta()</code>: Setzt und gibt die
                 Menge zurück mit welcher der nummerische Wert geändert werden soll wenn ein Button
                 gedrückt gehalten wird.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setSmallDelta($delta)</code> und <code>getSmallDelta()</code>: Setzt und gibt das
                 Delta zurück mit dem die Nummer geändert werden soll wenn ein Button einmal gedrückt wird.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setIntermediateChanges($flag)</code> und <code>getIntermediateChanges()</code>:
                 Setzt un gibt das Flag zurück das anzeigt ob jede Änderung des Werte angezeigt werden soll
                 wenn der Button gedrückt gehalten wird, oder nicht.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setRangeMessage($message)</code> und <code>getRangeMessage()</code>: Setzt und gibt
                 die Nachricht zurück die den Bereich der möglichen Werte anzeigt.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setMin($value)</code> und <code>getMin()</code>: Setzt und gibt den mindesten möglichen
                 Wert zurück.
             </para></listitem>
-            
+
             <listitem><para>
                 <code>setMax($value)</code> und <code>getMax()</code>: Setzt und gibt den maximalen möglichen
                 Wert zurück.
@@ -799,8 +799,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'NumberSpinner', 
-    'foo', 
+    'NumberSpinner',
+    'foo',
     array(
         'value'             => '7',
         'label'             => 'NumberSpinner',
@@ -839,7 +839,7 @@ $form->addElement(
         <itemizedlist>
             <listitem><para>
                 <code>setLocale($locale)</code> und <code>getLocale()</code>: Spezifiziert und gibt ein
-                spezifisches oder alternatives Gebietsschema zurück das mit diesem Dijit verwendet werden soll. 
+                spezifisches oder alternatives Gebietsschema zurück das mit diesem Dijit verwendet werden soll.
             </para></listitem>
 
             <listitem><para>
@@ -870,8 +870,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'NumberTextBox', 
-    'elevation', 
+    'NumberTextBox',
+    'elevation',
     array(
         'label'          => 'NumberTextBox',
         'required'       => true,
@@ -938,7 +938,7 @@ $form->addElement(
             <code>setMultiOptions()</code> und <code>setMultiOption()</code> Methoden zu spezifizieren.
         </para>
 
-        <para> 
+        <para>
             Standardmäßig registriert dieses Element eine <code>InArray</code> Prüfung welche die
             Arrayschlüssel gegen registrierte Optionen prüft. Dieses Verhalten kann deaktiviert werden
             indem entweder <code>setRegisterInArrayValidator(false)</code> ausgerufen, oder ein false
@@ -950,8 +950,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'RadioButton', 
-    'foo', 
+    'RadioButton',
+    'foo',
     array(
         'label' => 'RadioButton',
         'multiOptions'  => array(
@@ -999,7 +999,7 @@ $form->addElement(
         <title>Abstraktes Slider Element</title>
 
         <para>
-            Slider ist ein abstraktes Element welches abgeleitet ist von 
+            Slider ist ein abstraktes Element welches abgeleitet ist von
             <link linkend="zend.dojo.form.elements.horizontalSlider">HorizontalSlider</link> und
             <link linkend="zend.dojo.form.elements.verticalSlider">VerticalSlider</link>. Es bietet
             eine Anzahl von üblichen Methoden für die Konfiguration von Slidern an, inklusive:
@@ -1040,7 +1040,7 @@ $form->addElement(
 
             <listitem><para>
                 <code>setPageIncrement($value)</code> und <code>getPageIncrement()</code>: Setzt den Wert um den
-                sich der Slider auf Tastaturereignisse ändert. 
+                sich der Slider auf Tastaturereignisse ändert.
             </para></listitem>
         </itemizedlist>
 
@@ -1118,8 +1118,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'TextBox', 
-    'foo', 
+    'TextBox',
+    'foo',
     array(
         'value'      => 'irgendein Text',
         'label'      => 'TextBox',
@@ -1147,8 +1147,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'Textarea', 
-    'textarea', 
+    'Textarea',
+    'textarea',
     array(
         'label'    => 'Textarea',
         'required' => true,
@@ -1213,8 +1213,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'TimeTextBox', 
-    'foo', 
+    'TimeTextBox',
+    'foo',
     array(
         'label'              => 'TimeTextBox',
         'required'           => true,
@@ -1288,8 +1288,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'ValidationTextBox', 
-    'foo', 
+    'ValidationTextBox',
+    'foo',
     array(
         'label'          => 'ValidationTextBox',
         'required'       => true,
@@ -1326,8 +1326,8 @@ $form->addElement(
 
             <programlisting role="php"><![CDATA[
 $form->addElement(
-    'VerticalSlider', 
-    'foo', 
+    'VerticalSlider',
+    'foo',
     array(
         'label'                    => 'VerticalSlider',
         'value'                    => 5,

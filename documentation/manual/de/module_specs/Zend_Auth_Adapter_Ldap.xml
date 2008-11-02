@@ -41,7 +41,7 @@ $password = $this->_request->getParam('password');
 
 $auth = Zend_Auth::getInstance();
 
-$config = new Zend_Config_Ini('../application/config/config.ini', 
+$config = new Zend_Config_Ini('../application/config/config.ini',
                               'production');
 $log_path = $config->ldap->log_path;
 $options = $config->ldap->toArray();
@@ -152,7 +152,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
             Anbei ist eine <ulink url="http://php.net/print_r"><code>print_r()</code></ulink>
             Ausgabe von beispielhaften Optionsparameters die twei Sets von Serveroptionen für LDAP
             Server enthalten, <code>s0.foo.net</code> und <code>dc1.w.net</code> (die gleichen
-            Optionen wie in der oberen INI Repräsentation): 
+            Optionen wie in der oberen INI Repräsentation):
             <programlisting role="output"><![CDATA[
 Array
 (
@@ -195,7 +195,7 @@ Array
                 Ein DN oder "distinguished name" ist ein String der den Pfad zu einem Objekt im
                 LDAP Verzeichnis repräsentiert. Jede komma-seperierte Komponente ist ein Attribut
                 und Wert der einen Node repräsentiert. Die Komponenten werden rückwirkend
-                evaluiert. Zum Beispiel ist der Benutzeraccount 
+                evaluiert. Zum Beispiel ist der Benutzeraccount
                 <emphasis>CN=Bob Carter,CN=Users,DC=w,DC=net</emphasis> direkt in
                 <emphasis>CN=Users,DC=w,DC=net container</emphasis> enthalten. Diese Struktur wird
                 am besten mit einem LDAP Browser wie das ADSI Edit MMC snap-in für Active Directory
@@ -324,7 +324,7 @@ Array
                         durchgeführt wird, benötigen diese Option. Wenn
                         <emphasis role="strong">bindRequiresDn</emphasis> <code>true</code> ist,
                         wird diese Option benötigt. Dieser Account muß kein privilegierter Account
-                        sein - ein Account mit nur-lese Zugriff zu Objekten unter 
+                        sein - ein Account mit nur-lese Zugriff zu Objekten unter
                         <emphasis role="strong">baseDn</emphasis> ist alles was notwendig ist
                         (und bevorzugt unter dem <emphasis>Prinzip des geringsten
                         Privilegs</emphasis>).
@@ -368,7 +368,7 @@ Array
                         <emphasis role="strong">baseDn</emphasis> ist, sollte es genug sein Ihn von
                         der DNS Domain des Benutzers der die <emphasis>DC=</emphasis> Komponenten
                         verwedet abzuleiten. Wenn der Hauptname eines Benutzers
-                        <emphasis>alice@foo.net</emphasis> ist, sollte ein 
+                        <emphasis>alice@foo.net</emphasis> ist, sollte ein
                         <emphasis role="strong">baseDn</emphasis> von
                         <emphasis>DC=foo,DC=net</emphasis> funktionieren. Eine präzisere Ortsangabe
                         (z.B. <emphasis>OU=Sales,DC=foo,DC=net</emphasis>) ist trotzdem
@@ -395,7 +395,7 @@ Array
                         Siehe das Kapitel <emphasis>Kanonisierung von Account Namen</emphasis>
                         in der <code>Zend_Ldap</code> Dokumentation für Details. Bei der
                         Verwendung von mehreren Sets von Serveroptionen ist es empfehlenswert,
-                        aber nicht notwendig, das die selbe 
+                        aber nicht notwendig, das die selbe
                         <emphasis role="strong">accountCanonicalForm</emphasis> in allen
                         Serveroptionen verwendet wird, sodas die sich ergebenden Benutzernamen
                         immer auf die selbe Art und Weise kanonisiert werden (z.b. wenn man auf
@@ -436,7 +436,7 @@ Array
                         werden (z.B., für Konsistenz bei mehreren Sets von Serveroptionen bei dem
                         Schrägstrich Stil <emphasis role="strong">accountCanonicalForm</emphasis>).
                         Diese Option wird nicht benötigt, aber wenn Sie nicht angegeben wird,
-                        werden Benutzernamen im Schrägstrich Stil (z.B. 
+                        werden Benutzernamen im Schrägstrich Stil (z.B.
                         <emphasis>FOO\alice</emphasis>) nicht unterstützt.
                     </entry>
                   </row>
@@ -447,13 +447,13 @@ Array
                         String ist ein
                         <ulink url="http://php.net/printf"><code>printf()</code></ulink>-Stil
                         Ausdruck der ein '<code>%s</code>' enthalten muß um den Benutzernamen
-                        unterzubringen. Der Standardwert ist 
-                        '<code>(&amp;(objectClass=user)(sAMAccountName=%s))</code>', ausgenommen 
+                        unterzubringen. Der Standardwert ist
+                        '<code>(&amp;(objectClass=user)(sAMAccountName=%s))</code>', ausgenommen
                         <emphasis role="strong">bindRequiresDn</emphasis> wird auf
                         <code>true</code> gesetzt. In diesem Fall ist der Standardwert
                         '<code>(&amp;(objectClass=posixAccount)(uid=%s))</code>'. Wenn, zum
                         Beispiel, aus irgendeinem Grund <code>bindRequiresDn = true</code> mti AD
-                        verwendet werden soll, muß 
+                        verwendet werden soll, muß
                         <code>accountFilterFormat = '(&amp;(objectClass=user)(sAMAccountName=%s))</code>'
                         gesetzt werden.
                     </entry>
@@ -588,7 +588,7 @@ Array
                         <entry>
                             Wie bei allen Servern, wird diese Option benötigt. Standardmäßig
                             platziert AD alle Benutzer Accounts unter dem
-                            <emphasis>Users</emphasis> Container (z.B., 
+                            <emphasis>Users</emphasis> Container (z.B.,
                             <emphasis>CN=Users,DC=foo,DC=net</emphasis>), aber der Standard ist in
                             größeren Organisationen nicht üblich. Der AD Administrator sollte nach
                             der besten DN für Accounts für die eigene Anwendung gefragt werden.
@@ -638,7 +638,7 @@ Array
                     nicht wahr sein, oder auch wenn ein alternativer Adapter verwendet wird (z.B.,
                     Kerberos). Generell ist bekannt das die Mehrdeutigkeit von Accountnamen ein
                     Sicherheitsproblem ist. Man sollte deswegen immer versuchen qualifizierte
-                    Accountnamen zu verwenden. 
+                    Accountnamen zu verwenden.
                 </para>
             </note>
 

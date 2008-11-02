@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.validate.introduction">
 
     <title>Einführung</title>
@@ -50,7 +50,7 @@
             sind die entsprechend menschlich-lesbaren String Nachrichten. Die Schlüssel und Werte sind
             Klassenabhängig; jede Prüfklasse definiert Ihr eigenes Set von Nachrichten für fehlgeschlagene
             Prüfungen und die eindeutigen Schlüssel die diese identifizieren. Jede klasse hat also eine
-            <code>const</code> Definition die jedem Identifikator für eine fehlgeschlagene Prüfung entspricht. 
+            <code>const</code> Definition die jedem Identifikator für eine fehlgeschlagene Prüfung entspricht.
         </para>
 
         <note>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12092 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -73,10 +73,10 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
 // lädt den 'FormLabel' Helfer:
-$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel' 
+$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // lädt den 'FormSubmit' Helfer:
-$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
+$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
 ]]>
         </programlisting>
 

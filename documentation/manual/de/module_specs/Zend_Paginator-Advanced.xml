@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.paginator.advanced">
     <title>Advanced usage</title>
 
@@ -72,36 +72,36 @@ public function getPages(Zend_Paginator $paginator, $pageRange = null);
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             Diese Methode sollten eine untere und obere Grenze für die Seitenzahl innerhalb der sogenannten
             "lokalen" Seiten berechnen (das sind Seiten nahe der aktuellen Seite).
         </para>
-        
+
         <para>
             Solange es keinen anderen Scrolling Stil erweitert (siehe zum Beispiel
             <code>Zend_Paginator_ScrollingStyle_Elastic</code>, wird der eigene Scrolling Stil üblicherweise mit
             etwas ähnlichem sie der folgenden Codezeile enden:
         </para>
-        
+
         <para>
             <programlisting role="php"><![CDATA[
 return $paginator->getPagesInRange($lowerBound, $upperBound);
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             Es ist nichts speziellen an diesem Aufruf; es ist mehr eine übliche Methode um die Gültigkeit der
             unteren und oberen Grenze zu prüfen und ein Array des Bereichs an den Paginator zurückzugeben.
         </para>
-        
+
         <para>
             Wenn man bereit ist den neuen Scrolling Stil zu benutzen, muß man <code>Zend_Paginator</code>
             bekanntgeben in welchem Verzeichnis er nachschauen muß. Um das zu tun muß das folgende ausgeführt
             werden:
         </para>
-        
+
         <para>
             <programlisting role="php"><![CDATA[
 $prefix = 'My_Paginator_ScrollingStyle';

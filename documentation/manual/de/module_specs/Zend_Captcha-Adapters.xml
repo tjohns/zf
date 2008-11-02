@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.captcha.adapters">
     <title>Captcha Adapter</title>
 
@@ -145,7 +145,7 @@
             <listitem><para>
                 <code>setFontSize($fsize)</code> und <code>getFontSize()</code> erlauben es die Schriftgröße,
                 in Pixel, zu spezifizieren die verwendet wird wenn das Captcha erzeugt wird. Der
-                Standardwert ist 24px. 
+                Standardwert ist 24px.
             </para></listitem>
 
             <listitem><para>

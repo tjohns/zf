@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.dom.query">
     <title>Zend_Dom_Query</title>
 
@@ -6,7 +6,7 @@
         <code>Zend_Dom_Query</code> bietet einen Mechanismus für die Abfrage von XML und (X)HTML Dokumenten
         indem entweder XPath oder CSS Selektoren verwendet werden. Sie wurde entwickelt um bei funktionalem
         Testen von MVC Anwendungen zu helfen, könnte aber auch für schnelle Entwicklung von Screen Scraper
-        verwendet werden. 
+        verwendet werden.
     </para>
 
     <para>
@@ -15,8 +15,8 @@
         Cascading Style Sheets entwickelt hat bekannt sein, oder jedem der Javascript Toolkits verwendet die
         Funktionalität für das Auswählen von Knoten bei der Anpassung von SCC Selektoren anbieten
         (<ulink url="http://prototypejs.org/api/utility/dollar-dollar">Prototype's
-            $$()</ulink> und 
-        <ulink url="http://api.dojotoolkit.org/jsdoc/dojo/HEAD/dojo.query">Dojo's 
+            $$()</ulink> und
+        <ulink url="http://api.dojotoolkit.org/jsdoc/dojo/HEAD/dojo.query">Dojo's
             dojo.query</ulink> sind beides Inspirationen für diese Komponente).
     </para>
 
@@ -106,10 +106,10 @@
         <td class="foo">
             <div>
                 Lorem ipsum <span class="bar">
-                    <a href="/foo/bar" id="one">One</a> 
-                    <a href="/foo/baz" id="two">Two</a> 
-                    <a href="/foo/bat" id="three">Three</a> 
-                    <a href="/foo/bla" id="four">Four</a> 
+                    <a href="/foo/bar" id="one">One</a>
+                    <a href="/foo/baz" id="two">Two</a>
+                    <a href="/foo/bat" id="three">Three</a>
+                    <a href="/foo/bla" id="four">Four</a>
                 </span>
             </div>
         </td>

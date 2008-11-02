@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -217,8 +217,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>Beispiel für das Überschreiben der _setupTableName() Methode</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
@@ -285,13 +284,12 @@ class Bugs extends Zend_Db_Table_Abstract
                 verschieben, die aufgerufen wird nachdem alle Tabellen Metadaten bearbeitet wurden. Das
                 ist besser als die <code>__construct</code> Methode wenn die Metadaten nicht
                 programmtechnisch verändert werden sollen.
-                
+
                 <example id="zend.db.table.defining.init.usage.example">
 
                     <title>Beispielverwendung der init() Methode</title>
 
-                    <programlisting role="php">
-<![CDATA[
+                    <programlisting role="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_observer;
@@ -338,8 +336,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>Beispiel für das erzeugen einer Tabelle mit Nutzung eines Adapterobjekts</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
 $table = new Bugs(array('db' => $db));
@@ -366,8 +363,7 @@ $table = new Bugs(array('db' => $db));
 
                 <title>Beispiel für das erstellen von Table mit einem Standardadapter</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
@@ -403,8 +399,7 @@ $table = new Bugs();
 
                 <title>Beispiel für das Erzeugen von Table mit einem Registry Schlüssel</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Registry::set('my_db', $db);
 
@@ -543,7 +538,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
             <para>
                 Eine Sequenz ist ein Datenbank Objekt das einen eindeutigen Wert erstellt, der als
-                Wert des Primärschlüssels in einer oder mehreren Tabellen der Datenbank verwendet werden kann. 
+                Wert des Primärschlüssels in einer oder mehreren Tabellen der Datenbank verwendet werden kann.
             </para>
 
             <para>
@@ -798,7 +793,7 @@ $rows = $table->find(array(1234, 5678));
             Anzahl an Elementen haben. Die Werte in jedem Array werden in Tupeln geformt und gereiht; zum
             Beispiel definiert das erste Element in allen Array Argumenten den ersten kombinierten Wert
             des Primärschlüssels, das zweite Element von allen Arrays definiert den zweiten kombinierten
-            Wert des Primärschlüssels, und so weiter.           
+            Wert des Primärschlüssels, und so weiter.
         </para>
 
         <example id="zend.db.table.find.example-compound">
@@ -933,8 +928,7 @@ $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
 
                     <title>Einfache Verwendung</title>
 
-                    <programlisting role="php">
-<![CDATA[
+                    <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
@@ -959,8 +953,7 @@ $rows = $table->fetchAll($select);
 
                     <title>Example of fluent interface</title>
 
-                    <programlisting role="php">
-<![CDATA[
+                    <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $rows =
@@ -981,7 +974,7 @@ $rows =
             <para>
                 Ein Set von Zeilen kann abgefragt werden indem irgendein Kriterium verwendet wird, das anders als
                 die Werte des Primärschlüssels sind, indem die <code>fetchAll()</code> Methode der Tabellen
-                Klasse verwendet wird. Diese Methode gibt ein Objekt vom Typ 
+                Klasse verwendet wird. Diese Methode gibt ein Objekt vom Typ
                 <code>Zend_Db_Table_Rowset_Abstract</code> zurück.
             </para>
 
@@ -989,8 +982,7 @@ $rows =
 
                 <title>Beispiel für das Finden von Zeilen durch einen Ausdruck</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select()->where('bug_status = ?', 'NEW');
@@ -1013,8 +1005,7 @@ $rows = $table->fetchAll($select);
 
                 <title>Beispiel für das Finden von Zeilen durch einen Ausdruck</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $order  = 'bug_id';
@@ -1227,8 +1218,7 @@ $row = $table->fetchRow($select);
 
             <title>Beispiel für das Erhalten des Namens einer Tabelle</title>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $info = $table->info();
@@ -1412,7 +1402,7 @@ $bugs = new Bugs();
 
             <para>
                 Der folgende Code demonstriert wie ein Cache für Metadaten für eine spezielle Instanz
-                eines Tabellenobjektes gesetzt werden kann: 
+                eines Tabellenobjektes gesetzt werden kann:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -1475,7 +1465,7 @@ $bugs = new Bugs(array('metadataCache' => $cache));
                 Standardmäßig geben die Methoden der Table Klasse ein Rowset als Instanzen der konkreten Klasse
                 Zend_Db_Table_Rowset, und Rowsets enthalten eine Kollektion von Instanzen der konkreten Klasse
                 Zend_Db_Table_Row. Eine alternative Klasse kann für jede von Ihnen als alternative Klasse
-                definiert werden die verwendet werden soll, aber es müssen Klassen sein die 
+                definiert werden die verwendet werden soll, aber es müssen Klassen sein die
                 Zend_Db_Table_Rowset_Abstract erweitern und respektiv Zend_Db_Table_Row_Abstract.
             </para>
 

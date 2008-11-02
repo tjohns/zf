@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11979 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.json.server">
     <title>Zend_Json_Server - JSON-RPC server</title>
 
@@ -9,12 +9,12 @@
         als auch die <ulink url="http://groups.google.com/group/json-rpc/web/json-rpc-1-2-proposal">Spezifikation der Version 2</ulink>;
         zusätzlich bietet Sie eine PHP Implementierung der
         <ulink url="http://groups.google.com/group/json-schema/web/service-mapping-description-proposal">Spezifikation für Service Mapping Description (SMD)</ulink>
-        Um Kunden von Services deren Metadaten anzubieten. 
+        Um Kunden von Services deren Metadaten anzubieten.
     </para>
 
     <para>
         JSON-RPC ist ein leichgewichtiges Remoce Procedure Call Protokoll das JSON für seine Nachrichten
-        verwendet. Diese JSON-RPC Implementierung folgt PHP's 
+        verwendet. Diese JSON-RPC Implementierung folgt PHP's
         <ulink url="http://us.php.net/manual/en/function.soap-soapserver-construct.php">SoapServer</ulink> API.
         Das bedeutet das in einer typischen Situation einfach folgendes getan wird:
     </para>
@@ -61,9 +61,9 @@ class Calculator
 {
     /**
      * Summe von zwei Variablen zurückgeben
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     *
+     * @param  int $x
+     * @param  int $y
      * @return int
      */
     public function add($x, $y)
@@ -73,9 +73,9 @@ class Calculator
 
     /**
      * Differenz von zwei Variablen zurückgeben
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     *
+     * @param  int $x
+     * @param  int $y
      * @return int
      */
     public function subtract($x, $y)
@@ -84,10 +84,10 @@ class Calculator
     }
 
     /**
-     * Produkt von zwei Variablen zurückgeben 
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     * Produkt von zwei Variablen zurückgeben
+     *
+     * @param  int $x
+     * @param  int $y
      * @return int
      */
     public function multiply($x, $y)
@@ -97,9 +97,9 @@ class Calculator
 
     /**
      * Division von zwei Variablen zurückgeben
-     * 
-     * @param  int $x 
-     * @param  int $y 
+     *
+     * @param  int $x
+     * @param  int $y
      * @return float
      */
     public function divide($x, $y)
@@ -114,7 +114,7 @@ class Calculator
             Es ist zu beachten das jede Methode einen Docblock mit Einträgen besitzt die jeden Parameter und
             seinen Typ beschreiben, sowie einen Eintrag für den Rückgabewert. Das ist
             <emphasis>absolut kritisch</emphasis> wenn <code>Zend_Json_Server</code> verwendet wird -- oder auch
-            jede andere Server Komponente für diesen Zweck im Zend Framework. 
+            jede andere Server Komponente für diesen Zweck im Zend Framework.
         </para>
 
         <para>

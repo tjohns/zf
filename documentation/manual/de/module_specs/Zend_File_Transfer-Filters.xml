@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12122 -->
 <sect1 id="zend.file.transfer.filters">
 
     <title>Filter für Zend_File_Transfer</title>
@@ -17,8 +17,16 @@
     <itemizedlist>
         <listitem>
             <para>
-                <code>Rename</code>: Dieser Filter kann Dateien umbenenntn, den Ort ändern und sogar das
+                <code>LowerCase</code>: Dieser Filter kann den Inhalt einer Textdatei auf Kleinschreibung
+                ändern.
+            </para>
+            <para>
+                <code>Rename</code>: Dieser Filter kann Dateien umbenennen, den Ort ändern und sogar das
                 Überschreiben von existierenden Dateien erzwingen.
+            </para>
+            <para>
+                <code>UpperCase</code>: Dieser Filter kann den Inhalt einer Textdatei auf Großschreibung
+                ändern.
             </para>
         </listitem>
     </itemizedlist>
@@ -29,7 +37,7 @@
         <para>
             Die Verwendung von Filtern ist sehr einfach. Es gibt verschiedene Methoden für das
             Hinzufügen und Manipulieren von Filtern.
-        </para>        
+        </para>
 
         <itemizedlist>
             <listitem>
@@ -150,6 +158,7 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
             </programlisting>
 
         </example>
+
         <note>
             <para>
                 Es ist zu beachten das, auch wenn das mehrfache Setzen des gleichen Filters erlaubt
@@ -157,6 +166,42 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
                 Filter verwendet werden.
             </para>
         </note>
+
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.lowercase">
+        <title><emphasis role="strong">LowerCase</emphasis> Filter</title>
+
+        <para>
+            Der <code>LowerCase</code> Filter erlaubt es den Inhalt einer Datei auf Kleinschreibung zu ändern.
+            Dieser Filter sollte nur mit Textdateien verwendet werden.
+        </para>
+
+        <example id="zend.file.transfer.filters.lowercase.example">
+            <title>Verwenden des Lowercase Filters</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('MimeType', 'text');
+
+// Fügt einen Filter hinzu der hochgeladene Textdateien auf Kleinschreibung ändert
+$upload->addFilter('LowerCase');
+
+// Fügt einen Filter hinzu um die hochgeladene Datei auf Kleinschreibung zu ändern aber nur für uploadfile1
+$upload->addFilter('LowerCase', null, 'uploadfile1');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Da es keine Optionen für den LowerCase Filter gibt muß man darauf achten das man als zweiten
+                Parameter eine null (die Optionen) geben muß wenn man Ihn auf ein einzelnes Dateielement
+                einschränken will.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.rename">
@@ -216,7 +261,7 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer_Adapter_Http();
 
-// Setzt einen neuen Zielpfad fpr alle Dateien
+// Setzt einen neuen Zielpfad für alle Dateien
 $upload->addFilter('Rename', 'C:\mypics\new');
 
 // Setzt einen neuen Zielpfad nur für uploadfile1
@@ -331,6 +376,42 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
         </table>
 
     </sect2>
+
+    <sect2 id="zend.file.transfer.filters.uppercase">
+        <title><emphasis role="strong">UpperCase</emphasis> Filter</title>
+
+        <para>
+            Der <code>UpperCase</code> Filter erlaubt es den Inhalt einer Datei auf Großschreibung zu ändern.
+            Dieser Filter sollte nur mit Textdateien verwendet werden.
+        </para>
+
+        <example id="zend.file.transfer.filters.uppercase.example">
+            <title>Verwenden des UpperCase Filters</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('MimeType', 'text');
+
+// Fügt einen Filter hinzu um die hochgeladene Textdatei auf Großschreibung zu ändern
+$upload->addFilter('UpperCase');
+
+// Fügt einen Filter hinzu um die hochgeladene Datei auf Großschreibung zu ändern aber nur für uploadfile1
+$upload->addFilter('UpperCase', null, 'uploadfile1');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Da es keine Optionen für den UpperCase Filter gibt muß man darauf achten das man als zweiten
+                Parameter eine null (die Optionen) geben muß wenn man Ihn auf ein einzelnes Dateielement
+                einschränken will.
+            </para>
+        </note>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
@@ -22,7 +22,7 @@
         <code>addDecorator()</code> des Teils oder ähnliche Methoden, erstellt werden können der
         Methode Optionen als Argument übergeben werden. Diese können verwendet werden um eine
         Platzierung zu spezifizieren, einen Seperator der zwischen übergebenem Inhalt und neu
-        erstelltem Inhalt verwendet wird, oder welche Option der Dekorator auch immer unterstützt. 
+        erstelltem Inhalt verwendet wird, oder welche Option der Dekorator auch immer unterstützt.
     </para>
 
     <para>
@@ -129,7 +129,7 @@
         <para>
             Wenn man der Meinung ist das die Notwendigkeiten der Darstellung sehr komplex sind oder
             starke Anpassungen benötigt, sollte man an die Erstellung eines eigenen Dekorators
-            überlegen. 
+            überlegen.
         </para>
 
         <para>
@@ -289,7 +289,7 @@ $element->setDecorators(array('Composite'));
             'Label' Dekoratore sind exzellente Beispiele dieser Praxis. Das erlaubt es Dekotatore
             zu mischen und zu anzupassen um komplexe Ausgaben zu erhalten -- und auch die
             Überladung von einzelnen Aspekten der Dekoration für die Anpassung an eigene
-            Bedürfnisse. 
+            Bedürfnisse.
         </para>
 
         <para>
@@ -321,7 +321,7 @@ class My_Decorator_Errors
 }
 ]]>
         </programlisting>
-    
+
         <para>
             In diesem speziellen Beispiel, weil das letzte Segment, 'Errors', des Dekorators auf
             <code>Zend_Form_Decorator_Errors</code> passt wird er <emphasis>statt</emphasis> diesem

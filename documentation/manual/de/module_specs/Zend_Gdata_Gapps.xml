@@ -1,7 +1,7 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.gapps">
     <title>Google Apps Provisionierung verwenden</title>
-    
+
     <para>
         Google Apps ist ein Service der es Domain Administratoren erlaubt Ihren Benutzern einen gemanagten
         Zugriff auf Google Services wie Mail, Kalender und Dokumente &amp; Tabellenkalkulationen zu bieten.
@@ -9,20 +9,20 @@
         Im speziellen erlaubt es diese API den Administratoren Benutzerzugänge, Nicknamen und Email Listen
         zu erstellen, zu empfangen, zu verändern und zu löschen.
     </para>
-    
+
     <para>
         Diese Bibliothek implementiert die Version 2.0 der Provisionierungs API. Zugriff zum eigenen Konto über
         die Provisionierungs API muß manuell für jede Domain aktiviert werden die das Google Apps Kontrollpanel
         verwendet. Nur bestimmte Kontotpen sind fähig dieses Feature einzuschalten.
     </para>
-    
+
     <para>
         Für weitere Information zur Google Apps Provisionierungs API, inklusive Anleitungen für das einschalten
         des API Zugriffs, kann in die
         <ulink url="http://code.google.com/apis/calendar/overview.html">Provisionierungs API V2.0 Referenz</ulink>
         gesehen werden.
     </para>
-    
+
     <note>
         <title>Authentifizierung</title>
         <para>
@@ -31,68 +31,68 @@
             authentifiziert werden.
         </para>
     </note>
-    
+
     <sect2 id="zend.gdata.gapps.domain">
         <title>Die aktuelle Domain setzen</title>
-        
+
         <para>
             Um die Provisionierungs API zu verwenden muß die Domain, die administriert werden soll, in allen
             Anfrage URIs spezifiziert werden. Um die Entwicklung zu vereinfachen, wird diese Information sowohl
             im Gapps Service und den Abfrageklassen gespeichert um Sie zu verwenden wenn Abfragen erstellt werden.
         </para>
-        
+
         <sect3 id="zend.gdata.gapps.domain.service">
             <title>Setzen der Domain für die Serviceklasse</title>
-            
+
             <para>
                 Um die Domain für die von der Serviceklasse durchgeführten Anfragen zu setzen kann entweder
                 <code>setDomain()</code> aufgerufen oder die Domain bei der Instanzierung der Serviceklasse
                 spezifiziert werden. Zum Beispiel:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 ]]>
             </programlisting>
-        
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.domain.query">
             <title>Die Domain für die Abfrageklasse setzen</title>
-            
+
             <para>
                 Das Setzen der Domain für Anfrage die durch die Abfrageklasse durchgeführt werden ist ähnlich dem
                 setzen für die Serviceklasse-entweder wird <code>setDomain()</code> aufgerufen, oder die Domain
                 wird bei der Erstellung der Abfrage angegeben. Zum Beispiel:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $query = new Zend_Gdata_Gapps_UserQuery($domain, $arg);
 ]]>
             </programlisting>
-            
+
             <para>
                 Wenn eine Serviceklassen Factorymethode verwendet wird um eine Abfrage zu erstellen, setzt
                 die Serviceklasse die Domain der Abfrage automatisch so das Sie ihrer eigenen Domain entspricht.
                 Als Ergebnis ist es nicht notwendig die Domain als Teil der Konstruktorargumente zu spezifizieren.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $domain = "example.com";
 $gdata = new Zend_Gdata_Gapps($client, $domain);
 $query = $gdata->newUserQuery($arg);
 ]]>
             </programlisting>
-            
+
         </sect3>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.gdata.gapps.users">
         <title>Interaktion mit Benutzern</title>
-        
+
         <para>
             Jeder Benutzerzugang zu einer Google Apps gehosteten Domain wird als Instanz von
             Zend_Gdata_Gapps_UserEntry repräsentiert. Diese Klasse bietet Zugriff zu allen Zugangseigenschaften
@@ -117,7 +117,7 @@ $gdata->createUser('foo', 'Random', 'User', '••••••••');
                 ein Name, ein Familienname und ein Passwort angegeben werden und anschließend
                 <code>insertUser()</code> am Serviceobjekt aufgerufen wird um den Eintrag zum Server zu laden.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $user = $gdata->newUserEntry();
 $user->login = $gdata->newLogin();
@@ -135,18 +135,18 @@ $user = $gdata->insertUser($user);
                 das Passwort als SHA-1 Schlüssel angegeben werden wenn <code>login->passwordHashFunction</code>
                 auf 'SHA-1' gesetzt ist.
             </para>
-            
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.users.retrieving">
             <title>Einen Benutzerzugang erhalten</title>
-            
+
             <para>
                 Individuelle Benutzerzugänge kann man erhalten indem die einfache <code>retrieveUser()</code>
                 Methode aufgerufen wird. Wenn der Benutzer nicht gefunden wird, wird <code>null</code>
                 zurückgegeben.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 
@@ -161,13 +161,13 @@ echo 'Hat den Regeln zugestimmt: ' .
      ($user->login->agreedToTerms ? 'Ja' : 'Nein') . "\n";
 ]]>
             </programlisting>
-            
+
             <para>
                 Benutzer kann man auch erhalten indem eine Instanz von Zend_Gdata_Gapps_UserQuery erstellt wird,
                 und dessen username Eigenschaft dem Benutzernamen des Benutzers entspricht den man erhalten will
                 und <code>getUserEntry()</code> auf einem Serviceobjekt mit dieser Abfrage aufruft.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $query = $gdata->newUserQuery('foo');
 $user = $gdata->getUserEntry($query);
@@ -183,23 +183,23 @@ echo 'Hat den Regeln zugestimmt: ' .
      ($user->login->agreedToTerms ? 'Ja' : 'Nein') . "\n";
 ]]>
             </programlisting>
-            
+
             <para>
                 Wenn der spezifizierte Benutzer nicht gefunden werden kann wird eine ServiceException mit einem
                 Fehlercode von Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST geworfen. ServiceExceptions werden
                 in <xref linkend="zend.gdata.gapps.exceptions" /> behandelt.
             </para>
-            
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.users.retrievingAll">
             <title>Alle Benutzer in einer Domain erhalten</title>
-            
+
             <para>
                 Um alle Benutzer in einer Domäne zu erhalten kann die einfache <code>retrieveAllUsers()</code>
                 Methode aufgerufen werden.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $feed = $gdata->retrieveAllUsers();
 
@@ -209,19 +209,19 @@ foreach ($feed as $user) {
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 Das wird ein Zend_Gdata_Gapps_UserFeed Objekt erstellen welches jeden Benutzer dieser Domain
                 enthält.
             </para>
-            
+
             <para>
                 Alternativ kann <code>getUserFeed()</code> ohne Optionen aufgerufen werden. Es ist zu beachten
                 das dieser Feed bei größeren Domains durch den Server in Seiten ausgegeben werden kann. Über
                 weitere Informationen der Ausgabe in Seiten siehe
                 <xref linkend="zend.gdata.introduction.paging" />.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $feed = $gdata->getUserFeed();
 
@@ -231,9 +231,9 @@ foreach ($feed as $user) {
 }
 ]]>
             </programlisting>
-                        
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.users.updating">
             <title>Einen Benutzerzugang aktualisieren</title>
 
@@ -270,11 +270,11 @@ $user = $user->save();
                 <para>
                     Es ist zu beachten das es nicht möglich ist ein Passwort auf diesem Weg wiederherzustellen da
                     gespeicherte Passwörter aus Sicherheitsgründern nicht über die Provisionierungs API
-                    verfügbar gemacht werden. 
+                    verfügbar gemacht werden.
                 </para>
-                
+
             </sect4>
-            
+
             <sect4 id="zend.gdata.gapps.users.updating.forcingPasswordChange">
                 <title>Einen Benutzer zwingen sein Passwort zu ändern</title>
 
@@ -297,7 +297,7 @@ $user = $user->save();
                 </para>
 
             </sect4>
-            
+
             <sect4 id="zend.gdata.gapps.users.updating.suspendingAccount">
                 <title>Einen Benutzerzugang unterbrechen</title>
 
@@ -354,53 +354,53 @@ $user = $user->save();
                 </para>
 
             </sect4>
-            
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.users.deleting">
             <title>Löschen eines Benutzerzugangs</title>
-            
+
             <para>
                 Einen Benutzerzugang zu löschen zu dem man bereits ein UserEntry hat, ist so einfach wie der
                 Aufruf von <code>delete()</code> auf diesem Eintrag.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $user = $gdata->retrieveUser('foo');
 $user->delete();
 ]]>
             </programlisting>
-            
+
             <para>
                 Wenn man keinen Zugriff auf ein UserEntry Objekt für einen Zugang hat, kann die einfache
                 <code>deleteUser()</code> Methode verwendet werden.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $gdata->deleteUser('foo');
 ]]>
             </programlisting>
-            
+
         </sect3>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.gdata.gapps.nicknames">
         <title>Mit Spitznamen interagieren</title>
-        
+
         <para>
             Spitznamen arbeiten als Email Aliase für bestehende Benutzer. Jeder Spitzname enthält genau zwei
             Schlüsseleigenschaften: Seinen Namen und seinen Eigentümer. Jede Email die zu einem Spitznamen
             adressiert wurde wird zu dem Benutzer weitergeleitet der diesen Spitznamen besitzt.
         </para>
-        
+
         <para>
             Spitznamen werden repräsentiert als Instanz von Zend_Gdata_Gapps_NicknameEntry.
         </para>
-        
+
         <sect3 id="zend.gdata.gapps.nicknames.creating">
             <title>Erstellen eines Spitznamens</title>
-            
+
             <para>
                 Spitznamen können durch den Aufruf der einfachen <code>createNickname()</code> Methode
                 erstellt werden:
@@ -425,12 +425,12 @@ $nickname->nickname = $gdata->newNickname('bar');
 $nickname = $gdata->insertNickname($nickname);
 ]]>
             </programlisting>
-        
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.nicknames.retrieving">
             <title>Einen Spitznamen empfangen</title>
-            
+
             <para>
                 Spitznamen können durch den Aufruf der bequemen <code>retrieveNickname()</code> Methode
                 empfangen werden. Sie gibt <code>null</code> zurück wenn der Benutzer nicht gefunden wurde.
@@ -520,7 +520,7 @@ foreach ($feed as $nickname) {
 $feed = $gdata->retrieveAllNicknames();
 
 foreach ($feed as $nickname) {
-    echo '  * ' . $nickname->nickname->name . ' => ' . 
+    echo '  * ' . $nickname->nickname->name . ' => ' .
         $nickname->login->username . "\n";
 }
 ]]>
@@ -530,7 +530,7 @@ foreach ($feed as $nickname) {
                 Das wird ein Zend_Gdata_Gapps_NicknameFeed Objekt erstellen welches jeden Spitznamen in der
                 Domain enthält.
             </para>
-            
+
             <para>
                 Alternativ kann <code>getNicknameFeed()</code> auf einem Service Objekt ohne Argumente aufgerufen
                 werden.
@@ -540,7 +540,7 @@ foreach ($feed as $nickname) {
 $feed = $gdata->getNicknameFeed();
 
 foreach ($feed as $nickname) {
-    echo '  * ' . $nickname->nickname->name . ' => ' . 
+    echo '  * ' . $nickname->nickname->name . ' => ' .
         $nickname->login->username . "\n";
 }
 ]]>
@@ -573,22 +573,22 @@ $gdata->deleteNickname('bar');
             </programlisting>
 
         </sect3>
-            
+
     </sect2>
-        
+
     <sect2 id="zend.gdata.gapps.emailLists">
         <title>Mit Email Listen interagieren</title>
-        
+
         <para>
             Email Listen erlauben verschiedenen Benutzern Emails zu empfangen die zu einer einzelnen Email
             Adresse adressiert sind. Benutzer müssen keine Teilnehmer dieser Domain sein um sich in eine
             Email Liste einzuschreiben, wen deren komplette Email Adresse (inklusive Domain) verwendet wird.
         </para>
-        
+
         <para>
             Jede Email Liste einer Domain wird als Instanz von Zend_Gdata_Gapps_EmailListEntry repräsentiert.
         </para>
-        
+
         <sect3 id="zend.gdata.gapps.emailLists.creating">
             <title>Erstellen einer Email Liste</title>
 
@@ -616,7 +616,7 @@ $list = $gdata->insertEmailList($list);
             </programlisting>
 
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.emailList.retrieve">
             <title>Empfangen aller Email Listen bei denen ein Empfänger eingeschrieben ist</title>
 
@@ -638,7 +638,7 @@ foreach ($feed as $list) {
                 Das erstelle ein Zend_Gdata_Gapps_EmailListFeed Objekt welches jede Email Liste enthält die
                 mit dem speziellen Empfänger assoziiert ist.
             </para>
-            
+
             <para>
                 Alternativ kann ein neues Zend_Gdata_Gapps_EmailListQuery erstellt werden, dessen recipient
                 Eigenschaft auf die gewünschte Email Adresse gesetzt werden, und die Abfrage durch den Aufruf
@@ -728,14 +728,14 @@ $gdata->deleteEmailList('friends');
                 Um einen Empfänger zu einer Email Liste hinzuzufügen, muß einfach die bequeme
                 <code>addRecipientToEmailList()</code> Methode aufgerufen werden:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $gdata->addRecipientToEmailList('bar@somewhere.com', 'friends');
 ]]>
             </programlisting>
-            
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.emailListRecipients.retrieving">
             <title>Eine Liste von Empfängern einer Email Liste erhalten</title>
 
@@ -752,13 +752,13 @@ foreach ($feed as $recipient) {
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 Alternativ kann ein neuer EmailListRecipientQuery erstellt werdne, dessen emailListName
                 Eigenschaft auf die gewünschte Email Liste gesetzt werden, und
                 <code>getEmailListRecipientFeed()</code> auf dem Service Objekt aufgerufen werden.
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $query = $gdata->newEmailListRecipientQuery();
 $query->setEmailListName('friends');
@@ -769,42 +769,42 @@ foreach ($feed as $recipient) {
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 Das erstellt ein Zend_Gdata_Gapps_EmailListRecipientFeed Objekt welche jeden Empfänger für die
                 ausgewählte Email Liste enthält.
             </para>
-            
+
         </sect3>
-        
+
         <sect3 id="zend.gdata.gapps.emailListRecipients.removing">
             <title>Einen Empfänger von einer Email Liste entfernen</title>
-            
+
             <para>
                 Um einen Empfänger von einer Email Liste zu entfernen, muß die bequeme
                 <code>removeRecipientFromEmailList()</code> Methode aufgerufen werden:
                 method:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
 ]]>
             </programlisting>
-            
+
         </sect3>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.gdata.gapps.exceptions">
         <title>Fehler handhaben</title>
-        
+
         <para>
             Zusätzlich zur Standardsuite von Ausnahmen die von Zend_Gdata geworfen werden, können Anfragen die
             die Provisionierungs API verwenden auch eine <code>Zend_Gdata_Gapps_ServiceException</code>
             werfen. Diese Ausnahme zeigt das ein API spezieller Fehler aufgetreten ist welche verhindert das
-            die Anfrage fertiggestellt werden kann. 
+            die Anfrage fertiggestellt werden kann.
         </para>
-        
+
         <para>
             Jede ServiceException Instanz kann einen oder mehrere Fehler Objekte enthalten. Jedes dieser
             Objekte enthalten einen Fehlercode, Grund und (optional) die Eingave welche die Ausnahme
@@ -814,19 +814,19 @@ $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
             url="http://code.google.com/apis/apps/gdata_provisioning_api_v2.0_reference.html#appendix_d">Google
             Apps Provisioning API V2.0 Reference: Appendix D</ulink> vorhanden.
         </para>
-        
+
         <para>
             Wärend die komplette Liste von Fehler die empfangen wurden in ServiceException als Array vorhanden
             sind das man durch den Aufruf von <code>getErrors()</code> erhalten kann, ist es oft bequemer
             zu wissen ob ein spezieller Fehler aufgetreten ist. Für diese Fälle kann das Vorhandensein eines
             Fehler durch den Aufruf von <code>hasError()</code> erkannt werden.
         </para>
-        
+
         <para>
             Das folgende Beispiel demonstriert wie erkannt werden kann ob eine angefragte Ressource nicht
             existiert und der Fehler korrekt behandelt werden kann:
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 function retrieveUser ($username) {
     $query = $gdata->newUserQuery($username);
@@ -844,7 +844,7 @@ function retrieveUser ($username) {
 }
 ]]>
         </programlisting>
-        
+
     </sect2>
-    
+
 </sect1>
