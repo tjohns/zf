@@ -1,8 +1,8 @@
 <sect1 id="zend.soap.autodiscovery">
-    <title>AutoDiscovery.</title>
+    <title>AutoDiscovery</title>
 
     <sect2 id="zend.soap.autodiscovery.introduction">
-        <title>AutoDiscovery. Introduction</title>
+        <title>AutoDiscovery Introduction</title>
         <para>
             SOAP functionality implemented within Zend Framework is intended to make all steps
             required for SOAP communications more simple.
@@ -86,7 +86,7 @@ $autodiscover->handle();
 
 
     <sect2 id="zend.soap.autodiscovery.class">
-        <title>Class autodiscovering.</title>
+        <title>Class autodiscovering</title>
 
         <para>
             If class is used to provide SOAP server functionality, then the same class should be provided to
@@ -151,7 +151,7 @@ $autodiscover->handle();
 
 
     <sect2 id="zend.soap.autodiscovery.functions">
-        <title>Functions autodiscovering.</title>
+        <title>Functions autodiscovering</title>
 
         <para>
             If set of functions are used to provide SOAP server functionality, then the same set should be provided to
@@ -219,7 +219,7 @@ $autodiscover->handle();
 
 
     <sect2 id="zend.soap.autodiscovery.datatypes">
-        <title>Autodiscovering. Datatypes.</title>
+        <title>Autodiscovering Datatypes</title>
 
         <para>
             Input/output datatypes are converted into network service types using the following mapping:
@@ -251,7 +251,7 @@ $autodiscover->handle();
                                 <code>Zend_Soap_AutoDiscover</code> will be created with the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
                                 class as detection algorithm for complex types. The first parameter of the AutoDiscover constructor takes
                                 any complex type strategy implementing <code>Zend_Soap_Wsdl_Strategy_Interface</code> or a string with the name
-                                of the class. For backwards compability with <code>$extractComplexType</code> boolean variables are parsed
+                                of the class. For backwards compatibility with <code>$extractComplexType</code> boolean variables are parsed
                                 exactly like in Zend_Soap_Wsdl. See the Zend_Soap_Wsdl manual on adding complex types for more information.
                             </para>
                         </footnote>.

@@ -29,7 +29,7 @@
                     <simpara>
                         <code>$strategy</code> - optional flag used to identify the strategy for complex types (objects)
                         detection. This was a boolean <code>$extractComplexTypes</code> before version 1.7 and can
-                        still be set as a boolean for backwards compability. By default the 1.6 detection behaviour
+                        still be set as a boolean for backwards compatibility. By default the 1.6 detection behaviour
                         is set. To read more on complex type detection strategies go to
                     </simpara>
                 </listitem>
@@ -350,7 +350,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
             <para>
                 Its detection and building algorithm is based on the currently
                 active detection strategy for complex types. You can set the detection strategy either by
-                specifiying the the class name as string or instance of a <code>Zend_Soap_Wsdl_Strategy_Interface</code>
+                specifying the the class name as string or instance of a <code>Zend_Soap_Wsdl_Strategy_Interface</code>
                 implementation as the third parameter of the constructor or using the <code>setComplexTypeStrategy($strategy)</code>
                 function of Zend_Soap_Wsdl. The following detection strategies currently exist:
             </para>
@@ -359,7 +359,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
                 <listitem>
                     <para>Class <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>: Enabled by default (when no
                     third constructor parameter is set). Iterates over the public attributes of a class type and
-                    registeres them as subtypes of the complex object type.</para>
+                    registers them as subtypes of the complex object type.</para>
                 </listitem>
                 <listitem>
                     <para>Class <code>Zend_Soap_Wsdl_Strategy_AnyType</code>: Casts all complex types into the
@@ -370,7 +370,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
                 <listitem>
                     <para>Class <code>Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence</code>: This strategy allows
                     to specifiy return parameters of the type: <code>int[]</code> or <code>string[]</code>. It can only
-                    handle simple PHP types such as int, string, boolean, float and so on, but allows to specifiy
+                    handle simple PHP types such as int, string, boolean, float and so on, but allows to specify
                     nested arrays of arrays of type.</para>
                 </listitem>
                 <listitem>
