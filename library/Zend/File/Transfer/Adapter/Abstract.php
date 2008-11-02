@@ -1221,6 +1221,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             foreach ($files as $find) {
                 $found = array();
                 foreach ($this->_files as $file => $content) {
+                    if (!isset($content['name'])) {
+                        continue;
+                    }
+
                     if ($content['name'] === $find) {
                         $found[] = $file;
                         break;
