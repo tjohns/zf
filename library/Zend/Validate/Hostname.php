@@ -322,9 +322,10 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
                      */
                     $labelChars = 'a-z0-9';
                     $utf8 = false;
-                    $classFile = str_replace('.php', DIRECTORY_SEPARATOR . ucfirst($this->_tld) . '.php', __FILE__);
+                    $classFile = 'Zend/Validate/Hostname/' . ucfirst($this->_tld) . '.php';
                     if ($this->_validateIdn) {
-                        if (file_exists($classFile)) {
+                        if (Zend_Loader::isReadable($classFile)) {
+
                             // Load additional characters
                             $className = 'Zend_Validate_Hostname_' . ucfirst($this->_tld);
                             Zend_Loader::loadClass($className);
