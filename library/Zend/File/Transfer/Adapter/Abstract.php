@@ -599,7 +599,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $validator->setTranslator($translator);
                     }
 
-                    if (!$validator->isValid($key, $content)) {
+                    if (!$validator->isValid($content['tmp_name'], $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
