@@ -844,11 +844,19 @@ $translate->addTranslation("\my_de.mo","de");
 
             <programlisting role="php"><![CDATA[
 // in your bootstrap file
-$locale = new Zend_Locale('de_AT');
+$locale = new Zend_Locale();
 Zend_Registry::set('Zend_Locale', $locale);
+
+// default language when requested language is not available
+$defaultlanguage = 'en';
 
 // somewhere in your application
 $translate = new Zend_Translate("gettext", "\my_de.mo");
+if (!$translate->isAvailable($locale->getLanguage())) {
+    // when user requests a not available language reroute to default
+    $translate->setLocale($defaultlanguage);
+}
+
 $translate->getLocale();
 ]]>
             </programlisting>
