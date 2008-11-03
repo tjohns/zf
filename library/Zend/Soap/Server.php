@@ -147,9 +147,6 @@ class Zend_Soap_Server implements Zend_Server_Interface
             throw new Zend_Soap_Server_Exception('SOAP extension is not loaded.');
         }
 
-        ini_set('display_errors', false);
-        set_error_handler(array($this, 'handlePhpErrors'), E_USER_ERROR);
-
         if (null !== $wsdl) {
             $this->setWsdl($wsdl);
         }
@@ -712,16 +709,23 @@ class Zend_Soap_Server implements Zend_Server_Interface
             $request = file_get_contents('php://input');
         }
 
+        // Set Zend_Soap_Server error handler
+        $displayErrorsOriginalState = ini_get('display_errors');
+        ini_set('display_errors', false);
+        set_error_handler(array($this, 'handlePhpErrors'), E_USER_ERROR);
+
         try {
             $this->_setRequest($request);
-        } catch (Zend_Soap_Server_Exception $fault) {
+        } catch (Zend_Soap_Server_Exception $setRequestException) {
+        	// Do nothing. Catch exception and store it in the $setRequestException variable is all what we need.
         }
 
         $soap = $this->_getSoap();
 
         ob_start();
-        if (isset($fault)) {
-            $soap->fault($fault->getCode(), $fault->getMessage());
+        if (isset($setRequestException)) {
+        	// Send SOAP fault message if we've catched exception
+            $soap->fault($setRequestException->getCode(), $setRequestException->getMessage());
         } else {
             try {
                 $soap->handle($request);
@@ -730,8 +734,11 @@ class Zend_Soap_Server implements Zend_Server_Interface
                 $soap->fault($e->getCode(), $e->getMessage());
             }
         }
-
         $this->_response = ob_get_clean();
+
+        // Restore original error handler
+        restore_error_handler();
+        ini_set('display_errors', $displayErrorsOriginalState);
 
         if (!$this->_returnResponse) {
             echo $this->_response;
@@ -777,7 +784,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function getFaultExceptions()
     {
-        return $this->_faultExceptions();
+        return $this->_faultExceptions;
     }
 
     /**
@@ -826,7 +833,6 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function handlePhpErrors($errno, $errstr, $errfile = null, $errline = null, array $errcontext = null)
     {
-        $fault = $this->fault($errstr, $errno);
-        throw $fault;
+        throw $this->fault($errstr, $errno);
     }
 }
