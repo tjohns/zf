@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -729,7 +729,8 @@ $res = $cache->foobar2('1', '2');
 // [...] // Benötigt, Konfiguration und Factory
 
 $cache->start();
-// Wenn der Cache gefunden wurde, wird das Ergebnis zum Browser geschickt, und das Skript stoppt hier
+// Wenn der Cache gefunden wurde, wird das Ergebnis zum Browser geschickt,
+// und das Skript stoppt hier
 
 // Rest der Seite ...
 ]]>

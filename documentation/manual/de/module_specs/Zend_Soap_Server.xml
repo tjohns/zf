@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12131 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
 
@@ -205,8 +205,10 @@ class MyClass {
 }
 ...
 $server = new Zend_Soap_Server(null, $options);
-$server->setClass('MyClass');      // Die Klasse an den Soap Server binden
-$server->setObject(new MyClass()); // Binden eines bereits initialisierten Objekts an den Soap Server
+// Die Klasse an den Soap Server binden
+$server->setClass('MyClass');
+// Binden eines bereits initialisierten Objekts an den Soap Server
+$server->setObject(new MyClass());
 ...
 $server->handle();
 ]]>
@@ -358,7 +360,8 @@ $request = $server->getLastRequest();
 ...
 $server = new Zend_Soap_Server(...);
 ...
-// Eine Antwort als Rückgabewert der handle() Methode erhalten statt diese auf den Ausgabe Stream zu werfen
+// Eine Antwort als Rückgabewert der handle() Methode
+// erhalten statt diese auf den Ausgabe Stream zu werfen
 $server->setReturnResponse(true);
 ...
 $response = $server->handle();

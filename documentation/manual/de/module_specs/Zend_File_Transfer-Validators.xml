@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -481,7 +481,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('ExcludeMimeType', 'image/gif');
 
 // Verweigert den Mimetyp gif und jpeg für alle gegebenen Dateien
-$upload->setValidator('ExcludeMimeType', array('image/gif', 'image/jpeg');
+$upload->setValidator('ExcludeMimeType', array('image/gif',
+                                               'image/jpeg');
 
 // Verweigert die Mimetyp Gruppe image für alle Dateien
 $upload->setValidator('ExcludeMimeType', 'image');
@@ -1074,7 +1075,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', 40000);
 
 // Limitiert die Größe der angegebenen Datei auf maximal 4MB und  minimal 10kB
-// zusätzlich wird im Fall eines Fehlers die reine Zahl statt einer Benutzerfreudnlichen zurückgegeben
+// zusätzlich wird im Fall eines Fehlers die reine Zahl statt einer
+// Benutzerfreundlichen zurückgegeben
 $upload->addValidator('Size', array('10kB', '4MB', false);
 ]]>
             </programlisting>

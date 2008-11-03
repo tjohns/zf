@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -199,7 +199,9 @@ $this->view->paginator = $paginator;
 </ul>
 <?php endif; ?>
 
-<?= $this->paginationControl($this->paginator, 'Sliding', 'my_pagination_control.phtml'); ?>
+<?= $this->paginationControl($this->paginator,
+                             'Sliding',
+                             'my_pagination_control.phtml'); ?>
 </body>
 </html>
 ]]>
@@ -296,7 +298,9 @@ $this->view->paginator = $paginator;
         <para>
             <programlisting role="php"><![CDATA[
 Zend_Paginator::setDefaultScrollingStyle('Sliding');
-Zend_View_Helper_PaginationControl::setDefaultViewPartial('my_pagination_control.phtml');
+Zend_View_Helper_PaginationControl::setDefaultViewPartial(
+    'my_pagination_control.phtml'
+);
 $paginator->setView($view);
 ]]>
             </programlisting>
@@ -359,7 +363,9 @@ Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <div class="paginationControl">
 <!-- Vorheriger Seitenlink -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Vorher</a> |
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">
+    &lt; Vorher
+  </a> |
 <?php else: ?>
   <span class="disabled">&lt; Vorher</span> |
 <?php endif; ?>
@@ -367,7 +373,9 @@ Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <!-- Anzahl an Seitenlinks -->
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
-    <a href="<?= $this->url(array('page' => $page)); ?>"><?= $page; ?></a> |
+    <a href="<?= $this->url(array('page' => $page)); ?>">
+      <?= $page; ?>
+    </a> |
   <?php else: ?>
     <?= $page; ?> |
   <?php endif; ?>
@@ -375,7 +383,9 @@ Siehe http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 
 <!-- Nächster Seitenlink -->
 <?php if (isset($this->next)): ?>
-  <a href="<?= $this->url(array('page' => $this->next)); ?>">Nächster &gt;</a>
+  <a href="<?= $this->url(array('page' => $this->next)); ?>">
+    Nächster &gt;
+  </a>
 <?php else: ?>
   <span class="disabled">Nächster &gt;</span>
 <?php endif; ?>
@@ -400,28 +410,36 @@ of <?= $this->totalItemCount; ?>
 
 <!-- First page link -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?= $this->url(array('page' => $this->first)); ?>">First</a> |
+  <a href="<?= $this->url(array('page' => $this->first)); ?>">
+    First
+  </a> |
 <?php else: ?>
   <span class="disabled">First</span> |
 <?php endif; ?>
 
 <!-- Vorheriger Seitenlink -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">&lt; Vorheriger</a> |
+  <a href="<?= $this->url(array('page' => $this->previous)); ?>">
+    &lt; Vorheriger
+  </a> |
 <?php else: ?>
   <span class="disabled">&lt; Vorheriger</span> |
 <?php endif; ?>
 
 <!-- Next page link -->
 <?php if (isset($this->next)): ?>
-  <a href="<?= $this->url(array('page' => $this->next)); ?>">Nächster &gt;</a> |
+  <a href="<?= $this->url(array('page' => $this->next)); ?>">
+    Nächster &gt;
+  </a> |
 <?php else: ?>
   <span class="disabled">Nächster &gt;</span> |
 <?php endif; ?>
 
 <!-- Last page link -->
 <?php if (isset($this->next)): ?>
-  <a href="<?= $this->url(array('page' => $this->last)); ?>">Last</a>
+  <a href="<?= $this->url(array('page' => $this->last)); ?>">
+    Last
+  </a>
 <?php else: ?>
   <span class="disabled">Last</span>
 <?php endif; ?>
@@ -440,12 +458,16 @@ of <?= $this->totalItemCount; ?>
 <select id="paginationControl" size="1">
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>
-  <option value="<?= $this->url(array('page' => $page)); ?>"<?= $selected ?>><?= $page; ?></option>
+  <option value="<?= $this->url(array('page' => $page)); ?>"<?= $selected ?>>
+    <?= $page; ?>
+  </option>
 <?php endforeach; ?>
 </select>
 <?php endif; ?>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
+<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js">
+</script>
 <script type="text/javascript">
 $('paginationControl').observe('change', function() {
     window.location = this.options[this.selectedIndex].value;

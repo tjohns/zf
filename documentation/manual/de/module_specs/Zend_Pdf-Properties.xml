@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.pdf.info">
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Dokument Informationen und Metadaten</title>
@@ -181,7 +181,9 @@ $metadataDOM = new DOMDocument();
 $metadataDOM->loadXML($metadata);
 
 $xpath = new DOMXPath($metadataDOM);
-$pdfPreffixNamespaceURI = $xpath->query('/rdf:RDF/rdf:Description')->item(0)->lookupNamespaceURI('pdf');
+$pdfPreffixNamespaceURI = $xpath->query('/rdf:RDF/rdf:Description')
+                                ->item(0)
+                                ->lookupNamespaceURI('pdf');
 $xpath->registerNamespace('pdf', $pdfPreffixNamespaceURI);
 
 $titleNode = $xpath->query('/rdf:RDF/rdf:Description/pdf:Title')->item(0);

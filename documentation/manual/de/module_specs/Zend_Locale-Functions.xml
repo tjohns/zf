@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale verwenden</title>
@@ -1097,7 +1097,8 @@ echo $locale->getLanguageTranslation($frenchCode, 'es');
 // Erhalte eine Liste aller Übersetzungslisten
 $lists = $locale->getTranslationList();
 
-// Zeige alle vorhandenen Übersetzungslisten (viel Ausgabe, alles in der gewählten Sprache)
+// Zeige alle vorhandenen Übersetzungslisten
+// (viel Ausgabe, alles in der gewählten Sprache)
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));

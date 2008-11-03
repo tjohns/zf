@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.gdata.youtube">
     <title>Verwenden der YouTube Daten API</title>
 
@@ -39,7 +39,10 @@
             Service Pbjekt übergeben werden.
         </para>
         <programlisting role="php"><![CDATA[
-$yt = new Zend_Gdata_YouTube($httpClient, $applicationId, $clientId, $developerKey);
+$yt = new Zend_Gdata_YouTube($httpClient,
+                             $applicationId,
+                             $clientId,
+                             $developerKey);
 ]]>
         </programlisting>
     </sect2>

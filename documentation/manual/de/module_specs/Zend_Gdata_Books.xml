@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.gdata.books">
     <title>Die Buchsuche Daten API verwenden</title>
 
@@ -201,7 +201,8 @@ http://www.google.com/books/feeds/p/PARTNER_COBRAND_ID/volumes?q=football+-socce
             </para>
 
             <programlisting role="php"><![CDATA[
-$query = $books->newVolumeQuery('http://www.google.com/books/p/PARTNER_COBRAND_ID');
+$query =
+    $books->newVolumeQuery('http://www.google.com/books/p/PARTNER_COBRAND_ID');
 ]]>
             </programlisting>
 
@@ -350,7 +351,8 @@ $books->insertVolume($entry, Zend_Gdata_Books::MY_ANNOTATION_FEED_URI);
             </para>
 
             <programlisting role="php"><![CDATA[
-$feed = $books->getVolumeFeed('http://www.google.com/books/feeds/users/USER_ID/volumes');
+$feed = $books->getVolumeFeed(
+            'http://www.google.com/books/feeds/users/USER_ID/volumes');
 <i>(oder)</i>
 $feed = $books->getUserAnnotationFeed();
 

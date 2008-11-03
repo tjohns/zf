@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12118 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -166,7 +166,13 @@ public function  drawCircle($x,
  * @param mixed $param6
  * @param mixed $param7
  */
-public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
+public function drawEllipse($x1,
+                            $y1,
+                            $x2,
+                            $y2,
+                            $param5 = null,
+                            $param6 = null,
+                            $param7 = null);
 ]]>
         </programlisting>
     </sect2>

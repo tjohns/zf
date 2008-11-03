@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.test.phpunit" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Test_PHPUnit</title>
 
@@ -47,7 +47,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function appBootstrap()
     {
-        $this->frontController->registerPlugin(new Bugapp_Plugin_Initialize('development'));
+        $this->frontController
+             ->registerPlugin(new Bugapp_Plugin_Initialize('development'));
     }
 
     public function testCallWithoutActionShouldPullFromIndexAction()

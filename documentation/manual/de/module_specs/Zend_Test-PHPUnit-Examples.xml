@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12150 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>Beispiele</title>
 
@@ -233,7 +233,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'foobar');
     }
 
-    public function testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
+    public function
+        testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
     {
         $this->loginUser('foobar', 'foobar');
         $this->request->setMethod('GET');
