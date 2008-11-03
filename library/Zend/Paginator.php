@@ -409,12 +409,11 @@ class Zend_Paginator implements Countable, IteratorAggregate
     }
 
     /**
-     * Return the total number of items
-     * available from the adapter
+     * Return the total number of items available.
      *
      * @return integer
      */
-    public function countAllItems()
+    public function getTotalItemCount()
     {
         return count($this->_adapter);
     }
@@ -721,14 +720,14 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function getView()
     {
-        if (null === $this->_view) {
+        if ($this->_view === null) {
             /**
              * @see Zend_Controller_Action_HelperBroker
              */
             require_once 'Zend/Controller/Action/HelperBroker.php';
             
             $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-            if (null === $viewRenderer->view) {
+            if ($viewRenderer->view === null) {
                 $viewRenderer->initView();
             }
             $this->_view = $viewRenderer->view;
@@ -835,7 +834,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     protected function _createPages($scrollingStyle = null)
     {
-        $pageCount = $this->count();
+        $pageCount         = $this->count();
         $currentPageNumber = $this->getCurrentPageNumber();
         
         $pages = new stdClass();
@@ -863,8 +862,8 @@ class Zend_Paginator implements Countable, IteratorAggregate
         // Item numbers
         if ($this->getCurrentItems() !== null) {
             $pages->currentItemCount = $this->getCurrentItemCount();
-            $pages->totalItemCount   = $this->countAllItems();
             $pages->itemCountPerPage = $this->getItemCountPerPage();
+            $pages->totalItemCount   = $this->getTotalItemCount();
             $pages->firstItemNumber  = (($currentPageNumber - 1) * $this->_itemCountPerPage) + 1;
             $pages->lastItemNumber   = $pages->firstItemNumber + $pages->currentItemCount - 1;
         }

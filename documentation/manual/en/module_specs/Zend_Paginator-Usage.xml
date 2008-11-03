@@ -550,7 +550,7 @@ $('paginationControl').observe('change', function() {
                         <row>
                             <entry>itemCountPerPage</entry>
                             <entry>integer</entry>
-                            <entry>Number of items expected on each page</entry>
+                            <entry>Maximum number of items available to each page</entry>
                         </row>
                         <row>
                             <entry>last</entry>
