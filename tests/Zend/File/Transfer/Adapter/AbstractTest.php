@@ -521,9 +521,10 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->testTransferDestinationShouldBeMutable();
         $destinations = $this->adapter->getDestination(array('bar', 'baz'));
         $this->assertTrue(is_array($destinations));
+        $directory = dirname(__FILE__);
         foreach ($destinations as $file => $destination) {
             $this->assertTrue(in_array($file, array('bar', 'baz')));
-            $this->assertEquals('/var/www/upload', $destination);
+            $this->assertEquals($directory, $destination);
         }
     }
 
