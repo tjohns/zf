@@ -663,10 +663,6 @@ class Zend_Soap_Server implements Zend_Server_Interface
         $options = $this->getOptions();
         $server  = new SoapServer($this->_wsdl, $options);
 
-        if (null !== $this->_persistence) {
-            $server->setPersistence($this->_persistence);
-        }
-
         if (!empty($this->_functions)) {
             $server->addFunction($this->_functions);
         }
@@ -679,6 +675,10 @@ class Zend_Soap_Server implements Zend_Server_Interface
 
         if (!empty($this->_object)) {
             $server->setObject($this->_object);
+        }
+
+        if (null !== $this->_persistence) {
+            $server->setPersistence($this->_persistence);
         }
 
         return $server;
