@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12122 -->
+<!-- EN-Revision: 12156 -->
 <sect1 id="zend.file.transfer.filters">
 
     <title>Filter für Zend_File_Transfer</title>
@@ -20,10 +20,14 @@
                 <code>LowerCase</code>: Dieser Filter kann den Inhalt einer Textdatei auf Kleinschreibung
                 ändern.
             </para>
+        </listitem>
+        <listitem>
             <para>
                 <code>Rename</code>: Dieser Filter kann Dateien umbenennen, den Ort ändern und sogar das
                 Überschreiben von existierenden Dateien erzwingen.
             </para>
+        </listitem>
+        <listitem>
             <para>
                 <code>UpperCase</code>: Dieser Filter kann den Inhalt einer Textdatei auf Großschreibung
                 ändern.

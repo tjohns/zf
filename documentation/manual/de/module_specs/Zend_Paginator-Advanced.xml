@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12200 -->
 <sect1 id="zend.paginator.advanced">
     <title>Advanced usage</title>
 
@@ -34,7 +34,9 @@
             Wenn man jemals schon das SPL Interface
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceCountable.html"><code>Countable</code></ulink>
             verwendet hat, wird man mit <code>count()</code> umgehen können. <code>Zend_Paginator</code> verwendet
-            es als totale Anzahl an Elementen in der Datensammlung.
+            es als totale Anzahl an Elementen in der Datensammlung. Zusätzlich bietet die
+            <code>Zend_Paginator</code> Instanz eine <code>countAllItems()</code> Methode die auf die
+            <code>count()</code> Methode des Adapters weiterleitet.
         </para>
 
         <para>

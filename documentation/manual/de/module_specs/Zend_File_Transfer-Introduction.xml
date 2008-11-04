@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12158 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -233,6 +233,13 @@ $upload->receive();
                     internen Informationen für die angegebene übertragene Datei zurück.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>: Diese Methode
+                    gibt einen Hash des Inhalts einer angegebenen übertragenen Datei zurück.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -271,6 +278,37 @@ $names = $upload->getFileName('foo');
                 Das kann geschehen durch den Fakt das beim Empfangen alle Filter ausgeführt werden.
                 Deswegen sollte man <code>getFileName()</code> immer ausführen nachdem man die Dateien
                 empfangen hat.
+            </para>
+        </note>
+
+        <para>
+            <code>getHash()</code> akzeptiert den Namen eines Hash Algorithmus als ersten Parameter. Für eine
+            Liste von bekannten Algorithmen kann in
+            <ulink url="http://php.net/hash_algos">PHP's hash_algos Methode</ulink> gesehen werden. Wenn kein
+            Algorithmus angegeben wird, wird <code>crc32</code> als Standardalgorithmus verwendet.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example2">
+            <title>Den Hash einer Datei erhalten</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Gibt die Hashes von allen Dateien als Array zurück wenn mehr als eine Datei hochgeladen wurde
+$hash = $upload->getHash('md5');
+
+// Gibt den Has für das 'foo' Formularelement zurück
+$names = $upload->getHash('crc32', 'foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das der zurückgegebene Wert ein Array ist, wenn die Datei oder der
+                Formularname mehr als eine einzelne Datei enthält.
             </para>
         </note>
     </sect2>

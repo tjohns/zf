@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12172 -->
 <sect3 id="zend.controller.router.routes.hostname">
     <title>Zend_Controller_Router_Route_Hostname</title>
 
@@ -75,11 +75,11 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     <www type="Zend_Controller_Router_Route_Hostname">
         <route>www.example.com</route>
         <chains>
-            <index type="Zend_Controller_Rotuer_Route_Static">
+            <index type="Zend_Controller_Router_Route_Static">
                 <route></route>
                 <defaults module="default" controller="index" action="index" />
             </index>
-            <imprint type="Zend_Controller_Rotuer_Route_Static">
+            <imprint type="Zend_Controller_Router_Route_Static">
                 <route>imprint</route>
                 <defaults module="default" controller="index" action="index" />
             </imprint>
@@ -88,7 +88,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     <users type="Zend_Controller_Router_Route_Hostname">
         <route>users.example.com</route>
         <chains>
-            <profile type="Zend_Controller_Rotuer_Route">
+            <profile type="Zend_Controller_Router_Route">
                 <route>:username</route>
                 <defaults module="users" controller="profile" action="index" />
             </index>

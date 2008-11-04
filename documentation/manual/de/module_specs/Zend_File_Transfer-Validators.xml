@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12236 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -79,6 +79,13 @@
                 <code>IsImage</code>: Diese Prüfung checkt ob die Datei ein Bild ist. Sie basiert auf der
                 <code>MimeType</code> Prüfung und validiert Bildedateien wie Jpg oder Gif. Sie kann auch
                 auf spezielle Bildtypen begrenzt werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Hash</code>: Diese Prüfung check den Hashwert des Inhalts einer Datei. Sie unterstützt
+                mehrere Algorithmen.
             </para>
         </listitem>
 
@@ -876,6 +883,66 @@ $upload->addValidator('IsImage', false, 'jpeg');
                 Es ist zu beachten das nicht geprüft wird ob ein gesetzter Dateityp ein Bildtyp ist
                 oder nicht. Man könnte also definieren das Zip Dateien von dieser Prüfung akzeptiert
                 werden auch wenn das nicht logisch ist.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.hash">
+        <title><emphasis role="strong">Hash</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Hash</code> Prüfung checkt den Inhalt einer übertragenen Datei indem Sie gehasht wird.
+            Diese Prüfung verwendet die Hash Erweiterung von PHP. Sie unterstützt die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Setzt den Hash gegen den geprüft werden soll.
+                </para>
+
+                <para>
+                    Man kann mehrere Hashes setzen indem Sie als Array angegeben werden. Jeder von Ihnen wird
+                    geprüft und nur wenn alle fehlschlagen wird die Prüfung selbst fehlschlagen.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>algorithm</code>: Setzt den Algorithmus der für das Hashen des Inhalts verwendet
+                    wird.
+                </para>
+
+                <para>
+                    Man kann mehrere Algorithmen setzen indem die <code>addHash()</code> Methode mehrere
+                    Male verwendet wird.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.hash.example">
+            <title>Verwenden der Hash Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Prüft ob der Inhalt der hochgeladenen Datei den angegebenen Hash hat
+$upload->addValidator('Hash', false, '3b3652f');
+
+// Begrenzt diese Prüfung auf zwei unterschiedliche Hashes
+$upload->addValidator('Hash', false, array('3b3652f', 'e612b69'));
+
+// Setzt einen anderen Algorithmus gegen den geprüft wird
+$upload->addValidator('Hash', false, '315b3cd8273d44912a7', 'md5');
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                Diese Prüfung unterstützt über 34 verschiedene Hash Algorithmen. Die bekanntesten sind
+                'crc32', 'md5' und 'sha1'. Wenn man die anderen wissen will kann man in PHP's
+                <ulink url="http://php.net/hash_algos">hash_algos Methode</ulink> nachsehen.
             </para>
         </note>
     </sect2>
