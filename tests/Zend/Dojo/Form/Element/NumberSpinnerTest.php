@@ -185,6 +185,18 @@ class Zend_Dojo_Form_Element_NumberSpinnerTest extends PHPUnit_Framework_TestCas
         $html = $this->element->render();
         $this->assertContains('dojoType="dijit.form.NumberSpinner"', $html);
     }
+
+    /**
+     * @group ZF-4638
+     */
+    public function testRenderingShouldOutputMinAndMaxConstraints()
+    {
+        $this->element->setMin(5)
+                      ->setMax(10);
+        $html = $this->element->render();
+        $this->assertRegexp('/\'min\':\s*5/', $html, $html);
+        $this->assertRegexp('/\'max\':\s*10/', $html, $html);
+    }
 }
 
 // Call Zend_Dojo_Form_Element_NumberSpinnerTest::main() if this source file is executed directly.

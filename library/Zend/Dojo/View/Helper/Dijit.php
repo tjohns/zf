@@ -209,10 +209,10 @@ abstract class Zend_Dojo_View_Helper_Dijit extends Zend_View_Helper_HtmlElement
                 if (is_array($params[$param])) {
                     $values = array();
                     foreach ($params[$param] as $key => $value) {
-                        if (!is_string($value)) {
+                        if (!is_scalar($value)) {
                             continue;
                         }
-                        $values[] = $value;
+                        $values[$key] = $value;
                     }
                 } elseif (is_string($params[$param])) {
                     $values = (array) $params[$param];
