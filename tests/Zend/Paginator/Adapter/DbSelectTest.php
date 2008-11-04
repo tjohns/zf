@@ -29,6 +29,7 @@ require_once 'Zend/Paginator/Adapter/DbSelect.php';
  * @see Zend_Db_Adapter_Pdo_Sqlite
  */
 require_once 'Zend/Db/Adapter/Pdo/Sqlite.php';
+require_once 'Zend/Debug.php';
 
 /**
  * @see PHPUnit_Framework_TestCase
@@ -49,17 +50,17 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
     /**
      * @var Zend_Paginator_Adapter_DbSelect
      */
-    private $_adapter;
+    protected $_adapter;
 
     /**
      * @var Zend_Db_Adapter_Pdo_Sqlite
      */
-    private $_db;
+    protected $_db;
 
     /**
      * @var Zend_Db_Select
      */
-    private $_query;
+    protected $_query;
 
     /**
      * @var Zend_Db_Table_Abstract
@@ -84,8 +85,8 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         $this->_table = new TestTable($this->_db);
 
         $this->_query = $this->_db->select()->from('test')
-                                            ->order('number ASC') // ZF-3740
-                                            ->limit(1000, 0); // ZF-3727
+                                            ->order('number ASC'); // ZF-3740
+                                            //->limit(1000, 0); // ZF-3727
 
         $this->_adapter = new Zend_Paginator_Adapter_DbSelect($this->_query);
     }
@@ -136,7 +137,8 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         }
 
         try {
-            $expr = new Zend_Db_Expr('COUNT(*) AS wrongcolumn');
+            $wrongcolumn = $this->_db->quoteIdentifier('wrongcolumn');
+            $expr = new Zend_Db_Expr("COUNT(*) AS $wrongcolumn");
             $query = $this->_db->select($expr)->from('test');
 
             $this->_adapter->setRowCount($query);
@@ -148,13 +150,14 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
 
     public function testAcceptsQueryForRowCount()
     {
-        $expression = new Zend_Db_Expr('COUNT(*) AS ' . Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN);
+        $row_count_column = $this->_db->quoteIdentifier(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN);
+        $expression = new Zend_Db_Expr("COUNT(*) AS $row_count_column");
 
         $rowCount = clone $this->_query;
         $rowCount->reset(Zend_Db_Select::COLUMNS)
-                 ->reset(Zend_Db_Select::ORDER) // ZF-3740
+                 ->reset(Zend_Db_Select::ORDER)        // ZF-3740
                  ->reset(Zend_Db_Select::LIMIT_OFFSET) // ZF-3727
-                 ->reset(Zend_Db_Select::GROUP) // ZF-4001
+                 ->reset(Zend_Db_Select::GROUP)        // ZF-4001
                  ->columns($expression);
 
         $this->_adapter->setRowCount($rowCount);
@@ -196,6 +199,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
                            ->order('number ASC')
                            ->limit(1000, 0)
                            ->group('number');
+
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
 
         $this->assertEquals(500, $adapter->count());
@@ -251,8 +255,9 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
      */
     public function testSelectSpecificColumns()
     {
+        $number = $this->_db->quoteIdentifier('number');
         $query = $this->_db->select()->from('test', array('testgroup', 'number'))
-                                     ->where('number >= ?', '1');
+                                     ->where("$number >= ?", '1');
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
 
         $this->assertEquals(500, $adapter->count());
@@ -268,17 +273,5 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Paginator_Adapter_DbSelect($query);
 
         $this->assertEquals(500, $adapter->count());
-    }
-
-    /**
-     * @group ZF-4613
-     */
-    public function testCountWithOracle()
-    {
-        if (TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED) {
-
-        } else {
-            $this->markTestSkipped('Oracle is required');
-        }
     }
 }

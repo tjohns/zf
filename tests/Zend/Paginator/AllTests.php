@@ -33,7 +33,9 @@ require_once 'Zend/PaginatorTest.php';
 
 require_once 'Zend/Paginator/Adapter/ArrayTest.php';
 require_once 'Zend/Paginator/Adapter/DbSelectTest.php';
+require_once 'Zend/Paginator/Adapter/DbSelect/OracleTest.php';
 require_once 'Zend/Paginator/Adapter/DbTableSelectTest.php';
+require_once 'Zend/Paginator/Adapter/DbTableSelect/OracleTest.php';
 require_once 'Zend/Paginator/Adapter/IteratorTest.php';
 require_once 'Zend/Paginator/Adapter/NullTest.php';
 
@@ -62,20 +64,25 @@ class Zend_Paginator_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Paginator');
         $suite->addTestSuite('Zend_PaginatorTest');
-        
+
         $suite->addTestSuite('Zend_Paginator_Adapter_ArrayTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_DbSelectTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_DbTableSelectTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_IteratorTest');
         $suite->addTestSuite('Zend_Paginator_Adapter_NullTest');
-        
+
+        if (TESTS_ZEND_DB_ADAPTER_ORACLE_ENABLED) {
+            $suite->addTestSuite('Zend_Paginator_Adapter_DbSelect_OracleTest');
+            $suite->addTestSuite('Zend_Paginator_Adapter_DbTableSelect_OracleTest');
+        }
+
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_AllTest');
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_ElasticTest');
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_JumpingTest');
         $suite->addTestSuite('Zend_Paginator_ScrollingStyle_SlidingTest');
-        
+
         $suite->addTestSuite('Zend_View_Helper_PaginationControlTest');
-        
+
         return $suite;
     }
 }
