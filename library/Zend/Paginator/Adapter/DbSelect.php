@@ -160,7 +160,11 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 $columns = array();
 
                 foreach ($columnParts as $part) {
-                	$columns[] = $part[1];
+                    if ($part[1] == '*' || $part[1] instanceof Zend_Db_Expr) {
+                        $columns[] = $part[1];
+                    } else {
+                        $columns[] = $rowCount->getAdapter()->quoteIdentifier($part[1], true);
+                    }
                 }
 
                 if (count($columns) == 1 && $columns[0] == '*') {
@@ -169,7 +173,15 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                     $groupPart = implode(',', $columns);
                 }
             } else {
-                $groupPart = implode(',', $rowCount->getPart(Zend_Db_Select::GROUP));
+                $groupParts = $rowCount->getPart(Zend_Db_Select::GROUP);
+
+                foreach ($groupParts as &$part) {
+                    if (!($part == '*' || $part instanceof Zend_Db_Expr)) {
+                        $part = $rowCount->getAdapter()->quoteIdentifier($part, true);
+                    }
+                }
+
+                $groupPart = implode(',', $groupParts);
             }
 
             $countPart  = empty($groupPart) ? 'COUNT(*)' : 'COUNT(DISTINCT ' . $groupPart . ')';
