@@ -1294,12 +1294,21 @@ echo "The table name is " . $info['name'] . "\n";
         <title>Caching Table Metadata</title>
 
         <para>
-            By default, <code>Zend_Db_Table_Abstract</code> queries the underlying database for
-            <link linkend="zend.db.table.info">table metadata</link> upon instantiation of a table
-            object. That is, when a new table object is created, the object's default behavior is
-            to fetch the table metadata from the database using the adapter's
-            <code>describeTable()</code> method.
+            By default, <code>Zend_Db_Table_Abstract</code> queries the
+            underlying database for <link linkend="zend.db.table.info">table
+                metadata</link> whenever that data is needed to perform table
+            operations.  The table object fetches the table metadata from the
+            database using the adapter's <code>describeTable()</code> method.
+            Operations requiring this introspection include:
         </para>
+
+        <itemizedlist>
+            <listitem><para><code>insert()</code></para></listitem>
+
+            <listitem><para><code>find()</code></para></listitem>
+
+            <listitem><para><code>info()</code></para></listitem>
+        </itemizedlist>
 
         <para>
             In some circumstances, particularly when many table objects are instantiated against
@@ -1436,6 +1445,67 @@ $bugs = new Bugs(array('metadataCache' => $cache));
             <link linkend="zend.cache">Zend_Cache</link> for more information.
         </para>
 
+        <sect3 id="zend.db.table.metadata.caching.hardcoding">
+            <title>Hardcoding Table Metadata</title>
+
+            <para>
+                To take metadata caching a step further, you can also choose to
+                hardcode metadata. In this particular case, however, any changes
+                to the table schema will require a change in your code. As such,
+                it is only recommended for those who are optimizing for
+                production usage.
+            </para>
+
+            <para>
+                The metadata structure is as follows:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+protected $_metadata = array(
+    '<column_name>' => array(
+        'SCHEMA_NAME'      => <string>,
+        'TABLE_NAME'       => <string>,
+        'COLUMN_NAME'      => <string>,
+        'COLUMN_POSITION'  => <int>,
+        'DATA_TYPE'        => <string>,
+        'DEFAULT'          => NULL|<value>,
+        'NULLABLE'         => <bool>,
+        'LENGTH'           => <string - length>,
+        'SCALE'            => NULL|<value>,
+        'PRECISION'        => NULL|<value>,
+        'UNSIGNED'         => NULL|<bool>,
+        'PRIMARY'          => <bool>,
+        'PRIMARY_POSITION' => <int>,
+        'IDENTITY'         => <bool>,
+    ),
+    // additional columns...
+);
+]]></programlisting>
+
+            <para>
+                An easy way to get the appropriate values is to use the metadata
+                cache, and then to deserialize values stored in the cache.
+            </para>
+
+            <para>
+                You can disable this optimization by turning of the
+                <code>metadataCacheInClass</code> flag:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// At instantiation:
+$bugs = new Bugs(array('metadataCacheInClass' => false));
+
+// Or later:
+$bugs->setMetadataCacheInClass(false);
+]]></programlisting>
+
+            <para>
+                The flag is enabled by default, which ensures that the
+                <code>$_metadata</code> array is only populated once per
+                instance.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.db.table.extending">

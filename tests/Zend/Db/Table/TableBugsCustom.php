@@ -42,6 +42,8 @@ class Zend_Db_Table_TableBugsCustom extends Zend_Db_Table_TableBugs
 {
     public $isMetadataFromCache = false;
 
+    protected $_metadataCacheInClass = false;
+
     protected $_rowClass    = 'Zend_Db_Table_Row_TestMyRow';
     protected $_rowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';
 
