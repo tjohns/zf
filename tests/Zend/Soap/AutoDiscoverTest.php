@@ -335,6 +335,17 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $this->assertContains("http://example.com/service.php", $wsdlOutput);
     }
 
+    public function testSetNonStringNonZendUriUriThrowsException()
+    {
+        $server = new Zend_Soap_AutoDiscover();
+        try {
+            $server->setUri(array("bogus"));
+            $this->fail();
+        } catch(Zend_Soap_AutoDiscover_Exception $e) {
+
+        }
+    }
+
     /**
      * @group ZF-4117
      */
@@ -389,6 +400,44 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, substr_count($wsdlOutput, '<message name="testFuncRequest">'));
         $this->assertEquals(1, substr_count($wsdlOutput, '<message name="testFuncResponse">'));
+    }
+
+    public function testUnusedFunctionsOfAutoDiscoverThrowException()
+    {
+        $server = new Zend_Soap_AutoDiscover();
+        try {
+            $server->setPersistence("bogus");
+            $this->fail();
+        } catch(Zend_Soap_AutoDiscover_Exception $e) {
+            
+        }
+
+        try {
+            $server->fault();
+            $this->fail();
+        } catch(Zend_Soap_AutoDiscover_Exception $e) {
+
+        }
+
+        try {
+            $server->loadFunctions("bogus");
+            $this->fail();
+        } catch(Zend_Soap_AutoDiscover_Exception $e) {
+
+        }
+    }
+
+    public function testGetFunctions()
+    {
+        $server = new Zend_Soap_AutoDiscover();
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+        $server->setClass('Zend_Soap_AutoDiscover_Test');
+
+        $functions = $server->getFunctions();
+        $this->assertEquals(
+            array('Zend_Soap_AutoDiscover_TestFunc', 'testFunc1', 'testFunc2', 'testFunc3', 'testFunc4'),
+            $functions
+        );
     }
 }
 

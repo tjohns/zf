@@ -273,13 +273,13 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     /**
      * Action to take when an error occurs
      *
-     * @todo Imeplement
      * @param string $fault
      * @param string|int $code
      */
     public function fault($fault = null, $code = null)
     {
-
+        require_once "Zend/Soap/AutoDiscover/Exception.php";
+        throw new Zend_Soap_AutoDiscover_Exception("Function has no use in AutoDiscover.");
     }
 
     /**
@@ -308,23 +308,23 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     /**
      * Load Functions
      *
-     * @todo Implement
      * @param unknown_type $definition
      */
     public function loadFunctions($definition)
     {
-
+        require_once "Zend/Soap/AutoDiscover/Exception.php";
+        throw new Zend_Soap_AutoDiscover_Exception("Function has no use in AutoDiscover.");
     }
 
     /**
      * Set Persistance
      *
-     * @todo Implement
      * @param int $mode
      */
     public function setPersistence($mode)
     {
-
+        require_once "Zend/Soap/AutoDiscover/Exception.php";
+        throw new Zend_Soap_AutoDiscover_Exception("Function has no use in AutoDiscover.");
     }
 
     /**
