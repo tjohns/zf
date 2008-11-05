@@ -219,8 +219,8 @@ if ($result->isValid()) {
             While the primary purpose of Zend_Auth (and consequently
             Zend_Auth_Adapter_DbTable) is primarily
             <emphasis role="strong">authentication</emphasis> and not
-            <emphasis role="strong">authorization</emphasis>, there exist a few
-            instances and problems that toe the line upon which domain the fit
+            <emphasis role="strong">authorization</emphasis>, there are a few
+            instances and problems that toe the line between which domain they fit
             within.  Depending on how you’ve decided to explain your problem, it
              sometimes makes sense to solve what could look like an
              authorization problem within the authentication adapter.
