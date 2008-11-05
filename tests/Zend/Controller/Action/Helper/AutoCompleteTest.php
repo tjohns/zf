@@ -103,36 +103,6 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
         $this->assertTrue($found, "JSON content-type header not found");
     }
 
-    public function testDojoHelperThrowsExceptionOnInvalidDataFormat()
-    {
-        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
-        $data = array('foo' => 'bar', 'baz');
-        try {
-            $encoded = $dojo->encodeJson($data);
-            $this->fail('Associative arrays without an "items" key should be considered invalid');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Invalid data', $e->getMessage());
-        }
-
-        $data = new stdClass;
-        $data->foo = 'bar';
-        $data->bar = 'baz';
-        try {
-            $encoded = $dojo->encodeJson($data);
-            $this->fail('Objects should be considered invalid');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Invalid data', $e->getMessage());
-        }
-
-        $data = 'foo';
-        try {
-            $encoded = $dojo->encodeJson($data);
-            $this->fail('Strings should be considered invalid');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Invalid data', $e->getMessage());
-        }
-    }
-
     public function testDojoHelperEncodesToJson()
     {
         $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
