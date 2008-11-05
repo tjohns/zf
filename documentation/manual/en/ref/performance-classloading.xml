@@ -13,7 +13,7 @@
     </para>
 
     <sect2 id="performance.classloading.includepath">
-        <title>Question: How can I optimize my include_path?</title>
+        <title>How can I optimize my include_path?</title>
 
         <para>
             One trivial optimization you can do to increase the speed of class
@@ -180,8 +180,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
     </sect2>
 
     <sect2 id="performance.classloading.striprequires">
-        <title>Question: How can I eliminate unnecessary require_once
-            statements?</title>
+        <title>How can I eliminate unnecessary require_once statements?</title>
 
         <para>
             Lazy loading is an optimization technique designed to push the
