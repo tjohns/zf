@@ -835,7 +835,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
                 <warning>
 
                     <para>
-                        The API for fetch operations has been superceded to allow a
+                        The API for fetch operations has been superseded to allow a
                         <code>Zend_Db_Table_Select</code> object to modify the query. However, the
                         deprecated usage of the <code>fetchRow()</code> and <code>fetchAll()</code>
                         methods will continue to work without modification.

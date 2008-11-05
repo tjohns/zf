@@ -294,7 +294,7 @@
                                 By default <code>Zend_Soap_Wsdl</code> will be created with the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
                                 class as detection algorithm for complex types. The first parameter of the AutoDiscover constructor takes
                                 any complex type strategy implementing <code>Zend_Soap_Wsdl_Strategy_Interface</code> or a string with the name
-                                of the class. For backwards compability with <code>$extractComplexType</code> boolean variables are parsed
+                                of the class. For backwards compatibility with <code>$extractComplexType</code> boolean variables are parsed
                                 the following way: If true, <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>, if false
                                 <code>Zend_Soap_Wsdl_Strategy_AnyType</code>.
                             </para>
@@ -370,7 +370,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
                 </listitem>
                 <listitem>
                     <para>Class <code>Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence</code>: This strategy allows
-                    to specifiy return parameters of the type: <code>int[]</code> or <code>string[]</code>. It can only
+                    to specify return parameters of the type: <code>int[]</code> or <code>string[]</code>. It can only
                     handle simple PHP types such as int, string, boolean, float and so on, but allows to specify
                     nested arrays of arrays of type.</para>
                 </listitem>

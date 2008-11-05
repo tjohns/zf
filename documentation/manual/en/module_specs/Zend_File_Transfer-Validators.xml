@@ -1094,12 +1094,12 @@ $upload->addValidator('MimeType', false, 'image');
         <note>
             <para>
                 This component will use the <code>fileinfo</code> extension if it is available. If it's not,
-                it will degrade to the <code>mime_content_type</code> function. And if the functioncall fails
+                it will degrade to the <code>mime_content_type</code> function. And if the function call fails
                 it will use the mimetype which is given by HTTP.
             </para>
 
             <para>
-                You should be aware of possible security problems when you have wether <code>fileinfo</code>
+                You should be aware of possible security problems when you have whether <code>fileinfo</code>
                 nor <code>mime_content_type</code> available. The mimetype given by HTTP is not secure and
                 can be easily manipulated.
             </para>

@@ -983,7 +983,7 @@ $translate = new Zend_Translate('gettext',
             <title>Language through filenames</title>
 
             <para>
-                Another way to detect the langage automatically is to use special filenames. You can either
+                Another way to detect the language automatically is to use special filenames. You can either
                 name the complete file or parts of a file with the used language. To use this way of detection
                 you will have to set the 'scan' option at initiation. There are several ways of naming the
                 sourcefiles which are described below:
