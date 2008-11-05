@@ -54,6 +54,21 @@ class Zend_Controller_Request_Apache404Test extends PHPUnit_Framework_TestCase
         $requestUri = $request->getRequestUri();
         $this->assertEquals('/foo/bar', $requestUri);
     }
+
+    /**
+     * @group ZF-3057
+     */
+    public function testRedirectQueryStringShouldBeParsedIntoGetVars()
+    {
+        $_SERVER['REDIRECT_URL']         = '/foo/bar';
+        $_SERVER['REDIRECT_QUERYSTRING'] = 'baz=bat&bat=delta';
+        $_SERVER['REQUEST_URI']          = '/baz/bat';
+
+        $request = new Zend_Controller_Request_Apache404();
+        $requestUri = $request->getRequestUri();
+        $this->assertEquals('/foo/bar', $requestUri);
+        $this->assertSame(array('baz' => 'bat', 'bat' => 'delta'), $request->getQuery());
+    }
 }
 
 // Call Zend_Controller_Request_Apache404Test::main() if this source file is executed directly.
