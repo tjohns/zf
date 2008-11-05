@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12236 -->
+<!-- EN-Revision: 12251 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -17,6 +17,14 @@
             <para>
                 <code>Count</code>: Diese Prüfung checkt die Anzahl der Dateien. Er bietet ein Minimum und ein
                 Maximum an und wirft einen Fehler wenn einer der zwei Werte überschritten werden.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Crc32</code>: Diese Prüfung checkt den Crc32 Hashwert vom Inhalt einer Datei. Sie basiert
+                auf der <code>Hash</code> Prüfung und erlaubt eine einfachere Verwendung indem nur Crc32
+                unterstützt wird.
             </para>
         </listitem>
 
@@ -91,6 +99,14 @@
 
         <listitem>
             <para>
+                <code>Md5</code>: Diese Prüfung checkt den Md5 Hashwert vom Inhalt einer Datei. Sie basiert
+                auf der <code>Hash</code> Prüfung und erlaubt eine einfachere Verwendung indem nur Md5
+                unterstützt wird.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>MimeType</code>: Diese Prüfung kann den Mimetyp von Dateien überprüfen. Sie ist auch
                 fähig Arten von Mimetypen zu prüfen und wirft einen Fehler wenn der MimeTyp einer angegebenen
                 Datei nicht passt.
@@ -101,6 +117,14 @@
             <para>
                 <code>NotExists</code>: Diese Prüfung checkt ob Dateien existieren. Sie wirft einen Fehler
                 wenn eine angegebene Datei existiert.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Sha1</code>: Diese Prüfung checkt den Sha1 Hashwert vom Inhalt einer Datei. Sie basiert
+                auf der <code>Hash</code> Prüfung und erlaubt eine einfachere Verwendung indem nur Sha1
+                unterstützt wird.
             </para>
         </listitem>
 
@@ -391,6 +415,44 @@ $upload->addValidator('Count', false, array(1, 5);
                 welche das Maximum überschrietet wird als Fehler zurückgegeben.
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.crc32">
+        <title><emphasis role="strong">Crc32</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Crc32</code> Prüfung checkt den Inhalt einer übertragenen Datei durch hashen. Diese
+            Prüfung verwendet die Hash Erweiterung von PHP mit dem Crc32 Algorithmus. Sie unterstützt die
+            folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Setzt den Hash gegen den geprüft wird.
+                </para>
+
+                <para>
+                    Man kann mehrere Hashes setzen indem Sie als Array angegeben werden. Jeder von Ihnen wird
+                    geprüft und nur wenn alle fehlschlagen wird die Prüfung selbst fehlschlagen.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.crc32.example">
+            <title>Verwenden der Crc32 Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Prüft ob der Inhalt der hochgeladenen Datei den angegebenen Hash hat
+$upload->addValidator('Hash', false, '3b3652f');
+
+// Begrenzt diese Prüfung auf zwei unterschiedliche Hashes
+$upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
@@ -947,6 +1009,44 @@ $upload->addValidator('Hash', false, '315b3cd8273d44912a7', 'md5');
         </note>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.md5">
+        <title><emphasis role="strong">Md5</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Md5</code> Prüfung checkt den Inhalt einer übertragenen Datei durch hashen. Diese
+            Prüfung verwendet die Hash Erweiterung von PHP mit dem Md5 Algorithmus. Sie unterstützt die
+            folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Setzt den Hash gegen den geprüft wird.
+                </para>
+
+                <para>
+                    Man kann mehrere Hashes setzen indem Sie als Array angegeben werden. Jeder von Ihnen wird
+                    geprüft und nur wenn alle fehlschlagen wird die Prüfung selbst fehlschlagen.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.md5.example">
+            <title>Verwenden der Md5 Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Prüft ob der Inhalt der hochgeladenen Datei den angegebenen Hash hat
+$upload->addValidator('Md5', false, '3b3652f336522365223');
+
+// Begrenzt diese Prüfung auf zwei unterschiedliche Hashes
+$upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.mimetype">
         <title><emphasis role="strong">MimeType</emphasis> Prüfung</title>
 
@@ -1070,6 +1170,44 @@ $upload->addValidator('NotExists',
                 existiert.
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.sha1">
+        <title><emphasis role="strong">Sha1</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>Sha1</code> Prüfung checkt den Inhalt einer übertragenen Datei durch hashen. Diese
+            Prüfung verwendet die Hash Erweiterung von PHP mit dem Sha1 Algorithmus. Sie unterstützt die
+            folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>hash</code>: Setzt den Hash gegen den geprüft wird.
+                </para>
+
+                <para>
+                    Man kann mehrere Hashes setzen indem Sie als Array angegeben werden. Jeder von Ihnen wird
+                    geprüft und nur wenn alle fehlschlagen wird die Prüfung selbst fehlschlagen.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.sha1.example">
+            <title>Verwenden der Sha1 Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Prüft ob der Inhalt der hochgeladenen Datei den angegebenen Hash hat
+$upload->addValidator('Sha1', false, '3b3652f336522365223');
+
+// Begrenzt diese Prüfung auf zwei unterschiedliche Hashes
+$upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">

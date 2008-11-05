@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12253 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -255,19 +255,24 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        PHP Klasse &lt;-&gt; <code>tns:$className</code>
+                        PHP Klasse &lt;-&gt; basierend auf der Strategie der komplexen Typen
                         <footnote>
                             <para>
-                                Wenn ein <code>Zend_Soap_AutoDiscover</code> Objekt mit ausgeschaltetem
-                                <code>$extractComplexTypes</code> Parameter erstellt wurde, dann werden die
-                                Klassen zu <code>xsd:anyType</code> übersetzt.
-                            </para>
-                            <para>
-                                Andernfalls wird <code>tns:$className</code> verwendet und die Typen die im
-                                Detail in der &lt;types&gt; WSDL Sektion beschrieben sind.
+                                <code>Zend_Soap_AutoDiscover</code> wird mit der
+                                <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> Klasse als
+                                Erkennungsalgorithmus für komplexe Typen erstellt. Der erste Parameter
+                                des AutoDiscover Constructors nimmt jede Strategie für komplexe Typen
+                                die <code>Zend_Soap_Wsdl_Strategy_Interface</code> implementieren oder
+                                einen String mit dem Nmaen der Klasse. Um Backwards Compatibility mit
+                                <code>$extractComplexType</code> zu gewährleisten werden boolsche
+                                Variablen wie in Zend_Soap_Wsdl geparst. Siehe das Zend_Soap_Wsdl Manual
+                                über das Hinzufügen von komplexen Typen für weitere Informationen.
                             </para>
                         </footnote>.
                     </para>
+                </listitem>
+                <listitem>
+                    <para>type[] oder object[] (z.B. int[]) &lt;-&gt; basieren auf der Strategie der komplexen Typen</para>
                 </listitem>
                 <listitem>
                     <para>PHP Void &lt;-&gt; Leerer Typ.</para>
