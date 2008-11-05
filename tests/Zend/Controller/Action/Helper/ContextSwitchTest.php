@@ -19,11 +19,12 @@ require_once 'Zend/Controller/Response/Cli.php';
 require_once 'Zend/Json.php';
 require_once 'Zend/Layout.php';
 require_once 'Zend/View.php';
+require_once 'Zend/View/Interface.php';
 
 /**
  * Test class for Zend_Controller_Action_Helper_ContextSwitch.
  */
-class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_TestCase 
+class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -823,6 +824,37 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $this->helper = new Zend_Controller_Action_Helper_ContextSwitch($config);
         $this->checkOptionsAreSet();
     }
+
+    /**
+     * @issue 3279
+     * @link http://framework.zend.com/issues/browse/ZF-3279
+     */
+    public function testPostJsonContextDoesntThrowExceptionWhenGetVarsMethodsExists()
+    {
+        try {
+            $this->helper->setAutoJsonSerialization(true);
+            $this->helper->postJsonContext();
+        } catch(Zend_Controller_Action_Exception $zcae) {
+            $this->fail('Exception should be throw when view does not implement getVars() method');
+        }
+    }
+
+    /**
+     * @issue 3279
+     * @link http://framework.zend.com/issues/browse/ZF-3279
+     */
+    public function testPostJsonContextThrowsExceptionWhenGetVarsMethodsDoesntExist()
+    {
+        $view = new Zend_Controller_Action_Helper_ContextSwitchText_CustomView();
+        $this->viewRenderer->setView($view);
+
+        try {
+            $this->helper->setAutoJsonSerialization(true);
+            $this->helper->postJsonContext();
+            $this->fail('Exception should be throw when view does not implement getVars() method');
+        } catch(Zend_Controller_Action_Exception $zcae) {
+        }
+    }
 }
 
 class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Controller_Action
@@ -863,6 +895,42 @@ class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Con
 class Zend_Controller_Action_Helper_ContextSwitchTest_LayoutOverride extends Zend_Layout
 {
     public static $_mvcInstance;
+}
+
+class Zend_Controller_Action_Helper_ContextSwitchText_CustomView implements Zend_View_Interface
+{
+    public function getEngine()
+    {}
+
+    public function setScriptPath($path)
+    {}
+
+    public function getScriptPaths()
+    {}
+
+    public function setBasePath($path, $classPrefix = 'Zend_View')
+    {}
+
+    public function addBasePath($path, $classPrefix = 'Zend_View')
+    {}
+
+    public function __set($key, $val)
+    {}
+
+    public function __isset($key)
+    {}
+
+    public function __unset($key)
+    {}
+
+    public function assign($spec, $value = null)
+    {}
+
+    public function clearVars()
+    {}
+
+    public function render($name)
+    {}
 }
 
 // Call Zend_Controller_Action_Helper_ContextSwitchTest::main() if this source file is executed directly.
