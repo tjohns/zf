@@ -63,8 +63,12 @@ class Zend_Controller_Action_HelperBroker
      * @param  Zend_Loader_PluginLoader_Interface $loader 
      * @return void
      */
-    public static function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader)
+    public static function setPluginLoader($loader)
     {
+        if ((null !== $loader) && (!$loader instanceof Zend_Loader_PluginLoader_Interface)) {
+            require_once 'Zend/Controller/Action/Exception.php';
+            throw new Zend_Controller_Action_Exception('Invalid plugin loader provided to HelperBroker');
+        }
         self::$_pluginLoader = $loader;
     }
 

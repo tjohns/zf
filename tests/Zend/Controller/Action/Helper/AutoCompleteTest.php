@@ -48,6 +48,7 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
     {
         Zend_Controller_Action_Helper_AutoCompleteTest_LayoutOverride::$_mvcInstance = null;
         Zend_Controller_Action_HelperBroker::resetHelpers();
+        Zend_Controller_Action_HelperBroker::setPluginLoader(null);
 
         $this->request = new Zend_Controller_Request_Http();
         $this->response = new Zend_Controller_Response_Cli();
