@@ -52,6 +52,12 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected $_methods = array();
 
     /**
+     * Array of directories to search for loading classes dynamically
+     * @var array
+     */
+    protected $_directories = array();
+
+    /**
      * @var bool Production flag; whether or not to return exception messages
      */
     protected $_production = true;
@@ -96,6 +102,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
         return $this->_production;
     }
 
+
     /**
      * Loads a remote class or method and executes the function and returns
      * the result
@@ -108,8 +115,30 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected function _dispatch($method, $params = null, $source = null)
     {
         if (!isset($this->_table[$method])) {
-            require_once 'Zend/Amf/Server/Exception.php';
-            throw new Zend_Amf_Server_Exception('Method "' . $method . '" does not exist');
+
+            // if source is null a method that was not defined was called.
+            if($source) {
+                $classPath = array();
+                $path = explode('.', $source);
+                $className = array_pop($path);
+                $uriclasspath = implode('/', $path);
+                // Take the user supplied directories and add the unique service path to the end.
+                foreach($this->_directories as $dir) {
+                    $classPath[] = $dir.$uriclasspath;
+                }
+                require_once('Zend/Loader.php');
+                try {
+                    Zend_Loader::LoadClass($className, $classPath);
+                } catch (Exception $e) {
+                    require_once 'Zend/Amf/Server/Exception.php';
+                    throw new Zend_Amf_Server_Exception('Class "' . $className . '" does not exist');
+                }
+                // Add the new loaded class to the server.
+                $this->setClass($className);
+            } else {
+                require_once 'Zend/Amf/Server/Exception.php';
+                throw new Zend_Amf_Server_Exception('Method "' . $method . '" does not exist');
+            }
         }
 
         $info = $this->_table[$method];
@@ -375,6 +404,15 @@ class Zend_Amf_Server implements Zend_Server_Interface
     }
 
     /**
+     * Add a file system path to a directory of services.
+     * @param string|array $path
+     */
+    public function setClassPath($path)
+    {
+
+    }
+
+    /**
      * Attach a class or object to the server
      *
      * Class may be either a class name or an instantiated object. Reflection
@@ -449,6 +487,27 @@ class Zend_Amf_Server implements Zend_Server_Interface
         return $this;
     }
 
+
+    /**
+     * Creates an array of directories in which services can reside.
+     *
+     * @param string $dir
+     */
+    public function addDirectory($dir)
+    {
+        $this->_directories[] = $dir;
+    }
+
+    /**
+     * Returns an array of directories that can hold services.
+     *
+     * @return array
+     */
+    public function getDirectory()
+    {
+        return $_directory;
+    }
+
     /**
      * (Re)Build the dispatch table
      *
@@ -504,7 +563,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
     {
     }
 
-	/**
+    /**
      * Returns a list of registered methods
      *
      * Returns an array of dispatchables (Zend_Server_Reflection_Function,

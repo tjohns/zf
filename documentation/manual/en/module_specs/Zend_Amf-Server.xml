@@ -57,6 +57,28 @@ echo $response;
         </programlisting>
 
         <para>
+        The <code>Zend Amf Server</code> also allows services to be dynamically loaded
+        based on a supplied directory path. You may add as many directories as you wish
+        to the server. The order that you add the directories to the server will be the
+        order that the LIFO search will be performed on the directories to match the class.
+        Adding dirtories is completed with the <code>addDirectory()</code> method.
+        </para>
+<programlisting role="php"><![CDATA[
+$server->addDirectory(dirname(__FILE__) .'/../services/');
+$server->addDirectory(dirname(__FILE__) .'/../package/');
+]]>
+</programlisting>
+		<para>
+		When calling remote services your source name can have underscore(_) and dot(.) directory
+		delimeters. When an underscore is used PEAR and Zend Framework class naming conventions
+		will be respected. This means that if you call the service <code>com_Foo_Bar</code>
+		the server will look for the file Bar.php in the each of the included
+		paths at <code>com/Foo/Bar.php</code>. If the dot notation is used for your remote
+		service such as <code>com.Foo.Bar</code> each included path will have
+		<code>com/Foo/Bar.php</code> append to the end to autoload Bar.php
+		</para>
+
+        <para>
             All AMF requests sent to the script will then be handled by the
             server, and an AMF response will be returned.
         </para>
