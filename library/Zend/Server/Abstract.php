@@ -58,6 +58,25 @@ require_once 'Zend/Server/Method/Parameter.php';
 abstract class Zend_Server_Abstract implements Zend_Server_Interface
 {
     /**
+     * @deprecated
+     * @var array List of PHP magic methods (lowercased)
+     */
+    protected static $magic_methods = array(
+        '__call',
+        '__clone',
+        '__construct',
+        '__destruct',
+        '__get',
+        '__isset',
+        '__set',
+        '__set_state',
+        '__sleep',
+        '__tostring',
+        '__unset',
+        '__wakeup',
+    );
+
+    /**
      * @var bool Flag; whether or not overwriting existing methods is allowed
      */
     protected $_overwriteExistingMethods = false;
@@ -90,6 +109,22 @@ abstract class Zend_Server_Abstract implements Zend_Server_Interface
     public function getFunctions()
     {
         return $this->_table;
+    }
+
+    /**
+     * Lowercase a string
+     *
+     * Lowercase's a string by reference
+     * 
+     * @deprecated
+     * @param  string $string value
+     * @param  string $key
+     * @return string Lower cased string
+     */
+    public static function lowerCase(&$value, &$key)
+    {
+        trigger_error(__CLASS__ . '::' . __METHOD__ . '() is deprecated and will be removed in a future version', E_USER_NOTICE);
+        return $value = strtolower($value);
     }
 
     /**
