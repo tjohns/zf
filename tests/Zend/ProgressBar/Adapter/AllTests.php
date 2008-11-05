@@ -30,6 +30,8 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/ProgressBar/Adapter/ConsoleTest.php';
+require_once 'Zend/ProgressBar/Adapter/JsPushTest.php';
+require_once 'Zend/ProgressBar/Adapter/JsPullTest.php';
 
 /**
  * @category   Zend
@@ -49,6 +51,8 @@ class Zend_ProgressBar_Adapter_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_ProgressBar_Adapter');
         $suite->addTestSuite('Zend_ProgressBar_Adapter_ConsoleTest');
+        $suite->addTestSuite('Zend_ProgressBar_Adapter_JsPushTest');
+        $suite->addTestSuite('Zend_ProgressBar_Adapter_JsPullTest');
         
         return $suite;
     }

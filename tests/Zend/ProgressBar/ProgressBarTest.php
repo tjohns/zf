@@ -70,6 +70,16 @@ class Zend_ProgressBar_ProgressBarTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testPersistence()
+    {
+        $progressBar = $this->_getProgressBar(0, 100, 'foobar');
+        $progressBar->update(25);
+        
+        $progressBar = $this->_getProgressBar(0, 100, 'foobar');
+        $progressBar->update();
+        $this->assertEquals(25, $progressBar->getCurrent());
+    }
+    
     public function testDefaultPercentage()
     {
         $progressBar = $this->_getProgressBar(0, 100);
@@ -124,9 +134,9 @@ class Zend_ProgressBar_ProgressBarTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $progressBar->getTimeRemaining());
     }
 
-    protected function _getProgressBar($min, $max)
+    protected function _getProgressBar($min, $max, $persistenceNamespace = null)
     {
-        return new Zend_ProgressBar_Stub(new Zend_ProgressBar_Adapter_MockUp(), $min, $max);
+        return new Zend_ProgressBar_Stub(new Zend_ProgressBar_Adapter_MockUp(), $min, $max, $persistenceNamespace);
     }
 }
 
