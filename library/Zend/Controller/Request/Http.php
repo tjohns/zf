@@ -887,7 +887,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      */
     public function isFlashRequest()
     {
-        return ($this->getHeader('USER_AGENT') == 'Shockwave Flash');
+        $header = strtolower($this->getHeader('USER_AGENT'));
+        return (strstr($header, ' flash')) ? true : false;
     }
     
     /**
