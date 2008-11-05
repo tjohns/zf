@@ -60,7 +60,7 @@ class Zend_ProgressBar
      *
      * @var string
      */
-    protected $_statusText;
+    protected $_statusText = null;
 
     /**
      * Adapter for the output
@@ -70,17 +70,25 @@ class Zend_ProgressBar
     protected $_adapter;
     
     /**
+     * Namespace for keeping the progressbar persistent
+     *
+     * @var string
+     */
+    protected $_persistenceNamespace = null;
+    
+    /**
      * Create a new progressbar backend.
      *
      * @param  Zend_ProgressBar_Adapter $adapter
      * @param  float                    $min
      * @param  float                    $max
-     * @throws Zend_ProgressBar_Exception When $min is greater or equal to $max
+     * @param  string                   $persistenceNamespace
+     * @throws Zend_ProgressBar_Exception When $min is greater than $max
      */
-    public function __construct(Zend_ProgressBar_Adapter $adapter, $min = 0, $max = 100)
+    public function __construct(Zend_ProgressBar_Adapter $adapter, $min = 0, $max = 100, $persistenceNamespace = null)
     {       
         // Check min/max values and set them
-        if ($min >= $max) {
+        if ($min > $max) {
             require_once 'Zend/ProgressBar/Exception.php';
             throw new Zend_ProgressBar_Exception('$max must be greater than $min');
         }
@@ -88,15 +96,45 @@ class Zend_ProgressBar
         $this->_min     = (float) $min;
         $this->_max     = (float) $max;
         $this->_current = (float) $min;
-
+        
+        // See if we have to open a session namespace
+        if ($persistenceNamespace !== null) {
+            require_once 'Zend/Session/Namespace.php';
+            
+            $this->_persistenceNamespace = new Zend_Session_Namespace($persistenceNamespace);
+        }
+        
         // Set adapter
         $this->_adapter = $adapter;
-        
+
         // Track the start time
         $this->_startTime = time();
         
-        // Poll the adapter
-        $this->_adapter->notify($this->_current, $this->_max, 0, 0, null, null);
+        // See If a persistenceNamespace exists and handle accordingly
+        if ($this->_persistenceNamespace !== null) {
+            if (isset($this->_persistenceNamespace->isSet)) {
+                $this->_startTime  = $this->_persistenceNamespace->startTime;
+                $this->_current    = $this->_persistenceNamespace->current;
+                $this->_statusText = $this->_persistenceNamespace->statusText;
+            } else {
+                $this->_persistenceNamespace->isSet      = true;
+                $this->_persistenceNamespace->startTime  = $this->_startTime;
+                $this->_persistenceNamespace->current    = $this->_current;
+                $this->_persistenceNamespace->statusText = $this->_statusText;
+            }
+        } else {
+            $this->update();
+        }
+    }
+    
+    /**
+     * Get the current adapter
+     *
+     * @return Zend_ProgressBar_Adapter
+     */
+    public function getAdapter()
+    {
+        return $this->_adapter;
     }
     
     /**
@@ -116,6 +154,12 @@ class Zend_ProgressBar
         // Update text if given
         if ($text !== null) {
             $this->_statusText = $text;
+        }
+
+        // See if we have to update a namespace
+        if ($this->_persistenceNamespace !== null) {
+            $this->_persistenceNamespace->current    = $this->_current;
+            $this->_persistenceNamespace->statusText = $this->_statusText;
         }
 
         // Calculate percent
@@ -152,6 +196,10 @@ class Zend_ProgressBar
      */
     public function finish()
     {
+        if ($this->_persistenceNamespace !== null) {
+            unset($this->_persistenceNamespace->isSet);
+        }
+        
         $this->_adapter->finish();
     }
 }

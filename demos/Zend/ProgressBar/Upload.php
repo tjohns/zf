@@ -20,38 +20,29 @@
  */
 
 /**
- * This sample file demonstrates a simple use case of a jspush-driven progressbar
+ * This sample file demonstrates a simple use case of a jspull-driven progressbar
  */
 
 if (isset($_GET['uploadId'])) {
     set_include_path(realpath(dirname(__FILE__) . '/../../../library')
-                     . PATH_SEPARATOR
-                     . realpath(dirname(__FILE__) . '/../../../../../trunk/library')
                      . PATH_SEPARATOR . get_include_path());
     
     require_once 'Zend/ProgressBar.php'; 
-    require_once 'Zend/ProgressBar/Adapter/JsPush.php';
+    require_once 'Zend/ProgressBar/Adapter/JsPull.php';
+    require_once 'Zend/Session/Namespace.php'; 
+   
+    $data          = uploadprogress_get_info($_GET['uploadId']);   
+    $bytesTotal    = ($data === null ? 0 : $data['bytes_total']);
+    $bytesUploaded = ($data === null ? 0 : $data['bytes_uploaded']);
     
-    $data = uploadprogress_get_info($_GET['uploadId']);
-
-    if ($data === null) {
-        die;
+    $adapter     = new Zend_ProgressBar_Adapter_JsPull();
+    $progressBar = new Zend_ProgressBar($adapter, 0, $bytesTotal, 'uploadProgress');
+    
+    if ($bytesTotal === $bytesUploaded) {
+        $progressBar->finish();
+    } else {
+        $progressBar->update($bytesUploaded);
     }
-    
-    $adapter     = new Zend_ProgressBar_Adapter_JsPush(array('updateMethodName' => 'Zend_ProgressBar_Update',
-                                                             'finishMethodName' => 'Zend_ProgressBar_Finish')); 
-    $progressBar = new Zend_ProgressBar(0, $data['bytes_total'], $adapter);
-     
-    do {
-        $data = uploadprogress_get_info($_GET['uploadId']);
-
-        $progressBar->update($data['bytes_uploaded']); 
-        usleep(10000); 
-    } while ($data['bytes_uploaded'] < $data['bytes_total']);
-    
-    $progressBar->finish();
-    
-    die;
 }
 ?>
 <html>
@@ -126,27 +117,77 @@ if (isset($_GET['uploadId'])) {
         }
     </style>
     <script type="text/javascript">
+        function makeRequest(url)
+        {
+            var httpRequest;
+        
+            if (window.XMLHttpRequest) {
+                httpRequest = new XMLHttpRequest();
+                if (httpRequest.overrideMimeType) {
+                    httpRequest.overrideMimeType('text/xml');
+                }
+            } else if (window.ActiveXObject) {
+                try {
+                    httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try {
+                        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {}
+                }
+            }
+        
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+                return false;
+            }
+            
+            httpRequest.onreadystatechange = function() { evalProgress(httpRequest); };
+            httpRequest.open('GET', url, true);
+            httpRequest.send('');
+        
+        }
+    
         function observeProgress()
         {
-            setTimeout("startProgress()", 1500);
+            setTimeout("getProgress()", 1500);
         }
         
-        function startProgress()
+        function getProgress()
         {
-            var iFrame = document.createElement('iframe');
-            document.getElementsByTagName('body')[0].appendChild(iFrame);
-            iFrame.src = 'Upload.php?uploadId=' + document.getElementById('uploadId').value;
+            makeRequest('Upload.php?uploadId=' + document.getElementById('uploadId').value);
+        }
+
+        function evalProgress(httpRequest)
+        {
+            try {
+                if (httpRequest.readyState == 4) {
+                    if (httpRequest.status == 200) {
+                        eval('var data = ' + httpRequest.responseText);
+
+                        if (data.finished) {
+                            finish();
+                        } else {
+                            update(data);
+                            setTimeout("getProgress()", 1000);
+                        }
+                    } else {
+                        alert('There was a problem with the request.');
+                    }
+                }
+            } catch(e) {
+                alert('Caught Exception: ' + e.description);
+            }
         }
         
-        function Zend_ProgressBar_Update(data)
+        function update(data)
         {
             document.getElementById('pg-percent').style.width = data.percent + '%';
-        
-            document.getElementById('pg-text-1').innerHTML = data.text;
-            document.getElementById('pg-text-2').innerHTML = data.text;
+
+            document.getElementById('pg-text-1').innerHTML = data.timeRemaining + ' seconds remaining';
+            document.getElementById('pg-text-2').innerHTML = data.timeRemaining + ' seconds remaining';
         }
         
-        function Zend_ProgressBar_Finish()
+        function finish()
         {
             document.getElementById('pg-percent').style.width = '100%';
         

@@ -23,7 +23,7 @@
         </para>
         
         <programlisting role="php"><![CDATA[
-$progressBar = new Zend_ProgressBar(0, $fileSize, $adapter);
+$progressBar = new Zend_ProgressBar($adapter, 0, $fileSize);
 
 while (!feof($fp)) {
     // Do something
@@ -37,29 +37,43 @@ $progressBar->finish();
         
         <para>
             In the first step, an instance of <code>Zend_ProgressBar</code> is
-            created, with a min-value of 0, a max-value of the total filesize
-            and a specific adapter. Then a file is processed and in every loop
+            created, with a specific adapter, a min-value of 0 and a max-value
+            of the total filesize. Then a file is processed and in every loop
             the progressbar is updated with the current byte count. At the end
             of the loop, the progressbar status is set to finished.  
         </para>
         <para>
-            <code>Zend_ProgressBar</code> also has a refresh() method which just
-            recalculates ETA and updates the adapter. This is useful when there
+            You can also call the <code>update()</code> method of
+            <code>Zend_ProgressBar</code> without arguments, which just
+            recalculates ETA and notifies the adapter. This is useful when there
             is no data update but you want the progressbar to be updated.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.progressbar.persistent">
+        <title>Persistent progress</title>
+        <para>
+            If you want the progressbar to be persistent over multiple requests,
+            you can give the name of a session namespace as fourth argument
+            to the constructor. In that case, the progressbar will not notify
+            the adapter within the constructor, but only when you call
+            <code>update()</code> or <code>finish()</code>. Also the current
+            value, the status text and the start time for ETA calculation will
+            be fetched in the next request run again.
         </para>
     </sect2>
 
     <sect2 id="zend.progressbar.adapters">
         <title>Standard adapters</title>
-        <para>
-            <code>Zend_ProgressBar</code> comes with the following two adapters:
-            
-            <itemizedlist mark="opencircle">
-                <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
-                <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
-            </itemizedlist>
-        </para>
-        
+	    <para>
+	        <code>Zend_ProgressBar</code> comes with the following three adapters:
+	        
+	        <itemizedlist mark="opencircle">
+	            <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
+	            <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
+	            <listitem><para><xref linkend="zend.progressbar.adapter.jspull" /></para></listitem>
+	        </itemizedlist>
+	    </para>
         <xi:include href="Zend_Progressbar_Adapter_Console.xml" />
         <xi:include href="Zend_Progressbar_Adapter_JsPush.xml" />
     </sect2>

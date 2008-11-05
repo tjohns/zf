@@ -60,16 +60,6 @@ class Zend_ProgressBar_ProgressBarTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
-    public function testEqualMinMax()
-    {
-        try {
-            $progressBar = $this->_getProgressBar(0, 0);
-            $this->fail('An expected Zend_Console_Exception has not been raised');
-        } catch (Zend_ProgressBar_Exception $expected) {
-            $this->assertContains('$max must be greater than $min', $expected->getMessage());
-        }
-    }
-
     public function testGreaterMin()
     {
         try {
