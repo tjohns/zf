@@ -107,7 +107,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
             </para>
         </sect3>
 
-        <sect3 id="performance.classloading.includepath.early">
+        <sect3 id="performance.classloading.includepath.currentdir">
             <title>Define the current directory last, or not at all</title>
 
             <para>
@@ -321,7 +321,7 @@ Zend_Loader::registerAutoload();
 
             <para>
                 The PluginLoader documentation <link
-                    linkid="zend.loader.pluginloader.performance.example">includes
+                    linkend="zend.loader.pluginloader.performance.example">includes
                 a complete example of its use</link>.
             </para>
         </sect3>

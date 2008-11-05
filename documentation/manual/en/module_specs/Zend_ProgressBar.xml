@@ -65,17 +65,18 @@ $progressBar->finish();
 
     <sect2 id="zend.progressbar.adapters">
         <title>Standard adapters</title>
-	    <para>
-	        <code>Zend_ProgressBar</code> comes with the following three adapters:
-	        
-	        <itemizedlist mark="opencircle">
-	            <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
-	            <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
-	            <listitem><para><xref linkend="zend.progressbar.adapter.jspull" /></para></listitem>
-	        </itemizedlist>
-	    </para>
+        <para>
+            <code>Zend_ProgressBar</code> comes with the following three adapters:
+            
+            <itemizedlist mark="opencircle">
+                <listitem><para><xref linkend="zend.progressbar.adapter.console" /></para></listitem>
+                <listitem><para><xref linkend="zend.progressbar.adapter.jspush" /></para></listitem>
+                <listitem><para><xref linkend="zend.progressbar.adapter.jspull" /></para></listitem>
+            </itemizedlist>
+        </para>
         <xi:include href="Zend_Progressbar_Adapter_Console.xml" />
         <xi:include href="Zend_Progressbar_Adapter_JsPush.xml" />
+        <xi:include href="Zend_Progressbar_Adapter_JsPull.xml" />
     </sect2>
 </sect1>
 <!--

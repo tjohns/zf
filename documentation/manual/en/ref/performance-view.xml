@@ -50,7 +50,7 @@
                 The simplest, cheapest solution is the same as for <link
                     linkend="performance.classloading.pluginloader">general
                     PluginLoader performance</link>: <link
-                    linkid="zend.loader.pluginloader.performance.example">use
+                    linkend="zend.loader.pluginloader.performance.example">use
                     the PluginLoader include file cache</link>. Anecdotal
                 evidence has shown this technique to provide a 25-30%
                 performance gain on systems without an opcode cache, and a
