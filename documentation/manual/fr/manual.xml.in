@@ -78,6 +78,10 @@
         <xi:include href="module_specs/Zend_Config_Ini.xml" />
         <xi:include href="module_specs/Zend_Config_Xml.xml" />
     </chapter>
+    <chapter id="zend.config.writer">
+        <title>Zend_Config_Writer</title>
+        <xi:include href="module_specs/Zend_Config_Writer.xml" />
+    </chapter>
     <chapter id="zend.console.getopt">
         <title>Zend_Console_Getopt</title>
         <xi:include href="module_specs/Zend_Console_Getopt-Introduction.xml" />
@@ -368,6 +372,10 @@
         <xi:include href="module_specs/Zend_Pdf-Properties.xml" />
         <xi:include href="module_specs/Zend_Pdf-Usage.xml" />
     </chapter>
+    <chapter id="zend.progressbar">
+        <title>Zend_ProgressBar</title>
+        <xi:include href="module_specs/Zend_ProgressBar.xml" />
+    </chapter>
     <chapter id="zend.registry">
         <title>Zend_Registry</title>
         <xi:include href="module_specs/Zend_Registry.xml" />
@@ -512,6 +520,17 @@
     </chapter>
     <xi:include href="ref/requirements.xml" />
     <xi:include href="ref/coding_standard.xml" />
+    <appendix id="performance">
+        <title>Zend Framework Performance Guide</title>
+        <xi:include href="ref/performance-introduction.xml" />
+        <xi:include href="ref/performance-classloading.xml" />
+            <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="ref/performance-localization.xml" />
+        <xi:include href="ref/performance-view.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-view.xml" /></xi:fallback>
+        </xi:include>
+    </appendix>
     <xi:include href="ref/copyrights.xml" />
     <index id="the.index" />
 </book>
