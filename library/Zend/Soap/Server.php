@@ -522,6 +522,8 @@ class Zend_Soap_Server implements Zend_Server_Interface
         $functions = array();
         if (null !== $this->_class) {
             $functions = get_class_methods($this->_class);
+        } elseif (null !== $this->_object) {
+            $functions = get_class_methods($this->_object);
         }
 
         return array_merge((array) $this->_functions, $functions);
@@ -731,7 +733,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
                 $soap->handle($request);
             } catch (Exception $e) {
                 $fault = $this->fault($e);
-                $soap->fault($e->getCode(), $e->getMessage());
+                $soap->fault($fault->getCode(), $fault->getMessage());
             }
         }
         $this->_response = ob_get_clean();
