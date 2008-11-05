@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12202 -->
+<!-- EN-Revision: 12276 -->
 <sect1 id="zend.paginator.usage">
     <title>Verwendung</title>
 
@@ -529,7 +529,7 @@ $('paginationControl').observe('change', function() {
                         <row>
                             <entry>itemCountPerPage</entry>
                             <entry>integer</entry>
-                            <entry>Anzahl der Elemente die auf jeder Seite erwartet werden</entry>
+                            <entry>Maximale Anzahl der Elemente die auf jeder Seite vorhanden sind</entry>
                         </row>
                         <row>
                             <entry>last</entry>

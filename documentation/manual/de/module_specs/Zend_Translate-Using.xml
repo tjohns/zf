@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12273 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -852,11 +852,19 @@ $translate->addTranslation("\my_de.mo","de");
 
             <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei
-$locale = new Zend_Locale('de_AT');
+$locale = new Zend_Locale();
 Zend_Registry::set('Zend_Locale', $locale);
+
+// Standardsprache wenn die angefragte Sprache nicht vorhanden ist
+$defaultlanguage = 'en';
 
 // Irgendwo in der Anwendung
 $translate = new Zend_Translate("gettext", "\my_de.mo");
+if (!$translate->isAvailable($locale->getLanguage())) {
+    // Wenn der Benutzer eine nicht vorhandene Sprache anfragt auf den Standard umrouten
+    $translate->setLocale($defaultlanguage);
+}
+
 $translate->getLocale();
 ]]>
             </programlisting>

@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12253 -->
+<!-- EN-Revision: 12262 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
     <sect2 id="zend.soap.autodiscovery.introduction">
-        <title>AutoDiscovery. Einführung</title>
+        <title>AutoDiscovery Einführung</title>
         <para>
             Die SOAP Funktionalität die im Zend Framework implementiert ist, ist dazu gedacht alle benötigten
             Schritte für die SOAP Kommunikation einfacher zu gestalten.
@@ -89,7 +89,7 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.class">
-        <title>Automatische Erkennung von Klassen.</title>
+        <title>Automatische Erkennung von Klassen</title>
 
         <para>
             Wenn eine Klasse verwendet wird um SOAP Server Funktionalitäten anzubieten, dann sollte die selbe
@@ -156,7 +156,7 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.functions">
-        <title>Funktionen für Autodiscovery.</title>
+        <title>Funktionen für Autodiscovery</title>
 
         <para>
             Wenn ein Set von Funktionen verwendet wird um SOAP Server Funktionalität anzubieten, dann sollte
@@ -228,7 +228,7 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.datatypes">
-        <title>Automatische Erkennung. Datentypen.</title>
+        <title>Automatische Erkennung. Datentypen</title>
 
         <para>
             Eingabe/Ausgabe Datentypen werden in Netzwerk Service Typen konvertiert indem das folgende
@@ -255,7 +255,7 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        PHP Klasse &lt;-&gt; basierend auf der Strategie der komplexen Typen
+                        PHP Klasse &lt;-&gt; basierend auf der Strategie der komplexen Typen  (See: <xref linkend="zend.soap.wsdl.types.add_complex" />)
                         <footnote>
                             <para>
                                 <code>Zend_Soap_AutoDiscover</code> wird mit der
