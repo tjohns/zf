@@ -154,7 +154,7 @@ library
             </para>
 
             <para>
-                Next, we'll opt to create our include_path programatically
+                Next, we'll opt to create our include_path programmatically
                 within our public/index.php file. This allows us to move our
                 code around on the filesystem, without needing to edit the
                 include_path every time.

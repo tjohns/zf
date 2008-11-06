@@ -273,7 +273,7 @@ class LoginPlugin extends Zend_Controller_Plugin_Abstract
 
             <para>
                 In most cases, using <code>action()</code> is simply overkill.
-                If you have most busines logic nested in your models and are
+                If you have most business logic nested in your models and are
                 simply querying the model and passing the results to a view
                 script, it will typically be faster and cleaner to simply write
                 a view helper that pulls the model, queries it, and does
