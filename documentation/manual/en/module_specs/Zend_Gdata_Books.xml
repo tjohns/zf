@@ -265,7 +265,7 @@ $books->insertVolume($entry, Zend_Gdata_Books::MY_ANNOTATION_FEED_URI);
 
                 <programlisting role="php"><![CDATA[
 $annotationUrl = $entry->getAnnotationLink()->href;
-$review        = new Zend_Gdata_Extension_Review();
+$review        = new Zend_Gdata_Books_Extension_Review();
 
 $review->setText("This book is amazing!");
 $entry->setReview($review);
@@ -287,7 +287,7 @@ $books->insertVolume($entry, $annotationUrl);
 
                 <programlisting role="php"><![CDATA[
 $entryUrl = $entry->getId()->getText();
-$review   = new Zend_Gdata_Extension_Review();
+$review   = new Zend_Gdata_Books_Extension_Review();
 
 $review->setText("This book is actually not that good!");
 $entry->setReview($review);
@@ -357,7 +357,9 @@ foreach ($feed as $entry) {
     foreach ($feed->getTitles() as $title) {
         echo $title;
     }
-    echo 'Rating: ' . $entry->getRating()->getValue();
+    if ($entry->getRating()) {
+        echo 'Rating: ' . $entry->getRating()->getAverage();
+    }
 }
 ]]>
             </programlisting>
@@ -461,7 +463,7 @@ $feed = $books->getUserLibraryFeed();
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$query = newVolumeQuery(
+$query = $books->newVolumeQuery(
     'http://www.google.com/books/feeds/users/USER_ID/collections/library/volumes');
 $query->setQuery('bear');
 $feed = $books->getVolumeFeed($query);
@@ -476,7 +478,7 @@ $feed = $books->getVolumeFeed($query);
                 </para>
 
                 <programlisting role="php"><![CDATA[
-$query = newVolumeQuery(
+$query = $books->newVolumeQuery(
     'http://www.google.com/books/feeds/users/USER_ID/collections/library/volumes');
 $query->setCategory(
 $query->setCategory('favorites');
