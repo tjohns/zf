@@ -549,11 +549,12 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
             if (basename($baseUrl) === $filename) {
                 $basePath = dirname($baseUrl);
+                /*fix for windows*/
+                $basePath = str_replace('\\','/',$basePath);
             } else {
                 $basePath = $baseUrl;
             }
         }
-
         $this->_basePath = rtrim($basePath, '/');
         return $this;
     }
@@ -567,6 +568,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     public function getBasePath()
     {
         if (null === $this->_basePath) {
+        	echo "is being set";
             $this->setBasePath();
         }
 
