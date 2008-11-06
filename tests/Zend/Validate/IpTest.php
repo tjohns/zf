@@ -90,4 +90,9 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->_validator->isValid('1.2.333'));
     }
+
+    public function testInvalidIpForZF3435()
+    {
+        $this->assertFalse($this->_validator->isValid('192.168.0.2 adfs'));
+    }
 }
