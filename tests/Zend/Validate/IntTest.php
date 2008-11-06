@@ -75,6 +75,8 @@ class Zend_Validate_IntTest extends PHPUnit_Framework_TestCase
             array('10', true),
             array(1, true),
             array('not an int', false),
+            array(true, false),
+            array(false, false),
             );
         foreach ($valuesExpected as $element) {
             $this->assertEquals($element[1], $this->_validator->isValid($element[0]));

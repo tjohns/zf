@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,12 +19,10 @@
  * @version    $Id$
  */
 
-
 /**
  * @see Zend_Validate_Abstract
  */
 require_once 'Zend/Validate/Abstract.php';
-
 
 /**
  * @category   Zend
@@ -35,7 +32,6 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Int extends Zend_Validate_Abstract
 {
-
     const NOT_INT = 'notInt';
 
     /**
@@ -56,11 +52,13 @@ class Zend_Validate_Int extends Zend_Validate_Abstract
     public function isValid($value)
     {
         $valueString = (string) $value;
-
         $this->_setValue($valueString);
+        if (is_bool($value)) {
+            $this->_error();
+            return false;
+        }
 
-        $locale = localeconv();
-
+        $locale        = localeconv();
         $valueFiltered = str_replace($locale['decimal_point'], '.', $valueString);
         $valueFiltered = str_replace($locale['thousands_sep'], '', $valueFiltered);
 
