@@ -287,6 +287,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         if (empty($decorators)) {
             $this->addDecorator('ViewHelper')
                 ->addDecorator('Errors')
+                ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'))
                 ->addDecorator('HtmlTag', array('tag' => 'dd'))
                 ->addDecorator('Label', array('tag' => 'dt'));
         }

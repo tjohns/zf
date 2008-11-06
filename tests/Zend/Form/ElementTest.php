@@ -1261,6 +1261,55 @@ class Zend_Form_ElementTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Form_Decorator_ViewHelper);
     }
 
+    /**
+     * @group ZF-4822
+     */
+    public function testErrorsDecoratorRegisteredByDefault()
+    {
+        $this->_checkZf2794();
+
+        $decorator = $this->element->getDecorator('errors');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Errors);
+    }
+
+    /**
+     * @group ZF-4822
+     */
+    public function testDescriptionDecoratorRegisteredByDefault()
+    {
+        $this->_checkZf2794();
+
+        $decorator = $this->element->getDecorator('description');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Description);
+        $options = $decorator->getOptions();
+        $this->assertTrue(array_key_exists('tag', $options));
+        $this->assertEquals('p', $options['tag']);
+        $this->assertTrue(array_key_exists('class', $options));
+        $this->assertEquals('description', $options['class']);
+    }
+
+    /**
+     * @group ZF-4822
+     */
+    public function testHtmlTagDecoratorRegisteredByDefault()
+    {
+        $this->_checkZf2794();
+
+        $decorator = $this->element->getDecorator('HtmlTag');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_HtmlTag);
+    }
+
+    /**
+     * @group ZF-4822
+     */
+    public function testLabelDecoratorRegisteredByDefault()
+    {
+        $this->_checkZf2794();
+
+        $decorator = $this->element->getDecorator('Label');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Label);
+    }
+
     public function testCanDisableRegisteringDefaultDecoratorsDuringInitialization()
     {
         $element = new Zend_Form_Element('foo', array('disableLoadDefaultDecorators' => true));

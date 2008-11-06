@@ -165,6 +165,10 @@ class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
             $description = $translator->translate($description);
         }
 
+        if (empty($description)) {
+            return $content;
+        }
+
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
         $tag       = $this->getTag();
@@ -172,10 +176,6 @@ class Zend_Form_Decorator_Description extends Zend_Form_Decorator_Abstract
         $escape    = $this->getEscape();
 
         $options   = $this->getOptions();
-
-        if (empty($description)) {
-            return $content;
-        }
 
         if ($escape) {
             $description = $view->escape($description);

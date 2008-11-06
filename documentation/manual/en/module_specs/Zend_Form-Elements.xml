@@ -838,6 +838,13 @@ $messages = $element->getMessages();
             </para></listitem>
 
             <listitem><para>
+                <emphasis>Description</emphasis>: appends the element
+                description. If none is present, nothing is appended. By
+                default, the description is rendered in a &lt;p&gt; tag with a
+                class of 'description'.
+            </para></listitem>
+
+            <listitem><para>
                 <emphasis>HtmlTag</emphasis>: wraps the element and errors in
                 an HTML &lt;dd&gt; tag.
             </para></listitem>
@@ -886,6 +893,7 @@ $element = new Zend_Form_Element('foo',
 $this->addDecorators(array(
     array('ViewHelper'),
     array('Errors'),
+    array('Description', array('tag' => 'p', 'class' => 'description')),
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
@@ -896,13 +904,15 @@ $this->addDecorators(array(
             The initial content is created by the 'ViewHelper' decorator, which
             creates the form element itself. Next, the 'Errors' decorator
             fetches error messages from the element, and, if any are present,
-            passes them to the 'FormErrors' view helper to render.  The next
-            decorator, 'HtmlTag', wraps the element and errors in an HTML
-            &lt;dd&gt; tag.  Finally, the last decorator, 'label', retrieves
-            the element's label and passes it to the 'FormLabel' view helper,
-            wrapping it in an HTML &lt;dt&gt; tag; the value is prepended to
-            the content by default. The resulting output looks basically like
-            this:
+            passes them to the 'FormErrors' view helper to render.  If a
+            description is present, the 'Description' decorator will append a
+            paragraph of class 'description' containing the descriptive text to
+            the aggregated content. The next decorator, 'HtmlTag', wraps the
+            element, errors, and description in an HTML &lt;dd&gt; tag.
+            Finally, the last decorator, 'label', retrieves the element's label
+            and passes it to the 'FormLabel' view helper, wrapping it in an HTML
+            &lt;dt&gt; tag; the value is prepended to the content by default.
+            The resulting output looks basically like this:
         </para>
 
         <programlisting role="html"><![CDATA[
@@ -912,6 +922,9 @@ $this->addDecorators(array(
     <ul class="errors">
         <li>"123" is not an alphanumeric value</li>
     </ul>
+    <p class="description">
+        This is some descriptive text regarding the element.
+    </p>
 </dd>
 ]]>
 </programlisting>
