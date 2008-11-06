@@ -484,6 +484,7 @@
         <xi:include href="module_specs/Zend_Translate-Introduction.xml" />
         <xi:include href="module_specs/Zend_Translate-Adapters.xml" />
         <xi:include href="module_specs/Zend_Translate-Using.xml" />
+        <xi:include href="module_specs/Zend_Translate-Migration.xml" />
     </chapter>
     <chapter id="zend.uri">
         <title>Zend_Uri</title>
@@ -523,7 +524,7 @@
     <appendix id="performance">
         <title>Zend Framework Performance Guide</title>
         <xi:include href="ref/performance-introduction.xml" />
-        <xi:include href="ref/performance-classloading.xml" />
+        <xi:include href="ref/performance-classloading.xml">
             <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="ref/performance-localization.xml" />
