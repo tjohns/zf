@@ -600,6 +600,19 @@ class Zend_Test_PHPUnit_ControllerTestCaseTest extends PHPUnit_Framework_TestCas
         $this->assertNotSame($response, $test);
     }
 
+    /**
+     * @group ZF-4511
+     */
+    public function testResetRequestShouldClearRequestObject()
+    {
+        $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');
+        $this->testCase->dispatch('/zend-test-php-unit-foo/baz');
+        $request = $this->testCase->getRequest();
+        $this->testCase->resetRequest();
+        $test = $this->testCase->getRequest();
+        $this->assertNotSame($request, $test);
+    }
+
     public function testResetResponseShouldClearAllViewPlaceholders()
     {
         $this->testCase->getFrontController()->setControllerDirectory(dirname(__FILE__) . '/_files/application/controllers');

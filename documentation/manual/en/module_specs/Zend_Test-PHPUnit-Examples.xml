@@ -161,7 +161,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
             Once we have that in place, we can write our tests. However, what
             about those tests that require a user is logged in? The easy
             solution is to use our application logic to do so... and fudge a
-            little by using the <code>resetResponse()</code> method, which will
+            little by using the <code>reset()</code> method, which will
             allow us to dispatch another request.
         </para>
 
@@ -172,16 +172,18 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function loginUser($user, $password)
     {
-        $request = $this->getRequest();
-        $request->setMethod('POST')
-                ->setPost(array(
-                    'username' => $user,
-                    'password' => $password,
-                ));
+        $this->request->setMethod('POST')
+                      ->setPost(array(
+                          'username' => $user,
+                          'password' => $password,
+                      ));
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
-        $this->resetResponse();
-        $request->setPost(array());
+        $this->reset();
+
+        $this->request->setPost(array());
+        
+        // ...
     }
 
     // ...

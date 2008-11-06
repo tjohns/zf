@@ -76,7 +76,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
 
-        $this->resetResponse();
+        $this->reset();
         $this->request->setMethod('GET')
              ->setPost(array());
         $this->dispatch('/user/view');

@@ -187,11 +187,10 @@ abstract class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_Te
         $_GET     = array();
         $_POST    = array();
         $_COOKIE  = array();
-        $this->_request  = null;
-        $this->_response = null;
+        $this->resetRequest();
+        $this->resetResponse();
         Zend_Layout::resetMvcInstance();
         Zend_Controller_Action_HelperBroker::resetHelpers();
-        $this->_resetPlaceholders();
         $this->frontController->resetInstance();
         Zend_Session::$_unitTestEnabled = true;
     }
@@ -214,6 +213,19 @@ abstract class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_Te
         foreach ($remove as $key) {
             unset($registry[$key]);
         }
+    }
+
+    /**
+     * Reset the request object
+     *
+     * Useful for test cases that need to test multiple trips to the server.
+     * 
+     * @return Zend_Test_PHPUnit_ControllerTestCase
+     */
+    public function resetRequest()
+    {
+        $this->_request = null;
+        return $this;
     }
 
     /**
