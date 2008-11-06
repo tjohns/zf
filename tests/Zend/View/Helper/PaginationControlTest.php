@@ -137,7 +137,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
             $output = $this->_viewHelper->paginationControl();
         } catch (Exception $e) {
             $this->assertType('Zend_View_Exception', $e);
-            $this->assertEquals('No paginator instance provided nor found', $e->getMessage());
+            $this->assertEquals('No paginator instance provided or incorrect type', $e->getMessage());
         }
     }
 
