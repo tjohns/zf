@@ -543,7 +543,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Sets the date that the video was recorded.
      *
-     * @param string $recorded The date that the video was recorded, in the         
+     * @param string $recorded The date that the video was recorded, in the
      *          format of '2001-06-19'
      */
     public function setVideoRecorded($recorded)
@@ -769,8 +769,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         if ($this->getMediaGroup()->getKeywords() != null) {
 
             $keywords = $this->getMediaGroup()->getKeywords();
-            $keywordsString = (string) $keywords;
-
+            $keywordsString = $keywords->getText();
             if (strlen(trim($keywordsString)) > 0) {
                 return split('(, *)|,', $keywordsString);
             }
@@ -781,7 +780,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Sets the keyword tags for a video.
      *
-     * @param mixed $tags Either a comma-separated string or an array 
+     * @param mixed $tags Either a comma-separated string or an array
      * of tags for the video
      * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
      */
@@ -881,7 +880,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         return null;
     }
 
-    /** 
+    /**
      * Sets the category of the video as a string.
      *
      * @param string $category Categories for the video
@@ -913,15 +912,15 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
                 if ($category instanceof Zend_Gdata_Media_Extension_MediaCategory) {
                     if ($category->getScheme() == self::YOUTUBE_DEVELOPER_TAGS_SCHEMA) {
                         $developerTags[] = $category->getText();
-                    }    
+                    }
                 }
             }
             return $developerTags;
-        } 
+        }
         return null;
     }
 
-    /** 
+    /**
      * Adds a developer tag to array of tags for the video.
      *
      * @param string $developerTag DeveloperTag for the video
@@ -942,7 +941,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         return $this;
     }
 
-    /** 
+    /**
      * Set multiple developer tags for the video as strings.
      *
      * @param array $developerTags Array of developerTag for the video
@@ -958,15 +957,15 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
 
 
     /**
-     * Get the current publishing state of the video. 
+     * Get the current publishing state of the video.
      *
      * @return Zend_Gdata_YouTube_Extension_State|null The publishing state of this video
      */
     public function getVideoState()
     {
         $control = $this->getControl();
-        if ($control != null && 
-            $control->getDraft() != null && 
+        if ($control != null &&
+            $control->getDraft() != null &&
             $control->getDraft()->getText() == 'yes') {
 
             return $control->getState();
@@ -975,16 +974,16 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     }
 
     /**
-     * Get the VideoEntry's Zend_Gdata_YouTube_Extension_MediaGroup object. 
+     * Get the VideoEntry's Zend_Gdata_YouTube_Extension_MediaGroup object.
      * If the mediaGroup does not exist, then set it.
      *
      * @return void
      */
     public function ensureMediaGroupIsNotNull()
-    {   
+    {
         if ($this->getMediagroup() == null) {
             $this->setMediagroup(new Zend_Gdata_YouTube_Extension_MediaGroup());
         }
     }
-    
+
 }
