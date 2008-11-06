@@ -296,6 +296,28 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.prepareElements">
+        <title>Zend_Form_Decorator_PrepareElements</title>
+
+        <para>
+            Forms, display groups, and sub forms are collections of
+            elements. When using the <link
+                linkid="zend.form.standardDecorators.viewScript">ViewScript</link>
+            decorator with your form or sub form, it's useful to be able to
+            recursively set the view object, translator, and all fully qualifid
+            names (as determined by sub form array notation). The
+            'PrepareElements' decorator can do this for you. Typically, you will
+            set it as the first decorator in the list.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$form->setDecorators(array(
+    'PrepareElements',
+    array('ViewScript', array('viewScript' => 'form.phtml')),
+));
+]]></programlisting>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.viewHelper">
         <title>Zend_Form_Decorator_ViewHelper</title>
 
