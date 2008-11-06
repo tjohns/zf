@@ -662,6 +662,13 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                     </row>
                     <row>
                         <entry>all</entry>
+                        <entry>disableNotices</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>If set to true, all notices regarding not available translations will be
+                        disabled. You should set this option to true in production environment</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
                         <entry>ignore</entry>
                         <entry><emphasis role="strong">.</emphasis></entry>
                         <entry>All directories and files beginning with this prefix will be ignored when
@@ -784,7 +791,9 @@ if ($translate->isAvailable("fr")) {
             <para>
                 Note that as long as you only add new translation sources with the <code>addTranslation()</code>
                 method <code>Zend_Translate</code> will automatically set the best fitting language for your
-                environment. So normally you will not need to call <code>setLocale()</code>.
+                environment when you use one of the automatic locales which are 'auto' or 'browser'. So
+                normally you will not need to call <code>setLocale()</code>. This should only be used in
+                conjunction with automatic source detection.
             </para>
 
             <para>
@@ -796,30 +805,38 @@ if ($translate->isAvailable("fr")) {
                 <title>How automatically language detection works</title>
                 <programlisting role="php"><![CDATA[
 // Let's expect the browser returns this language settings
-HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
+// HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
 
 // Example 1:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_es.mo","es_UG");
+$translate = new Zend_Translate('gettext',
+                                '\my_it.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
 // no fitting language found, return the messageid
 
 // Example 2:
-$translate = new Zend_Translate("gettext", "\my_en.mo", "en_US");
-$translate->addTranslation("\my_it.mo","it_IT");
-// best found fitting language is "en_US"
+$translate = new Zend_Translate('gettext',
+                                '\my_fr.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+// best found fitting language is 'fr'
 
 // Example 3:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_de.mo","de");
-// best found fitting language is "de" because "de_AT" will be
-// degraded to "de"
+$translate = new Zend_Translate('gettext',
+                                '\my_de.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+// best found fitting language is 'de' because 'de_AT' will be
+// degraded to 'de'
 
 // Example 4:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_ru.mo","ru");
-$translate->setLocale("it_IT");
-$translate->addTranslation("\my_de.mo","de");
-// returns "it_IT" as translation source
+$translate = new Zend_Translate('gettext',
+                                '\my_it.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+$translate->addTranslation('\my_ru.mo', 'ru');
+$translate->setLocale('it_IT');
+// returns 'it' as translation source and overrides the automatic settings
 ]]>
                 </programlisting>
             </example>
@@ -851,7 +868,7 @@ Zend_Registry::set('Zend_Locale', $locale);
 $defaultlanguage = 'en';
 
 // somewhere in your application
-$translate = new Zend_Translate("gettext", "\my_de.mo");
+$translate = new Zend_Translate('gettext', '\my_de.mo');
 if (!$translate->isAvailable($locale->getLanguage())) {
     // when user requests a not available language reroute to default
     $translate->setLocale($defaultlanguage);
