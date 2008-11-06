@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12339 -->
 <sect1 id="zend.test.phpunit" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Test_PHPUnit</title>
 
@@ -69,7 +69,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
 
-        $this->resetResponse();
+        $this->resetRequest()
+             ->resetResponse();
         $this->request->setMethod('GET')
              ->setPost(array());
         $this->dispatch('/user/view');
