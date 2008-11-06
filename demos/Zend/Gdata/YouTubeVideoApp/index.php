@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Zend Framework
  *
@@ -19,7 +19,7 @@
  */
 
 /**
- * PHP sample code for the YouTube data API.  Utilizes the Zend Framework 
+ * PHP sample code for the YouTube data API.  Utilizes the Zend Framework
  * Zend_Gdata component to communicate with the YouTube data API.
  *
  * Requires the Zend Framework Zend_Gdata component and PHP >= 5.1.4
@@ -43,46 +43,46 @@ session_start();
  * @param string $code Alphanumeric description of error
  * @param string $videoId (optional) Video id received back to which the status code refers to
  */
-function uploadStatus($status, $code = null, $videoId = null) 
+function uploadStatus($status, $code = null, $videoId = null)
 {
     switch ($status) {
         case $status < 400:
-            echo  'Success ! Entry created (id: '. $videoId . 
-                  ') <a href="#" onclick=" ytVideoApp.checkUploadDetails(\''. 
+            echo  'Success ! Entry created (id: '. $videoId .
+                  ') <a href="#" onclick=" ytVideoApp.checkUploadDetails(\''.
                   $videoId .'\'); ">(check details)</a>';
             break;
         default:
-            echo 'There seems to have been an error: '. $code . 
-                 '<a href="#" onclick=" ytVideoApp.checkUploadDetails(\''. 
+            echo 'There seems to have been an error: '. $code .
+                 '<a href="#" onclick=" ytVideoApp.checkUploadDetails(\''.
                  $videoId . '\'); ">(check details)</a>';
     }
 }
 
-/** 
+/**
  * Helper function to check whether a session token has been set
- * 
+ *
  * @return boolean Returns true if a session token has been set
  */
-function authenticated() 
+function authenticated()
 {
     if (isset($_SESSION['sessionToken'])) {
         return true;
     }
 }
 
-/** 
- * Helper function to check whether a developer keyhas been set
- * 
- * @return boolean Returns true if a developer keyhas been set
+/**
+ * Helper function to check whether a developer key has been set
+ *
+ * @return boolean Returns true if a developer key has been set
  */
-function developerKeySet() 
+function developerKeySet()
 {
     if (isset($_SESSION['developerKey'])) {
         return true;
     }
 }
 
-/** 
+/**
  * Helper function to print a form for user to enter the developer key.
  */
 function printDeveloperKeyForm()
@@ -96,7 +96,7 @@ function printDeveloperKeyForm()
 END;
 }
 
-/** 
+/**
  * Helper function to print a list of authenticated actions for a user.
  */
 function printAuthenticatedActions()
@@ -104,22 +104,25 @@ function printAuthenticatedActions()
     print <<<END
         <div id="actions"><h3>Authenticated Actions</h3>
         <ul>
-        <li><a href="#" onclick="ytVideoApp.listVideos('search_owner', '', 1); 
+        <li><a href="#" onclick="ytVideoApp.listVideos('search_owner', '', 1);
         return false;">retrieve my videos</a></li>
-        <li><a href="#" onclick="ytVideoApp.prepareUploadForm(); 
+        <li><a href="#" onclick="ytVideoApp.prepareUploadForm();
         return false;">upload a video</a><br />
         <div id="syndicatedUploadDiv"></div><div id="syndicatedUploadStatusDiv">
         </div></li>
-        <li><a href="#" onclick="ytVideoApp.retrievePlaylists(); 
-        return false;">manage my playlists</a><br /></li>  
+        <li><a href="#" onclick="ytVideoApp.retrievePlaylists();
+        return false;">manage my playlists</a><br /></li>
         </ul></div>
 END;
 }
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title>YouTube data API Video Browser in PHP</title>
-  <link href="video_app.css" type="text/css" rel="stylesheet"/>
+  <link href="video_app.css" type="text/css" rel="stylesheet" />
   <script src="video_app.js" type="text/javascript"></script>
 </head>
 
@@ -129,9 +132,9 @@ END;
       <h2>YouTube data API Video App in PHP</h2>
         <a href="session_details.php">click to examine session variables</a><br/>
         <div id="searchBox">
-        <form id="searchForm" onsubmit="ytVideoApp.listVideos(this.queryType.value, this.searchTerm.value, 1); return false;">
-        <select name="queryType" onchange="ytVideoApp.queryTypeChanged(this.value, this.form.searchTerm);">
-          <option value="search_all" selected="true">All Videos</option>
+        <form id="searchForm" onsubmit="ytVideoApp.listVideos(this.queryType.value, this.searchTerm.value, 1); return false;" action="javascript:void();" >
+        <div id="searchBoxTop"><select name="queryType" onchange="ytVideoApp.queryTypeChanged(this.value, this.form.searchTerm);" >
+          <option value="search_all" selected="selected">All Videos</option>
           <option value="search_top_rated">Top Rated Videos</option>
           <option value="search_most_viewed">Most Viewed Videos</option>
           <option value="search_recently_featured">Recently Featured Videos</option>
@@ -141,18 +144,18 @@ END;
                     echo '<option value="search_owner">Display my videos</option>';
                 }
           ?>
-        </select>
-        <input name="searchTerm" type="text" value="gdata">
-        <input type="submit" value="Search">
+        </select></div>
+        <div><input name="searchTerm" type="text" value="YouTube Data API" />
+        <input type="submit" value="Search" /></div>
       </form>
     </div>
-    <br clear="all">
+    <br />
 
     </div>
-    <br clear="all" />
+    <br />
     <!-- Authentication status -->
-    <div id="authStatus">Authentication status: 
-    <?php 
+    <div id="authStatus">Authentication status:
+    <?php
         if (developerKeySet()) {
             if (authenticated()) {
                 print <<<END
@@ -161,8 +164,8 @@ END;
             } else {
                 print <<<END
                     developer key set, but no authentication detected.<br />
-                    <div id="generateAuthSubLink"><a href="#" 
-                    onclick="ytVideoApp.presentAuthLink(); 
+                    <div id="generateAuthSubLink"><a href="#"
+                    onclick="ytVideoApp.presentAuthLink();
                     return false;">Click here to generate authentication link</a>
                     </div>
 END;
@@ -180,13 +183,13 @@ END;
         if (isset($_GET['status'])) {
             (isset($_GET['code']) ? $code = $_GET['code'] : $code = null);
             (isset($_GET['id']) ? $id = $_GET['id'] : $id = null);
-            print '<div id="generalStatus">' . 
-                  uploadStatus($_GET['status'], $code, $id) . 
+            print '<div id="generalStatus">' .
+                  uploadStatus($_GET['status'], $code, $id) .
                   '<div id="detailedUploadStatus"></div></div>';
-         } 
+         }
     ?>
     <!-- General status -->
-    <?php 
+    <?php
         if (developerKeySet()) {
             if (authenticated()) {
                 printAuthenticatedActions();
@@ -199,15 +202,15 @@ END;
       <div id="searchResultsListColumn">
         <div id="searchResultsVideoList"></div>
         <div id="searchResultsNavigation">
-          <form id="navigationForm">
-            <input type="button" id="previousPageButton" onclick="ytVideoApp.listVideos(ytVideoApp.previousQueryType, ytVideoApp.previousSearchTerm, ytVideoApp.previousPage);" value="Back" style="display: none;"></input>
-            <input type="button" id="nextPageButton" onclick="ytVideoApp.listVideos(ytVideoApp.previousQueryType, ytVideoApp.previousSearchTerm, ytVideoApp.nextPage);" value="Next" style="display: none;"></input>
+          <form id="navigationForm" action="javascript:void();">
+            <input type="button" id="previousPageButton" onclick="ytVideoApp.listVideos(ytVideoApp.previousQueryType, ytVideoApp.previousSearchTerm, ytVideoApp.previousPage);" value="Back" style="display: none;" />
+            <input type="button" id="nextPageButton" onclick="ytVideoApp.listVideos(ytVideoApp.previousQueryType, ytVideoApp.previousSearchTerm, ytVideoApp.nextPage);" value="Next" style="display: none;" />
           </form>
         </div>
       </div>
     <div id="searchResultsVideoColumn">
       <div id="videoPlayer"></div>
-    </div> 
+    </div>
   </div>
 </div>
 </body>

@@ -19,7 +19,7 @@
  */
 
 /**
- * PHP sample code for the YouTube data API.  Utilizes the Zend Framework 
+ * PHP sample code for the YouTube data API.  Utilizes the Zend Framework
  * Zend_Gdata component to communicate with the YouTube data API.
  *
  * Requires the Zend Framework Zend_Gdata component and PHP >= 5.1.4
@@ -66,17 +66,17 @@ $operation = $_POST['operation'];
 switch ($operation) {
 
     case 'create_upload_form':
-        createUploadForm($_POST['videoTitle'], 
-                         $_POST['videoDescription'], 
-                         $_POST['videoCategory'], 
+        createUploadForm($_POST['videoTitle'],
+                         $_POST['videoDescription'],
+                         $_POST['videoCategory'],
                          $_POST['videoTags']);
         break;
 
     case 'edit_meta_data':
-        editVideoData($_POST['newVideoTitle'], 
-                      $_POST['newVideoDescription'], 
-                      $_POST['newVideoCategory'], 
-                      $_POST['newVideoTags'], 
+        editVideoData($_POST['newVideoTitle'],
+                      $_POST['newVideoDescription'],
+                      $_POST['newVideoCategory'],
+                      $_POST['newVideoTags'],
                       $_POST['videoId']);
         break;
 
@@ -86,7 +86,7 @@ switch ($operation) {
 
     case 'delete_video':
         deleteVideo($_POST['videoId']);
-        break;    
+        break;
 
     case 'auth_sub_request':
         generateAuthSubRequestLink();
@@ -117,15 +117,15 @@ switch ($operation) {
         break;
 
     case 'update_playlist':
-        updatePlaylist($_POST['newPlaylistTitle'], 
-                       $_POST['newPlaylistDescription'], 
+        updatePlaylist($_POST['newPlaylistTitle'],
+                       $_POST['newPlaylistDescription'],
                        $_POST['oldPlaylistTitle']);
         break;
 
     case (strcmp(substr($operation, 0, 7), 'search_') == 0):
         // initialize search specific information
         $searchType = substr($operation, 7);
-        searchVideos($searchType, $_POST['searchTerm'], $_POST['startIndex'], 
+        searchVideos($searchType, $_POST['searchTerm'], $_POST['startIndex'],
             $_POST['maxResults']);
         break;
 
@@ -141,14 +141,14 @@ switch ($operation) {
 /**
  * Perform a search on youtube. Passes the result feed to echoVideoList.
  *
- * @param string $searchType The type of search to perform. 
+ * @param string $searchType The type of search to perform.
  * If set to 'owner' then attempt to authenticate.
  * @param string $searchTerm The term to search on.
  * @param string $startIndex Start retrieving search results from this index.
  * @param string $maxResults The number of results to retrieve.
  * @return void
  */
-function searchVideos($searchType, $searchTerm, $startIndex, $maxResults) 
+function searchVideos($searchType, $searchTerm, $startIndex, $maxResults)
 {
   // create an unauthenticated service object
     $youTubeService = new Zend_Gdata_YouTube();
@@ -190,7 +190,7 @@ function searchVideos($searchType, $searchTerm, $startIndex, $maxResults)
                 $feed = $youTubeService->getVideoFeed('http://gdata.youtube.com/feeds/users/default/uploads');
                 if (loggingEnabled()) {
                     logMessage($httpClient->getLastRequest(), 'request');
-                    logMessage($httpClient->getLastResponse()->getBody(), 
+                    logMessage($httpClient->getLastResponse()->getBody(),
                         'response');
                 }
             } catch (Zend_Gdata_App_HttpException $httpException) {
@@ -228,7 +228,7 @@ function searchVideos($searchType, $searchTerm, $startIndex, $maxResults)
  * @param Zend_Gdata_YouTube_VideoEntry $entry The video entry
  * @return (string|null) The URL or null, if the URL is not found
  */
-function findFlashUrl($entry) 
+function findFlashUrl($entry)
 {
     foreach ($entry->mediaGroup->content as $content) {
         if ($content->type === 'application/x-shockwave-flash') {
@@ -242,9 +242,9 @@ function findFlashUrl($entry)
  * Check the upload status of a video
  *
  * @param string $videoId The video to check.
- * @return string A message about the video's status. 
+ * @return string A message about the video's status.
  */
-function checkUpload($videoId) 
+function checkUpload($videoId)
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
@@ -264,7 +264,7 @@ function checkUpload($videoId)
             }
 
             if ($control instanceof Zend_Gdata_App_Extension_Control) {
-                if (($control->getDraft() != null) && 
+                if (($control->getDraft() != null) &&
                     ($control->getDraft()->getText() == 'yes')) {
                     $state = $videoEntry->getVideoState();
                     if ($state instanceof Zend_Gdata_YouTube_Extension_State) {
@@ -285,7 +285,7 @@ function checkUpload($videoId)
  *
  * @return void
  */
-function generateUrlInformation() 
+function generateUrlInformation()
 {
     if (!isset($_SESSION['operationsUrl']) || !isset($_SESSION['homeUrl'])) {
         $_SESSION['operationsUrl'] = 'http://'. $_SERVER['HTTP_HOST']
@@ -304,7 +304,7 @@ function generateUrlInformation()
  * @param string $messageType The type of message to log.
  * @return void
  */
-function logMessage($message, $messageType) 
+function logMessage($message, $messageType)
 {
     if (!isset($_SESSION['log_maxLogEntries'])) {
         $_SESSION['log_maxLogEntries'] = 20;
@@ -336,7 +336,7 @@ function logMessage($message, $messageType)
  * @param string $videoId The video id for the video to be edited.
  * @return void
  */
-function editVideoData($newVideoTitle, $newVideoDescription, $newVideoCategory, $newVideoTags, $videoId) 
+function editVideoData($newVideoTitle, $newVideoDescription, $newVideoCategory, $newVideoTags, $videoId)
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
@@ -400,13 +400,13 @@ function editVideoData($newVideoTitle, $newVideoDescription, $newVideoCategory, 
     }
         print 'Entry updated successfully.<br /><a href="#" onclick="'
             . 'ytVideoApp.presentFeed(\'search_owner\', 5, 0, \'none\'); '
-            . 'ytVideoApp.refreshSearchResults();" >' 
-            . '(refresh your video listing)</a><br />' 
+            . 'ytVideoApp.refreshSearchResults();" >'
+            . '(refresh your video listing)</a><br />'
             . printCacheWarning();
 }
 
 /**
- * Create upload form by sending the incoming video meta-data to youtube and 
+ * Create upload form by sending the incoming video meta-data to youtube and
  * retrieving a new entry. Prints form HTML to page.
  *
  * @param string $VideoTitle The title for the video entry.
@@ -416,7 +416,7 @@ function editVideoData($newVideoTitle, $newVideoDescription, $newVideoCategory, 
  * @param string $nextUrl (optional) The URL to redirect back to after form upload has completed.
  * @return void
  */
-function createUploadForm($videoTitle, $videoDescription, $videoCategory, $videoTags, $nextUrl = null) 
+function createUploadForm($videoTitle, $videoDescription, $videoCategory, $videoTags, $nextUrl = null)
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
@@ -452,7 +452,7 @@ function createUploadForm($videoTitle, $videoDescription, $videoCategory, $video
     } catch (Zend_Gdata_App_Exception $e) {
         print 'ERROR - Could not retrieve token for syndicated upload. '
             . $e->getMessage()
-            . '<br /><a href="session_details.php">' 
+            . '<br /><a href="session_details.php">'
             . 'click here to view details of last request</a><br />';
         return;
     }
@@ -481,7 +481,7 @@ END;
  * @param string $videoId Id of the video to be deleted.
  * @return void
  */
-function deleteVideo($videoId) 
+function deleteVideo($videoId)
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
@@ -538,21 +538,21 @@ function deleteVideo($videoId)
 function setLogging($loggingOption, $maxLogItems = 10)
 {
     switch ($loggingOption) {
-        case 'on' : 
-            $_SESSION['logging'] = 'on'; 
+        case 'on' :
+            $_SESSION['logging'] = 'on';
             $_SESSION['log_currentCounter'] = 0;
             $_SESSION['log_maxLogEntries'] = $maxLogItems;
             break;
 
-        case 'off': 
-            $_SESSION['logging'] = 'off'; 
+        case 'off':
+            $_SESSION['logging'] = 'off';
             break;
     }
 }
 
 /**
  * Check whether logging is enabled.
- * 
+ *
  * @return boolean Return true if session variable for logging is set to 'on'.
  */
 function loggingEnabled()
@@ -568,7 +568,7 @@ function loggingEnabled()
  * @param string $name Name of the session variable to delete.
  * @return void
  */
-function clearSessionVar($name) 
+function clearSessionVar($name)
 {
     if (isset($_SESSION[$name])) {
         unset($_SESSION[$name]);
@@ -609,8 +609,8 @@ function setDeveloperKey($developerKey)
     $_SESSION['developerKey'] = $developerKey;
 
     if (!isset($_SESSION['sessionToken'])) {
-        echo generateAuthSubRequestLink() 
-            . ' (Developer Key set.)<br />'; 
+        echo generateAuthSubRequestLink()
+            . ' (Developer Key set.)<br />';
     } else {
         print 'Developer Key has been set.<br /><a href="">(reload the page)</a>';
     }
@@ -667,11 +667,13 @@ function echoThumbnails($feed)
 {
     foreach ($feed as $entry) {
         $videoId = $entry->getVideoId();
-        $firstThumbnail = $entry->mediaGroup->thumbnail[0]->url;
+        $firstThumbnail = htmlspecialchars(
+            $entry->mediaGroup->thumbnail[0]->url);
         echo '<img id="' . $videoId . '" class="thumbnail" src="'
             . $firstThumbnail .'" width="130" height="97" onclick="'
             . 'ytVideoApp.presentVideo(\'' . $videoId . '\', 1);" '
-            . 'title="click to watch: ' . $entry->getVideoTitle() . '" >';
+            . 'title="click to watch: ' .
+            htmlspecialchars($entry->getVideoTitle()) . '" />';
      }
 }
 
@@ -692,15 +694,16 @@ function echoVideoList($feed, $authenticated = false)
         $videoId = $entry->getVideoId();
         $thumbnailUrl = 'notfound.jpg';
         if (count($entry->mediaGroup->thumbnail) > 0) {
-            $thumbnailUrl = $entry->mediaGroup->thumbnail[0]->url;
+            $thumbnailUrl = htmlspecialchars(
+                $entry->mediaGroup->thumbnail[0]->url);
         }
 
-        $videoTitle = $entry->getVideoTitle();
-        $videoDescription = $entry->getVideoDescription();
-        $videoCategory = $entry->getVideoCategory();
+        $videoTitle = htmlspecialchars($entry->getVideoTitle());
+        $videoDescription = htmlspecialchars($entry->getVideoDescription());
+        $videoCategory = htmlspecialchars($entry->getVideoCategory());
         $videoTags = $entry->getVideoTags();
 
-        $table .= '<tr id="' . $videoId . '">'
+        $table .= '<tr id="video_' . $videoId . '">'
                 . '<td width="130"><img onclick="ytVideoApp.presentVideo(\''
                 . $videoId. '\')" src="' . $thumbnailUrl. '" /></td>'
                 . '<td><a href="#" onclick="ytVideoApp.presentVideo(\''
@@ -709,16 +712,16 @@ function echoVideoList($feed, $authenticated = false)
                 . stripslashes($videoDescription) . '</p>'
                 . '<p class="videoCategory">category: ' . $videoCategory
                 . '</p><p class="videoTags">tagged: '
-                . implode(', ', $videoTags) . '</p>';
+                . htmlspecialchars(implode(', ', $videoTags)) . '</p>';
 
           if ($authenticated) {
-              $table .= '<p class="edit">' 
+              $table .= '<p class="edit">'
                      . '<a onclick="ytVideoApp.presentMetaDataEditForm(\''
                      . addslashes($videoTitle) . '\', \''
                      . addslashes($videoDescription) . '\', \''
                      . $videoCategory . '\', \''
                      . addslashes(implode(', ', $videoTags)) . '\', \''
-                     . $videoId . '\');" href="#">edit video data</a> | ' 
+                     . $videoId . '\');" href="#">edit video data</a> | '
                      . '<a href="#" onclick="ytVideoApp.confirmDeletion(\''
                      . $videoId
                      . '\');">delete this video</a></p><br clear="all">';
@@ -742,13 +745,13 @@ function echoVideoList($feed, $authenticated = false)
  * @param string $videoId The video
  * @return void
  */
-function echoVideoPlayer($videoId) 
+function echoVideoPlayer($videoId)
 {
     $youTubeService = new Zend_Gdata_YouTube();
 
     try {
         $entry = $youTubeService->getVideoEntry($videoId);
-    } catch (Zend_Gdata_App_HttpException $e) {
+    } catch (Zend_Gdata_App_HttpException $httpException) {
         print 'ERROR ' . $httpException->getMessage()
             . ' HTTP details<br /><textarea cols="100" rows="20">'
             . $httpException->getRawResponseBody()
@@ -758,8 +761,8 @@ function echoVideoPlayer($videoId)
         return;
     }
 
-    $videoTitle = $entry->getVideoTitle();
-    $videoUrl = findFlashUrl($entry);
+    $videoTitle = htmlspecialchars($entry->getVideoTitle());
+    $videoUrl = htmlspecialchars(findFlashUrl($entry));
     $relatedVideoFeed = getRelatedVideos($entry->getVideoId());
     $topRatedFeed = getTopRatedVideosByUser($entry->author[0]->name);
 
@@ -769,16 +772,16 @@ function echoVideoPlayer($videoId)
         <param name="movie" value="${videoUrl}&autoplay=1"></param>
         <param name="wmode" value="transparent"></param>
         <embed src="${videoUrl}&autoplay=1" type="application/x-shockwave-flash" wmode="transparent"
-        width=425" height="350"></embed>
+        width="425" height="350"></embed>
         </object>
 END;
 
     echo '<br />';
     echoVideoMetadata($entry);
     echo '<br /><b>Related:</b><br />';
-    echoThumbnails($relatedVideoFeed); 
+    echoThumbnails($relatedVideoFeed);
     echo '<br /><b>Top rated videos by user:</b><br />';
-    echoThumbnails($topRatedFeed); 
+    echoThumbnails($topRatedFeed);
 }
 
 /**
@@ -805,15 +808,15 @@ function getRelatedVideos($videoId)
 /**
  * Returns a feed of top rated videos for the specified user
  *
- * @param string $user The username 
+ * @param string $user The username
  * @return Zend_Gdata_YouTube_VideoFeed The feed of top rated videos
  */
 function getTopRatedVideosByUser($user)
 {
-    $userVideosUrl = 'http://gdata.youtube.com/feeds/users/' . 
+    $userVideosUrl = 'http://gdata.youtube.com/feeds/users/' .
                    $user . '/uploads';
     $youTubeService = new Zend_Gdata_YouTube();
-    $ytQuery = $youTubeService->newVideoQuery($userVideosUrl);  
+    $ytQuery = $youTubeService->newVideoQuery($userVideosUrl);
     // order by the rating of the videos
     $ytQuery->setOrderBy('rating');
     // retrieve a maximum of 5 videos
@@ -831,15 +834,15 @@ function getTopRatedVideosByUser($user)
  */
 function echoVideoMetadata($entry)
 {
-    $title = $entry->getVideoTitle();
-    $description = $entry->getVideoDescription();
-    $authorUsername = $entry->author[0]->name;
-    $authorUrl = 'http://www.youtube.com/profile?user=' . 
+    $title = htmlspecialchars($entry->getVideoTitle());
+    $description = htmlspecialchars($entry->getVideoDescription());
+    $authorUsername = htmlspecialchars($entry->author[0]->name);
+    $authorUrl = 'http://www.youtube.com/profile?user=' .
                  $authorUsername;
-    $tags = implode(', ', $entry->getVideoTags());
-    $duration = $entry->mediaGroup->duration->seconds;
-    $watchPage = $entry->mediaGroup->player[0]->url;
-    $viewCount = $entry->statistics->viewCount;
+    $tags = htmlspecialchars(implode(', ', $entry->getVideoTags()));
+    $duration = htmlspecialchars($entry->getVideoDuration());
+    $watchPage = htmlspecialchars($entry->getVideoWatchPageUrl());
+    $viewCount = htmlspecialchars($entry->getVideoViewCount());
     $rating = 0;
     if (isset($entry->rating->average)) {
         $rating = $entry->rating->average;
@@ -848,7 +851,7 @@ function echoVideoMetadata($entry)
     if (isset($entry->rating->numRaters)) {
         $numRaters = $entry->rating->numRaters;
     }
-    $flashUrl = findFlashUrl($entry);
+    $flashUrl = htmlspecialchars(findFlashUrl($entry));
     print <<<END
         <b>Title:</b> ${title}<br />
         <b>Description:</b> ${description}<br />
@@ -864,14 +867,14 @@ END;
 
 /**
  * Print message about YouTube caching.
- * 
+ *
  * @return string A message
  */
 function printCacheWarning()
 {
     return '<p class="note">'
          . 'Please note that the change may not be reflected in the API '
-         . 'immediately due to caching.<br/>' 
+         . 'immediately due to caching.<br/>'
          . 'Please refer to the API documentation for more details.</p>';
 }
 
@@ -883,7 +886,7 @@ function retrievePlaylists()
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
-    $feed = $youTubeService->getPlaylistListFeed('default'); 
+    $feed = $youTubeService->getPlaylistListFeed('default');
 
     if (loggingEnabled()) {
         logMessage($httpClient->getLastRequest(), 'request');
@@ -931,7 +934,7 @@ function retrievePlaylists()
 /**
  * Create a new playlist for the currently authenticated user
  *
- * @param string $playlistTitle Title of the new playlist 
+ * @param string $playlistTitle Title of the new playlist
  * @param string $playlistDescription Description for the new playlist
  * @return void
  */
@@ -939,7 +942,7 @@ function createPlaylist($playlistTitle, $playlistDescription)
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
-    $feed = $youTubeService->getPlaylistListFeed('default'); 
+    $feed = $youTubeService->getPlaylistListFeed('default');
     if (loggingEnabled()) {
         logMessage($httpClient->getLastRequest(), 'request');
         logMessage($httpClient->getLastResponse()->getBody(), 'response');
@@ -992,7 +995,7 @@ function deletePlaylist($playlistTitle)
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
-    $feed = $youTubeService->getPlaylistListFeed('default'); 
+    $feed = $youTubeService->getPlaylistListFeed('default');
     if (loggingEnabled()) {
         logMessage($httpClient->getLastRequest(), 'request');
         logMessage($httpClient->getLastResponse()->getBody(), 'response');
@@ -1049,7 +1052,7 @@ function updatePlaylist($newPlaylistTitle, $newPlaylistDescription, $oldPlaylist
 {
     $httpClient = getAuthSubHttpClient();
     $youTubeService = new Zend_Gdata_YouTube($httpClient);
-    $feed = $youTubeService->getPlaylistListFeed('default'); 
+    $feed = $youTubeService->getPlaylistListFeed('default');
 
     if (loggingEnabled()) {
         logMessage($httpClient->getLastRequest(), 'request');
@@ -1090,8 +1093,8 @@ function updatePlaylist($newPlaylistTitle, $newPlaylistDescription, $oldPlaylist
         return;
     }
 
-    print 'Playlist deleted succesfully.<br /><a href="#" onclick="' . 
-          'ytVideoApp.retrievePlaylists();"'. 
+    print 'Playlist deleted succesfully.<br /><a href="#" onclick="' .
+          'ytVideoApp.retrievePlaylists();"'.
           '">(refresh your playlist listing)</a><br />'.
           printCacheWarning();
 }
