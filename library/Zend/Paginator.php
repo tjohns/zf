@@ -577,6 +577,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
     public function setItemCountPerPage($itemCountPerPage)
     {
         $this->_itemCountPerPage = (integer) $itemCountPerPage;
+        if ($this->_itemCountPerPage == 0) {
+            $this->_itemCountPerPage = 1;
+        }
         $this->_pageCount        = $this->_calculatePageCount();
         $this->_pageItems        = array();
         $this->_currentItems     = null;
