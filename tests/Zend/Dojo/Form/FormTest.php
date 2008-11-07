@@ -102,6 +102,15 @@ class Zend_Dojo_Form_FormTest extends PHPUnit_Framework_TestCase
         $paths  = $loader->getPaths('Zend_Dojo_View_Helper');
         $this->assertTrue(is_array($paths));
     }
+
+    /**
+     * @group ZF-4748
+     */
+    public function testHtmlTagDecoratorShouldHaveZendFormDojoClassByDefault()
+    {
+        $decorator = $this->form->getDecorator('HtmlTag');
+        $this->assertEquals('zend_form_dojo', $decorator->getOption('class'));
+    }
 }
 
 // Call Zend_Dojo_Form_FormTest::main() if this source file is executed directly.
