@@ -269,7 +269,7 @@ abstract class Zend_Form_Element_Multi extends Zend_Form_Element_Xhtml
             return true;
         }
 
-        if (!isset($this->_translated[$option])) {
+        if (!isset($this->_translated[$option]) && !empty($value)) {
             $this->options[$option] = $this->_translateValue($value);
             if ($this->options[$option] === $value) {
                 return false;

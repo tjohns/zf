@@ -154,6 +154,23 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group ZF-4390
+     */
+    public function testEmptyOptionsShouldNotBeTranslated()
+    {
+        $translate = new Zend_Translate('array', array('unused', 'foo' => 'bar'), 'en');
+        $this->element->setTranslator($translate);
+        $this->element->setMultiOptions(array(
+            array('key' => '', 'value' => ''),
+            array('key' => 'foo', 'value' => 'foo'),
+        ));
+        $this->element->setView($this->getView());
+        $html = $this->element->render();
+        $this->assertNotContains('unused', $html, $html);
+        $this->assertContains('bar', $html, $html);
+    }
+
+    /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
      * @link   http://framework.zend.com/issues/browse/ZF-2794
