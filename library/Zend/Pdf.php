@@ -144,14 +144,14 @@ class Zend_Pdf
      *
      * @var array
      */
-    private $_originalProperties = array();
+    protected $_originalProperties = array();
 
     /**
      * Document level javascript
      *
      * @var string
      */
-    private $_javaScript = null;
+    protected $_javaScript = null;
 
     /**
      * Document named actions
@@ -160,7 +160,7 @@ class Zend_Pdf
      *
      * @var array   - array of Zend_Pdf_Action objects
      */
-    private $_namedActions = array();
+    protected $_namedActions = array();
 
 
     /**
@@ -168,7 +168,7 @@ class Zend_Pdf
      *
      * @var Zend_Pdf_Trailer
      */
-    private $_trailer = null;
+    protected $_trailer = null;
 
 
     /**
@@ -176,14 +176,14 @@ class Zend_Pdf
      *
      * @var Zend_Pdf_ElementFactory_Interface
      */
-    private $_objFactory = null;
+    protected $_objFactory = null;
 
     /**
      * Memory manager for stream objects
      *
      * @var Zend_Memory_Manager|null
      */
-    private static $_memoryManager = null;
+    protected static $_memoryManager = null;
 
     /**
      * Pdf file parser.
@@ -191,7 +191,15 @@ class Zend_Pdf
      *
      * @var Zend_Pdf_Parser
      */
-    private $_parser;
+    protected $_parser;
+
+
+    /**
+     * List of inheritable attributesfor pages tree
+     *
+     * @var array
+     */
+    protected static $_inheritableAttributes = array('Resources', 'MediaBox', 'CropBox', 'Rotate');
 
     /**
      * Request used memory manager
@@ -403,22 +411,13 @@ class Zend_Pdf
     }
 
 
-
-    /**
-     * List of inheritable attributesfor pages tree
-     *
-     * @var array
-     */
-    private static $_inheritableAttributes = array('Resources', 'MediaBox', 'CropBox', 'Rotate');
-
-
     /**
      * Load pages recursively
      *
      * @param Zend_Pdf_Element_Reference $pages
      * @param array|null $attributes
      */
-    private function _loadPages(Zend_Pdf_Element_Reference $pages, $attributes = array())
+    protected function _loadPages(Zend_Pdf_Element_Reference $pages, $attributes = array())
     {
         if ($pages->getType() != Zend_Pdf_Element::TYPE_DICTIONARY) {
             throw new Zend_Pdf_Exception('Wrong argument');
@@ -464,7 +463,7 @@ class Zend_Pdf
      *
      * @todo Dump pages as a balanced tree instead of a plain set.
      */
-    private function _dumpPages()
+    protected function _dumpPages()
     {
         $pagesContainer = $this->_trailer->Root->Pages;
         $pagesContainer->touch();
