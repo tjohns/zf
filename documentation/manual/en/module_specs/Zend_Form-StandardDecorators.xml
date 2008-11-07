@@ -302,7 +302,7 @@ class Util
         <para>
             Forms, display groups, and sub forms are collections of
             elements. When using the <link
-                linkid="zend.form.standardDecorators.viewScript">ViewScript</link>
+                linkend="zend.form.standardDecorators.viewScript">ViewScript</link>
             decorator with your form or sub form, it's useful to be able to
             recursively set the view object, translator, and all fully qualifid
             names (as determined by sub form array notation). The
