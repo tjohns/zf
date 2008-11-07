@@ -303,9 +303,7 @@ class Zend_Pdf
             }
 
             if ($this->_trailer->Info !== null) {
-                foreach ($this->_trailer->Info->getKeys() as $key) {
-                    $this->properties[$key] = $this->_trailer->Info->$key->value;
-                }
+                $this->properties = $this->_trailer->Info->toPhp();
 
                 if (isset($this->properties['Trapped'])) {
                     switch ($this->properties['Trapped']) {
@@ -573,7 +571,7 @@ class Zend_Pdf
      * Extract fonts attached to the document
      *
      * returns array of Zend_Pdf_Resource_Font_Extracted objects
-     * 
+     *
      * @return array
      */
     public function extractFonts()
@@ -586,42 +584,42 @@ class Zend_Pdf
                 // Page doesn't contain have any font reference
                 continue;
             }
-            
+
             $fontResources = $pageResources->Font;
 
             foreach ($fontResources->getKeys() as $fontResourceName) {
                 $fontDictionary = $fontResources->$fontResourceName;
-    
+
                 if (! ($fontDictionary instanceof Zend_Pdf_Element_Reference  ||
                        $fontDictionary instanceof Zend_Pdf_Element_Object) ) {
                     // Font dictionary has to be an indirect object or object reference
                     continue;
                 }
-    
+
                 $fontResourcesUnique[$fontDictionary->toString($this->_objFactory)] = $fontDictionary;
             }
         }
-        
+
         $fonts = array();
         foreach ($fontResourcesUnique as $resourceReference => $fontDictionary) {
             try {
                 // Try to extract font
                 $extractedFont = new Zend_Pdf_Resource_Font_Extracted($fontDictionary);
 
-                $fonts[$resourceReference] = $extractedFont; 
+                $fonts[$resourceReference] = $extractedFont;
             } catch (Zend_Pdf_Exception $e) {
                 if ($e->getMessage() != 'Unsupported font type.') {
                     throw $e;
                 }
             }
         }
-        
+
         return $fonts;
-    } 
+    }
 
     /**
      * Extract font attached to the page by specific font name
-     * 
+     *
      * $fontName should be specified in UTF-8 encoding
      *
      * @return Zend_Pdf_Resource_Font_Extracted|null
@@ -631,23 +629,23 @@ class Zend_Pdf
         $fontResourcesUnique = array();
         foreach ($this->pages as $page) {
             $pageResources = $page->extractResources();
-            
+
             if ($pageResources->Font === null) {
                 // Page doesn't contain have any font reference
                 continue;
             }
-            
+
             $fontResources = $pageResources->Font;
 
             foreach ($fontResources->getKeys() as $fontResourceName) {
                 $fontDictionary = $fontResources->$fontResourceName;
-    
+
                 if (! ($fontDictionary instanceof Zend_Pdf_Element_Reference  ||
                        $fontDictionary instanceof Zend_Pdf_Element_Object) ) {
                     // Font dictionary has to be an indirect object or object reference
                     continue;
                 }
-                
+
                 $resourceReference = $fontDictionary->toString($this->_objFactory);
                 if (isset($fontResourcesUnique[$resourceReference])) {
                     continue;
@@ -655,14 +653,14 @@ class Zend_Pdf
                     // Mark resource as processed
                     $fontResourcesUnique[$resourceReference] = 1;
                 }
-   
+
                 if ($fontDictionary->BaseFont->value != $fontName) {
                     continue;
                 }
-                
+
                 try {
                     // Try to extract font
-                    return new Zend_Pdf_Resource_Font_Extracted($fontDictionary); 
+                    return new Zend_Pdf_Resource_Font_Extracted($fontDictionary);
                 } catch (Zend_Pdf_Exception $e) {
                     if ($e->getMessage() != 'Unsupported font type.') {
                         throw $e;
@@ -673,8 +671,8 @@ class Zend_Pdf
         }
 
         return null;
-    } 
-    
+    }
+
     /**
      * Render the completed PDF to a string.
      * If $newSegmentOnly is true, then only appended part of PDF is returned.
@@ -728,9 +726,12 @@ class Zend_Pdf
                     case 'Creator':
                         // break intentionally omitted
                     case 'Producer':
-                        // break intentionally omitted
-                    default:
                         $docInfo->$key = new Zend_Pdf_Element_String((string)$value);
+                        break;
+
+                    default:
+                    	// Set property using PDF type based on PHP type
+                        $docInfo->$key = Zend_Pdf_Element::phpToPdf($value);
                         break;
                 }
             }
