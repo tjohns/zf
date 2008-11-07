@@ -405,6 +405,8 @@ class Zend_Cache_Core
      *                     ($tags can be an array of strings or a single string)
      * 'notMatchingTag' => remove cache entries not matching one of the given tags
      *                     ($tags can be an array of strings or a single string)
+     * 'matchingAnyTag' => remove cache entries matching any given tags
+     *                     ($tags can be an array of strings or a single string)
      *
      * @param  string       $mode
      * @param  array|string $tags
@@ -416,7 +418,11 @@ class Zend_Cache_Core
         if (!$this->_options['caching']) {
             return true;
         }
-        if (!in_array($mode, array(Zend_Cache::CLEANING_MODE_ALL, Zend_Cache::CLEANING_MODE_OLD, Zend_Cache::CLEANING_MODE_MATCHING_TAG, Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG))) {
+        if (!in_array($mode, array(Zend_Cache::CLEANING_MODE_ALL,
+                                   Zend_Cache::CLEANING_MODE_OLD,
+                                   Zend_Cache::CLEANING_MODE_MATCHING_TAG,
+                                   Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG,
+                                   Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG))) {
             Zend_Cache::throwException('Invalid cleaning mode');
         }
         self::_validateTagsArray($tags);

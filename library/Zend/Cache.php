@@ -72,7 +72,8 @@ abstract class Zend_Cache
     const CLEANING_MODE_OLD              = 'old';
     const CLEANING_MODE_MATCHING_TAG     = 'matchingTag';
     const CLEANING_MODE_NOT_MATCHING_TAG = 'notMatchingTag';
-
+    const CLEANING_MODE_MATCHING_ANY_TAG = 'matchingAnyTag';
+    
     /**
      * Factory
      *
