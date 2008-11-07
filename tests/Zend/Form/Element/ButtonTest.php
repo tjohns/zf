@@ -52,7 +52,6 @@ class Zend_Form_Element_ButtonTest extends PHPUnit_Framework_TestCase
     {
         require_once 'Zend/View.php';
         $view = new Zend_View();
-        $view->addHelperPath(dirname(__FILE__) . '/../../../../library/Zend/View/Helper/');
         return $view;
     }
 
@@ -106,7 +105,19 @@ class Zend_Form_Element_ButtonTest extends PHPUnit_Framework_TestCase
         $decorator = $this->element->getDecorator('ViewHelper');
         $decorator->setElement($this->element);
         $html = $decorator->render('');
-        $this->assertRegexp('/<(input|button)[^>]*?value="Submit Button"/', $html, $html);
+        $this->assertRegexp('/<(input|button)[^>]*?>Submit Button/', $html, $html);
+    }
+
+    /**
+     * @group ZF-3961
+     */
+    public function testValuePropertyShouldNotBeRendered()
+    {
+        $this->element->setLabel('Button Label')
+                      ->setView($this->getView());
+        $html = $this->element->render();
+        $this->assertContains('Button Label', $html, $html);
+        $this->assertNotContains('value="', $html);
     }
 
     /**

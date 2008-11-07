@@ -156,11 +156,6 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
             throw new Zend_Form_Decorator_Exception('DijitElement decorator cannot render without a registered view object');
         }
 
-        $dijitParams = $this->getDijitParams();
-        if ($element->isRequired()) {
-            $dijitParams['required'] = true;
-        }
-
         $options = null;
         if (method_exists($element, 'getMultiOptions')) {
             $options = $element->getMultiOptions();
@@ -171,6 +166,11 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
         $value     = $this->getValue($element);
         $attribs   = $this->getElementAttribs();
         $name      = $element->getFullyQualifiedName();
+
+        $dijitParams = $this->getDijitParams();
+        if ($element->isRequired()) {
+            $dijitParams['required'] = true;
+        }
 
         $id = $element->getId();
         if ($view->dojo()->hasDijit($id)) {
