@@ -553,6 +553,10 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $basePath = $baseUrl;
             }
         }
+        
+        if (substr(PHP_OS, 0, 3) === 'WIN') {
+            $basePath = str_replace('\\', '/', $basePath);
+        }
 
         $this->_basePath = rtrim($basePath, '/');
         return $this;

@@ -367,6 +367,17 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertSame('', $this->_request->getBaseUrl());
     }
  
+    /*
+     * Tests if an empty string gets returned when no basepath is set on the request.
+     * This is important on windows, where before this fix '\' was returned instead of an empty string.
+     * @see ZF-4810
+     */
+    public function testGetBasePathIsEmptyStringIfNoneSet()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $this->assertEquals('', $request->getBasePath());
+    }
+
     public function testSetBaseUrl()
     {
         $this->_request->setBaseUrl('/news');
