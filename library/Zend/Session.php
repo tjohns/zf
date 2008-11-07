@@ -96,6 +96,7 @@ class Zend_Session extends Zend_Session_Abstract
         'cookie_path'               => null,
         'cookie_domain'             => null,
         'cookie_secure'             => null,
+        'cookie_httponly'           => null,
         'use_cookies'               => null,
         'use_only_cookies'          => 'on',
         'referer_check'             => null,
