@@ -273,6 +273,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *                     ($tags can be an array of strings or a single string)
      * 'notMatchingTag' => remove cache entries not matching one of the given tags
      *                     ($tags can be an array of strings or a single string)
+     * 'matchingAnyTag' => remove cache entries matching any given tags
+     *                     ($tags can be an array of strings or a single string)
      *
      * @param string $mode clean mode
      * @param tags array $tags array of tags
@@ -329,6 +331,19 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     public function getIdsNotMatchingTags($tags = array())
     {
         return $this->_get($this->_options['cache_dir'], 'notMatching', $tags);
+    }
+    
+    /**
+     * Return an array of stored cache ids which match any given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of matching cache ids with one of tags (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array())
+    {
+        return $this->_get($this->_options['cache_dir'], 'matchingAny', $tags);
     }
     
     /**
@@ -612,6 +627,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *                                               ($tags can be an array of strings or a single string)
      * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
      *                                               ($tags can be an array of strings or a single string)
+     * Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG => remove cache entries matching any given tags
+     *                                               ($tags can be an array of strings or a single string)
      *
      * @param  string $dir  Directory to clean
      * @param  string $mode Clean mode
@@ -682,6 +699,18 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                             $result = ($result) && $this->remove($id);
                         }
                         break;
+                    case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                        $matching = false;
+                        foreach ($tags as $tag) {
+                            if (in_array($tag, $metadatas['tags'])) {
+                                $matching = true;
+                                break;
+                            }
+                        }
+                        if ($matching) {
+                            $result = ($result) && ($this->remove($id));
+                        }
+                        break;
                     default:
                         Zend_Cache::throwException('Invalid mode for clean() method');
                         break;
@@ -749,6 +778,18 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                             }
                         }
                         if (!$matching) {
+                            $result[] = $id;
+                        }
+                        break;
+                    case 'matchingAny':
+                        $matching = false;
+                        foreach ($tags as $tag) {
+                            if (in_array($tag, $metadatas['tags'])) {
+                                $matching = true;
+                                break;
+                            }
+                        }
+                        if ($matching) {
                             $result[] = $id;
                         }
                         break;
