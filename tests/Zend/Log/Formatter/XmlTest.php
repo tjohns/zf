@@ -20,6 +20,8 @@
  * @version    $Id$
  */
 
+require_once dirname(__FILE__)."/../../../TestHelper.php";
+
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -69,4 +71,28 @@ class Zend_Log_Formatter_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertType('SimpleXMLElement', $sxml, 'Formatted XML is invalid');
     }
 
+    /**
+     * @group ZF-2062
+     * @group ZF-4190
+     */
+    public function testHtmlSpecialCharsInMessageGetEscapedForValidXml()
+    {
+        $f = new Zend_Log_Formatter_Xml();
+        $line = $f->format(array('message' => '&key1=value1&key2=value2', 'priority' => 42));
+
+        $this->assertContains("&amp;", $line);
+        $this->assertTrue(substr_count($line, "&amp;") == 2);
+    }
+
+    /**
+     * @group ZF-2062
+     * @group ZF-4190
+     */
+    public function testFixingBrokenCharsSoXmlIsValid()
+    {
+        $f = new Zend_Log_Formatter_Xml();
+        $line = $f->format(array('message' => '&amp', 'priority' => 42));
+
+        $this->assertContains('&amp;amp', $line);
+    }
 }
