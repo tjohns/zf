@@ -22,6 +22,21 @@ require_once 'Zend/Http/Client/Adapter/Test.php';
 class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase 
 {
     /**
+     * @var Zend_Http_Client_Adapter_Abstract
+     */
+    protected $httpAdapter;
+
+    /**
+     * @var Zend_Http_Client
+     */
+    protected $httpClient;
+
+    /**
+     * @var Zend_XmlRpc_Client
+     */
+    protected $xmlrpcClient;
+
+    /**
      * Runs the test methods of this class.
      *
      * @return void
@@ -519,6 +534,21 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         
         $request = $this->xmlrpcClient->getLastRequest();
         $this->assertEquals('system.methodSignature', $request->getMethod());
+    }
+
+    /**
+     * @group ZF-4372
+     */
+    public function testSettingUriOnHttpClientIsNotOverwrittenByXmlRpcClient()
+    {
+        $changedUri = "http://bar:80";
+        // Overwrite: http://foo:80
+        $this->setServerResponseTo(array());
+        $this->xmlrpcClient->getHttpClient()->setUri($changedUri);
+        $this->xmlrpcClient->call("foo");
+        $uri = $this->xmlrpcClient->getHttpClient()->getUri(true);
+
+        $this->assertEquals($changedUri, $uri);
     }
     
     
