@@ -112,15 +112,65 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
         if($this->_uri instanceof Zend_Uri) {
             $uri = $this->_uri;
         } else {
-            $schema = "http";
-            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-                $schema = 'https';
-            }
-            $host = (isset($_SERVER['HTTP_HOST'])?$_SERVER['HTTP_HOST']:$_SERVER['SERVER_NAME']);
-            $uri = Zend_Uri::factory($schema . '://' . $host . $_SERVER['SCRIPT_NAME']);
+            $schema     = $this->getSchema();
+            $host       = $this->getHostName();
+            $scriptName = $this->getRequestUriWithoutParameters();
+            $uri = Zend_Uri::factory($schema . '://' . $host . $scriptName);
             $this->setUri($uri);
         }
         return $uri;
+    }
+
+    /**
+     * Detect and returns the current HTTP/HTTPS Schema
+     *
+     * @return string
+     */
+    protected function getSchema()
+    {
+        $schema = "http";
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $schema = 'https';
+        }
+        return $schema;
+    }
+
+    /**
+     * Detect and return the current hostname
+     *
+     * @return string
+     */
+    protected function getHostName()
+    {
+        if(isset($_SERVER['HTTP_HOST'])) {
+            $host = $_SERVER['HTTP_HOST'];
+        } else {
+            $host = $_SERVER['SERVER_NAME'];
+        }
+        return $host;
+    }
+
+    /**
+     * Detect and return the current script name without parameters
+     *
+     * @return string
+     */
+    protected function getRequestUriWithoutParameters()
+    {
+        if (isset($_SERVER['HTTP_X_REWRITE_URL'])) { // check this first so IIS will catch
+            $requestUri = $_SERVER['HTTP_X_REWRITE_URL'];
+        } elseif (isset($_SERVER['REQUEST_URI'])) {
+            $requestUri = $_SERVER['REQUEST_URI'];
+        } elseif (isset($_SERVER['ORIG_PATH_INFO'])) { // IIS 5.0, PHP as CGI
+            $requestUri = $_SERVER['ORIG_PATH_INFO'];
+        } else {
+            $requestUri = $_SERVER['SCRIPT_NAME'];
+        }
+        if( ($pos = strpos($requestUri, "?")) !== false) {
+            $requestUri = substr($requestUri, 0, $pos);
+        }
+
+        return $requestUri;
     }
 
     /**

@@ -29,6 +29,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
             $_SERVER = array();
         }
         $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['REQUEST_URI'] = '/my_script.php?wsdl';
         $_SERVER['SCRIPT_NAME'] = '/my_script.php';
         $_SERVER['HTTPS'] = "off";
     }
@@ -43,9 +44,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     function testSetClass()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
-
+        
         $server = new Zend_Soap_AutoDiscover();
         $server->setClass('Zend_Soap_AutoDiscover_Test');
         $dom = new DOMDocument();
@@ -125,8 +124,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     function testAddFunctionSimple()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover();
         $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
@@ -170,8 +167,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     function testAddFunctionMultiple()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover();
         $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
@@ -281,8 +276,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
      */
     public function testUseHttpsSchemaIfAccessedThroughHttps()
     {
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
         $_SERVER['HTTPS'] = "on";
         $httpsScriptUri = 'https://localhost/my_script.php';
 
@@ -303,8 +296,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     public function testChangeWsdlUriInConstructor()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover(true, "http://example.com/service.php");
         $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
@@ -324,8 +315,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     public function testChangeWsdlUriViaSetUri()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover(true);
         $server->setUri("http://example.com/service.php");
@@ -357,8 +346,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     public function testChangingWsdlUriAfterGenerationIsPossible()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover(true);
         $server->setUri("http://example.com/service.php");
@@ -392,8 +379,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
     public function testUsingClassWithMultipleMethodPrototypesProducesValidWsdl()
     {
         $scriptUri = 'http://localhost/my_script.php';
-        $_SERVER['HTTP_HOST'] = 'localhost';
-        $_SERVER['SCRIPT_NAME'] = '/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover();
         $server->setClass('Zend_Soap_AutoDiscover_TestFixingMultiplePrototypes');
@@ -443,6 +428,32 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
             array('Zend_Soap_AutoDiscover_TestFunc', 'testFunc1', 'testFunc2', 'testFunc3', 'testFunc4'),
             $functions
         );
+    }
+
+    /**
+     * @group ZF-4835
+     */
+    public function testUsingRequestUriWithoutParametersAsDefault()
+    {
+        // Apache
+        $_SERVER = array('REQUEST_URI' => '/my_script.php?wsdl', 'HTTP_HOST' => 'localhost');
+        $server = new Zend_Soap_AutoDiscover();
+        $this->assertEquals("http://localhost/my_script.php", $server->getUri()->getUri());
+
+        // Apache plus SSL
+        $_SERVER = array('REQUEST_URI' => '/my_script.php?wsdl', 'HTTP_HOST' => 'localhost', 'HTTPS' => 'on');
+        $server = new Zend_Soap_AutoDiscover();
+        $this->assertEquals("https://localhost/my_script.php", $server->getUri()->getUri());
+
+        // IIS 5 + PHP as FastCGI
+        $_SERVER = array('ORIG_PATH_INFO' => '/my_script.php?wsdl', 'SERVER_NAME' => 'localhost');
+        $server = new Zend_Soap_AutoDiscover();
+        $this->assertEquals("http://localhost/my_script.php", $server->getUri()->getUri());
+
+        // IIS
+        $_SERVER = array('HTTP_X_REWRITE_URL' => '/my_script.php?wsdl', 'SERVER_NAME' => 'localhost');
+        $server = new Zend_Soap_AutoDiscover();
+        $this->assertEquals("http://localhost/my_script.php", $server->getUri()->getUri());
     }
 }
 
