@@ -173,7 +173,9 @@ class Zend_Rest_Server implements Zend_Server_Interface
     /**
      * Implement Zend_Server_Interface::handle()
      *
-     * @param array $request
+     * @param  array $request
+     * @throws Zend_Rest_Server_Exception
+     * @return string|void
      */
     public function handle($request = false)
     {
@@ -236,13 +238,25 @@ class Zend_Rest_Server implements Zend_Server_Interface
                         }
                     }
                 } else {
-                    $result = $this->fault("Unknown Method '$this->_method'.", 404);
+                    require_once "Zend/Rest/Server/Exception.php";
+                    $result = $this->fault(
+                        new Zend_Rest_Server_Exception("Unknown Method '$this->_method'."),
+                        404
+                    );
                 }
             } else {
-                $result = $this->fault("Unknown Method '$this->_method'.", 404);
+                require_once "Zend/Rest/Server/Exception.php";
+                $result = $this->fault(
+                    new Zend_Rest_Server_Exception("Unknown Method '$this->_method'."),
+                    404
+                );
             }
         } else {
-            $result = $this->fault("No Method Specified.", 404);
+            require_once "Zend/Rest/Server/Exception.php";
+            $result = $this->fault(
+                new Zend_Rest_Server_Exception("No Method Specified."),
+                404
+            );
         }
 
         if ($result instanceof SimpleXMLElement) {

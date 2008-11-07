@@ -330,6 +330,9 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertContains("<foo>bar</foo>", $result, "Bad Result");
     }
 
+    /**
+     * @group ZF-3751
+     */
     public function testHandleInvalidMethod()
     {
         $server = new Zend_Rest_Server();
@@ -337,6 +340,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $server->returnResponse(true);
         $response = $server->handle(array('method' => 'test3DomElement'));
         $this->assertContains('<status>failed</status>', $response);
+        $this->assertNotContains('<message>An unknown error occured. Please try again.</message>', $response);
     }
 
     public function testFault()
@@ -464,6 +468,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @see ZF-1992
+     * @group ZF-1992
      */
     public function testDefaultEncodingShouldBeUtf8()
     {
@@ -473,6 +478,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @see ZF-1992
+     * @group ZF-1992
      */
     public function testEncodingShouldBeMutableViaAccessors()
     {
@@ -484,6 +490,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @see ZF-2279
+     * @group ZF-2279
      */
     public function testNamesOfArgumentsShouldDetermineArgumentOrder()
     {
@@ -497,6 +504,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @see ZF-1949
+     * @group ZF-1949
      */
     public function testMissingArgumentsShouldResultInFaultResponse()
     {
@@ -511,6 +519,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @see ZF-1949
+     * @group ZF-1949
      */
     public function testMissingArgumentsWithDefaultsShouldNotResultInFaultResponse()
     {
@@ -521,6 +530,32 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
         $result = ob_get_clean();
         $this->assertContains('<status>success</status>', $result, var_export($result, 1));
         $this->assertContains('<response>Hello today, How are you Davey</response>', $result, var_export($result, 1));
+    }
+
+    /**
+     * @group ZF-3751
+     */
+    public function testCallingUnknownMethodDoesNotThrowUnknownButSpecificErrorExceptionMessage()
+    {
+        $server = new Zend_Rest_Server();
+        $server->setClass('Zend_Rest_Server_Test2');
+        $server->returnResponse(true);
+        $response = $server->handle(array('method' => 'testCallingInvalidMethod'));
+        $this->assertContains('<status>failed</status>', $response);
+        $this->assertNotContains('<message>An unknown error occured. Please try again.</message>', $response);
+    }
+
+    /**
+     * @group ZF-3751
+     */
+    public function testCallingNoMethodDoesNotThrowUnknownButSpecificErrorExceptionMessage()
+    {
+        $server = new Zend_Rest_Server();
+        $server->setClass('Zend_Rest_Server_Test2');
+        $server->returnResponse(true);
+        $response = $server->handle();
+        $this->assertContains('<status>failed</status>', $response);
+        $this->assertNotContains('<message>An unknown error occured. Please try again.</message>', $response);
     }
 }
 
