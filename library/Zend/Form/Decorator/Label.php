@@ -175,10 +175,14 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
      *
      * Currently overloads:
      *
-     * - getOptPrefix()
-     * - getOptSuffix()
-     * - reqOptPrefix()
-     * - reqOptSuffix()
+     * - getOpt(ional)Prefix()
+     * - getOpt(ional)Suffix()
+     * - getReq(uired)Prefix()
+     * - getReq(uired)Suffix()
+     * - setOpt(ional)Prefix()
+     * - setOpt(ional)Suffix()
+     * - setReq(uired)Prefix()
+     * - setReq(uired)Suffix()
      * 
      * @param  string $method 
      * @param  array $args 
@@ -187,11 +191,11 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
      */
     public function __call($method, $args)
     {
-        if ((12 == strlen($method))
-            && ('get' == substr($method, 0, 3))
-            && (('Prefix' == substr($method, -6))
-                || ('Suffix' == substr($method, -6))))
-        {
+        $tail = substr($method, -6);
+        $head = substr($method, 0, 3);
+        if (in_array($head, array('get', 'set'))
+            && (('Prefix' == $tail) || ('Suffix' == $tail))
+        ) {
             $position = substr($method, -6);
             $type     = strtolower(substr($method, 3, 3));
             switch ($type) {
@@ -203,18 +207,29 @@ class Zend_Form_Decorator_Label extends Zend_Form_Decorator_Abstract
                     break;
                 default:
                     require_once 'Zend/Form/Exception.php';
-                    throw new Zend_Form_Exception(sprintf('Invalid method "%s" called in Label decorator', $method));
+                    throw new Zend_Form_Exception(sprintf('Invalid method "%s" called in Label decorator, and detected as type %s', $method, $type));
             }
 
-            if (null === ($element = $this->getElement())) {
-                $this->_loadOptReqKey($key);
-            } elseif (isset($element->$key)) {
-                $this->$key = (string) $element->$key;
-            } else {
-                $this->_loadOptReqKey($key);
+            switch ($head) {
+                case 'set':
+                    if (0 === count($args)) {
+                        require_once 'Zend/Form/Exception.php';
+                        throw new Zend_Form_Exception(sprintf('Method "%s" requires at least one argument; none provided', $method));
+                    }
+                    $value = array_shift($args);
+                    $this->$key = $value;
+                    return $this;
+                case 'get':
+                default:
+                    if (null === ($element = $this->getElement())) {
+                        $this->_loadOptReqKey($key);
+                    } elseif (isset($element->$key)) {
+                        $this->$key = (string) $element->$key;
+                    } else {
+                        $this->_loadOptReqKey($key);
+                    }
+                    return $this->$key;
             }
-
-            return $this->$key;
         }
 
         require_once 'Zend/Form/Exception.php';
