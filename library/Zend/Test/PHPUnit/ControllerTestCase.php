@@ -3,6 +3,9 @@
 /** PHPUnit_Framework_TestCase */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+/** PHPUnit_Runner_Version */
+require_once 'PHPUnit/Runner/Version.php';
+
 /** Zend_Controller_Front */
 require_once 'Zend/Controller/Front.php';
 
@@ -1089,9 +1092,14 @@ abstract class Zend_Test_PHPUnit_ControllerTestCase extends PHPUnit_Framework_Te
     {
         $stack = debug_backtrace();
         foreach (debug_backtrace() as $step) {
-            if (isset($step['object']) &&
-                $step['object'] instanceof PHPUnit_Framework_TestCase) {
-                $step['object']->incrementAssertionCounter();
+            if (isset($step['object']) 
+                && $step['object'] instanceof PHPUnit_Framework_TestCase
+            ) {
+                if (version_compare('3.3.3', PHPUnit_Runner_Version::id(), 'lt')) {
+                    $step['object']->addToAssertionCount(1);
+                } else {
+                    $step['object']->incrementAssertionCounter();
+                }
                 break;
             }
         }
