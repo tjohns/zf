@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/Dom/QueryTest.php';
+require_once 'Zend/Dom/Query/ResultTest.php';
 require_once 'Zend/Dom/Query/Css2XpathTest.php';
 
 /**
@@ -52,6 +53,7 @@ class Zend_Dom_AllTests
 
         $suite->addTestSuite('Zend_Dom_QueryTest');
         $suite->addTestSuite('Zend_Dom_Query_Css2XpathTest');
+        $suite->addTestSuite('Zend_Dom_Query_ResultTest');
 
         return $suite;
     }

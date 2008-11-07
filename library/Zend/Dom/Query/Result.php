@@ -134,7 +134,7 @@ class Zend_Dom_Query_Result implements Iterator,Countable
      */
  	public function valid()
     {
-        if (in_array($this->_position, range(0, $this->_nodeList->length - 1))) {
+        if (in_array($this->_position, range(0, $this->_nodeList->length - 1)) && $this->_nodeList->length > 0) {
             return true;
         }
         return false;
