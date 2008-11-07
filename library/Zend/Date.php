@@ -1325,7 +1325,7 @@ class Zend_Date extends Zend_Date_DateObject
             return $zone;
         }
 
-        preg_match('/(\w{3,30})/', $zone, $match);
+        preg_match('/([[:alpha:]\/]{3,30})/', $zone, $match);
         try {
             if (!empty($match) and (!is_int($match[count($match) - 1]))) {
                 $oldzone = $this->getTimezone();
@@ -2165,7 +2165,7 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("unsupported ISO8601 format ($date)", $date);
                 }
                 if (!empty($timematch)) {
-                    $tmpdate = substr($tmpdate, strlen($timematch[0])); 
+                    $tmpdate = substr($tmpdate, strlen($timematch[0]));
                 }
                 if (empty($datematch)) {
                     $datematch[1] = 1970;
