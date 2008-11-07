@@ -49,7 +49,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
                 true);
         $this->entry = new Zend_Gdata_YouTube_VideoEntry();
     }
-    
+
     private function createRandomString() {
         $randomString = '';
         for ($x = 0; $x < 10; $x++) {
@@ -546,7 +546,7 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('rejected', $videoState->getName());
         $this->assertEquals('inappropriate', $videoState->getReasonCode());
         $this->assertEquals('http://www.youtube.com/t/community_guidelines', $videoState->getHelpUrl());
-        $this->assertEquals('The content of this video may violate the terms of use.', 
+        $this->assertEquals('The content of this video may violate the terms of use.',
                             $videoState->getText());
     }
 
@@ -571,6 +571,13 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $videoEntry->setVideoPublic();
 
         $this->assertFalse($videoEntry->isVideoPrivate());
+    }
+
+    public function testRetrieveCommentsFeedUrl() {
+        $this->entry->transferFromXML($this->entryText);
+        $commentsFeedUrl = $this->entry->getVideoCommentFeedUrl();
+        $this->assertEquals($commentsFeedUrl,
+            'http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments');
     }
 
 }

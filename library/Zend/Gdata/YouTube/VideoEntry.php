@@ -986,4 +986,22 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         }
     }
 
+    /**
+     * Retrieve the URL for a video's comment feed.
+     *
+     * @return string|null The URL if found, or null if not found.
+     */
+    public function getVideoCommentFeedUrl()
+    {
+        $commentsExtension = $this->getComments();
+        $commentsFeedUrl = null;
+        if ($commentsExtension) {
+            $commentsFeedLink = $commentsExtension->getFeedLink();
+            if ($commentsFeedLink) {
+                $commentsFeedUrl = $commentsFeedLink->getHref();
+            }
+        }
+        return $commentsFeedUrl;
+    }
+
 }
