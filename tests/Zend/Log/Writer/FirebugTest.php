@@ -160,11 +160,10 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
         
         $headers = array();
-        $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
+        $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
-        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"INFO"},"This is a log message!"]|';
-        $headers['X-Wf-1-Index'] = '1';
+        $headers['X-Wf-1-1-1-1'] = '42|[{"Type":"INFO"},"This is a log message!"]|';
         
         $this->assertTrue($this->_response->verifyHeaders($headers));
     }
