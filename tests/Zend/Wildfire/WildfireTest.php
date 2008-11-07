@@ -629,6 +629,29 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->assertNull(Zend_Wildfire_Channel_HttpHeaders::getInstance(true));
     }    
     
+    
+    /**
+     * @group ZF-4843
+     */
+    public function testResourceLogging()
+    {
+        $this->_setupWithoutFrontController();
+        
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $firephp->send(array('file'=>tmpfile()));
+        
+        $messages = $protocol->getMessages();
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [0];
+        
+        $this->assertEquals(substr($message,0,41)
+                            , '[{"Type":"LOG"},{"file":"** Resource id #');
+    }
 }
 
 class Zend_Wildfire_WildfireTest_JsonEncodingTestClass

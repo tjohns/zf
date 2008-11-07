@@ -467,6 +467,11 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
     {
         $return = array();
         
+        if (is_resource($object)) {
+    
+            return '** '.(string)$object.' **';
+    
+        } else    
         if (is_object($object)) {
 
             if ($depth > $this->_maxObjectDepth) {
