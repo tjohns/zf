@@ -265,4 +265,18 @@ class Zend_Rest_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $this->assertEquals('string', $response->response());
     }
+
+    /**
+     * @group ZF-3705
+     * @group ZF-3647
+     */
+    public function testInvalidXmlInClientResultLeadsToException()
+    {
+        try {
+            $result = new Zend_Rest_Client_Result("invalidxml");
+            $this->fail();
+        } catch(Zend_Rest_Client_Result_Exception $e) {
+            
+        }
+    }
 }
