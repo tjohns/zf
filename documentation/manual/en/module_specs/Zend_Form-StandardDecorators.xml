@@ -193,6 +193,83 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.formErrors">
+        <title>Zend_Form_Decorator_FormErrors</title>
+
+        <para>
+            Some developers and designers prefer to group all error messages at
+            the top of the form. The FormErrors decorator allows you to do this.
+        </para>
+        
+        <para>
+            By default, the generated list of errors has the following markup:
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<ul class="form-errors>
+    <li><b>[element label or name]</b><ul>
+            <li>[error message]</li>
+            <li>[error message]</li>
+        </ul>
+    </li>
+    <li><ul>
+        <li><b>[subform element label or name</b><ul>
+                <li>[error message]</li>
+                <li>[error message]</li>
+            </ul>
+        </li>
+    </ul></li>
+</ul>
+]]></programlisting>
+
+        <para>
+            You can pass in a variety of options to configure the generated
+            output:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <code>ignoreSubForms</code>: whether or not to disable recursion
+                into subforms. Default value: false (i.e., allow recursion).
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupElementLabelEnd</code>: Markup to append to element
+                labels. Default value: '&lt;/b&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupElementLabelStart</code>: Markup to prepend to
+                element labels. Default value: '&lt;b&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListEnd</code>: Markup to append error message lists
+                with.  Default value: '&lt;/ul&gt;'.
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListItemEnd</code>: Markup to append individual
+                error messages with. Default value: '&lt;/li&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListItemStart</code>: Markup to prepend individual
+                error messages with. Default value: '&lt;li&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListStart</code>: Markup to append error message
+                lists with. Default value: '&lt;ul class="form-errors"&gt;'
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            The FormErrors decorator can either prepend or append the content
+            provided to it.
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.htmlTag">
         <title>Zend_Form_Decorator_HtmlTag</title>
 
