@@ -406,7 +406,6 @@ class Zend_Console_Getopt
                     $this->_addRulesModeZend($rules);
                     break;
                 }
-                $this->_getoptConfig['ruleMode'] = self::MODE_GNU;
                 // intentional fallthrough
             case self::MODE_GNU:
                 $this->_addRulesModeGnu($rules);
@@ -841,7 +840,7 @@ class Zend_Console_Getopt
     protected function _addRulesModeGnu($rules)
     {
         $ruleArray = array();
-
+        
         /**
          * Options may be single alphanumeric characters.
          * Options may have a ':' which indicates a required string parameter.

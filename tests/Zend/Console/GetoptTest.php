@@ -492,4 +492,17 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('mbp', $opts->getOption('man-bear-pig'));
     }
 
+    /**
+     * @group ZF-2064
+     */
+    public function testAddRulesDoesNotThrowWarnings()
+    {
+        // Fails if warning is thrown: Should not happen!
+        $opts = new Zend_Console_Getopt('abp:');
+        $opts->addRules(
+          array(
+            'verbose|v' => 'Print verbose output'
+          )
+        );
+    }
 }
