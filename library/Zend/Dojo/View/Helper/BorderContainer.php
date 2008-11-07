@@ -47,6 +47,12 @@ class Zend_Dojo_View_Helper_BorderContainer extends Zend_Dojo_View_Helper_DijitC
     protected $_module = 'dijit.layout.BorderContainer';
 
     /**
+     * Ensure style is only registered once
+     * @var bool
+     */
+    protected $_styleIsRegistered = false;
+
+    /**
      * dijit.layout.BorderContainer
      * 
      * @param  string $id 
@@ -62,7 +68,10 @@ class Zend_Dojo_View_Helper_BorderContainer extends Zend_Dojo_View_Helper_DijitC
         }
 
         // this will ensure that the border container is viewable:
-        $this->view->headStyle()->appendStyle('html, body { height: 100%; width: 100%; margin: 0; padding: 0; }');
+        if (!$this->_styleIsRegistered) {
+            $this->view->headStyle()->appendStyle('html, body { height: 100%; width: 100%; margin: 0; padding: 0; }');
+            $this->_styleIsRegistered = true;
+        }
 
         // and now we create it:
         return $this->_createLayoutContainer($id, $content, $params, $attribs);

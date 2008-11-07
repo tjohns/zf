@@ -118,6 +118,18 @@ class Zend_Dojo_View_Helper_BorderContainerTest extends PHPUnit_Framework_TestCa
         $this->assertNotRegexp('/<div[^>]*(dojoType="dijit.layout.BorderContainer")/', $html);
         $this->assertNotNull($this->view->dojo()->getDijit('container'));
     }
+
+    /**
+     * @group ZF-4664
+     */
+    public function testMultipleCallsToBorderContainerShouldNotCreateMultipleStyleEntries()
+    {
+        $this->getContainer();
+        $this->getContainer();
+        $style  = 'html, body { height: 100%; width: 100%; margin: 0; padding: 0; }';
+        $styles = $this->helper->view->headStyle()->toString();
+        $this->assertEquals(1, substr_count($styles, $style), $styles);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_BorderContainerTest::main() if this source file is executed directly.
