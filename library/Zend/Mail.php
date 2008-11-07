@@ -511,15 +511,23 @@ class Zend_Mail extends Zend_Mime_Message
      * @return Zend_Mail Provides fluent interface
      * @throws Zend_Mail_Exception if called subsequent times
      */
-    public function setFrom($email, $name = '')
+    public function setFrom($email, $name = null)
     {
         if ($this->_from === null) {
             $email = strtr($email,"\r\n\t",'???');
             $this->_from = $email;
-            if ($name != '') {
-                $name = '"' . $this->_encodeHeader($name) . '" ';
+            if ($name !== null && $name !== $email) {
+            	$encodedName = $this->_encodeHeader($name);
+                if ($encodedName === $name && strpos($name, ',') !== false) {
+                	$format = '"%s" <%s>';
+                } else {
+                	$format = '%s <%s>';
+                }
+                $from = sprintf($format, $encodedName, $email);
+            } else {
+            	$from = $email;
             }
-            $this->_storeHeader('From', $name.' <'.$email.'>', true);
+            $this->_storeHeader('From', $from, true);
         } else {
             /**
              * @see Zend_Mail_Exception
