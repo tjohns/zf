@@ -198,7 +198,7 @@ class Zend_Mime_Decode
         }
 
         $field = $firstName . '=' . $field;
-        if (!preg_match_all('%([^=\s]+)\s*=("[^"]+"|[^;]+)(;\s*|$)%', $field, $matches)) {
+        if (!preg_match_all('%([^=\s]+)\s*=\s*("[^"]+"|[^;]+)(;\s*|$)%', $field, $matches)) {
             throw new Zend_Exception('not a valid header field');
         }
 
