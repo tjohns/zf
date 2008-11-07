@@ -74,9 +74,10 @@ class Zend_Paginator_Adapter_DbSelect_OracleTest extends Zend_Paginator_Adapter_
 
         $this->_table = new TestTable($this->_db);
 
-        $this->_query = $this->_db->select()->from('test')->order('number ASC')->// ZF-3740
-limit(1000, 0); // ZF-3727
-
+        $this->_query = $this->_db->select()
+                                  ->from('test')
+                                  ->order('number ASC') // ZF-3740
+                                  ->limit(1000, 0);     // ZF-3727
 
         $this->_adapter = new Zend_Paginator_Adapter_DbSelect($this->_query);
     }
@@ -97,7 +98,13 @@ limit(1000, 0); // ZF-3727
                 'create table "test" (
                                "number"      NUMBER(5),
                                "testgroup"   NUMBER(3),
-                               constraint PK_TEST primary key ("number")
+                               constraint "pk_test" primary key ("number")
+                           )');
+        $this->_db->query(
+                'create table "test_empty" (
+                               "number"      NUMBER(5),
+                               "testgroup"   NUMBER(3),
+                               constraint "pk_test_empty" primary key ("number")
                            )');
     }
 
@@ -113,7 +120,20 @@ limit(1000, 0); // ZF-3727
     {
         try {
             $this->_db->query('drop table "test"');
-        } catch (Zend_Db_Statement_Oracle_Exception $e) {    //echo $e->getMessage();
-        }
+        } catch (Zend_Db_Statement_Oracle_Exception $e) {}
+        try {
+            $this->_db->query('drop table "test_empty"');
+        } catch (Zend_Db_Statement_Oracle_Exception $e) {}
+    }
+
+    public function testGroupByQueryOnEmptyTableReturnsRowCountZero()
+    {
+        $query = $this->_db->select()
+                           ->from('test_empty')
+                           ->order('number ASC')
+                           ->limit(1000, 0);
+        $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+
+        $this->assertEquals(0, $adapter->count());
     }
 }
