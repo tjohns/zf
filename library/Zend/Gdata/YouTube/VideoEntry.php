@@ -987,6 +987,29 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     }
 
     /**
+     * Helper function to conveniently set a video's rating.
+     *
+     * @param integer $ratingValue A number representing the rating. Must
+     *          be between 1 and 5 inclusive.
+     * @throws Zend_Gdata_Exception
+     * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface.
+     */
+    public function setVideoRating($ratingValue)
+    {
+        if ($ratingValue < 1 || $ratingValue > 5) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                'Rating for video entry must be between 1 and 5 inclusive.');
+        }
+
+         require_once 'Zend/Gdata/Extension/Rating.php';
+         $rating = new Zend_Gdata_Extension_Rating(null, 1, 5, null,
+            $ratingValue);
+        $this->setRating($rating);
+        return $this;
+    }
+
+    /**
      * Retrieve the URL for a video's comment feed.
      *
      * @return string|null The URL if found, or null if not found.

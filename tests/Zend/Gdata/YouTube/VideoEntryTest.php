@@ -580,4 +580,20 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
             'http://gdata.youtube.com/feeds/videos/UMFI1hdm96E/comments');
     }
 
+    public function testAddVideoEntryRating()
+    {
+        $this->entry->transferFromXML($this->entryText);
+        $ratingValue = 2;
+        $entryWithRating = $this->entry->setVideoRating($ratingValue);
+        $this->assertTrue(
+            $entryWithRating instanceof Zend_Gdata_YouTube_VideoEntry);
+
+        $rating = $entryWithRating->getRating();
+        $this->assertTrue(
+            $rating instanceof Zend_Gdata_Extension_Rating);
+
+        $this->assertEquals($rating->getValue(), $ratingValue);
+    }
+
+
 }
