@@ -169,6 +169,12 @@ class Zend_Controller_Router_Route_Regex extends Zend_Controller_Router_Route_Ab
         $mergedData = $this->_arrayMergeNumericKeys($mergedData, $matchedValuesMapped);
         $mergedData = $this->_arrayMergeNumericKeys($mergedData, $dataValuesMapped);
 
+        if ($encode) {
+            foreach ($mergedData as $key => &$value) {
+                $value = urlencode($value);
+            }
+        }	
+
         ksort($mergedData);
 
         $return = @vsprintf($this->_reverse, $mergedData);
