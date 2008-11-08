@@ -418,6 +418,10 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals('are you; funky=monkey; ', $client->getHeader('cookie'));
     }
     
+    /**
+     * @group ZF-4802
+     *
+     */
     public function testCorrectConcatenationOfCookies_2()
     {
     	require_once '/opt/local/apache2/htdocs/BugHuntDay/library/bughuntday/library/Zend/Http/Client.php';
