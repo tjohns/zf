@@ -638,7 +638,7 @@ class Zend_Http_Client
 
             if (isset($this->headers['cookie'][1]) && ';' != trim(substr($this->headers['cookie'][1], -1)))
             {
-            	$this->headers['cookie'][1] .= '; ';
+                $this->headers['cookie'][1] .= '; ';
             }
             $this->headers['cookie'][1] .= $cookie . '=' . $value . '; ';
         }
@@ -942,11 +942,11 @@ class Zend_Http_Client
         // Set the Accept-encoding header if not set - depending on whether
         // zlib is available or not.
         if (! isset($this->headers['accept-encoding'])) {
-        	if (function_exists('gzinflate')) {
-        		$headers[] = 'Accept-encoding: gzip, deflate';
-        	} else {
-        		$headers[] = 'Accept-encoding: identity';
-        	}
+            if (function_exists('gzinflate')) {
+                $headers[] = 'Accept-encoding: gzip, deflate';
+            } else {
+                $headers[] = 'Accept-encoding: identity';
+            }
         }
         
         // Set the Content-Type header
@@ -977,7 +977,7 @@ class Zend_Http_Client
 
         // Add all other user defined headers
         foreach ($this->headers as $header) {
-        	list($name, $value) = $header;
+            list($name, $value) = $header;
             if (is_array($value))
                 $value = implode(', ', $value);
 
