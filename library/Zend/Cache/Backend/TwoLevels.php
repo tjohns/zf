@@ -241,6 +241,8 @@ class Zend_Cache_Backend_TwoLevels extends Zend_Cache_Backend implements Zend_Ca
      *                                               ($tags can be an array of strings or a single string)
      * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
      *                                               ($tags can be an array of strings or a single string)
+     * Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG => remove cache entries matching any given tags
+     *                                               ($tags can be an array of strings or a single string)
      *
      * @param  string $mode Clean mode
      * @param  array  $tags Array of tags
@@ -266,6 +268,14 @@ class Zend_Cache_Backend_TwoLevels extends Zend_Cache_Backend implements Zend_Ca
                 break;
             case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
                 $ids = $this->_slowBackend->getIdsNotMatchingTags($tags);
+                $res = true;
+                foreach ($ids as $id) {
+                    $res = $res && $this->_slowBackend->remove($id) && $this->_fastBackend->remove($id);
+                }
+                return $res;
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                $ids = $this->_slowBackend->getIdsMatchingAnyTags($tags);
                 $res = true;
                 foreach ($ids as $id) {
                     $res = $res && $this->_slowBackend->remove($id) && $this->_fastBackend->remove($id);
@@ -323,6 +333,20 @@ class Zend_Cache_Backend_TwoLevels extends Zend_Cache_Backend implements Zend_Ca
     {
         return $this->_slowBackend->getIdsNotMatchingTags($tags);
     }
+
+    /**
+     * Return an array of stored cache ids which match any given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of any matching cache ids (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array())
+    {
+        return $this->_slowBackend->getIdsMatchingAnyTags($tags);
+    }
+    
     
     /**
      * Return the filling percentage of the backend storage
