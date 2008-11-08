@@ -1558,4 +1558,26 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group ZF-4379
+     */
+    public function testInputFilterWithValidatorAndEmptyArrayShouldFail()
+    {
+        $validator = array(
+            'age' => array(
+                'presence' => 'required',
+                'Int'
+            )
+        );
+
+        $data = array(
+            'age' => array()
+        );
+
+        $input = new Zend_Filter_Input(null, $validator, $data, array(Zend_Filter_Input::ALLOW_EMPTY => false));
+
+        if ($input->isValid()) {
+		$this->fail('Filtering input with an empty array should fail on the validator');
+        }
+    }
 }
