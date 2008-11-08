@@ -25,7 +25,7 @@
 require_once 'Zend/Gdata/App/MediaEntry.php';
 
 /**
- * Represents the GData flavor of an Atom entry
+ * Represents the Gdata flavor of an Atom entry
  *
  * @category   Zend
  * @package    Zend_Gdata

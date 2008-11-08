@@ -21,7 +21,7 @@
  */
 
 require_once 'Zend/Gdata/App.php';
-require_once 'Zend/GData/HttpClient.php';
+require_once 'Zend/Gdata/HttpClient.php';
 require_once 'Zend/Gdata/TestUtility/MockHttpClient.php';
 
 /**
@@ -107,7 +107,7 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
                 + 'Zend_Gdata_App_InvalidArgumentException');
     }
     
-    public function testNoGDataVersionHeaderSentWhenUsingV1()
+    public function testNoGdataVersionHeaderSentWhenUsingV1()
     {
         $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
         
@@ -124,7 +124,7 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($found, 'Version header found in V1 feed');
     }
     
-    public function testNoGDataVersionHeaderSentWhenUsingV1X()
+    public function testNoGdataVersionHeaderSentWhenUsingV1X()
     {
         $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
         
@@ -141,7 +141,7 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(!$found, 'Version header found in V1 feed');
     }
     
-    public function testGDataVersionHeaderSentWhenUsingV2()
+    public function testGdataVersionHeaderSentWhenUsingV2()
     {
         $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
         
@@ -158,7 +158,7 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($found, 'Version header not found or incorrect');
     }
     
-    public function testGDataVersionHeaderSentWhenUsingV2X()
+    public function testGdataVersionHeaderSentWhenUsingV2X()
     {
         $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
         

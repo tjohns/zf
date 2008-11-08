@@ -45,7 +45,7 @@ require_once 'Zend/Gdata/Extension/OpenSearchStartIndex.php';
 require_once 'Zend/Gdata/Extension/OpenSearchItemsPerPage.php';
 
 /**
- * The GData flavor of an Atom Feed
+ * The Gdata flavor of an Atom Feed
  *
  * @category   Zend
  * @package    Zend_Gdata

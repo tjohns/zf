@@ -36,7 +36,7 @@ require_once 'Zend/Gdata/Media.php';
 require_once 'Zend/Gdata/Media/Entry.php';
 
 /**
- * The GData flavor of an Atom Feed with media support
+ * The Gdata flavor of an Atom Feed with media support
  *
  * @category   Zend
  * @package    Zend_Gdata
