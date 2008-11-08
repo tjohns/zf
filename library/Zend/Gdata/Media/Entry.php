@@ -95,7 +95,7 @@ class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry
      */
     protected function takeChildFromDOM($child)
     {
-        $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;	
+        $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
         case $this->lookupNamespace('media') . ':' . 'group':
             $mediaGroup = new Zend_Gdata_Media_Extension_MediaGroup();
