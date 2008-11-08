@@ -37,7 +37,7 @@ require_once 'Zend/Amf/Value/Messaging/AsyncMessage.php';
  */
 class Zend_Amf_Value_Messaging_CommandMessage extends Zend_Amf_Value_Messaging_AsyncMessage
 {
-	/**
+    /**
      *  This operation is used to subscribe to a remote destination.
      *  @const int
      */
@@ -86,7 +86,7 @@ class Zend_Amf_Value_Messaging_CommandMessage extends Zend_Amf_Value_Messaging_A
      */
     const LOGIN_OPERATION = 8;
 
-	/**
+    /**
      * This operation is used to log the user out of the current channel, and
      * will invalidate the server session if the channel is HTTP based.
      * @const int

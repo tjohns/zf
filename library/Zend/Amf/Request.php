@@ -203,7 +203,7 @@ class Zend_Amf_Request
         return $this->_bodies;
     }
 
-	/**
+    /**
      * Accessor to private array of message bodies.
      *
      * @param  Zend_Amf_Value_MessageBody $message

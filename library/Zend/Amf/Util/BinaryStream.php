@@ -83,8 +83,8 @@ class Zend_Amf_Util_BinaryStream
         return $this->_stream;
     }
 
-	/**
-	 * Read the number of bytes in a row for the length supplied.
+    /**
+     * Read the number of bytes in a row for the length supplied.
      *
      * @todo   Should check that there are enough bytes left in the stream we are about to read.
      * @param  int $length
