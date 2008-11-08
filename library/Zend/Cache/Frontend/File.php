@@ -86,7 +86,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         }
     }
     
-	/**
+    /**
      * Public frontend to set an option
      *
      * Just a wrapper to get a specific behaviour for master_file

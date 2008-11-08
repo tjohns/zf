@@ -482,7 +482,7 @@ class Zend_Cache_Core
     
     /**
      * Return an array of stored tags
-	 *
+     *
      * @return array array of stored tags (string)
      */
     public function getTags()
