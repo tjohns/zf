@@ -833,18 +833,18 @@ class Zend_Filter_Input
                     $field = array($field);
                 }
                 if (!count($field)) {
-			if ($validatorRule[self::ALLOW_EMPTY] == true) {
+            if ($validatorRule[self::ALLOW_EMPTY] == true) {
                             continue;
                         }
-			$this->_invalidMessages[$validatorRule[self::RULE]] =
-			    $validatorRule[self::VALIDATOR_CHAIN]->getMessages();
-			$this->_invalidErrors[$validatorRule[self::RULE]] =
-			    $validatorRule[self::VALIDATOR_CHAIN]->getErrors();
-			unset($this->_validFields[$fieldKey]);
-			$failed = true;
-			if ($validatorRule[self::BREAK_CHAIN]) {
-			    return;
-			}
+            $this->_invalidMessages[$validatorRule[self::RULE]] =
+                $validatorRule[self::VALIDATOR_CHAIN]->getMessages();
+            $this->_invalidErrors[$validatorRule[self::RULE]] =
+                $validatorRule[self::VALIDATOR_CHAIN]->getErrors();
+            unset($this->_validFields[$fieldKey]);
+            $failed = true;
+            if ($validatorRule[self::BREAK_CHAIN]) {
+                return;
+            }
                 }
                 foreach ($field as $value) {
                     if (empty($value)) {

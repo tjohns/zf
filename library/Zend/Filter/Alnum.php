@@ -83,7 +83,7 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
         	$this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
         	self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
         											array('ja')
-									                );
+                                                    );
         }
        
     }
