@@ -36,14 +36,14 @@ require_once 'Zend/Captcha/Word.php';
 */
 class Zend_Captcha_Dumb extends Zend_Captcha_Word
 {
-	/**
-	 * Render the captcha
-	 *
-	 * @param  Zend_View $view
-	 * @param  mixed $element
-	 * @return string
-	 */
-	public function render(Zend_View_Interface $view, $element = null)
+    /**
+     * Render the captcha
+     *
+     * @param  Zend_View $view
+     * @param  mixed $element
+     * @return string
+     */
+    public function render(Zend_View_Interface $view, $element = null)
     {
         return 'Please type this word backwards: <b>'
              . strrev($this->getWord())

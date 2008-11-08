@@ -36,41 +36,41 @@ require_once 'Zend/Validate/Interface.php';
  */
 interface Zend_Captcha_Adapter extends Zend_Validate_Interface 
 {
-	/**
-	 * Generate a new captcha
+    /**
+     * Generate a new captcha
      *
-	 * @return string new captcha ID
-	 */
-	public function generate();
+     * @return string new captcha ID
+     */
+    public function generate();
 
-	/**
-	 * Display the captcha
-	 *
-	 * @param  Zend_View_Interface $view
-	 * @param  mixed $element
+    /**
+     * Display the captcha
+     *
+     * @param  Zend_View_Interface $view
+     * @param  mixed $element
      * @return string
-	 */
-	public function render(Zend_View_Interface $view, $element = null);
+     */
+    public function render(Zend_View_Interface $view, $element = null);
 
-	/**
-	 * Set captcha name
-	 *
-	 * @param  string $name
+    /**
+     * Set captcha name
+     *
+     * @param  string $name
      * @return Zend_Captcha_Adapter
-	 */
-	public function setName($name);
+     */
+    public function setName($name);
 
-	/**
-	 * Get captcha name
-	 * 
-	 * @return string
-	 */
-	public function getName();
+    /**
+     * Get captcha name
+     * 
+     * @return string
+     */
+    public function getName();
 
-	/**
-	 * Get optional private decorator for this captcha type
-	 *
-	 * @return Zend_Form_Decorator_Interface|string
-	 */
-	public function getDecorator();
+    /**
+     * Get optional private decorator for this captcha type
+     *
+     * @return Zend_Form_Decorator_Interface|string
+     */
+    public function getDecorator();
 }

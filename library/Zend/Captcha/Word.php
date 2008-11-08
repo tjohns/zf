@@ -120,51 +120,51 @@ abstract class Zend_Captcha_Word extends Zend_Captcha_Base
      */
     protected $_wordlen = 8;
 
-	/**
+    /**
      * Retrieve session class to utilize
      *
-	 * @return string
-	 */
+     * @return string
+     */
     public function getSessionClass()
     {
-		return $this->_sessionClass;
-	}
+        return $this->_sessionClass;
+    }
 
-	/**
+    /**
      * Set session class for persistence
      *
-	 * @param  string $_sessionClass
+     * @param  string $_sessionClass
      * @return Zend_Captcha_Word
-	 */
+     */
     public function setSessionClass($_sessionClass)
     {
-		$this->_sessionClass = $_sessionClass;
-		return $this;
-	}
+        $this->_sessionClass = $_sessionClass;
+        return $this;
+    }
 
-	/**
+    /**
      * Retrieve word length to use when genrating captcha
      *
-	 * @return integer
-	 */
+     * @return integer
+     */
     public function getWordlen()
     {
-		return $this->_wordlen;
-	}
+        return $this->_wordlen;
+    }
 
-	/**
+    /**
      * Set word length of captcha
      *
-	 * @param integer $wordlen
+     * @param integer $wordlen
      * @return Zend_Captcha_Word
-	 */
+     */
     public function setWordlen($wordlen)
     {
-		$this->_wordlen = $wordlen;
-		return $this;
-	}
+        $this->_wordlen = $wordlen;
+        return $this;
+    }
 
-	/**
+    /**
      * Retrieve captcha ID
      *
      * @return string
@@ -227,17 +227,17 @@ abstract class Zend_Captcha_Word extends Zend_Captcha_Base
         return $this->_session;
     }
 
-	/**
+    /**
      * Set session namespace object
      *
-	 * @param  Zend_Session_Namespace $session
+     * @param  Zend_Session_Namespace $session
      * @return Zend_Captcha_Word
-	 */
+     */
     public function setSession(Zend_Session_Namespace $session)
     {
-		$this->_session = $session;
-		return $this;
-	}
+        $this->_session = $session;
+        return $this;
+    }
 
     /**
      * Get captcha word
@@ -300,12 +300,12 @@ abstract class Zend_Captcha_Word extends Zend_Captcha_Base
      */
     public function generate()
     {
-	    $this->_session = null;
+        $this->_session = null;
         $id             = $this->_generateRandomId();
         $this->_setId($id);
         $word           = $this->_generateWord();
         $this->_setWord($word);
-	    return $id;
+        return $id;
     }
 
     protected function _generateRandomId()

@@ -52,7 +52,7 @@ class Zend_Captcha_Figlet extends Zend_Captcha_Word
      * @param  null|string|array|Zend_Config $options 
      * @return void
      */
-	public function __construct($options = null)
+    public function __construct($options = null)
     {
         parent::__construct($options);
         $this->_figlet = new Zend_Text_Figlet($options);
@@ -70,13 +70,13 @@ class Zend_Captcha_Figlet extends Zend_Captcha_Word
     }
 
  	/**
-	 * Display the captcha
-	 *
-	 * @param Zend_View $view
-	 * @param mixed $element
-	 * @return string
-	 */
-	public function render(Zend_View_Interface $view, $element = null)
+     * Display the captcha
+     *
+     * @param Zend_View $view
+     * @param mixed $element
+     * @return string
+     */
+    public function render(Zend_View_Interface $view, $element = null)
     {
         return '<pre>'
              . $this->_figlet->render($this->getWord())
