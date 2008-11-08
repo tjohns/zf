@@ -567,7 +567,7 @@ abstract class Zend_Controller_Action
      * @param mixed $default
      * @return mixed
      */
-    final protected function _getParam($paramName, $default = null)
+    protected function _getParam($paramName, $default = null)
     {
         $value = $this->getRequest()->getParam($paramName);
         if ((null == $value) && (null !== $default)) {
@@ -584,7 +584,7 @@ abstract class Zend_Controller_Action
      * @param mixed $value
      * @return Zend_Controller_Action
      */
-    final protected function _setParam($paramName, $value)
+    protected function _setParam($paramName, $value)
     {
         $this->getRequest()->setParam($paramName, $value);
 
@@ -598,7 +598,7 @@ abstract class Zend_Controller_Action
      * @param string $paramName
      * @return boolean
      */
-    final protected function _hasParam($paramName)
+    protected function _hasParam($paramName)
     {
         return null !== $this->getRequest()->getParam($paramName);
     }
@@ -609,7 +609,7 @@ abstract class Zend_Controller_Action
      *
      * @return array
      */
-    final protected function _getAllParams()
+    protected function _getAllParams()
     {
         return $this->getRequest()->getParams();
     }
