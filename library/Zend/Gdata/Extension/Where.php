@@ -50,9 +50,9 @@ class Zend_Gdata_Extension_Where extends Zend_Gdata_Extension
         $this->_entryLink = $entryLink;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_label !== null) {
             $element->setAttribute('label', $this->_label);
         }

@@ -35,7 +35,7 @@ class Zend_Gdata_Gapps_EmailListRecipientQueryTest extends PHPUnit_Framework_Tes
         $this->query = new Zend_Gdata_Gapps_EmailListRecipientQuery();
     }
 
-    // Test to make sure that the domain accessor methods work and propogate
+    // Test to make sure that the domain accessor methods work and propagate
     // to the query URI.
     public function testCanSetQueryDomain()
     {
@@ -51,7 +51,7 @@ class Zend_Gdata_Gapps_EmailListRecipientQueryTest extends PHPUnit_Framework_Tes
                 $this->query->getQueryUrl());
     }
 
-    // Test to make sure that the emailListName accessor methods work and propogate
+    // Test to make sure that the emailListName accessor methods work and propagate
     // to the query URI.
     public function testCanSetEmailListNameProperty()
     {

@@ -56,9 +56,9 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
         $this->_length = $length;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_href !== null) {
             $element->setAttribute('href', $this->_href);
         }

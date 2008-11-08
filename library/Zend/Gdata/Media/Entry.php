@@ -78,9 +78,9 @@ class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry
      * @return DOMElement The DOMElement representing this element and all
      *          child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_mediaGroup != null) {
             $element->appendChild($this->_mediaGroup->getDOM($element->ownerDocument));
         }

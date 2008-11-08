@@ -68,9 +68,9 @@ class Zend_Gdata_Media_Extension_MediaDescription extends Zend_Gdata_Extension
      * @return DOMElement The DOMElement representing this element and all 
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_type !== null) {
             $element->setAttribute('type', $this->_type);
         }

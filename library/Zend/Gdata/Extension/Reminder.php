@@ -53,9 +53,9 @@ class Zend_Gdata_Extension_Reminder extends Zend_Gdata_Extension
         $this->_minutes = $minutes;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_absoluteTime !== null) {
             $element->setAttribute('absoluteTime', $this->_absoluteTime);
         }

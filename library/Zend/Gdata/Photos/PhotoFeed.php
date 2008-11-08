@@ -150,9 +150,9 @@ class Zend_Gdata_Photos_PhotoFeed extends Zend_Gdata_Feed
         parent::__construct($element);
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_gphotoId != null) {
             $element->appendChild($this->_gphotoId->getDOM($element->ownerDocument));
         }

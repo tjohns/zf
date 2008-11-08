@@ -85,9 +85,9 @@ class Zend_Gdata_Spreadsheets_CellFeed extends Zend_Gdata_Feed
         parent::__construct($element);
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->rowCount != null) {
             $element->appendChild($this->_rowCount->getDOM($element->ownerDocument));
         }

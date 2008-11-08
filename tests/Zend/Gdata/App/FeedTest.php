@@ -104,4 +104,36 @@ class Zend_Gdata_App_FeedTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("Foo", $this->feed->entry[1]->title->text);
     }
 
+    public function testCanSetAndGetEtag() {
+        $data = "W/&amp;FooBarBaz&amp;";
+        $this->feed->setEtag($data);
+        $this->assertEquals($this->feed->getEtag(), $data);
+    }
+    
+    public function testSetServicePropagatesToChildren() {
+        // Setup
+        $entries = array(new Zend_Gdata_App_Entry(),
+                         new Zend_Gdata_App_Entry());
+        foreach ($entries as $entry) {
+            $this->feed->addEntry($entry);
+        }
+        
+        // Set new service instance and test for propagation
+        $s = new Zend_Gdata_App();
+        $this->feed->setService($s);
+        $this->assertEquals('Zend_Gdata_App',
+                            get_class($this->feed->getService()));
+        foreach ($entries as $entry) {
+            $this->assertEquals('Zend_Gdata_App',
+                                get_class($entry->getService()));
+        }
+        
+        // Set null service instance and test for propagation
+        $s = null;
+        $this->feed->setService($s);
+        $this->assertEquals(null, get_class($this->feed->getService()));
+        foreach ($entries as $entry) {
+            $this->assertEquals(null, get_class($entry->getService()));
+        }
+    }
 }

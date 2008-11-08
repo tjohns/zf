@@ -47,9 +47,9 @@ class Zend_Gdata_Extension_ExtendedProperty extends Zend_Gdata_Extension
         $this->_value = $value;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_name !== null) {
             $element->setAttribute('name', $this->_name);
         }

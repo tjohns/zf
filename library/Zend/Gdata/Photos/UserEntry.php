@@ -154,9 +154,9 @@ class Zend_Gdata_Photos_UserEntry extends Zend_Gdata_Entry
      * @return DOMElement The DOMElement representing this element and all
      *          child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_gphotoNickname !== null) {
             $element->appendChild($this->_gphotoNickname->getDOM($element->ownerDocument));
         }

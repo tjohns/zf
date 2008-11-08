@@ -49,9 +49,9 @@ class Zend_Gdata_App_Extension_Category extends Zend_Gdata_App_Extension
         $this->_label = $label;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_term !== null) {
             $element->setAttribute('term', $this->_term);
         }

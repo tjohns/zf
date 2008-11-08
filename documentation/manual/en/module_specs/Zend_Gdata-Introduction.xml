@@ -330,6 +330,26 @@ $gdata = new Zend_Gdata($client);
         </programlisting>
 
         <para>
+            Beginning with Zend Framework 1.7, support has been added for
+            protocol versioning. This allows the client and server to support
+            new features while maintaining backwards compatibility. While most
+            services will manage this for you, if you create a Zend_Gdata
+            instance directly (as opposed to one of it's subclasses), you may
+            need to specify the desired protocol version to access certain
+            server functionality.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client();
+$client->setConfig( ...options... );
+
+$gdata = new Zend_Gdata($client);
+$gdata->setMajorProtocolVersion(2);
+$gdata->setMinorProtocolVersion(null);
+]]>
+        </programlisting>
+
+        <para>
             Also see the sections on authentication for methods to
             create an authenticated Zend_Http_Client object.
         </para>

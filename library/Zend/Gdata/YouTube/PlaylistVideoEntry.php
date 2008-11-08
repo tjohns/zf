@@ -75,9 +75,9 @@ class Zend_Gdata_YouTube_PlaylistVideoEntry extends Zend_Gdata_YouTube_VideoEntr
      * @return DOMElement The DOMElement representing this element and all 
      * child properties. 
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_position !== null) {
             $element->appendChild($this->_position->getDOM($element->ownerDocument));
         }

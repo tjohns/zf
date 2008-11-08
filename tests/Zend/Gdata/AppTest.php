@@ -16,12 +16,13 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage UnitTests
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2006-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Http/Client.php';
 require_once 'Zend/Gdata/App.php';
+require_once 'Zend/GData/HttpClient.php';
+require_once 'Zend/Gdata/TestUtility/MockHttpClient.php';
 
 /**
  * @package Zend_Gdata
@@ -32,18 +33,448 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->fileName = 'Zend/Gdata/App/_files/FeedSample1.xml';
+        $this->expectedEtag = 'W/"CkcHQH8_fCp7ImA9WxRTGEw."';
+        $this->httpEntrySample = file_get_contents(
+                'Zend/Gdata/_files/AppSample1.txt',
+                true);
+        
+        $this->adapter = new Test_Zend_Gdata_MockHttpClient();
+        $this->client = new Zend_Gdata_HttpClient();
+        $this->client->setAdapter($this->adapter);
+        $this->service = new Zend_Gdata_App($this->client);
     }
-
+    
     public function testImportFile()
     {
         $feed = Zend_Gdata_App::importFile($this->fileName, 
                 'Zend_Gdata_App_Feed', true);
         $this->assertEquals('dive into mark', $feed->title->text);
     }
-
+    
     public function testSetAndGetHttpMethodOverride()
     {
         Zend_Gdata_App::setHttpMethodOverride(true);
         $this->assertEquals(true, Zend_Gdata_App::getHttpMethodOverride());
     }
+    
+    public function testSetAndGetProtocolVersion()
+    {
+        $this->service->setMajorProtocolVersion(2);
+        $this->service->setMinorProtocolVersion(1);
+        $this->assertEquals(2, $this->service->getMajorProtocolVersion());
+        $this->assertEquals(1, $this->service->getMinorProtocolVersion());
+    }
+    
+    public function testDefaultProtocolVersionIs1X()
+    {
+        $this->assertEquals(1, $this->service->getMajorProtocolVersion());
+        $this->assertEquals(null, $this->service->getMinorProtocolVersion());
+    }
+    
+    public function testMajorProtocolVersionCannotBeLessThanOne()
+    {
+        $exceptionCaught = false;
+        try {
+            $this->service->setMajorProtocolVersion(0);
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Expected exception not caught: '
+                + 'Zend_Gdata_App_InvalidArgumentException');
+    }
+    
+    public function testMajorProtocolVersionCannotBeNull()
+    {
+        $exceptionCaught = false;
+        try {
+            $this->service->setMajorProtocolVersion(null);
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Expected exception not caught: '
+                + 'Zend_Gdata_App_InvalidArgumentException');
+    }
+    
+    public function testMinorProtocolVersionCannotBeLessThanZero()
+    {
+        $exceptionCaught = false;
+        try {
+            $this->service->setMinorProtocolVersion(-1);
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Expected exception not caught: '
+                + 'Zend_Gdata_App_InvalidArgumentException');
+    }
+    
+    public function testNoGDataVersionHeaderSentWhenUsingV1()
+    {
+        $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
+        
+        $this->service->setMajorProtocolVersion(1);
+        $this->service->setMinorProtocolVersion(NULL);
+        $this->service->get('http://www.example.com');
+        
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if (strstr($header, 'GData-Version:'))
+                $found = true;
+        }
+        $this->assertFalse($found, 'Version header found in V1 feed');
+    }
+    
+    public function testNoGDataVersionHeaderSentWhenUsingV1X()
+    {
+        $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
+        
+        $this->service->setMajorProtocolVersion(1);
+        $this->service->setMinorProtocolVersion(1);
+        $this->service->get('http://www.example.com');
+        
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if (strstr($header, 'GData-Version:'))
+                $found = true;
+        }
+        $this->assertTrue(!$found, 'Version header found in V1 feed');
+    }
+    
+    public function testGDataVersionHeaderSentWhenUsingV2()
+    {
+        $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
+        
+        $this->service->setMajorProtocolVersion(2);
+        $this->service->setMinorProtocolVersion(NULL);
+        $this->service->get('http://www.example.com');
+        
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'GData-Version: 2')
+                $found = true;
+        }
+        $this->assertTrue($found, 'Version header not found or incorrect');
+    }
+    
+    public function testGDataVersionHeaderSentWhenUsingV2X()
+    {
+        $this->adapter->setResponse(array('HTTP/1.1 200 OK\r\n\r\n'));
+        
+        $this->service->setMajorProtocolVersion(2);
+        $this->service->setMinorProtocolVersion(1);
+        $this->service->get('http://www.example.com');
+        
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'GData-Version: 2')
+                $found = true;
+        }
+        $this->assertTrue($found, 'Version header not found or incorrect');
+    }
+    
+    public function testHTTPETagsPropagateToEntriesOnGet()
+    {
+        $this->adapter->setResponse($this->httpEntrySample);   
+        $entry = $this->service->getEntry('http://www.example.com');
+        $this->assertEquals($this->expectedEtag, $entry->getEtag());
+    }
+    
+    public function testHTTPETagsPropagateToEntriesOnUpdate()
+    {
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = new Zend_Gdata_App_Entry();
+        $newEntry = $this->service->updateEntry($entry, 'http://www.example.com');
+        $this->assertEquals($this->expectedEtag, $newEntry->getEtag());
+    }
+    
+    public function testHTTPEtagsPropagateToEntriesOnInsert()
+    {
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = new Zend_Gdata_App_Entry();
+        $newEntry = $this->service->insertEntry($entry, 'http://www.example.com');
+        $this->assertEquals($this->expectedEtag, $newEntry->getEtag());
+    }
+    
+    public function testIfMatchHTTPHeaderSetOnUpdate()
+    {
+        $etag = 'ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->link = array(new Zend_Gdata_App_Extension_Link(
+                'http://www.example.com',
+                'edit',
+                'application/atom+xml'));
+        $entry->setEtag($etag);
+        $this->service->updateEntry($entry);
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-Match header not found or incorrect');
+    }
+    
+    public function testIfMatchHTTPHeaderSetOnUpdateIfWeak()
+    {
+        $etag = 'W/ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->link = array(new Zend_Gdata_App_Extension_Link(
+                'http://www.example.com',
+                'edit',
+                'application/atom+xml'));
+        $entry->setEtag($etag);
+        $this->service->updateEntry($entry);
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertFalse($found, 'If-Match header found');
+    }
+    
+    public function testIfMatchHTTPHeaderSetOnSave()
+    {
+        $etag = 'ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = $this->service->newEntry();
+        $entry->link = array(new Zend_Gdata_App_Extension_Link(
+                'http://www.example.com',
+                'edit',
+                'application/atom+xml'));
+        $entry->setEtag($etag);
+        $entry->setService($this->service);
+        $entry->save();
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-Match header not found or incorrect');
+    }
+    
+    public function testIfMatchHTTPHeaderNotSetOnDelete()
+    {
+        $etag = 'ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = $this->service->newEntry();
+        $entry->link = array(new Zend_Gdata_App_Extension_Link(
+                'http://www.example.com',
+                'edit',
+                'application/atom+xml'));
+        $entry->setEtag($etag);
+        $entry->setService($this->service);
+        $entry->delete();
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertFalse($found, 'If-Match header found on delete');
+    }
+    
+    public function testIfMatchHTTPHeaderSetOnManualPost()
+    {
+        $etag = 'ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = $this->service->newEntry();
+        $entry->setEtag($etag);
+        $entry->setService($this->service);
+        $this->service->post($entry, 'http://www.example.com');
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-Match header not found or incorrect');
+    }
+    
+    public function testIfMatchHTTPHeaderSetOnManualPut()
+    {
+        $etag = 'ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = $this->service->newEntry();
+        $entry->link = array(new Zend_Gdata_App_Extension_Link(
+                'http://www.example.com',
+                'edit',
+                'application/atom+xml'));
+        $entry->setEtag($etag);
+        $entry->setService($this->service);
+        $this->service->put($entry);
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-Match header not found or incorrect');
+    }
+    
+    public function testIfMatchHTTPHeaderSetOnManualDelete()
+    {
+        $etag = 'ABCD1234';
+        $this->adapter->setResponse("HTTP/1.1 201 Created");
+        $this->service->setMajorProtocolVersion(2);
+        $entry = $this->service->newEntry();
+        $entry->link = array(new Zend_Gdata_App_Extension_Link(
+                'http://www.example.com',
+                'edit',
+                'application/atom+xml'));
+        $entry->setEtag($etag);
+        $entry->setService($this->service);
+        $this->service->delete($entry);
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etag)
+                $found = true;
+        }
+        $this->assertFalse($found, 'If-Match header found on delete');
+    }
+    
+    public function testIfMatchHeaderCanBeSetOnInsert() {
+        $etagOverride = 'foo';
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $newEntry = $this->service->insertEntry($entry,
+                'http://www.example.com',
+                'Zend_Gdata_App_Entry',
+                array('If-Match' => $etagOverride));
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etagOverride)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-Match header not found or incorrect');
+    }
+    
+    public function testIfNoneMatchHeaderCanBeSetOnInsert() {
+        $etagOverride = 'foo';
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $newEntry = $this->service->insertEntry($entry,
+                'http://www.example.com',
+                'Zend_Gdata_App_Entry',
+                array('If-None-Match' => $etagOverride));
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-None-Match: ' . $etagOverride)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-None-Match header not found or incorrect ');
+    }
+    
+    public function testIfMatchHeaderCanBeSetOnUpdate() {
+        $etagOverride = 'foo';
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $newEntry = $this->service->updateEntry($entry,
+                'http://www.example.com',
+                'Zend_Gdata_App_Entry',
+                array('If-Match' => $etagOverride));
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-Match: ' . $etagOverride)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-Match header not found or incorrect or incorrect');
+    }
+    
+    public function testIfNoneMatchHeaderCanBeSetOnUpdate() {
+        $etagOverride = 'foo';
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $newEntry = $this->service->updateEntry($entry,
+                'http://www.example.com',
+                'Zend_Gdata_App_Entry',
+                array('If-None-Match' => $etagOverride));
+        $headers = $this->adapter->popRequest()->headers;
+        $found = false;
+        foreach ($headers as $header) {
+            if ($header == 'If-None-Match: ' . $etagOverride)
+                $found = true;
+        }
+        $this->assertTrue($found, 'If-None-Match header not found or incorrect');
+    }
+    
+    public function testGenerateIfMatchHeaderDataReturnsEtagIfV2() {
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $result = $this->service->generateIfMatchHeaderData($entry, false);
+        $this->assertEquals($etag, $result);
+    }
+    
+    public function testGenerateIfMatchHeaderDataReturnsNullIfV1() {
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(1);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $result = $this->service->generateIfMatchHeaderData($entry, false);
+        $this->assertEquals(null, $result);
+    }
+    
+    public function testGenerateIfMatchHeaderDataReturnsNullIfNotEntry() {
+        $this->service->setMajorProtocolVersion(2);
+        $result = $this->service->generateIfMatchHeaderData("Hello world", false);
+        $this->assertEquals(null, $result);
+    }
+    
+    public function testGenerateIfMatchHeaderDataReturnsNullIfWeak() {
+        $etag = 'W/ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $result = $this->service->generateIfMatchHeaderData($entry, false);
+        $this->assertEquals(null, $result);
+    }
+    
+    public function testGenerateIfMatchHeaderDataReturnsEtagIfWeakAndFlagSet() {
+        $etag = 'W/ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $result = $this->service->generateIfMatchHeaderData($entry, true);
+        $this->assertEquals($etag, $result);
+    }
+    
+    public function testGenerateIfMatchHeaderDataReturnsEtagIfNotWeakAndFlagSet() {
+        $etag = 'ABCD1234';
+        $this->service->setMajorProtocolVersion(2);
+        $entry = new Zend_Gdata_App_Entry();
+        $entry->setEtag($etag);
+        $result = $this->service->generateIfMatchHeaderData($entry, true);
+        $this->assertEquals($etag, $result);
+    }
+
 }

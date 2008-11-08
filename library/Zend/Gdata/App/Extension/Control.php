@@ -51,9 +51,9 @@ class Zend_Gdata_App_Extension_Control extends Zend_Gdata_App_Extension
         $this->_draft = $draft;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_draft != null) {
             $element->appendChild($this->_draft->getDOM($element->ownerDocument));
         }

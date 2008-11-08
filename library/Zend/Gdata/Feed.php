@@ -91,9 +91,9 @@ class Zend_Gdata_Feed extends Zend_Gdata_App_Feed
         parent::__construct($element);
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_totalResults != null) {
             $element->appendChild($this->_totalResults->getDOM($element->ownerDocument));
         }

@@ -57,9 +57,9 @@ class Zend_Gdata_Spreadsheets_CellEntry extends Zend_Gdata_Entry
         parent::__construct($element);
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_cell != null) {
             $element->appendChild($this->_cell->getDOM($element->ownerDocument));
         }

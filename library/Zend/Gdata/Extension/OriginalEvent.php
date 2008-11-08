@@ -58,9 +58,9 @@ class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension
         $this->_when = $when;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_id !== null) {
             $element->setAttribute('id', $this->_id);
         }

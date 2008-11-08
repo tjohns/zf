@@ -68,7 +68,7 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
      * @return DOMElement The DOMElement representing this element and all
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc);
         if ($this->_value !== null) {

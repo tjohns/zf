@@ -56,9 +56,9 @@ class Zend_Gdata_Extension_When extends Zend_Gdata_Extension
         $this->_reminders = $reminders;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_startTime !== null) {
             $element->setAttribute('startTime', $this->_startTime);
         }

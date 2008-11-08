@@ -113,9 +113,9 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
     protected $_originalEvent = null;
     protected $_entryLink = null;
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_who != null) {
             foreach ($this->_who as $who) {
                 $element->appendChild($who->getDOM($element->ownerDocument));

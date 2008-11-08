@@ -45,6 +45,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $service = 'blogger';
         $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
         $this->gdata = new Zend_Gdata($client);
+        $this->gdata->setMajorProtocolVersion(2);
     }
 
     public function testPostAndDeleteByEntry()

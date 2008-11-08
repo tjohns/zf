@@ -58,7 +58,7 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
         $date = Zend_Gdata_App_Util::formatTimestamp('2024-03-19T01:38:12Z');
         $this->assertEquals('2024-03-19T01:38:12Z', $date);
     }
-    
+
     public function testFormatTimestampUsingLowercaseTAndZ()
     {
         // assert that a correctly formatted timestamp is not modified
@@ -72,14 +72,14 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
         $date = Zend_Gdata_App_Util::formatTimestamp('2007/07/13');
         $this->assertEquals('2007-07-13T00:00:00', $date);
     }
-    
+
     public function testFormatTimestampFromInteger()
     {
         $ts = 1164960000; // Fri Dec  1 00:00:00 PST 2006
         $date = Zend_Gdata_App_Util::formatTimestamp($ts);
         $this->assertEquals('2006-12-01T08:00:00+00:00', $date);
     }
-    
+
     public function testExceptionFormatTimestampNonsense()
     {
         $util = new Zend_Gdata_App_Util();
@@ -92,7 +92,7 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
         // Excetion not thrown, this is bad.
         $this->fail("Exception not thrown.");
     }
-    
+
     public function testExceptionFormatTimestampSemiInvalid()
     {
         $util = new Zend_Gdata_App_Util();
@@ -105,7 +105,7 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
         // Excetion not thrown, this is bad.
         $this->fail("Exception not thrown.");
     }
-    
+
     public function testExceptionFormatTimestampInvalidTime()
     {
         $util = new Zend_Gdata_App_Util();
@@ -144,5 +144,70 @@ class Zend_Gdata_App_UtilTest extends PHPUnit_Framework_TestCase
         // Excetion not thrown, this is bad.
         $this->fail("Exception not thrown.");
     }
-        
+
+    public function testFindGreatestBoundedValueReturnsMax() {
+        $data = array(-1 => null,
+                      0 => null,
+                      1 => null,
+                      2 => null,
+                      3 => null,
+                      5 => null,
+                      -2 => null);
+        $result = Zend_Gdata_App_Util::findGreatestBoundedValue(99, $data);
+        $this->assertEquals(5, $result);
+    }
+
+    public function testFindGreatestBoundedValueReturnsMaxWhenBounded() {
+        $data = array(-1 => null,
+                      0 => null,
+                      1 => null,
+                      2 => null,
+                      3 => null,
+                      5 => null,
+                      -2 => null);
+        $result = Zend_Gdata_App_Util::findGreatestBoundedValue(4, $data);
+        $this->assertEquals(3, $result);
+    }
+
+    public function testFindGreatestBoundedValueReturnsMaxWhenUnbounded() {
+        $data = array(-1 => null,
+                      0 => null,
+                      1 => null,
+                      2 => null,
+                      3 => null,
+                      5 => null,
+                      -2 => null);
+        $result = Zend_Gdata_App_Util::findGreatestBoundedValue(null, $data);
+        $this->assertEquals(5, $result);
+    }
+
+    public function testFindGreatestBoundedValueReturnsZeroWhenZeroBounded() {
+        $data = array(-1 => null,
+                      0 => null,
+                      1 => null,
+                      2 => null,
+                      3 => null,
+                      5 => null,
+                      -2 => null);
+        $result = Zend_Gdata_App_Util::findGreatestBoundedValue(0, $data);
+        $this->assertEquals(0, $result);
+    }
+
+    public function testFindGreatestBoundedValueFailsWhenNegativelyBounded() {
+        $data = array(-1 => null,
+                      0 => null,
+                      1 => null,
+                      2 => null,
+                      3 => null,
+                      5 => null,
+                      -2 => null);
+        try {
+            $result = Zend_Gdata_App_Util::findGreatestBoundedValue(-1, $data);
+            $failed = true;
+        } catch (Zend_Gdata_App_Exception $e) {
+            $failed = false;
+        }
+        $this->assertFalse($failed, 'Exception not raised.');
+    }
+
 }

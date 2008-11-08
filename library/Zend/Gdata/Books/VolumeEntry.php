@@ -153,7 +153,7 @@ class Zend_Gdata_Books_VolumeEntry extends Zend_Gdata_Entry
      * @return DOMElement The DOMElement representing this element and all
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
         $element = parent::getDOM($doc);
         if ($this->_creators !== null) {
