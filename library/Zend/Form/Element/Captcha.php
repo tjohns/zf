@@ -30,27 +30,27 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
      */
     protected $_captcha;
     
-	/**
-	 * Get captcha adapter
-	 * 
-	 * @return Zend_Captcha_Adapter
-	 */
+    /**
+     * Get captcha adapter
+     * 
+     * @return Zend_Captcha_Adapter
+     */
     public function getCaptcha() 
     {
-		return $this->_captcha;
-	}
-	
-	/**
-	 * Set captcha adapter
-	 * 
-	 * @param string|array|Zend_Captcha_Adapter $captcha
-	 * @param array $options
-	 */
+        return $this->_captcha;
+    }
+    
+    /**
+     * Set captcha adapter
+     * 
+     * @param string|array|Zend_Captcha_Adapter $captcha
+     * @param array $options
+     */
     public function setCaptcha($captcha, $options = array()) 
     {
-	    if ($captcha instanceof Zend_Captcha_Adapter) {
+        if ($captcha instanceof Zend_Captcha_Adapter) {
             $instance = $captcha;
-	    } else {
+        } else {
     	    if (is_array($captcha)) {
                 if (array_key_exists('captcha', $captcha)) {
                     $name = $captcha['captcha'];
@@ -74,12 +74,12 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
                     $instance = $r->newInstance();
                 }
             }
-	    }
-	    
+        }
+        
         $this->_captcha = $instance;
         $this->_captcha->setName($this->getName());
         return $this;
-	}
+    }
 
     /**
      * Constructor
@@ -92,9 +92,9 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
      * @param  string|array|Zend_Config $spec 
      * @return void
      */
-	public function __construct($spec, $options = null) 
-	{
-		parent::__construct($spec, $options);
+    public function __construct($spec, $options = null) 
+    {
+        parent::__construct($spec, $options);
     	$this->setAllowEmpty(true)
     	     ->setRequired(true)
              ->setAutoInsertNotEmptyValidator(false)

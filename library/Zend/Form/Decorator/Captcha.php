@@ -58,7 +58,7 @@ class Zend_Form_Decorator_Captcha extends Zend_Form_Decorator_Abstract
         $separator = $this->getSeparator();
 
         $captcha = $element->getCaptcha();
-	    $markup  = $captcha->render($view, $element);
+        $markup  = $captcha->render($view, $element);
         switch ($placement) {
             case 'PREPEND':
                 $content = $markup . $separator .  $content;
