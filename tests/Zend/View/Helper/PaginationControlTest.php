@@ -169,6 +169,22 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
         $output = $this->_viewHelper->paginationControl($paginator);
         $this->assertContains('page count (3)', $output, $output);
     }
+
+    /**
+     * @group ZF-4878
+     */
+    public function testCanUseObjectForScrollingStyle()
+    {
+        $all = new Zend_Paginator_ScrollingStyle_All();
+
+        try {
+            $output = $this->_viewHelper->paginationControl($this->_paginator, $all, 'testPagination.phtml');
+        } catch (Exception $e) {
+            $this->fail('Could not use object for sliding style');
+        }
+
+        $this->assertContains('page count (11) equals pages in range (11)', $output, $output);
+    }
 }
 
 // Call Zend_View_Helper_PaginationControlTest::main() if this source file is executed directly.
