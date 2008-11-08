@@ -142,22 +142,21 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-    	switch ($mode) {
-    		case Zend_Cache::CLEANING_MODE_ALL:
-    			return apc_clear_cache('user');
-    			break;
-    		case Zend_Cache::CLEANING_MODE_OLD:
-    			$this->_log("Zend_Cache_Backend_Apc::clean() : CLEANING_MODE_OLD is unsupported by the Apc backend");
-    			break;
-    		case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
-    		case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
-    		case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
-            	$this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND);
-            	break;
-           	default:
-            	$this->_log("Zend_Cache_Backend_Apc::clean() : illegal mode is specified");
-           		break;
-    	}
+        switch ($mode) {
+            case Zend_Cache::CLEANING_MODE_ALL:
+                return apc_clear_cache('user');
+            case Zend_Cache::CLEANING_MODE_OLD:
+                $this->_log("Zend_Cache_Backend_Apc::clean() : CLEANING_MODE_OLD is unsupported by the Apc backend");
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                $this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND);
+                break;
+            default:
+                $this->_log("Zend_Cache_Backend_Apc::clean() : illegal mode is specified");
+                break;
+        }
     }
 
     /**

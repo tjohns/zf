@@ -130,12 +130,12 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             Zend_Cache::throwException('Invalid metadatas_array_max_size, must be > 10');
         }
         if (isset($options['hashed_directory_umask']) && is_string($options['hashed_directory_umask'])) {
-        	// See #ZF-4422
-        	$this->_options['hashed_directory_umask'] = octdec($this->_options['hashed_directory_umask']);    	
+            // See #ZF-4422
+            $this->_options['hashed_directory_umask'] = octdec($this->_options['hashed_directory_umask']);
         }
-    	if (isset($options['cache_file_umask']) && is_string($options['cache_file_umask'])) {
-        	// See #ZF-4422
-        	$this->_options['cache_file_umask'] = octdec($this->_options['cache_file_umask']);    	
+        if (isset($options['cache_file_umask']) && is_string($options['cache_file_umask'])) {
+            // See #ZF-4422
+            $this->_options['cache_file_umask'] = octdec($this->_options['cache_file_umask']);
         }
     }
 
