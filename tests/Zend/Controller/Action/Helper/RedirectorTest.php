@@ -434,6 +434,28 @@ class Zend_Controller_Action_Helper_RedirectorTest extends PHPUnit_Framework_Tes
         $test = $this->redirector->getRedirectUrl();
         $this->assertEquals('/account/login', $test, $test);
     }
+
+    /**
+     * @group ZF-4318
+     */
+    public function testServerVariableHttpsToOffDoesNotBuildHttpsUrl()
+    {
+        // Set Preconditions from Issue:
+        $_SERVER['HTTPS'] = "off";
+        $_SERVER['HTTP_HOST'] = 'localhost';
+        $_SERVER['SERVER_PORT'] = 80;
+        $this->redirector->setUseAbsoluteUri(true);
+
+        $this->request->setModuleName('admin')
+                      ->setControllerName('class')
+                      ->setActionName('view');
+        $this->redirector->gotoUrl('/bar/baz');
+        $test = $this->redirector->getRedirectUrl();
+
+        $this->assertNotContains('https://', $test);
+        $this->assertEquals('http://localhost/bar/baz', $test);
+    }
+
     /**#@-*/
 }
 
