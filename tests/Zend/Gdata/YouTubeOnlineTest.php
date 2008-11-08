@@ -43,7 +43,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    public function testRetrieveSubScriptionFeed() 
+    public function testRetrieveSubScriptionFeed()
     {
         $feed = $this->gdata->getSubscriptionFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
