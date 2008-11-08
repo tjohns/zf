@@ -95,7 +95,8 @@ class Zend_Gdata extends Zend_Gdata_App
      * Create Gdata object
      *
      * @param Zend_Http_Client $client
-     * @param string $applicationId The identity of the app in the form of Company-AppName-Version
+     * @param string $applicationId The identity of the app in the form of
+     *          Company-AppName-Version
      */
     public function __construct($client = null, $applicationId = 'MyCompany-MyApp-1.0')
     {
@@ -171,11 +172,11 @@ class Zend_Gdata extends Zend_Gdata_App
 
     /**
      * Performs a HTTP request using the specified method.
-     * 
+     *
      * Overrides the definition in the parent (Zend_Gdata_App)
      * and uses the Zend_Gdata_HttpClient functionality
      * to filter the HTTP requests and responses.
-     *  
+     *
      * @param string $method The HTTP method for the request -
      *                       'GET', 'POST', 'PUT', 'DELETE'
      * @param string $url The URL to which this request is being performed,
@@ -204,4 +205,19 @@ class Zend_Gdata extends Zend_Gdata_App
         }
     }
 
+    /**
+     * Determines whether service object is authenticated.
+     *
+     * @return boolean True if service object is authenticated, false otherwise.
+     */
+    public function isAuthenticated()
+    {
+        $client = parent::getHttpClient();
+        if ($client->getClientLoginToken() ||
+            $client->getAuthSubToken()) {
+                return true;
+        }
+
+        return false;
+    }
 }

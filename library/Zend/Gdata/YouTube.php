@@ -61,8 +61,8 @@ require_once 'Zend/Gdata/YouTube/ContactFeed.php';
 require_once 'Zend/Gdata/YouTube/PlaylistVideoFeed.php';
 
 /**
- * Service class for interacting with the services which use the media extensions
- * @link http://code.google.com/apis/gdata/calendar.html
+ * Service class for interacting with the YouTube Data API.
+ * @link http://code.google.com/apis/youtube/
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -176,22 +176,46 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     /**
      * Retrieves a specific video entry.
      *
-     * @param mixed $videoId The videoId of interest
-     *         Zend_Gdata_Query object from which a URL can be determined
+     * @param mixed $videoId The ID of the video to retrieve.
      * @param mixed $location (optional) The URL to query or a
-     *         Zend_Gdata_Query object from which a URL can be determined
-     * @return Zend_Gdata_YouTube_VideoEntry The feed of videos found at the
+     *         Zend_Gdata_Query object from which a URL can be determined.
+     * @param boolean $fullEntry (optional) Retrieve the full metadata for the
+     *         entry. Only possible if entry belongs to currently authenticated
+     *         user. An exception will be thrown otherwise.
+     * @throws Zend_Gdata_App_HttpException
+     * @return Zend_Gdata_YouTube_VideoEntry The video entry found at the
      *         specified URL.
      */
-    public function getVideoEntry($videoId = null, $location = null)
+    public function getVideoEntry($videoId = null, $location = null,
+        $fullEntry = false)
     {
         if ($videoId !== null) {
-            $uri = self::VIDEO_URI . "/" . $videoId;
+            if ($fullEntry) {
+                return $this->getFullVideoEntry($videoId);
+            } else {
+                $uri = self::VIDEO_URI . "/" . $videoId;
+            }
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
             $uri = $location;
         }
+        return parent::getEntry($uri, 'Zend_Gdata_YouTube_VideoEntry');
+    }
+
+    /**
+     * Retrieves a video entry from the user's upload feed.
+     *
+     * @param mixed $videoID The ID of the video to retrieve.
+     * @throws Zend_Gdata_App_HttpException
+     * @return Zend_Gdata_YouTube_VideoEntry|null The video entry to be
+     *          retrieved, or null if it was not found or the user requesting it
+     *          did not have the appropriate permissions.
+     */
+    public function getFullVideoEntry($videoId)
+    {
+        $uri = self::USER_URI . "/default/" .
+            self::UPLOADS_URI_SUFFIX . "/$videoId";
         return parent::getEntry($uri, 'Zend_Gdata_YouTube_VideoEntry');
     }
 
@@ -504,6 +528,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      * Helper function for parsing a YouTube token response
      *
      * @param string $response The service response
+     * @throws Zend_Gdata_App_Exception
      * @return array An array containing the token and URL
      */
     public static function parseFormUploadTokenResponse($response)
@@ -548,6 +573,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      *
      * @param Zend_Gdata_YouTube_VideoEntry $videoEntry The video entry
      * @param string $url The location as a string URL
+     * @throws Zend_Gdata_App_Exception
      * @return array An array containing a token and URL
      */
     public function getFormUploadToken($videoEntry, $url='http://gdata.youtube.com/action/GetUploadToken')
@@ -557,8 +583,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
             $response = $this->post($videoEntry, $url);
             return self::parseFormUploadTokenResponse($response->getBody());
         } else {
-            throw new Zend_Gdata_App_Exception('url must be provided as a string URL');
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_Exception('Url must be provided as a string URL');
         }
     }
-
 }
