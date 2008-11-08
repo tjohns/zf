@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 12226 -->
+<!-- EN-Revision: 12280 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -919,6 +919,18 @@
     <xi:include href="ref/coding_standard.xml">
         <xi:fallback><xi:include href="../en/ref/coding_standard.xml" /></xi:fallback>
     </xi:include>
+    <appendix id="performance">
+        <title>Zend Framework Performance Guide</title>
+        <xi:include href="ref/performance-introduction.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="ref/performance-classloading.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="ref/performance-localization.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-localization.xml" /></xi:fallback>
+        </xi:include>
+    </appendix>
     <xi:include href="ref/copyrights.xml">
         <xi:fallback><xi:include href="../en/ref/copyrights.xml" /></xi:fallback>
     </xi:include>
