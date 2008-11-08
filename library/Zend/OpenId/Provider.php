@@ -702,10 +702,10 @@ class Zend_OpenId_Provider
 
         if ($version >= 2.0) {
         	if (!empty($this->_opEndpoint)) {
-	            $ret['openid.op_endpoint'] = $this->_opEndpoint;
+                $ret['openid.op_endpoint'] = $this->_opEndpoint;
         	} else {
-	            $ret['openid.op_endpoint'] = Zend_OpenId::selfUrl();
-	        }
+                $ret['openid.op_endpoint'] = Zend_OpenId::selfUrl();
+            }
         }
         $ret['openid.response_nonce'] = gmdate('Y-m-d\TH:i:s\Z') . uniqid();
         $ret['openid.mode'] = 'id_res';
