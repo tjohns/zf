@@ -712,7 +712,7 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
 
     public function testToJson()
     {
-        if (function_exists('json_encode')) {
+        if (!function_exists('json_encode')) {
             $this->markTestSkipped('json_encode not available. See ZF-4874.');
         }
         
