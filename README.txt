@@ -5,7 +5,7 @@ overall quality of the production release through the feedback we recieve. In
 particular, *your* feedback will help make the Zend Framework 1.7 production release
 a success, so please post your comments and questions to the appropriate mailing list
 and bring bugs to our attention by creating an issue in our issue tracker:
-
+ 
 http://framework.zend.com/issues
 
 RELEASE INFORMATION
