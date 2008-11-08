@@ -170,11 +170,11 @@ class Zend_Pdf_Element_Dictionary extends Zend_Pdf_Element
      */
     public function toPhp()
     {
-    	$phpArray = array();
+        $phpArray = array();
 
-    	foreach ($this->_items as $itemName => $item) {
-    		$phpArray[$itemName] = $item->toPhp();
-    	}
+        foreach ($this->_items as $itemName => $item) {
+            $phpArray[$itemName] = $item->toPhp();
+        }
 
         return $phpArray;
     }

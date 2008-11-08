@@ -730,7 +730,7 @@ class Zend_Pdf
                         break;
 
                     default:
-                    	// Set property using PDF type based on PHP type
+                        // Set property using PDF type based on PHP type
                         $docInfo->$key = Zend_Pdf_Element::phpToPdf($value);
                         break;
                 }

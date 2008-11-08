@@ -629,13 +629,13 @@ class Zend_Pdf_Page
      */
     public function setAlpha($alpha, $mode = 'Normal')
     {
-    	if (!in_array($mode, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge',
-    	                           'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion'))) {
-    	   throw new Zend_Pdf_Exception('Unsupported transparency mode.');
-    	}
-    	if (!is_numeric($alpha)  ||  $alpha < 0  ||  $alpha > 1) {
-    		throw new Zend_Pdf_Exception('Alpha value must be numeric between 0 (transparent) and 1 (opaque).');
-    	}
+        if (!in_array($mode, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge',
+                                   'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion'))) {
+            throw new Zend_Pdf_Exception('Unsupported transparency mode.');
+        }
+        if (!is_numeric($alpha)  ||  $alpha < 0  ||  $alpha > 1) {
+            throw new Zend_Pdf_Exception('Alpha value must be numeric between 0 (transparent) and 1 (opaque).');
+        }
 
         $this->_addProcSet('Text');
         $this->_addProcSet('PDF');

@@ -187,9 +187,9 @@ class Zend_Pdf_Resource_Font_FontDescriptor
                 if ($fontParser instanceof Zend_Pdf_FileParser_Font_OpenType_Type1 /* not implemented now */) {
                     $fontDescriptor->FontFile  = $fontFileObject;
                 } else if ($fontParser instanceof Zend_Pdf_FileParser_Font_OpenType_TrueType) {
-                	$fontDescriptor->FontFile2 = $fontFileObject;
+                    $fontDescriptor->FontFile2 = $fontFileObject;
                 } else {
-                	$fontDescriptor->FontFile3 = $fontFileObject;
+                    $fontDescriptor->FontFile3 = $fontFileObject;
                 }
             }
         }

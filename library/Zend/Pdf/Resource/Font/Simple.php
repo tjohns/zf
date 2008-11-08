@@ -131,7 +131,7 @@ abstract class Zend_Pdf_Resource_Font_Simple extends Zend_Pdf_Resource_Font
      */
     public function glyphNumbersForCharacters($characterCodes)
     {
-    	return $this->_cmap->glyphNumbersForCharacters($characterCodes);
+        return $this->_cmap->glyphNumbersForCharacters($characterCodes);
     }
 
     /**
