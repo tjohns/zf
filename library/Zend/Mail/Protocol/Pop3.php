@@ -186,9 +186,9 @@ class Zend_Mail_Protocol_Pop3
             $message = '';
             $line = fgets($this->_socket);
             while ($line && rtrim($line, "\r\n") != '.') {
-            	if ($line[0] == '.') {
-            		$line = substr($line, 1);
-            	}
+                if ($line[0] == '.') {
+                    $line = substr($line, 1);
+                }
                 $message .= $line;
                 $line = fgets($this->_socket);
             };

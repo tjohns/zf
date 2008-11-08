@@ -141,13 +141,13 @@ class Zend_Mail_Storage_Mbox extends Zend_Mail_Storage_Abstract
      */
     public function getMessage($id)
     {
-    	// TODO that's ugly, would be better to let the message class decide
-    	if (strtolower($this->_messageClass) == 'zend_mail_message_file' || is_subclass_of($this->_messageClass, 'zend_mail_message_file')) {
-    	    // TODO top/body lines
-    	    $messagePos = $this->_getPos($id);
-    	    return new $this->_messageClass(array('file' => $this->_fh, 'startPos' => $messagePos['start'],
-    	                                          'endPos' => $messagePos['end']));
-    	}
+        // TODO that's ugly, would be better to let the message class decide
+        if (strtolower($this->_messageClass) == 'zend_mail_message_file' || is_subclass_of($this->_messageClass, 'zend_mail_message_file')) {
+            // TODO top/body lines
+            $messagePos = $this->_getPos($id);
+            return new $this->_messageClass(array('file' => $this->_fh, 'startPos' => $messagePos['start'],
+                                                  'endPos' => $messagePos['end']));
+        }
 
         $bodyLines = 0; // TODO: need a way to change that
 
