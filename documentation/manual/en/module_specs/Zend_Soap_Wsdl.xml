@@ -351,7 +351,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
             <para>
                 Its detection and building algorithm is based on the currently
                 active detection strategy for complex types. You can set the detection strategy either by
-                specifying the the class name as string or instance of a <code>Zend_Soap_Wsdl_Strategy_Interface</code>
+                specifying the class name as string or instance of a <code>Zend_Soap_Wsdl_Strategy_Interface</code>
                 implementation as the third parameter of the constructor or using the <code>setComplexTypeStrategy($strategy)</code>
                 function of Zend_Soap_Wsdl. The following detection strategies currently exist:
             </para>
