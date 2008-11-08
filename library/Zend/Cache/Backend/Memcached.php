@@ -54,6 +54,12 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     const DEFAULT_PERSISTENT = true;
 
+	/**
+	 * Log message
+	 */
+	const TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND = 'Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend';
+	const TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND =  'Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcached backend';
+    
     /**
      * Available options
      *
@@ -196,11 +202,10 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      *
      * Available modes are :
      * 'all' (default)  => remove all cache entries ($tags is not used)
-     * 'old'            => remove too old cache entries ($tags is not used)
-     * 'matchingTag'    => remove cache entries matching all given tags
-     *                     ($tags can be an array of strings or a single string)
-     * 'notMatchingTag' => remove cache entries not matching one of the given tags
-     *                     ($tags can be an array of strings or a single string)
+     * 'old'            => unsupported
+     * 'matchingTag'    => unsupported
+     * 'notMatchingTag' => unsupported
+     * 'matchingAnyTag' => unsupported
      *
      * @param  string $mode Clean mode
      * @param  array  $tags Array of tags
@@ -208,18 +213,22 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-        if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
-            return $this->_memcache->flush();
-        }
-        if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
-            $this->_log("Zend_Cache_Backend_Memcached::clean() : CLEANING_MODE_OLD is unsupported by the Memcached backend");
-        }
-        if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
-            $this->_log("Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend");
-        }
-        if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
-            $this->_log("Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend");
-        }
+    	switch ($mode) {
+    		case Zend_Cache::CLEANING_MODE_ALL:
+    			return $this->_memcache->flush();
+    			break;
+    		case Zend_Cache::CLEANING_MODE_OLD:
+    			$this->_log("Zend_Cache_Backend_Memcached::clean() : CLEANING_MODE_OLD is unsupported by the Memcached backend");
+    			break;
+    		case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+    		case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+    		case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            	$this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND);
+            	break;
+           	default:
+            	$this->_log("Zend_Cache_Backend_Memcached::clean() : illegal mode is specified");
+           		break;
+		}
     }
 
     /**
@@ -267,8 +276,8 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     public function getTags()
     {
-        $this->_log("Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcache backend");
-        return array();
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND);
+    	return array();
     }
     
     /**
@@ -281,7 +290,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     public function getIdsMatchingTags($tags = array())
     {
-        $this->_log("Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcache backend");
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND);
         return array();
     }
 
@@ -295,10 +304,24 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */    
     public function getIdsNotMatchingTags($tags = array())
     {
-        $this->_log("Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcache backend");
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND);
         return array();
     }
     
+    /**
+     * Return an array of stored cache ids which match any given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of any matching cache ids (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array())
+    {
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND);
+        return array();         
+    }
+
     /**
      * Return the filling percentage of the backend storage
      *
