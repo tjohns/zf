@@ -67,6 +67,15 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         $table = new Zend_Db_Table_TableBugs($config);
     }
+    
+    /**
+     * @group ZF-2666
+     */
+    public function testIsIdentity()
+    {
+        $bugs = $this->_table['bugs'];
+        $this->assertTrue($bugs->isIdentity('bug_id'));
+    }
 
     /**
      * @group ZF-2510
