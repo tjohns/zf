@@ -224,7 +224,8 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
      * @param Zend_Gdata_App_Entry $value The value to set
      * @return void
      */
-    public function offsetSet($key, $value) {
+    public function offsetSet($key, $value)
+    {
         $this->_entry[$key] = $value;
     }
 
@@ -234,7 +235,8 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
      * @param int $key The index to get
      * @param Zend_Gdata_App_Entry $value The value to set
      */
-    public function offsetGet($key) {
+    public function offsetGet($key)
+    {
         if (array_key_exists($key, $this->_entry)) {
             return $this->_entry[$key];
         }
@@ -246,7 +248,8 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
      * @param int $key The index to set
      * @param Zend_Gdata_App_Entry $value The value to set
      */
-    public function offsetUnset($key) {
+    public function offsetUnset($key)
+    {
         if (array_key_exists($key, $this->_entry)) {
             unset($this->_entry[$key]);
         }
@@ -258,8 +261,51 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
      * @param int $key The index to check for existence
      * @return boolean
      */
-    public function offsetExists($offset) {
+    public function offsetExists($key)
+    {
         return (array_key_exists($key, $this->_entry));
+    }
+
+   /**
+     * Retrieve the next set of results from this feed.
+     *
+     * @throws Zend_Gdata_App_Exception
+     * @return mixed|null Returns the next set of results as a feed of the same
+     *          class as this feed, or null if no results exist.
+     */
+    public function getNextFeed()
+    {
+        $nextLink = $this->getNextLink();
+        if (!$nextLink) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_Exception('No link to next set ' .
+            'of results found.');
+        }
+        $nextLinkHref = $nextLink->getHref();
+        $service = new Zend_Gdata_App($this->getHttpClient());
+
+        return $service->getFeed($nextLinkHref, get_class($this));
+    }
+
+   /**
+     * Retrieve the previous set of results from this feed.
+     *
+     * @throws Zend_Gdata_App_Exception
+     * @return mixed|null Returns the previous set of results as a feed of
+     *          the same class as this feed, or null if no results exist.
+     */
+    public function getPreviousFeed()
+    {
+        $previousLink = $this->getPreviousLink();
+        if (!$previousLink) {
+            require_once 'Zend/Gdata/App/HttpException.php';
+            throw new Zend_Gdata_App_Exception('No link to previous set ' .
+            'of results found.');
+        }
+        $previousLinkHref = $previousLink->getHref();
+        $service = new Zend_Gdata_App($this->getHttpClient());
+
+        return $service->getFeed($previousLinkHref, get_class($this));
     }
 
 }

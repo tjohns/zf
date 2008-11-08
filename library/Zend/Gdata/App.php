@@ -273,7 +273,7 @@ class Zend_Gdata_App
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'You cannot enable gzipped responses if the zlib module ' .
                     'is not enabled in your PHP installation.');
-        
+
         }
         self::$_gzipEnabled = $enabled;
     }
@@ -291,7 +291,7 @@ class Zend_Gdata_App
     /**
      * Get whether to use verbose exception messages
      *
-     * In the case of HTTP errors,  use the body of the HTTP response 
+     * In the case of HTTP errors,  use the body of the HTTP response
      * in the exception message.
      *
      * @return boolean
@@ -304,7 +304,7 @@ class Zend_Gdata_App
     /**
      * Set whether to use verbose exception messages
      *
-     * In the case of HTTP errors, use the body of the HTTP response 
+     * In the case of HTTP errors, use the body of the HTTP response
      * in the exception message.
      *
      * @param boolean $verbose Whether to use verbose exception messages
@@ -336,26 +336,26 @@ class Zend_Gdata_App
     }
 
     /**
-     * Provides pre-processing for HTTP requests to APP services.  
+     * Provides pre-processing for HTTP requests to APP services.
      *
-     * 1. Checks the $data element and, if it's an entry, extracts the XML, 
+     * 1. Checks the $data element and, if it's an entry, extracts the XML,
      *    multipart data, edit link (PUT,DELETE), etc.
-     * 2. If $data is a string, sets the default content-type  header as 
+     * 2. If $data is a string, sets the default content-type  header as
      *    'application/atom+xml' if it's not already been set.
-     * 3. Adds a x-http-method override header and changes the HTTP method 
+     * 3. Adds a x-http-method override header and changes the HTTP method
      *    to 'POST' if necessary as per getHttpMethodOverride()
      *
-     * @param string $method The HTTP method for the request - 'GET', 'POST', 
+     * @param string $method The HTTP method for the request - 'GET', 'POST',
      *                       'PUT', 'DELETE'
-     * @param string $url The URL to which this request is being performed, 
+     * @param string $url The URL to which this request is being performed,
      *                    or null if found in $data
-     * @param array $headers An associative array of HTTP headers for this 
+     * @param array $headers An associative array of HTTP headers for this
      *                       request
-     * @param mixed $data The Zend_Gdata_App_Entry or XML for the  
+     * @param mixed $data The Zend_Gdata_App_Entry or XML for the
      *                    body of the request
-     * @param string $contentTypeOverride The override value for the 
+     * @param string $contentTypeOverride The override value for the
      *                                    content type of the request body
-     * @return array An associative array containing the determined 
+     * @return array An associative array containing the determined
      *               'method', 'url', 'data', 'headers', 'contentType'
      */
     public function prepareRequest($method, $url = null, $headers = array(), $data = null, $contentTypeOverride = null)
@@ -375,7 +375,7 @@ class Zend_Gdata_App
             $rawData = $data->encode();
             if ($data->getMediaSource() !== null) {
                 $finalContentType = 'multipart/related; boundary="' . $data->getBoundary() . '"';
-                $headers['MIME-version'] = '1.0'; 
+                $headers['MIME-version'] = '1.0';
                 $headers['Slug'] = $data->getMediaSource()->getSlug();
             } else {
                 $finalContentType = 'application/atom+xml';
@@ -422,13 +422,13 @@ class Zend_Gdata_App
     /**
      * Performs a HTTP request using the specified method
      *
-     * @param string $method The HTTP method for the request - 'GET', 'POST', 
+     * @param string $method The HTTP method for the request - 'GET', 'POST',
      *                       'PUT', 'DELETE'
      * @param string $url The URL to which this request is being performed
-     * @param array $headers An associative array of HTTP headers 
+     * @param array $headers An associative array of HTTP headers
      *                       for this request
      * @param string $body The body of the HTTP request
-     * @param string $contentType The value for the content type 
+     * @param string $contentType The value for the content type
      *                                of the request body
      * @param int $remainingRedirects Number of redirects to follow if request
      *                              s results in one
@@ -447,7 +447,7 @@ class Zend_Gdata_App
         if (($method == 'POST' || $method == 'PUT') && $body === null && $headers['x-http-method-override'] != 'DELETE') {
                 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException(
-                        'You must specify the data to post as either a ' . 
+                        'You must specify the data to post as either a ' .
                         'string or a child of Zend_Gdata_App_Entry');
         }
         if ($url === null) {
@@ -467,7 +467,7 @@ class Zend_Gdata_App
         }
 
         // Make sure the HTTP client object is 'clean' before making a request
-        // In addition to standard headers to reset via resetParameters(), 
+        // In addition to standard headers to reset via resetParameters(),
         // also reset the Slug header
         $this->_httpClient->resetParameters();
         $this->_httpClient->setHeaders('Slug', null);
@@ -540,14 +540,14 @@ class Zend_Gdata_App
     public function importUrl($url, $className='Zend_Gdata_App_Feed')
     {
         $response = $this->get($url);
-        
+
         $feedContent = $response->getBody();
         $feed = self::importString($feedContent, $className);
         if ($this->getHttpClient() != null) {
             $feed->setHttpClient($this->getHttpClient());
-        }   
+        }
         return $feed;
-    }   
+    }
 
 
     /**
@@ -627,11 +627,11 @@ class Zend_Gdata_App
     public function post($data, $uri = null, $remainingRedirects = null,
             $contentType = null, $extraHeaders = null)
     {
-        $requestData = $this->prepareRequest('POST', $uri, $extraHeaders, 
+        $requestData = $this->prepareRequest('POST', $uri, $extraHeaders,
                                              $data, $contentType);
         return $this->performHttpRequest(
-                $requestData['method'], $requestData['url'], 
-                $requestData['headers'], $requestData['data'], 
+                $requestData['method'], $requestData['url'],
+                $requestData['headers'], $requestData['data'],
                 $requestData['contentType']);
     }
 
@@ -653,8 +653,8 @@ class Zend_Gdata_App
     {
         $requestData = $this->prepareRequest('PUT', $uri, $extraHeaders, $data, $contentType);
         return $this->performHttpRequest(
-                $requestData['method'], $requestData['url'], 
-                $requestData['headers'], $requestData['data'], 
+                $requestData['method'], $requestData['url'],
+                $requestData['headers'], $requestData['data'],
                 $requestData['contentType']);
     }
 
@@ -672,10 +672,10 @@ class Zend_Gdata_App
         if (is_string($data)) {
             $requestData = $this->prepareRequest('DELETE', $data);
         } else {
-            $requestData = $this->prepareRequest('DELETE', null, null, $data); 
+            $requestData = $this->prepareRequest('DELETE', null, null, $data);
         }
-        return $this->performHttpRequest($requestData['method'], $requestData['url'], 
-                                         $requestData['headers'], '', $requestData['contentType'], 
+        return $this->performHttpRequest($requestData['method'], $requestData['url'],
+                                         $requestData['headers'], '', $requestData['contentType'],
                                          $remainingRedirects);
     }
 
@@ -709,7 +709,7 @@ class Zend_Gdata_App
         } elseif ($className === null) {
             $className = 'Zend_Gdata_App_Entry';
         }
-        
+
         $response = $this->put($data, $uri);
         $returnEntry = new $className($response->getBody());
         $returnEntry->setHttpClient(self::getstaticHttpClient());
@@ -759,12 +759,12 @@ class Zend_Gdata_App
 
     /**
      * Retrieve all entries for a feed, iterating through pages as necessary.
-     * Be aware that calling this function on a large dataset will take a 
-     * significant amount of time to complete. In some cases this may cause 
+     * Be aware that calling this function on a large dataset will take a
+     * significant amount of time to complete. In some cases this may cause
      * execution to timeout without proper precautions in place.
      *
      * @param $feed The feed to iterate through.
-     * @return mixed A new feed of the same type as the one originally 
+     * @return mixed A new feed of the same type as the one originally
      *          passed in, containing all relevent entries.
      */
     public function retrieveAllEntriesForFeed($feed) {
@@ -775,7 +775,7 @@ class Zend_Gdata_App
             foreach ($feed as $entry) {
                 $result->addEntry($entry);
             }
-            
+
             $next = $feed->getLink('next');
             if ($next !== null) {
                 $feed = $this->getFeed($next->href, $feedClass);
@@ -792,14 +792,69 @@ class Zend_Gdata_App
      * Zend_Http_Client_Adapter used for performing the requests.
      * NOTE: This will not work if you have customized the adapter
      * already to use a proxy server or other interface.
-     * 
+     *
      * @param $logfile The logfile to use when logging the requests
      */
-    public function enableRequestDebugLogging($logfile) 
+    public function enableRequestDebugLogging($logfile)
     {
         $this->_httpClient->setConfig(array(
             'adapter' => 'Zend_Gdata_App_LoggingHttpClientAdapterSocket',
             'logfile' => $logfile
             ));
     }
+
+    /**
+     * Retrieve next set of results based on a given feed.
+     *
+     * @param Zend_Gdata_App_Feed $feed The feed from which to
+     *          retreive the next set of results.
+     * @param string $className (optional) The class of feed to be returned.
+     *          If null, the next feed (if found) will be the same class as
+     *          the feed that was given as the first argument.
+     * @return Zend_Gdata_App_Feed|null Returns a
+     *          Zend_Gdata_App_Feed or null if no next set of results
+     *          exists.
+     */
+    public function getNextFeed($feed, $className = null)
+    {
+        $nextLink = $feed->getNextLink();
+        if (!$nextLink) {
+            return null;
+        }
+        $nextLinkHref = $nextLink->getHref();
+
+        if (is_null($className)) {
+            $className = get_class($feed);
+        }
+
+        return $this->getFeed($nextLinkHref, $className);
+    }
+
+    /**
+     * Retrieve previous set of results based on a given feed.
+     *
+     * @param Zend_Gdata_App_Feed $feed The feed from which to
+     *          retreive the previous set of results.
+     * @param string $className (optional) The class of feed to be returned.
+     *          If null, the previous feed (if found) will be the same class as
+     *          the feed that was given as the first argument.
+     * @return Zend_Gdata_App_Feed|null Returns a
+     *          Zend_Gdata_App_Feed or null if no previous set of results
+     *          exists.
+     */
+    public function getPreviousFeed($feed, $className = null)
+    {
+        $previousLink = $feed->getPreviousLink();
+        if (!$previousLink) {
+            return null;
+        }
+        $previousLinkHref = $previousLink->getHref();
+
+        if (is_null($className)) {
+            $className = get_class($feed);
+        }
+
+        return $this->getFeed($previousLinkHref, $className);
+    }
+
 }
