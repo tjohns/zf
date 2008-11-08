@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12412 -->
 <sect1 id="zend.cache.theory">
     <title>Die Theorie des Cachens</title>
     <para>
@@ -111,9 +111,9 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
         </programlisting>
         <para>
             Mögliche Löschmodi sind: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
-            <code>CLEANING_MODE_MATCHING_TAG</code> und <code>CLEANING_MODE_NOT_MATCHING_TAG</code>.
-            Die letzteren sind, wie deren Namen vermuten lassen, kombiniert mit einem Array von Markierungen
-            für die Löschoperation.
+            <code>CLEANING_MODE_MATCHING_TAG</code>, <code>CLEANING_MODE_NOT_MATCHING_TAG</code> und
+            <code>CLEANING_MODE_MATCHING_ANY_TAG</code>. Die letzteren sind, wie deren Namen vermuten
+            lassen, kombiniert mit einem Array von Markierungen für die Löschoperation.
         </para>
     </sect2>
 </sect1>

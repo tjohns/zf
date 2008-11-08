@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12339 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>Beispiele</title>
 
@@ -156,8 +156,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         <para>
             Sobald das fertig ist, können wir unsere Tests schreiben. Trotzdem, was ist mit den Tests die
             erfordern das der Benutzer angemeldet ist? Die einfache Lösung besteht darin das unsere
-            Anwendungslogik das macht... und ein bischen trickst indem die <code>resetResponse()</code>
-            Methode verwendet wird, die es uns erlaubt eine andere Anfrage abzusetzen.
+            Anwendungslogik das macht... und ein bischen trickst indem die <code>resetRequest()</code> und
+            <code>resetResponse()</code> Methoden verwendet werden, die es uns erlauben eine andere Anfrage
+            abzusetzen.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -167,16 +168,19 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function loginUser($user, $password)
     {
-        $request = $this->getRequest();
-        $request->setMethod('POST')
-                ->setPost(array(
-                    'username' => $user,
-                    'password' => $password,
-                ));
+        $this->request->setMethod('POST')
+                      ->setPost(array(
+                          'username' => $user,
+                          'password' => $password,
+                      ));
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
-        $this->resetResponse();
-        $request->setPost(array());
+        $this->resetRequest()
+             ->resetResponse();
+
+        $this->request->setPost(array());
+
+        // ...
     }
 
     // ...
