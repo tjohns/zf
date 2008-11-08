@@ -235,10 +235,10 @@ class Zend_Paginator implements Countable, IteratorAggregate
                                    array $prefixPaths = null)
     {
         if ($adapter == self::INTERNAL_ADAPTER) {
-        	if (is_array($data)) {
-        		$adapter = 'Array';
-        	} else if ($data instanceof Zend_Db_Table_Select) {
-        		$adapter = 'DbTableSelect';
+            if (is_array($data)) {
+                $adapter = 'Array';
+            } else if ($data instanceof Zend_Db_Table_Select) {
+                $adapter = 'DbTableSelect';
             } else if ($data instanceof Zend_Db_Select) {
                 $adapter = 'DbSelect';
             } else if ($data instanceof Iterator) {
@@ -260,9 +260,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
         $pluginLoader = self::getAdapterLoader();
         
         if (null !== $prefixPaths) {
-        	foreach ($prefixPaths as $prefix => $path) {
-        		$pluginLoader->addPrefixPath($prefix, $path);
-        	}
+            foreach ($prefixPaths as $prefix => $path) {
+                $pluginLoader->addPrefixPath($prefix, $path);
+            }
         }
         
         $adapterClassName = $pluginLoader->load($adapter);
@@ -308,7 +308,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
             self::addScrollingStylePrefixPaths($prefixPaths->prefixpath->toArray());
         }
         
-    	$scrollingStyle = $config->get('scrollingstyle');
+        $scrollingStyle = $config->get('scrollingstyle');
         
         if ($scrollingStyle != null) {
             self::setDefaultScrollingStyle($scrollingStyle);
@@ -426,13 +426,13 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function clearPageItemCache($pageNumber = null)
     {
-    	if (null === $pageNumber) {
-    		$this->_pageItems = array();
-    	} else if (isset($this->_pageItems[$pageNumber])) {
-    		unset($this->_pageItems[$pageNumber]);
-    	}
-    	
-    	return $this;
+        if (null === $pageNumber) {
+            $this->_pageItems = array();
+        } else if (isset($this->_pageItems[$pageNumber])) {
+            unset($this->_pageItems[$pageNumber]);
+        }
+
+        return $this;
     }
     
     /**
@@ -816,7 +816,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function toJson()
     {
-    	return Zend_Json::encode($this->getCurrentItems());
+        return Zend_Json::encode($this->getCurrentItems());
     }
     
     /**

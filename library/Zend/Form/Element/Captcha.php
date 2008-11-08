@@ -51,20 +51,20 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
         if ($captcha instanceof Zend_Captcha_Adapter) {
             $instance = $captcha;
         } else {
-    	    if (is_array($captcha)) {
+            if (is_array($captcha)) {
                 if (array_key_exists('captcha', $captcha)) {
                     $name = $captcha['captcha'];
                     unset($captcha['captcha']);
                 } else {
                     $name = array_shift($captcha);
                 }
-    	        $options = array_merge($options, $captcha);
-    	    } else {
-    	        $name = $captcha;
-    	    }
+                $options = array_merge($options, $captcha);
+            } else {
+                $name = $captcha;
+            }
 
-    	    $name = $this->getPluginLoader(self::CAPTCHA)->load($name);
-    	    if (empty($options)) {
+            $name = $this->getPluginLoader(self::CAPTCHA)->load($name);
+            if (empty($options)) {
                 $instance = new $name;
             } else {
                 $r = new ReflectionClass($name);
@@ -95,11 +95,11 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
     public function __construct($spec, $options = null) 
     {
         parent::__construct($spec, $options);
-    	$this->setAllowEmpty(true)
-    	     ->setRequired(true)
+        $this->setAllowEmpty(true)
+             ->setRequired(true)
              ->setAutoInsertNotEmptyValidator(false)
-    	     ->addValidator($this->getCaptcha(), true);
-    }	
+             ->addValidator($this->getCaptcha(), true);
+    }
 
     /**
      * Set options
@@ -148,7 +148,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
 
         $this->setValue($this->getCaptcha()->generate());
 
-    	return parent::render($view);
+        return parent::render($view);
     }
     
     /**

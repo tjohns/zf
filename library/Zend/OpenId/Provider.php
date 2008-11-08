@@ -145,7 +145,7 @@ class Zend_OpenId_Provider
      */
     public function setOpEndpoint($url)
     {
-    	$this->_opEndpoint = $url;
+        $this->_opEndpoint = $url;
     }
 
     /**
@@ -701,9 +701,9 @@ class Zend_OpenId_Provider
         }
 
         if ($version >= 2.0) {
-        	if (!empty($this->_opEndpoint)) {
+            if (!empty($this->_opEndpoint)) {
                 $ret['openid.op_endpoint'] = $this->_opEndpoint;
-        	} else {
+            } else {
                 $ret['openid.op_endpoint'] = Zend_OpenId::selfUrl();
             }
         }

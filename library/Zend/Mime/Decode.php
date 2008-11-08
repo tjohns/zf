@@ -142,8 +142,8 @@ class Zend_Mime_Decode
         $headers = iconv_mime_decode_headers($headers, ICONV_MIME_DECODE_CONTINUE_ON_ERROR);
 
         if ($headers === false ) {
-        	// an error occurs during the decoding
-        	return;
+            // an error occurs during the decoding
+            return;
         }
 
         // normalize header names
@@ -188,8 +188,8 @@ class Zend_Mime_Decode
      */
     public static function splitHeaderField($field, $wantedPart = null, $firstName = 0)
     {
-    	$wantedPart = strtolower($wantedPart);
-    	$firstName = strtolower($firstName);
+        $wantedPart = strtolower($wantedPart);
+        $firstName = strtolower($firstName);
 
         // special case - a bit optimized
         if ($firstName === $wantedPart) {
@@ -217,7 +217,7 @@ class Zend_Mime_Decode
 
         $split = array();
         foreach ($matches[1] as $key => $name) {
-        	$name = strtolower($name);
+            $name = strtolower($name);
             if ($matches[2][$key][0] == '"') {
                 $split[$name] = substr($matches[2][$key], 1, -1);
             } else {

@@ -351,8 +351,8 @@ abstract class Zend_Db_Table_Rowset_Abstract implements SeekableIterator, Counta
      */
     public function offsetGet($offset)
     {
-    	$this->_pointer = (int) $offset;
-    	
+        $this->_pointer = (int) $offset;
+
         return $this->current();
     }
     
