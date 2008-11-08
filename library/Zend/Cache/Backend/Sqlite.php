@@ -362,6 +362,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
     /**
      * Return the filling percentage of the backend storage
      *
+     * @throws Zend_Cache_Exception
      * @return int integer between 0 and 100
      */
     public function getFillingPercentage()
@@ -657,6 +658,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
     /**
      * Check if the database structure is ok (with the good version), if no : build it
      *
+     * @throws Zend_Cache_Exception
      * @return boolean True if ok
      */
     private function _checkAndBuildStructure()

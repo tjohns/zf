@@ -160,6 +160,7 @@ class Zend_Cache_Backend_Xcache extends Zend_Cache_Backend implements Zend_Cache
      *
      * @param  string $mode clean mode
      * @param  array  $tags array of tags
+     * @throws Zend_Cache_Exception
      * @return boolean true if no problem
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
@@ -196,7 +197,7 @@ class Zend_Cache_Backend_Xcache extends Zend_Cache_Backend implements Zend_Cache
             	$this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_XCACHE_BACKEND);
             	break;
            	default:
-            	$this->_log("Zend_Cache_Backend_Xcache::clean() : illegal mode is specified");
+                Zend_Cache::throwException('Invalid mode for clean() method');
            		break;
     	}
     }

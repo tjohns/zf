@@ -209,6 +209,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      *
      * @param  string $mode Clean mode
      * @param  array  $tags Array of tags
+     * @throws Zend_Cache_Exception
      * @return boolean True if no problem
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
@@ -226,7 +227,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             	$this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND);
             	break;
            	default:
-            	$this->_log("Zend_Cache_Backend_Memcached::clean() : illegal mode is specified");
+                Zend_Cache::throwException('Invalid mode for clean() method');
            		break;
 		}
     }
@@ -325,6 +326,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     /**
      * Return the filling percentage of the backend storage
      *
+     * @throws Zend_Cache_Exception
      * @return int integer between 0 and 100
      */
     public function getFillingPercentage()
