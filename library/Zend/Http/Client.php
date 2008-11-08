@@ -635,6 +635,11 @@ class Zend_Http_Client
             $value = addslashes($value);
 
             if (! isset($this->headers['cookie'])) $this->headers['cookie'] = array('Cookie', '');
+
+            if (isset($this->headers['cookie'][1]) && ';' != trim(substr($this->headers['cookie'][1], -1)))
+            {
+            	$this->headers['cookie'][1] .= '; ';
+            }
             $this->headers['cookie'][1] .= $cookie . '=' . $value . '; ';
         }
 

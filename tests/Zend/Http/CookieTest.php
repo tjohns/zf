@@ -403,4 +403,29 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
         $cookie = Zend_Http_Cookie::fromString('fo;o=bar; secure; domain=foo.nl');
         $this->assertEquals(false, $cookie, 'fromString was expected to fail and return false');
     }
+
+    /**
+     * @group ZF-4802
+     *
+     */
+    public function testCorrectConcatenationOfCookies_1()
+    {
+    	require_once '/opt/local/apache2/htdocs/BugHuntDay/library/bughuntday/library/Zend/Http/Client.php';
+    	$client = new Zend_Http_Client();
+		$client->setHeaders(array('cookie' => 'are you'));
+		$client->setCookie('funky', 'monkey');
+		
+		$this->assertEquals('are you; funky=monkey; ', $client->getHeader('cookie'));
+    }
+    
+    public function testCorrectConcatenationOfCookies_2()
+    {
+    	require_once '/opt/local/apache2/htdocs/BugHuntDay/library/bughuntday/library/Zend/Http/Client.php';
+        $client = new Zend_Http_Client();
+        $client->setHeaders(array('cookie' => 'are you;'));
+        $client->setCookie('funky', 'monkey');
+        
+        $this->assertEquals('are you;funky=monkey; ', $client->getHeader('cookie'));
+    }
+    
 }
