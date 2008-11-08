@@ -339,7 +339,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * In case of multiple tags, a logical AND is made between tags
      *
      * @param array $tags array of tags
-     * @return array array of matching cache ids with one of tags (string)
+     * @return array array of any matching cache ids (string)
      */
     public function getIdsMatchingAnyTags($tags = array())
     {

@@ -66,6 +66,16 @@ interface Zend_Cache_Backend_ExtendedInterface extends Zend_Cache_Backend_Interf
      * @return array array of not matching cache ids (string)
      */    
     public function getIdsNotMatchingTags($tags = array());
+
+    /**
+     * Return an array of stored cache ids which match any given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of any matching cache ids (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array());
     
     /**
      * Return the filling percentage of the backend storage

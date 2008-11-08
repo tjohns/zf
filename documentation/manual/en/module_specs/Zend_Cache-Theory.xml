@@ -106,8 +106,9 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
         </programlisting>
         <para>
             Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
-            <code>CLEANING_MODE_MATCHING_TAG</code> and <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. The
-            latter are, as their names suggest, combined with an array of tags in cleaning operations.
+            <code>CLEANING_MODE_MATCHING_TAG</code>, <code>CLEANING_MODE_NOT_MATCHING_TAG</code> and
+            <code>CLEANING_MODE_MATCHING_ANY_TAG</code>.
+            The latter are, as their names suggest, combined with an array of tags in cleaning operations.
         </para>
     </sect2>
 </sect1>
