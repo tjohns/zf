@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12290 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -1310,11 +1310,19 @@ echo "Der Name der Tabelle ist " . $info['name'] . "\n";
 
         <para>
             Standardmäßig fragt <code>Zend_Db_Table_Abstract</code> die darunterliegende Datenbank für die
-            <link linkend="zend.db.table.info">Metadaten der Tabelle</link> ab, wärend der Instanzierung
-            des Table Objektes. Das ist, wenn ein neues Table Objekt erstellt wird, das Standardverhalten
-            des Objekts das die Metadaten der Tabelle von der Datenbank geholt werden durch verwenden der
-            <code>describeTable()</code> Methode des Adapters.
+            <link linkend="zend.db.table.info">Metadaten der Tabelle</link> ab immer wenn diese diese Daten
+            benötigt werden um Tabellenoperationen durchzuführen. Das Tableobjekt holt die Metadaten der
+            Tabelle von der Datenbank indem es die <code>describeTable()</code> Methode des Adapters
+            verwendet. Operationen die diese Einsicht benötigten sind:
         </para>
+
+        <itemizedlist>
+            <listitem><para><code>insert()</code></para></listitem>
+
+            <listitem><para><code>find()</code></para></listitem>
+
+            <listitem><para><code>info()</code></para></listitem>
+        </itemizedlist>
 
         <para>
             In einigen Fällen, speziell wenn viele Table Objekte auf der gleichen Datenbanktabelle instanziert
@@ -1451,6 +1459,65 @@ $bugs = new Bugs(array('metadataCache' => $cache));
             <link linkend="zend.cache">Zend_Cache</link> für weitere Informationen.
         </para>
 
+        <sect3 id="zend.db.table.metadata.caching.hardcoding">
+            <title>Tabellen Metadaten hardcoden</title>
+
+            <para>
+                Um das Cachen von Metadaten einen weiteren Schritt weiterzubringen, kann man sich auch
+                entscheiden die Metadaten hardzucoden. In diesem speziellen Fall benötigt jede Änderung
+                trotzdem eine Änderung im Code. Als solches, ist es nur empfohlen für jene die eine
+                Produktionsumgebung optimieren wollen.
+            </para>
+
+            <para>
+                Die Struktur der Metadaten ist wie folgt:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+protected $_metadata = array(
+    '<column_name>' => array(
+        'SCHEMA_NAME'      => <string>,
+        'TABLE_NAME'       => <string>,
+        'COLUMN_NAME'      => <string>,
+        'COLUMN_POSITION'  => <int>,
+        'DATA_TYPE'        => <string>,
+        'DEFAULT'          => NULL|<value>,
+        'NULLABLE'         => <bool>,
+        'LENGTH'           => <string - length>,
+        'SCALE'            => NULL|<value>,
+        'PRECISION'        => NULL|<value>,
+        'UNSIGNED'         => NULL|<bool>,
+        'PRIMARY'          => <bool>,
+        'PRIMARY_POSITION' => <int>,
+        'IDENTITY'         => <bool>,
+    ),
+    // additional columns...
+);
+]]></programlisting>
+
+            <para>
+                Ein einfacher Weg um die richtigen Werte zu erhalten ist es den Metadaten Cache zu verwenden,
+                und dann die Werte die im Cache gespeichert sind, zu deserialisieren.
+            </para>
+
+            <para>
+                Diese Optimierung kann ausgeschaltet werden indem das <code>metadataCacheInClass</code>
+                Flag ausgeschaltet wird:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Bei der Instanziierung:
+$bugs = new Bugs(array('metadataCacheInClass' => false));
+
+// Oder später:
+$bugs->setMetadataCacheInClass(false);
+]]></programlisting>
+
+            <para>
+                Das Flag ist standardmäßig aktiviert, was sicherstellt das das <code>$_metadata</code>
+                Array nur einmal pro Instanz ausgeliefert wird.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.db.table.extending">

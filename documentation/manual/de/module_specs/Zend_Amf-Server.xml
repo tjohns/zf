@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12236 -->
+<!-- EN-Revision: 12293 -->
 <sect1 id="zend.amf.server">
     <title>Zend_Amf_Server</title>
 
@@ -55,6 +55,30 @@ $response = $server->handle();
 echo $response;
 ]]>
         </programlisting>
+
+        <para>
+            <code>Zend Amf Server</code> erlaubt es auch Services das Sie dynamisch geladen werden, basierend
+            auf dem angegebenen Verzeichnispfad. Man kann dem Server so viele Verzeichnisse wie man will
+            hinzufügen. Die Reihenfolge in der man die Verzeichnisse zum Server hinzufügt ist die Reihenfolge
+            in der die LIFO Suche auf den Verzeichnissen durchgeführt wird um die Klasse zu finden.
+            Das Hinzufügen von Verzeichnissen wird mit der <code>addDirectory()</code> Methode durchgeführt.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$server->addDirectory(dirname(__FILE__) .'/../services/');
+$server->addDirectory(dirname(__FILE__) .'/../package/');
+]]>
+        </programlisting>
+
+        <para>
+            Wenn entfernte Services aufgerufen werden kann der Quellname einen Unterstrich (_) oder Punkt (.)
+            Begrenzer im Verzeichnis haben. Wenn ein Unterstrich verwendet wird werden die Namenskonventionen
+            der PEAR und Zend Framework Klassen verwendet. Das bedeutet das wenn man das Sevice
+            <code>com_Foo_Bar</code> aufruft wird der Server nach der Datei Bar.php suchen, und zwar in jedem
+            der eingefügten Pfade unter <code>com/Foo/Bar.php</code>. Wenn die Punkt Notation für entfernte
+            Services wie für <code>com.Foo.Bar</code> verwendet wird, wird jedem eingefügten Pfad
+            <code>com/Foo/Bar.php</code> am Ende hinzugefügt um Bar.php automatisch zu laden.
+        </para>
 
         <para>
             Alle AMF Anfragen die an das Skript gesendet werden, werden dan durch den Server
