@@ -48,11 +48,11 @@ class Zend_Pdf_Resource_Font_FontDescriptor
      * Object constructor
      * @throws Zend_Pdf_Exception
      */
-	public function __construct()
-	{
-		throw new Zend_Pdf_Exception('Zend_Pdf_Resource_Font_FontDescriptor is not intended to be instantiated');
-	} 
-	
+    public function __construct()
+    {
+        throw new Zend_Pdf_Exception('Zend_Pdf_Resource_Font_FontDescriptor is not intended to be instantiated');
+    } 
+    
     /**
      * Object constructor
      * 

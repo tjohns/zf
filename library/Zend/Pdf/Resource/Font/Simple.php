@@ -65,7 +65,7 @@ abstract class Zend_Pdf_Resource_Font_Simple extends Zend_Pdf_Resource_Font
      */
     protected $_cmap = null;
 
-	/**
+    /**
      * Array containing the widths of each of the glyphs contained in the font.
      *
      * Keys are integers starting from 0, which coresponds to Zend_Pdf_Cmap::MISSING_CHARACTER_GLYPH.
@@ -91,7 +91,7 @@ abstract class Zend_Pdf_Resource_Font_Simple extends Zend_Pdf_Resource_Font
     protected $_missingGlyphWidth = 0;
 
 
-	/**** Public Interface ****/
+    /**** Public Interface ****/
 
 
   /* Object Lifecycle */
