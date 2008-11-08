@@ -286,6 +286,27 @@ abstract class Zend_Db_Table_Abstract
         $this->_setup();
         $this->init();
     }
+    
+	/**
+     * Check if the specified column is the table identity
+     *
+     * @throws Zend_Db_Table_Exception
+     * @param string $column
+     * @return boolean
+     */
+    public function isIdentity($column)
+    {
+        if (!isset($this->_metadata[$column])) {
+            /**
+             * @see Zend_Db_Table_Exception
+             */
+            require_once 'Zend/Db/Table/Exception.php';
+            
+            throw new Zend_Db_Table_Exception('Column "' . $column . '" is not a column in this table.');
+        }
+        
+        return (bool) $this->_metadata[$column]['IDENTITY'];
+    }
 
     /**
      * @param  string $classname
