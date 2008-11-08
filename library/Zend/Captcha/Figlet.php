@@ -69,7 +69,7 @@ class Zend_Captcha_Figlet extends Zend_Captcha_Word
         return parent::generate();    
     }
 
- 	/**
+    /**
      * Display the captcha
      *
      * @param Zend_View $view

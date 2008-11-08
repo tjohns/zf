@@ -155,7 +155,7 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     {
         return $this->_lineNoiseLevel;
     }
- 	/**
+    /**
      * Get captcha expiration
      *
      * @return int

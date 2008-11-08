@@ -323,20 +323,20 @@ abstract class Zend_Captcha_Word extends Zend_Captcha_Base
     public function isValid($value, $context = null)
     {
         $name = $this->getName();
-    	if (!isset($context[$name]['input'])) {
-    		$this->_error(self::MISSING_VALUE);
-    		return false;
-    	}
-    	$value = strtolower($context[$name]['input']);
+        if (!isset($context[$name]['input'])) {
+            $this->_error(self::MISSING_VALUE);
+            return false;
+        }
+        $value = strtolower($context[$name]['input']);
         $this->_setValue($value);
 
-    	if (!isset($context[$name]['id'])) {
-    		$this->_error(self::MISSING_ID);
-    		return false;
-    	}
+        if (!isset($context[$name]['id'])) {
+            $this->_error(self::MISSING_ID);
+            return false;
+        }
 
-    	$this->_id = $context[$name]['id'];
-    	if ($value !== $this->getWord()) {
+        $this->_id = $context[$name]['id'];
+        if ($value !== $this->getWord()) {
             $this->_error(self::BAD_CAPTCHA);
             return false;
         }
