@@ -78,8 +78,8 @@ class Zend_Soap_Client_DotNet extends Zend_Soap_Client
      */
     protected function _preProcessResult($result)
     {
-    	$resultProperty = $this->getLastMethod() . 'Result';
-    	
+        $resultProperty = $this->getLastMethod() . 'Result';
+
         return $result->$resultProperty;
     }
 

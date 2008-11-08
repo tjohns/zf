@@ -143,7 +143,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function __construct($wsdl = null, array $options = null)
     {
-    	if (!extension_loaded('soap')) {
+        if (!extension_loaded('soap')) {
             throw new Zend_Soap_Server_Exception('SOAP extension is not loaded.');
         }
 
@@ -358,9 +358,9 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function setClassmap($classmap)
     {
-    	if (!is_array($classmap)) {
-    		throw new Zend_Soap_Server_Exception('Classmap must be an array');
-    	}
+        if (!is_array($classmap)) {
+            throw new Zend_Soap_Server_Exception('Classmap must be an array');
+        }
         foreach ($classmap as $type => $class) {
             if (!class_exists($class)) {
                 throw new Zend_Soap_Server_Exception('Invalid class in class map');
@@ -439,7 +439,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
         }
 
         if (is_array($this->_functions)) {
-        	$this->_functions = array_unique($this->_functions);
+            $this->_functions = array_unique($this->_functions);
         }
 
         return $this;
@@ -719,14 +719,14 @@ class Zend_Soap_Server implements Zend_Server_Interface
         try {
             $this->_setRequest($request);
         } catch (Zend_Soap_Server_Exception $setRequestException) {
-        	// Do nothing. Catch exception and store it in the $setRequestException variable is all what we need.
+            // Do nothing. Catch exception and store it in the $setRequestException variable is all what we need.
         }
 
         $soap = $this->_getSoap();
 
         ob_start();
         if (isset($setRequestException)) {
-        	// Send SOAP fault message if we've catched exception
+            // Send SOAP fault message if we've catched exception
             $soap->fault($setRequestException->getCode(), $setRequestException->getMessage());
         } else {
             try {
