@@ -39,6 +39,12 @@ require_once 'Zend/Cache/Backend.php';
  */
 class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Backend_ExtendedInterface
 {
+	/**
+	 * Log message
+	 */
+	const TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND = 'Zend_Cache_Backend_Apc::clean() : tags are unsupported by the Apc backend';
+	const TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND =  'Zend_Cache_Backend_Apc::save() : tags are unsupported by the Apc backend';
+
     /**
      * Constructor
      *
@@ -104,7 +110,7 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
         $lifetime = $this->getLifetime($specificLifetime);
         $result = apc_store($id, array($data, time(), $lifetime), $lifetime);
         if (count($tags) > 0) {
-            $this->_log("Zend_Cache_Backend_Apc::save() : tags are unsupported by the Apc backend");
+            $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND);
         }
         return $result;
     }
@@ -125,11 +131,10 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      *
      * Available modes are :
      * 'all' (default)  => remove all cache entries ($tags is not used)
-     * 'old'            => remove too old cache entries ($tags is not used)
-     * 'matchingTag'    => remove cache entries matching all given tags
-     *                     ($tags can be an array of strings or a single string)
-     * 'notMatchingTag' => remove cache entries not matching one of the given tags
-     *                     ($tags can be an array of strings or a single string)
+     * 'old'            => unsupported
+     * 'matchingTag'    => unsupported
+     * 'notMatchingTag' => unsupported
+     * 'matchingAnyTag' => unsupported
      *
      * @param  string $mode clean mode
      * @param  array  $tags array of tags
@@ -137,18 +142,22 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-        if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
-            return apc_clear_cache('user');
-        }
-        if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
-            $this->_log("Zend_Cache_Backend_Apc::clean() : CLEANING_MODE_OLD is unsupported by the Apc backend");
-        }
-        if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
-            $this->_log("Zend_Cache_Backend_Apc::clean() : tags are unsupported by the Apc backend");
-        }
-        if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
-            $this->_log("Zend_Cache_Backend_Apc::clean() : tags are unsupported by the Apc backend");
-        }
+    	switch ($mode) {
+    		case Zend_Cache::CLEANING_MODE_ALL:
+    			return apc_clear_cache('user');
+    			break;
+    		case Zend_Cache::CLEANING_MODE_OLD:
+    			$this->_log("Zend_Cache_Backend_Apc::clean() : CLEANING_MODE_OLD is unsupported by the Apc backend");
+    			break;
+    		case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+    		case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+    		case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+            	$this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_APC_BACKEND);
+            	break;
+           	default:
+            	$this->_log("Zend_Cache_Backend_Apc::clean() : illegal mode is specified");
+           		break;
+    	}
     }
 
     /**
@@ -191,7 +200,7 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      */
     public function getTags()
     {   
-        $this->_log("Zend_Cache_Backend_Apc::save() : tags are unsupported by the Apc backend");
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND);
         return array();
     }
     
@@ -205,7 +214,7 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      */
     public function getIdsMatchingTags($tags = array())
     {
-        $this->_log("Zend_Cache_Backend_Apc::save() : tags are unsupported by the Apc backend");
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND);
         return array();               
     }
 
@@ -219,7 +228,21 @@ class Zend_Cache_Backend_Apc extends Zend_Cache_Backend implements Zend_Cache_Ba
      */    
     public function getIdsNotMatchingTags($tags = array())
     {
-        $this->_log("Zend_Cache_Backend_Apc::save() : tags are unsupported by the Apc backend");
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND);
+        return array();         
+    }
+    
+    /**
+     * Return an array of stored cache ids which match any given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of any matching cache ids (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array())
+    {
+        $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_APC_BACKEND);
         return array();         
     }
     
