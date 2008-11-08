@@ -120,7 +120,7 @@ function Zend_ProgressBar_Update(data)
         </programlisting>
 
         <para>
-            This will create a simple container with a black border and a block
+            This will create a simple container with a black border and a
             block which indicates the current process. You should not hide
             the <code>iframe</code> or <code>object</code> by <code>display: none;</code>,
             as some browsers like Safari 2 will not load the actual content then.
@@ -148,7 +148,7 @@ function Zend_ProgressBar_Update(data)
     <note>
         <title>Interval of updates</title>
         <para>
-            You should take of of not sending too many updates, as every update
+            You should take care of not sending too many updates, as every update
             has a min-size of 1kb. This is a requirement for the Safari browser
             to actually render and execute the function call. Internet Explorer
             has a similar limitation of 256 bytes. 
