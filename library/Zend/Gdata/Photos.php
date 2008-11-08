@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Photos
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -140,21 +141,27 @@ class Zend_Gdata_Photos extends Zend_Gdata
      */
     public function getUserFeed($userName = null, $location = null)
     {
-        if ($userName !== null) {
+        if ($location instanceof Zend_Gdata_Photos_UserQuery) {
+            $location->setType('feed');
+            if ($userName !== null) {
+                $location->setUser($userName);
+            }
+            $uri = $location->getQueryUrl();
+        } else if ($location instanceof Zend_Gdata_Query) {
+            if ($userName !== null) {
+                $location->setUser($userName);
+            }
+            $uri = $location->getQueryUrl();
+        } else if ($location !== null) {
+            $uri = $location;
+        } else if ($userName !== null) {
             $uri = self::PICASA_BASE_FEED_URI . '/' .
                 self::DEFAULT_PROJECTION . '/' . self::USER_PATH . '/' .
                 $userName;
-        } else if ($location === null) {
+        } else {
             $uri = self::PICASA_BASE_FEED_URI . '/' .
                 self::DEFAULT_PROJECTION . '/' . self::USER_PATH . '/' .
                 self::DEFAULT_USER;
-        } else if ($location instanceof Zend_Gdata_Photos_UserQuery) {
-            $location->setType('feed');
-            $uri = $location->getQueryUrl();
-        } else if ($location instanceof Zend_Gdata_Query) {
-            $uri = $location->getQueryUrl();
-        } else {
-            $uri = $location;
         }
         
         return parent::getFeed($uri, 'Zend_Gdata_Photos_UserFeed');

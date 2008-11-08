@@ -13,9 +13,10 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category     Zend
- * @package      Zend_Gdata
- * @copyright    Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @category   Zend
+ * @package    Zend_Gdata
+ * @subpackage Spreadsheets
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
