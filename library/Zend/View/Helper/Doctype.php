@@ -38,7 +38,7 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
     /**#@+
      * DocType constants
      */
-	const XHTML11             = 'XHTML11';
+    const XHTML11             = 'XHTML11';
     const XHTML1_STRICT       = 'XHTML1_STRICT';
     const XHTML1_TRANSITIONAL = 'XHTML1_TRANSITIONAL';
     const XHTML1_FRAMESET     = 'XHTML1_FRAMESET';
