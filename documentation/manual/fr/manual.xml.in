@@ -235,7 +235,9 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gbase.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Photos.xml" />
-        <xi:include href="module_specs/Zend_Gdata_YouTube.xml" />
+        <xi:include href="module_specs/Zend_Gdata_YouTube.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_YouTube.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
