@@ -110,7 +110,12 @@ abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
                 $val = $this->_normalizeId($val);
             }
 
-            $xhtml .= " $key=\"$val\"";
+            if (strpos($val, '"') !== false) {
+                $xhtml .= " $key='$val'";
+            } else {
+                $xhtml .= " $key=\"$val\"";
+            }
+            
         }
         return $xhtml;
     }
