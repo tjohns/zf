@@ -31,6 +31,11 @@
 class Zend_Mail_Protocol_Pop3
 {
     /**
+     * Default timeout in seconds for initiating session
+     */
+    const TIMEOUT_CONNECTION_POP = 30;
+	
+	/**
      * saves if server supports top
      * @var null|bool
      */
@@ -93,13 +98,13 @@ class Zend_Mail_Protocol_Pop3
             $port = $ssl == 'SSL' ? 995 : 110;
         }
 
-        $this->_socket = @fsockopen($host, $port);
+        $this->_socket = @fsockopen($host, $port, $errno, $errstr, self::TIMEOUT_CONNECTION_POP);
         if (!$this->_socket) {
             /**
              * @see Zend_Mail_Protocol_Exception
              */
             require_once 'Zend/Mail/Protocol/Exception.php';
-            throw new Zend_Mail_Protocol_Exception('cannot connect to host');
+            throw new Zend_Mail_Protocol_Exception('cannot connect to host : ' . $errno . ' : ' . $errstr);
         }
 
         $welcome = $this->readResponse();

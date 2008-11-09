@@ -31,6 +31,11 @@
 class Zend_Mail_Protocol_Imap
 {
     /**
+     * Default timeout in seconds for initiating session
+     */
+    const TIMEOUT_CONNECTION_IMAP = 30;
+    
+	/**
      * socket to imap server
      * @var resource|null
      */
@@ -41,7 +46,6 @@ class Zend_Mail_Protocol_Imap
      * @var int
      */
     protected $_tagCount = 0;
-
 
     /**
      * Public constructor
@@ -85,13 +89,13 @@ class Zend_Mail_Protocol_Imap
             $port = $ssl === 'SSL' ? 993 : 143;
         }
 
-        $this->_socket = @fsockopen($host, $port);
+        $this->_socket = @fsockopen($host, $port, $errno, $errstr, self::TIMEOUT_CONNECTION_IMAP);
         if (!$this->_socket) {
             /**
              * @see Zend_Mail_Protocol_Exception
              */
             require_once 'Zend/Mail/Protocol/Exception.php';
-            throw new Zend_Mail_Protocol_Exception('cannot connect to host');
+            throw new Zend_Mail_Protocol_Exception('cannot connect to host : ' . $errno . ' : ' . $errstr);
         }
 
         if (!$this->_assumedNextLine('* OK')) {
