@@ -220,8 +220,6 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         clearstatcache();
         $file = $this->_file($id);
         $path = $this->_path($id);
-        $firstTry = true;
-        $result = false;
         if ($this->_options['hashed_directory_level'] > 0) {
             if (!is_writable($path)) {
                 // maybe, we just have to build the directory structure
@@ -244,7 +242,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         );
         $res = $this->_setMetadatas($id, $metadatas);
         if (!$res) {
-            // FIXME : log
+            $this->_log('Zend_Cache_Backend_File::save() / error on saving metadata');
             return false;
         }
         $res = $this->_filePutContents($file, $data);
