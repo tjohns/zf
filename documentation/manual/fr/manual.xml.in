@@ -473,6 +473,7 @@
     <chapter id="zend.text">
         <title>Zend_Text</title>
         <xi:include href="module_specs/Zend_Text_Figlet.xml" />
+        <xi:include href="module_specs/Zend_Text_Table.xml" />
     </chapter>
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
