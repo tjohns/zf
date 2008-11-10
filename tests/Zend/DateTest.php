@@ -3299,7 +3299,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,$locale);
 
         $result = $date->getDate();
-        $this->assertSame('2002-01-04T05:00:00+05:00', $result->get(Zend_Date::W3C));
+        $this->assertSame('2002-01-04T00:00:00+05:00', $result->get(Zend_Date::W3C));
     }
 
     /**
