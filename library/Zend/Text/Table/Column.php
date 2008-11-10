@@ -56,6 +56,13 @@ class Zend_Text_Table_Column
      * @var integer
      */
     protected $_colSpan = 1;
+    
+    /**
+     * Allowed align parameters
+     *
+     * @var array
+     */
+    protected $_allowedAligns = array(self::ALIGN_LEFT, self::ALIGN_CENTER, self::ALIGN_RIGHT);
 
     /**
      * Create a column for a Zend_Text_Table_Row object.
@@ -88,13 +95,14 @@ class Zend_Text_Table_Column
      *
      * @param  string $content  Content of the column
      * @param  string $encoding The Encoding of the content
-     * @throws InvalidArgumentException When $content is not a string
+     * @throws Zend_Text_Table_Exception When $content is not a string
      * @return Zend_Text_Table_Column
      */
     public function setContent($content, $encoding = 'UTF-8')
     {
         if (is_string($content) === false) {
-            throw new InvalidArgumentException('$content must be a string');
+            require_once 'Zend/Text/Table/Exception.php';
+            throw new Zend_Text_Table_Exception('$content must be a string');
         }
 
         if ($encoding !== 'UTF-8') {
@@ -110,15 +118,14 @@ class Zend_Text_Table_Column
      * Set the align
      *
      * @param  string $align Align of the column
-     * @throws InvalidArgumentException When supplied align is invalid
+     * @throws Zend_Text_Table_Exception When supplied align is invalid
      * @return Zend_Text_Table_Column
      */
     public function setAlign($align)
     {
-        if (in_array($align, array(self::ALIGN_LEFT,
-                                   self::ALIGN_CENTER,
-                                   self::ALIGN_RIGHT)) === false) {
-            throw new InvalidArgumentException('Invalid align supplied');
+        if (in_array($align, $this->_allowedAligns) === false) {
+            require_once 'Zend/Text/Table/Exception.php';
+            throw new Zend_Text_Table_Exception('Invalid align supplied');
         }
 
         $this->_align = $align;
@@ -130,13 +137,14 @@ class Zend_Text_Table_Column
      * Set the colspan
      *
      * @param  int $colSpan
-     * @throws InvalidArgumentException When $colSpan is smaller than 1
+     * @throws Zend_Text_Table_Exception When $colSpan is smaller than 1
      * @return Zend_Text_Table_Column
      */
     public function setColSpan($colSpan)
     {
         if (is_int($colSpan) === false or $colSpan < 1) {
-            throw new InvalidArgumentException('$colSpan must be an integer and greater than 0');
+            require_once 'Zend/Text/Table/Exception.php';
+            throw new Zend_Text_Table_Exception('$colSpan must be an integer and greater than 0');
         }
 
         $this->_colSpan = $colSpan;
@@ -158,26 +166,36 @@ class Zend_Text_Table_Column
      * Render the column width the given column width
      *
      * @param  integer $columnWidth The width of the column
-     * @throws InvalidArgumentException When $columnWidth is lower than 1
+     * @param  integer $padding     The padding for the column
+     * @throws Zend_Text_Table_Exception When $columnWidth is lower than 1
+     * @throws Zend_Text_Table_Exception When padding is greater than columnWidth
      * @return string
      */
-    public function render($columnWidth)
+    public function render($columnWidth, $padding = 0)
     {
         if (is_int($columnWidth) === false or $columnWidth < 1) {
-            throw new InvalidArgumentException('$columnWidth must be an integer and greater than 0');
+            require_once 'Zend/Text/Table/Exception.php';
+            throw new Zend_Text_Table_Exception('$columnWidth must be an integer and greater than 0');
+        }
+        
+        $columnWidth -= ($padding * 2);
+        
+        if ($columnWidth < 1) {
+            require_once 'Zend/Text/Table/Exception.php';
+            throw new Zend_Text_Table_Exception('Padding (' . $padding . ') is greater than column width');
         }
 
         switch ($this->_align) {
             case self::ALIGN_LEFT:
-                $padding = STR_PAD_RIGHT;
+                $padMode = STR_PAD_RIGHT;
                 break;
 
             case self::ALIGN_CENTER:
-                $padding = STR_PAD_BOTH;
+                $padMode = STR_PAD_BOTH;
                 break;
 
             case self::ALIGN_RIGHT:
-                $padding = STR_PAD_LEFT;
+                $padMode = STR_PAD_LEFT;
                 break;
 
             default:
@@ -189,7 +207,9 @@ class Zend_Text_Table_Column
         $paddedLines = array();
 
         foreach ($lines AS $line) {
-            $paddedLines[] = str_pad($line, $columnWidth, ' ', $padding);
+            $paddedLines[] = str_repeat(' ', $padding)
+                           . str_pad($line, $columnWidth, ' ', $padMode)
+                           . str_repeat(' ', $padding);
         }
 
         $result = implode("\n", $paddedLines);

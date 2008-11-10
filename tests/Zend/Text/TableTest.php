@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: XmlTest.php 9670 2008-06-11 08:51:21Z dasprid $
+ * @version    $Id$
  */
 
 // Call Zend_Text_FigletTest::main() if this source file is executed directly.
@@ -63,6 +63,13 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($column->render(10), "foobar    \nfoo       ");
     }
     
+    public function testColumnPadding()
+    {
+        $column = new Zend_Text_Table_Column("foobar\nfoo");
+
+        $this->assertEquals($column->render(10, 1), " foobar   \n foo      ");
+    }
+    
     public function testColumnAlignCenter()
     {
         $column = new Zend_Text_Table_Column("foobar\nfoo", Zend_Text_Table_Column::ALIGN_CENTER);
@@ -91,7 +98,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
         try {
             $column = new Zend_Text_Table_Column(1);
             $this->fail('An expected InvalidArgumentException has not been raised');
-        } catch (InvalidArgumentException $expected) {
+        } catch (Zend_Text_Table_Exception $expected) {
             $this->assertContains('$content must be a string', $expected->getMessage());
         }
     }
@@ -101,7 +108,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
         try {
             $column = new Zend_Text_Table_Column(null, false);
             $this->fail('An expected InvalidArgumentException has not been raised');
-        } catch (InvalidArgumentException $expected) {
+        } catch (Zend_Text_Table_Exception $expected) {
             $this->assertContains('Invalid align supplied', $expected->getMessage());
         }
     }
@@ -111,7 +118,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
         try {
             $column = new Zend_Text_Table_Column(null, null, 0);
             $this->fail('An expected InvalidArgumentException has not been raised');
-        } catch (InvalidArgumentException $expected) {
+        } catch (Zend_Text_Table_Exception $expected) {
             $this->assertContains('$colSpan must be an integer and greater than 0', $expected->getMessage());
         }
     }
@@ -122,7 +129,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
             $column = new Zend_Text_Table_Column();
             $column->render(0);
             $this->fail('An expected InvalidArgumentException has not been raised');
-        } catch (InvalidArgumentException $expected) {
+        } catch (Zend_Text_Table_Exception $expected) {
             $this->assertContains('$columnWidth must be an integer and greater than 0', $expected->getMessage());
         }
     }
@@ -200,7 +207,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     public function testTableConstructInvalidColumnWidths()
     {
         try {
-            $table = new Zend_Text_Table(array());
+            $table = new Zend_Text_Table(array('columnWidths' => array()));
             $this->fail('An expected Zend_Text_Table_Exception has not been raised');
         } catch (Zend_Text_Table_Exception $expected) {
             $this->assertContains('You must supply at least one column', $expected->getMessage());
@@ -210,16 +217,38 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     public function testTableConstructInvalidColumnWidthsItem()
     {
         try {
-            $table = new Zend_Text_Table(array('foo'));
+            $table = new Zend_Text_Table(array('columnWidths' => array('foo')));
             $this->fail('An expected Zend_Text_Table_Exception has not been raised');
         } catch (Zend_Text_Table_Exception $expected) {
             $this->assertContains('Column 0 has an invalid column width', $expected->getMessage());
         }
     }
+
+    public function testTableDecoratorLoaderSimple()
+    {
+        $table = new Zend_Text_Table(array('columnWidths' => array(10), 'decorator' => 'ascii'));
+        
+        $row = new Zend_Text_Table_Row();
+        $row->createColumn('foobar');
+        $table->appendRow($row);
+        
+        $this->assertEquals($table->render(), "+----------+\n|foobar    |\n+----------+\n");
+    }
+    
+    public function testTableDecoratorLoaderAdvanced()
+    {
+        $table = new Zend_Text_Table(array('columnWidths' => array(10), 'decorator' => new Zend_Text_Table_Decorator_Ascii()));
+        
+        $row = new Zend_Text_Table_Row();
+        $row->createColumn('foobar');
+        $table->appendRow($row);
+        
+        $this->assertEquals($table->render(), "+----------+\n|foobar    |\n+----------+\n");
+    }
     
     public function testTableSimpleRow()
     {
-        $table = new Zend_Text_Table(array(10));
+        $table = new Zend_Text_Table(array('columnWidths' => array(10)));
         
         $row = new Zend_Text_Table_Row();
         $row->createColumn('foobar');
@@ -230,7 +259,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testDefaultColumnAlign()
     {
-        $table = new Zend_Text_Table(array(10));
+        $table = new Zend_Text_Table(array('columnWidths' => array(10)));
         
         $table->setDefaultColumnAlign(0, Zend_Text_Table_Column::ALIGN_CENTER);
                 
@@ -266,7 +295,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testTableWithoutRows()
     {
-        $table = new Zend_Text_Table(array(10));
+        $table = new Zend_Text_Table(array('columnWidths' => array(10)));
         
         try {
             $table->render();
@@ -278,7 +307,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testTableColSpanWithMultipleRows()
     {
-        $table = new Zend_Text_Table(array(10, 10));
+        $table = new Zend_Text_Table(array('columnWidths' => array(10, 10)));
         
         $row = new Zend_Text_Table_Row();
         $row->appendColumn(new Zend_Text_Table_Column('foobar'));
@@ -298,7 +327,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testTableComplex()
     {
-        $table = new Zend_Text_Table(array(10, 10, 10));
+        $table = new Zend_Text_Table(array('columnWidths' => array(10, 10, 10)));
         
         $row = new Zend_Text_Table_Row();
         $row->appendColumn(new Zend_Text_Table_Column('foobar'));
@@ -333,7 +362,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testTableMagicToString()
     {
-        $table = new Zend_Text_Table(array(10));
+        $table = new Zend_Text_Table(array('columnWidths' => array(10)));
         
         $row = new Zend_Text_Table_Row();
         $row->appendColumn(new Zend_Text_Table_Column('foobar'));
