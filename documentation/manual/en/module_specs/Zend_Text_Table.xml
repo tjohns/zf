@@ -42,7 +42,7 @@
         <code>Zend_Text_Table_Column</code> and then either set the column
         options in the constructor or later with the <code>set*</code> methods.
         The first parameter is the content of the column which may have
-        multiple lines, which in the best case are seperated by just the
+        multiple lines, which in the best case are separated by just the
         <code>\n</code> character. The second parameter defines the align, which
         is "left" by default and can be one of the class constants of
         <code>Zend_Text_Table_Column</code>:
@@ -84,7 +84,7 @@
             This example illustrates the basic use of <code>Zend_Text_Table</code>
             to create a simple table:
         </para>
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 require_once 'Zend/Text/Table.php';
 require_once 'Zend/Text/Table/Row.php';
 require_once 'Zend/Text/Table/Column.php';
@@ -103,14 +103,16 @@ $row->appendColumn(new Zend_Text_Table_Column('Framework'));
 $table->appendRow($row);
 
 echo $table;
-?>]]>
+]]>
         </programlisting>
         <para>
             This will result in the following output:
         </para>
-        <programlisting role="text"><![CDATA[┌──────────┬────────────────────┐
+        <programlisting role="text"><![CDATA[
+┌──────────┬────────────────────┐
 │Zend      │Framework           │
-└──────────┴────────────────────┘]]>
+└──────────┴────────────────────┘
+]]>
         </programlisting>
     </example>
 </sect1>
