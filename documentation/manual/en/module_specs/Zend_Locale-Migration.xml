@@ -83,7 +83,7 @@ if (Zend_Locale::isLocale($locale, false)) {
             <title>Changes when using getDefault()</title>
 
             <para>
-                The meaning of the getDefault() method has been change die to the fact that we
+                The meaning of the getDefault() method has been change due to the fact that we
                 integrated a framework locale which can be set with setDefault(). It does no
                 longer return the locale chain but only the set framework locale.
             </para>
