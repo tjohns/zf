@@ -186,21 +186,21 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
      */
     protected function connectHandshake($host, $port = 443, $http_ver = '1.1', array &$headers = array())
     {
-    	$request = "CONNECT $host:$port HTTP/$http_ver\r\n" . 
-    	           "Host: " . $this->config['proxy_host'] . "\r\n";
+        $request = "CONNECT $host:$port HTTP/$http_ver\r\n" . 
+                   "Host: " . $this->config['proxy_host'] . "\r\n";
 
-    	// Add the user-agent header
-    	if (isset($this->config['useragent'])) {
-    		$request .= "User-agent: " . $this->config['useragent'] . "\r\n";
-    	}
-    	
-    	// If the proxy-authorization header is set, send it to proxy but remove
-    	// it from headers sent to target host
-    	if (isset($headers['proxy-authorization'])) {
-    	    $request .= "Proxy-authorization: " . $headers['proxy-authorization'] . "\r\n";
-    	    unset($headers['proxy-authorization']);
-    	}
-    	
+        // Add the user-agent header
+        if (isset($this->config['useragent'])) {
+            $request .= "User-agent: " . $this->config['useragent'] . "\r\n";
+        }
+        
+        // If the proxy-authorization header is set, send it to proxy but remove
+        // it from headers sent to target host
+        if (isset($headers['proxy-authorization'])) {
+            $request .= "Proxy-authorization: " . $headers['proxy-authorization'] . "\r\n";
+            unset($headers['proxy-authorization']);
+        }
+    
         $request .= "\r\n";
 
         // Send the request
@@ -222,8 +222,8 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         
         // Check that the response from the proxy is 200
         if (Zend_Http_Response::extractCode($response) != 200) {
-                require_once 'Zend/Http/Client/Adapter/Exception.php';
-        	throw new Zend_Http_Client_Adapter_Exception("Unable to connect to HTTPS proxy. Server response: " . $response);
+            require_once 'Zend/Http/Client/Adapter/Exception.php';
+            throw new Zend_Http_Client_Adapter_Exception("Unable to connect to HTTPS proxy. Server response: " . $response);
         }
         
         // If all is good, switch socket to secure mode. We have to fall back
@@ -238,7 +238,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
         $success = false; 
         foreach($modes as $mode) {
             $success = stream_socket_enable_crypto($this->socket, true, $mode);
-        	if ($success) break;
+            if ($success) break;
         }
         
         if (! $success) {
