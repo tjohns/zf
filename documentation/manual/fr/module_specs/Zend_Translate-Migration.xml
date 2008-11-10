@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 12319 -->
 <sect1 id="zend.translate.migration">
     <title>Migrer à partir des versions précédentes</title>
@@ -13,9 +14,9 @@
             <title>Paramétrer les langues</title>
 
             <para>Lors de l'utilisation de la détection automatique des langues, ou du réglage manuel des langues de
-            Zend_Translate, vous avez peut-être remarqué que de temps en temps une notice est envoyée concernant le
-            non-ajout de traductions vides. Dans certaines versions précédentes, une exception était levée dans certains
-            cas.</para>
+            <code>Zend_Translate</code>, vous avez peut-être remarqué que de temps en temps une notice est envoyée
+            concernant le non-ajout de traductions vides. Dans certaines versions précédentes, une exception était levée
+            dans certains cas.</para>
 
             <para>Ceci intervient quand un utilisateur requête une langue non existante, vous n'avez alors aucun moyen
             simple de détecter ce qui ne va pas. Nous avons donc ajouté ces notices qui apparaîtront dans votre
