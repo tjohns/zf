@@ -37,7 +37,7 @@ require_once 'Zend/Json.php';
  */
 class Zend_Paginator implements Countable, IteratorAggregate
 {
-	/**
+    /**
      * Specifies that the factory should try to detect the proper adapter type first
      *
      * @var string
@@ -143,7 +143,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     protected $_view = null;
     
-	/**
+    /**
      * Adds an adapter prefix path to the plugin loader.
      *
      * @param string $prefix
@@ -154,7 +154,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         self::getAdapterLoader()->addPrefixPath($prefix, $path);
     }
     
-	/**
+    /**
      * Adds an array of adapter prefix paths to the plugin 
      * loader.
      *
@@ -183,7 +183,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         }
     }
     
-	/**
+    /**
      * Adds a scrolling style prefix path to the plugin loader.
      *
      * @param string $prefix
@@ -223,7 +223,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         }
     }
     
-	/**
+    /**
      * Factory.
      *
      * @param  mixed $data
@@ -231,38 +231,38 @@ class Zend_Paginator implements Countable, IteratorAggregate
      * @param  array $prefixPaths
      * @return Zend_Paginator
      */
-	public static function factory($data, $adapter = self::INTERNAL_ADAPTER,
-								   array $prefixPaths = null)
+    public static function factory($data, $adapter = self::INTERNAL_ADAPTER,
+                                   array $prefixPaths = null)
     {
         if ($adapter == self::INTERNAL_ADAPTER) {
-        	if (is_array($data)) {
-        		$adapter = 'Array';
-        	} else if ($data instanceof Zend_Db_Table_Select) {
-        		$adapter = 'DbTableSelect';
-	        } else if ($data instanceof Zend_Db_Select) {
-	            $adapter = 'DbSelect';
-	        } else if ($data instanceof Iterator) {
-	            $adapter = 'Iterator';
-	        } else if (is_integer($data)) {
-	            $adapter = 'Null';
-	        } else {
-	            $type = (is_object($data)) ? get_class($data) : gettype($data);
-	            
-	            /**
-	             * @see Zend_Paginator_Exception
-	             */
-	            require_once 'Zend/Paginator/Exception.php';
-	            
-	            throw new Zend_Paginator_Exception('No adapter for type ' . $type);
-	        }
+            if (is_array($data)) {
+                $adapter = 'Array';
+            } else if ($data instanceof Zend_Db_Table_Select) {
+                $adapter = 'DbTableSelect';
+            } else if ($data instanceof Zend_Db_Select) {
+                $adapter = 'DbSelect';
+            } else if ($data instanceof Iterator) {
+                $adapter = 'Iterator';
+            } else if (is_integer($data)) {
+                $adapter = 'Null';
+            } else {
+                $type = (is_object($data)) ? get_class($data) : gettype($data);
+                
+                /**
+                 * @see Zend_Paginator_Exception
+                 */
+                require_once 'Zend/Paginator/Exception.php';
+                
+                throw new Zend_Paginator_Exception('No adapter for type ' . $type);
+            }
         }
         
         $pluginLoader = self::getAdapterLoader();
         
         if (null !== $prefixPaths) {
-        	foreach ($prefixPaths as $prefix => $path) {
-        		$pluginLoader->addPrefixPath($prefix, $path);
-        	}
+            foreach ($prefixPaths as $prefix => $path) {
+                $pluginLoader->addPrefixPath($prefix, $path);
+            }
         }
         
         $adapterClassName = $pluginLoader->load($adapter);
@@ -270,7 +270,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         return new self(new $adapterClassName($data));
     }
     
-	/**
+    /**
      * Returns the adapter loader.  If it doesn't exist it's created.
      *
      * @return Zend_Loader_PluginLoader
@@ -286,7 +286,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         return self::$_adapterLoader;
     }
     
-	/**
+    /**
      * Set a global config
      *
      * @param Zend_Config $config
@@ -307,14 +307,14 @@ class Zend_Paginator implements Countable, IteratorAggregate
             self::addScrollingStylePrefixPaths($prefixPaths->prefixpath->toArray());
         }
         
-    	$scrollingStyle = $config->get('scrollingstyle');
+        $scrollingStyle = $config->get('scrollingstyle');
         
         if ($scrollingStyle != null) {
             self::setDefaultScrollingStyle($scrollingStyle);
         }
     }
     
-	/**
+    /**
      * Returns the default scrolling style.
      *
      * @return  string
@@ -423,13 +423,13 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function clearPageItemCache($pageNumber = null)
     {
-    	if (null === $pageNumber) {
-    		$this->_pageItems = array();
-    	} else if (isset($this->_pageItems[$pageNumber])) {
-    		unset($this->_pageItems[$pageNumber]);
-    	}
-    	
-    	return $this;
+        if (null === $pageNumber) {
+            $this->_pageItems = array();
+        } else if (isset($this->_pageItems[$pageNumber])) {
+            unset($this->_pageItems[$pageNumber]);
+        }
+        
+        return $this;
     }
     
     /**
@@ -813,7 +813,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function toJson()
     {
-    	return Zend_Json::encode($this->getCurrentItems());
+        return Zend_Json::encode($this->getCurrentItems());
     }
     
     /**

@@ -524,15 +524,15 @@ class Zend_Mail extends Zend_Mime_Message
             $email = strtr($email,"\r\n\t",'???');
             $this->_from = $email;
             if ($name !== null && $name !== $email) {
-            	$encodedName = $this->_encodeHeader($name);
+                $encodedName = $this->_encodeHeader($name);
                 if ($encodedName === $name && strpos($name, ',') !== false) {
-                	$format = '"%s" <%s>';
+                    $format = '"%s" <%s>';
                 } else {
-                	$format = '%s <%s>';
+                    $format = '%s <%s>';
                 }
                 $from = sprintf($format, $encodedName, $email);
             } else {
-            	$from = $email;
+                $from = $email;
             }
             $this->_storeHeader('From', $from, true);
         } else {
@@ -642,7 +642,7 @@ class Zend_Mail extends Zend_Mime_Message
             } else if (is_int($date)) {
                 $date = date('r', $date);
             } else if (is_string($date)) {
-            	$date = strtotime($date);
+                $date = strtotime($date);
                 if ($date === false || $date < 0) {
                     throw new Zend_Mail_Exception('String representations of Date Header must be ' .
                                                   'strtotime()-compatible');
