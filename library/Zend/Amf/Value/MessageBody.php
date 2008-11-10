@@ -44,7 +44,7 @@ class Zend_Amf_Value_MessageBody
      */
     protected $_targetUri = "";
 
-	/**
+    /**
      * Universal Resource Identifier that uniquely targets the originator's
      * Object that should receive the server's response. The server will
      * use this path specification to target the "OnResult()" or "onStatus()"
@@ -62,8 +62,8 @@ class Zend_Amf_Value_MessageBody
      */
     protected $_responseUri = "";
 
-	/**
-	 * Contains the actual data associated with the operation. It contains
+    /**
+     * Contains the actual data associated with the operation. It contains
      * the client's parameter data that is passed to the server's operation/method.
      * When serializing a root level data type or a parameter list array, no
      * name field is included. That is, the data is anonomously represented

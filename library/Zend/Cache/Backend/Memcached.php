@@ -54,11 +54,11 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     const DEFAULT_PERSISTENT = true;
 
-	/**
-	 * Log message
-	 */
-	const TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND = 'Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend';
-	const TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND =  'Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcached backend';
+    /**
+     * Log message
+     */
+    const TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND = 'Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend';
+    const TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND =  'Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcached backend';
     
     /**
      * Available options
@@ -214,22 +214,22 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-    	switch ($mode) {
-    		case Zend_Cache::CLEANING_MODE_ALL:
-    			return $this->_memcache->flush();
-    			break;
-    		case Zend_Cache::CLEANING_MODE_OLD:
-    			$this->_log("Zend_Cache_Backend_Memcached::clean() : CLEANING_MODE_OLD is unsupported by the Memcached backend");
-    			break;
-    		case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
-    		case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
-    		case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
-            	$this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND);
-            	break;
-           	default:
+        switch ($mode) {
+            case Zend_Cache::CLEANING_MODE_ALL:
+                return $this->_memcache->flush();
+                break;
+            case Zend_Cache::CLEANING_MODE_OLD:
+                $this->_log("Zend_Cache_Backend_Memcached::clean() : CLEANING_MODE_OLD is unsupported by the Memcached backend");
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                $this->_log(self::TAGS_UNSUPPORTED_BY_CLEAN_OF_MEMCACHED_BACKEND);
+                break;
+               default:
                 Zend_Cache::throwException('Invalid mode for clean() method');
-           		break;
-		}
+                   break;
+        }
     }
 
     /**
@@ -272,13 +272,13 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     
     /**
      * Return an array of stored tags
-	 *
+     *
      * @return array array of stored tags (string)
      */
     public function getTags()
     {
         $this->_log(self::TAGS_UNSUPPORTED_BY_SAVE_OF_MEMCACHED_BACKEND);
-    	return array();
+        return array();
     }
     
     /**

@@ -90,19 +90,19 @@ class Zend_Json
      * @param array $options Additional options used during encoding
      * @return string JSON encoded object
      */
-	public static function encode($valueToEncode, $cycleCheck = false, $options = array())
-	{
-	    if (is_object($valueToEncode) && method_exists($valueToEncode, 'toJson')) {
-	        return $valueToEncode->toJson();
-	    }
-	    
-	    if (function_exists('json_encode') && self::$useBuiltinEncoderDecoder !== true) {
-	        return json_encode($valueToEncode);
-	    }
-	
-	    require_once 'Zend/Json/Encoder.php';
-	    return Zend_Json_Encoder::encode($valueToEncode, $cycleCheck, $options);
-	}
+    public static function encode($valueToEncode, $cycleCheck = false, $options = array())
+    {
+        if (is_object($valueToEncode) && method_exists($valueToEncode, 'toJson')) {
+            return $valueToEncode->toJson();
+        }
+        
+        if (function_exists('json_encode') && self::$useBuiltinEncoderDecoder !== true) {
+            return json_encode($valueToEncode);
+        }
+    
+        require_once 'Zend/Json/Encoder.php';
+        return Zend_Json_Encoder::encode($valueToEncode, $cycleCheck, $options);
+    }
     
     /**  
      * fromXml - Converts XML to JSON  

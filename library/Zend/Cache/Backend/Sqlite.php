@@ -240,7 +240,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
     
     /**
      * Return an array of stored tags
-	 *
+     *
      * @return array array of stored tags (string)
      */
     public function getTags()
@@ -613,45 +613,45 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     private function _clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-    	switch ($mode) {
-    		case Zend_Cache::CLEANING_MODE_ALL:
-	            $res1 = $this->_query('DELETE FROM cache');
-	            $res2 = $this->_query('DELETE FROM tag');
-	            return $res1 && $res2;
-    			break;
-    		case Zend_Cache::CLEANING_MODE_OLD:
-	            $mktime = time();
-	            $res1 = $this->_query("DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
-	            $res2 = $this->_query("DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
-	            return $res1 && $res2;
-	            break;
-    		case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
-	            $ids = $this->getIdsMatchingTags($tags);
-	            $result = true;
-	            foreach ($ids as $id) {
-	                $result = $result && ($this->remove($id));
-	            }
-	            return $result;
-	            break;
-    		case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
-	            $ids = $this->getIdsNotMatchingTags($tags);
-	            $result = true;
-	            foreach ($ids as $id) {
-	                $result = $result && ($this->remove($id));
-	            }
-	            return $result;
-	            break;
-    		case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
-	            $ids = $this->getIdsMatchingAnyTags($tags);
-	            $result = true;
-	            foreach ($ids as $id) {
-	                $result = $result && ($this->remove($id));
-	            }
-	            return $result;
-	            break;
-	        default:
-    			break;
-    	}
+        switch ($mode) {
+            case Zend_Cache::CLEANING_MODE_ALL:
+                $res1 = $this->_query('DELETE FROM cache');
+                $res2 = $this->_query('DELETE FROM tag');
+                return $res1 && $res2;
+                break;
+            case Zend_Cache::CLEANING_MODE_OLD:
+                $mktime = time();
+                $res1 = $this->_query("DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
+                $res2 = $this->_query("DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
+                return $res1 && $res2;
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+                $ids = $this->getIdsMatchingTags($tags);
+                $result = true;
+                foreach ($ids as $id) {
+                    $result = $result && ($this->remove($id));
+                }
+                return $result;
+                break;
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+                $ids = $this->getIdsNotMatchingTags($tags);
+                $result = true;
+                foreach ($ids as $id) {
+                    $result = $result && ($this->remove($id));
+                }
+                return $result;
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                $ids = $this->getIdsMatchingAnyTags($tags);
+                $result = true;
+                foreach ($ids as $id) {
+                    $result = $result && ($this->remove($id));
+                }
+                return $result;
+                break;
+            default:
+                break;
+        }
         return false;
     }
 

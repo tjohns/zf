@@ -183,67 +183,67 @@ class Zend_Cache_Backend_ZendPlatform extends Zend_Cache_Backend implements Zend
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
-    	switch ($mode) {
-    		case Zend_Cache::CLEANING_MODE_ALL:
-    		case Zend_Cache::CLEANING_MODE_OLD:
-		        $cache_dir = ini_get('zend_accelerator.output_cache_dir');
-		        if (!$cache_dir) {
-		            return false;
-		        }
-		        $cache_dir .= '/.php_cache_api/';
-		        return $this->_clean($cache_dir, $mode);
-		        break;
-    		case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
-	            $idlist = null;
-	            foreach ($tags as $tag) {
-	                $next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifetime']);
-	                if ($idlist) {
-	                    $idlist = array_intersect_assoc($idlist, $next_idlist);
-	                } else {
-	                    $idlist = $next_idlist;
-	                }
-	                if (count($idlist) == 0) {
-	                    // if ID list is already empty - we may skip checking other IDs
-	                    $idlist = null;
-	                    break;
-	                }
-	            }
-	            if ($idlist) {
-	                foreach ($idlist as $id) {
-	                    output_cache_remove_key($id);
-	                }
-	            }
-	            return true;
-	            break;
-    		case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
-	            $this->_log("Zend_Cache_Backend_ZendPlatform::clean() : CLEANING_MODE_NOT_MATCHING_TAG is not supported by the Zend Platform backend");
-	            return false;
-	            break;
-    		case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
-	            $idlist = null;
-	            foreach ($tags as $tag) {
-	                $next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifetime']);
-	                if ($idlist) {
-	                    $idlist = array_merge_recursive($idlist, $next_idlist);
-	                } else {
-	                    $idlist = $next_idlist;
-	                }
-	                if (count($idlist) == 0) {
-	                    // if ID list is already empty - we may skip checking other IDs
-	                    $idlist = null;
-	                    break;
-	                }
-	            }
-	            if ($idlist) {
-	                foreach ($idlist as $id) {
-	                    output_cache_remove_key($id);
-	                }
-	            }
-	            return true;
-	            break;
-           	default:
+        switch ($mode) {
+            case Zend_Cache::CLEANING_MODE_ALL:
+            case Zend_Cache::CLEANING_MODE_OLD:
+                $cache_dir = ini_get('zend_accelerator.output_cache_dir');
+                if (!$cache_dir) {
+                    return false;
+                }
+                $cache_dir .= '/.php_cache_api/';
+                return $this->_clean($cache_dir, $mode);
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_TAG:
+                $idlist = null;
+                foreach ($tags as $tag) {
+                    $next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifetime']);
+                    if ($idlist) {
+                        $idlist = array_intersect_assoc($idlist, $next_idlist);
+                    } else {
+                        $idlist = $next_idlist;
+                    }
+                    if (count($idlist) == 0) {
+                        // if ID list is already empty - we may skip checking other IDs
+                        $idlist = null;
+                        break;
+                    }
+                }
+                if ($idlist) {
+                    foreach ($idlist as $id) {
+                        output_cache_remove_key($id);
+                    }
+                }
+                return true;
+                break;
+            case Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG:
+                $this->_log("Zend_Cache_Backend_ZendPlatform::clean() : CLEANING_MODE_NOT_MATCHING_TAG is not supported by the Zend Platform backend");
+                return false;
+                break;
+            case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                $idlist = null;
+                foreach ($tags as $tag) {
+                    $next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifetime']);
+                    if ($idlist) {
+                        $idlist = array_merge_recursive($idlist, $next_idlist);
+                    } else {
+                        $idlist = $next_idlist;
+                    }
+                    if (count($idlist) == 0) {
+                        // if ID list is already empty - we may skip checking other IDs
+                        $idlist = null;
+                        break;
+                    }
+                }
+                if ($idlist) {
+                    foreach ($idlist as $id) {
+                        output_cache_remove_key($id);
+                    }
+                }
+                return true;
+                break;
+            default:
                 Zend_Cache::throwException('Invalid mode for clean() method');
-           		break;
+                break;
         }
     }
 

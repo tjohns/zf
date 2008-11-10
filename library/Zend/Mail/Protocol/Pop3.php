@@ -34,8 +34,8 @@ class Zend_Mail_Protocol_Pop3
      * Default timeout in seconds for initiating session
      */
     const TIMEOUT_CONNECTION_POP = 30;
-	
-	/**
+    
+    /**
      * saves if server supports top
      * @var null|bool
      */
@@ -191,9 +191,9 @@ class Zend_Mail_Protocol_Pop3
             $message = '';
             $line = fgets($this->_socket);
             while ($line && rtrim($line, "\r\n") != '.') {
-            	if ($line[0] == '.') {
-            		$line = substr($line, 1);
-            	}
+                if ($line[0] == '.') {
+                    $line = substr($line, 1);
+                }
                 $message .= $line;
                 $line = fgets($this->_socket);
             };

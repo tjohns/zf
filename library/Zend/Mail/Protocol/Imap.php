@@ -35,7 +35,7 @@ class Zend_Mail_Protocol_Imap
      */
     const TIMEOUT_CONNECTION_IMAP = 30;
     
-	/**
+    /**
      * socket to imap server
      * @var resource|null
      */
@@ -820,14 +820,14 @@ class Zend_Mail_Protocol_Imap
     {
         $response = $this->requestAndResponse('SEARCH', $params);
         if (!$response) {
-        	return $response;
+            return $response;
         }
         
         foreach ($response as $ids) {
-        	if ($ids[0] == 'SEARCH') {
-        		array_shift($ids);
-        		return $ids;
-        	}
+            if ($ids[0] == 'SEARCH') {
+                array_shift($ids);
+                return $ids;
+            }
         }
         return array();
     }

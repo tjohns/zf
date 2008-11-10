@@ -162,7 +162,7 @@ class Zend_Http_Response
         if (! is_array($headers)) {
             require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception('No valid headers were passed');
-	}
+    }
 
         foreach ($headers as $name => $value) {
             if (is_int($name))

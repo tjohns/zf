@@ -34,10 +34,10 @@ require_once 'Zend/Amf/Value/Messaging/AcknowledgeMessage.php';
  */
 class Zend_Amf_Value_Messaging_ErrorMessage extends Zend_Amf_Value_Messaging_AcknowledgeMessage
 {
-	/**
-	 * Additional data with error
-	 * @var object
-	 */
+    /**
+     * Additional data with error
+     * @var object
+     */
     public $extendedData = null;
 
     /**

@@ -82,7 +82,7 @@ class Zend_Cache_Core
         'lifetime'                  => 3600,
         'logging'                   => false,
         'logger'                    => null,
-        'ignore_user_abort'		    => false
+        'ignore_user_abort'         => false
     );
 
     /**
@@ -482,7 +482,7 @@ class Zend_Cache_Core
     
     /**
      * Return an array of stored tags
-	 *
+     *
      * @return array array of stored tags (string)
      */
     public function getTags()
