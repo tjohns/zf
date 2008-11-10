@@ -684,17 +684,17 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         $this->_initWeight($reader);
 
         if ($docsFilter === null) {
-        	// Create local documents filter if it's not provided by upper query
-        	$docsFilter = new Zend_Search_Lucene_Index_DocsFilter();
+            // Create local documents filter if it's not provided by upper query
+            $docsFilter = new Zend_Search_Lucene_Index_DocsFilter();
         }
 
         foreach ($this->_subqueries as $subqueryId => $subquery) {
-        	if ($this->_signs == null  ||  $this->_signs[$subqueryId] === true) {
-        		// Subquery is required
-        		$subquery->execute($reader, $docsFilter);
-        	} else {
-        		$subquery->execute($reader);
-        	}
+            if ($this->_signs == null  ||  $this->_signs[$subqueryId] === true) {
+                // Subquery is required
+                $subquery->execute($reader, $docsFilter);
+            } else {
+                $subquery->execute($reader);
+            }
         }
 
         if ($this->_signs === null) {

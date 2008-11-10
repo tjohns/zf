@@ -405,7 +405,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      */
     public function termDocsFilter(Zend_Search_Lucene_Index_Term $term, $docsFilter = null)
     {
-    	return $this->_index->termDocsFilter($term, $docsFilter);
+        return $this->_index->termDocsFilter($term, $docsFilter);
     }
 
     /**

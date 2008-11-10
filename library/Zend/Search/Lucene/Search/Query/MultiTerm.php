@@ -329,7 +329,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
         $docsFilter = new Zend_Search_Lucene_Index_DocsFilter();
         foreach ($this->_terms as $termId => $term) {
-        	$termDocs = $reader->termDocs($term, $docsFilter);
+            $termDocs = $reader->termDocs($term, $docsFilter);
         }
         // Treat last retrieved docs vector as a result set
         // (filter collects data for other terms)
