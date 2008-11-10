@@ -60,12 +60,12 @@ class Zend_Soap_Client_Local extends Zend_Soap_Client
      */
     function __construct(Zend_Soap_Server $server, $wsdl, $options = null)
     {
-    	$this->_server = $server;
+        $this->_server = $server;
 
         // Use Server specified SOAP version as default
         $this->setSoapVersion($server->getSoapVersion());
 
-    	parent::__construct($wsdl, $options);
+        parent::__construct($wsdl, $options);
     }
 
     /**

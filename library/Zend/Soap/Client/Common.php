@@ -62,7 +62,7 @@ class Zend_Soap_Client_Common extends SoapClient
     function __doRequest($request, $location, $action, $version, $one_way = null)
     {
         if ($one_way === null) {
-   	        return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version);
+            return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version);
         } else {
             return call_user_func($this->_doRequestCallback, $this, $request, $location, $action, $version, $one_way);
         }
