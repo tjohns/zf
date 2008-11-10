@@ -448,11 +448,18 @@ class Zend_Mail extends Zend_Mime_Message
     {
         $email = strtr($email,"\r\n\t",'???');
         $this->_addRecipient($email, ('To' == $headerName) ? true : false);
-        if ($name != '') {
-            $name = '"' . $this->_encodeHeader($name) . '" ';
+        if ($name !== '' && $name !== null && $name !== $email) {
+            $encodedName = $this->_encodeHeader($name);
+            if ($encodedName === $name && strpos($name, ',') !== false) {
+                $format = '"%s" <%s>';
+            } else {
+                $format = '%s <%s>';
+            }
+            $destination = sprintf($format, $encodedName, $email);
+        } else {
+            $destination = $email;
         }
-
-        $this->_storeHeader($headerName, $name .'<'. $email . '>', true);
+        $this->_storeHeader($headerName, $destination, true);
     }
 
     /**
