@@ -408,7 +408,7 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
      * @group ZF-4802
      *
      */
-    public function testCorrectConcatenationOfCookies_1()
+    public function testCorrectConcatenationOfCookiesOne()
     {
     	  require_once 'Zend/Http/Client.php';
     	  $client = new Zend_Http_Client();
@@ -422,7 +422,7 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
      * @group ZF-4802
      *
      */
-    public function testCorrectConcatenationOfCookies_2()
+    public function testCorrectConcatenationOfCookiesTwo()
     {
     	  require_once 'Zend/Http/Client.php';
         $client = new Zend_Http_Client();
