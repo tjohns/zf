@@ -171,6 +171,49 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test isValid() on select elements without optgroups. This
+     * ensures fixing ZF-3985 doesn't break existing functionality.
+     *
+     * @see ZF-3985
+     */
+    public function testIsValidWithPlainOptions()
+    {
+        // test both syntaxes for setting plain options
+        $this->element->setMultiOptions(array(
+            array('key' => '1', 'value' => 'Web Developer'),
+            '2' => 'Software Engineer',
+        ));
+
+        $this->assertTrue($this->element->isValid('1'));
+        $this->assertTrue($this->element->isValid('2'));
+        $this->assertFalse($this->element->isValid('3'));
+        $this->assertFalse($this->element->isValid('Web Developer'));
+    }
+
+    /**
+     * @group ZF-3985
+     */
+    public function testIsValidWithOptionGroups()
+    {
+        // test optgroup and both syntaxes for setting plain options
+        $this->element->setMultiOptions(array(
+            'Technology' => array(
+                '1' => 'Web Developer',
+                '2' => 'Software Engineer',
+            ),
+            array('key' => '3', 'value' => 'Trainee'),
+            '4' => 'Intern',
+        ));
+
+        $this->assertTrue($this->element->isValid('1'));
+        $this->assertTrue($this->element->isValid('3'));
+        $this->assertTrue($this->element->isValid('4'));
+        $this->assertFalse($this->element->isValid('5'));
+        $this->assertFalse($this->element->isValid('Technology'));
+        $this->assertFalse($this->element->isValid('Web Developer'));
+    }
+
+    /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
      * @link   http://framework.zend.com/issues/browse/ZF-2794
