@@ -413,10 +413,10 @@ class Zend_Auth_Adapter_Http implements Zend_Auth_Adapter_Interface
             break;
             default:
                 /**
-                * @see Zend_Auth_Adapter_Exception
-                */
- 	            require_once 'Zend/Auth/Adapter/Exception.php';
- 	            throw new Zend_Auth_Adapter_Exception('Unsupported authentication scheme');
+                 * @see Zend_Auth_Adapter_Exception
+                 */
+                require_once 'Zend/Auth/Adapter/Exception.php';
+                throw new Zend_Auth_Adapter_Exception('Unsupported authentication scheme');
         }
 
         return $result;
