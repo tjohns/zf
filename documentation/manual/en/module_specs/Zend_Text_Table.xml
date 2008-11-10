@@ -32,10 +32,10 @@
     <para>
         Rows are simply added to the table by creating a new instance of
         <code>Zend_Text_Table_Row</code>, and appending it to the table via the
-        <code>appendRow</code> method. Rows itself have no options to choose
-        from. You can also give an array to directly to the <code>appendRow</code>
-        method, which then will automatically converted to a row object, 
-        containing multiple column objects.
+        <code>appendRow</code> method. Rows themselves have no options. You can also
+        give an array to directly to the <code>appendRow</code> method, which then
+        will automatically converted to a row object, containing multiple column
+        objects.
     </para>
     <para>
         The same way you can add columns to the rows. Create a new instance of
