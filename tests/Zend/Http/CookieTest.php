@@ -410,12 +410,12 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
      */
     public function testCorrectConcatenationOfCookies_1()
     {
-    	require_once '/opt/local/apache2/htdocs/BugHuntDay/library/bughuntday/library/Zend/Http/Client.php';
-    	$client = new Zend_Http_Client();
-		$client->setHeaders(array('cookie' => 'are you'));
-		$client->setCookie('funky', 'monkey');
+    	  require_once 'Zend/Http/Client.php';
+    	  $client = new Zend_Http_Client();
+		    $client->setHeaders(array('cookie' => 'are you'));
+		    $client->setCookie('funky', 'monkey');
 		
-		$this->assertEquals('are you; funky=monkey; ', $client->getHeader('cookie'));
+		    $this->assertEquals('are you; funky=monkey; ', $client->getHeader('cookie'));
     }
     
     /**
@@ -424,7 +424,7 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
      */
     public function testCorrectConcatenationOfCookies_2()
     {
-    	require_once '/opt/local/apache2/htdocs/BugHuntDay/library/bughuntday/library/Zend/Http/Client.php';
+    	  require_once 'Zend/Http/Client.php';
         $client = new Zend_Http_Client();
         $client->setHeaders(array('cookie' => 'are you;'));
         $client->setCookie('funky', 'monkey');
