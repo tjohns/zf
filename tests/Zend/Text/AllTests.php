@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/Text/FigletTest.php';
+require_once 'Zend/Text/TableTest.php';
 
 /**
  * @category   Zend
@@ -50,6 +51,7 @@ class Zend_Text_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Text');
 
         $suite->addTestSuite('Zend_Text_FigletTest');
+        $suite->addTestSuite('Zend_Text_TableTest');
 
         return $suite;
     }

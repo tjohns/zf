@@ -1,0 +1,119 @@
+<sect1 id="zend.text.table.introduction">
+    <title>Zend_Text_Table</title>
+    <para>
+        <code>Zend_Text_Table</code> is a component to create text based tables
+        on the fly with different decorators. This can be helpful, if you either
+        want to send structured data in text emails, which are used to have
+        mono-spaced fonts, or to display table information in a CLI application.
+        <code>Zend_Text_Table</code> supports multi-line columns, colspan and
+        align as well.
+    </para>
+    <note>
+        <title>Encoding</title>
+        <para>
+            <code>Zend_Text_Table</code> expects your strings to be UTF-8 encoded
+            by default. If this is not the case, you can supply the character
+            encoding as a parameter to the <code>constructor</code> or the
+            <code>setContent</code> method of <code>Zend_Text_Table_Column</code>.
+        </para>
+    </note>
+    <para>
+        A <code>Zend_Text_Table</code> object consists of rows, which contain
+        columns, represented by <code>Zend_Text_Table_Row</code> and
+        <code>Zend_Text_Table_Column</code>. When creating a table, you have to
+        supply all column widths as an array. So to speak, when you want to
+        display a table with three columns, having a size of 10, 50 and 20
+        characters, you simply supply an <code>array(10, 50, 20)</code> as
+        first parameter to the constructor. As a second parameter, you may
+        supply a decorator, which styles the borders of the table. By default,
+        <code>Zend_Text_Table_Decorator_Unicode</code> is used, but you may also
+        use the simpler decorator called <code>Zend_Text_Table_Decorator_Ascii</code>.
+    </para>
+    <para>
+        Rows are simply added to the table by creating a new instance of
+        <code>Zend_Text_Table_Row</code>, and appending it to the table via the
+        <code>appendRow</code> method. Rows itself have no options to choose
+        from. You can also give an array to directly to the <code>appendRow</code>
+        method, which then will automatically converted to a row object, 
+        containing multiple column objects.
+    </para>
+    <para>
+        The same way you can add columns to the rows. Create a new instance of
+        <code>Zend_Text_Table_Column</code> and then either set the column
+        options in the constructor or later with the <code>set*</code> methods.
+        The first parameter is the content of the column which may have
+        multiple lines, which in the best case are seperated by just the
+        <code>\n</code> character. The second parameter defines the align, which
+        is "left" by default and can be one of the class constants of
+        <code>Zend_Text_Table_Column</code>:
+        
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>ALIGN_LEFT</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>ALIGN_CENTER</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>ALIGN_RIGHT</code>
+                </para>
+            </listitem>
+        </itemizedlist>
+        
+        The third parameter is the colspan of the column. For example, when you
+        choose "2" as colspan, the column will span over two columns of the table.
+        The last parameter defines the encoding of the content, which should be
+        supplied, if the content is neither ASCII nor UTF-8. To append the column
+        to the row, you simply call <code>appendColumn</code> in your row object
+        with the column object as parameter. Alternatively you can directly
+        give a string to the <code>appendColumn</code> method.
+    </para>
+    <para>
+        To finally render the table, you can either use the <code>render</code>
+        method of the table, or use the magic method <code>__toString</code>
+        by doing <code>echo $table;</code> or <code>$tableString = (string) $table</code>.
+    </para>    
+    <example id="zend.text.table.example.using">
+        <title>Using Zend_Text_Table</title>
+        <para>
+            This example illustrates the basic use of <code>Zend_Text_Table</code>
+            to create a simple table:
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Text/Table.php';
+require_once 'Zend/Text/Table/Row.php';
+require_once 'Zend/Text/Table/Column.php';
+
+$table = new Zend_Text_Table(array(10, 20));
+
+// Either simple
+$table->appendRow(array('Zend', 'Framework'));
+
+// Or verbose
+$row = new Zend_Text_Table_Row();
+
+$row->appendColumn(new Zend_Text_Table_Column('Zend'));
+$row->appendColumn(new Zend_Text_Table_Column('Framework'));
+
+$table->appendRow($row);
+
+echo $table;
+?>]]>
+        </programlisting>
+        <para>
+            This will result in the following output:
+        </para>
+        <programlisting role="text"><![CDATA[┌──────────┬────────────────────┐
+│Zend      │Framework           │
+└──────────┴────────────────────┘]]>
+        </programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
