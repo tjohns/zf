@@ -36,7 +36,7 @@ require_once 'Zend/Gdata/Media/Entry.php';
 require_once 'Zend/Gdata/YouTube/Extension/MediaGroup.php';
 
 /**
- * Represents the YouTube flavor of a GData Media Entry
+ * Represents the YouTube flavor of a Gdata Media Entry
  *
  * @category   Zend
  * @package    Zend_Gdata

@@ -229,7 +229,7 @@ class Zend_Gdata_App_Entry extends Zend_Gdata_App_FeedEntryParent
             $className = get_class($this);
         }
         
-        // Append ETag, if present (GData v2 and above, only) and doesn't
+        // Append ETag, if present (Gdata v2 and above, only) and doesn't
         // conflict with existing headers
         if ($this->_etag != null
                 && !array_key_exists('If-Match', $extraHeaders)

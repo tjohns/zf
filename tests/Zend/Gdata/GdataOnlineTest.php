@@ -174,8 +174,8 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
 
     public function testMediaUpload()
     {
-        // the standard sevice for GData testing is Blogger, due to the strong
-        // match to the standard GData/APP protocol.  However, Blogger doesn't
+        // the standard sevice for Gdata testing is Blogger, due to the strong
+        // match to the standard Gdata/APP protocol.  However, Blogger doesn't
         // currently support media uploads, so we're using Picasa Web Albums
         // for this test instead
         $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');

@@ -575,7 +575,7 @@ class Zend_Gdata_App
         if ($headers === null) {
             $headers = array();
         }
-        // Append a GData version header if protocol v2 or higher is in use.
+        // Append a Gdata version header if protocol v2 or higher is in use.
         // (Protocol v1 does not use this header.)
         $major = $this->getMajorProtocolVersion();
         $minor = $this->getMinorProtocolVersion();

@@ -29,7 +29,7 @@ require_once 'Zend/Gdata/App.php';
  * Subclasses exist to implement service-specific features
  *
  * As the Google data API protocol is based upon the Atom Publishing Protocol
- * (APP), GData functionality extends the appropriate Zend_Gdata_App classes
+ * (APP), Gdata functionality extends the appropriate Zend_Gdata_App classes
  *
  * @link http://code.google.com/apis/gdata/overview.html
  *
@@ -68,7 +68,7 @@ class Zend_Gdata extends Zend_Gdata_App
             'Zend_Gdata_App');
 
     /**
-     * Namespaces used for GData data
+     * Namespaces used for Gdata data
      *
      * @var array
      */

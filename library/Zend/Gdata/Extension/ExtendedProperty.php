@@ -25,7 +25,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Data model for gd:extendedProperty element, used by some GData
+ * Data model for gd:extendedProperty element, used by some Gdata
  * services to implement arbitrary name/value pair storage
  *
  * @category   Zend

@@ -25,7 +25,7 @@
 require_once 'Zend/Gdata/App/Extension.php';
 
 /**
- * Represents a GData extension
+ * Represents a Gdata extension
  *
  * @category   Zend
  * @package    Zend_Gdata

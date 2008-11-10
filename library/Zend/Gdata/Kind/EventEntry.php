@@ -90,7 +90,7 @@ require_once 'Zend/Gdata/Extension/OriginalEvent.php';
 require_once 'Zend/Gdata/Extension/EntryLink.php';
 
 /**
- * Data model for the GData Event "Kind".  Google Calendar has a separate
+ * Data model for the Gdata Event "Kind".  Google Calendar has a separate
  * EventEntry class which extends this.
  *
  * @category   Zend
