@@ -55,6 +55,12 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Text_TableTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
+    
+    public function tearDown()
+    {
+        Zend_Text_Table::setInputCharset('utf-8');
+        Zend_Text_Table::setOutputCharset('utf-8');
+    }
 
     public function testColumnAlignLeft()
     {
@@ -84,13 +90,33 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($column->render(10), "    foobar\n       foo");
     }
     
-    public function testColumnEncoding()
+    public function testColumnForcedEncoding()
     {
         $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt');
                 
         $column = new Zend_Text_Table_Column($iso885915, null, null, 'iso-8859-15');
 
         $this->assertEquals($column->render(6), 'Ömläüt');
+    }
+    
+    public function testColumnDefaultInputEncoding()
+    {
+        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt');
+                
+        Zend_Text_Table::setInputCharset('iso-8859-15');
+        $column = new Zend_Text_Table_Column($iso885915);
+
+        $this->assertEquals($column->render(6), 'Ömläüt');
+    }
+    
+    public function testColumnDefaultOutputEncoding()
+    {
+        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt');
+                
+        Zend_Text_Table::setOutputCharset('iso-8859-15');
+        $column = new Zend_Text_Table_Column('Ömläüt');
+
+        $this->assertEquals($column->render(6), $iso885915);
     }
     
     public function testColumnSetContentInvalidArgument()
@@ -227,6 +253,19 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     public function testTableDecoratorLoaderSimple()
     {
         $table = new Zend_Text_Table(array('columnWidths' => array(10), 'decorator' => 'ascii'));
+        
+        $row = new Zend_Text_Table_Row();
+        $row->createColumn('foobar');
+        $table->appendRow($row);
+        
+        $this->assertEquals($table->render(), "+----------+\n|foobar    |\n+----------+\n");
+    }
+    
+    public function testTableDecoratorEncodingDefault()
+    {
+        Zend_Text_Table::setOutputCharset('iso-8859-15');
+        
+        $table = new Zend_Text_Table(array('columnWidths' => array(10)));
         
         $row = new Zend_Text_Table_Row();
         $row->createColumn('foobar');

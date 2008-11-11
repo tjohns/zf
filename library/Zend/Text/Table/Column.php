@@ -20,6 +20,11 @@
  */
 
 /**
+ * @see Zend_Text_Table
+ */
+require_once 'Zend/Text/Table.php';
+
+/**
  * Column class for Zend_Text_Table_Row
  *
  * @category  Zend
@@ -70,12 +75,12 @@ class Zend_Text_Table_Column
      * @param string  $content  The content of the column
      * @param string  $align    The align of the content
      * @param integer $colSpan  The colspan of the column
-     * @param string  $encoding The encoding of the content
+     * @param string  $charset  The encoding of the content
      */
-    public function __construct($content = null, $align = null, $colSpan = null, $encoding = null)
+    public function __construct($content = null, $align = null, $colSpan = null, $charset = null)
     {
         if ($content !== null) {
-            $this->setContent($content, $encoding);
+            $this->setContent($content, $charset);
         }
 
         if ($align !== null) {
@@ -90,23 +95,32 @@ class Zend_Text_Table_Column
     /**
      * Set the content.
      *
-     * If $encoding is not defined, it is assumed that $content is UTF-8
-     * encoded.
+     * If $charset is not defined, it is assumed that $content is encoded in
+     * the charset defined via Zend_Text_Table::setInputCharset() (defaults
+     * to utf-8).
      *
      * @param  string $content  Content of the column
-     * @param  string $encoding The Encoding of the content
+     * @param  string $charset  The charset of the content
      * @throws Zend_Text_Table_Exception When $content is not a string
      * @return Zend_Text_Table_Column
      */
-    public function setContent($content, $encoding = 'UTF-8')
+    public function setContent($content, $charset = null)
     {
         if (is_string($content) === false) {
             require_once 'Zend/Text/Table/Exception.php';
             throw new Zend_Text_Table_Exception('$content must be a string');
         }
 
-        if ($encoding !== 'UTF-8') {
-            $content = iconv($encoding, 'UTF-8', $content);
+        if ($charset === null) {
+            $inputCharset = Zend_Text_Table::getInputCharset();
+        } else {
+            $inputCharset = strtolower($charset);
+        }
+        
+        $outputCharset = Zend_Text_Table::getOutputCharset();
+        
+        if ($inputCharset !== $outputCharset) {
+            $content = iconv($inputCharset, $outputCharset, $content);
         }
 
         $this->_content = $content;

@@ -87,6 +87,20 @@ class Zend_Text_Table
     protected $_pluginLoader = null;
     
     /**
+     * Charset which is used for input by default
+     *
+     * @var string
+     */
+    protected static $_inputCharset = 'utf-8';
+    
+    /**
+     * Charset which is used internally
+     *
+     * @var string
+     */
+    protected static $_outputCharset = 'utf-8';
+    
+    /**
      * Option keys to skip when calling setOptions()
      * 
      * @var array
@@ -122,8 +136,11 @@ class Zend_Text_Table
         
         // If no decorator was given, use default unicode decorator
         if ($this->_decorator === null) {
-            require_once 'Zend/Text/Table/Decorator/Unicode.php';
-            $this->_decorator = new Zend_Text_Table_Decorator_Unicode();
+            if (self::getOutputCharset() === 'utf-8') {
+                $this->setDecorator('unicode');
+            } else {
+                $this->setDecorator('ascii');
+            }
         }
     }
     
@@ -262,6 +279,46 @@ class Zend_Text_Table
         return $this;
     }
 
+    /**
+     * Set the input charset for column contents
+     *
+     * @param string $charset
+     */
+    public static function setInputCharset($charset)
+    {
+        self::$_inputCharset = strtolower($charset);
+    }
+    
+    /**
+     * Get the input charset for column contents
+     *
+     * @param string $charset
+     */
+    public static function getInputCharset()
+    {
+        return self::$_inputCharset;
+    }
+    
+    /**
+     * Set the output charset for column contents
+     *
+     * @param string $charset
+     */
+    public static function setOutputCharset($charset)
+    {
+        self::$_outputCharset = strtolower($charset);
+    }
+    
+    /**
+     * Get the output charset for column contents
+     *
+     * @param string $charset
+     */
+    public static function getOutputCharset()
+    {
+        return self::$_outputCharset;
+    }
+    
     /**
      * Append a row to the table
      *

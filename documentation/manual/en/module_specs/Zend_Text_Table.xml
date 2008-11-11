@@ -12,9 +12,14 @@
         <title>Encoding</title>
         <para>
             <code>Zend_Text_Table</code> expects your strings to be UTF-8 encoded
-            by default. If this is not the case, you can supply the character
+            by default. If this is not the case, you can either supply the character
             encoding as a parameter to the <code>constructor</code> or the
             <code>setContent</code> method of <code>Zend_Text_Table_Column</code>.
+            Alternativley if you have a different encoding in the entire
+            process, you can define the standard input charset with
+            <code>Zend_Text_Table::setInputCharset($charset)</code>. In
+            case you need another output charset for the table, you can set
+            this with <code>Zend_Text_Table::setOutputCharset($charset)</code>.
         </para>
     </note>
     <para>
