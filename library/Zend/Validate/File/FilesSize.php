@@ -81,7 +81,7 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
                 $options = array('min' => $options);
             } elseif (!is_array($options)) {
                 require_once 'Zend/Validate/Exception.php';
-                throw new Zend_Validate_Exception('Invalid options provided to constructor');
+                throw new Zend_Validate_Exception('Invalid options to validator provided');
             }
 
             $argv = func_get_args();
@@ -119,7 +119,7 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
             // Is file readable ?
             if (!Zend_Loader::isReadable($files)) {
                 $this->_throw($file, self::NOT_READABLE);
-                return false;
+                continue;
             }
 
             if (!isset($this->_files[$files])) {

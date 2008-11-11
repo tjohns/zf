@@ -69,11 +69,13 @@ class Zend_Validate_File_Md5 extends Zend_Validate_File_Hash
     {
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
-        }
-        if (!is_array($options) && !is_string($options)) {
+        } elseif (is_scalar($options)) {
+            $options = array('hash1' => $options);
+        } elseif (!is_array($options)) {
             require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception('Invalid options provided to constructor');
+            throw new Zend_Validate_Exception('Invalid options to validator provided');
         }
+
         $this->setMd5($options);
     }
 

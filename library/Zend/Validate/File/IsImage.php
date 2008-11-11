@@ -103,16 +103,16 @@ class Zend_Validate_File_IsImage extends Zend_Validate_File_MimeType
             return $this->_throw($file, self::NOT_READABLE);
         }
 
-        if (class_exists('finfo', false) && defined('MAGIC')) {
-            $info = new finfo(FILEINFO_MIME);
-            $this->_type = $info->file($value);
-            unset($info);
-        } else if (function_exists('mime_content_type')){
-            $this->_type = mime_content_type($value);
-        }
-
-        if (empty($this->_type) && ($file !== null)) {
-            $this->_type = $file['type'];
+        if ($file !== null) {
+            if (class_exists('finfo', false) && defined('MAGIC')) {
+                $mime = new finfo(FILEINFO_MIME);
+                $this->_type = $mime->file($value);
+                unset($mime);
+            } elseif (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
+                $this->_type = mime_content_type($value);
+            } else {
+                $this->_type = $file['type'];
+            }
         }
 
         if (empty($this->_type)) {
@@ -124,9 +124,9 @@ class Zend_Validate_File_IsImage extends Zend_Validate_File_MimeType
             return true;
         }
 
+        $types = explode('/', $this->_type);
+        $types = array_merge($types, explode('-', $this->_type));
         foreach($compressions as $mime) {
-            $types = explode('/', $this->_type);
-            $types = array_merge($types, explode('-', $this->_type));
             if (in_array($mime, $types)) {
                 return true;
             }

@@ -155,7 +155,7 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
 
         if (!is_string($min) and !is_numeric($min)) {
             require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception ('Invalid options to count validator provided');
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
         }
 
         $min = (integer) $min;
@@ -194,7 +194,7 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
 
         if (!is_string($max) and !is_numeric($max)) {
             require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception ('Invalid options to count validator provided');
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
         }
 
         $max = (integer) $max;
@@ -233,15 +233,30 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
 
         $this->_count = count($this->_files);
         if (($this->_max !== null) && ($this->_count > $this->_max)) {
-            $this->_error(self::TOO_MUCH);
-            return false;
+            return $this->_throw($file, self::TOO_MUCH);
         }
 
         if (($this->_min !== null) && ($this->_count < $this->_min)) {
-            $this->_error(self::TOO_LESS);
-            return false;
+            return $this->_throw($file, self::TOO_LESS);
         }
 
         return true;
+    }
+
+    /**
+     * Throws an error of the given type
+     *
+     * @param  string $file
+     * @param  string $errorType
+     * @return false
+     */
+    protected function _throw($file, $errorType)
+    {
+        if ($file !== null) {
+            $this->_value = $file['name'];
+        }
+
+        $this->_error($errorType);
+        return false;
     }
 }

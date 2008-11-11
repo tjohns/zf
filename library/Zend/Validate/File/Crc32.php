@@ -60,14 +60,21 @@ class Zend_Validate_File_Crc32 extends Zend_Validate_File_Hash
     /**
      * Sets validator options
      *
-     * $hash is the hash we accept for the file $file
-     *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return void
      */
-    public function __construct($hash)
+    public function __construct($options)
     {
-        $this->setCrc32($hash);
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } elseif (is_scalar($options)) {
+            $options = array('hash1' => $options);
+        } elseif (!is_array($options)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Invalid options to validator provided');
+        }
+
+        $this->setCrc32($options);
     }
 
     /**
@@ -150,16 +157,15 @@ class Zend_Validate_File_Crc32 extends Zend_Validate_File_Hash
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_FOUND);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_FOUND);
         }
 
         $hashes = array_unique(array_keys($this->_hash));
         $filehash = hash_file('crc32', $value);
         if ($filehash === false) {
-            $this->_throw($file, self::NOT_DETECTED);
-            return false;
+            return $this->_throw($file, self::NOT_DETECTED);
         }
 
         foreach($hashes as $hash) {
@@ -168,7 +174,6 @@ class Zend_Validate_File_Crc32 extends Zend_Validate_File_Hash
             }
         }
 
-        $this->_throw($file, self::DOES_NOT_MATCH);
-        return false;
+        return $this->_throw($file, self::DOES_NOT_MATCH);
     }
 }

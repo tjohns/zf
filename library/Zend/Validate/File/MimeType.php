@@ -82,6 +82,15 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
      */
     public function __construct($mimetype)
     {
+        if ($mimetype instanceof Zend_Config) {
+            $mimetype = $mimetype->toArray();
+        } elseif (is_string($mimetype)) {
+            $mimetype = explode(',', $mimetype);
+        } elseif (!is_array($mimetype)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception("Invalid options to validator provided");
+        }
+
         $this->setMimeType($mimetype);
     }
 
@@ -125,13 +134,11 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
     {
         $mimetypes = $this->getMimeType(true);
 
-        if ($mimetype instanceof Zend_Config) {
-            $mimetype = $mimetype->toArray();
-        } elseif (is_string($mimetype)) {
+        if (is_string($mimetype)) {
             $mimetype = explode(',', $mimetype);
         } elseif (!is_array($mimetype)) {
             require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception("Invalid mimetype parameter provided");
+            throw new Zend_Validate_Exception("Invalid options to validator provided");
         }
 
         foreach ($mimetype as $content) {
@@ -194,8 +201,9 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
             return true;
         }
 
+        $types = explode('/', $this->_type);
+        $types = array_merge($types, explode('-', $this->_type));
         foreach($mimetype as $mime) {
-            $types = explode('/', $this->_type);
             if (in_array($mime, $types)) {
                 return true;
             }

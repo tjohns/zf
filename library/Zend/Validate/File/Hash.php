@@ -65,16 +65,17 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
      */
     public function __construct($options)
     {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } elseif (is_scalar($options)) {
+            $options = array('hash1' => $options);
+        } elseif (!is_array($options)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Invalid options to validator provided');
+        }
+
         if (1 < func_num_args()) {
             trigger_error('Multiple constructor options are deprecated in favor of a single options array', E_USER_NOTICE);
-            if ($options instanceof Zend_Config) {
-                $options = $options->toArray();
-            } elseif (is_scalar($options)) {
-                $options = array('hash1' => $options);
-            } elseif (!is_array($options)) {
-                require_once 'Zend/Validate/Exception.php';
-                throw new Zend_Validate_Exception('Invalid options provided to constructor');
-            }
             $options['algorithm'] = func_get_arg(1);
         }
 
@@ -113,9 +114,7 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
      */
     public function addHash($options)
     {
-        if ($options instanceof Zend_Config) {
-            $options = $options->toArray();
-        } else if (is_string($options)) {
+        if (is_string($options)) {
             $options = array($options);
         } else if (!is_array($options)) {
             require_once 'Zend/Validate/Exception.php';
@@ -164,8 +163,7 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
         foreach ($algos as $algorithm) {
             $filehash = hash_file($algorithm, $value);
             if ($filehash === false) {
-                $this->_throw($file, self::NOT_DETECTED);
-                return false;
+                return $this->_throw($file, self::NOT_DETECTED);
             }
 
             foreach($hashes as $hash) {
