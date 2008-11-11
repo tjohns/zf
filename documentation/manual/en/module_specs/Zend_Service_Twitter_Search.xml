@@ -1,4 +1,4 @@
-<sect2 id="zend.service.twitter.search" xmlns:xi="http://www.w3.org/2001/XInclude">
+<sect2 id="zend.service.twitter.search">
     <title>Zend_Service_Twitter_Search</title>
 
     <sect3 id="zend.service.twitter.search.introduction">
@@ -59,7 +59,7 @@ foreach($twitter_trends as $trend) {
 
         <para>
             Using the search method returns tweets that match a specific query.
-            There are anumber of <ulink
+            There are a number of <ulink
                 url="http://search.twitter.com/operators">Search Operators</ulink> that you
             can use to query with.
         </para>
@@ -109,7 +109,7 @@ foreach($twitter_trends as $trend) {
                 <para>
                     <code>geocode</code>, returns tweets by users located within a given radius of the given
                     latitude/longitude, where the user's location is taken from their Twitter profile. The
-                    parameter value is specified by "latitide,longitude,radius", where radius units must
+                    parameter value is specified by "latitude,longitude,radius", where radius units must
                     be specified as either "mi" (miles) or "km" (kilometers).
                 </para>
             </listitem>
@@ -117,7 +117,7 @@ foreach($twitter_trends as $trend) {
         <example id="zend.service.twitter.search.search.json">
             <title>JSON Search Example</title>
             <para>
-                The following code sameple will return an array with the values search results
+                The following code sample will return an array with the values search results
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -130,7 +130,7 @@ $search_results = $twitter_search->search('zend', array('lang' => 'en'));
         <example id="zend.service.twitter.search.search.atom">
             <title>ATOM Search Example</title>
             <para>
-                The following code sameple will return a <code>Zend_Feed_Atom</code> object.
+                The following code sample will return a <code>Zend_Feed_Atom</code> object.
             </para>
 
             <programlisting role="php"><![CDATA[

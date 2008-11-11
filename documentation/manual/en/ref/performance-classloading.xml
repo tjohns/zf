@@ -120,7 +120,6 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
                 Framework applications, this is not desired, and the path may be
                 safely pushed to the last item in the list.
             </para>
-        </sect3>
 
         <example id="performance.classloading.includepath.example">
             <title>Example: Optimized include_path</title>
@@ -177,6 +176,7 @@ $paths = array(
 set_include_path(implode(PATH_SEPARATOR, $paths));
 ]]></programlisting>
         </example>
+        </sect3>
     </sect2>
 
     <sect2 id="performance.classloading.striprequires">
