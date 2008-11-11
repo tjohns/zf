@@ -298,7 +298,7 @@ foreach ($relatedArtists as $artist) {
 
         <para>
             <code>Zend_Service_Audioscrobbler</code> は、<code>setTrack()</code>
-            メソッドで指定した極についてのデータを取得する、ふたつのメソッドを提供しています。
+            メソッドで指定した曲についてのデータを取得する、ふたつのメソッドを提供しています。
             <itemizedlist>
                 <listitem>
                     <para>
