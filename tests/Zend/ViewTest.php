@@ -842,7 +842,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view = new Zend_View();
         $view->declareVars();
         $helperPath = $view->getHelperPath('declareVars');
-        $this->assertContains($helperPath, $expected);
+        $this->assertContains($expected, $helperPath);
     }
 
     public function testGetFilter()
@@ -868,7 +868,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view->addFilterPath($base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1');
 
         $filterPath = $view->getFilterPath('foo');
-        $this->assertEquals($expected, $filterPath);
+        $this->assertEquals($expected, $filterPath, var_export($filterPath, 1));
     }
 
     public function testGetFilters()

@@ -306,11 +306,23 @@ class Zend_Loader_PluginLoader implements Zend_Loader_PluginLoader_Interface
     {
         $name = $this->_formatName($name);
         if ($this->_useStaticRegistry 
-            && isset(self::$_staticLoadedPluginPaths[$this->_useStaticRegistry][$name])
+            && !empty(self::$_staticLoadedPluginPaths[$this->_useStaticRegistry][$name])
         ) {
             return self::$_staticLoadedPluginPaths[$this->_useStaticRegistry][$name];
-        } elseif (isset($this->_loadedPluginPaths[$name])) {
+        } elseif (!empty($this->_loadedPluginPaths[$name])) {
             return $this->_loadedPluginPaths[$name];
+        }
+
+        if ($this->isLoaded($name)) {
+            $class = $this->getClassName($name);
+            $r     = new ReflectionClass($class);
+            $path  = $r->getFileName();
+            if ($this->_useStaticRegistry) {
+                self::$_staticLoadedPluginPaths[$this->_useStaticRegistry][$name] = $path;
+            } else {
+                $this->_loadedPluginPaths[$name] = $path;
+            }
+            return $path;
         }
 
         return false;
