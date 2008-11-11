@@ -263,9 +263,6 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         $path = '/statuses/friends_timeline';
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
-                case 'id':
-                    $path .= '/' . $value;
-                    break;
                 case 'since':
                     $this->_setDate($value);
                     break;
@@ -312,8 +309,8 @@ class Zend_Service_Twitter extends Zend_Rest_Client
                     $count = (int) $value;
                     if (0 >= $count) {
                         $count = 1;
-                    } elseif (20 < $count) {
-                        $count = 20;
+                    } elseif (200 < $count) {
+                        $count = 200;
                     }
                     $_params['count'] = $count;
                     break;
@@ -366,7 +363,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         );
 
         if(is_numeric($in_reply_to_status_id) && !empty($in_reply_to_status_id)) {
-            $this->in_reply_to_status_id = $in_reply_to_status_id;
+            $data['in_reply_to_status_id'] = $in_reply_to_status_id;
         }
 
         //$this->status = $status;
@@ -377,7 +374,11 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     /**
      * Get status replies
      *
-     * @param  int $page Which page of replies to retrieve
+     * $params may include one or more of the following keys
+     * - since: return results only after the date specified
+     * - since_id: return results only after the specified tweet id
+     * - page: return page X of results
+     *
      * @return Zend_Rest_Client_Result
      */
     public function statusReplies(array $params = array())
@@ -427,16 +428,29 @@ class Zend_Service_Twitter extends Zend_Rest_Client
      * @param  int|string $id Id or username of user for whom to fetch friends
      * @return Zend_Rest_Client_Result
      */
-    public function userFriends($id = null)
+    public function userFriends(array $params = array())
     {
         $this->_init();
         $path = '/statuses/friends';
-        if (null !== $id) {
-            $path .= '/' . $id;
+        $_params = array();
+        foreach ($params as $key => $value) {
+            switch (strtolower($key)) {
+                case 'id':
+                    $path .= '/' . $value;
+                    break;
+                case 'since':
+                    $this->_setDate($value);
+                    break;
+                case 'page':
+                    $_params['page'] = (int) $value;
+                    break;
+                default:
+                    break;
+            }
         }
-        $path .= '.xml';
+        $path    .= '.xml';
 
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
