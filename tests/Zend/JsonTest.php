@@ -49,24 +49,31 @@ require_once 'Zend/Json/Decoder.php';
  */
 class Zend_JsonTest extends PHPUnit_Framework_TestCase
 {
+	private $_originalUseBuiltinEncoderDecoderValue;
+
+    public function setUp()
+    {
+        $this->_originalUseBuiltinEncoderDecoderValue = Zend_Json::$useBuiltinEncoderDecoder;
+    }
+
+    public function tearDown()
+    {
+        Zend_Json::$useBuiltinEncoderDecoder = $this->_originalUseBuiltinEncoderDecoderValue;
+    }
 
     public function testJsonWithPhpJsonExtension()
     {
         if (!extension_loaded('json')) {
             $this->markTestSkipped('JSON extension is not loaded');
         }
-        $u = Zend_Json::$useBuiltinEncoderDecoder;
         Zend_Json::$useBuiltinEncoderDecoder = false;
         $this->_testJson(array('string', 327, true, null));
-        Zend_Json::$useBuiltinEncoderDecoder = $u;
     }
 
     public function testJsonWithBuiltins()
     {
-        $u = Zend_Json::$useBuiltinEncoderDecoder;
         Zend_Json::$useBuiltinEncoderDecoder = true;
         $this->_testJson(array('string', 327, true, null));
-        Zend_Json::$useBuiltinEncoderDecoder = $u;
     }
 
     /**
@@ -368,10 +375,10 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
             // success
         }
     }
-    
+
     /**
      * Test for ZF-4053
-     * 
+     *
      * Check to see that cyclical exceptions are silenced when
      * $option['silenceCyclicalExceptions'] = true is used
      */
@@ -427,13 +434,13 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $this->assertContains("Class.create('Zend_JsonTest_Object'", $encoded);
         $this->assertContains("Class.create('Zend_JsonTest'", $encoded);
     }
-    
+
     public function testToJsonSerialization()
     {
     	$toJsonObject = new ToJsonClass();
-    	
+
     	$result = Zend_Json::encode($toJsonObject);
-    	
+
     	$this->assertEquals('{"firstName":"John","lastName":"Doe","email":"john@doe.com"}', $result);
     }
 }
@@ -470,14 +477,14 @@ class Zend_JsonTest_Object
     }
 }
 
-class ToJsonClass 
+class ToJsonClass
 {
     private $_firstName = 'John';
-    
+
     private $_lastName = 'Doe';
-    
+
     private $_email = 'john@doe.com';
-    
+
     public function toJson()
     {
         $data = array(
@@ -485,7 +492,7 @@ class ToJsonClass
             'lastName'  => $this->_lastName,
             'email'     => $this->_email
         );
-        
+
         return Zend_Json::encode($data);
     }
 }
