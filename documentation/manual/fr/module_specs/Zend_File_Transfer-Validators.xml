@@ -171,13 +171,13 @@ $upload->addValidator('Size', false, 20000);
 
 // Paramètre un poids de fichier de 20 octets minimum
 // et de 20000 octets maximum
-$upload->addValidator('Size', false, array(20, 20000));
+$upload->addValidator('Size', false, array('min' => 20, 'max' => 20000));
 
 // Paramètre un poids de fichier de 20 octets minimum et
 // de 20000 octets maximum et un nombre de fichiers en une seule étape
 $upload->setValidators(array(
-    'Size'  => array(20, 20000),
-    'Count' => array(1, 3),
+    'Size'  => array('min' => 20, 'max' => 20000),
+    'Count' => array('min' => 1, 'max' => 3),
 ));
 ]]></programlisting>
         </example>
@@ -262,8 +262,8 @@ if ($upload->isValid()) {
     <sect2 id="zend.file.transfer.validators.count">
         <title>Validateur <emphasis role="strong">Count</emphasis></title>
 
-        <para>Le validateur <code>Count</code> vérifie le nombre de fichiers fournis. Il supporte les options suivantes
-        :</para>
+        <para>Le validateur <code>Count</code> vérifie le nombre de fichiers fournis. Il supporte les clés d'options
+        suivantes :</para>
 
         <itemizedlist>
             <listitem>
@@ -286,8 +286,7 @@ if ($upload->isValid()) {
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez initialiser ce validateur avec ces deux options. La première option est <code>min</code>, la
-        seconde est <code>max</code>. Quand seule une option est fournie, elle est utilisée en tant que
+        <para>Vous pouvez initialiser ce validateur avec une chaîne ou un entier, la valeur sera utilisée en tant que
         <code>max</code>. Mais vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code>
         pour paramétrer ces options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les
         récupérer.</para>
@@ -303,7 +302,7 @@ $upload->addValidator('Count', false, 2);
 
 // Limite le nombre de fichiers à 5 maximum,
 // tout en obligeant au moins 1 fichier
-$upload->addValidator('Count', false, array(1, 5);
+$upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
 ]]></programlisting>
         </example>
 
@@ -321,9 +320,10 @@ $upload->addValidator('Count', false, array(1, 5);
 
         <itemizedlist>
             <listitem>
-                <para><code>hash</code> : paramètre la valeur de hachage qui doit être vérifié.</para>
+                 <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique. 
+                 Les valeurs seront utilisées pour vérifier la valeur de hachage.</para>
 
-                <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
+                <para>Vous pouvez paramétrer de multiples hachages en utilisant différentes clés. Chacun
                 sera vérifié et seulement si tous échouent, la validation elle-même échouera.</para>
             </listitem>
         </itemizedlist>
@@ -351,12 +351,13 @@ $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
 
         <itemizedlist>
             <listitem>
-                <para><code>extension</code> : vérifie qu'un fichier n'utilise pas cette extension.</para>
+                <para><code>*</code>: vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Les valeurs seront utilisées en tant qu'extensions à vérifier que le fichier n'utilise pas.</para>
             </listitem>
 
             <listitem>
                 <para><code>case</code> : paramètre une validation qui tient compte de la casse. Par défaut, ce n'est
-                pas sensible à la casse. Notez que cette option est utilisée pour toutes les extensions.</para>
+                pas sensible à la casse. Notez que cette clé est utilisée pour toutes les extensions.</para>
             </listitem>
         </itemizedlist>
 
@@ -381,6 +382,9 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 // Refuser les fichiers avec l'extension php ou exe en utilisant
 // la notation de type tableau
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+
+// Vérifier aussi la casse
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
 ]]></programlisting>
         </example>
 
@@ -398,7 +402,8 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
         <itemizedlist>
             <listitem>
-                <para><code>MimeType</code>: paramètre le type MIME à vérifier.</para>
+                <para><code>*</code>: vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Paramètre le type MIME à vérifier.</para>
 
                 <para>Avec cette option vous pouvez définir le(s) type(s) MIME que vous souhaitez exclure.</para>
             </listitem>
@@ -446,7 +451,8 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
 
         <itemizedlist>
             <listitem>
-                <para><code>directory</code> : vérifie si le fichier existe dans le dossier fourni.</para>
+                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Vérifie si le fichier existe dans le dossier fourni.</para>
             </listitem>
         </itemizedlist>
 
@@ -485,12 +491,13 @@ $upload->addValidator('Exists',
 
         <itemizedlist>
             <listitem>
-                <para><code>extension</code> : paramètre l'extension à vérifier.</para>
+                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Paramètre l'extension à vérifier.</para>
             </listitem>
 
             <listitem>
                 <para><code>case</code> : paramètre une validation sensible à la casse. Par défaut, la validation n'est
-                pas sensible à la casse. Notez que cette option est utilisée pour toutes les extensions.</para>
+                pas sensible à la casse. Notez que cette clé est utilisée pour toutes les extensions.</para>
             </listitem>
         </itemizedlist>
 
@@ -516,8 +523,8 @@ $upload->addValidator('Extension', false, 'jpg,png');
 // la notation de type tableau
 $upload->addValidator('Extension', false, array('jpg', 'png'));
 
-// Vérifie suivant la casse
-$upload = new Zend_File_Transfer('mo,png', true);
+// Vérifie aussi la casse
+$upload->addValidator('Extension', false, array('mo', 'png', 'case' => true));
 if (!$upload->isValid('C:\temp\myfile.MO')) {
     print 'Non valide à cause de MO au lieu de mo';
 }
@@ -560,8 +567,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez initialiser ce validateur avec ces deux options. La première option est <code>min</code>, la
-        seconde est <code>max</code>. Quand seule une option est fournie, elle est utilisée en tant que
+        <para>Vous pouvez initialiser seulement avec une chaîne qui sera utilisée en tant que
         <code>max</code>. Mais vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code>
         pour paramétrer ces options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les
         récupérer.</para>
@@ -582,10 +588,13 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('FilesSize', false, 40000);
 
 // Limite la taille de tous les fichiers dans une plage de 10kB à 4MB
-$upload->addValidator('FilesSize', false, array('10kB', '4MB');
+$upload->addValidator('FilesSize', false, array('min' => '10kB',
+                                                'max' => '4MB'));
 
 // Comme ci-dessus, mais retourne la taille de fichier brute plutôt qu'une chaîne
-$upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
+$upload->addValidator('FilesSize', false, array('min' => '10kB',
+                                                'max' => '4MB',
+                                                'bytestring' => false));
 ]]></programlisting>
         </example>
 
@@ -627,18 +636,15 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez initialiser ce validateur avec ces quatre options. Quand <code>minheight</code> ou
-        <code>minwidth</code> sont omises, elles sont réglées à 0. Et quand <code>maxwidth</code> ou
-        <code>maxheight</code> ne sont pas fournies, elles sont réglées à <code>null</code>. Mais vous pouvez aussi
-        utiliser les méthodes <code>setImageMin()</code> et <code>setImageMax()</code> pour régler les valeurs minimum
-        et maximum plus tard et <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
+        <para>Vous pouvez aussi utiliser les méthodes <code>setImageMin()</code> et <code>setImageMax()</code>
+        pour régler les valeurs minimum et maximum plus tard et <code>getMin()</code> et <code>getMax()</code>
+        pour les récupérer.</para>
 
         <para>Par commodité, il existe aussi les méthodes <code>setImageWidth</code> et <code>setImageHeight</code> qui
         paramètrent la largeur et la hauteur minimum et maximum. Bien sûr les méthodes associées
         <code>getImageWidth</code> et <code>getImageHeight</code> sont aussi disponibles.</para>
 
-        <para>Pour désactiver la validation d'une dimension, paramétrez la valeur correspondante à
-        <code>null</code>.</para>
+        <para>Pour désactiver la validation d'une dimension, ne paramétrez pas l'option correspondante.</para>
 
         <example id="zend.file.transfer.validators.imagesize.example">
             <title>Utiliser le validateur ImageSize</title>
@@ -648,12 +654,6 @@ $upload = new Zend_File_Transfer();
 
 // Limite la taille de l'image à une hauteur de 100 à 200 et
 // une largeur de 40 à 80 pixels
-$upload->addValidator('ImageSize', false, 40, 100, 80, 200);
-
-// Utilise la notation de type tableau
-$upload->addValidator('ImageSize', false, array(40, 100, 80, 200);
-
-// Utilise la notation de type tableau indexé
 $upload->addValidator('ImageSize',
                       false,
                       array('minwidth' => 40,
@@ -662,7 +662,7 @@ $upload->addValidator('ImageSize',
                             'maxheight' => 200);
 
 // Autre possibilité de réglage
-$upload->setImageWidth(20, 200);
+$upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
 ]]></programlisting>
         </example>
     </sect2>
@@ -738,7 +738,8 @@ $upload->addValidator('IsImage', false, 'jpeg');
 
         <itemizedlist>
             <listitem>
-                <para><code>hash</code> : paramètre la valeur de hachage qui doit être vérifié.</para>
+                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Paramètre la valeur de hachage qui doit être vérifié.</para>
 
                 <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
                 sera vérifié et seulement si tous échouent, la validation elle-même échouera.</para>
@@ -767,7 +768,7 @@ $upload->addValidator('Hash', false, '3b3652f');
 $upload->addValidator('Hash', false, array('3b3652f', 'e612b69'));
 
 // Paramètre un algorithme différent pour effectuer le hachage
-$upload->addValidator('Hash', false, '315b3cd8273d44912a7', 'md5');
+$upload->addValidator('Hash', false, array('315b3cd8273d44912a7', 'algorithm' => 'md5'));
 ]]></programlisting>
         </example>
 
@@ -786,7 +787,8 @@ $upload->addValidator('Hash', false, '315b3cd8273d44912a7', 'md5');
 
         <itemizedlist>
             <listitem>
-                <para><code>hash</code> : paramètre la valeur de hachage qui doit être vérifié.</para>
+                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Paramètre la valeur de hachage qui doit être vérifié.</para>
 
                 <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
                 sera vérifié et seulement si tous échouent, la validation elle-même échouera.</para>
@@ -816,7 +818,8 @@ $upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc
 
         <itemizedlist>
             <listitem>
-                <para><code>MimeType</code>: paramètre le type MIME à contrôler.</para>
+                <para><code>*</code>: vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Paramètre le type MIME à contrôler.</para>
 
                 <para>Avec cette option vous pouvez définir le type MIME des fichiers qui seront acceptés.</para>
             </listitem>
@@ -875,7 +878,8 @@ $upload->addValidator('MimeType', false, 'image');
 
         <itemizedlist>
             <listitem>
-                <para><code>directory</code> : vérifie si le fichier n'existe pas dans le dossier fourni.</para>
+                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Vérifie si le fichier n'existe pas dans le dossier fourni.</para>
             </listitem>
         </itemizedlist>
 
@@ -915,7 +919,8 @@ $upload->addValidator('NotExists',
 
         <itemizedlist>
             <listitem>
-                <para><code>hash</code> : paramètre la valeur de hachage qui doit être vérifié.</para>
+                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                Paramètre la valeur de hachage qui doit être vérifié.</para>
 
                 <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
                 sera vérifié et seulement si tous échouent, la validation elle-même échouera.</para>
@@ -945,14 +950,14 @@ $upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365dd
 
         <itemizedlist>
             <listitem>
-                <para><code>Min</code>: paramètre le poids minimum du fichier.</para>
+                <para><code>min</code>: paramètre le poids minimum du fichier.</para>
 
                 <para>Avec cette option vous pouvez définir le poids minimum d'un fichier que vous souhaitez
                 transférer.</para>
             </listitem>
 
             <listitem>
-                <para><code>Max</code>: paramètre le poids maximum du fichier.</para>
+                <para><code>max</code>: paramètre le poids maximum du fichier.</para>
 
                 <para>Avec cette option vous pouvez limiter le poids d'un fichier que vous souhaitez transférer.</para>
             </listitem>
@@ -966,11 +971,14 @@ $upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365dd
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez initialiser ce validateur avec ces deux options. La première option est <code>min</code>, la
-        seconde est <code>max</code>. Quand seule une option est fournie, elle est utilisée en tant que
+        <para>Vous pouvez initialiser seulement avec une chaîne qui sera utilisée en tant que
         <code>max</code>. Mais vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code>
         pour paramétrer ces options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les
         récupérer.</para>
+
+        <para>Quand seule une chaîne est fournie, elle est utilisée en tant que <code>max</code>. Mais vous pouvez
+        aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code> pour paramétrer ces options plus
+        tard et <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
 
         <para>La taille elle-même est acceptée en notation SI comme sur la plupart des systèmes d'exploitation. Au lieu
         de 20000 octets, vous pouvez utiliser <emphasis>20kB</emphasis>. Toutes les unités sont converties en utilisant
@@ -989,7 +997,7 @@ $upload->addValidator('Size', false, 40000);
 
 // Limite la taille du fichier 'uploadfile' dans une plage de 10kB à 4MB
 // Additionally returns the plain number in case of an error instead of a userfriendly one
-$upload->addValidator('Size', false, array('10kB', '4MB', false));
+$upload->addValidator('Size', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
 ]]></programlisting>
         </example>
     </sect2>

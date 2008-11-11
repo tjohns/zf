@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12156 -->
+<!-- EN-Revision: 12541 -->
 <sect1 id="zend.file.transfer.filters">
     <title>Filtres pour Zend_File_Transfer</title>
 
@@ -83,7 +83,7 @@ $upload->addFilter('Rename', 'C:\image\uploads');
 
 // Paramètre un nouveau dossier de destination
 // et surcharge pour les fichiers existants
-$upload->addFilter('Size', array('C:\image\uploads', true));
+$upload->addFilter('Size', array('C:\image\uploads', 'overwrite' => true));
 ]]></programlisting>
         </example>
 
@@ -163,25 +163,16 @@ $upload->addFilter('LowerCase', null, 'uploadfile1');
 
         <itemizedlist>
             <listitem>
-                <para><code>oldfile</code> : le nom et le dossier de l'ancien fichier qui doit être renommé.</para>
-
-                <para>Cette option peut être une chaîne de caractères ou un tableau. En fonction de l'option fournie, le
-                comportement de cette option changera.</para>
+                <para><code>source</code> : le nom et le dossier de l'ancien fichier qui doit être renommé.</para>
             </listitem>
 
             <listitem>
-                <para><code>newfile</code> : le nouveau dossier ou nom du fichier.</para>
-
-                <para>Cette option est optionnelle et peut être une chaîne, un tableau ou un booléen. En fonction de
-                l'option fournie, le comportement de cette option changera.</para>
+                <para><code>target</code> : le nouveau dossier ou nom du fichier.</para>
             </listitem>
 
             <listitem>
                 <para><code>overwrite</code> : paramètre si l'ancien fichier écrase le nouveau fichier s'il existe
-                déjà.</para>
-
-                <para>Cette option est optionnelle et doit être un booléen. La valeur par défaut est
-                <code>false</code>.</para>
+                déjà. La valeur par défaut est <code>false</code>.</para>
             </listitem>
         </itemizedlist>
 
@@ -238,7 +229,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
 
                     <row>
-                        <entry>addFile('C:\uploads\file.ext', true)</entry>
+                        <entry>addFile('C:\uploads\file.ext', 'overwrite' => true)</entry>
 
                         <entry>Spécifie un nouveau dossier et un nom de fichier pour tous les fichiers quand la chaîne
                         n'est pas un dossier et écrase le fichier existant si celui-ci existe. Notez que vous aurez pas
@@ -246,7 +237,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
 
                     <row>
-                        <entry>addFile('C:\temp\uploads', 'C:\uploads')</entry>
+                        <entry>addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads'))</entry>
 
                         <entry>Spécifie un nouveau dossier pour tous les fichiers qui sont présent dans l'ancien dossier
                         quand la chaîne est un dossier. Notez que vous aurez une exception si le fichier existe déjà,
@@ -254,29 +245,11 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
 
                     <row>
-                        <entry>addFile('C:\temp\uploads', 'C:\uploads', true)</entry>
+                        <entry>addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads', 'overwrite' => true))</entry>
 
                         <entry>Spécifie un nouveau dossier pour tous les fichiers qui sont présent dans l'ancien dossier
                         quand la chaîne est un dossier. Notez que vous aurez pas de notification en cas
                         d'écrasement.</entry>
-                    </row>
-
-                    <row>
-                        <entry>addFile(array('C:\temp\uploads\file1.gif' =&gt; 'C:\uploads\file.gif'))</entry>
-
-                        <entry>Spécifie de nouveaux dossiers pour les fichiers fournis. Vous devez toujours fournir une
-                        paire clé/valeur correspondant respectivement au fichier source et fichier cible. Notez que vous
-                        aurez une exception si le fichier existe déjà, voir le paramètre d'écrasement.</entry>
-                    </row>
-
-                    <row>
-                        <entry>addFile(array('C:\temp\uploads\file1.gif' =&gt; 'C:\uploads\file.gif'), true)</entry>
-
-                        <entry>Spécifie de nouveaux dossiers pour les fichiers fournis. Vous devez toujours fournir une
-                        paire clé/valeur correspondant respectivement au fichier source et fichier cible. Notez que vous
-                        aurez pas de notification en cas d'écrasement. Optionnellement vous pouvez fournir un dossier
-                        avec la clé "0", celui-ci sera utilisé pour tous les fichiers dont la source n'est pas
-                        fournie.</entry>
                     </row>
                 </tbody>
             </tgroup>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 12516 -->
 <sect1 id="zend.text.table.introduction">
     <title>Zend_Text_Table</title>
@@ -17,12 +18,47 @@
     </note>
 
     <para>Un objet <code>Zend_Text_Table</code> consiste en des lignes, qui contiennent des colonnes, représenté par
-    <code>Zend_Text_Table_Row</code> et <code>Zend_Text_Table_Column</code>. Lors de la création d'une table, vous devez
-    fournir toutes les largeurs de colonnes sous la forme d'un tableau. Disons que si souhaitez afficher une table avec
-    trois colonnes, ayant des largeurs de 10, 50 et 20 caractères, vous avez juste à fournir <code>array(10, 50,
-    20)</code> en tant que premier paramètre du constructeur. En second paramètre, vous pouvez fournir un décorateur,
-    qui stylise les bordures de la table. Par défaut <code>Zend_Text_Table_Decorator_Unicode</code> est utilisé, mais
-    vous pouvez aussi utiliser le décorateur simple <code>Zend_Text_Table_Decorator_Ascii</code>.</para>
+    <code>Zend_Text_Table_Row</code> et <code>Zend_Text_Table_Column</code>. Lors de la création d'une table, vous
+    pouvez fournir un tableau avec les options pour la table. Celles-ci sont : <itemizedlist>
+            <listitem>
+                <para><code>columnWidths</code> (obligatoire) : un tableau définissant toutes les largeurs de colonnes
+                en nombre de caractères.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>decorator</code> : le décorateur à utiliser pour les bordures de la table. Le défaut est
+                <code>unicode</code>, mais vous pouvez aussi spécifier <code>ascii</code> ou fournir une instance d'un
+                objet décorateur personnalisé.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>padding</code> : le remplissage gauche et droit de la colonne en caractères. Le remplissage
+                par défaut est zéro.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>AutoSeparate</code> : la manière comment les lignes sont séparées avec des lignes
+                horizontales. Par défaut, il y a une séparation entre chaque ligne. Ceci est défini entant que bitmask
+                contenant une ou plus des constantes de <code>Zend_Text_Table</code> suivantes :<itemizedlist><listitem>
+                        <para>
+                            <code>Zend_Text_Table::AUTO_SEPARATE_NONE</code>
+                        </para>
+
+                        <para>
+                            <code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code>
+                        </para>
+
+                        <para>
+                            <code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code>
+                        </para>
+
+                        <para>
+                            <code>Zend_Text_Table::AUTO_SEPARATE_ALL</code>
+                        </para>
+                    </listitem></itemizedlist>
+                    Où "header" est toujours la première ligne, et "footer" est toujours la dernière.</para>
+            </listitem>
+        </itemizedlist></para>
 
     <para>Les lignes sont simplement ajoutées à la table en créant une nouvelle instance de
     <code>Zend_Text_Table_Row</code>, et en l'ajoutant à la table via la méthode <code>appendRow</code>. Les lignes
@@ -34,7 +70,7 @@
     <code>Zend_Text_Table_Column</code> et ensuite paramétrer les options de colonnes soit dans le constructeur ou plus
     tard par les méthodes <code>set*</code>. Le premier paramètre est le contenu de la colonne qui peut avoir des lignes
     multiples, elles sont dans le meilleur des cas séparées par le caractère <code>\n</code>. Le second paramètre
-    définit l'alignement, qui est "<code>left</code>" par défaut et peut être l'une des constantes de la classe
+    définit l'alignement, qui est <code>left</code> par défaut et peut être l'une des constantes de la classe
     <code>Zend_Text_Table_Column</code> :<itemizedlist>
             <listitem>
                 <para><code>ALIGN_LEFT</code></para>
@@ -65,11 +101,7 @@
         :</para>
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Text/Table.php';
-require_once 'Zend/Text/Table/Row.php';
-require_once 'Zend/Text/Table/Column.php';
-
-$table = new Zend_Text_Table(array(10, 20));
+$table = new Zend_Text_Table(array('columnWidths' => array(10, 20)));
 
 // Either simple
 $table->appendRow(array('Zend', 'Framework'));
@@ -94,6 +126,3 @@ echo $table;
 ]]></programlisting>
     </example>
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
