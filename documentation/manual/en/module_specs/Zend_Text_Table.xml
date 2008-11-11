@@ -15,7 +15,7 @@
             by default. If this is not the case, you can either supply the character
             encoding as a parameter to the <code>constructor</code> or the
             <code>setContent</code> method of <code>Zend_Text_Table_Column</code>.
-            Alternativley if you have a different encoding in the entire
+            Alternatively if you have a different encoding in the entire
             process, you can define the standard input charset with
             <code>Zend_Text_Table::setInputCharset($charset)</code>. In
             case you need another output charset for the table, you can set
@@ -59,8 +59,14 @@
                     <itemizedlist>
                         <listitem>
                             <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
+                        </listitem>
+                        <listitem>
                             <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
+                        </listitem>
+                        <listitem>
                             <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
+                        </listitem>
+                        <listitem>
                             <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
                         </listitem>
                     </itemizedlist>
