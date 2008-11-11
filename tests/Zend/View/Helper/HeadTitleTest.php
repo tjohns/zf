@@ -185,6 +185,17 @@ class Zend_View_Helper_HeadTitleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('<title>Prefix &amp; Some Title &amp; Postfix</title>', $this->helper->toString());
     }
+
+    public function testCanTranslateTitle()
+    {
+        require_once 'Zend/Translate/Adapter/Ini.php';
+        require_once 'Zend/Registry.php';
+        $adapter = new Zend_Translate_Adapter_Ini(dirname(__FILE__) . '/../../Translate/Adapter/_files/translation_en.ini', 'en');
+        Zend_Registry::set('Zend_Translate', $adapter);
+        $this->helper->enableTranslation();
+        $this->helper->headTitle('Message_1');
+        $this->assertEquals('<title>Message 1 (en)</title>', $this->helper->toString());
+    }
 }
 
 // Call Zend_View_Helper_HeadTitleTest::main() if this source file is executed directly.
