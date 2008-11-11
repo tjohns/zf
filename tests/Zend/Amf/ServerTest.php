@@ -317,7 +317,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         // serialize the data to an AMF output stream
         $data[] = "12345";
         $this->_server->setClass('Zend_Amf_testclass');
-        $newBody = new Zend_Amf_Value_MessageBody("Zend_Amf_testclass.bogus","/1",$data);
+        $newBody = new Zend_Amf_Value_MessageBody("bogus","/1",$data);
         $request = new Zend_Amf_Request();
         $request->addAmfBody($newBody);
         $request->setObjectEncoding(0x00);
@@ -337,7 +337,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
                 break;
             }
         }
-        $this->assertTrue($found, 'Invalid method did not raise error condition');
+        $this->assertTrue($found, 'Invalid method did not raise error condition' . var_export($bodies, 1));
     }
 
     public function testInvalidCommandMessageShouldResultInErrorMessage()
