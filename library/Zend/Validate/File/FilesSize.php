@@ -71,7 +71,7 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
     public function __construct($options)
     {
         $this->_files = array();
-        $this->setSize(0);
+        $this->_setSize(0);
 
         if (1 < func_num_args()) {
             trigger_error('Multiple constructor options are deprecated in favor of a single options array', E_USER_NOTICE);
@@ -114,7 +114,7 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
 
         $min  = $this->getMin(true);
         $max  = $this->getMax(true);
-        $size = $this->getSize();
+        $size = $this->_getSize();
         foreach ($value as $files) {
             // Is file readable ?
             if (!Zend_Loader::isReadable($files)) {
@@ -131,7 +131,7 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
 
             // limited to 2GB files
             $size += @filesize($files);
-            $this->setSize($size);
+            $this->_setSize($size);
             if (($max !== null) && ($max < $size)) {
                 if ($this->useByteString()) {
                     $this->setMax($this->_toByteString($max));

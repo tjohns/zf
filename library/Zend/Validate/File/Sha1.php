@@ -70,6 +70,10 @@ class Zend_Validate_File_Sha1 extends Zend_Validate_File_Hash
         if ($options instanceof Zend_Config) {
             $options = $options->toArray();
         }
+        if (!is_array($options) && !is_string($options)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Invalid options provided to constructor');
+        }
         $this->setHash($options);
     }
 

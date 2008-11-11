@@ -245,7 +245,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
      * 
      * @return int
      */
-    public function getSize()
+    protected function _getSize()
     {
         return $this->_size;
     }
@@ -256,7 +256,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
      * @param  int $size 
      * @return Zend_Validate_File_Size
      */
-    public function setSize($size)
+    protected function _setSize($size)
     {
         $this->_size = (int) $size;
         return $this;
@@ -282,7 +282,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
 
         // limited to 4GB files
         $size = sprintf("%u", @filesize($value));
-        $this->setSize($size);
+        $this->_setSize($size);
 
         // Check to see if it's smaller than min size
         $min = $this->getMin(true);

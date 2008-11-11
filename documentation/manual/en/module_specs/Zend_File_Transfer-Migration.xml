@@ -156,6 +156,14 @@ $upload->addValidator('Extension',
                     </para></listitem>
                 </itemizedlist>
 
+                <para>
+                    Additionally, the <code>useByteString()</code> method
+                    signature has changed. It can only be used to test if the
+                    validator is expecting to use byte strings in generated
+                    messages. To set the value of the flag, use the
+                    <code>setUseByteString()</code> method.
+                </para>
+
                 <example id="zend.file.transfer.migration.fromonesixonetooneseven.validators.filessize.example">
                     <title>Changes for the filessize validator from 1.6 to 1.7</title>
 
@@ -171,6 +179,12 @@ $upload->addValidator('FilesSize',
                    array('min' => 100,
                          'max' => 10000,
                          'bytestring' => true));
+
+// Example for 1.6
+$upload->useByteString(true); // set flag
+
+// Same example for 1.7
+$upload->setUseByteSting(true); // set flag
 ]]>
                     </programlisting>
                 </example>
