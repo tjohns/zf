@@ -67,6 +67,7 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+    	Zend_Service_Abstract::getHttpClient()->setAdapter('Zend_Http_Client_Adapter_Socket');
         $this->twitter = new Zend_Service_Twitter(self::TWITTER_USER, self::TWITTER_PASS);
 
         /*$adapter = new Zend_Http_Client_Adapter_Test();
@@ -188,7 +189,8 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $httpResponse  = $httpClient->getLastResponse();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
-/**
+
+    /**
      * @return void
      */
     public function testPublicTimelineStatusReturnsResults()
