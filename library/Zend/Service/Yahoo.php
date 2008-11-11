@@ -400,6 +400,7 @@ class Zend_Service_Yahoo
      * 'similar_ok' => bool  permit similar results in the result set
      * 'country'    => string  The country code for the content searched
      * 'license'    => (any|cc_any|cc_commercial|cc_modifiable)  The license of content being searched
+     * 'region'     => The regional search engine on which the service performs the search. default us.
      *
      * @param  string $query    the query being run
      * @param  array  $options  any optional parameters
@@ -803,7 +804,7 @@ class Zend_Service_Yahoo
     protected function _validateWebSearch(array $options)
     {
         $validOptions = array('appid', 'query', 'results', 'start', 'language', 'type', 'format', 'adult_ok',
-                              'similar_ok', 'country', 'site', 'subscription', 'license');
+                              'similar_ok', 'country', 'site', 'subscription', 'license', 'region');
 
         $this->_compareOptions($options, $validOptions);
 
@@ -838,6 +839,12 @@ class Zend_Service_Yahoo
                                                                     'txt', 'xls'));
         $this->_validateInArray('license', $options['license'], array('any', 'cc_any', 'cc_commercial',
                                                                       'cc_modifiable'));
+        if (isset($options['region'])){
+            $this->_validateInArray('region', $options['region'], array('ar', 'au', 'at', 'br', 'ca', 'ct', 'dk', 'fi',
+                                                                          'fr', 'de', 'in', 'id', 'it', 'my', 'mx', 
+                                                                          'nl', 'no', 'ph', 'ru', 'sg', 'es', 'se',
+                                                                          'ch', 'th', 'uk', 'us'));
+        }
     }
 
 
