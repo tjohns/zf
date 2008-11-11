@@ -320,11 +320,11 @@ $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
 
         <itemizedlist>
             <listitem>
-                 <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique. 
-                 Les valeurs seront utilisées pour vérifier la valeur de hachage.</para>
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique. Les
+                valeurs seront utilisées pour vérifier la valeur de hachage.</para>
 
-                <para>Vous pouvez paramétrer de multiples hachages en utilisant différentes clés. Chacun
-                sera vérifié et seulement si tous échouent, la validation elle-même échouera.</para>
+                <para>Vous pouvez paramétrer de multiples hachages en utilisant différentes clés. Chacun sera vérifié et
+                seulement si tous échouent, la validation elle-même échouera.</para>
             </listitem>
         </itemizedlist>
 
@@ -351,8 +351,8 @@ $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code>: vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
-                Les valeurs seront utilisées en tant qu'extensions à vérifier que le fichier n'utilise pas.</para>
+                <para><code>*</code>: vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique. Les
+                valeurs seront utilisées en tant qu'extensions à vérifier que le fichier n'utilise pas.</para>
             </listitem>
 
             <listitem>
@@ -402,7 +402,7 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => t
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code>: vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code>: vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Paramètre le type MIME à vérifier.</para>
 
                 <para>Avec cette option vous pouvez définir le(s) type(s) MIME que vous souhaitez exclure.</para>
@@ -451,7 +451,7 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Vérifie si le fichier existe dans le dossier fourni.</para>
             </listitem>
         </itemizedlist>
@@ -491,7 +491,7 @@ $upload->addValidator('Exists',
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Paramètre l'extension à vérifier.</para>
             </listitem>
 
@@ -567,10 +567,9 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez initialiser seulement avec une chaîne qui sera utilisée en tant que
-        <code>max</code>. Mais vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code>
-        pour paramétrer ces options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les
-        récupérer.</para>
+        <para>Vous pouvez initialiser seulement avec une chaîne qui sera utilisée en tant que <code>max</code>. Mais
+        vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code> pour paramétrer ces
+        options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
 
         <para>La taille elle-même est acceptée en notation SI comme sur la plupart des systèmes d'exploitation. Au lieu
         de 20000 octets (NdT. : "bytes" en anglais), vous pouvez utiliser <emphasis>20kB</emphasis>. Toutes les unités
@@ -636,9 +635,9 @@ $upload->addValidator('FilesSize', false, array('min' => '10kB',
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez aussi utiliser les méthodes <code>setImageMin()</code> et <code>setImageMax()</code>
-        pour régler les valeurs minimum et maximum plus tard et <code>getMin()</code> et <code>getMax()</code>
-        pour les récupérer.</para>
+        <para>Vous pouvez aussi utiliser les méthodes <code>setImageMin()</code> et <code>setImageMax()</code> pour
+        régler les valeurs minimum et maximum plus tard et <code>getMin()</code> et <code>getMax()</code> pour les
+        récupérer.</para>
 
         <para>Par commodité, il existe aussi les méthodes <code>setImageWidth</code> et <code>setImageHeight</code> qui
         paramètrent la largeur et la hauteur minimum et maximum. Bien sûr les méthodes associées
@@ -738,7 +737,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Paramètre la valeur de hachage qui doit être vérifié.</para>
 
                 <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
@@ -787,7 +786,7 @@ $upload->addValidator('Hash', false, array('315b3cd8273d44912a7', 'algorithm' =>
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Paramètre la valeur de hachage qui doit être vérifié.</para>
 
                 <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
@@ -818,7 +817,7 @@ $upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code>: vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code>: vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Paramètre le type MIME à contrôler.</para>
 
                 <para>Avec cette option vous pouvez définir le type MIME des fichiers qui seront acceptés.</para>
@@ -878,7 +877,7 @@ $upload->addValidator('MimeType', false, 'image');
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Vérifie si le fichier n'existe pas dans le dossier fourni.</para>
             </listitem>
         </itemizedlist>
@@ -919,7 +918,7 @@ $upload->addValidator('NotExists',
 
         <itemizedlist>
             <listitem>
-                <para><code>*</code> : vous pouvez paramètrer n'importe quelle clé ou utiliser un tableau numérique.
+                <para><code>*</code> : vous pouvez paramétrer n'importe quelle clé ou utiliser un tableau numérique.
                 Paramètre la valeur de hachage qui doit être vérifié.</para>
 
                 <para>Vous pouvez paramétrer de multiples hachages en les fournissant sous la forme d'un tableau. Chacun
@@ -971,14 +970,13 @@ $upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365dd
             </listitem>
         </itemizedlist>
 
-        <para>Vous pouvez initialiser seulement avec une chaîne qui sera utilisée en tant que
-        <code>max</code>. Mais vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code>
-        pour paramétrer ces options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les
-        récupérer.</para>
+        <para>Vous pouvez initialiser seulement avec une chaîne qui sera utilisée en tant que <code>max</code>. Mais
+        vous pouvez aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code> pour paramétrer ces
+        options plus tard et <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
 
-        <para>Quand seule une chaîne est fournie, elle est utilisée en tant que <code>max</code>. Mais vous pouvez
-        aussi utiliser les méthodes <code>setMin()</code> et <code>setMax()</code> pour paramétrer ces options plus
-        tard et <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
+        <para>Quand seule une chaîne est fournie, elle est utilisée en tant que <code>max</code>. Mais vous pouvez aussi
+        utiliser les méthodes <code>setMin()</code> et <code>setMax()</code> pour paramétrer ces options plus tard et
+        <code>getMin()</code> et <code>getMax()</code> pour les récupérer.</para>
 
         <para>La taille elle-même est acceptée en notation SI comme sur la plupart des systèmes d'exploitation. Au lieu
         de 20000 octets, vous pouvez utiliser <emphasis>20kB</emphasis>. Toutes les unités sont converties en utilisant

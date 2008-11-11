@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 12516 -->
+<!-- EN-Revision: 12558 -->
 <sect1 id="zend.text.table.introduction">
     <title>Zend_Text_Table</title>
 
@@ -14,7 +13,11 @@
 
         <para><code>Zend_Text_Table</code> suppose que vos chaînes sont encodés en UTF-8 par défaut. Si ce n'est pas le
         cas, vous pouvez fournir l'encodage en tant que paramètre du constructeur ou à la méthode
-        <code>setContent</code> de <code>Zend_Text_Table_Column</code>.</para>
+        <code>setContent</code> de <code>Zend_Text_Table_Column</code>. Alternativement si vous avez un encodage
+        différent dans le processus complet, vous pouvez définir l'encodage d'entrée ("input") standard avec
+        <code>Zend_Text_Table::setInputCharset($charset)</code>. Dans le cas où vous avez besoin d'un autre encodage
+        pour la sortie ("output") de la table, vous pouvez le paramétrer avec
+        <code>Zend_Text_Table::setOutputCharset($charset)</code>.</para>
     </note>
 
     <para>Un objet <code>Zend_Text_Table</code> consiste en des lignes, qui contiennent des colonnes, représenté par
@@ -39,24 +42,24 @@
             <listitem>
                 <para><code>AutoSeparate</code> : la manière comment les lignes sont séparées avec des lignes
                 horizontales. Par défaut, il y a une séparation entre chaque ligne. Ceci est défini entant que bitmask
-                contenant une ou plus des constantes de <code>Zend_Text_Table</code> suivantes :<itemizedlist><listitem>
-                        <para>
-                            <code>Zend_Text_Table::AUTO_SEPARATE_NONE</code>
-                        </para>
+                contenant une ou plus des constantes de <code>Zend_Text_Table</code> suivantes :<itemizedlist>
+                        <listitem>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
+                        </listitem>
 
-                        <para>
-                            <code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code>
-                        </para>
+                        <listitem>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
+                        </listitem>
 
-                        <para>
-                            <code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code>
-                        </para>
+                        <listitem>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
+                        </listitem>
 
-                        <para>
-                            <code>Zend_Text_Table::AUTO_SEPARATE_ALL</code>
-                        </para>
-                    </listitem></itemizedlist>
-                    Où "header" est toujours la première ligne, et "footer" est toujours la dernière.</para>
+                        <listitem>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
+                        </listitem>
+                    </itemizedlist> Où "header" est toujours la première ligne, et "footer" est toujours la
+                dernière.</para>
             </listitem>
         </itemizedlist></para>
 
