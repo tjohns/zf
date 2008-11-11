@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
@@ -189,9 +189,12 @@
 
             <programlisting role="php"><![CDATA[
 $as = new Zend_Service_Audioscrobbler();
-$as->setUser('BigDaddy71'); // プロファイル情報を取得したいユーザを設定します
-$profileInfo = $as->userGetProfileInformation(); // BigDaddy71 のプロファイル情報を取得します
-print "$profileInfo->realname の情報は $profileInfo->url にあります"; // その一部を表示します
+// プロファイル情報を取得したいユーザを設定します
+$as->setUser('BigDaddy71');
+// BigDaddy71 のプロファイル情報を取得します
+$profileInfo = $as->userGetProfileInformation();
+// その一部を表示します
+print "$profileInfo->realname の情報は $profileInfo->url にあります";
 ]]>
             </programlisting>
 
@@ -203,8 +206,10 @@ print "$profileInfo->realname の情報は $profileInfo->url にあります"; /
 
             <programlisting role="php"><![CDATA[
 $as = new Zend_Service_Audioscrobbler();
-$as->setUser('lo_fye'); // 週間アーティストチャートを取得したいユーザを設定します
-$weeks = $as->userGetWeeklyChartList(); // チャートデータが存在する、過去の一覧を取得します
+// 週間アーティストチャートを取得したいユーザを設定します
+$as->setUser('lo_fye');
+// チャートデータが存在する、過去の一覧を取得します
+$weeks = $as->userGetWeeklyChartList();
 if (count($weeks) < 1) {
     echo 'データが存在しません';
 }
@@ -215,7 +220,9 @@ $as->setToDate($weeks[0]); // 終了日を設定します
 
 $previousWeeklyArtists = $as->userGetPreviousWeeklyArtistChart();
 
-echo '週間アーティストチャート ' . date('Y-m-d h:i:s', $as->from_date) . '<br />';
+echo '週間アーティストチャート '
+   . date('Y-m-d h:i:s', $as->from_date)
+   . '<br />';
 
 foreach ($previousWeeklyArtists as $artist) {
     // アーティスト名と、プロファイルへのリンクを表示します
@@ -280,10 +287,13 @@ foreach ($previousWeeklyArtists as $artist) {
 
             <programlisting role="php"><![CDATA[
 $as = new Zend_Service_Audioscrobbler();
-$as->setArtist('LCD Soundsystem'); // 関連アーティストを取得したいアーティストを設定します
-$relatedArtists = $as->artistGetRelatedArtists(); // 関連アーティストを取得します
+// 関連アーティストを取得したいアーティストを設定します
+$as->setArtist('LCD Soundsystem');
+// 関連アーティストを取得します
+$relatedArtists = $as->artistGetRelatedArtists();
 foreach ($relatedArtists as $artist) {
-    print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />'; // 関連アーティストを表示します
+    // 関連アーティストを表示します
+    print '<a href="' . $artist->url . '">' . $artist->name . '</a><br />';
 }
 ]]>
             </programlisting>
