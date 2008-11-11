@@ -388,7 +388,6 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         // create a mock remoting message
         $message = new Zend_Amf_Value_Messaging_RemotingMessage();
         $message->operation = 'bogus'; // INVALID method!
-        $message->source    = 'Zend_Amf_testclass';
         $message->body      = $data;
 
         // create a mock message body to place th remoting message inside
@@ -412,7 +411,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
                 }
             }
         }
-        $this->assertTrue($found, 'Invalid method did not raise error condition');
+        $this->assertTrue($found, 'Invalid method did not raise error condition: ' . var_export($bodies, 1));
     }
 
     public function testDispatchingMethodThatThrowsExceptionShouldReturnErrorMessageWhenProductionFlagOff()

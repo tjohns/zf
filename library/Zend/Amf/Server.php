@@ -115,20 +115,21 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected function _dispatch($method, $params = null, $source = null)
     {
         if (!isset($this->_table[$method])) {
-
             // if source is null a method that was not defined was called.
-            if($source) {
-                $classPath = array();
-                $path = explode('.', $source);
-                $className = array_pop($path);
+            if ($source) {
+                $classPath    = array();
+                $path         = explode('.', $source);
+                $className    = array_pop($path);
                 $uriclasspath = implode('/', $path);
+
                 // Take the user supplied directories and add the unique service path to the end.
-                foreach($this->_directories as $dir) {
-                    $classPath[] = $dir.$uriclasspath;
+                foreach ($this->_directories as $dir) {
+                    $classPath[] = $dir . $uriclasspath;
                 }
+
                 require_once('Zend/Loader.php');
                 try {
-                    Zend_Loader::LoadClass($className, $classPath);
+                    Zend_Loader::loadClass($className, $classPath);
                 } catch (Exception $e) {
                     require_once 'Zend/Amf/Server/Exception.php';
                     throw new Zend_Amf_Server_Exception('Class "' . $className . '" does not exist');
@@ -430,10 +431,8 @@ class Zend_Amf_Server implements Zend_Server_Interface
     public function setClass($class, $namespace = '', $argv = null)
     {
         if (is_string($class) && !class_exists($class)){
-            if (!class_exists($class)) {
-                require_once 'Zend/Amf/Server/Exception.php';
-                throw new Zend_Amf_Server_Exception('Invalid method or class');
-            }
+            require_once 'Zend/Amf/Server/Exception.php';
+            throw new Zend_Amf_Server_Exception('Invalid method or class');
         } elseif (!is_string($class) && !is_object($class)) {
             require_once 'Zend/Amf/Server/Exception.php';
             throw new Zend_Amf_Server_Exception('Invalid method or class; must be a classname or object');
@@ -519,7 +518,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected function _buildDispatchTable()
     {
         $table = array();
-        foreach ($this->_methods as $dispatchable) {
+        foreach ($this->_methods as $key => $dispatchable) {
             if ($dispatchable instanceof Zend_Server_Reflection_Function_Abstract) {
                 $ns   = $dispatchable->getNamespace();
                 $name = $dispatchable->getName();
