@@ -3227,7 +3227,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         foreach (array('foo', 'baz') as $name) {
             $element = $this->form->$name;
-            $this->assertFalse($element->getDecorator('Description'));
             $this->assertFalse($element->getDecorator('Form'));
             $this->assertFalse($element->getDecorator('Fieldset'));
         }
@@ -3265,7 +3264,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         foreach (array('foo', 'baz') as $name) {
             $element = $this->form->$name;
-            $this->assertFalse($element->getDecorator('Description'));
             $this->assertFalse($element->getDecorator('Form'));
             $this->assertFalse($element->getDecorator('Fieldset'));
         }
