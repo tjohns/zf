@@ -546,7 +546,7 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
 
     public function testUserFolloersReturnsResults()
     {
-        $response = $this->twitter->user->followers('zftestuser1');
+        $response = $this->twitter->user->followers(array('id' =>'zftestuser1'));
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Zend_Service_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
@@ -557,7 +557,7 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
 
     public function testUserFriendsSpecificUserReturnsResults()
     {
-        $response = $this->twitter->user->friends('zftestuser1');
+        $response = $this->twitter->user->friends(array('id' =>'zftestuser1'));
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Zend_Service_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
