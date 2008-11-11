@@ -47,6 +47,10 @@ require_once 'Zend/Http/Client/Adapter/Socket.php';
  */
 require_once 'Zend/Http/Client/Adapter/Test.php';
 
+/**
+ * @see Zend_Service_Yahoo_WebResult
+ */
+require_once 'Zend/Service/Yahoo/WebResult.php';
 
 /**
  * @category   Zend
@@ -530,6 +534,19 @@ class Zend_Service_Yahoo_OfflineTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Service_Exception $e) {
             $this->assertContains("option 'type'", $e->getMessage());
         }
+    }
+    
+    /**
+     * WebResult should check if the result has a Cache section or not
+     * 
+     * @group ZF-3636
+     */
+    public function testWebResultCache(){
+    	// create empty result eg. without cache section
+    	$domDoc = new DOMDocument();
+    	$element = $domDoc->createElement('Result'); 
+    	// this should not result in errors    	
+    	$webResult = new Zend_Service_Yahoo_WebResult($element);
     }
 }
 
