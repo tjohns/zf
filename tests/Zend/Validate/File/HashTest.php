@@ -81,16 +81,16 @@ class Zend_Validate_File_HashTest extends PHPUnit_Framework_TestCase
         }
 
         $valuesExpected = array(
-            array('ed74c22109fe9f110579f77b053b8bc3', 'md5', true),
-            array('4d74c22109fe9f110579f77b053b8bc3', 'md5', false),
-            array(array('4d74c22109fe9f110579f77b053b8bc3', 'ed74c22109fe9f110579f77b053b8bc3'), 'md5', true),
-            array(array('1d74c22109fe9f110579f77b053b8bc3', '4d74c22109fe9f110579f77b053b8bc3'), 'md5', false),
+            array(array('ed74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'), true),
+            array(array('4d74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'), false),
+            array(array('4d74c22109fe9f110579f77b053b8bc3', 'ed74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'), true),
+            array(array('1d74c22109fe9f110579f77b053b8bc3', '4d74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'), false),
         );
 
         foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_Hash($element[0], $element[1]);
+            $validator = new Zend_Validate_File_Hash($element[0]);
             $this->assertEquals(
-                $element[2],
+                $element[1],
                 $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
                 "Tested with " . var_export($element, 1)
             );
@@ -157,7 +157,7 @@ class Zend_Validate_File_HashTest extends PHPUnit_Framework_TestCase
         $validator = new Zend_Validate_File_Hash('12345');
         $validator->setHash('12333');
         $this->assertEquals(array('12333' => 'crc32'), $validator->getHash());
-        
+
         $validator->setHash(array('12321', '12121'));
         $this->assertEquals(array('12321' => 'crc32', '12121' => 'crc32'), $validator->getHash());
     }

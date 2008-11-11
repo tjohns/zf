@@ -60,15 +60,25 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
     /**
      * Sets validator options
      *
-     * $hash is the hash we accept for the file $file
-     *
-     * @param  string|array $hash      Hash to check for
-     * @param  string       $algorithm (Optional) Algorithm to use, defaults to 'crc32'
+     * @param  string|array $options
      * @return void
      */
-    public function __construct($hash, $algorithm = 'crc32')
+    public function __construct($options)
     {
-        $this->setHash($hash, $algorithm);
+        if (1 < func_num_args()) {
+            trigger_error('Multiple constructor options are deprecated in favor of a single options array', E_USER_NOTICE);
+            if ($options instanceof Zend_Config) {
+                $options = $options->toArray();
+            } elseif (is_scalar($options)) {
+                $options = array('hash1' => $options);
+            } elseif (!is_array($options)) {
+                require_once 'Zend/Validate/Exception.php';
+                throw new Zend_Validate_Exception('Invalid options provided to constructor');
+            }
+            $options['algorithm'] = func_get_arg(1);
+        }
+
+        $this->setHash($options);
     }
 
     /**
@@ -84,14 +94,13 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
     /**
      * Sets the hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
-     * @param  string       $algorithm (Optional) Algorithm to use, defaults to 'crc32'
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function setHash($hash, $algorithm = 'crc32')
+    public function setHash($options)
     {
         $this->_hash  = null;
-        $this->addHash($hash, $algorithm);
+        $this->addHash($options);
 
         return $this;
     }
@@ -99,23 +108,34 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
     /**
      * Adds the hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
-     * @param  string       $algorithm (Optional) Algorithm to use, defaults to 'crc32'
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function addHash($hash, $algorithm = 'crc32')
+    public function addHash($options)
     {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } else if (is_string($options)) {
+            $options = array($options);
+        } else if (!is_array($options)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception("False parameter given");
+        }
+
         $known = hash_algos();
+        if (!isset($options['algorithm'])) {
+            $algorithm = 'crc32';
+        } else {
+            $algorithm = $options['algorithm'];
+            unset($options['algorithm']);
+        }
+
         if (!in_array($algorithm, $known)) {
             require_once 'Zend/Validate/Exception.php';
             throw new Zend_Validate_Exception("Unknown algorithm '{$algorithm}'");
         }
 
-        if (is_string($hash)) {
-            $hash = array($hash);
-        }
-
-        foreach ($hash as $value) {
+        foreach ($options as $value) {
             $this->_hash[$value] = $algorithm;
         }
 
@@ -134,9 +154,9 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_FOUND);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_FOUND);
         }
 
         $algos  = array_unique(array_values($this->_hash));
@@ -155,8 +175,7 @@ class Zend_Validate_File_Hash extends Zend_Validate_Abstract
             }
         }
 
-        $this->_throw($file, self::DOES_NOT_MATCH);
-        return false;
+        return $this->_throw($file, self::DOES_NOT_MATCH);
     }
 
     /**

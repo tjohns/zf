@@ -62,12 +62,15 @@ class Zend_Validate_File_Sha1 extends Zend_Validate_File_Hash
      *
      * $hash is the hash we accept for the file $file
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return void
      */
-    public function __construct($hash)
+    public function __construct($options)
     {
-        $this->setHash($hash, 'sha1');
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+        $this->setHash($options);
     }
 
     /**
@@ -83,50 +86,58 @@ class Zend_Validate_File_Sha1 extends Zend_Validate_File_Hash
     /**
      * Sets the sha1 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
-     * @param  string       $algorithm (Depreciated) Algorithm to use, fixed to sha1
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function setHash($hash, $algorithm = 'sha1')
+    public function setHash($options)
     {
-        parent::setHash($hash, 'sha1');
+        if (!is_array($options)) {
+            $options = (array) $options;
+        }
+
+        $options['algorithm'] = 'sha1';
+        parent::setHash($options);
         return $this;
     }
 
     /**
      * Sets the sha1 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function setSha1($hash)
+    public function setSha1($options)
     {
-        $this->setHash($hash, 'sha1');
+        $this->setHash($options);
         return $this;
     }
 
     /**
      * Adds the sha1 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
-     * @param  string       $algorithm (Depreciated) Algorithm to use, fixed to sha1
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function addHash($hash, $algorithm = 'sha1')
+    public function addHash($options)
     {
-        parent::addHash($hash, 'sha1');
+        if (!is_array($options)) {
+            $options = (array) $options;
+        }
+
+        $options['algorithm'] = 'sha1';
+        parent::addHash($options);
         return $this;
     }
 
     /**
      * Adds the sha1 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function addSha1($hash)
+    public function addSha1($options)
     {
-        $this->addHash($hash, 'sha1');
+        $this->addHash($options);
         return $this;
     }
 
@@ -142,25 +153,23 @@ class Zend_Validate_File_Sha1 extends Zend_Validate_File_Hash
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_FOUND);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_FOUND);
         }
 
         $hashes = array_unique(array_keys($this->_hash));
         $filehash = hash_file('sha1', $value);
         if ($filehash === false) {
-            $this->_throw($file, self::NOT_DETECTED);
-            return false;
+            return $this->_throw($file, self::NOT_DETECTED);
         }
 
-        foreach($hashes as $hash) {
+        foreach ($hashes as $hash) {
             if ($filehash === $hash) {
                 return true;
             }
         }
 
-        $this->_throw($file, self::DOES_NOT_MATCH);
-        return false;
+        return $this->_throw($file, self::DOES_NOT_MATCH);
     }
 }

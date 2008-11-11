@@ -53,7 +53,7 @@ class Zend_Validate_File_IsImage extends Zend_Validate_File_MimeType
     /**
      * Sets validator options
      *
-     * @param  string|array $compression
+     * @param  string|array $mimetype
      * @return void
      */
     public function __construct($mimetype = array())
@@ -98,26 +98,25 @@ class Zend_Validate_File_IsImage extends Zend_Validate_File_MimeType
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_READABLE);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_READABLE);
         }
 
-        if (class_exists('fileinfo', false)) {
-            $info = finfo(FILEINFO_MIME);
+        if (class_exists('finfo', false) && defined('MAGIC')) {
+            $info = new finfo(FILEINFO_MIME);
             $this->_type = $info->file($value);
-            $info->close();
+            unset($info);
         } else if (function_exists('mime_content_type')){
             $this->_type = mime_content_type($value);
         }
 
-        if (empty($this->_type) and ($file !== null)) {
+        if (empty($this->_type) && ($file !== null)) {
             $this->_type = $file['type'];
         }
 
         if (empty($this->_type)) {
-            $this->_throw($file, self::NOT_DETECTED);
-            return false;
+            return $this->_throw($file, self::NOT_DETECTED);
         }
 
         $compressions = $this->getMimeType(true);
@@ -133,7 +132,6 @@ class Zend_Validate_File_IsImage extends Zend_Validate_File_MimeType
             }
         }
 
-        $this->_throw($file, self::FALSE_TYPE);
-        return false;
+        return $this->_throw($file, self::FALSE_TYPE);
     }
 }

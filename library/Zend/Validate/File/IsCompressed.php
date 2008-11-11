@@ -94,15 +94,15 @@ class Zend_Validate_File_IsCompressed extends Zend_Validate_File_MimeType
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_READABLE);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_READABLE);
         }
 
-        if (class_exists('fileinfo', false)) {
-            $info = finfo(FILEINFO_MIME);
+        if (class_exists('finfo', false) && defined('MAGIC')) {
+            $info = new finfo(FILEINFO_MIME);
             $this->_type = $info->file($value);
-            $info->close();
+            unset($info);
         } else if (function_exists('mime_content_type')) {
             $this->_type = mime_content_type($value);
         }
@@ -112,8 +112,7 @@ class Zend_Validate_File_IsCompressed extends Zend_Validate_File_MimeType
         }
 
         if (empty($this->_type)) {
-            $this->_throw($file, self::NOT_DETECTED);
-            return false;
+            return $this->_throw($file, self::NOT_DETECTED);
         }
 
         $compressions = $this->getMimeType(true);
@@ -121,7 +120,7 @@ class Zend_Validate_File_IsCompressed extends Zend_Validate_File_MimeType
             return true;
         }
 
-        foreach($compressions as $mime) {
+        foreach ($compressions as $mime) {
             $types = explode('/', $this->_type);
             $types = array_merge($types, explode('-', $this->_type));
             if (in_array($mime, $types)) {
@@ -129,7 +128,6 @@ class Zend_Validate_File_IsCompressed extends Zend_Validate_File_MimeType
             }
         }
 
-        $this->_throw($file, self::FALSE_TYPE);
-        return false;
+        return $this->_throw($file, self::FALSE_TYPE);
     }
 }

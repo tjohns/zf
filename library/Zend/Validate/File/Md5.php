@@ -62,12 +62,19 @@ class Zend_Validate_File_Md5 extends Zend_Validate_File_Hash
      *
      * $hash is the hash we accept for the file $file
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return void
      */
-    public function __construct($hash)
+    public function __construct($options)
     {
-        $this->setMd5($hash);
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+        if (!is_array($options) && !is_string($options)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('Invalid options provided to constructor');
+        }
+        $this->setMd5($options);
     }
 
     /**
@@ -83,50 +90,60 @@ class Zend_Validate_File_Md5 extends Zend_Validate_File_Hash
     /**
      * Sets the md5 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
-     * @param  string       $algorithm (Depreciated) Algorithm to use, fixed to md5
+     * @param  string|array $options
+     * @param  string       $algorithm (Deprecated) Algorithm to use, fixed to md5
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function setHash($hash, $algorithm = 'md5')
+    public function setHash($options)
     {
-        parent::setHash($hash, 'md5');
+        if (!is_array($options)) {
+            $options = (array) $options;
+        }
+
+        $options['algorithm'] = 'md5';
+        parent::setHash($options);
         return $this;
     }
 
     /**
      * Sets the md5 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function setMd5($hash)
+    public function setMd5($options)
     {
-        $this->setHash($hash, 'md5');
+        $this->setHash($options);
         return $this;
     }
 
     /**
      * Adds the md5 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @param  string       $algorithm (Depreciated) Algorithm to use, fixed to md5
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function addHash($hash, $algorithm = 'md5')
+    public function addHash($options)
     {
-        parent::addHash($hash, 'md5');
+        if (!is_array($options)) {
+            $options = (array) $options;
+        }
+
+        $options['algorithm'] = 'md5';
+        parent::addHash($options);
         return $this;
     }
 
     /**
      * Adds the md5 hash for one or multiple files
      *
-     * @param  string|array $hash      Hash to check for
+     * @param  string|array $options
      * @return Zend_Validate_File_Hash Provides a fluent interface
      */
-    public function addMd5($hash)
+    public function addMd5($options)
     {
-        $this->addHash($hash, 'md5');
+        $this->addHash($options);
         return $this;
     }
 
@@ -142,16 +159,15 @@ class Zend_Validate_File_Md5 extends Zend_Validate_File_Hash
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_FOUND);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_FOUND);
         }
 
         $hashes = array_unique(array_keys($this->_hash));
         $filehash = hash_file('md5', $value);
         if ($filehash === false) {
-            $this->_throw($file, self::NOT_DETECTED);
-            return false;
+            return $this->_throw($file, self::NOT_DETECTED);
         }
 
         foreach($hashes as $hash) {
@@ -160,7 +176,6 @@ class Zend_Validate_File_Md5 extends Zend_Validate_File_Hash
             }
         }
 
-        $this->_throw($file, self::DOES_NOT_MATCH);
-        return false;
+        return $this->_throw($file, self::DOES_NOT_MATCH);
     }
 }

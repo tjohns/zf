@@ -118,7 +118,7 @@ $upload = new Zend_File_Transfer();
 $upload->addFilter('Rename', 'C:\picture\uploads');
 
 // Set a new destination path and overwrites existing files
-$upload->addFilter('Size', array('C:\picture\uploads', true));
+$upload->addFilter('Size', array('C:\picture\uploads', 'overwrite' => true));
 ]]>
             </programlisting>
         </example>
@@ -223,33 +223,20 @@ $upload->addFilter('LowerCase', null, 'uploadfile1');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>oldfile</code>: The name and destination of the old file which shall be renamed.
-                </para>
-
-                <para>
-                    This option can be a string or a array. Depending on the given options the
-                    behaviour of this option will change.
+                    <code>source</code>: The name and destination of the old file which shall be renamed.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>newfile</code>: The new directory, or filename of the file.
-                </para>
-
-                <para>
-                    This option is optional and can be a string, a array or a boolean. Depending on the
-                    given options the behaviour of this option will change.
+                    <code>target</code>: The new directory, or filename of the file.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>overwrite</code>: Sets if the old file overwrites the new one if it already exists.
-                </para>
-
-                <para>
-                    This option is optional and must be a boolean. The default value is false.
+                    The default value is false.
                 </para>
             </listitem>
         </itemizedlist>
@@ -321,7 +308,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\uploads\file.ext', true)
+                            addFile(array('C:\uploads\file.ext', 'overwrite' => true))
                         </entry>
                         <entry>
                             Specifies a new location and filename for all files when the given string is
@@ -331,7 +318,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\temp\uploads', 'C:\uploads')
+                            addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads'))
                         </entry>
                         <entry>
                             Specifies a new location for all files in the old location when the given strings are
@@ -341,34 +328,12 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\temp\uploads', 'C:\uploads', true)
+                            addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads', 'overwrite' => true))
                         </entry>
                         <entry>
                             Specifies a new location for all files in the old location when the given strings are
                             detected as directory and overwrites and existing file with the same target name.
                             Note, that you will get no notification that a file was overwritten.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            addFile(array('C:\temp\uploads\file1.gif' => 'C:\uploads\file.gif'))
-                        </entry>
-                        <entry>
-                            Specifies new locations for given files. You must always give a key-value pair of
-                            source and target file. Note that you will get an exception when the file
-                            already exists, see the overwriting parameter.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            addFile(array('C:\temp\uploads\file1.gif' => 'C:\uploads\file.gif'), true)
-                        </entry>
-                        <entry>
-                            Specifies new locations for given files. You must always give a key-value pair of
-                            source and target file and overwrites and existing file with the same target name.
-                            Note, that you will get no notification that a file was overwritten.
-                            Optionally you can give one directory with the key 0 which will then be used for
-                            all files where no source is defined.
                         </entry>
                     </row>
                 </tbody>

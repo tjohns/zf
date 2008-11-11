@@ -64,15 +64,35 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
      * It also accepts an array with the keys 'min' and 'max'
      *
      * @param  integer|array $min        Minimum diskspace for all files
-     * @param  integer       $max        Maximum diskspace for all files
-     * @param  boolean       $bytestring Use bytestring or real size ?
+     * @param  integer       $max        Maximum diskspace for all files (deprecated)
+     * @param  boolean       $bytestring Use bytestring or real size ? (deprecated)
      * @return void
      */
-    public function __construct($min, $max = null, $bytestring = true)
+    public function __construct($options)
     {
         $this->_files = array();
-        $this->_size  = 0;
-        parent::__construct($min, $max, $bytestring);
+        $this->setSize(0);
+
+        if (1 < func_num_args()) {
+            trigger_error('Multiple constructor options are deprecated in favor of a single options array', E_USER_NOTICE);
+            if ($options instanceof Zend_Config) {
+                $options = $options->toArray();
+            } elseif (is_scalar($options)) {
+                $options = array('min' => $options);
+            } elseif (!is_array($options)) {
+                require_once 'Zend/Validate/Exception.php';
+                throw new Zend_Validate_Exception('Invalid options provided to constructor');
+            }
+
+            $argv = func_get_args();
+            array_shift($argv);
+            $options['max'] = array_shift($argv);
+            if (!empty($argv)) {
+                $options['bytestring'] = array_shift($argv);
+            }
+        }
+
+        parent::__construct($options);
     }
 
     /**
@@ -87,13 +107,17 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
      */
     public function isValid($value, $file = null)
     {
+        require_once 'Zend/Loader.php';
         if (is_string($value)) {
             $value = array($value);
         }
 
+        $min  = $this->getMin(true);
+        $max  = $this->getMax(true);
+        $size = $this->getSize();
         foreach ($value as $files) {
             // Is file readable ?
-            if (!@is_readable($files)) {
+            if (!Zend_Loader::isReadable($files)) {
                 $this->_throw($file, self::NOT_READABLE);
                 return false;
             }
@@ -106,13 +130,13 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
             }
 
             // limited to 2GB files
-            $this->_size += @filesize($files);
-            if (($this->_max !== null) && ($this->_max < $this->_size)) {
-                if ($this->_bytestr) {
-                    $max = $this->_max;
-                    $this->_max = $this->_toByteString($this->_max);
+            $size += @filesize($files);
+            $this->setSize($size);
+            if (($max !== null) && ($max < $size)) {
+                if ($this->useByteString()) {
+                    $this->setMax($this->_toByteString($max));
                     $this->_throw($file, self::TOO_BIG);
-                    $this->_max = $max;
+                    $this->setMax($max);
                 } else {
                     $this->_throw($file, self::TOO_BIG);
                 }
@@ -120,12 +144,11 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
         }
 
         // Check that aggregate files are >= minimum size
-        if (($this->_min !== null) && ($this->_size < $this->_min)) {
-            if ($this->_bytestr) {
-                $min        = $this->_min;
-                $this->_min = $this->_toByteString($this->_min);
+        if (($min !== null) && ($size < $min)) {
+            if ($this->useByteString()) {
+                $this->setMin($this->_toByteString($min));
                 $this->_throw($file, self::TOO_SMALL);
-                $this->_min = $min;
+                $this->setMin($min);
             } else {
                 $this->_throw($file, self::TOO_SMALL);
             }
@@ -133,8 +156,8 @@ class Zend_Validate_File_FilesSize extends Zend_Validate_File_Size
 
         if (count($this->_messages) > 0) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 }
