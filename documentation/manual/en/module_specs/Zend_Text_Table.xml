@@ -51,14 +51,16 @@
                     separation between all rows. This is defined as a bitmask
                     containing one ore more of the following constants of
                     <code>Zend_Text_Table</code>:
-		            <listitem>
-		                <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
-		                <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
-		                <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
-		                <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
-		            </listitem>
-		            Where header is always the first row, and the footer is
-		            always the last row.
+                    <itemizedlist>
+                        <listitem>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
+                            <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
+                        </listitem>
+                    </itemizedlist>
+                    Where header is always the first row, and the footer is
+                    always the last row.
                 </para>
             </listitem>
         </itemizedlist>
