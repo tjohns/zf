@@ -20,14 +20,48 @@
     <para>
         A <code>Zend_Text_Table</code> object consists of rows, which contain
         columns, represented by <code>Zend_Text_Table_Row</code> and
-        <code>Zend_Text_Table_Column</code>. When creating a table, you have to
-        supply all column widths as an array. So to speak, when you want to
-        display a table with three columns, having a size of 10, 50 and 20
-        characters, you simply supply an <code>array(10, 50, 20)</code> as
-        first parameter to the constructor. As a second parameter, you may
-        supply a decorator, which styles the borders of the table. By default,
-        <code>Zend_Text_Table_Decorator_Unicode</code> is used, but you may also
-        use the simpler decorator called <code>Zend_Text_Table_Decorator_Ascii</code>.
+        <code>Zend_Text_Table_Column</code>. When creating a table, you can
+        supply an array with options for the table. Those are:
+        
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>columnWidths</code> (required): An array defining
+                    all columns width their widths in characters.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>decorator</code>: The decorator to use for the
+                    table borders. The default is <code>unicode</code>, but
+                    you may also specify <code>ascii</code> or give an instance
+                    of a custom decorator object.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>padding</code>: The left and right padding withing
+                    the columns in characters. The default padding is zero.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>AutoSeparate</code>: The way how the rows are
+                    separated with horizontal lines. The default is a
+                    separation between all rows. This is defined as a bitmask
+                    containing one ore more of the following constants of
+                    <code>Zend_Text_Table</code>:
+		            <listitem>
+		                <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
+		                <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
+		                <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
+		                <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
+		            </listitem>
+		            Where header is always the first row, and the footer is
+		            always the last row.
+                </para>
+            </listitem>
+        </itemizedlist>
     </para>
     <para>
         Rows are simply added to the table by creating a new instance of
@@ -44,7 +78,7 @@
         The first parameter is the content of the column which may have
         multiple lines, which in the best case are separated by just the
         <code>\n</code> character. The second parameter defines the align, which
-        is "left" by default and can be one of the class constants of
+        is <code>left</code> by default and can be one of the class constants of
         <code>Zend_Text_Table_Column</code>:
         
         <itemizedlist>
@@ -89,7 +123,7 @@ require_once 'Zend/Text/Table.php';
 require_once 'Zend/Text/Table/Row.php';
 require_once 'Zend/Text/Table/Column.php';
 
-$table = new Zend_Text_Table(array(10, 20));
+$table = new Zend_Text_Table(array('columnWidths' => array(10, 20)));
 
 // Either simple
 $table->appendRow(array('Zend', 'Framework'));
