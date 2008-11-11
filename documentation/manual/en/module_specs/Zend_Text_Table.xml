@@ -121,10 +121,6 @@
             to create a simple table:
         </para>
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Text/Table.php';
-require_once 'Zend/Text/Table/Row.php';
-require_once 'Zend/Text/Table/Column.php';
-
 $table = new Zend_Text_Table(array('columnWidths' => array(10, 20)));
 
 // Either simple
