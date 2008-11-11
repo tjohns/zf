@@ -456,19 +456,20 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
         }
 
         if ($baseUrl === null) {
-            $filename = basename($_SERVER['SCRIPT_FILENAME']);
+            $filename = (isset($_SERVER['SCRIPT_FILENAME'])) ? basename($_SERVER['SCRIPT_FILENAME']) : '';
 
-            if (basename($_SERVER['SCRIPT_NAME']) === $filename) {
+            if (isset($_SERVER['SCRIPT_NAME']) && basename($_SERVER['SCRIPT_NAME']) === $filename) {
                 $baseUrl = $_SERVER['SCRIPT_NAME'];
-            } elseif (basename($_SERVER['PHP_SELF']) === $filename) {
+            } elseif (isset($_SERVER['PHP_SELF']) && basename($_SERVER['PHP_SELF']) === $filename) {
                 $baseUrl = $_SERVER['PHP_SELF'];
             } elseif (isset($_SERVER['ORIG_SCRIPT_NAME']) && basename($_SERVER['ORIG_SCRIPT_NAME']) === $filename) {
                 $baseUrl = $_SERVER['ORIG_SCRIPT_NAME']; // 1and1 shared hosting compatibility
             } else {
                 // Backtrack up the script_filename to find the portion matching
                 // php_self
-                $path    = $_SERVER['PHP_SELF'];
-                $segs    = explode('/', trim($_SERVER['SCRIPT_FILENAME'], '/'));
+                $path    = isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '';
+                $file    = isset($_SERVER['SCRIPT_FILENAME']) ? $_SERVER['SCRIPT_FILENAME'] : '';
+                $segs    = explode('/', trim($file, '/'));
                 $segs    = array_reverse($segs);
                 $index   = 0;
                 $last    = count($segs);
