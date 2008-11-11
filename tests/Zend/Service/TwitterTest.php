@@ -320,6 +320,16 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+
+        /**
+         * @todo
+         * Test is based on data stored on twitter.com.
+         * It's necessary to update appropriate twitter.com entry to get results here. It should be done automatically.
+         *
+         * Mark test as incomplete until it's not done.
+         */
+        $this->markTestIncomplete('Appropriate twitter.com entry has to be updated by test automatically.');
+
         $this->assertTrue(isset($response->status));
     }
 
