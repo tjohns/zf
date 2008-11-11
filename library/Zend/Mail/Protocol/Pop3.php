@@ -33,7 +33,7 @@ class Zend_Mail_Protocol_Pop3
     /**
      * Default timeout in seconds for initiating session
      */
-    const TIMEOUT_CONNECTION_POP = 30;
+    const TIMEOUT_CONNECTION = 30;
     
     /**
      * saves if server supports top
@@ -98,7 +98,9 @@ class Zend_Mail_Protocol_Pop3
             $port = $ssl == 'SSL' ? 995 : 110;
         }
 
-        $this->_socket = @fsockopen($host, $port, $errno, $errstr, self::TIMEOUT_CONNECTION_POP);
+        $errno  =  0;
+        $errstr = '';
+        $this->_socket = @fsockopen($host, $port, $errno, $errstr, self::TIMEOUT_CONNECTION);
         if (!$this->_socket) {
             /**
              * @see Zend_Mail_Protocol_Exception
