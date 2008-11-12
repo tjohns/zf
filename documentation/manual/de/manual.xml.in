@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 12319 -->
+<!-- EN-Revision: 12534 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -815,6 +815,9 @@
         <xi:include href="module_specs/Zend_Service_Technorati.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Technorati.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Service_Twitter.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Twitter.xml" parse="xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Service_Yahoo.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Service_Yahoo.xml" /></xi:fallback>
         </xi:include>
@@ -869,6 +872,9 @@
         <title>Zend_Text</title>
         <xi:include href="module_specs/Zend_Text_Figlet.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Text_Figlet.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Text_Table.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Text_Table.xml" /></xi:fallback>
         </xi:include>
     </chapter>
 
