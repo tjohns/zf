@@ -140,7 +140,14 @@ class Zend_Json_Encoder
         }
 
         $props = '';
-        foreach (get_object_vars($value) as $name => $propValue) {
+        
+        if ($value instanceof Iterator) {
+        	$propCollection = $value;
+        } else {
+        	$propCollection = get_object_vars($value);
+        }
+        
+        foreach ($propCollection as $name => $propValue) {
             if (isset($propValue)) {
                 $props .= ','
                         . $this->_encodeValue($name)
@@ -228,7 +235,7 @@ class Zend_Json_Encoder
         $result = 'null';
 
         if (is_int($value) || is_float($value)) {
-            $result = (string)$value;
+            $result = (string) $value;
         } elseif (is_string($value)) {
             $result = $this->_encodeString($value);
         } elseif (is_bool($value)) {
