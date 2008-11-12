@@ -15,6 +15,16 @@
         item.
     </para>
 
+	<note>
+        <title>PartialLoop Counter</title>
+		<para>
+			The <code>PartialLoop</code> view helper assigns a variable to the view named
+			<code>partialCounter</code> which passes the current position of the array to the view script.
+			This provides an easy way to have alternating colors on table rows for example.
+		</para>
+
+	</note>
+
     <example id="zend.view.helpers.initial.partial.usage">
         <title>Basic Usage of Partials</title>
 
@@ -24,22 +34,26 @@
         </para>
 
         <programlisting role="php"><![CDATA[
+
 <?php // partial.phtml ?>
 <ul>
-    <li>From: <?= $this->escape($this->from) >?</li>
-    <li>Subject: <?= $this->escape($this->subject) >?</li>
+    <li>From: <?= $this->escape($this->from) ?></li>
+    <li>Subject: <?= $this->escape($this->subject) ?></li>
 </ul>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             You would then call it from your view script using the following:
         </para>
 
         <programlisting role="php"><![CDATA[
+
 <?= $this->partial('partial.phtml', array(
-    'from' => 'Team Framework', 
+    'from' => 'Team Framework',
     'subject' => 'view partials')); ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             Which would then render:
@@ -50,7 +64,8 @@
     <li>From: Team Framework</li>
     <li>Subject: view partials</li>
 </ul>
-]]></programlisting>
+]]>
+</programlisting>
 
     </example>
         <note>
@@ -95,13 +110,14 @@
 // Tell partial to pass objects as 'model' variable
 $view->partial()->setObjectKey('model');
 
-// Tell partial to pass objects from partialLoop as 'model' variable in final
-// partial view script:
+// Tell partial to pass objects from partialLoop as 'model' variable
+// in final partial view script:
 $view->partialLoop()->setObjectKey('model');
-]]></programlisting>
-            
+]]>
+            </programlisting>
+
             <para>
-                This technique is particularly useful when passing 
+                This technique is particularly useful when passing
                 <code>Zend_Db_Table_Rowset</code>s to
                 <code>partialLoop()</code>, as you then have full access to your
                 row objects within the view scripts, allowing you to call
@@ -138,21 +154,22 @@ $view->partialLoop()->setObjectKey('model');
 <? // partialLoop.phtml ?>
     <dt><?= $this->key ?></dt>
     <dd><?= $this->value ?></dd>
-
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             And the following "model":
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 $model = array(
     array('key' => 'Mammal', 'value' => 'Camel'),
     array('key' => 'Bird', 'value' => 'Penguin'),
     array('key' => 'Reptile', 'value' => 'Asp'),
     array('key' => 'Fish', 'value' => 'Flounder'),
 );
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             In your view script, you could then invoke the
@@ -163,7 +180,8 @@ $model = array(
 <dl>
 <?= $this->partialLoop('partialLoop.phtml', $model) ?>
 </dl>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <programlisting role="html"><![CDATA[
 <dl>
@@ -178,9 +196,9 @@ $model = array(
 
     <dt>Fish</dt>
     <dd>Flounder</dd>
-
 </dl>
-]]></programlisting>
+]]>
+</programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.partial.modules">
@@ -200,7 +218,8 @@ $model = array(
 
         <programlisting role="php"><![CDATA[
 <?= $this->partial('pager.phtml', 'list', $pagerData) ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             In this way, you can re-use partials created specifically for other
@@ -209,6 +228,3 @@ $model = array(
         </para>
     </example>
 </sect3>
-<!--
-vim:se ts=4 sw=4 et:
--->

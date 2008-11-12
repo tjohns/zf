@@ -24,7 +24,7 @@ require_once 'Zend/Controller/Front.php';
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_View_Helper_PartialLoop
@@ -295,6 +295,31 @@ class Zend_View_Helper_PartialLoopTest extends PHPUnit_Framework_TestCase
             $result = $this->helper->partialLoop('partialLoop.phtml', null, array());
         } catch (Exception $e) {
             $this->fail('Empty array should not cause partialLoop to throw exception');
+        }
+    }
+
+    /**
+     * @see ZF-2737
+     * @link http://framework.zend.com/issues/browse/ZF-2737
+     */
+    public function testPartialLoopIncramentsPartialCounter()
+    {
+        $data = array(
+            array('message' => 'foo'),
+            array('message' => 'bar'),
+            array('message' => 'baz'),
+            array('message' => 'bat')
+        );
+
+        $view = new Zend_View(array(
+            'scriptPath' => $this->basePath . '/default/views/scripts'
+        ));
+        $this->helper->setView($view);
+
+        $result = $this->helper->partialLoop('partialLoopCouter.phtml', $data);
+        foreach ($data as $key=>$item) {
+            $string = 'This is an iteration: ' . $item['message'] . ', pointer at ' . ($key+1);
+            $this->assertContains($string, $result);
         }
     }
 }
