@@ -15,6 +15,16 @@
         item.
     </para>
 
+	<note>
+        <title>PartialLoop Counter</title>
+		<para>
+			The <code>PartialLoop</code> view helper assigns a variable to the view named
+			<code>partialCounter</code> which passes the current position of the array to the view script.
+			This provides an easy way to have alternating colors on table rows for example.
+		</para>
+
+	</note>
+
     <example id="zend.view.helpers.initial.partial.usage">
         <title>Basic Usage of Partials</title>
 
