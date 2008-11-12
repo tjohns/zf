@@ -30,7 +30,7 @@ class My_Form_Test extends Zend_Dojo_Form
 
     /**
      * Form initialization
-     * 
+     *
      * @return void
      */
     public function init()
@@ -42,11 +42,11 @@ class My_Form_Test extends Zend_Dojo_Form
         $this->setDecorators(array(
             'FormElements',
             array('TabContainer', array(
-                'id' => 'tabContainer', 
+                'id' => 'tabContainer',
                 'style' => 'width: 600px; height: 500px;',
                 'dijitParams' => array(
                     'tabPosition' => 'top'
-                ), 
+                ),
             )),
             'DijitForm',
         ));
@@ -59,8 +59,8 @@ class My_Form_Test extends Zend_Dojo_Form
             ),
         ));
         $textForm->addElement(
-                'TextBox', 
-                'textbox', 
+                'TextBox',
+                'textbox',
                 array(
                     'value'      => 'some text',
                     'label'      => 'TextBox',
@@ -69,8 +69,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'DateTextBox', 
-                'datebox', 
+                'DateTextBox',
+                'datebox',
                 array(
                     'value' => '2008-07-05',
                     'label' => 'DateTextBox',
@@ -78,21 +78,21 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'TimeTextBox', 
-                'timebox', 
+                'TimeTextBox',
+                'timebox',
                 array(
                     'label' => 'TimeTextBox',
                     'required'  => true,
                 )
             )
             ->addElement(
-                'CurrencyTextBox', 
-                'currencybox', 
+                'CurrencyTextBox',
+                'currencybox',
                 array(
                     'label' => 'CurrencyTextBox',
                     'required'  => true,
                     // 'currency' => 'USD',
-                    'invalidMessage' => 'Invalid amount. ' . 
+                    'invalidMessage' => 'Invalid amount. ' .
                                         'Include dollar sign, commas, ' .
                                         'and cents.',
                     // 'fractional' => true,
@@ -101,8 +101,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'NumberTextBox', 
-                'numberbox', 
+                'NumberTextBox',
+                'numberbox',
                 array(
                     'label' => 'NumberTextBox',
                     'required'  => true,
@@ -115,8 +115,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'ValidationTextBox', 
-                'validationbox', 
+                'ValidationTextBox',
+                'validationbox',
                 array(
                     'label' => 'ValidationTextBox',
                     'required'  => true,
@@ -125,8 +125,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'Textarea', 
-                'textarea', 
+                'Textarea',
+                'textarea',
                 array(
                     'label'    => 'Textarea',
                     'required' => true,
@@ -156,8 +156,8 @@ class My_Form_Test extends Zend_Dojo_Form
             'legend' => 'Toggle Elements',
         ));
         $toggleForm->addElement(
-                'NumberSpinner', 
-                'ns', 
+                'NumberSpinner',
+                'ns',
                 array(
                     'value'             => '7',
                     'label'             => 'NumberSpinner',
@@ -172,15 +172,15 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'Button', 
-                'dijitButton', 
+                'Button',
+                'dijitButton',
                 array(
                     'label' => 'Button',
                 )
             )
             ->addElement(
-                'CheckBox', 
-                'checkbox', 
+                'CheckBox',
+                'checkbox',
                 array(
                     'label' => 'CheckBox',
                     'checkedValue'  => 'foo',
@@ -189,8 +189,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'RadioButton', 
-                'radiobutton', 
+                'RadioButton',
+                'radiobutton',
                 array(
                     'label' => 'RadioButton',
                     'multiOptions'  => array(
@@ -207,8 +207,8 @@ class My_Form_Test extends Zend_Dojo_Form
             'legend' => 'Select Elements',
         ));
         $selectForm->addElement(
-                'ComboBox', 
-                'comboboxselect', 
+                'ComboBox',
+                'comboboxselect',
                 array(
                     'label' => 'ComboBox (select)',
                     'value' => 'blue',
@@ -217,8 +217,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'ComboBox', 
-                'comboboxremote', 
+                'ComboBox',
+                'comboboxremote',
                 array(
                     'label' => 'ComboBox (remoter)',
                     'storeId' => 'stateStore',
@@ -232,8 +232,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'FilteringSelect', 
-                'filterselect', 
+                'FilteringSelect',
+                'filterselect',
                 array(
                     'label' => 'FilteringSelect (select)',
                     'value' => 'blue',
@@ -242,8 +242,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'FilteringSelect', 
-                'filterselectremote', 
+                'FilteringSelect',
+                'filterselectremote',
                 array(
                     'label' => 'FilteringSelect (remoter)',
                     'storeId' => 'stateStore',
@@ -262,8 +262,8 @@ class My_Form_Test extends Zend_Dojo_Form
             'legend' => 'Slider Elements',
         ));
         $sliderForm->addElement(
-                'HorizontalSlider', 
-                'horizontal', 
+                'HorizontalSlider',
+                'horizontal',
                 array(
                     'label' => 'HorizontalSlider',
                     'value' => 5,
@@ -308,8 +308,8 @@ class My_Form_Test extends Zend_Dojo_Form
                 )
             )
             ->addElement(
-                'VerticalSlider', 
-                'vertical', 
+                'VerticalSlider',
+                'vertical',
                 array(
                     'label' => 'VerticalSlider',
                     'value' => 5,

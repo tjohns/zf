@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.spreadsheets">
     <title>Google Tabellenkalkulation verwenden</title>
 
@@ -145,13 +145,13 @@ foreach($rowData as $customEntry) {
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 Eine alternative Version dieses Arrays, <code>customByName</code>, erlaubt den direkten Zugriff
                 zu dem Eintrag einer Zelle durch den Namen. Das ist üblich, wenn man versucht auf einen
                 speziellen Header zuzugreifen:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 $customEntry = $listFeed->entries[1]->getCustomByName('my_heading');
 echo $customEntry->getColumnName() . " = " . $customEntry->getText();

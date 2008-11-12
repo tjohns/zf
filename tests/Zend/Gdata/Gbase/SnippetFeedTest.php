@@ -32,7 +32,7 @@ class Zend_Gdata_Gbase_SnippetFeedTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->snippetFeed = new Zend_Gdata_Gbase_SnippetFeed( 
-                file_get_contents('Zend/Gdata/Gbase/_files/TestDataGbaseSnippetFeedSample1.xml'),
+                file_get_contents(dirname(__FILE__) . '/_files/TestDataGbaseSnippetFeedSample1.xml'),
                 true);
     }
 

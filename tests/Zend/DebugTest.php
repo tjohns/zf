@@ -22,7 +22,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Debug
@@ -63,7 +63,14 @@ class Zend_DebugTest extends PHPUnit_Framework_TestCase
         Zend_Debug::setSapi('cgi');
         $data = 'string';
         $result = Zend_Debug::Dump($data, null, false);
-        $this->assertEquals("<pre>string(6) &quot;string&quot;\n</pre>", $result);
+
+        // Has to check for two strings, because xdebug internally handles CLI vs Web
+        $this->assertContains($result,
+            array(
+                "<pre>string(6) \"string\"\n</pre>",
+                "<pre>string(6) &quot;string&quot;\n</pre>",
+            )
+        );
     }
 
     public function testDebugDumpEcho()
@@ -89,6 +96,24 @@ class Zend_DebugTest extends PHPUnit_Framework_TestCase
         $result = str_replace(array(PHP_EOL, "\n"), '_', $result);
         $expected = "_{$label} _string(6) \"string\"__";
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @group ZF-4136
+     * @group ZF-1663
+     */
+    public function testXdebugEnabledAndNonCliSapiDoesNotEscapeSpecialChars()
+    {
+        if(!extension_loaded('xdebug')) {
+            $this->markTestSkipped("This test only works in combination with xdebug.");
+        }
+
+        Zend_Debug::setSapi('apache');
+        $a = array("a" => "b");
+
+        $result = Zend_Debug::dump($a, "LABEL", false);
+        $this->assertContains("<pre>", $result);
+        $this->assertContains("</pre>", $result);
     }
 
 }

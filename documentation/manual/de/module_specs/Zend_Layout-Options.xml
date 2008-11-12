@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.layout.options">
     <title>Zend_Layout Konfigurations Optionen</title>
 
@@ -41,7 +41,7 @@
                 nicht dargestellt wenn eine Aktion eine Ausnahme wirft und dieses Flag true ist (das wird
                 verwendet um zu verhindern das das Layout doppelt dargestellt wird wen das
                 <link linkend="zend.controller.plugins.standard.errorhandler">ErrorHandler Plugin</link> verwendet wird.
-                Standardmäßig ist dieses Flag true. Zugriffsmethoden sind 
+                Standardmäßig ist dieses Flag true. Zugriffsmethoden sind
                 <code>setMvcSuccessfulActionOnly()</code> und <code>getMvcSuccessfulActionOnly()</code>.
             </para>
         </listitem>
@@ -51,7 +51,7 @@
                 <emphasis>view</emphasis>: Das View Objekt das für die Darstellung verwendet wird. Wenn mit
                 MVC verwendet, dann versucht <code>Zend_Layout</code> das View Objekt zu verwenden das mit
                 <link linkend="zend.controller.actionhelpers.viewrenderer">dem ViewRenderer</link> registriert
-                wurde wenn kein explizites View Objekt übergeben wurde. Zugriffsmethoden sind 
+                wurde wenn kein explizites View Objekt übergeben wurde. Zugriffsmethoden sind
                 <code>setView()</code> und <code>getView()</code>.
             </para>
         </listitem>
@@ -77,7 +77,7 @@
         <listitem>
             <para>
                 <emphasis>inflector</emphasis>: Die Beugung die verwendet werden soll wenn Layout Namen zu
-                Layout Skript Pfaden aufgelöst werden; siehe <link linkend="zend.layout.advanced.inflector">die 
+                Layout Skript Pfaden aufgelöst werden; siehe <link linkend="zend.layout.advanced.inflector">die
                 <code>Zend_Layout</code> Beugungs Dokumentation für weitere Details</link>.
                 Zugriffsmethoden sind <code>setInflector()</code> und <code>getInflector()</code>.
             </para>
@@ -182,7 +182,7 @@ $layout->setOptions($options);
 $layout->setConfig($options);
 ]]>
             </programlisting>
-        
+
             <para>
                 Es ist zu beachten das einige Optionen, wie <code>pluginClass</code> und
                 <code>helperClass</code>, keinen Effekt haven wenn Sie mit Hilfe dieser Methode übergeben werden;

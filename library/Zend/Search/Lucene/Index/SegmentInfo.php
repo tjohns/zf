@@ -29,6 +29,9 @@ require_once 'Zend/Search/Lucene/Exception.php';
 /** Zend_Search_Lucene_LockManager */
 require_once 'Zend/Search/Lucene/LockManager.php';
 
+/** Zend_Search_Lucene_Index_DocsFilter */
+require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
+
 
 /**
  * @category   Zend
@@ -39,6 +42,14 @@ require_once 'Zend/Search/Lucene/LockManager.php';
  */
 class Zend_Search_Lucene_Index_SegmentInfo
 {
+    /**
+     * "Full scan vs fetch" boundary.
+     *
+     * If filter selectivity is less than this value, then full scan is performed
+     * (since term entries fetching has some additional overhead).
+     */
+    const FULL_SCAN_VS_FETCH_BOUNDARY = 5;
+
     /**
      * Number of docs in a segment
      *
@@ -213,11 +224,11 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_docCount  = $docCount;
 
         if ($docStoreOptions !== null) {
-        	$this->_usesSharedDocStore    = true;
-        	$this->_sharedDocStoreOptions = $docStoreOptions;
+            $this->_usesSharedDocStore    = true;
+            $this->_sharedDocStoreOptions = $docStoreOptions;
 
-        	if ($docStoreOptions['isCompound']) {
-        		$cfxFile       = $this->_directory->getFileObject($docStoreOptions['segment'] . '.cfx');
+            if ($docStoreOptions['isCompound']) {
+                $cfxFile       = $this->_directory->getFileObject($docStoreOptions['segment'] . '.cfx');
                 $cfxFilesCount = $cfxFile->readVInt();
 
                 $cfxFiles     = array();
@@ -237,7 +248,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
                 $this->_sharedDocStoreOptions['files']     = $cfxFiles;
                 $this->_sharedDocStoreOptions['fileSizes'] = $cfxFileSizes;
-        	}
+            }
         }
 
         $this->_hasSingleNormFile = $hasSingleNormFile;
@@ -293,9 +304,11 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $fieldName = $fnmFile->readString();
             $fieldBits = $fnmFile->readByte();
             $this->_fields[$count] = new Zend_Search_Lucene_Index_FieldInfo($fieldName,
-                                                                            $fieldBits & 1,
+                                                                            $fieldBits & 0x01 /* field is indexed */,
                                                                             $count,
-                                                                            $fieldBits & 2 );
+                                                                            $fieldBits & 0x02 /* termvectors are stored */,
+                                                                            $fieldBits & 0x10 /* norms are omitted */,
+                                                                            $fieldBits & 0x20 /* payloads are stored */);
             if ($fieldBits & 0x10) {
                 // norms are omitted for the indexed field
                 $this->_norms[$count] = str_repeat(chr(Zend_Search_Lucene_Search_Similarity::encodeNorm(1.0)), $docCount);
@@ -308,7 +321,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_fieldsDicPositions = array_flip($fieldNums);
 
         if ($this->_delGen == -2) {
-        	$this->_detectLatestDelGen();
+            $this->_detectLatestDelGen();
         }
 
         if ($this->_delGen == -1) {
@@ -427,25 +440,25 @@ class Zend_Search_Lucene_Index_SegmentInfo
     public function openCompoundFile($extension, $shareHandler = true)
     {
         if (($extension == '.fdx'  || $extension == '.fdt')  &&  $this->_usesSharedDocStore) {
-        	$fdxFName = $this->_sharedDocStoreOptions['segment'] . '.fdx';
+            $fdxFName = $this->_sharedDocStoreOptions['segment'] . '.fdx';
             $fdtFName = $this->_sharedDocStoreOptions['segment'] . '.fdt';
 
             if (!$this->_sharedDocStoreOptions['isCompound']) {
-            	$fdxFile = $this->_directory->getFileObject($fdxFName, $shareHandler);
-            	$fdxFile->seek($this->_sharedDocStoreOptions['offset']*8, SEEK_CUR);
+                $fdxFile = $this->_directory->getFileObject($fdxFName, $shareHandler);
+                $fdxFile->seek($this->_sharedDocStoreOptions['offset']*8, SEEK_CUR);
 
-            	if ($extension == '.fdx') {
-            		// '.fdx' file is requested
-            		return $fdxFile;
-            	} else {
-            		// '.fdt' file is requested
-            		$fdtStartOffset = $fdxFile->readLong();
+                if ($extension == '.fdx') {
+                    // '.fdx' file is requested
+                    return $fdxFile;
+                } else {
+                    // '.fdt' file is requested
+                    $fdtStartOffset = $fdxFile->readLong();
 
                     $fdtFile = $this->_directory->getFileObject($fdtFName, $shareHandler);
                     $fdtFile->seek($fdtStartOffset, SEEK_CUR);
 
                     return $fdtFile;
-            	}
+                }
             }
 
             if( !isset($this->_sharedDocStoreOptions['files'][$fdxFName]) ) {
@@ -505,10 +518,10 @@ class Zend_Search_Lucene_Index_SegmentInfo
     public function compoundFileLength($extension)
     {
         if (($extension == '.fdx'  || $extension == '.fdt')  &&  $this->_usesSharedDocStore) {
-        	$filename = $this->_sharedDocStoreOptions['segment'] . $extension;
+            $filename = $this->_sharedDocStoreOptions['segment'] . $extension;
 
             if (!$this->_sharedDocStoreOptions['isCompound']) {
-            	return $this->_directory->fileLength($filename);
+                return $this->_directory->fileLength($filename);
             }
 
             if( !isset($this->_sharedDocStoreOptions['fileSizes'][$filename]) ) {
@@ -852,18 +865,141 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
+     * Returns IDs of all the documents containing term.
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @param integer $shift
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
+     * @return array
+     */
+    public function termDocs(Zend_Search_Lucene_Index_Term $term, $shift = 0, $docsFilter = null)
+    {
+        $termInfo = $this->getTermInfo($term);
+
+        if (!$termInfo instanceof Zend_Search_Lucene_Index_TermInfo) {
+            if ($docsFilter !== null  &&  $docsFilter instanceof Zend_Search_Lucene_Index_DocsFilter) {
+                $docsFilter->segmentFilters[$this->_name] = array();
+            }
+            return array();
+        }
+
+        $frqFile = $this->openCompoundFile('.frq');
+        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $docId  = 0;
+        $result = array();
+
+        if ($docsFilter !== null) {
+            if (!$docsFilter instanceof Zend_Search_Lucene_Index_DocsFilter) {
+                throw new Zend_Search_Lucene_Exception('Documents filter must be an instance of Zend_Search_Lucene_Index_DocsFilter or null.');
+            }
+
+            if (isset($docsFilter->segmentFilters[$this->_name])) {
+                // Filter already has some data for the current segment
+
+                // Make short name for the filter (which doesn't need additional dereferencing)
+                $filter = &$docsFilter->segmentFilters[$this->_name];
+
+                // Check if filter is not empty
+                if (count($filter) == 0) {
+                    return array();
+                }
+
+                if ($this->_docCount/count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
+                    // Perform fetching
+// ---------------------------------------------------------------
+                    $updatedFilterData = array();
+
+                    for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                        $docDelta = $frqFile->readVInt();
+                        if( $docDelta % 2 == 1 ) {
+                            $docId += ($docDelta-1)/2;
+                        } else {
+                            $docId += $docDelta/2;
+                            // read freq
+                            $frqFile->readVInt();
+                        }
+
+                        if (isset($filter[$docId])) {
+                           $result[] = $shift + $docId;
+                           $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                        }
+                    }
+                    $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
+// ---------------------------------------------------------------
+                } else {
+                    // Perform full scan
+                    $updatedFilterData = array();
+
+                    for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                        $docDelta = $frqFile->readVInt();
+                        if( $docDelta % 2 == 1 ) {
+                            $docId += ($docDelta-1)/2;
+                        } else {
+                            $docId += $docDelta/2;
+                            // read freq
+                            $frqFile->readVInt();
+                        }
+
+                        if (isset($filter[$docId])) {
+                           $result[] = $shift + $docId;
+                           $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                        }
+                    }
+                    $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
+                }
+            } else {
+                // Filter is present, but doesn't has data for the current segment yet
+                $filterData = array();
+                for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                    $docDelta = $frqFile->readVInt();
+                    if( $docDelta % 2 == 1 ) {
+                        $docId += ($docDelta-1)/2;
+                    } else {
+                        $docId += $docDelta/2;
+                        // read freq
+                        $frqFile->readVInt();
+                    }
+
+                    $result[] = $shift + $docId;
+                    $filterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                }
+                $docsFilter->segmentFilters[$this->_name] = $filterData;
+            }
+        } else {
+            for( $count=0; $count < $termInfo->docFreq; $count++ ) {
+                $docDelta = $frqFile->readVInt();
+                if( $docDelta % 2 == 1 ) {
+                    $docId += ($docDelta-1)/2;
+                } else {
+                    $docId += $docDelta/2;
+                    // read freq
+                    $frqFile->readVInt();
+                }
+
+                $result[] = $shift + $docId;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns term freqs array.
      * Result array structure: array(docId => freq, ...)
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @param integer $shift
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      * @return Zend_Search_Lucene_Index_TermInfo
      */
-    public function termFreqs(Zend_Search_Lucene_Index_Term $term, $shift = 0)
+    public function termFreqs(Zend_Search_Lucene_Index_Term $term, $shift = 0, $docsFilter = null)
     {
         $termInfo = $this->getTermInfo($term);
 
         if (!$termInfo instanceof Zend_Search_Lucene_Index_TermInfo) {
+            if ($docsFilter !== null  &&  $docsFilter instanceof Zend_Search_Lucene_Index_DocsFilter) {
+                $docsFilter->segmentFilters[$this->_name] = array();
+            }
             return array();
         }
 
@@ -872,14 +1008,99 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $result = array();
         $docId = 0;
 
-        for ($count = 0; $count < $termInfo->docFreq; $count++) {
-            $docDelta = $frqFile->readVInt();
-            if ($docDelta % 2 == 1) {
-                $docId += ($docDelta-1)/2;
-                $result[$shift + $docId] = 1;
+        $result = array();
+
+        if ($docsFilter !== null) {
+            if (!$docsFilter instanceof Zend_Search_Lucene_Index_DocsFilter) {
+                throw new Zend_Search_Lucene_Exception('Documents filter must be an instance of Zend_Search_Lucene_Index_DocsFilter or null.');
+            }
+
+            if (isset($docsFilter->segmentFilters[$this->_name])) {
+                // Filter already has some data for the current segment
+
+                // Make short name for the filter (which doesn't need additional dereferencing)
+                $filter = &$docsFilter->segmentFilters[$this->_name];
+
+                // Check if filter is not empty
+                if (count($filter) == 0) {
+                    return array();
+                }
+
+
+                if ($this->_docCount/count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
+                    // Perform fetching
+// ---------------------------------------------------------------
+                    $updatedFilterData = array();
+
+                    for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                        $docDelta = $frqFile->readVInt();
+                        if ($docDelta % 2 == 1) {
+                            $docId += ($docDelta-1)/2;
+                            if (isset($filter[$docId])) {
+                                $result[$shift + $docId] = 1;
+                                $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                            }
+                        } else {
+                            $docId += $docDelta/2;
+                            if (isset($filter[$docId])) {
+                                $result[$shift + $docId] = $frqFile->readVInt();
+                                $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                            }
+                        }
+                    }
+                    $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
+// ---------------------------------------------------------------
+                } else {
+                    // Perform full scan
+                    $updatedFilterData = array();
+
+                    for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                        $docDelta = $frqFile->readVInt();
+                        if ($docDelta % 2 == 1) {
+                            $docId += ($docDelta-1)/2;
+                            if (isset($filter[$docId])) {
+                                $result[$shift + $docId] = 1;
+                                $updatedFilterData[$docId] = 1; // 1 is just some constant value, so we don't need additional var dereference here
+                            }
+                        } else {
+                            $docId += $docDelta/2;
+                            if (isset($filter[$docId])) {
+                                $result[$shift + $docId] = $frqFile->readVInt();
+                                $updatedFilterData[$docId] = 1; // 1 is just some constant value, so we don't need additional var dereference here
+                            }
+                        }
+                    }
+                    $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
+                }
             } else {
-                $docId += $docDelta/2;
-                $result[$shift + $docId] = $frqFile->readVInt();
+                // Filter doesn't has data for current segment
+                $filterData = array();
+
+                for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                    $docDelta = $frqFile->readVInt();
+                    if ($docDelta % 2 == 1) {
+                        $docId += ($docDelta-1)/2;
+                        $result[$shift + $docId] = 1;
+                        $filterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                    } else {
+                        $docId += $docDelta/2;
+                        $result[$shift + $docId] = $frqFile->readVInt();
+                        $filterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                    }
+                }
+
+                $docsFilter->segmentFilters[$this->_name] = $filterData;
+            }
+        } else {
+            for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                $docDelta = $frqFile->readVInt();
+                if ($docDelta % 2 == 1) {
+                    $docId += ($docDelta-1)/2;
+                    $result[$shift + $docId] = 1;
+                } else {
+                    $docId += $docDelta/2;
+                    $result[$shift + $docId] = $frqFile->readVInt();
+                }
             }
         }
 
@@ -892,45 +1113,177 @@ class Zend_Search_Lucene_Index_SegmentInfo
      *
      * @param Zend_Search_Lucene_Index_Term $term
      * @param integer $shift
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      * @return Zend_Search_Lucene_Index_TermInfo
      */
-    public function termPositions(Zend_Search_Lucene_Index_Term $term, $shift = 0)
+    public function termPositions(Zend_Search_Lucene_Index_Term $term, $shift = 0, $docsFilter = null)
     {
         $termInfo = $this->getTermInfo($term);
 
         if (!$termInfo instanceof Zend_Search_Lucene_Index_TermInfo) {
+            if ($docsFilter !== null  &&  $docsFilter instanceof Zend_Search_Lucene_Index_DocsFilter) {
+                $docsFilter->segmentFilters[$this->_name] = array();
+            }
             return array();
         }
 
         $frqFile = $this->openCompoundFile('.frq');
         $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
-        $freqs = array();
+
         $docId = 0;
+        $freqs = array();
 
-        for ($count = 0; $count < $termInfo->docFreq; $count++) {
-            $docDelta = $frqFile->readVInt();
-            if ($docDelta % 2 == 1) {
-                $docId += ($docDelta-1)/2;
-                $freqs[$docId] = 1;
+
+        if ($docsFilter !== null) {
+            if (!$docsFilter instanceof Zend_Search_Lucene_Index_DocsFilter) {
+                throw new Zend_Search_Lucene_Exception('Documents filter must be an instance of Zend_Search_Lucene_Index_DocsFilter or null.');
+            }
+
+            if (isset($docsFilter->segmentFilters[$this->_name])) {
+                // Filter already has some data for the current segment
+
+                // Make short name for the filter (which doesn't need additional dereferencing)
+                $filter = &$docsFilter->segmentFilters[$this->_name];
+
+                // Check if filter is not empty
+                if (count($filter) == 0) {
+                    return array();
+                }
+
+                if ($this->_docCount/count($filter) < self::FULL_SCAN_VS_FETCH_BOUNDARY) {
+                    // Perform fetching
+// ---------------------------------------------------------------
+                    for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                        $docDelta = $frqFile->readVInt();
+                        if ($docDelta % 2 == 1) {
+                            $docId += ($docDelta-1)/2;
+                            $freqs[$docId] = 1;
+                        } else {
+                            $docId += $docDelta/2;
+                            $freqs[$docId] = $frqFile->readVInt();
+                        }
+                    }
+
+                    $updatedFilterData = array();
+                    $result = array();
+                    $prxFile = $this->openCompoundFile('.prx');
+                    $prxFile->seek($termInfo->proxPointer, SEEK_CUR);
+                    foreach ($freqs as $docId => $freq) {
+                        $termPosition = 0;
+                        $positions = array();
+
+                        // we have to read .prx file to get right position for next doc
+                        // even filter doesn't match current document
+                        for ($count = 0; $count < $freq; $count++ ) {
+                            $termPosition += $prxFile->readVInt();
+                            $positions[] = $termPosition;
+                        }
+
+                        // Include into updated filter and into result only if doc is matched by filter
+                        if (isset($filter[$docId])) {
+                            $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                            $result[$shift + $docId] = $positions;
+                        }
+                    }
+
+                    $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
+// ---------------------------------------------------------------
+                } else {
+                    // Perform full scan
+                    for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                        $docDelta = $frqFile->readVInt();
+                        if ($docDelta % 2 == 1) {
+                            $docId += ($docDelta-1)/2;
+                            $freqs[$docId] = 1;
+                        } else {
+                            $docId += $docDelta/2;
+                            $freqs[$docId] = $frqFile->readVInt();
+                        }
+                    }
+
+                    $updatedFilterData = array();
+                    $result = array();
+                    $prxFile = $this->openCompoundFile('.prx');
+                    $prxFile->seek($termInfo->proxPointer, SEEK_CUR);
+                    foreach ($freqs as $docId => $freq) {
+                        $termPosition = 0;
+                        $positions = array();
+
+                        // we have to read .prx file to get right position for next doc
+                        // even filter doesn't match current document
+                        for ($count = 0; $count < $freq; $count++ ) {
+                            $termPosition += $prxFile->readVInt();
+                            $positions[] = $termPosition;
+                        }
+
+                        // Include into updated filter and into result only if doc is matched by filter
+                        if (isset($filter[$docId])) {
+                            $updatedFilterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+                            $result[$shift + $docId] = $positions;
+                        }
+                    }
+
+                    $docsFilter->segmentFilters[$this->_name] = $updatedFilterData;
+                }
             } else {
-                $docId += $docDelta/2;
-                $freqs[$docId] = $frqFile->readVInt();
+                // Filter doesn't has data for current segment
+                for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                    $docDelta = $frqFile->readVInt();
+                    if ($docDelta % 2 == 1) {
+                        $docId += ($docDelta-1)/2;
+                        $freqs[$docId] = 1;
+                    } else {
+                        $docId += $docDelta/2;
+                        $freqs[$docId] = $frqFile->readVInt();
+                    }
+                }
+
+                $filterData = array();
+                $result = array();
+                $prxFile = $this->openCompoundFile('.prx');
+                $prxFile->seek($termInfo->proxPointer, SEEK_CUR);
+                foreach ($freqs as $docId => $freq) {
+                    $filterData[$docId] = 1; // 1 is just a some constant value, so we don't need additional var dereference here
+
+                    $termPosition = 0;
+                    $positions = array();
+
+                    for ($count = 0; $count < $freq; $count++ ) {
+                        $termPosition += $prxFile->readVInt();
+                        $positions[] = $termPosition;
+                    }
+
+                    $result[$shift + $docId] = $positions;
+                }
+
+                $docsFilter->segmentFilters[$this->_name] = $filterData;
             }
-        }
-
-        $result = array();
-        $prxFile = $this->openCompoundFile('.prx');
-        $prxFile->seek($termInfo->proxPointer, SEEK_CUR);
-        foreach ($freqs as $docId => $freq) {
-            $termPosition = 0;
-            $positions = array();
-
-            for ($count = 0; $count < $freq; $count++ ) {
-                $termPosition += $prxFile->readVInt();
-                $positions[] = $termPosition;
+        } else {
+            for ($count = 0; $count < $termInfo->docFreq; $count++) {
+                $docDelta = $frqFile->readVInt();
+                if ($docDelta % 2 == 1) {
+                    $docId += ($docDelta-1)/2;
+                    $freqs[$docId] = 1;
+                } else {
+                    $docId += $docDelta/2;
+                    $freqs[$docId] = $frqFile->readVInt();
+                }
             }
 
-            $result[$shift + $docId] = $positions;
+            $result = array();
+            $prxFile = $this->openCompoundFile('.prx');
+            $prxFile->seek($termInfo->proxPointer, SEEK_CUR);
+            foreach ($freqs as $docId => $freq) {
+                $termPosition = 0;
+                $positions = array();
+
+                for ($count = 0; $count < $freq; $count++ ) {
+                    $termPosition += $prxFile->readVInt();
+                    $positions[] = $termPosition;
+                }
+
+                $result[$shift + $docId] = $positions;
+            }
         }
 
         return $result;
@@ -1155,11 +1508,11 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_detectLatestDelGen();
 
         if ($this->_delGen == -1) {
-        	// Set delete file generation number to 1
-        	$this->_delGen = 1;
+            // Set delete file generation number to 1
+            $this->_delGen = 1;
         } else {
-        	// Increase delete file generation number by 1
-        	$this->_delGen++;
+            // Increase delete file generation number by 1
+            $this->_delGen++;
         }
 
         $delFile = $this->_directory->createFile($this->_name . '_' . base_convert($this->_delGen, 10, 36) . '.del');
@@ -1284,6 +1637,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      * Values:
      *
      * self::SM_TERMS_ONLY - terms are scanned, no additional info is retrieved
+     * self::SM_FULL_INFO  - terms are scanned, frequency and position info is retrieved
      * self::SM_MERGE_INFO - terms are scanned, frequency and position info is retrieved
      *                       document numbers are compacted (shifted if segment has deleted documents)
      *

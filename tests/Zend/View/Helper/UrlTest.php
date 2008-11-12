@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_UrlTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -22,7 +22,7 @@ require_once 'Zend/Controller/Request/Http.php';
  * Tests formText helper, including some common functionality of all form helpers
  * 
  * @uses PHPUnit_Framework_TestCase
- * @version $Id: UrlTest.php 4828 2007-05-16 21:28:54Z matthew $
+ * @version $Id$
  */
 class Zend_View_Helper_UrlTest extends PHPUnit_Framework_TestCase 
 {

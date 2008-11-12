@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -184,7 +184,7 @@ class TestController extends Zend_Controller_Action
     protected $_form;
 
     public function getForm()
-    {   
+    {
         if (null === $this->_form) {
             $this->_form = new Zend_Form();
             $this->_form->setMethod('get')
@@ -302,8 +302,8 @@ class TestController extends Zend_Controller_Action
    // benötigten Dojo Bibliotheken: ?>
 <? $this->headScript()
         ->setAllowArbitraryAttributes(true)
-        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js', 
-            'text/javascript', 
+        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
+            'text/javascript',
             array('djConfig' => 'parseOnLoad: true'))
         ->captureStart() ?>
 djConfig.usePlainJson=true;

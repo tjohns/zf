@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_File_Transfer_Adapter_AbstractTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 require_once 'Zend/File/Transfer/Adapter/Abstract.php';
 require_once 'Zend/Filter/BaseName.php';
@@ -521,18 +521,37 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->testTransferDestinationShouldBeMutable();
         $destinations = $this->adapter->getDestination(array('bar', 'baz'));
         $this->assertTrue(is_array($destinations));
+        $directory = dirname(__FILE__);
         foreach ($destinations as $file => $destination) {
             $this->assertTrue(in_array($file, array('bar', 'baz')));
-            $this->assertEquals('/var/www/upload', $destination);
+            $this->assertEquals($directory, $destination);
         }
     }
 
     public function testSettingAndRetrievingOptions()
     {
-        $this->assertEquals(array('ignoreNoFile' => false), $this->adapter->getOptions());
+        $this->assertEquals(
+            array(
+                'bar' => array('ignoreNoFile' => false),
+                'baz' => array('ignoreNoFile' => false),
+                'foo' => array('ignoreNoFile' => false),
+            ), $this->adapter->getOptions());
 
         $this->adapter->setOptions(array('ignoreNoFile' => true));
-        $this->assertEquals(array('ignoreNoFile' => true), $this->adapter->getOptions());
+        $this->assertEquals(
+            array(
+                'bar' => array('ignoreNoFile' => true),
+                'baz' => array('ignoreNoFile' => true),
+                'foo' => array('ignoreNoFile' => true),
+            ), $this->adapter->getOptions());
+
+        $this->adapter->setOptions(array('ignoreNoFile' => false), 'foo');
+        $this->assertEquals(
+            array(
+                'bar' => array('ignoreNoFile' => true),
+                'baz' => array('ignoreNoFile' => true),
+                'foo' => array('ignoreNoFile' => false),
+            ), $this->adapter->getOptions());
     }
 
     public function testGetAllAdditionalFileInfos()
@@ -556,7 +575,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $files = $this->adapter->getFileInfo('unknown');
     }
-    
+
     /**
      * @expectedException Zend_File_Transfer_Exception
      */
@@ -607,6 +626,53 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->adapter->setDestination($path);
         $this->assertEquals($path . DIRECTORY_SEPARATOR . 'foo.jpg', $this->adapter->getFileName('foo'));
     }
+
+    public function testAdapterShouldAllowRetrievingFileNameWithoutPath()
+    {
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($path);
+        $this->assertEquals('foo.jpg', $this->adapter->getFileName('foo', false));
+    }
+
+    public function testAdapterShouldAllowRetrievingAllFileNames()
+    {
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($path);
+        $files = $this->adapter->getFileName();
+        $this->assertTrue(is_array($files));
+        $this->assertEquals($path . DIRECTORY_SEPARATOR . 'bar.png', $files['bar']);
+    }
+
+    public function testAdapterShouldAllowRetrievingAllFileNamesWithoutPath()
+    {
+        $path = dirname(__FILE__)
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '..'
+              . DIRECTORY_SEPARATOR . '_files';
+        $this->adapter->setDestination($path);
+        $files = $this->adapter->getFileName(null, false);
+        $this->assertTrue(is_array($files));
+        $this->assertEquals('bar.png', $files['bar']);
+    }
+
+    public function testExceptionForUnknownHashValue()
+    {
+        try {
+            $this->adapter->getHash('foo', 'unknown_hash');
+            $this->fail();
+        } catch (Zend_Exception $e) {
+            $this->assertContains('Unknown hash algorithm', $e->getMessage());
+        }
+    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract
@@ -617,22 +683,34 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
     {
         $this->_files = array(
             'foo' => array(
-                'name'     => 'foo.jpg',
-                'type'     => 'image/jpeg',
-                'size'     => 126976,
-                'tmp_name' => '/tmp/489127ba5c89c',
+                'name'      => 'foo.jpg',
+                'type'      => 'image/jpeg',
+                'size'      => 126976,
+                'tmp_name'  => '/tmp/489127ba5c89c',
+                'options'   => array('ignoreNoFile' => false),
+                'validated' => false,
+                'received'  => false,
+                'filtered'  => false,
             ),
             'bar' => array(
                 'name'     => 'bar.png',
                 'type'     => 'image/png',
                 'size'     => 91136,
                 'tmp_name' => '/tmp/489128284b51f',
+                'options'  => array('ignoreNoFile' => false),
+                'validated' => false,
+                'received'  => false,
+                'filtered'  => false,
             ),
             'baz' => array(
                 'name'     => 'baz.text',
                 'type'     => 'text/plain',
                 'size'     => 1172,
                 'tmp_name' => '/tmp/4891286cceff3',
+                'options'  => array('ignoreNoFile' => false),
+                'validated' => false,
+                'received'  => false,
+                'filtered'  => false,
             ),
         );
     }
@@ -656,6 +734,16 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
     public function isReceived($file = null)
     {
         return $this->received;
+    }
+
+    public function isUploaded($files = null)
+    {
+        return true;
+    }
+
+    public function isFiltered($files = null)
+    {
+        return true;
     }
 
     public function getProgress()

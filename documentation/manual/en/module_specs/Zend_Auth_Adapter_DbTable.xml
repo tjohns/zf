@@ -3,12 +3,12 @@
     <sect2 id="zend.auth.adapter.dbtable.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> provides the ability to 
-            authenticate against credentials stored in a database table. Because 
+            <code>Zend_Auth_Adapter_DbTable</code> provides the ability to
+            authenticate against credentials stored in a database table. Because
             <code>Zend_Auth_Adapter_DbTable</code> requires an instance of
-            <code>Zend_Db_Adapter_Abstract</code> to be passed to its 
-            constructor, each instance is bound to a particular database 
-            connection. Other configuration options may be set through the 
+            <code>Zend_Db_Adapter_Abstract</code> to be passed to its
+            constructor, each instance is bound to a particular database
+            connection. Other configuration options may be set through the
             constructor and through instance methods, one for each option.
         </para>
         <para>
@@ -17,40 +17,40 @@
                 <listitem>
                     <para>
                         <code>tableName</code>: This is the name of the database
-                         table that contains the authentication credentials, 
-                        and against which the database authentication query is 
+                         table that contains the authentication credentials,
+                        and against which the database authentication query is
                         performed.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>identityColumn</code>: This is the name of the 
-                        database table column used to represent the identity. 
-                        The identity column must contain unique values, such as 
+                        <code>identityColumn</code>: This is the name of the
+                        database table column used to represent the identity.
+                        The identity column must contain unique values, such as
                         a username or e-mail address.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>credentialColumn</code>: This is the name of the 
-                        database table column used to represent the credential. 
-                        Under a simple identity and password authentication 
-                        scheme, the credential value corresponds to the 
-                        password. See also the <code>credentialTreatment</code> 
+                        <code>credentialColumn</code>: This is the name of the
+                        database table column used to represent the credential.
+                        Under a simple identity and password authentication
+                        scheme, the credential value corresponds to the
+                        password. See also the <code>credentialTreatment</code>
                         option.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>credentialTreatment</code>: In many cases, 
-                        passwords and other sensitive data are encrypted, 
-                        hashed, encoded, obscured, salted or otherwise treated 
-                        through some function or algorithm. By specifying a 
+                        <code>credentialTreatment</code>: In many cases,
+                        passwords and other sensitive data are encrypted,
+                        hashed, encoded, obscured, salted or otherwise treated
+                        through some function or algorithm. By specifying a
                         parameterized treatment string with this method, such as
-                         <code>'MD5(?)'</code> or <code>'PASSWORD(?)'</code>, a 
-                        developer may apply such arbitrary SQL upon input 
-                        credential data. Since these functions are specific to 
-                        the underlying RDBMS, check the database manual for the 
+                         <code>'MD5(?)'</code> or <code>'PASSWORD(?)'</code>, a
+                        developer may apply such arbitrary SQL upon input
+                        credential data. Since these functions are specific to
+                        the underlying RDBMS, check the database manual for the
                         availability of such functions for your database system.
                     </para>
                 </listitem>
@@ -59,16 +59,16 @@
         <example id="zend.auth.adapter.dbtable.introduction.example.basic_usage">
             <title>Basic Usage</title>
             <para>
-                As explained in the introduction, the 
-                <code>Zend_Auth_Adapter_DbTable</code> constructor requires an 
+                As explained in the introduction, the
+                <code>Zend_Auth_Adapter_DbTable</code> constructor requires an
                 instance of <code>Zend_Db_Adapter_Abstract</code> that serves as
-                 the database connection to which the authentication adapter 
-                instance is bound. First, the database connection should be 
+                 the database connection to which the authentication adapter
+                instance is bound. First, the database connection should be
                 created.
             </para>
             <para>
                 The following code creates an adapter for an in-memory database,
-                 creates a simple table schema, and inserts a row against 
+                 creates a simple table schema, and inserts a row against
                 which we can perform an authentication query later. This example
                  requires the PDO SQLite extension to be available:
             </para>
@@ -96,10 +96,10 @@ $dbAdapter->query($sqlInsert);
 ]]>
             </programlisting>
             <para>
-                With the database connection and table data available, an 
-                instance of <code>Zend_Auth_Adapter_DbTable</code> may be 
+                With the database connection and table data available, an
+                instance of <code>Zend_Auth_Adapter_DbTable</code> may be
                 created. Configuration option values may be passed to the
-                constructor or deferred as parameters to setter methods after 
+                constructor or deferred as parameters to setter methods after
                 instantiation:
             </para>
             <programlisting role="php"><![CDATA[
@@ -122,10 +122,10 @@ $authAdapter
 ]]>
             </programlisting>
             <para>
-                At this point, the authentication adapter instance is ready to 
-                accept authentication queries. In order to formulate an 
-                authentication query, the input credential values are passed to 
-                the adapter prior to calling the <code>authenticate()</code> 
+                At this point, the authentication adapter instance is ready to
+                accept authentication queries. In order to formulate an
+                authentication query, the input credential values are passed to
+                the adapter prior to calling the <code>authenticate()</code>
                 method:
             </para>
             <programlisting role="php"><![CDATA[
@@ -140,9 +140,9 @@ $result = $authAdapter->authenticate();
 ]]>
             </programlisting>
             <para>
-                In addition to the availability of the 
+                In addition to the availability of the
                 <code>getIdentity()</code> method upon the authentication result
-                object, <code>Zend_Auth_Adapter_DbTable</code> also supports 
+                object, <code>Zend_Auth_Adapter_DbTable</code> also supports
                 retrieving the table row upon authentication success:
             </para>
             <programlisting role="php"><![CDATA[
@@ -166,7 +166,7 @@ Array
 ]]>
             </programlisting>
             <para>
-                Since the table row contains the credential value, it is 
+                Since the table row contains the credential value, it is
                 important to secure the values against unintended access.
             </para>
         </example>
@@ -174,12 +174,12 @@ Array
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
         <title>Advanced Use: Persisting a DbTable Result Object</title>
         <para>
-            By default, <code>Zend_Auth_Adapter_DbTable</code> returns the 
-            identity supplied back to the auth object upon successful 
-            authentication. Another use case scenario, where developers want to 
-            store to the persistent storage mechanism of <code>Zend_Auth</code> 
+            By default, <code>Zend_Auth_Adapter_DbTable</code> returns the
+            identity supplied back to the auth object upon successful
+            authentication. Another use case scenario, where developers want to
+            store to the persistent storage mechanism of <code>Zend_Auth</code>
             an identity object containing other useful information, is solved by
-             using the <code>getResultRowObject()</code> method to return a 
+             using the <code>getResultRowObject()</code> method to return a
             <code>stdClass</code> object. The following code snippet illustrates
             its use:
         </para>
@@ -204,7 +204,7 @@ if ($result->isValid()) {
     ));
 
     /* ... */
-    
+
 } else {
 
     /* ... */
@@ -216,19 +216,19 @@ if ($result->isValid()) {
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>Advanced Usage By Example</title>
         <para>
-            While the primary purpose of Zend_Auth (and consequently 
-            Zend_Auth_Adapter_DbTable) is primarily 
-            <emphasis role="strong">authentication</emphasis> and not 
-            <emphasis role="strong">authorization</emphasis>, there exist a few 
-            instances and problems that toe the line upon which domain the fit 
+            While the primary purpose of Zend_Auth (and consequently
+            Zend_Auth_Adapter_DbTable) is primarily
+            <emphasis role="strong">authentication</emphasis> and not
+            <emphasis role="strong">authorization</emphasis>, there are a few
+            instances and problems that toe the line between which domain they fit
             within.  Depending on how you’ve decided to explain your problem, it
-             sometimes makes sense to solve what could look like an 
+             sometimes makes sense to solve what could look like an
              authorization problem within the authentication adapter.
         </para>
         <para>
-            With that bit of a disclaimer out of the way, 
-            Zend_Auth_Adapter_DbTable has some built in mechanisms that can be 
-            leveraged to add additional checks at authentication time to solve 
+            With that bit of a disclaimer out of the way,
+            Zend_Auth_Adapter_DbTable has some built in mechanisms that can be
+            leveraged to add additional checks at authentication time to solve
             some common user problems.
         </para>
         <programlisting role="php"><![CDATA[
@@ -252,11 +252,11 @@ $adapter = new Zend_Auth_Adapter_DbTable(
 ]]>
         </programlisting>
         <para>
-            Another scenario can be the implementation of a salting mechanism. 
-            Salting is a term referring to a technique which can highly improve 
-            your application’s security. It’s based on the idea that 
-            concatenating a random string to every password makes it impossible 
-            to accomplish a successful brute force attack on the database using 
+            Another scenario can be the implementation of a salting mechanism.
+            Salting is a term referring to a technique which can highly improve
+            your application’s security. It’s based on the idea that
+            concatenating a random string to every password makes it impossible
+            to accomplish a successful brute force attack on the database using
             precomputed hash values from a dictionary.
         </para>
         <para>
@@ -271,7 +271,7 @@ $dbAdapter->query($sqlAlter);
 ]]>
         </programlisting>
         <para>
-            Here’s a simple way to generate a salt string for every user at 
+            Here’s a simple way to generate a salt string for every user at
             registration:
         </para>
         <programlisting role="php"><![CDATA[
@@ -298,9 +298,9 @@ $adapter = new Zend_Auth_Adapter_DbTable(
         </programlisting>
         <note>
             <para>
-                You can improve security even more by using a static salt value 
-                hardcoded into your application. In the case that your database 
-                is compromised (e. g. by an SQL injection attack) but your web 
+                You can improve security even more by using a static salt value
+                hardcoded into your application. In the case that your database
+                is compromised (e. g. by an SQL injection attack) but your web
                 server is intact your data is still unusable for the attacker.
             </para>
         </note>

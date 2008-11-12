@@ -1,42 +1,26 @@
 <sect1 id="zend.feed.custom-feed">
-    <title>
-        Специальные классы лент и записей
-        <!-- Custom Feed and Entry Classes -->
-    </title>
+    <title>Создание собственных классов лент и записей</title>
 
     <para>
-        Наконец, вы можете наследовать классы <code>Zend_Feed</code>, если хотите обеспечить
-        собственный формат или такие детали, как автоматическое управление элементами,
-        которые должны находиться в специальном пространстве имен.
-<!--
-        Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
-        niceties like automatic handling of elements that should go into a custom namespace.
--->
+        Вы можете наследовать классы <code>Zend_Feed</code>, если хотите обеспечить
+        собственный формат или такие улучшения, как автоматическая обработка
+        элементов, которые должны находиться в специальном пространстве имен.
     </para>
 
     <para>
-        Здесь приведен пример специального класса публикации Atom, который управляет
-        публикациями в собственным пространстве имен <code>myns:</code>. Обратите
-        внимание, что он автоматически делает вызов <code>registerNamespace()</code>,
-        так что конечным пользователям не нужно беспокоиться о пространствах имен.
-<!--
-        Here is an example of a custom Atom entry class that handles its own <code>myns:</code> namespace
-        entries. Note that it also makes the <code>registerNamespace()</code> call for you, so the end user
-        doesn't need to worry about namespaces at all.
--->
+        Здесь приведен пример специального класса сообщения Atom, который управляет
+        сообщениями в собственным пространстве имен <code>myns:</code>. Обратите
+        внимание, что он автоматически производит вызов
+        <code>registerNamespace()</code>, так что конечным пользователям не
+        нужно будет беспокоиться о пространствах имен.
     </para>
 
-    <example>
-        <title>
-            Расширение класса публикации Atom с добавлением специальных пространств имен
-            <!-- Extending the Atom Entry Class with Custom Namespaces -->
-        </title>
+    <example id="zend.feed.custom-feed.example.extending">
+        <title>Расширение класса сообщения Atom с добавлением специальных пространств имен</title>
         <programlisting role="php"><![CDATA[
-<?php
-
 /**
-* Специальный класс публикации знает URI ленты и может автоматически
-* добавлять дополнительные пространства имен
+ * Специальный класс сообщения знает URI ленты и может автоматически
+ * добавлять дополнительные пространства имен
  */
 class MyEntry extends Zend_Feed_Entry_Atom
 {
@@ -74,24 +58,34 @@ class MyEntry extends Zend_Feed_Entry_Atom
         }
     }
 
-}
+    public function __call($var, $unused)
+    {
+        switch ($var) {
+            case 'myUpdated':
+                // преобразование myUpdated в myns:updated.
+                return parent::__call('myns:updated', $unused);
 
-?>]]>   </programlisting>
+            default:
+                return parent::__call($var, $unused);
+        }
+    }
+}
+]]>
+        </programlisting>
         <para>
-            Далее для использования этого класса просто создаете его экземпляр и устанавливаете
-            свойство <code>myUpdated</code>:
-<!--
-            Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
-            property:
--->
+            Далее для использования этого класса просто создаете его экземпляр
+            и устанавливаете свойство <code>myUpdated</code>:
         </para>
         <programlisting role="php"><![CDATA[
-<?php
-
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
-?>]]>   </programlisting>
+// вызов в виде метода обрабатывается функцией __call
+$entry->myUpdated();  
+// вызов в виде свойства обрабатывается функцией __get
+$entry->myUpdated;
+]]>
+        </programlisting>
     </example>
 
 </sect1>

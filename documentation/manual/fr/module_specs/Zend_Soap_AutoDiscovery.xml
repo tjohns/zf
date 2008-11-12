@@ -1,15 +1,15 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12308 -->
 <sect1 id="zend.soap.autodiscovery">
-    <title>Auto découverte.</title>
+    <title>Auto découverte</title>
 
     <sect2 id="zend.soap.autodiscovery.introduction">
         <title>Introduction à l'auto découverte</title>
 
-        <para>Les fonctionnalités SOAP de Zend Framework sont proposées afin de simplifier l'accès aux services Web de type
-        SOAP.</para>
+        <para>Les fonctionnalités SOAP de Zend Framework sont proposées afin de simplifier l'accès aux services Web de
+        type SOAP.</para>
 
-        <para>SOAP est un protocole d'échange de données indépendant d'un langage. Il peut donc être utilisé avec une autre
-        technologie que PHP.</para>
+        <para>SOAP est un protocole d'échange de données indépendant d'un langage. Il peut donc être utilisé avec une
+        autre technologie que PHP.</para>
 
         <para>Il y a trois configurations d'utilisation de SOAP avec Zend Framework: <orderedlist>
                 <listitem>
@@ -25,19 +25,19 @@
                 </listitem>
             </orderedlist></para>
 
-        <para>Il est indispensable de connaître les fonctionnalités qu'offre un serveur SOAP, afin de pouvoir communiquer
-        avec lui. <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> est alors utilisé pour décrire en détail l'API des
-        services disponibles sur un serveur SOAP.</para>
+        <para>Il est indispensable de connaître les fonctionnalités qu'offre un serveur SOAP, afin de pouvoir
+        communiquer avec lui. <ulink url="http://www.w3.org/TR/wsdl">WSDL</ulink> est alors utilisé pour décrire en
+        détail l'API des services disponibles sur un serveur SOAP.</para>
 
         <para>Le langage WSDL est assez complexe (voyez <ulink
-        url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink> pour les détails ). Il est donc difficile d'écrire
-        une définition WSDL correcte, à la main.</para>
+        url="http://www.w3.org/TR/wsdl">http://www.w3.org/TR/wsdl</ulink> pour les détails ). Il est donc difficile
+        d'écrire une définition WSDL correcte, à la main.</para>
 
         <para>Un autre problème concerne la synchronisation des changements dans l'API avec des fichiers WSDL déjà
         existants.</para>
 
-        <para>Ces 2 problèmes peuvent être résolus avec la génération automatique de WSDL, qui permet d'analyser une classe
-        ou des fonctions, d'en extraire les paramètres d'entrée/sortie, et de générer un fichier WSDL correct et
+        <para>Ces 2 problèmes peuvent être résolus avec la génération automatique de WSDL, qui permet d'analyser une
+        classe ou des fonctions, d'en extraire les paramètres d'entrée/sortie, et de générer un fichier WSDL correct et
         compréhensible par le serveur et les clients SOAP.</para>
 
         <para>Il y a deux façons d'utiliser Zend Framework pour une application serveur SOAP: <itemizedlist>
@@ -50,7 +50,7 @@
                 </listitem>
             </itemizedlist></para>
 
-        <para>Ces deux façons sont supportées par la fonctionnalité d'auto génération de Zend Framework.</para>
+        <para>Ces deux façons sont supportées par la fonctionnalité d'auto génération du Zend Framework.</para>
 
         <para>Zend_Soap_AutoDiscovery supporte aussi la correspondance des types PHP vers <ulink
         url="http://www.w3.org/TR/xmlschema-2/">les types XSD</ulink>.</para>
@@ -67,7 +67,7 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.class">
-        <title>Auto découverte de classe.</title>
+        <title>Auto découverte de classe</title>
 
         <para>Si une classe est utilisée dans un serveur SOAP, alors celle-ci devrait aussi être fournie à
         <code>Zend_Soap_AutoDiscovery</code> afin d'en générer le fichier WSDL : <programlisting role="php"><![CDATA[
@@ -86,11 +86,11 @@ $autodiscover->handle();
                 </listitem>
 
                 <listitem>
-                    <para><code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> est utilisé comme URI pour
-                    rechercher le fichier WSDL.</para>
+                    <para><code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> est utilisé comme URI
+                    pour rechercher le fichier WSDL.</para>
 
-                    <para>Cet URI est aussi utilisé comme un espace de nom cible pour tous les noms du service (incluant les
-                    types complexes décrits éventuellement).</para>
+                    <para>Cet URI est aussi utilisé comme un espace de nom cible pour tous les noms du service (incluant
+                    les types complexes décrits éventuellement).</para>
                 </listitem>
 
                 <listitem>
@@ -114,10 +114,10 @@ $autodiscover->handle();
         <note>
             <title>Important !</title>
 
-            <para>L'auto génération du fichier WSDL (avec auto découverte de la classe) utilise les blocs de documentation
-            de PHP insérés par le développeur dans ses classes, afin de trouver les types retournés. De ce fait, pour les
-            types scalaires, c'est le seul moyen de les déterminer de manière sûre, et concernant les types de retour des
-            méthodes, c'est le seul moyen de les découvrir (PHP étant faiblement typé).</para>
+            <para>L'auto génération du fichier WSDL (avec auto découverte de la classe) utilise les blocs de
+            documentation de PHP insérés par le développeur dans ses classes, afin de trouver les types retournés. De ce
+            fait, pour les types scalaires, c'est le seul moyen de les déterminer de manière sûre, et concernant les
+            types de retour des méthodes, c'est le seul moyen de les découvrir (PHP étant faiblement typé).</para>
 
             <para>Ceci signifie que documenter de manière correcte vos classes et méthodes n'est pas seulement une bonne
             pratique, c'est tout simplement essentiel pour partager vos classes en tant que services SOAP auto
@@ -126,10 +126,10 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.functions">
-        <title>Auto découverte des fonctions.</title>
+        <title>Auto découverte des fonctions</title>
 
-        <para>Si des fonctions doivent être utilisées (partagées) via un serveur SOAP, alors elles doivent être passées à
-        <code>Zend_Soap_AutoDiscovery</code> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[
+        <para>Si des fonctions doivent être utilisées (partagées) via un serveur SOAP, alors elles doivent être passées
+        à <code>Zend_Soap_AutoDiscovery</code> pour générer un fichier WSDL : <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->addFunction('function1');
 $autodiscover->addFunction('function2');
@@ -148,11 +148,11 @@ $autodiscover->handle();
                 </listitem>
 
                 <listitem>
-                    <para><code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> est utilisé comme URI pour
-                    rechercher le fichier WSDL.</para>
+                    <para><code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> est utilisé comme URI
+                    pour rechercher le fichier WSDL.</para>
 
-                    <para>Cet URI est aussi utilisé comme un espace de nom cible pour tous les noms du service (incluant les
-                    types complexes décrits éventuellement).</para>
+                    <para>Cet URI est aussi utilisé comme un espace de nom cible pour tous les noms du service (incluant
+                    les types complexes décrits éventuellement).</para>
                 </listitem>
 
                 <listitem>
@@ -176,10 +176,10 @@ $autodiscover->handle();
         <note>
             <title>Important!</title>
 
-            <para>L'auto génération du fichier WSDL (avec auto découverte des fonctions) utilise les blocs de documentation
-            de PHP insérés par le développeur dans ses fonctions, afin de trouver les types retournés. De ce fait, pour les
-            types scalaires, c'est le seul moyen de les déterminer de manière sûre, et concernant les types de retour des
-            méthodes, c'est le seul moyen de les découvrir (PHP étant faiblement typé).</para>
+            <para>L'auto génération du fichier WSDL (avec auto découverte des fonctions) utilise les blocs de
+            documentation de PHP insérés par le développeur dans ses fonctions, afin de trouver les types retournés. De
+            ce fait, pour les types scalaires, c'est le seul moyen de les déterminer de manière sûre, et concernant les
+            types de retour des méthodes, c'est le seul moyen de les découvrir (PHP étant faiblement typé).</para>
 
             <para>Ceci signifie que documenter de manière correcte vos fonctions n'est pas seulement une bonne pratique,
             c'est tout simplement essentiel pour partager vos fonctions en tant que services SOAP auto générés.</para>
@@ -187,7 +187,7 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.datatypes">
-        <title>Types de donnée auto découverts.</title>
+        <title>Types de donnée auto découverts</title>
 
         <para>Les types de données d'entrée/sortie sont convertis en types spéciaux pour le réseau, suivant ces règles :
         <itemizedlist>
@@ -216,14 +216,22 @@ $autodiscover->handle();
                 </listitem>
 
                 <listitem>
-                    <para>Classes PHP &lt;-&gt; <code>tns:$className</code>.<footnote>
-                            <para>Si l'objet <code>Zend_Soap_AutoDiscover</code> est crée avec le paramètre
-                            <code>$extractComplexTypes</code> désactivé, alors les classes sont traduites vers
-                            <code>xsd:anyType</code>.</para>
+                    <para>Classe PHP &lt;-&gt; basé sur la stratégie des types complexes (Voir : <xref
+                    linkend="zend.soap.wsdl.types.add_complex" />) <footnote>
+                            <para><code>Zend_Soap_AutoDiscover</code> sera créé avec la classe
+                            <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> en tant qu'algorithme de détection
+                            pour les types complexes. Le premier paramètre du constructeur AutoDiscover accepte toute
+                            stratégie de types complexes implémentant <code>Zend_Soap_Wsdl_Strategy_Interface</code> ou
+                            une chaîne correspondant au nom de la classe. Pour une compatibilité ascendante, avec
+                            <code>$extractComplexType</code> les variables booléennes sont analysées comme avec
+                            Zend_Soap_Wsdl. Regardez le manuel <link linkend="zend.soap.wsdl.types.add_complex">Zend_Soap_Wsdl sur l'ajout des types complexes</link> pour plus
+                            d'informations.</para>
+                        </footnote>.</para>
+                </listitem>
 
-                            <para>Autrement, <code>tns:$className</code> est utilisé et le type est décrit en détails dans
-                            la section WSDL &lt;types&gt;</para>
-                        </footnote></para>
+                <listitem>
+                    <para><code>type[]</code> or <code>object[]</code> (c'est-à-dire <code>int[]</code>) &lt;-&gt; basé
+                    sur la stratégie des types complexes</para>
                 </listitem>
 
                 <listitem>
@@ -234,8 +242,8 @@ $autodiscover->handle();
                     <para>Si le type n'est pas reconnu en tant que l'un de ceux-ci, alors <code>xsd:anyType</code> est
                     utilisé.</para>
                 </listitem>
-            </itemizedlist> Où <code>xsd:</code> est l'espace "http://www.w3.org/2001/XMLSchema", <code>soap-enc:</code> est
-        l'espace "http://schemas.xmlsoap.org/soap/encoding/", <code>tns:</code> est "l'espace de nom cible" du
+            </itemizedlist> Où <code>xsd:</code> est l'espace "http://www.w3.org/2001/XMLSchema", <code>soap-enc:</code>
+        est l'espace "http://schemas.xmlsoap.org/soap/encoding/", <code>tns:</code> est "l'espace de nom cible" du
         service.</para>
     </sect2>
 </sect1>

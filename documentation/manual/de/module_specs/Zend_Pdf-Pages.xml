@@ -109,7 +109,7 @@ unset($pdf->pages[$templatePageIndex]);
         </example>
 
         <para>
-            Das ist nützlich wenn verschiedene Seite mit Hilfe eines Templates erstellt werden sollen. 
+            Das ist nützlich wenn verschiedene Seite mit Hilfe eines Templates erstellt werden sollen.
         </para>
 
         <caution>

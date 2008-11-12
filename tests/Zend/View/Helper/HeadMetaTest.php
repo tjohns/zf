@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HeadMetaTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_View_Helper_HeadMeta */
 require_once 'Zend/View/Helper/HeadMeta.php';
@@ -25,7 +25,7 @@ require_once 'Zend/View.php';
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_View_Helper_HeadMeta
@@ -320,7 +320,7 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         $this->assertContains('some content', $test);
         $this->assertContains('foo', $test);
     }
-    
+
     /**
      * @issue ZF-2663
      */
@@ -331,31 +331,47 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
         $view->headMeta()->appendHttpEquiv('pragma', 'bar');
         $view->headMeta()->appendHttpEquiv('Cache-control', 'baz');
         $view->headMeta()->setName('keywords', 'bat');
- 
+
         $this->assertEquals(
-            '<meta http-equiv="pragma" content="bar" />' . PHP_EOL . '<meta http-equiv="Cache-control" content="baz" />' . PHP_EOL . '<meta name="keywords" content="bat" />', 
+            '<meta http-equiv="pragma" content="bar" />' . PHP_EOL . '<meta http-equiv="Cache-control" content="baz" />' . PHP_EOL . '<meta name="keywords" content="bat" />',
             $view->headMeta()->toString()
             );
     }
-    
+
     /**
      * @issue ZF-2663
      */
     public function testSetNameDoesntClobberPart2()
     {
         $view = new Zend_View();
-        $view->headMeta()->setName('keywords', 'foo');                     
+        $view->headMeta()->setName('keywords', 'foo');
         $view->headMeta()->setName('description', 'foo');
         $view->headMeta()->appendHttpEquiv('pragma', 'baz');
         $view->headMeta()->appendHttpEquiv('Cache-control', 'baz');
-        $view->headMeta()->setName('keywords', 'bar'); 
- 
+        $view->headMeta()->setName('keywords', 'bar');
+
         $this->assertEquals(
             '<meta name="description" content="foo" />' . PHP_EOL . '<meta http-equiv="pragma" content="baz" />' . PHP_EOL . '<meta http-equiv="Cache-control" content="baz" />' . PHP_EOL . '<meta name="keywords" content="bar" />',
             $view->headMeta()->toString()
             );
     }
-    
+
+    /**
+     * @issue ZF-3780
+     * @link http://framework.zend.com/issues/browse/ZF-3780
+     */
+    public function testPlacesMetaTagsInProperOrder()
+    {
+        $view = new Zend_View();
+        $view->headMeta()->setName('keywords', 'foo');
+        $view->headMeta('some content', 'bar', 'name', array(), Zend_View_Helper_Placeholder_Container_Abstract::PREPEND);
+
+        $this->assertEquals(
+            '<meta name="bar" content="some content" />' . PHP_EOL . '<meta name="keywords" content="foo" />',
+            $view->headMeta()->toString()
+            );
+    }
+
 }
 
 // Call Zend_View_Helper_HeadMetaTest::main() if this source file is executed directly.

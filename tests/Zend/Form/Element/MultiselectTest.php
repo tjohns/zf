@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Element_MultiselectTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Form/Element/Multiselect.php';
 require_once 'Zend/Translate.php';

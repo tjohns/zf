@@ -31,7 +31,7 @@ class Zend_Cache_Core
      *
      * @var object $_backend
      */
-    private $_backend = null;
+    protected $_backend = null;
 
     /**
      * Available options
@@ -82,7 +82,7 @@ class Zend_Cache_Core
         'lifetime'                  => 3600,
         'logging'                   => false,
         'logger'                    => null,
-        'ignore_user_abort'		    => false
+        'ignore_user_abort'         => false
     );
 
     /**
@@ -372,7 +372,7 @@ class Zend_Cache_Core
             $data2 = $this->_backend->load($id, true);
             if ($data!=$data2) {
                 $this->_log('Zend_Cache_Core::save() / write_control : written and read data do not match');
-                $this->remove($id);
+                $this->_backend->remove($id);
                 return false;
             }
         }
@@ -405,6 +405,8 @@ class Zend_Cache_Core
      *                     ($tags can be an array of strings or a single string)
      * 'notMatchingTag' => remove cache entries not matching one of the given tags
      *                     ($tags can be an array of strings or a single string)
+     * 'matchingAnyTag' => remove cache entries matching any given tags
+     *                     ($tags can be an array of strings or a single string)
      *
      * @param  string       $mode
      * @param  array|string $tags
@@ -416,7 +418,11 @@ class Zend_Cache_Core
         if (!$this->_options['caching']) {
             return true;
         }
-        if (!in_array($mode, array(Zend_Cache::CLEANING_MODE_ALL, Zend_Cache::CLEANING_MODE_OLD, Zend_Cache::CLEANING_MODE_MATCHING_TAG, Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG))) {
+        if (!in_array($mode, array(Zend_Cache::CLEANING_MODE_ALL,
+                                   Zend_Cache::CLEANING_MODE_OLD,
+                                   Zend_Cache::CLEANING_MODE_MATCHING_TAG,
+                                   Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG,
+                                   Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG))) {
             Zend_Cache::throwException('Invalid cleaning mode');
         }
         self::_validateTagsArray($tags);
@@ -476,7 +482,7 @@ class Zend_Cache_Core
     
     /**
      * Return an array of stored tags
-	 *
+     *
      * @return array array of stored tags (string)
      */
     public function getTags()

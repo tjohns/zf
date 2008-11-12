@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11765 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
@@ -107,7 +107,7 @@ ldap.server1.bindRequiresDn = true
 
 ; Active Directory 用の設定の例
 ldap.server2.host = dc1.w.net
-ldap.server2.useSsl = true
+ldap.server2.useStartTls = true
 ldap.server2.accountDomainName = w.net
 ldap.server2.accountDomainNameShort = W
 ldap.server2.accountCanonicalForm = 3
@@ -164,7 +164,7 @@ Array
     [server2] => Array
         (
             [host] => dc1.w.net
-            [useSsl] => 1
+            [useStartTls] => 1
             [accountDomainName] => w.net
             [accountDomainNameShort] => W
             [accountCanonicalForm] => 3
@@ -296,14 +296,25 @@ Array
                     </entry>
                   </row>
                   <row>
-                    <entry><emphasis role="strong">useSsl</emphasis></entry>
+                    <entry>useStartTls</entry>
                     <entry>
-                        <code>true</code> の場合、LDAP クライアント側に SSL / TLS
-                        での暗号化トランスポートを要求します。
-                        実運用環境では <code>true</code> を指定することを強く推奨します。
-                        これにより、パスワードが平文で送られてしまうことを防ぎます。
-                        デフォルト値は <code>false</code> です。というのも、
-                        この機能を使用するにはサーバ側に別途証明書のインストールが必要となることが多いからです。
+                        LDAP クライアントが TLS (SSLv2) で暗号化されたトランスポートを用いるかどうか。
+                        実運用環境では、この値を <code>true</code> にすることを強く推奨します。
+                        そうすれば、パスワードが平文で転送されることを防ぐことができます。
+                        デフォルト値は <code>false</code> です。
+                        というのも、別途証明書のインストールを要するサーバが多く存在するからです。
+                        <code>useSsl</code> と <code>useStartTls</code> は互いに排他的です。
+                        <code>useStartTls</code> オプションのほうが <code>useSsl</code>
+                        よりおすすめですが、中にはこの新しい仕組みをサポートしていないサーバもあります。
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>useSsl</entry>
+                    <entry>
+                        LDAP クライアントが SSL で暗号化されたトランスポートを用いるかどうか。
+                        <code>useSsl</code> と <code>useStartTls</code> は互いに排他的ですが、
+                        サーバや LDAP クライアントライブラリが対応している場合は
+                        <code>useStartTls</code> を使うことを推奨します。
                         この値によって、デフォルトの <emphasis role="strong">port</emphasis>
                         の値が変わります (上の <emphasis role="strong">port</emphasis> の説明を参照ください)。
                     </entry>
@@ -446,6 +457,14 @@ Array
                         と設定する必要があります。
                     </entry>
                   </row>
+                  <row>
+                    <entry><emphasis role="strong">optReferrals</emphasis></entry>
+                    <entry>
+                        <code>true</code> に設定すると、
+                        参照先を追跡するよう LDAP クライアントに指示します。
+                        デフォルト値は <code>false</code> です。
+                    </entry>
+                  </row>
                 </tbody>
               </tgroup>
             </table>
@@ -453,6 +472,7 @@ Array
 
         <note>
             <para>
+                <code>useStartTls = true</code> あるいは
                 <code>useSsl = true</code> としていると、LDAP クライアント側で
                 「サーバの証明書を検証できない」というエラーが発生することに気づかれるかもしれません。
                 PHP の LDAP 拡張モジュールは OpenLDAP クライアントライブラリと密接につながっているので、
@@ -548,10 +568,16 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
                         <entry>
                             セキュリティの観点からは、これは <code>true</code> にしておくべきです。
                             この場合、サーバに証明書をインストールしておく必要があります。
+                        </entry>
+                      </row>
+                      <row>
+                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry>
+                            <code>useStartTls</code> の代替として用いられます (上を参照ください)。
                         </entry>
                       </row>
                       <row>
@@ -639,10 +665,15 @@ Array
                         </entry>
                       </row>
                       <row>
-                        <entry><emphasis role="strong">useSsl</emphasis></entry>
+                        <entry><emphasis role="strong">useStartTls</emphasis></entry>
                         <entry>
                             セキュリティの観点からは、これは <code>true</code> にしておくべきです。
                             この場合、サーバに証明書をインストールしておく必要があります。
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>
+                            <code>useStartTls</code> の代替として用いられます (上を参照ください)。
                         </entry>
                       </row>
                       <row>

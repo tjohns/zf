@@ -7,7 +7,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Loader/PluginLoader.php';
 
@@ -16,6 +16,8 @@ require_once 'Zend/Loader/PluginLoader.php';
  */
 class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
 {
+    protected $_includeCache;
+
     /**
      * Runs the test methods of this class.
      *
@@ -37,6 +39,11 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        if (file_exists($this->_includeCache)) {
+            unlink($this->_includeCache);
+        }
+        Zend_Loader_PluginLoader::setIncludeFileCache(null);
+        $this->_includeCache = dirname(__FILE__) . '/_files/includeCache.inc.php';
         $this->libPath = realpath(dirname(__FILE__) . '/../../../library');
         $this->key = null;
     }
@@ -50,6 +57,10 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         $this->clearStaticPaths();
+        Zend_Loader_PluginLoader::setIncludeFileCache(null);
+        if (file_exists($this->_includeCache)) {
+            unlink($this->_includeCache);
+        }
     }
 
     public function clearStaticPaths()
@@ -340,6 +351,57 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($className, $loader->getClassName('Word_UnderscoreToDash'));
     }
     
+    /**
+     * @group ZF-4670
+     */
+    public function testIncludeCacheShouldBeNullByDefault()
+    {
+        $this->assertNull(Zend_Loader_PluginLoader::getIncludeFileCache());
+    }
+
+    /**
+     * @group ZF-4670
+     */
+    public function testPluginLoaderShouldAllowSpecifyingIncludeFileCache()
+    {
+        $cacheFile = $this->_includeCache;
+        $this->testIncludeCacheShouldBeNullByDefault();
+        Zend_Loader_PluginLoader::setIncludeFileCache($cacheFile);
+        $this->assertEquals($cacheFile, Zend_Loader_PluginLoader::getIncludeFileCache());
+    }
+
+    /**
+     * @group ZF-4670
+     * @expectedException Zend_Loader_PluginLoader_Exception
+     */
+    public function testPluginLoaderShouldThrowExceptionWhenPathDoesNotExist()
+    {
+        $cacheFile = dirname(__FILE__) . '/_filesDoNotExist/includeCache.inc.php';
+        $this->testIncludeCacheShouldBeNullByDefault();
+        Zend_Loader_PluginLoader::setIncludeFileCache($cacheFile);
+        $this->fail('Should not allow specifying invalid cache file path');
+    }
+
+    /**
+     * @group ZF-4670
+     */
+    public function testPluginLoaderShouldAppendIncludeCacheWhenClassIsFound()
+    {
+        $cacheFile = $this->_includeCache;
+        Zend_Loader_PluginLoader::setIncludeFileCache($cacheFile);
+        $loader = new Zend_Loader_PluginLoader(array());
+        $loader->addPrefixPath('Zend_View_Helper', $this->libPath . '/Zend/View/Helper');
+        $loader->addPrefixPath('ZfTest', dirname(__FILE__) . '/_files/ZfTest');
+        try {
+            $className = $loader->load('CacheTest');
+        } catch (Exception $e) {
+            $paths = $loader->getPaths();
+            $this->fail(sprintf("Failed loading helper; paths: %s", var_export($paths, 1)));
+        }
+        $this->assertTrue(file_exists($cacheFile));
+        $cache = file_get_contents($cacheFile);
+        $this->assertContains('CacheTest.php', $cache);
+    }
 }
 
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.

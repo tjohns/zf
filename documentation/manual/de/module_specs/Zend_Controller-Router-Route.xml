@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11872 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -178,60 +178,6 @@ $router->addRoute('archive', $route);
             Eine URL wie <code>http://example.com/archive/test</code> wird nicht zugeordnet und die Kontrolle wird
             stattdessen an die nächste Route in der Kette übertragen.
         </para>
-    </sect4>
-
-    <sect4 id="zend.controller.router.routes.standard.hostname-routing">
-        <title>Routen von Hostnamen</title>
-
-        <para>
-            Man kann auch den Hostnamen für das Matchen von Routen verwenden. Für das einfache Matchen gibt es
-            eine statische Hostname Option:
-        </para>
-
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => 'blog.mysite.com',
-        'path' => 'archive'
-    ),
-    array(
-        'module'     => 'blog',
-        'controller' => 'archive',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('archive', $route);
-]]>
-        </programlisting>
-
-        <para>
-            Wenn Parameter im Hostnamen gematcht werden sollen gibt es eine Regex Option. Im folgenden
-            Beispiel wird die Subdomain als Benutzername-Parameter für den Action Kontroller verwendet.
-            Wenn die Route zusammengefügt wird, muß einfach der Benutzername als Parameter angegeben werden,
-            die man es mit den anderen Pfad Parametern machen würde: 
-        </para>
-        
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => array(
-            'regex'   => '([a-z]+).mysite.com',
-            'reverse' => '%s.mysite.com'
-            'params'  => array(
-                1 => 'username'
-            ) 
-        ),
-        'path' => ''
-    ),
-    array(
-        'module'     => 'users',
-        'controller' => 'profile',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('profile', $route);
-]]>
-        </programlisting>
     </sect4>
 </sect3>
 <!--

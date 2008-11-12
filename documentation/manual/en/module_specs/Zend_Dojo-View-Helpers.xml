@@ -89,7 +89,7 @@
             <para>
                 The argument order varies from the other dijits in order to
                 keep compatibility with the standard <code>form()</code> view
-                helper. 
+                helper.
             </para>
         </listitem>
 
@@ -155,7 +155,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
             predictable layouts for your site. For any questions on general
             usage, <ulink
                 url="http://dojotoolkit.org/book/dojo-book-0-9/part-2-dijit/layout">read
-            more about them in the Dojo manual</ulink>. 
+            more about them in the Dojo manual</ulink>.
         </para>
 
         <para>
@@ -179,8 +179,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->accordionContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'duration' => 200,
     ),
@@ -200,8 +200,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->accordionPane(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'title' => 'Pane Title',
     ),
@@ -223,8 +223,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->borderContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'design' => 'headline',
     ),
@@ -244,8 +244,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->contentPane(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'title'  => 'Pane Title',
         'region' => 'left',
@@ -267,8 +267,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->splitContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'orientation'  => 'horizontal',
         'sizerWidth'   => 7,
@@ -292,8 +292,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->stackContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(),
     array(
         'style' => 'width: 400px; height: 500px; border: 1px;',
@@ -313,8 +313,8 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->tabContainer(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(),
     array(
         'style' => 'width: 400px; height: 500px; border: 1px;',
@@ -333,7 +333,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>captureStart($id, array $params = array(), array $attribs = array())</code>: 
+                    <code>captureStart($id, array $params = array(), array $attribs = array())</code>:
                     begin capturing content to include in a container.
                     <code>$params</code> refers to the dijit params to use with
                     the container, while <code>$attribs</code> refer to any
@@ -348,7 +348,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
 
             <listitem>
                 <para>
-                    <code>captureEnd($id)</code>: 
+                    <code>captureEnd($id)</code>:
                     finish capturing content to include in a container.
                     <code>$id</code> should refer to an id previously used with
                     a <code>captureStart()</code> call. Returns a string
@@ -432,8 +432,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->button(
-    'foo', 
-    'Show Me!', 
+    'foo',
+    'Show Me!',
     array('iconClass' => 'myButtons'),
 ); ?>
 ]]>
@@ -467,8 +467,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
 
                 <programlisting role="php"><![CDATA[
 <?= $view->checkBox(
-    'foo', 
-    'bar', 
+    'foo',
+    'bar',
     array(),
     array(),
     array('checkedValue' => 'foo', 'unCheckedValue' => 'bar')
@@ -562,8 +562,8 @@ echo $view->borderContainer()->captureEnd('masterLayout');
                 <programlisting role="php"><![CDATA[
 // As a select element:
 echo $view->comboBox(
-    'foo', 
-    'bar', 
+    'foo',
+    'bar',
     array(
         'autocomplete' => false,
     ),
@@ -577,8 +577,8 @@ echo $view->comboBox(
 
 // As a dojo.data-enabled element:
 echo $view->comboBox(
-    'foo', 
-    'bar', 
+    'foo',
+    'bar',
     array(
         'autocomplete' => false,
         'store'        => 'stateStore',
@@ -881,7 +881,7 @@ echo $view->numberSpinner(
                     dijit.form.NumberTextBox. NumberTextBox provides the
                     ability to format and display number entries in a localized
                     fashion, as well as validate numerical entries, optionally
-                    against given constraints. 
+                    against given constraints.
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -957,7 +957,7 @@ echo $view->radioButton(
 
             <listitem>
                 <para>
-                    <emphasis>SimpleTextarea</emphasis>: dijit.form.SimpleTextarea. 
+                    <emphasis>SimpleTextarea</emphasis>: dijit.form.SimpleTextarea.
                     These act like normal textareas, but are styled using the
                     current dijit theme. You do not need to specify either the
                     rows or columns attributes; use <code>ems</code> or

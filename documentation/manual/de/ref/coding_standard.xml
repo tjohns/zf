@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11091 -->
+<!-- EN-Revision: 12116 -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
@@ -13,17 +13,17 @@
                 Zend Framework verwenden haben diese Code Standards als nützlich empfunden weil Ihr
                 Code Stil mit jedem Zend Framework Code konsistent bleibt. Es ist auch anzumerken das
                 es signifikant viel Arbeit erfordert einen kompletten Coding Standard zu definieren.
-                 
+
                 Beachte: Manchmal entscheiden Entwickler das die Verfügbarkeit eines Standards wichtiger
                 ist als was der Standard aktuell im höchsten Level des Designs empfiehlt. Diese
                 Richtlinien im Zend Framework Coding Standard beschreiben die Praxis die im ZF Projekt
                 sehr gut funktionieren. Diese Standard können geändert oder so wie sie sind verwendet
                 werden solange Sie sich an unsere <ulink href="http://framework.zend.com/license">Lizenz</ulink>
                 halten.
-            </para> 
+            </para>
 
             <para>
-                Die Bereiche die im ZF Coding Standard abgedeckt werden enthalten: 
+                Die Bereiche die im ZF Coding Standard abgedeckt werden enthalten:
 
                 <itemizedlist>
                     <listitem>
@@ -217,7 +217,7 @@ widgetFactory()
                 wie Singleton oder das Factory Pattern, sollte der Name der Methode den Namen des Pattern
                 enthalten wo es praktikabel ist, um das Verhalten besser zu beschreiben.
             </para>
-            
+
             <para>
                  Für Methoden in Objekten die mit dem "private" oder "protected" Modifikator deklariert
                  sind, muß das erste Zeichen des variablen Namens ein einzelner Unterstrich sein. Das
@@ -277,7 +277,7 @@ widgetFactory()
                 Wörter in Konstantennamen müssen durch ein Unterstrich Zeichen geteilt werden. Zum
                 Beispiel ist <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> gestattet aber
                 <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> nicht.
-            </para> 
+            </para>
 
             <para>
                 Konstanten müssen als Klassenkonstanten definiert werden mit dem "const" Modifikator.

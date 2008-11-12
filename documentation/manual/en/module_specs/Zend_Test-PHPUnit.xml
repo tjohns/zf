@@ -48,7 +48,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function appBootstrap()
     {
-        $this->frontController->registerPlugin(new Bugapp_Plugin_Initialize('development'));
+        $this->frontController
+             ->registerPlugin(new Bugapp_Plugin_Initialize('development'));
     }
 
     public function testCallWithoutActionShouldPullFromIndexAction()
@@ -75,7 +76,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
 
-        $this->resetResponse();
+        $this->resetRequest()
+             ->resetResponse();
+
         $this->request->setMethod('GET')
              ->setPost(array());
         $this->dispatch('/user/view');

@@ -4,7 +4,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_XmlRpc_ServerTest::main');
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Request.php';
@@ -302,7 +302,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($response instanceof Zend_XmlRpc_Response, $response->__toString() . "\n\n" . $request->__toString());
         $returns = $response->getReturnValue();
         $this->assertTrue(is_array($returns));
-        $this->assertEquals(2, count($returns));
+        $this->assertEquals(2, count($returns), var_export($returns, 1));
         $this->assertTrue(is_array($returns[0]), var_export($returns[0], 1));
         $this->assertTrue(is_string($returns[1]), var_export($returns[1], 1));
     }

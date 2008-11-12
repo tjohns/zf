@@ -7,6 +7,32 @@
         migrate your scripts to use the new architecture.
     </para>
 
+    <sect2 id="zend.controller.migration.fromonesixtooneseven">
+        <title>Migrating from 1.6.x to 1.7.0 or newer</title>
+
+        <sect3 id="zend.controller.migration.fromonesixtooneseven.dispatcher">
+            <title>Dispatcher Interface changes</title>
+
+            <para>
+                Users brought to our attention the fact that
+                <code>Zend_Controller_Action_Helper_ViewRenderer </code> were
+                using a method of the dispatcher abstract class that were not in
+                the dispatcher interface. We have now added the following method to
+                ensure that custom dispatchers will continue to work with the
+                shipped implementations:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>formatModuleName()</code>: should be used to take a raw
+                controller name, such as one that would be packaged inside a request
+                object, and reformat it to a proper class name that a class extending
+                <code>Zend_Controller_Action</code> would use
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromoneohtoonesix">
         <title>Migrating from 1.5.x to 1.6.0 or newer</title>
 
@@ -505,7 +531,7 @@ $router = new Zend_Controller_RewriteRouter();
 $router->addRoute('user',
                   'user/:username',
                   array('controller' => 'user', 'action' => 'info')
-);                  
+);
 
 /* -- set it in a controller -- */
 $ctrl = Zend_Controller_Front::getInstance();

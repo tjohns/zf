@@ -118,15 +118,14 @@
 
             <example id="zend.db.adapter.connecting.constructor.example">
                 <title>Использование конструктора адаптера</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
-
+                <programlisting role="php"><![CDATA[
 $db = new Zend_Db_Adapter_Pdo_Mysql(array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
 
@@ -154,8 +153,12 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
             <example id="zend.db.adapter.connecting.factory.example">
                 <title>Использование метода-фабрики адаптеров</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
+                <programlisting role="php"><![CDATA[
+// Нам не нужно использовать следующее предложение, поскольку
+// файл Zend_Db_Adapter_Pdo_Mysql будет загружен через
+// метод-фабрику Zend_Db
+
+// require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
 
 // Автоматически загружает класс Zend_Db_Adapter_Pdo_Mysql
 // и создает его экземпляр.
@@ -164,7 +167,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
     'username' => 'webuser',
     'password' => 'xxxxxxxx',
     'dbname'   => 'test'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
 
@@ -179,8 +183,9 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
             <example id="zend.db.adapter.connecting.factory.example2">
                 <title>Использование метода-фабрики для пользовательского класса адаптера</title>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Db.php';
+                <programlisting role="php"><![CDATA[
+// Нам не нужно загружать файл с классом адаптера,
+// поскольку он будет загружен через метод-фабрику Zend_Db
 
 // Автоматически загружает класс MyProject_Db_Adapter_Pdo_Mysql
 // и создает его экземпляр.
@@ -190,7 +195,8 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
     'password'         => 'xxxxxxxx',
     'dbname'           => 'test',
     'adapterNamespace' => 'MyProject_Db_Adapter'
-));]]>
+));
+]]>
                 </programlisting>
             </example>
 
@@ -223,10 +229,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                     <link linkend="zend.config.adapters.ini">Zend_Config_Ini</link>
                     или <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>.
                 </para>
-                <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Config.php';
-require_once 'Zend/Db.php';
-
+                <programlisting role="php"><![CDATA[
 $config = new Zend_Config(
     array(
         'database' => array(
@@ -240,7 +243,8 @@ $config = new Zend_Config(
     )
 );
 
-$db = Zend_Db::factory($config->database);]]>
+$db = Zend_Db::factory($config->database);
+]]>
                 </programlisting>
             </example>
 
@@ -343,7 +347,7 @@ $db = Zend_Db::factory($config->database);]]>
                     <code>Zend_Db::CASE_UPPER</code> и
                     <code>Zend_Db::CASE_LOWER</code>.
                 </para>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $options = array(
     Zend_Db::CASE_FOLDING => Zend_Db::CASE_UPPER
 );
@@ -356,7 +360,8 @@ $params = array(
     'options'        => $options
 );
 
-$db = Zend_Db::factory('Db2', $params);]]>
+$db = Zend_Db::factory('Db2', $params);
+]]>
                 </programlisting>
             </example>
 
@@ -376,7 +381,7 @@ $db = Zend_Db::factory('Db2', $params);]]>
                     кавычки, то оно должно производиться самостоятельно с
                     использованием метода <code>quoteIdentifier()</code>.
                 </para>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $options = array(
     Zend_Db::AUTO_QUOTE_IDENTIFIERS => false
 );
@@ -389,13 +394,14 @@ $params = array(
     'options'        => $options
 );
 
-$db = Zend_Db::factory('Pdo_Mysql', $params);]]>
+$db = Zend_Db::factory('Pdo_Mysql', $params);
+]]>
                 </programlisting>
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example3">
                 <title>Передача фабрике опций драйвера PDO</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $pdoParams = array(
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
 );
@@ -410,7 +416,9 @@ $params = array(
 
 $db = Zend_Db::factory('Pdo_Mysql', $params);
 
-echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);]]>
+echo $db->getConnection()
+        ->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
+]]>
                 </programlisting>
             </example>
 
@@ -454,7 +462,7 @@ echo $db->getConnection()->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);]]>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
                 <title>Обработка исключений при соединении</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
     $db->getConnection();
@@ -462,7 +470,8 @@ try {
     // возможно, неправильные параметры соединения или СУРБД не запущена
 } catch (Zend_Exception $e) {
     // возможно, попытка загрузки требуемого класса адаптера потерпела неудачу
-}]]>
+}
+]]>
                 </programlisting>
             </example>
 
@@ -545,7 +554,8 @@ CREATE TABLE bugs_products (
   bug_id            INTEGER NOT NULL REFERENCES bugs,
   product_id        INTEGER NOT NULL REFERENCES products,
   PRIMARY KEY       (bug_id, product_id)
-);]]>
+);
+]]>
         </programlisting>
 
         <para>
@@ -601,10 +611,11 @@ CREATE TABLE bugs_products (
 
             <example id="zend.db.adapter.select.fetchall.example">
                 <title>Использование fetchAll()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $sql = 'SELECT * FROM bugs WHERE bug_id = ?';
 
-$result = $db->fetchAll($sql, 2);]]>
+$result = $db->fetchAll($sql, 2);
+]]>
                 </programlisting>
             </example>
 
@@ -695,13 +706,14 @@ $result = $db->fetchAll($sql, 2);]]>
 
             <example id="zend.db.adapter.select.fetch-mode.example">
                 <title>Использование setFetchMode()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAll('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
 // $result является массивом объектов
-echo $result[0]->bug_description;]]>
+echo $result[0]->bug_description;
+]]>
                 </programlisting>
             </example>
 
@@ -719,13 +731,15 @@ echo $result[0]->bug_description;]]>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
                 <title>Использование fetchAssoc()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchAssoc('SELECT * FROM bugs WHERE bug_id = ?', 2);
 
-// $result - массив ассоциативных массивов, несмотря на установленный режим извлечения
-echo $result[0]['bug_description'];]]>
+// $result является массивом ассоциативных массивов, независимо
+// от установленного режима извлечения
+echo $result[0]['bug_description'];
+]]>
                 </programlisting>
             </example>
 
@@ -747,13 +761,15 @@ echo $result[0]['bug_description'];]]>
 
             <example id="zend.db.adapter.select.fetchcol.example">
                 <title>Использование fetchCol()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
-$result = $db->fetchCol('SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
+$result = $db->fetchCol(
+    'SELECT bug_description, bug_id FROM bugs WHERE bug_id = ?', 2);
 
 // содержит bug_description; bug_id не возвращается
-echo $result[0];]]>
+echo $result[0];
+]]>
                 </programlisting>
             </example>
 
@@ -781,12 +797,13 @@ echo $result[0];]]>
 
             <example id="zend.db.adapter.select.fetchpairs.example">
                 <title>Использование fetchPairs()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchPairs('SELECT bug_id, bug_status FROM bugs');
 
-echo $result[2];]]>
+echo $result[2];
+]]>
                 </programlisting>
             </example>
         </sect3>
@@ -803,13 +820,14 @@ echo $result[2];]]>
 
             <example id="zend.db.adapter.select.fetchrow.example">
                 <title>Использование fetchRow()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchRow('SELECT * FROM bugs WHERE bug_id = 2');
 
 // обратите внимание, что $result - единственный объект, а не массив объектов
-echo $result->bug_description;]]>
+echo $result->bug_description;
+]]>
                 </programlisting>
             </example>
         </sect3>
@@ -828,11 +846,12 @@ echo $result->bug_description;]]>
 
             <example id="zend.db.adapter.select.fetchone.example">
                 <title>Использование fetchOne()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
 
 // это единственное строковое значение
-echo $result;]]>
+echo $result;
+]]>
                 </programlisting>
             </example>
         </sect3>
@@ -863,14 +882,15 @@ echo $result;]]>
 
             <example id="zend.db.adapter.write.insert.example">
                 <title>Добавление в таблицу</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $data = array(
     'created_on'      => '2007-03-22',
     'bug_description' => 'Something wrong',
     'bug_status'      => 'NEW'
 );
 
-$db->insert('bugs', $data);]]>
+$db->insert('bugs', $data);
+]]>
                 </programlisting>
             </example>
 
@@ -902,14 +922,15 @@ $db->insert('bugs', $data);]]>
 
             <example id="zend.db.adapter.write.insert.example2">
                 <title>Добавление выражений в таблицу</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
     'bug_description' => 'Something wrong',
     'bug_status'      => 'NEW'
 );
 
-$db->insert('bugs', $data);]]>
+$db->insert('bugs', $data);
+]]>
                 </programlisting>
             </example>
 
@@ -940,11 +961,12 @@ $db->insert('bugs', $data);]]>
 
             <example id="zend.db.adapter.write.lastinsertid.example-1">
                 <title>Использование lastInsertId() для автоинкрементного ключа</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
 
 // возвращает последнее значение, сгенерированное автоинкрементным столбцом
-$id = $db->lastInsertId();]]>
+$id = $db->lastInsertId();
+]]>
                 </programlisting>
             </example>
 
@@ -967,14 +989,17 @@ $id = $db->lastInsertId();]]>
 
             <example id="zend.db.adapter.write.lastinsertid.example-2">
                 <title>Использование lastInsertId() для последовательности</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
 
-// возвращает последнее значение, сгенерированное последовательностью 'bugs_bug_id_seq'
+// возвращает последнее значение, сгенерированное
+// последовательностью 'bugs_bug_id_seq'
 $id = $db->lastInsertId('bugs', 'bug_id');
 
-// альтернативно, возвращает последнее значение, сгенерированное последовательностью 'bugs_seq'.
-$id = $db->lastInsertId('bugs');]]>
+// альтернативно, возвращает последнее значение, сгенерированное
+// последовательностью 'bugs_seq'.
+$id = $db->lastInsertId('bugs');
+]]>
                 </programlisting>
             </example>
 
@@ -988,11 +1013,13 @@ $id = $db->lastInsertId('bugs');]]>
 
             <example id="zend.db.adapter.write.lastinsertid.example-3">
                 <title>Использование lastSequenceId()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
 
-// возвращает последнее значение, сгенерированное последовательностью 'bugs_id_gen'.
-$id = $db->lastSequenceId('bugs_id_gen');]]>
+// возвращает последнее значение, сгенерированное
+// последовательностью 'bugs_id_gen'.
+$id = $db->lastSequenceId('bugs_id_gen');
+]]>
                 </programlisting>
             </example>
 
@@ -1084,13 +1111,14 @@ $id = $db->lastSequenceId('bugs_id_gen');]]>
 
             <example id="zend.db.adapter.write.update.example">
                 <title>Обновление строк</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $data = array(
     'updated_on'      => '2007-03-23',
     'bug_status'      => 'FIXED'
 );
 
-$n = $db->update('bugs', $data, 'bug_id = 2');]]>
+$n = $db->update('bugs', $data, 'bug_id = 2');
+]]>
                 </programlisting>
             </example>
 
@@ -1107,7 +1135,7 @@ $n = $db->update('bugs', $data, 'bug_id = 2');]]>
 
             <example id="zend.db.adapter.write.update.example-array">
                 <title>Обновление строк с использованием массива выражений</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $data = array(
     'updated_on'      => '2007-03-23',
     'bug_status'      => 'FIXED'
@@ -1120,7 +1148,8 @@ $n = $db->update('bugs', $data, $where);
 
 // Результирующий SQL:
 //  UPDATE "bugs" SET "update_on" = '2007-03-23', "bug_status" = 'FIXED'
-//  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')]]>
+//  WHERE ("reported_by" = 'goofy') AND ("bug_status" = 'OPEN')
+]]>
                 </programlisting>
             </example>
 
@@ -1151,8 +1180,9 @@ $n = $db->update('bugs', $data, $where);
 
             <example id="zend.db.adapter.write.delete.example">
                 <title>Удаление строк</title>
-                <programlisting role="php"><![CDATA[<?php
-$n = $db->delete('bugs', 'bug_id = 3');]]>
+                <programlisting role="php"><![CDATA[
+$n = $db->delete('bugs', 'bug_id = 3');
+]]>
                 </programlisting>
             </example>
 
@@ -1187,7 +1217,8 @@ $name = "O'Reilly";
 $sql = "SELECT * FROM bugs WHERE reported_by = '$name'";
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O'Reilly']]>
+// SELECT * FROM bugs WHERE reported_by = 'O'Reilly'
+]]>
             </programlisting>
         </para>
 
@@ -1228,7 +1259,7 @@ echo $sql;
 
             <example id="zend.db.adapter.quoting.quote.example">
                 <title>Использование quote()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $name = $db->quote("O'Reilly");
 echo $name;
 // 'O\'Reilly'
@@ -1236,7 +1267,8 @@ echo $name;
 $sql = "SELECT * FROM bugs WHERE reported_by = $name";
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly']]>
+// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
+]]>
                 </programlisting>
             </example>
 
@@ -1259,7 +1291,8 @@ echo $sql;
                 целочисленный тип данных <code>INTEGER</code>.
 
                 <programlisting role="php"><![CDATA[
-SELECT * FROM atable WHERE intColumn = '123']]>
+SELECT * FROM atable WHERE intColumn = '123'
+]]>
                 </programlisting>
             </para>
 
@@ -1271,7 +1304,7 @@ SELECT * FROM atable WHERE intColumn = '123']]>
 
             <example id="zend.db.adapter.quoting.quote.example-2">
                 <title>Использование quote() с указанием типа SQL</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
      . $db->quote($value, 'INTEGER');
@@ -1324,11 +1357,12 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
 
             <example id="zend.db.adapter.quoting.quote-into.example">
                 <title>Использование quoteInto()</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly']]>
+// SELECT * FROM bugs WHERE reported_by = 'O\'Reilly'
+]]>
                 </programlisting>
             </example>
 
@@ -1340,11 +1374,12 @@ echo $sql;
 
             <example id="zend.db.adapter.quoting.quote-into.example-2">
                 <title>Использование quoteInto() с указанием типа SQL</title>
-                <programlisting role="php"><![CDATA[<?php
+                <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
 
 echo $sql;
-// SELECT * FROM bugs WHERE reported_by = 1234]]>
+// SELECT * FROM bugs WHERE reported_by = 1234
+]]>
                 </programlisting>
             </example>
 
@@ -1394,14 +1429,16 @@ echo $sql;
 
             <example id="zend.db.adapter.quoting.quote-identifier.example">
                 <title>Использование quoteIdentifier()</title>
-                <programlisting role="php"><![CDATA[<?php
-// мы можем иметь имя таблицы, которое является зарезервированным в SQL словом
+                <programlisting role="php"><![CDATA[
+// мы можем иметь имя таблицы,
+// которое является зарезервированным в SQL словом
 $tableName = $db->quoteIdentifier("order");
 
 $sql = "SELECT * FROM $tableName";
 
 echo $sql
-// SELECT * FROM "order"]]>
+// SELECT * FROM "order"
+]]>
                 </programlisting>
             </example>
 
@@ -1476,7 +1513,7 @@ echo $sql
 
         <example id="zend.db.adapter.transactions.example">
             <title>Управление транзакциями для обеспечения согласованности данных</title>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 // Старт транзакции явным образом
 $db->beginTransaction();
 
@@ -1497,7 +1534,8 @@ try {
     // Таким образом, все изменения либо фиксируются, либо не фиксируется вместе.
     $db->rollBack();
     echo $e->getMessage();
-}]]>
+}
+]]>
             </programlisting>
         </example>
 
@@ -1521,12 +1559,12 @@ try {
 
         <para>
             Ключами возвращаемого ассоциативного массива являются имена столбцов
-            таблицы. Значения соответствующие этим столбцам, также являются
+            таблицы. Значения, соответствующие этим столбцам, также являются
             ассоциативными массивами со следующими ключами и значениями:
         </para>
 
         <table frame="all" cellpadding="5" id="zend.db.adapter.list-describe.metadata">
-            <title>Поля метаданных, возвращаемые методом describeTable()</title>
+            <title>Поля метаданных, возвращаемых методом describeTable()</title>
             <tgroup cols="3" align="left" colsep="1" rowsep="1">
                 <thead>
                     <row>
@@ -1616,6 +1654,38 @@ try {
             возвращает пустой массив.
         </para>
 
+        <note>
+            <title>Как поле метаданных IDENTITY соотносится с типом СУРБД</title>
+            <para>
+                Поле метаданных IDENTITY было выбрано в качестве
+                "идиоматического" термина для представления связи с
+                суррогатными ключами. Это поле обычно знакомо под следующими
+                именами:
+            </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>IDENTITY</code> - DB2, MSSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>AUTO_INCREMENT</code> - MySQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SERIAL</code> - PostgreSQL
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>SEQUENCE</code> - Oracle
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.db.adapter.closing">
@@ -1640,8 +1710,9 @@ try {
 
         <example id="zend.db.adapter.closing.example">
             <title>Закрытие соединения с БД</title>
-            <programlisting role="php"><![CDATA[<?php
-$db->closeConnection();]]>
+            <programlisting role="php"><![CDATA[
+$db->closeConnection();
+]]>
             </programlisting>
         </example>
 
@@ -1701,8 +1772,9 @@ $db->closeConnection();]]>
 
         <example id="zend.db.adapter.other-statements.example">
             <title>Запуск неподготовленного оператора в адаптере PDO</title>
-            <programlisting role="php"><![CDATA[<?php
-$result = $db->getConnection()->exec('DROP TABLE bugs');]]>
+            <programlisting role="php"><![CDATA[
+$result = $db->getConnection()->exec('DROP TABLE bugs');
+]]>
             </programlisting>
         </example>
 
@@ -2006,7 +2078,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');]]>
                 <listitem>
                     <para>
                         Для того, чтобы соединится с базой данных SQLite2,
-                        указывайте <code>'dsnprefix'=>'sqlite2'</code> в массиве
+                        указывайте <code>'sqlite2'=>true</code> в массиве
                         параметров при создании экземпляра адаптера Pdo_Sqlite.
                     </para>
                 </listitem>

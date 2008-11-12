@@ -75,6 +75,9 @@ class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
         $elt = $dom->appendChild(new DOMElement($this->_rootElement));
 
         foreach ($dataToInsert as $key => $value) {
+            if($key == "message") {
+                $value = htmlspecialchars($value);
+            }
             $elt->appendChild(new DOMElement($key, $value));
         }
 

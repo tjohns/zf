@@ -15,6 +15,16 @@
         item.
     </para>
 
+	<note>
+        <title>PartialLoop Counter</title>
+		<para>
+			The <code>PartialLoop</code> view helper assigns a variable to the view named
+			<code>partialCounter</code> which passes the current position of the array to the view script.
+			This provides an easy way to have alternating colors on table rows for example.
+		</para>
+
+	</note>
+
     <example id="zend.view.helpers.initial.partial.usage">
         <title>Basic Usage of Partials</title>
 
@@ -40,7 +50,7 @@
         <programlisting role="php"><![CDATA[
 
 <?= $this->partial('partial.phtml', array(
-    'from' => 'Team Framework', 
+    'from' => 'Team Framework',
     'subject' => 'view partials')); ?>
 ]]>
         </programlisting>
@@ -105,9 +115,9 @@ $view->partial()->setObjectKey('model');
 $view->partialLoop()->setObjectKey('model');
 ]]>
             </programlisting>
-            
+
             <para>
-                This technique is particularly useful when passing 
+                This technique is particularly useful when passing
                 <code>Zend_Db_Table_Rowset</code>s to
                 <code>partialLoop()</code>, as you then have full access to your
                 row objects within the view scripts, allowing you to call

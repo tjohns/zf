@@ -714,7 +714,8 @@ $result = $cache->foobar2('1', '2');
 // [...] // require, configuration and factory
 
 $cache->start();
-// if the cache is hit, the result is sent to the browser and the script stop here
+// if the cache is hit, the result is sent to the browser
+// and the script stop here
 
 // rest of the page ...
 ]]>
@@ -736,22 +737,22 @@ $frontendOptions = array(
    'regexps' => array(
        // cache the whole IndexController
        '^/$' => array('cache' => true),
-       
+
        // cache the whole IndexController
        '^/index/' => array('cache' => true),
-       
+
        // we don't cache the ArticleController...
        '^/article/' => array('cache' => false),
-       
+
        // ... but we cache the "view" action of this ArticleController
-       '^/article/view/' => array(              
+       '^/article/view/' => array(
            'cache' => true,
-           
+
            // and we cache even there are some variables in $_POST
            'cache_with_post_variables' => true,
-           
-           // but the cache will be dependent on the $_POST array 
-           'make_id_with_post_variables' => true 
+
+           // but the cache will be dependent on the $_POST array
+           'make_id_with_post_variables' => true
        )
    )
 );

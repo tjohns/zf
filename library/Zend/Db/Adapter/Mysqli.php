@@ -102,7 +102,8 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     /**
      * Quote a raw string.
      *
-     * @param string $value     Raw string
+     * @param mixed $value Raw string
+     *
      * @return string           Quoted string
      */
     protected function _quote($value)
@@ -364,6 +365,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
      * @param string $tableName   OPTIONAL Name of table.
      * @param string $primaryKey  OPTIONAL Name of primary key column.
      * @return string
+     * @todo Return value should be int?
      */
     public function lastInsertId($tableName = null, $primaryKey = null)
     {

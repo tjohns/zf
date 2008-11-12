@@ -182,6 +182,18 @@ class Zend_Registry extends ArrayObject
     }
 
     /**
+     * Constructs a parent ArrayObject with default
+     * ARRAY_AS_PROPS to allow acces as an object
+     *
+     * @param array $array data array
+     * @param integer $flags ArrayObject flags
+     */
+    public function __construct($array = array(), $flags = parent::ARRAY_AS_PROPS)
+    {
+        parent::__construct($array, $flags);
+    }
+
+    /**
      * @param string $index
      * @returns mixed
      *

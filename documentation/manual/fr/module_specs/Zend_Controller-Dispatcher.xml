@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.dispatcher">
     <title>Le dispatcheur</title>
 
@@ -155,7 +155,7 @@ interface Zend_Controller_Dispatcher_Interface
      * Efface le tableau des paramètres utilisateur,
      * ou un paramètre utilisateur unique :
      *
-     * @param null|string|array single key or 
+     * @param null|string|array single key or
      *                          array of keys for params to clear
      * @return Zend_Controller_Dispatcher_Interface
      */
@@ -224,21 +224,21 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Retourne le nom du module par défaut
-     * 
+     *
      * @return string
      */
     public function getDefaultModule();
 
     /**
      * Retourne le nom du contrôleur par défaut
-     * 
+     *
      * @return string
      */
     public function getDefaultControllerName();
 
     /**
      * Retourne le nom de l'action par défaut
-     * 
+     *
      * @return string
      */
     public function getDefaultAction();

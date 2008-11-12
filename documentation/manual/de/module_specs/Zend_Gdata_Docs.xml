@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.docs">
     <title>Verwenden der Google Dokumente Listen Daten API</title>
 
@@ -108,7 +108,7 @@ function uploadDocument($docs, $html, $originalFileName,
             <ulink url="http://code.google.com/apis/documents/reference.html#Parameters">Dokumenten Listen Daten API Referenz Anleitung</ulink>
             gefunden werden.
         </para>
-    
+
         <sect3 id="zend.gdata.docs.listwpdocuments">
             <title>Eine Liste von Wortverarbeitungs Dokumenten erhalten</title>
             <para>
@@ -116,7 +116,7 @@ function uploadDocument($docs, $html, $originalFileName,
                 Um zum Beispiel eine Liste von eigenen Wortverarbeitungs Dokumenten zu sehen, würde man eine
                 Kategorieanfrage wie folgt durchführen.
             </para>
-    
+
             <programlisting role="php"><![CDATA[
 $feed = $docs->getDocumentListFeed(
     'http://docs.google.com/feeds/documents/private/full/-/document');

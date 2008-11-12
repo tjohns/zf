@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.test.phpunit.testing">
     <title>Testen eigener Kontroller und MVC Anwendungen</title>
 
@@ -25,7 +25,7 @@ class IndexControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
 }
 ]]>
     </programlisting>
-    
+
     <para>
         Es gibt trotzdem Zeiten, , in denen man zusätzliche Informationen angeben muß -- GET und POST Variablen,
         COOKIE Informationen, usw. Man kann die Anfrage mit diesen Informationen ausstatten:

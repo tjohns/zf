@@ -114,11 +114,11 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
     public function getQuery($encoding)
     {
         if (strpos($this->_term, '?') !== false || strpos($this->_term, '*') !== false) {
-	        if ($this->_fuzzyQuery) {
-	            throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is not supported for terms with wildcards.');
-	        }
+            if ($this->_fuzzyQuery) {
+                throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is not supported for terms with wildcards.');
+            }
 
-        	$pattern = '';
+            $pattern = '';
 
             $subPatterns = explode('*', $this->_term);
 
@@ -165,7 +165,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
         }
 
         if (count($tokens) == 1  && !$this->_fuzzyQuery) {
-        	$term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
+            $term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
             $query = new Zend_Search_Lucene_Search_Query_Term($term);
             $query->setBoost($this->_boost);
 

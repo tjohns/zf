@@ -24,6 +24,16 @@ class Zend_Form_Element_FileTest_Adapter_Foo extends Zend_File_Transfer_Adapter_
         return $this->received;
     }
 
+    public function isUploaded($files = null)
+    {
+        return true;
+    }
+
+    public function isFiltered($files = null)
+    {
+        return true;
+    }
+
     public function getProgress()
     {
         return;

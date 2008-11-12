@@ -138,11 +138,11 @@ class Zend_Search_Lucene_Index_DictionaryLoader
                         if (ord($termSuffix[$count1]) & 0x20 ) {
                             $addBytes++;
 
-	                        // Never used for Java Lucene created index.
-	                        // Java2 doesn't encode strings in four bytes
-	                        if (ord($termSuffix[$count1]) & 0x10 ) {
-	                            $addBytes++;
-	                        }
+                            // Never used for Java Lucene created index.
+                            // Java2 doesn't encode strings in four bytes
+                            if (ord($termSuffix[$count1]) & 0x10 ) {
+                                $addBytes++;
+                            }
                         }
                         $termSuffix .= substr($data, $pos, $addBytes);
                         $pos += $addBytes;

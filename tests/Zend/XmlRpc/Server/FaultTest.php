@@ -1,7 +1,7 @@
 <?php
 // Call Zend_XmlRpc_Server_FaultTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once 'Zend/TestHelper.php';
+    require_once dirname(__FILE__) . '/../../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Server_FaultTest::main");
 }
 
@@ -186,7 +186,7 @@ class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase
      */
     public function test__toString()
     {
-        $dom  = new DOMDocument('1.0', 'ISO-8859-1');
+        $dom  = new DOMDocument('1.0', 'UTF-8');
         $r    = $dom->appendChild($dom->createElement('methodResponse'));
         $f    = $r->appendChild($dom->createElement('fault'));
         $v    = $f->appendChild($dom->createElement('value'));

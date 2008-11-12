@@ -144,7 +144,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = null)
     {
-        if (($type !== null) and (Zend_Locale::isLocale($type))) {
+        if (($type !== null) and (Zend_Locale::isLocale($type, null, false))) {
             $locale = $type;
             $type = null;
         }
@@ -153,8 +153,8 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $locale = new Zend_Locale();
         }
 
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, true)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, true, false)) {
                 require_once 'Zend/Measure/Exception.php';
                 throw new Zend_Measure_Exception("Language (" . (string) $locale . ") is unknown");
             }
@@ -275,7 +275,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
      * @param  string  $type  Type from which to convert to decimal
      * @return string
      */
-    private function toDecimal($input, $type)
+    private function _toDecimal($input, $type)
     {
         $value = '';
         // Convert base xx values
@@ -397,7 +397,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             throw new Zend_Measure_Exception('Unknown type of number:' . $type);
         }
 
-        $value = $this->toDecimal($this->getValue(-1), $this->getType(-1));
+        $value = $this->_toDecimal($this->getValue(-1), $this->getType(-1));
         $value = $this->_fromDecimal($value, $type);
 
         $this->_value = $value;

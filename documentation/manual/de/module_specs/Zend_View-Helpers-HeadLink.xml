@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 11835 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink Helfer</title>
 
@@ -27,9 +27,9 @@
 
     <para>
         Der <code>$media</code> Wert ist standardmäßig 'screen', kann aber jeder gültige Media Wert sein.
-        <code>$conditionalStylesheet</code> ist ein boolscher Wert und wird verwendet um wärend der
-        Darstellung zu erkennen ob spezielle Kommentare inkludiert werden sollen um das Laden dieser
-        Stylesheets auf diversen Plattformen zu verhindern.
+        <code>$conditionalStylesheet</code> ist ein String oder boolsches false und wird verwendet um
+        wärend der Darstellung zu erkennen ob spezielle Kommentare inkludiert werden sollen um das Laden
+        dieser Stylesheets auf diversen Plattformen zu verhindern.
     </para>
 
     <para>

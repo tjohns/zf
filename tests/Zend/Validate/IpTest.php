@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -21,17 +20,15 @@
  * @version    $Id$
  */
 
-
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Validate_Ip
  */
 require_once 'Zend/Validate/Ip.php';
-
 
 /**
  * @category   Zend
@@ -87,5 +84,15 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
     public function testGetMessages()
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
+    }
+
+    public function testInvalidIpForZF4809()
+    {
+        $this->assertFalse($this->_validator->isValid('1.2.333'));
+    }
+
+    public function testInvalidIpForZF3435()
+    {
+        $this->assertFalse($this->_validator->isValid('192.168.0.2 adfs'));
     }
 }

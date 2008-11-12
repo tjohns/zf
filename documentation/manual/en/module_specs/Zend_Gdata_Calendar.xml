@@ -120,7 +120,7 @@ function getCurrentUrl()
     global $_SERVER;
 
     // Filter php_self to avoid a security vulnerability.
-    $php_request_uri = 
+    $php_request_uri =
         htmlentities(substr($_SERVER['REQUEST_URI'],
                             0,
                             strcspn($_SERVER['REQUEST_URI'], "\n\r")),
@@ -143,7 +143,7 @@ function getCurrentUrl()
     return $protocol . $host . $port . $php_request_uri;
 }
 
-/** 
+/**
  * Obtain an AuthSub authenticated HTTP client, redirecting the user
  * to the AuthSub server to login if necessary.
  */
@@ -162,7 +162,7 @@ function getAuthSubHttpClient()
 
         // Redirect the user to the AuthSub server to sign in
 
-        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next, 
+        $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
                                                              $scope,
                                                              $secure,
                                                              $session);
@@ -248,7 +248,7 @@ try {
 echo "<h1>Calendar List Feed</h1>";
 echo "<ul>";
 foreach ($listFeed as $calendar) {
-    echo "<li>" . $calendar->title . 
+    echo "<li>" . $calendar->title .
          " (Event Feed: " . $calendar->id . ")</li>";
 }
 echo "</ul>";

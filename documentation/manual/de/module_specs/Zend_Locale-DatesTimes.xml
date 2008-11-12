@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12151 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>Arbeiten mit Daten und Zeiten</title>
@@ -169,7 +169,8 @@ Array
     [year] => 2006
 )
 
-// Alternativ können einige Arten von Problemen mit den Eingabedaten automatisch korrigiert werden
+// Alternativ können einige Arten von Problemen mit
+// den Eingabedaten automatisch korrigiert werden
 $date2 = Zend_Locale_Format::getDate('04.13.2006',
                                      array('date_format' => 'dd.MM.yyyy',
                                            'fix_date' => true)
@@ -224,7 +225,11 @@ print_r ($date);
             <title>Normalisieren eines Datums mit Uhrzeit</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale);
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55',
+                                    array('date_format' =>
+                                                Zend_Locale_Format::STANDARD,
+                                          'locale' => $locale
+                                    );
 
 print_r ($date);
 ]]>

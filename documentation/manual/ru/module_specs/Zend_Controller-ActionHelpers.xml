@@ -168,8 +168,18 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
         </para>
 
         <para>
+            Внутри себя брокер помощников использует <link
+                linkend="zend.loader.pluginloader">экземпляр PluginLoader</link>
+            для поддержки путей. Вы можете извлечь PluginLoader, используя
+            статический метод <code>getPluginLoader()</code>, или
+            добавить свой экземпляр PluginLoader, используя
+            <code>setPluginLoader()</code>.
+        </para>
+
+        <para>
             Для определения того, есть ли помощник в брокере, используйте
-            <code>hasHelper($name)</code>, где <code>$name</code> - короткое имя помощника (без префикса):
+            <code>hasHelper($name)</code>, где <code>$name</code> - короткое
+            имя помощника без префикса:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -217,7 +227,7 @@ $redirector =
         <para>
             Наконец, для удаления зарегистрированного помощника из брокера
             используйте <code>removeHelper($name)</code>, где <code>$name</code>
-            - короткое имя помощника (без префикса):
+            - короткое имя помощника без префикса:
         </para>
 
         <programlisting role="php"><![CDATA[

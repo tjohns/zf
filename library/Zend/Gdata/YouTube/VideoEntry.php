@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -183,9 +184,9 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      * @return DOMElement The DOMElement representing this element and all
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_noEmbed != null) {
             $element->appendChild($this->_noEmbed->getDOM(
                 $element->ownerDocument));
@@ -543,7 +544,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Sets the date that the video was recorded.
      *
-     * @param string $recorded The date that the video was recorded, in the         
+     * @param string $recorded The date that the video was recorded, in the
      *          format of '2001-06-19'
      */
     public function setVideoRecorded($recorded)
@@ -769,8 +770,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         if ($this->getMediaGroup()->getKeywords() != null) {
 
             $keywords = $this->getMediaGroup()->getKeywords();
-            $keywordsString = (string) $keywords;
-
+            $keywordsString = $keywords->getText();
             if (strlen(trim($keywordsString)) > 0) {
                 return split('(, *)|,', $keywordsString);
             }
@@ -781,7 +781,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Sets the keyword tags for a video.
      *
-     * @param mixed $tags Either a comma-separated string or an array 
+     * @param mixed $tags Either a comma-separated string or an array
      * of tags for the video
      * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
      */
@@ -881,7 +881,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         return null;
     }
 
-    /** 
+    /**
      * Sets the category of the video as a string.
      *
      * @param string $category Categories for the video
@@ -913,15 +913,15 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
                 if ($category instanceof Zend_Gdata_Media_Extension_MediaCategory) {
                     if ($category->getScheme() == self::YOUTUBE_DEVELOPER_TAGS_SCHEMA) {
                         $developerTags[] = $category->getText();
-                    }    
+                    }
                 }
             }
             return $developerTags;
-        } 
+        }
         return null;
     }
 
-    /** 
+    /**
      * Adds a developer tag to array of tags for the video.
      *
      * @param string $developerTag DeveloperTag for the video
@@ -942,7 +942,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         return $this;
     }
 
-    /** 
+    /**
      * Set multiple developer tags for the video as strings.
      *
      * @param array $developerTags Array of developerTag for the video
@@ -958,15 +958,15 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
 
 
     /**
-     * Get the current publishing state of the video. 
+     * Get the current publishing state of the video.
      *
      * @return Zend_Gdata_YouTube_Extension_State|null The publishing state of this video
      */
     public function getVideoState()
     {
         $control = $this->getControl();
-        if ($control != null && 
-            $control->getDraft() != null && 
+        if ($control != null &&
+            $control->getDraft() != null &&
             $control->getDraft()->getText() == 'yes') {
 
             return $control->getState();
@@ -975,16 +975,57 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     }
 
     /**
-     * Get the VideoEntry's Zend_Gdata_YouTube_Extension_MediaGroup object. 
+     * Get the VideoEntry's Zend_Gdata_YouTube_Extension_MediaGroup object.
      * If the mediaGroup does not exist, then set it.
      *
      * @return void
      */
     public function ensureMediaGroupIsNotNull()
-    {   
+    {
         if ($this->getMediagroup() == null) {
             $this->setMediagroup(new Zend_Gdata_YouTube_Extension_MediaGroup());
         }
     }
-    
+
+    /**
+     * Helper function to conveniently set a video's rating.
+     *
+     * @param integer $ratingValue A number representing the rating. Must
+     *          be between 1 and 5 inclusive.
+     * @throws Zend_Gdata_Exception
+     * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface.
+     */
+    public function setVideoRating($ratingValue)
+    {
+        if ($ratingValue < 1 || $ratingValue > 5) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                'Rating for video entry must be between 1 and 5 inclusive.');
+        }
+
+         require_once 'Zend/Gdata/Extension/Rating.php';
+         $rating = new Zend_Gdata_Extension_Rating(null, 1, 5, null,
+            $ratingValue);
+        $this->setRating($rating);
+        return $this;
+    }
+
+    /**
+     * Retrieve the URL for a video's comment feed.
+     *
+     * @return string|null The URL if found, or null if not found.
+     */
+    public function getVideoCommentFeedUrl()
+    {
+        $commentsExtension = $this->getComments();
+        $commentsFeedUrl = null;
+        if ($commentsExtension) {
+            $commentsFeedLink = $commentsExtension->getFeedLink();
+            if ($commentsFeedLink) {
+                $commentsFeedUrl = $commentsFeedLink->getHref();
+            }
+        }
+        return $commentsFeedUrl;
+    }
+
 }

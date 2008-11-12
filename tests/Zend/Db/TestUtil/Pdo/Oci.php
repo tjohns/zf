@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Oci.php 6294 2007-09-11 18:02:19Z bkarwin $
+ * @version    $Id$
  */
 
 
@@ -140,7 +140,7 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
             $hex = bin2hex($row['doc_clob']);
             $row['doc_clob'] = new Zend_Db_Expr("TO_CLOB($quoted)");
             $row['doc_blob'] = new Zend_Db_Expr("TO_BLOB(HEXTORAW('$hex'))");
-                
+
         }
         return $data;
     }
@@ -152,6 +152,18 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
             $row['product_id'] = new Zend_Db_Expr($this->_db->quoteIdentifier('zfproducts_seq', true).'.NEXTVAL');
         }
         return $data;
+    }
+
+    /**
+     * ZF-4330: schemas on Oracle are specifics:
+     * "A schema is owned by a database user and has the same name as that user."
+     * http://download-east.oracle.com/docs/cd/B19306_01/server.102/b14220/intro.htm#sthref69
+     * @return string
+     */
+    public function getSchema()
+    {
+        $param = $this->getParams();
+        return $param['username'];
     }
 
 }

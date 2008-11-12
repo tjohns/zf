@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.soap.server">
     <title>Zend_Soap_Server</title>
 
@@ -132,7 +132,7 @@ class MyClass {
     public function method1($inputParam) {
         ...
     }
-    
+
     /**
      * Cette méthode accepte ...
      *
@@ -143,12 +143,15 @@ class MyClass {
     public function method2($inputParam1, $inputParam2) {
         ...
     }
-    
+
     ...
 }
 ...
 $server = new Zend_Soap_Server(null, $options);
+// Connecte la classe au serveur Soap
 $server->setClass('MyClass');
+// Connecte un objet déjà initialisé au serveur Soap
+$server->setObject(new MyClass());
 ...
 $server->handle();
 ]]></programlisting> <note>
@@ -171,7 +174,7 @@ $server->handle();
 function function1($inputParam) {
     ...
 }
-    
+
 /**
  * Cette fonction ...
  *
@@ -266,7 +269,7 @@ $request = $server->getLastRequest();
 ...
 $server = new Zend_Soap_Server(...);
 ...
-// Récupère la réponse plutôt que de l'emettre
+// Récupère la réponse plutôt que de l'émettre
 $server->setReturnResponse(true);
 ...
 $response = $server->handle();
@@ -279,7 +282,7 @@ $response = $server->handle();
 $server = new Zend_Soap_Server(...);
 ...
 $server->handle();
-$response = $server->getLastResyponse();
+$response = $server->getLastResponse();
 ...
 ]]></programlisting></para>
         </sect3>

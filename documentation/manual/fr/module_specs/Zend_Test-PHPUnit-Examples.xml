@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12339 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>Exemples</title>
 
@@ -85,9 +85,9 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
      * Constructor
      *
      * Initialize environment, root path, and configuration.
-     * 
-     * @param  string $env 
-     * @param  string|null $root 
+     *
+     * @param  string $env
+     * @param  string|null $root
      * @return void
      */
     public function __construct($env, $root = null)
@@ -105,7 +105,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     /**
      * Route startup
-     * 
+     *
      * @return void
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
@@ -147,8 +147,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
         <para>Une fois ceci en place, nous pouvons écrire nos tests. Cependant, combien de ces tests nécessiteront qu'un
         utilisateur soit connecté ? La solution la plus simple est d'utiliser la logique de votre application pour faire
-        ceci... et d'esquiver un peu par l'utilisation de la méthode <code>resetResponse()</code>, qui vous permettra de
-        dispatcher une nouvelle requête.</para>
+        ceci... et d'esquiver un peu par l'utilisation des méthodes <code>resetResponse()</code> et 
+        <code>resetResponse()</code>, qui vous permettront de dispatcher une nouvelle requête.</para>
 
         <programlisting role="php"><![CDATA[
 class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
@@ -157,16 +157,20 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function loginUser($user, $password)
     {
-        $request = $this->getRequest();
-        $request->setMethod('POST')
-                ->setPost(array(
-                    'username' => $user,
-                    'password' => $password,
-                ));
+        $this->request->setMethod('POST')
+                      ->setPost(array(
+                          'username' => $user,
+                          'password' => $password,
+                      ));
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
-        $this->resetResponse();
-        $request->setPost(array());
+
+        $this->resetRequest()
+             ->resetResponse();
+
+        $this->request->setPost(array());
+        
+        // ...
     }
 
     // ...

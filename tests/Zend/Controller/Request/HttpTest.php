@@ -3,7 +3,7 @@
 if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Request_HttpTest::main");
 }
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Controller/Request/Http.php';
 
@@ -367,6 +367,17 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertSame('', $this->_request->getBaseUrl());
     }
  
+    /*
+     * Tests if an empty string gets returned when no basepath is set on the request.
+     * This is important on windows, where before this fix '\' was returned instead of an empty string.
+     * @see ZF-4810
+     */
+    public function testGetBasePathIsEmptyStringIfNoneSet()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $this->assertEquals('', $request->getBasePath());
+    }
+
     public function testSetBaseUrl()
     {
         $this->_request->setBaseUrl('/news');
@@ -567,6 +578,9 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->_request->isFlashRequest());
         $_SERVER['HTTP_USER_AGENT'] = 'Shockwave Flash';
+        $this->assertTrue($this->_request->isFlashRequest());
+
+        $_SERVER['HTTP_USER_AGENT'] = 'Adobe Flash Player 10';
         $this->assertTrue($this->_request->isFlashRequest());
     }
 

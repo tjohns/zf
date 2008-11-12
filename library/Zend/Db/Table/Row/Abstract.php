@@ -236,7 +236,7 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
     {
         $this->_connected = false;
     }
-    
+
     /**
      * Proxy to __isset
      * Required by the ArrayAccess implementation
@@ -246,9 +246,9 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-    	return $this->__isset($offset);
+        return $this->__isset($offset);
     }
-    
+
     /**
      * Proxy to __get
      * Required by the ArrayAccess implementation
@@ -256,32 +256,32 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
      * @param string $offset
      * @return string
      */
- 	public function offsetGet($offset)
- 	{
- 		return $this->__get($offset);
- 	}
- 	
- 	/**
- 	 * Proxy to __set
- 	 * Required by the ArrayAccess implementation
- 	 *
- 	 * @param string $offset
- 	 * @param mixed $value
- 	 */
- 	public function offsetSet($offset, $value)
- 	{
- 		$this->__set($offset, $value);
- 	}
- 	
- 	/**
- 	 * Does nothing
- 	 * Required by the ArrayAccess implementation
- 	 *
- 	 * @param string $offset
- 	 */
- 	public function offsetUnset($offset)
- 	{
- 	}
+     public function offsetGet($offset)
+     {
+         return $this->__get($offset);
+     }
+
+     /**
+      * Proxy to __set
+      * Required by the ArrayAccess implementation
+      *
+      * @param string $offset
+      * @param mixed $value
+      */
+     public function offsetSet($offset, $value)
+     {
+         $this->__set($offset, $value);
+     }
+
+     /**
+      * Does nothing
+      * Required by the ArrayAccess implementation
+      *
+      * @param string $offset
+      */
+     public function offsetUnset($offset)
+     {
+     }
 
     /**
      * Initialize object
@@ -587,7 +587,7 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
             throw new Zend_Db_Table_Row_Exception('This row has been marked read-only');
         }
 
-    	$where = $this->_getWhereQuery();
+        $where = $this->_getWhereQuery();
 
         /**
          * Execute pre-DELETE logic
@@ -652,6 +652,8 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
      */
     public function setFromArray(array $data)
     {
+        $data = array_intersect_key($data, $this->_data);
+
         foreach ($data as $columnName => $value) {
             $this->__set($columnName, $value);
         }

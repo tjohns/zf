@@ -138,7 +138,7 @@ $index->optimize();
         </para>
 
         <para>
-            <emphasis>MaxBufferedDocs</emphasis> hat keinen Effekt wenn nur ein Dokument pro Skriptausführung 
+            <emphasis>MaxBufferedDocs</emphasis> hat keinen Effekt wenn nur ein Dokument pro Skriptausführung
             indiziert wird. Auf der anderen Seite ist das sehr wichtig für die Indizierung per Batch.
             Größere Werte erhöhen die Geschwindigkeit des Indizierens, benötigen aber auch mehr Speicher.
         </para>
@@ -181,7 +181,7 @@ $index->optimize();
         <para>
             Kleinere Segmente verkleinern generell die Qualität des Index. Viele kleine Segmente können auch
             zu einem "Too many open files" Fehler führen, ausgelöst durch die Beschränkungen des Betriebsystems.
-            
+
             <footnote>
                 <para>
                     Zend_Search_Lucene hält jedes Segment offen um die Geschwindigkeit des Suchens zu erhöhen.
@@ -232,7 +232,7 @@ $index->optimize();
         <para>
             Zend_Search_Lucene prüft wärend jedem Aufruf von <code>addDocument()</code> ob das Zusammenführen
             von Segmentgruppen dazu führt das neu erstellte Segmente in die nächste Gruppe verschoben
-            werden. Wenn ja, wird das Zusammenführen durchgeführt. 
+            werden. Wenn ja, wird das Zusammenführen durchgeführt.
         </para>
 
         <para>
@@ -285,7 +285,7 @@ $index->optimize();
         <para>
             Wenn das Indexobjekt in einer globalen Variable gespeichert wird, wird es nur am Ende der
             Skriptausführung zerstört
-            
+
             <footnote>
                 <para>
                     Das kann auch vorkommen wenn der Index oder die QueryHit Instanzen in zyklischen
@@ -296,7 +296,7 @@ $index->optimize();
         </para>
 
         <para>
-            Die Behandlung von PHP Ausnahmen ist aktuell auch ein Herunterfahren. 
+            Die Behandlung von PHP Ausnahmen ist aktuell auch ein Herunterfahren.
         </para>
 
         <para>
@@ -405,7 +405,7 @@ foreach ($docIds as $id) {
         <para>
             Der Verzeichnisindex der Ausdrücke wird während der Suche geladen. Das ist aktuelle jeder 128
             <superscript>te</superscript> Ausdruck des kompletten Verzeichnisses.
-            
+
             <footnote>
                 <para>
                     Das Lucene Dateiformat erlaubt es diese Zahl zu ändern, aber Zend_Search_Lucene bietet
@@ -427,7 +427,7 @@ foreach ($docIds as $id) {
             Verzeichnis an Ausdrücken enthält und den Verzeichnisindex der Ausdrücke. Wenn der Index aus
             <emphasis>N</emphasis> Segmenten besteht kann der Speicherverbrauch im schlimmsten Fall
             <emphasis>N</emphasis> mal so groß sein. Eine Optimierung des Index kann durchgeführt werden
-            um alle Segmente in eines zusammenzuführen um diesen Speicherverbrauch zu verhindern . 
+            um alle Segmente in eines zusammenzuführen um diesen Speicherverbrauch zu verhindern .
         </para>
 
         <para>
@@ -467,7 +467,7 @@ foreach ($docIds as $id) {
 
         <para>
             Verschlüsselung kann explizit als optionaler Parameter bei den Felderstellung Methoden
-            spezifiziert werden: 
+            spezifiziert werden:
             <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title',

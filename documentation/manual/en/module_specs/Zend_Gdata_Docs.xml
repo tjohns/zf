@@ -2,10 +2,10 @@
     <title>Using Google Documents List Data API</title>
 
     <para>
-        The Google Documents List Data API allows client applications to 
-        upload documents to Google Documents and list them in the form of 
+        The Google Documents List Data API allows client applications to
+        upload documents to Google Documents and list them in the form of
         Google Data API ("GData") feeds. Your client application can request
-        a list of a user's documents, and query the content in an existing 
+        a list of a user's documents, and query the content in an existing
         document.
     </para>
 
@@ -35,11 +35,11 @@ $feed = $docs->getDocumentListFeed();
         </programlisting>
 
         <para>
-        The resulting <code>Zend_Gdata_Docs_DocumentListFeed</code> object 
+        The resulting <code>Zend_Gdata_Docs_DocumentListFeed</code> object
         represents the response from the server. This feed contains a list of
-        <code>Zend_Gdata_Docs_DocumentListEntry</code> objects 
-        (<code>$feed->entries</code>), each of which represents a single 
-        Google Document.                                
+        <code>Zend_Gdata_Docs_DocumentListEntry</code> objects
+        (<code>$feed->entries</code>), each of which represents a single
+        Google Document.
         </para>
     </sect2>
 
@@ -108,21 +108,21 @@ function uploadDocument($docs, $html, $originalFileName,
         <para>
             You can search the Document List using some of the <ulink
             url="http://code.google.com/apis/gdata/reference.html#Queries">standard
-            Google Data API query parameters</ulink>. Categories are used to 
-            restrict the 
+            Google Data API query parameters</ulink>. Categories are used to
+            restrict the
             type of document (word processor document, spreadsheet) returned.
-            The full-text query string is used to search the content of all 
-            the documents. More detailed information on parameters specific 
-            to the Documents List can be found in the <ulink 
+            The full-text query string is used to search the content of all
+            the documents. More detailed information on parameters specific
+            to the Documents List can be found in the <ulink
             url="http://code.google.com/apis/documents/reference.html#Parameters">Documents List Data API Reference Guide</ulink>.
         </para>
-    
+
         <sect3 id="zend.gdata.docs.listwpdocuments">
             <title>Get a List of Word Processing Documents</title>
             <para>
                 You can also request a feed containing all of your documents of a specific type. For example, to see a list of your work processing documents, you would perform a category query as follows.
             </para>
-    
+
             <programlisting role="php"><![CDATA[
 $feed = $docs->getDocumentListFeed(
     'http://docs.google.com/feeds/documents/private/full/-/document');

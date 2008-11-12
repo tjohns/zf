@@ -67,6 +67,15 @@ class Zend_Validate_File_Exists extends Zend_Validate_Abstract
      */
     public function __construct($directory = array())
     {
+        if ($directory instanceof Zend_Config) {
+            $directory = $directory->toArray();
+        } else if (is_string($directory)) {
+            $directory = explode(',', $directory);
+        } else if (!is_array($directory)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
+        }
+
         $this->setDirectory($directory);
     }
 
@@ -109,8 +118,12 @@ class Zend_Validate_File_Exists extends Zend_Validate_Abstract
     public function addDirectory($directory)
     {
         $directories = $this->getDirectory(true);
+
         if (is_string($directory)) {
             $directory = explode(',', $directory);
+        } else if (!is_array($directory)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
         }
 
         foreach ($directory as $content) {
@@ -160,14 +173,12 @@ class Zend_Validate_File_Exists extends Zend_Validate_Abstract
 
             $check = true;
             if (!file_exists($directory . DIRECTORY_SEPARATOR . $file['name'])) {
-                $this->_throw($file, self::DOES_NOT_EXIST);
-                return false; 
+                return $this->_throw($file, self::DOES_NOT_EXIST);
             }
         }
 
         if (!$check) {
-            $this->_throw($file, self::DOES_NOT_EXIST);
-            return false;
+            return $this->_throw($file, self::DOES_NOT_EXIST);
         }
 
         return true;

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.pdf.usage">
     <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
     <para>
@@ -64,7 +64,7 @@ try {
     $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) .
                                                 '/stamp.jpg');
 } catch (Zend_Pdf_Exception $e) {
-    // Beispiel wie man mit Ladefehlern bei Grafiken umgeht. 
+    // Beispiel wie man mit Ladefehlern bei Grafiken umgeht.
     if ($e->getMessage() != 'Image Erweiterung nicht installiert.' &&
         $e->getMessage() != 'JPG Unterstützung ist nicht richtig konfiguriert.') {
         throw $e;

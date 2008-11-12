@@ -5,7 +5,7 @@
  * @subpackage UnitTests
  */
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Controller_Router_Route_Regex */
 require_once 'Zend/Controller/Router/Route/Regex.php';
@@ -420,6 +420,31 @@ class Zend_Controller_Router_Route_RegexTest extends PHPUnit_Framework_TestCase
         // check to make sure that the assembly can reset a single parameter
         $this->assertEquals('itemlist/1', $route->assemble(array('page' => null)));
         
+    }
+
+    /**
+     * @group ZF-4335
+     */
+    public function testAssembleMethodShouldNotIgnoreEncodeParam()
+    {
+        $route = new Zend_Controller_Router_Route_Regex(
+            'blog/archive/(.+)-(.+)\.html',
+            array(
+                'controller' => 'blog',
+                'action'     => 'view'
+            ),
+            array(
+                1 => 'name',
+                2 => 'description'
+            ),
+            'blog/archive/%s-%s.html'
+        );
+
+        $data = array('string.that&has=some>', 'characters<that;need+to$be*encoded');
+        $url = $route->assemble($data, false, true);
+        $expectedUrl = 'blog/archive/string.that%26has%3Dsome%3E-characters%3Cthat%3Bneed%2Bto%24be%2Aencoded.html';
+
+        $this->assertEquals($url, $expectedUrl, 'Assembled url isn\'t encoded properly when using the encode parameter.');
     }
     
 }

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id: ImageSizeTest.php 12004 2008-10-18 14:29:41Z mikaelkael $
  */
 
 // Call Zend_Validate_File_ImageSizeTest::main() if this source file is executed directly.
@@ -28,7 +28,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_ImageSize
@@ -63,55 +63,37 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $valuesExpected = array(
-            array(0, 10, 1000, 2000, true),
-            array(0, 0, 200, 200, true),
-            array(150, 150, 200, 200, false),
-            array(80, 0, 80, 200, true),
-            array(0, 0, 60, 200, false),
-            array(90, 0, 200, 200, false),
-            array(0, 0, 200, 80, false),
-            array(0, 110, 200, 140, false)
+            array(array('minwidth' => 0, 'minheight' => 10, 'maxwidth' => 1000, 'maxheight' => 2000), true),
+            array(array('minwidth' => 0, 'minheight' => 0, 'maxwidth' => 200, 'maxheight' => 200), true),
+            array(array('minwidth' => 150, 'minheight' => 150, 'maxwidth' => 200, 'maxheight' => 200), false),
+            array(array('minwidth' => 80, 'minheight' => 0, 'maxwidth' => 80, 'maxheight' => 200), true),
+            array(array('minwidth' => 0, 'minheight' => 0, 'maxwidth' => 60, 'maxheight' => 200), false),
+            array(array('minwidth' => 90, 'minheight' => 0, 'maxwidth' => 200, 'maxheight' => 200), false),
+            array(array('minwidth' => 0, 'minheight' => 0, 'maxwidth' => 200, 'maxheight' => 80), false),
+            array(array('minwidth' => 0, 'minheight' => 110, 'maxwidth' => 200, 'maxheight' => 140), false)
         );
 
         foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_ImageSize($element[0], $element[1], $element[2], $element[3]);
+            $validator = new Zend_Validate_File_ImageSize($element[0]);
             $this->assertEquals(
-                $element[4],
+                $element[1],
                 $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
                 "Tested with " . var_export($element, 1)
             );
         }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_ImageSize(array($element[0], $element[1], $element[2], $element[3]));
-            $this->assertEquals(
-                $element[4],
-                $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
-                "Tested with " . var_export($element, 1)
-            );
-        }
-
-        foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_ImageSize(array('minwidth' => $element[0], 'minheight' => $element[1], 'maxwidth' => $element[2], 'maxheight' => $element[3]));
-            $this->assertEquals(
-                $element[4],
-                $validator->isValid(dirname(__FILE__) . '/_files/picture.jpg'),
-                "Tested with " . var_export($element, 1)
-            );
-        }
-
-        $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 0, 'minheight' => 10, 'maxwidth' => 1000, 'maxheight' => 2000));
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.jpg'));
         $failures = $validator->getMessages();
         $this->assertContains('can not be read', $failures['fileImageSizeNotReadable']);
 
         $file['name'] = 'TestName';
-        $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 0, 'minheight' => 10, 'maxwidth' => 1000, 'maxheight' => 2000));
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/nofile.jpg', $file));
         $failures = $validator->getMessages();
         $this->assertContains('TestName', $failures['fileImageSizeNotReadable']);
 
-        $validator = new Zend_Validate_File_ImageSize(0, 10, 1000, 2000);
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 0, 'minheight' => 10, 'maxwidth' => 1000, 'maxheight' => 2000));
         $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/badpicture.jpg'));
         $failures = $validator->getMessages();
         $this->assertContains('could not be detected', $failures['fileImageSizeNotDetected']);
@@ -124,11 +106,11 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetImageMin()
     {
-        $validator = new Zend_Validate_File_ImageSize(1, 10, 100, 1000);
-        $this->assertEquals(array(1, 10), $validator->getImageMin());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 1, 'minheight' => 10, 'maxwidth' => 100, 'maxheight' => 1000));
+        $this->assertEquals(array('minwidth' => 1, 'minheight' => 10), $validator->getImageMin());
 
         try {
-            $validator = new Zend_Validate_File_ImageSize(1000, 100, 10, 1);
+            $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 1000, 'minheight' => 100, 'maxwidth' => 10, 'maxheight' => 1));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("greater than or equal", $e->getMessage());
@@ -142,15 +124,15 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testSetImageMin()
     {
-        $validator = new Zend_Validate_File_ImageSize(100, 1000, 10000, 100000);
-        $validator->setImageMin(10, 10);
-        $this->assertEquals(array(10, 10), $validator->getImageMin());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 100, 'minheight' => 1000, 'maxwidth' => 10000, 'maxheight' => 100000));
+        $validator->setImageMin(array('minwidth' => 10, 'minheight' => 10));
+        $this->assertEquals(array('minwidth' => 10, 'minheight' => 10), $validator->getImageMin());
 
-        $validator->setImageMin(9, 100);
-        $this->assertEquals(array(9, 100), $validator->getImageMin());
+        $validator->setImageMin(array('minwidth' => 9, 'minheight' => 100));
+        $this->assertEquals(array('minwidth' => 9, 'minheight' => 100), $validator->getImageMin());
 
         try {
-            $validator->setImageMin(20000, 20000);
+            $validator->setImageMin(array('minwidth' => 20000, 'minheight' => 20000));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("less than or equal", $e->getMessage());
@@ -164,11 +146,11 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetImageMax()
     {
-        $validator = new Zend_Validate_File_ImageSize(10, 100, 1000, 10000);
-        $this->assertEquals(array(1000, 10000), $validator->getImageMax());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 10, 'minheight' => 100, 'maxwidth' => 1000, 'maxheight' => 10000));
+        $this->assertEquals(array('maxwidth' => 1000, 'maxheight' => 10000), $validator->getImageMax());
 
         try {
-            $validator = new Zend_Validate_File_ImageSize(10000, 1000, 100, 10);
+            $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 10000, 'minheight' => 1000, 'maxwidth' => 100, 'maxheight' => 10));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("greater than or equal", $e->getMessage());
@@ -182,21 +164,21 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testSetImageMax()
     {
-        $validator = new Zend_Validate_File_ImageSize(10, 100, 1000, 10000);
-        $validator->setImageMax(100, 100);
-        $this->assertEquals(array(100, 100), $validator->getImageMax());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 10, 'minheight' => 100, 'maxwidth' => 1000, 'maxheight' => 10000));
+        $validator->setImageMax(array('maxwidth' => 100, 'maxheight' => 100));
+        $this->assertEquals(array('maxwidth' => 100, 'maxheight' => 100), $validator->getImageMax());
 
-        $validator->setImageMax(110, 1000);
-        $this->assertEquals(array(110, 1000), $validator->getImageMax());
+        $validator->setImageMax(array('maxwidth' => 110, 'maxheight' => 1000));
+        $this->assertEquals(array('maxwidth' => 110, 'maxheight' => 1000), $validator->getImageMax());
 
-        $validator->setImageMax(null, 1100);
-        $this->assertEquals(array(null, 1100), $validator->getImageMax());
+        $validator->setImageMax(array('maxheight' => 1100));
+        $this->assertEquals(array('maxwidth' => 110, 'maxheight' => 1100), $validator->getImageMax());
 
-        $validator->setImageMax(120, null);
-        $this->assertEquals(array(120, null), $validator->getImageMax());
+        $validator->setImageMax(array('maxwidth' => 120));
+        $this->assertEquals(array('maxwidth' => 120, 'maxheight' => 1100), $validator->getImageMax());
 
         try {
-            $validator->setImageMax(10000, 1);
+            $validator->setImageMax(array('maxwidth' => 10000, 'maxheight' => 1));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("greater than or equal", $e->getMessage());
@@ -210,8 +192,8 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetImageWidth()
     {
-        $validator = new Zend_Validate_File_ImageSize(1, 10, 100, 1000);
-        $this->assertEquals(array(1, 100), $validator->getImageWidth());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 1, 'minheight' => 10, 'maxwidth' => 100, 'maxheight' => 1000));
+        $this->assertEquals(array('minwidth' => 1, 'maxwidth' => 100), $validator->getImageWidth());
     }
 
     /**
@@ -221,12 +203,12 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testSetImageWidth()
     {
-        $validator = new Zend_Validate_File_ImageSize(100, 1000, 10000, 100000);
-        $validator->setImageWidth(2000, 2200);
-        $this->assertEquals(array(2000, 2200), $validator->getImageWidth());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 100, 'minheight' => 1000, 'maxwidth' => 10000, 'maxheight' => 100000));
+        $validator->setImageWidth(array('minwidth' => 2000, 'maxwidth' => 2200));
+        $this->assertEquals(array('minwidth' => 2000, 'maxwidth' => 2200), $validator->getImageWidth());
 
         try {
-            $validator->setImageWidth(20000, 200);
+            $validator->setImageWidth(array('minwidth' => 20000, 'maxwidth' => 200));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("less than or equal", $e->getMessage());
@@ -240,8 +222,8 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testGetImageHeight()
     {
-        $validator = new Zend_Validate_File_ImageSize(1, 10, 100, 1000);
-        $this->assertEquals(array(10, 1000), $validator->getImageHeight());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 1, 'minheight' => 10, 'maxwidth' => 100, 'maxheight' => 1000));
+        $this->assertEquals(array('minheight' => 10, 'maxheight' => 1000), $validator->getImageHeight());
     }
 
     /**
@@ -251,12 +233,12 @@ class Zend_Validate_File_ImageSizeTest extends PHPUnit_Framework_TestCase
      */
     public function testSetImageHeight()
     {
-        $validator = new Zend_Validate_File_ImageSize(100, 1000, 10000, 100000);
-        $validator->setImageHeight(2000, 2200);
-        $this->assertEquals(array(2000, 2200), $validator->getImageHeight());
+        $validator = new Zend_Validate_File_ImageSize(array('minwidth' => 100, 'minheight' => 1000, 'maxwidth' => 10000, 'maxheight' => 100000));
+        $validator->setImageHeight(array('minheight' => 2000, 'maxheight' => 2200));
+        $this->assertEquals(array('minheight' => 2000, 'maxheight' => 2200), $validator->getImageHeight());
 
         try {
-            $validator->setImageHeight(20000, 200);
+            $validator->setImageHeight(array('minheight' => 20000, 'maxheight' => 200));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("less than or equal", $e->getMessage());

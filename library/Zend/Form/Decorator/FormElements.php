@@ -48,7 +48,7 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
      * @param  string $belongsTo
      * @return string
      */
-    protected function _mergeBelongsTo($baseBelongsTo, $belongsTo)
+    public function mergeBelongsTo($baseBelongsTo, $belongsTo)
     {
         $endOfArrayName = strpos($belongsTo, '[');
 
@@ -87,7 +87,7 @@ class Zend_Form_Decorator_FormElements extends Zend_Form_Decorator_Abstract
                 $item->setBelongsTo($belongsTo);
             } elseif (!empty($belongsTo) && ($item instanceof Zend_Form)) {
                 if ($item->isArray()) {
-                    $name = $this->_mergeBelongsTo($belongsTo, $item->getElementsBelongTo());
+                    $name = $this->mergeBelongsTo($belongsTo, $item->getElementsBelongTo());
                     $item->setElementsBelongTo($name, true);
                 } else {
                     $item->setElementsBelongTo($belongsTo, true);

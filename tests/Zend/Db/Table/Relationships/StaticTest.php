@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 5484 2007-06-28 21:38:50Z bkarwin $
+ * @version    $Id$
  */
 
 

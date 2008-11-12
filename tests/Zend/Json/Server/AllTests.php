@@ -23,12 +23,13 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Json_Server_AllTests::main');
 }
 
+require_once 'Zend/Json/Server/CacheTest.php';
 require_once 'Zend/Json/Server/ErrorTest.php';
 require_once 'Zend/Json/Server/RequestTest.php';
 require_once 'Zend/Json/Server/ResponseTest.php';
@@ -53,6 +54,7 @@ class Zend_Json_Server_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Json - Server');
 
+        $suite->addTestSuite('Zend_Json_Server_CacheTest');
         $suite->addTestSuite('Zend_Json_Server_ErrorTest');
         $suite->addTestSuite('Zend_Json_Server_RequestTest');
         $suite->addTestSuite('Zend_Json_Server_ResponseTest');

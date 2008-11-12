@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.http.client">
     <title>Zend_Http_Client - 導入</title>
 
@@ -35,6 +35,16 @@ $client->setConfig(array(
 ]]>
                 </programlisting>
             </example>
+
+            <note>
+                <para>Zend_Http_Client は Zend_Uri_Http を用いて URL を検証します。
+                つまり、URL 中にあるパイプ記号 ('|') やキャレット記号 ('^')
+                などの特殊文字はデフォルトでは許可されないということです。
+
+                これを変更するには、Zend_Uri のオプション 'allow_unwise' を
+                'true' に設定します。詳細は <xref linkend="zend.uri.validation.allowunwise" />
+                を参照ください。</para>
+            </note>
         </para>
     </sect2>
     <sect2 id="zend.http.client.configuration">

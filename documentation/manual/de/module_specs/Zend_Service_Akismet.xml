@@ -197,7 +197,7 @@ if ($akismet->isSpam($data)) {
         <para>
             <code>Zend_Service_Akismet::submitSpam()</code> nimmt das selbe Datenarray entgegen wie es der
             <code>isSpam()</code> übergeben wird, aber es wird kein Wert zurückgegeben. Eine Ausnahme wird
-            geworfen wenn der API Schlüsel ungültig ist. 
+            geworfen wenn der API Schlüsel ungültig ist.
         </para>
 
         <example id="zend.service.akismet.submitspam.example-1">

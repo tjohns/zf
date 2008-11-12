@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.http.client.advanced">
     <title>Zend_Http_Client - Fortgeschrittende Nutzung</title>
 
@@ -110,7 +110,8 @@ $client->setHeaders('Host', 'www.example.com');
 // Ein anderer Weg um genau das Gleiche zu erreichen
 $client->setHeaders('Host: www.example.com');
 
-// Setzen von verschiedenen Werten für den selben Header (besonders für Cookie Header nützlich):
+// Setzen von verschiedenen Werten für den selben Header
+// (besonders für Cookie Header nützlich):
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'

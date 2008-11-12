@@ -358,11 +358,11 @@ $hits  = $index->find($query);
         
         <para>
             Each query which uses boolean operators can be rewritten using signs notation and constructed using API. For example:
-	        <programlisting role="querystring"><![CDATA[
+            <programlisting role="querystring"><![CDATA[
 word1 AND (word2 AND word3 AND NOT word4) OR word5
 ]]>
 </programlisting>
-	        is equivalent to
+            is equivalent to
             <programlisting role="querystring"><![CDATA[
 (+(word1) +(+word2 +word3 -word4)) (word5)
 ]]>

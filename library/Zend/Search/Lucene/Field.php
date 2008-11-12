@@ -47,41 +47,41 @@ class Zend_Search_Lucene_Field
      * Field value
      * 
      * @var boolean
-	 */
+     */
     public $value;
     
     /**
      * Field is to be stored in the index for return with search hits.
      * 
      * @var boolean
-	 */
+     */
     public $isStored    = false;
     
     /**
      * Field is to be indexed, so that it may be searched on.
      * 
      * @var boolean
-	 */
+     */
     public $isIndexed   = true;
 
     /**
      * Field should be tokenized as text prior to indexing.
      * 
      * @var boolean
-	 */
+     */
     public $isTokenized = true;
     /**
      * Field is stored as binary.
      * 
      * @var boolean
-	 */
+     */
     public $isBinary    = false;
 
     /**
      * Field are stored as a term vector
      * 
      * @var boolean
-	 */
+     */
     public $storeTermVector = false;
 
     /**

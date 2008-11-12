@@ -20,10 +20,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube.php';
 require_once 'Zend/Gdata/YouTube/VideoQuery.php';
+require_once 'Zend/Gdata/ClientLogin.php';
 
 /**
  * @package Zend_Gdata
@@ -42,7 +43,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
     }
 
-    public function testRetrieveSubScriptionFeed() 
+    public function testRetrieveSubScriptionFeed()
     {
         $feed = $this->gdata->getSubscriptionFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
@@ -93,7 +94,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $entry = $this->gdata->getVideoEntry('66wj2g5yz0M');
         $this->assertEquals('TestMovie', $entry->title->text);
 
-        $entry = $this->gdata->getVideoEntry(null, 'http://gdata.youtube.com/feeds/videos/66wj2g5yz0M');
+        $entry = $this->gdata->getVideoEntry(null, 'http://gdata.youtube.com/feeds/api/videos/66wj2g5yz0M');
         $this->assertEquals('TestMovie', $entry->title->text);
     }
 
@@ -127,16 +128,39 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('taken', $entry->relationship->text);
     }
 
-    public function testRetrievePlaylistList()
+    public function testRetrieveAndUpdatePlaylistList()
     {
+
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $service = Zend_Gdata_YouTube::AUTH_SERVICE_NAME;
+        $authenticationURL= 'https://www.google.com/youtube/accounts/ClientLogin';
+        $httpClient = Zend_Gdata_ClientLogin::getHttpClient(
+                                          $username = $user,
+                                          $password = $pass,
+                                          $service = $service,
+                                          $client = null,
+                                          $source = 'Google-UnitTests-1.0',
+                                          $loginToken = null,
+                                          $loginCaptcha = null,
+                                          $authenticationURL);
+
+        $this->gdata = new Zend_Gdata_YouTube($httpClient, 'Google-UnitTests-1.0', 'ytapi-gdataops-12345-u78960r7-0', 'AI39si6c-ZMGFZ5fkDAEJoCNHP9LOM2LSO1XuycZF7Eyu1IuvkioESqzRcf3voDLymIUGIrxdMx2aTufdbf5D7E51NyLYyfeaw');
+        $this->gdata->enableRequestDebugLogging('/tmp/yt_requests.log');
+
         $feed = $this->gdata->getPlaylistListFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
         $this->assertEquals('Playlists of zfgdata', $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
+        $i = 0;
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');
+            if ($i == 0) {
+                $entry->title->setText('new playlist title');
+                $entry->save();
+            }
+            $i++;
         }
-        $this->assertEquals('test playlist', $feed->entry[0]->description->text);
     }
 
     public function testRetrievePlaylistVideoFeed()
@@ -145,7 +169,6 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
 
         $feed = $this->gdata->getPlaylistVideoFeed($listFeed->entry[0]->feedLink[0]->href);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('test playlist', $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');

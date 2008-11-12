@@ -25,7 +25,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Filter_Input
@@ -1113,8 +1113,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Loader_PluginLoader_Exception', $e,
                 'Expected object of type Zend_Filter_Exception, got '.get_class($e));
-            $this->assertContains("Plugin by name MyDigits was not found in the registry",
-                $e->getMessage());
+            $this->assertContains("not found in the registry", $e->getMessage());
         }
     }
 

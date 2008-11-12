@@ -80,6 +80,36 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
+     * ZF-4330: Oracle binds variables by name
+     * Test that fetchAssoc() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchAllOverrideFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $col_name = $this->_db->foldCase('product_id');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+
+        // Test associative array
+        $result = $this->_db->fetchAll("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id ASC", array(":id"=>1), Zend_Db::FETCH_ASSOC);
+        $this->assertEquals(2, count($result));
+        $this->assertType('array', $result[0]);
+        $this->assertEquals(2, count($result[0])); // count columns
+        $this->assertEquals(2, $result[0][$col_name]);
+
+        // Test numeric and associative array
+        // OCI8 driver does not support fetchAll(FETCH_BOTH), use fetch() in a loop instead
+
+        // Ensure original fetch mode has been retained
+        $result = $this->_db->fetchAll("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
+        $this->assertEquals(2, count($result));
+        $this->assertType('object', $result[0]);
+        $this->assertEquals(2, $result[0]->$col_name);
+    }
+
+    /**
      * Test the Adapter's fetchAssoc() method.
      */
     public function testAdapterFetchAssoc()
@@ -92,6 +122,22 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
             $this->assertThat($row, $this->arrayHasKey('product_id'));
             $this->assertEquals($idKey, $row['product_id']);
         }
+    }
+
+    /**
+     * ZF-4275: Oracle binds variables by name
+     * Test that fetchAssoc() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchAssocAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $result = $this->_db->fetchAssoc("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id DESC", array(":id"=>1));
+        $this->assertType('array', $result);
+        $this->assertEquals(array('product_id', 'product_name'), array_keys(current($result)));
     }
 
     /**
@@ -109,6 +155,24 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
+     * ZF-4275: Oracle binds variables by name
+     * Test that fetchCol() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchColAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $result = $this->_db->fetchCol("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id ASC", array(":id"=>1));
+        $this->assertType('array', $result);
+        $this->assertEquals(2, count($result)); // count rows
+        $this->assertEquals(2, $result[0]);
+        $this->assertEquals(3, $result[1]);
+    }
+
+	/**
      * Test the Adapter's fetchOne() method.
      */
     public function testAdapterFetchOne()
@@ -122,7 +186,26 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $this->assertEquals($prod, $result);
     }
 
+
     /**
+     * ZF-4275: Oracle binds variables by name
+     * Test that fetchCol() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchOneAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $prod = 'Linux';
+        $result = $this->_db->fetchOne("SELECT $product_name FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
+        $this->assertType('string', $result);
+        $this->assertEquals($prod, $result);
+    }
+
+	/**
      * Test the Adapter's fetchPairs() method.
      */
     public function testAdapterFetchPairs()
@@ -138,6 +221,24 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
+     * ZF-4275: Oracle binds variables by name
+     * Test the Adapter's fetchPairs() method.
+     */
+    public function testAdapterFetchPairsAfterSetFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+        $prod = 'Linux';
+        $result = $this->_db->fetchPairs("SELECT $product_id, $product_name FROM $products WHERE $product_id > :id ORDER BY $product_id ASC", array(":id"=>1));
+        $this->assertType('array', $result);
+        $this->assertEquals(2, count($result)); // count rows
+        $this->assertEquals($prod, $result[2]);
+    }
+
+    /**
      * Test the Adapter's fetchRow() method.
      */
     public function testAdapterFetchRow()
@@ -148,6 +249,34 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
         $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
         $this->assertEquals(2, count($result)); // count columns
         $this->assertEquals(2, $result['product_id']);
+    }
+
+    /**
+     * ZF-4330: Oracle binds variables by name
+     * Test that fetchAssoc() still fetched an associative array
+     * after the adapter's default fetch mode is set to something else.
+     */
+    public function testAdapterFetchRowOverrideFetchMode()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $col_name = $this->_db->foldCase('product_id');
+
+        $this->_db->setFetchMode(Zend_Db::FETCH_OBJ);
+
+        // Test associative array
+        $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1), Zend_Db::FETCH_ASSOC);
+        $this->assertType('array', $result);
+        $this->assertEquals(2, count($result)); // count columns
+        $this->assertEquals(2, $result['product_id']);
+
+        // Test numeric and associative array
+        // OCI8 driver does not support fetchAll(FETCH_BOTH), use fetch() in a loop instead
+
+        // Ensure original fetch mode has been retained
+        $result = $this->_db->fetchRow("SELECT * FROM $products WHERE $product_id > :id ORDER BY $product_id", array(":id"=>1));
+        $this->assertType('object', $result);
+        $this->assertEquals(2, $result->$col_name);
     }
 
     public function testAdapterInsert()

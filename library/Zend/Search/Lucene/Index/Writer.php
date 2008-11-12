@@ -436,9 +436,9 @@ class Zend_Search_Lucene_Index_Writer
         try {
             // Write format marker
             if ($this->_targetFormatVersion == Zend_Search_lucene::FORMAT_2_1) {
-            	$newSegmentFile->writeInt((int)0xFFFFFFFD);
+                $newSegmentFile->writeInt((int)0xFFFFFFFD);
             } else if ($this->_targetFormatVersion == Zend_Search_lucene::FORMAT_2_3) {
-            	$newSegmentFile->writeInt((int)0xFFFFFFFC);
+                $newSegmentFile->writeInt((int)0xFFFFFFFC);
             }
 
             // Read src file format identifier
@@ -494,7 +494,7 @@ class Zend_Search_Lucene_Index_Writer
                     $delGenLow         = $segmentsFile->readInt();
 
                     if ($srcFormat == Zend_Search_Lucene::FORMAT_2_3) {
-                    	$docStoreOffset = $segmentsFile->readInt();
+                        $docStoreOffset = $segmentsFile->readInt();
 
                         if ($docStoreOffset != -1) {
                             $docStoreSegment        = $segmentsFile->readString();
@@ -507,7 +507,7 @@ class Zend_Search_Lucene_Index_Writer
                             $docStoreOptions = null;
                         }
                     } else {
-                    	$docStoreOptions = null;
+                        $docStoreOptions = null;
                     }
 
                     $hasSingleNormFile = $segmentsFile->readByte();
@@ -563,14 +563,14 @@ class Zend_Search_Lucene_Index_Writer
                     $newSegmentFile->writeInt($delGenHigh);
                     $newSegmentFile->writeInt($delGenLow);
                     if ($this->_targetFormatVersion == Zend_Search_Lucene::FORMAT_2_3) {
-                    	if ($docStoreOptions !== null) {
-                    		$newSegmentFile->writeInt($docStoreOffset);
-                    		$newSegmentFile->writeString($docStoreSegment);
-                    		$newSegmentFile->writeByte($docStoreIsCompoundFile);
-                    	} else {
-                    		// Set DocStoreOffset to -1
-                    		$newSegmentFile->writeInt((int)0xFFFFFFFF);
-                    	}
+                        if ($docStoreOptions !== null) {
+                            $newSegmentFile->writeInt($docStoreOffset);
+                            $newSegmentFile->writeString($docStoreSegment);
+                            $newSegmentFile->writeByte($docStoreIsCompoundFile);
+                        } else {
+                            // Set DocStoreOffset to -1
+                            $newSegmentFile->writeInt((int)0xFFFFFFFF);
+                        }
                     } else if ($docStoreOptions !== null) {
                         // Release index write lock
                         Zend_Search_Lucene_LockManager::releaseWriteLock($this->_directory);
@@ -734,11 +734,11 @@ class Zend_Search_Lucene_Index_Writer
 
             foreach ($filesToDelete as $file) {
                 try {
-                	/** Skip shared docstore segments deleting */
+                    /** Skip shared docstore segments deleting */
                     /** @todo Process '.cfx' files to check if them are already unused */
-                	if (substr($file, strlen($file)-4) != '.cfx') {
+                    if (substr($file, strlen($file)-4) != '.cfx') {
                         $this->_directory->deleteFile($file);
-                	}
+                    }
                 } catch (Zend_Search_Lucene_Exception $e) {
                     if (strpos($e->getMessage(), 'Can\'t delete file') === false) {
                         // That's not "file is under processing or already deleted" exception

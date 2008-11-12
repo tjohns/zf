@@ -132,9 +132,9 @@ class Zend_Loader
          * Try finding for the plain filename in the include_path.
          */
         if ($once) {
-            $return = @include_once $filename;
+            include_once $filename;
         } else {
-            $return = @include $filename;
+            include $filename;
         }
 
         /**
@@ -144,13 +144,18 @@ class Zend_Loader
             set_include_path($incPath);
         }
 
-        return ($return) ? true : false;
+        return true;
     }
 
     /**
      * Returns TRUE if the $filename is readable, or FALSE otherwise.
      * This function uses the PHP include_path, where PHP's is_readable()
      * does not.
+     *
+     * Note from ZF-2900:
+     * If you use custom error handler, please check whether return value
+     *  from error_reporting() is zero or not.
+     * At mark of fopen() can not suppress warning if the handler is used.
      *
      * @param string   $filename
      * @return boolean

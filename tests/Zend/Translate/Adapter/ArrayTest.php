@@ -23,6 +23,13 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Error flag
+     *
+     * @var boolean
+     */
+    protected $_errorOccurred = false;
+
+    /**
      * Runs the test methods of this class.
      *
      * @return void
@@ -106,7 +113,7 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.php', 'en');
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null, 'locale' => 'en', 'ignore' => '.'), $adapter->getOptions());
+        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null, 'locale' => 'en', 'ignore' => '.', 'disableNotices' => false), $adapter->getOptions());
         $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }
@@ -173,6 +180,22 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
     public function testLoadArrayFile()
     {
         $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.php');
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+    }
+
+    public function testDisablingNotices()
+    {
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $adapter = new Zend_Translate_Adapter_Array(array());
+        $this->assertTrue($this->_errorOccurred);
+        restore_error_handler();
+        $this->_errorOccurred = false;
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $adapter = new Zend_Translate_Adapter_Array(array(), 'en', array('disableNotices' => true));
+        $this->assertFalse($this->_errorOccurred);
+        restore_error_handler();
         $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
     }
 

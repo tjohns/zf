@@ -38,7 +38,7 @@ require_once 'Zend/Amf/Parse/TypeLoader.php';
  */
 class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
 {
-	/**
+    /**
      * Total number of objects in the referenceObject array
      * @var int
      */

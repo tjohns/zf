@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11358 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.router" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Routeur Standard</title>
 
@@ -251,12 +251,26 @@ $request->setBaseUrl('/~user/application-root/');
 ]]></programlisting>
     </sect2>
 
+    <sect2 id="zend.controller.router.global.parameters">
+        <title>Paramètres globaux</title>
+
+        <para>Vous pouvez régler des paramètres globaux dans un routeur, qui sont automatiquement fournis à la route
+        lors de son assemblage, grâce à la fonction <code>setGlobalParam()</code>. Si un paramètre global est réglé mais
+        qu'il est aussi fourni directement à la méthode d'assemblage, le paramètre utilisateur écrase le paramètre
+        global. Vous pouvez régler un paramètre global de cette manière :</para>
+
+        <programlisting role="php"><![CDATA[
+$router->setGlobalParam('lang', 'en');
+]]></programlisting>
+    </sect2>
+
     <sect2 id="zend.controller.router.routes">
         <title>Types de route</title>
 
         <xi:include href="Zend_Controller-Router-Route.xml" />
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
+        <xi:include href="Zend_Controller-Router-Route-Hostname.xml" />
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">

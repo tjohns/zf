@@ -303,4 +303,38 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
 
         unlink(dirname(__FILE__) . '/_files/output.pdf');
     }
+
+    /**
+     * @group ZF-3701
+     */
+    public function testZendPdfIsExtendableWithAccessToProperties()
+    {
+        $pdf = new ExtendedZendPdf();
+
+        // Test accessing protected variables and their default content
+        $this->assertEquals(array(), $pdf->_originalProperties);
+        $this->assertEquals(array(), $pdf->_namedActions);
+
+        $pdfpage = new ExtendedZendPdfPage(Zend_Pdf_Page::SIZE_A4);
+        // Test accessing protected variables and their default content
+        $this->assertEquals(0, $pdfpage->_saveCount);
+    }
+}
+
+
+class ExtendedZendPdf extends Zend_Pdf
+{
+    public function __get($name) {
+        if(isset($this->$name)) {
+            return $this->$name;
+        }
+    }
+}
+class ExtendedZendPdfPage extends Zend_Pdf_Page
+{
+    public function __get($name) {
+        if(isset($this->$name)) {
+            return $this->$name;
+        }
+    }
 }

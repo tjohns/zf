@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12111 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Aides d'action (Helper)</title>
 
@@ -115,6 +115,11 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Aides', 'Aide');
 
         <para>Puisque ces méthodes sont statiques, elles peuvent être appelées en tout point du déroulement du
         contrôleur pour ajouter dynamiquement les aides nécessaires.</para>
+
+        <para>En interne, le gestionnaire d'aide utilise <link linkend="zend.loader.pluginloader">une instance de
+        PluginLoader</link> pour conserver les chemins. Vous pouvez récupérer le PluginLoader en utilisant la méthode
+        statique <code>getPluginLoader()</code>, ou alternativement, injecter une instance personnalisée de PluginLoader
+        en utilisant <code>setPluginLoader()</code>.</para>
 
         <para>Pour déterminer si une aide existe dans le gestionnaire d'aide, utilisez <code>hasHelper($name)</code>, où
         <code>$name</code> est le nom raccourci de l'aide (sans le préfixe) :</para>

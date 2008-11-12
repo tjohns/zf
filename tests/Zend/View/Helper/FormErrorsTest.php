@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_FormErrorsTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/FormErrors.php';
 require_once 'Zend/View.php';
@@ -12,7 +12,7 @@ require_once 'Zend/View.php';
 /**
  * Test class for Zend_View_Helper_FormErrors
  */
-class Zend_View_Helper_FormErrorsTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_FormErrorsTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -64,7 +64,7 @@ class Zend_View_Helper_FormErrorsTest extends PHPUnit_Framework_TestCase
 
     public function testGetElementStartReturnsDefaultValue()
     {
-        $this->assertEquals('<ul class="errors"%s><li>', $this->helper->getElementStart());
+        $this->assertEquals('<ul%s><li>', $this->helper->getElementStart());
     }
 
     public function testCanSetElementEndString()
@@ -132,6 +132,17 @@ class Zend_View_Helper_FormErrorsTest extends PHPUnit_Framework_TestCase
         $html = $this->helper->formErrors($errors, array('escape' => false));
         $this->assertContains($errors['foo'], $html);
         $this->assertContains($errors['bar'], $html);
+    }
+
+    /**
+     * @issue ZF-3477
+     * @link http://framework.zend.com/issues/browse/ZF-3477
+     */
+    public function testCanSetClassAttribute()
+    {
+        $options = array('class' => 'custom-class');
+        $acutallHtml = $this->helper->formErrors(array(), $options);
+        $this->assertEquals('<ul class="custom-class"><li></li></ul>', $acutallHtml);
     }
 }
 

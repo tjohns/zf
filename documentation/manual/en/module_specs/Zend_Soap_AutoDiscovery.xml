@@ -1,8 +1,8 @@
 <sect1 id="zend.soap.autodiscovery">
-    <title>AutoDiscovery.</title>
+    <title>AutoDiscovery</title>
 
     <sect2 id="zend.soap.autodiscovery.introduction">
-        <title>AutoDiscovery. Introduction</title>
+        <title>AutoDiscovery Introduction</title>
         <para>
             SOAP functionality implemented within Zend Framework is intended to make all steps
             required for SOAP communications more simple.
@@ -86,10 +86,10 @@ $autodiscover->handle();
 
 
     <sect2 id="zend.soap.autodiscovery.class">
-        <title>Class autodiscovering.</title>
+        <title>Class autodiscovering</title>
 
         <para>
-            If class is used to provide SOAP server functionality, then the same class should be provided to 
+            If class is used to provide SOAP server functionality, then the same class should be provided to
             <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
@@ -98,7 +98,7 @@ $autodiscover->handle();
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             The following rules are used while WSDL generation:
             <itemizedlist>
@@ -110,11 +110,11 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
+                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used
                         as an URI where the WSDL is available.
                     </para>
                     <para>
-                         It's also used as a target namespace for all service related names (including 
+                         It's also used as a target namespace for all service related names (including
                          described complex types).
                     </para>
                 </listitem>
@@ -135,26 +135,26 @@ $autodiscover->handle();
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <note>
             <title>Important!</title>
             <para>
-                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
-                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
+                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types.
+                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the
                 only way to determine them.
             </para>
             <para>
-                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class.
             </para>
         </note>
     </sect2>
 
 
     <sect2 id="zend.soap.autodiscovery.functions">
-        <title>Functions autodiscovering.</title>
+        <title>Functions autodiscovering</title>
 
         <para>
-            If set of functions are used to provide SOAP server functionality, then the same set should be provided to 
+            If set of functions are used to provide SOAP server functionality, then the same set should be provided to
             <code>Zend_Soap_AutoDiscovery</code> for WSDL generation:
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
@@ -166,7 +166,7 @@ $autodiscover->handle();
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             The following rules are used while WSDL generation:
             <itemizedlist>
@@ -178,11 +178,11 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used 
+                        <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used
                         as an URI where the WSDL is available.
                     </para>
                     <para>
-                         It's also used as a target namespace for all service related names (including 
+                         It's also used as a target namespace for all service related names (including
                          described complex types).
                     </para>
                 </listitem>
@@ -203,23 +203,23 @@ $autodiscover->handle();
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <note>
             <title>Important!</title>
             <para>
-                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types. 
-                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the 
+                WSDL autodiscovery utilizes the PHP docblocks provided by the developer to determine the parameter and return types.
+                In fact, for scalar types, this is the only way to determine the parameter types, and for return types, this is the
                 only way to determine them.
             </para>
             <para>
-                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class. 
+                That means, providing correct and fully detailed docblocks is not only best practice, but is required for discovered class.
             </para>
         </note>
     </sect2>
 
 
     <sect2 id="zend.soap.autodiscovery.datatypes">
-        <title>Autodiscovering. Datatypes.</title>
+        <title>Autodiscovering Datatypes</title>
 
         <para>
             Input/output datatypes are converted into network service types using the following mapping:
@@ -245,18 +245,21 @@ $autodiscover->handle();
                 </listitem>
                 <listitem>
                     <para>
-                        PHP class &lt;-&gt; <code>tns:$className</code>
+                        PHP class &lt;-&gt; based on complex type strategy (See: <xref linkend="zend.soap.wsdl.types.add_complex" />)
                         <footnote>
                             <para>
-                                If <code>Zend_Soap_AutoDiscover</code> object is created with <code>$extractComplexTypes</code>
-                                parameter turned off, then classes are translated to <code>xsd:anyType</code>.
-                            </para>
-                            <para>
-                                Otherwise, <code>tns:$className</code> is used and type is described in details in &lt;types&gt;
-                                WSDL section.
+                                <code>Zend_Soap_AutoDiscover</code> will be created with the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
+                                class as detection algorithm for complex types. The first parameter of the AutoDiscover constructor takes
+                                any complex type strategy implementing <code>Zend_Soap_Wsdl_Strategy_Interface</code> or a string with the name
+                                of the class. For backwards compatibility with <code>$extractComplexType</code> boolean variables are parsed
+                                exactly like in Zend_Soap_Wsdl. See the <link linkend="zend.soap.wsdl.types.add_complex">Zend_Soap_Wsdl manual
+                                on adding complex</link> types for more information.
                             </para>
                         </footnote>.
                     </para>
+                </listitem>
+                <listitem>
+                    <para>type[] or object[] (ie. int[]) &lt;-&gt; based on complex type strategy</para>
                 </listitem>
                 <listitem>
                     <para>PHP void &lt;-&gt; empty type.</para>
@@ -265,8 +268,8 @@ $autodiscover->handle();
                     <para>If type is not matched to any of these types by some reason, then <code>xsd:anyType</code> is used.</para>
                 </listitem>
             </itemizedlist>
-            
-            Where <code>xsd:</code> is "http://www.w3.org/2001/XMLSchema" namespace, 
+
+            Where <code>xsd:</code> is "http://www.w3.org/2001/XMLSchema" namespace,
             <code>soap-enc:</code> is a "http://schemas.xmlsoap.org/soap/encoding/" namespace,
             <code>tns:</code> is a "target namespace" for a service.
         </para>

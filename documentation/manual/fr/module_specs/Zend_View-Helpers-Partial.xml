@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12577 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>L'aide de vue Partial</title>
 
@@ -9,6 +9,14 @@
 
     <para>Une soeur de l'aide <code>Partial</code>, l'aide de vue de <code>PartialLoop</code> vous permet de passer des
     données itératives, et effectue un rendu partiel pour chaque élément.</para>
+
+    <note>
+        <title>Compteur de PartialLoop</title>
+
+        <para>L'aide de vue <code>PartialLoop</code> assigne une variable à la vue nommée <code>partialCounter</code>
+        qui fournit la position courante du tableau au script de vue. Ce qui permet simplement d'avoir des couleurs
+        alternatives dans les lignes d'un tableau par exemple.</para>
+    </note>
 
     <example id="zend.view.helpers.initial.partial.usage">
         <title>Utilisation de base des Partials</title>

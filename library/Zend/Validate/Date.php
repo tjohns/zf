@@ -112,8 +112,8 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
         }
 
         require_once 'Zend/Locale.php';
-        if (!Zend_Locale::isLocale($locale, true)) {
-            if (!Zend_Locale::isLocale($locale, false)) {
+        if (!Zend_Locale::isLocale($locale, true, false)) {
+            if (!Zend_Locale::isLocale($locale, false, false)) {
                 require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception("The locale '$locale' is no known locale");
             }

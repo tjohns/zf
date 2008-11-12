@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12150 -->
 <sect2 id="zend.validate.set.email_address">
 
     <title>Email Adresse</title>
@@ -67,7 +67,9 @@ if ($validator->isValid($email)) {
         und lokale Hostnamen, akzeptiert werden wie im Beispiel das anbei steht:
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
+$validator = new Zend_Validate_EmailAddress(
+                    Zend_Validate_Hostname::ALLOW_DNS |
+                    Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
     // Email Adresse scheint gültig zu sein
 } else {
@@ -98,7 +100,8 @@ if ($validator->isValid($email)) {
         Konstruktor übergeben werden.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
+                                            true);
 ]]>
         </programlisting>
 

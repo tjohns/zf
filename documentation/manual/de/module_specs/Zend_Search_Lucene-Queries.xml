@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.search.lucene.query-api">
     <title>Abfrage Erzeugungs API</title>
 
@@ -55,11 +55,11 @@ try {
             gestückelt und alle Begriffsstücke werden für die Suche verwendet.
             Die <code>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</code> Methode
             kann verwendet werden um Exceptions einzuschalten. Die
-            <code>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</code> und 
+            <code>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</code> und
             <code>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</code> Methoden
-            sind auch dazu gedacht das Verhalten der Exceptionsbehandlung zu verwalten. 
+            sind auch dazu gedacht das Verhalten der Exceptionsbehandlung zu verwalten.
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.search.lucene.queries.term-query">
@@ -328,7 +328,7 @@ $hits  = $index->find($query);
         </programlisting>
 
         <para>
-            Es ist auch möglich Listen von Unterabfragen im Konstruktor der Boolschen Abfrage zu definieren: 
+            Es ist auch möglich Listen von Unterabfragen im Konstruktor der Boolschen Abfrage zu definieren:
             <programlisting role="php"><![CDATA[
 ...
 $subqueries = array($subquery1, $subquery2, $subquery3);
@@ -362,7 +362,7 @@ $hits  = $index->find($query);
                 </listitem>
             </itemizedlist>
         </para>
-        
+
         <para>
             Jede Abfrage die boolsche Operatoren verwendet kann, kann auch auch umgeschrieben werden damit Sie
             die Vorzeichen-Schreibweise verwendet und mit Hilfe der API erstellt wird. Zum Beispiel:
@@ -382,7 +382,7 @@ word1 AND (word2 AND word3 AND NOT word4) OR word5
         <title>Wildcard Abfragen</title>
         <para>
             Wildcard Abfragen können dazu verwendet werden um nach Dokumenten zu suchen die Strings enthalten
-            welche den spezifizierten Patterns entsprechen. 
+            welche den spezifizierten Patterns entsprechen.
         </para>
 
         <para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12412 -->
 <sect1 id="zend.cache.theory">
     <title>Aspect théorique</title>
 
@@ -111,7 +111,8 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG,
 ]]></programlisting>
 
         <para>Les modes disponibles de nettoyage sont <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
-        <code>CLEANING_MODE_MATCHING_TAG</code> et <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. Les derniers, comme leur
-        nom l'indique, sont à combiner avec un tableau de balises pour réaliser les opérations de nettoyage.</para>
+        <code>CLEANING_MODE_MATCHING_TAG</code>, <code>CLEANING_MODE_NOT_MATCHING_TAG</code> et
+        <code>CLEANING_MODE_MATCHING_ANY_TAG</code>. Les derniers, comme leur nom l'indique, sont à combiner avec un
+        tableau de balises pour réaliser les opérations de nettoyage.</para>
     </sect2>
 </sect1>

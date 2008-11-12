@@ -30,41 +30,41 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
      */
     protected $_captcha;
     
-	/**
-	 * Get captcha adapter
-	 * 
-	 * @return Zend_Captcha_Adapter
-	 */
+    /**
+     * Get captcha adapter
+     * 
+     * @return Zend_Captcha_Adapter
+     */
     public function getCaptcha() 
     {
-		return $this->_captcha;
-	}
-	
-	/**
-	 * Set captcha adapter
-	 * 
-	 * @param string|array|Zend_Captcha_Adapter $captcha
-	 * @param array $options
-	 */
+        return $this->_captcha;
+    }
+    
+    /**
+     * Set captcha adapter
+     * 
+     * @param string|array|Zend_Captcha_Adapter $captcha
+     * @param array $options
+     */
     public function setCaptcha($captcha, $options = array()) 
     {
-	    if ($captcha instanceof Zend_Captcha_Adapter) {
+        if ($captcha instanceof Zend_Captcha_Adapter) {
             $instance = $captcha;
-	    } else {
-    	    if (is_array($captcha)) {
+        } else {
+            if (is_array($captcha)) {
                 if (array_key_exists('captcha', $captcha)) {
                     $name = $captcha['captcha'];
                     unset($captcha['captcha']);
                 } else {
                     $name = array_shift($captcha);
                 }
-    	        $options = array_merge($options, $captcha);
-    	    } else {
-    	        $name = $captcha;
-    	    }
+                $options = array_merge($options, $captcha);
+            } else {
+                $name = $captcha;
+            }
 
-    	    $name = $this->getPluginLoader(self::CAPTCHA)->load($name);
-    	    if (empty($options)) {
+            $name = $this->getPluginLoader(self::CAPTCHA)->load($name);
+            if (empty($options)) {
                 $instance = new $name;
             } else {
                 $r = new ReflectionClass($name);
@@ -74,12 +74,12 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
                     $instance = $r->newInstance();
                 }
             }
-	    }
-	    
+        }
+        
         $this->_captcha = $instance;
         $this->_captcha->setName($this->getName());
         return $this;
-	}
+    }
 
     /**
      * Constructor
@@ -92,14 +92,14 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
      * @param  string|array|Zend_Config $spec 
      * @return void
      */
-	public function __construct($spec, $options = null) 
-	{
-		parent::__construct($spec, $options);
-    	$this->setAllowEmpty(true)
-    	     ->setRequired(true)
+    public function __construct($spec, $options = null) 
+    {
+        parent::__construct($spec, $options);
+        $this->setAllowEmpty(true)
+             ->setRequired(true)
              ->setAutoInsertNotEmptyValidator(false)
-    	     ->addValidator($this->getCaptcha(), true);
-    }	
+             ->addValidator($this->getCaptcha(), true);
+    }    
 
     /**
      * Set options
@@ -148,7 +148,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
 
         $this->setValue($this->getCaptcha()->generate());
 
-    	return parent::render($view);
+        return parent::render($view);
     }
     
     /**
@@ -219,6 +219,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('Errors')
+                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'))
                  ->addDecorator('HtmlTag', array('tag' => 'dd'))
                  ->addDecorator('Label', array('tag' => 'dt'));
         }

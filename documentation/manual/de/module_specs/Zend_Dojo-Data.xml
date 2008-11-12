@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11282 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data Envelopes</title>
 
@@ -17,7 +17,7 @@
     </para>
 
     <programlisting role="javascript"><![CDATA[
-{ 
+{
     identifier: '<name>',
     <label: '<label>',>
     items: [
@@ -170,7 +170,7 @@ $data->fromJson($json);
             weitere Anfragen zu erstellen (z.B., wenn er die letzte Seite der Daten
             erreicht hat). Diese Technik ist nützlich wenn große Sets an Daten im
             Grid geliefert werden sollen, ohne das man das komplette Set auf einmal
-            laden muß. 
+            laden muß.
         </para>
 
         <para>

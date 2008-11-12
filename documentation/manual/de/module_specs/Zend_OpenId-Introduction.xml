@@ -101,7 +101,7 @@
                 <para>
                     Der OpenID Konsument verifiziert die vom Provider empfangenen Informationen durch die
                     Verwendung des "geteilten Geheimnisses" das er bei Schritt 3 erhalten hat oder durch das
-                    senden einer direkten Anfrage zum OpenID Provider. 
+                    senden einer direkten Anfrage zum OpenID Provider.
                 </para>
             </listitem>
         </orderedlist>

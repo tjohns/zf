@@ -22,7 +22,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * These const values control some testing behavior.
@@ -3299,7 +3299,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,$locale);
 
         $result = $date->getDate();
-        $this->assertSame('2002-01-04T05:00:00+05:00', $result->get(Zend_Date::W3C));
+        $this->assertSame('2002-01-04T00:00:00+05:00', $result->get(Zend_Date::W3C));
     }
 
     /**
@@ -5173,6 +5173,16 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date   = new Zend_Date('13',null,$locale);
         $this->assertSame($date->getLocale(), $locale->toString());
+    }
+
+    /**
+     * Test for ZF-4867
+     */
+    public function testZF4867()
+    {
+        date_default_timezone_set('America/New_York');
+        $date1  = new Zend_Date('2006-01-01 01:00:00 Europe/Paris', Zend_Date::ISO_8601);
+        $this->assertEquals('Europe/Paris', $date1->getTimezone());
     }
 }
 

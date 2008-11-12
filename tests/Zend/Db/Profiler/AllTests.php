@@ -17,14 +17,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 8064 2008-02-16 10:58:39Z thomas $
+ * @version    $Id$
  */
  
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Db_Profiler_AllTests::main');
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
@@ -37,7 +37,7 @@ require_once 'Zend/Db/Profiler/FirebugTest.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 8064 2008-02-16 10:58:39Z thomas $
+ * @version    $Id$
  */
 class Zend_Db_Profiler_AllTests
 {

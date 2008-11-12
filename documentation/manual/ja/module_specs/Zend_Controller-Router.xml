@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11358 -->
+<!-- EN-Revision: 11947 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>標準のルータ</title>
     <sect2 id="zend.controller.router.introduction">
@@ -119,7 +119,7 @@ $router->addRoute('user',
         </programlisting>
 
         <para>
-            Rewrite ルータには、4 種類の基本的なルーティング方式があります
+            Rewrite ルータには、5 種類の基本的なルーティング方式があります
             (そのうちのひとつは特別なものです)。
         </para>
 
@@ -127,6 +127,7 @@ $router->addRoute('user',
             <listitem><para><xref linkend="zend.controller.router.routes.standard" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.hostname" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
 
@@ -323,6 +324,7 @@ $request->setBaseUrl('/~user/application-root/');
         <xi:include href="Zend_Controller-Router-Route.xml" />
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
+        <xi:include href="Zend_Controller-Router-Route-Hostname.xml" />
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">

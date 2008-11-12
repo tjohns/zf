@@ -193,6 +193,83 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.formErrors">
+        <title>Zend_Form_Decorator_FormErrors</title>
+
+        <para>
+            Some developers and designers prefer to group all error messages at
+            the top of the form. The FormErrors decorator allows you to do this.
+        </para>
+        
+        <para>
+            By default, the generated list of errors has the following markup:
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<ul class="form-errors>
+    <li><b>[element label or name]</b><ul>
+            <li>[error message]</li>
+            <li>[error message]</li>
+        </ul>
+    </li>
+    <li><ul>
+        <li><b>[subform element label or name</b><ul>
+                <li>[error message]</li>
+                <li>[error message]</li>
+            </ul>
+        </li>
+    </ul></li>
+</ul>
+]]></programlisting>
+
+        <para>
+            You can pass in a variety of options to configure the generated
+            output:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <code>ignoreSubForms</code>: whether or not to disable recursion
+                into subforms. Default value: false (i.e., allow recursion).
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupElementLabelEnd</code>: Markup to append to element
+                labels. Default value: '&lt;/b&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupElementLabelStart</code>: Markup to prepend to
+                element labels. Default value: '&lt;b&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListEnd</code>: Markup to append error message lists
+                with.  Default value: '&lt;/ul&gt;'.
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListItemEnd</code>: Markup to append individual
+                error messages with. Default value: '&lt;/li&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListItemStart</code>: Markup to prepend individual
+                error messages with. Default value: '&lt;li&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListStart</code>: Markup to append error message
+                lists with. Default value: '&lt;ul class="form-errors"&gt;'
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            The FormErrors decorator can either prepend or append the content
+            provided to it.
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.htmlTag">
         <title>Zend_Form_Decorator_HtmlTag</title>
 
@@ -296,6 +373,28 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.prepareElements">
+        <title>Zend_Form_Decorator_PrepareElements</title>
+
+        <para>
+            Forms, display groups, and sub forms are collections of
+            elements. When using the <link
+                linkend="zend.form.standardDecorators.viewScript">ViewScript</link>
+            decorator with your form or sub form, it's useful to be able to
+            recursively set the view object, translator, and all fully qualifid
+            names (as determined by sub form array notation). The
+            'PrepareElements' decorator can do this for you. Typically, you will
+            set it as the first decorator in the list.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$form->setDecorators(array(
+    'PrepareElements',
+    array('ViewScript', array('viewScript' => 'form.phtml')),
+));
+]]></programlisting>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.viewHelper">
         <title>Zend_Form_Decorator_ViewHelper</title>
 
@@ -306,7 +405,7 @@ class Util
             helper to utilize; if none is provided, it uses the last segment
             of the element's class name to determine the helper, prepending
             it with the string 'form': e.g., 'Zend_Form_Element_Text' would
-            look for a view helper of 'formText'. 
+            look for a view helper of 'formText'.
         </para>
 
         <para>
@@ -381,18 +480,18 @@ $element->setDecorators(array(array('ViewScript',
                                     array('class' => 'form element'))));
 ]]>
         </programlisting>
-        
+
         <para>
             You could then have a view script something like this:
         </para>
 
         <programlisting role="php"><![CDATA[
 <div class="<?= $this->class ?>">
-    <?= $this->formLabel($this->element->getName(), 
+    <?= $this->formLabel($this->element->getName(),
                          $this->element->getLabel()) ?>
     <?= $this->{$this->element->helper}(
         $this->element->getName(),
-        $this->element->getValue(), 
+        $this->element->getValue(),
         $this->element->getAttribs()
     ) ?>
     <?= $this->formErrors($this->element->getMessages()) ?>

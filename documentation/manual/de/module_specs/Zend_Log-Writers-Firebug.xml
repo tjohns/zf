@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11231 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.log.writers.firebug">
 
     <title>An Firebox schreiben</title>
@@ -46,10 +46,10 @@
             </para>
         </listitem>
     </itemizedlist>
-    
+
     <example id="zend.log.writers.firebug.example.with_front_controller">
         <title>Loggen mit <code>Zend_Controller_Front</code></title>
-    
+
         <programlisting role="php"><![CDATA[
 // Platziere das in der Bootstrap Datei bevor der Frontcontroller ausgeführt wird
 $writer = new Zend_Log_Writer_Firebug();
@@ -58,12 +58,12 @@ $logger = new Zend_Log($writer);
 // Verwende das in den Modell, View, und Controller Dateien
 $logger->log('Das ist eine Lognachricht!', Zend_Log::INFO);
 ]]>
-        </programlisting>	
+        </programlisting>
     </example>
-      
+
     <example id="zend.log.writers.firebug.example.without_front_controller">
         <title>Loggen ohne <code>Zend_Controller_Front</code></title>
-      
+
         <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Firebug();
 $logger = new Zend_Log($writer);
@@ -86,11 +86,11 @@ $response->sendHeaders();
 ]]>
         </programlisting>
     </example>
-    
+
     <sect3 id="zend.log.writers.firebug.priority-styles">
-  
+
         <title>Setzen von Stilen für Prioritäten</title>
-  
+
         <para>
             Eingebaute und Benutzerdefinierte Prioritäten können mit der
             <code>setPriorityStyle()</code> Methode angepasst werden.
@@ -101,7 +101,7 @@ $logger->addPriority('FOO', 8);
 $writer->setPriorityStyle(8, 'TRACE');
 $logger->foo('Foo Nachricht');
 ]]>
-        </programlisting>	
+        </programlisting>
 
         <para>
             Der Standardstil für Benutzerdefinierte Prioritäten kann mit der
@@ -158,11 +158,11 @@ $writer->setDefaultPriorityStyle('TRACE');
         </table>
       </para>
     </sect3>
-  
+
     <sect3 id="zend.log.writers.firebug.preparing-data">
-  
+
       <title>Daten für das Loggen vorbereiten</title>
-  
+
       <para>
           Wärend jede PHP Variable mit den eingebauten Prioritäten geloggt werden kann, ist eine etwas spezielle
           Formatierung notwendig wenn einige der spezialisierteren Logstile verwendet werden.
@@ -173,11 +173,11 @@ $writer->setDefaultPriorityStyle('TRACE');
           Stile benötigen keine spezielle Formatierung.
       </para>
     </sect3>
-  
+
     <sect3 id="zend.log.writers.firebug.preparing-data.exception">
-     
+
       <title>Loggen von Ausnahmen</title>
-     
+
       <para>
           Um eine <code>Zend_Exception</code> zu loggen muß einfach das Exceptionobjekt an den Logger
           übergeben werden. Es ist egal welche Priorität oder welcher Stil gesetzt wurde, da die Ausnahme
@@ -190,11 +190,11 @@ $logger->err($exception);
 ]]>
       </programlisting>
     </sect3>
-  
+
     <sect3 id="zend.log.writers.firebug.preparing-data.table">
-     
+
       <title>Tabellen loggen</title>
-     
+
       <para>
           Man kann auch Daten loggen und diese in einem Table Stil formatieren. Spalten werden automatisch
           erkannt und die erste Zeile der Daten wird automatisch der Header.

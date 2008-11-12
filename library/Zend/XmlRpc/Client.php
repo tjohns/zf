@@ -272,7 +272,9 @@ class Zend_XmlRpc_Client
         iconv_set_encoding('internal_encoding', 'UTF-8');
 
         $http = $this->getHttpClient();
-        $http->setUri($this->_serverAddress);
+        if($http->getUri() === null) {
+            $http->setUri($this->_serverAddress);
+        }
 
         $http->setHeaders(array(
             'Content-Type: text/xml; charset=utf-8',

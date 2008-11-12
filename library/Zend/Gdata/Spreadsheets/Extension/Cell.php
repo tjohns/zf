@@ -93,9 +93,9 @@ class Zend_Gdata_Spreadsheets_Extension_Cell extends Zend_Gdata_Extension
         $this->_numericValue = $numericValue;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         $element->setAttribute('row', $this->_row);
         $element->setAttribute('col', $this->_col);
         if ($this->_inputValue) $element->setAttribute('inputValue', $this->_inputValue);

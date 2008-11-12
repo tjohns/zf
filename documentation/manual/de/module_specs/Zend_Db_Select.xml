@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
@@ -172,8 +172,7 @@ $select = $db->select()
 
                 <title>Beispiel für die from() Methode</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 // Erstellen dieser Anfrage:
 //   SELECT *
 //   FROM "products"
@@ -199,8 +198,7 @@ $select = $db->select()
 
                 <title>Beispiel für das Angeben eines Beziehungsnamens</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 // Erzeugt diese Anfrage:
 //   SELECT p.*
 //   FROM "products" AS p
@@ -1130,7 +1128,7 @@ $select = $db->select()
                 <para>
                     Die <code>LIMIT</code> Syntax wird nicht von allen RDBMS Marken unterstützt.
                     Einige RDBMS benötigen eine unterschiedliche Syntax für eine ähnliche
-                    Funktionalität. Jede Zend_Db_Adapter_Abstract Klasse enthält eine Methode um 
+                    Funktionalität. Jede Zend_Db_Adapter_Abstract Klasse enthält eine Methode um
                     für das RDBMS passende Syntax zu erzeugen.
                 </para>
 

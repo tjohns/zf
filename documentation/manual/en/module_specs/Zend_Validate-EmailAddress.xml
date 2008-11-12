@@ -64,7 +64,9 @@ if ($validator->isValid($email)) {
         though an example of how to accept both DNS and Local hostnames appears below:
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
+$validator = new Zend_Validate_EmailAddress(
+                    Zend_Validate_Hostname::ALLOW_DNS |
+                    Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
     // email appears to be valid
 } else {
@@ -95,7 +97,8 @@ if ($validator->isValid($email)) {
         constructor.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
+                                            true);
 ]]>
         </programlisting>
 

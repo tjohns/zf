@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Books
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -175,7 +176,6 @@ class Zend_Gdata_Books extends Zend_Gdata
         } else {
             $uri = $location;
         }
-        print $uri;
         return parent::insertEntry(
             $entry, $uri, 'Zend_Gdata_Books_VolumeEntry');
     }

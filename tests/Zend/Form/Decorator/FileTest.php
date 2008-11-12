@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Decorator_FileTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -116,6 +116,31 @@ class Zend_Form_Decorator_FileTest extends PHPUnit_Framework_TestCase
         $test = $this->decorator->render(null);
         $this->assertRegexp('#MAX_FILE_SIZE#s', $test);
         $this->assertRegexp('#3000#s', $test);
+    }
+
+    public function testPlacementInitiallyAppends()
+    {
+        $this->assertEquals(Zend_Form_Decorator_Abstract::APPEND, $this->decorator->getPlacement());
+    }
+
+    public function testRenderReturnsOriginalContentWhenNoViewPresentInElement()
+    {
+        $element = new Zend_Form_Element('foo');
+        $this->decorator->setElement($element);
+        $content = 'test content';
+        $this->assertSame($content, $this->decorator->render($content));
+    }
+
+    public function testCanPrependFileToContent()
+    {
+        $element = new Zend_Form_Element_File('foo');
+        $element->setValue('foobar')
+                ->setView($this->getView());
+        $this->decorator->setElement($element)
+                        ->setOption('placement', 'prepend');
+
+        $file = $this->decorator->render('content');
+        $this->assertRegexp('#<input[^>]*>.*?(content)#s', $file, $file);
     }
 }
 

@@ -101,7 +101,7 @@
                 <para>
                     <code>formCheckbox($name, $value, $attribs,
                         $options):</code> Creates an &lt;input type="checkbox"
-                    /&gt; element.  
+                    /&gt; element.
                 </para>
 
                 <para>
@@ -138,29 +138,29 @@ echo $this->formCheckbox('foo');
 // '1' and '0' as checked/unchecked options; checked
 echo $this->formCheckbox('foo', null, array('checked' => true));
 
-// 'bar' and '0' as checked/unchecked options; not checked 
+// 'bar' and '0' as checked/unchecked options; not checked
 echo $this->formCheckbox('foo', 'bar');
 
-// 'bar' and '0' as checked/unchecked options; checked 
+// 'bar' and '0' as checked/unchecked options; checked
 echo $this->formCheckbox('foo', 'bar', array('checked' => true));
 
-// 'bar' and 'baz' as checked/unchecked options; unchecked 
+// 'bar' and 'baz' as checked/unchecked options; unchecked
 echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
 
-// 'bar' and 'baz' as checked/unchecked options; unchecked 
+// 'bar' and 'baz' as checked/unchecked options; unchecked
 echo $this->formCheckbox('foo', null, null, array(
-    'checked' => 'bar', 
+    'checked' => 'bar',
     'unChecked' => 'baz'
 ));
 
-// 'bar' and 'baz' as checked/unchecked options; checked 
+// 'bar' and 'baz' as checked/unchecked options; checked
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
 echo $this->formCheckbox('foo',
                          null,
                          array('checked' => true),
                          array('bar', 'baz');
 
-// 'bar' and 'baz' as checked/unchecked options; unchecked 
+// 'bar' and 'baz' as checked/unchecked options; unchecked
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
 echo $this->formCheckbox('foo',
                          null,
@@ -409,11 +409,11 @@ $view->addHelperPath('/path/to/some/helpers', 'My_View_Helper');
 $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // now when you call $this->helperName(), Zend_View will look first for
-// "/path/to/some/helpers/HelperName" using class name 
-// "Your_View_Helper_HelperName", then for 
-// "/other/path/to/helpers/HelperName.php" using class name 
-// "My_View_Helper_HelperName", and finally for 
-// "Zend/View/Helper/HelperName.php" using class name 
+// "/path/to/some/helpers/HelperName" using class name
+// "Your_View_Helper_HelperName", then for
+// "/other/path/to/helpers/HelperName.php" using class name
+// "My_View_Helper_HelperName", and finally for
+// "Zend/View/Helper/HelperName.php" using class name
 // "Zend_View_Helper_HelperName".
 ]]>
         </programlisting>

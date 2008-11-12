@@ -32,7 +32,7 @@ $mail->send();
             </programlisting>
 
         </example>
-    
+
         <note>
             <title>Minimum definitions</title>
             <para>
@@ -76,8 +76,8 @@ $mail->setBodyText('This is the text of the mail.')
 
         <para>
             The default transport for a <code>Zend_Mail</code> instance is <code>Zend_Mail_Transport_Sendmail</code>.
-            It is essentially a wrapper to the PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> function. 
-            If you wish to pass additional parameters to the <ulink url="http://php.net/mail"><code>mail()</code></ulink> function, 
+            It is essentially a wrapper to the PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> function.
+            If you wish to pass additional parameters to the <ulink url="http://php.net/mail"><code>mail()</code></ulink> function,
             simply create a new transport instance and pass your parameters to the constructor. The new transport instance
             can then act as the default <code>Zend_Mail</code> transport, or it can be passed to the <code>send()</code>
             method of <code>Zend_Mail</code>.

@@ -17,7 +17,7 @@
         class prefix to prepend when determining if a particular plugin class is
         loaded. Additionally, paths are searched in LIFO order. Due to the LIFO
         search and the class prefixes, this allows you to namespace your
-        plugins, and thus override plugins from paths registered earlier. 
+        plugins, and thus override plugins from paths registered earlier.
     </para>
 
     <sect2 id="zend.loader.pluginloader.usage">
@@ -76,10 +76,10 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
 // load 'FormLabel' helper:
-$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel' 
+$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // load 'FormSubmit' helper:
-$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
+$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
 ]]>
         </programlisting>
 
@@ -197,6 +197,72 @@ if ($loader->isLoaded('Adapter')) {
 }
 ]]>
         </programlisting>
+    </sect2>
+
+    <sect2 id="zend.loader.pluginloader.performance">
+        <title>Getting Better Performance for Plugins</title>
+
+        <para>
+            Plugin loading can be an expensive operation. At its heart, it needs
+            to loop through each prefix, then each path on the prefix, until it
+            finds a file that matches -- and which defines the class expected.
+            In cases where the file exists but does not define the class, an
+            error will be added to the PHP error stack, which is also an
+            expensive operation. The question then turns to: how can you keep
+            the flexibility of plugins and also address performance?
+        </para>
+
+        <para>
+            <code>Zend_Loader_PluginLoader</code> offers an opt-in feature for
+            just this situation, a class file include cache. When enabled, it
+            will create a file that contains all successful includes which you
+            can then call from your bootstrap. Using this strategy, you can
+            greatly improve your performance for your production servers.
+        </para>
+
+        <example id="zend.loader.pluginloader.performance.example">
+            <title>Using the PluginLoader class file include cache</title>
+
+            <para>
+                To use the class file include cache, simply drop in the
+                following code into your bootstrap:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+]]></programlisting>
+
+            <para>
+                Obviously, the path and filename will vary based on your needs.
+                This code should come as early as possible, to ensure that
+                plugin-based components can make use of it.
+            </para>
+
+            <para>
+                During development, you may wish to disable the cache. One
+                method for doing so is to use a configuration key for
+                determining whether or not the plugin loader should cache.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+if ($config->enablePluginLoaderCache) {
+    Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+}
+]]></programlisting>
+
+            <para>
+                This technique allows you to keep your modifications to your
+                configuration file rather than code.
+            </para>
+        </example>
     </sect2>
 </sect1>
 <!--

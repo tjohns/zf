@@ -68,9 +68,9 @@ class Zend_Gdata_Calendar_Extension_Link extends Zend_Gdata_App_Extension_Link
      * @return DOMElement The DOMElement representing this element and all
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_webContent != null) {
             $element->appendChild($this->_webContent->getDOM($element->ownerDocument));
         }

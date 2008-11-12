@@ -58,7 +58,7 @@ class Zend_Json_Server_Smd_Service
      * Regex for names
      * @var string
      */
-    protected $_nameRegex = '/^[a-z][a-z0-9_]+$/i';
+    protected $_nameRegex = '/^[a-z][a-z0-9._]+$/i';
 
     /**
      * Parameter option types

@@ -11,7 +11,7 @@
     <para>
         Installing Zend Framework is extremely simple. Once you have downloaded and extracted the framework, you should add the
         /library folder in the distribution to the beginning of your include path. You may also want to move the library folder
-        to another- possibly shared- location on your filesystem. 
+        to another- possibly shared- location on your filesystem.
 
         <itemizedlist>
             <listitem>

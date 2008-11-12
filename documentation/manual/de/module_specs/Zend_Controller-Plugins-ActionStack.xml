@@ -23,7 +23,7 @@
                 <code>getRegistry()</code> und <code>setRegistry()</code>.
                 Intern verwendet <code>ActionStack</code> eine Instanz von <code>Zend_Registry</code>
                 um den Stack zu speichern. Diese kann durch eine andere Registry Instanz ersetzt werden
-                oder dieselbe mit diesen Zugriffsmethoden empfangen.  
+                oder dieselbe mit diesen Zugriffsmethoden empfangen.
             </para>
         </listitem>
 
@@ -52,7 +52,7 @@
     <para>
         Eine zusätzliche Methode, <code>forward()</code>, erwartet ein Anfrageobjekt, und setzt den Status
         des aktellen Anfrageobjektes im Front Kontroller auf den Status des angegebenen Anfrageobjekts,
-        und markiert dieses als unerledigt (das forciert einen weiteren Durchlauf der Dispatch Schleife). 
+        und markiert dieses als unerledigt (das forciert einen weiteren Durchlauf der Dispatch Schleife).
     </para>
 </sect3>
 <!--

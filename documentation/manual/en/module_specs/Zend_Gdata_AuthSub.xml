@@ -81,7 +81,7 @@ $my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
         // You can convert the single-use token to a session token.
-        $session_token = 
+        $session_token =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
         // Store the session token in our session.
         $_SESSION['cal_token'] = $session_token;
@@ -90,7 +90,7 @@ if (!isset($_SESSION['cal_token'])) {
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
             $my_calendar, 0, 1);
-        echo "Click <a href='$googleUri'>here</a> " . 
+        echo "Click <a href='$googleUri'>here</a> " .
              "to authorize this application.";
         exit();
     }

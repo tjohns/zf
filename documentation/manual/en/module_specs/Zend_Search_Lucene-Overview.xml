@@ -6,7 +6,8 @@
         <para>Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
             Since it stores its index on the filesystem and does not require a database
             server, it can add search capabilities to almost any PHP-driven website.
-            Zend_Search_Lucene supports the following features:<itemizedlist>
+            Zend_Search_Lucene supports the following features:
+            <itemizedlist>
                 <listitem>
                     <para>Ranked searching - best results returned first</para>
                 </listitem>
@@ -322,177 +323,267 @@ $headerLinksArray = $doc->getHeaderLinks();
         </para>
     </sect2>
 
-	<sect2 id="zend.search.lucene.index-creation.docx-documents">
-	  <title>Word 2007 documents</title>
-	  <para>
-	    Zend_Search_Lucene offers a Word 2007 parsing feature. Documents can be created directly from a Word 2007 file:
-	    <programlisting role="php">
-	      <![CDATA[
-	$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
-	$index->addDocument($doc);
-	]]>
-	    </programlisting>
-	  </para>
-	
-	  <para>
-	    <code>Zend_Search_Lucene_Document_Docx</code> class uses the <code>ZipArchive</code> class and
-	    <code>simplexml</code> methods to parse the source document. If the <code>ZipArchive</code> class (from module php_zip)
-	    is not available, the <code>Zend_Search_Lucene_Document_Docx</code> will also not be available for use with Zend Framework.
-	  </para>
-	
-	  <para>
-	    <code>Zend_Search_Lucene_Document_Docx</code> class recognizes document meta data and document text. Meta data consists, depending on document contents, of filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created.
-	  </para>
-	
-	  <para>
-	    The 'filename' field is the actual Word 2007 file name.
-	  </para>
-	
-	  <para>
-	    The 'title' field is the actual document title.
-	  </para>
-	
-	  <para>
-	    The 'subject' field is the actual document subject.
-	  </para>
-	
-	  <para>
-	    The 'creator' field is the actual document creator.
-	  </para>
-	
-	  <para>
-	    The 'keywords' field contains the actual document keywords.
-	  </para>
-	
-	  <para>
-	    The 'description' field is the actual document description.
-	  </para>
-	
-	  <para>
-	    The 'lastModifiedBy' field is the username who has last modified the actual document.
-	  </para>
-	
-	  <para>
-	    The 'revision' field is the actual document revision number.
-	  </para>
-	
-	  <para>
-	    The 'modified' field is the actual document last modified date / time.
-	  </para>
-	
-	  <para>
-	    The 'created' field is the actual document creation date / time.
-	  </para>
-	
-	  <para>
-	    The 'body' field is the actual body content of the Word 2007 document. It only includes normal text, comments and revisions are not included.
-	  </para>
-	
-	  <para>
-	    The <code>loadDocxFile()</code> methods of <code>Zend_Search_Lucene_Document_Docx</code> class
-	    also have second optional argument. If it's set to true, then body content is also stored within index and can
-	    be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
-	  </para>
-	
-	  <para>
-	    Parsed documents may be augmented by the programmer with any other field:
-	    <programlisting role="php">
-	      <![CDATA[
-	$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
-	$doc->addField(Zend_Search_Lucene_Field::UnIndexed('indexTime',
-	                                                   time()));
-	$doc->addField(Zend_Search_Lucene_Field::Text('annotation',
-	                                              'Document annotation text'));
-	$index->addDocument($doc);
-	]]>
-	    </programlisting>
-	  </para>
-	</sect2>
-	
-	<sect2 id="zend.search.lucene.index-creation.pptx-documents">
-	  <title>Powerpoint 2007 documents</title>
-	  <para>
-	    Zend_Search_Lucene offers a Powerpoint 2007 parsing feature. Documents can be created directly from a Powerpoint 2007 file:
-	    <programlisting role="php">
-	      <![CDATA[
-	$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
-	$index->addDocument($doc);
-	]]>
-	    </programlisting>
-	  </para>
-	
-	  <para>
-	    <code>Zend_Search_Lucene_Document_Pptx</code> class uses the <code>ZipArchive</code> class and
-	    <code>simplexml</code> methods to parse the source document. If the <code>ZipArchive</code> class (from module php_zip)
-	    is not available, the <code>Zend_Search_Lucene_Document_Pptx</code> will also not be available for use with Zend Framework.
-	  </para>
-	
-	  <para>
-	    <code>Zend_Search_Lucene_Document_Pptx</code> class recognizes document meta data and document text. Meta data consists, depending on document contents, of filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created.
-	  </para>
-	
-	  <para>
-	    The 'filename' field is the actual Powerpoint 2007 file name.
-	  </para>
-	
-	  <para>
-	    The 'title' field is the actual document title.
-	  </para>
-	
-	  <para>
-	    The 'subject' field is the actual document subject.
-	  </para>
-	
-	  <para>
-	    The 'creator' field is the actual document creator.
-	  </para>
-	
-	  <para>
-	    The 'keywords' field contains the actual document keywords.
-	  </para>
-	
-	  <para>
-	    The 'description' field is the actual document description.
-	  </para>
-	
-	  <para>
-	    The 'lastModifiedBy' field is the username who has last modified the actual document.
-	  </para>
-	
-	  <para>
-	    The 'revision' field is the actual document revision number.
-	  </para>
-	
-	  <para>
-	    The 'modified' field is the actual document last modified date / time.
-	  </para>
-	
-	  <para>
-	    The 'created' field is the actual document creation date / time.
-	  </para>
-	
-	  <para>
-	    The 'body' field is the actual content of all slides and slide notes in the Powerpoint 2007 document.
-	  </para>
-	
-	  <para>
-	    The <code>loadPptxFile()</code> methods of <code>Zend_Search_Lucene_Document_Pptx</code> class
-	    also have second optional argument. If it's set to true, then body content is also stored within index and can
-	    be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
-	  </para>
-	
-	  <para>
-	    Parsed documents may be augmented by the programmer with any other field:
-	    <programlisting role="php">
-	      <![CDATA[
-	$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
-	$doc->addField(Zend_Search_Lucene_Field::UnIndexed('indexTime',
-	                                                   time()));
-	$doc->addField(Zend_Search_Lucene_Field::Text('annotation',
-	                                              'Document annotation text'));
-	$index->addDocument($doc);
-	]]>
-	    </programlisting>
-	  </para>
-	</sect2>
+    <sect2 id="zend.search.lucene.index-creation.docx-documents">
+        <title>Word 2007 documents</title>
+        <para>
+            Zend_Search_Lucene offers a Word 2007 parsing feature. Documents can be created directly from a Word 2007 file:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Docx</code> class uses the <code>ZipArchive</code> class and
+            <code>simplexml</code> methods to parse the source document. If the <code>ZipArchive</code> class (from module php_zip)
+            is not available, the <code>Zend_Search_Lucene_Document_Docx</code> will also not be available for use with Zend Framework.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Docx</code> class recognizes document meta data and document text. Meta data consists, depending on document contents, of filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created.
+        </para>
+
+        <para>
+            The 'filename' field is the actual Word 2007 file name.
+        </para>
+
+        <para>
+            The 'title' field is the actual document title.
+        </para>
+
+        <para>
+            The 'subject' field is the actual document subject.
+        </para>
+
+        <para>
+            The 'creator' field is the actual document creator.
+        </para>
+
+        <para>
+            The 'keywords' field contains the actual document keywords.
+        </para>
+
+        <para>
+            The 'description' field is the actual document description.
+        </para>
+
+        <para>
+            The 'lastModifiedBy' field is the username who has last modified the actual document.
+        </para>
+
+        <para>
+            The 'revision' field is the actual document revision number.
+        </para>
+
+        <para>
+            The 'modified' field is the actual document last modified date / time.
+        </para>
+
+        <para>
+            The 'created' field is the actual document creation date / time.
+        </para>
+
+        <para>
+            The 'body' field is the actual body content of the Word 2007 document. It only includes normal text, comments and revisions are not included.
+        </para>
+
+        <para>
+            The <code>loadDocxFile()</code> methods of <code>Zend_Search_Lucene_Document_Docx</code> class
+            also have second optional argument. If it's set to true, then body content is also stored within index and can
+            be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
+        </para>
+    
+        <para>
+            Parsed documents may be augmented by the programmer with any other field:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time())
+);
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Document annotation text')
+);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.pptx-documents">
+        <title>Powerpoint 2007 documents</title>
+        <para>
+            Zend_Search_Lucene offers a Powerpoint 2007 parsing feature. Documents can be created directly from a Powerpoint 2007 file:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Pptx</code> class uses the <code>ZipArchive</code> class and
+            <code>simplexml</code> methods to parse the source document. If the <code>ZipArchive</code> class (from module php_zip)
+            is not available, the <code>Zend_Search_Lucene_Document_Pptx</code> will also not be available for use with Zend Framework.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Pptx</code> class recognizes document meta data and document text. Meta data consists, depending on document contents, of filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created.
+        </para>
+
+        <para>
+            The 'filename' field is the actual Powerpoint 2007 file name.
+        </para>
+
+        <para>
+            The 'title' field is the actual document title.
+        </para>
+
+        <para>
+            The 'subject' field is the actual document subject.
+        </para>
+
+        <para>
+            The 'creator' field is the actual document creator.
+        </para>
+
+        <para>
+            The 'keywords' field contains the actual document keywords.
+        </para>
+
+        <para>
+            The 'description' field is the actual document description.
+        </para>
+
+        <para>
+            The 'lastModifiedBy' field is the username who has last modified the actual document.
+        </para>
+
+        <para>
+            The 'revision' field is the actual document revision number.
+        </para>
+
+        <para>
+            The 'modified' field is the actual document last modified date / time.
+        </para>
+
+        <para>
+            The 'created' field is the actual document creation date / time.
+        </para>
+
+        <para>
+            The 'body' field is the actual content of all slides and slide notes in the Powerpoint 2007 document.
+        </para>
+
+        <para>
+            The <code>loadPptxFile()</code> methods of <code>Zend_Search_Lucene_Document_Pptx</code> class
+            also have second optional argument. If it's set to true, then body content is also stored within index and can
+            be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
+        </para>
+
+        <para>
+            Parsed documents may be augmented by the programmer with any other field:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time()));
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Document annotation text'));
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.xlsx-documents">
+        <title>Excel 2007 documents</title>
+        <para>
+            Zend_Search_Lucene offers a Excel 2007 parsing feature. Documents can be created directly from a Excel 2007 file:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Xlsx</code> class uses the <code>ZipArchive</code> class and
+            <code>simplexml</code> methods to parse the source document. If the <code>ZipArchive</code> class (from module php_zip)
+            is not available, the <code>Zend_Search_Lucene_Document_Xlsx</code> will also not be available for use with Zend Framework.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Xlsx</code> class recognizes document meta data and document text. Meta data consists, depending on document contents, of filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created.
+        </para>
+
+        <para>
+            The 'filename' field is the actual Excel 2007 file name.
+        </para>
+
+        <para>
+            The 'title' field is the actual document title.
+        </para>
+
+        <para>
+            The 'subject' field is the actual document subject.
+        </para>
+
+        <para>
+            The 'creator' field is the actual document creator.
+        </para>
+
+        <para>
+            The 'keywords' field contains the actual document keywords.
+        </para>
+
+        <para>
+            The 'description' field is the actual document description.
+        </para>
+
+        <para>
+            The 'lastModifiedBy' field is the username who has last modified the actual document.
+        </para>
+
+        <para>
+            The 'revision' field is the actual document revision number.
+        </para>
+
+        <para>
+            The 'modified' field is the actual document last modified date / time.
+        </para>
+
+        <para>
+            The 'created' field is the actual document creation date / time.
+        </para>
+
+        <para>
+            The 'body' field is the actual content of all cells in all worksheets of the Excel 2007 document.
+        </para>
+
+        <para>
+            The <code>loadXlsxFile()</code> methods of <code>Zend_Search_Lucene_Document_Xlsx</code> class
+            also have second optional argument. If it's set to true, then body content is also stored within index and can
+            be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
+        </para>
+
+        <para>
+            Parsed documents may be augmented by the programmer with any other field:
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time()));
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Document annotation text'));
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
 </sect1>

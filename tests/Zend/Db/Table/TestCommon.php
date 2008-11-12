@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 7508 2008-01-19 03:12:38Z peptolab $
+ * @version    $Id$
  */
 
 
@@ -66,6 +66,26 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
                         'unknownKey'      => 'testValue');
 
         $table = new Zend_Db_Table_TableBugs($config);
+    }
+
+    /**
+     * @group ZF-2510
+     */
+    public function testMetadataCacheInClassFlagShouldBeEnabledByDefault()
+    {
+        $bugs = $this->_table['bugs'];
+        $this->assertTrue($bugs->metadataCacheInClass());
+    }
+
+    /**
+     * @group ZF-2510
+     */
+    public function testMetadataCacheInClassFlagShouldBeMutable()
+    {
+        $bugs = $this->_table['bugs'];
+        $this->assertTrue($bugs->metadataCacheInClass());
+        $bugs->setMetadataCacheInClass(false);
+        $this->assertFalse($bugs->metadataCacheInClass());
     }
 
     public function testTableInfo()
@@ -346,11 +366,11 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $db = $table->getAdapter();
         $this->assertSame($this->_db, $db);
     }
-    
+
     public function testTableWithNoAdapterAndNoDefaultAdapter()
     {
         Zend_Db_Table_Abstract::setDefaultAdapter(null);
-        $this->assertNull(Zend_Db_Table_Abstract::getDefaultAdapter());     
+        $this->assertNull(Zend_Db_Table_Abstract::getDefaultAdapter());
         try {
             $table = new Zend_Db_Table_TableBugs();
             $this->fail('Zend_Db_Table_Exception should be thrown');
@@ -409,6 +429,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     {
         try {
             $table = $this->_getTable('Zend_Db_Table_TableBugs', array('primary' => ''));
+            $primary = $table->info(Zend_Db_Table_Abstract::PRIMARY);
             $this->fail('Expected to catch Zend_Db_Table_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
@@ -421,7 +442,8 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     public function testTableExceptionInvalidPrimaryKey()
     {
         try {
-            $table = new Zend_Db_Table_TableBugs(array('primary' => 'foo'));
+            $table   = new Zend_Db_Table_TableBugs(array('primary' => 'foo'));
+            $primary = $table->info(Zend_Db_Table_Abstract::PRIMARY);
             $this->fail('Expected to catch Zend_Db_Table_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
@@ -440,6 +462,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         try {
             $table = $this->_getTable('Zend_Db_Table_TableSpecial',
                 array('name' => $tableName));
+            $primary = $table->info(Zend_Db_Table_Abstract::PRIMARY);
             $this->fail('Expected to catch Zend_Db_Table_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e,
@@ -715,7 +738,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         // insert a lot of rows
         $n = 100000;
-        for ($i = 1; $i <= $n; $i++) 
+        for ($i = 1; $i <= $n; $i++)
         {
             $table->insert(array('product_name' => "product$i"));
             if ($i % 1000 == 0) {
@@ -1123,7 +1146,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $select = $table->select()
             ->order('bug_id ASC')
             ->limit(2, 1);
-        
+
         $rowset = $table->fetchAll($select);
         $this->assertType('Zend_Db_Table_Rowset', $rowset,
             'Expecting object of type Zend_Db_Table_Rowset, got '.get_class($rowset));
@@ -1223,6 +1246,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
 
         try {
             $bugsTable = $this->_getTable('Zend_Db_Table_TableBugs');
+            $primary = $bugsTable->info(Zend_Db_Table_Abstract::PRIMARY);
             $this->fail('Expected to catch Zend_Db_Table_Exception');
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Table_Exception', $e);
@@ -1252,17 +1276,54 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
             $tableBugsCustom1->getMetadataCache()
         );
 
-        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache, 'Failed asserting metadata is not from cache');
 
         $tableBugsCustom1->setup();
 
-        $this->assertTrue($tableBugsCustom1->isMetadataFromCache);
+        $this->assertTrue($tableBugsCustom1->isMetadataFromCache, 'Failed asserting metadata is from cache');
 
         $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
         $tableBugsCustom1->setup();
 
-        $this->assertFalse($tableBugsCustom1->isMetadataFromCache);
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache, 'Failed asserting metadata is not from cache after cleaning');
+    }
+
+    /**
+     * Ensures that table metadata caching can be persistent in the object even 
+     * after a flushed cache, if the setMetadataCacheInClass property is true.
+     *
+     * @group  ZF-2510
+     * @return void
+     */
+    public function testTableMetadataCacheInClass()
+    {
+        $cache = $this->_getCache();
+
+        $tableBugsCustom1 = $this->_getTable(
+            'Zend_Db_Table_TableBugsCustom',
+            array(
+                'metadataCache'        => $cache,
+                'metadataCacheInClass' => true,
+            )
+        );
+
+        $this->assertType(
+            'Zend_Cache_Core',
+            $tableBugsCustom1->getMetadataCache()
+        );
+
+        $this->assertFalse($tableBugsCustom1->isMetadataFromCache, 'Failed asserting metadata is not from cache');
+
+        $tableBugsCustom1->setup();
+
+        $this->assertTrue($tableBugsCustom1->isMetadataFromCache, 'Failed asserting metadata is from cache');
+
+        $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+        $tableBugsCustom1->setup();
+
+        $this->assertTrue($tableBugsCustom1->isMetadataFromCache, 'Failed asserting metadata is from cache after cleaning');
     }
 
     /**
@@ -1381,8 +1442,9 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $row2->delete();
 
         $table = $this->_table['bugs_products'];
+        $product_id = $this->_db->quoteIdentifier('product_id', true);
         $select = $table->select()
-            ->where('product_id = ?', 2);
+            ->where($product_id . ' = ?', 2);
 
         $rows = $table->fetchAll($select);
         $this->assertEquals(0, count($rows));
@@ -1447,7 +1509,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $cacheFrontend = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
         $cacheFrontend->clean(Zend_Cache::CLEANING_MODE_ALL);
-        
+
         rmdir($folder);
 
         return $cacheFrontend;

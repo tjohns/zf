@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11280 -->
+<!-- EN-Revision: 12116 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -38,7 +38,7 @@
         <para>
             Zuerst müssen wir unserem View Objekt mitteilen das es die Dojo View Helferpfade verwenden soll.
             Das kann in der eigenen Bootstrap Datei getan werden oder in einem Plugin das früh abläuft;
-            einfach das View Objekt nehmen und das folgende ausführen: 
+            einfach das View Objekt nehmen und das folgende ausführen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -55,11 +55,11 @@ $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
         <programlisting role="php"><![CDATA[
 <? // Datenspeicher für FilteringSelect einstellen ?>
 <div dojoType="custom.PairedStore" jsId="stateStore"
-    url="/data/autocomplete/type/state/format/ajax" 
+    url="/data/autocomplete/type/state/format/ajax"
     requestMethod="get"></div>
 
 <? // Eingabeelement: ?>
-State: <input id="state" dojoType="dijit.form.FilteringSelect" 
+State: <input id="state" dojoType="dijit.form.FilteringSelect"
     store="stateStore" pageSize="5" />
 
 <? // Notwendige Dojo Elemente einstellen:
@@ -80,17 +80,17 @@ $this->dojo()->enable()
 <?= $this->doctype() ?>
 <html>
 <head>
-    <?= $this->headTitle() ?> 
-    <?= $this->headMeta() ?> 
-    <?= $this->headLink() ?> 
-    <?= $this->headStyle() ?> 
+    <?= $this->headTitle() ?>
+    <?= $this->headMeta() ?>
+    <?= $this->headLink() ?>
+    <?= $this->headStyle() ?>
 <? if ($this->dojo()->isEnabled()){
     $this->dojo()->setLocalPath('/js/dojo/dojo.js')
                  ->addStyleSheetModule('dijit.themes.tundra');
     echo $this->dojo();
    }
 ?>
-    <?= $this->headScript() ?> 
+    <?= $this->headScript() ?>
 </head>
 <body class="tundra">
     <?= $this->layout()->content ?>
@@ -199,7 +199,7 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
             Themenverzeichnis verwendet wird; im obigen Beispiel sucht Dojo das Thema in
             'dijit/themes/tundra/tundra.css'.
         </para>
-        
+
         <para>
             Wenn ein Thema verwendet wird ist es wichtig daran zu denken die Themenklasse, zumindest an den
             Container der jedes Dijit das verwendet wird umgibt, zu übergeben; im üblichsten Fällen wird es
@@ -239,7 +239,7 @@ $view->dojo()->addStylesheetModule('dijit.themes.tundra');
 
             <listitem><para>
                 Die Datei wird an ShrinkSafe übergeben, welches Leerzeichen und Kommentare entfernt, sowie
-                Variablennamen verkleinert. 
+                Variablennamen verkleinert.
             </para></listitem>
         </itemizedlist>
 
@@ -260,7 +260,7 @@ $view->dojo()->addLayer('/js/foo/foo.js');
         </programlisting>
 
         <para>
-            Für weitere Informationen über die Erstellung von eigenen Build, schauen Sie bitte 
+            Für weitere Informationen über die Erstellung von eigenen Build, schauen Sie bitte
             <ulink url="http://dojotoolkit.org/book/dojo-book-0-9/part-4-meta-dojo/package-system-and-custom-builds">
             in die Dojo Builddokumentation</ulink>.
         </para>

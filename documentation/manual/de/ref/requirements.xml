@@ -23,7 +23,7 @@
 
         <para>
             Zend empfiehlt PHP 5.2.3 oder höher wegen kritischer Sicherheits- und Geschwindigkeits-
-            verbesserungen, aber Zend Framework benötigt nur PHP 5.1.4 oder später. 
+            verbesserungen, aber Zend Framework benötigt nur PHP 5.1.4 oder später.
         </para>
 
         <para>

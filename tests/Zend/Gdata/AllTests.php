@@ -23,7 +23,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Gdata_AllTests::main');
@@ -42,6 +42,7 @@ require_once 'Zend/Gdata/AuthSubTest.php';
  */
 require_once 'Zend/Gdata/AppTest.php';
 require_once 'Zend/Gdata/App/UtilTest.php';
+require_once 'Zend/Gdata/App/BaseTest.php';
 require_once 'Zend/Gdata/App/AuthorTest.php';
 require_once 'Zend/Gdata/App/CategoryTest.php';
 require_once 'Zend/Gdata/App/ContentTest.php';
@@ -56,6 +57,7 @@ require_once 'Zend/Gdata/QueryTest.php';
 require_once 'Zend/Gdata/AttendeeStatusTest.php';
 require_once 'Zend/Gdata/AttendeeTypeTest.php';
 require_once 'Zend/Gdata/CommentsTest.php';
+require_once 'Zend/Gdata/EntryTest.php';
 require_once 'Zend/Gdata/EntryLinkTest.php';
 require_once 'Zend/Gdata/EventStatusTest.php';
 require_once 'Zend/Gdata/ExtendedPropertyTest.php';
@@ -206,6 +208,7 @@ class Zend_Gdata_AllTests
          */
         $suite->addTestSuite('Zend_Gdata_AppTest');
         $suite->addTestSuite('Zend_Gdata_App_UtilTest');
+        $suite->addTestSuite('Zend_Gdata_App_BaseTest');
         $suite->addTestSuite('Zend_Gdata_App_AuthorTest');
         $suite->addTestSuite('Zend_Gdata_App_CategoryTest');
         $suite->addTestSuite('Zend_Gdata_App_ContentTest');
@@ -220,6 +223,7 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_AttendeeStatusTest');
         $suite->addTestSuite('Zend_Gdata_AttendeeTypeTest');
         $suite->addTestSuite('Zend_Gdata_CommentsTest');
+        $suite->addTestSuite('Zend_Gdata_EntryTest');
         $suite->addTestSuite('Zend_Gdata_EntryLinkTest');
         $suite->addTestSuite('Zend_Gdata_EventStatusTest');
         $suite->addTestSuite('Zend_Gdata_ExtendedPropertyTest');

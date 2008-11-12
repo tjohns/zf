@@ -122,6 +122,21 @@ class Zend_Locale
     const ZFDEFAULT   = 'default';
 
     /**
+     * Defines if old behaviour should be supported
+     * Old behaviour throws notices and will be deleted in future releases
+     *
+     * @var boolean
+     */
+    public static $compatibilityMode = true;
+
+    /**
+     * Internal variable
+     *
+     * @var boolean
+     */
+    private static $_breakChain = false;
+
+    /**
      * Actual set locale
      *
      * @var string Locale
@@ -213,11 +228,29 @@ class Zend_Locale
      */
     public static function getDefault()
     {
+        if ((self::$compatibilityMode === true) or (func_num_args() > 0)) {
+            if (!self::$_breakChain) {
+                self::$_breakChain = true;
+                trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_NOTICE);
+                $params = func_get_args();
+                $param = null;
+                if (isset($params[0])) {
+                    $param = $params[0];
+                }
+                return self::getOrder($param);
+            }
+
+            self::$_breakChain = false;
+        }
+
         return self::$_default;
     }
 
     /**
      * Sets a new default locale
+     * If provided you can set a quality between 0 and 1 (or 2 and 100)
+     * which represents the percent of quality the browser
+     * requested within HTTP
      *
      * @param  string|Zend_Locale $locale  Locale to set
      * @param  float              $quality The quality to set from 0 to 1
@@ -233,9 +266,13 @@ class Zend_Locale
             throw new Zend_Locale_Exception('Only full qualified locales can be used as default!');
         }
 
-        if (($quality < 0.1) or ($quality > 1)) {
+        if (($quality < 0.1) or ($quality > 100)) {
             require_once 'Zend/Locale/Exception.php';
-            throw new Zend_Locale_Exception("Quality must be between 0.1 and 1");
+            throw new Zend_Locale_Exception("Quality must be between 0.1 and 100");
+        }
+
+        if ($quality > 1) {
+            $quality /= 100;
         }
 
         if (isset(self::$_localeData[(string) $locale]) === true) {
@@ -628,19 +665,19 @@ class Zend_Locale
         $quest['yesarray'] = $yes;
         $quest['no']       = $no[0];
         $quest['noarray']  = $no;
-        $quest['yesexpr']  = self::_getRegex($yes);
-        $quest['noexpr']   = self::_getRegex($no);
+        $quest['yesexpr']  = self::_prepareQuestionString($yes);
+        $quest['noexpr']   = self::_prepareQuestionString($no);
 
         return $quest;
     }
 
     /**
-     * Internal function for creating a regex
+     * Internal function for preparing the returned question regex string
      *
      * @param  string $input Regex to parse
      * @return string
      */
-    private static function _getRegex($input)
+    private static function _prepareQuestionString($input)
     {
         $regex = '';
         if (is_array($input) === true) {
@@ -684,11 +721,12 @@ class Zend_Locale
      * "en_XX" refers to "en", which returns true
      * "XX_yy" refers to "root", which returns false
      *
-     * @param  string|Zend_Locale $locale Locale to check for
-     * @param  boolean            $strict (Optional) If true, no rerouting will be done when checking
+     * @param  string|Zend_Locale $locale     Locale to check for
+     * @param  boolean            $strict     (Optional) If true, no rerouting will be done when checking
+     * @param  boolean            $compatible (DEPRECIATED) Only for internal usage, brakes compatibility mode
      * @return boolean If the locale is known dependend on the settings
      */
-    public static function isLocale($locale, $strict = false)
+    public static function isLocale($locale, $strict = false, $compatible = true)
     {
         try {
             $locale = self::_prepareLocale($locale, $strict);
@@ -696,12 +734,24 @@ class Zend_Locale
             return false; 
         }
 
-        if (isset(self::$_localeData[$locale]) === true) {
-            return true;
-        } else if (!$strict) {
-            $locale = explode('_', $locale);
-            if (isset(self::$_localeData[$locale[0]]) === true) {
+        if (($compatible === true) and (self::$compatibilityMode === true)) {
+            trigger_error('You are running Zend_Locale in compatibility mode... please migrate your scripts', E_USER_NOTICE);
+            if (isset(self::$_localeData[$locale]) === true) {
+                return $locale;
+            } else if (!$strict) {
+                $locale = explode('_', $locale);
+                if (isset(self::$_localeData[$locale[0]]) === true) {
+                    return $locale[0];
+                }
+            }
+        } else {
+            if (isset(self::$_localeData[$locale]) === true) {
                 return true;
+            } else if (!$strict) {
+                $locale = explode('_', $locale);
+                if (isset(self::$_localeData[$locale[0]]) === true) {
+                    return true;
+                }
             }
         }
 
@@ -800,6 +850,7 @@ class Zend_Locale
         if (empty(self::$_auto) === true) {
             self::$_browser     = self::getBrowser();
             self::$_environment = self::getEnvironment();
+            self::$_breakChain  = true;
             self::$_auto        = self::getBrowser() + self::getEnvironment() + self::getDefault();
         }
 
@@ -851,15 +902,18 @@ class Zend_Locale
     {
         switch ($order) {
             case self::ENVIRONMENT:
-                $languages = self::getEnvironment() + self::getBrowser() + self::getDefault();
+                self::$_breakChain = true;
+                $languages         = self::getEnvironment() + self::getBrowser() + self::getDefault();
                 break;
 
             case self::ZFDEFAULT:
-                $languages = self::getDefault() + self::getEnvironment() + self::getBrowser();
+                self::$_breakChain = true;
+                $languages         = self::getDefault() + self::getEnvironment() + self::getBrowser();
                 break;
 
             default:
-                $languages = self::getBrowser() + self::getEnvironment() + self::getDefault();
+                self::$_breakChain = true;
+                $languages         = self::getBrowser() + self::getEnvironment() + self::getDefault();
                 break;
         }
 

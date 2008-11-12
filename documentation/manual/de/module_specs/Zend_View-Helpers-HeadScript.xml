@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12084 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript Helfer</title>
 
@@ -123,13 +123,13 @@ $this->headScript()->appendFile('/js/prototype.js')
 // Skripte in eine Reihenfolge bringen
 
 // An einem bestimmten Offset Platzieren um sicherzustellen das es als letztes geladen wird
-$this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
+$this->headScript()->offsetSetFile(100, '/js/myfuncs.js');
 
 // Scriptige Effekte verwenden (append verwendet den nächsten Index, 101)
-$this->headScript()->appendScript('/js/scriptaculous.js');
+$this->headScript()->appendFile('/js/scriptaculous.js');
 
 // Aber Basis Prototype Skripte müssen immer als erstes geladen werden
-$this->headScript()->prependScript('/js/prototype.js');
+$this->headScript()->prependFile('/js/prototype.js');
 ]]>
         </programlisting>
 

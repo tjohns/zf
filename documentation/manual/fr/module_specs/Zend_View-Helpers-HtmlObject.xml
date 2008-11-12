@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>L'aide de vue HTML Object</title>
 
@@ -41,8 +41,8 @@
         <para>Ceci affichera le code HTML suivant :</para>
 
         <programlisting role="html"><![CDATA[
-<object data="/path/to/flash.swf" type="application/x-shockwave-flash" 
-    classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
+<object data="/path/to/flash.swf" type="application/x-shockwave-flash"
+    classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
     codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
 </object>
 ]]></programlisting>
@@ -65,16 +65,16 @@
 
         <programlisting role="php"><![CDATA[
 <?php echo $this->htmlObject(
-    '/path/to/file.ext', 
-    'mime/type', 
+    '/path/to/file.ext',
+    'mime/type',
     array(
-        'attr1' => 'aval1', 
+        'attr1' => 'aval1',
         'attr2' => 'aval2'
-    ), 
+    ),
     array(
-        'param1' => 'pval1', 
+        'param1' => 'pval1',
         'param2' => 'pval2'
-    ), 
+    ),
     'some content'
 ); ?>
 ]]></programlisting>

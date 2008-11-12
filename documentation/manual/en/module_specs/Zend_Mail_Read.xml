@@ -101,7 +101,7 @@ foreach ($mail as $message) {
         </para>
 
         <programlisting role="php"><![CDATA[
-$mail = new Zend_Mail_Storage_Mbox(array('filename' => 
+$mail = new Zend_Mail_Storage_Mbox(array('filename' =>
                                              '/home/test/mail/inbox'));
 ]]>
         </programlisting>
@@ -441,7 +441,7 @@ $mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' =>
 // with Zend_Mail_Storage_Folder_Maildir and Zend_Mail_Storage_Imap
 $mail = new Zend_Mail_Storage_Folder_Mbox(array('dirname' =>
                                                     '/home/test/mail/',
-                                                'folder'  => 
+                                                'folder'  =>
                                                     'Archive'));
 
 // maildir with folders
@@ -534,7 +534,9 @@ echo '</select>';
 //  INBOX.Archive.2005
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
-echo 'Last folder was ' . $mail->getSelectedFolder() . "new folder is $folder\n";
+echo 'Last folder was '
+   . $mail->getSelectedFolder()
+   . "new folder is $folder\n";
 $mail->selectFolder($folder);
 ]]>
         </programlisting>
@@ -700,14 +702,14 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
 
             <para>
             <code>Zend_Mail_Storage_Writable_Maildir</code> has support for Maildir++ quotas. It's disabled by default,
-            but it's possible to use it manually, if the automatic checks are not desired (this means 
+            but it's possible to use it manually, if the automatic checks are not desired (this means
             <code>appendMessage()</code>, <code>removeMessage()</code> and <code>copyMessage()</code> do no checks
             and do not add entry to the maildirsize file). If enabled an exception is thrown if you try to write
             to the maildir if it's already over quota.
             </para>
-            
+
             <para>
-            There are three methods used for quotas: <code>getQuota()</code>, <code>setQuota()</code> and 
+            There are three methods used for quotas: <code>getQuota()</code>, <code>setQuota()</code> and
             <code>checkQuota()</code>:
             </para>
 
@@ -720,7 +722,7 @@ echo 'Quota check is now ', $mail->getQuota() ? 'enabled' : 'disabled', "\n";
 echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";
 ]]>
             </programlisting>
-            
+
             <para>
             <code>checkQuota()</code> can also return a more detailed response:
             </para>
@@ -728,22 +730,26 @@ echo 'You are ', $mail->checkQuota() ? 'over quota' : 'not over quota', "\n";
             <programlisting role="php"><![CDATA[
 $quota = $mail->checkQuota(true);
 echo 'You are ', $quota['over_quota'] ? 'over quota' : 'not over quota', "\n";
-echo 'You have ', $quota['count'], ' of ', $quota['quota']['count'], ' messages and use ';
+echo 'You have ',
+     $quota['count'],
+     ' of ',
+     $quota['quota']['count'],
+     ' messages and use ';
 echo $quota['size'], ' of ', $quota['quota']['size'], ' octets';
 ]]>
             </programlisting>
-            
+
             <para>
             If you want to specify your own quota instead of using the one specified in the maildirsize file you
             can do with <code>setQuota()</code>:
             </para>
-            
+
             <programlisting role="php"><![CDATA[
 // message count and octet size supported, order does matter
 $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
 ]]>
             </programlisting>
-            
+
             <para>
             To add your own quota checks use single letters as key and they are preserved (but obviously not checked).
             It's also possible to extend  <code>Zend_Mail_Storage_Writable_Maildir</code> to define your own quota only
@@ -752,21 +758,21 @@ $quota = $mail->setQuota(array('size' => 10000, 'count' => 100));
 
             <programlisting role="php"><![CDATA[
 class Example_Mail_Storage_Maildir extends Zend_Mail_Storage_Writable_Maildir {
-	// getQuota is called with $fromStorage = true by quota checks
-	public function getQuota($fromStorage = false) {
-		try {
-			return parent::getQuota($fromStorage);
-		} catch (Zend_Mail_Storage_Exception $e) {
-			if (!$fromStorage) {
-				// unknown error:
-				throw $e;
-			}
-			// maildirsize file must be missing
-			
-			list($count, $size) = get_quota_from_somewhere_else();
-			return array('count' => $count, 'size' => $size);
-		}
-	}
+    // getQuota is called with $fromStorage = true by quota checks
+    public function getQuota($fromStorage = false) {
+        try {
+            return parent::getQuota($fromStorage);
+        } catch (Zend_Mail_Storage_Exception $e) {
+            if (!$fromStorage) {
+                // unknown error:
+                throw $e;
+            }
+            // maildirsize file must be missing
+
+            list($count, $size) = get_quota_from_somewhere_else();
+            return array('count' => $count, 'size' => $size);
+        }
+    }
 }
 ]]>
             </programlisting>

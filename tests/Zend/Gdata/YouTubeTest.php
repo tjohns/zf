@@ -20,7 +20,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/TestHelper.php';
+require_once 'TestHelper.php';
 require_once 'Zend/Gdata/YouTube.php';
 require_once 'Zend/Http/Client.php';
 

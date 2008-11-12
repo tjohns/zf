@@ -52,8 +52,8 @@
         <note>
             <title/>
             <para>
-                Default analyzer doesn't treats numbers as parts of terms. Use corresponding 'Num' analyzer if you don't want words 
-                to be broken by numbers.  
+                Default analyzer doesn't treats numbers as parts of terms. Use corresponding 'Num' analyzer if you don't want words
+                to be broken by numbers.
             </para>
         </note>
     </sect2>
@@ -80,19 +80,19 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         <warning>
             <title/>
             <para>
-                UTF-8 compatible analyzers were improved in ZF 1.5. Early versions of analyzers assumed 
-                all non-ascii characters are letters. New analyzers implementation has more accurate behavior. 
+                UTF-8 compatible analyzers were improved in ZF 1.5. Early versions of analyzers assumed
+                all non-ascii characters are letters. New analyzers implementation has more accurate behavior.
             </para>
             <para>
                 This may need you to re-build index to have data and search queries tokenized in the same way, otherwise search engine
-                may return wrong result sets.  
+                may return wrong result sets.
             </para>
         </warning>
 
         <para>
-            All of these analyzers need PCRE (Perl-compatible regular expressions) library to be compiled with UTF-8 support turned on. 
+            All of these analyzers need PCRE (Perl-compatible regular expressions) library to be compiled with UTF-8 support turned on.
             PCRE UTF-8 support is turned on for the PCRE library sources bundled with PHP source code distribution, but if shared library is used
-            instead of bundled with PHP sources, then UTF-8 support state may depend on you operating system. 
+            instead of bundled with PHP sources, then UTF-8 support state may depend on you operating system.
         </para>
 
         <para>
@@ -108,15 +108,15 @@ if (@preg_match('/\pL/u', 'a') == 1) {
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
-            Case insensitive versions of UTF-8 compatible analyzers also need <ulink url="http://www.php.net/manual/en/ref.mbstring.php">mbstring</ulink> extension to be enabled. 
+            Case insensitive versions of UTF-8 compatible analyzers also need <ulink url="http://www.php.net/manual/en/ref.mbstring.php">mbstring</ulink> extension to be enabled.
         </para>
-        
+
         <para>
             If you don't want mbstring extension to be turned on, but need case insensitive search, you may use the following approach: normalize source data before indexing
             and query string before searching by converting them to lowercase:
-        
+
             <programlisting role="php"><![CDATA[
 
 // Indexing

@@ -90,7 +90,7 @@ class Zend_Currency
      */
     public function __construct($currency = null, $locale = null)
     {
-        if (Zend_Locale::isLocale($currency, true)) {
+        if (Zend_Locale::isLocale($currency, true, false)) {
             $temp     = $locale;
             $locale   = $currency;
             $currency = $temp;
@@ -242,14 +242,14 @@ class Zend_Currency
     {
         // Manage the params
         if ((empty($locale)) and (!empty($currency)) and
-            (Zend_Locale::isLocale($currency, true))) {
+            (Zend_Locale::isLocale($currency, true, false))) {
             $locale   = $currency;
             $currency = null;
         }
 
         // Validate the locale and get the country short name
         $country = null;
-        if ((Zend_Locale::isLocale($locale, true)) and (strlen($locale) > 4)) {
+        if ((Zend_Locale::isLocale($locale, true, false)) and (strlen($locale) > 4)) {
             $country = substr($locale, (strpos($locale, '_') + 1));
         } else {
             require_once 'Zend/Currency/Exception.php';
@@ -481,12 +481,12 @@ class Zend_Currency
      *
      * @param  string|Zend_Locale $locale (Optional) Locale for parsing input
      * @throws Zend_Currency_Exception When the given locale does not exist
-     * @return Zend_Currency Provides fluid interface
+     * @return Zend_Currency Provides fluent interface
      */
     public function setLocale($locale = null)
     {
-        if (!Zend_Locale::isLocale($locale, false)) {
-            if (!Zend_Locale::isLocale($locale, true)) {
+        if (!Zend_Locale::isLocale($locale, false, false)) {
+            if (!Zend_Locale::isLocale($locale, true, false)) {
                 require_once 'Zend/Currency/Exception.php';
                 throw new Zend_Currency_Exception("Given locale (" . (string) $locale . ") does not exist");
             } else {
@@ -553,7 +553,7 @@ class Zend_Currency
                     break;
 
                 case 'format':
-                    if ((empty($value) === false) and (Zend_Locale::isLocale($value) === false)) {
+                    if ((empty($value) === false) and (Zend_Locale::isLocale($value, null, false) === false)) {
                         require_once 'Zend/Currency/Exception.php';
                         throw new Zend_Currency_Exception("'" .
                             ((gettype($value) === 'object') ? get_class($value) : $value)

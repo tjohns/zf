@@ -84,7 +84,7 @@
                     Wenn die anwendung auf mehr als einem Server läuft und die Zeitbasis dieses
                     Servers nicht miteinander gekoppelt sind kann das zu Problemen in der Anwendung
                     führen wenn Teile der Anwendung von einem Server und andere von einem anderen
-                    Server kommen. 
+                    Server kommen.
                 </para>
             </listitem>
             <listitem>
@@ -113,7 +113,7 @@
             Das <code>Network Time Protocol</code> (<emphasis role="strong">NTP</emphasis>) ist
             ein Protokoll für die Synchronisierung von Uhren von Computersystemen über
             Paket-geführte, variabel laufende Datennetzwerke. NTP verwendet den UDP Port 123 als
-            Transportschicht. Siehe 
+            Transportschicht. Siehe
             <ulink url="http://en.wikipedia.org/wiki/Network_Time_Protocol">diesen Wikipedia Artikel</ulink>
             für Details über das Protokoll.
         </para>

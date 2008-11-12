@@ -75,7 +75,7 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
         // Document data holders
         $slides = array();
         $slideNotes = array();
-    	$documentBody = array();
+        $documentBody = array();
         $coreProperties = array();
 
         // Open OpenXML package
@@ -86,31 +86,31 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
         $relations = simplexml_load_string($package->getFromName("_rels/.rels"));
         foreach ($relations->Relationship as $rel) {
             if ($rel["Type"] == Zend_Search_Lucene_Document_OpenXml::SCHEMA_OFFICEDOCUMENT) {
-            	// Found office document! Search for slides...
-            	$slideRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/_rels/" . basename($rel["Target"]) . ".rels")) );
-            	foreach ($slideRelations->Relationship as $slideRel) {
-            		if ($slideRel["Type"] == Zend_Search_Lucene_Document_Pptx::SCHEMA_SLIDERELATION) {
-            			// Found slide!
-            			$slides[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
-		                    $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . basename($slideRel["Target"])) )
-		                );
-		                
-		                // Search for slide notes
-		                $slideNotesRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/_rels/" . basename($slideRel["Target"]) . ".rels")) );
-		                foreach ($slideNotesRelations->Relationship as $slideNoteRel) {
-							if ($slideNoteRel["Type"] == Zend_Search_Lucene_Document_Pptx::SCHEMA_SLIDENOTESRELATION) {
-		            			// Found slide notes!
-		            			$slideNotes[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
-				                    $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . dirname($slideNoteRel["Target"]) . "/" . basename($slideNoteRel["Target"])) )
-				                );
-				                
-				                break;
-							}
-		                }
-            		}
-            	}
-            	
-            	break;
+                // Found office document! Search for slides...
+                $slideRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/_rels/" . basename($rel["Target"]) . ".rels")) );
+                foreach ($slideRelations->Relationship as $slideRel) {
+                    if ($slideRel["Type"] == Zend_Search_Lucene_Document_Pptx::SCHEMA_SLIDERELATION) {
+                        // Found slide!
+                        $slides[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
+                            $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . basename($slideRel["Target"])) )
+                        );
+                        
+                        // Search for slide notes
+                        $slideNotesRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/_rels/" . basename($slideRel["Target"]) . ".rels")) );
+                        foreach ($slideNotesRelations->Relationship as $slideNoteRel) {
+                            if ($slideNoteRel["Type"] == Zend_Search_Lucene_Document_Pptx::SCHEMA_SLIDENOTESRELATION) {
+                                // Found slide notes!
+                                $slideNotes[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
+                                    $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . dirname($slideNoteRel["Target"]) . "/" . basename($slideNoteRel["Target"])) )
+                                );
+                                
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                break;
             }
         }
         
@@ -120,31 +120,31 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
         
         // Extract contents from slides
         foreach ($slides as $slideKey => $slide) {
-        	// Register namespaces
-        	$slide->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
-        	$slide->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
-        	
-        	// Fetch all text
-        	$textElements = $slide->xpath('//a:t');
-        	foreach ($textElements as $textElement) {
-        		$documentBody[] = (string)$textElement;
-        	}
+            // Register namespaces
+            $slide->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
+            $slide->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
+            
+            // Fetch all text
+            $textElements = $slide->xpath('//a:t');
+            foreach ($textElements as $textElement) {
+                $documentBody[] = (string)$textElement;
+            }
 
-	        // Extract contents from slide notes
-	        if (isset($slideNotes[$slideKey])) {
-	        	// Fetch slide note
-	        	$slideNote = $slideNotes[$slideKey];
+            // Extract contents from slide notes
+            if (isset($slideNotes[$slideKey])) {
+                // Fetch slide note
+                $slideNote = $slideNotes[$slideKey];
 
-	        	// Register namespaces
-	        	$slideNote->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
-	        	$slideNote->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
-	        	
-	        	// Fetch all text
-	        	$textElements = $slideNote->xpath('//a:t');
-	        	foreach ($textElements as $textElement) {
-	        		$documentBody[] = (string)$textElement;
-	        	}
-	        }
+                // Register namespaces
+                $slideNote->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
+                $slideNote->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
+                
+                // Fetch all text
+                $textElements = $slideNote->xpath('//a:t');
+                foreach ($textElements as $textElement) {
+                    $documentBody[] = (string)$textElement;
+                }
+            }
         }   
         
         // Read core properties

@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 
 // Call Zend_Validate_File_MimeTypeTest::main() if this source file is executed directly.
@@ -28,7 +28,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_MimeType
@@ -74,20 +74,24 @@ class Zend_Validate_File_MimeTypeTest extends PHPUnit_Framework_TestCase
             array(array('image/jpeg', 'jpeg'), false),
         );
 
+        $filetest = dirname(__FILE__) . '/_files/testsize.mo';
         $files = array(
             'name'     => 'testsize.mo',
             'type'     => 'image/gif',
             'size'     => 200,
-            'tmp_name' => dirname(__FILE__) . '/_files/testsize.mo',
+            'tmp_name' => $filetest,
             'error'    => 0
         );
 
         foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_MimeType($element[0]);
+            $options   = array_shift($element);
+            $expected  = array_shift($element);
+            $validator = new Zend_Validate_File_MimeType($options);
             $this->assertEquals(
-                $element[1],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo', $files),
-                "Tested with " . var_export($element, 1)
+                $expected,
+                $validator->isValid($filetest, $files),
+                "Test expected " . var_export($expected, 1) . " with " . var_export($options, 1)
+                . "\nMessages: " . var_export($validator->getMessages(), 1)
             );
         }
     }

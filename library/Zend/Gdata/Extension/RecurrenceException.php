@@ -65,16 +65,16 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
      * @return DOMElement The DOMElement representing this element and all
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
-        if ($this->_specialized != null) {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this->_specialized !== null) {
             $element->setAttribute('specialized', ($this->_specialized ? "true" : "false"));
         }
-        if ($this->_entryLink != null) {
+        if ($this->_entryLink !== null) {
             $element->appendChild($this->_entryLink->getDOM($element->ownerDocument));
         }
-        if ($this->_originalEvent != null) {
+        if ($this->_originalEvent !== null) {
             $element->appendChild($this->_originalEvent->getDOM($element->ownerDocument));
         }
         return $element;

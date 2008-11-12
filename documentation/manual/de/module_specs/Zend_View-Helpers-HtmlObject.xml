@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.view.helpers.initial.object">
     <title>HTML Objekt Helfer</title>
 
@@ -16,7 +16,7 @@
         <listitem>
             <para>
                 <code>formFlash</code>
-                Erzeugt Markup für die Einbettung von Flash Dateien. 
+                Erzeugt Markup für die Einbettung von Flash Dateien.
             </para>
         </listitem>
         <listitem>
@@ -61,11 +61,11 @@
         <para>
             Das gibt das folgende HTML aus:
         </para>
-        
+
         <programlisting role="html"><![CDATA[
 <object data="/path/to/flash.swf"
-        type="application/x-shockwave-flash" 
-        classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" 
+        type="application/x-shockwave-flash"
+        classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
         codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab">
 </object>
 ]]>
@@ -96,23 +96,23 @@
 
         <programlisting role="php"><![CDATA[
 echo $this->htmlObject(
-    '/path/to/file.ext', 
-    'mime/type', 
+    '/path/to/file.ext',
+    'mime/type',
     array(
-        'attr1' => 'aval1', 
+        'attr1' => 'aval1',
         'attr2' => 'aval2'
-    ), 
+    ),
     array(
-        'param1' => 'pval1', 
+        'param1' => 'pval1',
         'param2' => 'pval2'
-    ), 
+    ),
     'some content'
 );
 
 /*
 Das würde folgendes ausgeben:
 
-<object data="/path/to/file.ext" type="mime/type" 
+<object data="/path/to/file.ext" type="mime/type"
     attr1="aval1" attr2="aval2">
     <param name="param1" value="pval1" />
     <param name="param2" value="pval2" />

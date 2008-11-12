@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestMyRow.php 5117 2007-06-05 00:38:13Z bkarwin $
+ * @version    $Id$
  */
 
 

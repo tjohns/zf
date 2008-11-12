@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 10573 2008-07-31 14:54:00Z matthew $
+ * @version    $Id$
  */
 
 // Call Zend_Captcha_ImageTest::main() if this source file is executed directly.
@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Captcha_ImageTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Form/Element/Captcha.php';
 require_once 'Zend/Captcha/Adapter.php';
@@ -170,6 +170,15 @@ class Zend_Captcha_ImageTest extends PHPUnit_Framework_TestCase
         $id = $this->captcha->getId();
         $this->assertRegexp("|<img[^>]*?src=\"/images/captcha/$id.png\"|", $html, "Expected $id in HTML:\n" . $html);
     }
+
+    public function testCaptchaHasAlt() 
+    {
+        $html = $this->element->render($this->getView());
+	$this->assertRegexp('|<img[^>]*? alt=""|', $html, "Expected alt= in HTML:\n" . $html);
+	$this->captcha->setImgAlt("Test Image");
+        $html = $this->element->render($this->getView());
+	$this->assertRegexp('|<img[^>]*? alt="Test Image"|', $html, "Wrong alt in HTML:\n" . $html);
+    }
     
     public function testCaptchaSetSuffix()
     {
@@ -207,6 +216,7 @@ class Zend_Captcha_ImageTest extends PHPUnit_Framework_TestCase
         $this->captcha->setGcFreq(1);
         sleep(2);
         $this->captcha->generate();
+	clearstatcache();
         $this->assertFalse(file_exists($filename), "File $filename was found even after GC");
     }
     

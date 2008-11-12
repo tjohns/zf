@@ -25,7 +25,7 @@ class IndexControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
 }
 ]]>
     </programlisting>
-    
+
     <para>
         There will be times, however, that you need to provide extra
         information -- GET and POST variables, COOKIE information, etc. You can

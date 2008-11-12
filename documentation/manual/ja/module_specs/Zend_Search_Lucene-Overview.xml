@@ -1,16 +1,14 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12025 -->
 <sect1 id="zend.search.lucene.overview">
     <title>概要</title>
 
     <sect2 id="zend.search.lucene.introduction">
         <title>導入</title>
-        <para>
-            Zend_Search_Lucene は、完全に PHP 5
+        <para>Zend_Search_Lucene は、完全に PHP 5
             で書かれている汎用的なテキスト検索エンジンです。
             インデックスをファイルシステム上に保存するためデータベースサーバを必要とせず、
             たいていの PHP ウェブサイト上で動作させることができます。
             Zend_Search_Lucene は、以下の機能をサポートしています。
-
             <itemizedlist>
                 <listitem>
                     <para>重要度による検索 - 最もマッチした結果が最初に返されます</para>
@@ -367,4 +365,270 @@ $headerLinksArray = $doc->getHeaderLinks();
         </para>
     </sect2>
 
+    <sect2 id="zend.search.lucene.index-creation.docx-documents">
+        <title>Word 2007 ドキュメント</title>
+        <para>
+            Zend_Search_Lucene には Word 2007 のパース機能があります。Word 2007 ファイルから直接ドキュメントを作成することができます。
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Docx</code> クラスは、<code>ZipArchive</code> クラスと
+            <code>simplexml</code> のメソッドでドキュメントをパースします。<code>ZipArchive</code> クラス (php_zip モジュール)
+            が使用できない場合は、<code>Zend_Search_Lucene_Document_Docx</code> を Zend Framework で使用することはできません。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Docx</code> クラスは、ドキュメントのメタデータとテキストを扱います。メタデータに含まれる内容は、ドキュメントの内容によって filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created などがあります。
+        </para>
+
+        <para>
+            'filename' フィールドは、実際の Word 2007 ファイルのファイル名です。
+        </para>
+
+        <para>
+            'title' フィールドは、実際のドキュメントのタイトルです。
+        </para>
+
+        <para>
+            'subject' フィールドは、実際のドキュメントの表題です。
+        </para>
+
+        <para>
+            'creator' フィールドは、実際のドキュメントの作成者です。
+        </para>
+
+        <para>
+            'keywords' フィールドは、実際のドキュメントのキーワードです。
+        </para>
+
+        <para>
+            'description' フィールドは、実際のドキュメントの説明です。
+        </para>
+
+        <para>
+            'lastModifiedBy' フィールドは、実際のドキュメントを最後に編集したユーザ名です。
+        </para>
+
+        <para>
+            'revision' フィールドは、実際のドキュメントのリビジョン番号です。
+        </para>
+
+        <para>
+            'modified' フィールドは、実際のドキュメントの最終更新日時です。
+        </para>
+
+        <para>
+            'created' フィールドは、実際のドキュメントの作成日時です。
+        </para>
+
+        <para>
+            'body' フィールドは、Word 2007 ドキュメントの実際の本文です。ここに含まれるのは通常のテキストのみで、コメントやリビジョンは含まれません。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Docx</code> クラスの <code>loadDocxFile()</code>
+            メソッドにもオプションの 2 番目の引数があります。これを true に設定すると、
+            本文もインデックスに格納されてインデックスから取得できるようになります。
+            デフォルトでは、本文のトークン化とインデックスの作成は行いますがインデックスには格納されません。
+        </para>
+    
+        <para>
+            パースしたドキュメントに、プログラマが任意のフィールドを追加することができます。
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time())
+);
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Document annotation text')
+);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.pptx-documents">
+        <title>Powerpoint 2007 ドキュメント</title>
+        <para>
+            Zend_Search_Lucene には Powerpoint 2007 のパース機能があります。Powerpoint 2007 ファイルから直接ドキュメントを作成することができます。
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Pptx</code> クラスは、<code>ZipArchive</code> クラスと
+            <code>simplexml</code> のメソッドでドキュメントをパースします。<code>ZipArchive</code> クラス (php_zip モジュール)
+            が使用できない場合は、<code>Zend_Search_Lucene_Document_Pptx</code> を Zend Framework で使用することはできません。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Pptx</code> クラスは、ドキュメントのメタデータとテキストを扱います。メタデータに含まれる内容は、ドキュメントの内容によって filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created などがあります。
+        </para>
+
+        <para>
+            'filename' フィールドは、実際の Powerpoint 2007 ファイルのファイル名です。
+        </para>
+
+        <para>
+            'title' フィールドは、実際のドキュメントのタイトルです。
+        </para>
+
+        <para>
+            'subject' フィールドは、実際のドキュメントの表題です。
+        </para>
+
+        <para>
+            'creator' フィールドは、実際のドキュメントの作成者です。
+        </para>
+
+        <para>
+            'keywords' フィールドは、実際のドキュメントのキーワードです。
+        </para>
+
+        <para>
+            'description' フィールドは、実際のドキュメントの説明です。
+        </para>
+
+        <para>
+            'lastModifiedBy' フィールドは、実際のドキュメントを最後に編集したユーザ名です。
+        </para>
+
+        <para>
+            'revision' フィールドは、実際のドキュメントのリビジョン番号です。
+        </para>
+
+        <para>
+            'modified' フィールドは、実際のドキュメントの最終更新日時です。
+        </para>
+
+        <para>
+            'created' フィールドは、実際のドキュメントの作成日時です。
+        </para>
+
+        <para>
+            'body' フィールドは、Powerpoint 2007 ドキュメントのすべてのスライドとノートの実際の本文です。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Pptx</code> クラスの <code>loadPptxFile()</code>
+            メソッドにもオプションの 2 番目の引数があります。これを true に設定すると、
+            本文もインデックスに格納されてインデックスから取得できるようになります。
+            デフォルトでは、本文のトークン化とインデックスの作成は行いますがインデックスには格納されません。
+        </para>
+
+        <para>
+            パースしたドキュメントに、プログラマが任意のフィールドを追加することができます。
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time()));
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Document annotation text'));
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.lucene.index-creation.xlsx-documents">
+        <title>Excel 2007 ドキュメント</title>
+        <para>
+            Zend_Search_Lucene には Excel 2007 のパース機能があります。Excel 2007 ファイルから直接ドキュメントを作成することができます。
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Xlsx</code> クラスは、<code>ZipArchive</code> クラスと
+            <code>simplexml</code> のメソッドでドキュメントをパースします。<code>ZipArchive</code> クラス (php_zip モジュール)
+            が使用できない場合は、<code>Zend_Search_Lucene_Document_Xlsx</code> を Zend Framework で使用することはできません。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Xlsx</code> クラスは、ドキュメントのメタデータとテキストを扱います。メタデータに含まれる内容は、ドキュメントの内容によって filename, title, subject, creator, keywords, description, lastModifiedBy, revision, modified, created などがあります。
+        </para>
+
+        <para>
+            'filename' フィールドは、実際の Excel 2007 ファイルのファイル名です。
+        </para>
+
+        <para>
+            'title' フィールドは、実際のドキュメントのタイトルです。
+        </para>
+
+        <para>
+            'subject' フィールドは、実際のドキュメントの表題です。
+        </para>
+
+        <para>
+            'creator' フィールドは、実際のドキュメントの作成者です。
+        </para>
+
+        <para>
+            'keywords' フィールドは、実際のドキュメントのキーワードです。
+        </para>
+
+        <para>
+            'description' フィールドは、実際のドキュメントの説明です。
+        </para>
+
+        <para>
+            'lastModifiedBy' フィールドは、実際のドキュメントを最後に編集したユーザ名です。
+        </para>
+
+        <para>
+            'revision' フィールドは、実際のドキュメントのリビジョン番号です。
+        </para>
+
+        <para>
+            'modified' フィールドは、実際のドキュメントの最終更新日時です。
+        </para>
+
+        <para>
+            'created' フィールドは、実際のドキュメントの作成日時です。
+        </para>
+
+        <para>
+            'body' フィールドは、Excel 2007 ドキュメントのすべてのワークシートのすべてのセルの実際の内容です。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Document_Xlsx</code> クラスの <code>loadXlsxFile()</code>
+            メソッドにもオプションの 2 番目の引数があります。これを true に設定すると、
+            本文もインデックスに格納されてインデックスから取得できるようになります。
+            デフォルトでは、本文のトークン化とインデックスの作成は行いますがインデックスには格納されません。
+        </para>
+
+        <para>
+            パースしたドキュメントに、プログラマが任意のフィールドを追加することができます。
+            <programlisting role="php"><![CDATA[
+$doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($filename);
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed(
+    'indexTime',
+    time()));
+$doc->addField(Zend_Search_Lucene_Field::Text(
+    'annotation',
+    'Document annotation text'));
+$index->addDocument($doc);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
 </sect1>

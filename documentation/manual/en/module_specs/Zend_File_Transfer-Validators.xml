@@ -20,6 +20,13 @@
 
         <listitem>
             <para>
+                <code>Crc32</code>: This validator checks for the crc32 hash value of the content from a file.
+                It is based on the <code>Hash</code> validator and allows a simpler usage by only supporting Crc32.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>ExcludeExtension</code>: This validator checks the extension of files. It will throw an
                 error when an given file has an defined extension. This way you can exclude defined extensions
                 from being validated.
@@ -28,7 +35,7 @@
 
         <listitem>
             <para>
-                <code>ExcludeMimeType</code>: This validator can validate the mimetype of files. It is 
+                <code>ExcludeMimeType</code>: This validator can validate the mimetype of files. It is
                 also able to validate types of mimetypes and will throw error when the mimetype of a given
                 file matches.
             </para>
@@ -81,6 +88,20 @@
 
         <listitem>
             <para>
+                <code>Hash</code>: This validator checks the hash value of the content from a file.
+                It supports multiple algorithms.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Md5</code>: This validator checks for the md5 hash value of the content from a file.
+                It is based on the <code>Hash</code> validator and allows a simpler usage by only supporting Md5.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>MimeType</code>: This validator can validate the mimetype of files. It is also able to
                 validate types of mimetypes and will throw error when the mimetype of a given file does not
                 match.
@@ -91,6 +112,13 @@
             <para>
                 <code>NotExists</code>: This validator checks for the existence of files. It will throw an
                 error when an given file does exist.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Sha1</code>: This validator checks for the sha1 hash value of the content from a file.
+                It is based on the <code>Hash</code> validator and allows a simpler usage by only supporting Sha1.
             </para>
         </listitem>
 
@@ -116,7 +144,7 @@
 
         <para>
             The usage of validators is quite simple. There are several methods for adding and manipulating validators.
-        </para>        
+        </para>
 
         <itemizedlist>
             <listitem>
@@ -131,7 +159,7 @@
                 <para>
                     <code>addValidator($validator, $breakChainOnFailure, $options = null, $files =
                     null)</code>: Adds the given validator to the validator
-                    stack (optionally only to the file(s) specified). 
+                    stack (optionally only to the file(s) specified).
                     <code>$validator</code> may be either an actual validator
                     instance, or a short name specifying the validator type
                     (e.g., 'Count').
@@ -160,7 +188,7 @@
 
             <listitem>
                 <para>
-                    <code>hasValidator($name)</code>: Indicates if a 
+                    <code>hasValidator($name)</code>: Indicates if a
                     validator has been registered.
                 </para>
             </listitem>
@@ -206,13 +234,13 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 20000);
 
 // Set a filesize with 20 bytes minimum and 20000 bytes maximum
-$upload->addValidator('Size', false, array(20, 20000));
+$upload->addValidator('Size', false, array('min' => 20, 'max' => 20000));
 
 // Set a filesize with 20 bytes minimum and 20000 bytes maximum and
-// a file count in one step 
+// a file count in one step
 $upload->setValidators(array(
-    'Size'  => array(20, 20000), 
-    'Count' => array(1, 3),
+    'Size'  => array('min' => 20, 'max' => 20000),
+    'Count' => array('min' => 1, 'max' => 3),
 ));
 ]]>
             </programlisting>
@@ -268,7 +296,7 @@ $upload->addValidator('Size', false, 20000)
             <para>
                 Note that even though setting the same validator
                 multiple times is allowed, doing so can lead to issues when using
-                different options for the same validator.  
+                different options for the same validator.
             </para>
         </note>
 
@@ -322,7 +350,7 @@ if ($upload->isValid()) {
 
         <para>
             The <code>Count</code> validator checks for the number of files which are provided. It
-            supports the following options:
+            supports the following option keys:
         </para>
 
         <itemizedlist>
@@ -356,8 +384,7 @@ if ($upload->isValid()) {
         </itemizedlist>
 
         <para>
-            You can initiate this validator with both options. The first option is <code>min</code>,
-            the second option is <code>max</code>. When only one option is given it is used as <code>max</code>.
+            You can initiate this validator with an string or integer, the value will be used as <code>max</code>.
             But you can also use the methods <code>setMin()</code> and <code>setMax()</code> to set both
             options afterwards and <code>getMin()</code> and <code>getMax()</code> to retrieve the actual
             set values.
@@ -374,7 +401,7 @@ $upload->addValidator('Count', false, 2);
 
 // Limit the amount of files to maximum 5 and expects minimum 1 file
 // to be returned
-$upload->addValidator('Count', false, array(1, 5);
+$upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
 ]]>
             </programlisting>
 
@@ -385,6 +412,45 @@ $upload->addValidator('Count', false, array(1, 5);
                 exceeds the maximum will be returned as error.
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.crc32">
+        <title><emphasis role="strong">Crc32</emphasis> validator</title>
+
+        <para>
+            The <code>Crc32</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php with the crc32 algorithm.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: You can set any key or use a numeric array. The values will be used
+                    as hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by using different keys. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.crc32.example">
+            <title>Using the Crc32 validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Crc32', false, '3b3652f');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
@@ -398,14 +464,15 @@ $upload->addValidator('Count', false, array(1, 5);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>extension</code>: Checks if the given file does not use this file extension.
+                    <code>*</code>: You can set any key or use a numeric array. The values will be used as
+                    extension to check if the given file does not use this file extension.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>case</code>: Sets if validation should be done case sensitive. Default is not
-                    case sensitive. Note the this option is used for all used extensions.
+                    case sensitive. Note the this key is used for all used extensions.
                 </para>
             </listitem>
         </itemizedlist>
@@ -433,6 +500,9 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 
 // Do not allow files with extension php or exe but use array notation
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+
+// Check case sensitive
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
 ]]>
             </programlisting>
 
@@ -455,7 +525,8 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>MimeType</code>: Set the mimetype type to validate against.
+                    <code>*</code>: You can set any key or use a numeric array. Set the mimetype type to
+                    validate against.
                 </para>
 
                 <para>
@@ -480,7 +551,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('ExcludeMimeType', false, 'image/gif');
 
 // Does not allow mimetype of gif and jpg images for all given files
-$upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg');
+$upload->addValidator('ExcludeMimeType', false, array('image/gif',
+                                                      'image/jpeg');
 
 // Does not allow mimetype of the group images for all given files
 $upload->addValidator('ExcludeMimeType', false, 'image');
@@ -515,7 +587,8 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>directory</code>: Checks if the file exists in the given directory.
+                    <code>*</code>: You can set any key or use a numeric array. Checks if the file exists
+                    in the given directory.
                 </para>
             </listitem>
         </itemizedlist>
@@ -560,14 +633,15 @@ $upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>extension</code>: Checks if the given file uses this file extension.
+                    <code>*</code>: You can set any key or use a numeric array. Checks if the given file
+                    uses this file extension.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>case</code>: Sets if validation should be done case sensitive. Default is not
-                    case sensitive. Note the this option is used for all used extensions.
+                    case sensitive. Note the this key is used for all used extensions.
                 </para>
             </listitem>
         </itemizedlist>
@@ -597,7 +671,7 @@ $upload->addValidator('Extension', false, 'jpg,png');
 $upload->addValidator('Extension', false, array('jpg', 'png'));
 
 // Check case sensitive
-$upload = new Zend_File_Transfer('mo,png', true);
+$upload->addValidator('Extension', false, array('mo', 'png', 'case' => true));
 if (!$upload->isValid('C:\temp\myfile.MO')) {
     print 'Not valid due to MO instead of mo';
 }
@@ -656,8 +730,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
         </itemizedlist>
 
         <para>
-            You can initiate this validator with both options. The first option is <code>min</code>,
-            the second option is <code>max</code>. When only one option is given it is used as <code>max</code>.
+            You can initiate this validator with only a string which will then be used as <code>max</code>.
             But you can also use the methods <code>setMin()</code> and <code>setMax()</code> to set both
             options afterwards and <code>getMin()</code> and <code>getMax()</code> to receive the actual
             set values.
@@ -681,10 +754,10 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('FilesSize', false, 40000);
 
 // Limit the size of all given files to maximum 4MB and mimimum 10kB
-$upload->addValidator('FilesSize', false, array('10kB', '4MB');
+$upload->addValidator('FilesSize', false, array('min' => '10kB', 'max' => '4MB'));
 
 // As before, but returns the plain filesize instead of a userfriendly string
-$upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
+$upload->addValidator('FilesSize', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
 ]]>
             </programlisting>
 
@@ -748,22 +821,19 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
         </itemizedlist>
 
         <para>
-            You can initiate this validator with all four options set. When <code>minheight</code> or
-            <code>minwidth</code> are not given, they will be set to 0. And when <code>maxwidth</code> or
-            <code>maxheight</code> are not given, they will be set to null. But you can also use the
-            methods <code>setImageMin()</code> and <code>setImageMax()</code> to set both minimum and
-            maximum values to set the options afterwards and <code>getMin()</code> and <code>getMax()</code>
-            to receive the actual set values.
+            You can also use the methods <code>setImageMin()</code> and <code>setImageMax()</code> to set
+            both minimum and maximum values to set the options afterwards and <code>getMin()</code> and
+            <code>getMax()</code> to receive the actual set values.
         </para>
 
         <para>
             For your convenience there is also a <code>setImageWidth</code> and <code>setImageHeight</code>
             method which will set the minimum and maximum height and width. Of course also the related
-            <code>getImageWidth</code> and <code>getImageHeight</code> methods are available. 
+            <code>getImageWidth</code> and <code>getImageHeight</code> methods are available.
         </para>
 
         <para>
-            To suppress the validation of a dimension just set the related value to <code>null</code>.
+            To suppress the validation of a dimension just don't set the related option.
         </para>
 
         <example id="zend.file.transfer.validators.imagesize.example">
@@ -774,21 +844,15 @@ $upload = new Zend_File_Transfer();
 
 // Limit the size of a image to a height of 100-200 and a width of
 // 40-80 pixel
-$upload->addValidator('ImageSize', false, 40, 100, 80, 200);
-
-// Use the array notation
-$upload->addValidator('ImageSize', false, array(40, 100, 80, 200);
-
-// Use the named array notation
-$upload->addValidator('ImageSize', false, 
-                      array('minwidth' => 40, 
-                            'maxwidth' => 80, 
-                            'minheight' => 100, 
+$upload->addValidator('ImageSize', false,
+                      array('minwidth' => 40,
+                            'maxwidth' => 80,
+                            'minheight' => 100,
                             'maxheight' => 200)
                       );
 
 // Set other image dimensions
-$upload->setImageWidth(20, 200);
+$upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
 ]]>
             </programlisting>
         </example>
@@ -868,6 +932,102 @@ $upload->addValidator('IsImage', false, 'jpeg');
         </note>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.hash">
+        <title><emphasis role="strong">Hash</emphasis> validator</title>
+
+        <para>
+            The <code>Hash</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php. It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: You can set any key or use a numeric array. Sets the hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by giving them as array. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>algorithm</code>: Sets the algorithm to use for hashing the content.
+                </para>
+
+                <para>
+                    You can set multiple algorithm by using the <code>addHash()</code> method multiple times.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.hash.example">
+            <title>Using the Hash validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Hash', false, '3b3652f');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Hash', false, array('3b3652f', 'e612b69'));
+
+// Sets a different algorithm to check against
+$upload->addValidator('Hash', false, array('315b3cd8273d44912a7', 'algorithm' => 'md5'));
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                This validator supports about 34 different hash algorithms. The most known are 'crc32',
+                'md5' and 'sha1'. When you want to know the others see php's
+                <ulink url="http://php.net/hash_algos">hash_algos method</ulink>.
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.md5">
+        <title><emphasis role="strong">Md5</emphasis> validator</title>
+
+        <para>
+            The <code>Md5</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php with the md5 algorithm.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: You can set any key or use a numeric array. Sets the hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by giving them as array. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.md5.example">
+            <title>Using the Md5 validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Md5', false, '3b3652f336522365223');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.mimetype">
         <title><emphasis role="strong">MimeType</emphasis> validator</title>
 
@@ -879,7 +1039,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>MimeType</code>: Set the mimetype type to validate against.
+                    <code>*</code>: You can set any key or use a numeric array. Set the mimetype type to validate against.
                 </para>
 
                 <para>
@@ -931,12 +1091,12 @@ $upload->addValidator('MimeType', false, 'image');
         <note>
             <para>
                 This component will use the <code>fileinfo</code> extension if it is available. If it's not,
-                it will degrade to the <code>mime_content_type</code> function. And if the functioncall fails
+                it will degrade to the <code>mime_content_type</code> function. And if the function call fails
                 it will use the mimetype which is given by HTTP.
             </para>
 
             <para>
-                You should be aware of possible security problems when you have wether <code>fileinfo</code>
+                You should be aware of possible security problems when you have whether <code>fileinfo</code>
                 nor <code>mime_content_type</code> available. The mimetype given by HTTP is not secure and
                 can be easily manipulated.
             </para>
@@ -954,7 +1114,7 @@ $upload->addValidator('MimeType', false, 'image');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>directory</code>: Checks if the file does not exist in the given directory.
+                    <code>*</code>: You can set any key or use a numeric array. Checks if the file does not exist in the given directory.
                 </para>
             </listitem>
         </itemizedlist>
@@ -991,6 +1151,44 @@ $upload->addValidator('NotExists', false,
         </note>
     </sect2>
 
+    <sect2 id="zend.file.transfer.validators.sha1">
+        <title><emphasis role="strong">Sha1</emphasis> validator</title>
+
+        <para>
+            The <code>Sha1</code> validator checks the content of a transferred file by hashing it.
+            This validator uses the hash extension from php with the md5 algorithm.
+            It supports the following options:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: You can set any key or use a numeric array. Sets the hash to validate against.
+                </para>
+
+                <para>
+                    You can set multiple hashes by giving them as array. Everyone will be checked and only
+                    if all fails, the validation itself will fail.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.sha1.example">
+            <title>Using the Sha1 validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Checks is the content of the uploaded file has the given hash
+$upload->addValidator('Sha1', false, '3b3652f336522365223');
+
+// Limits this validator to two different hashes
+$upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
     <sect2 id="zend.file.transfer.validators.size">
         <title><emphasis role="strong">Size</emphasis> validator</title>
 
@@ -1002,7 +1200,7 @@ $upload->addValidator('NotExists', false,
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Min</code>: Set the minimum filesize.
+                    <code>min</code>: Set the minimum filesize.
                 </para>
 
                 <para>
@@ -1012,7 +1210,7 @@ $upload->addValidator('NotExists', false,
 
             <listitem>
                 <para>
-                    <code>Max</code>: Set the maximum filesize.
+                    <code>max</code>: Set the maximum filesize.
                 </para>
 
                 <para>
@@ -1034,11 +1232,9 @@ $upload->addValidator('NotExists', false,
         </itemizedlist>
 
         <para>
-            You can initiate this validator with both options. The first option is <code>min</code>,
-            the second option is <code>max</code>. When only one option is given it is used as <code>max</code>.
-            But you can also use the methods <code>setMin()</code> and <code>setMax()</code> to set both
-            options afterwards and <code>getMin()</code> and <code>getMax()</code> to receive the actual
-            set values.
+            When only a string is given it is used as <code>max</code>. But you can also use the methods
+            <code>setMin()</code> and <code>setMax()</code> to set both options afterwards and
+            <code>getMin()</code> and <code>getMax()</code> to receive the actual set values.
         </para>
 
         <para>
@@ -1059,8 +1255,9 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 40000);
 
 // Limit the size a given file to maximum 4MB and mimimum 10kB
-// Additionally returns the plain number in case of an error instead of a userfriendly one
-$upload->addValidator('Size', false, array('10kB', '4MB', false));
+// Additionally returns the plain number in case of an error
+// instead of a userfriendly one
+$upload->addValidator('Size', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
 ]]>
             </programlisting>
         </example>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>Authentification avec ClientLogin</title>
 
@@ -56,7 +56,7 @@ try {
    $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
 } catch (Zend_Gdata_App_CaptchaRequiredException $cre) {
     echo 'l'URL de l\'image CAPTCHA est: ' . $cre->getCaptchaUrl() . "\n";
-    echo 'Token ID: ' . $cre->getCaptchaToken() . "\n"; 
+    echo 'Token ID: ' . $cre->getCaptchaToken() . "\n";
 } catch (Zend_Gdata_App_AuthException $ae) {
    echo 'Problème d'authentification : ' . $ae->exception() . "\n";
 }

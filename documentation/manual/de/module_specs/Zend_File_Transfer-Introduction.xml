@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12158 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -19,6 +19,18 @@
             kommenden Release hinzugefügt. Nicht implementierte Methoden werfen eine Ausnahme. Deswegen
             sollte aktuell eine Instanz von <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet
             werden. Das wird sich in Zukunft ändern, sobald mehrere Adapter vorhanden sind.
+        </para>
+    </note>
+
+    <note>
+        <title>Formulare</title>
+        <para>
+            Wenn man <code>Zend_Form</code> verwendet sollte man die Beispiele, die im Kapitel von
+            <code>Zend_Form</code> zu finden sind, lesen und verwenden und <code>Zend_File_Transfer</code>
+            nicht manuell verwenden. Aber die Information die man in diesem Kapitel lesen kann sind sehr
+            nützlich, selbst wenn man Sie nicht direkt verwendet. Alle Annahmen, Beschreibungen und
+            Lösungen sind die gleichen wenn man <code>Zend_File_Transfer</code> über <code>Zend_Form</code>
+            verwendet.
         </para>
     </note>
 
@@ -130,6 +142,176 @@ if (!$adapter->receive()) {
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.file.transfer.introduction.checking">
+
+        <title>Prüfen von Dateien</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> hat verschiedene Methoden die auf verschiedenste Annahmen
+            prüfen welche nützlich sind wenn man Dateien bearbeiten will nachdem Sie empfangen wurden.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">isValid($files = null)</emphasis>: Diese Methode prüft ob die
+                    angegebene Datei gültig ist, basierend auf den Prüfungen welche dieser Datei
+                    angehängt sind. Wenn keine Dateien angegeben wurden, werden alle Dateien geprüft.
+                    Es ist zu beachten das diese Methode mindestens dann aufgerufen wird, wenn man die
+                    Dateien empfängt.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">isUploaded($files = null)</emphasis>: Diese Methode prüft ob die
+                    angegebene Datei vom Benutzer hochgeladen wurde. Das ist nützlich wenn man verschiedene
+                    Dateien definiert hat die optional hochzuladen sind. Wenn keine Dateien angegeben wurden,
+                    werden alle Dateien geprüft.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">isReceived($files = null)</emphasis>: Diese Methode prüft ob die
+                    angegebene Datei bereits empfangen wurde. Wenn keine Dateien angegeben wurden, werden
+                    alle Dateien geprüft.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.introduction.checking.example">
+            <title>Dateien prüfen</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Gibt alle bekannten internen Dateiinformationen zurück
+$files = $upload->getFileInfo();
+
+foreach ($files as $file => $info) {
+    // Datei hochgeladen ?
+    if (!$upload->isUploaded($file)) {
+        print "Warum hast Du die Datei nicht hochgeladen ?";
+        continue;
+    }
+
+    // Prüfungen sind ok ?
+    if (!$upload->isValid($file)) {
+        print "Sorry, aber die Datei ist nicht das was wir wollten";
+        continue;
+    }
+}
+
+$upload->receive();
+]]>
+            </programlisting>
+
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.informations">
+
+        <title>Zusätzliche Dateiinformationen</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> kann verschiedene zusätzliche Informationen über Dateien
+            zurückgeben. Die folgenden Methoden sind vorhanden:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileName($file = null, $path = true)</emphasis>: Diese Methode
+                    gibt den wirklichen Namen der übertragenen Datei zurück.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileInfo($file = null)</emphasis>: Diese Methode gibt die
+                    internen Informationen für die angegebene übertragene Datei zurück.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>: Diese Methode
+                    gibt einen Hash des Inhalts einer angegebenen übertragenen Datei zurück.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            <code>getFileName()</code> akzeptiert den Namen des Elements als ersten Parameter. Wenn kein Name
+            angegeben wird, werden alle bekannten Dateinamen in einem Array zurückgegeben. Wenn die Datei
+            eine MultiDatei ist, wird auch ein Array zurückgegeben. Wenn nur eine einzelne Datei vorhanden ist
+            wird nur ein String zurückgegeben.
+        </para>
+
+        <para>
+            Standardmäßig werden Dateinamen mit Ihrem kompletten Pfad zurückgegeben. Wenn man nur den Dateinamen
+            ohne Pfad benötigt, kann der zweite Parameter <code>$path</code> gesetzt werden, welcher den
+            Dateinamen ausschneidet wenn er auf false gesetzt wird.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example1">
+            <title>Den Dateinamen bekommen</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Gibt die Dateinamen aller Dateien zurück
+$names = $upload->getFileName();
+
+// Gibt den Dateinamen des Formularelements 'foo' zurück
+$names = $upload->getFileName('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das sich der Dateinamen ändern kann wenn man die Datei empfängt (receive).
+                Das kann geschehen durch den Fakt das beim Empfangen alle Filter ausgeführt werden.
+                Deswegen sollte man <code>getFileName()</code> immer ausführen nachdem man die Dateien
+                empfangen hat.
+            </para>
+        </note>
+
+        <para>
+            <code>getHash()</code> akzeptiert den Namen eines Hash Algorithmus als ersten Parameter. Für eine
+            Liste von bekannten Algorithmen kann in
+            <ulink url="http://php.net/hash_algos">PHP's hash_algos Methode</ulink> gesehen werden. Wenn kein
+            Algorithmus angegeben wird, wird <code>crc32</code> als Standardalgorithmus verwendet.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example2">
+            <title>Den Hash einer Datei erhalten</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Gibt die Hashes von allen Dateien als Array zurück wenn mehr als eine Datei hochgeladen wurde
+$hash = $upload->getHash('md5');
+
+// Gibt den Has für das 'foo' Formularelement zurück
+$names = $upload->getHash('crc32', 'foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Es ist zu beachten das der zurückgegebene Wert ein Array ist, wenn die Datei oder der
+                Formularname mehr als eine einzelne Datei enthält.
+            </para>
+        </note>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

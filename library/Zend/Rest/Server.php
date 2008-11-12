@@ -46,13 +46,8 @@ require_once 'Zend/Server/Abstract.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Interface
+class Zend_Rest_Server implements Zend_Server_Interface
 {
-    /**
-     * @var Zend_Server_Reflection
-     */
-    protected $_reflection = null;
-
     /**
      * Class Constructor Args
      * @var array
@@ -75,9 +70,32 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
     protected $_headers = array();
 
     /**
+     * @var array PHP's Magic Methods, these are ignored
+     */
+    protected static $magicMethods = array(
+        '__construct',
+        '__destruct',
+        '__get',
+        '__set',
+        '__call',
+        '__sleep',
+        '__wakeup',
+        '__isset',
+        '__unset',
+        '__tostring',
+        '__clone',
+        '__set_state',
+    );
+
+    /**
      * @var string Current Method
      */
     protected $_method;
+
+    /**
+     * @var Zend_Server_Reflection
+     */
+    protected $_reflection = null;
 
     /**
      * Whether or not {@link handle()} should send output or return the response.
@@ -117,6 +135,20 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
     }
 
     /**
+     * Lowercase a string
+     *
+     * Lowercase's a string by reference
+     *
+     * @param string $value
+     * @param string $key
+     * @return string Lower cased string
+     */
+    public static function lowerCase(&$value, &$key)
+    {
+        return $value = strtolower($value);
+    }
+
+    /**
      * Whether or not to return a response
      *
      * If called without arguments, returns the value of the flag. If called
@@ -141,7 +173,9 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
     /**
      * Implement Zend_Server_Interface::handle()
      *
-     * @param array $request
+     * @param  array $request
+     * @throws Zend_Rest_Server_Exception
+     * @return string|void
      */
     public function handle($request = false)
     {
@@ -204,13 +238,25 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
                         }
                     }
                 } else {
-                    $result = $this->fault("Unknown Method '$this->_method'.", 404);
+                    require_once "Zend/Rest/Server/Exception.php";
+                    $result = $this->fault(
+                        new Zend_Rest_Server_Exception("Unknown Method '$this->_method'."),
+                        404
+                    );
                 }
             } else {
-                $result = $this->fault("Unknown Method '$this->_method'.", 404);
+                require_once "Zend/Rest/Server/Exception.php";
+                $result = $this->fault(
+                    new Zend_Rest_Server_Exception("Unknown Method '$this->_method'."),
+                    404
+                );
             }
         } else {
-            $result = $this->fault("No Method Specified.", 404);
+            require_once "Zend/Rest/Server/Exception.php";
+            $result = $this->fault(
+                new Zend_Rest_Server_Exception("No Method Specified."),
+                404
+            );
         }
 
         if ($result instanceof SimpleXMLElement) {
@@ -477,7 +523,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
         }
 
         foreach ($function as $func) {
-            if (is_callable($func) && !in_array($func, self::$magic_methods)) {
+            if (is_callable($func) && !in_array($func, self::$magicMethods)) {
                 $this->_functions[$func] = $this->_reflection->reflectFunction($func);
             } else {
                 throw new Zend_Rest_Server_Exception("Invalid Method Added to Service.");

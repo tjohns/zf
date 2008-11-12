@@ -103,7 +103,7 @@
         <para>
             The Figlet adapter utilizes <link
                 linkend="zend.text.figlet">Zend_Text_Figlet</link> to present a
-            Figlet to the user. Figlet captchas are limited to characters only. 
+            Figlet to the user. Figlet captchas are limited to characters only.
         </para>
 
         <para>

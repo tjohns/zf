@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11224 -->
+<!-- EN-Revision: 11855 -->
 <sect1 id="zend.paginator.usage">
     <title>使用法</title>
 
@@ -31,7 +31,18 @@
                         <entry>DbSelect</entry>
                         <entry>
                             <link linkend="zend.db.select"><code>Zend_Db_Select</code></link> 
-                            のインスタンスを使用します。
+                            のインスタンスを使用し、配列を返します。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>DbTableSelect</entry>
+                        <entry>
+                            <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link> 
+                            のインスタンスを使用し、
+                            <code>Zend_Db_Table_Rowset_Abstract</code>
+                            のインスタンスを返します。
+                            これは、結果セットについての追加情報
+                            (カラム名など) を提供します。
                         </entry>
                     </row>
                     <row>
@@ -51,6 +62,21 @@
                 </tbody>
             </tgroup>
         </table>
+
+        <note>
+            <para>
+                指定したクエリにマッチするすべての行を取得するのではなく、
+                DbSelect アダプタや DbTableSelect アダプタは
+                現在のページの表示のための必要最小限のデータのみを取得します。
+            </para>
+            
+            <para>
+                そのため、マッチする行の総数を得るための別のクエリが動的に生成されます。
+                しかし、総数を直接指定したり、総数を求めるクエリを直接指定したりすることもできます。
+                詳細な情報は、DbSelect アダプタの
+                <code>setRowCount()</code> メソッドを参照ください。
+            </para>
+        </note>
 
         <para>
             <code>Zend_Paginator</code> のインスタンスを作成するには、
@@ -77,18 +103,21 @@ $paginator = Zend_Paginator::factory($array);
         </para>
 
         <note>
-            <para>Null アダプタの場合は、
-            データコレクションのかわりに要素数をコンストラクタで指定します。</para>
+            <para>
+                Null アダプタの場合は、
+                データコレクションのかわりに要素数をコンストラクタで指定します。
+            </para>
         </note>
         
         <para>
             この状態でも技術的には既に使用可能ですが、
-            データを読み進めていくためにはさらにページ番号を教えてやる必要があります。
+            ユーザが要求したページ番号をコントローラのアクション内で教えてやる必要があります。
+            これにより、データを読み進めていくことが可能となります。
         </para>
 
         <para>
             <programlisting role="php"><![CDATA[
-$paginator->setCurrentPageNumber($pageNumber);
+$paginator->setCurrentPageNumber($page);
 ]]>
             </programlisting>
         </para>
@@ -106,12 +135,12 @@ $paginator->setCurrentPageNumber($pageNumber);
         
         <para>
             <programlisting role="php"><![CDATA[
-routes.example.route = articles/:articleName/:pageNumber
+routes.example.route = articles/:articleName/:page
 routes.example.defaults.controller = articles
 routes.example.defaults.action = view
-routes.example.defaults.pageNumber = 1
+routes.example.defaults.page = 1
 routes.example.reqs.articleName = \w+
-routes.example.reqs.pageNumber = \d+
+routes.example.reqs.page = \d+
 ]]>
             </programlisting>
         </para>
@@ -123,7 +152,7 @@ routes.example.reqs.pageNumber = \d+
         
         <para>
             <programlisting role="php"><![CDATA[
-$paginator->setCurrentPageNumber($this->_getParam('pageNumber'));
+$paginator->setCurrentPageNumber($this->_getParam('page'));
 ]]>
             </programlisting>
         </para>
@@ -186,12 +215,13 @@ $this->view->paginator = $paginator;
         
         <para>
             最後のほうでビューヘルパーをコールしているところに注目しましょう。
-            PaginationControl は paginator のインスタンスを受け取り、
-            オプションでスクロール形式とビュー用の partial を受け取ります。
+            PaginationControl 4 つまでのパラメータを受け取ります。
+            paginator のインスタンス、スクロール形式、
+            そして追加パラメータの配列です。
         </para>
         
         <para>
-            オプションではありますが、この 2 つのパラメータは重要です。
+            2 番目と 3 番目のパラメータは重要です。
             ビュー partial はページ処理コントロールの
             <emphasis>見た目</emphasis>を決めるために用いられ、
             一方スクロール形式はその <emphasis>振る舞い</emphasis>
@@ -270,6 +300,14 @@ $this->view->paginator = $paginator;
         </table>
         
         <para>
+            4 番目、そして最後のパラメータはオプションの連想配列です。
+            ここで、ビューパーシャルから (<code>$this</code> を用いて)
+            使用したい追加変数を指定します。
+            たとえば、ページ移動用のリンクに使用する追加の
+            URL パラメータなどを含めることができます。
+        </para>
+        
+        <para>
             デフォルトのビュー partial とスクロール形式、
             そしてビューのインスタンスを設定してしまえば、
             PaginationControl のコールを完全に除去することができます。
@@ -296,6 +334,32 @@ $paginator->setView($view);
 ]]>
             </programlisting>
         </para>
+
+        <note>
+            <para>
+                もちろん、<code>Zend_Paginator</code>
+                を別のテンプレートエンジンで使用することもできます。
+                たとえば、Smarty を使用する場合は次のようになります。
+            </para>
+            
+            <para>
+                <programlisting role="php"><![CDATA[
+$smarty->assign('pages', $paginator->getPages());
+]]>
+                </programlisting>
+            </para>
+
+            <para>
+                そして、テンプレートからは次のようにして paginator の値にアクセスします。
+            </para>
+            
+            <para>
+                <programlisting role="php"><![CDATA[
+{$pages.pageCount}
+]]>
+                </programlisting>
+            </para>
+        </note>
         
         <sect3 id="zend.paginator.usage.rendering.example-controls">
             <title>ページ処理コントロールの例</title>

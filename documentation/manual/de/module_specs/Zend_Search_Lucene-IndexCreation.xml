@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>Indexerstellung</title>
 
@@ -243,14 +243,14 @@ $index->optimize();
                 basiert auf Lucene v2.3 und ist kompatibel mit den aktuellen Implementation der
                 Zend_Search_Lucene Komponente (ZF 1.6). Frühere Versionen der Zend_Search_Lucene
                 Implementation benötigen andere Versionen des Java Lucene Tools um kompatibel zu sein:
-                <itemizedlist> 
-                    <listitem> 
-                        <para>ZF 1.5 - Java Lucene 2.1 (Luke Tool v0.7.1 - <ulink url="http://www.getopt.org/luke/luke-0.7.1/"/>)</para> 
-                    </listitem> 
-                    <listitem> 
-                        <para>ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke Tool v0.6 - <ulink url="http://www.getopt.org/luke/luke-0.6/"/>)</para> 
-                    </listitem> 
-                </itemizedlist> 
+                <itemizedlist>
+                    <listitem>
+                        <para>ZF 1.5 - Java Lucene 2.1 (Luke Tool v0.7.1 - <ulink url="http://www.getopt.org/luke/luke-0.7.1/"/>)</para>
+                    </listitem>
+                    <listitem>
+                        <para>ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke Tool v0.6 - <ulink url="http://www.getopt.org/luke/luke-0.6/"/>)</para>
+                    </listitem>
+                </itemizedlist>
             </para>
         </sect3>
     </sect2>
@@ -265,7 +265,7 @@ $index->optimize();
         <para>
             Es ist möglich das mit der
             <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code>
-            Methode zu überschreiben. 
+            Methode zu überschreiben.
         </para>
 
 

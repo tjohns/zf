@@ -95,40 +95,39 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      * Min limits the file count, when used with max=null it is the maximum file count
      * It also accepts an array with the keys 'min' and 'max'
      *
-     * @param  integer|array $min Minimum file count
-     * @param  integer       $max Maximum file count
+     * If $options is a integer, it will be used as maximum file count
+     * As Array is accepts the following keys:
+     * 'min': Minimum filecount
+     * 'max': Maximum filecount
+     *
+     * @param  integer|array $options Options for the adapter
+     * @param  integer $max (Deprecated) Maximum value (implies $options is the minimum)
      * @return void
      */
-    public function __construct($min, $max = null)
+    public function __construct($options)
     {
-        $this->_files = array();
-        if (is_array($min) === true) {
-            if (isset($min['max']) === true) {
-                $max = $min['max'];
-            }
-
-            if (isset($min['min']) === true) {
-                $min = $min['min'];
-            }
-
-            if (isset($min[0]) === true) {
-                if (count($min) === 2) {
-                    $max = $min[1];
-                    $min = $min[0];
-                } else {
-                    $max = $min[0];
-                    $min = null;
-                }
-            }
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } elseif (is_string($options) || is_numeric($options)) {
+            $options = array('max' => $options);
+        } elseif (!is_array($options)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
         }
 
-        if (empty($max) === true) {
-            $max = $min;
-            $min = null;
+        if (1 < func_num_args()) {
+            trigger_error('Multiple arguments are deprecated in favor of an array of named arguments', E_USER_NOTICE);
+            $options['min'] = func_get_arg(0);
+            $options['max'] = func_get_arg(1);
         }
 
-        $this->setMin($min);
-        $this->setMax($max);
+        if (isset($options['min'])) {
+            $this->setMin($options);
+        }
+
+        if (isset($options['max'])) {
+            $this->setMax($options);
+        }
     }
 
     /**
@@ -138,37 +137,42 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      */
     public function getMin()
     {
-        $min = $this->_min;
-
-        return $min;
+        return $this->_min;
     }
 
     /**
      * Sets the minimum file count
      *
-     * @param  integer $min            The minimum file count
+     * @param  integer|array $min The minimum file count
      * @return Zend_Validate_File_Size Provides a fluent interface
      * @throws Zend_Validate_Exception When min is greater than max
      */
     public function setMin($min)
     {
-        if ($min === null) {
-            $this->_min = null;
-        } else if (($this->_max !== null) and ($min > $this->_max)) {
-            require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception('The minimum must be less than or equal to the maximum file count, but '
-                . " {$min} > {$this->_max}");
-        } else {
-            $this->_min = max(0, (integer) $min);
+        if (is_array($min) and isset($min['min'])) {
+            $min = $min['min'];
         }
 
+        if (!is_string($min) and !is_numeric($min)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
+        }
+
+        $min = (integer) $min;
+        if (($this->_max !== null) && ($min > $this->_max)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception("The minimum must be less than or equal to the maximum file count, but $min >"
+                                            . " {$this->_max}");
+        }
+
+        $this->_min = $min;
         return $this;
     }
 
     /**
      * Returns the maximum file count
      *
-     * @return integer|null
+     * @return integer
      */
     public function getMax()
     {
@@ -178,22 +182,29 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
     /**
      * Sets the maximum file count
      *
-     * @param  integer|null $max       The maximum file count
-     * @throws Zend_Validate_Exception When max is smaller than min
+     * @param  integer|array $max The maximum file count
      * @return Zend_Validate_StringLength Provides a fluent interface
+     * @throws Zend_Validate_Exception When max is smaller than min
      */
     public function setMax($max)
     {
-        if ($max === null) {
-            $this->_max = null;
-        } else if (($this->_min !== null) and ($max < $this->_min)) {
-            require_once 'Zend/Validate/Exception.php';
-            throw new Zend_Validate_Exception("The maximum must be greater than or equal to the minimum file count, but "
-                . "{$max} < {$this->_min}");
-        } else {
-            $this->_max = (integer) $max;
+        if (is_array($max) and isset($max['max'])) {
+            $max = $max['max'];
         }
 
+        if (!is_string($max) and !is_numeric($max)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception ('Invalid options to validator provided');
+        }
+
+        $max = (integer) $max;
+        if (($this->_min !== null) && ($max < $this->_min)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception("The maximum must be greater than or equal to the minimum file count, but "
+                                            . "$max < {$this->_min}");
+        }
+
+        $this->_max = $max;
         return $this;
     }
 
@@ -222,15 +233,30 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
 
         $this->_count = count($this->_files);
         if (($this->_max !== null) && ($this->_count > $this->_max)) {
-            $this->_error(self::TOO_MUCH);
-            return false;
+            return $this->_throw($file, self::TOO_MUCH);
         }
 
         if (($this->_min !== null) && ($this->_count < $this->_min)) {
-            $this->_error(self::TOO_LESS);
-            return false;
+            return $this->_throw($file, self::TOO_LESS);
         }
 
         return true;
+    }
+
+    /**
+     * Throws an error of the given type
+     *
+     * @param  string $file
+     * @param  string $errorType
+     * @return false
+     */
+    protected function _throw($file, $errorType)
+    {
+        if ($file !== null) {
+            $this->_value = $file['name'];
+        }
+
+        $this->_error($errorType);
+        return false;
     }
 }

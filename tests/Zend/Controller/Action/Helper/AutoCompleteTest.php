@@ -1,7 +1,7 @@
 <?php
 // Call Zend_Controller_Action_Helper_AutoCompleteTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once 'Zend/TestHelper.php';
+    require_once dirname(__FILE__) . '/../../../../TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_Controller_Action_Helper_AutoCompleteTest::main");
 }
 
@@ -48,6 +48,7 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
     {
         Zend_Controller_Action_Helper_AutoCompleteTest_LayoutOverride::$_mvcInstance = null;
         Zend_Controller_Action_HelperBroker::resetHelpers();
+        Zend_Controller_Action_HelperBroker::setPluginLoader(null);
 
         $this->request = new Zend_Controller_Request_Http();
         $this->response = new Zend_Controller_Response_Cli();
@@ -101,36 +102,6 @@ class Zend_Controller_Action_Helper_AutoCompleteTest extends PHPUnit_Framework_T
             }
         }
         $this->assertTrue($found, "JSON content-type header not found");
-    }
-
-    public function testDojoHelperThrowsExceptionOnInvalidDataFormat()
-    {
-        $dojo = new Zend_Controller_Action_Helper_AutoCompleteDojo();
-        $data = array('foo' => 'bar', 'baz');
-        try {
-            $encoded = $dojo->encodeJson($data);
-            $this->fail('Associative arrays without an "items" key should be considered invalid');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Invalid data', $e->getMessage());
-        }
-
-        $data = new stdClass;
-        $data->foo = 'bar';
-        $data->bar = 'baz';
-        try {
-            $encoded = $dojo->encodeJson($data);
-            $this->fail('Objects should be considered invalid');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Invalid data', $e->getMessage());
-        }
-
-        $data = 'foo';
-        try {
-            $encoded = $dojo->encodeJson($data);
-            $this->fail('Strings should be considered invalid');
-        } catch (Zend_Controller_Action_Exception $e) {
-            $this->assertContains('Invalid data', $e->getMessage());
-        }
     }
 
     public function testDojoHelperEncodesToJson()

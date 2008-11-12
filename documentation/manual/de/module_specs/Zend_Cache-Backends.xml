@@ -1,9 +1,9 @@
-<!-- EN-Revision: 11462 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
-        <para>
-            Es gibt zwei Arten von Backends: Standard und erweiterte. Natürlich bieten erweiterte Backends
-            mehr Features.
+    <para>
+        Es gibt zwei Arten von Backends: Standard und erweiterte. Natürlich bieten erweiterte Backends
+        mehr Features.
     </para>
 
     <sect2 id="zend.cache.backends.file">
@@ -332,7 +332,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>string</code></entry>
                           <entry><code>File</code></entry>
                           <entry>
-                              Der "langsame" Backendname 
+                              Der "langsame" Backendname
                           </entry>
                       </row>
                       <row>
@@ -340,7 +340,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>string</code></entry>
                           <entry><code>Apc</code></entry>
                           <entry>
-                              Der "schnelle" Backendname 
+                              Der "schnelle" Backendname
                           </entry>
                       </row>
                       <row>
@@ -348,7 +348,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>array</code></entry>
                           <entry><code>array()</code></entry>
                           <entry>
-                              Die "langsamen" Backendoptionen 
+                              Die "langsamen" Backendoptionen
                           </entry>
                       </row>
                       <row>
@@ -356,7 +356,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>array</code></entry>
                           <entry><code>array()</code></entry>
                           <entry>
-                              Die "schnellen" Backendoptionen 
+                              Die "schnellen" Backendoptionen
                           </entry>
                       </row>
                       <row>
@@ -385,7 +385,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                           <entry><code>false</code></entry>
                           <entry>
                               Wenn true, wird kein require_once für das langsame Backend verwendet
-                              (nur für eigene Backends nützlich) 
+                              (nur für eigene Backends nützlich)
                           </entry>
                       </row>
                       <row>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12150 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -94,7 +94,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 ]]>
@@ -401,7 +402,7 @@ $viewRenderer =
 
             <para>
                 Der <code>ViewRenderer</code> führt einige Pfad Normalisierungen durch um das Eruieren
-                von View Skripten einfacher zu machen. Die Standardregeln sind wie folgt: 
+                von View Skripten einfacher zu machen. Die Standardregeln sind wie folgt:
             </para>
 
             <itemizedlist>

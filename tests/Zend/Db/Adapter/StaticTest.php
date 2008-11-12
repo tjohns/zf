@@ -18,14 +18,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StaticTest.php 6923 2007-11-25 02:00:06Z peptolab $
+ * @version    $Id$
  */
 
 
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 

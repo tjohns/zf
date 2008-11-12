@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.view.helpers.initial.placeholder">
     <title>Platzhalter (PlaceHolder) Helfer</title>
 
@@ -21,8 +21,8 @@
         <programlisting role="php"><![CDATA[
 <?php $this->placeholder('foo')->set("Ein Text für später") ?>
 
-<?php 
-    echo $this->placeholder('foo'); 
+<?php
+    echo $this->placeholder('foo');
     // Ausgabe "Ein Text für später"
 ?>
 ]]>
@@ -89,15 +89,15 @@
 
         <programlisting role="php"><![CDATA[
 <!-- Späteres View Skript -->
-<?php 
+<?php
 $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
-                         ->setSeparator("</li><li>\n") 
+                         ->setSeparator("</li><li>\n")
                          ->setIndent(4)
                          ->setPostfix("</li></ul>\n");
 ?>
 
-<?php 
-    echo $this->placeholder('foo'); 
+<?php
+    echo $this->placeholder('foo');
     // Ausgabe als unsortierte Liste mit schöner Einrückung
 ?>
 ]]>
@@ -107,7 +107,7 @@ $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
             Weil die <code>Placeholder</code> Container Objekte <code>ArrayObject</code> erweitern, können
             Inhalte einem speziellen Schlüssel im Container sehr einfach zugeordnet werden, statt diese einfach
             an den Container anzufügen. Auf Schlüssel kann entweder als Objekt Eigenschaften oder als Array
-            Schlüssel zugegriffen werden. 
+            Schlüssel zugegriffen werden.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -182,7 +182,7 @@ foreach ($this->data as $datum): ?>
 
         <programlisting role="php"><![CDATA[
 <!-- Erfassung zum Schlüssel -->
-<?php $this->placeholder('foo')->captureStart('SET', 'data'); 
+<?php $this->placeholder('foo')->captureStart('SET', 'data');
 foreach ($this->data as $datum): ?>
 <div class="foo">
     <h2><?= $datum->title ?></h2>

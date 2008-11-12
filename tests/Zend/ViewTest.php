@@ -26,7 +26,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * Zend_View
@@ -77,11 +77,6 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     public function testDefaultScriptPath()
     {
         $this->_testDefaultPath('script', false);
-    }
-
-    public function normalizePath($path)
-    {
-        return str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
     }
 
     /**
@@ -141,7 +136,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view = new Zend_View();
 
         $reflector = $view->getAllPaths();
-        $paths     = $reflector[$pathType];
+        $paths     = $this->_filterPath($reflector[$pathType]);
 
         // test default helper path
         $this->assertType('array', $paths);
@@ -176,12 +171,12 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $expectedPaths = $reflector[$pathType];
 
         if ($pathType != 'script') {
-            $expectedPaths = $expectedPaths[$prefix];
+            $expectedPaths = $this->_filterPath($expectedPaths[$prefix]);
         }
 
-        array_push($expectedPaths, 'baz' . DIRECTORY_SEPARATOR);
-        array_push($expectedPaths, 'bar' . DIRECTORY_SEPARATOR);
-        array_push($expectedPaths, 'foo' . DIRECTORY_SEPARATOR);
+        array_push($expectedPaths, 'baz');
+        array_push($expectedPaths, 'bar');
+        array_push($expectedPaths, 'foo');
 
         // add paths
         $func = 'add' . ucfirst($pathType) . 'Path';
@@ -191,7 +186,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         // introspect script paths after adding two new paths
         $reflector   = $view->getAllPaths();
-        $actualPaths = $reflector[$pathType];
+        $actualPaths = $this->_filterPath($reflector[$pathType]);
 
         switch ($pathType) {
             case 'script':
@@ -490,9 +485,9 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
     public function testSetConfigInConstructor()
     {
-        $scriptPath = $this->normalizePath(dirname(__FILE__) . '/View/_templates/');
-        $helperPath = $this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
-        $filterPath = $this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
+        $scriptPath = $this->_filterPath(dirname(__FILE__) . '/View/_templates/');
+        $helperPath = $this->_filterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
+        $filterPath = $this->_filterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1/');
 
         $config = array(
             'escape'           => 'strip_tags',
@@ -510,23 +505,18 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $helperPaths = $view->getHelperPaths();
         $filterPaths = $view->getFilterPaths();
 
-        $this->assertContains($this->normalizePath($scriptPath), $scriptPaths);
+        $this->assertContains($this->_filterPath($scriptPath), $this->_filterPath($scriptPaths));
 
         $found  = false;
         $prefix = false;
         foreach ($helperPaths as $helperPrefix => $paths) {
             foreach ($paths as $path) {
+                $path = $this->_filterPath($path);
                 if (strstr($path, $helperPath)) {
                     $found  = true;
                     $prefix = $helperPrefix;
                 }
             }
-            /*
-            if (strstr($pathInfo['dir'], $helperPath)) {
-                $found  = true;
-                $prefix = $pathInfo['prefix'];
-            }
-             */
         }
         $this->assertTrue($found, var_export($helperPaths, 1));
         $this->assertEquals('My_View_Helper_', $prefix);
@@ -535,6 +525,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $prefix = false;
         foreach ($filterPaths as $classPrefix => $paths) {
             foreach ($paths as $pathInfo) {
+                $path = $this->_filterPath($pathInfo);
                 if (strstr($pathInfo, $filterPath)) {
                     $found  = true;
                     $prefix = $classPrefix;
@@ -571,14 +562,14 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertSame($view, $status);
         $helperPaths = $view->getHelperPaths();
         $this->assertTrue(array_key_exists('My_View_Helper_', $helperPaths));
-        $path = current($helperPaths['My_View_Helper_']);
-        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/'), $path);
+        $path = $this->_filterPath(current($helperPaths['My_View_Helper_']));
+        $this->assertEquals($this->_filterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1/'), $path);
 
         $view->setHelperPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/', 'Other_View_Helper');
         $helperPaths = $view->getHelperPaths();
         $this->assertTrue(array_key_exists('Other_View_Helper_', $helperPaths));
-        $path = current($helperPaths['Other_View_Helper_']);
-        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir2/'), $path);
+        $path = $this->_filterPath(current($helperPaths['Other_View_Helper_']));
+        $this->assertEquals($this->_filterPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/'), $path);
     }
 
     public function testHelperPathWithPrefixAndRelativePath()
@@ -588,7 +579,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertSame($view, $status);
         $helperPaths = $view->getHelperPaths();
         $this->assertTrue(array_key_exists('My_View_Helper_', $helperPaths));
-        $this->assertContains($this->normalizePath('Zend/View/_stubs/HelperDir1/'), current($helperPaths['My_View_Helper_']));
+        $this->assertContains($this->_filterPath('Zend/View/_stubs/HelperDir1/'), $this->_filterPath(current($helperPaths['My_View_Helper_'])));
     }
 
     public function testFilterPathWithPrefix()
@@ -598,12 +589,12 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertSame($view, $status);
         $filterPaths = $view->getFilterPaths();
         $this->assertTrue(array_key_exists('My_View_Filter_', $filterPaths));
-        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir1/'), current($filterPaths['My_View_Filter_']));
+        $this->assertEquals($this->_filterPath(dirname(__FILE__) . '/View/_stubs/HelperDir1/'), $this->_filterPath(current($filterPaths['My_View_Filter_'])));
 
         $view->setFilterPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/', 'Other_View_Filter');
         $filterPaths = $view->getFilterPaths();
         $this->assertTrue(array_key_exists('Other_View_Filter_', $filterPaths));
-        $this->assertEquals($this->normalizePath(dirname(__FILE__) . '/View/_stubs/HelperDir2/'), current($filterPaths['Other_View_Filter_']));
+        $this->assertEquals($this->_filterPath(dirname(__FILE__) . '/View/_stubs/HelperDir2/'), $this->_filterPath(current($filterPaths['Other_View_Filter_'])));
     }
 
     public function testAssignThrowsExceptionsOnBadValues()
@@ -720,7 +711,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
     public function testSetBasePathFromConstructor()
     {
-        $base = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'View';
+        $base = dirname(__FILE__) . '/View';
         $view = new Zend_View(array('basePath' => $base));
         $this->_testBasePath($view, $base);
     }
@@ -740,18 +731,35 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->_testBasePath($view, $base);
     }
 
+    protected function _filterPath($path)
+    {
+        if (is_array($path)) {
+            foreach ($path as $k => $p) {
+                $path[$k] = $this->_filterPath($p);
+            }
+            return $path;
+        }
+
+        $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+        $path = str_replace('//', '/', $path);
+        $path = rtrim($path, '/');
+        return $path;
+    }
+
     protected function _testBasePath(Zend_View $view, $base, $classPrefix = null)
     {
-        $scriptPaths = $view->getScriptPaths();
-        $helperPaths = $view->getHelperPaths();
-        $filterPaths = $view->getFilterPaths();
-        $this->assertContains($base . DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR, $scriptPaths);
+        $base        = $this->_filterPath($base);
+        $scriptPaths = $this->_filterPath($view->getScriptPaths());
+        $helperPaths = $this->_filterPath($view->getHelperPaths());
+        $filterPaths = $this->_filterPath($view->getFilterPaths());
+        $this->assertContains($base  . '/scripts', $scriptPaths);
 
         $found  = false;
         $prefix = false;
         foreach ($helperPaths as $pathPrefix => $paths) {
             foreach ($paths as $path) {
-                if ($path == $base . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR) {
+                $path = $this->_filterPath($path);
+                if ($path == $base . '/helpers') {
                     $found  = true;
                     $prefix = $pathPrefix;
                     break;
@@ -768,7 +776,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $prefix = false;
         foreach ($filterPaths as $pathPrefix => $paths) {
             foreach ($paths as $path) {
-                if ($path == $base . DIRECTORY_SEPARATOR . 'filters' . DIRECTORY_SEPARATOR) {
+                $path = $this->_filterPath($path);
+                if ($path == $base . '/filters') {
                     $found  = true;
                     $prefix = $pathPrefix;
                     break;
@@ -833,7 +842,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view = new Zend_View();
         $view->declareVars();
         $helperPath = $view->getHelperPath('declareVars');
-        $this->assertContains($helperPath, $expected);
+        $this->assertContains($expected, $helperPath);
     }
 
     public function testGetFilter()
@@ -859,7 +868,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view->addFilterPath($base . '_stubs' . DIRECTORY_SEPARATOR . 'FilterDir1');
 
         $filterPath = $view->getFilterPath('foo');
-        $this->assertEquals($expected, $filterPath);
+        $this->assertEquals($expected, $filterPath, var_export($filterPath, 1));
     }
 
     public function testGetFilters()

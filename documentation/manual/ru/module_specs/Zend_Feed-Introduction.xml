@@ -2,70 +2,48 @@
     <title>Введение</title>
     <para>
         <code>Zend_Feed</code> предназначен для работы с
-        лентами RSS и Atom. Он предоставляет естетственный синтаксис (natural syntax) для
-        доступа к элементам лент, атрибутам лент и публикаций, полностью поддерживает
-        изменение структуры лент и публикаций с использованием того же естетственного
-        синтаксиса и преобразует результаты изменений обратно в XML. В будущем эта
-        поддержка изменений может обеспечить добавление поддержки Atom Publishing Protocol.
-<!--
-        <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
-        natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
-        <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
-        same natural syntax, and turning the result back into XML. In the future, this modification support
-        could provide support for the Atom Publishing Protocol.
--->
+        лентами RSS и Atom. Он предоставляет естетственный синтаксис
+        (natural syntax) для доступа к элементам лент, атрибутам лент и
+        их сообщений, полностью поддерживает изменение структуры лент и
+        публикаций с использованием того же синтаксиса и преобразует
+        результаты изменений обратно в XML. В будущем эта
+        поддержка изменений может обеспечить добавление поддержки Atom
+        Publishing Protocol.
     </para>
 
     <para>
         Программно <code>Zend_Feed</code> состоит из базового класса
-        <code>Zend_Feed</code>, абстрактных базовых классов <code>Zend_Feed_Abstract</code>
-        и <code>Zend_Feed_Entry_Abstract</code> для представления лент и публикаций,
-        конкретных реализаций лент и публикаций для RSS и Atom, а также
-        "закулисных" помощников для обеспечения работы естетственного синтаксиса.
-<!--
-        Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_Entry_Abstract</code> base classes for
-        representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
-        a behind-the-scenes helper for making the natural syntax magic work.
--->
+        <code>Zend_Feed</code>, абстрактных базовых классов
+        <code>Zend_Feed_Abstract</code>
+        и <code>Zend_Feed_Entry_Abstract</code> для представления лент и
+        их сообщений, реализаций лент и сообщений применительно для RSS и Atom,
+        а также "помощников" для обеспечения работы естетственного
+        синтаксиса.
     </para>
 
     <para>
         В примере ниже мы демонстрируем простое получение ленты RSS и
         сохранение нужных данных из ленты в массив PHP, который
         может быть использован для распечатки, сохранения в БД и т.д.
-<!--
-        In the example below, we demonstrate a simple use case of retrieving an RSS feed and saving relevant
-        portions of the feed data to a simple PHP array, which could then be used for printing the data, storing
-        to a database, etc.
--->
     </para>
 
     <note>
         <title>Внимание</title>
         <para>
-            Многие ленты RSS имеют различные доступные свойства каналов и их элементов.
-            Спецификация RSS предоставляет множество необязательных свойств, поэтому имейте
-            это в виду, когда пишете код для работы с данными RSS.
-<!--
-            Many RSS feeds have different channel and item properties available. The RSS specification provides for
-            many optional properties, so be aware of this when writing code to work with RSS data.
--->
+            Многие ленты RSS различаются по набору доступных свойств каналов и
+            сообщений. Спецификация RSS предоставляет множество необязательных
+            свойств, поэтому имейте это в виду, когда пишете код для работы с
+            данными RSS.
         </para>
     </note>
 
-    <example>
-        <title>
-            Включение Zend_Feed в работу с данными ленты RSS
-            <!-- Putting Zend_Feed to Work on RSS Feed Data -->
-        </title>
+    <example id="zend.feed.introduction.example.rss">
+        <title>Использование Zend_Feed в работе с данными ленты RSS</title>
         <programlisting role="php"><![CDATA[
-<?php
-require_once 'Zend/Feed.php';
-
 // Извлечение последних новостей Slashdot
 try {
-    $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
+    $slashdotRss =
+        Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
     // неудача при импортировании ленты
     echo "Exception caught importing feed: {$e->getMessage()}\n";
@@ -88,8 +66,8 @@ foreach ($slashdotRss as $item) {
         'description' => $item->description()
         );
 }
-
-?>]]>   </programlisting>
+]]>
+        </programlisting>
     </example>
 </sect1>
 <!--

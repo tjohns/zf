@@ -31,6 +31,38 @@ class Zend_Db_Table_Pdo_OciTest extends Zend_Db_Table_TestCommon
         $this->markTestSkipped($this->getDriver().' does not support auto-increment keys.');
     }
 
+    /**
+     * ZF-4330: Oracle needs sequence
+     */
+    public function testTableInsertWithSchema()
+    {
+        $schemaName = $this->_util->getSchema();
+        $tableName = 'zfbugs';
+        $identifier = join('.', array_filter(array($schemaName, $tableName)));
+        $table = $this->_getTable('Zend_Db_Table_TableSpecial',
+            array('name' => $tableName, 'schema' => $schemaName,Zend_Db_Table_Abstract::SEQUENCE => 'zfbugs_seq')
+        );
+
+        $row = array (
+            'bug_description' => 'New bug',
+            'bug_status'      => 'NEW',
+            'created_on'      => '2007-04-02',
+            'updated_on'      => '2007-04-02',
+            'reported_by'     => 'micky',
+            'assigned_to'     => 'goofy',
+            'verified_by'     => 'dduck'
+        );
+
+        $profilerEnabled = $this->_db->getProfiler()->getEnabled();
+        $this->_db->getProfiler()->setEnabled(true);
+        $insertResult = $table->insert($row);
+        $this->_db->getProfiler()->setEnabled($profilerEnabled);
+
+        $qp = $this->_db->getProfiler()->getLastQueryProfile();
+        $tableSpec = $this->_db->quoteIdentifier($identifier, true);
+        $this->assertContains("INSERT INTO $tableSpec ", $qp->getQuery());
+    }
+
     public function testTableInsertSequence()
     {
         $table = $this->_getTable('Zend_Db_Table_TableBugs',

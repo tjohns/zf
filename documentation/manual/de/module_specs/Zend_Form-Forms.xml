@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -178,7 +178,7 @@ $element = new Zend_Form_Element_Text('foo');
 $form->addElement($element);
 
 // Eine Factory verwenden
-// 
+//
 // Erstellt ein Element von Typ Zend_Form_Element_Text mit dem
 // Namen 'foo':
 $form->addElement('text', 'foo');
@@ -578,13 +578,13 @@ $login = $form->login;
 
             <programlisting role="php"><![CDATA[
 $form->addDisplayGroup(
-    array('foo', 'bar'), 
-    'foobar', 
+    array('foo', 'bar'),
+    'foobar',
     array('disableLoadDefaultDecorators' => true)
 );
 ]]>
             </programlisting>
-            
+
             <para>
                 Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird,
                 sowohl als Array Option als auch in einem <code>Zend_Config</code> Objekt.
@@ -653,7 +653,7 @@ $form->setDisplayGroupDecorators(array(
             <programlisting role="php"><![CDATA[
 // Verwenden der 'My_DisplayGroup' Klasse
 $form->addDisplayGroup(
-    array('username', 'password'), 
+    array('username', 'password'),
     'user',
     array('displayGroupClass' => 'My_DisplayGroup')
 );
@@ -666,9 +666,9 @@ $form->addDisplayGroup(
             </para>
 
             <para>
-                Es kann auch eine eine Standardklasse für Anzeigegruppen definiert werden die mit 
+                Es kann auch eine eine Standardklasse für Anzeigegruppen definiert werden die mit
                 der Form zu verwenden ist, sodas alle Anzeigegrupen die mit dem Form Objekt
-                erstellt werden diese Klasse verwenden: 
+                erstellt werden diese Klasse verwenden:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -1016,7 +1016,7 @@ $name = $form->getName();
         <para>
             Um die Aktion (URL zu der die Form übermittelt) und Methode (Methode mit der
             übermittelt werden soll, 'POST' oder 'GET') zu setzen, können die Zugriffsmethoden für
-            action und method verwendet werden: 
+            action und method verwendet werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -1150,7 +1150,7 @@ $form->setDecorators(array(
 $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
 ]]>
             </programlisting>
-            
+
             <para>
                 Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird,
                 sowohl als Array Option als auch in einem <code>Zend_Config</code> Objekt.
@@ -1193,7 +1193,7 @@ $form = $element->getDecorator('FooBar');
 $form->addDecorators(
     array('HtmlTag', array('tag' => 'div')),
     array(
-        'decorator' => array('FooBar' => 'HtmlTag'), 
+        'decorator' => array('FooBar' => 'HtmlTag'),
         'options' => array('tag' => 'dd')
     ),
 );

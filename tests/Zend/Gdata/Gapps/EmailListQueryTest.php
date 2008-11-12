@@ -43,7 +43,7 @@ class Zend_Gdata_Gapps_EmailListQueryTest extends PHPUnit_Framework_TestCase
                 $this->query->getQueryUrl());
     }
 
-    // Test to make sure that the domain accessor methods work and propogate
+    // Test to make sure that the domain accessor methods work and propagate
     // to the query URI.
     public function testCanSetQueryDomain()
     {
@@ -58,7 +58,7 @@ class Zend_Gdata_Gapps_EmailListQueryTest extends PHPUnit_Framework_TestCase
                 $this->query->getQueryUrl());
     }
 
-    // Test to make sure that the emailListName accessor methods work and propogate
+    // Test to make sure that the emailListName accessor methods work and propagate
     // to the query URI.
     public function testCanSetEmailListNameProperty()
     {
@@ -74,7 +74,7 @@ class Zend_Gdata_Gapps_EmailListQueryTest extends PHPUnit_Framework_TestCase
                 $this->query->getQueryUrl());
     }
 
-    // Test to make sure that the recipient accessor methods work and propogate
+    // Test to make sure that the recipient accessor methods work and propagate
     // to the query URI.
     public function testCanSetRecipientProperty()
     {
@@ -91,7 +91,7 @@ class Zend_Gdata_Gapps_EmailListQueryTest extends PHPUnit_Framework_TestCase
     }
 
     // Test to make sure that the startUsername accessor methods work and
-    // propogate to the query URI.
+    // propagate to the query URI.
     public function testCanSetStartEmailListNameProperty()
     {
         $this->query->setDomain("my.domain.com");

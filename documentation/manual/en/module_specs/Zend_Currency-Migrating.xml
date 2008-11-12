@@ -80,7 +80,7 @@ $currency->setFormat(array $options);
         <para>
             The <code>toCurrency()</code> method does no longer support the optional
             'script' and 'locale' parameters. Instead it takes an options array which
-            can contain the same keys as for the <code>setFormat</code> method. 
+            can contain the same keys as for the <code>setFormat</code> method.
         </para>
 
         <programlisting role="php"><![CDATA[

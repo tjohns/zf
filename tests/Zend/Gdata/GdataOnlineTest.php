@@ -20,7 +20,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Http/Client.php';
 require_once 'Zend/Gdata.php';
@@ -45,6 +45,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $service = 'blogger';
         $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
         $this->gdata = new Zend_Gdata($client);
+        $this->gdata->setMajorProtocolVersion(2);
     }
 
     public function testPostAndDeleteByEntry()
@@ -58,7 +59,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('PHP test blog post', $insertedEntry->title->text);
         $this->assertEquals('Blog post content...',
                 $insertedEntry->content->text);
-        $this->assertTrue( 
+        $this->assertTrue(
                 strpos($insertedEntry->getEditLink()->href, 'http') === 0);
         $this->gdata->delete($insertedEntry);
     }
@@ -71,7 +72,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $entry->title = $this->gdata->newTitle('PHP test blog post');
         $entry->content = $this->gdata->newContent('Blog post content...');
         $insertedEntry = $this->gdata->insertEntry($entry, $postUrl);
-        $this->assertTrue( 
+        $this->assertTrue(
                 strpos($insertedEntry->getEditLink()->href, 'http') === 0);
         $this->gdata->delete($insertedEntry->getEditLink()->href);
     }
@@ -89,7 +90,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("PHP test blog post",
                 $entry->title->getText());
         $this->assertEquals(" PHP test blog post ",
-                $entry->title->getText(false)); 
+                $entry->title->getText(false));
         $this->assertEquals($entry->title->getText(),
             $entry->title->__toString());
 
@@ -97,12 +98,12 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $retrievedEntryQuery = $this->gdata->newQuery(
                 $insertedEntry->getSelfLink()->href);
         $retrievedEntry = $this->gdata->getEntry($retrievedEntryQuery);
-        $this->assertTrue( 
+        $this->assertTrue(
                 strpos($retrievedEntry->getEditLink()->href, 'http') === 0);
         $this->gdata->delete($retrievedEntry);
     }
 
-    public function testPostUpdateAndDeleteEntry() 
+    public function testPostUpdateAndDeleteEntry()
     {
         $postUrl = 'http://www.blogger.com/feeds/' . $this->blog .
                 '/posts/default';
@@ -110,7 +111,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $entry->title = $this->gdata->newTitle('PHP test blog post');
         $entry->content = $this->gdata->newContent('Blog post content...');
         $insertedEntry = $this->gdata->insertEntry($entry, $postUrl);
-        $this->assertTrue( 
+        $this->assertTrue(
                 strpos($insertedEntry->getEditLink()->href, 'http') === 0);
         $insertedEntry->title->text = 'PHP test blog post modified';
         $updatedEntry = $this->gdata->updateEntry($insertedEntry);
@@ -118,7 +119,7 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
                 $updatedEntry->title->text);
         $updatedEntry->title->text = 'PHP test blog post modified twice';
         // entry->saveXML() and entry->getXML() should be the same
-        $this->assertEquals($updatedEntry->saveXML(), 
+        $this->assertEquals($updatedEntry->saveXML(),
                 $updatedEntry->getXML());
         $newlyUpdatedEntry = $this->gdata->updateEntry($updatedEntry);
         $this->assertEquals('PHP test blog post modified twice',
@@ -173,8 +174,8 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
 
     public function testMediaUpload()
     {
-        // the standard sevice for GData testing is Blogger, due to the strong
-        // match to the standard GData/APP protocol.  However, Blogger doesn't
+        // the standard sevice for Gdata testing is Blogger, due to the strong
+        // match to the standard Gdata/APP protocol.  However, Blogger doesn't
         // currently support media uploads, so we're using Picasa Web Albums
         // for this test instead
         $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
@@ -196,21 +197,21 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
                 'http://schemas.google.com/photos/2007#album',
                 'http://schemas.google.com/g/2005#kind'
                 )));
-        $createdAlbumEntry = $gd->insertEntry($albumEntry, 
+        $createdAlbumEntry = $gd->insertEntry($albumEntry,
                 'http://picasaweb.google.com/data/feed/api/user/default');
-        $this->assertEquals('My New Test Album', 
+        $this->assertEquals('My New Test Album',
                 $createdAlbumEntry->title->text);
         $albumUrl = $createdAlbumEntry->getLink('http://schemas.google.com/g/2005#feed')->href;
-    
-        // post the photo to the new album, without any metadata 
+
+        // post the photo to the new album, without any metadata
         // other than the slug
         // add a slug header to the media file source
         $fs->setSlug('Going to the park');
         $createdPhotoBinaryOnly = $gd->insertEntry($fs, $albumUrl);
-        $this->assertEquals('Going to the park', 
+        $this->assertEquals('Going to the park',
                 $createdPhotoBinaryOnly->title->text);
 
-        // post the photo to the new album along with the entry 
+        // post the photo to the new album along with the entry
         // remove slug header from the media file source
         $fs->setSlug(null);
 
@@ -225,9 +226,72 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
                 'http://schemas.google.com/g/2005#kind'
                 )));
         $createdPhotoMultipart = $gd->insertEntry($mediaEntry, $albumUrl);
-        $this->assertEquals('My New Test Photo', 
+        $this->assertEquals('My New Test Photo',
                 $createdPhotoMultipart->title->text);
-        
+
+    }
+
+    function testIsAuthenticated()
+    {
+        $this->assertTrue($this->gdata->isAuthenticated());
+    }
+
+    function testRetrieveNextAndPreviousFeedsFromService()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $this->blog = constant('TESTS_ZEND_GDATA_BLOG_ID');
+        $service = 'youtube';
+        $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+        $gd = new Zend_Gdata($client);
+
+        $feed = $gd->getFeed(
+            'http://gdata.youtube.com/feeds/api/standardfeeds/recently_featured',
+            'Zend_Gdata_App_Feed');
+
+        $this->assertNotNull($feed);
+        $this->assertTrue($feed instanceof Zend_Gdata_App_Feed);
+        $this->assertEquals($feed->count(), 25);
+
+        $nextFeed = $gd->getNextFeed($feed);
+
+        $this->assertNotNull($nextFeed);
+        $this->assertTrue($nextFeed instanceof Zend_Gdata_App_Feed);
+        $this->assertEquals($nextFeed->count(), 25);
+
+        $previousFeed = $gd->getPreviousFeed($nextFeed);
+
+        $this->assertNotNull($previousFeed);
+        $this->assertTrue($previousFeed instanceof Zend_Gdata_App_Feed);
+        $this->assertEquals($previousFeed->count(), 25);
+
+    }
+
+    function testRetrieveNextFeedAndPreviousFeedsFromFeed()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $this->blog = constant('TESTS_ZEND_GDATA_BLOG_ID');
+        $service = 'youtube';
+        $client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $service);
+        $gd = new Zend_Gdata($client);
+
+        $feed = $gd->getFeed(
+            'http://gdata.youtube.com/feeds/api/standardfeeds/recently_featured',
+            'Zend_Gdata_App_Feed');
+
+        $nextFeed = $feed->getNextFeed();
+
+        $this->assertNotNull($nextFeed);
+        $this->assertTrue($nextFeed instanceof Zend_Gdata_App_Feed);
+        $this->assertEquals($nextFeed->count(), 25);
+
+        $previousFeed = $nextFeed->getPreviousFeed();
+
+        $this->assertNotNull($previousFeed);
+        $this->assertTrue($previousFeed instanceof Zend_Gdata_App_Feed);
+        $this->assertEquals($previousFeed->count(), 25);
+
     }
 
 }

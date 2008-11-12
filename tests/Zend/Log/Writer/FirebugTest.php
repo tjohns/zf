@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NullTest.php 3980 2007-03-15 21:38:38Z mike $
+ * @version    $Id$
  */
 
 /** PHPUnit_Framework_TestCase */
@@ -47,7 +47,7 @@ require_once 'Zend/Controller/Response/Http.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: NullTest.php 3980 2007-03-15 21:38:38Z mike $
+ * @version    $Id$
  */
 class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
 {
@@ -160,11 +160,10 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         Zend_Wildfire_Channel_HttpHeaders::getInstance()->flush();
         
         $headers = array();
-        $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.1';
+        $headers['X-Wf-Protocol-1'] = 'http://meta.wildfirehq.org/Protocol/JsonStream/0.2';
         $headers['X-Wf-1-Structure-1'] = 'http://meta.firephp.org/Wildfire/Structure/FirePHP/FirebugConsole/0.1';
         $headers['X-Wf-1-Plugin-1'] = 'http://meta.firephp.org/Wildfire/Plugin/ZendFramework/FirePHP/1.6.2';
-        $headers['X-Wf-1-1-1-1'] = '|[{"Type":"INFO"},"This is a log message!"]|';
-        $headers['X-Wf-1-Index'] = '1';
+        $headers['X-Wf-1-1-1-1'] = '42|[{"Type":"INFO"},"This is a log message!"]|';
         
         $this->assertTrue($this->_response->verifyHeaders($headers));
     }

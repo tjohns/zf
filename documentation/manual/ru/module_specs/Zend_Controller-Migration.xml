@@ -8,6 +8,34 @@
         архитектуру.
     </para>
 
+    <sect2 id="zend.controller.migration.fromonesixtooneseven">
+        <title>Переход с 1.6.x на 1.7.0 и более поздние версии</title>
+
+        <sect3 id="zend.controller.migration.fromonesixtooneseven.dispatcher">
+            <title>Изменения в интерфейсе диспетчера</title>
+
+            <para>
+                Пользователи обратили наше внимание на тот факт, что
+                <code>Zend_Controller_Action_Helper_ViewRenderer</code>
+                использует не присутствующий в интерфейсе метод из
+                абстрактного класса диспетчера. Мы добавили
+                этот метод в интерфейс диспетчера для того,
+                чтобы гарантировать работу созданного вами диспетчера с
+                классами, входящими в поставку Zend Framework:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>formatModuleName()</code>: должен принимать
+                    необработанное имя контроллера (в том виде, в котором оно
+                    хранится в объекте запроса) и преобразовывать его в имя
+                    класса контроллера, наследующего от
+                    <code>Zend_Controller_Action</code>.
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+
     <sect2 id="zend.controller.migration.fromoneohtoonesix">
         <title>Переход с 1.5.x на 1.6.0 и более поздние версии</title>
 

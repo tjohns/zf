@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TableBugsCustom.php 5896 2007-07-27 20:04:24Z bkarwin $
+ * @version    $Id$
  */
 
 
@@ -41,6 +41,8 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_TableBugsCustom extends Zend_Db_Table_TableBugs
 {
     public $isMetadataFromCache = false;
+
+    protected $_metadataCacheInClass = false;
 
     protected $_rowClass    = 'Zend_Db_Table_Row_TestMyRow';
     protected $_rowsetClass = 'Zend_Db_Table_Rowset_TestMyRowset';

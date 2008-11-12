@@ -35,13 +35,13 @@ interface Zend_Paginator_Adapter_Interface extends Countable
      * @return integer
      */
     //public function count();
-
+    
     /**
-     * Returns a collection of items for a page.
+     * Returns an collection of items for a page.
      *
-     * @param  integer $pageNumber Page number
+     * @param  integer $offset Page offset
      * @param  integer $itemCountPerPage Number of items per page
-     * @return mixed
+     * @return array
      */
-    public function getItems($pageNumber, $itemCountPerPage);
+    public function getItems($offset, $itemCountPerPage);
 }

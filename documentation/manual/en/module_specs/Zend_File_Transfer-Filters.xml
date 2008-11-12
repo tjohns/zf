@@ -15,8 +15,18 @@
     <itemizedlist>
         <listitem>
             <para>
+                <code>LowerCase</code>: This filter can lowercase the content of a textfile.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 <code>Rename</code>: This filter can rename files, change the location and even force
                 overwriting of existing files.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <code>UpperCase</code>: This filter can uppercase the content of a textfile.
             </para>
         </listitem>
     </itemizedlist>
@@ -26,14 +36,14 @@
 
         <para>
             The usage of filters is quite simple. There are several methods for adding and manipulating filters.
-        </para>        
+        </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <code>addFilter($filter, $options = null, $files =
                     null)</code>: Adds the given filter to the filter
-                    stack (optionally only to the file(s) specified). 
+                    stack (optionally only to the file(s) specified).
                     <code>$filter</code> may be either an actual filter
                     instance, or a short name specifying the filter type
                     (e.g., 'Rename').
@@ -62,7 +72,7 @@
 
             <listitem>
                 <para>
-                    <code>hasFilter($name)</code>: Indicates if a 
+                    <code>hasFilter($name)</code>: Indicates if a
                     filter has been registered.
                 </para>
             </listitem>
@@ -108,7 +118,7 @@ $upload = new Zend_File_Transfer();
 $upload->addFilter('Rename', 'C:\picture\uploads');
 
 // Set a new destination path and overwrites existing files
-$upload->addFilter('Size', array('C:\picture\uploads', true));
+$upload->addFilter('Size', array('C:\picture\uploads', 'overwrite' => true));
 ]]>
             </programlisting>
         </example>
@@ -157,13 +167,49 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
             </programlisting>
 
         </example>
+
         <note>
             <para>
                 Note that even though setting the same filter
                 multiple times is allowed, doing so can lead to issues when using
-                different options for the same filter.  
+                different options for the same filter.
             </para>
         </note>
+
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.lowercase">
+        <title><emphasis role="strong">LowerCase</emphasis> filter</title>
+
+        <para>
+            The <code>LowerCase</code> filter allows to change the content of a file to lowercase.
+            You should use this filter only on textfiles.
+        </para>
+
+        <example id="zend.file.transfer.filters.lowercase.example">
+            <title>Using the LowerCase filter</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('MimeType', 'text');
+
+// Adds a filter to lowercase the uploaded textfile
+$upload->addFilter('LowerCase');
+
+// Adds a filter to lowercase the uploaded file but only for uploadfile1
+$upload->addFilter('LowerCase', null, 'uploadfile1');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that due to the fact that there are no options for the LowerCase filter, you must give
+                a null as second parameter (the options) when you want to limit it to a single file element.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.rename">
@@ -177,33 +223,20 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>oldfile</code>: The name and destination of the old file which shall be renamed.
-                </para>
-
-                <para>
-                    This option can be a string or a array. Depending on the given options the
-                    behaviour of this option will change.
+                    <code>source</code>: The name and destination of the old file which shall be renamed.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>newfile</code>: The new directory, or filename of the file.
-                </para>
-
-                <para>
-                    This option is optional and can be a string, a array or a boolean. Depending on the
-                    given options the behaviour of this option will change.
+                    <code>target</code>: The new directory, or filename of the file.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>overwrite</code>: Sets if the old file overwrites the new one if it already exists.
-                </para>
-
-                <para>
-                    This option is optional and must be a boolean. The default value is false.
+                    The default value is false.
                 </para>
             </listitem>
         </itemizedlist>
@@ -275,7 +308,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\uploads\file.ext', true)
+                            addFile(array('C:\uploads\file.ext', 'overwrite' => true))
                         </entry>
                         <entry>
                             Specifies a new location and filename for all files when the given string is
@@ -285,7 +318,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\temp\uploads', 'C:\uploads')
+                            addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads'))
                         </entry>
                         <entry>
                             Specifies a new location for all files in the old location when the given strings are
@@ -295,34 +328,12 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\temp\uploads', 'C:\uploads', true)
+                            addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads', 'overwrite' => true))
                         </entry>
                         <entry>
                             Specifies a new location for all files in the old location when the given strings are
                             detected as directory and overwrites and existing file with the same target name.
                             Note, that you will get no notification that a file was overwritten.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            addFile(array('C:\temp\uploads\file1.gif' => 'C:\uploads\file.gif'))
-                        </entry>
-                        <entry>
-                            Specifies new locations for given files. You must always give a key-value pair of
-                            source and target file. Note that you will get an exception when the file
-                            already exists, see the overwriting parameter.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            addFile(array('C:\temp\uploads\file1.gif' => 'C:\uploads\file.gif'), true)
-                        </entry>
-                        <entry>
-                            Specifies new locations for given files. You must always give a key-value pair of
-                            source and target file and overwrites and existing file with the same target name.
-                            Note, that you will get no notification that a file was overwritten.
-                            Optionally you can give one directory with the key 0 which will then be used for
-                            all files where no source is defined.
                         </entry>
                     </row>
                 </tbody>
@@ -331,6 +342,41 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
         </table>
 
     </sect2>
+
+    <sect2 id="zend.file.transfer.filters.uppercase">
+        <title><emphasis role="strong">UpperCase</emphasis> filter</title>
+
+        <para>
+            The <code>UpperCase</code> filter allows to change the content of a file to uppercase.
+            You should use this filter only on textfiles.
+        </para>
+
+        <example id="zend.file.transfer.filters.uppercase.example">
+            <title>Using the UpperCase filter</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('MimeType', 'text');
+
+// Adds a filter to uppercase the uploaded textfile
+$upload->addFilter('UpperCase');
+
+// Adds a filter to uppercase the uploaded file but only for uploadfile1
+$upload->addFilter('UpperCase', null, 'uploadfile1');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that due to the fact that there are no options for the UpperCase filter, you must give
+                a null as second parameter (the options) when you want to limit it to a single file element.
+            </para>
+        </note>
+
+    </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9648 -->
+<!-- EN-Revision: 11835 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink ヘルパー</title>
 
@@ -30,7 +30,7 @@
     <para>
         <code>$media</code> のデフォルトは 'screen' ですが、
         有効な media 形式なら何にでもすることができます。
-        <code>$conditionalStylesheet</code> は boolean 値で、
+        <code>$conditionalStylesheet</code> は文字列あるいは false で、
         レンダリング時に使用します。
         特定のプラットフォームでスタイルシートの読み込みをやめたい場合などに、
         特別なコメントを使用できるようになります。
@@ -80,12 +80,15 @@
         <programlisting role="php"><![CDATA[
 <?php // ビュースクリプトのリンクを設定します
 $this->headLink()->appendStylesheet('/styles/basic.css')
-                 ->headLink(array('rel' => 'favicon', 'href' => '/img/favicon.ico'), 'PREPEND')
+                 ->headLink(array('rel' => 'favicon',
+                                  'href' => '/img/favicon.ico'),
+                                  'PREPEND')
                  ->prependStylesheet('/styles/moz.css', 'screen', true);
 ?>
 <?php // リンクをレンダリングします ?>
 <?= $this->headLink() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

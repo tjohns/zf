@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle Helfer</title>
 
@@ -49,7 +49,7 @@
         Letztendlich kann auch die <code>headStyle()</code> Methode verwendet werden um schnellstens
         Deklarationselemente hinzuzufügen; die Signatur dafür ist
         <code>headStyle($content$placement = 'APPEND', $attributes = array())</code>.
-        <code>$placement</code> sollte entweder 'APPEND', 'PREPEND', oder 'SET' sein. 
+        <code>$placement</code> sollte entweder 'APPEND', 'PREPEND', oder 'SET' sein.
     </para>
 
     <para>
@@ -58,7 +58,7 @@
         Methoden zu forcieren. Intern wird jeder Teil als <code>stdClass</code> Token gespeichert, welches
         später serialisiert wird durch Verwendung der <code>itemToString()</code> Methode. Das erlaubt es
         die Teile im Stack zu Prüfen, und optional auch zu Ändern durch einfaches Modifizieren des
-        zurückgegebenen Objektes. 
+        zurückgegebenen Objektes.
     </para>
 
     <para>

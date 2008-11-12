@@ -78,14 +78,14 @@ array(
       'email'       => 'email of the author', //optional
       'webmaster'   =>     // optional, ignored if atom is used
                        'email address for person responsible ' .
-                       'for technical issues' 
+                       'for technical issues'
       'copyright'   => 'copyright notice', //optional
       'image'       => 'url to image', //optional
       'generator'   => 'generator', // optional
       'language'    => 'language the feed is written in', // optional
       'ttl'         =>     // optional, ignored if atom is used
                        'how long in minutes a feed can be cached ' .
-                       'before refreshing', 
+                       'before refreshing',
       'rating'      =>     // optional, ignored if atom is used
                        'The PICS rating for the channel.',
       'cloud'       => array(
@@ -230,7 +230,7 @@ array(
 
             <programlisting role="php"><![CDATA[
 // importing a feed from a custom builder source
-$atomFeedFromArray = 
+$atomFeedFromArray =
     Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
 // the following line is equivalent to the above;
@@ -255,8 +255,7 @@ $rssFeedFromArray =
                 <code>saveXml()</code> methods.
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // dump the feed to standard output

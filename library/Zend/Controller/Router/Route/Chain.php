@@ -97,14 +97,31 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
         $value = '';
 
         foreach ($this->_routes as $key => $route) {
-            if ($key > 0) $value .= $this->_separators[$key];
+            if ($key > 0) {
+                $value .= $this->_separators[$key];
+            }
+            
             $value .= $route->assemble($data, $reset, $encode);
+            
+            if (method_exists($route, 'getVariables')) {
+                $variables = $route->getVariables();
+                
+                foreach ($variables as $variable) {
+                    $data[$variable] = null;
+                }
+            }
         }
 
         return $value;
     }
 
-    public function setRequest(Zend_Controller_Request_Abstract $request)
+    /**
+     * Set the request object for this and the child routes
+     * 
+     * @param  Zend_Controller_Request_Abstract|null $request
+     * @return void
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request = null)
     {
         $this->_request = $request;
 

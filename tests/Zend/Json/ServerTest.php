@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Json_ServerTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Json/Server.php';
 require_once 'Zend/Json/Server/Request.php';
@@ -54,14 +54,14 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
     {
         $this->server->addFunction('strtolower');
         $methods = $this->server->getFunctions();
-        $this->assertTrue(array_key_exists('strtolower', $methods));
+        $this->assertTrue($methods->hasMethod('strtolower'));
     }
 
     public function testShouldBeAbleToBindCallbackToServer()
     {
         $this->server->addFunction(array($this, 'setUp'));
         $methods = $this->server->getFunctions();
-        $this->assertTrue(array_key_exists('setUp', $methods));
+        $this->assertTrue($methods->hasMethod('setUp'));
     }
 
     public function testShouldBeAbleToBindClassToServer()
@@ -80,7 +80,7 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
             if ('_' == $method[0]) {
                 continue;
             }
-            $this->assertTrue(array_key_exists($method, $test), 'Testing for method ' . $method . ' against ' . var_export(array_keys($test), 1));
+            $this->assertTrue($test->hasMethod($method), 'Testing for method ' . $method . ' against ' . var_export($test, 1));
         }
     }
 
@@ -102,7 +102,7 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
             if ('_' == $method[0]) {
                 continue;
             }
-            $this->assertTrue(array_key_exists($method, $test), 'Testing for method ' . $method . ' against ' . var_export(array_keys($test), 1));
+            $this->assertTrue($test->hasMethod($method), 'Testing for method ' . $method . ' against ' . var_export($test, 1));
         }
     }
 
@@ -122,9 +122,9 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
         $this->server->setClass('Zend_Json_Server_Request')
                      ->setClass('Zend_Json_Server_Response');
         $methods = $this->server->getFunctions();
-        $this->assertTrue(array_key_exists('toJson', $methods));
-        $toJson = $methods['toJson'];
-        $this->assertEquals('Zend_Json_Server_Response', $toJson->getDeclaringClass()->getName());
+        $this->assertTrue($methods->hasMethod('toJson'));
+        $toJson = $methods->getMethod('toJson');
+        $this->assertEquals('Zend_Json_Server_Response', $toJson->getCallback()->getClass());
     }
 
     public function testGetRequestShouldInstantiateRequestObjectByDefault()
@@ -271,7 +271,7 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
         $result = $response->getResult();
         $this->assertTrue(is_array($result));
         $this->assertTrue(3 == count($result));
-        $this->assertEquals('two', $result[1]);
+        $this->assertEquals('two', $result[1], var_export($result, 1));
         $this->assertNull($result[2]);
     }
 
@@ -362,6 +362,15 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
         $buffer = ob_get_clean();
 
         $this->assertTrue(empty($buffer));
+    }
+
+    public function testLoadFunctionsShouldLoadResultOfGetFunctions()
+    {
+        $this->server->setClass('Zend_Json_ServerTest_Foo');
+        $functions = $this->server->getFunctions();
+        $server = new Zend_Json_Server();
+        $server->loadFunctions($functions);
+        $this->assertEquals($functions->toArray(), $server->getFunctions()->toArray());
     }
 }
 

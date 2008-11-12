@@ -7,7 +7,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 require_once 'Zend/Amf/Server.php';
 require_once 'Zend/Amf/Request.php';
 require_once 'Zend/Amf/Parse/TypeLoader.php';
@@ -198,6 +198,56 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("bar: foo", $responseBody[0]->getData(), var_export($responseBody, 1));
     }
 
+	/**
+     * Test to make sure that AMF3 basic requests are handled for loading
+     * a class.
+     * This type of call is sent from NetConnection rather than RemoteObject
+     *
+     * @group ZF-4680
+     */
+    public function testHandleLoadedClassAmf3NetConnection()
+    {
+        // serialize the data to an AMF output stream
+        $data = "12345";
+        $this->_server->setClass('Zend_Amf_testclass');
+        $newBody = new Zend_Amf_Value_MessageBody("Zend_Amf_testclass.test1","/1",$data);
+        $request = new Zend_Amf_Request();
+        $request->addAmfBody($newBody);
+        $request->setObjectEncoding(0x03);
+        $result = $this->_server->handle($request);
+        $response = $this->_server->getResponse();
+        $responseBody = $response->getAmfBodies();
+        // Now check if the return data was properly set.
+        $this->assertTrue(0 < count($responseBody), var_export($responseBody, 1));
+        $this->assertTrue(array_key_exists(0, $responseBody), var_export($responseBody, 1));
+        $this->assertEquals("String: 12345", $responseBody[0]->getData(), var_export($responseBody, 1));
+
+    }
+
+    /**
+     * Test to make sure that AMF3 basic requests are handled for function calls.
+     * This type of call is sent from net connection rather than RemoteObject
+     *
+     * @group ZF-4680
+     */
+    public function testShouldAllowHandlingFunctionCallsViaAmf3NetConnection()
+    {
+        // serialize the data to an AMF output stream
+        $data = array('foo', 'bar');
+        $this->_server->addFunction('Zend_Amf_Server_testFunction');
+        $newBody = new Zend_Amf_Value_MessageBody("Zend_Amf_Server_testFunction","/1",$data);
+        $request = new Zend_Amf_Request();
+        $request->addAmfBody($newBody);
+        $request->setObjectEncoding(0x03);
+        $result = $this->_server->handle($request);
+        $response = $this->_server->getResponse();
+        $responseBody = $response->getAmfBodies();
+        // Now check if the return data was properly set.
+        $this->assertTrue(0 < count($responseBody), var_export($responseBody, 1));
+        $this->assertTrue(array_key_exists(0, $responseBody), var_export($responseBody, 1));
+        $this->assertEquals("bar: foo", $responseBody[0]->getData(), var_export($responseBody, 1));
+    }
+
     /**
      * Test sending data to the remote class and make sure we
      * recieve the proper response.
@@ -267,7 +317,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         // serialize the data to an AMF output stream
         $data[] = "12345";
         $this->_server->setClass('Zend_Amf_testclass');
-        $newBody = new Zend_Amf_Value_MessageBody("Zend_Amf_testclass.bogus","/1",$data);
+        $newBody = new Zend_Amf_Value_MessageBody("bogus","/1",$data);
         $request = new Zend_Amf_Request();
         $request->addAmfBody($newBody);
         $request->setObjectEncoding(0x00);
@@ -287,7 +337,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
                 break;
             }
         }
-        $this->assertTrue($found, 'Invalid method did not raise error condition');
+        $this->assertTrue($found, 'Invalid method did not raise error condition' . var_export($bodies, 1));
     }
 
     public function testInvalidCommandMessageShouldResultInErrorMessage()
@@ -338,7 +388,6 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         // create a mock remoting message
         $message = new Zend_Amf_Value_Messaging_RemotingMessage();
         $message->operation = 'bogus'; // INVALID method!
-        $message->source    = 'Zend_Amf_testclass';
         $message->body      = $data;
 
         // create a mock message body to place th remoting message inside
@@ -362,7 +411,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
                 }
             }
         }
-        $this->assertTrue($found, 'Invalid method did not raise error condition');
+        $this->assertTrue($found, 'Invalid method did not raise error condition: ' . var_export($bodies, 1));
     }
 
     public function testDispatchingMethodThatThrowsExceptionShouldReturnErrorMessageWhenProductionFlagOff()
@@ -785,7 +834,7 @@ class Zend_Amf_testclass
 
     /**
      * Test that invoke arguments are passed
-     * 
+     *
      * @param  string $message message argument for comparisons
      * @return string
      */
@@ -797,8 +846,8 @@ class Zend_Amf_testclass
 
     /**
      * Test static usage
-     * 
-     * @param  string $message 
+     *
+     * @param  string $message
      * @return string
      */
     public static function checkStaticUsage($message)
@@ -807,8 +856,8 @@ class Zend_Amf_testclass
     }
 
     /**
-     * Test throwing exceptions 
-     * 
+     * Test throwing exceptions
+     *
      * @return void
      */
     public function throwException()

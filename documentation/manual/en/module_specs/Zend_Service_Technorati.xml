@@ -213,7 +213,7 @@ try {
     $resultSet = $technorati->search('PHP');
 } catch(Zend_Service_Technorati_Exception $e) {
     echo "An error occurred: " $e->getMessage();
-} 
+}
 ]]>
             </programlisting>
         </example>
@@ -239,7 +239,7 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $key = $technorati->keyInfo();
 
 echo "API Key: " . $key->getApiKey() . "<br />";
-echo "Daily Usage: " . $key->getApiQueries() . "/" . 
+echo "Daily Usage: " . $key->getApiQueries() . "/" .
      $key->getMaxQueries() . "<br />";
 ]]>
             </programlisting>
@@ -278,7 +278,7 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->cosmos('http://devzone.zend.com/');
 
 echo "<p>Reading " . $resultSet->totalResults() .
-     " of " . $resultSet->totalResultsAvailable() . 
+     " of " . $resultSet->totalResultsAvailable() .
      " available results</p>";
 echo "<ol>";
 foreach ($resultSet as $result) {
@@ -362,7 +362,7 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $resultSet = $technorati->dailyCounts('php');
 
 foreach ($resultSet as $result) {
-    echo "<li>" . $result->getDate() . 
+    echo "<li>" . $result->getDate() .
          "(" . $result->getCount() . ")</li>";
 }
 echo "</ol>";
@@ -465,7 +465,7 @@ $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 $result = $technorati->getInfo('weppos');
 
 $author = $result->getAuthor();
-echo "<h2>Blogs authored by " . $author->getFirstName() . " " . 
+echo "<h2>Blogs authored by " . $author->getFirstName() . " " .
      $author->getLastName() . "</h2>";
 echo "<ol>";
 foreach ($result->getWeblogs() as $weblog) {
@@ -560,7 +560,7 @@ $resultSet = $technorati->search('php');
 foreach ($resultSet as $result) {
     // do something with your
     // Zend_Service_Technorati_SearchResult object
-} 
+}
 ]]>
                 </programlisting>
             </example>

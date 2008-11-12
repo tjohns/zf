@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.gdata.photos">
     <title>Utilisation des albums Web Picasa</title>
 
@@ -95,7 +95,7 @@ session_start();
 /**
  * Retourne l'URL complet de la page actuelle,
  * en fonction des variables d'environnement
- * 
+ *
  * Env variables utilisées:
  * $_SERVER['HTTPS'] = (on|off|)
  * $_SERVER['HTTP_HOST'] = value of the Host: header
@@ -104,7 +104,7 @@ session_start();
  *
  * @return string Current URL
  */
-function getCurrentUrl() 
+function getCurrentUrl()
 {
     global $_SERVER;
 
@@ -141,7 +141,7 @@ function getCurrentUrl()
  *
  * @return string AuthSub URL
  */
-function getAuthSubUrl() 
+function getAuthSubUrl()
 {
     $next = getCurrentUrl();
     $scope = 'http://picasaweb.google.com/data';
@@ -159,18 +159,18 @@ function getAuthSubUrl()
  * l'authentification AuthSub.
  *
  * Utilise $_SESSION['sessionToken'] pour stocker le jeton de session
- * AuthSub après l'avoir obtenu. $_GET['token'] récupère ce jeton 
+ * AuthSub après l'avoir obtenu. $_GET['token'] récupère ce jeton
  * après la redirection d'authentification
  *
  * @return Zend_Http_Client
  */
-function getAuthSubHttpClient() 
+function getAuthSubHttpClient()
 {
     global $_SESSION, $_GET;
     if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
-        $_SESSION['sessionToken'] = 
+        $_SESSION['sessionToken'] =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
-    } 
+    }
     $client =
         Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
     return $client;

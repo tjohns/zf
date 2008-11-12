@@ -87,7 +87,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         if (! is_array($config)) {
             require_once 'Zend/Http/Client/Adapter/Exception.php';
             throw new Zend_Http_Client_Adapter_Exception(
-                '$config expects an array, ' . gettype($config) . ' recieved.');
+                '$concig expects an array, ' . gettype($config) . ' recieved.');
         }
 
         foreach ($config as $k => $v) {
@@ -246,21 +246,22 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         if (isset($headers['transfer-encoding'])) {
             if ($headers['transfer-encoding'] == 'chunked') {
                 do {
-                    $chunk = '';
-                    $line = @fgets($this->socket);
-                    $chunk .= $line;
+                    $line  = @fgets($this->socket);
+                    $chunk = $line;
 
-                    $hexchunksize = ltrim(chop($line), '0');
-                    $hexchunksize = strlen($hexchunksize) ? strtolower($hexchunksize) : 0;
-
-                    $chunksize = hexdec(chop($line));
-                    if (dechex($chunksize) != $hexchunksize) {
-                        @fclose($this->socket);
+                    // Figure out the next chunk size
+                    $chunksize = trim($line);
+                    if (! ctype_xdigit($chunksize)) {
+                        $this->close();
                         require_once 'Zend/Http/Client/Adapter/Exception.php';
                         throw new Zend_Http_Client_Adapter_Exception('Invalid chunk size "' .
-                            $hexchunksize . '" unable to read chunked body');
+                            $chunksize . '" unable to read chunked body');
                     }
 
+                    // Convert the hexadecimal value to plain integer
+                    $chunksize = hexdec($chunksize);
+                    
+                    // Read chunk
                     $left_to_read = $chunksize;
                     while ($left_to_read > 0) {
                         $line = @fread($this->socket, $left_to_read);

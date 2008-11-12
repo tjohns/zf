@@ -3,7 +3,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Form_FormTest::main');
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 // error_reporting(E_ALL);
 
@@ -3227,7 +3227,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         foreach (array('foo', 'baz') as $name) {
             $element = $this->form->$name;
-            $this->assertFalse($element->getDecorator('Description'));
             $this->assertFalse($element->getDecorator('Form'));
             $this->assertFalse($element->getDecorator('Fieldset'));
         }
@@ -3265,7 +3264,6 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         foreach (array('foo', 'baz') as $name) {
             $element = $this->form->$name;
-            $this->assertFalse($element->getDecorator('Description'));
             $this->assertFalse($element->getDecorator('Form'));
             $this->assertFalse($element->getDecorator('Fieldset'));
         }

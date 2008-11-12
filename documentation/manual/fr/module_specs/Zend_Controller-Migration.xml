@@ -1,10 +1,32 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.migration">
     <title>Migrer depuis des versions précédentes</title>
 
     <para>L'API des composants MVC a changé plusieurs fois. Si vous avez débuté avec des versions antérieures du Zend
     Framework, suivez les recommandations suivantes pour migrer vos scripts afin d'utiliser la nouvelle
     architecture.</para>
+
+    <sect2 id="zend.controller.migration.fromonesixtooneseven">
+        <title>Migrer de la version 1.6.x vers 1.7.0 ou plus récent</title>
+
+        <sect3 id="zend.controller.migration.fromonesixtooneseven.dispatcher">
+            <title>Changement dans l'interface Dispatcher</title>
+
+            <para>Les utilisateurs ont portés l'attention sur le fait que
+            <code>Zend_Controller_Action_Helper_ViewRenderer</code> utilisait une méthode de la classe abstraite du
+            dispatcheur standard qui n'était pas présente dans l'interface Dispatcher.La méthode suivante a donc été
+            ajoutée pour s'assurer que les dispatcheurs personnalisés continueront à fonctionner avec les
+            implémentations embarquées :</para>
+
+            <itemizedlist>
+                <listitem>
+                    <para><code>formatModuleName()</code> : devrait être utilisé pour prendre un nom de contrôleur brut,
+                    comme un qui aurait été embarqué dans un objet requête, et pour le formater en un nom de classe
+                    approprié qu'une classe étendant <code>Zend_Controller_Action</code> pourra utiliser.</para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonesix">
         <title>Migrer de la version 1.5.x vers 1.6.0 ou plus récent</title>
@@ -485,7 +507,7 @@ echo $response;
 // Récupère le nom de controleur de la requête
 // L'accès se fait via : $this->_action->getControllerName().
 // L'exemple ci-dessous utilise getRequest(), bien que vous pourriez
-// accéder directement à la propriété $_request ; 
+// accéder directement à la propriété $_request ;
 // l'utilisation de getRequest() est recommandée puisque la classe
 // parente peut surcharger l'accès à l'objet requête.
 $controller = $this->getRequest()->getControllerName();
@@ -498,7 +520,7 @@ $action = $this->getRequest()->getActionName();
 // Ceci n'a pas changé ; les méthodes _getParams() et _getParam()
 // relaient simplement l'objet requete maintenant.
 $params = $this->_getParams();
-$foo = $this->_getParam('foo', 'default'); 
+$foo = $this->_getParam('foo', 'default');
 // parametre de la requete 'foo', en utilisant 'default'
 // en tant que valeur par défaut si aucune valeur n'est trouvée
 ]]></programlisting>

@@ -52,49 +52,40 @@ class Zend_Validate_File_ExcludeMimeType extends Zend_Validate_File_MimeType
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_READABLE);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_READABLE);
         }
 
         if ($file !== null) {
-            $info['type'] = $file['type'];
-        } else {
-            $this->_throw($file, self::NOT_DETECTED);
-            return false;
+            if (class_exists('finfo', false) && defined('MAGIC')) {
+                $mime = new finfo(FILEINFO_MIME);
+                $this->_type = $mime->file($value);
+                unset($mime);
+            } elseif (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
+                $this->_type = mime_content_type($value);
+            } else {
+                $this->_type = $file['type'];
+            }
+        }
+
+        if (empty($this->_type)) {
+            return $this->_throw($file, self::NOT_DETECTED);
         }
 
         $mimetype = $this->getMimeType(true);
-        if (in_array($info['type'], $mimetype)) {
-            $this->_throw($file, self::FALSE_TYPE);
-            return false;
+        if (in_array($this->_type, $mimetype)) {
+            return $this->_throw($file, self::FALSE_TYPE);
         }
 
+        $types = explode('/', $this->_type);
+        $types = array_merge($types, explode('-', $this->_type));
         foreach($mimetype as $mime) {
-            $types = explode('/', $info['type']);
             if (in_array($mime, $types)) {
-                $this->_throw($file, self::FALSE_TYPE);
-                return false;
+                return $this->_throw($file, self::FALSE_TYPE);
             }
         }
 
         return true;
-    }
-
-    /**
-     * Throws an error of the given type
-     *
-     * @param  string $file
-     * @param  string $errorType
-     * @return false
-     */
-    protected function _throw($file, $errorType)
-    {
-        if ($file !== null) {
-            $this->_value = $file['name'];
-        }
-
-        $this->_error($errorType);
-        return false;
     }
 }

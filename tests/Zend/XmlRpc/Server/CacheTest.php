@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_XmlRpc_Server_CacheTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Cache.php';
 

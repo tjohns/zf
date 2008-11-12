@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11751 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
@@ -563,7 +563,7 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
 Zend_Locale_Format::setOptions(array('locale' => 'en_US',
                                      'date_format' => 'dd.MMMM.YYYY'));
 // グローバル設定の日付書式をオーバーライドします
-$date = Zend_Locale_Format::getDate('2007-04-20,
+$date = Zend_Locale_Format::getDate('2007-04-20',
                                     array('date_format' =>
                                               Zend_Locale_Format::STANDARD);
 

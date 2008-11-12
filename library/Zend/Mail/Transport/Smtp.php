@@ -145,7 +145,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract
             try {
                 $this->_connection->quit();
             } catch (Zend_Mail_Protocol_Exception $e) {
-            	// ignore
+                // ignore
             }
             $this->_connection->disconnect();
         }

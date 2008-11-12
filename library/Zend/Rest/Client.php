@@ -205,12 +205,6 @@ class Zend_Rest_Client extends Zend_Service_Abstract
      * $response = $rest->sayHello('Foo', 'Manchu')->get();
      * </code>
      *
-     * You can also use an HTTP request method as a calling method, using the
-     * path as the first argument:
-     * <code>
-     * $rest->get('/sayHello', 'Foo', 'Manchu');
-     * </code>
-     *
      * Or use them together, but in sequential calls:
      * <code>
      * $rest->sayHello('Foo', 'Manchu');
@@ -237,8 +231,12 @@ class Zend_Rest_Client extends Zend_Service_Abstract
         } else {
             // More than one arg means it's definitely a Zend_Rest_Server
             if (sizeof($args) == 1) {
-                $this->_data['method'] = $method;
-                $this->_data['arg1']  = $args[0];
+                // Uses first called function name as method name
+                if (!isset($this->_data['method'])) {
+                    $this->_data['method'] = $method;
+                    $this->_data['arg1']  = $args[0];
+                }
+                $this->_data[$method]  = $args[0];
             } else {
                 $this->_data['method'] = $method;
                 if (sizeof($args) > 0) {

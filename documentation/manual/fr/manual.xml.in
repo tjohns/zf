@@ -38,6 +38,13 @@
         <xi:include href="module_specs/Zend_Acl-Refining.xml" />
         <xi:include href="module_specs/Zend_Acl-Advanced.xml" />
     </chapter>
+    <chapter id="zend.amf">
+        <title>Zend_Amf</title>
+        <xi:include href="module_specs/Zend_Amf.xml" />
+        <xi:include href="module_specs/Zend_Amf-Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf-Server.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
         <xi:include href="module_specs/Zend_Auth.xml" />
@@ -70,6 +77,10 @@
         <xi:include href="module_specs/Zend_Config-TheoryOfOperation.xml" />
         <xi:include href="module_specs/Zend_Config_Ini.xml" />
         <xi:include href="module_specs/Zend_Config_Xml.xml" />
+    </chapter>
+    <chapter id="zend.config.writer">
+        <title>Zend_Config_Writer</title>
+        <xi:include href="module_specs/Zend_Config_Writer.xml" />
     </chapter>
     <chapter id="zend.console.getopt">
         <title>Zend_Console_Getopt</title>
@@ -164,9 +175,8 @@
         <title>Zend_File</title>
         <xi:include href="module_specs/Zend_File_Transfer-Introduction.xml" />
         <xi:include href="module_specs/Zend_File_Transfer-Validators.xml" />
-        <xi:include href="module_specs/Zend_File_Transfer-Filters.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_File_Transfer-Filters.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_File_Transfer-Filters.xml" />
+        <xi:include href="module_specs/Zend_File_Transfer-Migration.xml" />
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
@@ -205,6 +215,9 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata-Introduction.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_AuthSub.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Books.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Books.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_ClientLogin.xml" />
         <xi:include href="module_specs/Zend_Gdata_Calendar.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Calendar.xml" /></xi:fallback>
@@ -221,8 +234,10 @@
         <xi:include href="module_specs/Zend_Gdata_Gbase.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Gbase.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Gdata_YouTube.xml" />
         <xi:include href="module_specs/Zend_Gdata_Photos.xml" />
+        <xi:include href="module_specs/Zend_Gdata_YouTube.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_YouTube.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Exception.xml" />
     </chapter>
     <chapter id="zend.http">
@@ -284,6 +299,7 @@
         <xi:include href="module_specs/Zend_Locale-AppendixLanguages.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Locale-AppendixLanguages.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Locale-Migration.xml" />
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
@@ -355,6 +371,10 @@
         <xi:include href="module_specs/Zend_Pdf-Drawing.xml" />
         <xi:include href="module_specs/Zend_Pdf-Properties.xml" />
         <xi:include href="module_specs/Zend_Pdf-Usage.xml" />
+    </chapter>
+    <chapter id="zend.progressbar">
+        <title>Zend_ProgressBar</title>
+        <xi:include href="module_specs/Zend_ProgressBar.xml" />
     </chapter>
     <chapter id="zend.registry">
         <title>Zend_Registry</title>
@@ -453,6 +473,7 @@
     <chapter id="zend.text">
         <title>Zend_Text</title>
         <xi:include href="module_specs/Zend_Text_Figlet.xml" />
+        <xi:include href="module_specs/Zend_Text_Table.xml" />
     </chapter>
     <chapter id="zend.timesync">
         <title>Zend_TimeSync</title>
@@ -464,6 +485,7 @@
         <xi:include href="module_specs/Zend_Translate-Introduction.xml" />
         <xi:include href="module_specs/Zend_Translate-Adapters.xml" />
         <xi:include href="module_specs/Zend_Translate-Using.xml" />
+        <xi:include href="module_specs/Zend_Translate-Migration.xml" />
     </chapter>
     <chapter id="zend.uri">
         <title>Zend_Uri</title>
@@ -500,6 +522,17 @@
     </chapter>
     <xi:include href="ref/requirements.xml" />
     <xi:include href="ref/coding_standard.xml" />
+    <appendix id="performance">
+        <title>Zend Framework Performance Guide</title>
+        <xi:include href="ref/performance-introduction.xml" />
+        <xi:include href="ref/performance-classloading.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="ref/performance-localization.xml" />
+        <xi:include href="ref/performance-view.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-view.xml" /></xi:fallback>
+        </xi:include>
+    </appendix>
     <xi:include href="ref/copyrights.xml" />
     <index id="the.index" />
 </book>

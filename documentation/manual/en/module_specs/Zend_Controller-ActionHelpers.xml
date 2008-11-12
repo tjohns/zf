@@ -160,6 +160,15 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
         </para>
 
         <para>
+            Internally, the helper broker uses <link
+                linkend="zend.loader.pluginloader">a PluginLoader
+                instance</link> to maintain paths. You can retrieve the
+            PluginLoader using the static method <code>getPluginLoader()</code>,
+            or, alternately, inject a custom PluginLoader instance using
+            <code>setPluginLoader()</code>.
+        </para>
+
+        <para>
             To determine if a helper exists in the helper broker, use
             <code>hasHelper($name)</code>, where <code>$name</code> is the short
             name of the helper (minus the prefix):

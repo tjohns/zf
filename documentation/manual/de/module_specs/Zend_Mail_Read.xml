@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11431 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.mail.read">
     <title>Lesen von Mail Nachrichten</title>
 
@@ -553,7 +553,9 @@ echo '</select>';
 //  INBOX.Archive.2005
 //  ...
 $folder = $mail->getFolders()->Archive->2005;
-echo 'Der letzte Ordner war ' . $mail->getSelectedFolder() . "neuer Ordner ist $folder\n";
+echo 'Der letzte Ordner war '
+   . $mail->getSelectedFolder()
+   . "neuer Ordner ist $folder\n";
 $mail->selectFolder($folder);
 ]]>
         </programlisting>
@@ -753,7 +755,11 @@ echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quo
             <programlisting role="php"><![CDATA[
 $quota = $mail->checkQuota(true);
 echo 'Sie sind ', $quota['over_quota'] ? 'über der Quote' : 'nicht über der Quote', "\n";
-echo 'Sie haben ', $quota['count'], ' von ', $quota['quota']['count'], ' Nachrichten und verwenden ';
+echo 'Sie haben ',
+    $quota['count'],
+    ' von ',
+    $quota['quota']['count'],
+    ' Nachrichten und verwenden ';
 echo $quota['size'], ' von ', $quota['quota']['size'], ' Oktets';
 ]]>
             </programlisting>

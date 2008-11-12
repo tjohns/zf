@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Media
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -91,19 +92,19 @@ class Zend_Gdata_Media_Extension_MediaText extends Zend_Gdata_Extension
      * @return DOMElement The DOMElement representing this element and all 
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
-        if ($this->_type != null) {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this->_type !== null) {
             $element->setAttribute('type', $this->_type);
         }
-        if ($this->_lang != null) {
+        if ($this->_lang !== null) {
             $element->setAttribute('lang', $this->_lang);
         }
-        if ($this->_start != null) {
+        if ($this->_start !== null) {
             $element->setAttribute('start', $this->_start);
         }
-        if ($this->_end != null) {
+        if ($this->_end !== null) {
             $element->setAttribute('end', $this->_end);
         }
         return $element;

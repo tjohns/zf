@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SqliteTest.php 5876 2007-07-27 07:29:38Z bkarwin $
+ * @version    $Id$
  */
 
 

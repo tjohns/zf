@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Form</title>
 
@@ -72,7 +72,7 @@
 </form>
 ]]>
         </programlisting>
-        
+
         <para>
             In diesem Beispiel enthalten die Rechnungs- und Versanadresse einige identische
             Felder, was bedeueten würde das sie sich gegenseitig überschreiben. Wir können das
@@ -118,7 +118,7 @@
                 type="text" value="" /></dd>
 
             <dt><label for="billing-municipality">Stadt:</label></dt>
-            <dd><input name="billing[municipality]" id="billing-municipality" 
+            <dd><input name="billing[municipality]" id="billing-municipality"
                 type="text" value="" /></dd>
 
             <dt><label for="billing-province">Bundesland:</label></dt>
@@ -165,7 +165,7 @@
         <para>
             Zusätzlich gibt es Möglichkeiten die es erlauben die Array Schreibweise fallweise
             zu aktivieren, wie auch die Spezifikation eines speziellen Array zu welchem ein
-            Element oder eine Sammlung gehört: 
+            Element oder eine Sammlung gehört:
         </para>
 
         <itemizedlist>
@@ -190,7 +190,7 @@
                     <code>Zend_Form::setElementsBelongTo($array)</code>: Durch Verwendung dieser
                     Methode kann der Name eines Arrays spezifiziert werden dem alle Elemente der
                     Form angehören. Der Name kann durch Verwendung der Zugriffsmethode
-                    <code>getElementsBelongTo()</code> eruiert werden. 
+                    <code>getElementsBelongTo()</code> eruiert werden.
             </para></listitem>
         </itemizedlist>
 
@@ -216,7 +216,7 @@
             Der Schlüssel in der Erstellung von Mehrfach-Seiten Form ist die Anpassung von
             Subforms, aber der Anzeige von nur einer solcher Subform pro Seite. Das erlaubt es
             eine einzelne Subform auf einmal zu übertragen und diese zu prüfen, aber die Form
-            nicht zu bearbeiten bis alle Subforms komplett sind.  
+            nicht zu bearbeiten bis alle Subforms komplett sind.
         </para>
 
         <example id="zend.form.advanced.multiPage.registration">
@@ -353,8 +353,8 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Eine Subform für die anzeige Vorbereiten
-     * 
-     * @param  string|Zend_Form_SubForm $spec 
+     *
+     * @param  string|Zend_Form_SubForm $spec
      * @return Zend_Form_SubForm
      */
     public function prepareSubForm($spec)
@@ -375,7 +375,7 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Form Dekoratore zu einer individuellen Subform hinzufügen
-     * 
+     *
      * @param  Zend_Form_SubForm $subForm
      * @return My_Form_Registration
      */
@@ -392,14 +392,14 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Einen Sendebutton in einer individuellen Subform hinzufügen
-     * 
+     *
      * @param  Zend_Form_SubForm $subForm
      * @return My_Form_Registration
      */
     public function addSubmitButton(Zend_Form_SubForm $subForm)
     {
         $subForm->addElement(new Zend_Form_Element_Submit(
-            'save', 
+            'save',
             array(
                 'label'    => 'Speichern und Fortfahren',
                 'required' => false,
@@ -411,8 +411,8 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Aktion und Methode der Subform hinzufügen
-     * 
-     * @param  Zend_Form_SubForm $subForm 
+     *
+     * @param  Zend_Form_SubForm $subForm
      * @return My_Form_Registration
      */
     public function addSubFormActions(Zend_Form_SubForm $subForm)
@@ -476,7 +476,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Den Session Namespace erhalten den wir verwenden
-     * 
+     *
      * @return Zend_Session_Namespace
      */
     public function getSessionNamespace()
@@ -491,7 +491,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Eine Liste von bereits in der Session gespeicherten Forms erhalten
-     * 
+     *
      * @return array
      */
     public function getStoredForms()
@@ -506,7 +506,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Eine Liste aller vorhandenen Subforms erhalten
-     * 
+     *
      * @return array
      */
     public function getPotentialForms()
@@ -516,7 +516,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Welche Subform wurde übermittelt?
-     * 
+     *
      * @return false|Zend_Form_SubForm
      */
     public function getCurrentSubForm()
@@ -540,7 +540,7 @@ class RegistrationController extends Zend_Controller_Action
 
     /**
      * Die nächste Suboform für die Anzeige erhalten
-     * 
+     *
      * @return Zend_Form_SubForm|false
      */
     public function getNextSubForm()
@@ -586,15 +586,15 @@ class RegistrationController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[
-class My_Form_Registration extends Zend_Form
+class RegistrationController extends Zend_Form
 {
     // ...
-    
+
     /**
      * Ist die Form gültig?
-     * 
-     * @param  Zend_Form_SubForm $subForm 
-     * @param  array $data 
+     *
+     * @param  Zend_Form_SubForm $subForm
+     * @param  array $data
      * @return bool
      */
     public function subFormIsValid(Zend_Form_SubForm $subForm,
@@ -611,7 +611,7 @@ class My_Form_Registration extends Zend_Form
 
     /**
      * Ist die komplette Form gültig?
-     * 
+     *
      * @return bool
      */
     public function formIsValid()
@@ -674,7 +674,7 @@ class RegistrationController extends Zend_Controller_Action
 }
 ]]>
             </programlisting>
-            
+
             <para>
                 Wie festzustellen ist, ist der aktuelle Code für die Bearbeitung der Form relativ
                 einfach. Wir prüfen um zu sehen ob wir eine aktuelle Übertragung einer Subform
@@ -722,7 +722,7 @@ foreach ($this->info as $info):
 endforeach ?>
 ]]>
             </programlisting>
-            
+
             <para>
                 Kommende Releases des Zend Frameworks werden Komponenten enthalten die
                 Mehrfach-Seiten Forms einfacher machen durch die Abstraktion der Session und der

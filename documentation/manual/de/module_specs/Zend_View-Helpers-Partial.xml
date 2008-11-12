@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12150 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partielle Helfer</title>
 
@@ -6,7 +6,7 @@
         Der <code>Partial</code> (Partielle) View Helfer wird verwendet um ein spezielles Template innerhalb
         seines eigenen variablen Bereichs zu rendern. Primär wird er für wiederverwendbare Templatefragmente
         verwendet bei denen man keine Vorsorge wegen variablen Namenskonflikten aufpassen muß. Zusätzlich
-        erlauben Sie es Teile von View Skripten von speziellen Modulen zu spezifizieren. 
+        erlauben Sie es Teile von View Skripten von speziellen Modulen zu spezifizieren.
     </para>
 
     <para>
@@ -37,7 +37,7 @@
 
         <programlisting role="php"><![CDATA[
 <?= $this->partial('partial.phtml', array(
-    'from' => 'Team Framework', 
+    'from' => 'Team Framework',
     'subject' => 'Teil der View')); ?>
 ]]>
         </programlisting>

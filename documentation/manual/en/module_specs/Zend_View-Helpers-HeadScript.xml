@@ -68,7 +68,7 @@
     </para>
 
     <para>
-        The <code>HeadScript</code> helper is a concrete implementation of the 
+        The <code>HeadScript</code> helper is a concrete implementation of the
         <link linkend="zend.view.helpers.initial.placeholder">Placeholder
             helper</link>.
     </para>
@@ -78,7 +78,7 @@
 
         <para>
             <code>HeadScript</code>'s sibling helper, <link
-                linkend="zend.view.helpers.initial.inlinescript">InlineScript</link>, 
+                linkend="zend.view.helpers.initial.inlinescript">InlineScript</link>,
             should be used when you wish to include scripts inline in the HTML
             <code>body</code>. Placing scripts at the end of your document is a
             good practice for speeding up delivery of your page, particularly
@@ -132,13 +132,13 @@ $this->headScript()->appendFile('/js/prototype.js')
 // Putting scripts in order
 
 // place at a particular offset to ensure loaded last
-$this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
+$this->headScript()->offsetSetFile(100, '/js/myfuncs.js');
 
 // use scriptaculous effects (append uses next index, 101)
-$this->headScript()->appendScript('/js/scriptaculous.js');
+$this->headScript()->appendFile('/js/scriptaculous.js');
 
 // but always have base prototype script load first:
-$this->headScript()->prependScript('/js/prototype.js');
+$this->headScript()->prependFile('/js/prototype.js');
 ]]>
         </programlisting>
 

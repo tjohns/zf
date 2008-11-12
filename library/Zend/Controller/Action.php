@@ -33,6 +33,11 @@ require_once 'Zend/Controller/Front.php';
 abstract class Zend_Controller_Action
 {
     /**
+     * @var array of existing class methods
+     */
+    protected $_classMethods;
+
+    /**
      * Word delimiters (used for normalizing view script paths)
      * @var array
      */
@@ -486,8 +491,12 @@ abstract class Zend_Controller_Action
 
         $this->preDispatch();
         if ($this->getRequest()->isDispatched()) {
+            if (null === $this->_classMethods) {
+                $this->_classMethods = get_class_methods($this);
+            }
+
             // preDispatch() didn't change the action, so we can continue
-            if ($this->getInvokeArg('useCaseSensitiveActions') || in_array($action, get_class_methods($this))) {
+            if ($this->getInvokeArg('useCaseSensitiveActions') || in_array($action, $this->_classMethods)) {
                 if ($this->getInvokeArg('useCaseSensitiveActions')) {
                     trigger_error('Using case sensitive actions without word separators is deprecated; please do not rely on this "feature"');
                 }
@@ -558,7 +567,7 @@ abstract class Zend_Controller_Action
      * @param mixed $default
      * @return mixed
      */
-    final protected function _getParam($paramName, $default = null)
+    protected function _getParam($paramName, $default = null)
     {
         $value = $this->getRequest()->getParam($paramName);
         if ((null == $value) && (null !== $default)) {
@@ -575,7 +584,7 @@ abstract class Zend_Controller_Action
      * @param mixed $value
      * @return Zend_Controller_Action
      */
-    final protected function _setParam($paramName, $value)
+    protected function _setParam($paramName, $value)
     {
         $this->getRequest()->setParam($paramName, $value);
 
@@ -589,7 +598,7 @@ abstract class Zend_Controller_Action
      * @param string $paramName
      * @return boolean
      */
-    final protected function _hasParam($paramName)
+    protected function _hasParam($paramName)
     {
         return null !== $this->getRequest()->getParam($paramName);
     }
@@ -600,7 +609,7 @@ abstract class Zend_Controller_Action
      *
      * @return array
      */
-    final protected function _getAllParams()
+    protected function _getAllParams()
     {
         return $this->getRequest()->getParams();
     }

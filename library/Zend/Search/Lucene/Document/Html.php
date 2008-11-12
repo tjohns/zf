@@ -119,7 +119,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             if (($href = $linkNode->getAttribute('href')) != '' &&
                 (!self::$_excludeNoFollowLinks  ||  strtolower($linkNode->getAttribute('rel')) != 'nofollow' )
                ) {
-            	$this->_links[] = $href;
+                $this->_links[] = $href;
             }
         }
         $this->_links = array_unique($this->_links);
@@ -140,7 +140,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      */
     public static function setExcludeNoFollowLinks($newValue)
     {
-    	self::$_excludeNoFollowLinks = $newValue;
+        self::$_excludeNoFollowLinks = $newValue;
     }
 
     /**

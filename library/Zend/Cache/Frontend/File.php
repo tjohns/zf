@@ -69,9 +69,39 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         if (!isset($this->_specificOptions['master_file'])) {
             Zend_Cache::throwException('master_file option must be set');
         }
+        $this->setMasterFile($this->_specificOptions['master_file']);
+    }
+    
+    /**
+     * Change the master_file option
+     * 
+     * @param string $masterFile the complete path and name of the master file
+     */
+    public function setMasterFile($masterFile)
+    {
         clearstatcache();
-        if (!($this->_masterFile_mtime = @filemtime($this->_specificOptions['master_file']))) {
-            Zend_Cache::throwException('Unable to read master_file : '.$this->_specificOptions['master_file']);
+        $this->_specificOptions['master_file'] = $masterFile;
+        if (!($this->_masterFile_mtime = @filemtime($masterFile))) {
+            Zend_Cache::throwException('Unable to read master_file : '.$masterFile);
+        }
+    }
+    
+    /**
+     * Public frontend to set an option
+     *
+     * Just a wrapper to get a specific behaviour for master_file
+     *
+     * @param  string $name  Name of the option
+     * @param  mixed  $value Value of the option
+     * @throws Zend_Cache_Exception
+     * @return void
+     */
+    public function setOption($name, $value)
+    {
+        if ($name == 'master_file') {
+            $this->setMasterFile($value);
+        } else {
+            parent::setOption($name, $value);
         }
     }
 

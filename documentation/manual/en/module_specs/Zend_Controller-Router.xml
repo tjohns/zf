@@ -324,6 +324,24 @@ $request->setBaseUrl('/~user/application-root/');
 
     </sect2>
 
+    <sect2 id="zend.controller.router.global.parameters">
+        <title>Global parameters</title>
+
+        <para>
+            You can set global parameters in a router which are automatically
+            supplied to a route when assembling through the
+            <code>setGlobalParam</code>. If a global parameter is set
+            but also given to the assemble method directly, the user parameter
+            overrides the global parameter. You can set a global parameter this
+            way:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$router->setGlobalParam('lang', 'en');
+]]>
+        </programlisting>
+    </sect2>
+
     <sect2 id="zend.controller.router.routes">
         <title>Route Types</title>
         <xi:include href="Zend_Controller-Router-Route.xml" />

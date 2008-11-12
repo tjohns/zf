@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.db.select">
     <title>Zend_Db_Select</title>
 
@@ -348,7 +348,7 @@ $select = $db->select()
 
 $select = $db->select()
              ->from(array('p' => 'produits'), 'p.produit_id')
-             ->columns('produit_nom', 'p'); 
+             ->columns('produit_nom', 'p');
              // Ou alternativement columns('p.produit_nom')
 ]]></programlisting>
             </example>

@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_HeadLinkTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/TestHelper.php';
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
@@ -27,7 +27,7 @@ require_once 'Zend/View.php';
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_View_Helper_HeadLink
@@ -374,6 +374,16 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $this->helper->appendStylesheet(array('href' => '/bar/baz', 'conditionalStylesheet' => false));
         $test = $this->helper->toString();
         $this->assertNotContains('[if false]', $test);
+    }
+
+    /**
+     * @issue ZF-3928
+     * @link http://framework.zend.com/issues/browse/ZF-3928
+     */
+    public function testTurnOffAutoEscapeDoesNotEncodeAmpersand()
+    {
+        $this->helper->setAutoEscape(true)->appendStylesheet('/css/rules.css?id=123&foo=bar');
+        $this->assertContains('id=123&foo=bar', $this->helper->toString());
     }
 }
 

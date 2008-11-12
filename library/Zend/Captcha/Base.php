@@ -67,23 +67,23 @@ abstract class Zend_Captcha_Base extends Zend_Validate_Abstract implements Zend_
     /**
      * Get name
      * 
-	 * @return string
-	 */
-	public function getName() 
-	{
-		return $this->_name;
-	}
-	
-	/**
-	 * Set name 
-	 * 
-	 * @param string $name
-	 */
-	public function setName($name) 
-	{
-		$this->_name = $name;
-		return $this;
-	}
+     * @return string
+     */
+    public function getName() 
+    {
+        return $this->_name;
+    }
+    
+    /**
+     * Set name 
+     * 
+     * @param string $name
+     */
+    public function setName($name) 
+    {
+        $this->_name = $name;
+        return $this;
+    }
 
     /**
      * Constructor
@@ -91,7 +91,7 @@ abstract class Zend_Captcha_Base extends Zend_Validate_Abstract implements Zend_
      * @param  array|Zend_Config $options 
      * @return void
      */
-	public function __construct($options = null)
+    public function __construct($options = null)
     {
         // Set options
         if (is_array($options)) {
@@ -114,16 +114,16 @@ abstract class Zend_Captcha_Base extends Zend_Validate_Abstract implements Zend_
             return $this;
         }
 
-		$method = 'set' . ucfirst ($key);
-		if (method_exists ($this, $method)) {
-			// Setter exists; use it
-			$this->$method ($value);
+        $method = 'set' . ucfirst ($key);
+        if (method_exists ($this, $method)) {
+            // Setter exists; use it
+            $this->$method ($value);
             $this->_options[$key] = $value;
-		} elseif (property_exists($this, $key)) {
-			// Assume it's metadata
+        } elseif (property_exists($this, $key)) {
+            // Assume it's metadata
             $this->$key = $value;
             $this->_options[$key] = $value;
-		}
+        }
         return $this;
     }
     

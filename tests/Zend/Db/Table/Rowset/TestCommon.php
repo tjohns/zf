@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 7427 2008-01-14 13:14:14Z peptolab $
+ * @version    $Id$
  */
 
 
@@ -135,7 +135,15 @@ abstract class Zend_Db_Table_Rowset_TestCommon extends Zend_Db_Table_TestSetup
             // has the exception correctly been overwritten by getRow() ?
             $this->assertRegExp('#No row could be found at position \d+#',$e->getMessage());
         } 
+    }
+    
+    public function testTableRowSetArrayAccess()
+    {
+        $table = $this->_table['bugs'];
+        $rowset = $table->fetchAll();
         
+        $this->assertTrue(isset($rowset[0]));
+        $this->assertType('Zend_Db_Table_Row', $rowset[0]);
     }
 
     public function testTableRowsetEmpty()

@@ -62,6 +62,10 @@ class Zend_Controller_Action_Helper_Url extends Zend_Controller_Action_Helper_Ab
         if ($module != $this->getFrontController()->getDispatcher()->getDefaultModule()) {
             $url = $module . '/' . $url;
         }
+        
+        if ('' !== ($baseUrl = $this->getFrontController()->getBaseUrl())) {
+        	$url = $baseUrl . '/' . $url;
+        }
 
         if (null !== $params) {
             $paramPairs = array();

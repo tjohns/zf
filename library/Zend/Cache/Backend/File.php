@@ -130,12 +130,12 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             Zend_Cache::throwException('Invalid metadatas_array_max_size, must be > 10');
         }
         if (isset($options['hashed_directory_umask']) && is_string($options['hashed_directory_umask'])) {
-        	// See #ZF-4422
-        	$this->_options['hashed_directory_umask'] = octdec($this->_options['hashed_directory_umask']);    	
+            // See #ZF-4422
+            $this->_options['hashed_directory_umask'] = octdec($this->_options['hashed_directory_umask']);
         }
-    	if (isset($options['cache_file_umask']) && is_string($options['cache_file_umask'])) {
-        	// See #ZF-4422
-        	$this->_options['cache_file_umask'] = octdec($this->_options['cache_file_umask']);    	
+        if (isset($options['cache_file_umask']) && is_string($options['cache_file_umask'])) {
+            // See #ZF-4422
+            $this->_options['cache_file_umask'] = octdec($this->_options['cache_file_umask']);
         }
     }
 
@@ -220,8 +220,6 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         clearstatcache();
         $file = $this->_file($id);
         $path = $this->_path($id);
-        $firstTry = true;
-        $result = false;
         if ($this->_options['hashed_directory_level'] > 0) {
             if (!is_writable($path)) {
                 // maybe, we just have to build the directory structure
@@ -244,7 +242,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         );
         $res = $this->_setMetadatas($id, $metadatas);
         if (!$res) {
-            // FIXME : log
+            $this->_log('Zend_Cache_Backend_File::save() / error on saving metadata');
             return false;
         }
         $res = $this->_filePutContents($file, $data);
@@ -273,6 +271,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *                     ($tags can be an array of strings or a single string)
      * 'notMatchingTag' => remove cache entries not matching one of the given tags
      *                     ($tags can be an array of strings or a single string)
+     * 'matchingAnyTag' => remove cache entries matching any given tags
+     *                     ($tags can be an array of strings or a single string)
      *
      * @param string $mode clean mode
      * @param tags array $tags array of tags
@@ -297,7 +297,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     
     /**
      * Return an array of stored tags
-	 *
+     *
      * @return array array of stored tags (string)
      */
     public function getTags()
@@ -332,8 +332,22 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     }
     
     /**
+     * Return an array of stored cache ids which match any given tags
+     * 
+     * In case of multiple tags, a logical AND is made between tags
+     *
+     * @param array $tags array of tags
+     * @return array array of any matching cache ids (string)
+     */
+    public function getIdsMatchingAnyTags($tags = array())
+    {
+        return $this->_get($this->_options['cache_dir'], 'matchingAny', $tags);
+    }
+    
+    /**
      * Return the filling percentage of the backend storage
      *
+     * @throws Zend_Cache_Exception
      * @return int integer between 0 and 100
      */
     public function getFillingPercentage()
@@ -612,6 +626,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      *                                               ($tags can be an array of strings or a single string)
      * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
      *                                               ($tags can be an array of strings or a single string)
+     * Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG => remove cache entries matching any given tags
+     *                                               ($tags can be an array of strings or a single string)
      *
      * @param  string $dir  Directory to clean
      * @param  string $mode Clean mode
@@ -682,6 +698,18 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                             $result = ($result) && $this->remove($id);
                         }
                         break;
+                    case Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG:
+                        $matching = false;
+                        foreach ($tags as $tag) {
+                            if (in_array($tag, $metadatas['tags'])) {
+                                $matching = true;
+                                break;
+                            }
+                        }
+                        if ($matching) {
+                            $result = ($result) && ($this->remove($id));
+                        }
+                        break;
                     default:
                         Zend_Cache::throwException('Invalid mode for clean() method');
                         break;
@@ -749,6 +777,18 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                             }
                         }
                         if (!$matching) {
+                            $result[] = $id;
+                        }
+                        break;
+                    case 'matchingAny':
+                        $matching = false;
+                        foreach ($tags as $tag) {
+                            if (in_array($tag, $metadatas['tags'])) {
+                                $matching = true;
+                                break;
+                            }
+                        }
+                        if ($matching) {
                             $result[] = $id;
                         }
                         break;

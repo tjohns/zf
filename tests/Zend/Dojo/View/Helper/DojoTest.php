@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_View_Helper_DojoTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Dojo_View_Helper_Dojo */
 require_once 'Zend/Dojo/View/Helper/Dojo.php';
@@ -206,22 +206,22 @@ class Zend_Dojo_View_Helper_DojoTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->helper->useCdn());
     }
 
-    public function testShouldUseAolCdnByDefault()
+    public function testShouldUseGoogleCdnByDefault()
     {
-        $this->assertEquals(Zend_Dojo::CDN_BASE_AOL, $this->helper->getCdnBase());
+        $this->assertEquals(Zend_Dojo::CDN_BASE_GOOGLE, $this->helper->getCdnBase());
     }
 
     public function testShouldAllowSpecifyingCdnBasePath()
     {
-        $this->testShouldUseAolCdnByDefault();
-        $this->helper->setCdnBase(Zend_Dojo::CDN_BASE_GOOGLE);
-        $this->assertEquals(Zend_Dojo::CDN_BASE_GOOGLE, $this->helper->getCdnBase());
+        $this->testShouldUseGoogleCdnByDefault();
+        $this->helper->setCdnBase(Zend_Dojo::CDN_BASE_AOL);
+        $this->assertEquals(Zend_Dojo::CDN_BASE_AOL, $this->helper->getCdnBase());
     }
 
     public function testShouldUseLatestVersionWhenUsingCdnByDefault()
     {
         $this->helper->enable();
-        $this->assertEquals('1.1.1', $this->helper->getCdnVersion());
+        $this->assertEquals('1.2.0', $this->helper->getCdnVersion());
     }
 
     public function testShouldAllowSpecifyingDojoVersionWhenUtilizingCdn()
@@ -429,7 +429,7 @@ function() {
                     $this->assertContains('parseOnLoad', $script);
                     break;
                 case 1:
-                    $this->assertContains('src="http://o.aolcdn.com/dojo/1.1/dojo/dojo.xd.js"', $script);
+                    $this->assertRegexp('#src="http://.+/dojo/[0-9.]+/dojo/dojo.xd.js"#', $script);
                     $this->assertContains('/>', $script);
                     break;
                 case 2:
@@ -446,7 +446,7 @@ function() {
         $style = $doc->saveXML($results->item(0));
         $this->assertContains('@import', $style);
         $this->assertEquals(2, substr_count($style, '@import'));
-        $this->assertEquals(1, substr_count($style, 'http://o.aolcdn.com/dojo/1.1/'), $style);
+        $this->assertEquals(1, substr_count($style, 'http://ajax.googleapis.com/ajax/libs/dojo/'), $style);
         $this->assertContains('css/custom.css', $style);
         $this->assertContains('dijit/themes/tundra/tundra.css', $style);
     }

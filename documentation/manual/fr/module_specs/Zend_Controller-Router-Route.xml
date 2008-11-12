@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 11872 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -141,53 +141,5 @@ $router->addRoute('archive', $route);
         variable "<code>annee</code>" contient une donnée numérique : <code>http://domaine.fr/archive/2345</code>. Une
         URL comme <code>http://exemple.annee/archive/test</code> ne sera pas captée (matchée) par cette route, et le
         contrôle sera passé à la route suivante, etc.</para>
-    </sect4>
-
-    <sect4 id="zend.controller.router.routes.standard.hostname-routing">
-        <title>Routage par le nom d'hôte</title>
-
-        <para>Vous pouvez aussi utiliser le nom d'hôte ("Hostname") pour la correspondance de route. Pour une simple
-        correspondance, il existe une option de nom d'hôte statique :</para>
-
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => 'blog.monsite.fr',
-        'path' => 'archive'
-    ),
-    array(
-        'module'     => 'blog',
-        'controller' => 'archive',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('archive', $route);
-]]></programlisting>
-
-        <para>i vous voulez capter des paramètres dans le nom d'hôte, il existe une option de type expression régulière.
-        Dans l'exemple suivant, le sous-domaine est utilisé en tant que paramètre de nom d'utilisateur pour le
-        contrôleur d'action. Quand vous assemblez la route, vous fournissez simplement le nom d'utilisateur en tant que
-        paramètre, comme vous le feriez avec tout autre paramètre :</para>
-
-        <programlisting role="php"><![CDATA[
-$route = new Zend_Controller_Router_Route(
-    array(
-        'host' => array(
-            'regex'   => '([a-z]+).monsite.fr',
-            'reverse' => '%s.monsite.fr'
-            'params'  => array(
-                1 => 'username'
-            ) 
-        ),
-        'path' => ''
-    ),
-    array(
-        'module'     => 'users',
-        'controller' => 'profile',
-        'action'     => 'index'
-    )
-);
-$router->addRoute('profile', $route);
-]]></programlisting>
     </sect4>
 </sect3>

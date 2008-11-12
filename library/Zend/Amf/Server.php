@@ -52,6 +52,12 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected $_methods = array();
 
     /**
+     * Array of directories to search for loading classes dynamically
+     * @var array
+     */
+    protected $_directories = array();
+
+    /**
      * @var bool Production flag; whether or not to return exception messages
      */
     protected $_production = true;
@@ -76,8 +82,8 @@ class Zend_Amf_Server implements Zend_Server_Interface
 
     /**
      * Set production flag
-     * 
-     * @param  bool $flag 
+     *
+     * @param  bool $flag
      * @return Zend_Amf_Server
      */
     public function setProduction($flag)
@@ -88,13 +94,14 @@ class Zend_Amf_Server implements Zend_Server_Interface
 
     /**
      * Whether or not the server is in production
-     * 
+     *
      * @return bool
      */
     public function isProduction()
     {
         return $this->_production;
     }
+
 
     /**
      * Loads a remote class or method and executes the function and returns
@@ -108,8 +115,31 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected function _dispatch($method, $params = null, $source = null)
     {
         if (!isset($this->_table[$method])) {
-            require_once 'Zend/Amf/Server/Exception.php';
-            throw new Zend_Amf_Server_Exception('Method "' . $method . '" does not exist');
+            // if source is null a method that was not defined was called.
+            if ($source) {
+                $classPath    = array();
+                $path         = explode('.', $source);
+                $className    = array_pop($path);
+                $uriclasspath = implode('/', $path);
+
+                // Take the user supplied directories and add the unique service path to the end.
+                foreach ($this->_directories as $dir) {
+                    $classPath[] = $dir . $uriclasspath;
+                }
+
+                require_once('Zend/Loader.php');
+                try {
+                    Zend_Loader::loadClass($className, $classPath);
+                } catch (Exception $e) {
+                    require_once 'Zend/Amf/Server/Exception.php';
+                    throw new Zend_Amf_Server_Exception('Class "' . $className . '" does not exist');
+                }
+                // Add the new loaded class to the server.
+                $this->setClass($className);
+            } else {
+                require_once 'Zend/Amf/Server/Exception.php';
+                throw new Zend_Amf_Server_Exception('Method "' . $method . '" does not exist');
+            }
         }
 
         $info = $this->_table[$method];
@@ -192,7 +222,6 @@ class Zend_Amf_Server implements Zend_Server_Interface
         $response->setObjectEncoding($objectEncoding);
 
         $responseBody = $request->getAmfBodies();
-        $bodyCount    = count($responseBody);
 
         // Iterate through each of the service calls in the AMF request
         foreach($responseBody as $body)
@@ -224,8 +253,20 @@ class Zend_Amf_Server implements Zend_Server_Interface
                         $return = new Zend_Amf_Value_Messaging_AcknowledgeMessage($message);
                         $return->body = $this->_dispatch($message->operation, $message->body, $message->source);
                     } else {
-                        require_once 'Zend/Amf/Server/Exception.php';
-                        throw new Zend_Amf_Server_Exception('unknown message type: ' . get_class($message));
+                        // Amf3 message sent with netConnection
+                        $targetURI = $body->getTargetURI();
+
+                        // Split the target string into its values.
+                        $source = substr($targetURI, 0, strrpos($targetURI, '.'));
+
+                        if ($source) {
+                            // Break off method name from namespace into source
+                            $method = substr(strrchr($targetURI, '.'), 1);
+                            $return = $this->_dispatch($method, array($body->getData()), $source);
+                        } else {
+                            // Just have a method name.
+                            $return = $this->_dispatch($targetURI, $body->getData());
+                        }
                     }
                 }
                 $responseType = Zend_AMF_Constants::RESULT_METHOD;
@@ -364,11 +405,20 @@ class Zend_Amf_Server implements Zend_Server_Interface
     }
 
     /**
+     * Add a file system path to a directory of services.
+     * @param string|array $path
+     */
+    public function setClassPath($path)
+    {
+
+    }
+
+    /**
      * Attach a class or object to the server
      *
-     * Class may be either a class name or an instantiated object. Reflection 
-     * is done on the class or object to determine the available public 
-     * methods, and each is attached to the server as and available method. If 
+     * Class may be either a class name or an instantiated object. Reflection
+     * is done on the class or object to determine the available public
+     * methods, and each is attached to the server as and available method. If
      * a $namespace has been provided, that namespace is used to prefix
      * AMF service call.
      *
@@ -381,10 +431,8 @@ class Zend_Amf_Server implements Zend_Server_Interface
     public function setClass($class, $namespace = '', $argv = null)
     {
         if (is_string($class) && !class_exists($class)){
-            if (!class_exists($class)) {
-                require_once 'Zend/Amf/Server/Exception.php';
-                throw new Zend_Amf_Server_Exception('Invalid method or class');
-            }
+            require_once 'Zend/Amf/Server/Exception.php';
+            throw new Zend_Amf_Server_Exception('Invalid method or class');
         } elseif (!is_string($class) && !is_object($class)) {
             require_once 'Zend/Amf/Server/Exception.php';
             throw new Zend_Amf_Server_Exception('Invalid method or class; must be a classname or object');
@@ -438,6 +486,27 @@ class Zend_Amf_Server implements Zend_Server_Interface
         return $this;
     }
 
+
+    /**
+     * Creates an array of directories in which services can reside.
+     *
+     * @param string $dir
+     */
+    public function addDirectory($dir)
+    {
+        $this->_directories[] = $dir;
+    }
+
+    /**
+     * Returns an array of directories that can hold services.
+     *
+     * @return array
+     */
+    public function getDirectory()
+    {
+        return $_directory;
+    }
+
     /**
      * (Re)Build the dispatch table
      *
@@ -449,7 +518,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
     protected function _buildDispatchTable()
     {
         $table = array();
-        foreach ($this->_methods as $dispatchable) {
+        foreach ($this->_methods as $key => $dispatchable) {
             if ($dispatchable instanceof Zend_Server_Reflection_Function_Abstract) {
                 $ns   = $dispatchable->getNamespace();
                 $name = $dispatchable->getName();
@@ -493,7 +562,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
     {
     }
 
-	/**
+    /**
      * Returns a list of registered methods
      *
      * Returns an array of dispatchables (Zend_Server_Reflection_Function,

@@ -170,7 +170,8 @@ function getAuthSubHttpClient()
 
 // -> Script execution begins here <-
 
-// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat the user has a valid session, so we can record the
+// Make sure http://code.google.com/apis/gdata/reference.html#Queriesthat
+// the user has a valid session, so we can record the
 // AuthSub session token once it is available.
 session_start();
 
@@ -198,7 +199,7 @@ $service = new Zend_Gdata_Gbase();
                 You can send a structured query to retrieve items from your own customer items feed or from the public snippets feed.
             </para>
             <para>
-                When retrieving items using the Base API, specially constructed query URLs are used to describe what events should be returned. The  <code>Zend_Gdata_Gbase_ItemQuery</code> and <code>Zend_Gdata_Gbase_SnippetQuery</code> classes simplify this task by automatically constructing a query URL based on provided parameters. 
+                When retrieving items using the Base API, specially constructed query URLs are used to describe what events should be returned. The  <code>Zend_Gdata_Gbase_ItemQuery</code> and <code>Zend_Gdata_Gbase_SnippetQuery</code> classes simplify this task by automatically constructing a query URL based on provided parameters.
             </para>
             <sect4 id="zend.gdata.gbase.retrieve.query.customeritems">
                 <title>Query Customer Items Feed</title>
@@ -249,7 +250,7 @@ $feed = $service->getGbaseSnippetFeed($query);
             </para>
             <programlisting role="php"><![CDATA[
 foreach ($feed->entries as $entry) {
-  // Get all attributes and print out the name and text value of each 
+  // Get all attributes and print out the name and text value of each
   // attribute
   $baseAttributes = $entry->getGbaseAttributes();
   foreach ($baseAttributes as $attr) {
@@ -281,8 +282,8 @@ foreach ($feed->entries as $entry) {
         <para>
             You can test a feed operation before it is actually executed by setting the dry-run flag (<code>$dryRun</code>) to <code>true</code>. Once you are sure that you want to submit the data, set it to <code>false</code> to execute the operation.
         </para>
-		<sect3 id="zend.gdata.gbase.crud.insert">
-			<title>Insert an Item</title>
+        <sect3 id="zend.gdata.gbase.crud.insert">
+            <title>Insert an Item</title>
             <para>
                 Items can be added by using the <code>insertGbaseItem()</code> method for the Base service:
             </para>
@@ -374,8 +375,8 @@ $entry->save($dryRun);
                 After making the changes, either invoke <code>save($dryRun)</code> method on the <code>Zend_Gdata_Gbase_ItemEntry</code> object or call <code>updateGbaseItem($entry, $dryRun)</code> method on the <code>Zend_Gdata_Gbase</code> object to save the changes.
             </para>
         </sect3>
-		<sect3 id="zend.gdata.gbase.crud.delete">
-			<title>Delete an Item</title>
+        <sect3 id="zend.gdata.gbase.crud.delete">
+            <title>Delete an Item</title>
             <para>
                 You can remove an item by calling <code>deleteGbaseItem()</code> method:
             </para>

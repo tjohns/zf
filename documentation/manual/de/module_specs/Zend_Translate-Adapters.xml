@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 11934 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>
@@ -86,15 +86,15 @@
             Hinweise die Entscheidung vereinfachen.
         </para>
 
-        <note> 
+        <note>
             <para>
                 Wenn man den Adapter auswählt sollte man auch auf das Verwendete Encoding achten.
                 Selbst wenn Zend Framework UTF-8 als Standard Encoding definiert besteht manchmal die
                 Notwendigkeit andere Encodings zu verwenden. <code>Zend_Translate</code> ändert kein
                 Encoding welches in Quelldateien definiert ist was bedeutet das, wenn eine Gettext Quelle
                 auf ISO-8859-1 aufgebaut ist, die Strings auch in diesem Encoding zurückgegeben werden
-                ohne das diese Konvertiert werden. Es gibt nur eine Einschränkung: 
-            </para> 
+                ohne das diese Konvertiert werden. Es gibt nur eine Einschränkung:
+            </para>
 
             <para>
                 Wenn XML basierende Quellformate wie TMX oder XLIFF verwendet werden muß das Encoding in
@@ -102,8 +102,8 @@
                 Parser standardmäßig als UTF-8 angesehen werden. Man sollte auch darauf achten das aktuell
                 das Encoding von XML Dateien auf die Encodings limitiert ist welche durch PHP unterstützt
                 werden. Das sind aktuell UTF-8, ISO-8859-1 und US-ASCII.
-            </para> 
-        </note> 
+            </para>
+        </note>
 
         <sect3 id="zend.translate.adapter.array">
 
@@ -341,8 +341,9 @@ try {
             Um das Caching zu verwenden muß nur ein Cache Objekt an die <code>Zend_Translate::setCache()</code>
             Methode übergeben werden. Diese nimmt eine Instanz von <code>Zend_Cache</code> als einzigen
             Parameter. Auch wenn irgendein Adapter direkt verwendet wird kann die <code>setCache()</code>
-            Methode verwendet werden. Der Bequemlichkeit halber gibt es die statische Methode
-            <code>Zend_Translate::getCache()</code>.
+            Methode verwendet werden. Der Bequemlichkeit halber gibt es die statischen Methoden
+            <code>getCache()</code>, <code>hasCache()</code>, <code>clearCache()</code> und
+            <code>removeCache()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[

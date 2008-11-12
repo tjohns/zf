@@ -76,7 +76,7 @@ public function drawLine($x1, $y1, $x2, $y2);
  * Draw a rectangle.
  *
  * Fill types:
- * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fill rectangle 
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fill rectangle
  *                                             and stroke (default)
  * Zend_Pdf_Page::SHAPE_DRAW_STROKE          - stroke rectangle
  * Zend_Pdf_Page::SHAPE_DRAW_FILL            - fill rectangle
@@ -125,7 +125,7 @@ public function drawPolygon($x, $y,
  * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
  *
  *
- * It's not a really circle, because PDF supports only cubic Bezier 
+ * It's not a really circle, because PDF supports only cubic Bezier
  * curves. But very good approximation.
  * It differs from a real circle on a maximum 0.00026 radiuses (at PI/8,
  * 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 and 15*PI/8 angles).
@@ -167,7 +167,13 @@ public function  drawCircle($x,
  * @param mixed $param6
  * @param mixed $param7
  */
-public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
+public function drawEllipse($x1,
+                            $y1,
+                            $x2,
+                            $y2,
+                            $param5 = null,
+                            $param6 = null,
+                            $param7 = null);
 ]]>
         </programlisting>
     </sect2>
@@ -420,16 +426,16 @@ $font = Zend_Pdf_Font::fontWithPath(
     <sect2 id="zend.pdf.drawing.extracting-fonts">
         <title>Starting in 1.5, Extracting fonts.</title>
         <para>
-            <code>Zend_Pdf</code> module provides a possibility to extract fonts from loaded documents. 
+            <code>Zend_Pdf</code> module provides a possibility to extract fonts from loaded documents.
         </para>
 
         <para>
-            It may be useful for incremental document updates. Without this functionality you have to attach and possibly embed 
-            font into a document each time you want to update it. 
+            It may be useful for incremental document updates. Without this functionality you have to attach and possibly embed
+            font into a document each time you want to update it.
         </para>
-        
+
         <para>
-            <code>Zend_Pdf</code> and <code>Zend_Pdf_Page</code> objects provide special methods to extract all fonts mentioned within 
+            <code>Zend_Pdf</code> and <code>Zend_Pdf_Page</code> objects provide special methods to extract all fonts mentioned within
             a document or a page:
         </para>
         <example id="zend.pdf.drawing.extracting-fonts.example-1">
@@ -505,8 +511,8 @@ $pdf->save($docPath, true /* incremental update mode */);
                 <listitem><para>Extracted font can be used only in the context of the document from which it was extracted.</para></listitem>
                 <listitem>
                     <para>
-                        Possibly embedded font program is actually not extracted. So extracted font can't provide 
-                        correct font metrics and original font has to be used for text width calculations: 
+                        Possibly embedded font program is actually not extracted. So extracted font can't provide
+                        correct font metrics and original font has to be used for text width calculations:
             <programlisting role="php"><![CDATA[
 
 ...
@@ -529,7 +535,7 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
             </programlisting>
                     </para>
                 </listitem>
-            </itemizedlist> 
+            </itemizedlist>
         </para>
     </sect2>
 
@@ -770,7 +776,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  */
 public function clipPolygon($x,
                             $y,
-                            $fillMethod = 
+                            $fillMethod =
                                 Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>

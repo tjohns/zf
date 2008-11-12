@@ -57,7 +57,7 @@
 
         <para>
             We could, and should define further tests, but these will do for
-            now. 
+            now.
         </para>
 
         <para>
@@ -95,9 +95,9 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
      * Constructor
      *
      * Initialize environment, root path, and configuration.
-     * 
-     * @param  string $env 
-     * @param  string|null $root 
+     *
+     * @param  string $env
+     * @param  string|null $root
      * @return void
      */
     public function __construct($env, $root = null)
@@ -115,7 +115,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     /**
      * Route startup
-     * 
+     *
      * @return void
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
@@ -161,8 +161,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
             Once we have that in place, we can write our tests. However, what
             about those tests that require a user is logged in? The easy
             solution is to use our application logic to do so... and fudge a
-            little by using the <code>resetResponse()</code> method, which will
-            allow us to dispatch another request.
+            little by using the <code>resetRequest()</code> and
+            <code>resetResponse()</code> methods, which will allow us to
+            dispatch another request.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -172,23 +173,27 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function loginUser($user, $password)
     {
-        $request = $this->getRequest();
-        $request->setMethod('POST')
-                ->setPost(array(
-                    'username' => $user,
-                    'password' => $password,
-                ));
+        $this->request->setMethod('POST')
+                      ->setPost(array(
+                          'username' => $user,
+                          'password' => $password,
+                      ));
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
-        $this->resetResponse();
-        $request->setPost(array());
+
+        $this->resetRequest()
+             ->resetResponse();
+
+        $this->request->setPost(array());
+        
+        // ...
     }
 
     // ...
 }
 ]]>
         </programlisting>
-        
+
         <para>
             Now let's write tests:
         </para>
@@ -238,7 +243,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'foobar');
     }
 
-    public function testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
+    public function 
+        testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
     {
         $this->loginUser('foobar', 'foobar');
         $this->request->setMethod('GET');

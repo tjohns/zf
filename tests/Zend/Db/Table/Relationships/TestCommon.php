@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestCommon.php 7530 2008-01-20 13:38:14Z peptolab $
+ * @version    $Id$
  */
 
 
@@ -72,9 +72,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     {
         $bug_id = $this->_db->quoteIdentifier('bug_id', true);
         $account_name = $this->_db->foldCase('account_name');
+        $account_name_column = $this->_db->quoteIdentifier('account_name', true);
 
         $table = $this->_table['bugs'];
-        $select = $table->select()->where('account_name = ?', 'goofy');
+        $select = $table->select()->where($account_name_column . ' = ?', 'goofy');
 
         $childRows = $table->fetchAll("$bug_id = 1");
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $childRows,
@@ -117,9 +118,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     {
         $bug_id = $this->_db->quoteIdentifier('bug_id', true);
         $account_name = $this->_db->foldCase('account_name');
+        $account_name_column = $this->_db->quoteIdentifier('account_name', true);
 
         $table = $this->_table['bugs'];
-        $select = $table->select()->where('account_name = ?', 'goofy');
+        $select = $table->select()->where($account_name_column . ' = ?', 'goofy');
 
         $childRows = $table->fetchAll("$bug_id = 1");
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $childRows,
@@ -200,16 +202,17 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     {
         $product_name = $this->_db->foldCase('product_name');
         $bug_id = $this->_db->foldCase('bug_id');
+        $bug_id_column = $this->_db->quoteIdentifier('bug_id', true);
 
         $table = $this->_table['bugs'];
-        $select = $table->select()->where($bug_id . ' = ?', 1)
+        $select = $table->select()->where($bug_id_column . ' = ?', 1)
                                   ->limit(2)
                                   ->order($product_name . ' ASC');
 
         $originRows = $table->find(1);
         $originRow1 = $originRows->current();
 
-        $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_TableProducts', 'Zend_Db_Table_TableBugsProducts', 
+        $destRows = $originRow1->findManyToManyRowset('Zend_Db_Table_TableProducts', 'Zend_Db_Table_TableBugsProducts',
                                                       null, null, $select);
         $this->assertType('Zend_Db_Table_Rowset_Abstract', $destRows,
             'Expecting object of type Zend_Db_Table_Rowset_Abstract, got '.get_class($destRows));
@@ -238,9 +241,10 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     {
         $product_name = $this->_db->foldCase('product_name');
         $bug_id = $this->_db->foldCase('bug_id');
+        $bug_id_column = $this->_db->quoteIdentifier('bug_id', true);
 
         $table = $this->_table['bugs'];
-        $select = $table->select()->where($bug_id . ' = ?', 1)
+        $select = $table->select()->where($bug_id_column . ' = ?', 1)
                                   ->limit(2)
                                   ->order($product_name . ' ASC');
 
@@ -1107,7 +1111,7 @@ abstract class Zend_Db_Table_Relationships_TestCommon extends Zend_Db_Table_Test
     public function testTableRelationshipFindManyToManyRowsetWithDissimilarTypes()
     {
         $table = $this->_table['products'];
-        
+
         $originRows = $table->find(1);
         $originRow1 = $originRows->current();
 

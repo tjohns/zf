@@ -218,8 +218,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>Example of overriding the _setupTableName() method</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected function _setupTableName()
@@ -291,8 +290,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                     <title>Example usage of init() method</title>
 
-                    <programlisting role="php">
-<![CDATA[
+                    <programlisting role="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
 {
     protected $_observer;
@@ -339,8 +337,7 @@ class Bugs extends Zend_Db_Table_Abstract
 
                 <title>Example of constructing a Table using an Adapter object</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 
 $table = new Bugs(array('db' => $db));
@@ -367,8 +364,7 @@ $table = new Bugs(array('db' => $db));
 
                 <title>Example of constructing a Table using a the Default Adapter</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
@@ -405,8 +401,7 @@ $table = new Bugs();
 
                 <title>Example of constructing a Table using a Registry key</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $db = Zend_Db::factory('PDO_MYSQL', $options);
 Zend_Registry::set('my_db', $db);
 
@@ -840,7 +835,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
                 <warning>
 
                     <para>
-                        The API for fetch operations has been superceded to allow a
+                        The API for fetch operations has been superseded to allow a
                         <code>Zend_Db_Table_Select</code> object to modify the query. However, the
                         deprecated usage of the <code>fetchRow()</code> and <code>fetchAll()</code>
                         methods will continue to work without modification.
@@ -854,8 +849,7 @@ $rows = $table->find(array(1234, 5678), array('ABC', 'DEF'));
 
                     <para>
 
-                        <programlisting role="php">
-<![CDATA[
+                        <programlisting role="php"><![CDATA[
 // Fetching a rowset
 $rows = $table->fetchAll('bug_status = "NEW"', 'bug_id ASC', 10, 0);
 $rows = $table->fetchAll($table->select()->where('bug_status = ?', 'NEW')
@@ -925,8 +919,7 @@ $row = $table->fetchRow($table->select()->where('bug_status = ?', 'NEW')
 
                     <title>Simple usage</title>
 
-                    <programlisting role="php">
-<![CDATA[
+                    <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select();
@@ -951,8 +944,7 @@ $rows = $table->fetchAll($select);
 
                     <title>Example of fluent interface</title>
 
-                    <programlisting role="php">
-<![CDATA[
+                    <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $rows =
@@ -980,8 +972,7 @@ $rows =
 
                 <title>Example of finding rows by an expression</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $select = $table->select()->where('bug_status = ?', 'NEW');
@@ -1003,8 +994,7 @@ $rows = $table->fetchAll($select);
 
                 <title>Example of finding rows by an expression</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $order  = 'bug_id';
@@ -1213,8 +1203,7 @@ $row = $table->fetchRow($select);
 
             <title>Example of getting the table name</title>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 $table = new Bugs();
 
 $info = $table->info();
@@ -1305,12 +1294,21 @@ echo "The table name is " . $info['name'] . "\n";
         <title>Caching Table Metadata</title>
 
         <para>
-            By default, <code>Zend_Db_Table_Abstract</code> queries the underlying database for
-            <link linkend="zend.db.table.info">table metadata</link> upon instantiation of a table
-            object. That is, when a new table object is created, the object's default behavior is
-            to fetch the table metadata from the database using the adapter's
-            <code>describeTable()</code> method.
+            By default, <code>Zend_Db_Table_Abstract</code> queries the
+            underlying database for <link linkend="zend.db.table.info">table
+                metadata</link> whenever that data is needed to perform table
+            operations.  The table object fetches the table metadata from the
+            database using the adapter's <code>describeTable()</code> method.
+            Operations requiring this introspection include:
         </para>
+
+        <itemizedlist>
+            <listitem><para><code>insert()</code></para></listitem>
+
+            <listitem><para><code>find()</code></para></listitem>
+
+            <listitem><para><code>info()</code></para></listitem>
+        </itemizedlist>
 
         <para>
             In some circumstances, particularly when many table objects are instantiated against
@@ -1368,7 +1366,7 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 
+$cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
@@ -1411,7 +1409,7 @@ $backendOptions  = array(
     'cache_dir'                => 'cacheDir'
     );
 
-$cache = Zend_Cache::factory('Core', 
+$cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
@@ -1447,6 +1445,67 @@ $bugs = new Bugs(array('metadataCache' => $cache));
             <link linkend="zend.cache">Zend_Cache</link> for more information.
         </para>
 
+        <sect3 id="zend.db.table.metadata.caching.hardcoding">
+            <title>Hardcoding Table Metadata</title>
+
+            <para>
+                To take metadata caching a step further, you can also choose to
+                hardcode metadata. In this particular case, however, any changes
+                to the table schema will require a change in your code. As such,
+                it is only recommended for those who are optimizing for
+                production usage.
+            </para>
+
+            <para>
+                The metadata structure is as follows:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+protected $_metadata = array(
+    '<column_name>' => array(
+        'SCHEMA_NAME'      => <string>,
+        'TABLE_NAME'       => <string>,
+        'COLUMN_NAME'      => <string>,
+        'COLUMN_POSITION'  => <int>,
+        'DATA_TYPE'        => <string>,
+        'DEFAULT'          => NULL|<value>,
+        'NULLABLE'         => <bool>,
+        'LENGTH'           => <string - length>,
+        'SCALE'            => NULL|<value>,
+        'PRECISION'        => NULL|<value>,
+        'UNSIGNED'         => NULL|<bool>,
+        'PRIMARY'          => <bool>,
+        'PRIMARY_POSITION' => <int>,
+        'IDENTITY'         => <bool>,
+    ),
+    // additional columns...
+);
+]]></programlisting>
+
+            <para>
+                An easy way to get the appropriate values is to use the metadata
+                cache, and then to deserialize values stored in the cache.
+            </para>
+
+            <para>
+                You can disable this optimization by turning of the
+                <code>metadataCacheInClass</code> flag:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// At instantiation:
+$bugs = new Bugs(array('metadataCacheInClass' => false));
+
+// Or later:
+$bugs->setMetadataCacheInClass(false);
+]]></programlisting>
+
+            <para>
+                The flag is enabled by default, which ensures that the
+                <code>$_metadata</code> array is only populated once per
+                instance.
+            </para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.db.table.extending">

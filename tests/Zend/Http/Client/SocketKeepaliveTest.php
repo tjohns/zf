@@ -2,12 +2,12 @@
 
 // Read local configuration
 if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
-    is_readable('Zend/TestConfiguration.php')) {
+    is_readable('TestConfiguration.php')) {
 
-    require_once 'Zend/TestConfiguration.php';
+    require_once 'TestConfiguration.php';
 }
 
-require_once "Zend/TestHelper.php";
+require_once realpath(dirname(__FILE__) . '/../../../') . '/TestHelper.php';
 
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';

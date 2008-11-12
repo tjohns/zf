@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 7538 2008-01-21 12:25:15Z kgbfernando $
+ * @version    $Id$
  */
 
 
@@ -30,7 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * PHPUnit_Framework_TestSuite

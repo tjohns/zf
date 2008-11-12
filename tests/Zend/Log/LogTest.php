@@ -41,7 +41,7 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->log = fopen('php://memory', 'a');
+        $this->log = fopen('php://memory', 'w+');
         $this->writer = new Zend_Log_Writer_Stream($this->log);
     }
     
@@ -71,9 +71,9 @@ class Zend_Log_LogTest extends PHPUnit_Framework_TestCase
         $logger = new Zend_Log();
 
         // create writers for two separate streams of temporary memory
-        $log1    = fopen('php://memory', 'a');
+        $log1    = fopen('php://memory', 'w+');
         $writer1 = new Zend_Log_Writer_Stream($log1);
-        $log2    = fopen('php://memory', 'a');
+        $log2    = fopen('php://memory', 'w+');
         $writer2 = new Zend_Log_Writer_Stream($log2);
 
         // add the writers

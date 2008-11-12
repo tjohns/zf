@@ -42,6 +42,15 @@ abstract class Zend_Uri
     protected $_scheme = '';
 
     /**
+     * Global configuration array
+     *
+     * @var array
+     */
+    static protected $_config = array(
+        'allow_unwise' => false
+    );
+    
+    /**
      * Return a string representation of this URI.
      *
      * @see    getUri()
@@ -139,6 +148,18 @@ abstract class Zend_Uri
         }
     }
 
+    /**
+     * Set global configuration options
+     *
+     * @param array $config
+     */
+    static public function setConfig(array $config)
+    {
+        foreach ($config as $k => $v) {
+            self::$_config[$k] = $v;
+        }
+    }
+    
     /**
      * Zend_Uri and its subclasses cannot be instantiated directly.
      * Use Zend_Uri::factory() to return a new Zend_Uri object.

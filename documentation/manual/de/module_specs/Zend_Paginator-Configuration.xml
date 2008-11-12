@@ -1,11 +1,11 @@
-<!-- EN-Revision: 10200 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.paginator.configuration">
     <title>Konfiguration</title>
 
     <para>
         <code>Zend_Paginator</code> hat verschiedene Konfigurationsmethoden die aufgerufen werden können:
     </para>
-        
+
     <table id="zend.paginator.configuration.table">
         <title>Konfigurationsmethoden für <code>Zend_Paginator</code></title>
 

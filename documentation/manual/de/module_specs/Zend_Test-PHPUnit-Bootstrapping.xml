@@ -36,7 +36,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         Zweitens kann ein PHP Callback angegeben werden der nach dem Bootstrap der Anwendung ausgeführt wird.
         Diese Methode kann im <link linkend="zend.test.phpunit.loginexample">Login Beispiel</link> gesehen
         werden. Wenn das Callback eine Funktion oder statische Methode ist, könnte Sie auch in der Klasse
-        gesetzt werden: 
+        gesetzt werden:
     </para>
 
     <programlisting role="php"><![CDATA[

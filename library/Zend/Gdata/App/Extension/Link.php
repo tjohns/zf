@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage App
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -55,25 +56,25 @@ class Zend_Gdata_App_Extension_Link extends Zend_Gdata_App_Extension
         $this->_length = $length;
     }
 
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
-        if ($this->_href != null) {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this->_href !== null) {
             $element->setAttribute('href', $this->_href);
         }
-        if ($this->_rel != null) {
+        if ($this->_rel !== null) {
             $element->setAttribute('rel', $this->_rel);
         }
-        if ($this->_type != null) {
+        if ($this->_type !== null) {
             $element->setAttribute('type', $this->_type);
         }
-        if ($this->_hrefLang != null) {
+        if ($this->_hrefLang !== null) {
             $element->setAttribute('hreflang', $this->_hrefLang);
         }
-        if ($this->_title != null) {
+        if ($this->_title !== null) {
             $element->setAttribute('title', $this->_title);
         }
-        if ($this->_length != null) {
+        if ($this->_length !== null) {
             $element->setAttribute('length', $this->_length);
         }
         return $element;

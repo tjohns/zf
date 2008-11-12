@@ -3,7 +3,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 // Call Zend_Controller_Action_Helper_FlashMessengerTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {

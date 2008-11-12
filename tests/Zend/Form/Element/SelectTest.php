@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Element_SelectTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Form/Element/Select.php';
 
@@ -151,6 +151,66 @@ class Zend_Form_Element_SelectTest extends PHPUnit_Framework_TestCase
             $this->fail('Could not find option: ' . $html);
         }
         $this->assertNotContains('selected', $matches[1]);
+    }
+
+    /**
+     * @group ZF-4390
+     */
+    public function testEmptyOptionsShouldNotBeTranslated()
+    {
+        $translate = new Zend_Translate('array', array('unused', 'foo' => 'bar'), 'en');
+        $this->element->setTranslator($translate);
+        $this->element->setMultiOptions(array(
+            array('key' => '', 'value' => ''),
+            array('key' => 'foo', 'value' => 'foo'),
+        ));
+        $this->element->setView($this->getView());
+        $html = $this->element->render();
+        $this->assertNotContains('unused', $html, $html);
+        $this->assertContains('bar', $html, $html);
+    }
+
+    /**
+     * Test isValid() on select elements without optgroups. This
+     * ensures fixing ZF-3985 doesn't break existing functionality.
+     *
+     * @see ZF-3985
+     */
+    public function testIsValidWithPlainOptions()
+    {
+        // test both syntaxes for setting plain options
+        $this->element->setMultiOptions(array(
+            array('key' => '1', 'value' => 'Web Developer'),
+            '2' => 'Software Engineer',
+        ));
+
+        $this->assertTrue($this->element->isValid('1'));
+        $this->assertTrue($this->element->isValid('2'));
+        $this->assertFalse($this->element->isValid('3'));
+        $this->assertFalse($this->element->isValid('Web Developer'));
+    }
+
+    /**
+     * @group ZF-3985
+     */
+    public function testIsValidWithOptionGroups()
+    {
+        // test optgroup and both syntaxes for setting plain options
+        $this->element->setMultiOptions(array(
+            'Technology' => array(
+                '1' => 'Web Developer',
+                '2' => 'Software Engineer',
+            ),
+            array('key' => '3', 'value' => 'Trainee'),
+            '4' => 'Intern',
+        ));
+
+        $this->assertTrue($this->element->isValid('1'));
+        $this->assertTrue($this->element->isValid('3'));
+        $this->assertTrue($this->element->isValid('4'));
+        $this->assertFalse($this->element->isValid('5'));
+        $this->assertFalse($this->element->isValid('Technology'));
+        $this->assertFalse($this->element->isValid('Web Developer'));
     }
 
     /**

@@ -23,12 +23,13 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Config_AllTests::main');
 }
 
+require_once 'Zend/Config/Writer/AllTests.php';
 require_once 'Zend/Config/IniTest.php';
 require_once 'Zend/Config/XmlTest.php';
 
@@ -50,6 +51,8 @@ class Zend_Config_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Config');
 
+        $suite->addTest(Zend_Config_Writer_AllTests::suite());
+        
         $suite->addTestSuite('Zend_Config_IniTest');
         $suite->addTestSuite('Zend_Config_XmlTest');
 

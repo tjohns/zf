@@ -12,7 +12,7 @@
                 found these coding standards useful because their code's style remains consistent with all
                 Zend Framework code. It is also worth noting that it requires significant effort to fully
                 specify coding standards.
-                
+
                 Note: Sometimes developers consider the establishment of a standard more important than what that
                 standard actually suggests at the most detailed level of design. The guidelines in the Zend Framework
                 coding standards capture practices that have worked well on the ZF project. You may modify these standards
@@ -95,8 +95,8 @@
             </para>
 
             <para>
-            	Note: Do not use carriage returns (CR) as is the convention in Apple OS's (0x0D) or the carriage
-            	return/linefeed combination (CRLF) as is standard for the Windows OS (0x0D, 0x0A).
+                Note: Do not use carriage returns (CR) as is the convention in Apple OS's (0x0D) or the carriage
+                return/linefeed combination (CRLF) as is standard for the Windows OS (0x0D, 0x0A).
             </para>
         </sect2>
     </sect1>
@@ -111,7 +111,7 @@
                 Zend Framework standardizes on a class naming convention whereby the names
                 of the classes directly map to the directories in which they are stored.
                 The root level directory of the ZF standard library is the "Zend/" directory, whereas
-                the root level directory of the ZF extras library is the "ZendX/" directory. All 
+                the root level directory of the ZF extras library is the "ZendX/" directory. All
                 Zend Framework classes are stored hierarchially under these root directories..
             </para>
 
@@ -127,14 +127,14 @@
                 word must be capitalized.  Successive capitalized letters are not allowed, e.g.
                 a class "Zend_PDF" is not allowed while "Zend_Pdf" is acceptable.
             </para>
-            
+
             <para>
                 These conventions define a pseudo-namespace mechanism for Zend Framework. Zend Framework
                 will adopt the PHP namespace feature when it becomes available and is feasible for our developers to use in their applications.
             </para>
 
             <para>
-                See the class names in the standard and extras libraries for examples of this classname convention. 
+                See the class names in the standard and extras libraries for examples of this classname convention.
 
                 <emphasis>IMPORTANT:</emphasis> Code that must be deployed alongside ZF libraries but is not
                 part of the standard or extras libraries (e.g. application code or libraries that are not distributed by Zend)
@@ -203,7 +203,7 @@ widgetFactory()
                 "get" or "set". In implementing design patterns, such as the singleton or factory
                 patterns, the name of the method should contain the pattern name where practical to more thoroughly describe behavior.
             </para>
-            
+
             <para>
                 For methods on objects that are declared with the "private" or "protected" modified,
                 the first character of the variable name must be an underscore. This is the only

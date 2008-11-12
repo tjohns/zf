@@ -137,7 +137,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         $this->_priority = $priority;
     }
         
-	/**
+    /**
      * Public frontend to set an option
      *
      * Just a wrapper to get a specific behaviour for cached_entity

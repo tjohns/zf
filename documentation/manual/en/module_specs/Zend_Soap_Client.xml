@@ -1,8 +1,8 @@
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
-    
+
     <para>
-        The <code>Zend_Soap_Client</code> class simplifies SOAP client development for PHP programmers. 
+        The <code>Zend_Soap_Client</code> class simplifies SOAP client development for PHP programmers.
     </para>
 
     <para>
@@ -10,10 +10,10 @@
     </para>
 
     <para>
-        Under the WSDL mode, the Zend_Soap_Client component uses a WSDL document to define transport 
+        Under the WSDL mode, the Zend_Soap_Client component uses a WSDL document to define transport
         layer options.
     </para>
-    
+
     <para>
         The WSDL description is usually provided by the web service the client will access. If the WSDL description is not
         made available, you may want to use Zend_Soap_Client in non-WSDL mode.
@@ -36,19 +36,19 @@
                     </para>
                 </listitem>
             </itemizedlist>
-            
-            Both of these parameters may be set later using <code>setWsdl($wsdl)</code> and 
+
+            Both of these parameters may be set later using <code>setWsdl($wsdl)</code> and
             <code>setOptions($options)</code> methods respectively.
         </para>
-        
+
         <note>
             <title>Important!</title>
             <para>
-                If you use Zend_Soap_Client component in non-WSDL mode, you <emphasis>must</emphasis> set 
-                the 'location' and 'uri' options. 
+                If you use Zend_Soap_Client component in non-WSDL mode, you <emphasis>must</emphasis> set
+                the 'location' and 'uri' options.
             </para>
         </note>
-        
+
         <para>
             The following options are recognized:
             <itemizedlist>
@@ -59,10 +59,10 @@
                 </listitem>
                 <listitem>
                     <para>
-                        'classmap' ('classMap') - can be used to map some WSDL types to PHP classes. 
+                        'classmap' ('classMap') - can be used to map some WSDL types to PHP classes.
                     </para>
                     <para>
-                        The option must be an array with WSDL types as keys and names of PHP classes as values. 
+                        The option must be an array with WSDL types as keys and names of PHP classes as values.
                     </para>
                 </listitem>
                 <listitem>
@@ -80,33 +80,33 @@
                 </listitem>
                 <listitem>
                     <para>
-                        'uri' - target namespace for the SOAP service (required for non-WSDL-mode, doesn't work for WSDL mode). 
+                        'uri' - target namespace for the SOAP service (required for non-WSDL-mode, doesn't work for WSDL mode).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'location' - the URL to request (required for non-WSDL-mode, doesn't work for WSDL mode). 
+                        'location' - the URL to request (required for non-WSDL-mode, doesn't work for WSDL mode).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'style' - request style (doesn't work for WSDL mode): <code>SOAP_RPC</code> or <code>SOAP_DOCUMENT</code>. 
+                        'style' - request style (doesn't work for WSDL mode): <code>SOAP_RPC</code> or <code>SOAP_DOCUMENT</code>.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'use' - method to encode messages (doesn't work for WSDL mode): <code>SOAP_ENCODED</code> or 
-                        <code>SOAP_LITERAL</code>. 
+                        'use' - method to encode messages (doesn't work for WSDL mode): <code>SOAP_ENCODED</code> or
+                        <code>SOAP_LITERAL</code>.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'login' and 'password' - login and password for an HTTP authentication. 
+                        'login' and 'password' - login and password for an HTTP authentication.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        'proxy_host', 'proxy_port', 'proxy_login', and 'proxy_password' - an HTTP connection through a proxy server. 
+                        'proxy_host', 'proxy_port', 'proxy_login', and 'proxy_password' - an HTTP connection through a proxy server.
                     </para>
                 </listitem>
                 <listitem>
@@ -117,21 +117,21 @@
                 <listitem>
                     <para>
                         'compression' - compression options; it's a combination of <code>SOAP_COMPRESSION_ACCEPT</code>,
-                        <code>SOAP_COMPRESSION_GZIP</code> and <code>SOAP_COMPRESSION_DEFLATE</code> options which 
+                        <code>SOAP_COMPRESSION_GZIP</code> and <code>SOAP_COMPRESSION_DEFLATE</code> options which
                         may be used like this:
                         <programlisting role="php"><![CDATA[
 // Accept response compression
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
 
 // Compress requests using gzip with compression level 5
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
 
 // Compress requests using deflate compression
-$client = new SoapClient("some.wsdl", 
+$client = new SoapClient("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
 ]]>
                         </programlisting>
@@ -140,19 +140,19 @@ $client = new SoapClient("some.wsdl",
             </itemizedlist>
         </para>
     </sect2>
-    
 
-    <sect2 id="zend.soap.client.calls"> 
+
+    <sect2 id="zend.soap.client.calls">
         <title>Performing SOAP Requests</title>
-        
+
         <para>
-            After we've created a <code>Zend_Soap_Client</code> object we are ready to perform SOAP requests.  
+            After we've created a <code>Zend_Soap_Client</code> object we are ready to perform SOAP requests.
         </para>
         <para>
-            Each web service method is mapped to the virtual <code>Zend_Soap_Client</code> object method which takes 
+            Each web service method is mapped to the virtual <code>Zend_Soap_Client</code> object method which takes
             parameters with common PHP types.
         </para>
-        
+
         <para>
             Use it like in the following example:
             <programlisting role="php"><![CDATA[
@@ -169,7 +169,7 @@ $client = new SoapClient("some.wsdl",
 //     public function method1($inputParam) {
 //         ...
 //     }
-//     
+//
 //     /**
 //      * This method takes ...
 //      *
@@ -180,7 +180,7 @@ $client = new SoapClient("some.wsdl",
 //     public function method2($inputParam1, $inputParam2) {
 //         ...
 //     }
-//     
+//
 //     ...
 // }
 // ...
@@ -197,7 +197,7 @@ $client = new SoapClient("MyService.wsdl");
 ...
 
 // $result1 is a string
-$result1 = $client->method1(10); 
+$result1 = $client->method1(10);
 ...
 
 // $result2 is a float

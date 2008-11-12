@@ -23,7 +23,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 require_once 'Zend/Gdata/YouTube/UserProfileEntry.php';
 require_once 'Zend/Gdata/YouTube.php';

@@ -74,14 +74,14 @@ abstract class Zend_Search_Lucene_Document_OpenXml extends Zend_Search_Lucene_Do
     /**
      * Extract metadata from document
      *
-     * @param ZipArchive $package	ZipArchive OpenXML package
-     * @return array	Key-value pairs containing document meta data
+     * @param ZipArchive $package    ZipArchive OpenXML package
+     * @return array    Key-value pairs containing document meta data
      */
     protected function extractMetaData(ZipArchive $package)
     {
-    	// Data holders
-    	$coreProperties = array();
-    	
+        // Data holders
+        $coreProperties = array();
+        
         // Read relations and search for core properties
         $relations = simplexml_load_string($package->getFromName("_rels/.rels"));
         foreach ($relations->Relationship as $rel) {
@@ -102,8 +102,8 @@ abstract class Zend_Search_Lucene_Document_OpenXml extends Zend_Search_Lucene_Do
                 }
             }
         }
-    	
-    	return $coreProperties;
+        
+        return $coreProperties;
     }
     
     /**

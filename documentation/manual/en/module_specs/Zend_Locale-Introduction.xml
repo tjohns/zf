@@ -251,7 +251,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
         <para>
             <code>Zend_Locale</code> provides three additionally locales. These locales do not belong to
             any language or region. They are "automatic" locales which means that they have the same effect
-            as the method <code>getDefault()</code> but without the negative effects like creating an instance. 
+            as the method <code>getDefault()</code> but without the negative effects like creating an instance.
             These "automatic" locales can be used anywhere, where also a standard locale and also the
             definition of a locale, it's string representation, can be used. This offers simplicity for
             situations like working with locales which are provided by a browser.
@@ -511,7 +511,7 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
 Zend_Locale_Format::setOptions(array('locale' => 'en_US',
                                      'date_format' => 'dd.MMMM.YYYY'));
 // overriding the global set date format
-$date = Zend_Locale_Format::getDate('2007-04-20,
+$date = Zend_Locale_Format::getDate('2007-04-20',
                                     array('date_format' =>
                                               Zend_Locale_Format::STANDARD);
 

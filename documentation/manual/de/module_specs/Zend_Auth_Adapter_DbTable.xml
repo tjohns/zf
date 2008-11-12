@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12292 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -64,7 +64,7 @@
                 Wie bereits in der Einführung beschrieben benötigt der <code>Zend_Auth_Adapter_DbTable</code>
                 Konstruktor eine Instanz von <code>Zend_Db_Adapter_Abstract</code> die als Datenbank Verbindung
                 fungiert zu welcher die Instanz des Authentifizierungs-Adapters gebunden ist. Zuerst sollte die
-                Datenbankverbindung erstellt werden. 
+                Datenbankverbindung erstellt werden.
             </para>
 
             <para>
@@ -75,7 +75,7 @@
 
             <programlisting role="php"><![CDATA[
 // Erstellt eine In-Memory SQLite Datenbankverbindung
-$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => 
+$dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' =>
                                                   ':memory:'));
 
 // Erstellt eine einfache Datenbank-Erstellungs-Abfrage

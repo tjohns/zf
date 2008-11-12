@@ -79,7 +79,7 @@ $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
 // method-style call is handled by __call function
-$entry->myUpdated();  
+$entry->myUpdated();
 // property-style call is handled by __get function
 $entry->myUpdated;
 ]]>

@@ -200,13 +200,13 @@ switch ($result->getCode()) {
         <para>
             Eine Anfrage zu authentifizieren die Authentifizierungs Zeugnisse enthält ist per se nützlich,
             aber auch wichtig um die Authentifizierungs Identität bearbeiten zu können ohne das immer die
-            Authentifizierungs Zeugnisse mit jeder Anfrage vorhanden sein müssen. 
+            Authentifizierungs Zeugnisse mit jeder Anfrage vorhanden sein müssen.
         </para>
 
         <para>
             Trotzdem ist HTTP ein statusloses Protokoll, und Techniken wie Cookies und Sessions wurden
             entwickelt um Stati über mehrere Anfragen hinweg in Server-seitigen Web Anwendungen zu
-            erhalten. 
+            erhalten.
         </para>
 
         <sect3 id="zend.auth.introduction.persistence.default">
@@ -219,7 +219,7 @@ switch ($result->getCode()) {
                  erfolgreichen Authentifizierungs Versuch speichert <code>Zend_Auth::authenticate()</code>
                  die Identität des Authentifizierungs Ergebnisses im persistenten Speicher. Solange die
                  Konfiguration nicht verändert wird, verwendet <code>Zend_Auth</code> eine Speicherklasse
-                 die <code>Zend_Auth_Storage_Session</code> heißt und die im Gegenzug 
+                 die <code>Zend_Auth_Storage_Session</code> heißt und die im Gegenzug
                  <link linkend="zend.session">Zend_Session</link> verwendet. Eine eigene Klasse kann stattdessen
                  verwendet werden, indem ein Objekt an <code>Zend_Auth::setStorage()</code> übergeben wird
                  welches <code>Zend_Auth_Storage_Interface</code> implementiert.
@@ -447,7 +447,7 @@ if ($auth->hasIdentity()) {
         <para>
             Um eine Identität vom persistenten Speicher zu entfernen muß einfach die <code>clearIdentity()</code>
             Methode verwendet werden. Das würde typischerweise für die Implementierung einer "Abmelde" Operation
-            in einer Anwendung Verwendung finden. 
+            in einer Anwendung Verwendung finden.
             <programlisting role="php"><![CDATA[
 Zend_Auth::getInstance()->clearIdentity();
 ]]>

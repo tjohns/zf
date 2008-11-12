@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,12 +19,10 @@
  * @version    $Id$
  */
 
-
 /**
  * @see Zend_Validate_Abstract
  */
 require_once 'Zend/Validate/Abstract.php';
-
 
 /**
  * @category   Zend
@@ -35,7 +32,6 @@ require_once 'Zend/Validate/Abstract.php';
  */
 class Zend_Validate_Ip extends Zend_Validate_Abstract
 {
-
     const NOT_IP_ADDRESS = 'notIpAddress';
 
     /**
@@ -59,7 +55,7 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (ip2long($valueString) === false) {
+        if ((ip2long($valueString) === false) || (long2ip(ip2long($valueString)) !== $valueString)) {
             $this->_error();
             return false;
         }

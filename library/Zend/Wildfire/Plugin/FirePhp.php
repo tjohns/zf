@@ -467,6 +467,11 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
     {
         $return = array();
         
+        if (is_resource($object)) {
+    
+            return '** '.(string)$object.' **';
+    
+        } else    
         if (is_object($object)) {
 
             if ($depth > $this->_maxObjectDepth) {
@@ -508,7 +513,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
                   $raw_name = "\0".'*'."\0".$raw_name;
               }
               
-              if (isset($members[$raw_name])
+              if (array_key_exists($raw_name,$members)
                   && !$property->isStatic()) {
                 
                   $return[$name] = $this->_encodeObject($members[$raw_name], $depth + 1);      

@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Exif
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -217,9 +218,9 @@ class Zend_Gdata_Exif_Extension_Tags extends Zend_Gdata_Extension
      * @return DOMElement The DOMElement representing this element and all
      *          child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_distance !== null) {
             $element->appendChild($this->_distance->getDOM($element->ownerDocument));
         }

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -73,10 +73,10 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
 // lädt den 'FormLabel' Helfer:
-$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel' 
+$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // lädt den 'FormSubmit' Helfer:
-$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
+$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
 ]]>
         </programlisting>
 
@@ -189,6 +189,71 @@ if ($loader->isLoaded('Adapter')) {
 }
 ]]>
         </programlisting>
+    </sect2>
+
+    <sect2 id="zend.loader.pluginloader.performance">
+        <title>Bessere Performance für Plugins erhalten</title>
+
+        <para>
+            Das Laden von Plugins kann eine teure Operation sein. Im Innersten muß es durch jeden Präfix
+            springen, dann durch jeden Pfad dieses Präfixes, solange bis es eine passende Datei findet --
+            und welche die erwartete Klasse definiert. In Fällen wo die Datei existiert aber die Klasse
+            nicht definiert ist, wird ein Fehler auf dem PHP Fehlerstack hinzugefügt, was auch eine
+            teure Operation ist. Die Frage die sich stellt lautet also: Wie kann man die Flexibilität der
+            Plugins behalten und auch die Performance sicherstellen?
+        </para>
+
+        <para>
+            <code>Zend_Loader_PluginLoader</code> bietet ein optional einschaltbares Feature für genau diese
+            Situation, einen integrierten Cache für die Klassendateien. Wenn er aktiviert wird, erstellt er
+            eine Datei die alle erfolgreichen Includes enthält welche dann von der Bootstrap Datei aus
+            aufgerufen werden kann. Durch Verwendung dieser Strategie, kann die Performance für
+            Produktive Server sehr stark verbessert werden.
+        </para>
+
+        <example id="zend.loader.pluginloader.performance.example">
+            <title>Verwendung des integrierten Klassendatei Caches des PluginLoaders</title>
+
+            <para>
+                Um den integrierten Klassendatei Cache zu verwenden muß einfach der folgende Code in die
+                Bootstrap Datei eingefügt werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+]]></programlisting>
+
+            <para>
+                Natürlich, veriiert der Pfad und der Dateiname basieren auf den eigenen Bedürfnissen.
+                Dieser Code sollte so früh wie möglich vorhanden sein um sicherzustellen das
+                Plugin-basierende Komponenten davon Verwendung machen können.
+            </para>
+
+            <para>
+                Wärend der Entwicklung kann es gewünscht sein den Cache auszuschalten. Eine Methode um das
+                zu tun ist die Verwendung eines Konfigurationsschlüsses um festzustellen ob der PluginLoader
+                cachen soll oder nicht.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+if ($config->enablePluginLoaderCache) {
+    Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+}
+]]></programlisting>
+
+            <para>
+                Diese Technik erlaubt es die Änderungen in der Konfigurationsdatei zu belassen und nicht
+                im Code.
+            </para>
+        </example>
     </sect2>
 </sect1>
 <!--

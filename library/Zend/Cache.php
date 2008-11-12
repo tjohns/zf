@@ -72,7 +72,8 @@ abstract class Zend_Cache
     const CLEANING_MODE_OLD              = 'old';
     const CLEANING_MODE_MATCHING_TAG     = 'matchingTag';
     const CLEANING_MODE_NOT_MATCHING_TAG = 'notMatchingTag';
-
+    const CLEANING_MODE_MATCHING_ANY_TAG = 'matchingAnyTag';
+    
     /**
      * Factory
      *
@@ -88,24 +89,24 @@ abstract class Zend_Cache
      */
     public static function factory($frontend, $backend, $frontendOptions = array(), $backendOptions = array(), $customFrontendNaming = false, $customBackendNaming = false, $autoload = false)
     {
-    	if (is_string($backend)) {
-        	$backendObject = self::_makeBackend($backend, $backendOptions, $customBackendNaming, $autoload);
-    	} else {
-    		if ((is_object($backend)) && (in_array('Zend_Cache_Backend_Interface', class_implements($backend)))) {
-    			$backendObject = $backend;
-    		} else {
-    			self::throwException('backend must be a backend name (string) or an object which implements Zend_Cache_Backend_Interface');
-    		}
-    	}
-    	if (is_string($frontend)) {
-        	$frontendObject = self::_makeFrontend($frontend, $frontendOptions, $customFrontendNaming, $autoload);
-    	} else {
-    		if (is_object($frontend)) {
-    			$frontendObject = $frontend;
-    		} else {
-    			self::throwException('frontend must be a frontend name (string) or an object');
-    		}
-    	}
+        if (is_string($backend)) {
+            $backendObject = self::_makeBackend($backend, $backendOptions, $customBackendNaming, $autoload);
+        } else {
+            if ((is_object($backend)) && (in_array('Zend_Cache_Backend_Interface', class_implements($backend)))) {
+                $backendObject = $backend;
+            } else {
+                self::throwException('backend must be a backend name (string) or an object which implements Zend_Cache_Backend_Interface');
+            }
+        }
+        if (is_string($frontend)) {
+            $frontendObject = self::_makeFrontend($frontend, $frontendOptions, $customFrontendNaming, $autoload);
+        } else {
+            if (is_object($frontend)) {
+                $frontendObject = $frontend;
+            } else {
+                self::throwException('frontend must be a frontend name (string) or an object');
+            }
+        }
         $frontendObject->setBackend($backendObject);
         return $frontendObject;
     }

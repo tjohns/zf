@@ -9,7 +9,13 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_Route_ChainTest::main');
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
+
+/** Zend_Config */
+require_once 'Zend/Config.php';
+
+/** Zend_Controller_Router_Rewrite */
+require_once 'Zend/Controller/Router/Rewrite.php';
 
 /** Zend_Controller_Router_Route_Chain */
 require_once 'Zend/Controller/Router/Route/Chain.php';
@@ -165,6 +171,22 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('en', $res['lang']);
         $this->assertEquals('1', $res['id']);
+    }
+    
+    public function testChainingAssembleWithRoutePlaceholder()
+    {
+        $chain = new Zend_Controller_Router_Route_Chain();
+
+        $foo = new Zend_Controller_Router_Route_Hostname(':account.zend.com');
+        $bar = new Zend_Controller_Router_Route('bar/*');
+
+        $chain->chain($foo)->chain($bar);
+
+        $request = new Zend_Controller_Router_ChainTest_Request('http://foobar.zend.com/bar');
+        $res = $chain->match($request);
+        
+        $this->assertType('array', $res);
+        $this->assertRegexp('#[^a-z0-9]?foobar\.zend\.com/bar/foo/bar#i', $chain->assemble(array('account' => 'foobar', 'foo' => 'bar')));
     }
 
     public function testChainingAssembleWithStatic()
@@ -323,9 +345,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
     }
 
     public function testConfigChainingAltrnative()
-    {
-        $this->markTestSkipped('Route features not ready');
-
+    {        
         $routes = array(
             'www' => array(
                 'type'  => 'Zend_Controller_Router_Route_Hostname',
@@ -377,14 +397,9 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
             ),
         );
         
-        $router = new Zend_Controller_Router_Rewrite();
-        $front = Zend_Controller_Front::getInstance();
-        $front->resetInstance();
-        $front->setDispatcher(new Zend_Controller_Router_RewriteTest_Dispatcher());
-        $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
-        $router->setFrontController($front);
-        
-        $router->addRoutes($routes);
+        $router = $this->_getRouter();
+
+        $router->addConfig(new Zend_Config($routes));
         
         $request = new Zend_Controller_Router_ChainTest_Request('http://user.example.com/profile');
         $token   = $router->route($request);
@@ -398,7 +413,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
     public function testConfigChainingMixed()
     {
         $this->markTestSkipped('Route features not ready');
-
+        
         $routes = array(
             'index' => array(
                 'type'  => 'Zend_Controller_Router_Route_Static',
@@ -452,14 +467,9 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
             ),
         );
         
-        $router = new Zend_Controller_Router_Rewrite();
-        $front = Zend_Controller_Front::getInstance();
-        $front->resetInstance();
-        $front->setDispatcher(new Zend_Controller_Router_RewriteTest_Dispatcher());
-        $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
-        $router->setFrontController($front);
+        $router = $this->_getRouter();
         
-        $router->addRoutes($routes);
+        $router->addConfig(new Zend_Config($routes));
         
         $request = new Zend_Controller_Router_ChainTest_Request('http://user.example.com/profile');
         $token   = $router->route($request);
@@ -474,6 +484,16 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Controller_Router_Route_Chain', $router->getRoute('www-index'));
     }
     
+    protected function _getRouter()
+    {
+        $router = new Zend_Controller_Router_Rewrite();
+        $front = Zend_Controller_Front::getInstance();
+        $front->resetInstance();
+        $front->setRequest(new Zend_Controller_Router_ChainTest_Request());
+        $router->setFrontController($front);
+        
+        return $router;
+    }
 }
 
 /**

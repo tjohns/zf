@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11358 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router</title>
     <sect2 id="zend.controller.router.introduction">
@@ -118,7 +118,7 @@ $router->addRoute('user',
         </programlisting>
 
         <para>
-            Der Rewrite Router kommt mit vier Basistypen von Routen (eine von denen ist speziell):
+            Der Rewrite Router kommt mit fünf Basistypen von Routen (eine von denen ist speziell):
             is special):
         </para>
 
@@ -126,6 +126,7 @@ $router->addRoute('user',
             <listitem><para><xref linkend="zend.controller.router.routes.standard" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.hostname" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
 
@@ -309,6 +310,22 @@ $request->setBaseUrl('/~user/application-root/');
 
     </sect2>
 
+    <sect2 id="zend.controller.router.global.parameters">
+        <title>Globale Parameter</title>
+
+        <para>
+            Man kann in einem Router globale Parameter setzen die der Route automatisch zur Verfügung stehen
+            wenn Sie durch <code>setGlobalParam</code> eingefügt werden. Wenn ein globaler Parameter
+            gesetzt ist, aber auch direkt an die Assemble Methode gegeben wird, überschreibt der
+            Benutzer-Parameter den Globalen-Parameter. Globale Parameter können auf folgendem Weg gesetzt werden:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$router->setGlobalParam('lang', 'en');
+]]>
+        </programlisting>
+    </sect2>
+
     <sect2 id="zend.controller.router.routes">
         <title>Router Typen</title>
         <xi:include href="Zend_Controller-Router-Route.xml">
@@ -319,6 +336,9 @@ $request->setBaseUrl('/~user/application-root/');
         </xi:include>
         <xi:include href="Zend_Controller-Router-Route-Regex.xml">
             <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Router-Route-Regex.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="Zend_Controller-Router-Route-Hostname.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Router-Route-Hostname.xml" /></xi:fallback>
         </xi:include>
     </sect2>
 

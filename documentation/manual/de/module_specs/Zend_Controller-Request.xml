@@ -264,7 +264,7 @@ $response   = $controller->dispatch();
             </para>
 
             <para>
-                Aktuell wird dieser Header standardmäßig mit den folgenden JS Bibliotheken geschickt: 
+                Aktuell wird dieser Header standardmäßig mit den folgenden JS Bibliotheken geschickt:
             </para>
 
             <itemizedlist>

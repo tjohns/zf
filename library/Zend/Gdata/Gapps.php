@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Gapps
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -167,19 +168,21 @@ class Zend_Gdata_Gapps extends Zend_Gdata
     }
     
     /**
-     * GET a uri using client object.
+     * GET a URI using client object.
      * This method overrides the default behavior of Zend_Gdata_App, 
      * providing support for Zend_Gdata_Gapps_ServiceException.
      * 
-     * @param  string $uri
+     * @param string $uri GET URI
+     * @param array $extraHeaders Extra headers to add to the request, as an
+     *        array of string-based key/value pairs.
      * @throws Zend_Gdata_App_HttpException
      * @throws Zend_Gdata_Gapps_ServiceException
      * @return Zend_Http_Response
      */
-    public function get($uri)
+    public function get($uri, $extraHeaders = array())
     {
         try {
-            return parent::get($uri);
+            return parent::get($uri, $extraHeaders);
         } catch (Zend_Gdata_App_HttpException $e) {
             self::throwServiceExceptionIfDetected($e);
         }

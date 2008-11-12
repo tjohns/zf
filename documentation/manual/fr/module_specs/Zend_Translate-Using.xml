@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12319 -->
 <sect1 id="zend.translate.using">
     <title>Utiliser les adaptateurs de traduction</title>
 
@@ -53,28 +53,28 @@ print $translate->_("Correction de la langue ceci est la ligne deux") . "\n";
 $translate = new Zend_Translate('gettext',
                                 '/chemin/vers/source-de.mo',
                                 'de');
-]]></programlisting>
-    Dans cet exemple nous avons décidé d'utiliser <emphasis role="strong">l'adaptateur Gettext</emphasis>. Nous plaçons
-    notre fichier <code>source-de.mo</code> dans le dossier <code>/chemin/vers</code>. Le fichier gettext inclura la
-    traduction allemande. Et nous avons également ajouté un autre fichier de langue pour le français.</para>
+]]></programlisting> Dans cet exemple nous avons décidé d'utiliser <emphasis role="strong">l'adaptateur
+    Gettext</emphasis>. Nous plaçons notre fichier <code>source-de.mo</code> dans le dossier <code>/chemin/vers</code>.
+    Le fichier gettext inclura la traduction allemande. Et nous avons également ajouté un autre fichier de langue pour
+    le français.</para>
 
     <para>L'étape suivante est d'envelopper toutes les chaînes qui doivent être traduites. L'approche la plus simple est
     d'avoir seulement des chaînes simples ou des phrases comme celle-ci : <programlisting role="php"><![CDATA[
 print $translate->_("Exemple")."\n";
 print "=======\n";
 print $translate->_("Ceci la ligne une")."\n";
-]]></programlisting>Certaines chaînes ne sont pas nécessairement
-    traduites. La ligne séparatrice est toujours la même ligne séparatrice, même dans d'autres langues.</para>
+]]></programlisting>Certaines chaînes ne sont pas nécessairement traduites. La ligne séparatrice est toujours la même
+    ligne séparatrice, même dans d'autres langues.</para>
 
     <para>Avoir des valeurs de données intégrées dans une chaîne de traduction est également supporté par l'utilisation
     des paramètres inclus. <programlisting role="php"><![CDATA[
 printf($translate->_("Aujourd'hui nous sommes le %1\$s") . "\n",
                      date("d/m/Y"));
-]]></programlisting>
-    Au lieu de <code>print()</code>, utiliser la fonction <code>printf()</code> et remplacer tous les paramètres avec
-    des éléments de type <code>%1\$s</code>. Le premier est <code>%1\$s</code>, le second <code>%2\$s</code>, et ainsi
-    de suite. De cette façon une traduction peut être faite sans savoir la valeur exacte. Dans notre exemple, la date
-    est toujours le jour actuel, mais la chaîne peut être traduite sans connaissance du jour actuel.</para>
+]]></programlisting> Au lieu de <code>print()</code>, utiliser la fonction <code>printf()</code> et remplacer tous les
+    paramètres avec des éléments de type <code>%1\$s</code>. Le premier est <code>%1\$s</code>, le second
+    <code>%2\$s</code>, et ainsi de suite. De cette façon une traduction peut être faite sans savoir la valeur exacte.
+    Dans notre exemple, la date est toujours le jour actuel, mais la chaîne peut être traduite sans connaissance du jour
+    actuel.</para>
 
     <para>Chaque chaîne est identifiée dans le stockage de traduction par un identificateur de message. Vous pouvez
     employer l'identificateur de message au lieu des chaînes dans votre code, comme ceci : <programlisting
@@ -292,14 +292,10 @@ $translate->addTranslation('chemin/vers/german.mo', 'de');
             toutes les langues, vous éliminez le problème des encodages incompatibles.</para>
         </note>
 
-        <para>
-            Many gettext editors add adapter informations as empty translation string.
-            This is the reason why empty string are not translated when using the
-            gettext adapter. Instead they are erased from the translation table and
-            provided by the <code>getAdapterInfo()</code> method. It will return
-            the adapter informations for all added gettext files as array where the
-            filename is used as key.
-        </para>
+        <para>Many gettext editors add adapter informations as empty translation string. This is the reason why empty
+        string are not translated when using the gettext adapter. Instead they are erased from the translation table and
+        provided by the <code>getAdapterInfo()</code> method. It will return the adapter informations for all added
+        gettext files as array where the filename is used as key.</para>
 
         <programlisting role="php"><![CDATA[
 // How to get the adapter informations
@@ -308,7 +304,6 @@ $translate = new Zend_Translate('gettext',
                                 'en');
 print_r $translate->getAdapterInfo();
 ]]></programlisting>
-
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">
@@ -527,13 +522,28 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
 
                     <row>
                         <entry>all</entry>
-                        <entry>ignore</entry>
+
+                        <entry><code>disableNotices</code></entry>
+
+                        <entry><code>false</code></entry>
+
+                        <entry>Si régler à <code>true</code>, toutes les notices concernant la non-disponibilité des
+                        traductions seront désactivées. Vous devriez mettre cette option à <code>true</code> dans votre
+                        environnement de production.</entry>
+                    </row>
+
+                    <row>
+                        <entry>all</entry>
+
+                        <entry><code>ignore</code></entry>
+
                         <entry><emphasis role="strong">.</emphasis></entry>
-                        <entry>All directories and files beginning with this prefix will be ignored when
-                        searching for files. This value defaults to <emphasis role="strong">'.'</emphasis>
-                        which leads to the behavior that all hidden files will be ignored. Setting this
-                        value to 'tmp' would mean that directories and files like 'tmpImages' and 'tmpFiles'
-                        would be ignored and also all subsequent directories</entry>
+
+                        <entry>All directories and files beginning with this prefix will be ignored when searching for
+                        files. This value defaults to <emphasis role="strong">'.'</emphasis> which leads to the behavior
+                        that all hidden files will be ignored. Setting this value to 'tmp' would mean that directories
+                        and files like 'tmpImages' and 'tmpFiles' would be ignored and also all subsequent
+                        directories</entry>
                     </row>
 
                     <row>
@@ -648,8 +658,9 @@ if ($translate->isAvailable("fr")) {
 
             <para>Notez que tant que vous ajouterez les nouvelles sources de traduction seulement via la méthode
             <code>addTranslation()</code>, <code>Zend_Translate</code> cherchera automatiquement la langue correspondant
-            au mieux à votre environnement. Donc normalement, vous n'avez jamais besoin d'appeler
-            <code>setLocale()</code>.</para>
+            au mieux à votre environnement quand vous utiliserez une des localisations automatiques "<code>auto</code>"
+            ou "<code>browser</code>". Donc normalement vous ne devriez pas appeler <code>setLocale()</code>. Ceci ne
+            doit être utilisé qu'en conjonction avec la détection automatique des sources de traduction.</para>
 
             <para>L'algorithme recherchera la meilleure locale suivant le navigateur des utilisateurs et votre
             environnement. Voyez l'exemple suivant pour les détails :</para>
@@ -659,29 +670,37 @@ if ($translate->isAvailable("fr")) {
 
                 <programlisting role="php"><![CDATA[
 // Assumons que le navigateur retourne ces valeurs
-HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
+// HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
 
-// Exemple 1:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_es.mo","es_UG");
+// Exemple 1 :
+$translate = new Zend_Translate('gettext',
+                                '\my_it.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
 // pas de langue trouvée, on retourne le messageid
 
-// Exemple 2:
-$translate = new Zend_Translate("gettext", "\my_en.mo", "en_US");
-$translate->addTranslation("\my_it.mo","it_IT");
+// Exemple 2 :
+$translate = new Zend_Translate('gettext',
+                                '\my_fr.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
 // langue correspondante trouvée "en_US"
 
-// Exemple 3:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_de.mo","de");
+// Exemple 3 :
+$translate = new Zend_Translate('gettext',
+                                '\my_de.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
 // langue correspondante trouvée "de" car "de_AT" est descendue à "de"
 
-// Exemple 4:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_ru.mo","ru");
-$translate->setLocale("it_IT");
-$translate->addTranslation("\my_de.mo","de");
-// retourne "it_IT" comme source de traduction
+// Exemple 4 :
+$translate = new Zend_Translate('gettext',
+                                '\my_it.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+$translate->addTranslation('\my_ru.mo', 'ru');
+$translate->setLocale('it_IT');
+// retourne "it_IT" comme source de traduction et surcharge le réglage automatique
 ]]></programlisting>
             </example>
 
@@ -692,12 +711,10 @@ $translate->addTranslation("\my_de.mo","de");
             role="strong">auto</emphasis> with <code>setLocale()</code> which will reactivate the automatically
             detection for <code>Zend_Translate</code>.</para>
 
-            <para>
-                Since Zend Framework 1.7.0 <code>Zend_Translate</code> recognises also an application
-                wide locale. You can simply set a <code>Zend_Locale</code> instance to the registry like shown
-                below. With this notation you can forget about setting the locale manually with each instance
-                when you want to use the same locale multiple times.
-            </para>
+            <para>Since Zend Framework 1.7.0 <code>Zend_Translate</code> recognises also an application wide locale. You
+            can simply set a <code>Zend_Locale</code> instance to the registry like shown below. With this notation you
+            can forget about setting the locale manually with each instance when you want to use the same locale
+            multiple times.</para>
 
             <programlisting role="php"><![CDATA[
 // in your bootstrap file
@@ -705,10 +722,9 @@ $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
 // somewhere in your application
-$translate = new Zend_Translate("gettext", "\my_de.mo");
+$translate = new Zend_Translate('gettext', '\my_de.mo');
 $translate->getLocale();
 ]]></programlisting>
-
         </sect3>
     </sect2>
 
@@ -875,7 +891,7 @@ $translate = new Zend_Translate('gettext',
                 <programlisting><![CDATA[
 /languages
   view_en_de.mo  -> detects english
-  view_en_es.mo  -> detects english and overwrites the first file 
+  view_en_es.mo  -> detects english and overwrites the first file
                     because the same messageids are used
   view_it_it.mo  -> detects italian
 ]]></programlisting>

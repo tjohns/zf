@@ -234,7 +234,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
         $id = $this->_id;
         if (!empty($id)) {
             $consumer = new Zend_OpenId_Consumer($this->_storage);
-			$consumer->setHttpClient($this->_httpClient);
+            $consumer->setHttpClient($this->_httpClient);
             /* login() is never returns on success */
             if (!$this->_check_immediate) {
                 if (!$consumer->login($id,
@@ -245,7 +245,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
                     return new Zend_Auth_Result(
                         Zend_Auth_Result::FAILURE,
                         $id,
-                        array("Authentication failed"));
+                        array("Authentication failed", $consumer->getError()));
                 }
             } else {
                 if (!$consumer->check($id,
@@ -256,20 +256,14 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
                     return new Zend_Auth_Result(
                         Zend_Auth_Result::FAILURE,
                         $id,
-                        array("Authentication failed"));
+                        array("Authentication failed", $consumer->getError()));
                 }
             }
         } else {
             $params = (isset($_SERVER['REQUEST_METHOD']) &&
                        $_SERVER['REQUEST_METHOD']=='POST') ? $_POST: $_GET;
-            if (!isset($params['openid_mode'])) {
-                return new Zend_Auth_Result(
-                    Zend_Auth_Result::FAILURE,
-                    $id,
-                    array("Authentication failed"));
-            }
             $consumer = new Zend_OpenId_Consumer($this->_storage);
-			$consumer->setHttpClient($this->_httpClient);
+            $consumer->setHttpClient($this->_httpClient);
             if ($consumer->verify(
                     $params,
                     $id,
@@ -282,7 +276,7 @@ class Zend_Auth_Adapter_OpenId implements Zend_Auth_Adapter_Interface
                 return new Zend_Auth_Result(
                     Zend_Auth_Result::FAILURE,
                     $id,
-                    array("Authentication failed"));
+                    array("Authentication failed", $consumer->getError()));
             }
         }
     }

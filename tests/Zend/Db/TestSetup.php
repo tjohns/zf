@@ -18,14 +18,14 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TestSetup.php 6847 2007-11-18 05:24:21Z peptolab $
+ * @version    $Id$
  */
 
 
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * @see Zend_Loader

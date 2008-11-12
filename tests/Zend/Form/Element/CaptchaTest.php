@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Element_CaptchaTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /** Zend_Form_Element_Captcha */
 require_once 'Zend/Form/Element/Captcha.php';
@@ -141,6 +141,18 @@ class Zend_Form_Element_CaptchaTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($valid, var_export($this->form->getMessages(), 1));
     }
 
+    /**
+     * @group ZF-4822
+     */
+    public function testDefaultDecoratorsShouldIncludeErrorsDescriptionHtmlTagAndLabel()
+    {
+        $decorators = $this->element->getDecorators();
+        $this->assertTrue(is_array($decorators));
+        $this->assertTrue(array_key_exists('Zend_Form_Decorator_Errors', $decorators), 'Missing Errors decorator' . var_export(array_keys($decorators), 1));
+        $this->assertTrue(array_key_exists('Zend_Form_Decorator_Description', $decorators), 'Missing Description decorator' . var_export(array_keys($decorators), 1));
+        $this->assertTrue(array_key_exists('Zend_Form_Decorator_HtmlTag', $decorators), 'Missing HtmlTag decorator' . var_export(array_keys($decorators), 1));
+        $this->assertTrue(array_key_exists('Zend_Form_Decorator_Label', $decorators), 'Missing Label decorator' . var_export(array_keys($decorators), 1));
+    }
 }
 
 class Zend_Form_Element_CaptchaTest_SessionContainer

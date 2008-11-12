@@ -130,7 +130,7 @@ Te?t
         <para>
             Mehrzeichen Wildcardsuche sucht nach 0 oder mehr Zeichen wenn Strings nach passenden Begriffen
             sucht. Um, zum Beispiel, nach Test, Tests oder Tester zu suchen, kann die folgende Suche verwendet
-            werden: 
+            werden:
             <programlisting role="querystring"><![CDATA[
 Test*
 ]]>

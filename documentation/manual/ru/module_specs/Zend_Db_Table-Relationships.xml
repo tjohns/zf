@@ -36,7 +36,7 @@
             Ниже приведено определение классов для этих таблиц:
         </para>
 
-        <programlisting role="php"><![CDATA[<?php
+        <programlisting role="php"><![CDATA[
 class Accounts extends Zend_Db_Table_Abstract
 {
     protected $_name            = 'accounts';
@@ -91,7 +91,8 @@ class BugsProducts extends Zend_Db_Table_Abstract
         )
     );
 
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -226,8 +227,10 @@ class BugsProducts extends Zend_Db_Table_Abstract
             Используйте следующий метод:
         </para>
 
-        <programlisting role="php"><![CDATA[<
-$row->findDependentRowset($table, [$rule]);]]>
+        <programlisting role="php">
+<![CDATA[
+$row->findDependentRowset($table, [$rule]);
+]]>
         </programlisting>
 
         <para>
@@ -243,19 +246,25 @@ $row->findDependentRowset($table, [$rule]);]]>
         </para>
 
         <example id="zend.db.table.relationships.fetching.dependent.example">
+
             <title>Извлечение зависимых строк</title>
+
             <para>
                 Этот пример демонстрирует получение объекта строки из таблицы
                 <code>Accounts</code> и поиск ошибок в таблице
                 <code>Bugs</code>, о которых сообщил данный пользователь.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
 
-$bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
+            <programlisting role="php">
+<![CDATA[
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
+
+$bugsReportedByUser = $user1234->findDependentRowset('Bugs');
+]]>
             </programlisting>
+
         </example>
 
         <para>
@@ -274,7 +283,9 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
         </para>
 
         <example id="zend.db.table.relationships.fetching.dependent.example-by">
+
             <title>Извлечение зависимых строк по определенному правилу</title>
+
             <para>
                 Этот пример демонстрирует получение строки из таблицы
                 <code>Accounts</code> и поиск ошибок в таблице
@@ -282,13 +293,16 @@ $bugsReportedByUser = $user1234->findDependentRowset('Bugs');]]>
                 пользователю. Ключ правила, соответствующий этой связи в данном
                 примере - <code>'Engineer'</code>.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]>
+            <programlisting role="php"><![CDATA[
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
+
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');
+]]>
             </programlisting>
+
         </example>
 
         <para>
@@ -305,20 +319,23 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer');]]>
                     должны быть отсортированы по имени.
                 </para>
 
-                <programlisting role="php"><![CDATA[<?php
-$accountsTable      = new Accounts();
-$accountsRowset     = $accountsTable->find(1234);
-$user1234           = $accountsRowset->current();
-$select             = $accountsTable->select()->order('name ASC')
-                                              ->limit(3);
+                <programlisting role="php"><![CDATA[
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
+$select = $accountsTable->select()->order('name ASC')
+                                  ->limit(3);
 
-$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select);]]>
+$bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 
+                                                     'Engineer',
+                                                     $select);
+]]>
                 </programlisting>
 
             </example>
 
             Вы можете также запрашивать строки из зависимой таблицы, используя
-            специальный механизм, называемый "вош метод".
+            специальный механизм -так называемые "магические методы".
             Zend_Db_Table_Row_Abstract вызывает метод:
             <code>findDependentRowset('&lt;TableClass&gt;', '&lt;Rule&gt;')</code>,
             если вы вызываете метод объекта строки,
@@ -346,6 +363,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
         </para>
 
         <note>
+
             <para>
                 Некоторые фреймворки приложений, такие, как Ruby on Rails,
                 используют механизм, называемый "инфлексией" (inflection), и
@@ -355,35 +373,41 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs', 'Engineer', $select
                 вызовах методов должны в точности соответствовать написанию
                 имени класса таблицы и ключа правила при объявлении.
             </para>
+
         </note>
 
         <example id="zend.db.table.relationships.fetching.dependent.example-magic">
+
             <title>Извлечение зависимых строк с использованием магического
             метода</title>
+
             <para>
                 Этот пример демонстрирует поиск зависимых строк, эквивалентный
                 тому, что был в предыдущих примерах. В данном случае приложение
                 использует вызов магического метода вместо передачи имени
                 таблицы и ключа правила в качестве аргументов.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$accountsTable    = new Accounts();
-$accountsRowset   = $accountsTable->find(1234);
-$user1234         = $accountsRowset->current();
 
-// Use the default reference rule
-$bugsReportedBy   = $user1234->findBugs();
+            <programlisting role="php"><![CDATA[
+$accountsTable = new Accounts();
+$accountsRowset = $accountsTable->find(1234);
+$user1234 = $accountsRowset->current();
 
-// Specify the reference rule
-$bugsAssignedTo   = $user1234->findBugsByEngineer();]]>
+// Используется правило связи по умолчанию
+$bugsReportedBy = $user1234->findBugs();
+
+// Задается правило связи
+$bugsAssignedTo = $user1234->findBugsByEngineer();
+]]>
             </programlisting>
+
         </example>
 
     </sect2>
 
     <sect2 id="zend.db.table.relationships.fetching.parent">
 
-        <title>Извлечение родителькой строки</title>
+        <title>Извлечение родительской строки</title>
 
         <para>
             Если вы имеете объект Row в результате запроса к зависимой таблице,
@@ -392,8 +416,9 @@ $bugsAssignedTo   = $user1234->findBugsByEngineer();]]>
             Используйте метод:
         </para>
 
-        <programlisting role="php"><![CDATA[<
-$row->findParentRow($table, [$rule]);]]>
+        <programlisting role="php"><![CDATA[
+$row->findParentRow($table, [$rule]);
+]]>
         </programlisting>
 
         <para>
@@ -409,20 +434,25 @@ $row->findParentRow($table, [$rule]);]]>
         </para>
 
         <example id="zend.db.table.relationships.fetching.parent.example">
+
             <title>Извлечение родительской строки</title>
+
             <para>
                 Этот пример демонстрирует получение объекта Row из таблицы
                 <code>Bugs</code> (для примера, одна из этих ошибок имеет статус
                 'NEW') и поиск строки в таблице <code>Accounts</code>,
                 соответствующей пользователю, сообщившем об этой ошибке.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
-$bug1              = $bugsRowset->current();
 
-$reporter          = $bug1->findParentRow('Accounts');]]>
+            <programlisting role="php"><![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?' => 'NEW'));
+$bug1 = $bugsRowset->current();
+
+$reporter = $bug1->findParentRow('Accounts');
+]]>
             </programlisting>
+
         </example>
 
         <para>
@@ -442,7 +472,9 @@ $reporter          = $bug1->findParentRow('Accounts');]]>
         </para>
 
         <example id="zend.db.table.relationships.fetching.parent.example-by">
+
             <title>Извлечение родительской строки по определенному правилу</title>
+
             <para>
                 Этот пример демонстрирует получение объекта Row из таблицы
                 <code>Bugs</code> и поиск аккаунта пользователя, которому
@@ -450,13 +482,16 @@ $reporter          = $bug1->findParentRow('Accounts');]]>
                 соответствующего этой связи в данном примере -
                 <code>'Engineer'</code>.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
 
-$engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
+            <programlisting role="php"><![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1 = $bugsRowset->current();
+
+$engineer = $bug1->findParentRow('Accounts', 'Engineer');
+]]>
             </programlisting>
+
         </example>
 
         <para>
@@ -491,32 +526,39 @@ $engineer          = $bug1->findParentRow('Accounts', 'Engineer');]]>
         </para>
 
         <note>
+
             <para>
                 Имя таблицы и ключ правила в вызовах методов должны в точности
                 соответствовать написанию имени класса таблицы и ключа правила
                 при объявлении.
             </para>
+
         </note>
 
         <example id="zend.db.table.relationships.fetching.parent.example-magic">
+
             <title>Извлечение родительской строки с использованием магического метода</title>
+
             <para>
                 Этот пример демонстрирует поиск родительской строки,
                 эквивалентный тому, что был в предыдущих примерах. В данном
                 случае используется вызов магического метода вместо передачи
                 имени таблицы и ключа правила в качестве аргументов.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$bugsTable         = new Bugs();
-$bugsRowset        = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
-$bug1              = $bugsRowset->current();
 
-// Use the default reference rule
-$reporter          = $bug1->findParentAccounts();
+            <programlisting role="php"><![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->fetchAll(array('bug_status = ?', 'NEW'));
+$bug1 = $bugsRowset->current();
 
-// Specify the reference rule
-$engineer          = $bug1->findParentAccountsByEngineer();]]>
+// Используется правило связи по умолчанию
+$reporter = $bug1->findParentAccounts();
+
+// Задается правило связи
+$engineer = $bug1->findParentAccountsByEngineer();
+]]>
             </programlisting>
+
         </example>
 
     </sect2>
@@ -533,8 +575,16 @@ $engineer          = $bug1->findParentAccountsByEngineer();]]>
             таблицу пересечений. Используйте метод:
         </para>
 
-        <programlisting role="php"><![CDATA[<
-$row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_Db_Table_Select $select]]]);]]>
+        <programlisting role="php">
+<![CDATA[
+$row->findManyToManyRowset($table, 
+                           $intersectionTable,
+                           [$rule1,
+                               [$rule2,
+                                   [Zend_Db_Table_Select $select]
+                               ]
+                           ]);
+]]>
         </programlisting>
 
         <para>
@@ -559,20 +609,26 @@ $row->findManyToManyRowset($table, $intersectionTable, [$rule1, [$rule2, [Zend_D
         </para>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example">
+
             <title>Извлечение строк через метод для связей "многие-ко-многим"</title>
+
             <para>
                 Этот пример демонстрирует получение объекта Row из исходной
                 таблицы <code>Accounts</code> и поиск строк в целевой таблице
                 <code>Products</code>, соответствующих продуктам, об ошибках в
                 которых сообщил этот пользователь.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]]>
+            <programlisting role="php"><![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
+
+$productsRowset = $bug1234->findManyToManyRowset('Products',
+                                                 'BugsProducts');
+]]>
             </programlisting>
+
         </example>
 
         <para>
@@ -611,19 +667,28 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts');]
         </para>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example-by">
+
             <title>Извлечение строк через метод для связей "многие-ко-многим" по определенному правилу</title>
+
             <para>
                 Этот пример демонстрирует получение объекта Row из исходной
                 таблицы <code>Bugs</code> и поиск строк в целевой таблице,
-                <code>Products</code>, соответствующих продуктам, к которым относится данная ошибка.
+                <code>Products</code>, соответствующих продуктам, к
+                которым относится данная ошибка.
             </para>
-            <programlisting role="php"><![CDATA[<?php
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
 
-$productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', 'Bug');]]>
+            <programlisting role="php">
+<![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
+
+$productsRowset = $bug1234->findManyToManyRowset('Products',
+                                                 'BugsProducts',
+                                                 'Bug');
+]]>
             </programlisting>
+
         </example>
 
         <para>
@@ -676,24 +741,29 @@ $productsRowset   = $bug1234->findManyToManyRowset('Products', 'BugsProducts', '
         </note>
 
         <example id="zend.db.table.relationships.fetching.many-to-many.example-magic">
+
             <title>Извлечение строк с использованием магического метода для связей "многие-ко-многим"</title>
+
             <para>
                 Этот пример демонстрирует поиск в целевой таблице в связи
                 "многие-ко многим" строк, соответствующих продуктам, к которым
                 относится данная ошибка.
             </para>
-            <programlisting role="php"><![CDATA[<?php
 
-$bugsTable        = new Bugs();
-$bugsRowset       = $bugsTable->find(1234);
-$bug1234          = $bugsRowset->current();
+            <programlisting role="php">
+<![CDATA[
+$bugsTable = new Bugs();
+$bugsRowset = $bugsTable->find(1234);
+$bug1234 = $bugsRowset->current();
 
 // Используется правило связи по умолчанию
-$products          = $bug1234->findProductsViaBugsProducts();
+$products = $bug1234->findProductsViaBugsProducts();
 
 // Задается правило связи
-$products          = $bug1234->findProductsViaBugsProductsByBug();]]>
+$products = $bug1234->findProductsViaBugsProductsByBug();
+]]>
             </programlisting>
+
         </example>
 
     </sect2>
@@ -744,14 +814,16 @@ $products          = $bug1234->findProductsViaBugsProductsByBug();]]>
                 автоматического удаления зависимых строк в таблице
                 <code>Bugs</code>.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php">
+<![CDATA[
 $productsTable  = new Products();
 $productsRowset = $productsTable->find(1234);
 $product1234    = $productsRowset->current();
 
 $product1234->delete();
 // Автоматически выполняется каскадное
-// удаление зависимых строк в таблице Bugs]]>
+// удаление зависимых строк в таблице Bugs
+]]>
             </programlisting>
         </example>
 
@@ -800,7 +872,7 @@ $product1234->delete();
                 результат, используя значение <code>self::NO_ACTION</code> или
                 пропустив элемент <code>'onUpdate'</code>.
             </para>
-            <programlisting role="php"><![CDATA[<?php
+            <programlisting role="php"><![CDATA[
 class BugsProducts extends Zend_Db_Table_Abstract
 {
     ...
@@ -814,7 +886,8 @@ class BugsProducts extends Zend_Db_Table_Abstract
         ),
         ...
     );
-}]]>
+}
+]]>
             </programlisting>
         </example>
 

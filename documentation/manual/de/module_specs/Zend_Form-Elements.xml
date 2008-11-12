@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11315 -->
+<!-- EN-Revision: 12328 -->
 <sect1 id="zend.form.elements">
     <title>Erstellen von Form Elementen mit Hilfe von Zend_Form_Element</title>
 
@@ -39,7 +39,7 @@
         benötigte Elemente. Zusätzlich wird der Zend Framework mit einer Anzahl an Standard
         XHTML Elementen ausgeliefert; über diese kann
         <link linkend="zend.form.standardElements">im Kapitel über Standard Elemente</link>
-        nachgelesen werden. 
+        nachgelesen werden.
     </para>
 
     <sect2 id="zend.form.elements.loaders">
@@ -74,7 +74,7 @@
 
             <listitem><para>
                 <code>getPluginLoader($type)</code>: Empfängt den mit <code>$type</code>
-                assoziierten Plugin Loader. 
+                assoziierten Plugin Loader.
             </para></listitem>
 
             <listitem><para>
@@ -431,7 +431,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
                 erlaubt es das zu tun indem der Schlüssel 'messages' angegeben wird und es auf
                 ein Array von Schlüssel/Werte Paaren gesetzt wird für das Setzen der
                 Nachrichten Templates. Man muß die Fehlermeldungen für die verschiedenen
-                Fehlertypen von Prüfungen wissen für die betreffende Prüfung. 
+                Fehlertypen von Prüfungen wissen für die betreffende Prüfung.
             </para>
 
             <para>
@@ -812,12 +812,18 @@ $messages = $element->getMessages();
             </para></listitem>
 
             <listitem><para>
+                <emphasis>Description</emphasis>: Fügt dem Element eine Beschreibung hinzu. Wenn keine
+                vorhanden ist, wird nichts angehängt. Standardmäßig wird die Beschreibung in einem
+                &lt;p&gt; Tag dargestellt mit einer Klassen von 'description'.
+            </para></listitem>
+
+            <listitem><para>
                 <emphasis>HtmlTag</emphasis>: Wrapt das Element und Fehler in ein HTML &lt;dd&gt;
                 Tag.
             </para></listitem>
 
             <listitem><para>
-                <emphasis>Label</emphasis>: Stell ein Label vor das Element indem es 
+                <emphasis>Label</emphasis>: Stell ein Label vor das Element indem es
                 <code>Zend_View_Helper_FormLabel</code> verwendet, und wrapt es in ein &lt;dt&gt;
                 Tag. Wenn kein Label angegeben wurde, wird nur das Definitionsbegriff Tag
                 dargestellt.
@@ -840,7 +846,7 @@ $element = new Zend_Form_Element('foo',
                                 );
 ]]>
             </programlisting>
-            
+
             <para>
                 Diese Option kann mit jeder anderen Option gemischt sein die übergeben wird, sowohl
                 als Array Option oder in einem <code>Zend_Config</code> Objekt.
@@ -859,6 +865,7 @@ $element = new Zend_Form_Element('foo',
 $this->addDecorators(array(
     array('ViewHelper'),
     array('Errors'),
+    array('Description', array('tag' => 'p', 'class' => 'description')),
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
@@ -869,8 +876,10 @@ $this->addDecorators(array(
             Der anfängliche Inhalt wird vom 'ViewHelper' Dekorator erstellt, welche das Form
             Element selbst erstellt. Als nächstes fängt der 'Errors' Dekorator Fehlermeldungen vom
             Element und, wenn welche vorhanden sind, übergibt Sie an den 'FormErrors' View Helfer
-            zur Darstellung. Der nächste Dekorator, 'HtmlTag', wrapt das Element und die Fehler in
-            ein HTML &lt;dd&gt; Tag. Letztendlich, empfängt der letzte Dekorator, 'label' das
+            zur Darstellung. Wenn eine Beschreibung vorhanden ist, wird der 'Description' Dekorator
+            einen Paragraph der Klasse 'description' anhängen der den beschreibenden Text für den
+            betreffenden Inhalt enthält. Der nächste Dekorator, 'HtmlTag', wrapt das Element und die
+            Fehler in ein HTML &lt;dd&gt; Tag. Letztendlich, empfängt der letzte Dekorator, 'label' das
             Label des Elements und übergibt es an den 'FormLabel' View Helfer, und wrapt es in ein
             HTML &lt;dt&gt; Tag; der Wert wird dem Inhalt standardmäßig vorangestellt. Die
             resultierende Ausgabe sieht grundsätzlich wie folgt aus:
@@ -883,6 +892,9 @@ $this->addDecorators(array(
     <ul class="errors">
         <li>"123" ist kein alphanummerischer Wert</li>
     </ul>
+    <p class="description">
+        Das ist etwas beschreibender Text betreffend dem Element.
+    </p>
 </dd>
 ]]>
         </programlisting>

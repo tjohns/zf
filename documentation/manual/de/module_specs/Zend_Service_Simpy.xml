@@ -253,10 +253,10 @@ $simpy->deleteNote($note->getId());
     <sect2 id="zend.service.simpy.watchlists">
         <title>Watchlists</title>
         <para>
-        	Watchlisten können durch das API nicht erstellt oder entfernt
-        	werden, sondern lediglich zurückgegeben. Folglich musst du eine
-        	Watchlist über die Simpy Webseite erstellen, bevor du diese
-        	über das API nutzt.
+            Watchlisten können durch das API nicht erstellt oder entfernt
+            werden, sondern lediglich zurückgegeben. Folglich musst du eine
+            Watchlist über die Simpy Webseite erstellen, bevor du diese
+            über das API nutzt.
         </para>
         <example id="zend.service.simpy.watchlists.retrieving">
             <title>Zurückgeben von Watchlisten</title>

@@ -11,7 +11,7 @@
             Servers zu authentifizieren. So ein Authentifizierungsprozess nimmt an das Benutzer nur ihre
             OpenID Identität an die Web Anwendung übermitteln. Dann werden Sie zu Ihrem OpenID Anbieter
             umgeleitet um die Eigentümerschaft der Identität mit Hilfe eines Passwortes oder einer anderen
-            Methode zu prüfen. Dieses Passwort ist der lokalen Web Anwendung nie bekannt. 
+            Methode zu prüfen. Dieses Passwort ist der lokalen Web Anwendung nie bekannt.
         </para>
         <para>
             Die OpenID Identität ist nur eine HTTP URL die auf eine Webseite mit entsprechenden Informationen
@@ -39,7 +39,7 @@
         <title>Spezielles</title>
         <para>
             Wie jeder andere <code>Zend_Auth</code> Adapter implementiert die <code>Zend_Auth_Adapter_OpenId</code>
-            Klasse das <code>Zend_Auth_Adapter_Interface</code>, welches nur eine Methode definiert - 
+            Klasse das <code>Zend_Auth_Adapter_Interface</code>, welches nur eine Methode definiert -
             <code>authenticate()</code>. Diese Methode führt die Authentifizierung selbst durch, allerdings muß
             das Objekt vor dem Aufruf vorbereitet werden. So eine Vorbereitung des Adapters beinhaltet das
             Setzen der OpenID Identität und einige andere <code>Zend_OpenId</code> spezifische Optionen.

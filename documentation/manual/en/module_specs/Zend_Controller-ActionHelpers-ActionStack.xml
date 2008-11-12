@@ -72,7 +72,7 @@ class FooController extends Zend_Controller_Action
         // (FooController::bazAction() with request var bar == baz)
         $request = clone $this->getRequest();
         // Don't set controller or module; use current values
-        $request->setActionName('baz') 
+        $request->setActionName('baz')
                 ->setParams(array('bar' => 'baz'));
         $this->_helper->actionStack($request);
 

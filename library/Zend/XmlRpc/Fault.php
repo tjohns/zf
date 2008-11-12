@@ -287,7 +287,7 @@ class Zend_XmlRpc_Fault
         $valueDOM->loadXML($value->saveXML());
 
         // Build response XML
-        $dom  = new DOMDocument('1.0', 'ISO-8859-1');
+        $dom  = new DOMDocument('1.0', $this->getEncoding());
         $r    = $dom->appendChild($dom->createElement('methodResponse'));
         $f    = $r->appendChild($dom->createElement('fault'));
         $f->appendChild($dom->importNode($valueDOM->documentElement, 1));

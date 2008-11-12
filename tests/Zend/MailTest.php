@@ -22,7 +22,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * Zend_Mail
@@ -153,10 +153,10 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $this->assertContains('This is a test.', $mock->body);
         $this->assertContains('Content-Transfer-Encoding: quoted-printable', $mock->header);
         $this->assertContains('Content-Type: text/plain', $mock->header);
-        $this->assertContains('From: "test Mail User" <testmail@example.com>', $mock->header);
+        $this->assertContains('From: test Mail User <testmail@example.com>', $mock->header);
         $this->assertContains('Subject: My Subject', $mock->header);
-        $this->assertContains('To: <recipient1@example.com>', $mock->header);
-        $this->assertContains('Cc: "Example no. 1 for cc" <recipient1_cc@example.com>', $mock->header);
+        $this->assertContains('To: recipient1@example.com', $mock->header);
+        $this->assertContains('Cc: Example no. 1 for cc <recipient1_cc@example.com>', $mock->header);
     }
 
     /**
@@ -181,10 +181,10 @@ class Zend_MailTest extends PHPUnit_Framework_TestCase
         $mail->send($mock);
 
         $this->assertTrue($mock->called);
-        $this->assertContains('From: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
+        $this->assertContains('From: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
         $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
-        $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail2@example.com>', $mock->header);
-        $this->assertContains('Cc: "=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail3@example.com>', $mock->header);
+        $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?= <testmail2@example.com>', $mock->header);
+        $this->assertContains('Cc: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?= <testmail3@example.com>', $mock->header);
         $this->assertContains('Subject: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
         $this->assertContains('X-MyTest:', $mock->header);
         $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);

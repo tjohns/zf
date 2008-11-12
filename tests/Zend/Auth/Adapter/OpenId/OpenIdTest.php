@@ -82,6 +82,13 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Auth_Adapter_OpenId(null, new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
+        $this->assertSame(null, $ret->getIdentity());
+        $this->assertSame(0, $ret->getCode());
+        $msgs = $ret->getMessages();
+        $this->assertTrue(is_array($msgs));
+        $this->assertSame(2, count($msgs));
+        $this->assertSame("Authentication failed", $msgs[0]);
+        $this->assertSame("Missing openid.mode", $msgs[1]);
     }
 
     public function testAuthenticateLoginInvalid()
@@ -89,6 +96,13 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Auth_Adapter_OpenId("%sd", new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
+        $this->assertSame("%sd", $ret->getIdentity());
+        $this->assertSame(0, $ret->getCode());
+        $msgs = $ret->getMessages();
+        $this->assertTrue(is_array($msgs));
+        $this->assertSame(2, count($msgs));
+        $this->assertSame("Authentication failed", $msgs[0]);
+        $this->assertSame("Normalisation failed", $msgs[1]);
     }
 
     public function testAuthenticateLoginValid()
@@ -333,10 +347,25 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
     public function testAuthenticateVerifyInvalid()
     {
         unset($_SERVER['REQUEST_METHOD']);
-        $_GET = array('openid_mode'=>'id_res');
+        $_GET = array('openid_mode'=>'id_res',
+            "openid_return_to" => "http://www.zf-test.com/test.php",
+            "openid_assoc_handle" => self::HANDLE,
+            "openid_claimed_id" => self::ID,
+            "openid_identity" => self::REAL_ID,
+            "openid_response_nonce" => "2007-08-14T12:52:33Z46c1a59124fff",
+            "openid_signed" => "assoc_handle,return_to,claimed_id,identity,response_nonce,mode,signed",
+            "openid_sig" => "h/5AFD25NpzSok5tzHEGCVUkQSw="
+		);
         $adapter = new Zend_Auth_Adapter_OpenId(null, new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
+        $this->assertSame(self::ID, $ret->getIdentity());
+        $this->assertSame(0, $ret->getCode());
+        $msgs = $ret->getMessages();
+        $this->assertTrue(is_array($msgs));
+        $this->assertSame(2, count($msgs));
+        $this->assertSame("Authentication failed", $msgs[0]);
+        $this->assertSame("Signature check failed", $msgs[1]);
     }
 
     public function testAuthenticateVerifyGetValid()

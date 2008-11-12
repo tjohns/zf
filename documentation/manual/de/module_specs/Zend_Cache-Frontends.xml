@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11455 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -676,7 +676,7 @@ $res = $cache->foobar2('1', '2');
                                           <para>
                                               <code>(int, false by default) specific_lifetime</code> :
                                               wenn nicht false, wird die angegebene Lifetime für das ausgewählte
-                                              Regex verwendet 
+                                              Regex verwendet
                                           </para>
                                       </listitem>
                                       <listitem>
@@ -729,7 +729,8 @@ $res = $cache->foobar2('1', '2');
 // [...] // Benötigt, Konfiguration und Factory
 
 $cache->start();
-// Wenn der Cache gefunden wurde, wird das Ergebnis zum Browser geschickt, und das Skript stoppt hier
+// Wenn der Cache gefunden wurde, wird das Ergebnis zum Browser geschickt,
+// und das Skript stoppt hier
 
 // Rest der Seite ...
 ]]>
@@ -760,7 +761,7 @@ $frontendOptions = array(
        '^/article/' => array('cache' => false),
 
        // ...aber wir cachen die "View" Aktion von diesem ArticleController
-       '^/article/view/' => array(              
+       '^/article/view/' => array(
            'cache' => true,
 
            // und wir cachen sogar wenn es einige Variablen in $_POST gibt
@@ -797,7 +798,7 @@ $cache->start();
             <para>
                 Aus Designgründen, kann es in einigen Fällen (zum Beispiel bei Verwendung von nicht HTTP/200
                 Return Codes), notwendig sein den aktuellen Cacheprozess zu unterbrechen. Deshalb zeigen wir
-                für dieses spezielle Frontend die cancel() Methode. 
+                für dieses spezielle Frontend die cancel() Methode.
             </para>
             <programlisting role="php"><![CDATA[
 // [...] // Benötigt, Konfiguration und Factory

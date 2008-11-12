@@ -555,7 +555,7 @@ print $locale->getTranslation('de', 'language', 'zh');
         </note>
 
         <para>
-            See the following table for detailed information: 
+            See the following table for detailed information:
         </para>
 
         <table id="zend.locale.getdata.table-2">
@@ -890,7 +890,7 @@ print $locale->getTranslation('de', 'language', 'zh');
             <para>
                 With Zend Framework 1.5 several old types have been renamed. This has to be done because
                 of several new types, some misspelling and to increase the usability. See this table for
-                a list of old to new types:  
+                a list of old to new types:
             </para>
         </note>
 
@@ -1011,7 +1011,8 @@ echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
 // obtain a list of all the translation lists
 $lists = $locale->getTranslationList();
 
-// show all translation lists available (lots of output, all in English language)
+// show all translation lists available
+// (lots of output, all in English language)
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));

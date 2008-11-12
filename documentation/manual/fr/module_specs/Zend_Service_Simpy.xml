@@ -150,7 +150,7 @@ $simpy->saveLink(
     'zend, framework, php' // Tags
 );
 
-/* Récupère la liste de tous les mots-clés utilisés par les liens 
+/* Récupère la liste de tous les mots-clés utilisés par les liens
 et les notes */
 $tagSet = $simpy->getTags();
 

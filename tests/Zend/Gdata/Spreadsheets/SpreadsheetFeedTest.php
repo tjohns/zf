@@ -32,7 +32,7 @@ class Zend_Gdata_Spreadsheets_SpreadsheetFeedTest extends PHPUnit_Framework_Test
     public function setUp()
     {
         $this->sprFeed = new Zend_Gdata_Spreadsheets_SpreadsheetFeed( 
-                file_get_contents('Zend/Gdata/Spreadsheets/_files/TestDataSpreadsheetFeedSample1.xml'),
+                file_get_contents(dirname(__FILE__) . '/_files/TestDataSpreadsheetFeedSample1.xml'),
                 true);
     }
 

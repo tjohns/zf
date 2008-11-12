@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: XmlTest.php 9670 2008-06-11 08:51:21Z dasprid $
+ * @version    $Id$
  */
 
 // Call Zend_Text_FigletTest::main() if this source file is executed directly.
@@ -28,7 +28,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Text_Figlet

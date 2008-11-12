@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 11765 -->
 <sect1 id="zend.ldap.using">
 
     <title>Einleitung</title>
@@ -259,7 +259,14 @@ echo "$acctname\n";
                             als anonyme Bindung akzeptieren. Dieses Verhalten ist fast immer unerwünscht.
                             Aus diesem Grund sind leere Passwörter explizit nicht erlaubt. Wenn dieser
                             Wert auf <code>true</code> gesetzt wird ist die Übermittlung eines leeres Passwortes
-                            wärend des Bindens erlaubt. 
+                            wärend des Bindens erlaubt.
+                        </entry>
+                      </row>
+                      <row>
+                        <entry>optReferrals</entry>
+                        <entry>
+                            Auf <code>true</code> gesetzt, zeigt diese Option dem LDAP Client das Referenzen
+                            gefolgt werden soll. Der Standardwert ist <code>false</code>.
                         </entry>
                       </row>
                     </tbody>
@@ -434,7 +441,7 @@ foreach ($multiOptions as $name => $options) {
             </para>
 
             <para>
-                Der obige Code ist dem sehr ähnlich, der in 
+                Der obige Code ist dem sehr ähnlich, der in
                 <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>
                 verwendet wird. Wir empfehlen daher, einfach den Authentifizierungs-Adapter
                 für Multi-Domain-Authentifizierung und LDAP-basierte Authentifizierung mit

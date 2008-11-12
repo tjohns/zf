@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11231 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.db.profiler.profilers.firebug">
     <title>Profilen mit Firebug</title>
 
@@ -35,10 +35,10 @@
             heruntergeladen werden kann.
         </para></listitem>
     </itemizedlist>
-            
+
     <example id="zend.db.profiler.profilers.firebug.example.with_front_controller">
         <title>DB Profiling mit <code>Zend_Controller_Front</code></title>
-    
+
         <programlisting role="php"><![CDATA[
 // In der Bootstrap Datei
 
@@ -53,12 +53,12 @@ $db->setProfiler($profiler);
 // Alle DB Abfragen im Modell, View und Controller Dateien
 // werden nun profiled und an Firebug gesendet
 ]]>
-        </programlisting>	
+        </programlisting>
     </example>
-              
+
     <example id="zend.db.profiler.profilers.firebug.example.without_front_controller">
         <title>DB Profiling ohne <code>Zend_Controller_Front</code></title>
-        
+
         <programlisting role="php"><![CDATA[
 $profiler = new Zend_Db_Profiler_Firebug('All DB Queries');
 $profiler->setEnabled(true);

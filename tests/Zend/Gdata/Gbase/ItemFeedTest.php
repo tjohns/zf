@@ -32,7 +32,7 @@ class Zend_Gdata_Gbase_ItemFeedTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->itemFeed = new Zend_Gdata_Gbase_ItemFeed( 
-                file_get_contents('Zend/Gdata/Gbase/_files/TestDataGbaseItemFeedSample1.xml'),
+                file_get_contents(dirname(__FILE__) . '/_files/TestDataGbaseItemFeedSample1.xml'),
                 true);
     }
 

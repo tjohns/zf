@@ -187,7 +187,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
         } else {
             // Write the length of the numberic array
             $this->_stream->writeLong($length);
-            for ($i=0; $i<=$length; $i++) {
+            for ($i=0; $i<$length; $i++) {
                 $value = isset($array[$i]) ? $array[$i] : null;
                 $this->writeTypeMarker($value);
             }

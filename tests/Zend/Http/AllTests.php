@@ -28,7 +28,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once realpath(dirname(__FILE__) . '/../../') . '/TestHelper.php';
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';

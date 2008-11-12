@@ -52,7 +52,7 @@
 $pdf->pages = array_reverse($pdf->pages);
 ...
 // Ajoute une nouvelle page
-$pdf->pages[] = new Zend_Pad_Page(Zend_Pdf_Page::SIZE_A4);
+$pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
 // Ajoute une nouvelle page
 $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 

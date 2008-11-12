@@ -17,10 +17,13 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 
-error_reporting( E_ALL | E_STRICT );
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * Zend_Console_Getopt
@@ -464,5 +467,42 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('string', $opts->k);
 
     }
+    
+    /**
+     * Test to ensure that dashed long names will parse correctly
+     * 
+     * @group ZF-4763
+     */
+    public function testDashWithinLongOptionGetsParsed()
+    {
+        $opts = new Zend_Console_Getopt(
+            array( // rules
+                'man-bear|m-s' => 'ManBear with dash',
+                'man-bear-pig|b=s' => 'ManBearPid with dash',
+                ),
+            array( // arguments
+                '--man-bear-pig=mbp',
+                '--man-bear',
+                'foobar'
+                )
+            );
+        
+        $opts->parse();
+        $this->assertEquals('foobar', $opts->getOption('man-bear'));
+        $this->assertEquals('mbp', $opts->getOption('man-bear-pig'));
+    }
 
+    /**
+     * @group ZF-2064
+     */
+    public function testAddRulesDoesNotThrowWarnings()
+    {
+        // Fails if warning is thrown: Should not happen!
+        $opts = new Zend_Console_Getopt('abp:');
+        $opts->addRules(
+          array(
+            'verbose|v' => 'Print verbose output'
+          )
+        );
+    }
 }

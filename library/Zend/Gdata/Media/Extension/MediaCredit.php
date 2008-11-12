@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Media
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -76,13 +77,13 @@ class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
      * @return DOMElement The DOMElement representing this element and all 
      * child properties.
      */
-    public function getDOM($doc = null)
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        $element = parent::getDOM($doc);
-        if ($this->_role != null) {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
+        if ($this->_role !== null) {
             $element->setAttribute('role', $this->_role);
         }
-        if ($this->_scheme != null) {
+        if ($this->_scheme !== null) {
             $element->setAttribute('scheme', $this->_scheme);
         }
         return $element;

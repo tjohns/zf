@@ -83,6 +83,9 @@ abstract class Zend_Dojo_View_Helper_Slider extends Zend_Dojo_View_Helper_Dijit
             $attribs['onChange'] = "dojo.byId('" . $id . "').value = arguments[0];";
         }
 
+        $id  = str_replace('][', '-', $id);
+        $id  = str_replace(array('[', ']'), '-', $id);
+        $id  = rtrim($id, '-');
         $id .= '-slider';
 
         switch ($this->_sliderType) {

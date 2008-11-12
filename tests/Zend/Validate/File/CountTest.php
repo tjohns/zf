@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id: CountTest.php 12004 2008-10-18 14:29:41Z mikaelkael $
  */
 
 // Call Zend_Validate_File_CountTest::main() if this source file is executed directly.
@@ -28,7 +28,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 /**
  * @see Zend_Validate_File_Count
@@ -63,86 +63,36 @@ class Zend_Validate_File_CountTest extends PHPUnit_Framework_TestCase
     public function testBasic()
     {
         $valuesExpected = array(
-            array(5, null, true, true, true, true),
-            array(0, 3, true, true, true, false),
-            array(2, 3, false, true, true, false),
-        );
+            array(5, true, true, true, true),
+            array(array('min' => 0, 'max' => 3), true, true, true, false),
+            array(array('min' => 2, 'max' => 3), false, true, true, false),
+            array(array('min' => 2), false, true, true, true),
+            array(array('max' => 5), true, true, true, true),
+            );
 
         foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_Count($element[0], $element[1]);
+            $validator = new Zend_Validate_File_Count($element[0]);
             $this->assertEquals(
-                $element[2],
+                $element[1],
                 $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
                 "Tested with " . var_export($element, 1)
             );
             $this->assertEquals(
-                $element[3],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[4],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[5],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-        }
-
-        foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_Count(array($element[0], $element[1]));
-            $this->assertEquals(
                 $element[2],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[3],
                 $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
                 "Tested with " . var_export($element, 1)
             );
             $this->assertEquals(
-                $element[4],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[5],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-        }
-
-        foreach ($valuesExpected as $element) {
-            $validator = new Zend_Validate_File_Count(array('min' => $element[0], 'max' => $element[1]));
-            $this->assertEquals(
-                $element[2],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-            $this->assertEquals(
                 $element[3],
-                $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'),
-                "Tested with " . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[4],
                 $validator->isValid(dirname(__FILE__) . '/_files/testsize3.mo'),
                 "Tested with " . var_export($element, 1)
             );
             $this->assertEquals(
-                $element[5],
+                $element[4],
                 $validator->isValid(dirname(__FILE__) . '/_files/testsize4.mo'),
                 "Tested with " . var_export($element, 1)
             );
         }
-
-        $validator = new Zend_Validate_File_Count(array(1));
-        $this->assertEquals(true, $validator->isValid(dirname(__FILE__) . '/_files/testsize.mo'));
-        $this->assertEquals(false, $validator->isValid(dirname(__FILE__) . '/_files/testsize2.mo'));
     }
 
     /**
@@ -152,21 +102,21 @@ class Zend_Validate_File_CountTest extends PHPUnit_Framework_TestCase
      */
     public function testGetMin()
     {
-        $validator = new Zend_Validate_File_Count(1, 5);
+        $validator = new Zend_Validate_File_Count(array('min' => 1, 'max' => 5));
         $this->assertEquals(1, $validator->getMin());
 
         try {
-            $validator = new Zend_Validate_File_Count(5, 1);
+            $validator = new Zend_Validate_File_Count(array('min' => 5, 'max' => 1));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("greater than or equal", $e->getMessage());
         }
 
-        $validator = new Zend_Validate_File_Count(array(1, 5));
+        $validator = new Zend_Validate_File_Count(array('min' => 1, 'max' => 5));
         $this->assertEquals(1, $validator->getMin());
 
         try {
-            $validator = new Zend_Validate_File_Count(array(5, 1));
+            $validator = new Zend_Validate_File_Count(array('min' => 5, 'max' => 1));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("greater than or equal", $e->getMessage());
@@ -180,7 +130,7 @@ class Zend_Validate_File_CountTest extends PHPUnit_Framework_TestCase
      */
     public function testSetMin()
     {
-        $validator = new Zend_Validate_File_Count(1000, 10000);
+        $validator = new Zend_Validate_File_Count(array('min' => 1000, 'max' => 10000));
         $validator->setMin(100);
         $this->assertEquals(100, $validator->getMin());
 
@@ -199,21 +149,11 @@ class Zend_Validate_File_CountTest extends PHPUnit_Framework_TestCase
      */
     public function testGetMax()
     {
-        $validator = new Zend_Validate_File_Count(1, 100);
+        $validator = new Zend_Validate_File_Count(array('min' => 1, 'max' => 100));
         $this->assertEquals(100, $validator->getMax());
 
         try {
-            $validator = new Zend_Validate_File_Count(5, 1);
-            $this->fail("Missing exception");
-        } catch (Zend_Validate_Exception $e) {
-            $this->assertContains("greater than or equal", $e->getMessage());
-        }
-
-        $validator = new Zend_Validate_File_Count(array(1, 50));
-        $this->assertEquals(50, $validator->getMax());
-
-        try {
-            $validator = new Zend_Validate_File_Count(array(50, 1));
+            $validator = new Zend_Validate_File_Count(array('min' => 5, 'max' => 1));
             $this->fail("Missing exception");
         } catch (Zend_Validate_Exception $e) {
             $this->assertContains("greater than or equal", $e->getMessage());
@@ -227,15 +167,12 @@ class Zend_Validate_File_CountTest extends PHPUnit_Framework_TestCase
      */
     public function testSetMax()
     {
-        $validator = new Zend_Validate_File_Count(1000, 10000);
+        $validator = new Zend_Validate_File_Count(array('min' => 1000, 'max' => 10000));
         $validator->setMax(1000000);
         $this->assertEquals(1000000, $validator->getMax());
 
         $validator->setMin(100);
         $this->assertEquals(1000000, $validator->getMax());
-
-        $validator->setMax(null);
-        $this->assertEquals(null, $validator->getMax());
     }
 }
 

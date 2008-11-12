@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage App
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -79,13 +80,20 @@ require_once 'Zend/Version.php';
  */
 abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
 {
-
     /**
-     * HTTP client object to use for retrieving feeds
+     * Service instance used to make network requests.
      *
-     * @var Zend_Http_Client
+     * @see setService(), getService()
      */
-    protected $_httpClient = null;
+    protected $_service = null;
+
+    /** 
+     * The HTTP ETag associated with this entry. Used for optimistic
+     * concurrency in protoco v2 or greater.
+     *
+     * @var string|null
+     */
+    protected $_etag = NULL;
 
     protected $_author = array();
     protected $_category = array();
@@ -129,43 +137,65 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      *
      * Sets the HTTP client object to use for retrieving the feed.
      *
+     * @deprecated Deprecated as of Zend Framework 1.7. Use
+     *             setService() instead.
      * @param  Zend_Http_Client $httpClient
      * @return Zend_Gdata_App_Feed Provides a fluent interface
      */
     public function setHttpClient(Zend_Http_Client $httpClient)
     {
-        $this->_httpClient = $httpClient;
+        if (!$this->_service) {
+            $this->_service = new Zend_Gdata_App();
+        }
+        $this->_service->setHttpClient($httpClient);
         return $this;
     }
 
-
     /**
-     * Gets the HTTP client object. If none is set, a new Zend_Http_Client will be used.
+     * Gets the HTTP client object. If none is set, a new Zend_Http_Client
+     * will be used.
      *
+     * @deprecated Deprecated as of Zend Framework 1.7. Use
+     *             getService() instead.
      * @return Zend_Http_Client_Abstract
      */
     public function getHttpClient()
     {
-        if (!$this->_httpClient instanceof Zend_Http_Client) {
-            /**
-             * @see Zend_Http_Client
-             */
-            require_once 'Zend/Http/Client.php';
-            $this->_httpClient = new Zend_Http_Client();
-            $useragent = 'Zend_Framework_Gdata/' . Zend_Version::VERSION;
-            $this->_httpClient->setConfig(array(
-                'strictredirects' => true,
-                 'useragent' => $useragent
-                )
-            );
+        if (!$this->_service) {
+            $this->_service = new Zend_Gdata_App();
         }
-        return $this->_httpClient;
+        $client = $this->_service->getHttpClient();
+        return $client;
     }
 
-
-    public function getDOM($doc = null)
+    /**
+     * Set the active service instance for this object. This will be used to
+     * perform network requests, such as when calling save() and delete().
+     *
+     * @param Zend_Gdata_App $instance The new service instance.
+     * @return Zend_Gdata_App_FeedEntryParent Provides a fluent interface.
+     */
+    public function setService($instance)
     {
-        $element = parent::getDOM($doc);
+        $this->_service = $instance;
+        return $this;
+    }
+    
+    /**
+     * Get the active service instance for this object. This will be used to
+     * perform network requests, such as when calling save() and delete().
+     *
+     * @return Zend_Gdata_App|null The current service instance, or null if
+     *         not set.
+     */
+    public function getService()
+    {
+        return $this->_service;
+    }
+
+    public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
+    {
+        $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         foreach ($this->_author as $author) {
             $element->appendChild($author->getDOM($element->ownerDocument));
         }
@@ -520,6 +550,27 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     {
         $this->_updated = $value;
         return $this;
+    }
+
+    /**
+     * Set the Etag for the current entry to $value. Setting $value to null
+     * unsets the Etag.
+     * 
+     * @param string|null $value
+     * @return Zend_Gdata_App_Entry Provides a fluent interface
+     */
+    public function setEtag($value) {
+        $this->_etag = $value;
+        return $this;
+    }
+
+    /**
+     * Return the Etag for the current entry, or null if not set.
+     *
+     * @return string|null
+     */
+    public function getEtag() {
+        return $this->_etag;
     }
 
 }

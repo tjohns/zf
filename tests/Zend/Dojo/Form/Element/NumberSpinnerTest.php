@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id:$
  */
 
 // Call Zend_Dojo_Form_Element_NumberSpinnerTest::main() if this source file is executed directly.
@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Dojo_Form_Element_NumberSpinnerTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /** Zend_Dojo_Form_Element_NumberSpinner */
 require_once 'Zend/Dojo/Form/Element/NumberSpinner.php';
@@ -184,6 +184,18 @@ class Zend_Dojo_Form_Element_NumberSpinnerTest extends PHPUnit_Framework_TestCas
     {
         $html = $this->element->render();
         $this->assertContains('dojoType="dijit.form.NumberSpinner"', $html);
+    }
+
+    /**
+     * @group ZF-4638
+     */
+    public function testRenderingShouldOutputMinAndMaxConstraints()
+    {
+        $this->element->setMin(5)
+                      ->setMax(10);
+        $html = $this->element->render();
+        $this->assertRegexp('/\'min\':\s*5/', $html, $html);
+        $this->assertRegexp('/\'max\':\s*10/', $html, $html);
     }
 }
 

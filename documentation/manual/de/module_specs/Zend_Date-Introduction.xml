@@ -67,7 +67,7 @@ date_default_timezone_set('Europe/Berlin');
             <emphasis role="strong">GMT</emphasis> keine Sommer-/Winterzeitumstellung enthalten. Das bedeutet
             das selbst wenn per Hand definiert wurde das <code>Zend_Date</code> die DST berücksichtigen soll,
             das automatisch für alle Instanzen von <code>Zend_Date</code> zurückgeschaltet wird die auf
-            UTC oder GMT eingestellt wurden. 
+            UTC oder GMT eingestellt wurden.
         </para>
     </sect2>
 

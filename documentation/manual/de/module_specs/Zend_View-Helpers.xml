@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11496 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -76,7 +76,7 @@
                 <code>fieldset($name, $content, $attribs):</code> Erstellt ein XHTML Fieldset.
                 Wenn <code>$attribs</code> einen 'legend' Schlüssel enthält, wird der Wert für
                 die Fieldset Beschriftung verwendet. Das Fieldset wird <code>$content</code>
-                umfassen wie vom Helfer angeboten. 
+                umfassen wie vom Helfer angeboten.
             </para></listitem>
 
             <listitem><para>
@@ -110,7 +110,7 @@
                     $options sollte ein Array sein. Wenn das Array indiziert ist, ist der erste
                     Wert der gecheckte Wert, und der zweite der ungecheckte Wert; alle anderen
                     Werte werden ignoriert. Es kann auch ein assoziatives Array mit den Schlüsseln
-                    'checked' und 'unChecked' übergeben werden. 
+                    'checked' und 'unChecked' übergeben werden.
                 </para>
 
                 <para>
@@ -131,29 +131,29 @@ echo $this->formCheckbox('foo');
 // '1' und '0' als gecheckte/ungecheckte Optionen; gecheckt
 echo $this->formCheckbox('foo', null, array('checked' => true));
 
-// 'bar' und '0' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+// 'bar' und '0' als gecheckte/ungecheckte Optionen; nicht gecheckt
 echo $this->formCheckbox('foo', 'bar');
 
-// 'bar' und '0' als gecheckte/ungecheckte Optionen; gecheckt 
+// 'bar' und '0' als gecheckte/ungecheckte Optionen; gecheckt
 echo $this->formCheckbox('foo', 'bar', array('checked' => true));
 
-// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt
 echo $this->formCheckbox('foo', null, null, array('bar', 'baz');
 
-// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt
 echo $this->formCheckbox('foo', null, null, array(
-    'checked' => 'bar', 
+    'checked' => 'bar',
     'unChecked' => 'baz'
 ));
 
-// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; gecheckt 
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; gecheckt
 echo $this->formCheckbox('foo', 'bar', null, array('bar', 'baz');
 echo $this->formCheckbox('foo',
                          null,
                          array('checked' => true),
                          array('bar', 'baz');
 
-// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt 
+// 'bar' und 'baz' als gecheckte/ungecheckte Optionen; nicht gecheckt
 echo $this->formCheckbox('foo', 'baz', null, array('bar', 'baz');
 echo $this->formCheckbox('foo',
                          null,
@@ -277,7 +277,7 @@ echo $this->formCheckbox('foo',
                 Liste gebaut. Wenn das <code>$escape</code> Flag true ist (standard), werden
                 individuelle Abschnitte escaped durch Verwendung des Escaping Mechanismus der im
                 View Objekt registriert wurde; ein false Wert wird übergeben wenn Markups in den
-                Listen gewünscht werden. 
+                Listen gewünscht werden.
             </para></listitem>
 
         </itemizedlist>

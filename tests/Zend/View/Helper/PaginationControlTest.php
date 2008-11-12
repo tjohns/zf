@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_View_Helper_PaginationControlTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View.php';
 require_once 'Zend/Paginator.php';
@@ -137,7 +137,7 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
             $output = $this->_viewHelper->paginationControl();
         } catch (Exception $e) {
             $this->assertType('Zend_View_Exception', $e);
-            $this->assertEquals('No paginator instance provided nor found', $e->getMessage());
+            $this->assertEquals('No paginator instance provided or incorrect type', $e->getMessage());
         }
     }
 
@@ -168,6 +168,22 @@ class Zend_View_Helper_PaginationControlTest extends PHPUnit_Framework_TestCase
 
         $output = $this->_viewHelper->paginationControl($paginator);
         $this->assertContains('page count (3)', $output, $output);
+    }
+
+    /**
+     * @group ZF-4878
+     */
+    public function testCanUseObjectForScrollingStyle()
+    {
+        $all = new Zend_Paginator_ScrollingStyle_All();
+
+        try {
+            $output = $this->_viewHelper->paginationControl($this->_paginator, $all, 'testPagination.phtml');
+        } catch (Exception $e) {
+            $this->fail('Could not use object for sliding style');
+        }
+
+        $this->assertContains('page count (11) equals pages in range (11)', $output, $output);
     }
 }
 

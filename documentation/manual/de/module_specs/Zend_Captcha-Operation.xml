@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11125 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha Anwendung</title>
 
@@ -8,7 +8,7 @@
     </para>
 
     <programlisting role="php"><![CDATA[
-interface Zend_Captcha_Adapter extends Zend_Validate_Interface 
+interface Zend_Captcha_Adapter extends Zend_Validate_Interface
 {
     public function generate();
 

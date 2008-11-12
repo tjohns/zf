@@ -20,6 +20,17 @@
         </para>
     </note>
 
+    <note>
+        <title>Forms</title>
+        <para>
+            When you are using <code>Zend_Form</code> you should read and use the examples described in the
+            chapter of <code>Zend_Form</code> and not use <code>Zend_File_Transfer</code> manually. But the
+            information you can read in this chapter will be helpful, even if you do not use it directly.
+            All assumptions, descriptions and solutions are the same when you are using
+            <code>Zend_File_Transfer</code> through <code>Zend_Form</code>.
+        </para>
+    </note>
+
     <para>
         The usage of <code>Zend_File_Transfer</code> is quite simple. It consist of two parts. The HTTP Form
         which does the upload, and the handling of the uploaded files with <code>Zend_File_Transfer</code>.
@@ -43,7 +54,7 @@
 </programlisting>
         <para>
             Note that you should use <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> for your convenience instead of creating
-            the HTML manually. 
+            the HTML manually.
         </para>
         <para>
             The next step is to create the receiver of the upload. In our example the receiver is
@@ -68,11 +79,12 @@ if (!$adapter->receive()) {
         </para>
 
     </example>
+
     <note>
         <title>Attention</title>
         <para>
             Keep in mind that this is just the simplest usage. You should
-            <emphasis role="strong">never</emphasis> just this example is an living environment as it
+            <emphasis role="strong">never</emphasis> just use this example as is in an living environment as it
             causes severe security issues. You should always use validators to increase security.
         </para>
     </note>
@@ -117,6 +129,171 @@ if (!$adapter->receive()) {
         </itemizedlist>
     </sect2>
 
+    <sect2 id="zend.file.transfer.introduction.checking">
+
+        <title>Checking files</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> has several method which check for different assumptions which
+            are useful when you have to process files after they have been uploaded.
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">isValid($files = null)</emphasis>: This method will check if the
+                    given files are valid, based on the validators which are attached to this files.
+                    When no files are given, all files will be checked. Note that this method will be called
+                    at latest when the files are received.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">isUploaded($files = null)</emphasis>: This method will check if the
+                    given files have been uploaded by the user. This is useful when you have defined several
+                    files to be uploaded optionally. When no files are given, all files will be checked.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">isReceived($files = null)</emphasis>: This method will check if the
+                    given files have already been received. When no files are given, all files will be checked.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.introduction.checking.example">
+            <title>Checking files</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Returns all known internal file informations
+$files = $upload->getFileInfo();
+
+foreach ($files as $file => $info) {
+    // file uploaded ?
+    if (!$upload->isUploaded($file)) {
+        print "Why havn't you uploaded the file ?";
+        continue;
+    }
+
+    // validators are ok ?
+    if (!$upload->isValid($file)) {
+        print "Sorry but $file is not what we wanted";
+        continue;
+    }
+}
+
+$upload->receive();
+]]>
+            </programlisting>
+
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.informations">
+
+        <title>Additional file informations</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> can return several additional informations on files.
+            The following methods are available:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileName($file = null, $path = true)</emphasis>: This method
+                    will return the real filename of an transferred file.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getFileInfo($file = null)</emphasis>: This method will return all
+                    internal informations for the given transferred file.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>: This method
+                    will return a hash of the content for a given transferred file.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            <code>getFileName()</code> accepts the name of the element as first parameter. If no name is given,
+            all known filenames will be returned in an array. If the file is an multifile, you will also get
+            an array. If there is only a single file a string will be returned.
+        </para>
+
+        <para>
+            Per default filenames will be returned with their complete path. If you need only the filename
+            without path, you can set the second parameter <code>$path</code> which will truncate the
+            filepath when set to false.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example1">
+            <title>Getting the filename</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Returns the file names from all files
+$names = $upload->getFileName();
+
+// Returns the file names from the 'foo' form element
+$names = $upload->getFileName('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that the filename can change when you receive the file. This is due to the fact that
+                after receiving all filters will be applied. So you should call <code>getFileName()</code>
+                always after you have received the files.
+            </para>
+        </note>
+
+        <para>
+            <code>getHash()</code> accepts the name of a hash algorithm as first parameter. For a list of
+            known algorithm look into
+            <ulink url="http://php.net/hash_algos">PHP's hash_algos method</ulink>. If you give no algorithm,
+            the <code>crc32</code> will be used as default algorithm.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example2">
+            <title>Getting the hash of a file</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Returns the hashes from all files as array if more than one file was uploaded
+$hash = $upload->getHash('md5');
+
+// Returns the hash for the 'foo' form element
+$names = $upload->getHash('crc32', 'foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that if the given file or formname contains more than one single file, the returned
+                value will be an array.
+            </para>
+        </note>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:

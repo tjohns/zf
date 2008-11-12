@@ -55,7 +55,7 @@
                 is set to UTC or GMT the option <code>'fix_dst'</code> will not be used</emphasis> because
                 these two timezones do not work with DST. When you change the timezone for this instance
                 again to a timezone which is not UTC or GMT the previous set 'fix_dst' option will be used
-                again for date "math". 
+                again for date "math".
             </para>
         </sect3>
 

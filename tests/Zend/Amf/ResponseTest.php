@@ -3,7 +3,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Amf_ResponseTest::main');
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 require_once 'Zend/Amf/Response.php';
 require_once 'Zend/Amf/Request.php';
 require_once 'Zend/Amf/Value/MessageBody.php';
@@ -159,7 +159,6 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
 
         // Load the expected response.
         $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/numberAmf3Response.bin');
-        file_put_contents('/tmp/test_amf3.log', $testResponse);
 
         // Check that the response matches the expected serialized value
         $this->assertEquals($mockResponse, $testResponse);
@@ -492,6 +491,26 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mockResponse, $testResponse);
     }
 
+    /**
+     * Check to make sure that we can place arrays in arrays.
+     *
+     * @group	ZF-4712
+     */
+    public function testPhpNestedArraySerializedToAmf0Array()
+    {
+        $data = array("items"=>array("a","b"));
+        $newBody = new Zend_Amf_Value_MessageBody('/1/onResult',null,$data);
+        $this->_response->setObjectEncoding(0x00);
+        $this->_response->addAmfBody($newBody);
+        $this->_response->finalize();
+        $testResponse = $this->_response->getResponse();
+        // Load the expected response.
+        $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/nestedArrayAmf0Response.bin');
+        // Check that the response matches the expected serialized value
+        $this->assertEquals($mockResponse, $testResponse);
+
+    }
+
     public function testPhpStringArraySerializedToAmf0MixedArray()
     {
         $data = array("one" =>"one", "two" => "two");
@@ -671,7 +690,7 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
 
     public function testZendDateSerializedToAmf0Date()
     {
-        $date = new Zend_Date('October 23, 1978');
+        $date = new Zend_Date('October 23, 1978', null, 'en_US');
         $date->set('4:20:00',Zend_Date::TIMES);
 
         $newBody = new Zend_Amf_Value_MessageBody('/1/onResult',null,$date);

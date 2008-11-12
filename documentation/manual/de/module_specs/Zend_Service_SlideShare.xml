@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.service.slideshare">
 
     <title>Einführung</title>
@@ -8,7 +8,7 @@
         <ulink url="http://www.slideshare.net/">slideshare.net</ulink> Web Service für das
         Online-Hosten von Slideshows zu interagieren. Mit dieser Komponente kann eine Slideshow
         die in dieser Website gehostet wird in einer Website eingebettet und sogar neue
-        Slideshows zum eigenen Account hochgeladen werden. 
+        Slideshows zum eigenen Account hochgeladen werden.
     </para>
 
     <sect2 id="zend.service.slideshare.basicusage">

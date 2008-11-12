@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11455 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
@@ -361,7 +361,7 @@ echo 'This is never cached ('.time().').';
             <code>call_user_func_array()</code> en PHP : <programlisting role="php"><![CDATA[
 $cache->call('veryExpensiveFunc', $params);
 
-// $params est dans un tableau par exemple, pour appeler 
+// $params est dans un tableau par exemple, pour appeler
 // (avec mise en cache) : veryExpensiveFunc(1, 'foo', 'bar')
 // vous devriez utiliser
 $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'));
@@ -511,7 +511,7 @@ $res = $cache->foobar2('1', '2');
             maître". C'est vraiment intéressant, par exemple, dans les problématiques de configuration ou de
             templates.</para>
 
-            <para>Pour l'instant, vous avez un fichier de configuration XML qui est parsé par une fonction qui retourne
+            <para>Par exemple, vous avez un fichier de configuration XML qui est parsé par une fonction, celle-ci retourne
             un "objet config" (comme avec <code>Zend_Config</code>). Avec <code>Zend_Cache_Frontend_File</code>, vous
             pouvez stocker l'objet config dans le cache (pour éviter d'analyser le fichier de configuration XML chaque
             fois) mais avec une sorte de forte dépendance au fichier maître. Ainsi si le fichier XML de configuration

@@ -901,7 +901,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -932,7 +932,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -966,7 +966,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -1000,7 +1000,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -1033,7 +1033,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -1067,7 +1067,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -1274,7 +1274,7 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
             list($key,$val) = explode('=', $line, 2);
             $query[$key] = urldecode($val);
         }
-        $this->assertSame( 'cancel', $query['openid.mode'] );
+        $this->assertSame( 'id_res', $query['openid.mode'] );
         $url2 = parse_url($query['openid.user_setup_url']);
         $this->assertSame( 'www.test.com', $url2['host'] );
         $this->assertSame( '/server.php', $url2['path'] );
@@ -1588,6 +1588,48 @@ class Zend_OpenId_ProviderTest extends PHPUnit_Framework_TestCase
 
         // wrong openid_mode
         $this->assertFalse( $provider->handle(array('openid_mode'=>'wrong')) );
+    }
+
+    /**
+     * testing setOpEndpoint
+     *
+     */
+    public function testSetOpEndpoint()
+    {
+        $storage = new Zend_OpenId_Provider_Storage_File(dirname(__FILE__)."/_files/provider");
+        $provider = new Zend_OpenId_ProviderHelper(null, null, $this->_user, $storage);
+        $provider->setOpEndpoint("http://www.test.com/real_endpoint.php");
+
+        // OpenID 2.0 with SHA256
+        $_SERVER['SCRIPT_URI'] = "http://www.test.com/endpoint.php";
+        $response = new Zend_OpenId_ResponseHelper(true);
+        $storage->addAssociation(self::HANDLE, "sha256", pack("H*", '0102030405060708091011121314151617181920212223242526272829303132'), time() + 3660);
+        $this->assertTrue( $provider->respondToConsumer(array(
+                'openid_ns' => Zend_OpenId::NS_2_0,
+                'openid_assoc_handle' => self::HANDLE,
+                'openid_return_to' => 'http://www.test.com/test.php'
+            ), null, $response) );
+        $headers = $response->getHeaders();
+        $this->assertSame( 'Location', $headers[0]['name'] );
+        $url = parse_url($headers[0]['value']);
+        $this->assertSame( 'www.test.com', $url['host'] );
+        $this->assertSame( '/test.php', $url['path'] );
+        $ret = array();
+        foreach (explode('&', $url['query']) as $line) {
+            list($key,$val) = explode('=', $line, 2);
+            $ret[$key] = urldecode($val);
+        }
+        $this->assertSame( 'id_res', $ret['openid.mode'] );
+        $this->assertSame( 'http://www.test.com/test.php', $ret['openid.return_to'] );
+        $this->assertSame( self::HANDLE, $ret['openid.assoc_handle'] );
+        $this->assertTrue( isset($ret['openid.response_nonce']) );
+        $this->assertTrue( isset($ret['openid.signed']) );
+        $this->assertTrue( isset($ret['openid.sig']) );
+        $this->assertSame( Zend_OpenId::NS_2_0, $ret['openid.ns'] );
+        $this->assertSame( "http://www.test.com/real_endpoint.php", $ret['openid.op_endpoint'] );
+        $this->assertTrue( $storage->getAssociation(self::HANDLE, $macFunc, $secret, $expires) );
+        $this->assertSame( 'sha256', $macFunc );
+        $storage->delAssociation(self::HANDLE);
     }
 }
 

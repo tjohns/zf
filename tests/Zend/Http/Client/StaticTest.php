@@ -1,6 +1,6 @@
 <?php
 
-require_once "Zend/TestHelper.php";
+require_once realpath(dirname(__FILE__) . '/../../../') . '/TestHelper.php';
 
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -344,5 +344,28 @@ class Zend_Http_Client_StaticTest extends PHPUnit_Framework_TestCase
 				// We're ok!
 			}
 		}
+	}
+	
+	/**
+	 * Test that configuration options are passed to the adapter after the
+	 * adapter is instantiated
+	 * 
+	 * @link http://framework.zend.com/issues/browse/ZF-4557
+	 */
+	public function testConfigPassToAdapterZF4557()
+	{
+	    require_once 'Zend/Http/Client/Adapter/Test.php';
+	    $adapter = new Zend_Http_Client_Adapter_Test();
+	    
+	    // test that config passes when we set the adapter
+	    $this->client->setConfig(array('param' => 'value1'));
+	    $this->client->setAdapter($adapter);
+	    $adapterCfg = $this->getObjectAttribute($adapter, 'config');
+	    $this->assertEquals('value1', $adapterCfg['param']);
+	    
+	    // test that adapter config value changes when we set client config
+	    $this->client->setConfig(array('param' => 'value2'));
+	    $adapterCfg = $this->getObjectAttribute($adapter, 'config');
+	    $this->assertEquals('value2', $adapterCfg['param']);
 	}
 }

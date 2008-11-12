@@ -363,6 +363,32 @@ class Zend_Config implements Countable, Iterator
     }
     
     /**
+     * Get the current extends
+     *
+     * @return array
+     */
+    public function getExtends()
+    {
+        return $this->_extends;
+    }
+    
+    /**
+     * Set an extend for Zend_Config_Writer
+     *
+     * @param  string $extendingSection
+     * @param  string $extendedSection
+     * @return void
+     */
+    public function setExtend($extendingSection, $extendedSection = null)
+    {
+        if ($extendedSection === null && isset($this->_extends[$extendingSection])) {
+            unset($this->_extends[$extendingSection]);
+        } else if ($extendedSection !== null) {
+            $this->_extends[$extendingSection] = $extendedSection;
+        }
+    }
+    
+    /**
      * Throws an exception if $extendingSection may not extend $extendedSection,
      * and tracks the section extension if it is valid.
      *

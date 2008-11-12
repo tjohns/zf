@@ -53,34 +53,34 @@
             <code>Zend_Search_Lucene::FORMAT_2_1</code> oder <code>Zend_Search_Lucene::FORMAT_2_3</code>
             Konstante entgegennimmt:
             <itemizedlist>
-                <listitem> 
+                <listitem>
                     <para>
-                        <code>Zend_Search_Lucene::FORMAT_2_1</code> macht eigentlich gar nichts da 
+                        <code>Zend_Search_Lucene::FORMAT_2_1</code> macht eigentlich gar nichts da
                         pre-2.1 Indezes automatisch in das 2.1 Format konvertiert werden.
-                    </para> 
-                </listitem> 
-                <listitem> 
+                    </para>
+                </listitem>
+                <listitem>
                     <para>
                          <code>Zend_Search_Lucene::FORMAT_2_3</code> erzwingt die Konvertierung ins 2.3 Format.
-                    </para> 
-                </listitem> 
-            </itemizedlist> 
-        </para> 
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
 
         <para>
-            Rückwärts Konvertierungen werden nicht unterstützt. 
-        </para> 
+            Rückwärts Konvertierungen werden nicht unterstützt.
+        </para>
 
-        <note> 
-            <title>Wichtig!</title> 
-            <para> 
+        <note>
+            <title>Wichtig!</title>
+            <para>
                 Sobald Indezes in eine höhere Version konvertiert wurden können Sie nicht zurück konvertiert
                 werden. Deswegen sollte man ein Backup der Indezes machen wenn man plant zu einer höheren
                 Version zu migrieren, man aber die Möglichkeit haben will wieder zurückzugehen.
-            </para> 
-        </note> 
+            </para>
+        </note>
 
-    </sect2> 
+    </sect2>
 
     <sect2 id="zend.search.lucene.advanced.static">
         <title>Den Index als statische Eigenschaft verwenden</title>

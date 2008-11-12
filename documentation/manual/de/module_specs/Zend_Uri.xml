@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.uri.chapter">
   <title>Zend_Uri</title>
 
@@ -110,6 +110,44 @@ $valid = Zend_Uri::check('http://uri.in.question');
         <code>Zend_Uri::check()</code> gibt ein Boolean zurück, was einfacher ist, als
         <code>Zend_Uri::factory()</code> zu verwenden und eine Ausnahme abzufangen.
     </para>
+
+    <sect3 id="zend.uri.validation.allowunwise">
+        <title>"Unwise" Zeichen in URIs erlauben</title>
+
+        <para>
+            Standardmäßig wird Zend_Uri die folgenden Zeichen nicht akzepzieren, da Sie durch die RFC als
+            "unwise" definiert und deshalb ungültig sind: <code>"{", "}", "|", "\", "^", "`"</code>.
+            Trotzdem, akzeptieren viele Implementierungen diese Zeichen als Gültig.
+        </para>
+
+        <para>
+            Zend_Uri kann so eingestellt werden das es diese "unwise" Zeichen akzeptiert indem die
+            'allow_unwise' Option auf ein boolsches TRUE gesetzt wird, durch Verwendung der
+            Zend_Uri::setConfig() Methode:
+        </para>
+
+        <example id="zend.uri.validation.allowunwise.example-1">
+            <title>Spezielle Zeichen in URIs erlauben</title>
+            <programlisting role="php"><![CDATA[
+// Normal würde das false zurückgeben:
+$valid = Zend_Uri::check('http://example.com/?q=this|that'); // Enthält '|' Symbol
+
+// Trotzdem kann man diese "unwise" Zeichen erlauben
+Zend_Uri::setConfig(array('allow_unwise' => true));
+$valid = Zend_Uri::check('http://example.com/?q=this|that'); // Gibt 'true' zurück
+
+// Setzt den Wert 'allow_unwise' auf das Standardmäßige FALSE zurück
+Zend_Uri::setConfig(array('allow_unwise' => false));
+]]>
+            </programlisting>
+        </example>
+
+        <note><para>
+            <code>Zend_Uri::setConfig()</code> setzt Konfigurationsoptionen global. Es wird empfohlen die
+            'allow_unwise' Option auf 'false' zurückzusetzen wie im obigen Beispiel, solange man unwise
+            Zeichen immer global erlauben will.
+        </para></note>
+    </sect3>
   </sect2>
 
   <sect2 id="zend.uri.instance-methods">

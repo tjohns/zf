@@ -128,14 +128,14 @@ class Zend_Pdf_Page
      *
      * @var Zend_Pdf_Element_Reference
      */
-    private $_pageDictionary;
+    protected $_pageDictionary;
 
     /**
      * PDF objects factory.
      *
      * @var Zend_Pdf_ElementFactory_Interface
      */
-    private $_objFactory = null;
+    protected $_objFactory = null;
 
     /**
      * Flag which signals, that page is created separately from any PDF document or
@@ -143,28 +143,28 @@ class Zend_Pdf_Page
      *
      * @var boolean
      */
-    private $_attached;
+    protected $_attached;
 
     /**
      * Stream of the drawing instractions.
      *
      * @var string
      */
-    private $_contents = '';
+    protected $_contents = '';
 
     /**
      * Current style
      *
      * @var Zend_Pdf_Style
      */
-    private $_style = null;
+    protected $_style = null;
 
     /**
      * Counter for the "Save" operations
      *
      * @var integer
      */
-    private $_saveCount = 0;
+    protected $_saveCount = 0;
 
     /**
      * Safe Graphics State semafore
@@ -175,21 +175,21 @@ class Zend_Pdf_Page
      *
      * @var boolean
      */
-    private $_safeGS;
+    protected $_safeGS;
 
     /**
      * Current font
      *
      * @var Zend_Pdf_Resource_Font
      */
-    private $_font = null;
+    protected $_font = null;
 
     /**
      * Current font size
      *
      * @var float
      */
-    private $_fontSize;
+    protected $_fontSize;
 
     /**
      * Object constructor.
@@ -356,7 +356,7 @@ class Zend_Pdf_Page
      * @param Zend_Pdf_Resource $resource
      * @return string
      */
-    private function _attachResource($type, Zend_Pdf_Resource $resource)
+    protected function _attachResource($type, Zend_Pdf_Resource $resource)
     {
         // Check that Resources dictionary contains appropriate resource set
         if ($this->_pageDictionary->Resources->$type === null) {
@@ -390,7 +390,7 @@ class Zend_Pdf_Page
      *
      * @param string $procSetName
      */
-    private function _addProcSet($procSetName)
+    protected function _addProcSet($procSetName)
     {
         // Check that Resources dictionary contains ProcSet entry
         if ($this->_pageDictionary->Resources->ProcSet === null) {
@@ -629,13 +629,13 @@ class Zend_Pdf_Page
      */
     public function setAlpha($alpha, $mode = 'Normal')
     {
-    	if (!in_array($mode, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge',
-    	                           'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion'))) {
-    	   throw new Zend_Pdf_Exception('Unsupported transparency mode.');
-    	}
-    	if (!is_numeric($alpha)  ||  $alpha < 0  ||  $alpha > 1) {
-    		throw new Zend_Pdf_Exception('Alpha value must be numeric between 0 (transparent) and 1 (opaque).');
-    	}
+        if (!in_array($mode, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge',
+                                   'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion'))) {
+            throw new Zend_Pdf_Exception('Unsupported transparency mode.');
+        }
+        if (!is_numeric($alpha)  ||  $alpha < 0  ||  $alpha > 1) {
+            throw new Zend_Pdf_Exception('Alpha value must be numeric between 0 (transparent) and 1 (opaque).');
+        }
 
         $this->_addProcSet('Text');
         $this->_addProcSet('PDF');

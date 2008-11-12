@@ -80,10 +80,10 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
         }
 
         if (null === self::$_meansEnglishAlphabet) {
-        	$this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
-        	self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
-        											array('ja')
-									                );
+            $this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
+            self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
+                                                    array('ja')
+                                                    );
         }
         
     }
@@ -103,11 +103,11 @@ class Zend_Filter_Alpha implements Zend_Filter_Interface
             // POSIX named classes are not supported, use alternative a-zA-Z match
             $pattern = '/[^a-zA-Z' . $whiteSpace . ']/';
         } else if (self::$_meansEnglishAlphabet) {
-        	//The Alphabet means english alphabet.
+            //The Alphabet means english alphabet.
             $pattern = '/[^a-zA-Z'  . $whiteSpace . ']/u';
         } else {
-        	//The Alphabet means each language's alphabet.
-        	$pattern = '/[^\p{L}' . $whiteSpace . ']/u';
+            //The Alphabet means each language's alphabet.
+            $pattern = '/[^\p{L}' . $whiteSpace . ']/u';
         }
 
         return preg_replace($pattern, '', (string) $value);

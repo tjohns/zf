@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AllTests.php 10573 2008-07-31 14:54:00Z matthew $
+ * @version    $Id$
  */
 
 // Call Zend_Captcha_FigletTest::main() if this source file is executed directly.
@@ -25,7 +25,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Captcha_FigletTest::main");
 }
 
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Form/Element/Captcha.php';
 require_once 'Zend/Captcha/Adapter.php';

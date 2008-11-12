@@ -66,7 +66,7 @@ class NewsController extends Zend_Controller_Action
 }
 ]]>
     </programlisting>
-    
+
     <para>
         Let's say that we want the <code>listAction()</code> to also be
         available in an XML format. Instead of creating a different action, we
@@ -217,7 +217,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
                 perform arbitrary logic that should occur. As an example,
                 the JSON context uses a callback to disable the ViewRenderer
                 when auto-JSON serialization is on.</para>
-                
+
                 <para>Post processing occurs during the action's
                 <code>postDispatch()</code> routine, and can be used to perform
                 arbitrary logic. As an example, the JSON context uses a callback
@@ -258,7 +258,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
 
             <listitem><para>
                 <code>hasContext($context)</code>: returns true if the context
-                exists, false otherwise.  
+                exists, false otherwise.
             </para></listitem>
 
             <listitem><para> <code>getContext($context)</code>: retrieve a
@@ -602,7 +602,7 @@ $contextSwitch->initContext();
             <listitem>
                 <para>
                     <code>setCallbacks($context, array $callbacks)</code>: set
-                    multiple callbacks for a given context. <code>$callbacks</code> 
+                    multiple callbacks for a given context. <code>$callbacks</code>
                     should be trigger/callback pairs. In actuality, the most callbacks
                     that can be registered are two, one for initialization and
                     one for post processing.
@@ -742,14 +742,14 @@ class CommentController extends Zend_Controller_Action
     public function viewAction()
     {
         // Pull a single comment to view.
-        // When AjaxContext detected, uses the comment/view.ajax.phtml 
+        // When AjaxContext detected, uses the comment/view.ajax.phtml
         // view script.
     }
 
     public function formAction()
     {
         // Render the "add new comment" form.
-        // When AjaxContext detected, uses the comment/form.ajax.phtml 
+        // When AjaxContext detected, uses the comment/form.ajax.phtml
         // view script.
     }
 
@@ -771,7 +771,7 @@ class CommentController extends Zend_Controller_Action
                 '/comment/process/format/json'. (Or you can pass the parameter
                 via query string: e.g., "?format=json".)
             </para>
-                
+
             <para>
                 Assuming your library passes the 'X-Requested-With:
                 XmlHttpRequest' header, these actions will then return the

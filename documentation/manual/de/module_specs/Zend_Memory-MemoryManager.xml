@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.memory.memory-manager">
     <title>Memory Manager</title>
 
@@ -145,7 +145,8 @@ function foo()
 
     ...
     // $memObject1 wird hier zerstört
-    // Aber das $memObject3 Objekt ist noch immer referenziert durch $memList und ist nicht zerstört
+    // Aber das $memObject3 Objekt ist noch immer referenziert
+    // durch $memList und ist nicht zerstört
 }
 ]]>
                 </programlisting>

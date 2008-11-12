@@ -24,7 +24,7 @@
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 /**
  * @see Zend_Uri
@@ -187,6 +187,7 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
      * Test that setQuery() can handle unencoded query parameters (as other
      * browsers do), ZF-1934
      *
+     * @link   http://framework.zend.com/issues/browse/ZF-1934
      * @return void
      */
     public function testUnencodedQueryParameters()
@@ -205,6 +206,64 @@ class Zend_Uri_HttpTest extends PHPUnit_Framework_TestCase
          $this->assertEquals('id=123&url=http%3A%2F%2Fexample.com%2F%3Fbar%3Dfoo+baz', $parts['query']);
     }
 
+    /**
+     * Test that unwise characters in the query string are not valid
+     *
+     */
+    public function testExceptionUnwiseQueryString()
+    {
+        $unwise = array(
+            'http://example.com/?q={',
+            'http://example.com/?q=}',
+            'http://example.com/?q=|',
+            'http://example.com/?q=\\',
+            'http://example.com/?q=^',
+            'http://example.com/?q=`',
+        ); 
+        
+        foreach ($unwise as $uri) {
+            $this->assertFalse(Zend_Uri::check($uri), "failed for URI $uri");
+        }
+    }
+    
+    /**
+     * Test that after setting 'allow_unwise' to true unwise characters are
+     * accepted
+     *
+     */
+    public function testAllowUnwiseQueryString()
+    {
+        $unwise = array(
+            'http://example.com/?q={',
+            'http://example.com/?q=}',
+            'http://example.com/?q=|',
+            'http://example.com/?q=\\',
+            'http://example.com/?q=^',
+            'http://example.com/?q=`',
+        ); 
+        
+        Zend_Uri::setConfig(array('allow_unwise' => true));
+        
+        foreach ($unwise as $uri) {
+            $this->assertTrue(Zend_Uri::check($uri), "failed for URI $uri");
+        }
+        
+        Zend_Uri::setConfig(array('allow_unwise' => false));
+    }
+    
+    /**
+     * Test that an extremely long URI does not break things up
+     * 
+     * @link http://framework.zend.com/issues/browse/ZF-3712
+     */
+    public function testVeryLongUriZF3712()
+    {
+        $uri = file_get_contents(dirname(realpath(__FILE__)) . DIRECTORY_SEPARATOR .
+           '_files' . DIRECTORY_SEPARATOR . 'testVeryLongUriZF3712.txt');
+        
+        $this->_testValidUri($uri);
+    }
+    
     /**
      * Test a known valid URI
      *

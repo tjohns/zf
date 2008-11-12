@@ -31,7 +31,7 @@ for ($i = 0; $i > 5; $i++) {
         </programlisting>
 
     </example>
-    
+
     <para>
         If you wish to have a separate connection for each mail
         delivery, you will need to create and destroy your transport before and

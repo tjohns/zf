@@ -61,18 +61,18 @@ class Zend_Validate_File_ExcludeExtension extends Zend_Validate_File_Extension
     public function isValid($value, $file = null)
     {
         // Is file readable ?
-        if (!@is_readable($value)) {
-            $this->_throw($file, self::NOT_FOUND);
-            return false;
+        require_once 'Zend/Loader.php';
+        if (!Zend_Loader::isReadable($value)) {
+            return $this->_throw($file, self::NOT_FOUND);
         }
 
         if ($file !== null) {
             $info['extension'] = substr($file['name'], strrpos($file['name'], '.') + 1);
         } else {
-            $info = @pathinfo($value);
+            $info = pathinfo($value);
         }
 
-        $extensions = $this->getExtension(true);
+        $extensions = $this->getExtension();
 
         if ($this->_case and (!in_array($info['extension'], $extensions))) {
             return true;
@@ -89,7 +89,6 @@ class Zend_Validate_File_ExcludeExtension extends Zend_Validate_File_Extension
             }
         }
 
-        $this->_throw($file, self::FALSE_EXTENSION);
-        return false;
+        return $this->_throw($file, self::FALSE_EXTENSION);
     }
 }

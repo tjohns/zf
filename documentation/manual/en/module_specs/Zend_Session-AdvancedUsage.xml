@@ -336,7 +336,7 @@ $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
 
 // may not work as expected before PHP 5.2.1
-$sessionNamespace->array['testKey'] = 1; 
+$sessionNamespace->array['testKey'] = 1;
 echo $sessionNamespace->array['testKey'];
 ]]>
             </programlisting>

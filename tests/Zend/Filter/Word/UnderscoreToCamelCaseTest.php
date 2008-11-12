@@ -1,7 +1,7 @@
 <?php
 // Call Zend_Filter_Word_UnderscoreToCamelCaseTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    require_once 'Zend/TestHelper.php';
+    require_once dirname(dirname(dirname(__FILE__))) . '/TestHelper.php';
     define("PHPUnit_MAIN_METHOD", "Zend_Filter_Word_UnderscoreToCamelCaseTest::main");
 }
 

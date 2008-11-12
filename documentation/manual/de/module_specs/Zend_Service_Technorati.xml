@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.service.technorati">
     <title>Zend_Service_Technorati</title>
 
@@ -27,7 +27,7 @@
             Technorati benötigt einen gültigen API Schlüssel zur Verwendung. Um einen eigenen API SChlüssel zu
             erhalten muss
             <ulink url="http://technorati.com/signup/">ein neuer Technorati Account erstellt werden</ulink>,
-            und anschließend die 
+            und anschließend die
             <ulink url="http://technorati.com/developers/apikey.html">API Schlüssel Sektion</ulink> besucht werden.
         </para>
         <note>
@@ -758,7 +758,7 @@ foreach ($resultSet as $result) {
             <title>Zend_Service_Technorati_KeyInfoResult</title>
             <para>
                 <code>Zend_Service_Technorati_KeyInfoResult</code> repräsentiert ein einzelnes Technorati KeyInfo
-                Abfrage Ergebnisobjekt. Es bietet Informationen über die eigene 
+                Abfrage Ergebnisobjekt. Es bietet Informationen über die eigene
                 <link linkend="zend.service.technorati.checking-api-daily-usage">tägliche Verwendung des Technorati API Schlüssels</link>.
             </para>
         </sect3>

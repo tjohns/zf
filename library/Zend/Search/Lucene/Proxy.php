@@ -77,7 +77,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      */
     public static function getActualGeneration(Zend_Search_Lucene_Storage_Directory $directory)
     {
-    	Zend_Search_Lucene::getActualGeneration($directory);
+        Zend_Search_Lucene::getActualGeneration($directory);
     }
 
     /**
@@ -88,7 +88,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      */
     public static function getSegmentFileName($generation)
     {
-    	Zend_Search_Lucene::getSegmentFileName($generation);
+        Zend_Search_Lucene::getSegmentFileName($generation);
     }
 
     /**
@@ -98,7 +98,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      */
     public function getFormatVersion()
     {
-    	return $this->_index->getFormatVersion();
+        return $this->_index->getFormatVersion();
     }
 
     /**
@@ -110,7 +110,7 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      */
     public function setFormatVersion($formatVersion)
     {
-    	$this->_index->setFormatVersion($formatVersion);
+        $this->_index->setFormatVersion($formatVersion);
     }
 
     /**
@@ -385,11 +385,27 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      * Returns IDs of all the documents containing term.
      *
      * @param Zend_Search_Lucene_Index_Term $term
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      * @return array
      */
-    public function termDocs(Zend_Search_Lucene_Index_Term $term)
+    public function termDocs(Zend_Search_Lucene_Index_Term $term, $docsFilter = null)
     {
-        return $this->_index->termDocs($term);
+        return $this->_index->termDocs($term, $docsFilter);
+    }
+
+    /**
+     * Returns documents filter for all documents containing term.
+     *
+     * It performs the same operation as termDocs, but return result as
+     * Zend_Search_Lucene_Index_DocsFilter object
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
+     * @return Zend_Search_Lucene_Index_DocsFilter
+     */
+    public function termDocsFilter(Zend_Search_Lucene_Index_Term $term, $docsFilter = null)
+    {
+        return $this->_index->termDocsFilter($term, $docsFilter);
     }
 
     /**
@@ -397,11 +413,12 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      * Return array structure: array( docId => freq, ...)
      *
      * @param Zend_Search_Lucene_Index_Term $term
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      * @return integer
      */
-    public function termFreqs(Zend_Search_Lucene_Index_Term $term)
+    public function termFreqs(Zend_Search_Lucene_Index_Term $term, $docsFilter = null)
     {
-        return $this->_index->termFreqs($term);
+        return $this->_index->termFreqs($term, $docsFilter);
     }
 
     /**
@@ -409,11 +426,12 @@ class Zend_Search_Lucene_Proxy implements Zend_Search_Lucene_Interface
      * Return array structure: array( docId => array( pos1, pos2, ...), ...)
      *
      * @param Zend_Search_Lucene_Index_Term $term
+     * @param Zend_Search_Lucene_Index_DocsFilter|null $docsFilter
      * @return array
      */
-    public function termPositions(Zend_Search_Lucene_Index_Term $term)
+    public function termPositions(Zend_Search_Lucene_Index_Term $term, $docsFilter = null)
     {
-        return $this->_index->termPositions($term);
+        return $this->_index->termPositions($term, $docsFilter);
     }
 
     /**

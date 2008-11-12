@@ -106,7 +106,7 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
             $token = new Zend_Search_Lucene_Analysis_Token(
                                       substr($this->_input,
                                              $termStartPosition,
-                                             $this->_position - 
+                                             $this->_position -
                                              $termStartPosition),
                                       $termStartPosition,
                                       $this->_position);
@@ -228,7 +228,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
     <sect2 id="zend.search.lucene.extending.scoring">
         <title>Scoring Algorithms</title>
         <para>
-            The score of a document <literal>d</literal> for a query <literal>q</literal> 
+            The score of a document <literal>d</literal> for a query <literal>q</literal>
             is defined as follows:
         </para>
 

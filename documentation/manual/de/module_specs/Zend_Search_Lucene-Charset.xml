@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.search.lucene.charset">
     <title>Zeichensätze</title>
 
@@ -81,7 +81,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             <title/>
             <para>
                 Die UTF-8 kompatiblen Analysatoren wurden in ZF 1.5 verbessert. Frühere Versionen der
-                Analysatoren nahmen an das alle nicht-Ascii Zeichen Buchstaben sind. Die neuen Analysatoren 
+                Analysatoren nahmen an das alle nicht-Ascii Zeichen Buchstaben sind. Die neuen Analysatoren
                 haben ein genaueres Verhalten.
             </para>
             <para>
@@ -112,19 +112,19 @@ if (@preg_match('/\pL/u', 'a') == 1) {
 ]]>
             </programlisting>
         </para>
-        
+
         <para>
             Groß-/Kleinschreibungs-unabhängige Versionen von UTF-8 kompatiblen Analysatoren erfordern das die
             <ulink url="http://www.php.net/manual/en/ref.mbstring.php">mbstring</ulink> Erweiterung
             aktiviert ist.
         </para>
-        
+
         <para>
             Wenn man die mbstring Erweiterung nicht einschalten will, und trotzdem Groß-/Kleinschreibungs
             unabhängige Suchen benötigt, kann die folgende Vorgehensweise verwendet werden: Quelldaten
             vor der Indizierung und Abfragestring for der Suche normalisieren indem diese zur
             Kleinschreibung konvertiert werden:
-        
+
             <programlisting role="php"><![CDATA[
 
 // Indizierung

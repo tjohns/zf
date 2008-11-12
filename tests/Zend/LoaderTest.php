@@ -28,7 +28,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 /**
  * Test helper
  */
-require_once 'Zend/TestHelper.php';
+require_once dirname(__FILE__) . '/../TestHelper.php';
 
 /**
  * Zend_Loader
@@ -347,11 +347,15 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
+     * @todo   Determine how to get the shell_exec to work on windows
      * @see    http://framework.zend.com/issues/browse/ZF-2463
+     * @return void
      */
     public function testLoaderAutoloadDoesNotHideParseError()
     {
+        if (strstr($_SERVER['OS'], 'Win')) {
+            $this->markTestSkipped(__METHOD__ . ' does not work on Windows');
+        }
         $command = 'php -d include_path='
             . escapeshellarg(get_include_path())
             . ' Zend/Loader/AutoloadDoesNotHideParseError.php 2>&1';

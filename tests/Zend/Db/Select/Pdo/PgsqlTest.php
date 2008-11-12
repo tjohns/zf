@@ -18,7 +18,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PgsqlTest.php 4969 2007-05-25 19:16:50Z darby $
+ * @version    $Id$
  */
 
 
@@ -43,6 +43,19 @@ class Zend_Db_Select_Pdo_PgsqlTest extends Zend_Db_Select_TestCommon
     public function getDriver()
     {
         return 'Pdo_Pgsql';
+    }
+
+    /**
+     * This test must be done on string field
+     */
+    protected function _selectColumnWithColonQuotedParameter ()
+    {
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $select = $this->_db->select()
+                            ->from('zfproducts')
+                            ->where($product_name . ' = ?', "as'as:x");
+        return $select;
     }
 
     public function testSelectGroupByExpr()

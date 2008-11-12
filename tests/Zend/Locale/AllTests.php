@@ -30,7 +30,8 @@ if (!defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE')) {
      * Read in user-defined test configuration if available; otherwise, read default test configuration.
      * This facilitates running "php AllTests.php" in this subdirectory or "phpunit Zend_Locale_AllTests".
      */
-    $_test_configuration = 'Zend/TestConfiguration.php';
+    $_test_configuration = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..'
+        . DIRECTORY_SEPARATOR .  'TestConfiguration.php';
     if (is_readable($_test_configuration)) {
         include_once $_test_configuration;
     } else if (is_readable("$_test_configuration.dist")) {
@@ -38,10 +39,8 @@ if (!defined('TESTS_ZEND_LOCALE_FORMAT_SETLOCALE')) {
     }
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
-error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 // define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
 
 require_once 'Zend/Locale/DataTest.php';

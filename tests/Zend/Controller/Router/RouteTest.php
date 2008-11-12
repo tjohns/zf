@@ -5,6 +5,15 @@
  * @subpackage UnitTests
  */
 
+/**
+ * Test helper
+ */
+require_once dirname(__FILE__) . '/../../../TestHelper.php';
+
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Controller_Router_RouteTest::main');
+}
+
 /** @see Zend_Controller_Request_Http */
 require_once 'Zend/Controller/Request/Http.php';
 
@@ -511,26 +520,31 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
      * Test guarding performance. Test may be failing on slow systems and shouldn't be failing on production.
      * This test is not critical in nature - it allows keeping changes performant.
      */
-    public function testRoutePerformance()
-    {
-        $count = 10000;
-        $expectedTime = 1;
-
-        $info = "This test may be failing on slow systems and shouldn't be failing on production. Tests if " . ($count / 10) . " complicated routes can be matched in a tenth of a second. Actual test matches " . $count . " times to make the test more reliable.";
-
-        $route = new Zend_Controller_Router_Route('archives/:year/:month/*', array('controller' => 'archive'));
-
-        $time_start = microtime(true);
-
-        for ($i = 1; $i <= $count; $i++) {
-            $values = $route->match('archives/2006/' . $i . '/controller/test/year/' . $i . '/sort/author');
-        }
-
-        $time_end = microtime(true);
-        $time = $time_end - $time_start;
-
-        $this->assertLessThan($expectedTime, $time, $info);
-    }
+    
+    /**
+	 * This test is commented out because performance testing should be done separately from unit
+	 * testing. It will be ported to a performance regression suite when such a suite is available.
+	 */
+//    public function testRoutePerformance()
+//    {
+//        $count = 10000;
+//        $expectedTime = 1;
+//
+//        $info = "This test may be failing on slow systems and shouldn't be failing on production. Tests if " . ($count / 10) . " complicated routes can be matched in a tenth of a second. Actual test matches " . $count . " times to make the test more reliable.";
+//
+//        $route = new Zend_Controller_Router_Route('archives/:year/:month/*', array('controller' => 'archive'));
+//
+//        $time_start = microtime(true);
+//
+//        for ($i = 1; $i <= $count; $i++) {
+//            $values = $route->match('archives/2006/' . $i . '/controller/test/year/' . $i . '/sort/author');
+//        }
+//
+//        $time_end = microtime(true);
+//        $time = $time_end - $time_start;
+//
+//        $this->assertLessThan($expectedTime, $time, $info);
+//    }
 
     public function testForZF2543()
     {
@@ -588,4 +602,8 @@ class Zend_Controller_Router_RouteTest extends PHPUnit_Framework_TestCase
     }
     
 
+}
+
+if (PHPUnit_MAIN_METHOD == 'Zend_Controller_Router_RouteTests::main') {
+    Zend_Controller_Router_RouteTests::main();
 }
