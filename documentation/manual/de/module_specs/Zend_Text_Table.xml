@@ -3,10 +3,10 @@
     <title>Zend_Text_Table</title>
     <para>
         <code>Zend_Text_Table</code> ist eine Komponente für die Erstellung von Text-basierenden Tabellen
-        on the fly mit unterschiedlichen Dekoratoren. Das kann hilfriech sein, wenn man entweder
-        Strukturierte Daten in einem Textemail verwenden will, welche normalerweise Mono-Spaced Schriftarten
-        verwenden, oder um Tabelleninformationen in einer CLI Anwendung darzustellen.
-        <code>Zend_Text_Table</code> unterstützt mehrzeilige Zeilen, Colspan und auch Ausrichtung.
+        welche mit unterschiedlichen Dekoratoren arbeitet. Das kann hilfreich sein, wenn man entweder
+        strukturierte Daten in einer Textemail verwenden will, welche normalerweise mit monospaced Schriftarten
+        geschrieben sind, oder um Tabelleninformationen in einer CLI Anwendung darzustellen.
+        <code>Zend_Text_Table</code> unterstützt mehrzeilige Spalten, Colspan und auch Ausrichtung.
     </para>
     <note>
         <title>Kodierung</title>
