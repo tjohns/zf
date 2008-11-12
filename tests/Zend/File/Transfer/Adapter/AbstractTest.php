@@ -152,7 +152,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowAddingValidatorInstance()
     {
-        $validator = new Zend_Validate_File_Count(1, 1);
+        $validator = new Zend_Validate_File_Count(array('min' => 1, 'max' => 1));
         $this->adapter->addValidator($validator);
         $test = $this->adapter->getValidator('Zend_Validate_File_Count');
         $this->assertSame($validator, $test);
