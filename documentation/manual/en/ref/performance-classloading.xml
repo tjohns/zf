@@ -88,7 +88,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
                 Another optimization is to combine paths. For instance, Zend
                 Framework follows PEAR naming conventions; thus, if you are
                 using PEAR libraries (or libraries from another framework or
-                component library that follows PEAR CS), try and put all of thse
+                component library that follows PEAR CS), try to put all of these
                 libraries on the same include_path. This can often be achieved
                 by something as simple as symlinking one or more libraries into
                 a common directory.
@@ -197,7 +197,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
             your library code is still performing require_once calls -- which is
             precisely the case with Zend Framework. So, the question is: how can
             you eliminate those require_once calls in order to maximize
-            autloader performance?
+            autoloader performance?
         </para>
 
         <sect3 id="performance.classloading.striprequires.sed">
