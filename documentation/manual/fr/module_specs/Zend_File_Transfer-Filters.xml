@@ -83,7 +83,7 @@ $upload->addFilter('Rename', 'C:\image\uploads');
 
 // Paramètre un nouveau dossier de destination
 // et surcharge pour les fichiers existants
-$upload->addFilter('Size', array('C:\image\uploads', 'overwrite' => true));
+$upload->addFilter('Rename', array('target' => 'C:\picture\uploads', 'overwrite' => true));
 ]]></programlisting>
         </example>
 
