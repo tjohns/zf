@@ -39,6 +39,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                  . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                  . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                  . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                                 . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                  . 'name="MyService" targetNamespace="http://localhost/MyService.php"/>' );
     }
 
@@ -54,6 +55,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                  . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                  . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                  . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                                 . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                  . 'name="MyService" targetNamespace="http://localhost/MyNewService.php"/>' );
     }
 
@@ -75,6 +77,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<message name="myMessage">'
                                .   '<part name="parameter1" type="xsd:int"/>'
@@ -97,6 +100,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                           . '</definitions>' );
@@ -119,6 +123,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType">'
                                .   '<operation name="operation1"/>'
@@ -149,6 +154,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                                . '<binding name="MyServiceBinding" type="myPortType"/>'
@@ -182,6 +188,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                                . '<binding name="MyServiceBinding" type="myPortType">'
@@ -232,6 +239,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                                . '<binding name="MyServiceBinding" type="myPortType">'
@@ -269,6 +277,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                                . '<binding name="MyServiceBinding" type="myPortType">'
@@ -310,6 +319,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                                . '<binding name="MyServiceBinding" type="myPortType">'
@@ -343,6 +353,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType"/>'
                                . '<binding name="MyServiceBinding" type="myPortType"/>'
@@ -369,6 +380,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<portType name="myPortType">'
                                .   '<documentation>This is a description for Port Type node.</documentation>'
@@ -387,6 +399,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php"/>' );
     }
 
@@ -404,6 +417,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php"/>' );
     }
 
@@ -423,6 +437,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php"/>' );
 
         $wsdl->dump(dirname(__FILE__) . '/_files/dumped.wsdl');
@@ -435,6 +450,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php"/>' );
 
         unlink(dirname(__FILE__) . '/_files/dumped.wsdl');
@@ -501,15 +517,17 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    function testAddingSameComplexTypeMoreThanOnceThrowsException()
+    function testAddingSameComplexTypeMoreThanOnceIsIgnored()
     {
         try {
             $wsdl = new Zend_Soap_Wsdl('MyService', 'http://localhost/MyService.php');
             $wsdl->addType('Zend_Soap_Wsdl_Test');
             $wsdl->addType('Zend_Soap_Wsdl_Test');
-            $this->fail();
+            $types = $wsdl->getTypes();
+            $this->assertEquals(1, count($types));
+            $this->assertEquals(array("Zend_Soap_Wsdl_Test"), $types);
         } catch(Zend_Soap_Wsdl_Exception $e) {
-
+            $this->fail();
         }
     }
 
@@ -536,6 +554,7 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
                                . 'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
                                . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                                . 'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+                               . 'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
                                . 'name="MyService" targetNamespace="http://localhost/MyService.php">'
                                . '<types>'
                                .   '<xsd:schema targetNamespace="http://localhost/MyService.php">'
@@ -582,4 +601,3 @@ class Zend_Soap_Wsdl_Test {
      */
     public $var2;
 }
-

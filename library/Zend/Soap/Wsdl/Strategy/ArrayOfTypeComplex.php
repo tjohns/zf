@@ -52,8 +52,12 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
             ));
         }
 
-        // The following blocks define the Array of Object structure
-        $xsdComplexTypeName = $this->_addArrayOfComplexType($singularType, $type);
+        if($nestingLevel == 1) {
+            // The following blocks define the Array of Object structure
+            $xsdComplexTypeName = $this->_addArrayOfComplexType($singularType, $type);
+        } else {
+            $xsdComplexTypeName = $singularType;
+        }
 
         // The array for the objects has been created, now build the object definition:
         $this->_addObjectComplexType($singularType);
@@ -78,7 +82,7 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
 
         $xsdAttribute = $dom->createElement("xsd:attribute");
         $xsdAttribute->setAttribute("ref", "soapenc:arrayType");
-        $xsdAttribute->setAttribute("wsdl:arrayType", sprintf("typens:%s[]", $singularType));
+        $xsdAttribute->setAttribute("wsdl:arrayType", sprintf("tns:%s[]", $singularType));
         $xsdRestriction->appendChild($xsdAttribute);
 
         $this->getContext()->getSchema()->appendChild($complexType);
@@ -94,8 +98,7 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
         // Override strategy to stay DRY
         $objectStrategy = new Zend_Soap_Wsdl_Strategy_DefaultComplexType();
         $this->getContext()->setComplexTypeStrategy($objectStrategy);
-        $objectStrategy->setContext($this->getContext());
-        $objectStrategy->addComplexType($singularType);
+        $this->getContext()->addComplexType($singularType);
 
         // Reset strategy
         $this->getContext()->setComplexTypeStrategy($complexStrategy);

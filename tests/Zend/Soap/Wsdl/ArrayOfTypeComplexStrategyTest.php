@@ -67,7 +67,7 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
         $wsdl = $this->wsdl->toXML();
 
         $this->assertContains(
-            '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexTest"><xsd:complexContent><xsd:restriction base="soapenc:Array"><xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Zend_Soap_Wsdl_ComplexTest[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
+            '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexTest"><xsd:complexContent><xsd:restriction base="soapenc:Array"><xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:Zend_Soap_Wsdl_ComplexTest[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
             $wsdl
         );
 
@@ -94,7 +94,7 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
         $wsdl = $this->wsdl->toXML();
 
         $this->assertContains(
-            '<xsd:complexType name="ArrayOfComplexObjectStructure"><xsd:complexContent><xsd:restriction base="soapenc:Array"><xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ComplexObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
+            '<xsd:complexType name="ArrayOfComplexObjectStructure"><xsd:complexContent><xsd:restriction base="soapenc:Array"><xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:ComplexObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
             $wsdl
         );
 
@@ -112,7 +112,7 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
         $wsdl = $this->wsdl->toXML();
 
         $this->assertContains(
-            '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure"><xsd:complexContent><xsd:restriction base="soapenc:Array"><xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ComplexObjectWithObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
+            '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure"><xsd:complexContent><xsd:restriction base="soapenc:Array"><xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="tns:ComplexObjectWithObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
             $wsdl
         );
 
@@ -124,6 +124,48 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
         $this->assertContains(
             '<xsd:complexType name="Zend_Soap_Wsdl_ComplexTest"><xsd:all><xsd:element name="var" type="xsd:int"/></xsd:all></xsd:complexType>',
             $wsdl
+        );
+    }
+
+    /**
+     * @group ZF-4937
+     */
+    public function testAddingTypesMultipleTimesIsSavedOnlyOnce()
+    {
+        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
+        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
+
+        $wsdl = $this->wsdl->toXML();
+
+        $this->assertEquals(1,
+            substr_count($wsdl, 'wsdl:arrayType="tns:ComplexObjectWithObjectStructure[]"')
+        );
+        $this->assertEquals(1,
+            substr_count($wsdl, '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure">')
+        );
+        $this->assertEquals(1,
+            substr_count($wsdl, '<xsd:complexType name="Zend_Soap_Wsdl_ComplexTest">')
+        );
+    }
+
+    /**
+     * @group ZF-4937
+     */
+    public function testAddingSingularThenArrayTypeIsRecognizedCorretly()
+    {
+        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure');
+        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
+
+        $wsdl = $this->wsdl->toXML();
+
+        $this->assertEquals(1,
+            substr_count($wsdl, 'wsdl:arrayType="tns:ComplexObjectWithObjectStructure[]"')
+        );
+        $this->assertEquals(1,
+            substr_count($wsdl, '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure">')
+        );
+        $this->assertEquals(1,
+            substr_count($wsdl, '<xsd:complexType name="Zend_Soap_Wsdl_ComplexTest">')
         );
     }
 }

@@ -12,6 +12,8 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /** Zend_Soap_AutoDiscover */
 require_once 'Zend/Soap/AutoDiscover.php';
 
+/** Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex */
+require_once "Zend/Soap/Wsdl/Strategy/ArrayOfTypeComplex.php";
 
 /**
  * Test cases for Zend_Soap_AutoDiscover
@@ -57,6 +59,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
               .              'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
               .              'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
               .              'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+              .              'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
               .              'name="Zend_Soap_AutoDiscover_Test" '
               .              'targetNamespace="' . $scriptUri . '">'
               .     '<portType name="Zend_Soap_AutoDiscover_TestPort">'
@@ -138,7 +141,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $name = $parts[0];
 
         $wsdl = '<?xml version="1.0"?>'.
-                '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="' . $scriptUri . '" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" name="' .$name. '" targetNamespace="' . $scriptUri . '">'.
+                '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="' . $scriptUri . '" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="' .$name. '" targetNamespace="' . $scriptUri . '">'.
                 '<portType name="' .$name. 'Port">'.
                 '<operation name="Zend_Soap_AutoDiscover_TestFunc"><input message="tns:Zend_Soap_AutoDiscover_TestFuncRequest"/><output message="tns:Zend_Soap_AutoDiscover_TestFuncResponse"/></operation>'.
                 '</portType>'.
@@ -190,7 +193,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $name = $parts[0];
 
         $wsdl = '<?xml version="1.0"?>'.
-                '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="' . $scriptUri . '" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" name="' .$name. '" targetNamespace="' . $scriptUri . '">'.
+                '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="' . $scriptUri . '" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="' .$name. '" targetNamespace="' . $scriptUri . '">'.
                 '<portType name="' .$name. 'Port">'.
                 '<operation name="Zend_Soap_AutoDiscover_TestFunc"><input message="tns:Zend_Soap_AutoDiscover_TestFuncRequest"/><output message="tns:Zend_Soap_AutoDiscover_TestFuncResponse"/></operation>'.
                 '<operation name="Zend_Soap_AutoDiscover_TestFunc2"><input message="tns:Zend_Soap_AutoDiscover_TestFunc2Request"/><output message="tns:Zend_Soap_AutoDiscover_TestFunc2Response"/></operation>'.
@@ -463,6 +466,32 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains("?wsdl", $uri);
         $this->assertEquals("http://localhost/my_script.php", $uri);
     }
+
+    /**
+     * @group ZF-4937
+     */
+    public function testComplexTypesThatAreUsedMultipleTimesAreRecoginzedOnce()
+    {
+        $server = new Zend_Soap_AutoDiscover('Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex');
+        $server->setClass('Zend_Soap_AutoDiscoverTestClass2');
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals(1,
+            substr_count($wsdlOutput, 'wsdl:arrayType="tns:Zend_Soap_AutoDiscoverTestClass1[]"'));
+        $this->assertEquals(1,
+            substr_count($wsdlOutput, '<xsd:complexType name="Zend_Soap_AutoDiscoverTestClass1">')
+        );
+        $this->assertEquals(1,
+            substr_count($wsdlOutput, '<xsd:complexType name="ArrayOfZend_Soap_AutoDiscoverTestClass1">')
+        );
+        $this->assertTrue(
+            substr_count($wsdlOutput, '<part name="test" type="tns:Zend_Soap_AutoDiscoverTestClass1"/>') >= 1
+        );
+    }
 }
 
 /* Test Functions */
@@ -620,5 +649,50 @@ class Zend_Soap_AutoDiscover_Test {
     static function testFunc4()
     {
         return "I'm Static!";
+    }
+}
+
+class Zend_Soap_AutoDiscoverTestClass1
+{
+    /**
+     * @var integer $var
+     */
+    public $var = 1;
+
+    /**
+     * @var string $param
+     */
+    public $param = "hello";
+}
+
+class Zend_Soap_AutoDiscoverTestClass2
+{
+    /**
+     *
+     * @param Zend_Soap_AutoDiscoverTestClass1 $test
+     * @return boolean
+     */
+    public function add(Zend_Soap_AutoDiscoverTestClass1 $test)
+    {
+        return true;
+    }
+
+    /**
+     * @return Zend_Soap_AutoDiscoverTestClass1[]
+     */
+    public function fetchAll()
+    {
+        return array(
+            new Zend_Soap_AutoDiscoverTestClass1(),
+            new Zend_Soap_AutoDiscoverTestClass1(),
+        );
+    }
+
+    /**
+     * @param Zend_Soap_AutoDiscoverTestClass1[]
+     */
+    public function addMultiple($test)
+    {
+        
     }
 }
