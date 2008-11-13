@@ -727,13 +727,13 @@ class Zend_Soap_Server implements Zend_Server_Interface
         ob_start();
         if (isset($setRequestException)) {
             // Send SOAP fault message if we've catched exception
-            $soap->fault($setRequestException->getCode(), $setRequestException->getMessage());
+            $soap->fault("Sender", $setRequestException->getMessage());
         } else {
             try {
                 $soap->handle($request);
             } catch (Exception $e) {
                 $fault = $this->fault($e);
-                $soap->fault($fault->getCode(), $fault->getMessage());
+                $soap->fault($fault->faultcode, $fault->faultstring);
             }
         }
         $this->_response = ob_get_clean();
@@ -798,11 +798,12 @@ class Zend_Soap_Server implements Zend_Server_Interface
      * will be used to create the fault object if it has been registered via
      * {@Link registerFaultException()}.
      *
+     * @link   http://www.w3.org/TR/soap12-part1/#faultcodes
      * @param  string|Exception $fault
-     * @param  int $code Defaults to 404
+     * @param  string $code SOAP Fault Codes
      * @return SoapFault
      */
-    public function fault($fault = null, $code = 404)
+    public function fault($fault = null, $code = "Reciever")
     {
         if ($fault instanceof Exception) {
             $class = get_class($fault);
@@ -819,7 +820,15 @@ class Zend_Soap_Server implements Zend_Server_Interface
             $message = 'Unknown error';
         }
 
-        return new SoapFault((string)$code, $message);
+        $allowedFaultModes = array(
+            'VersionMismatch', 'MustUnderstand', 'DataEncodingUnknown',
+            'Sender', 'Receiver', 'Server'
+        );
+        if(!in_array($code, $allowedFaultModes)) {
+            $code = "Reciever";
+        }
+
+        return new SoapFault($code, $message);
     }
 
     /**
@@ -835,6 +844,6 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function handlePhpErrors($errno, $errstr, $errfile = null, $errline = null, array $errcontext = null)
     {
-        throw $this->fault($errstr, $errno);
+        throw $this->fault($errstr, "Reciever");
     }
 }
