@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12345 -->
+<!-- EN-Revision: 12545 -->
 <sect1 id="performance.classloading">
     <title>Laden von Klassen</title>
 
@@ -112,59 +112,61 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
                 man Zend Framework Anwendungen hat, ist das nicht gewünscht, und der Pfad kann ohne
                 Probleme als letztes Element in der Liste verschoben werden.
             </para>
-        </sect3>
 
-        <example id="performance.classloading.includepath.example">
-            <title>Beispiel: Optimierter include_path</title>
+            <example id="performance.classloading.includepath.example">
+                <title>Beispiel: Optimierter include_path</title>
 
-            <para>
-                Fügen wir also alle diese Vorschläge zusammen. Unsere Annahme wird sein, das man ein oder
-                mehrere PEAR Bibliotheken in Verbindung mit dem Zend Framework verwendet -- möglicherweise
-                die PHPUnit und Archive_Tar Bibliotheken -- und das man offensichtlicherweise die Dateien
-                relativ zur aktuellen Datei einfügen muß.
-            </para>
+                <para>
+                    Fügen wir also alle diese Vorschläge zusammen. Unsere Annahme wird sein, das man ein oder
+                    mehrere PEAR Bibliotheken in Verbindung mit dem Zend Framework verwendet -- möglicherweise
+                    die PHPUnit und Archive_Tar Bibliotheken -- und das man offensichtlicherweise die Dateien
+                    relativ zur aktuellen Datei einfügen muß.
+                </para>
 
-            <para>
-                Zuerst, erstellen wir ein Bibliotheksverzeichnis in unserem Projekt. Innerhalb dieses
-                Verzeichnisses, erstellen wir einen Symlink zu unserer Zend Framework Bibliothek/Zend
-                Verzeichnis, wie auch dem notwendigen Verzeichnis von unserer PEAR Installation:
-            </para>
+                <para>
+                    Zuerst, erstellen wir ein Bibliotheksverzeichnis in unserem Projekt. Innerhalb dieses
+                    Verzeichnisses, erstellen wir einen Symlink zu unserer Zend Framework Bibliothek/Zend
+                    Verzeichnis, wie auch dem notwendigen Verzeichnis von unserer PEAR Installation:
+                </para>
 
-            <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[
 library
     Archive/
     PEAR/
     PHPUnit/
     Zend/
-]]></programlisting>
+]]>
+                </programlisting>
 
-            <para>
-                Das erlaubt es und unseren eigenen Blbiliothekscode hinzuzufügen wenn das notwendig werden
-                sollte, wärend andere verwendete Bibliotheken intakt bleiben.
-            </para>
+                <para>
+                    Das erlaubt es und unseren eigenen Blbiliothekscode hinzuzufügen wenn das notwendig werden
+                    sollte, wärend andere verwendete Bibliotheken intakt bleiben.
+                </para>
 
-            <para>
-                Als nächstes erstellen wir unseren include_path programmtechnisch in unserer public/index.php
-                Datei. Das erlaubt es uns unseren Code in unserem Dateisystem zu verschieben, ohne das es
-                notwendig ist jedesmal den include_path zu bearbeiten.
-            </para>
+                <para>
+                    Als nächstes erstellen wir unseren include_path programmtechnisch in unserer public/index.php
+                    Datei. Das erlaubt es uns unseren Code in unserem Dateisystem zu verschieben, ohne das es
+                    notwendig ist jedesmal den include_path zu bearbeiten.
+                </para>
 
-            <para>
-                Wir borgen uns Ideen von jedem der obigen Vorschläge aus: Wir verwenden absolute Pfade, die
-                durch die Verwendung von <code>realpath()</code> erkannt werden; wir fügen den Zend Framework
-                so früh wie möglich in den include_path ein; wir haben bereits Include Pfade erstellt; und wir
-                geben das aktuelle Verzeichnis als letzten Pfad hinein. Faktisch, machen wir es hier sehr gut --
-                wir werden mit nur zwei Pfaden enden.
-            </para>
+                <para>
+                    Wir borgen uns Ideen von jedem der obigen Vorschläge aus: Wir verwenden absolute Pfade, die
+                    durch die Verwendung von <code>realpath()</code> erkannt werden; wir fügen den Zend Framework
+                    so früh wie möglich in den include_path ein; wir haben bereits Include Pfade erstellt; und wir
+                    geben das aktuelle Verzeichnis als letzten Pfad hinein. Faktisch, machen wir es hier sehr gut --
+                    wir werden mit nur zwei Pfaden enden.
+                </para>
 
-            <programlisting role="php"><![CDATA[
+                <programlisting role="php"><![CDATA[
 $paths = array(
     realpath(dirname(__FILE__) . '/../library'),
     '.'
 );
 set_include_path(implode(PATH_SEPARATOR, $paths));
-]]></programlisting>
-        </example>
+]]>
+                </programlisting>
+            </example>
+        </sect3>
     </sect2>
 
     <sect2 id="performance.classloading.striprequires">
