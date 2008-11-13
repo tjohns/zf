@@ -273,7 +273,7 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $loader = new Zend_Loader_PluginLoader();
         $loader->addPrefixPath('Foo_Helper', $this->libPath . '/Zend/View/Helper');
         try {
-            $className = $loader->load('DocType');
+            $className = $loader->load('Doctype');
             $this->fail('Invalid prefix for a path should throw an exception');
         } catch (Exception $e) {
         }
