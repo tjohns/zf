@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12156 -->
+<!-- EN-Revision: 12541 -->
 <sect1 id="zend.file.transfer.filters">
 
     <title>Filter für Zend_File_Transfer</title>
@@ -219,34 +219,20 @@ $upload->addFilter('LowerCase', null, 'uploadfile1');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>oldfile</code>: Der Name und das Ziel der alten Datei welche umbenannt werden soll.
-                </para>
-
-                <para>
-                    Diese Option kann ein String oder ein Array sein. Abhängig von den angegebenen Optionen
-                    ändert sich das Verhalten dieser Option.
+                    <code>source</code>: Der Name und das Ziel der alten Datei welche umbenannt werden soll.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>newfile</code>: Das neue Verzeichnis, oder der Dateiname der Datei.
-                </para>
-
-                <para>
-                    Diese Option ist optional und kann ein String, ein Array oder ein Boolean sein. Abhängig von
-                    den angegebenen Optionen ändert sich das Verhalten dieser Option.
+                    <code>target</code>: Das neue Verzeichnis, oder der Dateiname der Datei.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>overwrite</code>: Definiert ob die alte Datei von der neuen überschrieben wird wenn
-                    diese bereits existiert.
-                </para>
-
-                <para>
-                    Diese Option ist optional und muß ein Boolean sein. Der Standardwert ist false.
+                    diese bereits existiert. Der Standardwert ist false.
                 </para>
             </listitem>
         </itemizedlist>
@@ -321,7 +307,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\uploads\file.ext', true)
+                            addFile(array('C:\uploads\file.ext', 'overwrite' => true))
                         </entry>
                         <entry>
                             Spezifiziert einen neuen Pfad und Dateinamen für alle Dateien wenn der angegebene
@@ -332,7 +318,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\temp\uploads', 'C:\uploads')
+                            addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads'))
                         </entry>
                         <entry>
                             Spezifiziert einen neuen Pfad für alle Dateien im alten Pfad wenn die angegebenen
@@ -342,36 +328,13 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
                     <row>
                         <entry>
-                            addFile('C:\temp\uploads', 'C:\uploads', true)
+                            addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads', 'overwrite' => true))
                         </entry>
                         <entry>
                             Spezifiziert einen neuen Pfad für alle Dateien im alten Pfad wenn die angegebenen
                             Strings als Verzeichnis erkant werden und überschreibt alle existierenden Dateien
                             mit dem gleichen Zielnamen. Es ist zu beachten das man keine Benachrichtigung
                             erhält das eine Datei überschrieben wurde.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            addFile(array('C:\temp\uploads\file1.gif' => 'C:\uploads\file.gif'))
-                        </entry>
-                        <entry>
-                            Spezifiziert neue Ziele für angegebene Dateien. Man muß immer Schlüssel-Wert
-                            Paare von Quell- und Zieldateien angeben. Es ist zu beachten das man eine
-                            Exception erhält wenn die Datei bereits existiert, siehe den overwriting Parameter.
-                        </entry>
-                    </row>
-                    <row>
-                        <entry>
-                            addFile(array('C:\temp\uploads\file1.gif' => 'C:\uploads\file.gif'), true)
-                        </entry>
-                        <entry>
-                            Spezifiziert neue Ziele für angegebene Dateien. Man muß immer Schlüssel-Wert
-                            Paare von Quell- und Zieldateien angeben und er überschreibt alle existierenden
-                            Dateien mit dem gleichen Zielnamen. Es ist zu beachten das man keine
-                            Benachrichtigung erhält wenn eine Datei überschrieben wurde. Optional kann ein
-                            Verzeichnis mit dem Schlüssel 0 angegeben werden welches dann für alle Dateien
-                            verwendet wird, für die keine Quelle definiert wurde.
                         </entry>
                     </row>
                 </tbody>
