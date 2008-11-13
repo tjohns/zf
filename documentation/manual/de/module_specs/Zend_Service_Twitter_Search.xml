@@ -71,14 +71,14 @@ foreach($twitter_trends as $trend) {
                 <para>
                     <code>lang</code>, begrenzt die Tweets auf eine angegebene Sprache, wobei lang durch einen
                     <ulink url="http://en.wikipedia.org/wiki/ISO_639-1">ISO 639-1 Code</ulink> angegeben werden
-                    muß.
+                    muß
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>rpp</code>, die Anzahl der Tweets die pro Seite zurückzugeben sind, bis zu einem
-                    Maximum von 100.
+                    Maximum von 100
                 </para>
             </listitem>
 
@@ -91,32 +91,33 @@ foreach($twitter_trends as $trend) {
 
             <listitem>
                 <para>
-                    <code>since_id</code>, returns tweets with status ids
-                    greater than the given id.
+                    <code>since_id</code>, gibt Tweets mit den Status IDs zurück die größer als die angegebene
+                    ID sind
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>show_user</code>, when "true", adds "&gt;user&lt;:"
-                    to the beginning of the tweet. This is useful for readers
-                    that do not display Atom's author field. The default is "false"
+                    <code>show_user</code>, ist es "true", fügt es "&gt;user&lt;:" am Anfang des Tweets hinzu.
+                    Das ist nützlich für Leser die das Authorfeld in Atom nicht anzeigen. Der Standardwert ist
+                    "false"
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>geocode</code>, returns tweets by users located within a given radius of the given
-                    latitude/longitude, where the user's location is taken from their Twitter profile. The
-                    parameter value is specified by "latitude,longitude,radius", where radius units must
-                    be specified as either "mi" (miles) or "km" (kilometers).
+                    <code>geocode</code>, gibt Tweets zurück bei denen Benutzer in einerm angegebenen Radium
+                    zum angegebenen Längen- und Breitengrad sind, wobei der Ort des Benutzers von seinem
+                    Twitter Profil genommen wird. Der Wert des Parameters wird durch
+                    "latitude,longitude,radius" spezifiziert, wobei die Einheiten des Radius entweder in
+                    "mi" (Meilen) oder "km" (Kilometer) spezifiziert werden müssen.
                 </para>
             </listitem>
         </itemizedlist>
         <example id="zend.service.twitter.search.search.json">
-            <title>JSON Search Example</title>
+            <title>Suchbeispiel für JSON</title>
             <para>
-                The following code sample will return an array with the values search results
+                Das folgende Codebeispiel gibt ein Array mit den Werten der Suchergebnisse zurück
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -127,9 +128,9 @@ $search_results = $twitter_search->search('zend', array('lang' => 'en'));
         </example>
 
         <example id="zend.service.twitter.search.search.atom">
-            <title>ATOM Search Example</title>
+            <title>Suchbeispiel für ATOM</title>
             <para>
-                The following code sample will return a <code>Zend_Feed_Atom</code> object.
+                Das folgende Codebeispiel gibt ein <code>Zend_Feed_Atom</code> Objekt zurück.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -141,20 +142,19 @@ $search_results = $twitter_search->search('zend', array('lang' => 'en'));
     </sect3>
 
     <sect3 id="zend.service.twitter.search.accessors">
-        <title>Zend-specific Accessor Methods</title>
+        <title>Zend-Spezifische Zugriffsmethoden</title>
 
         <para>
-            While the Twitter Search API only specifies two methods,
-            <code>Zend_Service_Twitter_Search</code> has additional accessors
-            that may be used for modifying internal properties.
+            Wärend die Such API von Twitter nur zwei Methoden spezifiziert, hat
+            <code>Zend_Service_Twitter_Search</code> zusätzliche Zugriffsmethoden die für die Modifizierung
+            von internen Eigenschaften verwendet werden können.
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>getResponseType()</code> and <code>setResponseType()</code>
-                    allow you to retrieve and modify the response type of the search
-                    between JSON and ATOM.
+                    <code>getResponseType()</code> und <code>setResponseType()</code> erlauben es den
+                    Antworttype der Suche zu empfangen und, zwischen JSON und ATOM, zu verändern.
                 </para>
             </listitem>
         </itemizedlist>
