@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12545 -->
+<!-- EN-Revision: 12600 -->
 <sect1 id="performance.classloading">
     <title>Laden von Klassen</title>
 
     <para>
-        Jeder der jemals profiling von Zend Framework Anwendungen durchführen muß, wird sofort feststellen
+        Jeder der jemals Profiling von Zend Framework Anwendungen durchführen muß, wird sofort feststellen
         das das Laden von Klassen relativ teuer ist im Zend Framework. Zwischen der reinen Anzahl von
         Klassendateien die für viele Komponenten geladen werden müssen, und der Verwendung von Plugins
         die keine 1:1 Verknüpfung zwischen Ihrem Klassennamen und dem Dateisystem haben, können die
