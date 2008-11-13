@@ -153,7 +153,7 @@ abstract class Zend_Server_Abstract implements Zend_Server_Interface
      * @param  Zend_Server_Reflection_Function_Abstract $reflection 
      * @param  null|string|object $class
      * @return Zend_Server_Method_Definition
-     * @throws Zend_XmlRpc_Server_Exception on duplicate entry
+     * @throws Zend_Server_Exception on duplicate entry
      */
     protected function _buildSignature(Zend_Server_Reflection_Function_Abstract $reflection, $class = null)
     {
