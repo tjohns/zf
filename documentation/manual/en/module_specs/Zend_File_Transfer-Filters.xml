@@ -118,7 +118,7 @@ $upload = new Zend_File_Transfer();
 $upload->addFilter('Rename', 'C:\picture\uploads');
 
 // Set a new destination path and overwrites existing files
-$upload->addFilter('Size', array('C:\picture\uploads', 'overwrite' => true));
+$upload->addFilter('Rename', array('target' => 'C:\picture\uploads', 'overwrite' => true));
 ]]>
             </programlisting>
         </example>
