@@ -1,53 +1,62 @@
-Welcome to the Zend Framework 1.7 Preview Release! This release showcases features
-that will be introduced in the final 1.7 release. The intent of this release is to
-give our users access to the latest features in Zend Framework and to improve the
-overall quality of the production release through the feedback we recieve. In
-particular, *your* feedback will help make the Zend Framework 1.7 production release
-a success, so please post your comments and questions to the appropriate mailing list
-and bring bugs to our attention by creating an issue in our issue tracker:
-
-http://framework.zend.com/issues
+Welcome to Zend Framework 1.7.0! This is the first release in the Zend Framework 1.7 series.
+This release maintains backwards compatibility with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
-Zend Framework 1.7 Preview Release (revision [INSERT REV NUM HERE]). Released on
-2008-10-13.
+
+Zend Framework 1.7.0 ([INSERT REV NUM HERE]).
+Released on 2008-11-17.
 
 NEW FEATURES
 ------------
 
 * Zend_AMF
-* Dojo Toolkit 1.2.0
-* ZendX_JQuery
+* Dojo Toolkit 1.2.1
 * Support for dijit editor
+* ZendX_JQuery in the extras library (see extras folder in the full distribution)
 * Metadata API in Zend_Cache
-* Google book search API
-* Performance enhancements
-* Application-wide locale with other i18n enhancements
+* Google book search API in Zend_Gdata
+* Preliminary support for GData Protocol v2 in Zend_Gdata
+* Support for skip data processing in Zend_Search_Lucene
+* Support for Open Office XML formats in Zend_Search_Lucene indexer
+* Performance enhancements in Zend_Loader, Zend_Controller, and server components
+* Application-wide locale and other i18n enhancements
 * File upload form element enhancements
+* Zend_Mail_Storage_Writable_Maildir can now be used in/as a MDA
+* Zend_Tool in incubator (see incubator folder in the full distribution)
+* Zend_Text_Table
+* Zend_ProgressBar
+* Zend_Config_Writer
+* ZendX_Console_Unix_Process in the extras library
+* Zend_Db_Table_Select support for Zend_Paginator
+* Global parameters for routes
+* Using Chain-Routes for Hostname-Routes via Zend_Config
+* I18N Improvements
+   - Application wide locale for all classes
+   - Data retrieving methods are now static
+   - Additional cache handling methods in all I18N classes
+   - Zend_Translate simplified
+* File Transfer Enhancements
+   - Support for File Elements in Subforms
+   - Support for Multifile Elements
+   - Support for MAX_FILES_SIZE in Form
+   - Support for Braking validation chain
+   - Support for Translation of Failure Messages
+   - New IsCompressed, IsImage, ExcludeMimeType, ExcludeExtension validators
+   - Support for FileInfo extension in MimeType validator
+* Zend_Db_Table_Select adapater for Zend_Paginator
+* Support for custom adapters in Zend_Paginator
+* More flexible handling of complex types in Zend_Soap
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10864
-
-INTENDED USE
-------------
-
-The code in this release provides a 'sneak peek' at features to be released in the
-upcoming Zend Framework 1.7 release and is not intended for production use. Please be
-aware that the API's introduced in this release may not be final, and that the Zend
-Framework team does not guarantee backwards compatibility to this release in future
-releases of Zend Framework. We strongly discourage the use of this preview
-release in production environments or for projects that could not easily be
-refactored to work with future releases of Zend Framework. We recommend
-evaluating these features for use in future projects, however, and would appreciate
-any feedback.
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10862
 
 SYSTEM REQUIREMENTS
 -------------------
 
-Zend Framework requires PHP 5.1.4 or later. Please see our reference guide for more
-detailed system requirements:
+Zend Framework requires PHP 5.1.4 or later and works best with 5.2.3 or later.
+Please see our reference guide for more detailed system requirements:
 
 http://framework.zend.com/manual/en/requirements.html
 
@@ -59,33 +68,29 @@ Please see /INSTALL.txt.
 QUESTIONS AND FEEDBACK
 ----------------------
 
-Online documentation can be found at http://framework.zend.com/manual. Questions that
+Online documentation can be found at http://framework.zend.com/manual. Questions that 
 are not addressed in the manual should be directed to the appropriate mailing list:
 
-http://framework.zend.com/wiki/x/GgE#ContributingtoZendFramework-
-Subscribetotheappropriatemailinglists
+http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists
 
-If you find code in this release behaving in an unexpected manner or contrary to its
-documented behavior, please create an issue in the Zend Framework issue tracker at:
+If you find code in this release behaving in an unexpected manner or contrary to its 
+documented behavior, please create an issue in the issue tracker at:
 
 http://framework.zend.com/issues
 
-If you have not done so already, you must email cla@zend.com with your issue tracker
-username requesting issue posting privileges.
-If you would like to be notified of new releases- including the production release of
-Zend Framework 1.7- you can subscribe to the fw-announce mailing list by sending a
-blank message to fw-announce-subscribe@lists.zend.com.
+If you would like to be notified of new releases- including further maintenance releases of 
+Zend Framework 1.7- you can subscribe to the fw-announce mailing list by sending a blank 
+message to fw-announce-subscribe@lists.zend.com.
 
 LICENSE
 -------
 
-The files in this archive are released under the Zend Framework license. You can find
-a copy of this license in /LICENSE.txt.
+The files in this archive are released under the Zend Framework license. You can find a 
+copy of this license in /LICENSE.txt.
 
 ACKNOWLEDGEMENTS
 ----------------
 
-The Zend Framework team would like to thank all the contributors to the Zend
-Framework project, our corporate sponsor (Zend Technologies), and you- the Zend
-Framework user. Please visit us sometime soon at http://framework.zend.com. Now have
-at it!
+The Zend Framework team would like to thank all the contributors to the Zend Framework 
+project, our corporate sponsor (Zend Technologies), and you- the Zend Framework user. 
+Please visit us sometime soon at http://framework.zend.com!
