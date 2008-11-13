@@ -24,7 +24,6 @@ require_once 'Zend/Server/Exception.php';
 require_once "Zend/Soap/Wsdl/Strategy/Interface.php";
 require_once "Zend/Soap/Wsdl/Strategy/Abstract.php";
 
-
 /**
  * Zend_Soap_Wsdl
  *
@@ -90,7 +89,8 @@ class Zend_Soap_Wsdl
                     xmlns:tns='$uri'
                     xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
                     xmlns:xsd='http://www.w3.org/2001/XMLSchema'
-                    xmlns:soap-enc='http://schemas.xmlsoap.org/soap/encoding/'></definitions>";
+                    xmlns:soap-enc='http://schemas.xmlsoap.org/soap/encoding/'
+                    xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'></definitions>";
         $this->_dom = new DOMDocument();
         if (!$this->_dom->loadXML($wsdl)) {
             throw new Zend_Server_Exception('Unable to create DomDocument');
@@ -438,13 +438,9 @@ class Zend_Soap_Wsdl
      */
     public function addType($type)
     {
-        if(in_array($type, $this->_includedTypes)) {
-            require_once "Zend/Soap/Wsdl/Exception.php";
-            throw new Zend_Soap_Wsdl_Exception(
-                sprintf("Trying to add a type '%s that is already part of the WSDL.", $type)
-            );
+        if(!in_array($type, $this->_includedTypes)) {
+            $this->_includedTypes[] = $type;
         }
-        $this->_includedTypes[] = $type;
         return $this;
     }
 
