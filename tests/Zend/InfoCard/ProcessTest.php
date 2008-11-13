@@ -59,6 +59,8 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
         $this->sslPubKey     = dirname(__FILE__) . '/_files/ssl_pub.cert';
         $this->sslPrvKey     = dirname(__FILE__) . '/_files/ssl_private.cert';
         $this->loadXmlDocument();
+        $_SERVER['SERVER_NAME'] = "192.168.1.105";
+        $_SERVER['SERVER_PORT'] = 80;
     }
 
     public function loadXmlDocument()
@@ -136,9 +138,6 @@ class Zend_InfoCard_ProcessTest extends PHPUnit_Framework_TestCase
         if (version_compare(PHP_VERSION, '5.2.0', '<')) {
             $this->markTestSkipped('DOMDocument::C14N() not available until PHP 5.2.0');
         }
-
-        $_SERVER['SERVER_NAME'] = "192.168.1.105";
-        $_SERVER['SERVER_PORT'] = 80;
 
         try {
             $infoCard = new Zend_InfoCard();
