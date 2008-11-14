@@ -241,7 +241,7 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
         }
         /* Convert the character set if requested.
          */
-        if ((! is_null($characterSet)) && ($characterSet != 'UTF-16BE')) {
+        if ((! is_null($characterSet)) && ($characterSet != 'UTF-16BE') && PHP_OS != 'AIX') { // AIX knows not this charset
             $name = iconv('UTF-16BE', $characterSet, $name);
         }
         return $name;

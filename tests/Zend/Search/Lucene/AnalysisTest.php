@@ -263,6 +263,10 @@ class Zend_Search_Lucene_AnalysisTest extends PHPUnit_Framework_TestCase
 
     public function testEncoding()
     {
+        if (PHP_OS == 'AIX') {
+            $this->markTestSkipped('Test not available on AIX');
+        }
+        
         $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8();
 
         // UTF-8 text with a cyrillic symbols

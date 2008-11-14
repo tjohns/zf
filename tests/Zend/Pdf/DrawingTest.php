@@ -156,6 +156,10 @@ class Zend_Pdf_DrawingTest extends PHPUnit_Framework_TestCase
 
     public function testFontDrawing()
     {
+        if (PHP_OS == 'AIX') {
+            $this->markTestSkipped('Not supported on AIX');
+        }
+        
         $pdf = new Zend_Pdf();
 
         $fontsList = array(Zend_Pdf_Font::FONT_COURIER,
@@ -350,6 +354,10 @@ class Zend_Pdf_DrawingTest extends PHPUnit_Framework_TestCase
 
     public function testFontExtracting()
     {
+        if (PHP_OS == 'AIX') {
+            $this->markTestSkipped('Not supported on AIX');
+        }
+        
         $pdf = new Zend_Pdf();
 
         $fontsList = array(Zend_Pdf_Font::FONT_COURIER,

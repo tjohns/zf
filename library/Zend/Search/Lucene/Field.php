@@ -217,7 +217,8 @@ class Zend_Search_Lucene_Field
             strcasecmp($this->encoding, 'utf-8') == 0 ) {
                 return $this->value;
         } else {
-            return iconv($this->encoding, 'UTF-8', $this->value);
+            
+            return (PHP_OS != 'AIX') ? iconv($this->encoding, 'UTF-8', $this->value) : iconv('ISO8859-1', 'UTF-8', $this->value);
         }
     }
 }
