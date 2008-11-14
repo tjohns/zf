@@ -1,0 +1,173 @@
+<!-- EN-Revision: 12116 -->
+<sect1 id="zend.pdf.usage">
+    <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
+    <para>
+        Dieser Abschnitt stellt ein Beispiel für die Anwendung der Komponente bereit.
+    </para>
+
+    <para>
+        Das Beispiel kann in der Datei <filename>demos/Zend/Pdf/demo.php</filename> gefunden werden.
+    </para>
+    <para>
+        Dort gibt es auch die Datei <filename>test.pdf</filename>, die für diese Demo zu
+        Testzwecken verwendet werden kann.
+    </para>
+
+    <example id="zend.pdf.usage.example-1">
+        <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
+        <programlisting role="php"><![CDATA[
+/**
+ * @package Zend_Pdf
+ * @subpackage demo
+ */
+
+if (!isset($argv[1])) {
+    echo "VERWENDUNG: php demo.php <pdf_file> [<output_pdf_file>]\n";
+    exit;
+}
+
+try {
+    $pdf = Zend_Pdf::load($argv[1]);
+} catch (Zend_Pdf_Exception $e) {
+    if ($e->getMessage() == 'Datei \'' . $argv[1] .
+                            '\' konnte nicht zum Lesen geöffnet werden.') {
+        // Erstelle neues PDF, wenn Datei nicht existiert
+        $pdf = new Zend_Pdf();
+
+        if (!isset($argv[2])) {
+            // Erzwinge komplettes neu schreiben der Datei (statt nur updaten)
+            $argv[2] = $argv[1];
+        }
+    } else {
+        // Werfe eine Ausnahme, wenn es nicht die "Can't open file"
+        // Exception ist
+        throw $e;
+    }
+}
+
+//--------------------------------------------------------------------
+// Kehre die Seitenreihenfolge um
+$pdf->pages = array_reverse($pdf->pages);
+
+// Erstelle einen neuen Stil
+$style = new Zend_Pdf_Style();
+$style->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
+$style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
+$style->setLineWidth(3);
+$style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
+$style->setFont(Zend_Pdf_Font::fontWithName(
+                    Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32
+               );
+
+try {
+    // Erstelle ein neues Grafikobjekt
+    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) .
+                                                '/stamp.jpg');
+} catch (Zend_Pdf_Exception $e) {
+    // Beispiel wie man mit Ladefehlern bei Grafiken umgeht.
+    if ($e->getMessage() != 'Image Erweiterung nicht installiert.' &&
+        $e->getMessage() != 'JPG Unterstützung ist nicht richtig konfiguriert.') {
+        throw $e;
+    }
+    $stampImage = null;
+}
+
+// Kennzeichne Seiten als verändert
+foreach ($pdf->pages as $page){
+    $page->saveGS();
+    $page->setAlpha(0,25);
+    $page->setStyle($style);
+    $page->rotate(0, 0, M_PI_2/3);
+
+    $page->saveGS();
+    $page->clipCircle(550, -10, 50);
+    if ($stampImage != null) {
+        $page->drawImage($stampImage, 500, -60, 600, 40);
+    }
+    $page->restoreGS();
+
+    $page->drawText('Modified by Zend Framework!', 150, 0);
+    $page->restoreGS();
+}
+
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts
+// (die Seite wird an das angegebene Dokument angehängt)
+$pdf->pages[] = ($page1 = $pdf->newPage('A4'));
+
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts
+// (die Seite wird nicht an das angegebene Dokument angehängt)
+$pdf->pages[] =
+    ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
+
+// Erstelle einen neuen Zeichensatz
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
+
+// Lege Zeichensatz fest und zeichnen einen text
+$page1->setFont($font, 36);
+$page1->drawText('Helvetica 36 text string', 60, 500);
+
+// Verwende das Zeichensatz Objekt für eine andere Seite
+$page2->setFont($font, 24);
+$page2->drawText('Helvetica 24 text string', 60, 500);
+
+// Verwenden einen anderen Zeichensatz
+$page2->setFont(
+    new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
+$page2->drawText('Times-Roman 32 text string', 60, 450);
+
+// Zeichne ein Rechteck
+$page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8));
+$page2->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
+$page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
+$page2->drawRectangle(60, 400, 400, 350);
+
+// Zeichne einen Kreis
+$page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
+$page2->drawCircle(85, 375, 25);
+
+// Zeichne Kreisausschnitte
+$page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6);
+$page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
+$page2->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3);
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
+$page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
+
+// Zeichne Ellipsen
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
+$page2->drawEllipse(250, 400, 400, 350);
+$page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
+$page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
+$page2->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
+
+// Zeichne und fülle ein Polygon
+$page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 1));
+$x = array();
+$y = array();
+for ($count = 0; $count < 8; $count++) {
+    $x[] = 140 + 25*cos(3*M_PI_4*$count);
+    $y[] = 375 + 25*sin(3*M_PI_4*$count);
+}
+$page2->drawPolygon($x, $y,
+                    Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                    Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
+
+// Zeichne eine Linie
+$page2->setLineWidth(0.5);
+$page2->drawLine(60, 375, 400, 375);
+//--------------------------------------------------------------------
+
+if (isset($argv[2])) {
+    $pdf->save($argv[2]);
+} else {
+    $pdf->save($argv[1], true /* Aktualisierung */);
+}
+]]>
+        </programlisting>
+    </example>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
