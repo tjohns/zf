@@ -71,6 +71,10 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($document->getFieldValue('body'),       'Document body, document body, document body...');
 
 
+        if (PHP_OS == 'AIX') {
+            return; // tests below here not valid on AIX
+        }
+        
         $wordsWithUmlautsIso88591 = iconv('UTF-8', 'ISO-8859-1', 'Words with umlauts: åãü...');
         $document->addField(Zend_Search_Lucene_Field::Text('description', $wordsWithUmlautsIso88591, 'ISO-8859-1'));
         $this->assertEquals($document->description, $wordsWithUmlautsIso88591);

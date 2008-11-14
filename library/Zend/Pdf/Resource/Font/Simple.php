@@ -175,10 +175,12 @@ abstract class Zend_Pdf_Resource_Font_Simple extends Zend_Pdf_Resource_Font
          * character codes to those found in the cmap.
          */
         if ($charEncoding != 'UTF-16BE') {
-            $string = iconv($charEncoding, 'UTF-16BE', $string);
+            if (PHP_OS != 'AIX') { // AIX doesnt know what UTF-16BE is
+                $string = iconv($charEncoding, 'UTF-16BE', $string);
+            }
         }
 
-        $charCount = iconv_strlen($string, 'UTF-16BE');
+        $charCount = (PHP_OS != 'AIX') ? iconv_strlen($string, 'UTF-16BE') : strlen($string);
         if ($charCount == 0) {
             return 0;
         }
@@ -256,6 +258,10 @@ abstract class Zend_Pdf_Resource_Font_Simple extends Zend_Pdf_Resource_Font
      */
     public function encodeString($string, $charEncoding)
     {
+        if (PHP_OS == 'AIX') {
+            return $string; // returning here b/c AIX doesnt know what CP1252 is
+        }
+        
         return iconv($charEncoding, 'CP1252//IGNORE', $string);
     }
 

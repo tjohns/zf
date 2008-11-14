@@ -92,7 +92,12 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testColumnForcedEncoding()
     {
-        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt');
+        if (PHP_OS == 'AIX') {
+            // AIX cannot handle these charsets
+            $this->markTestSkipped('Test case cannot run on AIX');
+        }
+        
+        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt'); 
                 
         $column = new Zend_Text_Table_Column($iso885915, null, null, 'iso-8859-15');
 
@@ -101,8 +106,13 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testColumnDefaultInputEncoding()
     {
-        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt');
-                
+        if (PHP_OS == 'AIX') {
+            // AIX cannot handle these charsets
+            $this->markTestSkipped('Test case cannot run on AIX');
+        }
+        
+        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt'); 
+                        
         Zend_Text_Table::setInputCharset('iso-8859-15');
         $column = new Zend_Text_Table_Column($iso885915);
 
@@ -111,8 +121,13 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
     
     public function testColumnDefaultOutputEncoding()
     {
-        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt');
-                
+        if (PHP_OS == 'AIX') {
+            // AIX cannot handle these charsets
+            $this->markTestSkipped('Test case cannot run on AIX');
+        }
+        
+        $iso885915 = iconv('utf-8', 'iso-8859-15', 'Ömläüt'); 
+                        
         Zend_Text_Table::setOutputCharset('iso-8859-15');
         $column = new Zend_Text_Table_Column('Ömläüt');
 

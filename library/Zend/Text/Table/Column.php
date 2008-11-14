@@ -120,7 +120,11 @@ class Zend_Text_Table_Column
         $outputCharset = Zend_Text_Table::getOutputCharset();
         
         if ($inputCharset !== $outputCharset) {
-            $content = iconv($inputCharset, $outputCharset, $content);
+            if (PHP_OS != 'AIX') {
+                // AIX does not understand these character sets
+                $content = iconv($inputCharset, $outputCharset, $content);
+            }
+            
         }
 
         $this->_content = $content;
