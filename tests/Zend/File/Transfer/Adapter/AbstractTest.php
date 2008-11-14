@@ -484,20 +484,8 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($filters));
     }
 
-    public function testDestinationShouldDefaultToSystemTempDirectory()
-    {
-        $tmpdir = sys_get_temp_dir();
-        $tmpdir = rtrim($tmpdir, "/\\");
-        $destinations = $this->adapter->getDestination();
-        foreach ($destinations as $file => $destination) {
-            $this->assertEquals($tmpdir, $destination);
-        }
-        $this->assertEquals($tmpdir, $this->adapter->getDestination('foo'));
-    }
-
     public function testTransferDestinationShouldBeMutable()
     {
-        $this->testDestinationShouldDefaultToSystemTempDirectory();
         $directory = dirname(__FILE__);
         $this->adapter->setDestination($directory);
         $destinations = $this->adapter->getDestination();
@@ -518,7 +506,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingDestinationsForAnArrayOfSpecifiedFiles()
     {
-        $this->testTransferDestinationShouldBeMutable();
+        $this->adapter->setDestination(dirname(__FILE__));
         $destinations = $this->adapter->getDestination(array('bar', 'baz'));
         $this->assertTrue(is_array($destinations));
         $directory = dirname(__FILE__);
@@ -673,11 +661,33 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
             $this->assertContains('Unknown hash algorithm', $e->getMessage());
         }
     }
+
+    public function testEmptyTempDirectoryDetection()
+    {
+        $this->adapter->_tmpDir = "";
+        $this->assertTrue(empty($this->adapter->_tmpDir), "Empty temporary directory");
+    }
+
+    public function testTempDirectoryDetection()
+    {
+        $this->adapter->getTmpDir();
+        $this->assertTrue(!empty($this->adapter->_tmpDir), "Temporary directory filled");
+    }
+
+    public function testTemporaryDirectoryAccessDetection()
+    {
+        $this->adapter->_tmpDir = "";
+        $path = "/NoPath/To/File";
+        $this->assertFalse($this->adapter->isPathWriteable($path));
+        $this->assertTrue($this->adapter->isPathWriteable($this->adapter->_tmpDir));
+    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract
 {
     public $received = false;
+
+    public $_tmpDir;
 
     public function __construct()
     {
@@ -749,6 +759,16 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
     public function getProgress()
     {
         return;
+    }
+
+    public function getTmpDir()
+    {
+        $this->_tmpDir = parent::_getTmpDir();
+    }
+
+    public function isPathWriteable($path)
+    {
+        return parent::_isPathWriteable($path);
     }
 }
 

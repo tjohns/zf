@@ -1108,7 +1108,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     }
 
     /**
-     * Determine system TMP directory
+     * Determine system TMP directory and detect if we have read access
      *
      * @return string
      * @throws Zend_File_Transfer_Exception if unable to determine directory
@@ -1116,15 +1116,35 @@ abstract class Zend_File_Transfer_Adapter_Abstract
     protected function _getTmpDir()
     {
         if (null === $this->_tmpDir) {
+            $tmpdir = array();
             if (function_exists('sys_get_temp_dir')) {
-                $tmpdir = sys_get_temp_dir();
-            } elseif (!empty($_ENV['TMP'])) {
-                $tmpdir = realpath($_ENV['TMP']);
-            } elseif (!empty($_ENV['TMPDIR'])) {
-                $tmpdir = realpath($_ENV['TMPDIR']);
-            } else if (!empty($_ENV['TEMP'])) {
-                $tmpdir = realpath($_ENV['TEMP']);
-            } else {
+                $tmpdir[] = sys_get_temp_dir();
+            }
+
+            if (!empty($_ENV['TMP'])) {
+                $tmpdir[] = realpath($_ENV['TMP']);
+            }
+
+            if (!empty($_ENV['TMPDIR'])) {
+                $tmpdir[] = realpath($_ENV['TMPDIR']);
+            }
+
+            if (!empty($_ENV['TEMP'])) {
+                $tmpdir[] = realpath($_ENV['TEMP']);
+            }
+
+            $upload = ini_get('upload_tmp_dir');
+            if ($upload) {
+                $tmpdir[] = realpath($upload);
+            }
+
+            foreach($tmpdir as $directory) {
+                if ($this->_isPathWriteable($directory)) {
+                    $this->_tmpDir = $directory;
+                }
+            }
+
+            if (empty($this->_tmpDir)) {
                 // Attemp to detect by creating a temporary file
                 $tempFile = tempnam(md5(uniqid(rand(), TRUE)), '');
                 if ($tempFile) {
@@ -1135,9 +1155,35 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                     throw new Zend_File_Transfer_Exception('Could not determine temp directory');
                 }
             }
-            $this->_tmpDir = rtrim($tmpdir, "/\\");
+
+            $this->_tmpDir = rtrim($this->_tmpDir, "/\\");
         }
         return $this->_tmpDir;
+    }
+
+    /**
+     * Tries to detect if we can read and write to the given path
+     *
+     * @param string $path
+     */
+    protected function _isPathWriteable($path)
+    {
+        $tempFile = rtrim($path, "/\\");
+        $tempFile .= '/' . 'test.1';
+
+        $result = @file_put_contents($tempFile, 'TEST');
+
+        if ($result == false) {
+            return false;
+        }
+
+        $result = @unlink($tempFile);
+
+        if ($result == false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
