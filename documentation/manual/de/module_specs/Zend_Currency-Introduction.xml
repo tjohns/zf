@@ -1,0 +1,65 @@
+<!-- EN-Revision: 11118 -->
+<sect1 id="zend.currency.introduction">
+
+    <title>Einführung in Zend_Currency</title>
+
+    <para>
+        <code>Zend_Currency</code> ist Teil des I18n Kerns des Zend Frameworks. Es behandelt alle Arbeiten
+        betreffend Währungen, Geld Darstellung und Formatierung. Ausserdem bietet es zusätzliche informative
+        Methoden welche lokalisierte Informationen zu Währungen und Informationen darüber enthalten welche
+        Währung in welcher Region verwendet wird und mehr.
+    </para>
+
+    <sect2 id="zend.currency.introduction.list">
+
+        <title>Warum sollte <code>Zend_Currency</code> verwendet werden ?</title>
+
+        <para>
+            <code>Zend_Currency</code> bietet die folgenden Funktionen für das Arbeiten mit Währungen und
+            Geld-bezogenen Arbeiten.
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Kompletter Support für Gebietsschemata</emphasis>
+                </para>
+                <para>
+                    <code>Zend_Currency</code> arbeitet mit allen vorhandenen Gebietsschemata und hat hierfür die
+                    Möglichkeit auf über 100 verschiedene lokalisierte Währungs-informationen zugreifen zu können.
+                    Das beinhaltet zum Beispiel Namen von Währungen, Abkürzungen, Währungssymbole und mehr.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Wiederverwendbare Währungs Definitionen</emphasis>
+                </para>
+                <para>
+                    <code>Zend_Currency</code> enthält nicht den Wert der Währung. Das ist der Grund warum
+                    dessen Funktionalität nicht in <code>Zend_Locale_Format</code> beinhaltet ist. Aber das
+                    bietet den Vorteil das bereits definierte Währungs Darstellungen wiederverwendet werden
+                    können.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Fluent Interface</emphasis>
+                </para>
+                <para>
+                    <code>Zend_Currency</code> beinhaltet das Fluent Interface wo es möglich ist.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">Zusätzliche informative Methoden</emphasis>
+                </para>
+                <para>
+                    <code>Zend_Currency</code> enthält zusätzliche Methoden welche Informationen darüber anbieten
+                    in welcher Region eine Währung verwendet wird, oder welcher Währung bekannt ist das Sie in
+                    einer definierten Region verwendet wird.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+</sect1>
