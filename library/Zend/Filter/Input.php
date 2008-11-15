@@ -346,6 +346,10 @@ class Zend_Filter_Input
      */
     protected function _escapeRecursive($data)
     {
+        if($data === null) {
+            return $data;
+        }
+
         if (!is_array($data)) {
             return $this->_getDefaultEscapeFilter()->filter($data);
         }

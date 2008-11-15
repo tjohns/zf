@@ -1557,4 +1557,22 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group ZF-3004
+     */
+    public function testInsertingNullDoesNotGetEscapedWithDefaultEscapeMethod()
+    {
+        $input = new Zend_Filter_Input(null, null, array('test' => null));
+        $input->process();
+
+        $this->assertFalse($input->hasMissing(), 'Expected hasMissing() to return false');
+        $this->assertFalse($input->hasInvalid(), 'Expected hasInvalid() to return false');
+        $this->assertFalse($input->hasUnknown(), 'Expected hasUnknown() to return false');
+        $this->assertTrue($input->hasValid(),    'Expected hasValid() to return true');
+
+        $this->assertNull($input->getUnescaped('test'), 'getUnescaped of test fails to return null');
+        $this->assertNull($input->getEscaped('test'),   'getEscaped of test fails to return null');
+        $this->assertNull($input->test,                 'magic get of test fails to return null');
+    }
+
 }
