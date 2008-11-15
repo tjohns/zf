@@ -124,11 +124,11 @@ class Zend_Validate_File_MimeTypeTest extends PHPUnit_Framework_TestCase
         $validator->setMimeType('image/jpeg');
         $this->assertEquals('image/jpeg', $validator->getMimeType());
         $this->assertEquals(array('image/jpeg'), $validator->getMimeType(true));
-        
+
         $validator->setMimeType('image/gif, text/test');
         $this->assertEquals('image/gif,text/test', $validator->getMimeType());
         $this->assertEquals(array('image/gif', 'text/test'), $validator->getMimeType(true));
-        
+
         $validator->setMimeType(array('video/mpeg', 'gif'));
         $this->assertEquals('video/mpeg,gif', $validator->getMimeType());
         $this->assertEquals(array('video/mpeg', 'gif'), $validator->getMimeType(true));
@@ -157,6 +157,27 @@ class Zend_Validate_File_MimeTypeTest extends PHPUnit_Framework_TestCase
         $validator->addMimeType('');
         $this->assertEquals('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
         $this->assertEquals(array('image/gif', 'text', 'jpg', 'to', 'zip', 'ti'), $validator->getMimeType(true));
+    }
+
+    public function testSetAndGetMagicFile()
+    {
+        $validator = new Zend_Validate_File_MimeType('image/gif');
+        $mimetype  = $validator->getMagicFile();
+        $this->assertTrue(empty($mimetype));
+        try {
+            $validator->setMagicFile('/unknown/magic/file');
+        } catch (Zend_Validate_Exception $e) {
+            $this->assertContains('can not be read', $e->getMessage());
+        }
+
+        $validator->setMagicFile(__FILE__);
+        $this->assertEquals(__FILE__, $validator->getMagicFile());
+    }
+
+    public function testSetMagicFileWithinConstructor()
+    {
+        $validator = new Zend_Validate_File_MimeType(array('image/gif', 'magicfile' => __FILE__));
+        $this->assertEquals(__FILE__, $validator->getMagicFile());
     }
 }
 

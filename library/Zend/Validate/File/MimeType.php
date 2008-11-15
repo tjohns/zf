@@ -73,6 +73,13 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
     protected $_mimetype;
 
     /**
+     * Magicfile to use
+     *
+     * @var string|null
+     */
+    protected $_magicfile;
+
+    /**
      * Sets validator options
      *
      * Mimetype to accept
@@ -91,7 +98,42 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
             throw new Zend_Validate_Exception("Invalid options to validator provided");
         }
 
+        if (isset($mimetype['magicfile'])) {
+            $this->setMagicFile($mimetype['magicfile']);
+        }
+
         $this->setMimeType($mimetype);
+    }
+
+    /**
+     * Returna the actual set magicfile
+     *
+     * @return string
+     */
+    public function getMagicFile()
+    {
+        return $this->_magicfile;
+    }
+
+    /**
+     * Sets the magicfile to use
+     * if null, the MAGIC constant from php is used
+     *
+     * @param  string $file
+     * @return Zend_Validate_File_MimeType Provides fluid interface
+     */
+    public function setMagicFile($file)
+    {
+        if (empty($file)) {
+            $this->_magicfile = null;
+        } else if (!is_readable($file)) {
+            require_once 'Zend/Validate/Exception.php';
+            throw new Zend_Validate_Exception('The given magicfile can not be read');
+        } else {
+            $this->_magicfile = (string) $file;
+        }
+
+        return $this;
     }
 
     /**
@@ -141,6 +183,10 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
             throw new Zend_Validate_Exception("Invalid options to validator provided");
         }
 
+        if (isset($mimetype['magicfile'])) {
+            unset($mimetype['magicfile']);
+        }
+
         foreach ($mimetype as $content) {
             if (empty($content) || !is_string($content)) {
                 continue;
@@ -181,8 +227,14 @@ class Zend_Validate_File_MimeType extends Zend_Validate_Abstract
         }
 
         if ($file !== null) {
-            if (class_exists('finfo', false) && defined('MAGIC')) {
-                $mime = new finfo(FILEINFO_MIME);
+            $mimefile = $this->getMagicFile();
+            if (class_exists('finfo', false) && ((!empty($mimefile)) or (defined('MAGIC')))) {
+                if (!empty($mimefile)) {
+                    $mime = new finfo(FILEINFO_MIME, $mimefile);
+                } else {
+                    $mime = new finfo(FILEINFO_MIME);
+                }
+
                 $this->_type = $mime->file($value);
                 unset($mime);
             } elseif (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
