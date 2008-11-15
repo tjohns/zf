@@ -213,7 +213,9 @@ class Zend_Service_Amazon_Item
         if ($result->length > 1) {
             foreach ($result as $disk) {
                 foreach ($xpath->query('./*/text()', $disk) as $t) {
-                    $this->Tracks[$disk->getAttribute('number')] = (string) $t->data;
+                    // TODO: For consistency in a bugfix all tracks are appended to one single array
+                    // Erroreous line: $this->Tracks[$disk->getAttribute('number')] = (string) $t->data;
+                    $this->Tracks[] = (string) $t->data;
                 }
             }
         } else if ($result->length == 1) {
