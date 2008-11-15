@@ -987,23 +987,30 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         </para>
 
         <programlisting role="php"><![CDATA[
-$options = array('inputNamespace' => 'My_Namespace');
+$options = array('filterNamespace' => 'My_Namespace_Filter', 'validatorNamespace' => 'My_Namespace_Validate');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]>
         </programlisting>
 
         <para>
-            Alternatively, you can use the addNamespace() method:
+            Alternatively, you can use the <code>addValidatorPrefixPath($prefix, $path)</code>
+            or <code>addFilterPrefixPath($prefix, $path)</code> methods, which directly
+            proxy to the plugin loader that is used by Zend_Filter_Input:
         </para>
 
         <programlisting role="php"><![CDATA[
-$input->addNamespace('Other_Namespace');
+$input->addValidatorPrefixPath('Other_Namespace', 'Other/Namespace');
+$input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
 
-// Now the search order is:
-// 1. My_Namespace
+// Now the search order for validators is:
+// 1. My_Namespace_Validate
 // 2. Other_Namespace
+// 3. Zend_Validate
+
+// The search order for filters is:
+// 1. My_Namespace_Filter
+// 2. Foo_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate
 ]]>
         </programlisting>
 
@@ -1012,6 +1019,16 @@ $input->addNamespace('Other_Namespace');
             only can add namespaces.  User-defined namespaces are searched
             first, Zend namespaces are searched last.
         </para>
+
+        <note>
+            <para>
+                As of version 1.5 the function <code>addNamespace($namespace)</code> was deprecated
+                and exchanged with the plugin loader and the <code>addFilterPrefixPath</code> and
+                <code>addValidatorPrefixPath</code> were added. Also the constant <code>Zend_Filter_Input::INPUT_NAMESPACE</code>
+                is now deprecated. The constants <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> and
+                <code>Zend_Filter_Input::FILTER_NAMESPACE</code> are available in releases after 1.7.0.
+            </para>
+        </note>
 
         <note>
             <para>

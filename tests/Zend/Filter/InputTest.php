@@ -1135,7 +1135,7 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Filter_Exception', $e,
                 'Expected object of type Zend_Filter_Exception, got '.get_class($e));
-            $this->assertEquals("Class based on basename 'Exception' must implement the 'Zend_Validate_Interface' interface",
+            $this->assertEquals("Class 'Zend_Validate_Exception' based on basename 'Exception' must implement the 'Zend_Validate_Interface' interface",
                 $e->getMessage());
         }
     }
@@ -1575,4 +1575,102 @@ class Zend_Filter_InputTest extends PHPUnit_Framework_TestCase
         $this->assertNull($input->test,                 'magic get of test fails to return null');
     }
 
+    /**
+     * @group ZF-3100
+     */
+    public function testPluginLoaderInputNamespaceWithSameNameFilterAndValidatorLeadsToException()
+    {
+        $filters = array(
+            'date1' => array('Date')
+        );
+        $validators = array(
+            'date1' => array('Date')
+        );
+        $data = array(
+            'date1' => '1990-01-01'
+        );
+        $options = array(
+            'inputNamespace' => array('MyZend_Filter', 'MyZend_Validate'),
+        );
+        $filter = new Zend_Filter_Input($filters, $validators, $data, $options);
+
+        try {
+            $filter->process();
+            $this->fail();
+        } catch(Zend_Filter_Exception $e) {
+            $this->assertEquals(
+                "Class 'MyZend_Validate_Date' based on basename 'Date' must implement the 'Zend_Filter_Interface' interface",
+                $e->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @group ZF-3100
+     */
+    public function testPluginLoaderWithFilterValidateNamespaceWithSameNameFilterAndValidatorWorksPerfectly()
+    {
+        // Array
+        $filters = array(
+            'date1' => array('Date')
+        );
+        $validators = array(
+            'date1' => array('Date')
+        );
+        $data = array(
+            'date1' => '1990-01-01'
+        );
+        $options = array(
+            'filterNamespace' => array('MyZend_Filter'),
+            'validatorNamespace' => array('MyZend_Validate'),
+        );
+        $filter = new Zend_Filter_Input($filters, $validators, $data, $options);
+
+        try {
+            $filter->process();
+            $this->assertEquals("2000-01-01", $filter->date1);
+        } catch(Zend_Filter_Exception $e) {
+            $this->fail();
+        }
+
+        // String notation
+        $options = array(
+            'filterNamespace' => 'MyZend_Filter',
+            'validatorNamespace' => 'MyZend_Validate',
+        );
+        $filter = new Zend_Filter_Input($filters, $validators, $data, $options);
+
+        try {
+            $filter->process();
+            $this->assertEquals("2000-01-01", $filter->date1);
+        } catch(Zend_Filter_Exception $e) {
+            $this->fail();
+        }
+    }
+}
+
+class MyZend_Filter_Date implements Zend_Filter_Interface
+{
+    public function filter($value)
+    {
+        return "2000-01-01";
+    }
+}
+
+class MyZend_Validate_Date implements Zend_Validate_Interface
+{
+    public function isValid($value)
+    {
+        return true;
+    }
+
+    public function getMessages()
+    {
+        return array();
+    }
+
+    public function getErrors()
+    {
+        return array();
+    }
 }
