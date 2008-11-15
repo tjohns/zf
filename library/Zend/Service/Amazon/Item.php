@@ -84,27 +84,27 @@ class Zend_Service_Amazon_Item
     /**
      * @var Zend_Service_Amazon_CustomerReview[]
      */
-    public $CustomerReviews;
+    public $CustomerReviews = array();
 
     /**
      * @var Zend_Service_Amazon_SimilarProducts[]
      */
-    public $SimilarProducts;
+    public $SimilarProducts = array();
 
     /**
      * @var Zend_Service_Amazon_Accessories[]
      */
-    public $Accessories;
+    public $Accessories = array();
 
     /**
      * @var array
      */
-    public $Tracks;
+    public $Tracks = array();
 
     /**
      * @var Zend_Service_Amazon_ListmaniaLists[]
      */
-    public $ListmaniaLists;
+    public $ListmaniaLists = array();
 
     protected $_dom;
 
