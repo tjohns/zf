@@ -242,6 +242,19 @@ class Zend_Console_Getopt
      */
     public function __construct($rules, $argv = null, $getoptConfig = array())
     {
+        if (!isset($_SERVER['argv'])) {
+            require_once 'Zend/Console/Getopt/Exception.php';
+            if(ini_get('register_argc_argv') == false) {
+                throw new Zend_Console_Getopt_Exception(
+                    "argv is not available, because ini option 'register_argc_argv' is set Off"
+                );
+            } else {
+                throw new Zend_Console_Getopt_Exception(
+                    '$_SERVER["argv"] is not set, but Zend_Console_Getopt cannot work without this information.'
+                );
+            }
+        }
+
         $this->_progname = $_SERVER['argv'][0];
         $this->setOptions($getoptConfig);
         $this->addRules($rules);

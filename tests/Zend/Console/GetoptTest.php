@@ -42,6 +42,13 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        if(ini_get('register_argc_argv') == false) {
+            $this->markTestSkipped("Cannot Test Zend_Console_Getopt without 'register_argc_argv' ini option true.");
+        }
+    }
+
     public function testGetoptShortOptionsGnuMode()
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
@@ -466,6 +473,24 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
         $opts->setArguments(array('-k', 'string'));
         $this->assertEquals('string', $opts->k);
 
+    }
+
+    /**
+     * @group ZF-2295
+     */
+    public function testRegisterArgcArgvOffThrowsException()
+    {
+        $argv = $_SERVER['argv'];
+        unset($_SERVER['argv']);
+
+        try {
+            $opts = new Zend_Console_GetOpt('abp:');
+            $this->fail();
+        } catch(Zend_Console_GetOpt_Exception $e) {
+            $this->assertContains('$_SERVER["argv"]', $e->getMessage());
+        }
+
+        $_SERVER['argv'] = $argv;
     }
     
     /**
