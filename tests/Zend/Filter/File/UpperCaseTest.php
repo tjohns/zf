@@ -121,4 +121,35 @@ class Zend_Filter_File_UpperCaseTest extends PHPUnit_Framework_TestCase
             $this->assertContains('not found', $e->getMessage());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testCheckSettingOfEncodingInIstance()
+    {
+        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        try {
+            $filter = new Zend_Filter_File_UpperCase('ISO-8859-1');
+            $filter->filter($this->_newFile);
+            $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
+        } catch (Zend_Filter_Exception $e) {
+            $this->assertContains('mbstring is required', $e->getMessage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckSettingOfEncodingWithMethod()
+    {
+        $this->assertContains('This is a File', file_get_contents($this->_newFile));
+        try {
+            $filter = new Zend_Filter_File_UpperCase();
+            $filter->setEncoding('ISO-8859-1');
+            $filter->filter($this->_newFile);
+            $this->assertContains('THIS IS A FILE', file_get_contents($this->_newFile));
+        } catch (Zend_Filter_Exception $e) {
+            $this->assertContains('mbstring is required', $e->getMessage());
+        }
+    }
 }
