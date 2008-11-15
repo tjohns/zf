@@ -31,10 +31,16 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
  * @see Zend_Service_Amazon
  */
 require_once 'Zend/Service/Amazon.php';
+
 /**
  * @see Zend_Service_Amazon_ResultSet
  */
 require_once 'Zend/Service/Amazon/ResultSet.php';
+
+/**
+ * @see Zend_Service_Amazon_ResultSet
+ */
+require_once 'Zend/Service/Amazon/SimilarProduct.php';
 
 /**
  * @see Zend_Http_Client_Adapter_Socket
@@ -125,5 +131,18 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
             $trackCount = $mozartTracks[$item->ASIN];
             $this->assertEquals($trackCount, count($item->Tracks));
         }
+    }
+
+    /**
+     * @group ZF-2749
+     */
+    public function testSimilarProductConstructorMissingAttributeDoesNotThrowNotice()
+    {
+        $dom = new DOMDocument();
+        $asin = $dom->createElement("ASIN", "TEST");
+        $product = $dom->createElement("product");
+        $product->appendChild($asin);
+
+        $similarproduct = new Zend_Service_Amazon_SimilarProduct($product);
     }
 }
