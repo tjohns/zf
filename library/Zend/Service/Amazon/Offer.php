@@ -32,6 +32,46 @@
 class Zend_Service_Amazon_Offer
 {
     /**
+     * @var string
+     */
+    public $MerchantId;
+
+    /**
+     * @var string
+     */
+    public $GlancePage;
+
+    /**
+     * @var string
+     */
+    public $Condition;
+
+    /**
+     * @var string
+     */
+    public $OfferListingId;
+
+    /**
+     * @var string
+     */
+    public $Price;
+
+    /**
+     * @var string
+     */
+    public $CurrentyCode;
+
+    /**
+     * @var string
+     */
+    public $Availability;
+
+    /**
+     * @var boolean
+     */
+    public $IsEligibleForSuperSaverShipping = false;
+
+    /**
      * Parse the given Offer element
      *
      * @param  DOMElement $dom

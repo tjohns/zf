@@ -31,20 +31,80 @@
  */
 class Zend_Service_Amazon_Item
 {
+    /**
+     * @var string
+     */
     public $ASIN;
+
+    /**
+     * @var string
+     */
     public $DetailPageURL;
+
+    /**
+     * @var int
+     */
     public $SalesRank;
+
+    /**
+     * @var int
+     */
+    public $TotalReviews;
+
+    /**
+     * @var int
+     */
+    public $AverageRating;
+
+    /**
+     * @var string
+     */
     public $SmallImage;
+
+    /**
+     * @var string
+     */
     public $MediumImage;
+
+    /**
+     * @var string
+     */
     public $LargeImage;
+
+    /**
+     * @var string
+     */
     public $Subjects;
+
+    /**
+     * @var Zend_Service_Amazon_OfferSet
+     */
     public $Offers;
+
+    /**
+     * @var Zend_Service_Amazon_CustomerReview[]
+     */
     public $CustomerReviews;
+
+    /**
+     * @var Zend_Service_Amazon_SimilarProducts[]
+     */
     public $SimilarProducts;
+
+    /**
+     * @var Zend_Service_Amazon_Accessories[]
+     */
     public $Accessories;
+
+    /**
+     * @var array
+     */
     public $Tracks;
+
+    /**
+     * @var Zend_Service_Amazon_ListmaniaLists[]
+     */
     public $ListmaniaLists;
-    public $PromotionalTag;
 
     protected $_dom;
 

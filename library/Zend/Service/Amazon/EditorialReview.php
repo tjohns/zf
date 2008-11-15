@@ -32,6 +32,16 @@
 class Zend_Service_Amazon_EditorialReview
 {
     /**
+     * @var string
+     */
+    public $Source;
+
+    /**
+     * @var string
+     */
+    public $Content;
+
+    /**
      * Assigns values to properties relevant to EditorialReview
      *
      * @param  DOMElement $dom

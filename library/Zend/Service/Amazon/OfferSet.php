@@ -32,6 +32,51 @@
 class Zend_Service_Amazon_OfferSet
 {
     /**
+     * @var string
+     */
+    public $LowestNewPrice;
+
+    /**
+     * @var string
+     */
+    public $LowestNewPriceCurrency;
+
+    /**
+     * @var string
+     */
+    public $LowestUsedPrice;
+
+    /**
+     * @var string
+     */
+    public $LowestUsedPriceCurrency;
+
+    /**
+     * @var int
+     */
+    public $TotalNew;
+
+    /**
+     * @var int
+     */
+    public $TotalUsed;
+
+    /**
+     * @var int
+     */
+    public $TotalCollectible;
+
+    /**
+     * @var int
+     */
+    public $TotalRefurbished;
+
+    /**
+     * @var Zend_Service_Amazon_Offer[]
+     */
+    public $Offers;
+
+    /**
      * Parse the given Offer Set Element
      *
      * @param  DOMElement $dom
