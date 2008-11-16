@@ -25,7 +25,7 @@
     </para>
     <para>
         Der prinzipielle Sponsor des Zend Framework Projektes ist
-        <ulink href="http://www.zend.com">Zend Technologies</ulink>, aber viele Firmen haben Komponenten oder
+        <ulink url="http://www.zend.com">Zend Technologies</ulink>, aber viele Firmen haben Komponenten oder
         signifikante Features dem Framework beigesteuert. Firmen wie Google, Microsoft, und StrikeIron sind
         eine Partnerschaft mit Zend eingegangen um Interfaces zu Web Services anzubieten und andere
         Technologien die diese dem Zend Framework Entwicklern geben wollen.
@@ -33,8 +33,8 @@
     <para>
         Zend Framework könnte alle diese Features nicht ausliefern und supporten ohne die Hilfe der
         lebhaften ZF Community. Community Mitglieder, einschließlich Entwicklern, sind selbst erreichbar
-        über <ulink href="http://framework.zend.com/archives">Mailing Listen</ulink>,
-        <ulink href="http://www.zftalk.com">IRC Kanälen</ulink>, und anderen Foren. Welche Frage man auch
+        über <ulink url="http://framework.zend.com/archives">Mailing Listen</ulink>,
+        <ulink url="http://www.zftalk.com">IRC Kanälen</ulink>, und anderen Foren. Welche Frage man auch
         immer über ZF hat, die Community ist immer da um diese zu beantworten.
     </para>
 </sect1>

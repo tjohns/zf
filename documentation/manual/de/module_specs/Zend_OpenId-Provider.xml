@@ -365,7 +365,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
                     zu registrieren, und Ihre vertrauten Seiten und Profile zu managen.
                 </para>
             </listitem>
-            <listitem>´
+            <listitem>
                 <para>
                     einen Abstraktions Speicher Layer um Informationen über Benutzer, Ihre Seiten und Profile zu
                     speichern. Es werden auch Assoziationen zwischen Providern und OpenID-aktivierten Seiten

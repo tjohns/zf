@@ -11,9 +11,7 @@
 
     <sect2 id="zend.validate.introduction.definition">
 
-        <para>
-            <emphasis role="strong">Was ist eine Prüfung?</emphasis>
-        </para>
+        <title>Was ist eine Prüfung?</title>
 
         <para>
             Eine Prüfung untersucht seine Eingabe mit Obacht auf einige Anforderungen und produziert ein boolsches
