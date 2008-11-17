@@ -346,6 +346,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
 
     public function testAuthenticateVerifyInvalid()
     {
+        $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         unset($_SERVER['REQUEST_METHOD']);
         $_GET = array('openid_mode'=>'id_res',
             "openid_return_to" => "http://www.zf-test.com/test.php",
@@ -378,6 +379,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
         $storage->purgeNonces();
 
+        $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         unset($_SERVER['REQUEST_METHOD']);
         $_GET = array(
             "openid_return_to" => "http://www.zf-test.com/test.php",
@@ -404,6 +406,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
         $storage->purgeNonces();
 
+        $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_GET = array();
         $_POST = array(
@@ -431,6 +434,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $storage->addAssociation(self::SERVER, self::HANDLE, self::MAC_FUNC, self::SECRET, $expiresIn);
         $storage->purgeNonces();
 
+        $_SERVER['SCRIPT_URI'] = "http://www.zf-test.com/test.php";
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_GET = array(
             "openid_ns"        => Zend_OpenId::NS_2_0,
