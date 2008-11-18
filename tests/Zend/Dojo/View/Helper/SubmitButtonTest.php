@@ -119,6 +119,15 @@ class Zend_Dojo_View_Helper_SubmitButtonTest extends PHPUnit_Framework_TestCase
         $this->assertNotRegexp('/<input[^>]*(dojoType="dijit.form.Button")/', $html);
         $this->assertNotNull($this->view->dojo()->getDijit('elementId'));
     }
+
+    /**
+     * @group ZF-4977
+     */
+    public function testHelperShouldRenderContentKeyAsLabelWhenPassed()
+    {
+        $html = $this->helper->submitButton('foo', '', array('content' => 'Label'));
+        $this->assertRegexp('/<input[^>]*(value="Label")/', $html, $html);
+    }
 }
 
 // Call Zend_Dojo_View_Helper_SubmitButtonTest::main() if this source file is executed directly.

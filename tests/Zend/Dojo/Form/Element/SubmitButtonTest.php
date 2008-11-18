@@ -181,6 +181,16 @@ class Zend_Dojo_Form_Element_SubmitButtonTest extends PHPUnit_Framework_TestCase
         $html = $this->element->render();
         $this->assertContains('type="submit"', $html);
     }
+
+    /**
+     * @group ZF-4977
+     */
+    public function testElementShouldRenderLabelAsInputValue()
+    {
+        $this->element->setLabel('Label!');
+        $html = $this->element->render();
+        $this->assertRegexp('/<input[^>]*(value="Label!")/', $html, $html);
+    }
 }
 
 // Call Zend_Dojo_Form_Element_SubmitButtonTest::main() if this source file is executed directly.
