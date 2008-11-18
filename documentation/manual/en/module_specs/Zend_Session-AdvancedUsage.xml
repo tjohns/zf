@@ -162,8 +162,7 @@ if ($userProfileNamespace->isLocked()) {
             Limits can be placed on the longevity of both namespaces and individual keys in namespaces. Common use cases
             include passing temporary information between requests, and reducing exposure to certain security risks by
             removing access to potentially sensitive information some time after authentication occurred. Expiration can
-            be based on either elapsed seconds or the number of "hops", where a hop occurs for each successive request
-            that instantiates the namespace at least once.
+            be based on either elapsed seconds or the number of "hops", where a hop occurs for each successive request.
         </para>
 
         <example id="zend.session.advanced_usage.expiration.example">
