@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.migration">
     <title>以前のバージョンからの移行</title>
 
@@ -8,6 +8,32 @@
         以下のガイドラインにしたがってスクリプトを変更し、
         新しい仕組みに対応させてください。
     </para>
+
+    <sect2 id="zend.controller.migration.fromonesixtooneseven">
+        <title>1.6.x から 1.7.0 以降への移行</title>
+
+        <sect3 id="zend.controller.migration.fromonesixtooneseven.dispatcher">
+            <title>ディスパッチャインターフェイスの変更</title>
+
+            <para>
+                ユーザからの指摘により、
+                <code>Zend_Controller_Action_Helper_ViewRenderer </code>
+                が使っているディスパッチャ抽象クラスのメソッドの中で
+                ディスパッチャインターフェイスに存在しないものがあることに気づきました。
+                次のメソッドを追加し、
+                自作のディスパッチャが同梱の実装と共存できるようにしています。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <code>formatModuleName()</code>:
+                リクエストオブジェクト内に格納されたりしている生のコントローラ名を受け取り、
+                それを再フォーマットして
+                <code>Zend_Controller_Action</code> を継承した適切なクラス名にします。
+                </para></listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
 
     <sect2 id="zend.controller.migration.fromoneohtoonesix">
         <title>1.5.x から 1.6.0 以降への移行</title>
@@ -499,7 +525,7 @@ $router = new Zend_Controller_RewriteRouter();
 $router->addRoute('user',
                   'user/:username',
                   array('controller' => 'user', 'action' => 'info')
-);                  
+);
 
 /* -- ルータをコントローラに設定します -- */
 $ctrl = Zend_Controller_Front::getInstance();
