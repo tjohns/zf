@@ -500,29 +500,17 @@ class Zend_Pdf
      * new Zend_Pdf_Page(numeric $width, numeric $height);
      * ---------------------------------------------------------
      *
-     * @param string|int $pagesize
-     * @param int        $param2 Height of page, when the first parameter is an integer and represents width.
+     * @param mixed $param1
+     * @param mixed $param2
      * @return Zend_Pdf_Page
      */
-    public function newPage($pagesize, $param2 = null)
+    public function newPage($param1, $param2 = null)
     {
         if ($param2 === null) {
-            return new Zend_Pdf_Page($pagesize, $this->_objFactory);
+            return new Zend_Pdf_Page($param1, $this->_objFactory);
         } else {
-            return $this->newCustomSizePage($pagesize, $param2);
+            return new Zend_Pdf_Page($param1, $param2, $this->_objFactory);
         }
-    }
-
-    /**
-     * Create a new custom sized page.
-     *
-     * @param  integer $width
-     * @param  integer $height
-     * @return Zend_Pdf_Page
-     */
-    public function newCustomSizePage($width, $height)
-    {
-        return new Zend_Pdf_Page($width, $height, $this->_objFactory);
     }
 
     /**

@@ -21,14 +21,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Pdf_FactoryTest extends PHPUnit_Framework_TestCase
 {
-    public function testNewCustomPageCreator()
-    {
-        $pdf = new Zend_Pdf();
-        $page = $pdf->newCustomSizePage(400, 400);
-
-        $this->assertTrue($page instanceof Zend_Pdf_Page);
-    }
-
     public function testNewPageCreator()
     {
         $pdf = new Zend_Pdf();
