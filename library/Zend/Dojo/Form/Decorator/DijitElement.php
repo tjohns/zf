@@ -38,7 +38,7 @@ require_once 'Zend/Form/Decorator/ViewHelper.php';
  * @subpackage Form_Decorator
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
+ * @version    $Id$
  */
 class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelper
 {
@@ -157,10 +157,6 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
         }
 
         $options = null;
-        if (method_exists($element, 'getMultiOptions')) {
-            $options = $element->getMultiOptions();
-        }
-
         $helper    = $this->getHelper();
         $separator = $this->getSeparator();
         $value     = $this->getValue($element);
@@ -181,7 +177,11 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
             } while ($view->dojo()->hasDijit($id));
         }
         $attribs['id'] = $id;
-
+        
+        if (array_key_exists('options', $attribs)) {
+       		$options = $attribs['options'];
+        }
+        
         $elementContent = $view->$helper($name, $value, $dijitParams, $attribs, $options);
         switch ($this->getPlacement()) {
             case self::APPEND:
