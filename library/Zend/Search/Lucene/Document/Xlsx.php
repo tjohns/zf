@@ -42,21 +42,21 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
      * @var string
      */
     const SCHEMA_SPREADSHEETML = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
-    
+
     /**
      * Xml Schema - DrawingML
      *
      * @var string
      */
-    const SCHEMA_DRAWINGML = 'http://schemas.openxmlformats.org/drawingml/2006/main';    
-    
+    const SCHEMA_DRAWINGML = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+
     /**
      * Xml Schema - Shared Strings
      *
      * @var string
      */
     const SCHEMA_SHAREDSTRINGS = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings';
-    
+
     /**
      * Xml Schema - Worksheet relation
      *
@@ -70,7 +70,7 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
      * @var string
      */
     const SCHEMA_SLIDENOTESRELATION = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide';
-    
+
     /**
      * Object constructor
      *
@@ -84,7 +84,7 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
         $worksheets = array();
         $documentBody = array();
         $coreProperties = array();
-        
+
         // Open OpenXML package
         $package = new ZipArchive();
         $package->open($fileName);
@@ -96,11 +96,11 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
                 // Found office document! Read relations for workbook...
                 $workbookRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/_rels/" . basename($rel["Target"]) . ".rels")) );
                 $workbookRelations->registerXPathNamespace("rel", Zend_Search_Lucene_Document_OpenXml::SCHEMA_RELATIONSHIP);
-                
+
                 // Read shared strings
                 $sharedStringsPath = $workbookRelations->xpath("rel:Relationship[@Type='" . Zend_Search_Lucene_Document_Xlsx::SCHEMA_SHAREDSTRINGS . "']");
-                $sharedStringsPath = (string)$sharedStringsPath[0]['Target'];              
-                $xmlStrings = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . $sharedStringsPath)) );            
+                $sharedStringsPath = (string)$sharedStringsPath[0]['Target'];
+                $xmlStrings = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . $sharedStringsPath)) );
                 if (isset($xmlStrings) && isset($xmlStrings->si)) {
                     foreach ($xmlStrings->si as $val) {
                         if (isset($val->t)) {
@@ -119,14 +119,14 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
                         );
                     }
                 }
-                
+
                 break;
             }
         }
-        
+
         // Sort worksheets
         ksort($worksheets);
-        
+
         // Extract contents from worksheets
         foreach ($worksheets as $sheetKey => $worksheet) {
             foreach ($worksheet->sheetData->row as $row) {
@@ -143,7 +143,7 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
                             }
 
                             break;
-                            
+
                         case "b":
                             // Value is boolean
                             $value = (string)$c->v;
@@ -156,13 +156,13 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
                             }
 
                             break;
-                            
+
                         case "inlineStr":
                             // Value is rich text inline
                             $value = $this->_parseRichText($c->is);
-                                        
+
                             break;
-                            
+
                         case "e":
                             // Value is an error message
                             if ((string)$c->v != '') {
@@ -184,11 +184,11 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
                                 elseif ($value == (double)$value) $value = (double)$value;
                             }
                     }
-                    
+
                     $documentBody[] = $value;
                 }
             }
-        }   
+        }
 
         // Read core properties
         $coreProperties = $this->extractMetaData($package);
@@ -197,28 +197,28 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
         $package->close();
 
         // Store filename
-        $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName));
+        $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName, 'UTF-8'));
 
         // Store contents
         if ($storeContent) {
-            $this->addField(Zend_Search_Lucene_Field::Text('body', implode(' ', $documentBody)));
+            $this->addField(Zend_Search_Lucene_Field::Text('body', implode(' ', $documentBody, 'UTF-8')));
         } else {
-            $this->addField(Zend_Search_Lucene_Field::UnStored('body', implode(' ', $documentBody)));
+            $this->addField(Zend_Search_Lucene_Field::UnStored('body', implode(' ', $documentBody, 'UTF-8')));
         }
 
         // Store meta data properties
         foreach ($coreProperties as $key => $value)
         {
-            $this->addField(Zend_Search_Lucene_Field::Text($key, $value));
+            $this->addField(Zend_Search_Lucene_Field::Text($key, $value, 'UTF-8'));
         }
 
         // Store title (if not present in meta data)
         if (!isset($coreProperties['title']))
         {
-            $this->addField(Zend_Search_Lucene_Field::Text('title', $fileName));
+            $this->addField(Zend_Search_Lucene_Field::Text('title', $fileName, 'UTF-8'));
         }
     }
-    
+
     /**
      * Parse rich text XML
      *

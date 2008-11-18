@@ -28,6 +28,15 @@ require_once 'Zend/Search/Lucene/Document.php';
 /** Zend_Search_Lucene_Document_Html */
 require_once 'Zend/Search/Lucene/Document/Html.php';
 
+/** Zend_Search_Lucene_Document_Docx */
+require_once 'Zend/Search/Lucene/Document/Docx.php';
+
+/** Zend_Search_Lucene_Document_Pptx */
+require_once 'Zend/Search/Lucene/Document/Pptx.php';
+
+/** Zend_Search_Lucene_Document_Xlsx */
+require_once 'Zend/Search/Lucene/Document/Xlsx.php';
+
 /** Zend_Search_Lucene_Storage_Directory_Filesystem */
 require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 

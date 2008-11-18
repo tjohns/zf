@@ -42,14 +42,14 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
      * @var string
      */
     const SCHEMA_PRESENTATIONML = 'http://schemas.openxmlformats.org/presentationml/2006/main';
-    
+
     /**
      * Xml Schema - DrawingML
      *
      * @var string
      */
-    const SCHEMA_DRAWINGML = 'http://schemas.openxmlformats.org/drawingml/2006/main';    
-    
+    const SCHEMA_DRAWINGML = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+
     /**
      * Xml Schema - Slide relation
      *
@@ -63,7 +63,7 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
      * @var string
      */
     const SCHEMA_SLIDENOTESRELATION = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide';
-    
+
     /**
      * Object constructor
      *
@@ -94,7 +94,7 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
                         $slides[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
                             $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . basename($slideRel["Target"])) )
                         );
-                        
+
                         // Search for slide notes
                         $slideNotesRelations = simplexml_load_string($package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/_rels/" . basename($slideRel["Target"]) . ".rels")) );
                         foreach ($slideNotesRelations->Relationship as $slideNoteRel) {
@@ -103,27 +103,27 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
                                 $slideNotes[ str_replace( 'rId', '', (string)$slideRel["Id"] ) ] = simplexml_load_string(
                                     $package->getFromName( $this->absoluteZipPath(dirname($rel["Target"]) . "/" . dirname($slideRel["Target"]) . "/" . dirname($slideNoteRel["Target"]) . "/" . basename($slideNoteRel["Target"])) )
                                 );
-                                
+
                                 break;
                             }
                         }
                     }
                 }
-                
+
                 break;
             }
         }
-        
+
         // Sort slides
         ksort($slides);
         ksort($slideNotes);
-        
+
         // Extract contents from slides
         foreach ($slides as $slideKey => $slide) {
             // Register namespaces
             $slide->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
             $slide->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
-            
+
             // Fetch all text
             $textElements = $slide->xpath('//a:t');
             foreach ($textElements as $textElement) {
@@ -138,15 +138,15 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
                 // Register namespaces
                 $slideNote->registerXPathNamespace("p", Zend_Search_Lucene_Document_Pptx::SCHEMA_PRESENTATIONML);
                 $slideNote->registerXPathNamespace("a", Zend_Search_Lucene_Document_Pptx::SCHEMA_DRAWINGML);
-                
+
                 // Fetch all text
                 $textElements = $slideNote->xpath('//a:t');
                 foreach ($textElements as $textElement) {
                     $documentBody[] = (string)$textElement;
                 }
             }
-        }   
-        
+        }
+
         // Read core properties
         $coreProperties = $this->extractMetaData($package);
 
@@ -154,25 +154,25 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
         $package->close();
 
         // Store filename
-        $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName));
+        $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName, 'UTF-8'));
 
             // Store contents
         if ($storeContent) {
-            $this->addField(Zend_Search_Lucene_Field::Text('body', implode(' ', $documentBody)));
+            $this->addField(Zend_Search_Lucene_Field::Text('body', implode(' ', $documentBody, 'UTF-8')));
         } else {
-            $this->addField(Zend_Search_Lucene_Field::UnStored('body', implode(' ', $documentBody)));
+            $this->addField(Zend_Search_Lucene_Field::UnStored('body', implode(' ', $documentBody, 'UTF-8')));
         }
 
         // Store meta data properties
         foreach ($coreProperties as $key => $value)
         {
-            $this->addField(Zend_Search_Lucene_Field::Text($key, $value));
+            $this->addField(Zend_Search_Lucene_Field::Text($key, $value, 'UTF-8'));
         }
 
         // Store title (if not present in meta data)
         if (!isset($coreProperties['title']))
         {
-            $this->addField(Zend_Search_Lucene_Field::Text('title', $fileName));
+            $this->addField(Zend_Search_Lucene_Field::Text('title', $fileName, 'UTF-8'));
         }
     }
 
