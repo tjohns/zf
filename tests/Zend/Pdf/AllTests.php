@@ -7,6 +7,7 @@ require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 require_once 'Zend/Pdf/ProcessingTest.php';
 require_once 'Zend/Pdf/DrawingTest.php';
+require_once 'Zend/Pdf/FactoryTest.php';
 
 require_once 'Zend/Pdf/Element/AllTests.php';
 
