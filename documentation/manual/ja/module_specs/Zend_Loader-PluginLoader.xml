@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.loader.pluginloader">
     <title>プラグインのロード</title>
 
@@ -77,10 +77,10 @@ $loader->addPrefixPath('Zend_View_Helper', 'Zend/View/Helper/')
 $formTextClass = $loader->load('FormText'); // 'Zend_View_Helper_FormText';
 
 // 'FormLabel' ヘルパーをロードします
-$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel' 
+$formLabelClass = $loader->load('FormLabel'); // 'Foo_View_Helper_FormLabel'
 
 // 'FormSubmit' ヘルパーをロードします
-$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit' 
+$formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
 ]]>
         </programlisting>
 
@@ -198,6 +198,74 @@ if ($loader->isLoaded('Adapter')) {
 }
 ]]>
         </programlisting>
+    </sect2>
+
+    <sect2 id="zend.loader.pluginloader.performance">
+        <title>プラグインのパフォーマンスの向上</title>
+
+        <para>
+            プラグインの読み込みは、非常に重い操作となりえます。
+            まず各プレフィックスについてループ処理をする必要があり、
+            各プレフィックス上のパスをすべて調べ、
+            期待通りのクラスに対応するファイルを探すという操作になるからです。
+            ファイルは存在するもののそこでクラスが定義されていないといった場合は
+            PHP のエラースタックにエラーが追加されますが、
+            これもまた負荷のかかる操作です。
+            ここで問題となるのが「プラグイン機能の柔軟性を保ちつつ
+            パフォーマンスも向上させるにはどうすればいいか？」ということです。
+        </para>
+
+        <para>
+            <code>Zend_Loader_PluginLoader</code>
+            では、このような場合のためのオプトイン機能として
+            ファイルインクルードキャッシュを提供しています。
+            これを有効にすると、インクルードに成功したすべてのファイルを含む
+            単一のファイルを作成します。起動ファイルからこれをコールすることができます。
+            この方式を使用すると、実運用サーバ上でのパフォーマンスが劇的に向上します。
+        </para>
+
+        <example id="zend.loader.pluginloader.performance.example">
+            <title>PluginLoader クラスのファイルインクルードキャッシュの使用法</title>
+
+            <para>
+                クラスファイルのインクルードキャッシュを使用するには、
+                次のコードを起動ファイルに追加します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+]]></programlisting>
+
+            <para>
+                もちろん、パスやファイル名は必要に応じて変更することになります。
+                このコードはできるだけ早い段階で実行されるようにしなければなりません。
+                そうすることで、プラグイン機構をもつコンポーネントが確実にキャッシュを使用できるようにします。
+            </para>
+
+            <para>
+                開発段階ではキャッシュを無効にしたいこともあるでしょう。
+                その方法のひとつとしては、ある設定項目を切り替えることで
+                プラグインローダーがキャッシュするかしないかを指定するというものがあります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+if (file_exists($classFileIncCache)) {
+    include_once $classFileIncCache;
+}
+if ($config->enablePluginLoaderCache) {
+    Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
+}
+]]></programlisting>
+
+            <para>
+                これを使えば、コードを直接変更しなくても設定ファイルだけの変更だけですませることができます。
+            </para>
+        </example>
     </sect2>
 </sect1>
 <!--
