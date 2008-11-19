@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11947 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>標準のルータ</title>
     <sect2 id="zend.controller.router.introduction">
@@ -317,6 +317,25 @@ $request->setBaseUrl('/~user/application-root/');
 ]]>
         </programlisting>
 
+    </sect2>
+
+    <sect2 id="zend.controller.router.global.parameters">
+        <title>グローバルパラメータ</title>
+
+        <para>
+            グローバルパラメータをルータ内で設定することができます。
+            これは <code>setGlobalParam</code>
+            によってルートに自動的に適用されます。
+            グローバルパラメータが設定されているにもかかわらず
+            直接メソッドによっても設定された場合は、
+            ユーザが設定したパラメータのほうがグローバルパラメータより優先されます。
+            グローバルパラメータは、このように設定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$router->setGlobalParam('lang', 'en');
+]]>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.controller.router.routes">
