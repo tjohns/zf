@@ -1,4 +1,5 @@
-<!-- EN-Revision: 11146 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 12670 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -663,24 +664,46 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         <code>Zend_Filter_Input</code> de chercher dans ces espaces là. Ceci se fait via son constructeur :</para>
 
         <programlisting role="php"><![CDATA[
-$options = array('inputNamespace' => 'My_Namespace');
+$options = array('filterNamespace' => 'My_Namespace_Filter', 'validatorNamespace' => 'My_Namespace_Validate');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]></programlisting>
 
-        <para>Aussi, la méthode <code>addNamespace()</code> peut être utilisée :</para>
+        <para>Alternativement, vous pouvez utiliser les méthodes <code>addValidatorPrefixPath($prefix, $path)</code> ou
+        <code>addFilterPrefixPath($prefix, $path)</code>, qui proxie directement le chargeur de plugin utilisé par
+        <code>Zend_Filter_Input</code> :</para>
 
         <programlisting role="php"><![CDATA[
-$input->addNamespace('Other_Namespace');
+$input->addValidatorPrefixPath('Autre_Namespace', 'Autre/Namespace');
+$input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
 
-// Now the search order is :
-// 1. My_Namespace
-// 2. Other_Namespace
-// 3. Zend_Filter
-// 4. Zend_Validate
+// Maitenant l'ordre de recherche des validateurs est :
+// 1. My_Namespace_Validate
+// 2. Autre_Namespace
+// 3. Zend_Validate
+
+// L'ordre de recherche des filtres est :
+// 1. My_Namespace_Filter
+// 2. Foo_Namespace
 ]]></programlisting>
 
         <para>Il n'est pas possible de supprimer les espaces de nommage <code>Zend_Filter</code> et
         <code>Zend_Validate</code>. Les espaces définis par l'utilisateur sont cherchés en premiers, les espaces de nom
         Zend sont cherchés en derniers.</para>
+
+        <note>
+            <para>A partir de la version 1.7, la fonction <code>addNamespace($namespace)</code> est dépréciée et
+            échangée avec le chargeur de plugin et les méthodes <code>addFilterPrefixPath</code> et
+            <code>addValidatorPrefixPath</code> ont été ajoutées. De même la constante
+            <code>Zend_Filter_Input::INPUT_NAMESPACE</code> est aussi dépréciée. Les constantes
+            <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> et <code>Zend_Filter_Input::FILTER_NAMESPACE</code> sont
+            disponibles à partir de la version 1.7.0.</para>
+        </note>
+
+        <note>
+            <para>A partir de la version 1.0.4, <code>Zend_Filter_Input::NAMESPACE</code>, ayant une valeur
+            <code>namespace</code>, a été changé par <code>Zend_Filter_Input::INPUT_NAMESPACE</code>, ayant une valeur
+            <code>inputNamespace</code>, dans le but de se conformer à la réservation du mot clé <code>namespace</code>
+            par PHP 5.3.</para>
+        </note>
     </sect2>
 </sect1>

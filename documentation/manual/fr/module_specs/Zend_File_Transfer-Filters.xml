@@ -1,4 +1,5 @@
-<!-- EN-Revision: 12541 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 12664 -->
 <sect1 id="zend.file.transfer.filters">
     <title>Filtres pour Zend_File_Transfer</title>
 
@@ -134,6 +135,9 @@ $upload->addFilter('Rename', 'file1', 'C:\picture\newjpg')
         <para>Le filtre <code>LowerCase</code> vous permet de mettre en minuscule le contenu d'un fichier. Vous devriez
         utiliser ce filtre seulement sur les fichiers texte.</para>
 
+        <para>Lors de l'initialisation vous pouvez fournir qui sera utilisée en tant qu'encodage. Ou vous pouvez
+        utiliser la méthode <code>setEncoding()</code> pour le paramétrer plus tard.</para>
+
         <example id="zend.file.transfer.filters.lowercase.example">
             <title>Utiliser le filtre LowerCase</title>
 
@@ -146,11 +150,14 @@ $upload->addFilter('LowerCase');
 
 // Ajoute un filtre pour mettre en minuscule seulement le fichier uploadé "uploadfile1"
 $upload->addFilter('LowerCase', null, 'uploadfile1');
+
+// Ajoute un filtre pour mettre en minuscule avec un encodage ISO-8859-1
+$upload->addFilter('LowerCase', 'ISO-8859-1');
 ]]></programlisting>
         </example>
 
         <note>
-            <para>Notez que comme il n'y pas d'options pour le filtre LowerCase, vous devez fournir un <code>null</code>
+            <para>Notez que les options du filtre LowerCase sont optionnelles, vous devez fournir un <code>null</code>
             en second paramètre quand vous souhaitez limiter le filtre à un fichier unique.</para>
         </note>
     </sect2>
@@ -171,8 +178,8 @@ $upload->addFilter('LowerCase', null, 'uploadfile1');
             </listitem>
 
             <listitem>
-                <para><code>overwrite</code> : paramètre si l'ancien fichier écrase le nouveau fichier s'il existe
-                déjà. La valeur par défaut est <code>false</code>.</para>
+                <para><code>overwrite</code> : paramètre si l'ancien fichier écrase le nouveau fichier s'il existe déjà.
+                La valeur par défaut est <code>false</code>.</para>
             </listitem>
         </itemizedlist>
 
@@ -229,7 +236,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
 
                     <row>
-                        <entry>addFile('C:\uploads\file.ext', 'overwrite' => true)</entry>
+                        <entry>addFile('C:\uploads\file.ext', 'overwrite' =&gt; true)</entry>
 
                         <entry>Spécifie un nouveau dossier et un nom de fichier pour tous les fichiers quand la chaîne
                         n'est pas un dossier et écrase le fichier existant si celui-ci existe. Notez que vous aurez pas
@@ -237,7 +244,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
 
                     <row>
-                        <entry>addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads'))</entry>
+                        <entry>addFile(array('source' =&gt; 'C:\temp\uploads', 'target' =&gt; 'C:\uploads'))</entry>
 
                         <entry>Spécifie un nouveau dossier pour tous les fichiers qui sont présent dans l'ancien dossier
                         quand la chaîne est un dossier. Notez que vous aurez une exception si le fichier existe déjà,
@@ -245,7 +252,8 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
                     </row>
 
                     <row>
-                        <entry>addFile(array('source' => 'C:\temp\uploads', 'target' => 'C:\uploads', 'overwrite' => true))</entry>
+                        <entry>addFile(array('source' =&gt; 'C:\temp\uploads', 'target' =&gt; 'C:\uploads', 'overwrite'
+                        =&gt; true))</entry>
 
                         <entry>Spécifie un nouveau dossier pour tous les fichiers qui sont présent dans l'ancien dossier
                         quand la chaîne est un dossier. Notez que vous aurez pas de notification en cas
@@ -262,6 +270,9 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
         <para>Le filtre <code>UpperCase</code> vous permet de mettre en minuscule le contenu d'un fichier. Vous devriez
         utiliser ce filtre seulement sur les fichiers texte.</para>
 
+        <para>Lors de l'initialisation vous pouvez fournir qui sera utilisée en tant qu'encodage. Ou vous pouvez
+        utiliser la méthode <code>setEncoding()</code> pour le paramétrer plus tard.</para>
+
         <example id="zend.file.transfer.filters.uppercase.example">
             <title>Utiliser le filtre UpperCase</title>
 
@@ -272,13 +283,16 @@ $upload->addValidator('MimeType', 'text');
 // Ajoute un filtre pour mettre en majuscule les fichiers textes uploadés
 $upload->addFilter('UpperCase');
 
-// joute un filtre pour mettre en minuscule seulement le fichier uploadé "uploadfile1"
+// Ajoute un filtre pour mettre en majuscule seulement le fichier uploadé "uploadfile1"
 $upload->addFilter('UpperCase', null, 'uploadfile1');
+
+// Ajoute un filtre pour mettre en majuscule avec un encodage ISO-8859-1
+$upload->addFilter('UpperCase', 'ISO-8859-1');
 ]]></programlisting>
         </example>
 
         <note>
-            <para>Notez que comme il n'y pas d'options pour le filtre UpperCase, vous devez fournir un <code>null</code>
+            <para>Notez que les options du filtre UpperCase sont optionnelles, vous devez fournir un <code>null</code>
             en second paramètre quand vous souhaitez limiter le filtre à un fichier unique.</para>
         </note>
     </sect2>

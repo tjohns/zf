@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12694 -->
 <sect1 id="zend.session.advancedusage">
     <title>Utilisation avancée</title>
 
@@ -138,7 +138,7 @@ if ($userProfileNamespace->isLocked()) {
         requêtes, et la diminution de l'exposition à un potentiel risque de sécurité par la suppression de l'accès à des
         informations sensibles potentielles à une certaine heure après que l'authentification ait eu lieu. L'expiration
         peut être basée sur les secondes écoulées, ou basées sur le concept de "hops", où un "hop" apparaît à chaque
-        requête successive qui active l'espace de noms au moins une fois.</para>
+        requête successive.</para>
 
         <example id="zend.session.advanced_usage.expiration.example">
             <title>Exemple d'expiration</title>
