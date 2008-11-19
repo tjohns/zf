@@ -525,8 +525,14 @@ class Zend_Search_Lucene_Index_Writer
                 if (!in_array($segName, $this->_segmentsToDelete)) {
                     // Load segment if necessary
                     if (!isset($this->_segmentInfos[$segName])) {
-                        $delGen = $delGenHigh * ((double)0xFFFFFFFF + 1) +
-                                     (($delGenLow < 0)? (double)0xFFFFFFFF - (-1 - $delGenLow) : $delGenLow);
+                        if (PHP_INT_SIZE > 4) {
+                        	// 64-bit system
+                        	$delGen = $delGenHigh << 32  |
+                        	          $delGenLow;
+                        } else {
+                        	$delGen = $delGenHigh * ((double)0xFFFFFFFF + 1) +
+                                         (($delGenLow < 0)? (double)0xFFFFFFFF - (-1 - $delGenLow) : $delGenLow);
+                        }
                         if ($isCompoundByte == 0xFF) {
                             // The segment is not a compound file
                             $isCompound = false;
@@ -551,8 +557,14 @@ class Zend_Search_Lucene_Index_Writer
                         $delGen = $this->_segmentInfos[$segName]->getDelGen();
 
                         if ($delGen >= 0) {
-                            $delGenHigh = (int)($delGen/((double)0xFFFFFFFF + 1));
-                            $delGenLow  =(int)($delGen & 0xFFFFFFFF);
+                            if (PHP_INT_SIZE > 4) {
+                                // 64-bit system
+                                $delGenHigh = $delGen >> 32  & 0xFFFFFFFF;
+                                $delGenLow  = $delGen        & 0xFFFFFFFF;
+                            } else {
+                                $delGenHigh = (int)($delGen/((double)0xFFFFFFFF + 1));
+                                $delGenLow  =(int)($delGen & 0xFFFFFFFF);
+                            }
                         } else {
                             $delGenHigh = $delGenLow = (int)0xFFFFFFFF;
                         }
