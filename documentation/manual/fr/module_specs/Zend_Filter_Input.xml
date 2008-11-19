@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 12670 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
@@ -691,7 +690,7 @@ $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
         Zend sont cherchés en derniers.</para>
 
         <note>
-            <para>A partir de la version 1.7, la fonction <code>addNamespace($namespace)</code> est dépréciée et
+            <para>A partir de la version 1.5, la fonction <code>addNamespace($namespace)</code> est dépréciée et
             échangée avec le chargeur de plugin et les méthodes <code>addFilterPrefixPath</code> et
             <code>addValidatorPrefixPath</code> ont été ajoutées. De même la constante
             <code>Zend_Filter_Input::INPUT_NAMESPACE</code> est aussi dépréciée. Les constantes
