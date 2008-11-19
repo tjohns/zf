@@ -339,7 +339,7 @@ if ($upload->isValid()) {
         <para>
             When validation has failed it is probably a good idea to get informations about the found
             problems. Therefor you can use the methods <code>getMessages()</code> which returns all
-            validation messages as array, <code>getErrors()</code> which returns all errorcodes, and
+            validation messages as array, <code>getErrors()</code> which returns all error codes, and
             <code>hasErrors()</code> which returns true as soon as a validation error has been found.
         </para>
 
@@ -723,7 +723,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
                 </para>
 
                 <para>
-                    With this option you can define if the user get's '10864' or '10MB'. Default value is true
+                    With this option you can define if the user gets '10864' or '10MB'. Default value is true
                     which returns '10MB'.
                 </para>
             </listitem>
@@ -1067,7 +1067,7 @@ $upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc
 
         <para>
             You can also set the magicfile which shall be used by fileinfo with the 'magicfile' option.
-            Additionally there are convinient <code>setMagicFile()</code> and <code>getMagicFile()</code>
+            Additionally there are convenient <code>setMagicFile()</code> and <code>getMagicFile()</code>
             methods which allow later setting and retrieving of the magicfile parameter. This methods are
             available since Zend Framework 1.7.1.
         </para>
@@ -1246,7 +1246,7 @@ $upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365dd
                 </para>
 
                 <para>
-                    With this option you can define if the user get's '10864' or '10MB'. Default value is true
+                    With this option you can define if the user gets '10864' or '10MB'. Default value is true
                     which returns '10MB'.
                 </para>
             </listitem>
