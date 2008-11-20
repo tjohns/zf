@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12111 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>アクションヘルパー</title>
 
@@ -160,6 +160,15 @@ Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
         <para>
             これらは静的メソッドなので、コントローラチェイン内の任意の場所で使用することができます。
             これにより、必要に応じて動的にヘルパーを追加できることになります。
+        </para>
+
+        <para>
+            内部的には、ヘルパーブローカは <link
+                linkend="zend.loader.pluginloader">PluginLoader
+                のインスタンス</link> を用いてパスを保持します。静的メソッド
+            <code>getPluginLoader()</code> で PluginLoader
+            を取得することもできますし、また独自の PluginLoader
+            インスタンスを <code>setPluginLoader()</code> で設定することもできます。
         </para>
 
         <para>
