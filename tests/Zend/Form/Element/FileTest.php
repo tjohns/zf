@@ -241,6 +241,7 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         set_error_handler(array($this, 'errorHandlerIgnore'));
         $this->element->setMaxFileSize(999999999999);
         if (!$this->_errorOccurred) {
+            restore_error_handler();
             $this->fail('INI exception expected');
         }
         restore_error_handler();
