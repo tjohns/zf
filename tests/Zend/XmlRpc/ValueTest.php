@@ -302,6 +302,25 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertType('DomElement', $val->getAsDOM());
         $this->assertEquals($this->wrapXml($xml), $val->saveXML());         
     }
+
+    /**
+     * @group ZF-3947
+     */
+    public function testMarshallingStructsWithEmptyValueFromXmlRpcShouldRetainKeys()
+    {
+        $native = array('foo' => '');
+        $xml = '<value><struct><member><name>foo</name>'
+             . '<value/></member></struct></value>';
+
+        $val = Zend_XmlRpc_Value::getXmlRpcValue($xml, 
+                                    Zend_XmlRpc_Value::XML_STRING);
+
+        $this->assertXmlRpcType('struct', $val);
+        $this->assertEquals('struct', $val->getType());
+        $this->assertSame($native, $val->getValue());
+        $this->assertType('DomElement', $val->getAsDOM());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());         
+    }
     
     // DateTime
 
