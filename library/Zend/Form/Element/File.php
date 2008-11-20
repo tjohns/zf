@@ -412,7 +412,11 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             return true;
         }
 
-        $adapter = $this->getTransferAdapter();
+        $adapter    = $this->getTransferAdapter();
+        $translator = $this->getTranslator();
+        if ($translator !== null) {
+            $adapter->setTranslator($translator);
+        }
 
         if (!$this->isRequired()) {
             $adapter->setOptions(array('ignoreNoFile' => true), $this->getName());
@@ -661,5 +665,57 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function setValue($value)
     {
         return $this;
+    }
+
+    /**
+     * Set translator object for localization
+     *
+     * @param  Zend_Translate|null $translator
+     * @return Zend_Form_Element_File
+     */
+    public function setTranslator($translator = null)
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->setTranslator($translator);
+        parent::setTranslator($translator);
+
+        return $this;
+    }
+
+    /**
+     * Retrieve localization translator object
+     *
+     * @return Zend_Translate_Adapter|null
+     */
+    public function getTranslator()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->getTranslator();
+    }
+
+    /**
+     * Indicate whether or not translation should be disabled
+     *
+     * @param  bool $flag
+     * @return Zend_Form_Element_File
+     */
+    public function setDisableTranslator($flag)
+    {
+        $adapter = $this->getTransferAdapter();
+        $adapter->setDisableTranslator($flag);
+        $this->_translatorDisabled = (bool) $flag;
+
+        return $this;
+    }
+
+    /**
+     * Is translation disabled?
+     *
+     * @return bool
+     */
+    public function translatorIsDisabled()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->translatorIsDisabled();
     }
 }
