@@ -255,6 +255,16 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('de_AT', $lang->getLocale());
         Zend_Registry::_unsetInstance();
     }
+
+    /**
+     * ZF-4994
+     */
+    public function testCamelCasedOptions()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/Adapter/_files/translation_otherdelimiter.csv', 'en', array('delimiter' => ','));
+        $lang->setOptions(array('myOption' => true));
+        $this->assertTrue($lang->getOptions('myOption'));
+    }
 }
 
 // Call Zend_TranslateTest::main() if this source file is executed directly.
