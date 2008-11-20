@@ -524,13 +524,12 @@ class Zend_Session extends Zend_Session_Abstract
                 }
             }
 
-            if (empty($_SESSION['__ZF'][$namespace])) {
+            if (isset($namespace) && empty($_SESSION['__ZF'][$namespace])) {
                 unset($_SESSION['__ZF'][$namespace]);
             }
-
         }
 
-        if (empty($_SESSION['__ZF'])) {
+        if (isset($_SESSION['__ZF']) && empty($_SESSION['__ZF'])) {
             unset($_SESSION['__ZF']);
         }
     }
