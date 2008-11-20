@@ -67,11 +67,14 @@ if (class_exists ( 'ZipArchive' )) {
                     $paragraphs = $contents->xpath ( '//w:body/w:p' );
 
                     foreach ( $paragraphs as $paragraph ) {
-                        $runs = $paragraph->xpath ( '//w:r/w:t' );
+                        $runs = $paragraph->xpath ( './/w:r/w:t' );
                         foreach ( $runs as $run ) {
                             $documentBody [] = ( string ) $run;
                         }
                     }
+
+                    // Add space after each paragraph. So they are not bound together.
+                    $documentBody[] = ' ';
 
                     break;
                 }
@@ -88,9 +91,9 @@ if (class_exists ( 'ZipArchive' )) {
 
             // Store contents
             if ($storeContent) {
-                $this->addField ( Zend_Search_Lucene_Field::Text ( 'body', implode ( ' ', $documentBody), 'UTF-8' ) );
+                $this->addField ( Zend_Search_Lucene_Field::Text ( 'body', implode('', $documentBody), 'UTF-8' ) );
             } else {
-                $this->addField ( Zend_Search_Lucene_Field::UnStored ( 'body', implode ( ' ', $documentBody), 'UTF-8'  ) );
+                $this->addField ( Zend_Search_Lucene_Field::UnStored ( 'body', implode('', $documentBody), 'UTF-8'  ) );
             }
 
             // Store meta data properties
