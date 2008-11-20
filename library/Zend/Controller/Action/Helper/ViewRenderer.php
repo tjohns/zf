@@ -281,7 +281,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
             $this->_inflector->setStaticRuleReference('moduleDir', $this->_moduleDir) // moduleDir must be specified before the less specific 'module'
                  ->addRules(array(
                      ':module'     => array('Word_CamelCaseToDash', 'StringToLower'),
-                     ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator('/'), 'StringToLower'),
+                     ':controller' => array('Word_CamelCaseToDash', new Zend_Filter_Word_UnderscoreToSeparator('/'), 'StringToLower', new Zend_Filter_PregReplace('/\./', '-')),
                      ':action'     => array('Word_CamelCaseToDash', new Zend_Filter_PregReplace('#[^a-z0-9' . preg_quote('/', '#') . ']+#i', '-'), 'StringToLower'),
                  ))
                  ->setStaticRuleReference('suffix', $this->_viewSuffix)
@@ -391,7 +391,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
 
         $parts = array(
             'module'     => (($moduleName = $request->getModuleName()) != '') ? $dispatcher->formatModuleName($moduleName) : $moduleName,
-            'controller' => substr($dispatcher->formatControllerName($request->getControllerName()), 0, -10),
+            'controller' => $request->getControllerName(),
             'action'     => $dispatcher->formatActionName($request->getActionName())
             );
 
@@ -844,7 +844,7 @@ class Zend_Controller_Action_Helper_ViewRenderer extends Zend_Controller_Action_
         $request    = $this->getRequest();
         $dispatcher = $this->_frontController->getDispatcher();
         $module     = $dispatcher->formatModuleName($request->getModuleName());
-        $controller = substr($dispatcher->formatControllerName($request->getControllerName()), 0, -10);
+        $controller = $request->getControllerName();
         $action     = $dispatcher->formatActionName($request->getActionName());
 
         $params     = compact('module', 'controller', 'action');

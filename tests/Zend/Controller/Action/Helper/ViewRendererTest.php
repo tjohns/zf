@@ -776,7 +776,7 @@ class Zend_Controller_Action_Helper_ViewRendererTest extends PHPUnit_Framework_T
 
         $expectedPathRegex = (DIRECTORY_SEPARATOR == '\\') ? '#modules\\\\foo\\\\views\\\\scripts\\\\$#' : '#modules/foo/views/scripts/$#';
         $this->assertRegExp($expectedPathRegex, $viewScriptPaths['script'][0]);
-        $this->assertEquals($this->helper->getViewScript(), 'car-bar/baz.phtml');
+        $this->assertEquals('car-bar/baz.phtml', $this->helper->getViewScript());
     }
     
     public function testCorrectViewHelperPathShouldBePropagatedWhenSubControllerInvoked()
