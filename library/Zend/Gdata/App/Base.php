@@ -20,6 +20,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * @see Zend_Gdata_App_Util
+ */
+require_once 'Zend/Gdata/App/Util.php';
 
 /**
  * Abstract class for all XML elements
