@@ -439,7 +439,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
         }
 
         $argv = null;
-        if (3 < func_num_args()) {
+        if (2 < func_num_args()) {
             $argv = array_slice(func_get_args(), 2);
         }
 
