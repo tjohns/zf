@@ -216,6 +216,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
                     require_once 'Zend/Loader/PluginLoader.php';
                     $this->_loaders[$type] = new Zend_Loader_PluginLoader($paths);
+                } else {
+                    $loader = $this->_loaders[$type];
+                    $prefix = 'Zend_' . $prefixSegment . '_File_';
+                    if (!$loader->getPaths($prefix)) {
+                        $loader->addPrefixPath($prefix, str_replace('_', '/', $prefix));
+                    }
                 }
                 return $this->_loaders[$type];
             default:

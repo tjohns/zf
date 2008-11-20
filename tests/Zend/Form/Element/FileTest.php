@@ -261,6 +261,20 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
     {
         $this->_errorOccurred = true;
     }
+
+    /**
+     * @group ZF-5007
+     */
+    public function testSettingValidatorAndFilterPrefixesShouldProxyToAdapter()
+    {
+        $this->element->addPrefixPath('Zend_Form_Element_Test_Filter', dirname(__FILE__) . '/_files/filter', 'filter')
+                      ->addPrefixPath('Zend_Form_Element_Test_Validate', dirname(__FILE__) . '/_files/validator', 'validate');
+        $adapter = $this->element->getTransferAdapter();
+        $filterPaths = $adapter->getPluginLoader('filter')->getPaths();
+        $this->assertContains('Zend_Form_Element_Test_Filter_', array_keys($filterPaths), var_export($filterPaths, 1));
+        $validatorPaths = $adapter->getPluginLoader('validate')->getPaths();
+        $this->assertContains('Zend_Form_Element_Test_Validate_', array_keys($validatorPaths));
+    }
 }
 
 class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract

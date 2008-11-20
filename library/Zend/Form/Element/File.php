@@ -145,7 +145,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         if (empty($type)) {
             $pluginPrefix = rtrim($prefix, '_') . '_Transfer_Adapter';
             $pluginPath   = rtrim($path, DIRECTORY_SEPARATOR) . '/Transfer/Adapter/';
-            $loader    = $this->getPluginLoader(self::TRANSFER_ADAPTER);
+            $loader       = $this->getPluginLoader(self::TRANSFER_ADAPTER);
             $loader->addPrefixPath($pluginPrefix, $pluginPath);
             return parent::addPrefixPath($prefix, $path, null);
         }
@@ -172,6 +172,11 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         } else {
             require_once 'Zend/Form/Element/Exception.php';
             throw new Zend_Form_Element_Exception('Invalid adapter specified');
+        }
+
+        foreach (array('filter', 'validate') as $type) {
+            $loader = $this->getPluginLoader($type);
+            $this->_adapter->setPluginLoader($loader, $type);
         }
 
         return $this;
