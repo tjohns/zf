@@ -102,20 +102,24 @@ class Zend_Form_Decorator_FileTest extends PHPUnit_Framework_TestCase
 
     public function setupElementWithMaxFileSize()
     {
+        $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
+
         $element = new Zend_Form_Element_File('foo');
         $element->addValidator('Count', 1)
                 ->setView($this->getView())
-                ->setMaxFileSize(3000);
+                ->setMaxFileSize($max);
         $this->element = $element;
         $this->decorator->setElement($element);
     }
 
     public function testRenderMaxFileSize()
     {
+        $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
+
         $this->setupElementWithMaxFileSize();
         $test = $this->decorator->render(null);
         $this->assertRegexp('#MAX_FILE_SIZE#s', $test);
-        $this->assertRegexp('#3000#s', $test);
+        $this->assertRegexp('#' . $max . '#s', $test);
     }
 
     public function testPlacementInitiallyAppends()
@@ -141,6 +145,29 @@ class Zend_Form_Decorator_FileTest extends PHPUnit_Framework_TestCase
 
         $file = $this->decorator->render('content');
         $this->assertRegexp('#<input[^>]*>.*?(content)#s', $file, $file);
+    }
+
+    private function _convertIniToInteger($setting)
+    {
+        if (!is_numeric($setting)) {
+            $type = strtoupper(substr($setting, -1));
+            $setting = (integer) substr($setting, 0, -1);
+
+            switch ($type) {
+                case 'M' :
+                    $setting *= 1024;
+                    break;
+
+                case 'G' :
+                    $setting *= 1024 * 1024;
+                    break;
+
+                default :
+                    break;
+            }
+        }
+
+        return (integer) $setting;
     }
 }
 

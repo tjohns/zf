@@ -233,9 +233,11 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
 
     public function testSettingMaxFileSize()
     {
+        $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
+
         $this->assertEquals(0, $this->element->getMaxFileSize());
-        $this->element->setMaxFileSize(3000);
-        $this->assertEquals(3000, $this->element->getMaxFileSize());
+        $this->element->setMaxFileSize($max);
+        $this->assertEquals($max, $this->element->getMaxFileSize());
 
         $this->_errorOccurred = false;
         set_error_handler(array($this, 'errorHandlerIgnore'));
@@ -245,6 +247,29 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
             $this->fail('INI exception expected');
         }
         restore_error_handler();
+    }
+
+    private function _convertIniToInteger($setting)
+    {
+        if (!is_numeric($setting)) {
+            $type = strtoupper(substr($setting, -1));
+            $setting = (integer) substr($setting, 0, -1);
+
+            switch ($type) {
+                case 'M' :
+                    $setting *= 1024;
+                    break;
+
+                case 'G' :
+                    $setting *= 1024 * 1024;
+                    break;
+
+                default :
+                    break;
+            }
+        }
+
+        return (integer) $setting;
     }
 
     /**
