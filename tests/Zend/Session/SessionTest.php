@@ -65,8 +65,9 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
     {
+        parent::__construct($name, $data, $dataName);
         $this->_script = 'php -c \'' . php_ini_loaded_file() . '\' '
             . escapeshellarg(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'SessionTestHelper.php');
 
@@ -974,5 +975,17 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
         // Do not destroy session since it still may be used by other tests
         // Zend_Session::destroy();
+    }
+
+    /**
+     * @group ZF-5003
+     */
+    public function testProcessSessionMetadataShouldNotThrowAnError()
+    {
+        Zend_Session::$_unitTestEnabled = true;
+        if (isset($_SESSION) && isset($_SESSION['__ZF'])) {
+            unset($_SESSION['__ZF']);
+        }
+        Zend_Session::start();
     }
 }
