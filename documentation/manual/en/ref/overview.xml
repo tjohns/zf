@@ -12,7 +12,7 @@
     <para>
         While they can be used separately, Zend Framework components in the standard library
         form a powerful and extensible web application framework when combined. ZF offers a
-        robust and performant MVC implementation, a database abstraction that is simple to
+        robust, high performance MVC implementation, a database abstraction that is simple to
         use, and a forms component that implements HTML form rendering, validation, and filtering
         so that developers can consolidate all of these operations using one easy-to-use, object
         oriented interface. Other components, such as Zend_Auth and Zend_Acl, provide user

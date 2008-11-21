@@ -3,20 +3,18 @@
     <title>Installation</title>
 
     <para>
-        Zend Framework requires PHP 5.1.4 or higher, although Zend strongly recommended 5.2.3 or higher as there were some
-        critical security and performance enhancements introduces between these two versions. You can find more details in the
-        <link linkend="requirements">requirements appendix</link>.
+        See the <link linkend="requirements">requirements appendix</link> for a detailed list of requirements for Zend Framework.
     </para>
 
     <para>
         Installing Zend Framework is extremely simple. Once you have downloaded and extracted the framework, you should add the
         /library folder in the distribution to the beginning of your include path. You may also want to move the library folder
-        to another- possibly shared- location on your filesystem.
+        to another- possibly shared- location on your file system.
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download">Download the latest stable release.</ulink>
+                    <ulink url="http://framework.zend.com/download/latest">Download the latest stable release.</ulink>
                     This version, available in both <code>.zip</code> and <code>.tar.gz</code> formats, is a good
                     choice for those who are new to Zend Framework.
                 </para>
@@ -44,16 +42,17 @@
                     directories as created in a working copy.
                 </para>
                 <para>
-                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">Checking out a
-                    working copy</ulink> is good when you might contribute to Zend Framework, and a working copy can
+                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">Check out a
+                    working copy</ulink> if you want contribute to Zend Framework, a working copy can
                     be updated any time with
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.update.html"><code>svn
-                    update</code></ulink>.
+                    update</code></ulink> and changes can be commited to our SVN repository with the <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.commit.html"><code>svn
+                    commit</code></ulink> command.
                 </para>
                 <para>
-                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">An externals
-                    definition</ulink> is highly convenient for developers already using SVN to manage their
-                    application working copies.
+                    An <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">externals
+                    definition</ulink> is quite convenient for developers already using SVN to manage their
+                    application's working copies.
                 </para>
                 <para>
                     The URL for the trunk of the Zend Framework SVN repository is:
@@ -75,7 +74,7 @@
     <para>
         Zend provides a <ulink url="http://framework.zend.com/docs/quickstart">QuickStart</ulink> to get you up and running
         as quickly as possible. This is an excellent way to begin learning about the framework with an emphasis
-        on real world examples that you can built upon.
+        on real world examples that you can build upon.
     </para>
 
     <para>
