@@ -216,12 +216,26 @@ abstract class Zend_View_Helper_TagCloud extends Zend_View_Helper_Abstract
      */
     public function render()
     {
+        // Calculate min and max weight
+        $minWeight = null;
+        $maxWeight = null;
+        
+        foreach ($this->_tags as $tag) {
+            if ($minWeight === null && $maxWeight === null) {
+                $minWeight = $tag[$this->_weightKey];
+                $maxWeight = $tag[$this->_weightKey];
+            } else {
+                $minWeight = min($minWeight, $tag[$this->_weightKey]);
+                $maxWeight = max($maxWeight, $tag[$this->_weightKey]);                
+            }
+        }
+        
         // First calculate the thresholds
         $steps      = ($this->_maxFontSize - $this->_minFontSize);
-        $delta      = ($this->_maxWeight - $this->_minWeight) / $steps;
+        $delta      = ($maxWeight - $minWeight) / $steps;
         $thresholds = array();
         for ($i = 0; $i <= $steps; $i++) {
-            $thresholds[$i] = 100 * log(($this->_minWeight + $i * $delta) + 2);
+            $thresholds[$i] = 100 * log(($minWeight + $i * $delta) + 2);
         }
        
         // Then generate the html
