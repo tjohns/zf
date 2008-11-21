@@ -57,7 +57,7 @@ of the following methods:
 CONFIGURING THE INCLUDE PATH
 ----------------------------
 
-Once you have a copy of the Zend Framework available, your application will need to
+Once you have a copy of Zend Framework available, your application will need to
 access the framework classes. Though there are several ways to achieve this, your
 PHP include_path needs to contain the path to the Zend Framework classes under the
 /library directory in this distribution. You can find out more about the PHP
