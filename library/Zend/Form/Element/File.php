@@ -450,7 +450,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     public function receive($value = null)
     {
         if (!$this->_validated) {
-            if (!$this->isValid($value)) {
+            if (!$this->isValid($this->getName())) {
                 return false;
             }
         }
@@ -717,5 +717,38 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         return $adapter->translatorIsDisabled();
+    }
+
+    /**
+     * Was the file received?
+     *
+     * @return bool
+     */
+    public function isReceived()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->isReceived($this->getName());
+    }
+
+    /**
+     * Was the file uploaded?
+     *
+     * @return bool
+     */
+    public function isUploaded()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->isUploaded($this->getName());
+    }
+
+    /**
+     * Has the file been filtered?
+     *
+     * @return bool
+     */
+    public function isFiltered()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->isFiltered($this->getName());
     }
 }
