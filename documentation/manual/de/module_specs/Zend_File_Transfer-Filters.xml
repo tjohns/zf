@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12630 -->
+<!-- EN-Revision: 12664 -->
 <sect1 id="zend.file.transfer.filters">
 
     <title>Filter für Zend_File_Transfer</title>
@@ -181,6 +181,12 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
             Dieser Filter sollte nur mit Textdateien verwendet werden.
         </para>
 
+        <para>
+            Bei der Initialisierung kann ein String angegeben werden welcher dann als Kodierung verwendet
+            wird. Oder man kann die <code>setEncoding()</code> Methode verwenden um Sie im Nachhinein zu
+            setzen.
+        </para>
+
         <example id="zend.file.transfer.filters.lowercase.example">
             <title>Verwenden des Lowercase Filters</title>
 
@@ -193,6 +199,9 @@ $upload->addFilter('LowerCase');
 
 // Fügt einen Filter hinzu um die hochgeladene Datei auf Kleinschreibung zu ändern aber nur für uploadfile1
 $upload->addFilter('LowerCase', null, 'uploadfile1');
+
+// Fügt einen Filter für die Kleinschreibung hinzu wobei die Kodierung auf ISO-8859-1 gesetzt wird
+$upload->addFilter('LowerCase', 'ISO-8859-1');
 ]]>
             </programlisting>
 
@@ -200,7 +209,7 @@ $upload->addFilter('LowerCase', null, 'uploadfile1');
 
         <note>
             <para>
-                Da es keine Optionen für den LowerCase Filter gibt muß man darauf achten das man als zweiten
+                Da die Optionen für den LowerCase Filter optional sind muß man darauf achten das man als zweiten
                 Parameter eine null (die Optionen) geben muß wenn man Ihn auf ein einzelnes Dateielement
                 einschränken will.
             </para>
@@ -352,6 +361,12 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
             Dieser Filter sollte nur mit Textdateien verwendet werden.
         </para>
 
+        <para>
+            Bei der Initialisierung kann ein String angegeben werden welcher dann als Kodierung verwendet
+            wird. Oder man kann die <code>setEncoding()</code> Methode verwenden um Sie im Nachhinein zu
+            setzen.
+        </para>
+
         <example id="zend.file.transfer.filters.uppercase.example">
             <title>Verwenden des UpperCase Filters</title>
 
@@ -364,6 +379,9 @@ $upload->addFilter('UpperCase');
 
 // Fügt einen Filter hinzu um die hochgeladene Datei auf Großschreibung zu ändern aber nur für uploadfile1
 $upload->addFilter('UpperCase', null, 'uploadfile1');
+
+// Fügt einen Filter für die Großschreibung hinzu wobei die Kodierung auf ISO-8859-1 gesetzt wird
+$upload->addFilter('UpperCase', 'ISO-8859-1');
 ]]>
             </programlisting>
 
@@ -371,7 +389,7 @@ $upload->addFilter('UpperCase', null, 'uploadfile1');
 
         <note>
             <para>
-                Da es keine Optionen für den UpperCase Filter gibt muß man darauf achten das man als zweiten
+                Da die Optionen für den UpperCase Filter optional sind muß man darauf achten das man als zweiten
                 Parameter eine null (die Optionen) geben muß wenn man Ihn auf ein einzelnes Dateielement
                 einschränken will.
             </para>

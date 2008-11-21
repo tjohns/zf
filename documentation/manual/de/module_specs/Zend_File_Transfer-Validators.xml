@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12541 -->
+<!-- EN-Revision: 12661 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -1067,12 +1067,31 @@ $upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc
                     Mit dieser Option kann der Mimetyp von Dateien definiert werden der akzeptiert werden soll.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>magicfile</code>: Das Magicfile das verwendet werden soll.
+                </para>
+
+                <para>
+                    Mit dieser Option kann das Magicfile definiert werden das zu verwenden ist. Wenn es nicht
+                    gesetzt wird, oder leer ist, wird stattdessen die MAGIC Konstante verwendet. Diese
+                    Option ist seit dem Zend Framework 1.7.1 vorhanden.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
             Diese Prüfung akzeptiert viele Mimetypen entweder als Komma-getrennter String, oder als
             Array. Man kan auch die Methoden <code>setMimeType()</code>, <code>addMimeType()</code>,
             und  <code>getMimeType()</code> verwenden um Mimetypen zu setzen und zu erhalten.
+        </para>
+
+        <para>
+            Man kann mit der 'magicfile' Option auch die Magicdatei setzen die von Fileinfo verwendet
+            werden soll. Zusätzlich gibt es die komfortablen <code>setMagicFile()</code> und
+            <code>getMagicFile()</code> Methoden die das spätere Setzen und Empfangen des Magicfile
+            Parameters erlauben. Diese Methoden sind seit dem Zend Framework 1.7.1 vorhanden.
         </para>
 
         <example id="zend.file.transfer.validators.mimetype.example">
@@ -1085,10 +1104,13 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('MimeType', 'image/gif');
 
 // Begrenzt den Mimetyp alle gegebenen Dateien auf Gif und Jpeg Dateien
-$upload->setValidator('MimeType', array('image/gif', 'image/jpeg');
+$upload->addValidator('MimeType', array('image/gif', 'image/jpeg');
 
 // Begrenzt den Mimetyp aller Dateien auf die Gruppe image
-$upload->setValidator('MimeType', 'image');
+$upload->addValidator('MimeType', 'image');
+
+// Ein anderes magicfile verwenden
+$upload->addValidator('MimeType', false, array('image', 'magicfile' => '/path/to/magicfile.mgx'));
 ]]>
             </programlisting>
         </example>

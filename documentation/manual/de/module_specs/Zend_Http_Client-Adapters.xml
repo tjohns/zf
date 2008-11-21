@@ -144,7 +144,7 @@ $config = array(
 );
 
 // Client-Instanz erzeugen
-$client = Zend_Http_Client('https://www.example.com', $config);
+$client = new Zend_Http_Client('https://www.example.com', $config);
 
 // Jetzt wird der Request über eine verschlüsselte Verbindung verschickt
 $response = $client->request();
@@ -250,7 +250,7 @@ $config = array(
 );
 
 // Client-Objekt instanziieren
-$client = Zend_Http_Client('http://www.example.com', $config);
+$client = new Zend_Http_Client('http://www.example.com', $config);
 
 // $client kann jetzt wie gewohnt benutzt werden
 ]]>
