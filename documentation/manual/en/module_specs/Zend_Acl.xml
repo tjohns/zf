@@ -46,7 +46,7 @@
         </para>
         <para>
             Zend_Acl provides a tree structure to which multiple resources
-            can be added. Since resources are stored in such a tree structure, they can be organized from thse
+            can be added. Since resources are stored in such a tree structure, they can be organized from the
             general (toward the tree root) to the specific (toward the tree leaves). Queries on
             a specific resource will automatically search the resource's hierarchy for rules assigned to ancestor
             resources, allowing for simple inheritance of rules. For example, if a default rule is to be
