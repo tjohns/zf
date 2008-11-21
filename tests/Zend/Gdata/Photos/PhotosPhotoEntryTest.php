@@ -30,10 +30,10 @@ require_once 'Zend/Http/Client/Adapter/Test.php';
  */
 class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 {
-    
+
     protected $photoEntry = null;
 
-    /** 
+    /**
       * Called before each test to setup any fixtures.
       */
     public function setUp()
@@ -45,7 +45,7 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-      * Verify that a given property is set to a specific value 
+      * Verify that a given property is set to a specific value
       * and that the getter and magic variable return the same value.
       *
       * @param object $obj The object to be interrogated.
@@ -62,12 +62,12 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-      * Verify that a given property is set to a specific value 
+      * Verify that a given property is set to a specific value
       * and that the getter and magic variable return the same value.
       *
       * @param object $obj The object to be interrogated.
       * @param string $name The name of the property to be verified.
-      * @param string $secondName 2nd level accessor function name      
+      * @param string $secondName 2nd level accessor function name
       * @param object $value The expected value of the property.
       */
     protected function verifyProperty2($obj, $name, $secondName, $value)
@@ -82,12 +82,12 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
     /**
       * Verify that a given property is set to a specific value,
-      * that it keeps that value when set using the setter, 
+      * that it keeps that value when set using the setter,
       * and that the getter and magic variable return the same value.
       *
       * @param object $obj The object to be interrogated.
-      * @param string $name The name of the property to be verified. 
-      * @param string $secondName 2nd level accessor function name   
+      * @param string $name The name of the property to be verified.
+      * @param string $secondName 2nd level accessor function name
       * @param object $value The expected value of the property.
       */
     protected function verifyProperty3($obj, $name, $secondName, $value)
@@ -113,12 +113,12 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's ID is correct
         $this->assertTrue($entry->getId() instanceof Zend_Gdata_App_Extension_Id);
-        $this->verifyProperty2($entry, "id", "text", 
+        $this->verifyProperty2($entry, "id", "text",
                 "http://picasaweb.google.com/data/entry/api/user/sample.user/albumid/1/photoid/100");
     }
 
     /**
-      * Check for the existence of an <atom:published> and verify that it contains 
+      * Check for the existence of an <atom:published> and verify that it contains
       * the expected value.
       */
     public function testPublished()
@@ -131,7 +131,7 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-      * Check for the existence of an <atom:updated> and verify that it contains 
+      * Check for the existence of an <atom:updated> and verify that it contains
       * the expected value.
       */
     public function testUpdated()
@@ -140,7 +140,7 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's updated date is correct
         $this->assertTrue($entry->getUpdated() instanceof Zend_Gdata_App_Extension_Updated);
-        $this->verifyProperty2($entry, "updated", "text", 
+        $this->verifyProperty2($entry, "updated", "text",
                 "2007-09-21T18:19:38.000Z");
     }
 
@@ -167,13 +167,13 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's title is correct
         $this->assertTrue($entry->getGphotoId() instanceof Zend_Gdata_Photos_Extension_Id);
-        $this->verifyProperty2($entry, "gphotoId", "text", 
+        $this->verifyProperty2($entry, "gphotoId", "text",
                 "100");
-        $this->verifyProperty3($entry, "gphotoId", "text", 
+        $this->verifyProperty3($entry, "gphotoId", "text",
                 "100");
     }
 
-    /** 
+    /**
      * Check for the existance of exif namespaced data and verify that it contains
      * the expected value.
      */
@@ -181,26 +181,26 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
     {
         $exifTags = $this->photoEntry->exifTags;
         $this->assertTrue($exifTags != null);
-        $this->assertTrue($exifTags->flash != null); 
-        $this->assertTrue($exifTags->fstop != null); 
-        $this->assertTrue($exifTags->exposure != null); 
-        $this->assertTrue($exifTags->focallength != null); 
-        $this->assertTrue($exifTags->iso != null); 
+        $this->assertTrue($exifTags->flash != null);
+        $this->assertTrue($exifTags->fstop != null);
+        $this->assertTrue($exifTags->exposure != null);
+        $this->assertTrue($exifTags->focallength != null);
+        $this->assertTrue($exifTags->iso != null);
         $this->assertTrue($exifTags->time != null);
-        $this->assertTrue($exifTags->distance != null); 
+        $this->assertTrue($exifTags->distance != null);
         $this->assertTrue($exifTags->make != null);
         $this->assertTrue($exifTags->model != null);
         $this->assertTrue($exifTags->imageUniqueID != null);
-        $this->assertEquals("true", $exifTags->flash->text); 
-        $this->assertEquals("11.0", $exifTags->fstop->text); 
-        $this->assertEquals("0.0040", $exifTags->exposure->text); 
+        $this->assertEquals("true", $exifTags->flash->text);
+        $this->assertEquals("11.0", $exifTags->fstop->text);
+        $this->assertEquals("0.0040", $exifTags->exposure->text);
         $this->assertEquals("22.0", $exifTags->focallength->text);
         $this->assertEquals("200", $exifTags->iso->text);
         $this->assertEquals("1180950900000", $exifTags->time->text);
         $this->assertEquals("0.0",$exifTags->distance->text);
         $this->assertEquals("Fictitious Camera Company",$exifTags->make->text);
-        $this->assertEquals("AMAZING-100D",$exifTags->model->text); 
-        $this->assertEquals("a5ce2e36b9df7d3cb081511c72e73926", $exifTags->imageUniqueID->text); 
+        $this->assertEquals("AMAZING-100D",$exifTags->model->text);
+        $this->assertEquals("a5ce2e36b9df7d3cb081511c72e73926", $exifTags->imageUniqueID->text);
     }
 
     /**
@@ -213,8 +213,8 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
         $pos = $point->pos;
         $this->assertEquals("41.87194 12.56738", $pos->text);
     }
-    
-    
+
+
     /**
       * Check for the existence of an <gphoto:version> and verify that it contains
       * the expected value.
@@ -225,9 +225,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's version is correct
         $this->assertTrue($entry->getGphotoVersion() instanceof Zend_Gdata_Photos_Extension_Version);
-        $this->verifyProperty2($entry, "gphotoVersion", "text", 
+        $this->verifyProperty2($entry, "gphotoVersion", "text",
                 "1190398778006402");
-        $this->verifyProperty3($entry, "gphotoVersion", "text", 
+        $this->verifyProperty3($entry, "gphotoVersion", "text",
                 "1190398778006402");
     }
 
@@ -241,9 +241,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's albumid is correct
         $this->assertTrue($entry->getGphotoAlbumId() instanceof Zend_Gdata_Photos_Extension_AlbumId);
-        $this->verifyProperty2($entry, "gphotoAlbumId", "text", 
+        $this->verifyProperty2($entry, "gphotoAlbumId", "text",
                 "1");
-        $this->verifyProperty3($entry, "gphotoAlbumId", "text", 
+        $this->verifyProperty3($entry, "gphotoAlbumId", "text",
                 "1");
     }
 
@@ -257,9 +257,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's width is correct
         $this->assertTrue($entry->getGphotoWidth() instanceof Zend_Gdata_Photos_Extension_Width);
-        $this->verifyProperty2($entry, "gphotoWidth", "text", 
+        $this->verifyProperty2($entry, "gphotoWidth", "text",
                 "2560");
-        $this->verifyProperty3($entry, "gphotoWidth", "text", 
+        $this->verifyProperty3($entry, "gphotoWidth", "text",
                 "2560");
     }
 
@@ -273,9 +273,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's height is correct
         $this->assertTrue($entry->getGphotoHeight() instanceof Zend_Gdata_Photos_Extension_Height);
-        $this->verifyProperty2($entry, "gphotoHeight", "text", 
+        $this->verifyProperty2($entry, "gphotoHeight", "text",
                 "1600");
-        $this->verifyProperty3($entry, "gphotoHeight", "text", 
+        $this->verifyProperty3($entry, "gphotoHeight", "text",
                 "1600");
     }
 
@@ -289,9 +289,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's size is correct
         $this->assertTrue($entry->getGphotoSize() instanceof Zend_Gdata_Photos_Extension_Size);
-        $this->verifyProperty2($entry, "gphotoSize", "text", 
+        $this->verifyProperty2($entry, "gphotoSize", "text",
                 "798334");
-        $this->verifyProperty3($entry, "gphotoSize", "text", 
+        $this->verifyProperty3($entry, "gphotoSize", "text",
                 "798334");
     }
 
@@ -305,9 +305,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's client is correct
         $this->assertTrue($entry->getGphotoClient() instanceof Zend_Gdata_Photos_Extension_Client);
-        $this->verifyProperty2($entry, "gphotoClient", "text", 
+        $this->verifyProperty2($entry, "gphotoClient", "text",
                 "");
-        $this->verifyProperty3($entry, "gphotoClient", "text", 
+        $this->verifyProperty3($entry, "gphotoClient", "text",
                 "");
     }
 
@@ -321,9 +321,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's checksum is correct
         $this->assertTrue($entry->getGphotoChecksum() instanceof Zend_Gdata_Photos_Extension_Checksum);
-        $this->verifyProperty2($entry, "gphotoChecksum", "text", 
+        $this->verifyProperty2($entry, "gphotoChecksum", "text",
                 "");
-        $this->verifyProperty3($entry, "gphotoChecksum", "text", 
+        $this->verifyProperty3($entry, "gphotoChecksum", "text",
                 "");
     }
 
@@ -337,9 +337,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's title is correct
         $this->assertTrue($entry->getGphotoTimestamp() instanceof Zend_Gdata_Photos_Extension_Timestamp);
-        $this->verifyProperty2($entry, "gphotoTimestamp", "text", 
+        $this->verifyProperty2($entry, "gphotoTimestamp", "text",
                 "1189025363000");
-        $this->verifyProperty3($entry, "gphotoTimestamp", "text", 
+        $this->verifyProperty3($entry, "gphotoTimestamp", "text",
                 "1189025363000");
     }
 
@@ -353,9 +353,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's title is correct
         $this->assertTrue($entry->getGphotoCommentingEnabled() instanceof Zend_Gdata_Photos_Extension_CommentingEnabled);
-        $this->verifyProperty2($entry, "gphotoCommentingEnabled", "text", 
+        $this->verifyProperty2($entry, "gphotoCommentingEnabled", "text",
                 "true");
-        $this->verifyProperty3($entry, "gphotoCommentingEnabled", "text", 
+        $this->verifyProperty3($entry, "gphotoCommentingEnabled", "text",
                 "true");
     }
 
@@ -369,9 +369,9 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
 
         // Assert that the entry's title is correct
         $this->assertTrue($entry->getGphotoCommentCount() instanceof Zend_Gdata_Photos_Extension_CommentCount);
-        $this->verifyProperty2($entry, "gphotoCommentCount", "text", 
+        $this->verifyProperty2($entry, "gphotoCommentCount", "text",
                 "0");
-        $this->verifyProperty3($entry, "gphotoCommentCount", "text", 
+        $this->verifyProperty3($entry, "gphotoCommentCount", "text",
                 "0");
     }
 
@@ -385,5 +385,5 @@ class Zend_Gdata_Photos_PhotosPhotoEntryTest extends PHPUnit_Framework_TestCase
         // Assert that the entry's media group exists
         $this->assertTrue($entry->getMediaGroup() instanceof Zend_Gdata_Media_Extension_MediaGroup);
     }
-    
+
 }

@@ -28,7 +28,7 @@ require_once 'Zend/Gdata/Extension.php';
 /**
  * Represents the media:content element of Media RSS.
  * Represents media objects.  Multiple media objects representing
- * the same content can be represented using a 
+ * the same content can be represented using a
  * media:group (Zend_Gdata_Media_Extension_MediaGroup) element.
  *
  * @category   Zend
@@ -47,7 +47,7 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
     protected $_url = null;
 
     /**
-     * @var int 
+     * @var int
      */
     protected $_fileSize = null;
 
@@ -73,7 +73,7 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
 
     /**
      * @var int
-     */ 
+     */
     protected $_bitrate = null;
 
     /**
@@ -115,14 +115,12 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
      * Creates an individual MediaContent object.
      */
     public function __construct($url = null, $fileSize = null, $type = null,
-            $medium = null, $isDefault = null, $expression = null, 
-            $bitrate = null, $framerate = null, $samplingrate = null, 
+            $medium = null, $isDefault = null, $expression = null,
+            $bitrate = null, $framerate = null, $samplingrate = null,
             $channels = null, $duration = null, $height = null, $width = null,
             $lang = null)
     {
-        foreach (Zend_Gdata_Media::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_url = $url;
         $this->_fileSize = $fileSize;
@@ -142,13 +140,13 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
 
 
     /**
-     * Retrieves a DOMElement which corresponds to this element and all 
+     * Retrieves a DOMElement which corresponds to this element and all
      * child properties.  This is used to build an entry back into a DOM
      * and eventually XML text for sending to the server upon updates, or
-     * for application storage/persistence.  
+     * for application storage/persistence.
      *
      * @param DOMDocument $doc The DOMDocument used to construct DOMElements
-     * @return DOMElement The DOMElement representing this element and all 
+     * @return DOMElement The DOMElement representing this element and all
      * child properties.
      */
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
@@ -201,7 +199,7 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
 
     /**
      * Given a DOMNode representing an attribute, tries to map the data into
-     * instance members.  If no mapping is defined, the name and value are 
+     * instance members.  If no mapping is defined, the name and value are
      * stored in an array.
      *
      * @param DOMNode $attribute The DOMNode attribute needed to be handled
@@ -260,8 +258,8 @@ class Zend_Gdata_Media_Extension_MediaContent extends Zend_Gdata_Extension
      * Returns the URL representing this MediaContent object
      *
      * @return string   The URL representing this MediaContent object.
-     */ 
-    public function __toString() 
+     */
+    public function __toString()
     {
         return $this->getUrl();
     }

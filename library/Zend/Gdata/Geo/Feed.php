@@ -55,9 +55,7 @@ class Zend_Gdata_Geo_Feed extends Zend_Gdata_Feed
 
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Geo::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Geo::$namespaces);
         parent::__construct($element);
     }
 

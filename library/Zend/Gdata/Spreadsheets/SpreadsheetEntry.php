@@ -44,16 +44,14 @@ class Zend_Gdata_Spreadsheets_SpreadsheetEntry extends Zend_Gdata_Entry
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
         parent::__construct($element);
     }
 
     /**
      * Returns the worksheets in this spreadsheet
      *
-     * @return Zend_Gdata_Spreadsheets_WorksheetFeed The worksheets 
+     * @return Zend_Gdata_Spreadsheets_WorksheetFeed The worksheets
      */
     public function getWorksheets()
     {

@@ -50,9 +50,7 @@ class Zend_Gdata_DublinCore_Extension_Publisher extends Zend_Gdata_Extension
      */
     public function __construct($value = null)
     {
-        foreach (Zend_Gdata_DublinCore::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_DublinCore::$namespaces);
         parent::__construct();
         $this->_text = $value;
     }

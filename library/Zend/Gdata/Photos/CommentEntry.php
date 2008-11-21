@@ -47,8 +47,8 @@ require_once 'Zend/Gdata/App/Extension/Category.php';
 
 /**
  * Data model class for a Comment Entry.
- * 
- * To transfer user entries to and from the servers, including 
+ *
+ * To transfer user entries to and from the servers, including
  * creating new entries, refer to the service class,
  * Zend_Gdata_Photos.
  *
@@ -63,14 +63,14 @@ class Zend_Gdata_Photos_CommentEntry extends Zend_Gdata_Entry
 {
 
     protected $_entryClassName = 'Zend_Gdata_Photos_CommentEntry';
-    
+
     /**
      * gphoto:id element
      *
      * @var Zend_Gdata_Photos_Extension_Id
      */
     protected $_gphotoId = null;
-    
+
     /**
      * gphoto:photoid element, differs from gphoto:id as this is an
      * actual identification number unique exclusively to photo entries,
@@ -82,17 +82,15 @@ class Zend_Gdata_Photos_CommentEntry extends Zend_Gdata_Entry
 
     /**
      * Create a new instance.
-     * 
+     *
      * @param DOMElement $element (optional) DOMElement from which this
      *          object should be constructed.
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Photos::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Photos::$namespaces);
         parent::__construct($element);
-        
+
         $category = new Zend_Gdata_App_Extension_Category(
             'http://schemas.google.com/photos/2007#comment',
             'http://schemas.google.com/g/2005#kind');
@@ -129,14 +127,14 @@ class Zend_Gdata_Photos_CommentEntry extends Zend_Gdata_Entry
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        
+
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('gphoto') . ':' . 'id'; 
+            case $this->lookupNamespace('gphoto') . ':' . 'id';
                 $id = new Zend_Gdata_Photos_Extension_Id();
                 $id->transferFromDOM($child);
                 $this->_gphotoId = $id;
                 break;
-            case $this->lookupNamespace('gphoto') . ':' . 'photoid'; 
+            case $this->lookupNamespace('gphoto') . ':' . 'photoid';
                 $photoid = new Zend_Gdata_Photos_Extension_PhotoId();
                 $photoid->transferFromDOM($child);
                 $this->_gphotoPhotoId = $photoid;

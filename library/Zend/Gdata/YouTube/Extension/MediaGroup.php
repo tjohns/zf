@@ -42,7 +42,7 @@ require_once 'Zend/Gdata/YouTube/Extension/Private.php';
 
 /**
  * This class represents the media:group element of Media RSS.
- * It allows the grouping of media:content elements that are 
+ * It allows the grouping of media:content elements that are
  * different representations of the same content.  When it exists,
  * it is a child of an Entry (Atom) or Item (RSS).
  *
@@ -62,9 +62,7 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
 
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct($element);
     }
 

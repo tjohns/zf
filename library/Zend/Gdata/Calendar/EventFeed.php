@@ -59,11 +59,8 @@ class Zend_Gdata_Calendar_EventFeed extends Zend_Gdata_Feed
 
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Calendar::$namespaces);
         parent::__construct($element);
-
     }
 
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)

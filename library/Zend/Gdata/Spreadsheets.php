@@ -99,9 +99,16 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     const CELL_FEED_LINK_URI = 'http://schemas.google.com/spreadsheets/2006#cellsfeed';
     const AUTH_SERVICE_NAME = 'wise';
 
+    /**
+     * Namespaces used for Zend_Gdata_Photos
+     *
+     * @var array
+     */
     public static $namespaces = array(
-        'gs' => 'http://schemas.google.com/spreadsheets/2006',
-        'gsx' => 'http://schemas.google.com/spreadsheets/2006/extended');
+        array('gs', 'http://schemas.google.com/spreadsheets/2006', 1, 0),
+        array(
+            'gsx', 'http://schemas.google.com/spreadsheets/2006/extended', 1, 0)
+    );
 
     /**
      * Create Gdata_Spreadsheets object
@@ -164,7 +171,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     /**
      * Gets a worksheet feed.
      *
-     * @param mixed $location A DocumentQuery, SpreadsheetEntry, or a string URI 
+     * @param mixed $location A DocumentQuery, SpreadsheetEntry, or a string URI
      * @return Zend_Gdata_Spreadsheets_WorksheetFeed The feed of worksheets
      */
     public function getWorksheetFeed($location)
@@ -362,7 +369,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      * @param mixed $location A ListQuery or string URI specifying the feed location.
      * @return array An array of rows.  Each element of the array is an associative array of data
      */
-    public function getSpreadsheetListFeedContents($location) 
+    public function getSpreadsheetListFeedContents($location)
     {
         $listFeed = $this->getListFeed($location);
         $listFeed = $this->retrieveAllEntriesForFeed($listFeed);
@@ -379,10 +386,10 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     }
 
     /**
-     * Returns the content of all cells as an associative array, indexed 
-     * off the cell location  (ie 'A1', 'D4', etc).  Each element of 
-     * the array is an associative array with a 'value' and a 'function'.  
-     * Only non-empty cells are returned by default.  'range' is the 
+     * Returns the content of all cells as an associative array, indexed
+     * off the cell location  (ie 'A1', 'D4', etc).  Each element of
+     * the array is an associative array with a 'value' and a 'function'.
+     * Only non-empty cells are returned by default.  'range' is the
      * value of the 'range' query parameter specified at:
      * http://code.google.com/apis/spreadsheets/reference.html#cells_Parameters
      *
@@ -403,10 +410,10 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
             $url = $location;
             $cellQuery = new Zend_Gdata_Spreadsheets_CellQuery($url);
         }
-       
+
         if ($range != null) {
             $cellQuery->setRange($range);
-        } 
+        }
         $cellQuery->setReturnEmpty($empty);
 
         $cellFeed = $this->getCellFeed($cellQuery);
@@ -428,7 +435,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
      * @param mixed $location A DocumentQuery or a string URI specifying the feed location.
      * @return Zend_Gdata_Spreadsheets_SpreadsheetFeed
      */
-    public function getSpreadsheets($location = null) 
+    public function getSpreadsheets($location = null)
     {
         return $this->getSpreadsheetFeed($location = null);
     }

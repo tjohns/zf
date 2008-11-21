@@ -45,17 +45,15 @@ class Zend_Gdata_Photos_Extension_MaxPhotosPerAlbum extends Zend_Gdata_Extension
 
     protected $_rootNamespace = 'gphoto';
     protected $_rootElement = 'maxPhotosPerAlbum';
-    
+
     /**
      * Constructs a new Zend_Gdata_Photos_Extension_MaxPhotosPerAlbum object.
-     * 
+     *
      * @param string $text (optional) The value being represented.
      */
-    public function __construct($text = null) 
+    public function __construct($text = null)
     {
-        foreach (Zend_Gdata_Photos::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Photos::$namespaces);
         parent::__construct();
         $this->setText($text);
     }

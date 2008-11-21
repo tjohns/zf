@@ -52,9 +52,7 @@ class Zend_Gdata_Books_Extension_BooksCategory extends
      */
     public function __construct($term = null, $scheme = null, $label = null)
     {
-        foreach (Zend_Gdata_Books::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Books::$namespaces);
         parent::__construct($term, $scheme, $label);
     }
 

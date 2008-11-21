@@ -52,9 +52,7 @@ class Zend_Gdata_Geo_Entry extends Zend_Gdata_Entry
 
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Geo::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri); 
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Geo::$namespaces);
         parent::__construct($element);
     }
 
@@ -81,7 +79,7 @@ class Zend_Gdata_Geo_Entry extends Zend_Gdata_Entry
             break;
         }
     }
-    
+
     public function getWhere()
     {
         return $this->_where;
@@ -92,6 +90,6 @@ class Zend_Gdata_Geo_Entry extends Zend_Gdata_Entry
         $this->_where = $value;
         return $this;
     }
-    
+
 
 }

@@ -339,8 +339,10 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
     public function testGetVideoThumbnails() {
         $this->entry->transferFromXML($this->entryText);
         $videoEntry = $this->entry;
+
         $mediaThumbnails1 = $videoEntry->getMediaGroup()->getThumbnail();
         $mediaThumbnails2 = $videoEntry->getVideoThumbnails();
+
         $this->assertEquals(count($mediaThumbnails1), count($mediaThumbnails2));
 
         $foundThumbnail = false;

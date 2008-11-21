@@ -19,6 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+
 require_once 'Zend/Gdata/Docs.php';
 require_once 'Zend/Http/Client.php';
 require_once 'Zend/Gdata/ClientLogin.php';
@@ -48,7 +50,7 @@ class Zend_Gdata_DocsOnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($entry instanceof Zend_Gdata_Docs_DocumentListEntry);
             $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
         }
-        
+
         $query = new Zend_Gdata_Docs_Query();
         $feed = $this->gdata->getDocumentListFeed($query);
         $this->assertTrue($feed instanceof Zend_Gdata_Docs_DocumentListFeed);
@@ -56,7 +58,7 @@ class Zend_Gdata_DocsOnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($entry instanceof Zend_Gdata_Docs_DocumentListEntry);
             $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
         }
-        
+
         $uri = $query->getQueryUrl();
         $feed = $this->gdata->getDocumentListFeed($uri);
         $this->assertTrue($feed instanceof Zend_Gdata_Docs_DocumentListFeed);
@@ -65,7 +67,7 @@ class Zend_Gdata_DocsOnlineTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($entry->getHttpClient() == $feed->getHttpClient());
         }
     }
-    
+
     public function testQueryForTitle()
     {
         $query = new Zend_Gdata_Docs_Query();
@@ -73,7 +75,7 @@ class Zend_Gdata_DocsOnlineTest extends PHPUnit_Framework_TestCase
         $feed = $this->gdata->getDocumentListFeed($query);
         $this->assertTrue(strpos(strtolower($feed->entries[0]->title), strtolower($this->docTitle)) !== FALSE);
     }
-    
+
     public function testGetDocumentListEntry()
     {
         $query = new Zend_Gdata_Docs_Query();
@@ -87,8 +89,8 @@ class Zend_Gdata_DocsOnlineTest extends PHPUnit_Framework_TestCase
     {
         $documentTitle = 'spreadsheet_upload_test.csv';
         $newDocumentEntry = $this->gdata->uploadFile(
-            'Zend/Gdata/_files/DocsTest.csv', $documentTitle, 
-            $this->gdata->lookupMimeType('CSV'), 
+            'Zend/Gdata/_files/DocsTest.csv', $documentTitle,
+            $this->gdata->lookupMimeType('CSV'),
             Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);
         $this->assertTrue($newDocumentEntry->title->text === $documentTitle);
 
@@ -116,7 +118,7 @@ class Zend_Gdata_DocsOnlineTest extends PHPUnit_Framework_TestCase
                 $documentFromGetPresentation->title->text === $documentTitle);
         }
 
-        // Cleanup and remove the new document.        
+        // Cleanup and remove the new document.
         $newDocumentEntry->delete();
     }
 

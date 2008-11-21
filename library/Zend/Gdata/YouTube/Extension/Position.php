@@ -41,14 +41,12 @@ class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
 
     /**
      * Constructs a new Zend_Gdata_YouTube_Extension_Position object.
-     * 
+     *
      * @param string $value (optional) The 1-based position in the playlist
      */
-    public function __construct($value = null) 
+    public function __construct($value = null)
     {
-        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct();
         $this->_text = $value;
     }
@@ -85,6 +83,6 @@ class Zend_Gdata_YouTube_Extension_Position extends Zend_Gdata_Extension
     {
         return $this->getValue();
     }
-    
+
 }
 

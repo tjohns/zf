@@ -43,9 +43,7 @@ class Zend_Gdata_Media_Extension_MediaKeywords extends Zend_Gdata_Extension
      */
     public function __construct()
     {
-        foreach (Zend_Gdata_Media::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
     }
 

@@ -45,9 +45,7 @@ class Zend_Gdata_Calendar_Extension_Hidden extends Zend_Gdata_Extension
      */
     public function __construct($value = null)
     {
-        foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Calendar::$namespaces);
         parent::__construct();
         $this->_value = $value;
     }

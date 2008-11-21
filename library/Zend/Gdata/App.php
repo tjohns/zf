@@ -54,17 +54,17 @@ class Zend_Gdata_App
 {
 
     /** Default major protocol version.
-      * 
+      *
       * @see _majorProtocolVersion
       */
     const DEFAULT_MAJOR_PROTOCOL_VERSION = 1;
-    
+
     /** Default minor protocol version.
       *
       * @see _minorProtocolVersion
       */
     const DEFAULT_MINOR_PROTOCOL_VERSION = null;
-    
+
     /**
      * Client object used to communicate
      *
@@ -128,7 +128,7 @@ class Zend_Gdata_App
       * Indicates the major protocol version that should be used.
       * At present, recognized values are either 1 or 2. However, any integer
       * value >= 1 is considered valid.
-      * 
+      *
       * Under most circumtances, this will be automatically set by
       * Zend_Gdata_App subclasses.
       *
@@ -141,10 +141,10 @@ class Zend_Gdata_App
       * Indicates the minor protocol version that should be used. Can be set
       * to either an integer >= 0, or NULL if no minor version should be sent
       * to the server.
-      * 
+      *
       * At present, this field is not used by any Google services, but may be
       * used in the future.
-      * 
+      *
       * Under most circumtances, this will be automatically set by
       * Zend_Gdata_App subclasses.
       *
@@ -382,7 +382,7 @@ class Zend_Gdata_App
     /**
      * Set the major protocol version that should be used. Values < 1 will
      * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
-     * 
+     *
      * @see _majorProtocolVersion
      * @param int $value The major protocol version to use.
      * @throws Zend_Gdata_App_InvalidArgumentException
@@ -399,7 +399,7 @@ class Zend_Gdata_App
 
     /**
      * Get the major protocol version that is in use.
-     * 
+     *
      * @see _majorProtocolVersion
      * @return int The major protocol version in use.
      */
@@ -407,12 +407,12 @@ class Zend_Gdata_App
     {
         return $this->_majorProtocolVersion;
     }
-    
+
     /**
      * Set the minor protocol version that should be used. If set to NULL, no
      * minor protocol version will be sent to the server. Values < 0 will
      * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
-     * 
+     *
      * @see _minorProtocolVersion
      * @param (int|NULL) $value The minor protocol version to use.
      * @throws Zend_Gdata_App_InvalidArgumentException
@@ -426,10 +426,10 @@ class Zend_Gdata_App
         }
         $this->_minorProtocolVersion = $value;
     }
-    
+
     /**
      * Get the minor protocol version that is in use.
-     * 
+     *
      * @see _minorProtocolVersion
      * @return (int|NULL) The major protocol version in use, or NULL if no
      *         minor version is specified.
@@ -438,9 +438,9 @@ class Zend_Gdata_App
     {
         return $this->_minorProtocolVersion;
     }
-    
+
     /**
-     * Provides pre-processing for HTTP requests to APP services.  
+     * Provides pre-processing for HTTP requests to APP services.
      *
      * 1. Checks the $data element and, if it's an entry, extracts the XML,
      *    multipart data, edit link (PUT,DELETE), etc.
@@ -473,7 +473,7 @@ class Zend_Gdata_App
         if (is_null($headers)) {
             $headers = array();
         }
-        
+
         $rawData = null;
         $finalContentType = null;
         if ($url == null) {
@@ -516,18 +516,18 @@ class Zend_Gdata_App
             }
             $finalContentType = $data->getContentType();
         }
-        
+
         if ($method == 'DELETE') {
             $rawData = null;
         }
-        
+
         // Set an If-Match header if:
         //   - This isn't a DELETE
         //   - If this isn't a GET, the Etag isn't weak
-        //   - A similar header (If-Match/If-None-Match) hasn't already been 
+        //   - A similar header (If-Match/If-None-Match) hasn't already been
         //     set.
         if ($method != 'DELETE' && (
-                !array_key_exists('If-Match', $headers) && 
+                !array_key_exists('If-Match', $headers) &&
                 !array_key_exists('If-None-Match', $headers)
                 ) ) {
             $allowWeak = $method == 'GET';
@@ -536,7 +536,7 @@ class Zend_Gdata_App
                 $headers['If-Match'] = $ifMatchHeader;
             }
         }
-        
+
         if ($method != 'POST' && $method != 'GET' && Zend_Gdata_App::getHttpMethodOverride()) {
             $headers['x-http-method-override'] = $method;
             $method = 'POST';
@@ -547,7 +547,7 @@ class Zend_Gdata_App
         if ($contentTypeOverride != null) {
             $finalContentType = $contentTypeOverride;
         }
-        
+
         return array('method' => $method, 'url' => $url, 'data' => $rawData, 'headers' => $headers, 'contentType' => $finalContentType);
     }
 
@@ -583,7 +583,7 @@ class Zend_Gdata_App
             $headers['GData-Version'] = $major +
                     (is_null($minor) ? '.' + $minor : '');
         }
-        
+
         // check the overridden method
         if (($method == 'POST' || $method == 'PUT') && $body === null && $headers['x-http-method-override'] != 'DELETE') {
                 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
@@ -683,15 +683,15 @@ class Zend_Gdata_App
     public function importUrl($url, $className='Zend_Gdata_App_Feed', $extraHeaders = array())
     {
         $response = $this->get($url, $extraHeaders);
-        
+
         $feedContent = $response->getBody();
         $feed = self::importString($feedContent, $className);
-        
+
         $etag = $response->getHeader('ETag');
         if (!is_null($etag)) {
             $feed->setEtag($etag);
         }
-        
+
         if ($this->getHttpClient() != null) {
             $feed->setHttpClient($this->getHttpClient());
         }
@@ -826,11 +826,11 @@ class Zend_Gdata_App
             $requestData = $this->prepareRequest('DELETE', $data);
         } else {
             $headers = array();
-            
+
             $requestData = $this->prepareRequest('DELETE', null, $headers, $data);
         }
         return $this->performHttpRequest($requestData['method'],
-                                         $requestData['url'], 
+                                         $requestData['url'],
                                          $requestData['headers'],
                                          '',
                                          $requestData['contentType'],
@@ -849,15 +849,15 @@ class Zend_Gdata_App
     public function insertEntry($data, $uri, $className='Zend_Gdata_App_Entry', $extraHeaders = array())
     {
         $response = $this->post($data, $uri, null, null, $extraHeaders);
-        
+
         $returnEntry = new $className($response->getBody());
         $returnEntry->setHttpClient(self::getstaticHttpClient());
-        
+
         $etag = $response->getHeader('ETag');
         if (!is_null($etag)) {
             $returnEntry->setEtag($etag);
         }
-        
+
         return $returnEntry;
     }
 
@@ -886,12 +886,12 @@ class Zend_Gdata_App
         $response = $this->put($data, $uri, null, null, $extraHeaders);
         $returnEntry = new $className($response->getBody());
         $returnEntry->setHttpClient(self::getstaticHttpClient());
-        
+
         $etag = $response->getHeader('ETag');
         if (!is_null($etag)) {
             $returnEntry->setEtag($etag);
         }
-        
+
         return $returnEntry;
     }
 
@@ -1063,5 +1063,5 @@ class Zend_Gdata_App
         }
         return $result;
     }
-    
+
 }

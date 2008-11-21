@@ -36,9 +36,9 @@ require_once 'Zend/Gdata/Feed.php';
 require_once 'Zend/Gdata/Photos/AlbumEntry.php';
 
 /**
- * Data model for a collection of album entries, usually 
+ * Data model for a collection of album entries, usually
  * provided by the servers.
- * 
+ *
  * For information on requesting this feed from a server, see the
  * service class, Zend_Gdata_Photos.
  *
@@ -51,77 +51,77 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
 {
     protected $_entryClassName = 'Zend_Gdata_Photos_AlbumEntry';
     protected $_feedClassName = 'Zend_Gdata_Photos_AlbumFeed';
-    
+
     /**
      * gphoto:id element
      *
      * @var Zend_Gdata_Photos_Extension_Id
      */
     protected $_gphotoId = null;
-    
+
     /**
      * gphoto:user element
      *
      * @var Zend_Gdata_Photos_Extension_User
      */
     protected $_gphotoUser = null;
-    
+
     /**
      * gphoto:access element
      *
      * @var Zend_Gdata_Photos_Extension_Access
      */
     protected $_gphotoAccess = null;
-    
+
     /**
      * gphoto:location element
      *
      * @var Zend_Gdata_Photos_Extension_Location
      */
     protected $_gphotoLocation = null;
-    
+
     /**
      * gphoto:nickname element
      *
      * @var Zend_Gdata_Photos_Extension_Nickname
      */
     protected $_gphotoNickname = null;
-    
+
     /**
      * gphoto:timestamp element
      *
      * @var Zend_Gdata_Photos_Extension_Timestamp
      */
     protected $_gphotoTimestamp = null;
-    
+
     /**
      * gphoto:name element
      *
      * @var Zend_Gdata_Photos_Extension_Name
      */
     protected $_gphotoName = null;
-    
+
     /**
      * gphoto:numphotos element
      *
      * @var Zend_Gdata_Photos_Extension_NumPhotos
      */
     protected $_gphotoNumPhotos = null;
-    
+
     /**
      * gphoto:commentCount element
      *
      * @var Zend_Gdata_Photos_Extension_CommentCount
      */
     protected $_gphotoCommentCount = null;
-    
+
     /**
      * gphoto:commentingEnabled element
      *
      * @var Zend_Gdata_Photos_Extension_CommentingEnabled
      */
     protected $_gphotoCommentingEnabled = null;
-    
+
     protected $_entryKindClassMapping = array(
         'http://schemas.google.com/photos/2007#photo' => 'Zend_Gdata_Photos_PhotoEntry',
         'http://schemas.google.com/photos/2007#comment' => 'Zend_Gdata_Photos_CommentEntry',
@@ -130,9 +130,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
 
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Photos::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Photos::$namespaces);
         parent::__construct($element);
     }
 
@@ -263,7 +261,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
     {
         return $this->_gphotoUser;
     }
-    
+
     /**
      * Set the value for this element's gphoto:user attribute.
      *
@@ -298,7 +296,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoAccess = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:location attribute.
      *
@@ -321,7 +319,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoLocation = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:name attribute.
      *
@@ -344,7 +342,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoName = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:numphotos attribute.
      *
@@ -367,7 +365,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoNumPhotos = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:commentCount attribute.
      *
@@ -390,7 +388,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoCommentCount = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:commentingEnabled attribute.
      *
@@ -413,7 +411,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoCommentingEnabled = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:id attribute.
      *
@@ -436,7 +434,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoId = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's georss:where attribute.
      *
@@ -459,7 +457,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_geoRssWhere = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:nickname attribute.
      *
@@ -482,7 +480,7 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoNickname = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:timestamp attribute.
      *
@@ -505,5 +503,5 @@ class Zend_Gdata_Photos_AlbumFeed extends Zend_Gdata_Feed
         $this->_gphotoTimestamp = $value;
         return $this;
     }
-    
+
 }
