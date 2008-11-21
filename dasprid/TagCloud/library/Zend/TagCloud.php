@@ -80,11 +80,11 @@ class Zend_TagCloud
         }
 
         if ($this->_cloudDecorator === null) {
-            $this->setCloudDecorator('htmlCloud');
+            $this->setCloudDecorator('htmlListUl');
         }
 
         if ($this->_tagsDecorator === null) {
-            $this->setTagsDecorator('htmlTags');
+            $this->setTagsDecorator('htmlListLi');
         }
     }
 
