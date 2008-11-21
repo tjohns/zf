@@ -54,7 +54,7 @@ require_once 'Zend/Gdata/AllTests.php';
 require_once 'Zend/Http/AllTests.php';
 require_once 'Zend/InfoCard/AllTests.php';
 require_once 'Zend/JsonTest.php';
-require_once 'Zend/Json/JsonXMLTest.php';
+require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/Layout/AllTests.php';
 require_once 'Zend/Ldap/AllTests.php';
 require_once 'Zend/LoaderTest.php';
@@ -137,7 +137,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTest(Zend_InfoCard_AllTests::suite());
         $suite->addTestSuite('Zend_JsonTest');
-        $suite->addTestSuite('Zend_Json_JsonXMLTest');
+        $suite->addTest(Zend_Json_AllTests::suite());
         $suite->addTest(Zend_Layout_AllTests::suite());
         $suite->addTest(Zend_Ldap_AllTests::suite());
         $suite->addTestSuite('Zend_LoaderTest');
