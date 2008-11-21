@@ -160,14 +160,15 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
     public function testI18nChaining()
     {
-        $this->markTestSkipped('Route features not ready');
+        //$this->markTestSkipped('Route features not ready');
         
         $lang = new Zend_Controller_Router_Route(':lang', array('lang' => 'en'));
         $profile = new Zend_Controller_Router_Route('user/:id', array('controller' => 'foo', 'action' => 'bar'));
 
         $chain = $lang->chain($profile);
 
-        $res = $chain->match('en/user/1');
+        $request = new Zend_Controller_Router_ChainTest_Request('http://www.zend.com/en/user/1');
+        $res = $chain->match($request);
 
         $this->assertEquals('en', $res['lang']);
         $this->assertEquals('1', $res['id']);
