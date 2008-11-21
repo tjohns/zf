@@ -2,7 +2,7 @@
     <title>Sending Multiple Mails per SMTP Connection</title>
 
     <para>
-        By default a single SMTP transport creates a single connection and
+        By default, a single SMTP transport creates a single connection and
         re-uses it for the lifetime of the script execution. You may send multiple
         e-mails through this SMTP connection. A RSET command is issued before each
         delivery to ensure the correct SMTP handshake is followed.

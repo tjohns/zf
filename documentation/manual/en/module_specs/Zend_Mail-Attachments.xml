@@ -1,9 +1,9 @@
 <sect1 id="zend.mail.attachments">
     <title>Attachments</title>
     <para>
-        Files can be attached to an e-mail using the <code>createAttachment()</code> method. The default behaviour
+        Files can be attached to an e-mail using the <code>createAttachment()</code> method. The default behavior
         of <code>Zend_Mail</code> is to assume the attachment is a binary object (application/octet-stream),
-        should be transferred with base64 encoding, and is handled as an attachment. These assumptions can be
+        that it should be transferred with base64 encoding, and that it is handled as an attachment. These assumptions can be
         overridden by passing more parameters to <code>createAttachment()</code>:
     </para>
     <example id="zend.mail.attachments.example-1">

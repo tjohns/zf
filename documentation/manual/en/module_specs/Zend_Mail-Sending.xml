@@ -16,10 +16,10 @@ Zend_Mail::setDefaultTransport($tr);
     <para>
         The <code>setDefaultTransport()</code> method and the constructor of
         <code>Zend_Mail_Transport_Smtp</code> are not expensive. These two lines can be processed at script
-        setup time (e.g., config.inc or similar) to configure the behaviour of the <code>Zend_Mail</code> class
+        setup time (e.g., config.inc or similar) to configure the behavior of the <code>Zend_Mail</code> class
         for the rest of the script. This keeps configuration information out of the application logic - whether
         mail is sent via SMTP or <ulink url="http://php.net/mail"><code>mail()</code></ulink>, what mail server
-        to use, etc.
+        is used, etc.
     </para>
 </sect1>
 <!--
