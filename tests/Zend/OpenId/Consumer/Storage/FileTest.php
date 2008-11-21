@@ -47,14 +47,25 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
     const SERVER   = "http://www.myopenid.com/";
     const SERVER2  = "http://www.myopenid2.com/";
     const VERSION  = 1.0;
+    
+    protected $_tmpDir = dirname(__FILE__) . "/tmp";
 
+    public function setUp()
+    {
+        mkdir($_tmpDir);
+    }
+
+    public function tearDown()
+    {
+        @rmdir($_tmpDir)
+    }
     /**
      * testing __construct
      *
      */
     public function testConstruct()
     {
-        $tmp = dirname(__FILE__)."/_files";
+        $tmp = $tmpDir;
         $dir = $tmp . '/openid_consumer';
         @rmdir($dir);
         $storage = new Zend_OpenId_Consumer_Storage_File($dir);
@@ -64,7 +75,7 @@ class Zend_OpenId_Consumer_Storage_FileTest extends PHPUnit_Framework_TestCase
             return;
         }
 
-        chmod($dir, 0);
+        chmod($dir, 0400);
         $dir2 = $dir . '/test';
         try {
             $storage = new Zend_OpenId_Consumer_Storage_File($dir2);
