@@ -7,7 +7,7 @@
         <para>
             Zend_Server_Reflection provides a standard mechanism for performing
             function and class introspection for use with server classes. It is
-            based on PHP 5's Reflection API, and extends it to provide methods
+            based on PHP 5's Reflection API, augmenting it with methods
             for retrieving parameter and return value types and descriptions, a
             full list of function and method prototypes (i.e., all possible
             valid calling combinations), and function/method descriptions.
@@ -59,7 +59,7 @@ $reflection->getNamespace();
             <code>Zend_Server_Reflection_Function</code> object;
             <code>reflectClass</code> returns a
             <code>Zend_Server_Reflection_Class</code> object. Please refer to
-            the API documentation to know what methods are available to each.
+            the API documentation to see what methods are available to each.
         </para>
     </sect2>
 </sect1>
