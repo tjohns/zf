@@ -296,6 +296,9 @@ class Zend_Pdf
         if ($source !== null) {
             $this->_parser  = new Zend_Pdf_Parser($source, $this->_objFactory, $load);
             $this->_trailer = $this->_parser->getTrailer();
+            if ($this->_trailer->Encrypt !== null) {
+            	throw new Zend_Pdf_Exception('Encrypted document modification is not supported');
+            }
             if ($revision !== null) {
                 $this->rollback($revision);
             } else {
