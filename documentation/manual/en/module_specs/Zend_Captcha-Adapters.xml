@@ -81,9 +81,11 @@
             other ways.
         </para>
 
-        <note><para>
-            Remeber, Word is an abstract class and may not be instantiated directly.
-        </para></note>
+        <note>
+        <para>
+            Word is an abstract class and may not be instantiated directly.
+        </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
@@ -152,10 +154,10 @@
 
             <listitem><para>
                 <code>setFont($font)</code> and <code>getFont()</code> allow
-                you to specify the font you wish to utilize. It should be a
-                fully qualified path to the font file to utilize. If you do not
-                set this value, the captcha will throw an exception during
-                generation; the font is mandatory.
+                you to specify the font you wish to utilize. <code>$font</code>
+                should be a fully qualified path to the font file to utilize.
+                If you do not set this value, the captcha will throw an
+                exception during generation; the font is mandatory.
             </para></listitem>
 
             <listitem><para>
