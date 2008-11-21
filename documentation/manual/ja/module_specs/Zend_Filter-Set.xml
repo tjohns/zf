@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10539 -->
+<!-- EN-Revision: 12751 -->
 <sect1 id="zend.filter.set">
 
     <title>標準のフィルタクラス群</title>
@@ -11,16 +11,24 @@
         <title>Alnum</title>
         <para>
             文字列 <code>$value</code>
-            から、英数字以外を取り除いたものを返します。
+            から、アルファベットおよび数字以外を取り除いたものを返します。
             このフィルタでは、オプションとして空白文字を認めることもできます。
         </para>
+        <note>
+            <para>
+             アルファベットとは各言語で単語を構成する文字を意味します。
+             ただし、以下の言語では英語のアルファベットをアルファベットとして扱います：中国語、日本語、韓国語。
+             言語はZend_Localeで指定されます。
+            </para>
+        </note>
+        
     </sect2>
 
     <sect2 id="zend.filter.set.alpha">
         <title>Alpha</title>
         <para>
             文字列 <code>$value</code>
-            から、英字以外を取り除いたものを返します。
+            から、アルファベット以外を取り除いたものを返します。
             このフィルタでは、オプションとして空白文字を認めることもできます。
         </para>
     </sect2>
