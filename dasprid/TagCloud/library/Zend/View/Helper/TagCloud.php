@@ -216,6 +216,12 @@ abstract class Zend_View_Helper_TagCloud extends Zend_View_Helper_Abstract
      */
     public function render()
     {
+        // Check if a tag array was supplied
+        if ($this->_tags === null) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('You must supply a tag array');
+        }
+        
         // Calculate min and max weight
         $minWeight = null;
         $maxWeight = null;
@@ -253,10 +259,12 @@ abstract class Zend_View_Helper_TagCloud extends Zend_View_Helper_Abstract
 
         foreach ($this->_tags as $tag) {
             if (!isset($tag[$this->_weightKey])) {
+                require_once 'Zend/View/Exception.php';
                 throw new Zend_View_Exception('Weight key not found in tag');            
             }
             
             if (!isset($tag[$this->_titleKey])) {
+                require_once 'Zend/View/Exception.php';
                 throw new Zend_View_Exception('Title key not found in tag');            
             }
             
