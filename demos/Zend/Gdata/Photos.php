@@ -27,7 +27,7 @@
  *
  * You can run this sample from a web browser.
  *
- * NOTE: You must ensure that the Zend Framework is in your PHP include
+ * NOTE: You must ensure that Zend Framework is in your PHP include
  * path.  You can do this via php.ini settings, or by modifying the 
  * argument to set_include_path in the code below.
  *

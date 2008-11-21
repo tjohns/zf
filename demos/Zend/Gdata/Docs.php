@@ -36,7 +36,7 @@
  * More information on the Command Line Interface is available at:
  *     http://www.php.net/features.commandline
  *
- * NOTE: You must ensure that the Zend Framework is in your PHP include
+ * NOTE: You must ensure that Zend Framework is in your PHP include
  * path.  You can do this via php.ini settings, or by modifying the 
  * argument to set_include_path in the code below.
  *

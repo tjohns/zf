@@ -21,7 +21,7 @@
  * @fileoverview Provides functions for browsing and searching YouTube 
  * data API feeds, as well as performing authentication, syndicated uploads
  * and playlist management using a PHP backend powered by the Zend_Gdata component
- * of the Zend Framework.
+ * of Zend Framework.
  */
 
 /**

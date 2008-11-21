@@ -29,7 +29,7 @@ require_once 'Zend/Loader.php';
  *
  * This simple mailer demonstrates the most important features of the mail reading classes. You can
  * use the test mbox and maildir files or a Pop3 or Imap server. It's meant to be run in a web enviroment
- * and CLI is not supported. Copy the files to a directory in your webroot and make sure the Zend Framework
+ * and CLI is not supported. Copy the files to a directory in your webroot and make sure Zend Framework
  * is in your include path (including incubator!).
  *
  * SSL and TLS are supported by Zend_Mail_Storage_[Pop3|Imap], but not shown here). You'd need to add

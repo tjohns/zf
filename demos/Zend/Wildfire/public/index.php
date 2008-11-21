@@ -18,7 +18,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/* NOTE: You must have the Zend Framework in your include path! */
+/* NOTE: You must have Zend Framework in your include path! */
 
 /*
  * Add our Firebug Log Writer to the registry
