@@ -138,13 +138,13 @@ $tableBugs = new Bugs(array('name' => 'bugs', 'schema' => 'bug_db'));
 
 // Second alternative:
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs');
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs'));
 
 // If schemas are specified in both 'name' and 'schema', the one
 // specified in 'name' takes precedence:
 
 $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
-                            'schema' => 'ignored');
+                            'schema' => 'ignored'));
 ]]>
                 </programlisting>
 
