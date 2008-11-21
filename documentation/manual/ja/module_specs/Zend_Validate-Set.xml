@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8387 -->
+<!-- EN-Revision: 12751 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -10,15 +10,22 @@
     <sect2 id="zend.validate.set.alnum">
         <title>Alnum</title>
         <para>
-            <code>$value</code> が英数字のみで構成されているときにのみ <code>true</code> を返します。
+            <code>$value</code> がアルファベットおよび数字のみで構成されているときにのみ <code>true</code> を返します。
             このバリデータでは、オプションとして空白文字を認めることもできます。
         </para>
+        <note>
+            <para>
+             アルファベットとは各言語で単語を構成する文字を意味します。
+             ただし、以下の言語では英語のアルファベットをアルファベットとして扱います：中国語、日本語、韓国語。
+             言語はZend_Localeで指定されます。
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.validate.set.alpha">
         <title>Alpha</title>
         <para>
-             <code>$value</code> が英字のみで構成されているときにのみ <code>true</code> を返します。
+             <code>$value</code> がアルファベットのみで構成されているときにのみ <code>true</code> を返します。
             このバリデータでは、オプションとして空白文字を認めることもできます。
         </para>
     </sect2>
