@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12151 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>日付および時刻の扱い</title>
@@ -154,10 +154,10 @@
             <title>日付の正規化</title>
             <programlisting role="php"><![CDATA[
 $dateString = Zend_Locale_Format::getDate('13.04.2006',
-                                          array('date_format' => 
+                                          array('date_format' =>
                                                     'dd.MM.yyyy')
                                          );
-                                         
+
 // この日付に対応する Zend_Date オブジェクトを作成します
 $dateObject = Zend_Date('13.04.2006',
                          array('date_format' => 'dd.MM.yyyy'));
@@ -230,7 +230,11 @@ print_r ($date);
             <title>日付と時刻の正規化</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', array('date_format' => Zend_Locale_Format::STANDARD, 'locale' => $locale);
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55',
+                                    array('date_format' =>
+                                                Zend_Locale_Format::STANDARD,
+                                          'locale' => $locale)
+                                    );
 
 print_r ($date);
 ]]>
@@ -359,7 +363,7 @@ print_r ($date);
         <example id="zend.locale.date.normalize.example-5">
             <title>入力された日付の訂正処理</title>
             <programlisting role="php"><![CDATA[
-$date = Zend_Locale_Format::getDate('41.10.20', 
+$date = Zend_Locale_Format::getDate('41.10.20',
                                     array('date_format' => 'ddMMyy',
                                           'fix_date' => true)
                                    );
@@ -392,7 +396,7 @@ print_r ($date);
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::checkDateFormat('13.Apr.2006',
-                                        array('date_format' => 
+                                        array('date_format' =>
                                                   Zend_Locale_Format::STANDARD,
                                               $locale)
                                        ) {
