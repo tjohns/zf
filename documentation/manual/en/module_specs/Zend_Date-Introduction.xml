@@ -33,7 +33,7 @@
         <title>Always Set a Default Timezone</title>
 
         <para>
-            Before using any date related functions in PHP or the Zend Framework, first make certain your application
+            Before using any date related functions in PHP or Zend Framework, first make certain your application
             has a correct default timezone, by either setting the TZ environment variable, using the
             <code>date.timezone</code> php.ini setting, or using
             <ulink url="http://php.net/date_default_timezone_set">date_default_timezone_set()</ulink>

@@ -7,7 +7,7 @@
     </para>
 
     <para>
-        Many languages split the handling of times and calendar dates into two classes. However, the Zend Framework
+        Many languages split the handling of times and calendar dates into two classes. However, Zend Framework
         strives for extreme simplicity, and forcing the developer to manage different objects with different methods for
         times and dates becomes a burden in many situations. Since <code>Zend_Date</code> methods support working with
         ambiguous dates that might not include all parts (era, year, month, day, hour, minute, second, timezone),

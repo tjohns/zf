@@ -100,9 +100,9 @@
             <title>Classes</title>
 
             <para>
-                The Zend Framework employs a class naming convention whereby the names
+                Zend Framework employs a class naming convention whereby the names
                 of the classes directly map to the directories in which they are stored.
-                The root level directory of the Zend Framework is the "Zend/" directory,
+                The root level directory of Zend Framework is the "Zend/" directory,
                 under which all classes are stored hierarchially.
             </para>
 

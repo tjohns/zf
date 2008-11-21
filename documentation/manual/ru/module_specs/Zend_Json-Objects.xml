@@ -72,7 +72,7 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
         коде разработчика и заполнен значениями, декодированными с помощью
         <code>Zend_Json</code>.
 <!--
-        The recommendation of the Zend Framework is that the individual
+        The recommendation of Zend Framework is that the individual
         developer should decide how to decode JSON objects. If an object of a
         specified type should be created, it can be created in the developer
         code and populated with the values decoded using <code>Zend_Json</code>.

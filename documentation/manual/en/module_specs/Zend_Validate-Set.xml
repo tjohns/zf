@@ -3,7 +3,7 @@
     <title>Standard Validation Classes</title>
 
     <para>
-        The Zend Framework comes with a standard set of validation classes, which are ready for you to use.
+        Zend Framework comes with a standard set of validation classes, which are ready for you to use.
     </para>
 
     <sect2 id="zend.validate.set.alnum">

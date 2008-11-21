@@ -32,7 +32,7 @@
                 <para>
                     Using a <ulink url="http://subversion.tigris.org">Subversion</ulink> (SVN) client. Zend Framework
                     is open source software, and the Subversion repository used for its development is publicly
-                    available. Consider using SVN to get the Zend Framework if you already use SVN for your
+                    available. Consider using SVN to get Zend Framework if you already use SVN for your
                     application development, want to contribute back to the framework, or need to upgrade your
                     framework version more often than releases occur.
                 </para>
@@ -63,7 +63,7 @@
     </para>
 
     <para>
-        Once you have a copy of the Zend Framework available, your application needs to be able to access the
+        Once you have a copy of Zend Framework available, your application needs to be able to access the
         framework classes. Though there are
         <ulink url="http://www.php.net/manual/en/configuration.changes.php">
         several ways to achieve this</ulink>, your PHP

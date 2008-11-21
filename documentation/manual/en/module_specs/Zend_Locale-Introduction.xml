@@ -20,7 +20,7 @@
         number format conventions, financial conventions, time and date conventions, etc. Localization involves adding
         explicit support to systems for special needs of these unique groups, such as language translation, and support
         for local customs or conventions for communicating plurals, dates, times, currencies, names, symbols, sorting
-        and ordering, etc. <code>L10n</code> and <code>I18n</code> compliment each other. The Zend Framework provides
+        and ordering, etc. <code>L10n</code> and <code>I18n</code> compliment each other. Zend Framework provides
         support for these through a combination of components, including Zend_Locale, Zend_Date, Zend_Measure,
         Zend_Translate, Zend_Currency, and Zend_TimeSync.
     </para>
@@ -126,7 +126,7 @@
 
         <para>
             Locale identifiers consist of information about the user's language and preferred/primary geographic region
-            (e.g. state or province of home or workplace). The locale identifier strings used in the Zend Framework are
+            (e.g. state or province of home or workplace). The locale identifier strings used in Zend Framework are
             internationally defined standard abbreviations of language and region, written as
             <code>language_REGION</code>. Both the language and region parts are abbreviated to alphabetic, ASCII
             characters.
@@ -146,8 +146,7 @@
             A user from USA would expect the language <code>English</code> and the region <code>USA</code>, yielding the
             locale identifier "en_US". A user in Germany would expect the language <code>German</code> and the region
             <code>Germany</code>, yielding the locale identifier "de_DE". See the
-            <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_territories.html">list of pre-defined locale and region combinations</ulink>
-            , if you need to select a specific locale within the Zend Framework.
+            <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_territories.html">list of pre-defined locale and region combinations</ulink>, if you need to select a specific locale within Zend Framework.
         </para>
 
         <example id="zend.locale.representation.example-1">
@@ -231,7 +230,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::FRAMEWORK</code> - When the Zend Framework has a standardized way of
+                        const <code>Zend_Locale::FRAMEWORK</code> - When Zend Framework has a standardized way of
                         specifying component defaults (planned, but not yet available), then using this constant during
                         instantiation will give preference to choosing a locale based on these defaults. If no matching
                         locale can be found, then preference is given to <code>ENVIRONMENT</code> and lastly

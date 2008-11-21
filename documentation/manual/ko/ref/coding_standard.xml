@@ -672,7 +672,7 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    All source code file written for the Zend Framework or that operates with the framework
+                    All source code file written for Zend Framework or that operates with the framework
                     must contain a "file-level" docblock at the top of each file and a "class-level" docblock
                     immediately above each class. Below are examples of such docblocks.
                 </para>

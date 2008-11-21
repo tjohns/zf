@@ -10,7 +10,7 @@
     </para>
 
     <para>
-        The Zend Framework provides support for both consuming remote XML-RPC
+        Zend Framework provides support for both consuming remote XML-RPC
         services and building new XML-RPC servers.
     </para>
 </sect1>

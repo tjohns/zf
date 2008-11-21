@@ -360,7 +360,7 @@ remember_me_seconds = 864000
                 persistent session data storage unique to each visitor. Zend_Session* wraps this storage mechanism
                 (<code>$_SESSION</code>) with an object-oriented interface. Unfortunately, if an attacker gains access
                 to the value of the cookie (the session id), an attacker might be able to hijack a visitor's session.
-                This problem is not unique to PHP, or the Zend Framework. The <code>regenerateId()</code> method allows
+                This problem is not unique to PHP, or Zend Framework. The <code>regenerateId()</code> method allows
                 an application to change the session id (stored in the visitor's cookie) to a new, random, unpredictable
                 value. Note: Although not the same, to make this section easier to read, we use the terms "user agent"
                 and "web browser" interchangeably.

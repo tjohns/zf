@@ -11,7 +11,7 @@
             преобразование типов между PHP и XML-RPC, прокси-объект сервера и
             доступ к средствам интроспекции на сервере.
 <!--
-            The Zend Framework provides support for consuming remote XML-RPC
+            Zend Framework provides support for consuming remote XML-RPC
             services as a client in the <code>Zend_XmlRpc_Client</code>
             package. Its major features include automatic type conversion
             between PHP and XML-RPC, a server proxy object, and access to

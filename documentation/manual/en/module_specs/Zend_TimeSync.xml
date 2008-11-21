@@ -3,9 +3,9 @@
     <title>Introduction</title>
 
     <para>
-        <code>Zend_TimeSync</code> is able to receive internet or network time from a timeserver using
+        <code>Zend_TimeSync</code> is able to receive internet or network time from a time server using
         the <emphasis role="strong">NTP</emphasis> or <emphasis role="strong">SNTP</emphasis> protocol.
-        With <code>Zend_TimeSync</code> the Zend Framework is able to act independently from the
+        With <code>Zend_TimeSync</code>, Zend Framework is able to act independently from the
         timesettings of the server where it is running.
     </para>
 

@@ -5,7 +5,7 @@
         <title>Wprowadzenie</title>
 
         <para>
-            The Zend Framework zapewnia obsługę wywoływania zdalnych serwisów
+            Zend Framework zapewnia obsługę wywoływania zdalnych serwisów
             XML-RPC jako klient w pakiecie <code>Zend_XmlRpc_Client</code>.
             Do głównych funkcjonalności należą: automatyczna konwersja
             typów pomiędzy PHP a XML-RPC, obiekt serwera proxy oraz dostęp

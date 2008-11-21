@@ -74,7 +74,7 @@
         <ulink
       url="http://www.php.net/session">http://www.php.net/session</ulink>
         ), with the bonus of convenience through an object-oriented interface and defaults providing both best practices
-        and smooth integration with the Zend Framework. Thus, a standard PHP session id, stored either in a client's
+        and smooth integration with Zend Framework. Thus, a standard PHP session id, stored either in a client's
         cookie or embedded in URLs, maintains the association between a client and session state data.
 -->
     </para>

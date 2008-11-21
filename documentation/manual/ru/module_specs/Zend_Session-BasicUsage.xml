@@ -18,7 +18,7 @@
         работы с сессиями.
 <!--
         <code>Zend_Session_Namespace</code> creates instances of containers providing the primary API for manipulating
-        session data in the Zend Framework. Namespaces are used to segregate all session data, although a default
+        session data in Zend Framework. Namespaces are used to segregate all session data, although a default
         namespace exists for those who only want one namespace for all their session data. <code>Zend_Session</code>
         utilizes ext/session and its special <code>$_SESSION</code> superglobal as the storage mechanism for session
         state data. While <code>$_SESSION</code> is still available in PHP's global namespace, developers should refrain
@@ -93,7 +93,7 @@
             and developer code. Namespacing provides an effective and popular way to "secure" a subset of session state
             data against accidental changes. Namespace names are restricted to character sequences represented as
             non-empty PHP strings that do not begin with an underscore ('_') character. Only core components included in
-            the Zend Framework should use namespace names starting with 'Zend_'.
+            Zend Framework should use namespace names starting with 'Zend_'.
 -->
         </para>
 

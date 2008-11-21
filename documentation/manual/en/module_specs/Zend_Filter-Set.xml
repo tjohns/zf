@@ -3,7 +3,7 @@
     <title>Standard Filter Classes</title>
 
     <para>
-        The Zend Framework comes with a standard set of filters, which are ready for you to use.
+        Zend Framework comes with a standard set of filters, which are ready for you to use.
     </para>
 
     <sect2 id="zend.filter.set.alnum">

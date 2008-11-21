@@ -28,7 +28,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
         error or conversion logic error, this function will throw an exception. The conversion logic also
         uses recursive techniques to traverse the XML tree. It supports recursion upto 25 levels deep.
         Beyond that depth, it will throw a <code>Zend_Json_Exception</code>. There are several XML files with varying
-        degree of complexity provided in the tests directory of the Zend Framework. They can be used to
+        degree of complexity provided in the tests directory of Zend Framework. They can be used to
         test the functionality of the xml2json feature.
     </para>
 

@@ -436,7 +436,7 @@ echo $myNamespace->someArray['foo']; // prints "bar"
         <title>Using Sessions with Unit Tests</title>
 
         <para>
-            The Zend Framework relies on PHPUnit to facilitate testing of itself. Many developers extend the existing
+            Zend Framework relies on PHPUnit to facilitate testing of itself. Many developers extend the existing
             suite of unit tests to cover the code in their applications. The exception
             "<emphasis role="strong">Zend_Session is currently marked as read-only</emphasis>" is thrown while
             performing unit tests, if any write-related methods are used after ending the session. However, unit tests

@@ -29,12 +29,12 @@
         persist session namespaces. <code>Zend_Session_Namespace</code> provides a standardized, object-oriented
         interface for working with namespaces persisted inside PHP's standard session mechanism. Support exists for
         both anonymous and authenticated (e.g., "login") session namespaces. <code>Zend_Auth</code>, the authentication
-        component of the Zend Framework, uses <code>Zend_Session_Namespace</code> to store some information associated
+        component of Zend Framework, uses <code>Zend_Session_Namespace</code> to store some information associated
         with authenticated users. Since <code>Zend_Session</code> uses the normal PHP ext/session functions internally,
         all the familiar configuration options and settings apply (see
         <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>), with such bonuses as the
         convenience of an object-oriented interface and default behavior that provides both best practices and smooth
-        integration with the Zend Framework. Thus, a standard PHP session identifier, whether conveyed by cookie or
+        integration with Zend Framework. Thus, a standard PHP session identifier, whether conveyed by cookie or
         within URLs, maintains the association between a client and session state data.
     </para>
 

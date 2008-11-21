@@ -71,7 +71,7 @@ echo "Page requests this session: ",
 
         <para>
             Namespace names are restricted to character sequences represented as non-empty PHP strings that do not begin
-            with an underscore ("<code>_</code>") character. Only core components included in the Zend Framework should
+            with an underscore ("<code>_</code>") character. Only core components included in Zend Framework should
             use namespace names starting with "<code>Zend</code>".
         </para>
 

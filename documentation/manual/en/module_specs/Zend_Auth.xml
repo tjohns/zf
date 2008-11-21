@@ -13,7 +13,7 @@
         whether an entity actually is what it purports to be (i.e., identification), based on some set of
         credentials. Authorization, the process of deciding whether to allow an entity access to, or to
         perform operations upon, other entities is outside the scope of Zend_Auth. For more information about
-        authorization and access control with the Zend Framework, please see
+        authorization and access control with Zend Framework, please see
         <link linkend="zend.acl">Zend_Acl</link>.
     </para>
 

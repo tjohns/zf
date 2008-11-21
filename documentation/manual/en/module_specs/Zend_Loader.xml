@@ -170,7 +170,7 @@ Zend_Loader::registerAutoload();
 
         <para>
             After registering the Zend Framework autoload callback, you can
-            reference classes from the Zend Framework without having to load
+            reference classes from Zend Framework without having to load
             them explicitly.  The <code>autoload()</code> method uses
             <code>Zend_Loader::loadClass()</code> automatically when you
             reference a class.
