@@ -72,7 +72,7 @@ echo $config->database->params->dbname; // prints "dbname"
             Zend_Config_Xml also supports two additional ways of defining nodes in the configuration. Both make use
             of attributes. Since the <code>extends</code> and the <code>value</code> attributes are reserved keywords
             (the latter one by the the second way of using attributes), they may not be used. The first way of
-            making usage of attributes is to add attributes in a parent nodes, which then will be translated into
+            making usage of attributes is to add attributes in a parent node, which then will be translated into
             children of that node:
         </para>
         <programlisting role="xml"><![CDATA[
@@ -93,7 +93,7 @@ echo $config->database->params->dbname; // prints "dbname"
 </programlisting>
         <para>
             The other way does not really shorten the config, but keeps it easier to maintain since you don't have to write
-            the tag-name twice. You simply create an empty tag, which contains it's value withing the <code>value</code>
+            the tag name twice. You simply create an empty tag with the value in the <code>value</code>
             attribute:
         </para>
         <programlisting role="xml"><![CDATA[

@@ -2,9 +2,9 @@
     <title>Theory of Operation</title>
     <para>
         Configuration data are made accessible to the <code>Zend_Config</code> constructor
-        through an associative array, which may be multidimensional, in order to support
-        organizing the data from general to specific. Concrete adapter classes function
-        to adapt configuration data from storage to produce the associative array for the
+        through an associative array, which may be multi-dimensional, in order to support
+        organizing the data from general to specific. Concrete adapter classes
+        adapt configuration data from storage to produce the associative array for the
         <code>Zend_Config</code> constructor. User scripts may provide such arrays directly
         to the <code>Zend_Config</code> constructor, without using an adapter class, since
         it may be appropriate to do so in certain situations.
@@ -20,7 +20,7 @@
         interfaces in order to facilitate simple access to configuration data.
         Thus, one may use the <ulink url="http://php.net/count"><code>count()</code></ulink>
         function and PHP constructs such as
-        <ulink url="http://php.net/foreach"><code>foreach</code></ulink> upon
+        <ulink url="http://php.net/foreach"><code>foreach</code></ulink> with
         <code>Zend_Config</code> objects.
     </para>
     <para>
@@ -72,7 +72,7 @@
             <para>
                 The <code>Zend_Config</code> object that is performing the merge must have been constructed
                 to allow modifications, by passing <code>true</code> as the second parameter of the constructor.
-                The <code>setReadOnly()</code> method can then be used to prevent any futher modifications
+                The <code>setReadOnly()</code> method can then be used to prevent any further modifications
                 after the merge is complete.
             </para>
         </note>

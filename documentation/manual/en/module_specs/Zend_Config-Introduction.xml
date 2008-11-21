@@ -1,8 +1,8 @@
 <sect1 id="zend.config.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Config</code> is designed to simplify access to and use of configuration data within applications.
-        It provides a nested object property based user interface for accessing such configuration data within
+        <code>Zend_Config</code> is designed to simplify the access to, and the use of, configuration data within applications.
+        It provides a nested object property based user interface for accessing this configuration data within
         application code. The configuration data may come from a variety of media supporting hierarchical data storage.
         Currently <code>Zend_Config</code> provides adapters for configuration data that are stored in text files with
         <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> and
