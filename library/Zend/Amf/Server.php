@@ -35,7 +35,7 @@ require_once 'Zend/Amf/Value/Messaging/CommandMessage.php';
 
 /**
  * An AMF gateway server implementation to allow the connection of the Adobe Flash Player to
- * the Zend Framework
+ * Zend Framework
  *
  * @todo       Make the relection methods cache and autoload.
  * @package    Zend_Amf
