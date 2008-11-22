@@ -3,7 +3,7 @@
     <title>Migration von vorhergehenden Versionen</title>
 
     <para>
-        Die API der MVC Komponenten hat sich mit der Zeit verändert. Wer das Zend Framework bereits
+        Die API der MVC Komponenten hat sich mit der Zeit verändert. Wer Zend Framework bereits
         in einer früheren Version verwendet hat, folgt dem Leitfaden unten, damit dieSkripte die
         neue Archtitekur verwenden.
     </para>

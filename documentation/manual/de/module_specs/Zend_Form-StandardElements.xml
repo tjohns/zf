@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12541 -->
+<!-- EN-Revision: 12750 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
     <para>
-        Der Zend Framework wird mit konkreten Element Klassen ausgeliefert die die meisten HTML
+        Zend Framework wird mit konkreten Element Klassen ausgeliefert die die meisten HTML
         Form Elemente abdecken. Die meisten spezifizieren einfach einen speziellen View Helfer
         zur Verwendung wenn das Element dekoriert wird, aber einige bieten zusätzliche
         Funktionalitäten an. Nachfolgend ist eine Liste aller solcher Klassen, sowie eine
@@ -248,6 +248,51 @@ $location = $form->foo->getFileName();
                 welches den Pfad und Namen der Datei zurückgibt.
             </para>
         </note>
+
+        <para>
+            Es gibt verschiedene Stati von hochgeladenen Dateien welche mit den folgenden Optionen
+            geprüft werden können:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>isUploaded()</code>: Prüft ob das Dateielement hochgeladen wurde oder nicht.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isReceived()</code>: Prüft ob das Dateielement bereits empfangen wurde.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isFiltered()</code>: Prüft ob die Filter bereits dem Dateielement
+                    angehängt wurden oder nicht.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.form.standardElements.file.isuploaded">
+            <title>Prüfen ob eine optionale Datei hochgeladen wurde</title>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Ein Bild hochladen:')
+        ->setDestination('/var/www/upload')
+        ->setRequired(false);
+$element->addValidator('Size', false, 102400);
+$form->addElement($element, 'foo');
+
+// Das foo Dateielement is optional, aber wenn es angegeben wurde, gehe hier herein
+if ($form->foo->isUploaded()) {
+    // Die foo Datei ist angegeben... mach was
+}
+]]>
+            </programlisting>
+        </example>
 
         <para>
             <code>Zend_Form_Element_File</code> unterstützt auch mehrere Dateien. Durch den Aufruf der

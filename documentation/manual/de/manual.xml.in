@@ -10,7 +10,7 @@
     <bookinfo>
         <title>Programmierer Referenzhandbuch</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmierer Referenzhandbuch für das Zend Framework</edition>
+        <edition>Programmierer Referenzhandbuch für Zend Framework</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>

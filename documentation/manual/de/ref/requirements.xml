@@ -4,7 +4,7 @@
     <title>Zend Framework Voraussetzungen</title>
 
     <para>
-        Der Zend Framework benötigt einen PHP 5 Interpreter mit einem Web Server der konfiguriert ist
+        Zend Framework benötigt einen PHP 5 Interpreter mit einem Web Server der konfiguriert ist
         PHP Skripte korrekt handzuhaben. Einige Features benötigen zusätzliche Erweiterungen oder
         Features des Web Servers; in den meisten Fällen kann der Framewrok ohne diese verwendet werden,
         was aber zu geringerer Performance führen kann, oder dazu das bestimmte Features nicht

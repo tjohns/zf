@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.timesync.introduction">
 
     <title>Einführung</title>
@@ -11,7 +11,7 @@
         <code>Zend_TimeSync</code> ist fähig die Internet- oder Netzwerkzeit von einem Zeitserver
         zu empfangen indem es das <emphasis role="strong">NTP</emphasis> oder
         <emphasis role="strong">SNTP</emphasis> Protokoll verwendet. Mit <code>Zend_TimeSync</code>
-        ist der Zend Framework fähig unabhängig von den Zeiteinstellungen des Servers auf dem es
+        ist Zend Framework fähig unabhängig von den Zeiteinstellungen des Servers auf dem es
         läuft zu agieren.
     </para>
 

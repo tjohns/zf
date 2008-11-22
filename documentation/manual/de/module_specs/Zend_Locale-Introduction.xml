@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -20,7 +20,7 @@
         mehr die Benutzung von Systemen für die spezielle Benutzung durch eindeutige Gruppen wie zum Beispiel
         Sprachübersetzung, Unterstützung von lokalen Konventionen für Plurale, Daten, Zeiten, Währungen, Namen,
         Symbolen, Sortierungen, Reihungen und viele mehr. <code>L10n</code> und <code>I18n</code> sind einander
-        sehr ähnlich. Der Zend Framework bietet Unterstützung für diese Konventionen durch eine Kombination von
+        sehr ähnlich. Zend Framework bietet Unterstützung für diese Konventionen durch eine Kombination von
         Komponenten wie Zend_Locale, Zend_Date, Zend_Measure, Zend_Translate, Zend_Currency und Zend_TimeSync.
     </para>
 
@@ -239,7 +239,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::FRAMEWORK</code> - Wenn der Zend Framework einen standartisierten
+                        const <code>Zend_Locale::FRAMEWORK</code> - Wenn Zend Framework einen standartisierten
                         Weg zur Verfügung stellt um für Komponenten Standardwerte zu definieren (das ist geplant
                         aber noch nicht realisiert), dann wird die Verwendung dieser Konstante das
                         Gebietsschema anhand dieser Standardwerte auswählen. Wenn kein passendes Gebietsschema

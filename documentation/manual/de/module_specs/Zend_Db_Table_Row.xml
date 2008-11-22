@@ -721,7 +721,7 @@ $row->bugDescription = 'New description';
 
             <para>
                 Es liegt in der Verantwortung des Entwicklers, Funktionen für Inflection zu schreiben.
-                Das Zend Framework bietet solche Funktionen wie bereits erwähnt von Haus aus
+                Zend Framework bietet solche Funktionen wie bereits erwähnt von Haus aus
                 nicht an.
             </para>
 

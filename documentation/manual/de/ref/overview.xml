@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10557 -->
+<!-- EN-Revision: 12742 -->
 <sect1 id="introduction.overview">
 
     <title>Übersicht</title>
@@ -13,7 +13,7 @@
     <para>
         Obwohl Sie seperat verwendet werden können, formen die Zend Framework Komponenten in der
         Standard Bibliothek einen mächtigen und erweiterbaren Framework für Web Anwendungen wenn Sie
-        kombiniert werden. ZF bietet eine robuste und schnelle MVC Implementation, eine Datenbank
+        kombiniert werden. ZF bietet eine robuste, hoch performante MVC Implementation, eine Datenbank
         Abstraktion die einfach zu verwenden ist, und eine Form Komponente die HTML Form Darstellung,
         Prüfung und Filterung implementiert, damit Entwickler alle diese Operationen konsolidieren können
         durch Verwendung eines einfach zu verwendenden, objekt-orientierten Interfaces. Andere Komponenten

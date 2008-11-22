@@ -4,8 +4,8 @@
     <title>Zend_Db_Adapter</title>
 
     <para>
-        Zend_DB und die zugehörigen Klassen bieten eine einfache SQL Schnittstelle für das Zend Framework.
-        Der Zend_Db_Adapter ist die Basisklasse zur Anbindung einer PHP Anwendung an ein RDBMS. Es gibt für
+        Zend_DB und die zugehörigen Klassen bieten eine einfache SQL Schnittstelle für Zend Framework.
+        Zend_Db_Adapter ist die Basisklasse zur Anbindung einer PHP Anwendung an ein RDBMS. Es gibt für
         jede RDBMS Marke einen eigenen Adapter.
     </para>
 

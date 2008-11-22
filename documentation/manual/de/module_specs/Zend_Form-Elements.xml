@@ -36,7 +36,7 @@
     <para>
         Die Basisklasse, <code>Zend_Form_Element</code>, hat begründete Standardwerte für viele
         Fälle, aber es ist am besten die Klasse zu erweitern für oft verwendete speziell
-        benötigte Elemente. Zusätzlich wird der Zend Framework mit einer Anzahl an Standard
+        benötigte Elemente. Zusätzlich wird Zend Framework mit einer Anzahl an Standard
         XHTML Elementen ausgeliefert; über diese kann
         <link linkend="zend.form.standardElements">im Kapitel über Standard Elemente</link>
         nachgelesen werden.

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12740 -->
 <sect1 id="zend.captcha.adapters">
     <title>Captcha Adapter</title>
 
@@ -72,9 +72,11 @@
             anderen Weg verwenden.
         </para>
 
-        <note><para>
-            Beachte: Word ist eine abstrakte Klasse und kann nicht direkt instanziiert werden.
-        </para></note>
+        <note>
+            <para>
+                Word ist eine abstrakte Klasse und kann nicht direkt instanziiert werden.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
@@ -137,9 +139,9 @@
 
             <listitem><para>
                 <code>setFont($font)</code> und <code>getFont()</code> erlauben es die Schrift zu spezifizieren
-                die verwendet werden soll. Es sollte ein voll qualifizierter Pfad zu der Schriftart-Datei sein
-                die verwendet werden soll. Wenn dieser Wert nicht gesetzt wird, wird Captcha wärend der
-                Erzeugung eine Ausnahme werden; die Schrift ist zwingend notwendig.
+                die verwendet werden soll. <code>$font</code> sollte ein voll qualifizierter Pfad zu der
+                Schriftart-Datei sein die verwendet werden soll. Wenn dieser Wert nicht gesetzt wird, wird
+                Captcha wärend der Erzeugung eine Ausnahme werden; die Schrift ist zwingend notwendig.
             </para></listitem>
 
             <listitem><para>
