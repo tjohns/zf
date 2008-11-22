@@ -676,7 +676,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testTemporaryDirectoryAccessDetection()
     {
-        $this->adapter->_tmpDir = "";
+        $this->adapter->_tmpDir = ".";
         $path = "/NoPath/To/File";
         $this->assertFalse($this->adapter->isPathWriteable($path));
         $this->assertTrue($this->adapter->isPathWriteable($this->adapter->_tmpDir));
