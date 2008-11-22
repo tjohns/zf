@@ -145,7 +145,7 @@ class Zend_Validate implements Zend_Validate_Interface
             $className = $namespace . '_' . ucfirst($classBaseName);
             try {
                 require_once 'Zend/Loader.php';
-                @Zend_Loader::loadClass($className);
+                Zend_Loader::loadClass($className);
                 if (class_exists($className, false)) {
                     $class = new ReflectionClass($className);
                     if ($class->implementsInterface('Zend_Validate_Interface')) {

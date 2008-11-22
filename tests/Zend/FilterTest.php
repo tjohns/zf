@@ -56,6 +56,7 @@ class Zend_FilterTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->error   = null;
         $this->_filter = new Zend_Filter();
     }
 
@@ -115,19 +116,39 @@ class Zend_FilterTest extends PHPUnit_Framework_TestCase
     /**
      * Ensures that if we specify a validator class basename that doesn't
      * exist in the namespace, get() throws an exception.
+     *
+     * Refactored to conform with ZF-2724.
+     *
+     * @group  ZF-2724
+     * @return void
      */
     public function testStaticFactoryClassNotFound()
     {
+        set_error_handler(array($this, 'handleNotFoundError'), E_WARNING);
         try {
-            $this->assertTrue(Zend_Filter::get('1234', 'UnknownFilter'));
-            $this->fail('Expected to catch Zend_Filter_Exception');
-        } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Filter_Exception', $e,
-                'Expected exception of type Zend_Filter_Exception, got '.get_class($e));
-            $this->assertEquals("Filter class not found from basename 'UnknownFilter'", $e->getMessage());
+            Zend_Filter::get('1234', 'UnknownFilter');
+        } catch (Zend_Filter_Exception $e) {
         }
+        restore_error_handler();
+        $this->assertTrue($this->error);
+        $this->assertTrue(isset($e));
+        $this->assertContains('Filter class not found', $e->getMessage());
     }
 
+    /**
+     * Handle file not found errors
+     * 
+     * @group  ZF-2724
+     * @param  int $errnum 
+     * @param  string $errstr 
+     * @return void
+     */
+    public function handleNotFoundError($errnum, $errstr)
+    {
+        if (strstr($errstr, 'No such file')) {
+            $this->error = true;
+        }
+    }
 }
 
 

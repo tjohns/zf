@@ -139,19 +139,39 @@ class Zend_ValidateTest extends PHPUnit_Framework_TestCase
     /**
      * Ensures that if we specify a validator class basename that doesn't
      * exist in the namespace, is() throws an exception.
+     *
+     * Refactored to conform with ZF-2724.
+     *
+     * @group  ZF-2724
+     * @return void
      */
     public function testStaticFactoryClassNotFound()
     {
+        set_error_handler(array($this, 'handleNotFoundError'), E_WARNING);
         try {
-            $this->assertTrue(Zend_Validate::is('1234', 'UnknownValidator'));
-            $this->fail('Expected to catch Zend_Validate_Exception');
+            Zend_Validate::is('1234', 'UnknownValidator');
         } catch (Zend_Exception $e) {
-            $this->assertType('Zend_Validate_Exception', $e,
-                'Expected exception of type Zend_Validate_Exception, got '.get_class($e));
-            $this->assertEquals("Validate class not found from basename 'UnknownValidator'", $e->getMessage());
         }
+        restore_error_handler();
+        $this->assertTrue($this->error);
+        $this->assertTrue(isset($e));
+        $this->assertContains('Validate class not found', $e->getMessage());
     }
 
+    /**
+     * Handle file not found errors
+     * 
+     * @group  ZF-2724
+     * @param  int $errnum 
+     * @param  string $errstr 
+     * @return void
+     */
+    public function handleNotFoundError($errnum, $errstr)
+    {
+        if (strstr($errstr, 'No such file')) {
+            $this->error = true;
+        }
+    }
 }
 
 
