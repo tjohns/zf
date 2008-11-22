@@ -20,7 +20,7 @@
 
         <para>La méthode statique <code>Zend_Loader::loadFile()</code> charge un fichier PHP, qui peut contenir du code
         PHP arbitraire. Cette méthode enveloppe la fonction PHP <ulink
-        url="http://php.net/include"><code>include()</code></ulink>, et lance une exception <code>Zend_Exception</code>
+        url="http://php.net/include"><code>include()</code></ulink>, et retournera le booléen <code>false</code>
         si le fichier n'existe pas.</para>
 
         <example id="zend.loader.file.example">
