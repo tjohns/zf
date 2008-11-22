@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12754 -->
 <sect1 id="zend.mail.sending">
     <title>Envoyer des émail en utilisant SMTP</title>
 
@@ -20,5 +20,5 @@ Zend_Mail::setDefaultTransport($tr);
     (par exemple dans un fichier <filename>config.inc</filename>) pour configurer le comportement de la classe
     <code>Zend_Mail</code> pour le reste du script. Cela garde les informations de configuration en dehors de la logique
     applicative - si les émail doivent être envoyés via SMTP ou via <ulink
-    url="http://php.net/mail"><code>mail()</code></ulink>, quel serveur utiliser, etc.</para>
+    url="http://php.net/mail"><code>mail()</code></ulink>, quel serveur est utilisé, etc.</para>
 </sect1>

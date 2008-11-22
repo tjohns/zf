@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12756 -->
 <sect1 id="zend.server.reflection">
     <title>Zend_Server_Reflection</title>
 
@@ -7,7 +7,7 @@
 
         <para><code>Zend_Server_Reflection</code> fournit un mécanisme standard pour exécuter l'introspection de
         fonction et de classe pour utiliser avec des classes serveur. Il est basé sur l'API de réflexion de PHP 5, et
-        l'étend pour fournir des méthodes de recherche des types et des descriptions de paramètre et de valeur de
+        l'améliore pour fournir des méthodes de recherche des types et des descriptions de paramètre et de valeur de
         retour, une liste complète des prototypes de fonction et de méthode (c.-à-d., toutes les combinaisons d'appels
         valides possibles), et des descriptions de fonction/méthode.</para>
 
@@ -51,6 +51,6 @@ $reflection->getNamespace();
 
         <para><code>reflectFunction()</code> retourne un objet <code>Zend_Server_Reflection_Function</code>.
         <code>reflectClass</code> retourne un objet <code>Zend_Server_Reflection_Class</code>. Veuillez vous référer à
-        la documentation d'API pour savoir quelles méthodes sont disponibles pour chacun.</para>
+        la documentation d'API pour voir quelles méthodes sont disponibles pour chacun.</para>
     </sect2>
 </sect1>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12739 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Adaptateurs de connexion</title>
 
@@ -140,7 +140,7 @@ $config = array(
 );
 
 // Instantie un objet client
-$client = Zend_Http_Client('https://www.example.com', $config);
+$client = new Zend_Http_Client('https://www.example.com', $config);
 
 // Cette requête sera envoyée vers une connexion sécurisée TLS
 $response = $client->request();
@@ -256,7 +256,7 @@ $config = array(
 );
 
 // Crée l'objet client
-$client = Zend_Http_Client('http://www.example.com', $config);
+$client = new Zend_Http_Client('http://www.example.com', $config);
 
 // utilisez l'objet client ici ...
 ]]></programlisting>
@@ -289,7 +289,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
             <programlisting role="php"><![CDATA[
 // Création de l'adatateur et de l'objet client :
 $adapter = new Zend_Http_Client_Adapter_Test();
-$client = Zend_Http_Client('http://www.example.com', array(
+$client = new Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
 ));
 
@@ -326,7 +326,7 @@ $response = $client->request('GET');
             <programlisting role="php"><![CDATA[
 // Création des objets adaptateur, et client
 $adapter = new Zend_Http_Client_Adapter_Test();
-$client = Zend_Http_Client('http://www.example.com', array(
+$client = new Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
 ));
 

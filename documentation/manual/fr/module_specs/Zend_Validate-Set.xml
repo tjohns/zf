@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8387 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Classes de validation standard</title>
 
@@ -18,6 +18,12 @@
 
         <para>Retourne <code>true</code> si et seulement si <code>$value</code> contient seulement des caractères
         alphabétiques. Ce validateur inclue une option permettant la validation possible des caractères espace.</para>
+
+        <note>
+            <para>Les caractères alphabétiques comprennent les caractères destinés à constituer des mots dans chaque
+            langue. Cependant l'alphabet anglais est aussi utilisé pour les langues suivantes : chinois, japonais et
+            coréen. La langue est spécifiée par <code>Zend_Locale</code>.</para>
+        </note>
     </sect2>
 
     <sect2 id="zend.validate.set.barcode">

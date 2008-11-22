@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12740 -->
 <sect1 id="zend.captcha.adapters">
     <title>Adaptateurs Captcha</title>
 
@@ -57,7 +57,7 @@
         utilisées.</para>
 
         <note>
-            <para>Souvenez vous, Word est une classe abstraite et ne peut être utilisée directement.</para>
+            <para>Word est une classe abstraite et ne peut être utilisée directement.</para>
         </note>
     </sect2>
 
@@ -107,8 +107,8 @@
 
             <listitem>
                 <para><code>setFont($font)</code> et <code>getFont()</code> vous donnent le moyen de manipuler la police
-                que vous souhaitez utiliser. Vous devez indiquer le chemin complet vers la police à utiliser. Une
-                exception sera levée si vous ne spécifiez pas ce paramètre.</para>
+                que vous souhaitez utiliser. <code>$font</code> doit indiquer le chemin complet vers la police à utiliser.
+                Une exception sera levée si vous ne spécifiez pas ce paramètre.</para>
             </listitem>
 
             <listitem>

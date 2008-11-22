@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10539 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.filter.set">
     <title>Classes de filtre standards</title>
 
@@ -9,6 +9,12 @@
 
         <para>Retourne la chaîne <code>$value</code>, en retirant tout sauf les caractères alphabétiques et numériques.
         Ce filtre inclue une option permettant d'autoriser ou non les caractères espace.</para>
+
+        <note>
+            <para>Les caractères alphabétiques comprennent les caractères destinés à constituer des mots dans chaque
+            langue. Cependant l'alphabet anglais est aussi utilisé pour les langues suivantes : chinois, japonais et
+            coréen. La langue est spécifiée par <code>Zend_Locale</code>.</para>
+        </note>
     </sect2>
 
     <sect2 id="zend.filter.set.alpha">

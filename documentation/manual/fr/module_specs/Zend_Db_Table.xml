@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12309 -->
+<!-- EN-Revision: 12737 -->
 <sect1 id="zend.db.table">
     <title>Zend_Db_Table</title>
 
@@ -105,13 +105,13 @@ $tableBugs = new Bugs(array('name' => 'bugs', 'schema' => 'bug_db'));
 
 // Seconde alternative :
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs');
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs'));
 
 // Si le nom de la base est spécifié dans name ET schema, alors c'est
 // celui spécifié dans name qui prime :
 
 $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
-                            'schema' => 'ignored');
+                            'schema' => 'ignored'));
 ]]></programlisting>
             </example>
 

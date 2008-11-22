@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12754 -->
 <sect1 id="zend.mail.introduction">
     <title>Introduction</title>
 
@@ -42,8 +42,7 @@ $mail->send();
         problème d'injection d'en-têtes avec des caractères de nouvelles lignes (<code>\n</code>).</para>
 
         <para>Vous pouvez aussi utiliser la plupart des méthodes de l'objet <code>Zend_Mail</code> via une interface
-        fluide. Une interface est dite fluide quand chaque méthode retourne la référence à l'objet appelé, ainsi vous
-        pouvez appeler aussitôt une autre méthode.</para>
+        fluide.</para>
 
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();

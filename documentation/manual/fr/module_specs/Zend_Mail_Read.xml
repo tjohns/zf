@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12754 -->
 <sect1 id="zend.mail.read">
     <title>Lire des émail</title>
 
@@ -215,7 +215,7 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'exemple.com'
 $message = $mail->getMessage($numeroDeMessage);
 ]]></programlisting>
 
-        <para>L'accès sous forme de tableau est aussi supporté, mais ne supporte pas des paramètres additionnels qui
+        <para>L'accès sous forme de tableau est aussi supporté, mais cet méthode d'accès ne supporte pas les paramètres additionnels qui
         aurait pu être ajouté à <code>getMessage()</code>. Tant que vous n'en n'avez pas besoin et que vous pouvez vivre
         avec les valeurs par défaut, vous pouvez utiliser :</para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12741 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
 
@@ -101,7 +101,7 @@ echo $config->database->params->dbname; // affiche "dbname"
 
         <para>La seconde manière ne permet pas vraiment de raccourcir la configuration, mais la rend plus facile à
         maintenir puisque vous n'avez pas à écrire les noms de balises deux fois. Vous créez simplement une balise vide
-        qui contient sa valeur à l'intérieur l'attribut <code>value</code> :</para>
+        ayant sa valeur dans <code>value</code> :</para>
 
         <programlisting role="xml"><![CDATA[
 <?xml version="1.0"?>
