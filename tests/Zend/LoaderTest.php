@@ -347,11 +347,20 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * In order to play nice with spl_autoload, an autoload callback should 
+     * *not* emit errors (exceptions are okay). ZF-2923 requests that this 
+     * behavior be applied, which counters the previous request in ZF-2463.
+     *
+     * As it is, the new behavior *will* hide parse and other errors. However, 
+     * a fatal error *will* be raised in such situations, which is as 
+     * appropriate or more appropriate than raising an exception.
+     *
      * @todo   Determine how to get the shell_exec to work on windows
      * @see    http://framework.zend.com/issues/browse/ZF-2463
+     * @group  ZF-2923
      * @return void
      */
-    public function testLoaderAutoloadDoesNotHideParseError()
+    public function testLoaderAutoloadShouldHideParseError()
     {
         if (isset($_SERVER['OS'])  &&  strstr($_SERVER['OS'], 'Win')) {
             $this->markTestSkipped(__METHOD__ . ' does not work on Windows');
@@ -360,7 +369,7 @@ class Zend_LoaderTest extends PHPUnit_Framework_TestCase
             . escapeshellarg(get_include_path())
             . ' Zend/Loader/AutoloadDoesNotHideParseError.php 2>&1';
         $output = shell_exec($command);
-        $this->assertRegexp('/error, unexpected T_STRING, expecting T_FUNCTION/i', $output, $output);
+        $this->assertTrue(empty($output));
     }
 }
 

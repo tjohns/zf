@@ -80,7 +80,7 @@ class Zend_Loader
             self::loadFile($file, $dirs, true);
         } else {
             self::_securityCheck($file);
-            include_once $file;
+            include $file;
         }
 
         if (!class_exists($class, false) && !interface_exists($class, false)) {
@@ -183,7 +183,7 @@ class Zend_Loader
     public static function autoload($class)
     {
         try {
-            self::loadClass($class);
+            @self::loadClass($class);
             return $class;
         } catch (Exception $e) {
             return false;
