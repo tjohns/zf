@@ -80,11 +80,11 @@ class Zend_TagCloud
         }
 
         if ($this->_cloudDecorator === null) {
-            $this->setCloudDecorator('htmlListUl');
+            $this->setCloudDecorator('cloudHtml');
         }
 
         if ($this->_tagsDecorator === null) {
-            $this->setTagsDecorator('htmlListLi');
+            $this->setTagsDecorator('tagHtml');
         }
     }
 
@@ -270,7 +270,25 @@ class Zend_TagCloud
      */
     public function render()
     {
-        $tagsResult  = $this->_tagsDecorator->render($this->_tags);
+        if (count($this->_tags) === 0) {
+            require_once 'Zend/TagCloud/Exception.php';
+            throw new Zend_TagCloud_Exception('No tags are defined');
+        }
+        
+        $minWeight = null;
+        $maxWeight = null;
+        
+        foreach ($this->_tags as $tag) {
+            if ($minWeight === null && $maxWeight === null) {
+                $minWeight = $tag[$this->_weightKey];
+                $maxWeight = $tag[$this->_weightKey];
+            } else {
+                $minWeight = min($minWeight, $tag[$this->_weightKey]);
+                $maxWeight = max($maxWeight, $tag[$this->_weightKey]);                
+            }
+        }
+        
+        $tagsResult  = $this->_tagsDecorator->render($this->_tags, $minWeight, $maxWeight);
         $cloudResult = $this->_cloudDecorator->render($tagsResult);
 
         return $cloudResult;
