@@ -61,7 +61,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
         <para>
             Eine Instanz eines Profiler Objektes führt dazu das der Adapter dieses Objekt verwendet. Der
             Typ des Objektes muß hierfür <code>Zend_Db_Profiler</code> oder eine Subklasse sein.
-            Der Profiler muß seperat eingeschaltet werden.
+            Der Profiler muß separat eingeschaltet werden.
             <programlisting role="php"><![CDATA[
 $profiler = MyProject_Db_Profiler();
 $profiler->setEnabled(true);

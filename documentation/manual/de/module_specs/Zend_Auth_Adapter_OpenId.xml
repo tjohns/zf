@@ -47,7 +47,7 @@
 
         <para>
             Trotzdem, im Gegensatz zu anderen <code>Zend_Auth</code> Adaptern führt er Authentifizierungen an einem
-            externen Server durch und das wird in zwei seperaten HTTP Anfragen getan. Deswegen muß
+            externen Server durch und das wird in zwei separaten HTTP Anfragen getan. Deswegen muß
             <code>Zend_Auth_Adapter_OpenId::authenticate()</code> zweimal aufgerufen werden. Das erste Mal wird
             die Methode nichts zurückgeben, aber den Benutzer zu seinem OpenID Server umleiten. Dann, nach der
             Authentifizierung auf dem Server wird dieser wieder zurück umleiten und das Skript muß für diese

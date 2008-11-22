@@ -209,7 +209,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
                     geeignet, wenn ein Zend_Search_Lucene Index in Kombination mit einer relationalen
                     Datenbank verwendet wird. Du kannst große Datenfelder mit UnStored Feldern
                     für die Suche indizieren und sie aus der relationalen Datenbank durch die
-                    Verwendung eines seperaten Feldes mithilfe eines Identifikators zurückholen.
+                    Verwendung eines separaten Feldes mithilfe eines Identifikators zurückholen.
                </para>
 
                 <table id="zend.search.lucene.index-creation.understanding-field-types.table">

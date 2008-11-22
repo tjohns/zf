@@ -179,7 +179,7 @@ $layout = Zend_Layout::getMvcInstance();
             <code>NavController::menuAction()</code> weiterleitet, welches Inhalt im 'nav' Antwortobjekt
             darstellt. Letztendlich wird auf <code>CommentController::fetchAction()</code> weitergeleitet und
             einige Kommentare geholt, aber diese werden auch im standard Antwortobjekt dargestellt. (was
-            Inhalt zu diesem Segment anfügt). Das View Skript kann dann jedes seperat darstellen:
+            Inhalt zu diesem Segment anfügt). Das View Skript kann dann jedes separat darstellen:
         </para>
 
         <programlisting role="php"><![CDATA[

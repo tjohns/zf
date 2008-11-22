@@ -125,7 +125,7 @@
             <para>
                 Klassennamen dürfen nur alphanumerische Zeichen enthalten. Nummern sind in Klassennamen
                 gestattet es wird aber von Ihnen in den meisten Fällen abgeraten. Unterstriche sind nur
-                gestattet im Platz des Pfadseperators -- der Dateiname "Zend/Db/Table.php" muß
+                gestattet im Platz des Pfadseparators -- der Dateiname "Zend/Db/Table.php" muß
                 übereinstimmen mit dem Klassennamen "Zend_Db_Table".
             </para>
 

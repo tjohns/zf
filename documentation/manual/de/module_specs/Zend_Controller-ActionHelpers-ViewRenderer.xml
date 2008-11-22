@@ -607,12 +607,12 @@ class Foo_BarController extends Zend_Controller_Action
                 FooBarControll.php weiterleiten was wiederum <code>foo-bar/baz-bat.phtml</code> rendern würde;
                 ein Aufruf der Aktion <code>/bar_baz/baz-bat</code> für dazu das
                 <code>Bar_BazController::bazBatAction()</code> in <code>Bar/BazController.php</code> dispatched
-                wird (betrachte die Seperation des Pfades) und <code>bar/baz/baz-bat.phtml</code> gerendert wird.
+                wird (betrachte die Separation des Pfades) und <code>bar/baz/baz-bat.phtml</code> gerendert wird.
             </para>
 
             <para>
                 Es ist zu beachten das im zweiten Beispiel, das Modul noch immer das Standardmodul ist, aber das der
-                Kontroller, wegen der Existenz eines Pfad Seperators, den Namen <code>Bar_BazController</code> in
+                Kontroller, wegen der Existenz eines Pfad Separators, den Namen <code>Bar_BazController</code> in
                 <code>Bar/BazController.php</code> empfängt. Der ViewRenderer emuliert die Kontroller
                 Verzeichnis Hierarchie.
             </para>

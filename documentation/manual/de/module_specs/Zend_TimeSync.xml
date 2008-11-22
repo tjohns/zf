@@ -66,10 +66,10 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Seperater Datenbank Server</emphasis>
+                    <emphasis role="strong">Separater Datenbank Server</emphasis>
                 </para>
                 <para>
-                    Wenn eine Datenbank auf einem seperaten Server läuft und der andere Server
+                    Wenn eine Datenbank auf einem separaten Server läuft und der andere Server
                     nicht mit <emphasis role="strong">NTP</emphasis> oder
                     <emphasis role="strong">SNTP</emphasis> an dem Anwendungsserver angebunden ist
                     wird man Probleme mit den in der Datenbank gespeicherten Daten bekommen wenn

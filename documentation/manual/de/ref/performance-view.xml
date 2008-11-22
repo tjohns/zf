@@ -19,7 +19,7 @@
             Die meisten <code>Zend_View</code> "Methoden" werden in Wirklichkeit durch Überladen des
             Helfersystems angeboten. Das bietet Zend_View wichtige Flexibilität; statt der Notwendigkeit
             Zend_View zu erweitern und alle Helfermethoden anzubieten die man in der eigenen Anwendung
-            verwenden will, kann man eigene Helfermethoden in seperaten Klassen definieren und Sie bei
+            verwenden will, kann man eigene Helfermethoden in separaten Klassen definieren und Sie bei
             Bedarf konsumieren wie wenn es direkte Methoden von Zend_View wären. Das hält das View Objekt
             selbst relativ dünn, und stellt sicher das Objekte nur erstellt werden wenn Sie auch benötigt werden.
         </para>

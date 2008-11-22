@@ -215,7 +215,7 @@ $s->setExpirationSeconds(60);
         <para>
             Namensräume können auch verwendet werden um den Zugriff auf Sessions durch Kontroller zu seperieren
             um Variablen vor Kontaminierung zu schützen. Zum Beispiel könnte ein Authentifizierungs Kontroller seine
-            Session Daten von allen anderen Kontrollern seperat halten um notwendigen Sicherheiten zu entsprechen.
+            Session Daten von allen anderen Kontrollern separat halten um notwendigen Sicherheiten zu entsprechen.
         </para>
 
         <example id="zend.session.advanced_usage.controllers.example">
@@ -506,7 +506,7 @@ $this->assertTrue($result === '',
     "erwartet result === '', aber '$result' bekommen)");
 session_start(); // wiederherstellen der vorher eingefrorenen Session
 
-// Das könnte in einen seperaten Test abgeteilt werden, aber aktuell, wenn
+// Das könnte in einen separaten Test abgeteilt werden, aber aktuell, wenn
 // irgendwas vom darüberleigenden Test den darunterliegenden Test
 // kontaminiert, ist das auch ein Fehler den wir wissen wollen.
 $s = new Zend_Session_Namespace('expireGuava');

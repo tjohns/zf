@@ -879,7 +879,7 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
 
             <listitem><para>
                 Erstellung von Multi-Seiten Formen. Da Subformen einfach Formen sind, kann eine
-                seperate Subform pro Seite angezeigt werden, um Multi-Seiten Formen zu bauen in
+                separate Subform pro Seite angezeigt werden, um Multi-Seiten Formen zu bauen in
                 denen jede Form seine eigene Prüflogik besitzt.  Nur sobald alle Subformen
                 geprüft wurden würde die Form als komplett angenommen werden.
             </para></listitem>

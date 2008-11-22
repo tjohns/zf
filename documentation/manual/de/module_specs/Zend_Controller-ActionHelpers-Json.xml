@@ -59,7 +59,7 @@ class FooController extends Zend_Controller_Action
         <title>Layouts behalten</title>
 
         <para>
-            Wenn man ein seperates Layout für JSON Antworten hat -- möglicherweise um die JSON
+            Wenn man ein separates Layout für JSON Antworten hat -- möglicherweise um die JSON
             Antworten in einer Art Kontext zu wrappen -- akzeptiert jede Methode im JSON Helfer
             ein zweites, optionales Argument: Ein Flag um Layouts zu aktivieren oder deaktivieren.
             Die Übergabe eines boolschen <code>true</code> Wertes hält Layouts aktiviert:

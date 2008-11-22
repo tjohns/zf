@@ -259,7 +259,7 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
         <title>Zend_OpenId_Consumer_Storage</title>
         <para>
             Es gibt drei Schritte beim Authentifizierungs Prozess von OpenID, und jeder wird durch eine
-            seperate HTTP Anfrage durchgeführt. Um die Informationen zwischen den Anfragen zu speichern
+            separate HTTP Anfrage durchgeführt. Um die Informationen zwischen den Anfragen zu speichern
             verwendet <code>Zend_OpenId_Consumer</code> einen internen Speicher.
         </para>
 

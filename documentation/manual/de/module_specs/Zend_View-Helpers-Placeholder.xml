@@ -6,7 +6,7 @@
         Der <code>Placeholder</code> View Helfer wird verwendet um Inhalte zwischen View Skripten und View
         Instanzen persistent zu machen. Er bietet auch einige nützliche Features wie Inhalte zu vereinigen,
         Inhalte von View Skripten zu erfassen und Vor- sowie Nach-Texte zu Inhalten hinzuzufügen (und eigene
-        Seperatoren für vereinigte Inhalte).
+        Separatoren für vereinigte Inhalte).
     </para>
 
     <example id="zend.view.helpers.initial.placeholder.usage">
@@ -206,7 +206,7 @@ foreach ($this->data as $datum): ?>
         </para>
 
         <para>
-            Die Dokumentation für jedes Element wird seperat behandelt, wie anbei beschrieben:
+            Die Dokumentation für jedes Element wird separat behandelt, wie anbei beschrieben:
         </para>
 
         <itemizedlist>
