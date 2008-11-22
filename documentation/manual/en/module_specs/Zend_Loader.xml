@@ -27,7 +27,7 @@
             file.  The file loaded may contain any PHP code.
             The method is a wrapper for the PHP function
             <ulink url="http://php.net/include"><code>include()</code></ulink>.
-            This method throws <code>Zend_Exception</code> on failure, for example
+            This method returns boolean false on failure, for example
             if the specified file does not exist.
         </para>
 
