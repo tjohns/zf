@@ -600,12 +600,14 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             $setting = (integer) substr($setting, 0, -1);
 
             switch ($type) {
-                case 'M' :
+                case 'K' :
                     $setting *= 1024;
+                case 'M' :
+                    $setting *= 1024 * 1024;
                     break;
 
                 case 'G' :
-                    $setting *= 1024 * 1024;
+                    $setting *= 1024 * 1024 * 1024;
                     break;
 
                 default :
