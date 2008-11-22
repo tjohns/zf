@@ -38,9 +38,9 @@ class Zend_TagCloud
     /**
      * Decorator for the tags
      *
-     * @var Zend_TagCloud_Decorator_Tags
+     * @var Zend_TagCloud_Decorator_Tag
      */
-    protected $_tagsDecorator = null;
+    protected $_tagDecorator = null;
 
     /**
      * List of all tags
@@ -83,7 +83,7 @@ class Zend_TagCloud
             $this->setCloudDecorator('cloudHtml');
         }
 
-        if ($this->_tagsDecorator === null) {
+        if ($this->_tagDecorator === null) {
             $this->setTagsDecorator('tagHtml');
         }
     }
@@ -206,7 +206,7 @@ class Zend_TagCloud
      * @param  mixed $decorator
      * @return Zend_TagCloud
      */
-    public function setTagsDecorator($decorator)
+    public function setTagDecorator($decorator)
     {
         $options = null;
 
@@ -225,9 +225,9 @@ class Zend_TagCloud
             $decorator = new $classname($options);
         }
 
-        if (!($decorator instanceof Zend_TagCloud_Decorator_Tags)) {
+        if (!($decorator instanceof Zend_TagCloud_Decorator_Tag)) {
             require_once 'Zend/TagCloud/Exception.php';
-            throw new Zend_TagCloud_Exception('Decorator is no instance of Zend_TagCloud_Decorator_Tags');
+            throw new Zend_TagCloud_Exception('Decorator is no instance of Zend_TagCloud_Decorator_Tag');
         }
 
         $this->_tagsDecorator = $decorator;
@@ -238,11 +238,11 @@ class Zend_TagCloud
     /**
      * Get the decorator for the tags
      *
-     * @return Zend_TagCloud_Decorator_Tags
+     * @return Zend_TagCloud_Decorator_Tag
      */
-    public function getTagsDecorator()
+    public function getTagDecorator()
     {
-        return $this->_tagsDecorator;
+        return $this->_tagDecorator;
     }
 
     /**
@@ -275,6 +275,7 @@ class Zend_TagCloud
             throw new Zend_TagCloud_Exception('No tags are defined');
         }
         
+        // Calculate min- and max-weight
         $minWeight = null;
         $maxWeight = null;
         
@@ -288,7 +289,28 @@ class Zend_TagCloud
             }
         }
         
-        $tagsResult  = $this->_tagsDecorator->render($this->_tags, $minWeight, $maxWeight);
+        // Calculate the thresholds
+        $weightList = $this->_tagDecorator->getWeightList();
+        $steps      = count($weightList);
+        $delta      = ($maxWeight - $minWeight) / $steps;
+        $thresholds = array();
+        
+        for ($i = 0; $i <= $steps; $i++) {
+            $thresholds[$i] = 100 * log(($minWeight + $i * $delta) + 2);
+        }
+
+        // Then assign the weight values 
+        foreach ($this->_tags as &$tag) {
+            $threshold = 100 * log($tag[$this->_weightKey] + 2); 
+            for ($i = 0; $i <= $steps; $i++) {
+                if ($threshold <= $thresholds[$i]) {
+                    $tag['weightValue'] = $weightList[$i];
+                    break;
+                }
+            }
+        }
+        
+        $tagsResult  = $this->_tagDecorator->render($this->_tags);
         $cloudResult = $this->_cloudDecorator->render($tagsResult);
 
         return $cloudResult;
