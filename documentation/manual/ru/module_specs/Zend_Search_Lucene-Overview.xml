@@ -319,7 +319,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
 
                 <table>
                     <title>Типы Zend_Search_Lucene_Field<!--Zend_Search_Lucene_Field Types--></title>
-                    <tgroup cols="4">
+                    <tgroup cols="5">
                         <thead>
                             <row>
                                 <entry>Тип поля</entry>
