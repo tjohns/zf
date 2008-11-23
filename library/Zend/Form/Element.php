@@ -1703,8 +1703,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         if (null === $options) {
             $decorator = new $class;
         } else {
-            $r = new ReflectionClass($class);
-            $decorator = $r->newInstance($options);
+            $decorator = new $class($options);
         }
 
         return $decorator;
