@@ -228,6 +228,18 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
+     * test that describeTable() returns correct types
+     * @group ZF-3624
+     *
+     */
+    public function testAdapterDescribeTableAttributeColumn()
+    {
+        $desc = $this->_db->describeTable('zfprice');
+        $this->assertEquals('zfprice',  $desc['price']['TABLE_NAME']);
+        $this->assertRegExp('/float/i', $desc['price']['DATA_TYPE']);
+    }
+
+    /**
      * Ensures that the PDO Buffered Query does not throw the error
      * 2014 General error
      *
@@ -238,7 +250,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
     {
         $params = $this->_util->getParams();
         $db = Zend_Db::factory($this->getDriver(), $params);
-        
+
         // Set default bound value
         $customerId = 1;
 
@@ -251,7 +263,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
 
         // Reset statement
         $stmt->closeCursor();
-        
+
         // Stored procedure returns a single row
         $stmt = $db->prepare('CALL zf_test_procedure(?)');
         $stmt->bindParam(1, $customerId);
