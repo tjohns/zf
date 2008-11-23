@@ -843,6 +843,10 @@ class Zend_Locale
      */
     private static function _prepareLocale($locale, $strict = false)
     {
+        if ($locale instanceof Zend_Locale) {
+            $locale = $locale->toString();
+        }
+
         if (is_array($locale)) {
             return '';
         }
