@@ -17,7 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SizeTest.php 12004 2008-10-18 14:29:41Z mikaelkael $
+ * @version    $Id$
  */
 
 // Call Zend_Validate_File_SizeTest::main() if this source file is executed directly.
@@ -65,6 +65,7 @@ class Zend_Validate_File_SizeTest extends PHPUnit_Framework_TestCase
         $valuesExpected = array(
             array(array('min' => 0, 'max' => 10000), true),
             array(array('min' => 0, 'max' => '10 MB'), true),
+            array(array('min' => '4B', 'max' => '10 MB'), true),
             array(array('min' => 0, 'max' => '10MB'), true),
             array(array('min' => 0, 'max' => '10  MB'), true),
             array(794, true),
