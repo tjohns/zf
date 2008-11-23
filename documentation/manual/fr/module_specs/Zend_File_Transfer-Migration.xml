@@ -80,13 +80,14 @@ $upload->addFilter('Rename',
 // Exemple pour 1.6
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Count',
-                   array(2, 3));
+                      array(2, 3));
 
 // Même exemple pour 1.7
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Count',
-                   array('min' => 2,
-                         'max' => 3));
+                      false,
+                      array('min' => 2,
+                            'max' => 3));
 ]]></programlisting>
                 </example>
             </sect4>
@@ -119,8 +120,9 @@ $upload->addValidator('Extension',
 // Même exemple pour 1.7
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Extension',
-                   array('extension1' => 'jpg,gif,bmp',
-                         'case' => true));
+                      false,
+                      array('extension1' => 'jpg,gif,bmp',
+                            'case' => true));
 ]]></programlisting>
                 </example>
             </sect4>
@@ -153,14 +155,15 @@ $upload->addValidator('Extension',
 // Exemple pour 1.6
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('FilesSize',
-                   array(100, 10000, true));
+                      array(100, 10000, true));
 
 // Même exemple pour 1.7
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('FilesSize',
-                   array('min' => 100,
-                         'max' => 10000,
-                         'bytestring' => true));
+                      false,
+                      array('min' => 100,
+                            'max' => 10000,
+                            'bytestring' => true));
 
 // Exemple pour 1.6
 $upload->useByteString(true); // set flag
@@ -194,13 +197,14 @@ $upload->setUseByteSting(true); // set flag
 // Exemple pour 1.6
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Hash',
-                   array('12345', 'md5'));
+                      array('12345', 'md5'));
 
 // Même exemple pour 1.7
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Hash',
-                   array('hash1' => '12345',
-                         'algorithm' => 'md5'));
+                      false,
+                      array('hash1' => '12345',
+                            'algorithm' => 'md5'));
 ]]></programlisting>
                 </example>
             </sect4>
@@ -230,15 +234,16 @@ $upload->addValidator('Hash',
 // Exemple pour 1.6
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('ImageSize',
-                   array(10, 10, 100, 100));
+                      array(10, 10, 100, 100));
 
 // Même exemple pour 1.7
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('ImageSize',
-                   array('minwidth' => 10,
-                         'minheight' => 10,
-                         'maxwidth' => 100,
-                         'maxheight' => 100));
+                      false,
+                      array('minwidth' => 10,
+                            'minheight' => 10,
+                            'maxwidth' => 100,
+                            'maxheight' => 100));
 ]]></programlisting>
                 </example>
             </sect4>
@@ -266,14 +271,15 @@ $upload->addValidator('ImageSize',
 // Exemple pour 1.6
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Size',
-                   array(100, 10000, true));
+                      array(100, 10000, true));
 
 // Même exemple pour 1.7
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('Size',
-                   array('min' => 100,
-                         'max' => 10000,
-                         'bytestring' => true));
+                      false,
+                      array('min' => 100,
+                            'max' => 10000,
+                            'bytestring' => true));
 ]]></programlisting>
                 </example>
             </sect4>
