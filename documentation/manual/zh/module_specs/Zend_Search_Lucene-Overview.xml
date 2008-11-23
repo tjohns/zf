@@ -114,7 +114,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 
                 <table>
                     <title>Zend_Search_Lucene_Field 类型</title>
-                    <tgroup cols="4">
+                    <tgroup cols="5">
                         <thead>
                             <row>
                                 <entry>字段类型</entry>
