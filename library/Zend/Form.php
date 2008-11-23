@@ -2322,8 +2322,7 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
         if (null === $options) {
             $decorator = new $class;
         } else {
-            $r = new ReflectionClass($class);
-            $decorator = $r->newInstance($options);
+            $decorator = new $class($options);
         }
 
         return $decorator;

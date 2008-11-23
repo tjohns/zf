@@ -645,8 +645,7 @@ class Zend_Form_DisplayGroup implements Iterator,Countable
         if (null === $options) {
             $decorator = new $class;
         } else {
-            $r = new ReflectionClass($class);
-            $decorator = $r->newInstance($options);
+            $decorator = new $class($options);
         }
 
         return $decorator;
