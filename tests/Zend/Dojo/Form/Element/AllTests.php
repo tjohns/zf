@@ -41,6 +41,7 @@ require_once 'Zend/Dojo/Form/Element/NumberSpinnerTest.php';
 require_once 'Zend/Dojo/Form/Element/NumberTextBoxTest.php';
 require_once 'Zend/Dojo/Form/Element/PasswordTextBoxTest.php';
 require_once 'Zend/Dojo/Form/Element/RadioButtonTest.php';
+require_once 'Zend/Dojo/Form/Element/SimpleTextareaTest.php';
 require_once 'Zend/Dojo/Form/Element/SubmitButtonTest.php';
 require_once 'Zend/Dojo/Form/Element/TextBoxTest.php';
 require_once 'Zend/Dojo/Form/Element/TextareaTest.php';
@@ -78,6 +79,7 @@ class Zend_Dojo_Form_Element_AllTests
         $suite->addTestSuite('Zend_Dojo_Form_Element_NumberTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_PasswordTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_RadioButtonTest');
+        $suite->addTestSuite('Zend_Dojo_Form_Element_SimpleTextareaTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_SubmitButtonTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_TextBoxTest');
         $suite->addTestSuite('Zend_Dojo_Form_Element_TextareaTest');
