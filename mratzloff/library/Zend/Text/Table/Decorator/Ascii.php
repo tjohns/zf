@@ -20,128 +20,29 @@
  */
 
 /**
- * @see Zend_Text_Table_Decorator_Interface
+ * @see Zend_Text_Table_Border_Ascii
  */
-require_once 'Zend/Text/Table/Decorator/Interface.php';
+require_once 'Zend/Text/Table/Border/Ascii.php';
 
 /**
- * ASCII Decorator for Zend_Text_Table
+ * Deprecated.  Use Zend_Text_Table_Border_Ascii instead.
  *
- * @category  Zend
- * @package   Zend_Text_Table
- * @uses      Zend_Text_Table_Decorator_Interface
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @deprecated Since 1.7.1
+ * @category   Zend
+ * @package    Zend_Text_Table
+ * @uses       Zend_Text_Table_Decorator_Interface
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Text_Table_Decorator_Ascii implements Zend_Text_Table_Decorator_Interface
+class Zend_Text_Table_Decorator_Ascii extends Zend_Text_Table_Border_Ascii
 {
     /**
-     * Defined by Zend_Text_Table_Decorator_Interface
+     * Deprecated.  Use Zend_Text_Table_Border_Ascii instead.
      *
-     * @return string
+     * @deprecated Since 1.7.1
      */
-    public function getTopLeft()
+    public function __construct()
     {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getTopRight()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getBottomLeft()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getBottomRight()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getVertical()
-    {
-        return '|';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getHorizontal()
-    {
-        return '-';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getCross()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getVerticalRight()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getVerticalLeft()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getHorizontalDown()
-    {
-        return '+';
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getHorizontalUp()
-    {
-        return '+';
+        //trigger_error('Zend_Text_Table_Decorator_Ascii has been renamed Zend_Text_Table_Border_Ascii', E_USER_NOTICE);
     }
 }

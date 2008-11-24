@@ -20,14 +20,15 @@
  */
 
 /**
- * Deprecated.  Use Zend_Text_Table_Border_Interface instead.
+ * Interface for Zend_Text_Table box model.  This is a bit simplified as it 
+ * only deals with content width and padding.
  *
- * @deprecated Since 1.7.1
- * @category   Zend
- * @package    Zend_Text_Table
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @category  Zend
+ * @package   Zend_Text_Table
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Text_Table_Decorator_Interface extends Zend_Text_Table_Border_Interface
+interface Zend_Text_Table_BoxModel_Interface
 {
+    public function getCellWidth($contentWidth, $padding);
 }

@@ -20,6 +20,11 @@
  */
 
 /**
+ * @see Zend_Text_Table_Cell
+ */
+require_once 'Zend/Text/Table/Cell.php';
+
+/**
  * Row class for Zend_Text_Table
  *
  * @category  Zend
@@ -30,11 +35,11 @@
 class Zend_Text_Table_Row
 {
     /**
-     * List of all columns
+     * List of all cells
      *
      * @var array
      */
-    protected $_columns = array();
+    protected $_cells = array();
 
     /**
      * Temporary stored column widths
@@ -44,172 +49,233 @@ class Zend_Text_Table_Row
     protected $_columnWidths = null;
 
     /**
-     * Create a new column and append it to the row
+     * Creates a new cell and append it to the row.
      *
      * @param  string $content
      * @param  array  $options 
      * @return Zend_Text_Table_Row
      */
-    public function createColumn($content, array $options = null)
+    public function createCell($content, array $options = null)
     {
-        $align    = null;
-        $colSpan  = null;
-        $encoding = null;
+        $alignment  = null;
+        $columnSpan = null;
+        $encoding   = null;
         
         if ($options !== null) {
             extract($options, EXTR_IF_EXISTS);
         }
-               
-        require_once 'Zend/Text/Table/Column.php';
         
-        $column = new Zend_Text_Table_Column($content, $align, $colSpan, $encoding);
-        
-        $this->appendColumn($column);
+        $cell = new Zend_Text_Table_Cell($content, $alignment, $columnSpan, $encoding);
+        $this->addCell($cell);
         
         return $this;
     }
     
     /**
-     * Append a column to the row
+     * Adds a cell to the row.
      *
-     * @param  Zend_Text_Table_Column $column The column to append to the row
+     * @param  Zend_Text_Table_Cell $cell The cell to append to the row
      * @return Zend_Text_Table_Row
      */
-    public function appendColumn(Zend_Text_Table_Column $column)
+    public function addCell(Zend_Text_Table_Cell $cell)
     {
-        $this->_columns[] = $column;
+        $this->_cells[] = $cell;
         
         return $this;
     }
     
     /**
-     * Get a column by it's index
+     * Returns a cell by its index.
      * 
      * Returns null, when the index is out of range
      *
      * @param  integer $index
-     * @return Zend_Text_Table_Column|null
+     * @return Zend_Text_Table_Cell|null
      */
-    public function getColumn($index)
+    public function getCell($index)
     {
-        if (!isset($this->_columns[$index])) {
+        if (!isset($this->_cells[$index])) {
             return null;
         }
         
-        return $this->_columns[$index];
+        return $this->_cells[$index];
     }
     
     /**
-     * Get all columns of the row
+     * Returns all cells of the row.
      *
      * @return array
      */
-    public function getColumns()
+    public function getCells()
     {
-        return $this->_columns;
+        return $this->_cells;
     }
 
     /**
-     * Get the widths of all columns, which were rendered last
+     * Returns the widths of all cells which were rendered last.
      *
-     * @throws Zend_Text_Table_Exception When no columns were rendered yet
+     * @throws Zend_Text_Table_Exception When no cells were rendered yet
      * @return integer
      */
     public function getColumnWidths()
     {
         if ($this->_columnWidths === null) {
+            /**
+             * @see Zend_Text_Table_Exception
+             */
             require_once 'Zend/Text/Table/Exception.php';
-            throw new Zend_Text_Table_Exception('No columns were rendered yet');
+
+            throw new Zend_Text_Table_Exception('No cells were rendered yet');
         }
 
         return $this->_columnWidths;
     }
 
     /**
-     * Render the row
+     * Renders the row.
      *
      * @param  array                               $columnWidths Width of all columns
-     * @param  Zend_Text_Table_Decorator_Interface $decorator    Decorator for the row borders
+     * @param  Zend_Text_Table_Border_Interface $border    Border for the row borders
      * @param  integer                             $padding      Padding for the columns
-     * @throws Zend_Text_Table_Exception When there are too many columns 
+     * @throws Zend_Text_Table_Exception When there are too many cells 
      * @return string
      */
     public function render(array $columnWidths,
-                           Zend_Text_Table_Decorator_Interface $decorator,
+                           Zend_Text_Table_Border_Interface $border,
                            $padding = 0)
     {
         // Prepare an array to store all column widths
         $this->_columnWidths = array();
 
-        // If there is no single column, create a column which spans over the
+        // If there is no single cell, create a cell which spans over the
         // entire row
-        if (count($this->_columns) === 0) {
-            require_once 'Zend/Text/Table/Column.php';
-            $this->appendColumn(new Zend_Text_Table_Column(null, null, count($columnWidths)));
+        if (count($this->_cells) < 1) {
+            $this->addCell(new Zend_Text_Table_Cell(null, null, count($columnWidths)));
         }
         
-        // First we have to render all columns, to get the maximum height
-        $renderedColumns = array();
-        $maxHeight       = 0;
-        $colNum          = 0;
-        foreach ($this->_columns as $column) {
-            // Get the colspan of the column
-            $colSpan = $column->getColSpan();
+        // First we have to render all cells, to get the maximum height
+        $renderedCells = array();
+        $maxHeight     = 0;
+        $columnNumber  = 0;
+
+        foreach ($this->_cells as $cell) {
+            // Get the colspan of the cell
+            $columnSpan = $cell->getColumnSpan();
 
             // Verify if there are enough column widths defined
-            if (($colNum + $colSpan) > count($columnWidths)) {
+            if (($columnNumber + $columnSpan) > count($columnWidths)) {
+                /**
+                 * @see Zend_Text_Table_Exception
+                 */
                 require_once 'Zend/Text/Table/Exception.php';
-                throw new Zend_Text_Table_Exception('Too many columns');
+
+                throw new Zend_Text_Table_Exception('Too many cells');
             }
 
             // Calculate the column width
-            $columnWidth = ($colSpan - 1 + array_sum(array_slice($columnWidths,
-                                                                 $colNum,
-                                                                 $colSpan)));
+            $columnWidth = ($columnSpan - 1 + array_sum(array_slice($columnWidths,
+                                                                    $columnNumber,
+                                                                    $columnSpan)));
 
-            // Render the column and split it's lines into an array
-            $result = explode("\n", $column->render($columnWidth, $padding));
+            // Render the cell and split it's lines into an array
+            $result = explode("\n", $cell->render($columnWidth, $padding));
 
-            // Store the width of the rendered column
+            // Store the width of the rendered cell
             $this->_columnWidths[] = $columnWidth;
 
-            // Store the rendered column and calculate the new max height
-            $renderedColumns[] = $result;
-            $maxHeight         = max($maxHeight, count($result));
+            // Store the rendered cell and calculate the new max height
+            $renderedCells[] = $result;
+            $maxHeight       = max($maxHeight, count($result));
 
-            // Set up the internal column number
-            $colNum += $colSpan;
+            // Set up the internal cell number
+            $columnNumber += $columnSpan;
         }
 
-        // If the row doesnt contain enough columns to fill the entire row, fill
-        // it with an empty column
-        if ($colNum < count($columnWidths)) {
-            $remainingWidth = (count($columnWidths) - $colNum - 1) +
+        // If the row doesnt contain enough cells to fill the entire row, fill
+        // it with an empty cell
+        if ($columnNumber < count($columnWidths)) {
+            $remainingWidth = (count($columnWidths) - $columnNumber - 1) +
                                array_sum(array_slice($columnWidths,
-                                                     $colNum));
-            $renderedColumns[] = array(str_repeat(' ', $remainingWidth));
+                                                     $columnNumber));
+            $renderedCells[] = array(str_repeat(' ', $remainingWidth));
 
             $this->_columnWidths[] = $remainingWidth;
         }
 
-        // Add each single column line to the result
+        // Add each single cell line to the result
         $result = '';
         for ($line = 0; $line < $maxHeight; $line++) {
-            $result .= $decorator->getVertical();
+            $result .= $border->getVertical();
 
-            foreach ($renderedColumns as $renderedColumn) {
-                if (isset($renderedColumn[$line]) === true) {
-                    $result .= $renderedColumn[$line];
+            foreach ($renderedCells as $renderedCell) {
+                if (isset($renderedCell[$line])) {
+                    $result .= $renderedCell[$line];
                 } else {
-                    $result .= str_repeat(' ', strlen($renderedColumn[0]));
+                    $result .= str_repeat(' ', strlen($renderedCell[0]));
                 }
 
-                $result .= $decorator->getVertical();
+                $result .= $border->getVertical();
             }
 
             $result .= "\n";
         }
 
         return $result;
+    }
+
+    /**
+     * Deprecated.  Use createCell() instead.
+     *
+     * @deprecated Since 1.7.1
+     * @param      string $content
+     * @param      array  $options 
+     * @return     Zend_Text_Table_Row
+     */
+    public function createColumn($content, array $options = null)
+    {
+        //trigger_error('createColumn() has been renamed createCell()', E_USER_NOTICE);
+
+        return $this->createCell($content, $options);
+    }
+
+    /**
+     * Deprecated.  Use addCell() instead.
+     *
+     * @deprecated Since 1.7.1
+     * @param      Zend_Text_Table_Cell $cell The cell to append to the row
+     * @return     Zend_Text_Table_Row
+     */
+    public function appendColumn(Zend_Text_Table_Cell $cell)
+    {
+        //trigger_error('appendColumn() has been renamed addCell()', E_USER_NOTICE);
+
+        return $this->addCell($cell);
+    }
+
+    /**
+     * Deprecated.  Use getCell() instead.
+     *
+     * @deprecated Since 1.7.1
+     * @param      integer $index
+     * @return     Zend_Text_Table_Cell|null
+     */
+    public function getColumn($index)
+    {
+        //trigger_error('getColumn() has been renamed getCell()', E_USER_NOTICE);
+
+        return $this->getCell($index);
+    }
+    
+    /**
+     * Deprecated.  Use getCells() instead.
+     *
+     * @deprecated Since 1.7.1
+     * @return     array
+     */
+    public function getColumns()
+    {
+        //trigger_error('getColumns() has been renamed getCells()', E_USER_NOTICE);
+
+        return $this->getCells();
     }
 }

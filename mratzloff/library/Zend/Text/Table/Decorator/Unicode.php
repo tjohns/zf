@@ -16,161 +16,33 @@
  * @package   Zend_Text_Table
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Unicode.php 12529 2008-11-10 21:05:43Z dasprid $
+ * @version   $Id: Ascii.php 12529 2008-11-10 21:05:43Z dasprid $
  */
 
 /**
- * @see Zend_Text_Table_Decorator_Interface
+ * @see Zend_Text_Table_Border_Unicode
  */
-require_once 'Zend/Text/Table/Decorator/Interface.php';
+require_once 'Zend/Text/Table/Border/Unicode.php';
 
 /**
- * Unicode Decorator for Zend_Text_Table
+ * Deprecated.  Use Zend_Text_Table_Border_Unicode instead.
  *
- * @category  Zend
- * @package   Zend_Text_Table
- * @uses      Zend_Text_Table_Decorator_Interface
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @deprecated Since 1.7.1
+ * @category   Zend
+ * @package    Zend_Text_Table
+ * @uses       Zend_Text_Table_Decorator_Interface
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Text_Table_Decorator_Unicode implements Zend_Text_Table_Decorator_Interface
+class Zend_Text_Table_Decorator_Unicode extends Zend_Text_Table_Border_Unicode
 {
     /**
-     * Defined by Zend_Text_Table_Decorator_Interface
+     * Deprecated.  Use Zend_Text_Table_Border_Unicode instead.
      *
-     * @return string
+     * @deprecated Since 1.7.1
      */
-    public function getTopLeft()
+    public function __construct()
     {
-        return $this->_uniChar(0x250C);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getTopRight()
-    {
-        return $this->_uniChar(0x2510);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getBottomLeft()
-    {
-        return $this->_uniChar(0x2514);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getBottomRight()
-    {
-        return $this->_uniChar(0x2518);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getVertical()
-    {
-        return $this->_uniChar(0x2502);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getHorizontal()
-    {
-        return $this->_uniChar(0x2500);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getCross()
-    {
-        return $this->_uniChar(0x253C);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getVerticalRight()
-    {
-        return $this->_uniChar(0x251C);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getVerticalLeft()
-    {
-        return $this->_uniChar(0x2524);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getHorizontalDown()
-    {
-        return $this->_uniChar(0x252C);
-    }
-
-    /**
-     * Defined by Zend_Text_Table_Decorator_Interface
-     *
-     * @return string
-     */
-    public function getHorizontalUp()
-    {
-        return $this->_uniChar(0x2534);
-    }
-
-    /**
-     * Convert am unicode character code to a character
-     *
-     * @param  integer $code
-     * @return string|false
-     */
-    protected function _uniChar($code)
-    {
-        if ($code <= 0x7F) {
-            $char = chr($code);
-        } else if ($code <= 0x7FF) {
-            $char = chr(0xC0 | $code >> 6)
-                  . chr(0x80 | $code & 0x3F);
-        } else if ($code <= 0xFFFF) {
-            $char =  chr(0xE0 | $code >> 12)
-                  . chr(0x80 | $code >> 6 & 0x3F)
-                  . chr(0x80 | $code & 0x3F);
-        } else if ($code <= 0x10FFFF) {
-            $char =  chr(0xF0 | $code >> 18)
-                  . chr(0x80 | $code >> 12 & 0x3F)
-                  . chr(0x80 | $code >> 6 & 0x3F)
-                  . chr(0x80 | $code & 0x3F);
-        } else {
-            return false;
-        }
-
-        return $char;
+        //trigger_error('Zend_Text_Table_Decorator_Unicode has been renamed Zend_Text_Table_Border_Unicode', E_USER_NOTICE);
     }
 }

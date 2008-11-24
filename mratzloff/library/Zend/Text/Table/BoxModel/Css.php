@@ -20,14 +20,23 @@
  */
 
 /**
- * Deprecated.  Use Zend_Text_Table_Border_Interface instead.
- *
- * @deprecated Since 1.7.1
- * @category   Zend
- * @package    Zend_Text_Table
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @see Zend_Text_Table_BoxModel_Interface
  */
-interface Zend_Text_Table_Decorator_Interface extends Zend_Text_Table_Border_Interface
+require_once 'Zend/Text/Table/BoxModel/Interface.php';
+
+/**
+ * CSS box model.  Excludes padding from content width calculations.  This will
+ * become the default box model as of 2.0.
+ *
+ * @category  Zend
+ * @package   Zend_Text_Table
+ * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Text_Table_BoxModel_Css implements Zend_Text_Table_BoxModel_Interface
 {
+    public function getCellWidth($contentWidth, $padding)
+    {
+        return $contentWidth + ($padding * 2);
+    }
 }
