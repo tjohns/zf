@@ -167,7 +167,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
             if ($this->_classList === null) {
                 $attribute = sprintf('style="font-size: %d%s"', $tag['weightValue'], $this->_fontSizeUnit);
             } else {
-                $attribute = sprintf('class="%s"', $tag['weightValue']);
+                $attribute = sprintf('class="%s"', htmlspecialchars($tag['weightValue']));
             }
             
             $tagHtml = sprintf('<a href="%s" %s>%s</a>', $tag['url'], $attribute, $tag['title']);
