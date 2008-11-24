@@ -22,7 +22,7 @@
 
 // Call Zend_Text_FigletTest::main() if this source file is executed directly.
 if (!defined("PHPUnit_MAIN_METHOD")) {
-    define("PHPUnit_MAIN_METHOD", "Zend_Text_TableTest::main");
+    define("PHPUnit_MAIN_METHOD", "Zend_Text_OrigTableTest::main");
 }
 
 /**
@@ -43,7 +43,7 @@ require_once 'Zend/Text/Table/Decorator/Ascii.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
+class Zend_Text_OrigTableTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -52,7 +52,7 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
      */
     public static function main()
     {
-        $suite  = new PHPUnit_Framework_TestSuite("Zend_Text_TableTest");
+        $suite  = new PHPUnit_Framework_TestSuite("Zend_Text_OrigTableTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
     
@@ -465,6 +465,6 @@ class Zend_Text_TableTest extends PHPUnit_Framework_TestCase
 }
 
 // Call Zend_Text_TableTest::main() if this source file is executed directly.
-if (PHPUnit_MAIN_METHOD == "Zend_Text_TableTest::main") {
-    Zend_Text_TableTest::main();
+if (PHPUnit_MAIN_METHOD == "Zend_Text_OrigTableTest::main") {
+    Zend_Text_OrigTableTest::main();
 }
