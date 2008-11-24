@@ -166,12 +166,12 @@ class Zend_TagCloud
         $options = null;
 
         if (is_array($decorator)) {
-            if (isset($decorator[1])) {
-                $options = $decorator[1];
+            if (isset($decorator['options'])) {
+                $options = $decorator['options'];
             }
 
-            if (isset($decorator[0])) {
-                $decorator = $decorator[0];
+            if (isset($decorator['decorator'])) {
+                $decorator = $decorator['decorator'];
             }
         }
 
@@ -211,12 +211,12 @@ class Zend_TagCloud
         $options = null;
 
         if (is_array($decorator)) {
-            if (isset($decorator[1])) {
-                $options = $decorator[1];
+            if (isset($decorator['options'])) {
+                $options = $decorator['options'];
             }
 
-            if (isset($decorator[0])) {
-                $decorator = $decorator[0];
+            if (isset($decorator['decorator'])) {
+                $decorator = $decorator['decorator'];
             }
         }
 
