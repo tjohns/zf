@@ -261,6 +261,26 @@ class Zend_Captcha_FigletTest extends PHPUnit_Framework_TestCase
         $empty = array($this->captcha->getName() => array('id' => $id, 'input' => ''));
         $this->assertEquals(false, $this->captcha->isValid(null, $empty));
     }
+
+    /**
+     * @group ZF-3995
+     */
+    public function testIsValidShouldAllowPassingArrayValueAndOmittingContext()
+    {
+        $this->testCaptchaIsRendered();
+        $input = array($this->element->getName() => array("id" => $this->captcha->getId(), "input" => $this->captcha->getWord()));
+        $this->assertTrue($this->element->isValid($input));
+    }
+
+    /**
+     * @group ZF-3995
+     */
+    public function testIsValidShouldNotRequireValueToBeNestedArray()
+    {
+        $this->testCaptchaIsRendered();
+        $input = array("id" => $this->captcha->getId(), "input" => $this->captcha->getWord());
+        $this->assertTrue($this->element->isValid($input));
+    }
 }
 
 class Zend_Captcha_FigletTest_SessionContainer
