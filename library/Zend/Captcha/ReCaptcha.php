@@ -222,14 +222,22 @@ class Zend_Captcha_ReCaptcha extends Zend_Captcha_Base
      */
     public function isValid($value, $context = null)
     {
-        if (empty($context[$this->_CHALLENGE]) || empty($context[$this->_RESPONSE])) {
+        if (!is_array($value) && !is_array($context)) {
+            $this->_error(self::MISSING_VALUE);
+            return false;
+        }
+        if (!is_array($value) && is_array($context)) {
+            $value = $context;
+        }
+
+        if (empty($value[$this->_CHALLENGE]) || empty($value[$this->_RESPONSE])) {
             $this->_error(self::MISSING_VALUE);
             return false;
         }
 
         $service = $this->getService();
         
-        $res = $service->verify($context[$this->_CHALLENGE], $context[$this->_RESPONSE]); 
+        $res = $service->verify($value[$this->_CHALLENGE], $value[$this->_RESPONSE]); 
         
         if (!$res) {
             $this->_error(self::ERR_CAPTCHA);

@@ -309,6 +309,26 @@ class Zend_Captcha_ImageTest extends PHPUnit_Framework_TestCase
         $input = array($this->element->getName() => array("id" => $this->captcha->getId(), "input" => "blah"));
         $this->assertFalse($this->element->isValid("", $input));
     }
+
+    /**
+     * @group ZF-3995
+     */
+    public function testIsValidShouldAllowPassingArrayValueWithNoContext()
+    {
+        $this->testCaptchaIsRendered();
+        $input = array($this->element->getName() => array("id" => $this->captcha->getId(), "input" => $this->captcha->getWord()));
+        $this->assertTrue($this->element->isValid($input));
+    }
+
+    /**
+     * @group ZF-3995
+     */
+    public function testIsValidShouldNotRequireValueToBeNestedArray()
+    {
+        $this->testCaptchaIsRendered();
+        $input = array("id" => $this->captcha->getId(), "input" => $this->captcha->getWord());
+        $this->assertTrue($this->element->isValid($input));
+    }
 }
 
 class Zend_Captcha_ImageTest_SessionContainer
