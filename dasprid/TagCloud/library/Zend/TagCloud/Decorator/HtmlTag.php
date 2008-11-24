@@ -172,8 +172,20 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
             
             $tagHtml = sprintf('<a href="%s" %s>%s</a>', $tag['url'], $attribute, $tag['title']);
             
-            foreach ($this->_htmlTags as $htmlTag) {
-                $htmlTag = sprintf('<%1$s>%2$s</%1$s>', $htmlTag, $tagHtml);
+            foreach ($this->_htmlTags as $key => $data) {
+                if (is_array($data)) {
+                    $htmlTag    = $key;
+                    $attributes = '';
+                    
+                    foreach ($data as $param => $value) {
+                        $attributes .= ' ' . $param . '="' . htmlspecialchars($value) . '"';
+                    }
+                } else {
+                    $htmlTag    = $data;
+                    $attributes = '';
+                }
+                
+                $htmlTag = sprintf('<%1$s%3$s>%2$s</%1$s>', $htmlTag, $tagHtml, $attributes);
             }
             
             $result[] = $tagHtml;

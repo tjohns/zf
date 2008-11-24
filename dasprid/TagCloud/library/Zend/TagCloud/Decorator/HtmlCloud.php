@@ -41,7 +41,7 @@ class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
      * @var array
      */
     protected $_htmlTags = array(
-        'ul'
+        'ul' => array('class' => 'zend_tagcloud')
     );
     
     /**
@@ -85,8 +85,20 @@ class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
     {
         $cloudHtml = implode($this->_separator, $tags);
         
-        foreach ($this->_htmlTags as $htmlTag) {
-            $cloudTag = sprintf('<%1$s>%2$s</%1$s>', $htmlTag, $cloudHtml);
+        foreach ($this->_htmlTags as $key => $data) {
+            if (is_array($data)) {
+                $htmlTag    = $key;
+                $attributes = '';
+                
+                foreach ($data as $param => $value) {
+                    $attributes .= ' ' . $param . '="' . htmlspecialchars($value) . '"';
+                }
+            } else {
+                $htmlTag    = $data;
+                $attributes = '';
+            }
+            
+            $cloudTag = sprintf('<%1$s%3$s>%2$s</%1$s>', $htmlTag, $cloudHtml, $attributes);
         }
         
         return $cloudHtml;
