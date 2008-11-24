@@ -68,7 +68,6 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
                     ->addControllerDirectory(dirname(__FILE__));
 
         $this->view = new Zend_View();
-        $this->view->addHelperPath(dirname(__FILE__) . '/../../../../../library/Zend/View/Helper/');
         $this->viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
         $this->viewRenderer->setView($this->view);
 
@@ -826,8 +825,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
     }
 
     /**
-     * @issue 3279
-     * @link http://framework.zend.com/issues/browse/ZF-3279
+     * @group ZF-3279
      */
     public function testPostJsonContextDoesntThrowExceptionWhenGetVarsMethodsExists()
     {
@@ -840,8 +838,7 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
     }
 
     /**
-     * @issue 3279
-     * @link http://framework.zend.com/issues/browse/ZF-3279
+     * @group ZF-3279
      */
     public function testPostJsonContextThrowsExceptionWhenGetVarsMethodsDoesntExist()
     {
@@ -854,6 +851,23 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
             $this->fail('Exception should be throw when view does not implement getVars() method');
         } catch(Zend_Controller_Action_Exception $zcae) {
         }
+    }
+
+    /** 
+     * @group ZF-4866
+     */
+    public function testForwardingShouldNotUseContextSuffixIfNewActionDoesNotDetectValidContext()
+    {
+        $this->request->setParam('format', 'xml')
+                      ->setActionName('foo');
+        $this->helper->setActionContext('bar', 'json');
+        $this->helper->initContext();
+        $this->assertEquals('xml', $this->helper->getCurrentContext());
+        $this->request->setActionName('bar');
+        $this->helper->init();
+        $this->helper->initContext();
+        $suffix = $this->viewRenderer->getViewSuffix();
+        $this->assertNotContains('xml', $suffix, $suffix);
     }
 }
 
