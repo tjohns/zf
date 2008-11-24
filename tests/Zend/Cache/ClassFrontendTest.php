@@ -89,7 +89,8 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
     public function testConstructorBadCall()
     {
         $options = array(
-            'cache_by_default' => true
+            'cached_entity' => new test(),
+            0 => true,
         );
         try {
             $test = new Zend_Cache_Frontend_Class($options);      
@@ -205,5 +206,17 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Zend_Cache_Exception was expected but not thrown'); 
     }   
+
+    /**
+     * @group ZF-5034
+     */
+    public function testCallingConstructorWithInvalidOptionShouldNotRaiseException()
+    {
+        $options = array(
+            'cached_entity' => new test(),
+            'this_key_does_not_exist' => true
+        );
+        $test = new Zend_Cache_Frontend_Class($options);      
+    }
 }
 

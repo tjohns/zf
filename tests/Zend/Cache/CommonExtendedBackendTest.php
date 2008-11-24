@@ -26,9 +26,9 @@ class Zend_Cache_CommonExtendedBackendTest extends Zend_Cache_CommonBackendTest 
 
     private $_capabilities;
     
-    public function __construct($className)
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        parent::__construct($className);
+        parent::__construct($name);
     }
     
     public function setUp($notag = false)

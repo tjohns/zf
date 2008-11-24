@@ -63,10 +63,14 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown');    
     }
     
+    /**
+     * The only bad default options are non-string keys
+     * @group ZF-5034
+     */
     public function testConstructorWithBadDefaultOptions2()
     {
         try {
-            $test = new Zend_Cache_Frontend_Page(array('default_options' => array('cache' => true, 'foo' => 'bar')));
+            $test = new Zend_Cache_Frontend_Page(array('default_options' => array('cache' => true, 1 => 'bar')));
         } catch (Exception $e) {
             return;
         }
@@ -93,6 +97,10 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown');    
     }
     
+    /**
+     * Only non-string keys should raise exceptions
+     * @group ZF-5034
+     */
     public function testConstructorWithBadRegexps3()
     {
         $array = array(
@@ -100,7 +108,7 @@ class Zend_Cache_PageFrontendTest extends PHPUnit_Framework_TestCase {
            '^/index/' => array('cache' => true),    
            '^/article/' => array('cache' => false), 
            '^/article/view/' => array(            
-               'foo' => true,                    
+               1 => true,                    
                'cache_with_post_variables' => true,   
                'make_id_with_post_variables' => true,   
            )

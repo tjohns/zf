@@ -28,9 +28,9 @@ class Zend_Cache_ZendPlatformBackendTest extends Zend_Cache_CommonBackendTest {
     
     protected $_instance;
  
-    public function __construct()
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        parent::__construct('Zend_Cache_Backend_ZendPlatform');
+        parent::__construct('Zend_Cache_Backend_ZendPlatform', $data, $dataName);
     }
        
     public function setUp($notag = false)

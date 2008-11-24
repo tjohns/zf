@@ -21,8 +21,8 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @package    Zend_Cache
  * @subpackage UnitTests
  */
-class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
-
+class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase 
+{
     private $_instance;
 
     public function setUp()
@@ -47,7 +47,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     public function testConstructorBadOption()
     {
         try {
-            $test = new Zend_Cache_Core(array('foo' => 'bar', 'lifetime' => 3600));
+            $test = new Zend_Cache_Core(array(0 => 'bar', 'lifetime' => 3600));
         } catch (Zend_Cache_Exception $e) {
             return;
         }
@@ -89,14 +89,25 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown');
     }
 
+    /**
+     * Unknown options are okay and should be silently ignored. Non-string 
+     * options, however, should throw exceptions.
+     *
+     * @group ZF-5034
+     */
     public function testSetOptionUnknownOption()
     {
         try {
+            $this->_instance->setOption(0, 1200);
+            $this->fail('Zend_Cache_Exception was expected but not thrown');
+        } catch (Zend_Cache_Exception $e) {
+        }
+
+        try {
             $this->_instance->setOption('foo', 1200);
         } catch (Zend_Cache_Exception $e) {
-            return;
+            $this->fail('Zend_Cache_Exception was thrown but should not have been');
         }
-        $this->fail('Zend_Cache_Exception was expected but not thrown');
     }
 
     public function testSaveCorrectBadCall1()

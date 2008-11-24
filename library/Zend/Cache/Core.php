@@ -181,20 +181,20 @@ class Zend_Cache_Core
      */
     public function setOption($name, $value)
     {
-        if (is_string($name)) {
-            $name = strtolower($name);
-            if (array_key_exists($name, $this->_options)) {
-                // This is a Core option
-                $this->_setOption($name, $value);
-                return;
-            }
-            if (array_key_exists($name, $this->_specificOptions)) {
-                // This a specic option of this frontend
-                $this->_specificOptions[$name] = $value;
-                return;
-            }
+        if (!is_string($name)) {
+            Zend_Cache::throwException("Incorrect option name : $name");
         }
-        Zend_Cache::throwException("Incorrect option name : $name");
+        $name = strtolower($name);
+        if (array_key_exists($name, $this->_options)) {
+            // This is a Core option
+            $this->_setOption($name, $value);
+            return;
+        }
+        if (array_key_exists($name, $this->_specificOptions)) {
+            // This a specic option of this frontend
+            $this->_specificOptions[$name] = $value;
+            return;
+        }
     }
 
     /**
@@ -579,17 +579,11 @@ class Zend_Cache_Core
         if (!isset($this->_options['logging']) || !$this->_options['logging']) {
             return;
         }
-        try {
-            /**
-             * @see Zend_Log
-             */
-            require_once 'Zend/Log.php';
-        } catch (Zend_Exception $e) {
-            Zend_Cache::throwException('Logging feature is enabled but the Zend_Log class is not available');
-        }
+
         if (isset($this->_options['logger']) && $this->_options['logger'] instanceof Zend_Log) {
             return;
         }
+
         // Create a default logger to the standard output stream
         require_once 'Zend/Log/Writer/Stream.php';
         $logger = new Zend_Log(new Zend_Log_Writer_Stream('php://output'));

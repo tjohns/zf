@@ -105,10 +105,9 @@ class Zend_Cache_Backend
             Zend_Cache::throwException("Incorrect option name : $name");
         }
         $name = strtolower($name);
-        if (!array_key_exists($name, $this->_options)) {
-            Zend_Cache::throwException("Incorrect option name : $name");
+        if (array_key_exists($name, $this->_options)) {
+            $this->_options[$name] = $value;
         }
-        $this->_options[$name] = $value;
     }
 
     /**
