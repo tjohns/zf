@@ -56,7 +56,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     {
         $options = array(
             'cache_by_default' => false,
-            'foo' => array('foo', 'bar')
+            0 => array('foo', 'bar')
         );
         try {
             $test = new Zend_Cache_Frontend_Function($options);      

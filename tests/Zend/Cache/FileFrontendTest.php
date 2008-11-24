@@ -114,7 +114,7 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     {
         # incorrect option
         try {
-            $test = new Zend_Cache_Frontend_File(array('master_file' => $this->_masterFile, 'foo' => 3600));      
+            $test = new Zend_Cache_Frontend_File(array('master_file' => $this->_masterFile, 0 => 3600));      
         } catch (Zend_Cache_Exception $e) {
             return;
         }

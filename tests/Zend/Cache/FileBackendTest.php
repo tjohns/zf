@@ -36,9 +36,9 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonExtendedBackendTest {
     protected $_instance2;
     protected $_cache_dir;
     
-    public function __construct()
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        parent::__construct('Zend_Cache_Backend_File');
+        parent::__construct('Zend_Cache_Backend_File', $data, $dataName);
     }
     
     public function setUp($notag = false)

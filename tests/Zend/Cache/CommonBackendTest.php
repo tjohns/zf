@@ -23,11 +23,12 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     protected $_className;
     protected $_root;
 
-    public function __construct($className)
+    public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        $this->_className = $className;
+        $this->_className = $name;
         $this->_root = dirname(__FILE__);
         date_default_timezone_set('UTC');
+        parent::__construct($name, $data, $dataName);
     }
 
     public function setUp($notag = false)
@@ -90,7 +91,7 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     {
         try {
             $class = $this->_className;
-            $test = new $class(array('foo' => 'bar'));
+            $test = new $class(array(1 => 'bar'));
         } catch (Zend_Cache_Exception $e) {
             return;
         }

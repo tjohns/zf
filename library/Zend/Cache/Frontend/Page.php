@@ -131,17 +131,17 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $name = strtolower($name);
             switch ($name) {
-            case 'regexps':
-                $this->_setRegexps($value);
-                break;
-            case 'default_options':
-                $this->_setDefaultOptions($value);
-                break;
-            case 'content_type_memorization':
-                $this->_setContentTypeMemorization($value);
-                break;
-            default:
-                $this->setOption($name, $value);
+                case 'regexps':
+                    $this->_setRegexps($value);
+                    break;
+                case 'default_options':
+                    $this->_setDefaultOptions($value);
+                    break;
+                case 'content_type_memorization':
+                    $this->_setContentTypeMemorization($value);
+                    break;
+                default:
+                    $this->setOption($name, $value);
             }
         }
         if (isset($this->_specificOptions['http_conditional'])) {
@@ -165,10 +165,11 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             Zend_Cache::throwException('default_options must be an array !');
         }
         foreach ($options as $key=>$value) {
+            if (!is_string($key)) {
+                Zend_Cache::throwException("invalid option [$key] !");
+            }
             $key = strtolower($key);
-            if (!isset($this->_specificOptions['default_options'][$key])) {
-                Zend_Cache::throwException("unknown option [$key] !");
-            } else {
+            if (isset($this->_specificOptions['default_options'][$key])) {
                 $this->_specificOptions['default_options'][$key] = $value;
             }
         }
@@ -218,9 +219,12 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             }
             $validKeys = array_keys($this->_specificOptions['default_options']);
             foreach ($conf as $key=>$value) {
+                if (!is_string($key)) {
+                    Zend_Cache::throwException("unknown option [$key] !");
+                }
                 $key = strtolower($key);
                 if (!in_array($key, $validKeys)) {
-                    Zend_Cache::throwException("unknown option [$key] !");
+                    unset($regexps[$regexp][$key]);
                 }
             }
         }
