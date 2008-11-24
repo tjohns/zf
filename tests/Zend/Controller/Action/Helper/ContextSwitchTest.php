@@ -869,6 +869,30 @@ class Zend_Controller_Action_Helper_ContextSwitchTest extends PHPUnit_Framework_
         $suffix = $this->viewRenderer->getViewSuffix();
         $this->assertNotContains('xml', $suffix, $suffix);
     }
+
+    /** 
+     * @group ZF-4866
+     */
+    public function testForwardingShouldNotPrependMultipleViewSuffixesForCustomContexts()
+    {
+        $this->helper->addContext('foo', array('suffix' => 'foo'));
+        $this->helper->setActionContext('foo', 'foo');
+        $this->helper->setActionContext('bar', 'foo');
+        $this->request->setParam('format', 'foo')
+                      ->setActionName('foo');
+        $this->helper->initContext();
+        $this->assertEquals('foo', $this->helper->getCurrentContext());
+        $suffix = $this->viewRenderer->getViewSuffix();
+        $this->assertContains('foo', $suffix, $suffix);
+
+        $this->request->setActionName('bar');
+        $this->helper->init();
+        $this->helper->initContext();
+        $this->assertEquals('foo', $this->helper->getCurrentContext());
+        $suffix = $this->viewRenderer->getViewSuffix();
+        $this->assertContains('foo', $suffix, $suffix);
+        $this->assertNotContains('foo.foo', $suffix, $suffix);
+    }
 }
 
 class Zend_Controller_Action_Helper_ContextSwitchTestController extends Zend_Controller_Action
