@@ -72,7 +72,7 @@ class Zend_Captcha_Figlet extends Zend_Captcha_Word
     /**
      * Display the captcha
      *
-     * @param Zend_View $view
+     * @param Zend_View_Interface $view
      * @param mixed $element
      * @return string
      */

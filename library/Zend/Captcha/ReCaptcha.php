@@ -248,7 +248,7 @@ class Zend_Captcha_ReCaptcha extends Zend_Captcha_Base
     /**
      * Render captcha
      * 
-     * @param  Zend_View $view 
+     * @param  Zend_View_Interface $view 
      * @param  mixed $element 
      * @return string
      */
