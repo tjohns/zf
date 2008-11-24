@@ -37,9 +37,10 @@ class Zend_Json_Server_CacheTest extends PHPUnit_Framework_TestCase
     {
         $this->server = new Zend_Json_Server();
         $this->server->setClass('Zend_Json_Server_CacheTest_Foo', 'foo');
-        $this->cacheFile = dirname(__FILE__) . '/_files/server.cache';
+        $this->cacheFile = tempnam(sys_get_temp_dir(), 'zjs');
 
-        if (!is_writeable(dirname(__FILE__))) {
+        // if (!is_writeable(dirname(__FILE__))) {
+        if (!is_writeable($this->cacheFile)) {
             $this->markTestSkipped('Cannot write test caches due to permissions');
         }
 
