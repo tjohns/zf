@@ -3,18 +3,18 @@
     <title>Introduction to Zend_Currency</title>
 
     <para>
-        <code>Zend_Currency</code> is part of the I18n core of the Zend_Framework. It handles all issues
-        related to currency, money representation and formating. And it also provides additional informational
-        methods which include localized informations on currencies, informations about which currency is used
-        in which region and more.
+        <code>Zend_Currency</code> is part of the strong support for i18n in Zend Framework. It handles all issues
+        related to currency, money representation and formatting. It also provides additional
+        methods which provide localized information on currencies, such as which currency is used
+        in which region.
     </para>
 
     <sect2 id="zend.currency.introduction.list">
 
-        <title>Why should <code>Zend_Currency</code> be used ?</title>
+        <title>Why use <code>Zend_Currency</code>?</title>
 
         <para>
-            <code>Zend_Currency</code> offers the following functions for handling currency and money related work.
+            <code>Zend_Currency</code> offers the following functions for handling currency manipulations.
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -23,24 +23,23 @@
                     <emphasis role="strong">Complete Locale support</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> works with all available locales and has therefor the ability to
-                    know about over 100 different localized currency informations. This includes for example
+                    <code>Zend_Currency</code> works with all available locales and therefore knows about over 100 different localized currencies. This includes
                     currency names, abbreviations, money signs and more.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Reusable currency definitions</emphasis>
+                    <emphasis role="strong">Reusable Currency Definitions</emphasis>
                 </para>
                 <para>
                     <code>Zend_Currency</code> does not include the value of the currency. This is the reason why
-                    it's functionality is not included in <code>Zend_Locale_Format</code>. But this gives the
+                    its functionality is not included in <code>Zend_Locale_Format</code>. <code>Zend_Currency</code> has the
                     advantage that already defined currency representations can be reused.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Fluent interface</emphasis>
+                    <emphasis role="strong">Fluent Interface</emphasis>
                 </para>
                 <para>
                     <code>Zend_Currency</code> includes fluent interfaces where possible.
@@ -48,11 +47,11 @@
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">Additional informational methods</emphasis>
+                    <emphasis role="strong">Additional Methods</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> includes additional methods which offers informations about
-                    in which regions a currency is used or which currency is known to be used in a defined region.
+                    <code>Zend_Currency</code> includes additional methods that offer information about
+                    which regions a currency is used in or which currency is used in a specified region.
                 </para>
             </listitem>
         </itemizedlist>

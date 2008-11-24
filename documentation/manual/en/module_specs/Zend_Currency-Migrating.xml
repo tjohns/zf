@@ -3,8 +3,8 @@
     <title>Migrating from Previous Versions</title>
 
     <para>
-        The API of <code>Zend_Currency</code> has changed in the past to increase
-        the usability. If you started using <code>Zend_Currency</code> with a
+        The API of <code>Zend_Currency</code> has changed in the past to enhance
+        usability. If you started using <code>Zend_Currency</code> with a
         version which is mentioned in this chapter follow the guidelines below
         to migrate your scripts to the new API.
     </para>
@@ -15,7 +15,7 @@
 
         <para>
             Creating an object of <code>Zend_Currency</code> has become simpler.
-            You now do not longer have to give a script or set it to null. The optional
+            You no longer have to give a script or set it to null. The optional
             script parameter is now an option which can be set through the
             <code>setFormat()</code> method.
         </para>
@@ -26,10 +26,9 @@ $currency = new Zend_Currency($currency, $locale);
         </programlisting>
 
         <para>
-            The <code>setFormat()</code> method takes now an array of options which
-            can be set. These options are set permanent and override all previous
-            set values. Also a new option 'precision' has been integrated. The
-            following options has been integrated:
+            The <code>setFormat()</code> method takes now an array of options. These options are set permanently and override all previously
+            set values. Also a new option 'precision' has been added. The
+            following options have been refactored:
 
             <itemizedlist mark='opencircle'>
                 <listitem>
@@ -78,7 +77,7 @@ $currency->setFormat(array $options);
         </programlisting>
 
         <para>
-            The <code>toCurrency()</code> method does no longer support the optional
+            The <code>toCurrency()</code> method no longer supports the optional
             'script' and 'locale' parameters. Instead it takes an options array which
             can contain the same keys as for the <code>setFormat</code> method.
         </para>
