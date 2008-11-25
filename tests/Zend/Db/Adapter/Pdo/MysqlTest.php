@@ -244,7 +244,7 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
      * @group ZF-3624
      * 
      */
-    public function testAdapterDescribeTableAttributeColumn()
+    public function testAdapterDescribeTableAttributeColumnFloat()
     {
         $desc = $this->_db->describeTable('zfprice');
         $this->assertEquals('zfprice',  $desc['price']['TABLE_NAME']);

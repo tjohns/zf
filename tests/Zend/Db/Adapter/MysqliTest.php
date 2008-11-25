@@ -232,7 +232,7 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
      * @group ZF-3624
      *
      */
-    public function testAdapterDescribeTableAttributeColumn()
+    public function testAdapterDescribeTableAttributeColumnFloat()
     {
         $desc = $this->_db->describeTable('zfprice');
         $this->assertEquals('zfprice',  $desc['price']['TABLE_NAME']);
