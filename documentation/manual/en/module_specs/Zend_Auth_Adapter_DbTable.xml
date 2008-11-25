@@ -226,9 +226,9 @@ if ($result->isValid()) {
              authorization problem within the authentication adapter.
         </para>
         <para>
-            With that bit of a disclaimer out of the way,
+            With that disclaimer out of the way,
             Zend_Auth_Adapter_DbTable has some built in mechanisms that can be
-            leveraged to add additional checks at authentication time to solve
+            leveraged for additional checks at authentication time to solve
             some common user problems.
         </para>
         <programlisting role="php"><![CDATA[
@@ -257,10 +257,10 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             your application’s security. It’s based on the idea that
             concatenating a random string to every password makes it impossible
             to accomplish a successful brute force attack on the database using
-            precomputed hash values from a dictionary.
+            pre-computed hash values from a dictionary.
         </para>
         <para>
-            Therefore we need to modify our table to store our salt string:
+            Therefore, we need to modify our table to store our salt string:
         </para>
         <programlisting role="php"><![CDATA[
 $sqlAlter = "ALTER TABLE [users] "
@@ -299,7 +299,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
         <note>
             <para>
                 You can improve security even more by using a static salt value
-                hardcoded into your application. In the case that your database
+                hard coded into your application. In the case that your database
                 is compromised (e. g. by an SQL injection attack) but your web
                 server is intact your data is still unusable for the attacker.
             </para>

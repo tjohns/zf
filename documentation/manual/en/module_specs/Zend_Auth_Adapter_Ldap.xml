@@ -65,7 +65,7 @@ if ($log_path) {
 }
 ]]>
             </programlisting>
-            Of course the logging code is optional, but it is highly recommended that you use a logger.
+            Of course, the logging code is optional, but it is highly recommended that you use a logger.
             <code>Zend_Auth_Adapter_Ldap</code> will record just about every bit of information anyone could want in
             <code>$messages</code> (more below), which is a nice feature in itself for something that has a history of
             being notoriously difficult to debug.
@@ -75,10 +75,10 @@ if ($log_path) {
             The <code>Zend_Config_Ini</code> code is used above to load the adapter options. It is also optional. A
             regular array would work equally well. The following is an example
             <code>application/config/config.ini</code> file that has options for two separate servers. With multiple
-            sets of server options the adapter will try each in order until the credentials are successfully
+            sets of server options the adapter will try each, in order, until the credentials are successfully
             authenticated. The names of the servers (e.g., <code>server1</code> and <code>server2</code>) are largely
             arbitrary. For details regarding the options array, see the <emphasis>Server Options</emphasis> section
-            below. Note that <code>Zend_Config_Ini</code> requires that any values with equals characters
+            below. Note that <code>Zend_Config_Ini</code> requires that any values with "equals" characters
             (<code>=</code>) will need to be quoted (like the DNs shown below).
             <programlisting role="ini"><![CDATA[
 [production]
@@ -116,7 +116,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
 
         <para>
             Note that in this case, even though OpenLDAP has no need for the short NetBIOS style domain name used by
-            Windows we provide it here for name canonicalization purposes (described in the
+            Windows, we provide it here for name canonicalization purposes (described in the
             <emphasis>Username Canonicalization</emphasis> section below).
         </para>
 
@@ -140,7 +140,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
         <para>
             Below is <ulink url="http://php.net/print_r"><code>print_r()</code></ulink> output of an example options
             parameter containing two sets of server options for LDAP servers <code>s0.foo.net</code> and
-            <code>dc1.w.net</code> (same options as the above INI representation):
+            <code>dc1.w.net</code> (the same options as the above INI representation):
             <programlisting role="output"><![CDATA[
 Array
 (
@@ -171,7 +171,7 @@ Array
 </programlisting>
             The information provided in each set of options above is different mainly because AD does not require a
             username be in DN form when binding (see the <code>bindRequiresDn</code> option in the
-            <emphasis>Server Options</emphasis> section below), which means we can omit the a number of options
+            <emphasis>Server Options</emphasis> section below), which means we can omit a number of options
             associated with retrieving the DN for a username being authenticated.
         </para>
 
@@ -179,7 +179,7 @@ Array
             <title>What is a DN?</title>
             <para>
                 A DN or "distinguished name" is a string that represents the path to an object within the LDAP
-                directory. Each comma separated component is an attribute and value representing a node. The components
+                directory. Each comma-separated component is an attribute and value representing a node. The components
                 are evaluated in reverse. For example, the user account
                 <emphasis>CN=Bob Carter,CN=Users,DC=w,DC=net</emphasis> is located directly within the
                 <emphasis>CN=Users,DC=w,DC=net container</emphasis>. This structure is best explored with an LDAP
@@ -204,11 +204,11 @@ Array
             <title>The Gory Details - What exactly happens in the authenticate method?</title>
             <para>
                 When the <code>authenticate()</code> method is called, the adapter iterates over each set of server
-                options, sets them on the internal <code>Zend_Ldap</code> instance and calls the
+                options, sets them on the internal <code>Zend_Ldap</code> instance, and calls the
                 <code>Zend_Ldap::bind()</code> method with the username and password being authenticated. The
                 <code>Zend_Ldap</code> class checks to see if the username is qualified with a domain (e.g., has a
                 domain component like <emphasis>alice@foo.net</emphasis> or <emphasis>FOO\alice</emphasis>). If a
-                domain is present, but it does not match either of the server's domain names
+                domain is present, but does not match either of the server's domain names
                 (<emphasis>foo.net</emphasis> or <emphasis>FOO</emphasis>), a special exception is thrown and caught by
                 <code>Zend_Auth_Adapter_Ldap</code> that causes that server to be ignored and the next set of server
                 options is selected. If a domain <emphasis>does</emphasis> match, or if the user did not supply a
@@ -279,7 +279,7 @@ Array
                     <entry>useSsl</entry>
                     <entry>
                         Whether or not the LDAP client should use SSL encrypted transport. The <code>useSsl</code>
-                        and <code>useStartTls</code> options are mutually exclusive but <code>useStartTls</code>
+                        and <code>useStartTls</code> options are mutually exclusive, but <code>useStartTls</code>
                         should be favored if the server and LDAP client library support it.
                         This value also changes the default <emphasis role="strong">port</emphasis> value (see
                         <emphasis role="strong">port</emphasis> description above).
@@ -291,7 +291,7 @@ Array
                         The DN of the account used to perform account DN lookups. LDAP servers that require the
                         username to be in DN form when performing the "bind" require this option. Meaning, if
                         <emphasis role="strong">bindRequiresDn</emphasis> is <code>true</code>, this option is
-                        required. This account does not need to be a privileged account - a account with read-only
+                        required. This account does not need to be a privileged account; an account with read-only
                         access to objects under the <emphasis role="strong">baseDn</emphasis> is all that is necessary
                         (and preferred based on the <emphasis>Principle of Least Privilege</emphasis>).
                     </entry>
@@ -377,7 +377,7 @@ Array
                         <emphasis>FOO</emphasis>). Note that there is a 1:1 mapping between the
                         <emphasis role="strong">accountDomainName</emphasis> and
                         <emphasis role="strong">accountDomainNameShort</emphasis>. This option should be used to
-                        specify the NetBIOS domain name for Windows networks but may also be used by non-AD servers
+                        specify the NetBIOS domain name for Windows networks, but may also be used by non-AD servers
                         (e.g., for consistency when multiple sets of server options with the backslash style
                         <emphasis role="strong">accountCanonicalForm</emphasis>). This option is not required but if it
                         is not supplied, usernames in backslash form (e.g., <emphasis>FOO\alice</emphasis>) are not
@@ -416,7 +416,7 @@ Array
                 claiming that it cannot validate the server's certificate. Assuming the PHP LDAP extension is
                 ultimately linked to the OpenLDAP client libraries, to resolve this issue you can set
                 "<code>TLS_REQCERT never</code>" in the OpenLDAP client <code>ldap.conf</code> (and restart the web
-                server) to indicate to the OpenLDAP client library that you trust the server. Alternatively if you are
+                server) to indicate to the OpenLDAP client library that you trust the server. Alternatively, if you are
                 concerned that the server could be spoofed, you can export the LDAP server's root certificate and put
                 it on the web server so that the OpenLDAP client can validate the server's identity.
             </para>
@@ -468,7 +468,7 @@ Array
               </tgroup>
             </table>
 
-            In practice index 0 should be displayed to the user (e.g., using the FlashMessenger helper), index 1 should
+            In practice, index 0 should be displayed to the user (e.g., using the FlashMessenger helper), index 1 should
             be logged and, if debugging information is being collected, indexes 2 and higher could be logged as well
             (although the final message always includes the string from index 1).
         </para>
@@ -546,7 +546,7 @@ Array
                       <row>
                         <entry><emphasis role="strong">accountDomainNameShort</emphasis></entry>
                         <entry>
-                            The NetBIOS name of the domain users are in and for which the AD server is an authority.
+                            The NetBIOS name of the domain that users are in and for which the AD server is an authority.
                             This is required if the backslash style
                             <emphasis role="strong">accountCanonicalForm</emphasis> is used.
                         </entry>
@@ -560,9 +560,9 @@ Array
                 <para>
                     Technically there should be no danger of accidental cross-domain authentication with the current
                     <code>Zend_Auth_Adapter_Ldap</code> implementation, since server domains are explicitly checked,
-                    but this may not be true of a future implementation that discovers the domain at runtime or if an
+                    but this may not be true of a future implementation that discovers the domain at runtime, or if an
                     alternative adapter is used (e.g., Kerberos). In general, account name ambiguity is known to be the
-                    source of security issues so always try to use qualified account names.
+                    source of security issues, so always try to use qualified account names.
                 </para>
             </note>
 
@@ -636,7 +636,7 @@ Array
                       <row>
                         <entry><emphasis role="strong">accountCanonicalForm</emphasis></entry>
                         <entry>
-                            Optional but the default value is 4 (principal style names like
+                            Optional, but the default value is 4 (principal style names like
                             <emphasis>alice@foo.net</emphasis>), which may not be ideal if your users are used to
                             backslash style names (e.g., <emphasis>FOO\alice</emphasis>). For backslash style names use
                             value 3.

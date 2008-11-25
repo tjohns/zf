@@ -16,7 +16,7 @@
 
         <para>
             This adapter allows authentication against text files containing lines having the basic elements
-            of digest authentication:
+            of Digest authentication:
             <itemizedlist>
                 <listitem>
                     <para>

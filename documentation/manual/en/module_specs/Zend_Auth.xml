@@ -258,7 +258,7 @@ $result = $auth->authenticate($authAdapter);
             <title>Implementing Customized Storage</title>
 
             <para>
-                Sometimes developers may need to use different identity persistence behavior than that provided by
+                Sometimes developers may need to use a different identity storage mechanism than that provided by
                 <code>Zend_Auth_Storage_Session</code>. For such cases developers may simply implement
                 <code>Zend_Auth_Storage_Interface</code> and supply an instance of the class to
                 <code>Zend_Auth::setStorage()</code>.
