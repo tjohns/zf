@@ -441,7 +441,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <para>
                     Classes must be named according to Zend Framework's naming conventions.
                 </para><para>
-                    The brace should always be written on the line underneath the class name (the "one true brace" form).
+                    The brace should always be written on the line underneath the class name.
                 </para><para>
                     Every class must have a documentation block that conforms to the PHPDocumentor standard.
                 </para><para>
@@ -503,7 +503,7 @@ class SampleClass
                 </para>
                 <para>
                     As with classes, the brace should always be written on the line underneath the
-                    function name (the "one true brace" form).
+                    function name.
 
                     Space between the function name and the opening parenthesis for the arguments is not permitted.
                 </para>
