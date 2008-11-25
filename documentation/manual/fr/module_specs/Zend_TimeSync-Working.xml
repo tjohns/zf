@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 12814 -->
 <sect1 id="zend.timesync.working">
     <title>Utiliser Zend_TimeSync</title>
 
@@ -7,7 +7,7 @@
     serveurs.</para>
 
     <note>
-        <para>Dans tous les exemples qui suivront, nous utiliserons un pool de serveurs générique public. <emphasis
+        <para>Dans tous les exemples qui suivront, nous utiliserons un pool de serveurs générique public : <emphasis
         role="strong">0.europe.pool.ntp.org</emphasis>. De votre côté, il est conseillé d'utiliser le pool le plus
         proche possible géographiquement de votre position. Lisez <ulink
         url="http://www.pool.ntp.org">http://www.pool.ntp.org</ulink> pour plus d'informations.</para>
@@ -31,8 +31,8 @@ print $server->getDate()->getIso();
         serveur sur lequel le script tourne, et retourner finalement un objet <code>Zend_Date</code> représentant le
         temps actuel, juste et corrigé.</para>
 
-        <para>Pour plus de détails sur les objets <code>Zend_Date</code> et leurs méthodes, voyez <link
-        linkend="zend.date.introduction">Zend_Date</link>.</para>
+        <para>Pour plus de détails sur les objets <code>Zend_Date</code> et leurs méthodes, voyez la documentation de
+        <link linkend="zend.date.introduction">Zend_Date</link>.</para>
     </sect2>
 
     <sect2 id="zend.timesync.working.multiple">
@@ -42,8 +42,8 @@ print $server->getDate()->getIso();
         de maintenance, ou tout simplement se retrouver saturés. Dans de tels cas, une exception sera levée.</para>
 
         <para><code>Zend_TimeSync</code> peut gérer plusieurs serveurs, et se connecter automatiquement au suivant, si
-        le précédent ne répond pas. Passez un tableau au constructeur de l'objet, ou utilisez la méthode
-        <code>addServer()</code> :</para>
+        le précédent ne répond pas. Passez un tableau de serverus de temps au constructeur de l'objet, ou utilisez la
+        méthode <code>addServer()</code> :</para>
 
         <programlisting role="php"><![CDATA[
 $server = new Zend_TimeSync(array('0.pool.ntp.org',

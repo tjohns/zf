@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12759 -->
+<!-- EN-Revision: 12814 -->
 <sect1 id="zend.timesync.introduction">
     <title>Introduction</title>
 
@@ -73,7 +73,7 @@
 
         <para>Le <code>Network Time Protocol</code> (<emphasis role="strong">NTP</emphasis>) est un protocole utilisé
         pour la synchronisation du temps des systèmes informatiques au travers du réseau. NTP utilise le port UDP 123
-        comme couche de transport. Voyez <ulink url="http://fr.wikipedia.org/wiki/Network_Time_Protocol">cet article
+        comme couche de transport. Voyez cet <ulink url="http://fr.wikipedia.org/wiki/Network_Time_Protocol"> article
         wikipédia</ulink> pour plus d'informations sur le protocole.</para>
     </sect2>
 

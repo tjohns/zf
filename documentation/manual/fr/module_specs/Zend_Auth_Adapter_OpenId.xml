@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12817 -->
 <sect1 id="zend.auth.adapter.openid">
     <title>Authentification OpenID</title>
 
@@ -11,7 +11,7 @@
         l'application Web utilisée. Un mot de passe ou un autre procédé est utilisé, et celui-ci n'est jamais connu de
         l'application Web originale.</para>
 
-        <para>L'identité OpenID est juste une URL HTTP qui pointe vers une page avec des informations décrivant le
+        <para>L'identité OpenID est juste une URI qui pointe vers une page avec des informations décrivant le
         serveur à utiliser et des informations sur l'utilisateur. Pour plus d'informations, consultez <ulink
         url="http://www.openid.net/">le site officiel OpenID</ulink> ou une version française <ulink
         url="http://www.openidfrance.fr">OpenIDFrance</ulink>.</para>

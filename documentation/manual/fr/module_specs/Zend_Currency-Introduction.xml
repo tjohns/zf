@@ -1,16 +1,16 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 12816 -->
 <sect1 id="zend.currency.introduction">
     <title>Introduction à Zend_Currency</title>
 
-    <para><code>Zend_Currency</code> est une partie du coeur de l'I18n ("internationalisation") du Zend_Framework. Elle
+    <para><code>Zend_Currency</code> est une partie du coeur de l'i18n ("internationalisation") du Zend_Framework. Elle
     permet le traitement de toutes les questions liées à la monnaie, à la représentation de l'argent et de son
-    formatage. Elle fournit aussi les méthodes informationnelles supplémentaires qui incluent des informations
-    régionalisées sur des devises, des informations sur quelle monnaie est utilisée dans quelle région et autres.</para>
+    formatage. Elle fournit aussi les méthodes supplémentaires qui incluent des informations régionalisées sur des
+    devises, des informations sur quelle monnaie est utilisée dans quelle région et autres.</para>
 
     <sect2 id="zend.currency.introduction.list">
-        <title>Pourquoi <code>Zend_Currency</code> devrait être utilisée ?</title>
+        <title>Pourquoi utiliser <code>Zend_Currency</code> ?</title>
 
-        <para><code>Zend_Currency</code> offre les fonctions suivantes pour manipuler la monnaie et l'argent.</para>
+        <para><code>Zend_Currency</code> offre les fonctions suivantes pour manipuler les monnaies.</para>
 
         <itemizedlist mark="opencircle">
             <listitem>
@@ -36,11 +36,11 @@
             </listitem>
 
             <listitem>
-                <para><emphasis role="strong">Méthodes d'informations additionnelles</emphasis></para>
+                <para><emphasis role="strong">Méthodes additionnelles</emphasis></para>
 
                 <para><code>Zend_Currency</code> inclue des méthodes additionnelles qui donnent des informations
                 concernant les régions dans lesquelles une monnaie est utilisée ou quelle monnaie est utilisée dans une
-                région définie.</para>
+                région spécifiée.</para>
             </listitem>
         </itemizedlist>
     </sect2>

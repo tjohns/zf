@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12839 -->
 <appendix id="coding-standard">
     <title>Convention de codage PHP du Zend Framework</title>
 
@@ -334,8 +334,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
 
                 <para>Les classes doivent être nommées conformément aux conventions de nommage du Zend Framework.</para>
 
-                <para>L'accolade est toujours écrite dans la ligne sous le nom de la classe (forme "one true
-                brace").</para>
+                <para>L'accolade est toujours écrite dans la ligne sous le nom de la classe.</para>
 
                 <para>Toutes les classes doivent avoir un bloc de documentation conforme aux standards
                 PHPDocumentor.</para>
@@ -387,8 +386,8 @@ class SampleClass
                 <para>Les fonctions internes aux classes doivent toujours déclarer leur visibilité en utilisant la
                 construction <code>private</code>, <code>protected</code>, ou <code>public</code>.</para>
 
-                <para>Tout comme les classes, l'accolade ouvrante est toujours écrite sous le nom de la fonction (form
-                "one true brace"). Il n'y a pas d'espace entre le nom de la fonction et les parenthèses des arguments.
+                <para>Tout comme les classes, l'accolade ouvrante est toujours écrite sous le nom de la fonction.
+                Il n'y a pas d'espace entre le nom de la fonction et les parenthèses des arguments.
                 Il n'y a pas d'espace entre la parenthèse fermante et l'accolade.</para>
 
                 <para>Les fonctions globales sont fortement déconseillées.</para>

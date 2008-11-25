@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12759 -->
+<!-- EN-Revision: 12819 -->
 <sect1 id="zend.loader.load">
     <title>Charger les fichiers et les classes dynamiquement</title>
 
@@ -164,7 +164,7 @@ Zend_Loader::registerAutoload('Mon_Chargeur');
         </example>
 
         <para>Vous pouvez effacer un callback d'autoload. <code>registerAutoload()</code> a un paramètre optionnel, qui
-        est réglé à <code>true</code> par défaut. S'il vaut <code>false</code>, le callback de l'autoload est effacé de
-        la pile des autoload SPL au lieu d'être enregistré.</para>
+        est réglé à <code>true</code> par défaut. S'il vaut <code>false</code>, le callback de l'autoload est alors
+        effacé de la pile des autoload SPL.</para>
     </sect2>
 </sect1>

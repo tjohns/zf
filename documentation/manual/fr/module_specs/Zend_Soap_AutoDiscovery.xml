@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12308 -->
+<!-- EN-Revision: 12836 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>Auto découverte</title>
 
@@ -64,6 +64,32 @@ $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
 ]]></programlisting></para>
+
+        <note id="zend.soap.autodiscovery.introduction.noserver">
+            <title>Zend_Soap_Autodiscover n'est pas un serveur SOAP</title>
+
+            <para>Il est très important de noter, que la classe <code>Zend_Soap_Autodiscover</code> n'agit pas en tant
+            que serveur SOAP elle-même. Elle génère seulement le WSDL et le fournit à ceux qui accèdent à l'URL qu'elle
+            écoute.</para>
+
+            <para>Par défaut l'URI de SOAP est <code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code>,
+            mais ceci peut être changé avec la méthode <code>setUri()</code> ou le paramètre de constructeur de la
+            classe <code>Zend_Soap_AutoDiscover</code>. L'URI doit correspondre à un <code>Zend_Soap_Server</code> qui
+            écoute les requêtes.</para>
+
+            <para><programlisting role="php"><![CDATA[
+if(isset($_GET['wsdl'])) {
+    $autodiscover = new Zend_Soap_AutoDiscover();
+    $autodiscover->setClass('HelloWorldService');
+    $autodiscover->handle();
+} else {
+    // pointing to the current file here
+    $soap = new Zend_Soap_Server("http://example.com/soap.php?wsdl");
+    $soap->setClass('HelloWorldService');
+    $soap->handle();
+}
+]]></programlisting></para>
+        </note>
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.class">
@@ -224,8 +250,9 @@ $autodiscover->handle();
                             stratégie de types complexes implémentant <code>Zend_Soap_Wsdl_Strategy_Interface</code> ou
                             une chaîne correspondant au nom de la classe. Pour une compatibilité ascendante, avec
                             <code>$extractComplexType</code> les variables booléennes sont analysées comme avec
-                            Zend_Soap_Wsdl. Regardez le manuel <link linkend="zend.soap.wsdl.types.add_complex">Zend_Soap_Wsdl sur l'ajout des types complexes</link> pour plus
-                            d'informations.</para>
+                            Zend_Soap_Wsdl. Regardez le manuel <link
+                            linkend="zend.soap.wsdl.types.add_complex">Zend_Soap_Wsdl sur l'ajout des types
+                            complexes</link> pour plus d'informations.</para>
                         </footnote>.</para>
                 </listitem>
 
