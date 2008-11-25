@@ -196,6 +196,29 @@ class Zend_Controller_Dispatcher_StandardTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @group ZF-3465
+     */
+    public function testUsingDefaultControllerAlwaysShouldRewriteActionNameToDefault()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('bogus');
+        $request->setActionName('really');
+        $request->setParam('action', 'really'); // router sets action as a param
+        $response = new Zend_Controller_Response_Cli();
+
+        $this->_dispatcher->setParam('useDefaultControllerAlways', true);
+
+        try {
+            $this->_dispatcher->dispatch($request, $response);
+        } catch (Zend_Controller_Dispatcher_Exception $e) {
+            $this->fail('Exception should not be raised when useDefaultControllerAlways set; message: ' . $e->getMessage());
+        }
+
+        $this->assertEquals('index', $request->getControllerName());
+        $this->assertEquals('index', $request->getActionName());
+    }
+
     public function testDispatchInvalidControllerUsingDefaultsWithDefaultModule()
     {
         $request = new Zend_Controller_Request_Http();
