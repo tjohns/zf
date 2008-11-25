@@ -144,7 +144,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     public function isReceived($files = null)
     {
         $files = $this->_getFiles($files);
-        foreach ($files as $key => $content) {
+        foreach ($files as $content) {
             if ($content['received'] !== true) {
                 return false;
             }
@@ -162,7 +162,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     public function isFiltered($files = null)
     {
         $files = $this->_getFiles($files);
-        foreach ($files as $key => $content) {
+        foreach ($files as $content) {
             if ($content['filtered'] !== true) {
                 return false;
             }
