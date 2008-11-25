@@ -328,22 +328,22 @@ class My_Controller_PreDispatchPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $dispatcher =
-            Zend_Controller_Front::getInstance()->getDispatcher();
-        $controller = $dispatcher->getController($request);
+        $front      = Zend_Controller_Front::getInstance();
+        $dispatcher = $front->getDispatcher();
+        $class      = $dispatcher->getControllerClass($request);
         if (!$controller) {
-            $controller =
-                $dispatcher->getDefaultControllerName($request);
+            $class = $dispatcher->getDefaultControllerClass($request);
         }
-        $action     = $dispatcher->getAction($request);
 
-        if (!method_exists($controller, $action)) {
-            $defaultAction = $dispatcher->getDefaultAction();
+        $r      = new ReflectionClass($class);
+        $action = $dispatcher->getActionMethod($request);
+
+        if (!$r->hasMethod($action)) {
+            $defaultAction  = $dispatcher->getDefaultAction();
             $controllerName = $request->getControllerName();
-            $response =
-                Zend_Controller_Front::getInstance()->getResponse();
-            $response->setRedirect('/' . $controllerName .
-                                   '/' . $defaultAction);
+            $response       = $front->getResponse();
+            $response->setRedirect('/' . $controllerName 
+                                  . '/' . $defaultAction);
             $response->sendHeaders();
             exit;
         }
