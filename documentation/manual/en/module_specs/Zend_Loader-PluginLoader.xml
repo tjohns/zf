@@ -16,7 +16,7 @@
         directory separator when resolving paths. It allows passing an optional
         class prefix to prepend when determining if a particular plugin class is
         loaded. Additionally, paths are searched in LIFO order. Due to the LIFO
-        search and the class prefixes, this allows you to namespace your
+        search and the class prefixes, this allows you to define namespaces for your
         plugins, and thus override plugins from paths registered earlier.
     </para>
 
@@ -25,7 +25,7 @@
 
         <para>
             First, let's assume the following directory structure and class
-            files, and that the toplevel directory and library directory are on
+            files, and that the top level directory and library directory are on
             the include_path:
         </para>
 
@@ -88,8 +88,6 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
         </para>
 
         <note>
-            <title>Multiple paths may be registered for a given prefix</title>
-
             <para>
                 In some cases, you may use the same prefix for multiple paths.
                 <code>Zend_Loader_PluginLoader</code> actually registers an
@@ -217,14 +215,14 @@ if ($loader->isLoaded('Adapter')) {
             just this situation, a class file include cache. When enabled, it
             will create a file that contains all successful includes which you
             can then call from your bootstrap. Using this strategy, you can
-            greatly improve your performance for your production servers.
+            greatly improve the performance of your production servers.
         </para>
 
         <example id="zend.loader.pluginloader.performance.example">
             <title>Using the PluginLoader class file include cache</title>
 
             <para>
-                To use the class file include cache, simply drop in the
+                To use the class file include cache, simply drop the
                 following code into your bootstrap:
             </para>
 

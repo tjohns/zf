@@ -32,7 +32,7 @@
         </para>
 
         <example id="zend.loader.load.file.example">
-            <title>Example of loadFile() method</title>
+            <title>Example of the loadFile() Method</title>
             <programlisting role="php"><![CDATA[
 Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 ]]>
@@ -49,10 +49,10 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
         </para>
 
         <para>
-            The <code>$dirs</code> argument specifies directories to search for
-            the file.  If <code>NULL</code>, only the <code>include_path</code>
-            is searched.  If a string or an array, the directory or directories
-            specified will be searched, and then the <code>include_path</code>.
+            The <code>$dirs</code> argument specifies which directories to search for
+            the file in.  If the value is <code>NULL</code>, only the <code>include_path</code>
+            is searched; if the value is a string or an array, the directory or directories
+            specified will be searched, followed by the <code>include_path</code>.
         </para>
 
         <para>
@@ -76,7 +76,7 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
         </para>
 
         <example id="zend.loader.load.class.example">
-            <title>Example of loadClass() method</title>
+            <title>Example of the loadClass() Method</title>
             <programlisting role="php"><![CDATA[
 Zend_Loader::loadClass('Container_Tree',
     array(
@@ -90,8 +90,8 @@ Zend_Loader::loadClass('Container_Tree',
 
         <para>
             The string specifying the class is converted to a relative path
-            by substituting directory separates for underscores, and appending
-            '.php'.  In the example above, 'Container_Tree' becomes 'Container/Tree.php'.
+            by substituting underscores with directory separators for your OS, and appending
+            '.php'.  In the example above, 'Container_Tree' becomes 'Container/Tree.php' on Windows.
         </para>
 
         <para>
@@ -154,9 +154,9 @@ if (Zend_Loader::isReadable($filename)) {
             The <code>Zend_Loader</code> class contains a method you can register with the
             PHP SPL autoloader.  <code>Zend_Loader::autoload()</code> is the
             callback method.  As a convenience, <code>Zend_Loader</code> provides the
-            <code>registerAutoload()</code> function register its
+            <code>registerAutoload()</code> function to register its
             <code>autoload()</code> method.  If the <code>spl_autoload</code>
-            extension is not present in your PHP environment, then
+            extension is not present in your PHP environment, then the
             <code>registerAutoload()</code> method throws a <code>Zend_Exception</code>.
         </para>
 
@@ -222,8 +222,8 @@ Zend_Loader::registerAutoload('My_Loader');
             You can remove an autoload callback.  The
             <code>registerAutoload()</code> has an optional second argument,
             which is <code>true</code> by default.  If this argument is
-            <code>false</code>, the autoload callback in unregistered from the
-            SPL autoload stack instead of registered.
+            <code>false</code>, the autoload callback is unregistered from the
+            SPL autoload stack.
         </para>
 
     </sect2>
