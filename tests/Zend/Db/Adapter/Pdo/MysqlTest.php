@@ -240,6 +240,18 @@ class Zend_Db_Adapter_Pdo_MysqlTest extends Zend_Db_Adapter_Pdo_TestCommon
     }
 
     /**
+     * test that describeTable() returns correct types
+     * @group ZF-3624
+     * 
+     */
+    public function testAdapterDescribeTableAttributeColumnFloat()
+    {
+        $desc = $this->_db->describeTable('zfprice');
+        $this->assertEquals('zfprice',  $desc['price']['TABLE_NAME']);
+        $this->assertRegExp('/float/i', $desc['price']['DATA_TYPE']);
+    }
+
+    /**
      * test that quoteTableAs() accepts a string and an alias,
      * and returns each as delimited identifiers.
      * Most RDBMS want an 'AS' in between.
