@@ -77,11 +77,11 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
         $complexType->appendChild($complexContent);
 
         $xsdRestriction = $dom->createElement("xsd:restriction");
-        $xsdRestriction->setAttribute('base', 'soapenc:Array');
+        $xsdRestriction->setAttribute('base', 'soap-enc:Array');
         $complexContent->appendChild($xsdRestriction);
 
         $xsdAttribute = $dom->createElement("xsd:attribute");
-        $xsdAttribute->setAttribute("ref", "soapenc:arrayType");
+        $xsdAttribute->setAttribute("ref", "soap-enc:arrayType");
         $xsdAttribute->setAttribute("wsdl:arrayType", sprintf("tns:%s[]", $singularType));
         $xsdRestriction->appendChild($xsdAttribute);
 
