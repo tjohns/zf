@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_Filter_Interface
+ * @see Zend_Filter_StringToLower
  */
-require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/StringToLower.php';
 
 /**
  * @category   Zend
@@ -30,8 +30,20 @@ require_once 'Zend/Filter/Interface.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Filter_File_LowerCase implements Zend_Filter_Interface
+class Zend_Filter_File_LowerCase extends Zend_Filter_StringToLower
 {
+    /**
+     * Adds options to the filter at initiation
+     *
+     * @param string $options
+     */
+    public function __construct($options = null)
+    {
+        if (!empty($options)) {
+            $this->setEncoding($options);
+        }
+    }
+
     /**
      * Defined by Zend_Filter_Interface
      *
@@ -59,7 +71,7 @@ class Zend_Filter_File_LowerCase implements Zend_Filter_Interface
             throw new Zend_Filter_Exception("Problem while reading file '$value'");
         }
 
-        $content = strtolower($content);
+        $content = parent::filter($content);
         $result  = file_put_contents($value, $content);
 
         if (!$result) {
