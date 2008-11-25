@@ -26,18 +26,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Auth_AllTests::main');
 }
 
-
-/**
- * PHPUnit_Framework_TestSuite
- */
-require_once 'PHPUnit/Framework/TestSuite.php';
-
-
-/**
- * PHPUnit_TextUI_TestRunner
- */
-require_once 'PHPUnit/TextUI/TestRunner.php';
-
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 
 /**
  * @see Zend_Auth_Adapter_AllTests
