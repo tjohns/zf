@@ -107,8 +107,8 @@ if(isset($_GET['wsdl'])) {
     $autodiscover->setClass('HelloWorldService');
     $autodiscover->handle();
 } else {
-
-    $soap = new Zend_Soap_Server("http://example.com/soap.php?wsdl"); // pointing to the current file here
+    // pointing to the current file here
+    $soap = new Zend_Soap_Server("http://example.com/soap.php?wsdl");
     $soap->setClass('HelloWorldService');
     $soap->handle();
 }]]>

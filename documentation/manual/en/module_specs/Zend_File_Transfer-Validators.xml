@@ -502,7 +502,9 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
 // Check case sensitive
-$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
+$upload->addValidator('ExcludeExtension',
+                      false,
+                      array('php', 'exe', 'case' => true));
 ]]>
             </programlisting>
 
@@ -609,7 +611,9 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Exists', false, '\temp');
 
 // Add two directories using the array notation
-$upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
+$upload->addValidator('Exists',
+                      false,
+                      array('\home\images', '\home\uploads'));
 ]]>
             </programlisting>
 
@@ -754,10 +758,16 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('FilesSize', false, 40000);
 
 // Limit the size of all given files to maximum 4MB and mimimum 10kB
-$upload->addValidator('FilesSize', false, array('min' => '10kB', 'max' => '4MB'));
+$upload->addValidator('FilesSize',
+                      false,
+                      array('min' => '10kB', 'max' => '4MB'));
 
 // As before, but returns the plain filesize instead of a userfriendly string
-$upload->addValidator('FilesSize', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
+$upload->addValidator('FilesSize',
+                      false,
+                      array('min' => '10kB',
+                            'max' => '4MB',
+                            'bytestring' => false));
 ]]>
             </programlisting>
 
@@ -976,7 +986,10 @@ $upload->addValidator('Hash', false, '3b3652f');
 $upload->addValidator('Hash', false, array('3b3652f', 'e612b69'));
 
 // Sets a different algorithm to check against
-$upload->addValidator('Hash', false, array('315b3cd8273d44912a7', 'algorithm' => 'md5'));
+$upload->addValidator('Hash',
+                      false,
+                      array('315b3cd8273d44912a7',
+                            'algorithm' => 'md5'));
 ]]>
             </programlisting>
         </example>
@@ -1022,7 +1035,10 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Md5', false, '3b3652f336522365223');
 
 // Limits this validator to two different hashes
-$upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+$upload->addValidator('Md5',
+                      false,
+                      array('3b3652f336522365223',
+                            'eb3365f3365ddc65365'));
 ]]>
             </programlisting>
         </example>
@@ -1088,7 +1104,10 @@ $upload->addValidator('MimeType', false, array('image/gif', 'image/jpeg');
 $upload->addValidator('MimeType', false, 'image');
 
 // Use a different magicfile
-$upload->addValidator('MimeType', false, array('image', 'magicfile' => '/path/to/magicfile.mgx'));
+$upload->addValidator('MimeType',
+                      false,
+                      array('image',
+                            'magicfile' => '/path/to/magicfile.mgx'));
 ]]>
             </programlisting>
         </example>
@@ -1204,7 +1223,9 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Sha1', false, '3b3652f336522365223');
 
 // Limits this validator to two different hashes
-$upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+$upload->addValidator('Sha1',
+                      false, array('3b3652f336522365223',
+                                   'eb3365f3365ddc65365'));
 ]]>
             </programlisting>
         </example>
@@ -1278,7 +1299,11 @@ $upload->addValidator('Size', false, 40000);
 // Limit the size a given file to maximum 4MB and mimimum 10kB
 // Additionally returns the plain number in case of an error
 // instead of a userfriendly one
-$upload->addValidator('Size', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
+$upload->addValidator('Size',
+                      false,
+                      array('min' => '10kB',
+                            'max' => '4MB',
+                            'bytestring' => false));
 ]]>
             </programlisting>
         </example>

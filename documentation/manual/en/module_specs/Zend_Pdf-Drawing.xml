@@ -451,9 +451,13 @@ $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 $yPosition = 700;
 foreach ($fontList as $font) {
     $page->setFont($font, 15);
-    $page->drawText(
-       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') .
-       ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
+                                   'en',
+                                   'UTF-8');
+    $page->drawText($fontName . ':  The quick brown fox jumps over the lazy dog',
+                    100,
+                    $yPosition,
+                    'UTF-8');
     $yPosition -= 30;
 }
 ...
