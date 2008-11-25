@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12844 -->
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
@@ -1448,6 +1448,13 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                     <para>Microsoft SQL Server ne supporte pas les séquences, ainsi <code>lastInsertId()</code> ignore
                     les paramètres qu'on lui passe et retourne toujours la valeur de la dernière clé auto-incrémentée.
                     <code>lastSequenceId()</code> retourne toujours <code>null</code>.</para>
+                </listitem>
+
+                <listitem>
+                    <para>Si vous travaillez avec des chaînes Unicode avec un encodage autre que UCS-2 (comme UTF-8),
+                    vous devrez peut-être réaliser une convertion dans votre code d'application ou stocker les données
+                    dans un champs binaire. Reportez vous à la <ulink url="http://support.microsoft.com/kb/232580">
+                    base de connaissance Microsoft</ulink> pour plus d'informations.</para>
                 </listitem>
 
                 <listitem>
