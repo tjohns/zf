@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12670 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -902,23 +902,30 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         </para>
 
         <programlisting role="php"><![CDATA[
-$options = array('inputNamespace' => 'My_Namespace');
+$options = array('filterNamespace' => 'My_Namespace_Filter', 'validatorNamespace' => 'My_Namespace_Validate');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]>
         </programlisting>
 
         <para>
-            Alternativ kann die addNamespace() Methode verwendet werden:
+            Alternatic kann die <code>addValidatorPrefixPath($prefix, $path)</code> oder die
+            <code>addFilterPrefixPath($prefix, $path)</code> Methoden verwendet werden, welche direkt
+            auf den Plugin Lader verweisen der von Zend_Filter_Input verwendet wird:
         </para>
 
         <programlisting role="php"><![CDATA[
-$input->addNamespace('Other_Namespace');
+$input->addValidatorPrefixPath('Other_Namespace', 'Other/Namespace');
+$input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
 
-// Die Suchrichtung ist jetzt:
+// Die Suchrichtung für die Prüfungen ist jetzt:
+// 1. My_Namespace_Validate
 // 1. My_Namespace
-// 2. Other_Namespace
+// 3. Zend_Validate
+
+// Die Suchrichtung für die Filter ist jetzt:
+// 1. My_Namespace_Filter
+// 2. Foo_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate
 ]]>
         </programlisting>
 
@@ -927,6 +934,17 @@ $input->addNamespace('Other_Namespace');
             hinzugefügt werden. Benutzerdefinierte Namensräume werden zuerst durchsucht, Zend Namensräume werden
             zuletzt durchsucht.
         </para>
+
+        <note>
+            <para>
+                Ab der Version 1.5 sollte die Funktion <code>addNamespace($namespace)</code> nicht mehr
+                verwendet werden und wurde durch den Plugin Lader getauscht. Und <code>addFilterPrefixPath</code>
+                sowie <code>addValidatorPrefixPath</code> wurden hinzugefügt. Auch die Konstante
+                <code>Zend_Filter_Input::INPUT_NAMESPACE</code> sollte jetzt nicht mehr verwendet werden.
+                Die Konstanten <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> und
+                <code>Zend_Filter_Input::FILTER_NAMESPACE</code> sind seit den Releases nach 1.7.0 vorhanden.
+            </para>
+        </note>
 
         <note>
             <para>
