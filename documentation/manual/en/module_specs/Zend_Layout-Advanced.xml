@@ -152,7 +152,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <para>
             <code>Zend_Layout</code> uses <code>Zend_Filter_Inflector</code> to
             establish a filter chain for translating a layout name to a layout
-            script path. By default, it uses the rules 'CamelCaseToDash'
+            script path. By default, it uses the rules 'Word_CamelCaseToDash'
             followed by 'StringToLower', and the suffix 'phtml' to transform the
             name to a path. As some examples:
         </para>
@@ -216,7 +216,7 @@ $layout->setViewSuffix('php');
             <programlisting role="php"><![CDATA[
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
-                       ->setFilterRule(array('CamelCaseToUnderscore'));
+                       ->setFilterRule(array('Word_CamelCaseToUnderscore'));
 ]]>
             </programlisting>
         </example>
@@ -234,7 +234,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
             <programlisting role="php"><![CDATA[
 $inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
-    ':script' => array('CamelCaseToUnderscore'),
+    ':script' => array('Word_CamelCaseToUnderscore'),
     'suffix'  => 'html'
 ));
 $layout->setInflector($inflector);
