@@ -259,6 +259,54 @@ $location = $form->foo->getFileName();
         </note>
 
         <para>
+            There are several states of the uploaded file which can be checked
+            with the following methods:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>isUploaded()</code>: Checks if the file element has
+                    been uploaded or not.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isReceived()</code>: Checks if the file element has
+                    already been received.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isFiltered()</code>: Checks if the filters have already
+                    been applied to the file element or not.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+
+        <example id="zend.form.standardElements.file.isuploaded">
+            <title>Checking if an optional file has been uploaded</title>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->setRequired(false);
+$element->addValidator('Size', false, 102400);
+$form->addElement($element, 'foo');
+
+// The foo file element is optional but when it's given go into here
+if ($form->foo->isUploaded()) {
+    // foo file given... do something
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
             <code>Zend_Form_Element_File</code> supports also multiple files.
             By calling the <code>setMultiFile($count)</code> method you can set
             the ammount of file elements you want to create. This prevents you
