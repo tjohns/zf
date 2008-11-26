@@ -4,7 +4,7 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
     define("PHPUnit_MAIN_METHOD", "Zend_Form_Element_FileTest::main");
 }
 
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
+require_once 'Zend/TestHelper.php';
 
 require_once 'Zend/Form/Element/File.php';
 require_once 'Zend/File/Transfer/Adapter/Abstract.php';
@@ -17,8 +17,6 @@ require_once 'Zend/View.php';
  */
 class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
 {
-    protected $_errorOccurred = false;
-
     /**
      * Runs the test methods of this class.
      *
@@ -236,29 +234,6 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $this->element->getMaxFileSize());
         $this->element->setMaxFileSize(3000);
         $this->assertEquals(3000, $this->element->getMaxFileSize());
-
-        $this->_errorOccurred = false;
-        set_error_handler(array($this, 'errorHandlerIgnore'));
-        $this->element->setMaxFileSize(999999999999);
-        if (!$this->_errorOccurred) {
-            $this->fail('INI exception expected');
-        }
-        restore_error_handler();
-    }
-
-    /**
-     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
-     *
-     * @param  integer $errno
-     * @param  string  $errstr
-     * @param  string  $errfile
-     * @param  integer $errline
-     * @param  array   $errcontext
-     * @return void
-     */
-    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
-    {
-        $this->_errorOccurred = true;
     }
 }
 
@@ -312,16 +287,6 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
     public function isReceived($file = null)
     {
         return $this->received;
-    }
-
-    public function isUploaded($files = null)
-    {
-        return true;
-    }
-
-    public function isFiltered($files = null)
-    {
-        return true;
     }
 
     public function getProgress()

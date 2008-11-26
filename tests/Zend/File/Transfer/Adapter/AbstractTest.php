@@ -152,7 +152,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowAddingValidatorInstance()
     {
-        $validator = new Zend_Validate_File_Count(array('min' => 1, 'max' => 1));
+        $validator = new Zend_Validate_File_Count(1, 1);
         $this->adapter->addValidator($validator);
         $test = $this->adapter->getValidator('Zend_Validate_File_Count');
         $this->assertSame($validator, $test);
@@ -160,7 +160,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowAddingValidatorViaPluginLoader()
     {
-        $this->adapter->addValidator('Count', false, array('min' => 1, 'max' => 1));
+        $this->adapter->addValidator('Count');
         $test = $this->adapter->getValidator('Count');
         $this->assertTrue($test instanceof Zend_Validate_File_Count);
     }
@@ -484,8 +484,20 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($filters));
     }
 
+    public function testDestinationShouldDefaultToSystemTempDirectory()
+    {
+        $tmpdir = sys_get_temp_dir();
+        $tmpdir = rtrim($tmpdir, "/\\");
+        $destinations = $this->adapter->getDestination();
+        foreach ($destinations as $file => $destination) {
+            $this->assertEquals($tmpdir, $destination);
+        }
+        $this->assertEquals($tmpdir, $this->adapter->getDestination('foo'));
+    }
+
     public function testTransferDestinationShouldBeMutable()
     {
+        $this->testDestinationShouldDefaultToSystemTempDirectory();
         $directory = dirname(__FILE__);
         $this->adapter->setDestination($directory);
         $destinations = $this->adapter->getDestination();
@@ -506,40 +518,21 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
 
     public function testAdapterShouldAllowRetrievingDestinationsForAnArrayOfSpecifiedFiles()
     {
-        $this->adapter->setDestination(dirname(__FILE__));
+        $this->testTransferDestinationShouldBeMutable();
         $destinations = $this->adapter->getDestination(array('bar', 'baz'));
         $this->assertTrue(is_array($destinations));
-        $directory = dirname(__FILE__);
         foreach ($destinations as $file => $destination) {
             $this->assertTrue(in_array($file, array('bar', 'baz')));
-            $this->assertEquals($directory, $destination);
+            $this->assertEquals('/var/www/upload', $destination);
         }
     }
 
     public function testSettingAndRetrievingOptions()
     {
-        $this->assertEquals(
-            array(
-                'bar' => array('ignoreNoFile' => false),
-                'baz' => array('ignoreNoFile' => false),
-                'foo' => array('ignoreNoFile' => false),
-            ), $this->adapter->getOptions());
+        $this->assertEquals(array('ignoreNoFile' => false), $this->adapter->getOptions());
 
         $this->adapter->setOptions(array('ignoreNoFile' => true));
-        $this->assertEquals(
-            array(
-                'bar' => array('ignoreNoFile' => true),
-                'baz' => array('ignoreNoFile' => true),
-                'foo' => array('ignoreNoFile' => true),
-            ), $this->adapter->getOptions());
-
-        $this->adapter->setOptions(array('ignoreNoFile' => false), 'foo');
-        $this->assertEquals(
-            array(
-                'bar' => array('ignoreNoFile' => true),
-                'baz' => array('ignoreNoFile' => true),
-                'foo' => array('ignoreNoFile' => false),
-            ), $this->adapter->getOptions());
+        $this->assertEquals(array('ignoreNoFile' => true), $this->adapter->getOptions());
     }
 
     public function testGetAllAdditionalFileInfos()
@@ -563,7 +556,7 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $files = $this->adapter->getFileInfo('unknown');
     }
-
+    
     /**
      * @expectedException Zend_File_Transfer_Exception
      */
@@ -614,113 +607,32 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->adapter->setDestination($path);
         $this->assertEquals($path . DIRECTORY_SEPARATOR . 'foo.jpg', $this->adapter->getFileName('foo'));
     }
-
-    public function testAdapterShouldAllowRetrievingFileNameWithoutPath()
-    {
-        $path = dirname(__FILE__)
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '_files';
-        $this->adapter->setDestination($path);
-        $this->assertEquals('foo.jpg', $this->adapter->getFileName('foo', false));
-    }
-
-    public function testAdapterShouldAllowRetrievingAllFileNames()
-    {
-        $path = dirname(__FILE__)
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '_files';
-        $this->adapter->setDestination($path);
-        $files = $this->adapter->getFileName();
-        $this->assertTrue(is_array($files));
-        $this->assertEquals($path . DIRECTORY_SEPARATOR . 'bar.png', $files['bar']);
-    }
-
-    public function testAdapterShouldAllowRetrievingAllFileNamesWithoutPath()
-    {
-        $path = dirname(__FILE__)
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '..'
-              . DIRECTORY_SEPARATOR . '_files';
-        $this->adapter->setDestination($path);
-        $files = $this->adapter->getFileName(null, false);
-        $this->assertTrue(is_array($files));
-        $this->assertEquals('bar.png', $files['bar']);
-    }
-
-    public function testExceptionForUnknownHashValue()
-    {
-        try {
-            $this->adapter->getHash('foo', 'unknown_hash');
-            $this->fail();
-        } catch (Zend_Exception $e) {
-            $this->assertContains('Unknown hash algorithm', $e->getMessage());
-        }
-    }
-
-    public function testEmptyTempDirectoryDetection()
-    {
-        $this->adapter->_tmpDir = "";
-        $this->assertTrue(empty($this->adapter->_tmpDir), "Empty temporary directory");
-    }
-
-    public function testTempDirectoryDetection()
-    {
-        $this->adapter->getTmpDir();
-        $this->assertTrue(!empty($this->adapter->_tmpDir), "Temporary directory filled");
-    }
-
-    public function testTemporaryDirectoryAccessDetection()
-    {
-        $this->adapter->_tmpDir = "";
-        $path = "/NoPath/To/File";
-        $this->assertFalse($this->adapter->isPathWriteable($path));
-        $this->assertTrue($this->adapter->isPathWriteable($this->adapter->_tmpDir));
-    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract
 {
     public $received = false;
 
-    public $_tmpDir;
-
     public function __construct()
     {
         $this->_files = array(
             'foo' => array(
-                'name'      => 'foo.jpg',
-                'type'      => 'image/jpeg',
-                'size'      => 126976,
-                'tmp_name'  => '/tmp/489127ba5c89c',
-                'options'   => array('ignoreNoFile' => false),
-                'validated' => false,
-                'received'  => false,
-                'filtered'  => false,
+                'name'     => 'foo.jpg',
+                'type'     => 'image/jpeg',
+                'size'     => 126976,
+                'tmp_name' => '/tmp/489127ba5c89c',
             ),
             'bar' => array(
                 'name'     => 'bar.png',
                 'type'     => 'image/png',
                 'size'     => 91136,
                 'tmp_name' => '/tmp/489128284b51f',
-                'options'  => array('ignoreNoFile' => false),
-                'validated' => false,
-                'received'  => false,
-                'filtered'  => false,
             ),
             'baz' => array(
                 'name'     => 'baz.text',
                 'type'     => 'text/plain',
                 'size'     => 1172,
                 'tmp_name' => '/tmp/4891286cceff3',
-                'options'  => array('ignoreNoFile' => false),
-                'validated' => false,
-                'received'  => false,
-                'filtered'  => false,
             ),
         );
     }
@@ -746,29 +658,9 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
         return $this->received;
     }
 
-    public function isUploaded($files = null)
-    {
-        return true;
-    }
-
-    public function isFiltered($files = null)
-    {
-        return true;
-    }
-
     public function getProgress()
     {
         return;
-    }
-
-    public function getTmpDir()
-    {
-        $this->_tmpDir = parent::_getTmpDir();
-    }
-
-    public function isPathWriteable($path)
-    {
-        return parent::_isPathWriteable($path);
     }
 }
 
