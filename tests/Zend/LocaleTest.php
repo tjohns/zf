@@ -61,6 +61,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
         // compatibilityMode is true until 1.8 therefor we have to change it
         Zend_Locale::$compatibilityMode = false;
+        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
     }
 
     public function tearDown()
@@ -74,7 +75,6 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testObjectCreation()
     {
-        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
         $this->assertTrue(Zend_Locale::isLocale('de'));
 
         $this->assertTrue(new Zend_Locale() instanceof Zend_Locale);
@@ -199,7 +199,6 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testsetLocale()
     {
-        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
         $value = new Zend_Locale('de_DE');
         $value->setLocale('en_US');
         $this->assertEquals('en_US', $value->toString());
@@ -525,7 +524,6 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testgetBrowser()
     {
         Zend_LocaleTestHelper::resetObject();
-        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
         $value = new Zend_LocaleTestHelper();
         $list = $value->getBrowser();
         $this->assertTrue(isset($list['de']));
