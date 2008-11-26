@@ -696,13 +696,13 @@ class Zend_Date extends Zend_Date_DateObject
                 }
 
                 if (($output[$i][0] !== "'") and (preg_match('/A+/', $output[$i]))) {
-                    $length     = strlen($output[$i]);
-                    $seconds    = $this->get(self::TIMESTAMP,   $locale);
-                    $month      = $this->get(self::MONTH_SHORT, $locale);
-                    $day        = $this->get(self::DAY_SHORT,   $locale);
-                    $year       = $this->get(self::YEAR,        $locale);
+                    $length = strlen($output[$i]);
+                    $hour   = $this->get(self::HOUR,        $locale);
+                    $minute = $this->get(self::MINUTE,      $locale);
+                    $second = $this->get(self::SECOND,      $locale);
+                    $milli  = $this->get(self::MILLISECOND, $locale);
 
-                    $seconds   -= $this->mktime(0, 0, 0, $month, $day, $year, false);
+                    $seconds    = $milli + ($second * 1000) + ($minute * 60000) + ($hour * 3600000);
                     $output[$i] = str_pad($seconds, $length, '0', STR_PAD_LEFT);
                 }
 
