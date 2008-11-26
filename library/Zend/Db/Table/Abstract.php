@@ -1171,11 +1171,11 @@ abstract class Zend_Db_Table_Abstract
 
     /**
      * Fetches one row in an object of type Zend_Db_Table_Row_Abstract,
-     * or returns Boolean false if no row matches the specified criteria.
+     * or returns null if no row matches the specified criteria.
      *
      * @param string|array|Zend_Db_Table_Select $where  OPTIONAL An SQL WHERE clause or Zend_Db_Table_Select object.
      * @param string|array                      $order  OPTIONAL An SQL ORDER clause.
-     * @return Zend_Db_Table_Row_Abstract The row results per the
+     * @return Zend_Db_Table_Row_Abstract|null The row results per the
      *     Zend_Db_Adapter fetch mode, or null if no row found.
      */
     public function fetchRow($where = null, $order = null)
