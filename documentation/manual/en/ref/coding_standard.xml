@@ -60,7 +60,7 @@
 
             <para>
                 For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
-                not required by PHP, and omitting it prevents the accidental injection of trailing whitespace into the response.
+                not required by PHP, and omitting it prevents the accidental injection of trailing white space into the response.
             </para>
 
             <para>
@@ -112,7 +112,7 @@
                 of the classes directly map to the directories in which they are stored.
                 The root level directory of the ZF standard library is the "Zend/" directory, whereas
                 the root level directory of the ZF extras library is the "ZendX/" directory. All
-                Zend Framework classes are stored hierarchially under these root directories..
+                Zend Framework classes are stored hierarchically under these root directories..
             </para>
 
             <para>
@@ -152,7 +152,7 @@
 
             <para>
                 Any file that contains PHP code should end with the extension ".php", with the notable exception of view scripts. The following
-                examples show acceptable filenames for Zend Framework classes.:
+                examples show acceptable filenames for Zend Framework classes:
 
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
@@ -253,12 +253,11 @@ widgetFactory()
             </para>
 
             <para>
-                All letters used in a constant name must be capitalized.
+                All letters used in a constant name must be capitalized, while all words in a constant name must be separated by underscore characters.
             </para>
 
             <para>
-                Words in constant names must be separated by underscore characters. For
-                example, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> is permitted but
+                For example, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> is permitted but
                 <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> is not.
             </para>
 
@@ -366,7 +365,7 @@ $company = 'Zend' . ' ' . 'Technologies';
                 <para>
                     When concatenating strings with the "." operator, it is encouraged to
                     break the statement into multiple lines to improve readability. In these
-                    cases, each successive line should be padded with whitespace such that the
+                    cases, each successive line should be padded with white space such that the
                     "."; operator is aligned under the "=" operator:
 
                     <programlisting role="php"><![CDATA[
@@ -403,7 +402,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio');
                 </para>
 
                 <para>
-                    It is permitted to declare multiline indexed arrays using the "array" construct.
+                    It is permitted to declare multi-line indexed arrays using the "array" construct.
                     In this case, each successive line must be padded with spaces such that beginning of
                     each line is aligned:
 
@@ -421,7 +420,7 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
 
                 <para>
                     When declaring associative arrays with the <code>array</code> construct, breaking the statement into multiple lines
-                    is encouraged. In this case, each successive line must be padded with whitespace such that both the keys and the values are aligned:
+                    is encouraged. In this case, each successive line must be padded with white space such that both the keys and the values are aligned:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
@@ -479,7 +478,7 @@ class SampleClass
                     declaration of any methods.
                 </para>
                 <para>
-                    The <code>var</code> constuct is not permitted.  Member variables always declare
+                    The <code>var</code> construct is not permitted.  Member variables always declare
                     their visibility by using one of the <code>private</code>, <code>protected</code>,
                     or <code>public</code> modifiers. Giving access to member variables directly by declaring them
                     as public is permitted but discouraged in favor of accessor methods (set/get).
@@ -557,7 +556,7 @@ class Foo
 
 
                 <para>
-                    The return value must not be enclosed in parentheses.  This can hinder readability, in addtional to breaking code
+                    The return value must not be enclosed in parentheses.  This can hinder readability, in additional to breaking code
                     if a method is later changed to return by reference.
 
                     <programlisting role="php"><![CDATA[
