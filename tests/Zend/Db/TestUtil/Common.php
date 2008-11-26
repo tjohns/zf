@@ -292,7 +292,6 @@ abstract class Zend_Db_TestUtil_Common
         return array(
             'product_id'    => 'INTEGER NOT NULL',
             'price_name'    => 'VARCHAR(100)',
-            'price'         => 'FLOAT(10,8)',
             'price_total'   => 'DECIMAL(10,2) NOT NULL',
             'PRIMARY KEY'   => 'product_id'
             );
@@ -409,7 +408,6 @@ abstract class Zend_Db_TestUtil_Common
             array(
                 'product_id'   => 1,
                 'price_name'   => 'Price 1',
-                'price'        => 20.450458,
                 'price_total'  => 200.45
             )
         );

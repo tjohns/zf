@@ -90,6 +90,36 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
         }
     }
 
+    /**
+     * Test that describeTable() returns correct float type
+     * @group ZF-3624
+     */
+    protected function _getColumnsPrice()
+    {
+        return array(
+            'product_id'    => 'INTEGER NOT NULL',
+            'price_name'    => 'VARCHAR(100)',
+            'price'         => 'FLOAT(10,8)',
+            'price_total'   => 'DECIMAL(10,2) NOT NULL',
+            'PRIMARY KEY'   => 'product_id'
+            );
+    }
+
+    /**
+     * Test that describeTable() returns correct float type
+     * @group ZF-3624
+     */
+    protected function _getDataPrice()
+    {
+        return array(
+            array(
+                'product_id'   => 1,
+                'price_name'   => 'Price 1',
+                'price_total'  => 200.45
+            )
+        );
+    }
+
     public function setUp(Zend_Db_Adapter_Abstract $db)
     {
         parent::setUp($db);
