@@ -3,11 +3,11 @@
 
     <para>
         When using Zend Framework's MVC layer, chances are you will be using
-        <code>Zend_View</code>. <code>Zend_View</code> is relatively performant
-        when compared to other view or templating engines; since view scripts
+        <code>Zend_View</code>. <code>Zend_View</code> is performs well
+        compared to other view or templating engines; since view scripts
         are written in PHP, you do not incur the overhead of compiling custom
         markup to PHP, nor do you need to worry that the compiled PHP is
-        unoptimized. However, <code>Zend_View</code> presents its own issues:
+        not optimized. However, <code>Zend_View</code> presents its own issues:
         extension is done via overloading (view helpers), and a number of view
         helpers, while carrying out key functionality do so with a performance
         cost.

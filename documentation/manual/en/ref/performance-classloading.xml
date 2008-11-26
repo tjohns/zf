@@ -6,7 +6,7 @@
         immediately recognize that class loading is relatively expensive in Zend
         Framework. Between the sheer number of class files that need to be
         loaded for many components, to the use of plugins that do not have a 1:1
-        relationship between their class name and the filesystem, the various
+        relationship between their class name and the file system, the various
         calls to <code>include_once</code> and <code>require_once</code> can be
         problematic. This chapter intends to provide some concrete solutions to
         these issues.
@@ -155,7 +155,7 @@ library
             <para>
                 Next, we'll opt to create our include_path programmatically
                 within our public/index.php file. This allows us to move our
-                code around on the filesystem, without needing to edit the
+                code around on the file system, without needing to edit the
                 include_path every time.
             </para>
 
@@ -204,7 +204,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
             <title>Strip require_once calls with find and sed</title>
 
             <para>
-                An easy way to strip require_once calls is to use the unix
+                An easy way to strip require_once calls is to use the UNIX
                 utilities 'find' and 'sed' in conjunction to comment out each
                 call. Try executing the following statements (where '%'
                 indicates the shell prompt):
@@ -258,7 +258,7 @@ Zend_Loader::registerAutoload();
             through each path attached to it, testing to see if the file exists
             and is readable on that path. It then loads it, and tests to see
             that the class it is looking for is available. As you might imagine,
-            this can lead to many stat calls on the filesystem.
+            this can lead to many stat calls on the file system.
         </para>
 
         <para>

@@ -14,7 +14,7 @@
 
         <para>
             Not all translation adapters are made equal. Some have more
-            features than others, and some are more performant than others.
+            features than others, and some perform better than others.
             Additionally, you may have business requirements that force you to
             use a particular adapter. However, if you have a choice, which
             adapters are fastest?
@@ -53,7 +53,7 @@
                 <listitem><para>
                     <emphasis>Gettext</emphasis>: the Zend Framework gettext
                     adapter does <emphasis>not</emphasis> use the gettext
-                    extension as it is not threadsafe and does not allow
+                    extension as it is not thread safe and does not allow
                     specifying more than one locale per server. As a result, it
                     is slower than using the gettext extension directly, but,
                     because the gettext format is binary, it's faster to parse
