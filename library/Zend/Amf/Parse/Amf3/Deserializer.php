@@ -166,7 +166,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
      * Strings are encoding using UTF-8 - however the header may either
      * describe a string literal or a string reference.
      *
-     * - string = 0×06 string-data
+     * - string = 0x06 string-data
      * - string-data = integer-data [ modified-utf-8 ]
      * - modified-utf-8 = *OCTET
      *
@@ -205,7 +205,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
      * of midnight, 1st Jan 1970 in the UTC time zone.
      * Local time zone information is not sent to flash.
      *
-     * - date = 0×08 integer-data [ number-data ]
+     * - date = 0x08 integer-data [ number-data ]
      *
      * @return Zend_Date
      */
@@ -232,7 +232,7 @@ class Zend_Amf_Parse_Amf3_Deserializer extends Zend_Amf_Parse_Deserializer
     /**
      * Read amf array to PHP array
      *
-     * - array = 0×09 integer-data ( [ 1OCTET *amf3-data ] | [OCTET *amf3-data 1] | [ OCTET *amf-data ] )
+     * - array = 0x09 integer-data ( [ 1OCTET *amf3-data ] | [OCTET *amf3-data 1] | [ OCTET *amf-data ] )
      *
      * @return array
      */
