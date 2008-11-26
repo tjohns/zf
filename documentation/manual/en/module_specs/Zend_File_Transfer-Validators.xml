@@ -1046,12 +1046,30 @@ $upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc
                     With this option you can define the mimetype of files which will be accepted.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <code>magicfile</code>: The magicfile which shall be used.
+                </para>
+
+                <para>
+                    With this option you can define magicfile to use. When it's not set or empty, the
+                    MAGIC constant will be used instead. This option is available since Zend Framework 1.7.1.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
             This validator accepts multiple mimetype either as a comma-delimited string, or as an
             array. You may also use the methods <code>setMimeType()</code>, <code>addMimeType()</code>,
             and <code>getMimeType()</code> to set and retrieve mimetype.
+        </para>
+
+        <para>
+            You can also set the magicfile which shall be used by fileinfo with the 'magicfile' option.
+            Additionally there are convinient <code>setMagicFile()</code> and <code>getMagicFile()</code>
+            methods which allow later setting and retrieving of the magicfile parameter. This methods are
+            available since Zend Framework 1.7.1.
         </para>
 
         <example id="zend.file.transfer.validators.mimetype.example">
@@ -1068,6 +1086,9 @@ $upload->addValidator('MimeType', false, array('image/gif', 'image/jpeg');
 
 // Limit the mimetype of all given files to the group images
 $upload->addValidator('MimeType', false, 'image');
+
+// Use a different magicfile
+$upload->addValidator('MimeType', false, array('image', 'magicfile' => '/path/to/magicfile.mgx'));
 ]]>
             </programlisting>
         </example>
