@@ -80,6 +80,9 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
                 case Zend_Amf_Constants::AMF3_BYTEARRAY:
                     $this->writeString($data);
                     break;
+                case Zend_Amf_Constants::AMF3_XMLSTRING;
+                    $this->writeString($data);
+                    break;
                 default:
                     require_once 'Zend/Amf/Exception.php';
                     throw new Zend_Amf_Exception('Unknown Type Marker: ' . $markerType);
@@ -119,6 +122,14 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
                         $markerType = Zend_Amf_Constants::AMF3_DATE;
                     } else if ($data instanceof Zend_Amf_Value_ByteArray) {
                         $markerType = Zend_Amf_Constants::AMF3_BYTEARRAY;
+                    } else if ($data instanceof DOMDocument) {
+                        // convert object to string
+                        $data = $data->saveXml();
+                        $markerType = Zend_Amf_Constants::AMF3_XMLSTRING;
+                    } else if ($data instanceof SimpleXMLElement) {
+                        // convert object to string;
+                        $data = $data->asXML();
+                        $markerType = Zend_Amf_Constants::AMF3_XMLSTRING;
                     } else {
                         $markerType = Zend_Amf_Constants::AMF3_OBJECT;
                     }
