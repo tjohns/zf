@@ -390,6 +390,9 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $requestUri = $_SERVER['HTTP_X_REWRITE_URL'];
             } elseif (isset($_SERVER['REQUEST_URI'])) {
                 $requestUri = $_SERVER['REQUEST_URI'];
+                if (isset($_SERVER['HTTP_HOST']) && strstr($requestUri, $_SERVER['HTTP_HOST'])) {
+                    $requestUri = preg_replace('#^[^:]*://[^/]*/#', '/', $requestUri);
+                }
             } elseif (isset($_SERVER['ORIG_PATH_INFO'])) { // IIS 5.0, PHP as CGI
                 $requestUri = $_SERVER['ORIG_PATH_INFO'];
                 if (!empty($_SERVER['QUERY_STRING'])) {
