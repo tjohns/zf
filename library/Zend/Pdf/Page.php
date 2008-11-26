@@ -968,10 +968,10 @@ class Zend_Pdf_Page
         $this->_contents .= $path;
 
         if ($fillMethod == Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING) {
-            $this->_contents .= " h\n W\n";
+            $this->_contents .= " h\n W\nn\n";
         } else {
             // Even-Odd fill method.
-            $this->_contents .= " h\n W*\n";
+            $this->_contents .= " h\n W*\nn\n";
         }
     }
 
@@ -994,7 +994,7 @@ class Zend_Pdf_Page
 
         $this->_contents .= $x1Obj->toString() . ' ' . $y1Obj->toString() . ' '
                          .      $widthObj->toString() . ' ' . $height2Obj->toString() . " re\n"
-                         .  " W\n";
+                         .  " W\nn\n";
     }
 
     /**
