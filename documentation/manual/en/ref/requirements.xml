@@ -19,12 +19,13 @@
         <title>PHP Version</title>
 
         <para>
-            Zend recommends PHP 5.2.3 or higher for critical security and performance enhancements, although
-            Zend Framework requires only PHP 5.1.4 or later.
+            Zend recommends the most current release of PHP for critical
+            security and performance enhancements, and currently supports
+            PHP 5.2.4 or later.
         </para>
 
         <para>
-            Zend Framework has an extensive collection of unit tests, which you can run using PHPUnit 3.0 or later.
+            Zend Framework has an extensive collection of unit tests, which you can run using PHPUnit 3.3.0 or later.
         </para>
 
     </sect1>
