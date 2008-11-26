@@ -245,10 +245,11 @@ abstract class Zend_Translate_Adapter {
         if ($optionKey === null) {
             return $this->_options;
         }
-        $optionKey = strtolower($optionKey);
+
         if (isset($this->_options[$optionKey]) === true) {
             return $this->_options[$optionKey];
         }
+
         return null;
     }
 
