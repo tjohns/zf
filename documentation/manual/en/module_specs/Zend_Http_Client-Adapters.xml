@@ -148,7 +148,7 @@ $config = array(
 );
 
 // Instantiate a client object
-$client = Zend_Http_Client('https://www.example.com', $config);
+$client = new Zend_Http_Client('https://www.example.com', $config);
 
 // The following request will be sent over a TLS secure connection.
 $response = $client->request();
@@ -254,7 +254,7 @@ $config = array(
 );
 
 // Instantiate a client object
-$client = Zend_Http_Client('http://www.example.com', $config);
+$client = new Zend_Http_Client('http://www.example.com', $config);
 
 // Continue working...
 ]]>
@@ -295,7 +295,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
             <programlisting role="php"><![CDATA[
 // Instantiate a new adapter and client
 $adapter = new Zend_Http_Client_Adapter_Test();
-$client = Zend_Http_Client('http://www.example.com', array(
+$client = new Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
 ));
 
@@ -339,7 +339,7 @@ $response = $client->request('GET');
             <programlisting role="php"><![CDATA[
 // Instantiate a new adapter and client
 $adapter = new Zend_Http_Client_Adapter_Test();
-$client = Zend_Http_Client('http://www.example.com', array(
+$client = new Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
 ));
 
