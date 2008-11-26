@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12880 -->
 <appendix id="requirements">
     <title>Configuration système requise par le Zend Framework</title>
 
@@ -442,9 +442,9 @@
                         <entry><emphasis role="strong"><ulink
                         url="http://www.php.net/manual/fr/ref.ldap.php"><code>ldap</code></ulink></emphasis></entry>
 
-                        <entry>---</entry>
+                        <entry>Hard</entry>
 
-                        <entry>---</entry>
+                        <entry>Zend_Ldap</entry>
                     </row>
 
                     <row>
@@ -1467,7 +1467,7 @@
 
                         <entry>---</entry>
 
-                        <entry>---</entry>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ldap.php"><code>ldap</code></ulink></entry>
                     </row>
 
                     <row>

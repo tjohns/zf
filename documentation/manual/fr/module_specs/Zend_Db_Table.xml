@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12737 -->
+<!-- EN-Revision: 12846 -->
 <sect1 id="zend.db.table">
     <title>Zend_Db_Table</title>
 
@@ -511,7 +511,7 @@ $table->delete($where);
         </example>
 
         <para>Cette méthode est proxiée vers <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link>
-        de l'adaptateur. Si le deuxième paramètre est un tableau, chacun des éléments du tableau sera joint au suivant
+        de l'adaptateur. Si le paramètre est un tableau, chacun des éléments du tableau sera joint au suivant
         avec l'opération <code>AND</code> pour former la clause WHERE.</para>
 
         <note>

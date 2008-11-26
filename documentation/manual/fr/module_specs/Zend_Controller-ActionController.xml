@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12876 -->
 <sect1 id="zend.controller.action">
     <title>Contrôleurs d'action</title>
 
@@ -207,6 +207,14 @@ if ($this->_hasParam('id') {
 
         <sect3 id="zend.controller.action.viewintegration.initview">
             <title>Initialisation des Vues</title>
+
+            <note id="zend.controller.action.viewintegration.viewrenderer">
+                <title>Par défaut, l'intégration des vues est réalisé via le ViewRenderer</title>
+
+                <para>Le contenu de cette section n'est valable que si vous avez explicitement désactivé le
+                <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>. Sinon, vous pouvez passer
+                à la section suivante.</para>
+            </note>
 
             <para><code>initView()</code> initialise l'objet Vue. <code>render()</code> appelle <code>initView()</code>
             dans le but de récupérer l'objet de vue, mais il peut être initialisé à tout moment ; par défaut il remplit
