@@ -706,14 +706,9 @@ $table->delete($where);
         </example>
 
         <para>
-            The second argument can be an array of SQL expressions. The expressions are combined as
-            Boolean terms using an <code>AND</code> operator.
-        </para>
-
-        <para>
             Since the table <code>delete()</code> method proxies to the database adapter
             <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link> method, the
-            second argument can be an array of SQL expressions. The expressions are combined as
+            argument can also be an array of SQL expressions. The expressions are combined as
             Boolean terms using an <code>AND</code> operator.
         </para>
 
