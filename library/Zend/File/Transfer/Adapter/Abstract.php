@@ -216,6 +216,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
                     require_once 'Zend/Loader/PluginLoader.php';
                     $this->_loaders[$type] = new Zend_Loader_PluginLoader($paths);
+                } else {
+                    $loader = $this->_loaders[$type];
+                    $prefix = 'Zend_' . $prefixSegment . '_File_';
+                    if (!$loader->getPaths($prefix)) {
+                        $loader->addPrefixPath($prefix, str_replace('_', '/', $prefix));
+                    }
                 }
                 return $this->_loaders[$type];
             default:
@@ -580,7 +586,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $validator->setTranslator($translator);
                     }
 
-                    if (!$validator->isValid($content['tmp_name'], $content)) {
+                    $tocheck = $content['tmp_name'];
+                    if (($class === 'Zend_Validate_File_Upload') and (empty($content['tmp_name']))) {
+                        $tocheck = $key;
+                    }
+
+                    if (!$validator->isValid($tocheck, $content)) {
                         $fileerrors += $validator->getMessages();
                     }
 
