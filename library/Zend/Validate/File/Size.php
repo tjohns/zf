@@ -282,16 +282,17 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
 
         // limited to 4GB files
         $size = sprintf("%u", @filesize($value));
-        $this->_setSize($size);
 
         // Check to see if it's smaller than min size
         $min = $this->getMin(true);
         $max = $this->getMax(true);
         if (($min !== null) && ($size < $min)) {
             if ($this->useByteString()) {
-                $this->setMin($this->_toByteString($min));
+                $this->_min  = $this->_toByteString($min);
+                $this->_size = $this->_toByteString($size);
                 $this->_throw($file, self::TOO_SMALL);
-                $this->setMin($min);
+                $this->_min  = $min;
+                $this->_size = $size;
             } else {
                 $this->_throw($file, self::TOO_SMALL);
             }
@@ -300,9 +301,11 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
         // Check to see if it's larger than max size
         if (($max !== null) && ($max < $size)) {
             if ($this->useByteString()) {
-                $this->setMax($this->_toByteString($max));
+                $this->_max  = $this->_toByteString($max);
+                $this->_size = $this->_toByteString($size);
                 $this->_throw($file, self::TOO_BIG);
-                $this->setMax($max);
+                $this->_max  = $max;
+                $this->_size = $size;
             } else {
                 $this->_throw($file, self::TOO_BIG);
             }
@@ -327,6 +330,7 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
         for ($i=0; $size >= 1024 && $i < 9; $i++) {
             $size /= 1024;
         }
+
         return round($size, 2) . $sizes[$i];
     }
 
@@ -342,31 +346,36 @@ class Zend_Validate_File_Size extends Zend_Validate_Abstract
             return (integer) $size;
         }
 
-        $type  = trim(substr($size, -2));
-        $value = substr($size, 0, -2);
+        $type  = trim(substr($size, -2, 1));
+
+        $value = substr($size, 0, -1);
+        if (!is_numeric($value)) {
+            $value = substr($value, 0, -1);
+        }
+
         switch (strtoupper($type)) {
-            case 'YB':
+            case 'Y':
                 $value *= (1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024);
                 break;
-            case 'ZB':
+            case 'Z':
                 $value *= (1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024);
                 break;
-            case 'EB':
+            case 'E':
                 $value *= (1024 * 1024 * 1024 * 1024 * 1024 * 1024);
                 break;
-            case 'PB':
+            case 'P':
                 $value *= (1024 * 1024 * 1024 * 1024 * 1024);
                 break;
-            case 'TB':
+            case 'T':
                 $value *= (1024 * 1024 * 1024 * 1024);
                 break;
-            case 'GB':
+            case 'G':
                 $value *= (1024 * 1024 * 1024);
                 break;
-            case 'MB':
+            case 'M':
                 $value *= (1024 * 1024);
                 break;
-            case 'KB':
+            case 'K':
                 $value *= 1024;
                 break;
             default:
