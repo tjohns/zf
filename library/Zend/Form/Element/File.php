@@ -145,7 +145,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         if (empty($type)) {
             $pluginPrefix = rtrim($prefix, '_') . '_Transfer_Adapter';
             $pluginPath   = rtrim($path, DIRECTORY_SEPARATOR) . '/Transfer/Adapter/';
-            $loader       = $this->getPluginLoader(self::TRANSFER_ADAPTER);
+            $loader    = $this->getPluginLoader(self::TRANSFER_ADAPTER);
             $loader->addPrefixPath($pluginPrefix, $pluginPath);
             return parent::addPrefixPath($prefix, $path, null);
         }
@@ -172,11 +172,6 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         } else {
             require_once 'Zend/Form/Element/Exception.php';
             throw new Zend_Form_Element_Exception('Invalid adapter specified');
-        }
-
-        foreach (array('filter', 'validate') as $type) {
-            $loader = $this->getPluginLoader($type);
-            $this->_adapter->setPluginLoader($loader, $type);
         }
 
         return $this;
@@ -563,8 +558,53 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function setMaxFileSize($size)
     {
+        $ini = $this->_convertIniToInteger(trim(ini_get('post_max_size')));
+        $mem = $this->_convertIniToInteger(trim(ini_get('memory_limit')));
+        $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
+
+        if (($max > -1) and ($size > $max)) {
+            trigger_error("Your 'upload_max_filesize' config setting allows only $max. You set $size.", E_USER_ERROR);
+        }
+
+        if (($ini > -1) and ($size > $ini)) {
+            trigger_error("Your 'post_max_size' config setting allows only $ini. You set $size.", E_USER_ERROR);
+        }
+
+        if (($mem > -1) and ($ini > $mem)) {
+            trigger_error("Your 'post_max_size' config settings exceeds the 'memory_limit' setting. You should fix this.", E_USER_ERROR);
+        }
+
         self::$_maxFileSize = $size;
         return $this;
+    }
+
+    /**
+     * Converts a ini setting to a integer value
+     *
+     * @param  string $setting
+     * @return integer
+     */
+    private function _convertIniToInteger($setting)
+    {
+        if (!is_numeric($setting)) {
+            $type = strtoupper(substr($setting, -1));
+            $setting = (integer) substr($setting, 0, -1);
+
+            switch ($type) {
+                case 'M' :
+                    $setting *= 1024;
+                    break;
+
+                case 'G' :
+                    $setting *= 1024 * 1024;
+                    break;
+
+                default :
+                    break;
+            }
+        }
+
+        return (integer) $setting;
     }
 
     /**
