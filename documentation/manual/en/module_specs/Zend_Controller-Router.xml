@@ -45,7 +45,7 @@ RewriteRule ^.*$ index.php [NC,L]
         </programlisting>
 
         <para>
-            The rewrite router can also be used with the IIS webserver if <ulink
+            The rewrite router can also be used with the IIS webserver (versions &lt;= 7.0) if <ulink
                 url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> has been
             installed as an Isapi extension with the following rewrite rule:
         </para>
@@ -65,6 +65,39 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css|html)$)[\w\%]*$)? /index.
                 Isapi_Rewrite extension.
             </para>
         </note>
+
+        <para>
+            IIS 7.0 introduces a native URL rewriting module, and it can be
+            configured as follows:
+        </para>
+
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsFile" pattern="" 
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsDirectory" 
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
 
         <para>
             If using Lighttpd, the following rewrite rule is valid:

@@ -88,7 +88,40 @@ RewriteRule ^.*$ index.php [NC,L]
             </programlisting>
 
             <para>
-                The above rule will route requests to existing resources
+                If using IIS 7.0, use the following as your rwrite
+                configuration:
+            </para>
+
+            <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsFile" pattern="" 
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsDirectory" 
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
+
+            <para>
+                The above rules will route requests to existing resources
                 (existing symlinks, non-empty files, or non-empty directories)
                 accordingly, and all other requests to the front controller.
             </para>
