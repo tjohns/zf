@@ -313,7 +313,7 @@ $newRow->save();
             </para>
 
             <example id="zend.db.table.row.write.delete.example">
-´
+
                 <title>Beispiel für das Löschen einer Zeile</title>
 
                 <programlisting role="php"><![CDATA[

@@ -2,6 +2,7 @@
 <sect1 id="zend.pdf.pages">
     <title>Dokument Seiten</title>
     <sect2 id="zend.pdf.pages.creation">
+        <title>Erstellung von Seiten</title>
         <para>
             Die Abstraktion von PDF Dokumentseiten wird durch die Klasse <code>Zend_Pdf_Page</code>
             abgebildet.
