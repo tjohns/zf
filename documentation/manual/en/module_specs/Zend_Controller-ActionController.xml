@@ -264,6 +264,16 @@ if ($this->_hasParam('id') {
     <sect2 id="zend.controller.action.viewintegration">
         <title>View Integration</title>
 
+        <note id="zend.controller.action.viewintegration.viewrenderer">
+            <title>Default view integration is via the ViewRenderer</title>
+
+            <para>
+                The content in this section is only valid when you have
+                explicitly disabled the <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>.
+                Otherwise, you can safely skip over this section.
+            </para>
+        </note>
+
         <para>
             <code>Zend_Controller_Action</code> provides a rudimentary and
             flexible mechanism for view integration. Two methods accomplish
@@ -311,7 +321,7 @@ applicationOrModule/
                 <code>views</code> subdirectory is assumed to contain sibling
                 functionality (helpers, filters). When determining the view
                 script name and path, the <code>views/scripts/</code> directory
-                will be used as the base path, with a directories named after the
+                will be used as the base path, with directories named after the
                 individual controllers providing a hierarchy of view scripts.
             </para>
         </sect3>
@@ -348,7 +358,7 @@ string render(string $action = null,
 
             <note><para>
                     Since controller and action names may contain word delimiter
-                    characters such as '_', '.', and '-', render() normalizes
+                    characters such as '_', '.', and '-', <code>render()</code> normalizes
                     these to '-' when determining the script name. Internally,
                     it uses the dispatcher's word and path delimiters to do this
                     normalization. Thus, a request to
