@@ -74,6 +74,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testObjectCreation()
     {
+        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
         $this->assertTrue(Zend_Locale::isLocale('de'));
 
         $this->assertTrue(new Zend_Locale() instanceof Zend_Locale);
@@ -198,6 +199,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testsetLocale()
     {
+        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
         $value = new Zend_Locale('de_DE');
         $value->setLocale('en_US');
         $this->assertEquals('en_US', $value->toString());
@@ -564,7 +566,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Locale::isLocale('yy'));
         $this->assertFalse(Zend_Locale::isLocale(1234));
         $this->assertFalse(Zend_Locale::isLocale('', true));
-        $this->assertTrue(Zend_Locale::isLocale('', false));
+        $this->assertFalse(Zend_Locale::isLocale('', false));
         $this->assertTrue(Zend_Locale::isLocale('auto'));
         $this->assertTrue(Zend_Locale::isLocale('browser'));
         $this->assertTrue(Zend_Locale::isLocale('environment'));
@@ -578,7 +580,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Locale::isLocale('yy'));
         $this->assertFalse(Zend_Locale::isLocale(1234));
         $this->assertFalse(Zend_Locale::isLocale('', true));
-        $this->assertTrue(is_string(Zend_Locale::isLocale('', false)));
+        $this->assertFalse(Zend_Locale::isLocale('', false));
         $this->assertTrue(is_string(Zend_Locale::isLocale('auto')));
         $this->assertTrue(is_string(Zend_Locale::isLocale('browser')));
         $this->assertTrue(is_string(Zend_Locale::isLocale('environment')));
@@ -642,6 +644,23 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testZF3617() {
         $value = new Zend_Locale('en-US');
         $this->assertEquals('en_US', $value->toString());
+    }
+
+    /**
+     * @ZF4963
+     */
+    public function testZF4963() {
+        $value = new Zend_Locale();
+        $locale = $value->toString();
+        $this->assertTrue(!empty($locale));
+
+        $this->assertTrue(Zend_Locale::isLocale(null));
+
+        $value = new Zend_Locale(0);
+        $value = $value->toString();
+        $this->assertTrue(!empty($value));
+
+        $this->assertFalse(Zend_Locale::isLocale(0));
     }
 
     /**
