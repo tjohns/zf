@@ -243,10 +243,27 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         set_error_handler(array($this, 'errorHandlerIgnore'));
         $this->element->setMaxFileSize(999999999999);
         if (!$this->_errorOccurred) {
-            restore_error_handler();
             $this->fail('INI exception expected');
         }
         restore_error_handler();
+    }
+
+    public function testTranslatingValidatorErrors()
+    {
+        require_once 'Zend/Translate.php';
+        $translate = new Zend_Translate('array', array('unused', 'foo' => 'bar'), 'en');
+        $this->element->setTranslator($translate);
+
+        $adapter = $this->element->getTranslator();
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+
+        $adapter = $this->element->getTransferAdapter();
+        $adapter = $adapter->getTranslator();
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+
+        $this->assertFalse($this->element->translatorIsDisabled());
+        $this->element->setDisableTranslator($translate);
+        $this->assertTrue($this->element->translatorIsDisabled());
     }
 
     private function _convertIniToInteger($setting)
@@ -285,20 +302,6 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
     public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
     {
         $this->_errorOccurred = true;
-    }
-
-    /**
-     * @group ZF-5007
-     */
-    public function testSettingValidatorAndFilterPrefixesShouldProxyToAdapter()
-    {
-        $this->element->addPrefixPath('Zend_Form_Element_Test_Filter', dirname(__FILE__) . '/_files/filter', 'filter')
-                      ->addPrefixPath('Zend_Form_Element_Test_Validate', dirname(__FILE__) . '/_files/validator', 'validate');
-        $adapter = $this->element->getTransferAdapter();
-        $filterPaths = $adapter->getPluginLoader('filter')->getPaths();
-        $this->assertContains('Zend_Form_Element_Test_Filter_', array_keys($filterPaths), var_export($filterPaths, 1));
-        $validatorPaths = $adapter->getPluginLoader('validate')->getPaths();
-        $this->assertContains('Zend_Form_Element_Test_Validate_', array_keys($validatorPaths));
     }
 }
 
