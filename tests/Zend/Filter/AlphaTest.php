@@ -58,18 +58,18 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
 
     /**
      * Locale in browser.
-     * 
+     *
      * @var Zend_Locale object
      */
     protected $_locale;
-    
+
     /**
      * The Alphabet means english alphabet.
-     * 
+     *
      * @var boolean
      */
     protected static $_meansEnglishAlphabet;
-    
+
     /**
      * Creates a new Zend_Filter_Alpha object for each test method
      *
@@ -82,10 +82,10 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
             self::$_unicodeEnabled = (@preg_match('/\pL/u', 'a')) ? true : false;
         }
         if (null === self::$_meansEnglishAlphabet) {
-        	$this->_locale = new Zend_Locale(Zend_Locale::BROWSER);
-        	self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
-        											array('ja')
-									                );
+            $this->_locale = new Zend_Locale('auto');
+            self::$_meansEnglishAlphabet = in_array($this->_locale->getLanguage(),
+                                                    array('ja')
+                                                    );
         }
     }
 
@@ -105,7 +105,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 ''              => ''
                 );
         } else if (self::$_meansEnglishAlphabet) {
-        	//The Alphabet means english alphabet.
+            //The Alphabet means english alphabet.
             /**
              * The first element contains multibyte alphabets.
              *  But , Zend_Filter_Alpha is expected to return only singlebyte alphabets.
@@ -120,9 +120,9 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 'Ｗ1v３Ｕ4t' => 'vt',
                 '，sй.rλ:qν＿p' => 'srqp',
                 'onml' => 'onml'
-                );               
+                );
         } else {
-        	//The Alphabet means each language's alphabet.
+            //The Alphabet means each language's alphabet.
             $valuesExpected = array(
                 'abc123'        => 'abc',
                 'abc 123'       => 'abc',
@@ -163,13 +163,13 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
                 " \t "          => " \t "
                 );
         } if (self::$_meansEnglishAlphabet) {
-        	//The Alphabet means english alphabet.
+            //The Alphabet means english alphabet.
             $valuesExpected = array(
                 'a B'  => 'a B',
                 'zＹ　x'  => 'zx'
                 );
         } else {
-        	//The Alphabet means each language's alphabet.
+            //The Alphabet means each language's alphabet.
             $valuesExpected = array(
                 'abc123'        => 'abc',
                 'abc 123'       => 'abc ',
