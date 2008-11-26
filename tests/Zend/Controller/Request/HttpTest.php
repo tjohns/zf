@@ -370,7 +370,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     /*
      * Tests if an empty string gets returned when no basepath is set on the request.
      * This is important on windows, where before this fix '\' was returned instead of an empty string.
-     * @see ZF-4810
+     * @group ZF-4810
      */
     public function testGetBasePathIsEmptyStringIfNoneSet()
     {
@@ -585,7 +585,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-1798
+     * @group ZF-1798
      */
     public function testGetAndPostBothInDefaultParamSources()
     {
@@ -593,7 +593,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-1798
+     * @group ZF-1798
      */
     public function testCanSetParamSources()
     {
@@ -605,7 +605,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-1798
+     * @group ZF-1798
      */
     public function testParamSourcesHonoredByGetParam()
     {
@@ -613,6 +613,18 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_POST = array('foo' => 'baz');
         $this->_request->setParamSources(array('_POST'));
         $this->assertEquals('baz', $this->_request->getParam('foo'));
+    }
+
+    /**
+     * @group ZF-3161
+     */
+    public function testRetrievingRequestUriShouldStripProtocolHostAndPortWhenPresent()
+    {
+        $_SERVER['REQUEST_URI'] = 'http://foo.example.com/foo/bar';
+        $_SERVER['HTTP_HOST']   = 'foo.example.com';
+        $request = new Zend_Controller_Request_Http();
+        $test = $request->getRequestUri();
+        $this->assertEquals('/foo/bar', $test);
     }
 }
 
