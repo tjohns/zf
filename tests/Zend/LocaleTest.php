@@ -49,10 +49,13 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
-    private $_cache = null;
+    private $_cache  = null;
+    private $_locale = null;
 
     public function setUp()
     {
+        $this->_locale = setlocale(0);
+        setlocale('de');
         require_once 'Zend/Cache.php';
         $this->_cache = Zend_Cache::factory('Core', 'File',
                  array('lifetime' => 120, 'automatic_serialization' => true),
@@ -67,6 +70,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         $this->_cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+        setlocale($this->_locale);
     }
 
     /**
