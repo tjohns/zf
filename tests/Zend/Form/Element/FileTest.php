@@ -233,17 +233,43 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
 
     public function testSettingMaxFileSize()
     {
+        $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
+
         $this->assertEquals(0, $this->element->getMaxFileSize());
-        $this->element->setMaxFileSize(3000);
-        $this->assertEquals(3000, $this->element->getMaxFileSize());
+        $this->element->setMaxFileSize($max);
+        $this->assertEquals($max, $this->element->getMaxFileSize());
 
         $this->_errorOccurred = false;
         set_error_handler(array($this, 'errorHandlerIgnore'));
         $this->element->setMaxFileSize(999999999999);
         if (!$this->_errorOccurred) {
+            restore_error_handler();
             $this->fail('INI exception expected');
         }
         restore_error_handler();
+    }
+
+    private function _convertIniToInteger($setting)
+    {
+        if (!is_numeric($setting)) {
+            $type = strtoupper(substr($setting, -1));
+            $setting = (integer) substr($setting, 0, -1);
+
+            switch ($type) {
+                case 'M' :
+                    $setting *= 1024;
+                    break;
+
+                case 'G' :
+                    $setting *= 1024 * 1024;
+                    break;
+
+                default :
+                    break;
+            }
+        }
+
+        return (integer) $setting;
     }
 
     /**
@@ -259,6 +285,20 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
     public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
     {
         $this->_errorOccurred = true;
+    }
+
+    /**
+     * @group ZF-5007
+     */
+    public function testSettingValidatorAndFilterPrefixesShouldProxyToAdapter()
+    {
+        $this->element->addPrefixPath('Zend_Form_Element_Test_Filter', dirname(__FILE__) . '/_files/filter', 'filter')
+                      ->addPrefixPath('Zend_Form_Element_Test_Validate', dirname(__FILE__) . '/_files/validator', 'validate');
+        $adapter = $this->element->getTransferAdapter();
+        $filterPaths = $adapter->getPluginLoader('filter')->getPaths();
+        $this->assertContains('Zend_Form_Element_Test_Filter_', array_keys($filterPaths), var_export($filterPaths, 1));
+        $validatorPaths = $adapter->getPluginLoader('validate')->getPaths();
+        $this->assertContains('Zend_Form_Element_Test_Validate_', array_keys($validatorPaths));
     }
 }
 
