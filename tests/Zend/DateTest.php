@@ -449,11 +449,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame(          '+0500', $date->toString(  "ZZZ"));
         $this->assertSame(          '+0500', $date->toString(   "ZZ"));
         $this->assertSame(          '+0500', $date->toString(    "Z"));
-        $this->assertSame(          '16290', $date->toString("AAAAA"));
-        $this->assertSame(          '16290', $date->toString( "AAAA"));
-        $this->assertSame(          '16290', $date->toString(  "AAA"));
-        $this->assertSame(          '16290', $date->toString(   "AA"));
-        $this->assertSame(          '16290', $date->toString(    "A"));
+        $this->assertSame(       '16290000', $date->toString("AAAAA"));
+        $this->assertSame(       '16290000', $date->toString( "AAAA"));
+        $this->assertSame(       '16290000', $date->toString(  "AAA"));
+        $this->assertSame(       '16290000', $date->toString(   "AA"));
+        $this->assertSame(       '16290000', $date->toString(    "A"));
 
         $date = new Zend_Date("1-1-1",null,$locale);
         $date->setTimezone(date_default_timezone_get());
