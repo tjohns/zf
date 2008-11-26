@@ -491,7 +491,7 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 
     // Save cache
-    Zend_XmlRpc_Server_Cache::save($cacheFile, $server));
+    Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
 // Create a request object
