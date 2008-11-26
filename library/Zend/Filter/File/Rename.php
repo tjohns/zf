@@ -40,7 +40,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
     /**
      * Class constructor
      *
-     * Options argument may be either a string, a Zend_Config object, or an array. 
+     * Options argument may be either a string, a Zend_Config object, or an array.
      * If an array or Zend_Config object, it accepts the following keys:
      * 'source'    => Source filename or directory which will be renamed
      * 'target'    => Target filename or directory, the new name of the sourcefile
@@ -59,7 +59,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
             $options = array('target' => $options);
         } elseif (!is_array($options)) {
             require_once 'Zend/Filter/Exception.php';
-            throw new Zend_Filter_Exception('Invalid options argument provided to rename filter');
+            throw new Zend_Filter_Exception('Invalid options argument provided to filter');
         }
 
         if (1 < func_num_args()) {
