@@ -104,7 +104,7 @@ $select = new Zend_Db_Select($db);
 
         <para>
             Wenn die Anfrage erstellt wird können Bedingungen der Anfrage nacheinander hinzugefügt
-            werden. Es gibt eine seperate Methode für das Hinzufügen von verschiedenen Bedingungen
+            werden. Es gibt eine separate Methode für das Hinzufügen von verschiedenen Bedingungen
             zum Zend_Db_Select Objekt.
         </para>
 

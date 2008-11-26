@@ -16,7 +16,7 @@
             Verwendung einer Array Schreibweise in den Namen der Elemente. Zum Beispiel, wenn man
             zwei Adressen hat die geholt werden sollen, eine Versand- und eine Rechnungsadresse,
             hat man identische Elemente; durch deren Gruppierung in einem Array, kann
-            sichergestellt werden das wie seperat geholt werden. Nehmen wir die folgende Form
+            sichergestellt werden das wie separat geholt werden. Nehmen wir die folgende Form
             als Beispiel an:
         </para>
 
@@ -143,7 +143,7 @@
         </programlisting>
 
         <para>
-            In dem obigen Beispiel erhalten wir jetzt seperate Adressen. In der übermittelten Form
+            In dem obigen Beispiel erhalten wir jetzt separate Adressen. In der übermittelten Form
             haben wir jetzt drei Elemente, 'shipping' und 'billing', jedes mit Schlüsseln für
             deren verschiedene Elemente.
         </para>

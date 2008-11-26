@@ -55,7 +55,7 @@
                 "<code>--user</code>" immer einen nachfolgenden Parameter benötigen.
             </para>
             <para>
-                Ein Parameter kann als seperates Argument angegeben werden der einem
+                Ein Parameter kann als separates Argument angegeben werden der einem
                 Flag Argument folgt, oder als Teil der gleichen Zeichenkette des
                 Arguments, getrennt vom Flag durch ein Gleichheitszeichen
                 ("<code>=</code>"). Die zweite Form wird nur bei langen Flags

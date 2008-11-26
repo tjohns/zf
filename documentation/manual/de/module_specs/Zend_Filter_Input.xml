@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12670 -->
+<!-- EN-Revision: 12703 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -902,7 +902,8 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         </para>
 
         <programlisting role="php"><![CDATA[
-$options = array('filterNamespace' => 'My_Namespace_Filter', 'validatorNamespace' => 'My_Namespace_Validate');
+$options = array('filterNamespace' => 'My_Namespace_Filter',
+                 'validatorNamespace' => 'My_Namespace_Validate');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]>
         </programlisting>

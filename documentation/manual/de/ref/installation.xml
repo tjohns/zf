@@ -1,13 +1,11 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="introduction.installation">
 
     <title>Installation</title>
 
     <para>
-        Zend Framework benötigt PHP 5.1.4 oder höher, auch wenn Zend stärkstens 5.2.3 oder höher
-        empfiehlt weil einige kritische Sicherheits- und Performance-Verbesserungen zwischen
-        diesen zwei Versionen eingeführt wurden. Mehr Details hierzu kann im
-        <link linkend="requirements">Anhang Voraussetzungen</link> gefunden werden.
+        Siehe den <link linkend="requirements">Anhang Voraussetzungen</link> für eine detailierte Liste von
+        Voraussetzungen für Zend Framework.
     </para>
 
     <para>
@@ -19,9 +17,9 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download">Herunterladen des letzten stabilen Releases.</ulink>
+                    <ulink url="http://framework.zend.com/download/latest">Herunterladen des letzten stabilen Releases.</ulink>
                     Diese Version, erhältlich in den beiden Formaten <code>.zip</code> und <code>.tar.gz</code> ist
-                    eine gute Wahl für jede für die der Zend Framework neu ist.
+                    eine gute Wahl für jene für die Zend Framework neu ist.
                 </para>
             </listitem>
             <listitem>
@@ -49,15 +47,17 @@
                     Verzeichnisse erhalten will, wie bei der Erstellung einer Arbeitskopie.
                 </para>
                 <para>
-                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">Auschecken einer
-                    Arbeitskopie</ulink> ist gut wenn man am Zend Frameowork mitarbeiten will, und eine
+                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">Checke eine
+                    Arbeitskopie aus</ulink> wenn Du am Zend Frameowork mitarbeiten willst. Eine
                     Arbeitskopie kann jederzeit mit
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.update.html"><code>svn
-                    update</code></ulink> upgedated werden.
+                    update</code></ulink> upgedated werden und Änderungen können mit dem
+                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.commit.html"><code>svn commit</code></ulink>
+                    Kommando in unser SVN Repository übertragen werden.
                 </para>
                 <para>
-                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">Eine externe
-                    Definition</ulink> ist sehr bequem für Entwickler die bereits SVN benutzen um Ihre eigenen
+                    Eine <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">externe
+                    Definition</ulink> ist recht bequem für Entwickler die bereits SVN benutzen um Ihre eigenen
                     Arbeitskopien ihrer Anwendungen zu Verwalten.
                 </para>
                 <para>

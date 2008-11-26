@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>Fortgeschrittene Benutzung</title>
@@ -171,7 +171,7 @@ if ($userProfileNamespace->isLocked()) {
             Anfragen, und das vermindern der Aufdeckung von vielfältigen Sicherheitsrisiken durch das Entfernen des
             Zugangs zu potentiell sensitiven Informationen, manchmal nachdem Authentifizierung stettgefunden hat.
             Das Ende kann entweder auf abgelaufenen Sekunden oder der Anzahl von "Sprüngen" basieren, wobei ein Sprung
-            für jede folgende Anfrage stattfindet die den Namensraum zumindest einmal instanziert.
+            für jede folgende Anfrage stattfindet.
         </para>
 
         <example id="zend.session.advanced_usage.expiration.example">
@@ -215,7 +215,7 @@ $s->setExpirationSeconds(60);
         <para>
             Namensräume können auch verwendet werden um den Zugriff auf Sessions durch Kontroller zu seperieren
             um Variablen vor Kontaminierung zu schützen. Zum Beispiel könnte ein Authentifizierungs Kontroller seine
-            Session Daten von allen anderen Kontrollern seperat halten um notwendigen Sicherheiten zu entsprechen.
+            Session Daten von allen anderen Kontrollern separat halten um notwendigen Sicherheiten zu entsprechen.
         </para>
 
         <example id="zend.session.advanced_usage.controllers.example">
@@ -451,7 +451,7 @@ echo $myNamespace->someArray['foo']; // gibt "bar" aus
         <title>Verwenden von Sessions mit Unit Tests</title>
 
         <para>
-            Der Zend Framework vertraut auf PHPUnit um das Testen von sich selbst zu ermöglichen. Viele
+            Zend Framework vertraut auf PHPUnit um das Testen von sich selbst zu ermöglichen. Viele
             Entwickler erweitern die existierende Sammlung von Unit Tests um den Code in deren Anwendungen
             anzudecken. Die Ausnahme "<emphasis role="strong">Zend_Session ist aktuell als nur-lesbar markiert</emphasis>"
             wird geworfen wärend Unit Tests durchgeführt werden, wenn irgendeine schreibende Methode verwendet wird
@@ -506,7 +506,7 @@ $this->assertTrue($result === '',
     "erwartet result === '', aber '$result' bekommen)");
 session_start(); // wiederherstellen der vorher eingefrorenen Session
 
-// Das könnte in einen seperaten Test abgeteilt werden, aber aktuell, wenn
+// Das könnte in einen separaten Test abgeteilt werden, aber aktuell, wenn
 // irgendwas vom darüberleigenden Test den darunterliegenden Test
 // kontaminiert, ist das auch ein Fehler den wir wissen wollen.
 $s = new Zend_Session_Namespace('expireGuava');

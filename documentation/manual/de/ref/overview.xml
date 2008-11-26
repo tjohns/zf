@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10557 -->
+<!-- EN-Revision: 12742 -->
 <sect1 id="introduction.overview">
 
     <title>Übersicht</title>
@@ -7,13 +7,13 @@
         Zend Framework (ZF) ist ein Open Source Framework für die Entwicklung von Web Anwendungen und
         Services mit PHP 5. ZF wurde durch Verwendung von 100% Objektorientiertem Code implementiert.
         Die Komponenten Struktur von ZF ist einzigartig; jede Komponente wurde entworfen mit wenig
-        Anhängigkeiten zu anderen Komponenten. Diese loose gekoppelte Architektur erlaubt es Entwicklern
+        Anhängigkeiten zu anderen Komponenten. Diese lose gekoppelte Architektur erlaubt es Entwicklern
         die Komponenten individuell zu verwenden. Wir nennen das oft auch ein "use-at-will" Design.
     </para>
     <para>
-        Obwohl Sie seperat verwendet werden können, formen die Zend Framework Komponenten in der
+        Obwohl Sie separat verwendet werden können, formen die Zend Framework Komponenten in der
         Standard Bibliothek einen mächtigen und erweiterbaren Framework für Web Anwendungen wenn Sie
-        kombiniert werden. ZF bietet eine robuste und schnelle MVC Implementation, eine Datenbank
+        kombiniert werden. ZF bietet eine robuste, hoch performante MVC Implementation, eine Datenbank
         Abstraktion die einfach zu verwenden ist, und eine Form Komponente die HTML Form Darstellung,
         Prüfung und Filterung implementiert, damit Entwickler alle diese Operationen konsolidieren können
         durch Verwendung eines einfach zu verwendenden, objekt-orientierten Interfaces. Andere Komponenten

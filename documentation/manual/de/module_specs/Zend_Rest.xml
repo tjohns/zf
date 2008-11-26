@@ -1,4 +1,4 @@
-<!-- EN-Revision: 3406 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.rest.introduction">
     <title>Einführung</title>
 
@@ -10,7 +10,7 @@
     </para>
 
     <para>
-        Der Zend Framework bietet beide Möglichkeiten, Client und Server, welche, wenn Sie zusammen benutzt werden,
+        Zend Framework bietet beide Möglichkeiten, Client und Server, welche, wenn Sie zusammen benutzt werden,
         eine viel größere "logische" Interface Erfahrung über den Zugriff auf virtuelle Objekt Eigenschaften erlauben.
         Die Server Komponente bietet automatische Darstellung von Funktionen und Klassen und verwendet ein
         bedeutungsvolles und einfaches XML Format. Beim Zugriff auf solche Services mit dem Client, ist es möglich

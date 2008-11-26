@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12600 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partielle Helfer</title>
 
@@ -13,6 +13,17 @@
         Ein Geschwisterteil zum <code>Partial</code> ist der <code>PartialLoop</code> View Helfer der es
         erlaubt Daten zu übergeben die durchlaufen werden können, und einen Abschnitt für jedes Teil auszugeben.
     </para>
+
+    <note>
+        <title>PartialLoop Zähler</title>
+        <para>
+            Der <code>PartialLoop</code> View Helfer fügt der View eine Variable hinzu die
+            <code>partialCounter</code> heißt und die die aktuelle Position des Arrays zum View
+            Skript übergibt. Das bietet einen einfachen Weg um alternative Farbgebungen zum Bespiel
+            bei Tabellenzeilen zu haben.
+        </para>
+
+    </note>
 
     <example id="zend.view.helpers.initial.partial.usage">
         <title>Grundsätzliche Verwendung von Partials</title>

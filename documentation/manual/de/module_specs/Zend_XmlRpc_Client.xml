@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.xmlrpc.client">
     <title>Zend_XmlRpc_Client</title>
 
@@ -6,7 +6,7 @@
         <title>Einführung</title>
 
         <para>
-            Das Zend Framework bietet Unterstützung, als Client - durch das <code>Zend_XmlRpc_Client</code>
+            Zend Framework bietet Unterstützung, als Client - durch das <code>Zend_XmlRpc_Client</code>
             Paket - entfernte XML-RPC-Dienste zu nutzen. Seine wichtigsten Möglichkeiten
             beinhalten das automatische Umwandeln zwischen PHP und XML-RPC, ein Server
             Proxy-Objekt und den Zugriff auf Server-Prüfungsmöglichkeiten.

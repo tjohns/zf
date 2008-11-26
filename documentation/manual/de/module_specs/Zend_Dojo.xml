@@ -3,7 +3,7 @@
     <title>Einführung</title>
 
     <para>
-        Ab Version 1.6.0, wird der Zend Framework mit dem
+        Ab Version 1.6.0, wird Zend Framework mit dem
         <ulink url="http://dojotoolkit.org">Dojo Toolkit</ulink> ausgeliefert um Out-Of-The-Box reiche
         Entwicklung von Internet Anwendungen zu unterstützen. Die Integrationspunkte mit Dojo enthalten:
     </para>

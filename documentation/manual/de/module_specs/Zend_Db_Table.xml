@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12309 -->
+<!-- EN-Revision: 12737 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -138,13 +138,13 @@ $tableBugs = new Bugs(array('name' => 'bugs', 'schema' => 'bug_db'));
 
 // Zweite Möglichkeit:
 
-$tableBugs = new Bugs(array('name' => 'bug_db.bugs');
+$tableBugs = new Bugs(array('name' => 'bug_db.bugs'));
 
 // Wenn Schema sowohl in $_name als auch $_schema angegeben wird,
 // so bekommt $_name vorrang:
 
 $tableBugs = new Bugs(array('name' => 'bug_db.bugs',
-                            'schema' => 'ignored');
+                            'schema' => 'ignored'));
 ]]>
                 </programlisting>
 
@@ -1770,7 +1770,7 @@ class BugsProducts extends MyAbstractTable
 
             <para>
                 Man ist selbst für das Schreiben von Funktionen verantwortlich um die Transformation der
-                Beugung auszuführen. Der Zend Framework bietet solche Funktionen nicht an.
+                Beugung auszuführen. Zend Framework bietet solche Funktionen nicht an.
             </para>
 
         </sect3>

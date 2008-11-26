@@ -112,7 +112,7 @@
         <para>
             <code>Zend_OpenId</code> besteht aus zwei Unterpaketen. Das erste ist
             <code>Zend_OpenId_Consumer</code> für die Entwicklung von OpenID-verwendenden Servern. Diese sind
-            komplett unabhängig voneinander und können seperat verwendet werden.
+            komplett unabhängig voneinander und können separat verwendet werden.
         </para>
 
         <para>

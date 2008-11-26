@@ -169,7 +169,7 @@ class BugsProducts extends Zend_Db_Table_Abstract
                     gleichen Elterntabelle. In der Beispieldatenbank gibt es eine Referenz von der
                     <code>bugs</code> Tabelle zu der <code>products</code> Tabelle, aber drei
                     Referenzen von der <code>bugs</code> Tabelle zur <code>accounts</code> Tabelle.
-                    Jede Referenz sollte in einen seperaten Eintrag im <code>$_referenceMap</code>
+                    Jede Referenz sollte in einen separaten Eintrag im <code>$_referenceMap</code>
                     Array gegeben werden.
                 </para>
             </listitem>

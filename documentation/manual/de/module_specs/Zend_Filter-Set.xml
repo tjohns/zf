@@ -1,10 +1,10 @@
-<!-- EN-Revision: 10539 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.filter.set">
 
     <title>Standard Filter Klassen</title>
 
     <para>
-        Der Zend Framework kommt mit einem Standardset von Filtern, welche bereits zur Verwendung fertig sind.
+        Zend Framework kommt mit einem Standardset von Filtern, welche bereits zur Verwendung fertig sind.
     </para>
 
     <sect2 id="zend.filter.set.alnum">
@@ -13,6 +13,15 @@
             Gibt den String <code>$value</code> zurück und entfernt alles ausser alphabetische und nummerische
             Zeichen. Dieser Filter inkludiert eine Option die auch Leerzeichen erlaubt.
         </para>
+
+        <note>
+            <para>
+                Alphabetische Zeichen bedeuten Zeichen die in jeder Spache Wörter bilden. Trotzdem wird das
+                englische Alphabet in den folgenden Sprachen für alphabethische Zeichen verwendet:
+                Chinesisch, Japanisch, Koreanisch. Die Sprache wurde von Zend_Locale spezifiziert.
+            </para>
+        </note>
+
     </sect2>
 
     <sect2 id="zend.filter.set.alpha">

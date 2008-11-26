@@ -21,7 +21,7 @@
         <code>setOptions()</code> Methode des Dekorators übergeben werden. Wenn Dekoratoren, über
         <code>addDecorator()</code> des Teils oder ähnliche Methoden, erstellt werden können der
         Methode Optionen als Argument übergeben werden. Diese können verwendet werden um eine
-        Platzierung zu spezifizieren, einen Seperator der zwischen übergebenem Inhalt und neu
+        Platzierung zu spezifizieren, einen Separator der zwischen übergebenem Inhalt und neu
         erstelltem Inhalt verwendet wird, oder welche Option der Dekorator auch immer unterstützt.
     </para>
 
@@ -61,7 +61,7 @@
                     <code>separator</code>: Der Separator wird zwischen dem Inhalt der an
                     <code>render()</code> übergeben wird und durch den Dekorator neu erstelltem
                     Inhalt verwendet, oder zwischen Teilen die durch den Dekorator dargestellt
-                    werden (z.B. FormElements verwenden Seperatoren zwischen jedem dargestellten
+                    werden (z.B. FormElements verwenden Separatoren zwischen jedem dargestellten
                     Teil). Im Fall das ein Dekoratpr den Inhalt ersetzt, wird diese Einstellung
                     ignoriert. Der Standardwert ist <code>PHP_EOL</code>.
             </para></listitem>

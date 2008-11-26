@@ -80,7 +80,7 @@ if ($log_path) {
             Der <code>Zend_Config_Ini</code> wird oben verwendet um die Optionen des Adapters zu
             laden. Er ist also auch optional. Ein reguläres Array würde genauso gut arbeiten. Das
             folgende ist eine Beispiel <code>application/config/config.ini</code> Datei die
-            Optionen für zwei seperate Server hat. Mit mehreren Sets von Server Optionen versucht
+            Optionen für zwei separate Server hat. Mit mehreren Sets von Server Optionen versucht
             der Adapter jede in Reihenfolge bis die Zugangsdaten erfolgreich authentifiziert
             wurden. Die Namen der Server (z.B., <code>server1</code> und <code>server2</code>) sind
             sehr verallgemeinert. Für Details betreffend dem Array für Optionen, siehe das Kapitel

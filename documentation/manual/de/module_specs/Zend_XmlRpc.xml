@@ -1,4 +1,4 @@
-<!-- EN-Revision: 2406 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.xmlrpc.introduction">
     <title>Einführung</title>
     <para>
@@ -9,7 +9,7 @@
         Datenstrukturen ermöglicht.".
     </para>
     <para>
-        Das Zend Framework stellt Unterstützung sowohl für die Verwendung von entfernten XML-RPC
+        Zend Framework stellt Unterstützung sowohl für die Verwendung von entfernten XML-RPC
         Diensten als auch für die Erstellung neuer XML-RPC Server bereit.
     </para>
 </sect1>

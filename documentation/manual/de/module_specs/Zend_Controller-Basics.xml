@@ -124,7 +124,7 @@
 
                     <para>
                         Da Menschen grundsätzlich inkonsistent sind im Behandeln und der Gründlichkeit beim
-                        Tippen von Links, normalisiert der Zend Framework die Pfad Informationen zur
+                        Tippen von Links, normalisiert Zend Framework die Pfad Informationen zur
                         Kleinschreibung. Das beeinflut natürlich wie Kontroller und Aktionen benannt werden
                         ... oder wie auf diese in Links referiert werden kann.
                     </para>
