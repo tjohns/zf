@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12839 -->
+<!-- EN-Revision: 12892 -->
 <appendix id="coding-standard">
     <title>Convention de codage PHP du Zend Framework</title>
 
@@ -198,10 +198,10 @@ widgetFactory()
             <para>Les constantes peuvent contenir des caractères alphanumériques et des tirets bas. Les nombres sont
             autorisés.</para>
 
-            <para>Les constantes doivent toujours être en majuscule.</para>
+            <para>Les constantes doivent toujours être en majuscule, cependant les mots pouvant les composer doivent
+            être séparés par des tiret-bats ("_").</para>
 
-            <para>Les mots dans les noms de constantes doivent être séparés avec des caractères tiret-bas ("_"). Par
-            exemple, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> est permis mais
+            <para>Par exemple, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> est permis mais
             <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> ne l'est pas.</para>
 
             <para>Les constantes doivent toujours être définies comme des membres d'une classe, en utilisant la

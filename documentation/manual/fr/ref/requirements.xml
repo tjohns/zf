@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12880 -->
+<!-- EN-Revision: 12887 -->
 <appendix id="requirements">
     <title>Configuration système requise par le Zend Framework</title>
 
@@ -16,11 +16,11 @@
     <sect1 id="requirements.version">
         <title>Version de PHP requise</title>
 
-        <para>Zend recommande la version 5.2.3 de PHP ou supérieure pour des questions de sécurité et de performances,
-        bien que le Zend Framework ne requière qu'au minimum la version 5.1.4 de PHP.</para>
+        <para>Zend recommande la version la plus récente de PHP pour des questions de sécurité et de performances, et
+        supporte actuellement la version 5.2.4 de PHP (ou plus récent).</para>
 
         <para>Zend Framework possède une collection étendue de tests automatisés, que vous pouvez lancer avec PHPUnit
-        3.0 ou plus.</para>
+        3.3.0 ou plus.</para>
     </sect1>
 
     <sect1 id="requirements.extensions">

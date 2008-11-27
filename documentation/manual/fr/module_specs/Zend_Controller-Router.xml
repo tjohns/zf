@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12890 -->
 <sect1 id="zend.controller.router" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Routeur Standard</title>
 
@@ -33,7 +33,7 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ]]></programlisting>
 
-        <para>Le routeur de réécriture peut aussi être utilisé avec un serveur Web IIS si <ulink
+        <para>Le routeur de réécriture peut aussi être utilisé avec un serveur Web IIS (versions &lg;= 7.0) si <ulink
         url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> a été installée comme une extension Isap avec la règle
         suivante :</para>
 
@@ -48,6 +48,36 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css|html)$)[\w\%]*$)? /index.
             vide. Dans ce cas, <code>Zend_Controller_Request_Http</code> essaiera d'utiliser la valeur de
             <code>$_SERVER['HTTP_X_REWRITE_URL']</code>, initialisée par l'extension Isapi_Rewrite.</para>
         </note>
+
+        <para>IIS 7.0 introduit un moodule de réécriture d'URL natif, et il peut être configuré comme ceci :</para>
+
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsFile" pattern="" 
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsDirectory" 
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
 
         <para>Si vous utilisez Lighttpd, la règle de réécriture suivante est valide :</para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11358 -->
+<!-- EN-Revision: 12890 -->
 <sect1 id="zend.controller.quickstart">
     <title>Zend_Controller - Démarrage rapide</title>
 
@@ -68,6 +68,37 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ]]></programlisting>
+
+            <para>Si vous avez IIS 7.0, utilisez ceci pour votre configuration de réécriture :</para>
+
+            <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsFile" pattern="" 
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsDirectory" 
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
+
 
             <para>Les règles ci-dessus vont redirigées toute requête vers des ressources existantes (liens symboliques,
             fichiers non vides, ou répertoires non-vides), tout autre requête sera renvoyée vers le contrôleur
