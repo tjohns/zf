@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 12891 -->
 <sect1 id="zend.layout.advanced">
     <title>Zend_Layout の高度な使用法</title>
 
@@ -163,7 +163,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
             <code>Zend_Layout</code> は、<code>Zend_Filter_Inflector</code>
             を使用して確立したフィルタチェインで
             レイアウト名からレイアウトスクリプトのパスへの変換を行います。
-            デフォルトで使用するルールは、まず 'CamelCaseToDash'、
+            デフォルトで使用するルールは、まず 'Word_CamelCaseToDash'、
             その後に 'StringToLower'、そして最後にサフィックス 'phtml'
             を追加してパスを作成します。たとえば次のようになります。
         </para>
@@ -230,7 +230,7 @@ $layout->setViewSuffix('php');
             <programlisting role="php"><![CDATA[
 $layout->getInflector()->setTarget('layouts/:script.:suffix')
                        ->setStaticRule('suffix', 'html')
-                       ->setFilterRule(array('CamelCaseToUnderscore'));
+                       ->setFilterRule(array('Word_CamelCaseToUnderscore'));
 ]]>
             </programlisting>
         </example>
@@ -247,7 +247,7 @@ $layout->getInflector()->setTarget('layouts/:script.:suffix')
             <programlisting role="php"><![CDATA[
 $inflector = new Zend_Filter_Inflector('layouts/:script.:suffix');
 $inflector->addRules(array(
-    ':script' => array('CamelCaseToUnderscore'),
+    ':script' => array('Word_CamelCaseToUnderscore'),
     'suffix'  => 'html'
 ));
 $layout->setInflector($inflector);
