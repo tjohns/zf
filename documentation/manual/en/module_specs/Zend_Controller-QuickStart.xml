@@ -88,7 +88,7 @@ RewriteRule ^.*$ index.php [NC,L]
             </programlisting>
 
             <para>
-                If using IIS 7.0, use the following as your rwrite
+                If using IIS 7.0, use the following as your rewrite
                 configuration:
             </para>
 
