@@ -4548,6 +4548,10 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public static function isDate($date, $format = null, $locale = null)
     {
+        if (!is_string($date) and !is_numeric($date) and !($date instanceof Zend_Date)) {
+            return false;
+        }
+
         if (($format !== null) and (Zend_Locale::isLocale($format, null, false))) {
             $locale = $format;
             $format = null;

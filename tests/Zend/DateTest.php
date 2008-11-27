@@ -5097,6 +5097,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Date::isDate('32.Mai.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 10:00:00', 'dd.MMMM.YYYY', 'de_AT'));
         $this->assertFalse(Zend_Date::isDate('30.Februar.2007 30:00:00', 'dd.MMMM.YYYY HH:mm:ss', 'de_AT'));
+        $this->assertFalse(Zend_Date::isDate(3.01));
     }
 
     public function testToArray()
