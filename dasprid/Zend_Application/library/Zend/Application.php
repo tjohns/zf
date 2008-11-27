@@ -74,7 +74,8 @@ class Zend_Application
     public function setOptions(array $options)
     {
         foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $method     = 'set' . ucfirst($key);
+            
             if (method_exists($this, $method) && !in_array(strtolower($key), $this->_skipOptions)) {
                 $this->$method($value);
             } else if (($plugin = $this->getPlugin($key)) !== null) {
@@ -111,8 +112,7 @@ class Zend_Application
         
         $className  = $this->getPluginLoader()->load($plugin);
         $class      = new $className($options);
-        $pluginName = substr(strrchr($plugin, '_'), 1);
-        
+        $pluginName = strtolower(substr(strrchr($plugin, '_'), 1));
         
         $this->_plugins[$pluginName] = $class;
         
