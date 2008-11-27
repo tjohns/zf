@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12877 -->
 <sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
@@ -104,7 +104,8 @@ echo $server->handle();
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -134,7 +135,8 @@ function myFunc($val1, $val2, $val3)
 */
 function myFunc($val1, $val2, $val3)
 {
-}]]>
+}
+]]>
         </programlisting>
 
         <para>
@@ -177,7 +179,8 @@ function myFunc($val1, $val2, $val3)
 $server->setClass('My_Service_Class', 'myservice');
 
 // 関数 'somefunc' は funcs.somefunc としてアクセスするようにします
-$server->addFunction('somefunc', 'funcs');]]>
+$server->addFunction('somefunc', 'funcs');
+]]>
         </programlisting>
     </sect2>
 
@@ -239,7 +242,8 @@ $server->addFunction('somefunc', 'funcs');]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]>
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
+]]>
         </programlisting>
 
         <para>
@@ -372,7 +376,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
 $server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
 $server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
-echo $server->handle();]]>
+echo $server->handle();
+]]>
             </programlisting>
         </sect3>
 
@@ -475,7 +480,8 @@ echo $server->handle($request);
                 次の例は、リクエスト間でサーバ定義をキャッシュします。
             </para>
 
-            <programlisting role="php"><![CDATA[// キャッシュファイルを指定します
+            <programlisting role="php"><![CDATA[
+// キャッシュファイルを指定します
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
 // Services_Exceptions を fault レスポンスで報告させるようにします
@@ -490,7 +496,7 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     $server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
 
     // キャッシュに保存します
-    Zend_XmlRpc_Server_Cache::save($cacheFile, $server));
+    Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
 // リクエストオブジェクトを作成します
@@ -499,7 +505,8 @@ $request = new Services_Request();
 // 独自のレスポンスを使用します
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]>
+echo $server->handle($request);
+]]>
             </programlisting>
         </sect3>
     </sect2>
