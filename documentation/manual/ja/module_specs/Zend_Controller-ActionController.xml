@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11085 -->
+<!-- EN-Revision: 12876 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
@@ -271,6 +271,17 @@ if ($this->_hasParam('id') {
     <sect2 id="zend.controller.action.viewintegration">
         <title>ビューの統合</title>
 
+        <note id="zend.controller.action.viewintegration.viewrenderer">
+            <title>Default view integration is via the ViewRenderer</title>
+
+            <para>
+                この節の内容は、
+                <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
+                を明示的に無効にしている場合にのみ有効です。
+                それ以外の場合はこの節を読み飛ばしてください。
+            </para>
+        </note>
+
         <para>
             <code>Zend_Controller_Action</code> では、
             ビューの統合のためのちょっとした柔軟な仕組みを提供しています。
@@ -356,7 +367,7 @@ string render(string $action = null,
             <note><para>
                     コントローラやアクションの名前には区切り文字
                     ('_' や '.'、'-') を含めることができるので、
-                    render() はスクリプト名を決定する際にこれらの文字を
+                    <code>render()</code> はスクリプト名を決定する際にこれらの文字を
                     '-' に正規化します。内部的には、
                     ディスパッチャで設定されている単語やパスの区切り文字を正規化時に用います。
                     したがって、<code>/foo.bar/baz-bat</code> へのリクエストの際に
