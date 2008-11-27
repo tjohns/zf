@@ -33,7 +33,7 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ]]></programlisting>
 
-        <para>Le routeur de réécriture peut aussi être utilisé avec un serveur Web IIS (versions &lg;= 7.0) si <ulink
+        <para>Le routeur de réécriture peut aussi être utilisé avec un serveur Web IIS (versions &lt;= 7.0) si <ulink
         url="http://www.isapirewrite.com">Isapi_Rewrite</ulink> a été installée comme une extension Isap avec la règle
         suivante :</para>
 
