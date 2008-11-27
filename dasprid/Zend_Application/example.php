@@ -3,10 +3,7 @@
  * First the user must set up the PHP enviroment, which means, set the include
  * path and require the Zend_Application.
  */
-$includePath = dirname(__FILE__) . '/library'
-             . PATH_SEPARATOR
-             . get_include_path();
-set_include_path($includePath);
+set_include_path(dirname(__FILE__) . '/library');
 
 require_once 'Zend/Application.php';
 
@@ -33,7 +30,7 @@ $application->registerPlugin('loader', array('class' => 'myPrivateLoader',
  */
 $application = new Zend_Application();
 $application->registerPlugin('loader'); // Should this be fluent or return the
-                                        // created loader?
+                                        // instantiated plugin?
 
 $loaderPlugin = $application->getPlugin('loader');
 $loaderPlugin->setClass('myPrivateLoader')
@@ -48,3 +45,8 @@ $application->initLoader();
  * Or init all plugins at once, FIFO:
  */
 $application->initAll();
+
+/**
+ * What's yet missing, but will be added, is a setPluginPath() method, which
+ * will allow to set an include path for user generated plugins.
+ */
