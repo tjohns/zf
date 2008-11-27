@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11091 -->
+<!-- EN-Revision: 12892 -->
 <appendix id="coding-standard">
   <title>Zend Framework PHP 標準コーディング規約</title>
     <sect1 id="coding-standard.overview">
@@ -13,7 +13,7 @@
                 Zend Framework を用いて開発をする人たちにとってもこのコーディング規約は有用でしょう。
                 これに従えば、Zend Framework のコードとの一貫性が保てるからです。
                 そのためには、ここで完全なコーディング規約を示す必要があります。
-                
+
                 注意: 詳細なレベルまでの設計指針を示すこと以上に、
                 それを標準規格として確立することが大切だと考えています。
                 Zend Framework コーディング規約の指針は、
@@ -136,7 +136,7 @@
                 "Zend_PDF" というクラス名は許可されません。代わりに
                 "Zend_Pdf" を使用します。
             </para>
-            
+
             <para>
                 これらの規約によって、Zend Framework 上で擬似名前空間を定義しています。
                 PHP に名前空間機能が追加されるようになったら、Zend Framework もそれに対応させます。
@@ -223,7 +223,7 @@ widgetFactory()
                 メソッド名にパターンの名前を含めるようにしましょう。こうすることで、
                 どのパターンを使っているのかがわかりやすくなります。
             </para>
-            
+
             <para>
                 オブジェクト内で "private" あるいは "protected"
                 と宣言されているメソッドについては、メソッド名の最初にアンダースコア
@@ -473,7 +473,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <para>
                     クラス宣言は、以下の Zend Framework 命名規約に従わなければなりません。
                 </para><para>
-                    開始波括弧は常にクラス名の下に書かなければなりません ("one true brace" 形式)。
+                    開始波括弧は常にクラス名の下に書かなければなりません。
                 </para><para>
                     PHPDocumentor の標準形式のドキュメントブロックがなければなりません。
                 </para><para>
@@ -536,8 +536,7 @@ class SampleClass
                     <code>public</code> のいずれかの修飾子を用いてアクセス範囲を指定しなければなりません。
                 </para>
                 <para>
-                    クラスと同様、波括弧は関数名の次の行に書かなければなりません
-                    ("one true brace" 形式)。
+                    クラスと同様、波括弧は関数名の次の行に書かなければなりません。
 
                     関数名と引数定義用の開始括弧の間にはスペースを入れてはいけません。
                 </para>
