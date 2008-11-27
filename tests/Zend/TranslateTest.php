@@ -265,6 +265,15 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $lang->setOptions(array('myOption' => true));
         $this->assertTrue($lang->getOptions('myOption'));
     }
+
+    /**
+     * ZF-4905
+     */
+    public function testPathNameWithColonResolution()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/Adapter/../Adapter/_files', 'en', array('delimiter' => ','));
+        $this->assertEquals('en', $lang->getLocale());
+    }
 }
 
 // Call Zend_TranslateTest::main() if this source file is executed directly.

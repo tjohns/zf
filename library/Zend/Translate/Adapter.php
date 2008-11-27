@@ -131,7 +131,8 @@ abstract class Zend_Translate_Adapter {
 
         $this->setOptions($options);
         if (is_string($data) and is_dir($data)) {
-            $prev  = '';
+            $data = realpath($data);
+            $prev = '';
             foreach (new RecursiveIteratorIterator(
                      new RecursiveDirectoryIterator($data, RecursiveDirectoryIterator::KEY_AS_PATHNAME),
                      RecursiveIteratorIterator::SELF_FIRST) as $directory => $info) {
