@@ -20,19 +20,19 @@
  */
 
 /**
- * @see Zend_Exception
+ * @see Zend_Application_Exception
  */
-require_once 'Zend/Exception.php';
+require_once 'Zend/Application/Exception.php';
 
 /**
- * Exception class for Zend_Application
+ * Exception class for Zend_Application_Plugin
  *
  * @category  Zend
  * @package   Zend_Application
- * @uses      Zend_Exception
+ * @uses      Zend_Application_Exception
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Exception extends Zend_Exception
+class Zend_Application_Plugin_Exception extends Zend_Application_Exception
 {
 }

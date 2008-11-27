@@ -77,6 +77,8 @@ class Zend_Application
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method) && !in_array(strtolower($key), $this->_skipOptions)) {
                 $this->$method($value);
+            } else if (($plugin = $this->getPlugin($key)) !== null) {
+                $plugin->setOptions($value);
             } else {
                 $this->registerPlugin($key, $value);
             } 
@@ -116,19 +118,17 @@ class Zend_Application
         
         return $this;
     }
-       
+    
     /**
      * Get a registered plugin
      *
      * @param  string $pluginName
-     * @throws Zend_Application_Exception When plugin is not registered
      * @return Zend_Application_Plugin
      */
     public function getPlugin($pluginName)
     {
         if (!isset($this->_plugins[$pluginName])) {
-            require_once 'Zend/Application/Exception.php';
-            throw new Zend_Application_Exception(sprintf('Plugin with name "%s" not registered', $pluginName));            
+            return null;            
         }
 
         return $this->_plugins[$pluginName];
@@ -153,11 +153,26 @@ class Zend_Application
     }
     
     /**
+     * Init all plugins
+     *
+     * @return Zend_Application
+     */
+    public function initAll()
+    {
+        foreach ($this->_plugins as $plugin) {
+            $plugin->init();
+        }
+        
+        return $this;
+    }
+    
+    /**
      * Method overloading for 'init' calls
      *
      * @param  string $name
      * @param  string $arguments
      * @throws Zend_Application_Exception When the called method is not known
+     * @throws Zend_Application_Exception When plugin is not registered
      * @return Zend_Application
      */
     public function __call($name, array $arguments)
@@ -169,6 +184,11 @@ class Zend_Application
         
         $pluginName = substr($name, 4);
         $plugin     = $this->getPlugin($pluginName);
+        
+        if ($plugin === null) {
+            require_once 'Zend/Application/Exception.php';
+            throw new Zend_Application_Exception(sprintf('Plugin with name "%s" not registered', $pluginName));
+        }
         
         $plugin->init();
 
