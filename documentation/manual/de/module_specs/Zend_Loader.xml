@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12759 -->
+<!-- EN-Revision: 12771 -->
 <sect1 id="zend.loader.load">
 
     <title>Dynamisches Laden von Dateien und Klassen</title>
@@ -29,7 +29,7 @@
             PHP Datei. Die geladene Datei kann jeden PHP Code enthalten.
             Diese Methode ist ein Wrapper für die PHP Funktion
             <ulink url="http://php.net/include"><code>include()</code></ulink>.
-            Diese Methode wirft bei einem Fehler eine <code>Zend_Exception</code>,
+            Diese Methode gibt bei einem Fehler ein boosches false zurück,
             zum Beispiel wenn die definierte Datei nicht existiert.
         </para>
 
