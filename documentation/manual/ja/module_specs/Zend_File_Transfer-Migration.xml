@@ -1,0 +1,63 @@
+<!-- EN-Revision: 11679 -->
+<sect1 id="zend.file.transfer.migration">
+
+    <title>以前のバージョンからの移行</title>
+
+    <para>
+        <code>Zend_File_Transfer</code> の API は日々変わっています。
+        <code>Zend_File_Transfer</code> やそのサブコンポーネントを
+        初期のバージョンから使っている方は、以下のガイドラインに従ってスクリプトを変更し、
+        新しい API にあわせましょう。
+    </para>
+
+    <sect2 id="zend.file.transfer.migration.fromonesixonetoonesixtwo">
+        <title>1.6.1 から 1.6.2 以降への移行</title>
+        <sect3 id="zend.file.transfer.migration.fromonesixonetoonesixtwo.validators">
+            <title>バリデータを使う際の変更点</title>
+
+            <para>
+                <code>Zend_File_Transfer</code> のバリデータが
+                <code>Zend_Form</code> のデフォルトのものと同じようには動作しないという指摘がありました。
+                <code>Zend_Form</code> では <code>breakChainOnFailure</code>
+                パラメータを利用でき、検証エラーが発生した際に
+                それ以降のバリデータを動作させないようにすることができます。
+            </para>
+
+            <para>
+                そこで、<code>Zend_File_Transfer</code>
+                の既存のバリデータにもこのパラメータを追加することにしました。
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    古い形式の API: <code>addValidator($validator, $options, $files)</code>.
+                </para></listitem>
+
+                <listitem><para>
+                    新しい形式の API: <code>addValidator($validator, $breakChainOnFailure, $options, $files)</code>.
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                既存のスクリプトを新しい API に移行するには、バリデータの定義の後に
+                <code>false</code> を追加します。
+            </para>
+
+            <example id="zend.file.transfer.migration.fromonesixonetoonesixtwo.example">
+                <title>ファイルバリデータを 1.6.1 から 1.6.2 に移行する方法</title>
+
+                <programlisting role="php"><![CDATA[
+// 1.6.1 での例
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', array('1B', '100kB'));
+
+// 同じ例を 1.6.2 以降用にしたもの
+// boolean false が追加されていることに注意しましょう
+$upload = new Zend_File_Transfer_Adapter_Http();
+$upload->addValidator('FilesSize', false, array('1B', '100kB'));
+]]>
+            </programlisting>
+        </example>
+        </sect3>
+    </sect2>
+</sect1>
