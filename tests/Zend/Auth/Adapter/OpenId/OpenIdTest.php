@@ -82,7 +82,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_Auth_Adapter_OpenId(null, new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
-        $this->assertSame(null, $ret->getIdentity());
+        $this->assertSame("", $ret->getIdentity());
         $this->assertSame(0, $ret->getCode());
         $msgs = $ret->getMessages();
         $this->assertTrue(is_array($msgs));
@@ -356,7 +356,7 @@ class Zend_Auth_Adapter_OpenIdTest extends PHPUnit_Framework_TestCase
             "openid_response_nonce" => "2007-08-14T12:52:33Z46c1a59124fff",
             "openid_signed" => "assoc_handle,return_to,claimed_id,identity,response_nonce,mode,signed",
             "openid_sig" => "h/5AFD25NpzSok5tzHEGCVUkQSw="
-		);
+        );
         $adapter = new Zend_Auth_Adapter_OpenId(null, new Zend_OpenId_Consumer_Storage_File(dirname(__FILE__)."/_files"));
         $ret = $adapter->authenticate();
         $this->assertFalse($ret->isValid());
