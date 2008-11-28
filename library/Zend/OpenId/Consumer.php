@@ -205,13 +205,22 @@ class Zend_OpenId_Consumer
         }
 
         if ($version < 2.0 && !isset($params["openid_claimed_id"])) {
-            if ($this->_session === null) {
+            if ($this->_session !== null) {
+                if ($this->_session->identity === $identity) {
+                    $identity = $this->_session->claimed_id;
+                }
+            } else if (defined('SID')) {
+                if (isset($_SESSION["zend_openid"]["identity"]) &&
+                    isset($_SESSION["zend_openid"]["claimed_id"]) &&
+                    $_SESSION["zend_openid"]["identity"] === $identity) {
+                    $identity = $_SESSION["zend_openid"]["claimed_id"];
+                }
+            } else {
                 require_once "Zend/Session/Namespace.php";
                 $this->_session = new Zend_Session_Namespace("zend_openid");
-            }
-            $session = $this->_session;
-            if ($session->identity == $identity) {
-                $identity = $session->claimed_id;
+                if ($this->_session->identity === $identity) {
+                    $identity = $this->_session->claimed_id;
+                }
             }
         }
 
@@ -848,13 +857,19 @@ class Zend_OpenId_Consumer
         $params['openid.claimed_id'] = $claimedId;
 
         if ($version <= 2.0) {
-            if ($this->_session === null) {
+            if ($this->_session !== null) {
+                $this->_session->identity = $id;
+                $this->_session->claimed_id = $claimedId;
+            } else if (defined('SID')) {
+                $_SESSION["zend_openid"] = array(
+                    "identity" => $id,
+                    "claimed_id" => $claimedId);
+            } else {
                 require_once "Zend/Session/Namespace.php";
                 $this->_session = new Zend_Session_Namespace("zend_openid");
+                $this->_session->identity = $id;
+                $this->_session->claimed_id = $claimedId;
             }
-            $session = $this->_session;
-            $session->identity = $id;
-            $session->claimed_id = $claimedId;
         }
 
         if (isset($handle)) {
