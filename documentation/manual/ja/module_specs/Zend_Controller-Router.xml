@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12890 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>標準のルータ</title>
     <sect2 id="zend.controller.router.introduction">
@@ -44,7 +44,7 @@ RewriteRule ^.*$ index.php [NC,L]
         </programlisting>
 
         <para>
-            Rewrite ルータを IIS ウェブサーバで使用するには
+            Rewrite ルータを IIS ウェブサーバ (バージョン &lt;= 7.0) で使用するには
             <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
             を Isapi 拡張モジュールとしてインストールします。そして次のようなルールを記述します。
         </para>
@@ -64,6 +64,39 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css|html)$)[\w\%]*$)? /index.
                 Isapi_Rewrite 拡張モジュールが設定します。
             </para>
         </note>
+
+        <para>
+            IIS 7.0 ではネイティブの URL リライトモジュールが登場しました。
+            次のように設定して使います。
+        </para>
+
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsFile" pattern="" 
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}" 
+                             matchType="IsDirectory" 
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
 
         <para>
             Lighttpd の場合は、次のようなルールを使用します。
