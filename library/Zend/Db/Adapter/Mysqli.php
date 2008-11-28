@@ -499,4 +499,18 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         }
     }
 
+    /**
+     * Retrieve server version in PHP style
+     *
+     *@return string
+     */
+    public function getServerVersion()
+    {
+        $this->_connect();
+        $version = $this->_connection->server_version;
+        $major = (int) ($version / 10000);
+        $minor = (int) ($version % 10000 / 100);
+        $revision = (int) ($version % 100);
+        return $major . '.' . $minor . '.' . $revision;
+    }
 }

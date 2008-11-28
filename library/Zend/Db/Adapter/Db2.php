@@ -627,4 +627,16 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         }
     }
 
+    /**
+     * Retrieve server version in PHP style
+     *
+     * @return string
+     */
+    public function getServerVersion()
+    {
+        $this->_connect();
+        $server_info = db2_server_info($this->_connection);
+        $version = explode('.', $server_info->DBMS_VER);
+        return ((int) $version[0]) . '.' . ((int) $version[1]) . '.' . ((int) $version[2]);
+    }
 }
