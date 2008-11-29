@@ -57,7 +57,7 @@ abstract class Zend_Application_Plugin
      * Set options from array
      *
      * @param  array $options Configuration for Zend_Application_Plugin
-     * @return Zend_Application
+     * @return Zend_Application_Plugin
      */
     public function setOptions(array $options)
     {
@@ -79,7 +79,7 @@ abstract class Zend_Application_Plugin
      * Set options from config object
      *
      * @param  Zend_Config $config Configuration for Zend_Application_Plugin
-     * @return Zend_TagCloud
+     * @return Zend_Application_Plugin
      */
     public function setConfig(Zend_Config $config)
     {
