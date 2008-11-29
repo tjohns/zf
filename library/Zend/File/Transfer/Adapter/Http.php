@@ -92,31 +92,36 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         $check = $this->_getFiles($files);
         foreach ($check as $file => $content) {
-            $directory   = '';
-            $destination = $this->getDestination($file);
-            if ($destination !== null) {
-                $directory = $destination . DIRECTORY_SEPARATOR;
-            }
-
-            // Should never return false when it's tested by the upload validator
-            if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
-                if ($content['options']['ignoreNoFile']) {
-                    $this->_files[$file]['received'] = true;
-                    $this->_files[$file]['filtered'] = true;
-                    continue;
+            if (!$content['validated']) {
+                $directory   = '';
+                $destination = $this->getDestination($file);
+                if ($destination !== null) {
+                    $directory = $destination . DIRECTORY_SEPARATOR;
                 }
 
-                $this->_files[$file]['received'] = false;
-                return false;
+                // Should never return false when it's tested by the upload validator
+                if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
+                    if ($content['options']['ignoreNoFile']) {
+                        $this->_files[$file]['received'] = true;
+                        $this->_files[$file]['filtered'] = true;
+                        continue;
+                    }
+
+                    $this->_files[$file]['received'] = false;
+                    return false;
+                }
+
+                $this->_files[$file]['received'] = true;
             }
 
-            $this->_files[$file]['received'] = true;
-            if (!$this->_filter($file)) {
-                $this->_files[$file]['filtered'] = false;
-                return false;
-            }
+            if (!$content['filtered']) {
+                if (!$this->_filter($file)) {
+                    $this->_files[$file]['filtered'] = false;
+                    return false;
+                }
 
-            $this->_files[$file]['filtered'] = true;
+                $this->_files[$file]['filtered'] = true;
+            }
         }
 
         return true;
