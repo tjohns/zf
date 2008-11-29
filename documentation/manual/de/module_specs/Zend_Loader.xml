@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12771 -->
+<!-- EN-Revision: 12819 -->
 <sect1 id="zend.loader.load">
 
     <title>Dynamisches Laden von Dateien und Klassen</title>
@@ -53,10 +53,10 @@ Zend_Loader::loadFile($filename, $dirs=null, $once=false);
 
         <para>
             Das <code>$dirs</code> Argument definiert das Verzeichnis in welchem
-            nach der Datei gesucht werden soll. Wenn es <code>NULL</code> ist, wird
-            nur anhand vom <code>include_path</code> gesucht. Wenn eine Zeichenkette
-            oder ein Array angegeben wurde, wird das definierte Verzeichnis oder
-            die Verzeichnisse durchsucht, und anschließend der <code>include_path</code>.
+            nach der Datei gesucht werden soll. Wenn der Wert <code>NULL</code> ist, wird
+            nur anhand vom <code>include_path</code> gesucht. Wenn der Wert Zeichenkette
+            oder ein Array ist, wird das definierte Verzeichnis oder
+            die Verzeichnisse durchsucht, gefolgt vom <code>include_path</code>.
         </para>
 
         <para>
@@ -94,8 +94,8 @@ Zend_Loader::loadClass('Container_Tree',
 
         <para>
             Die Zeichenkette die die Klasse definiert, wird in einen relativen Pfad
-            umgewandelt durch die Annahme das Verzeichnisse mit Unterstrichen
-            getrennt werden und anfügen von '.php'. Im obigen Beispiel wird
+            umgewandelt durch die Annahme das Verzeichnisse für das OS mit Unterstrichen
+            getrennt werden und anfügen von '.php'. Im obigen Beispiel wird für Windows
             'Container_Tree' zu 'Container/Tree.php'.
         </para>
 
@@ -230,7 +230,7 @@ Zend_Loader::registerAutoload('My_Loader');
             Der Callback für den Autoloader kann entfernt werden. Die <code>registerAutoload()</code> Methode hat
             ein zweites optionales Argument welches standardmäßig <code>true</code> ist. Wenn dieses Argument
             <code>false</code> ist, wird die Registrierung des Callback des Autoloaders vom SPL Autoload Stack
-            entfernt anstatt registriert.
+            entfernt.
         </para>
 
     </sect2>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12292 -->
+<!-- EN-Revision: 12817 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -233,10 +233,9 @@ if ($result->isValid()) {
         </para>
 
         <para>
-            Mit dieser kurzen Definition, hat Zend_Auth_Adapter_DbTable einige eingebaute
-            Mechanismen die so angepasst werden können das zusätzliche Checks wärend der
-            Authentifizierungszeit hinzugefügt werden können, um einige übliche Benutzerprobleme
-            zu lösen.
+            Mit dieser Definition, hat Zend_Auth_Adapter_DbTable einige eingebaute Mechanismen die für
+            zusätzliche Checks wärend der Authentifizierungszeit angepasst werden können, um einige
+            übliche Benutzerprobleme zu lösen.
         </para>
 
         <programlisting role="php"><![CDATA[

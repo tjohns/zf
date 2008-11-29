@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12819 -->
 <sect1 id="zend.loader.pluginloader">
     <title>Plugins laden</title>
 
@@ -14,8 +14,8 @@
         Framework mit einer Klasse pro Datei, der Verwendung von Unterstrichen als Verzeichnistrenner bei der
         Auflösung von Pfaden. Es erlaubt die Übergabe eines optionalen Klasenpräfixes der vorangestellt wird,
         wenn eine bestimmte Pluginklasse geladen wird. Zusätzlich können Pfade in LIFO Reihenfolge durchsucht
-        werden. Die LIFO Suche und der Klassen Präfix erlaubt es die Plugins in Namensräumen zu haben, und so
-        Plugins zu überladen die vorher registriert wurden.
+        werden. Die LIFO Suche und der Klassen Präfix erlaubt es für die Plugins Namensräumen zu definieren,
+        und auf diese Weise Plugins zu überladen die vorher registriert wurden.
     </para>
 
     <sect2 id="zend.loader.pluginloader.usage">
@@ -96,8 +96,6 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
         </note>
 
         <note>
-            <title>Pfade können wärend der Instantiierung definiert werden</title>
-
             <para>
                 Optional kann ein Array von Präfix / Pfad Paaren angegeben werden (oder Präfix / Pfade --
                 Plural, Pfade sind erlaubt) und als Parameter dem Kontruktor übergeben werden:

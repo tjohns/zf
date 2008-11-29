@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12759 -->
+<!-- EN-Revision: 12817 -->
 <sect1 id="zend.auth.introduction">
 
     <title>Einführung</title>
@@ -273,7 +273,7 @@ $result = $auth->authenticate($authAdapter);
             <title>Eigene Speicher implementieren</title>
 
             <para>
-                Zeitweise wollen Entwickler ein anderes Verhalten der Persistenz für Identitäten erhalten als
+                Zeitweise wollen Entwickler einen anderen Speichermechanismus für Identitäten verwenden als
                 es von <code>Zend_Auth_Storage_Session</code> angeboten wird. Für solche Fälle können
                 Entwickler einfach <code>Zend_Auth_Storage_Interface</code> implementieren und eine
                 Instanz der Klasse an <code>Zend_Auth::setStorage()</code> übergeben.

@@ -1,11 +1,12 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12818 -->
 <sect1 id="zend.infocard.basics">
     <title>Einführung</title>
 
     <para>
         Die <code>Zend_InfoCard</code> Komponente implementiert die Unterstützung vertrauender Forderungen
         für Informationskarten. Informationskarten werden für Identitätsmanagement im Internet verwendet
-        und zur Authentifikation von Benutzern auf Webseiten (genannt vertrauende Forderung).
+        und zur Authentifikation von Benutzern auf Webseiten. Die Webseiten bei denen sich die Benutzer
+        im Endeffekt authentifizieren werden <emphasis>vertrauende Seiten</emphasis> genannt.
     </para>
 
     <para>
@@ -318,9 +319,9 @@ public function submitinfocardAction()
         <para>
             Die <code>Zend_InfoCard</code> Komponente wurde entwickelt um den Wachstum im Standard der
             Informationskarten durch die Verwendung einer modularen Architektur zu erlauben. Aktuell werden
-            viele dieser Hooks nicht verwendet und können ignoriert werden. Trotzdem gibt es einen Aspekt der
-            in jeder seriären Implementation von Informationskarten implementiert sein sollte:
-            <code>Zend_InfoCard_Adapter</code>.
+            viele dieser Hooks nicht verwendet und können ignoriert werden. Aber es gibt einen Aspekt der
+            in jeder seriösen Implementation von Informationskarten geschrieben werden sollte: Der
+            <code>Zend_InfoCard</code> Adapter.
         </para>
 
         <para>
