@@ -1,18 +1,18 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12816 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
 
     <para>
         Um <code>Zend_Currency</code> in einer Anwendung zu verwenden muß nur eine Instanz davon erstellt
-        werden ohne das Parameter angegeben werden. Das erstellt eine Instanz von <code>Zend_Currency</code>
-        mit dem aktuellen Gebietsschema, und definiert die Währung die aktuell in diesem Gebietsschema
+        werden ohne das Parameter angegeben werden. Das Erstellt eine Instanz von <code>Zend_Currency</code>
+        mit deinem Gebietsschema, und definiert die Währung die aktuell in diesem Gebietsschema
         verwendet wird.
     </para>
 
     <example id="zend.currency.usage.example1">
 
-        <title>Eine Instanz von Zend_Currency anhand des aktuellen Gebietsschemas erstellen</title>
+        <title>Eine Instanz von Zend_Currency anhand des Gebietsschemas erstellen</title>
 
         <para>
             Angenommen 'en_US' ist, durch die Umgebung des Benutzers, als aktuelles Gebietsschema gesetzt.
@@ -34,11 +34,11 @@ $currency = new Zend_Currency();
     </example>
 
     <para>
-        Seit dem Zend Framework 1.7.0 unterstützt <code>Zend_Currency</code> auch die Verwendung eines
-        Anwendungsweiten Gebietsschemas. Man kann einfach eine <code>Zend_Locale</code> Instanz in der
-        Registry setzen wie unten gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
-        Gebietsschemas mit jeder Instanz komplett vergessen wenn man das gleiche Gebietsschema mehrere
-        Male verwenden will.
+        <code>Zend_Currency</code> unterstützt auch die Verwendung eines
+        Anwendungsweiten Gebietsschemas. Man kann eine <code>Zend_Locale</code> Instanz in der
+        Registry wie unten gezeigt setzen. Mit dieser Schreibweise kann man verhindern das
+        Gebietsschematas mit jeder Instanz gesetzt werden müssen wenn man das gleiche Gebietsschema in der
+        gesamten Anwendung verwenden will.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -53,15 +53,15 @@ $currency = new Zend_Currency();
 
     <note>
         <para>
-            Es ist zu beachten, das wenn das eigene System kein standardmäßiges Gebietsschema hat, oder das
+            Wenn das eigene System kein standardmäßiges Gebietsschema hat, oder das
             Gebietsschema des eigenen Systems nicht automatisch eruiert werden kann, wird
-            <code>Zend_Currency</code> eine Ausnahme werfen. Wenn dieses Verhalten auftritt sollte das
-            Gebietsschema per Hand gesezt werden.
+            <code>Zend_Currency</code> eine Ausnahme werfen. Wenn dieses Verhalten auftritt sollte man daran
+            denken das Gebietsschema per Hand zu setzen.
         </para>
     </note>
 
     <para>
-        Natürlich können, abhängig von den eigenen Bedürfnissen, verschiedene Parameter bei der Erstellung
+        Abhängig von den eigenen Bedürfnissen, können verschiedene Parameter bei der Instanzierung
         angegeben werden. Jeder dieser Parameter ist optional und kann unterdrückt werden. Selbst die
         Reihenfolge dieser Parameter kann gewechselt werden. Die Bedeutung dieser Parmeter wird in der
         folgenden Liste beschrieben:
@@ -76,10 +76,9 @@ $currency = new Zend_Currency();
                 Ein Gebietsschema kann verschiedene Währungen beinhalten. Deshalb kann der erste Parameter
                 <emphasis role="strong">'currency'</emphasis> definieren welche Währung verwendet werden soll
                 indem der Kurzname oder der komplette Name dieser Währung angegeben wird. Wenn die angegebene
-                Währung in keinem Gebietsschema bekannt ist, wird eine Ausnahme geworfen. Kurznamen von
-                Währungen bestehen immer aus 3 Buchstaben und werden groß geschrieben. Bekannte Kurznamen
-                von Währungen sind zum Beispiel <code>USD</code> oder <code>EUR</code>. Für eine Liste aller
-                bekannten Währungen gibt es die Informativen Methoden von <code>Zend_Currency</code>.
+                Währung in keinem Gebietsschema erkannt wird, wird eine Ausnahme geworfen. Kurznamen von
+                Währungen bestehen immer aus 3 Buchstaben und sind groß geschrieben. Bekannte Kurznamen
+                von Währungen sind zum Beispiel <code>USD</code> oder <code>EUR</code>.
             </para>
         </listitem>
         <listitem>
@@ -87,17 +86,17 @@ $currency = new Zend_Currency();
                 <emphasis role="strong">locale</emphasis>:
             </para>
             <para>
-                Der dritte Parameter <emphasis role="strong">'locale'</emphasis> definiert welches
-                Gebietsschema für die Formatierung der Währung verwendet werden soll. Das angegebene
-                Gebietsschema wird auch verwendet um die Standardschreibweise und die Währung dieses
-                Gebietsschemas zu erhalten wenn diese Parameter nicht angegeben werden.
+                Der <emphasis role="strong">'locale'</emphasis> Parameter definiert welches
+                Gebietsschema für die Formatierung der Währung verwendet werden soll. Das spezifizierte
+                Gebietsschema wird auch verwendet um die Schreibweise und das Symbol für diese Währung zu
+                erhalten wenn diese Parameter nicht angegeben werden.
             </para>
             <note>
                 <para>
                     Es gilt zu Beachten das Zend_Currency nur Gebietsschema akzeptiert die eine Region
                     beinhalten. Das bedeutet das alle angegebenen Gebietsschemata die nur eine Sprache
-                    beinhalten eine Ausnahme werfen. Zum Beispiel wird das Gebietsschema
-                    <emphasis role="strong">en</emphasis> eine Ausnahme werfen, aber das Gebietsschema
+                    beinhalten zu einer Ausnahme führen. Zum Beispiel wird das Gebietsschema
+                    <emphasis role="strong">en</emphasis> zu einer Ausnahme führen, aber das Gebietsschema
                     <emphasis role="strong">en_US</emphasis> wird als Währung
                     <emphasis role="strong">USD</emphasis> zurückgeben.
                 </para>
@@ -107,7 +106,7 @@ $currency = new Zend_Currency();
 
     <example id="zend.currency.usage.example2">
 
-        <title>Andere Beispiele für die Erstellung einer Instanz von Zend_Currency</title>
+        <title>Andere Wege für die Erstellung einer Instanz von Zend_Currency</title>
 
         <programlisting role="php"><![CDATA[
 // Wir nehmen das Standardgebietsschema 'de_AT' an
@@ -129,15 +128,15 @@ $currency = new Zend_Currency('en_US', 'EUR');
     </example>
 
     <para>
-        Es können also alle diese Parameter unterdrückt werden wenn man die Standardwerte verwenden will.
-        Das hat keine negativen Effekte bei der Handhabung von Währungen. Es kann aber nützlich sein, wenn man
-        z.B. die Standardwährung einer Region nicht weiß.
+        Es können also alle diese Parameter bei <code>Zend_Currency</code>'s Constructor unterdrückt werden
+        wenn man die Standardwerte verwenden will. Das hat keine negativen Effekte bei der Handhabung von
+        Währungen. Es kann aber nützlich sein, wenn man zum Beispiel die Standardwährung einer Region nicht weiß.
     </para>
 
     <note>
         <para>
-            Für viele Länder gibt es verschiedene bekannt Währungen. Eine Währung wird immer aktuell gerade
-            verwendet und es gibt eventuell noch alte Währungen. Wenn der
+            Für viele Länder gibt es verschiedene bekannt Währungen. Typishcerweise wird eine Währung immer
+            gerade aktuell verwendet und es gibt eventuell noch alte Währungen. Wenn der
             '<emphasis role="strong">currency</emphasis>' Parameter unterdrückt wird, wird immer die aktuelle
             Währung verwendet. Die Region '<emphasis role="strong">de</emphasis>' zum Beispiel kennt die
             Währungen '<emphasis role="strong">EUR</emphasis>' und
@@ -151,15 +150,15 @@ $currency = new Zend_Currency('en_US', 'EUR');
         <title>Eine Ausgabe von einer Währung erstellen</title>
 
         <para>
-            Um einen bestehenden Wert in eine formatierte Ausgabe einer Währung zu konvertieren, muß die
-            Methode <emphasis role="strong">toCurrency()</emphasis> verwendet werden. Sie nimmt einen
+            Um einen nummerischen Wert in einen formatierten String für die aktuelle Währung zu konvertieren,
+            muß man die Methode <emphasis role="strong">toCurrency()</emphasis> verwenden. Sie nimmt einen
             Wert der konvertiert werden soll. Der Wert selbst kann jede normalisierte Zahl sein.
         </para>
 
         <para>
             Wenn man nur eine lokalisierte Zahl hat, muß diese zuerst mit
             <link linkend="zend.locale.number.normalize">Zend_Locale_Format::getNumber()</link>
-            in einen normalisierte Zahl konvertiert werden. Danach kann Sie mit <code>toCurrency()</code>
+            in einen normalisierte Zahl konvertiert werden. Dann kann Sie mit <code>toCurrency()</code>
             verwendet werden um eine Ausgabe einer Währung zu erstellen.
         </para>
 
@@ -172,7 +171,7 @@ $currency = new Zend_Currency('en_US', 'EUR');
 
         <example id="zend.currency.usage.tocurrency.example">
 
-            <title>Eine Ausgabe für eine Währung erstellen</title>
+            <title>Erstellung und Ausgabe eines Strings einer Währung</title>
 
             <programlisting role="php"><![CDATA[
 // Erstellt eine Instanz mit 'en_US' und verwendet 'USD'
@@ -199,8 +198,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
 
         <para>
             Das Format das bei der Erstellung der <code>Zend_Currency</code> Instanz angegeben wurde, ist
-            natürlich das Standardformat. Aber manchmal ist es nützlich dieses Format für eigene Zwecke
-            anzupassen.
+            natürlich das Standardformat. Aber manchmal ist es nützlich dieses Format anzupassen.
         </para>
 
         <para>
@@ -213,7 +211,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                     <emphasis role="strong">Symbol, Kurzname oder Name der Währung</emphasis>:
                 </para>
                 <para>
-                    Das Symbol der Währung wird normalerweise bei der Ausgabe einer Währung angezeigt.
+                    Das Symbol der Währung wird normalerweise bei der Ausgabe eines Währungs Strings angezeigt.
                     Es kann unterdrückt oder sogar überschrieben werden wenn das notwendig ist.
                 </para>
             </listitem>
@@ -330,7 +328,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
 
         <table id="zend.currency.usage.setformat.constantsdescription">
 
-            <title>Konstanten für die Auswahl der Beschreibung einer Währung</title>
+            <title>Konstanten für die Auswahl der Position der Währungs Beschreibung</title>
 
             <tgroup cols="2" align="left">
                 <thead>
@@ -418,7 +416,7 @@ echo $currency->toCurrency(1000);
 
     <sect2 id="zend.currency.usage.informational">
 
-        <title>Informative Methoden von Zend_Currency</title>
+        <title>Referenz Methoden von Zend_Currency</title>
 
         <para>
             Natürlich bietet <code>Zend_Currency</code> auch Methoden an um Informationen über jede existierende
@@ -523,8 +521,8 @@ print_r($currency->getCurrencyList('de_AT');
 
         <para>
             Die Methode <code>setLocale</code> erlaubt es ein neues Gebietsschema für <code>Zend_Currency</code>
-            zu setzen. Wenn diese Funktion aufgerufen wird werden auch alle Standardwerte für die
-            Währung überschrieben. Das beinhaltet den Namen der Währung, die Abkürzung und das Symbol.
+            zu setzen. Alle Standardwerte werden überschrieben wenn diese Funktion aufgerufen wird.
+            Das beinhaltet den Namen der Währung, die Abkürzung und das Symbol.
         </para>
 
         <example id="zend.currency.usage.setlocale.example">
@@ -547,14 +545,14 @@ print $currency->toCurrency(1000);
 
     <sect2 id="zend.currency.usage.cache">
 
-        <title>Zend_Currency schneller machen</title>
+        <title>Zend_Currency Performance Optimierung</title>
 
         <para>
             <code>Zend_Currency</code> kann schneller gemacht werden indem <code>Zend_Cache</code> verwendet
-            wird. Durch die Verwendung der statischen Methode <code>Zend_Currency::setCache($cache)</code>
-            welche eine Option akzeptiert, nämlich einen <code>Zend_Cache</code> Adapter. Wenn dieser
-            gesetzt wird, werden die Lokalisierungsdaten der Methoden von Zend_Currency gecached. Der
-            Bequemlichkeit halber gibt es auch die statischen Methoden <code>Zend_Currency::getCache()</code>,
+            wird. Die statischen Methode <code>Zend_Currency::setCache($cache)</code> akzeptiert eine Option:
+            einen <code>Zend_Cache</code> Adapter. Wenn der Cache Adapter gesetzt wird,
+            werden die Lokalisierungsdaten von Zend_Currency gecached. Es gibt einige
+            statischen Methoden für die Manipulation des Caches: <code>Zend_Currency::getCache()</code>,
             <code>hasCache()</code>, <code>clearCache()</code> und <code>removeCache()</code>.
         </para>
 
