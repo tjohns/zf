@@ -444,7 +444,8 @@
 
                         <entry>Hard</entry>
 
-                        <entry>Zend_Ldap</entry>
+                        <entry><ulink
+                        url="http://framework.zend.com/manual/fr/zend.ldap.html"><code>Zend_Ldap</code></ulink></entry>
                     </row>
 
                     <row>
