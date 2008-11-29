@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12702 -->
+<!-- EN-Revision: 12836 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -507,7 +507,9 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
 // Prüft abhängig von der Groß-/Kleinschreibung
-$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
+$upload->addValidator('ExcludeExtension',
+                      false,
+                      array('php', 'exe', 'case' => true));
 ]]>
             </programlisting>
 
@@ -617,7 +619,9 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Exists', false, '\temp');
 
 // Zwei Verzeichnisse hinzufügen inden die Array Schreibweise verwendet wird
-$upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
+$upload->addValidator('Exists',
+                      false,
+                      array('\home\images', '\home\uploads'));
 ]]>
             </programlisting>
 
@@ -768,10 +772,16 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('FilesSize', false, 40000);
 
 // Limitiert die Größe aller angegebenen Dateien auf maximal 4MB und minimal 10kB
-$upload->addValidator('FilesSize', false, array('min' => '10kB', 'max' => '4MB'));
+$upload->addValidator('FilesSize',
+                      false,
+                      array('min' => '10kB', 'max' => '4MB'));
 
 // Wie zuvor, gibt aber die reine Dateigröße statt einem benutzerfreundlichen String zurück
-$upload->addValidator('FilesSize', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
+$upload->addValidator('FilesSize',
+                      false,
+                      array('min' => '10kB',
+                            'max' => '4MB',
+                            'bytestring' => false));
 ]]>
             </programlisting>
 
@@ -995,7 +1005,10 @@ $upload->addValidator('Hash', false, '3b3652f');
 $upload->addValidator('Hash', false, array('3b3652f', 'e612b69'));
 
 // Setzt einen anderen Algorithmus gegen den geprüft wird
-$upload->addValidator('Hash', false, array('315b3cd8273d44912a7', 'algorithm' => 'md5'));
+$upload->addValidator('Hash',
+                      false,
+                      array('315b3cd8273d44912a7',
+                            'algorithm' => 'md5'));
 ]]>
             </programlisting>
         </example>
@@ -1042,7 +1055,10 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Md5', false, '3b3652f336522365223');
 
 // Begrenzt diese Prüfung auf zwei unterschiedliche Hashes
-$upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+$upload->addValidator('Md5',
+                      false,
+                      array('3b3652f336522365223',
+                            'eb3365f3365ddc65365'));
 ]]>
             </programlisting>
         </example>
@@ -1110,7 +1126,10 @@ $upload->addValidator('MimeType', array('image/gif', 'image/jpeg');
 $upload->addValidator('MimeType', 'image');
 
 // Ein anderes magicfile verwenden
-$upload->addValidator('MimeType', false, array('image', 'magicfile' => '/path/to/magicfile.mgx'));
+$upload->addValidator('MimeType',
+                      false,
+                      array('image',
+                            'magicfile' => '/path/to/magicfile.mgx'));
 ]]>
             </programlisting>
         </example>
@@ -1230,7 +1249,9 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Sha1', false, '3b3652f336522365223');
 
 // Begrenzt diese Prüfung auf zwei unterschiedliche Hashes
-$upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365ddc65365'));
+$upload->addValidator('Sha1',
+                      false, array('3b3652f336522365223',
+                                   'eb3365f3365ddc65365'));
 ]]>
             </programlisting>
         </example>
@@ -1302,12 +1323,16 @@ $upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365dd
 $upload = new Zend_File_Transfer();
 
 // Limitiert die Größe einer Datei auf 40000 Bytes
-$upload->addValidator('Size', 40000);
+$upload->addValidator('Size', false, 40000);
 
 // Limitiert die Größe der angegebenen Datei auf maximal 4MB und  minimal 10kB
 // zusätzlich wird im Fall eines Fehlers die reine Zahl statt einer
 // Benutzerfreundlichen zurückgegeben
-$upload->addValidator('Size', array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
+$upload->addValidator('Size',
+                      false,
+                      array('min' => '10kB',
+                            'max' => '4MB',
+                            'bytestring' => false));
 ]]>
             </programlisting>
         </example>

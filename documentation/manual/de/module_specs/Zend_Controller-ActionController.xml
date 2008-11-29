@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12876 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
@@ -240,6 +240,16 @@ if ($this->_hasParam('id') {
     <sect2 id="zend.controller.action.viewintegration">
         <title>View Integration</title>
 
+        <note id="zend.controller.action.viewintegration.viewrenderer">
+            <title>Standard View Integration über den ViewRenderer</title>
+
+            <para>
+                Der Inhalt dieses Kapitel ist nur gültig wenn man den
+                <link linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link> explizit
+                deaktiviert hat. Andernfalls kann man dieses kapitel ohne Bedenken überspringen.
+            </para>
+        </note>
+
         <para>
             <code>Zend_Controller_Action</code> bietet einen rudimentären und flexiblen Mechanismus für View
             Integration. Zwei Methoden machen das möglich, <code>initView()</code> und <code>render()</code>;
@@ -314,7 +324,7 @@ string render(string $action = null,
 
             <note><para>
                     Da Kontroller- und Aktionsnamen Wort Begrenzer Zeichen enthalten können wie z.B. '_', '.' und
-                    '-', normalisiert render() diese zu '-' wenn der Skript Name eruiert wird. Intern werden die
+                    '-', normalisiert <code>render()</code> diese zu '-' wenn der Skript Name eruiert wird. Intern werden die
                     Wort- und Pfadbegrenzer vom Dispatcher verwendet um die Normalisierung durchzuführen. Deshalb
                     wird eine Anfrage auf <code>/foo.bar/baz-bat</code> das Skript auf
                     <code>foo-bar/baz-bat.phtml</code> rendern. Wenn eine Aktionsmethode camelCase Zeichen enthält,

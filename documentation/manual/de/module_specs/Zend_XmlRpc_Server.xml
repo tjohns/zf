@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12118 -->
+<!-- EN-Revision: 12877 -->
 <sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
@@ -502,7 +502,7 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     $server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
 
     // Speichern des Caches
-    Zend_XmlRpc_Server_Cache::save($cacheFile, $server));
+    Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
 // Ein neues Anfrage-Objekt wird erstellt

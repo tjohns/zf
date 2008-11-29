@@ -1,10 +1,10 @@
-<!-- EN-Revision: 12345 -->
+<!-- EN-Revision: 12893 -->
 <sect1 id="performance.view">
     <title>Darstellen der View</title>
 
     <para>
         Wenn man den MVC Layer vom Zend Framework verwendet, sind die Chancen das man <code>Zend_View</code>
-        verwendet recht hoch. <code>Zend_View</code> ist recht schnell verglichen mit anderen View oder
+        verwendet recht hoch. <code>Zend_View</code> ist performant verglichen mit anderen View oder
         Templating Engines; da View Skripte in PHP geschrieben sind muß man weder den Overhead eines
         Kompilierungssystems zu PHP auf sich nehmen, noch muß man darauf achten das das kompilierte PHP
         nicht optimiert ist. Trotzdem zeigt <code>Zend_View</code> seine eigenen Probleme: Erweiterungen

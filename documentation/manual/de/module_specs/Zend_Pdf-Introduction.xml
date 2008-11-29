@@ -1,14 +1,12 @@
-<!-- EN-Revision: 5068 -->
+<!-- EN-Revision: 12834 -->
 <sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Einführung</title>
     <para>
-        Die Zend_Pdf Komponente ist ein komplett in PHP 5 geschriebenes Werkzeug für die Veränderung von
-        PDF (Portable Document Format) Dateien. Es kann bestehende Dokumente laden, neue Dokumente
-        erstellen, Dokumente modifizieren und modifizierte Dokumente speichern. Dadurch kann es jede
-        PHP-getriebene Anwendung unterstützen, Dokumente im PDF Format dynamisch aufzubereiten,
-        indem bestehende Vorlagen modifiziert oder Dokumente von Grund auf neu erstellt werden.
-        Die Zend_Pdf Komponente stellt die folgenden Funktionen bereit:
+        Die Komponente Zend_Pdf ist eine Manipulations Engine für PDF (Portable Document Format).
+        Es kann Dokumente laden, erstellen, verändern und speichern. Deswegen kann es jeder PHP betriebenen
+        Anwendung helfen PDF Dokumente dynamisch zu erstellen indem bestehende Templates verändert
+        oder neue von Grund auf erzeugt werden. Zend_Pdf unterstützt die folgenden Features:
     <itemizedlist>
         <listitem>
             <para>

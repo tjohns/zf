@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12953 -->
 <appendix id="requirements">
 
     <title>Zend Framework Voraussetzungen</title>
@@ -22,12 +22,12 @@
         <title>PHP Version</title>
 
         <para>
-            Zend empfiehlt PHP 5.2.3 oder höher wegen kritischer Sicherheits- und Geschwindigkeits-
-            verbesserungen, aber Zend Framework benötigt nur PHP 5.1.4 oder später.
+            Zend empfiehlt das aktuellste Release von PHP wegen kritischer Sicherheits und Performance
+            Verbesserungen, und unserstützt aktuell PHP 5.2.4 oder höher.
         </para>
 
         <para>
-            Zend Framework hat eine exzessive Sammlung von automatisierten Tests, welche mit PHPUnit 3.0 oder
+            Zend Framework hat eine exzessive Sammlung von automatisierten Tests, welche mit PHPUnit 3.3.0 oder
             einer späteren Version, ausgeführt werden können.
         </para>
 
@@ -280,8 +280,8 @@
                     </row>
                     <row>
                         <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.ldap.php"><code>ldap</code></ulink></emphasis></entry>
-                        <entry>---</entry>
-                        <entry>---</entry>
+                        <entry>Hart</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.ldap.html"><code>Zend_Ldap</code></ulink></entry>
                     </row>
                     <row>
                         <entry morerows="2" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></emphasis></entry>
@@ -860,7 +860,7 @@
                         <entry><emphasis role="strong"><ulink url="http://framework.zend.com/manual/en/zend.ldap.html"><code>Zend_Ldap</code></ulink></emphasis></entry>
                         <entry>---</entry>
                         <entry>---</entry>
-                        <entry>---</entry>
+                        <entry><ulink url="http://www.php.net/manual/en/ref.ldap.php"><code>ldap</code></ulink></entry>
                     </row>
                     <row>
                         <entry><emphasis role="strong"><ulink url="http://framework.zend.com/manual/en/zend.loader.html"><code>Zend_Loader</code></ulink></emphasis></entry>

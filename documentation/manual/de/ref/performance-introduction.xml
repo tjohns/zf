@@ -1,10 +1,10 @@
-<!-- EN-Revision: 12280 -->
+<!-- EN-Revision: 12893 -->
 <sect1 id="performance.introduction">
     <title>Einführung</title>
 
     <para>
         Der Zweck dieses Anhangs ist es einige konkrete Strategien für die Verbesserung der Geschwindigkeit
-        für Zend Framework Anwendungen zu geben. Der Ratgeber wird im "Frage:Antwort" Format präsentiert,
+        für Zend Framework Anwendungen zu geben. Der Ratgeber wird im "Frage und Antwort" Format präsentiert,
         und ist in Abschnitte von gleichlautenden Interessen geteilt.
     </para>
 </sect1>

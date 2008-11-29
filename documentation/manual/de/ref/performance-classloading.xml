@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12600 -->
+<!-- EN-Revision: 12893 -->
 <sect1 id="performance.classloading">
     <title>Laden von Klassen</title>
 
@@ -192,7 +192,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
             <title>Aufrufe von require_once mit find und sed entfernen</title>
 
             <para>
-                Ein einfacher Weg um require_once Aufrufe zu entfernen ist die Verwendung der Unix
+                Ein einfacher Weg um require_once Aufrufe zu entfernen ist die Verwendung der UNIX
                 Utilities 'find' und 'set' in Verbindung um jeden Aufruf auszukommentieren. Führe die
                 folgenden Anweisungen aus (wobei '%' der Shell Prompt ist):
             </para>

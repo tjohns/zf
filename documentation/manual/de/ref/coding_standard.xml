@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12892 -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
@@ -270,12 +270,12 @@ widgetFactory()
             </para>
 
             <para>
-                Alle Buchstaben die in Konstantenname verwendet werden müssen großgeschrieben haben.
+                Alle Buchstaben die in Konstantenname verwendet werden müssen großgeschrieben haben, wärend
+                Wörter in einem Konstantennamen durch Unterstriche getrennt werden müssen.
             </para>
 
             <para>
-                Wörter in Konstantennamen müssen durch ein Unterstrich Zeichen geteilt werden. Zum
-                Beispiel ist <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> gestattet aber
+                Zum Beispiel ist <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> gestattet aber
                 <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> nicht.
             </para>
 
@@ -463,7 +463,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 <para>
                     Klassen müssen entsprechend der Zend Framework Namenskonvention benannt werden.
                 </para><para>
-                    Die Klammer sollte immer in der Zeile unter dem Klassennamen geschrieben werden (die "one true brace" Form).
+                    Die Klammer sollte immer in der Zeile unter dem Klassennamen geschrieben werden.
                 </para><para>
                     Jede Klasse muß einen Dokumentationsblock haben der dem PHPDocumentor Standard entspricht.
                 </para><para>
@@ -528,7 +528,7 @@ class SampleClass
                 </para>
                 <para>
                     Wie bei Klassen, sollte die Klammer immer in der Zeile unterhalb des Funktionsnamens
-                    geschrieben werden (die "one true brace" Form).
+                    geschrieben werden.
 
                     Leerzeichen zwischen dem Funktionsnamen und der öffnenden Klammer für die Argumente
                     sind nicht erlaubt.

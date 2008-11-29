@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12737 -->
+<!-- EN-Revision: 12846 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
@@ -709,14 +709,9 @@ $table->delete($where);
         </example>
 
         <para>
-            Das zweite Argument kann ein Array von SQL Ausdrücken sein. Diese Ausdrücke werden als boolsche
-            Terme kombiniert indem der <code>AND</code> Operator verwendet wird.
-        </para>
-
-        <para>
             Da die <code>delete()</code> Methode der Tabelle zur
             <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link> Methode des Datenbank
-            Adapters weiterleitet, kann das zweite Argument ein Array von SQL Ausdrücken sein. Diese
+            Adapters weiterleitet, kann das Argument ein Array von SQL Ausdrücken sein. Diese
             Ausdrücke werden als boolsche Terme kombiniert indem ein <code>AND</code> Operator verwendet wird.
         </para>
 

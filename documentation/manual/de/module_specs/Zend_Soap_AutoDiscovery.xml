@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12308 -->
+<!-- EN-Revision: 12836 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -86,6 +86,39 @@ $autodiscover->handle();
 ]]>
             </programlisting>
         </para>
+
+        <note id="zend.soap.autodiscovery.introduction.noserver">
+            <title>Zend_Soap_Autodiscover ist kein Soap Server</title>
+
+            <para>
+                Es ist wichtig anzumerken, das die Klasse Zend_Soap_Autodiscover nicht für sich selbst als
+                SOAP Server agiert. Sie erzeugt nur den WSDL und bietet Ihn jedem an der auf die URL
+                zugreift auf die geschaut wird.
+            </para>
+
+            <para>
+                Als Endpunkt der SOAP URI verwendet es den Standard
+                <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code>, der aber mit der
+                <code>setUri()</code> Funktion oder dem Contructor Parameter der Zend_Soap_AutoDiscover Klasse
+                verändert werden kann. Der Endpunkt muß an einen Zend_Soap_Server übergeben werden der auf
+                die Anfragen hört.
+            </para>
+
+            <para>
+                <programlisting role="php"><![CDATA[
+if(isset($_GET['wsdl'])) {
+    $autodiscover = new Zend_Soap_AutoDiscover();
+    $autodiscover->setClass('HelloWorldService');
+    $autodiscover->handle();
+} else {
+    // zeigt auf diese aktuelle Datei
+    $soap = new Zend_Soap_Server("http://example.com/soap.php?wsdl");
+    $soap->setClass('HelloWorldService');
+    $soap->handle();
+}]]>
+                </programlisting>
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.class">

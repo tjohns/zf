@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 12844 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1734,6 +1734,15 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         <code>lastInsertId()</code> Argumente und gibt immer den letzten Wert der für den
                         auto-increment Schlüssel generiert wurde zurück. Die <code>lastSequenceId()</code>
                         Methode gibt <code>null</code> zurück.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Wenn man mit Unicode Strings in einer anderen Codierung als UCS-2 (wie UTF-8) arbeitet,
+                        kann es sein das man eine Konvertierung im eigenen Anwendungscode durchführen, oder
+                        die Daten in einer Binären Spalte speicher muß. Referieren Sie bitte auf
+                        <ulink url="http://support.microsoft.com/kb/232580">Microsoft's Knowledge Base</ulink>
+                        für weitere Informationen.
                     </para>
                 </listitem>
                 <listitem>
