@@ -65,11 +65,23 @@ class Zend_Application_Plugin_Session extends Zend_Application_Plugin
     /**
      * Set session save handler
      *
-     * @param Zend_Session_SaveHandler_Interface $saveHandler
+     * @param  mixed $saveHandler
+     * @throws Zend_Application_Plugin_Exception When $saveHandler is no valid save handler
+     * @return Zend_Application_Plugin_Session
      */
-    public function setSaveHandler(Zend_Session_SaveHandler_Interface $saveHandler)
+    public function setSaveHandler($saveHandler)
     {
-        $this->_saveHandler = $saveHandler;
+        if ($saveHandler instanceof Zend_Session_SaveHandler_Interface) {
+            $this->_saveHandler = $saveHandler;
+        } else if (is_string($saveHandler)) {
+            require_once 'Zend/Loader.php';
+            Zend_Loader::loadClass($saveHandler);
+            
+            $this->_saveHandler = new $saveHandler();
+        } else {
+            require_once 'Zend/Application/Plugin/Exception.php';
+            throw new Zend_application_Plugin_Exception('$saveHandler is no valid save handler');
+        }
     }
     
     /**
