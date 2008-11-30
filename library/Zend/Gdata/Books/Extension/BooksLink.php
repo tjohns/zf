@@ -22,9 +22,9 @@
  */
 
 /**
- * @see Zend_Gdata_Extension_Link
+ * @see Zend_Gdata_App_Extension_Link
  */
-require_once 'Zend/Gdata/Extension/Link.php';
+require_once 'Zend/Gdata/App/Extension/Link.php';
 
 /**
  * Extends the base Link class with Books extensions
