@@ -333,4 +333,28 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         $this->_connect();
         return $this->_serverType->nextSequenceId($sequenceName);
     }
+
+    /**
+     * Retrieve server version in PHP style
+     * Pdo_Idm doesn't support getAttribute(PDO::ATTR_SERVER_VERSION)
+     * @return string
+     */
+    public function getServerVersion()
+    {
+        try {
+            $stmt = $this->query('SELECT service_level, fixpack_num FROM TABLE (sysproc.env_get_inst_info()) as INSTANCEINFO');
+            $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+            if (count($result)) {
+                $matches = null;
+                if (preg_match('/((?:[0-9]{1,2}\.){1,3}[0-9]{1,2})/', $result[0][0], $matches)) {
+                    return $matches[1];
+                } else {
+                    return null;
+                }
+            }
+            return null;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 }
