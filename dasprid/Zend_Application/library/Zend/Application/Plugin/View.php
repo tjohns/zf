@@ -25,7 +25,7 @@
 require_once 'Zend/Application/Plugin.php';
 
 /**
- * Plugin for setting session options
+ * Plugin for settings view options
  *
  * @category  Zend
  * @package   Zend_Application
@@ -33,22 +33,15 @@ require_once 'Zend/Application/Plugin.php';
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Plugin_Session extends Zend_Application_Plugin
+class Zend_Application_Plugin_View extends Zend_Application_Plugin
 {
     /**
-     * Options for sessions
+     * Options for the view
      *
      * @var array
      */
     protected $_options = array();
-    
-    /**
-     * Save handler to use
-     *
-     * @var Zend_Session_SaveHandler_Interface
-     */
-    protected $_saveHandler = null;
-    
+
     /**
      * Set options from array
      *
@@ -63,44 +56,20 @@ class Zend_Application_Plugin_Session extends Zend_Application_Plugin
     }
     
     /**
-     * Set session save handler
-     *
-     * @param  mixed $saveHandler
-     * @throws Zend_Application_Plugin_Exception When $saveHandler is no valid save handler
-     * @return Zend_Application_Plugin_Session
-     */
-    public function setSaveHandler($saveHandler)
-    {
-        if (is_string($saveHandler)) {
-            require_once 'Zend/Loader.php';
-            Zend_Loader::loadClass($saveHandler);
-            
-            $this->_saveHandler = new $saveHandler();
-        }
-        
-        if ($saveHandler instanceof Zend_Session_SaveHandler_Interface) {
-            $this->_saveHandler = $saveHandler;
-        } else {
-            require_once 'Zend/Application/Plugin/Exception.php';
-            throw new Zend_application_Plugin_Exception('$saveHandler is no valid save handler');
-        }
-    }
-    
-    /**
      * Defined by Zend_Application_Plugin
      *
      * @return void
      */
     public function init()
     {
-        require_once 'Zend/Session.php';
+        require_once 'Zend/View.php';
+        $view = new Zend_View($this->_options);
+
+        require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
+        $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
+        $viewRenderer->setView($view);
         
-        if (count($this->_options) > 0) {
-            Zend_Session::setOptions($this->_options);
-        }
-        
-        if ($this->_saveHandler !== null) {
-            Zend_Session::setSaveHandler($this->_saveHandler);
-        }
+        require_once 'Zend/Controller/Action/HelperBroker.php';
+        Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
     }
 }
