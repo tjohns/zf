@@ -531,6 +531,21 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Get internal file informations
+     *
+     * @param  string $value (Optional) Element or file to return
+     * @return array
+     */
+    public function getFileInfo($value = null)
+    {
+        if (empty($value)) {
+            $value = $this->getName();
+        }
+
+        return $this->getTransferAdapter()->getFileInfo($value);
+    }
+
+    /**
      * Set a multifile element
      *
      * @param integer $count Number of file elements
@@ -761,6 +776,18 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     {
         $adapter = $this->getTransferAdapter();
         return $adapter->isFiltered($this->getName());
+    }
+
+    /**
+     * Returns the hash for this file element
+     *
+     * @param string $hash (Optional) Hash algorithm to use
+     * @return string|array Hashstring
+     */
+    public function getHash($hash = 'crc32')
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->getHash($hash, $this->getName());
     }
 
     /**
