@@ -306,4 +306,12 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
         return true;
     }
 
+    /**
+     * Retrieve server version in PHP style
+     *
+     * @return string
+     */
+    public function getServerVersion() {
+        return "5.6.7.8";
+    }
 }
