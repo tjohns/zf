@@ -633,12 +633,15 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     {
         $this->_connect();
         $version = oci_server_version($this->_connection);
-        $matches = null;
-        if (preg_match('/((?:[0-9]{1,2}\.){1,3}[0-9]{1,2})/', $version, $matches)) {
-            return $matches[1];
+        if ($version !== false) {
+            $matches = null;
+            if (preg_match('/((?:[0-9]{1,2}\.){1,3}[0-9]{1,2})/', $version, $matches)) {
+                return $matches[1];
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
     }
 }
-

@@ -360,4 +360,22 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
         return (int)$this->fetchOne($sql);
     }
 
+    /**
+     * Retrieve server version in PHP style
+     * Pdo_Mssql doesn't support getAttribute(PDO::ATTR_SERVER_VERSION)
+     * @return string
+     */
+    public function getServerVersion()
+    {
+        try {
+            $stmt = $this->query("SELECT SERVERPROPERTY('productversion')");
+            $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+            if (count($result)) {
+                return $result[0][0];
+            }
+            return null;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 }
