@@ -1,12 +1,12 @@
-Welcome to Zend Framework 1.7.0! This is the first release in the Zend
-Framework 1.7 series. This release maintains backwards compatibility with all
-Zend Framework 1.x releases.
+Welcome to Zend Framework 1.7.1! This is the first maintenance release in the 
+Zend Framework 1.7 series. This release maintains backwards compatibility
+with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.7.0 ([INSERT REV NUM HERE]).
-Released on 2008-11-17.
+Zend Framework 1.7.1 ([INSERT REV NUM HERE]).
+Released on 2008-12-01.
 
 SPECIAL NOTICE
 --------------
@@ -66,8 +66,7 @@ http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10903
 SYSTEM REQUIREMENTS
 -------------------
 
-Zend recommends PHP 5.2.3 or higher for critical security and performance
-enhancements, although Zend Framework requires only PHP 5.1.4 or later.
+Zend Framework requires PHP 5.1.4 or later and works best with 5.2.3 or later.
 Please see our reference guide for more detailed system requirements:
 
 http://framework.zend.com/manual/en/requirements.html
@@ -80,21 +79,21 @@ Please see /INSTALL.txt.
 QUESTIONS AND FEEDBACK
 ----------------------
 
-Online documentation can be found at http://framework.zend.com/manual.
-Questions that are not addressed in the manual should be directed to the
-appropriate mailing list:
+Online documentation can be found at http://framework.zend.com/manual. Questions
+that are not addressed in the manual should be directed to the appropriate
+mailing list:
 
 http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists
 
-If you find code in this release behaving in an unexpected manner or
-contrary to its documented behavior, please create an issue in the Zend
-Framework issue tracker at:
+If you find code in this release behaving in an unexpected manner or contrary to
+its documented behavior, please create an issue in the Zend Framework issue
+tracker at:
 
 http://framework.zend.com/issues
 
-If you would like to be notified of new releases- including further maintenance
-releases of Zend Framework 1.7- you can subscribe to the fw-announce mailing
-list by sending a blank message to fw-announce-subscribe@lists.zend.com.
+If you would like to be notified of new releases- including further
+maintenance releases of Zend Framework 1.7- you can subscribe to the fw-announce
+mailing list by sending a blank message to fw-announce-subscribe@lists.zend.com.
 
 LICENSE
 -------
@@ -106,6 +105,5 @@ ACKNOWLEDGEMENTS
 ----------------
 
 The Zend Framework team would like to thank all the contributors to the Zend
-Framework project, our corporate sponsor (Zend Technologies), and you- the Zend Framework user. 
-Please visit us sometime soon at: http://framework.zend.com!
-
+Framework project, our corporate sponsor (Zend Technologies), and you- the Zend
+Framework user. Please visit us sometime soon at http://framework.zend.com!
