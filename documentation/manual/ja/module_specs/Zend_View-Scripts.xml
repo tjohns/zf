@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12965 -->
 <sect1 id="zend.view.scripts">
 
     <title>ビュースクリプト</title>
@@ -219,7 +219,6 @@ public function getScriptPaths();
  * テンプレート変数をオブジェクトのプロパティとして代入するためのオーバーロードメソッド
  */
 public function __set($key, $value);
-public function __get($key);
 public function __isset($key);
 public function __unset($key);
 
@@ -346,17 +345,6 @@ class Zend_View_Smarty implements Zend_View_Interface
     public function __set($key, $val)
     {
         $this->_smarty->assign($key, $val);
-    }
-
-    /**
-     * 代入された変数を取得します
-     *
-     * @param string $key 変数名
-     * @return mixed 変数の値
-     */
-    public function __get($key)
-    {
-        return $this->_smarty->get_template_vars($key);
     }
 
     /**
