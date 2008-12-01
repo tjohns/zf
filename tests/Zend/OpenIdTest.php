@@ -675,4 +675,34 @@ class Zend_OpenIdTest extends PHPUnit_Framework_TestCase
         $this->assertSame( '00fe', bin2hex(Zend_OpenId::btwoc(pack('H*', 'fe'))) );
         $this->assertSame( '00ff', bin2hex(Zend_OpenId::btwoc(pack('H*', 'ff'))) );
     }
+
+    /**
+     * testing setSelfUrl
+     *
+     */
+    public function testSetSelfUrl()
+    {
+        unset($_SERVER['SCRIPT_URI']);
+        unset($_SERVER['HTTPS']);
+        unset($_SERVER['HTTP_HOST']);
+        unset($_SERVER['SERVER_NAME']);
+        unset($_SERVER['SERVER_PORT']);
+        unset($_SERVER['SCRIPT_URL']);
+        unset($_SERVER['REDIRECT_URL']);
+        unset($_SERVER['PHP_SELF']);
+        unset($_SERVER['SCRIPT_NAME']);
+        unset($_SERVER['PATH_INFO']);
+        $_SERVER['SCRIPT_URI'] = "http://www.test.com/";
+
+        $this->assertSame( 'http://www.test.com/', Zend_OpenId::selfUrl() );
+
+        $this->assertSame( null, Zend_OpenId::setSelfUrl("http://localhost/test") );
+        $this->assertSame( "http://localhost/test", Zend_OpenId::selfUrl() );
+
+        $this->assertSame( "http://localhost/test", Zend_OpenId::setSelfUrl() );
+        $this->assertSame( 'http://www.test.com/', Zend_OpenId::selfUrl() );
+
+        $this->assertSame( null, Zend_OpenId::setSelfUrl() );
+        $this->assertSame( 'http://www.test.com/', Zend_OpenId::selfUrl() );
+    }
 }

@@ -65,6 +65,26 @@ class Zend_OpenId
      * Allows enable/disable stoping execution of PHP script after redirect()
      */
     static public $exitOnRedirect = true;
+   
+    /**
+     * Alternative request URL that can be used to override the default 
+     * selfUrl() response
+     */
+    static public $selfUrl = null;
+
+    /**
+     * Sets alternative request URL that can be used to override the default
+     * selfUrl() response
+     *
+     * @param string $selfUrl the URL to be set
+     * @return string the old value of overriding URL
+     */
+    static public function setSelfUrl($selfUrl = null)
+    {
+    	$ret = self::$selfUrl;
+		self::$selfUrl = $selfUrl;
+		return $ret;
+	}
 
     /**
      * Returns a full URL that was requested on current HTTP request.
@@ -73,7 +93,9 @@ class Zend_OpenId
      */
     static public function selfUrl()
     {
-        if (isset($_SERVER['SCRIPT_URI'])) {
+    	if (self::$selfUrl !== null) {
+			return self::$selfUrl;
+        } if (isset($_SERVER['SCRIPT_URI'])) {
             return $_SERVER['SCRIPT_URI'];
         }
         $url = '';
