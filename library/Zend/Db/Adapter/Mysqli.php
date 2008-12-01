@@ -321,13 +321,25 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return ((bool) ($this->_connection instanceof mysqli));
+    }
+
+    /**
      * Force the connection to close.
      *
      * @return void
      */
     public function closeConnection()
     {
-        $this->_connection->close();
+        if ($this->isConnected()) {
+            $this->_connection->close();
+        }
         $this->_connection = null;
     }
 

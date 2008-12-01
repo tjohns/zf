@@ -187,13 +187,26 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return ((bool) (is_resource($this->_connection)
+                     && get_resource_type($this->_connection) == 'DB2 Connection'));
+    }
+
+    /**
      * Force the connection to close.
      *
      * @return void
      */
     public function closeConnection()
     {
-        db2_close($this->_connection);
+        if ($this->isConnected()) {
+            db2_close($this->_connection);
+        }
         $this->_connection = null;
     }
 
