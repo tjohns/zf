@@ -225,7 +225,6 @@ public function getScriptPaths();
  * properties
  */
 public function __set($key, $value);
-public function __get($key);
 public function __isset($key);
 public function __unset($key);
 
@@ -352,17 +351,6 @@ class Zend_View_Smarty implements Zend_View_Interface
     public function __set($key, $val)
     {
         $this->_smarty->assign($key, $val);
-    }
-
-    /**
-     * Retrieve an assigned variable
-     *
-     * @param string $key The variable name.
-     * @return mixed The variable value.
-     */
-    public function __get($key)
-    {
-        return $this->_smarty->get_template_vars($key);
     }
 
     /**
