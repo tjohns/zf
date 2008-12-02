@@ -1500,7 +1500,9 @@ class Zend_Pdf_Page
     /**
      * Rotate the page.
      *
-     * @param float $angle
+     * @param float $x  - the X co-ordinate of rotation point
+     * @param float $y  - the Y co-ordinate of rotation point
+     * @param float $angle - rotation angle
      * @return Zend_Pdf_Page
      */
     public function rotate($x, $y, $angle)
@@ -1518,8 +1520,72 @@ class Zend_Pdf_Page
 
         $this->_addProcSet('PDF');
         $this->_contents .= '1 0 0 1 ' . $xObj->toString() . ' ' . $yObj->toString() . " cm\n"
-                         . $cos->toString() . ' ' . $sin->toString() . ' ' . $mSin->toString() . ' ' . $cos->toString() . " 0 0 cm\n"
-                         .'1 0 0 1 ' . $mXObj->toString() . ' ' . $mYObj->toString() . " cm\n";
+                         .  $cos->toString() . ' ' . $sin->toString() . ' ' . $mSin->toString() . ' ' . $cos->toString() . " 0 0 cm\n"
+                         .  '1 0 0 1 ' . $mXObj->toString() . ' ' . $mYObj->toString() . " cm\n";
+
+        return $this;
+    }
+
+    /**
+     * Scale coordination system.
+     *
+     * @param float $xScale - X dimention scale
+     * @param float $yScale - Y dimention scale
+     * @return Zend_Pdf_Page
+     */
+    public function scale($xScale, $yScale)
+    {
+        $xScaleObj = new Zend_Pdf_Element_Numeric($xScale);
+        $yScaleObj = new Zend_Pdf_Element_Numeric($yScale);
+
+        $this->_addProcSet('PDF');
+        $this->_contents .= $xScaleObj->toString() . ' 0 0 ' . $yScaleObj->toString() . " 0 0 cm\n";
+
+        return $this;
+    }
+
+    /**
+     * Translate coordination system.
+     *
+     * @param float $xShift - X coordinate shift
+     * @param float $yShift - Y coordinate shift
+     * @return Zend_Pdf_Page
+     */
+    public function translate($xShift, $yShift)
+    {
+        $xShiftObj = new Zend_Pdf_Element_Numeric($xShift);
+        $yShiftObj = new Zend_Pdf_Element_Numeric($yShift);
+
+        $this->_addProcSet('PDF');
+        $this->_contents .= '1 0 0 1 ' . $xShiftObj->toString() . ' ' . $yShiftObj->toString() . " cm\n";
+
+        return $this;
+    }
+
+    /**
+     * Translate coordination system.
+     *
+     * @param float $x  - the X co-ordinate of axis skew point
+     * @param float $y  - the Y co-ordinate of axis skew point
+     * @param float $xAngle - X axis skew angle
+     * @param float $yAngle - Y axis skew angle
+     * @return Zend_Pdf_Page
+     */
+    public function skew($x, $y, $xAngle, $yAngle)
+    {
+        $tanXObj = new Zend_Pdf_Element_Numeric(tan($xAngle));
+        $tanYObj = new Zend_Pdf_Element_Numeric(-tan($yAngle));
+
+        $xObj = new Zend_Pdf_Element_Numeric($x);
+        $yObj = new Zend_Pdf_Element_Numeric($y);
+
+        $mXObj = new Zend_Pdf_Element_Numeric(-$x);
+        $mYObj = new Zend_Pdf_Element_Numeric(-$y);
+
+        $this->_addProcSet('PDF');
+        $this->_contents .= '1 0 0 1 ' . $xObj->toString() . ' ' . $yObj->toString() . " cm\n"
+                         .  '1 ' . $tanXObj->toString() . ' ' . $tanYObj->toString() . " 1 0 0 cm\n"
+                         .  '1 0 0 1 ' . $mXObj->toString() . ' ' . $mYObj->toString() . " cm\n";
 
         return $this;
     }

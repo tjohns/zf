@@ -32,43 +32,43 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
         $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
         // Apply font and draw text
-        $page1->setFont($font, 36);
-        $page1->setFillColor(Zend_Pdf_Color_Html::color('#9999cc'));
-        $page1->drawText('Helvetica 36 text string', 60, 500);
+        $page1->setFont($font, 36)
+              ->setFillColor(Zend_Pdf_Color_Html::color('#9999cc'))
+              ->drawText('Helvetica 36 text string', 60, 500);
 
         // Use font object for another page
-        $page2->setFont($font, 24);
-        $page2->drawText('Helvetica 24 text string', 60, 500);
+        $page2->setFont($font, 24)
+              ->drawText('Helvetica 24 text string', 60, 500);
 
         // Use another font
-        $page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES), 32);
-        $page2->drawText('Times-Roman 32 text string', 60, 450);
+        $page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES), 32)
+              ->drawText('Times-Roman 32 text string', 60, 450);
 
         // Draw rectangle
-        $page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8));
-        $page2->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
-        $page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-        $page2->drawRectangle(60, 400, 400, 350);
+        $page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8))
+              ->setLineColor(new Zend_Pdf_Color_GrayScale(0.2))
+              ->setLineDashingPattern(array(3, 2, 3, 4), 1.6)
+              ->drawRectangle(60, 400, 400, 350);
 
         // Draw circle
-        $page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
-        $page2->drawCircle(85, 375, 25);
+        $page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID)
+              ->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0))
+              ->drawCircle(85, 375, 25);
 
         // Draw sectors
-        $page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6);
-        $page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
-        $page2->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3);
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
-        $page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
+        $page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6)
+              ->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0))
+              ->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3)
+              ->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0))
+              ->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
 
         // Draw ellipse
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
-        $page2->drawEllipse(250, 400, 400, 350);
-        $page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
-        $page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
-        $page2->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
+        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0))
+              ->drawEllipse(250, 400, 400, 350)
+              ->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0))
+              ->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3)
+              ->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0))
+              ->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
 
         // Draw and fill polygon
         $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 1));
@@ -83,8 +83,8 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
                             Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
 
         // Draw line
-        $page2->setLineWidth(0.5);
-        $page2->drawLine(60, 375, 400, 375);
+        $page2->setLineWidth(0.5)
+              ->drawLine(60, 375, 400, 375);
 
         $pdf->save(dirname(__FILE__) . '/_files/output.pdf');
         unset($pdf);
@@ -109,16 +109,16 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
             $page->saveGS();
 
             // Create new Style
-            $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
-            $page->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
-            $page->setLineWidth(3);
-            $page->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-            $page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
+            $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9))
+                 ->setLineColor(new Zend_Pdf_Color_GrayScale(0.2))
+                 ->setLineWidth(3)
+                 ->setLineDashingPattern(array(3, 2, 3, 4), 1.6)
+                 ->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
 
-            $page->rotate(0, 0, M_PI_2/3);
-            $page->drawText('Modified by Zend Framework!', 150, 0);
-            $page->restoreGS();
+            $page->rotate(0, 0, M_PI_2/3)
+                 ->drawText('Modified by Zend Framework!', 150, 0)
+                 ->restoreGS();
         }
 
 
@@ -132,43 +132,43 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
         $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
         // Apply font and draw text
-        $page1->setFont($font, 36);
-        $page1->setFillColor(Zend_Pdf_Color_Html::color('#9999cc'));
-        $page1->drawText('Helvetica 36 text string', 60, 500);
+        $page1->setFont($font, 36)
+              ->setFillColor(Zend_Pdf_Color_Html::color('#9999cc'))
+              ->drawText('Helvetica 36 text string', 60, 500);
 
         // Use font object for another page
-        $page2->setFont($font, 24);
-        $page2->drawText('Helvetica 24 text string', 60, 500);
+        $page2->setFont($font, 24)
+              ->drawText('Helvetica 24 text string', 60, 500);
 
         // Use another font
-        $page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES), 32);
-        $page2->drawText('Times-Roman 32 text string', 60, 450);
+        $page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES), 32)
+              ->drawText('Times-Roman 32 text string', 60, 450);
 
         // Draw rectangle
-        $page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8));
-        $page2->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
-        $page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-        $page2->drawRectangle(60, 400, 400, 350);
+        $page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8))
+              ->setLineColor(new Zend_Pdf_Color_GrayScale(0.2))
+              ->setLineDashingPattern(array(3, 2, 3, 4), 1.6)
+              ->drawRectangle(60, 400, 400, 350);
 
         // Draw circle
-        $page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
-        $page2->drawCircle(85, 375, 25);
+        $page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID)
+              ->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0))
+              ->drawCircle(85, 375, 25);
 
         // Draw sectors
-        $page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6);
-        $page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
-        $page2->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3);
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
-        $page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
+        $page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6)
+              ->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0))
+              ->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3)
+              ->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0))
+              ->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
 
         // Draw ellipse
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0));
-        $page2->drawEllipse(250, 400, 400, 350);
-        $page2->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0));
-        $page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
-        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0));
-        $page2->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
+        $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 0))
+              ->drawEllipse(250, 400, 400, 350)
+              ->setFillColor(new Zend_Pdf_Color_Cmyk(1, 0, 0, 0))
+              ->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3)
+              ->setFillColor(new Zend_Pdf_Color_Rgb(1, 1, 0))
+              ->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
 
         // Draw and fill polygon
         $page2->setFillColor(new Zend_Pdf_Color_Rgb(1, 0, 1));
@@ -183,8 +183,8 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
                             Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
 
         // Draw line
-        $page2->setLineWidth(0.5);
-        $page2->drawLine(60, 375, 400, 375);
+        $page2->setLineWidth(0.5)
+              ->drawLine(60, 375, 400, 375);
 
         $pdf->save(dirname(__FILE__) . '/_files/output.pdf');
 
@@ -275,11 +275,11 @@ class Zend_Pdf_ProcessingTest extends PHPUnit_Framework_TestCase
             $page->saveGS();
 
             // Create new Style
-            $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
-            $page->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
-            $page->setLineWidth(3);
-            $page->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-            $page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
+            $page->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9))
+                 ->setLineColor(new Zend_Pdf_Color_GrayScale(0.2))
+                 ->setLineWidth(3)
+                 ->setLineDashingPattern(array(3, 2, 3, 4), 1.6)
+                 ->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
 
             $page->rotate(0, 0, M_PI_2/3);
