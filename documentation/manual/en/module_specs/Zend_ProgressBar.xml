@@ -74,9 +74,9 @@ $progressBar->finish();
                 <listitem><para><xref linkend="zend.progressbar.adapter.jspull" /></para></listitem>
             </itemizedlist>
         </para>
-        <xi:include href="Zend_Progressbar_Adapter_Console.xml" />
-        <xi:include href="Zend_Progressbar_Adapter_JsPush.xml" />
-        <xi:include href="Zend_Progressbar_Adapter_JsPull.xml" />
+        <xi:include href="Zend_ProgressBar_Adapter_Console.xml" />
+        <xi:include href="Zend_ProgressBar_Adapter_JsPush.xml" />
+        <xi:include href="Zend_ProgressBar_Adapter_JsPull.xml" />
     </sect2>
 </sect1>
 <!--
