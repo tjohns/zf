@@ -116,7 +116,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      *
      * @var boolean
      */
-    private $_cancel = false;
+    protected $_cancel = false;
 
     /**
      * Constructor
