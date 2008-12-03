@@ -67,6 +67,7 @@ $color3 = new Zend_Pdf_Color_Html('forestgreen');
  * @param float $y1
  * @param float $x2
  * @param float $y2
+ * @return Zend_Pdf_Page 
  */
 public function drawLine($x1, $y1, $x2, $y2);
 ]]>
@@ -86,6 +87,7 @@ public function drawLine($x1, $y1, $x2, $y2);
  * @param float $x2
  * @param float $y2
  * @param integer $fillType
+ * @return Zend_Pdf_Page 
  */
 public function drawRectangle($x1, $y1, $x2, $y2,
                     $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
@@ -104,6 +106,7 @@ public function drawRectangle($x1, $y1, $x2, $y2,
  * @param array $y  - array of float (the Y co-ordinates of the vertices)
  * @param integer $fillType
  * @param integer $fillMethod
+ * @return Zend_Pdf_Page 
  */
 public function drawPolygon($x, $y,
                             $fillType =
@@ -138,6 +141,7 @@ public function drawPolygon($x, $y,
  * @param mixed $param4
  * @param mixed $param5
  * @param mixed $param6
+ * @return Zend_Pdf_Page 
  */
 public function  drawCircle($x,
                             $y,
@@ -166,6 +170,7 @@ public function  drawCircle($x,
  * @param mixed $param5
  * @param mixed $param6
  * @param mixed $param7
+ * @return Zend_Pdf_Page 
  */
 public function drawEllipse($x1,
                             $y1,
@@ -195,6 +200,7 @@ public function drawEllipse($x1,
  * @param string $charEncoding (optional) Character encoding of source
  *               text.Defaults to current locale.
  * @throws Zend_Pdf_Exception
+ * @return Zend_Pdf_Page 
  */
 public function drawText($text, $x, $y, $charEncoding = '');
 ]]>
@@ -242,6 +248,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
  *
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
+ * @return Zend_Pdf_Page 
  */
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
 ]]>
@@ -587,6 +594,7 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
  * @param float $y1
  * @param float $x2
  * @param float $y2
+ * @return Zend_Pdf_Page 
  */
 public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
 ]]>
@@ -642,6 +650,7 @@ public function setLineWidth(float $width);
  *
  * @param array $pattern
  * @param array $phase
+ * @return Zend_Pdf_Page 
  */
 public function setLineDashingPattern($pattern, $phase = 0);
 ]]>
@@ -732,21 +741,82 @@ regardless of the directions in which the circles are drawn.
         </itemizedlist>
     </sect2>
 
-    <sect2 id="zend.pdf.drawing.rotations">
-        <title>Rotations</title>
-        <para>
-        PDF page can be rotated before applying any draw operation.
-        It can be done by <code>Zend_Pdf_Page::rotate()</code> method:
-        </para>
-        <programlisting role="php"><![CDATA[
+    <sect2 id="zend.pdf.drawing.linear-transformations">
+        <sect3 id="zend.pdf.drawing.linear-transformations.rotations">
+            <title>Rotations.</title>
+            <para>
+            PDF page can be rotated before applying any draw operation.
+            It can be done by <code>Zend_Pdf_Page::rotate()</code> method:
+            </para>
+            <programlisting role="php"><![CDATA[
 /**
- * Rotate the page around ($x, $y) point by specified angle (in radians).
+ * Rotate the page.
  *
- * @param float $angle
+ * @param float $x  - the X co-ordinate of rotation point
+ * @param float $y  - the Y co-ordinate of rotation point
+ * @param float $angle - rotation angle
+ * @return Zend_Pdf_Page
  */
 public function rotate($x, $y, $angle);
 ]]>
-        </programlisting>
+            </programlisting>
+        </sect3>
+
+        <sect3 id="zend.pdf.drawing.linear-transformations.scale">
+            <title>Starting from ZF 1.8, scaling.</title>
+            <para>
+            Scaling transformation is provided by <code>Zend_Pdf_Page::scale()</code> method:
+            </para>
+            <programlisting role="php"><![CDATA[
+/**
+ * Scale coordination system.
+ *
+ * @param float $xScale - X dimention scale factor
+ * @param float $yScale - Y dimention scale factor
+ * @return Zend_Pdf_Page
+ */
+public function scale($xScale, $yScale);
+]]>
+            </programlisting>
+        </sect3>
+
+        <sect3 id="zend.pdf.drawing.linear-transformations.translate">
+            <title>Starting from ZF 1.8, translating.</title>
+            <para>
+                Coordinate system shifting is performed by <code>Zend_Pdf_Page::translate()</code> method:
+            </para>
+            <programlisting role="php"><![CDATA[
+/**
+ * Translate coordination system.
+ *
+ * @param float $xShift - X coordinate shift
+ * @param float $yShift - Y coordinate shift
+ * @return Zend_Pdf_Page
+ */
+public function translate($xShift, $yShift);
+]]>
+            </programlisting>
+        </sect3>
+
+        <sect3 id="zend.pdf.drawing.linear-transformations.skew">
+            <title>Starting from ZF 1.8, skewing.</title>
+            <para>
+                Page skewing can be done using <code>Zend_Pdf_Page::skew()</code> method:
+            </para>
+            <programlisting role="php"><![CDATA[
+/**
+ * Translate coordination system.
+ *
+ * @param float $x  - the X co-ordinate of axis skew point
+ * @param float $y  - the Y co-ordinate of axis skew point
+ * @param float $xAngle - X axis skew angle
+ * @param float $yAngle - Y axis skew angle
+ * @return Zend_Pdf_Page
+ */
+public function skew($x, $y, $xAngle, $yAngle);
+]]>
+            </programlisting>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
@@ -765,12 +835,16 @@ public function rotate($x, $y, $angle);
  * This takes a snapshot of the currently applied style, position,
  * clipping area and any rotation/translation/scaling that has been
  * applied.
+ *
+ * @return Zend_Pdf_Page 
  */
 public function saveGS();
 
 /**
  * Restore the graphics state that was saved with the last call to
  * saveGS().
+ *
+ * @return Zend_Pdf_Page 
  */
 public function restoreGS();
 ]]>
@@ -794,6 +868,7 @@ public function restoreGS();
  * @param float $y1
  * @param float $x2
  * @param float $y2
+ * @return Zend_Pdf_Page 
  */
 public function clipRectangle($x1, $y1, $x2, $y2);
 ]]>
@@ -805,6 +880,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  * @param array $x  - array of float (the X co-ordinates of the vertices)
  * @param array $y  - array of float (the Y co-ordinates of the vertices)
  * @param integer $fillMethod
+ * @return Zend_Pdf_Page 
  */
 public function clipPolygon($x,
                             $y,
@@ -821,6 +897,7 @@ public function clipPolygon($x,
  * @param float $radius
  * @param float $startAngle
  * @param float $endAngle
+ * @return Zend_Pdf_Page 
  */
 public function clipCircle($x,
                            $y,
@@ -845,6 +922,7 @@ public function clipCircle($x,
  * @param float $y2
  * @param float $startAngle
  * @param float $endAngle
+ * @return Zend_Pdf_Page 
  */
 public function clipEllipse($x1,
                             $y1,
@@ -869,6 +947,7 @@ public function clipEllipse($x1,
  * Set the style to use for future drawing operations on this page
  *
  * @param Zend_Pdf_Style $style
+ * @return Zend_Pdf_Page 
  */
 public function setStyle(Zend_Pdf_Style $style);
 
@@ -889,6 +968,7 @@ public function getStyle();
  * Set line color.
  *
  * @param Zend_Pdf_Color $color
+ * @return Zend_Pdf_Page 
  */
 public function setLineColor(Zend_Pdf_Color $color);
 ]]>
@@ -898,6 +978,7 @@ public function setLineColor(Zend_Pdf_Color $color);
  * Get line color.
  *
  * @return Zend_Pdf_Color|null
+ * @return Zend_Pdf_Page 
  */
 public function getLineColor();
 ]]>
@@ -907,6 +988,7 @@ public function getLineColor();
  * Set line width.
  *
  * @param float $width
+ * @return Zend_Pdf_Page 
  */
 public function setLineWidth($width);
 ]]>
@@ -916,6 +998,7 @@ public function setLineWidth($width);
  * Get line width.
  *
  * @return float
+ * @return Zend_Pdf_Page 
  */
 public function getLineWidth();
 ]]>
@@ -926,6 +1009,7 @@ public function getLineWidth();
  *
  * @param array $pattern
  * @param float $phase
+ * @return Zend_Pdf_Page 
  */
 public function setLineDashingPattern($pattern, $phase = 0);
 ]]>
@@ -935,6 +1019,7 @@ public function setLineDashingPattern($pattern, $phase = 0);
  * Get line dashing pattern
  *
  * @return array
+ * @return Zend_Pdf_Page 
  */
 public function getLineDashingPattern();
 ]]>
@@ -944,6 +1029,7 @@ public function getLineDashingPattern();
  * Get line dashing phase
  *
  * @return float
+ * @return Zend_Pdf_Page 
  */
 public function getLineDashingPhase();
 ]]>
@@ -953,6 +1039,7 @@ public function getLineDashingPhase();
  * Set fill color.
  *
  * @param Zend_Pdf_Color $color
+ * @return Zend_Pdf_Page 
  */
 public function setFillColor(Zend_Pdf_Color $color);
 ]]>
@@ -972,6 +1059,7 @@ public function getFillColor();
  *
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
+ * @return Zend_Pdf_Page 
  */
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
 ]]>
@@ -981,6 +1069,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
  * Modify current font size
  *
  * @param float $fontSize
+ * @return Zend_Pdf_Page 
  */
 public function setFontSize($fontSize);
 ]]>
@@ -1027,6 +1116,7 @@ public function getFontSize();
  * @param float $alpha
  * @param string $mode
  * @throws Zend_Pdf_Exception
+ * @return Zend_Pdf_Page 
  */
 public function setAlpha($alpha, $mode = 'Normal');
 ]]>

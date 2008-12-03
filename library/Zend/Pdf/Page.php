@@ -1529,8 +1529,8 @@ class Zend_Pdf_Page
     /**
      * Scale coordination system.
      *
-     * @param float $xScale - X dimention scale
-     * @param float $yScale - Y dimention scale
+     * @param float $xScale - X dimention scale factor
+     * @param float $yScale - Y dimention scale factor
      * @return Zend_Pdf_Page
      */
     public function scale($xScale, $yScale)
