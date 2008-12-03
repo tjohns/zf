@@ -478,7 +478,8 @@ $result = $cache->foobar2('1', '2');
             <para>
                 <code>Zend_Cache_Frontend_File</code> is a frontend driven by the
                 modification time of a "master file". It's really interesting for examples
-                in configuration or templates issues.
+                in configuration or templates issues. It's also possible to use multiple
+                master files.
             </para>
             <para>
                 For instance, you have an XML configuration file which is parsed by a function
@@ -504,11 +505,37 @@ $result = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>master_file (mandatory)</code></entry>
+                              <entry><code>master_file (deprecated)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
                                   the complete path and name of the master file
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>master_files</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code></code></entry>
+                              <entry>
+                                  an array of complete path of master files
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>master_files_mode</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry>
+                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> or <code>Zend_Cache_Frontend_File::MODE_OR</code> ; 
+                                  if <code>MODE_AND</code>, then all master files have to be touched to get a cache invalidation
+                                  if <code>MODE_OR</code>, then a single touched master file is enough to get a cache invalidation
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>ignore_missing_master_files</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  if true, missing master files are ignored silently (an exception is raised else)
                               </entry>
                          </row>
                       </tbody>
