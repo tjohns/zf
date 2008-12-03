@@ -58,9 +58,7 @@ class Zend_Gdata_Media_Extension_MediaRestriction extends Zend_Gdata_Extension
      */
     public function __construct($text = null, $relationship = null,  $type = null)
     {
-        foreach (Zend_Gdata_Media::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();
         $this->_text = $text;
         $this->_relationship = $relationship;

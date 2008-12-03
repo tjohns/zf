@@ -50,9 +50,7 @@ class Zend_Gdata_Spreadsheets_Extension_ColCount extends Zend_Gdata_Extension
      */
     public function __construct($text = null)
     {
-        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
         parent::__construct();
         $this->_text = $text;
     }

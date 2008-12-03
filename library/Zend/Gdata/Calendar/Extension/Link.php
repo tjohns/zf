@@ -51,9 +51,7 @@ class Zend_Gdata_Calendar_Extension_Link extends Zend_Gdata_App_Extension_Link
     public function __construct($href = null, $rel = null, $type = null,
             $hrefLang = null, $title = null, $length = null, $webContent = null)
     {
-        foreach (Zend_Gdata_Calendar::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Calendar::$namespaces);
         parent::__construct($href, $rel, $type, $hrefLang, $title, $length);
         $this->_webContent = $webContent;
     }

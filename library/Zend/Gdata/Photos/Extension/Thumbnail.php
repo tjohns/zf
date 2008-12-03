@@ -44,17 +44,15 @@ class Zend_Gdata_Photos_Extension_Thumbnail extends Zend_Gdata_Extension
 
     protected $_rootNamespace = 'gphoto';
     protected $_rootElement = 'thumbnail';
-    
+
     /**
      * Constructs a new Zend_Gdata_Photos_Extension_Thumbnail object.
-     * 
+     *
      * @param string $text (optional) The thumbnail URI to represent.
      */
-    public function __construct($text = null) 
+    public function __construct($text = null)
     {
-        foreach (Zend_Gdata_Photos::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Photos::$namespaces);
         parent::__construct();
         $this->setText($text);
     }

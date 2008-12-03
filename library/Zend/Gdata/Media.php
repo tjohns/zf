@@ -37,8 +37,14 @@ require_once 'Zend/Gdata.php';
 class Zend_Gdata_Media extends Zend_Gdata
 {
 
+    /**
+     * Namespaces used for Zend_Gdata_Photos
+     *
+     * @var array
+     */
     public static $namespaces = array(
-            'media' => 'http://search.yahoo.com/mrss/');
+        array('media', 'http://search.yahoo.com/mrss/', 1, 0)
+    );
 
     /**
      * Create Gdata_Media object

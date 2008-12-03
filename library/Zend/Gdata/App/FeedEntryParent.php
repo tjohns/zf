@@ -87,7 +87,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     protected $_service = null;
 
-    /** 
+    /**
      * The HTTP ETag associated with this entry. Used for optimistic
      * concurrency in protoco v2 or greater.
      *
@@ -180,7 +180,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
         $this->_service = $instance;
         return $this;
     }
-    
+
     /**
      * Get the active service instance for this object. This will be used to
      * perform network requests, such as when calling save() and delete().
@@ -362,8 +362,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
 
     /**
      * Given a particular 'rel' value, this method returns a matching
-     * Zend_Gdata_App_Extension_Link element.  If the 'rel' value 
-     * is not provided, the full array of Zend_Gdata_App_Extension_Link 
+     * Zend_Gdata_App_Extension_Link element.  If the 'rel' value
+     * is not provided, the full array of Zend_Gdata_App_Extension_Link
      * elements is returned.  In an atom feed, each link is represented
      * by an atom:link element.  The 'rel' value passed to this function
      * is the atom:link/@rel attribute.  Example rel values include 'self',
@@ -392,7 +392,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     /**
      * Returns the Zend_Gdata_App_Extension_Link element which represents
      * the URL used to edit this resource.  This link is in the atom feed/entry
-     * as an atom:link with a rel attribute value of 'edit'.  
+     * as an atom:link with a rel attribute value of 'edit'.
      *
      * @return Zend_Gdata_App_Extension_Link The link, or null if not found
      */
@@ -404,8 +404,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     /**
      * Returns the Zend_Gdata_App_Extension_Link element which represents
      * the URL used to retrieve the next chunk of results when paging through
-     * a feed.  This link is in the atom feed as an atom:link with a 
-     * rel attribute value of 'next'.  
+     * a feed.  This link is in the atom feed as an atom:link with a
+     * rel attribute value of 'next'.
      *
      * @return Zend_Gdata_App_Extension_Link The link, or null if not found
      */
@@ -416,9 +416,9 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
 
     /**
      * Returns the Zend_Gdata_App_Extension_Link element which represents
-     * the URL used to retrieve the previous chunk of results when paging 
-     * through a feed.  This link is in the atom feed as an atom:link with a 
-     * rel attribute value of 'previous'.  
+     * the URL used to retrieve the previous chunk of results when paging
+     * through a feed.  This link is in the atom feed as an atom:link with a
+     * rel attribute value of 'previous'.
      *
      * @return Zend_Gdata_App_Extension_Link The link, or null if not found
      */
@@ -438,8 +438,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     /**
      * Returns the Zend_Gdata_App_Extension_Link element which represents
      * the URL used to retrieve the entry or feed represented by this object
-     * This link is in the atom feed/entry as an atom:link with a 
-     * rel attribute value of 'self'.  
+     * This link is in the atom feed/entry as an atom:link with a
+     * rel attribute value of 'self'.
      *
      * @return Zend_Gdata_App_Extension_Link The link, or null if not found
      */
@@ -451,11 +451,11 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     /**
      * Returns the Zend_Gdata_App_Extension_Link element which represents
      * the URL for an alternate view of the data represented by this feed or
-     * entry.  This alternate view is commonly a user-facing webpage, blog 
+     * entry.  This alternate view is commonly a user-facing webpage, blog
      * post, etc.  The MIME type for the data at the URL is available from the
-     * returned Zend_Gdata_App_Extension_Link element. 
-     * This link is in the atom feed/entry as an atom:link with a 
-     * rel attribute value of 'self'.  
+     * returned Zend_Gdata_App_Extension_Link element.
+     * This link is in the atom feed/entry as an atom:link with a
+     * rel attribute value of 'self'.
      *
      * @return Zend_Gdata_App_Extension_Link The link, or null if not found
      */
@@ -505,8 +505,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     }
 
     /**
-     * Returns a string representation of the title of this feed or entry.  
-     * The title is an extremely short textual representation of this 
+     * Returns a string representation of the title of this feed or entry.
+     * The title is an extremely short textual representation of this
      * resource and is found as an atom:title element in a feed or entry
      *
      * @return string
@@ -555,7 +555,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     /**
      * Set the Etag for the current entry to $value. Setting $value to null
      * unsets the Etag.
-     * 
+     *
      * @param string|null $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */

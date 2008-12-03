@@ -63,8 +63,14 @@ class Zend_Gdata_Calendar extends Zend_Gdata
 
     protected $_defaultPostUri = self::CALENDAR_EVENT_FEED_URI;
 
+    /**
+     * Namespaces used for Zend_Gdata_Calendar
+     *
+     * @var array
+     */
     public static $namespaces = array(
-            'gCal' => 'http://schemas.google.com/gCal/2005');
+        array('gCal', 'http://schemas.google.com/gCal/2005', 1, 0)
+    );
 
     /**
      * Create Gdata_Calendar object

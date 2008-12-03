@@ -55,9 +55,7 @@ class Zend_Gdata_Spreadsheets_SpreadsheetFeed extends Zend_Gdata_Feed
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
         parent::__construct($element);
     }
 

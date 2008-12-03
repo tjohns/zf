@@ -26,7 +26,7 @@
 require_once 'Zend/Gdata/Extension.php';
 
 /**
- * Represents the yt:recordingDate element
+ * Represents the yt:books element
  *
  * @category   Zend
  * @package    Zend_Gdata
@@ -41,9 +41,7 @@ class Zend_Gdata_YouTube_Extension_Books extends Zend_Gdata_Extension
 
     public function __construct($text = null)
     {
-        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
         parent::__construct();
         $this->_text = $text;
     }

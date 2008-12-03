@@ -43,12 +43,10 @@ class Zend_Gdata_YouTube_Extension_NoEmbed extends Zend_Gdata_Extension
      * Constructs a new Zend_Gdata_YouTube_Extension_VideoShare object.
      * @param bool $enabled(optional) The enabled value of the element.
      */
-    public function __construct($enabled = null) 
+    public function __construct($enabled = null)
     {
-        foreach (Zend_Gdata_YouTube::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
-        parent::__construct();        
+        $this->registerAllNamespaces(Zend_Gdata_YouTube::$namespaces);
+        parent::__construct();
     }
 
 }

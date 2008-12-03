@@ -97,12 +97,17 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const RESPONSES_URI_SUFFIX = 'responses';
     const RELATED_URI_SUFFIX = 'related';
 
+    /**
+     * Namespaces used for Zend_Gdata_YouTube
+     *
+     * @var array
+     */
     public static $namespaces = array(
-            'yt' => 'http://gdata.youtube.com/schemas/2007',
-            'georss' => 'http://www.georss.org/georss',
-            'gml' => 'http://www.opengis.net/gml',
-            'media' => 'http://search.yahoo.com/mrss/',
-            'app' => 'http://purl.org/atom/app#');
+        array('yt', 'http://gdata.youtube.com/schemas/2007', 1, 0),
+        array('georss', 'http://www.georss.org/georss', 1, 0),
+        array('gml', 'http://www.opengis.net/gml', 1, 0),
+        array('media', 'http://search.yahoo.com/mrss/', 1, 0)
+    );
 
     /**
      * Create Zend_Gdata_YouTube object

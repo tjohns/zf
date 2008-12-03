@@ -58,9 +58,7 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Spreadsheets::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Spreadsheets::$namespaces);
         parent::__construct($element);
     }
 
@@ -167,17 +165,17 @@ class Zend_Gdata_Spreadsheets_WorksheetEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * Returns the content of all cells as an associative array, indexed 
-     * off the cell location  (ie 'A1', 'D4', etc).  Each element of 
-     * the array is an associative array with a 'value' and a 'function'.  
-     * Only non-empty cells are returned by default.  'range' is the 
+     * Returns the content of all cells as an associative array, indexed
+     * off the cell location  (ie 'A1', 'D4', etc).  Each element of
+     * the array is an associative array with a 'value' and a 'function'.
+     * Only non-empty cells are returned by default.  'range' is the
      * value of the 'range' query parameter specified at:
      * http://code.google.com/apis/spreadsheets/reference.html#cells_Parameters
      *
      * @param string $range The range of cells to retrieve
      * @param boolean $empty Whether to retrieve empty cells
      * @return array An associative array of cells
-     */    
+     */
     public function getContentsAsCells($range = null, $empty = false)
     {
         $service = new Zend_Gdata_Spreadsheets($this->getHttpClient());

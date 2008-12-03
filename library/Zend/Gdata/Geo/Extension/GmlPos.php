@@ -43,17 +43,15 @@ class Zend_Gdata_Geo_Extension_GmlPos extends Zend_Gdata_Extension
 
     protected $_rootNamespace = 'gml';
     protected $_rootElement = 'pos';
-    
+
     /**
      * Constructs a new Zend_Gdata_Geo_Extension_GmlPos object.
-     * 
+     *
      * @param string $text (optional) The value to use for this element.
      */
-    public function __construct($text = null) 
+    public function __construct($text = null)
     {
-        foreach (Zend_Gdata_Geo::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Geo::$namespaces);
         parent::__construct();
         $this->setText($text);
     }

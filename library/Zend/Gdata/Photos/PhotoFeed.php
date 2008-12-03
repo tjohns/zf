@@ -36,9 +36,9 @@ require_once 'Zend/Gdata/Feed.php';
 require_once 'Zend/Gdata/Photos/PhotoEntry.php';
 
 /**
- * Data model for a collection of photo entries, usually 
+ * Data model for a collection of photo entries, usually
  * provided by the Picasa servers.
- * 
+ *
  * For information on requesting this feed from a server, see the
  * service class, Zend_Gdata_Photos.
  *
@@ -49,91 +49,91 @@ require_once 'Zend/Gdata/Photos/PhotoEntry.php';
  */
 class Zend_Gdata_Photos_PhotoFeed extends Zend_Gdata_Feed
 {
-    
+
     /**
      * gphoto:id element
      *
      * @var Zend_Gdata_Photos_Extension_Id
      */
     protected $_gphotoId = null;
-    
+
     /**
      * gphoto:albumid element
      *
      * @var Zend_Gdata_Photos_Extension_AlbumId
      */
     protected $_gphotoAlbumId = null;
-    
+
     /**
      * gphoto:version element
      *
      * @var Zend_Gdata_Photos_Extension_Version
      */
     protected $_gphotoVersion = null;
-    
+
     /**
      * gphoto:width element
      *
      * @var Zend_Gdata_Photos_Extension_Width
      */
     protected $_gphotoWidth = null;
-    
+
     /**
      * gphoto:height element
      *
      * @var Zend_Gdata_Photos_Extension_Height
      */
     protected $_gphotoHeight = null;
-    
+
     /**
      * gphoto:size element
      *
      * @var Zend_Gdata_Photos_Extension_Size
      */
     protected $_gphotoSize = null;
-    
+
     /**
      * gphoto:client element
      *
      * @var Zend_Gdata_Photos_Extension_Client
      */
     protected $_gphotoClient = null;
-    
+
     /**
      * gphoto:checksum element
      *
      * @var Zend_Gdata_Photos_Extension_Checksum
      */
     protected $_gphotoChecksum = null;
-    
+
     /**
      * gphoto:timestamp element
      *
      * @var Zend_Gdata_Photos_Extension_Timestamp
      */
     protected $_gphotoTimestamp = null;
-    
+
     /**
      * gphoto:commentCount element
      *
      * @var Zend_Gdata_Photos_Extension_CommentCount
      */
     protected $_gphotoCommentCount = null;
-    
+
     /**
      * gphoto:commentingEnabled element
      *
      * @var Zend_Gdata_Photos_Extension_CommentingEnabled
      */
     protected $_gphotoCommentingEnabled = null;
-    
+
     /**
      * media:group element
      *
      * @var Zend_Gdata_Media_Extension_MediaGroup
      */
     protected $_mediaGroup = null;
-    
+
     protected $_entryClassName = 'Zend_Gdata_Photos_PhotoEntry';
     protected $_feedClassName = 'Zend_Gdata_Photos_PhotoFeed';
 
@@ -144,9 +144,7 @@ class Zend_Gdata_Photos_PhotoFeed extends Zend_Gdata_Feed
 
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Photos::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Photos::$namespaces);
         parent::__construct($element);
     }
 
@@ -250,7 +248,7 @@ class Zend_Gdata_Photos_PhotoFeed extends Zend_Gdata_Feed
                 $commentCount->transferFromDOM($child);
                 $this->_gphotoCommentCount = $commentCount;
                 break;
-            case $this->lookupNamespace('media') . ':' . 'group'; 
+            case $this->lookupNamespace('media') . ':' . 'group';
                 $mediaGroup = new Zend_Gdata_Media_Extension_MediaGroup();
                 $mediaGroup->transferFromDOM($child);
                 $this->_mediaGroup = $mediaGroup;
@@ -509,7 +507,7 @@ class Zend_Gdata_Photos_PhotoFeed extends Zend_Gdata_Feed
         $this->_gphotoCommentCount = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's gphoto:commentingEnabled attribute.
      *
@@ -532,7 +530,7 @@ class Zend_Gdata_Photos_PhotoFeed extends Zend_Gdata_Feed
         $this->_gphotoCommentingEnabled = $value;
         return $this;
     }
-    
+
     /**
      * Get the value for this element's media:group attribute.
      *

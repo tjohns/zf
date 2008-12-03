@@ -37,13 +37,13 @@ require_once 'Zend/Gdata/Gapps/Extension/Nickname.php';
 
 /**
  * Data model class for a Google Apps Nickname Entry.
- * 
- * Each nickname entry describes a single nickname within a Google Apps 
- * hosted domain. Each user may own several nicknames, but each nickname may 
- * only belong to one user. Multiple entries are contained within instances 
+ *
+ * Each nickname entry describes a single nickname within a Google Apps
+ * hosted domain. Each user may own several nicknames, but each nickname may
+ * only belong to one user. Multiple entries are contained within instances
  * of Zend_Gdata_Gapps_NicknameFeed.
- * 
- * To transfer nickname entries to and from the Google Apps servers, 
+ *
+ * To transfer nickname entries to and from the Google Apps servers,
  * including creating new entries, refer to the Google Apps service class,
  * Zend_Gdata_Gapps.
  *
@@ -60,31 +60,29 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
     protected $_entryClassName = 'Zend_Gdata_Gapps_NicknameEntry';
 
     /**
-     * <apps:login> element used to hold information about the owner 
+     * <apps:login> element used to hold information about the owner
      * of this nickname, including their username.
-     * 
+     *
      * @var Zend_Gdata_Gapps_Extension_Login
      */
     protected $_login = null;
-    
+
     /**
      * <apps:nickname> element used to hold the name of this nickname.
-     * 
+     *
      * @var Zend_Gdata_Gapps_Extension_Nickname
      */
     protected $_nickname = null;
-    
+
     /**
      * Create a new instance.
-     * 
+     *
      * @param DOMElement $element (optional) DOMElement from which this
      *          object should be constructed.
      */
     public function __construct($element = null)
     {
-        foreach (Zend_Gdata_Gapps::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Gapps::$namespaces);
         parent::__construct($element);
     }
 
@@ -108,7 +106,7 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
         }
         return $element;
     }
-    
+
     /**
      * Creates individual Entry objects of the appropriate type and
      * stores them as members of this entry based upon DOM data.
@@ -118,14 +116,14 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
-        
+
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('apps') . ':' . 'login'; 
+            case $this->lookupNamespace('apps') . ':' . 'login';
                 $login = new Zend_Gdata_Gapps_Extension_Login();
                 $login->transferFromDOM($child);
                 $this->_login = $login;
                 break;
-            case $this->lookupNamespace('apps') . ':' . 'nickname'; 
+            case $this->lookupNamespace('apps') . ':' . 'nickname';
                 $nickname = new Zend_Gdata_Gapps_Extension_Nickname();
                 $nickname->transferFromDOM($child);
                 $this->_nickname = $nickname;
@@ -148,10 +146,10 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * Set the value of the login property for this object. This property 
+     * Set the value of the login property for this object. This property
      * is used to store the username address of the current user.
-     * 
-     * @param Zend_Gdata_Gapps_Extension_Login $value The desired value for 
+     *
+     * @param Zend_Gdata_Gapps_Extension_Login $value The desired value for
      *          this instance's login property.
      * @return Zend_Gdata_Gapps_NicknameEntry Provides a fluent interface.
      */
@@ -173,10 +171,10 @@ class Zend_Gdata_Gapps_NicknameEntry extends Zend_Gdata_Entry
     }
 
     /**
-     * Set the value of the nickname property for this object. This property 
+     * Set the value of the nickname property for this object. This property
      * is used to store the the name of the current nickname.
-     * 
-     * @param Zend_Gdata_Gapps_Extension_Nickname $value The desired value for 
+     *
+     * @param Zend_Gdata_Gapps_Extension_Nickname $value The desired value for
      *          this instance's nickname property.
      * @return Zend_Gdata_Gapps_NicknameEntry Provides a fluent interface.
      */

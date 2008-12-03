@@ -43,17 +43,15 @@ class Zend_Gdata_Exif_Extension_FocalLength extends Zend_Gdata_Extension
 
     protected $_rootNamespace = 'exif';
     protected $_rootElement = 'focallength';
-    
+
     /**
      * Constructs a new Zend_Gdata_Exif_Extension_FocalLength object.
-     * 
+     *
      * @param string $text (optional) The value to use for this element.
      */
-    public function __construct($text = null) 
+    public function __construct($text = null)
     {
-        foreach (Zend_Gdata_Exif::$namespaces as $nsPrefix => $nsUri) {
-            $this->registerNamespace($nsPrefix, $nsUri);
-        }
+        $this->registerAllNamespaces(Zend_Gdata_Exif::$namespaces);
         parent::__construct();
         $this->setText($text);
     }
