@@ -277,7 +277,7 @@ class Zend_Gdata_Photos_UserEntry extends Zend_Gdata_Entry
      */
     public function getGphotoQuotaCurrent()
     {
-        return $this->_gphotoThumbnail;
+        return $this->_gphotoQuotaCurrent;
     }
 
     /**
@@ -288,7 +288,7 @@ class Zend_Gdata_Photos_UserEntry extends Zend_Gdata_Entry
      */
     public function setGphotoQuotaCurrent($value)
     {
-        $this->_gphotoThumbnail = $value;
+        $this->_gphotoQuotaCurrent = $value;
         return $this;
     }
 
