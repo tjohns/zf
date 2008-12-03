@@ -64,7 +64,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE'], 'Expected data type to be VARCHAR');
         $this->assertEquals('',                  $desc['product_name']['DEFAULT'], 'Expected default to be empty string');
         $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
-        $this->assertEquals(0,                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        if (!$this->_db->isI5()) {
+        	$this->assertEquals(0,                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        } else {
+        	$this->assertNull(                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        }
         $this->assertEquals(0,                   $desc['product_name']['PRECISION'], 'Expected precision to be 0');
         $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
         $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
@@ -107,7 +111,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         // create a second connection to the same database
         $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
         $dbConnection2->getConnection();
-        $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        if ($dbConnection2->isI5()) {
+        	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
+        } else {
+            $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        }
         
         // notice the number of rows in connection 2
         $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
@@ -159,7 +167,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         // create a second connection to the same database
         $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
         $dbConnection2->getConnection();
-        $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        if ($dbConnection2->isI5()) {
+        	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
+        } else {
+            $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        }
         
         // notice the number of rows in connection 2
         $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");

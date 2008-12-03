@@ -42,7 +42,14 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
             'dbname'   => 'TESTS_ZEND_DB_ADAPTER_DB2_DATABASE',
             'port'     => 'TESTS_ZEND_DB_ADAPTER_DB2_PORT'
         );
-        return parent::getParams($constants);
+        
+        $params = parent::getParams($constants);
+        
+        if (isset($GLOBALS['TESTS_ZEND_DB_ADAPTER_DB2_DRIVER_OPTIONS'])) {
+        	$params['driver_options'] = $GLOBALS['TESTS_ZEND_DB_ADAPTER_DB2_DRIVER_OPTIONS'];
+        }
+        
+        return $params;
     }
 
     public function getSchema()
@@ -100,9 +107,16 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     protected function _getSqlCreateTable($tableName)
     {
-        $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
-            . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
-        );
+    	if ($this->_db->isI5()) {
+            $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM QSYS2.TABLES T '
+                . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
+            );
+    	} else {
+            $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
+                . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
+            );    		
+    	}
+        
         if (in_array(strtoupper($tableName), $tableList)) {
             return null;
         }
@@ -111,9 +125,16 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     protected function _getSqlDropTable($tableName)
     {
-        $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
-            . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
-        );
+        if ($this->_db->isI5()) {
+            $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM QSYS2.TABLES T '
+                . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
+            );
+    	} else {
+            $tableList = $this->_db->fetchCol('SELECT UPPER(T.TABLE_NAME) FROM SYSIBM.TABLES T '
+                . $this->_db->quoteInto(' WHERE UPPER(T.TABLE_NAME) = UPPER(?)', $tableName)
+            );		
+    	}
+
         if (in_array(strtoupper($tableName), $tableList)) {
             return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName, true);
         }
@@ -122,9 +143,23 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     protected function _getSqlCreateSequence($sequenceName)
     {
-        $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
-            . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
-        );
+        if ($this->_db->isI5()) {
+            $sequenceQuery = 'SELECT UPPER(S.SEQNAME) FROM QSYS2.SYSSEQUENCES S '
+                . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
+        } else {
+            $sequenceQuery = 'SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
+                . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
+        }
+
+        //echo 'This is the result of fetchCol of ' . $sequenceQuery . PHP_EOL;
+        
+        $seqList = $this->_db->fetchCol($sequenceQuery);
+        
+
+        //var_dump($seqList);
+        
+        //echo 'Checking for ' . $sequenceName . ' in the array above';
+        
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return null;
         }
@@ -133,9 +168,21 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
 
     protected function _getSqlDropSequence($sequenceName)
     {
-        $seqList = $this->_db->fetchCol('SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
-            . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName)
-        );
+        if ($this->_db->isI5()) {
+            $sequenceQuery = 'SELECT UPPER(S.SEQNAME) FROM QSYS2.SYSSEQUENCES S '
+                . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
+        } else {
+            $sequenceQuery = 'SELECT UPPER(S.SEQNAME) FROM SYSIBM.SYSSEQUENCES S '
+                . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
+        }
+        
+        //echo 'In _getSqlDropSequence: ' . $sequenceQuery . PHP_EOL;
+        
+        $seqList = $this->_db->fetchCol($sequenceQuery);
+        
+        //echo 'The result of fetchCol looking for (' . $sequenceName . '): ';
+        //var_dump($seqList);
+        
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' RESTRICT';
         }
@@ -145,7 +192,13 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _rawQuery($sql)
     {
         $conn = $this->_db->getConnection();
-        $result = db2_exec($conn, $sql);
+        //echo 'Attempting to run: ' . $sql . PHP_EOL;
+        $result = @db2_exec($conn, $sql);
+        //var_dump($result);
+        if ($result === false) {
+        	//echo 'ERROR: ' . db2_stmt_errormsg();
+        }
+        
         if (!$result) {
             $e = db2_stmt_errormsg();
             require_once 'Zend/Db/Exception.php';

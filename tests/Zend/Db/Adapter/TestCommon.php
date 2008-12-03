@@ -191,6 +191,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'result of second query not as expected');
 
         // clean up
+        unset($stmt);
         $util->dropTable($tableName);
     }
 
