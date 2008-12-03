@@ -93,8 +93,17 @@ class Zend_Service_Yahoo_WebResult extends Zend_Service_Yahoo_Result
 
         $this->_xpath = new DOMXPath($result->ownerDocument);
         $this->_xpath->registerNamespace('yh', $this->_namespace);
-
-        $this->CacheUrl = $this->_xpath->query('./yh:Cache/yh:Url/text()', $result)->item(0)->data;
-        $this->CacheSize = (int) $this->_xpath->query('./yh:Cache/yh:Size/text()', $result)->item(0)->data;
+		
+        // check if the cache section exists
+        $cacheUrl = $this->_xpath->query('./yh:Cache/yh:Url/text()', $result)->item(0);
+        if ($cacheUrl instanceof DOMNode)
+        {
+        	$this->CacheUrl = $cacheUrl->data;
+        }
+        $cacheSize = $this->_xpath->query('./yh:Cache/yh:Size/text()', $result)->item(0);
+        if ($cacheSize instanceof DOMNode)
+        {
+        	$this->CacheSize = (int) $cacheSize->data;
+        }
     }
 }
