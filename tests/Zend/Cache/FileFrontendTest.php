@@ -24,14 +24,23 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     
     private $_instance1;
     private $_instance2;
+    private $_instance3;
+    private $_instance4;
+    private $_masterFile;
+    private $_masterFile1;
+    private $_masterFile2;
     
     
     public function setUp()
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->_masterFile = $this->_getTmpDirWindows() . DIRECTORY_SEPARATOR . 'zend_cache_master';
+            $this->_masterFile1 = $this->_getTmpDirWindows() . DIRECTORY_SEPARATOR . 'zend_cache_master1';
+            $this->_masterFile2 = $this->_getTmpDirWindows() . DIRECTORY_SEPARATOR . 'zend_cache_master2';
         } else {
             $this->_masterFile = $this->_getTmpDirUnix() . DIRECTORY_SEPARATOR . 'zend_cache_master';
+        	$this->_masterFile1 = $this->_getTmpDirUnix() . DIRECTORY_SEPARATOR . 'zend_cache_master1';
+        	$this->_masterFile2 = $this->_getTmpDirUnix() . DIRECTORY_SEPARATOR . 'zend_cache_master2';
         }
         if (!$this->_instance1) {
             touch($this->_masterFile, 123455);
@@ -45,13 +54,28 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
             $this->_backend = new Zend_Cache_Backend_Test();
             $this->_instance2->setBackend($this->_backend);
         }
-        
+        if (!$this->_instance3) {
+        	touch($this->_masterFile1, 123455);
+        	touch($this->_masterFile2, 123455);
+            $this->_instance3 = new Zend_Cache_Frontend_File(array('master_files' => array($this->_masterFile1, $this->_masterFile2)));           
+            $this->_backend = new Zend_Cache_Backend_Test();
+            $this->_instance3->setBackend($this->_backend);
+        }
+        if (!$this->_instance4) {
+            touch($this->_masterFile1);
+            touch($this->_masterFile2);
+            $this->_instance4 = new Zend_Cache_Frontend_File(array('master_files' => array($this->_masterFile1, $this->_masterFile2)));           
+            $this->_backend = new Zend_Cache_Backend_Test();
+            $this->_instance4->setBackend($this->_backend);
+        }       
     }
     
     public function tearDown()
     {
         unset($this->_instance1);
         unlink($this->_masterFile);
+        unlink($this->_masterFile1);
+        unlink($this->_masterFile2);
     }
     
     private function _getTmpDirWindows()
@@ -144,6 +168,16 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     public function testGetCorrectCall2()
     {
         $this->assertEquals('foo', $this->_instance1->load('cache_id'));    
+    }
+    
+	public function testTestCorrectCall4()
+    {
+        $this->assertFalse($this->_instance4->test('cache_id'));
+    }
+    
+    public function testTestCorrectCall5()
+    {
+        $this->assertFalse($this->_instance3->load('false')); 
     }
     
     public function testGetCorrectCall3()
