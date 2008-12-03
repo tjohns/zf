@@ -1,7 +1,7 @@
 <sect1 id="zend.form.introduction">
     <title>Zend_Form</title>
 
-    <para>
+    <para>  
         Zend_Form simplifica la creación y manejo de formularios en sus
         aplicaciones web. Cumple los siguientes objetivos: 
     </para>
