@@ -1549,7 +1549,7 @@ try {
         <example id="zend.db.adapter.closing.example">
             <title>Schließen einer Datenbankverbindung</title>
             <programlisting role="php"><![CDATA[
-$db-&gt;closeConnection();
+$db->closeConnection();
 ]]>
             </programlisting>
         </example>
