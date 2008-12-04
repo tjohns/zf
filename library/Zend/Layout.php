@@ -174,6 +174,8 @@ class Zend_Layout
     {
         if (null === self::$_mvcInstance) {
             self::$_mvcInstance = new self($options, true);
+        } elseif (is_string($options)) {
+            self::$_mvcInstance->setLayoutPath($options);
         } else {
             self::$_mvcInstance->setOptions($options);
         }

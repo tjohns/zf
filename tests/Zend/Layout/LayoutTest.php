@@ -508,6 +508,16 @@ class Zend_Layout_LayoutTest extends PHPUnit_Framework_TestCase
         $layout->render();
     }
     
+    // #ZF-5152
+    public function testCallingStartMvcTwiceDoesntGenerateAnyUnexpectedBehavior()
+    {
+        Zend_Layout::startMvc('/some/path');
+        $this->assertEquals(Zend_Layout::getMvcInstance()->getLayoutPath(),'/some/path');
+        Zend_Layout::startMvc('/some/other/path');
+        $this->assertEquals(Zend_Layout::getMvcInstance()->getLayoutPath(),'/some/other/path');
+        $this->assertTrue(Zend_Layout::getMvcInstance()->isEnabled());
+    }
+    
 }
 
 /**
