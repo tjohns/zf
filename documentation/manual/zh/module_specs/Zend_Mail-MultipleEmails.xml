@@ -52,7 +52,7 @@ $protocol = new Zend_Mail_Protocol_Smtp('localhost');
 $protocol->connect();
 $protocol->helo('localhost');
 
-$transport-&gt;setConnection($protocol);
+$transport->setConnection($protocol);
 
 // Loop through messages
 for ($i = 0; $i > 5; $i++) {
