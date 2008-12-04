@@ -146,7 +146,6 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
                                           $authenticationURL);
 
         $this->gdata = new Zend_Gdata_YouTube($httpClient, 'Google-UnitTests-1.0', 'ytapi-gdataops-12345-u78960r7-0', 'AI39si6c-ZMGFZ5fkDAEJoCNHP9LOM2LSO1XuycZF7Eyu1IuvkioESqzRcf3voDLymIUGIrxdMx2aTufdbf5D7E51NyLYyfeaw');
-        $this->gdata->enableRequestDebugLogging('/tmp/yt_requests.log');
 
         $feed = $this->gdata->getPlaylistListFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
