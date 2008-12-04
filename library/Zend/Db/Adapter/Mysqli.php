@@ -302,16 +302,33 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             $port = null;
         }
 
+        $this->_connection = mysqli_init();
+
+        if(!empty($this->_config['driver_options'])) {
+            foreach($this->_config['driver_options'] as $option=>$value) {
+                if(is_string($option)) {
+                    // Suppress warnings here
+                    // Ignore it if it's not a valid constant
+                    $option = @constant(strtoupper($option));
+                    if(is_null($option))
+                        continue;
+                }
+                mysqli_options($this->_connection, $option, $value);
+            }
+        }
+
         // Suppress connection warnings here.
         // Throw an exception instead.
-        @$this->_connection = new mysqli(
+        $_isConnected = @mysqli_real_connect(
+            $this->_connection,
             $this->_config['host'],
             $this->_config['username'],
             $this->_config['password'],
             $this->_config['dbname'],
             $port
         );
-        if ($this->_connection === false || mysqli_connect_errno()) {
+
+        if ($_isConnected === false || mysqli_connect_errno()) {
             /**
              * @see Zend_Db_Adapter_Mysqli_Exception
              */
