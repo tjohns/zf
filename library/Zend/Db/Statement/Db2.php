@@ -58,15 +58,10 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     public function _prepare($sql)
     {
         $connection = $this->_adapter->getConnection();
+        
+        // db2_prepare on i5 emits errors, these need to be 
+        // suppressed so that proper exceptions can be thrown
         $this->_stmt = @db2_prepare($connection, $sql);
-
-        /*
-        if ($this->_stmt == false) {
-        	var_dump($this->_stmt);
-        	echo db2_stmt_errormsg();
-        	print_r(error_get_last());
-        }
-		*/
 
         if (!$this->_stmt) {
             /**

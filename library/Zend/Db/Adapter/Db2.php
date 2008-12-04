@@ -702,6 +702,22 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         // if its 'named' or anything else
         return false;
     }
+    
+    /**
+     * Retrieve server version in PHP style
+     *
+     * @return string
+     */
+    public function getServerVersion()
+    {
+        $this->_connect();
+        $server_info = db2_server_info($this->_connection);
+        if ($server_info !== false) {
+            return $server_info->DBMS_VER;
+        } else {
+            return null;
+        }
+    }
 
     /**
      * Return whether or not this is running on i5
