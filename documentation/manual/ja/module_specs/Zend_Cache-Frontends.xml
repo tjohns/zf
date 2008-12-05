@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11455 -->
+<!-- EN-Revision: 13001 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache のフロントエンド</title>
 
@@ -494,6 +494,7 @@ $result = $cache->foobar2('1', '2');
                 <code>Zend_Cache_Frontend_File</code> は、マスタファイルの
                 「更新時刻」にもとづいて動作するフロントエンドです。
                 これは、例えば設定ファイルやテンプレートなどで有効に使えるでしょう。
+                複数のマスタファイルを使用することもできます。
             </para>
             <para>
                 例えば、XML の設定ファイルを使用しており、それが「設定オブジェクト」
@@ -520,11 +521,41 @@ $result = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                          <row>
-                              <entry><code>master_file (必須)</code></entry>
+                              <entry><code>master_file (非推奨)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
                                   マスタファイルへのフルパス。
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>master_files</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code></code></entry>
+                              <entry>
+                                  マスタファイル群へのフルパスの配列。
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>master_files_mode</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry>
+                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> あるいは
+                                  <code>Zend_Cache_Frontend_File::MODE_OR</code>。
+                                  <code>MODE_AND</code> の場合は、
+                                  すべてのマスタファイルにアクセスがあるまでキャッシュが無効化されません。
+                                  <code>MODE_OR</code> の場合は、
+                                  どれかひとつのマスタファイルにアクセスがあればキャッシュを無効化します。
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>ignore_missing_master_files</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  true の場合は、マスタファイルが存在しない場合は無視します
+                                  (true でない場合は例外が発生します)。
                               </entry>
                          </row>
                       </tbody>
@@ -729,7 +760,8 @@ $result = $cache->foobar2('1', '2');
 // [...] // require、設定そしてファクトリ
 
 $cache->start();
-// キャッシュにヒットした場合はその結果がブラウザに送信され、処理はここで停止します
+// キャッシュにヒットした場合はその結果がブラウザに送信され、
+// 処理はここで停止します
 
 // ページの残りの部分 ...
 ]]>
@@ -751,22 +783,22 @@ $frontendOptions = array(
    'regexps' => array(
        // IndexController 全体をキャッシュします
        '^/$' => array('cache' => true),
-       
+
        // IndexController 全体をキャッシュします
        '^/index/' => array('cache' => true),
-       
+
        // ArticleController はキャッシュしません
        '^/article/' => array('cache' => false),
-       
+
        // ……が、ArticleController の "view" アクションはキャッシュします
-       '^/article/view/' => array(              
+       '^/article/view/' => array(
            'cache' => true,
-           
+
            // また、たとえ $_POST に何らかの変数がふくまれていてもキャッシュを行います
            'cache_with_post_variables' => true,
-           
+
            // しかし、そのキャッシュは $_POST 配列に依存します
-           'make_id_with_post_variables' => true 
+           'make_id_with_post_variables' => true
        )
    )
 );
