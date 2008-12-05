@@ -948,6 +948,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             throw new Zend_File_Transfer_Exception('The given destination is no directory or does not exist');
         }
 
+        if (!is_writable($destination)) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('The given destination is not writeable');
+        }
+
         if ($files === null) {
             foreach ($this->_files as $file => $content) {
                 $this->_files[$file]['destination'] = $destination;
