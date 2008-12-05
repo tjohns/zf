@@ -23,7 +23,7 @@
 /** Zend_Search_Lucene_Document_OpenXml */
 require_once 'Zend/Search/Lucene/Document/OpenXml.php';
 
-if (class_exists('ZipArchive')) {
+if (class_exists('ZipArchive', false)) {
 
 /**
  * Xlsx document.
