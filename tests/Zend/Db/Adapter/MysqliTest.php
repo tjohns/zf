@@ -276,6 +276,21 @@ class Zend_Db_Adapter_MysqliTest extends Zend_Db_Adapter_TestCommon
         $this->_testAdapterAlternateStatement('Test_MysqliStatement');
     }
 
+    public function testMySqliInitCommand()
+    {
+        $params = $this->_util->getParams();
+        $params['driver_options'] = array(
+            'mysqli_init_command' => 'SET AUTOCOMMIT=0;'
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+
+        $sql = 'SELECT @@AUTOCOMMIT as autocommit';
+
+        $row = $db->fetchRow($sql);
+
+        $this->assertEquals(0, $row['autocommit']);
+    }
+
     public function getDriver()
     {
         return 'Mysqli';
