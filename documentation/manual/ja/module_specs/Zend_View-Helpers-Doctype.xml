@@ -25,6 +25,7 @@
         <listitem><para><code>HTML4_STRICT</code></para></listitem>
         <listitem><para><code>HTML4_LOOSE</code></para></listitem>
         <listitem><para><code>HTML4_FRAMESET</code></para></listitem>
+        <listitem><para><code>HTML5</code></para></listitem>
     </itemizedlist>
 
     <para>
