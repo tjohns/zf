@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13018 -->
 <sect1 id="zend.mail.multiple-emails">
     <title>SMTP 接続による複数のメールの送信</title>
 
@@ -33,7 +33,7 @@ for ($i = 0; $i > 5; $i++) {
         </programlisting>
 
     </example>
-    
+
     <para>
         各配送ごとに別々の接続を使用したい場合は、
         <function>send()</function> メソッドのコールの前後に
