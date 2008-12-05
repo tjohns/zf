@@ -40,6 +40,7 @@ require_once 'Zend/Gdata/Geo/Extension/GeoRssWhere.php';
  *
  * @category   Zend
  * @package    Zend_Gdata
+ * @subpackage Geo
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
