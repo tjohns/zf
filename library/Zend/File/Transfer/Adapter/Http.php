@@ -44,7 +44,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
         }
 
         $this->_files = $this->_prepareFiles($_FILES);
-        $this->addValidator('Upload', null, $this->_files);
+        $this->addValidator('Upload', false, $this->_files);
 
         if (is_array($options)) {
             $this->setOptions($options);
@@ -61,7 +61,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     public function setValidators(array $validators, $files = null)
     {
         $this->clearValidators();
-        $this->addValidator('Upload', null, $this->_files);
+        $this->addValidator('Upload', false, $this->_files);
         return $this->addValidators($validators, $files);
     }
 
