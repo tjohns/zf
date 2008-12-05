@@ -371,7 +371,7 @@ Zend_Controller_Front::run('../application/controllers');
             <listitem>
                 <para>
                     <code>registerPlugin(Zend_Controller_Plugin_Abstract $plugin, $stackIndex = null)</code>
-                    allows you to register a <link
+                    allows you to register <link
                         linkend="zend.controller.plugins">plugin objects</link>.
                     By setting the optional <code>$stackIndex</code>, you can
                     control the order in which plugins will execute.
