@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13045 -->
 <sect1 id="zend.date.constants">
 
     <title>日付関数全般用の定数</title>
@@ -143,7 +143,7 @@
                         <entry>Zend_Date::WEEKDAY_SHORT</entry>
                         <entry>曜日 (地域化された曜日名の短縮形。三文字)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
-                        <entry><emphasis role="strong">Fre</emphasis> が金曜日を表す</entry>
+                        <entry><emphasis role="strong">Fri</emphasis> が金曜日を表す</entry>
                     </row>
                     <row>
                         <entry>Zend_Date::WEEKDAY_NAME</entry>
