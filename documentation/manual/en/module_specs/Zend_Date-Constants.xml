@@ -138,7 +138,7 @@
                         <entry>Zend_Date::WEEKDAY_SHORT</entry>
                         <entry>Weekday (Name of the day, localized, abbreviated, the first three digits)</entry>
                         <entry>2009-02-06T14:53:27+01:00</entry>
-                        <entry><emphasis role="strong">Fre</emphasis> for Friday</entry>
+                        <entry><emphasis role="strong">Fri</emphasis> for Friday</entry>
                     </row>
                     <row>
                         <entry>Zend_Date::WEEKDAY_NAME</entry>
