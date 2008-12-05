@@ -311,6 +311,38 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testUserTimelineStatusSinceTwoDaysAgoDateAsStringReturnsResults()
+    {
+        $this->insertTestTwitterData();
+        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'since' => '-2 days') );
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Zend_Service_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+
+        $this->assertTrue(isset($response->status));
+    }
+
+    /**
+     * @return void
+     */
+    public function testUserTimelineStatusSinceTwoDaysAgoDateAsIntegerReturnsResults()
+    {
+        $this->insertTestTwitterData();
+        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'since' => strtotime('-2 days')) );
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Zend_Service_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+
+        $this->assertTrue(isset($response->status));
+    }
+
+    /**
+     * @return void
+     */
     public function testFriendsTimelineStatusSinceTwoDaysAgoReturnsResults()
     {
         /* @var $response Zend_Rest_Client_Result */
@@ -320,15 +352,6 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
-
-        /**
-         * @todo
-         * Test is based on data stored on twitter.com.
-         * It's necessary to update appropriate twitter.com entry to get results here. It should be done automatically.
-         *
-         * Mark test as incomplete until it's not done.
-         */
-        $this->markTestIncomplete('Appropriate twitter.com entry has to be updated by test automatically.');
 
         $this->assertTrue(isset($response->status));
     }
@@ -345,15 +368,6 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
-
-        /**
-         * @todo
-         * Test is based on data stored on twitter.com
-         * They don't correspond to expected result now.
-         *
-         * Mark test as incomplete until it's not done.
-         */
-        $this->markTestIncomplete('twitter.com has to contain right data.');
 
         $this->assertTrue(isset($response->status));
     }
@@ -372,15 +386,6 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $raw_response = $httpResponse->getHeadersAsString() . $httpResponse->getBody();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
 
-        /**
-         * @todo
-         * Test is based on data stored on twitter.com
-         * They don't correspond to expected result now.
-         *
-         * Mark test as incomplete until it's not done.
-         */
-        $this->markTestIncomplete('twitter.com has to contain right data.');
-
         $this->assertTrue(isset($response->status));
         $this->assertEquals(2, count($response->status), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
@@ -388,72 +393,15 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
     public function testUserTimelineStatusShouldReturnTwentyResults()
     {
         /* @var $response Zend_Rest_Client_Result */
-        $response = $this->twitter->status->userTimeline( array('id' => 'sidhighwind', 'count' => 40) );
+        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'count' => 40) );
         $this->assertTrue($response instanceof Zend_Rest_Client_Result);
         $httpClient    = Zend_Service_Twitter::getHttpClient();
         $httpRequest   = $httpClient->getLastRequest();
         $httpResponse  = $httpClient->getLastResponse();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
-
-        /**
-         * @todo
-         * Test is based on data stored on twitter.com
-         * They don't correspond to expected result now.
-         *
-         * Mark test as incomplete until it's not done.
-         */
-        $this->markTestIncomplete('twitter.com has to contain right data.');
 
         $this->assertTrue(isset($response->status));
         $this->assertEquals(20, count($response->status));
-    }
-
-    /**
-     * @return void
-     */
-    public function testUserTimelineStatusSinceTwoDaysAgoDateAsStringReturnsResults()
-    {
-        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'since' => '-2 days') );
-        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
-        $httpClient    = Zend_Service_Twitter::getHttpClient();
-        $httpRequest   = $httpClient->getLastRequest();
-        $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
-
-        /**
-         * @todo
-         * Test is based on data stored on twitter.com
-         * They don't correspond to expected result now.
-         *
-         * Mark test as incomplete until it's not done.
-         */
-        $this->markTestIncomplete('twitter.com has to contain right data.');
-
-        $this->assertTrue(isset($response->status));
-    }
-
-    /**
-     * @return void
-     */
-    public function testUserTimelineStatusSinceTwoDaysAgoDateAsIntegerReturnsResults()
-    {
-        $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'since' => strtotime('-2 days')) );
-        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
-        $httpClient    = Zend_Service_Twitter::getHttpClient();
-        $httpRequest   = $httpClient->getLastRequest();
-        $httpResponse  = $httpClient->getLastResponse();
-        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
-
-        /**
-         * @todo
-         * Test is based on data stored on twitter.com
-         * They don't correspond to expected result now.
-         *
-         * Mark test as incomplete until it's not done.
-         */
-        $this->markTestIncomplete('twitter.com has to contain right data.');
-
-        $this->assertTrue(isset($response->status));
     }
 
     /**
@@ -662,5 +610,19 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $httpRequest    = $httpClient->getLastRequest();
         $httpResponse   = $httpClient->getLastResponse();
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+    }
+
+    /**
+     * Insert Test Data
+     *
+     */
+    protected function insertTestTwitterData()
+    {
+        $twitter = new Zend_Service_Twitter('zftestuser1','zftestuser1');
+        // create 10 new entries
+        for($x=0; $x<10; $x++) {
+            $twitter->status->update( 'Test Message - ' . $x);
+        }
+        $twitter->account->endSession();
     }
 }
