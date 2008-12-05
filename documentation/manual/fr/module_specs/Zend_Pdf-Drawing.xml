@@ -563,7 +563,7 @@ public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
             <programlisting role="php"><![CDATA[
 ...
 //Charger une image
-$image = new Zend_Pdf_Image::imageWithPath('mon_image.jpg');
+$image = Zend_Pdf_Image::imageWithPath('mon_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
