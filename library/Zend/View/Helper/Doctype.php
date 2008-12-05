@@ -32,7 +32,7 @@ require_once 'Zend/View/Helper/Abstract.php';
  * @subpackage Helper
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
 {
     /**#@+
@@ -46,10 +46,11 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
     const HTML4_STRICT        = 'HTML4_STRICT';
     const HTML4_LOOSE         = 'HTML4_LOOSE';
     const HTML4_FRAMESET      = 'HTML4_FRAMESET';
+    const HTML5               = 'HTML5';
     const CUSTOM_XHTML        = 'CUSTOM_XHTML';
     const CUSTOM              = 'CUSTOM';
     /**#@-*/
-    
+
     /**
      * Default DocType
      * @var string
@@ -72,7 +73,7 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
      * Constructor
      *
      * Map constants to doctype strings, and set default doctype
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -88,6 +89,7 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
                     self::HTML4_STRICT        => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
                     self::HTML4_LOOSE         => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">',
                     self::HTML4_FRAMESET      => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">',
+                    self::HTML5               => '<!DOCTYPE html>',
                 )
             ));
             Zend_Registry::set($this->_regKey, $this->_registry);
@@ -96,11 +98,11 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
             $this->_registry = Zend_Registry::get($this->_regKey);
         }
     }
-    
+
     /**
      * Set or retrieve doctype
-     * 
-     * @param  string $doctype 
+     *
+     * @param  string $doctype
      * @return Zend_View_Helper_Doctype
      */
     public function doctype($doctype = null)
@@ -115,6 +117,7 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
                 case self::HTML4_STRICT:
                 case self::HTML4_LOOSE:
                 case self::HTML4_FRAMESET:
+                case self::HTML5:
                     $this->setDoctype($doctype);
                     break;
                 default:
@@ -138,8 +141,8 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
 
     /**
      * Set doctype
-     * 
-     * @param  string $doctype 
+     *
+     * @param  string $doctype
      * @return Zend_View_Helper_Doctype
      */
     public function setDoctype($doctype)
@@ -147,10 +150,10 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
         $this->_registry['doctype'] = $doctype;
         return $this;
     }
-    
+
     /**
      * Retrieve doctype
-     * 
+     *
      * @return string
      */
     public function getDoctype()
@@ -160,17 +163,17 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
 
     /**
      * Get doctype => string mappings
-     * 
+     *
      * @return array
      */
     public function getDoctypes()
     {
         return $this->_registry['doctypes'];
     }
-    
+
     /**
      * Is doctype XHTML?
-     * 
+     *
      * @return boolean
      */
     public function isXhtml()
@@ -180,7 +183,7 @@ class Zend_View_Helper_Doctype extends Zend_View_Helper_Abstract
 
     /**
      * String representation of doctype
-     * 
+     *
      * @return string
      */
     public function __toString()
