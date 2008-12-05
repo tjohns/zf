@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13036 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>Doctype ヘルパー</title>
 
@@ -51,16 +51,18 @@
         <programlisting role="php"><![CDATA[
 $doctypeHelper = new Zend_View_Helper_Doctype();
 $doctypeHelper->doctype('XHTML1_STRICT');
-]]></programlisting>
-        
+]]>
+        </programlisting>
+
         <para>
             そして、それをレイアウトスクリプトの先頭で表示します。
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 <?php echo $this->doctype() ?>
-]]></programlisting>
-        
+]]>
+        </programlisting>
+
     </example>
 
     <example id="zend.view.helpers.initial.doctype.retrieving">
@@ -87,7 +89,8 @@ $doctype = $view->doctype()->getDoctype();
 if ($view->doctype()->isXhtml()) {
     // 何かをします
 }
-?>]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--
