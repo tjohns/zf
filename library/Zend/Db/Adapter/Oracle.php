@@ -94,6 +94,14 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     protected $_defaultStmtClass = 'Zend_Db_Statement_Oracle';
 
     /**
+     * Check if LOB field are returned as string
+     * instead of OCI-Lob object
+     *
+     * @var boolean
+     */
+    protected $_lobAsString = null;
+
+    /**
      * Creates a connection resource.
      *
      * @return void
@@ -160,6 +168,37 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Activate/deactivate return of LOB as string
+     *
+     * @param string $lob_as_string
+     * @return Zend_Db_Adapter_Oracle
+     */
+    public function setLobAsString($lobAsString)
+    {
+        $this->_lobAsString = (bool) $lobAsString;
+        return $this;
+    }
+
+    /**
+     * Return whether or not LOB are returned as string
+     *
+     * @return boolean
+     */
+    public function getLobAsString()
+    {
+        if ($this->_lobAsString === null) {
+            // if never set by user, we use driver option if it exists otherwise false
+            if (isset($this->_config['driver_options']) &&
+                isset($this->_config['driver_options']['lob_as_string'])) {
+                $this->_lobAsString = (bool) $this->_config['driver_options']['lob_as_string'];
+            } else {
+                $this->_lobAsString = false;
+            }
+        }
+        return $this->_lobAsString;
+    }
+
+    /**
      * Returns an SQL statement for preparation.
      *
      * @param string $sql The SQL statement with placeholders.
@@ -171,6 +210,9 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $stmtClass = $this->_defaultStmtClass;
         Zend_Loader::loadClass($stmtClass);
         $stmt = new $stmtClass($this, $sql);
+        if ($stmt instanceof Zend_Db_Statement_Oracle) {
+            $stmt->setLobAsString($this->getLobAsString());
+        }
         $stmt->setFetchMode($this->_fetchMode);
         return $stmt;
     }

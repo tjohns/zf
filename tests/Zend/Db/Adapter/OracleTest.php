@@ -414,6 +414,29 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     /**
      * @group ZF-5146
      */
+    public function testAdapterLobAsString()
+    {
+        $this->assertFalse($this->_db->getLobAsString());
+        $this->_db->setLobAsString(true);
+        $this->assertTrue($this->_db->getLobAsString());
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterLobAsStringFromDriverOptions()
+    {
+        $params = $this->_util->getParams();
+        $params['driver_options'] = array(
+            'lob_as_string' => true
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $this->assertTrue($db->getLobAsString());
+    }
+
+    /**
+     * @group ZF-5146
+     */
     public function testAdapterReadClobFetchRow()
     {
         $documents = $this->_db->quoteIdentifier('zfdocuments');
@@ -425,6 +448,15 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
                     'this is the clob that never ends...';
         $lob = $value['doc_clob'];
         $this->assertEquals($expected, $lob->read($lob->size()));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchRowLobAsString()
+    {
+        $this->_db->setLobAsString(true);
+        parent::testAdapterReadClobFetchRow();
     }
 
     /**
@@ -446,6 +478,15 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     /**
      * @group ZF-5146
      */
+    public function testAdapterReadClobFetchAssocLobAsString()
+    {
+        $this->_db->setLobAsString(true);
+        parent::testAdapterReadClobFetchAssoc();
+    }
+
+    /**
+     * @group ZF-5146
+     */
     public function testAdapterReadClobFetchOne()
     {
         $documents = $this->_db->quoteIdentifier('zfdocuments');
@@ -458,6 +499,15 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
                     'this is the clob that never ends...';
         $lob = $value;
         $this->assertEquals($expected, $lob->read($lob->size()));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchOneLobAsString()
+    {
+        $this->_db->setLobAsString(true);
+        parent::testAdapterReadClobFetchOne();
     }
 
     /**
