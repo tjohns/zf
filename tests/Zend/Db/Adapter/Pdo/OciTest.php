@@ -206,9 +206,80 @@ class Zend_Db_Adapter_Pdo_OciTest extends Zend_Db_Adapter_Pdo_TestCommon
         $this->assertEquals('"foo" "bar"', $value);
     }
 
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchAll()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $value = $this->_db->fetchAll("SELECT * FROM $documents WHERE $document_id = 1");
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $this->assertEquals($expected, stream_get_contents($value[0]['doc_clob']));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchRow()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $value = $this->_db->fetchRow("SELECT * FROM $documents WHERE $document_id = 1");
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $this->assertEquals($expected, stream_get_contents($value['doc_clob']));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchAssoc()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $value = $this->_db->fetchAssoc("SELECT * FROM $documents WHERE $document_id = 1");
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $this->assertEquals($expected, stream_get_contents($value[1]['doc_clob']));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchCol()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $document_clob = $this->_db->quoteIdentifier('doc_clob');
+        $value = $this->_db->fetchCol("SELECT $document_clob FROM $documents WHERE $document_id = 1");
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $this->assertEquals($expected, stream_get_contents($value[0]));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchOne()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $document_clob = $this->_db->quoteIdentifier('doc_clob');
+        $value = $this->_db->fetchOne("SELECT $document_clob FROM $documents WHERE $document_id = 1");
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $this->assertEquals($expected, stream_get_contents($value));
+    }
+
     public function getDriver()
     {
         return 'Pdo_Oci';
     }
-
 }
