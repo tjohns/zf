@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12092 -->
+<!-- EN-Revision: 12819 -->
 <sect1 id="zend.loader.load">
 
     <title>ファイルやクラスの動的な読み込み</title>
@@ -29,7 +29,7 @@
             このメソッドは PHP 関数
             <ulink url="http://php.net/include"><code>include()</code></ulink>
             のラッパーで、失敗した場合 (たとえば指定したファイルが存在しないなど)
-            には <code>Zend_Exception</code> をスローします。
+            には false を返します。
         </para>
 
         <example id="zend.loader.load.file.example">
@@ -90,8 +90,8 @@ Zend_Loader::loadClass('Container_Tree',
         </example>
 
         <para>
-            クラスを指定する文字列は、アンダースコアをパス区切り文字に変換して最後に
-            '.php' を追加したものとなります。上の例では、
+            クラスを指定する文字列は、アンダースコアを OS のパス区切り文字に変換して最後に
+            '.php' を追加したものとなります。上の例では、Windows 上で
             'Container_Tree' は 'Container/Tree.php' となります。
         </para>
 

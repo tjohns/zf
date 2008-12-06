@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 12819 -->
 <sect1 id="zend.loader.pluginloader">
     <title>プラグインのロード</title>
 
@@ -89,8 +89,6 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
         </para>
 
         <note>
-            <title>同じプレフィックスでの複数のパスの登録</title>
-
             <para>
                 時には、同じプレフィックスを複数のパスで使用することもあるかもしれません。
                 <code>Zend_Loader_PluginLoader</code>
