@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12997 -->
 <sect1 id="zend.pdf.drawing">
     <title>描画</title>
 
@@ -70,6 +70,7 @@ $color3 = new Zend_Pdf_Color_Html('forestgreen');
  * @param float $y1
  * @param float $x2
  * @param float $y2
+ * @return Zend_Pdf_Page 
  */
 public function drawLine($x1, $y1, $x2, $y2);
 ]]>
@@ -88,6 +89,7 @@ public function drawLine($x1, $y1, $x2, $y2);
  * @param float $x2
  * @param float $y2
  * @param integer $fillType
+ * @return Zend_Pdf_Page 
  */
 public function drawRectangle($x1, $y1, $x2, $y2,
                     $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);
@@ -106,6 +108,7 @@ public function drawRectangle($x1, $y1, $x2, $y2,
  * @param array $y  - float の配列 (頂点の Y 座標)
  * @param integer $fillType
  * @param integer $fillMethod
+ * @return Zend_Pdf_Page 
  */
 public function drawPolygon($x, $y,
                             $fillType =
@@ -139,6 +142,7 @@ public function drawPolygon($x, $y,
  * @param mixed $param4
  * @param mixed $param5
  * @param mixed $param6
+ * @return Zend_Pdf_Page 
  */
 public function  drawCircle($x,
                             $y,
@@ -167,8 +171,15 @@ public function  drawCircle($x,
  * @param mixed $param5
  * @param mixed $param6
  * @param mixed $param7
+ * @return Zend_Pdf_Page 
  */
-public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);
+public function drawEllipse($x1,
+                            $y1,
+                            $x2,
+                            $y2,
+                            $param5 = null,
+                            $param6 = null,
+                            $param7 = null);
 ]]>
         </programlisting>
     </sect2>
@@ -192,6 +203,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @param string $charEncoding (オプション) ソーステキストの文字エンコーディング。
  *   デフォルトは現在のロケールです。
  * @throws Zend_Pdf_Exception
+ * @return Zend_Pdf_Page 
  */
 public function drawText($text, $x, $y, $charEncoding = '');
 ]]>
@@ -243,6 +255,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
  *
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
+ * @return Zend_Pdf_Page 
  */
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
 ]]>
@@ -429,9 +442,40 @@ $font = Zend_Pdf_Font::fontWithPath(
         </example>
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.standard-fonts-limitations">
+        <title>標準 PDF フォントの制限</title>
+        <para>
+            標準 PDF フォントは、いくつかのシングルバイトエンコーディング
+            (詳細は <ulink url="http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf">PDF Reference, Sixth Edition, version 1.7</ulink>
+            の Appendix D を参照ください) を内部的に使用しています。
+            これらは、ほぼ Latin1 文字セットと同じものです (Symbol フォントと ZapfDingbats
+            フォントは例外です)。
+        </para>
+        <para>
+            Zend_Pdf は、標準フォントでのテキストの描画時に CP1252 (WinLatin1) を使用します。
+        </para>
+        <para>
+            他のエンコーディングでもテキストは描画できますが、
+            現在のロケールと異なる場合はそれを指定する必要があります。
+            実際に描画されるのは WinLatin1 の文字のみです。
+        </para>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
+            <title>フォント埋め込みオプションの使用</title>
+            <programlisting role="php"><![CDATA[
+...
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_COURIER);
+$pdfPage->setFont($font, 36)
+        ->drawText('Euro sign - €', 72, 720, 'UTF-8')
+        ->drawText('Text with umlauts - à è ì', 72, 650, 'UTF-8');
+...
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+        
 
     <sect2 id="zend.pdf.drawing.extracting-fonts">
-        <title>1.5 以降で使用できる、フォントの抽出</title>
+        <title>フォントの抽出</title>
         <para>
             <code>Zend_Pdf</code> モジュールを使用すると、読み込んだドキュメントからフォントを抽出できるようになります。
         </para>
@@ -441,7 +485,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             この機能がなければ、ドキュメントを更新するたびにフォントをアタッチしたり
             ドキュメントに埋め込んだりしなければならなくなります。
         </para>
-        
+
         <para>
             <code>Zend_Pdf</code> オブジェクトおよび <code>Zend_Pdf_Page</code> オブジェクトには、
             ドキュメントやページ内のすべてのフォントを抽出するためのメソッドが用意されています。
@@ -459,9 +503,13 @@ $pdf->pages[] = ($page = $pdf->newPage(Zend_Pdf_Page::SIZE_A4));
 $yPosition = 700;
 foreach ($fontList as $font) {
     $page->setFont($font, 15);
-    $page->drawText(
-       $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT, 'en', 'UTF-8') .
-       ':  The quick brown fox jumps over the lazy dog', 100, $yPosition, 'UTF-8');
+    $fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
+                                   'en',
+                                   'UTF-8');
+    $page->drawText($fontName . ':  The quick brown fox jumps over the lazy dog',
+                    100,
+                    $yPosition,
+                    'UTF-8');
     $yPosition -= 30;
 }
 ...
@@ -565,6 +613,7 @@ for ($charIndex = 0; $charIndex < strlen($text); $charIndex++) {
  * @param float $y1
  * @param float $x2
  * @param float $y2
+ * @return Zend_Pdf_Page 
  */
 public function drawImage(Zend_Pdf_Resource_Image $image, $x1, $y1, $x2, $y2);
 ]]>
@@ -621,6 +670,7 @@ public function setLineWidth(float $width);
  *
  * @param array $pattern
  * @param array $phase
+ * @return Zend_Pdf_Page 
  */
 public function setLineDashingPattern($pattern, $phase = 0);
 ]]>
@@ -712,21 +762,82 @@ nonzero winding number ルールに対するもうひとつのルールが even-
         </itemizedlist>
     </sect2>
 
-    <sect2 id="zend.pdf.drawing.rotations">
-        <title>回転</title>
-        <para>
-        描画操作を適用する前に、PDF のページを回転させることができます。
-        それには <code>Zend_Pdf_Page::rotate()</code> メソッドを使用します。
-        </para>
-        <programlisting role="php"><![CDATA[
+    <sect2 id="zend.pdf.drawing.linear-transformations">
+        <sect3 id="zend.pdf.drawing.linear-transformations.rotations">
+            <title>回転</title>
+            <para>
+            描画操作を適用する前に、PDF のページを回転させることができます。
+            それには <code>Zend_Pdf_Page::rotate()</code> メソッドを使用します。
+            </para>
+            <programlisting role="php"><![CDATA[
 /**
- * ($x, $y) を中心にし、指定した角度 (ラジアン) だけ回転します。
+ * ページを回転します。
  *
- * @param float $angle
+ * @param float $x  - 回転の中心の X 座標
+ * @param float $y  - 回転の中心の Y 座標
+ * @param float $angle - 回転角度
+ * @return Zend_Pdf_Page
  */
 public function rotate($x, $y, $angle);
 ]]>
-        </programlisting>
+            </programlisting>
+        </sect3>
+
+        <sect3 id="zend.pdf.drawing.linear-transformations.scale">
+            <title>ZF 1.8 以降で使用できる拡大/縮小</title>
+            <para>
+            倍率の変更は <code>Zend_Pdf_Page::scale()</code> メソッドで行います。
+            </para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 座標系の拡大/縮小
+ *
+ * @param float $xScale - X 方向の倍率
+ * @param float $yScale - Y 方向の倍率
+ * @return Zend_Pdf_Page
+ */
+public function scale($xScale, $yScale);
+]]>
+            </programlisting>
+        </sect3>
+
+        <sect3 id="zend.pdf.drawing.linear-transformations.translate">
+            <title>ZF 1.8 以降で使用できる移動</title>
+            <para>
+                座標系の移動は <code>Zend_Pdf_Page::translate()</code> メソッドで行います。
+            </para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 座標系の移動
+ *
+ * @param float $xShift - X 方向の移動
+ * @param float $yShift - Y 方向の移動
+ * @return Zend_Pdf_Page
+ */
+public function translate($xShift, $yShift);
+]]>
+            </programlisting>
+        </sect3>
+
+        <sect3 id="zend.pdf.drawing.linear-transformations.skew">
+            <title>ZF 1.8 以降で使用できる傾斜</title>
+            <para>
+                ページを傾けるには <code>Zend_Pdf_Page::skew()</code> メソッドを使用します。
+            </para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 座標系の変換
+ *
+ * @param float $x  - 傾斜点の X 座標
+ * @param float $y  - 傾斜点の Y 座標
+ * @param float $xAngle - X 軸の傾斜角度
+ * @param float $yAngle - Y 軸の傾斜角度
+ * @return Zend_Pdf_Page
+ */
+public function skew($x, $y, $xAngle, $yAngle);
+]]>
+            </programlisting>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
@@ -746,11 +857,15 @@ public function rotate($x, $y, $angle);
  * このページのグラフィックの状態を保存します。
  * 現在適用されているスタイル・位置・クリップ領域および
  * 回転/移動/拡大縮小などを情報を保存します。
+ *
+ * @return Zend_Pdf_Page 
  */
 public function saveGS();
 
 /**
  * 直近の saveGS() で保存されたグラフィックの状態を復元します。
+ *
+ * @return Zend_Pdf_Page 
  */
 public function restoreGS();
 ]]>
@@ -776,6 +891,7 @@ public function restoreGS();
  * @param float $y1
  * @param float $x2
  * @param float $y2
+ * @return Zend_Pdf_Page 
  */
 public function clipRectangle($x1, $y1, $x2, $y2);
 ]]>
@@ -787,10 +903,11 @@ public function clipRectangle($x1, $y1, $x2, $y2);
  * @param array $x  - float の配列 (頂点の X 座標)
  * @param array $y  - float の配列 (頂点の Y 座標)
  * @param integer $fillMethod
+ * @return Zend_Pdf_Page 
  */
 public function clipPolygon($x,
                             $y,
-                            $fillMethod = 
+                            $fillMethod =
                                 Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);
 ]]>
         </programlisting>
@@ -803,6 +920,7 @@ public function clipPolygon($x,
  * @param float $radius
  * @param float $startAngle
  * @param float $endAngle
+ * @return Zend_Pdf_Page 
  */
 public function clipCircle($x,
                            $y,
@@ -827,6 +945,7 @@ public function clipCircle($x,
  * @param float $y2
  * @param float $startAngle
  * @param float $endAngle
+ * @return Zend_Pdf_Page 
  */
 public function clipEllipse($x1,
                             $y1,
@@ -852,6 +971,7 @@ public function clipEllipse($x1,
  * このページの描画操作で使用する予定のスタイルを設定します。
  *
  * @param Zend_Pdf_Style $style
+ * @return Zend_Pdf_Page 
  */
 public function setStyle(Zend_Pdf_Style $style);
 
@@ -873,6 +993,7 @@ public function getStyle();
  * 線の色を設定します。
  *
  * @param Zend_Pdf_Color $color
+ * @return Zend_Pdf_Page 
  */
 public function setLineColor(Zend_Pdf_Color $color);
 ]]>
@@ -882,6 +1003,7 @@ public function setLineColor(Zend_Pdf_Color $color);
  * 線の色を取得します。
  *
  * @return Zend_Pdf_Color|null
+ * @return Zend_Pdf_Page 
  */
 public function getLineColor();
 ]]>
@@ -891,6 +1013,7 @@ public function getLineColor();
  * 線の幅を設定します。
  *
  * @param float $width
+ * @return Zend_Pdf_Page 
  */
 public function setLineWidth($width);
 ]]>
@@ -900,6 +1023,7 @@ public function setLineWidth($width);
  * 線の幅を取得します。
  *
  * @return float
+ * @return Zend_Pdf_Page 
  */
 public function getLineWidth();
 ]]>
@@ -910,6 +1034,7 @@ public function getLineWidth();
  *
  * @param array $pattern
  * @param float $phase
+ * @return Zend_Pdf_Page 
  */
 public function setLineDashingPattern($pattern, $phase = 0);
 ]]>
@@ -919,6 +1044,7 @@ public function setLineDashingPattern($pattern, $phase = 0);
  * 破線のパターンを取得します。
  *
  * @return array
+ * @return Zend_Pdf_Page 
  */
 public function getLineDashingPattern();
 ]]>
@@ -928,6 +1054,7 @@ public function getLineDashingPattern();
  * 破線の位相を取得します。
  *
  * @return float
+ * @return Zend_Pdf_Page 
  */
 public function getLineDashingPhase();
 ]]>
@@ -937,6 +1064,7 @@ public function getLineDashingPhase();
  * 塗りつぶし色を設定します。
  *
  * @param Zend_Pdf_Color $color
+ * @return Zend_Pdf_Page 
  */
 public function setFillColor(Zend_Pdf_Color $color);
 ]]>
@@ -956,6 +1084,7 @@ public function getFillColor();
  *
  * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
+ * @return Zend_Pdf_Page 
  */
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
 ]]>
@@ -965,6 +1094,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
  * 現在のフォントサイズを変更します。
  *
  * @param float $fontSize
+ * @return Zend_Pdf_Page 
  */
 public function setFontSize($fontSize);
 ]]>
@@ -1011,6 +1141,7 @@ public function getFontSize();
  * @param float $alpha
  * @param string $mode
  * @throws Zend_Pdf_Exception
+ * @return Zend_Pdf_Page 
  */
 public function setAlpha($alpha, $mode = 'Normal');
 ]]>
