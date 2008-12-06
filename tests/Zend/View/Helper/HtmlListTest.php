@@ -190,11 +190,9 @@ class Zend_View_Helper_HtmlListTest extends PHPUnit_Framework_TestCase
         $items = array('one', array('four', 'five', 'six'), 'two', 'three');
 
         $list = $this->helper->htmlList($items, false, array('class' => 'foo'));
-        var_dump($list);
+        
         foreach ($items[1] as $item) {
-        	var_dump($item);
             $this->assertRegexp('#<ul[^>]*?class="foo"[^>]*>.*?(<li>' . $item . ')#s', $list);
-            
         }
         
     }
