@@ -62,7 +62,7 @@ class Zend_View_Helper_HtmlList extends Zend_View_Helper_FormElement
                 }
                 $list .= '<li>' . $item . '</li>' . self::EOL;
             } else {
-                if (5 < strlen($list)) {
+                if (6 < strlen($list)) {
                     $list = substr($list, 0, strlen($list) - 6)
                      . $this->htmlList($item, $ordered, $attribs, $escape) . '</li>' . self::EOL;
                 } else {
