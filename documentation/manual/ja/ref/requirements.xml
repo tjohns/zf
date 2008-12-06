@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12887 -->
+<!-- EN-Revision: 12953 -->
 <appendix id="requirements">
 
     <title>Zend Framework のシステム要件</title>
@@ -285,7 +285,7 @@
                     <row>
                         <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.ldap.php"><code>ldap</code></ulink></emphasis></entry>
                         <entry>ハード</entry>
-                        <entry>Zend_Ldap</entry>
+                        <entry><ulink url="http://framework.zend.com/manual/en/zend.ldap.html"><code>Zend_Ldap</code></ulink></entry>
                     </row>
                     <row>
                         <entry morerows="2" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></emphasis></entry>
