@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11838 -->
+<!-- EN-Revision: 12750 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -143,7 +143,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             チェックされていない場合はなにも送信されません。
             内部的に、Zend_Form_Element_Checkbox はこの状態を強制します。
         </para>
-            
+
         <para>
             デフォルトでは、チェックされているときの値は '1'
             でチェックされていないときの値は '0' です。
@@ -206,10 +206,13 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             <programlisting role="php"><![CDATA[
 $element = new Zend_Form_Element_File('foo');
 $element->setLabel('Upload an image:')
-        ->setDestination('/var/www/upload')
-        ->addValidator('Count', false, 1)     // ファイルはひとつだけ
-        ->addValidator('Size', false, 102400) // 最大で 100K
-        ->addValidator('Extension', false, 'jpg,png,gif'); // JPEG、PNG および GIF のみ
+        ->setDestination('/var/www/upload');
+// ファイルはひとつだけ
+$element->addValidator('Count', false, 1);
+// 最大で 100K
+$element->addValidator('Size', false, 102400);
+// JPEG、PNG および GIF のみ
+$element->addValidator('Extension', false, 'jpg,png,gif');
 $form->addElement($element, 'foo');
 ]]>
             </programlisting>
@@ -260,9 +263,59 @@ $location = $form->foo->getFileName();
 
             <para>
                 HTTP 内で、file 要素は値を持ちません。
-                したがって、getValue() をコールしても出力は何も得られません。
+                したがって、またセキュリティ上の理由もあって、
+                getValue() ではアップロードしたファイル名だけしか取得できません。
+                完全パスを取得することはできません。完全な情報が欲しい場合は、
+                getFileName() をコールすればパスおよびファイル名が得られます。
             </para>
         </note>
+
+        <para>
+            アップロードされたファイルの状態については、次のメソッドで調べることができます。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>isUploaded()</code>:
+                    file 要素がアップロード済みかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isReceived()</code>:
+                    file 要素を既に受信済みかどうかを調べます。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>isFiltered()</code>:
+                    フィルタが file 要素に適用済みかどうかを調べます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+
+        <example id="zend.form.standardElements.file.isuploaded">
+            <title>オプションのファイルがアップロードされたかどうかの確認</title>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->setRequired(false);
+$element->addValidator('Size', false, 102400);
+$form->addElement($element, 'foo');
+
+// file 要素 foo はオプションですが、もしアップロードされた場合はここに到達します
+if ($form->foo->isUploaded()) {
+    // foo がアップロードされたので、ここで何かをします
+}
+]]>
+            </programlisting>
+        </example>
 
         <para>
             <code>Zend_Form_Element_File</code> は複数のファイルもサポートしています。
@@ -282,11 +335,15 @@ $location = $form->foo->getFileName();
             <programlisting role="php"><![CDATA[
 $element = new Zend_Form_Element_File('foo');
 $element->setLabel('Upload an image:')
-        ->setDestination('/var/www/upload')
-        ->addValidator('Count', false, array(1, 3)) // ファイルの数を最小で 1、最大で 3 とします
-        ->addValidator('Size', false, 102400) // 100K までに制限します
-        ->addValidator('Extension', false, 'jpg,png,gif') // JPEG, PNG, および GIF のみを有効とします
-        ->setMultiFile(3); // 3 つの file 要素を作成します
+        ->setDestination('/var/www/upload');
+// ファイルの数を最小で 1、最大で 3 とします
+$element->addValidator('Count', false, array('min' => 1, 'max' => 3));
+// 100K までに制限します
+$element->addValidator('Size', false, 102400);
+// JPEG, PNG, および GIF のみを有効とします
+$element->addValidator('Extension', false, 'jpg,png,gif');
+// 3 つの file 要素を作成します
+$element->setMultiFile(3);
 $form->addElement($element, 'foo');
 ]]>
             </programlisting>
@@ -381,7 +438,7 @@ $form->addElement($element, 'foo');
 $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 ]]>
         </programlisting>
-        
+
         <para>
             salt は、後から <code>setSalt($salt)</code>
             メソッドを使って設定することもできます。
