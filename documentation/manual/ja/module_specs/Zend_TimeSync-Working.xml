@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12814 -->
 <sect1 id="zend.timesync.working">
 
     <title>Zend_TimeSync の動作</title>
@@ -306,7 +306,8 @@ try {
         echo $myException->getMessage();
         echo '<br />';
     }
-}]]>
+}
+]]>
         </programlisting>
     </sect2>
 </sect1>
