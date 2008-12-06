@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10741 -->
+<!-- EN-Revision: 12740 -->
 <sect1 id="zend.captcha.adapters">
     <title>Captcha アダプタ</title>
 
@@ -77,9 +77,11 @@
             違う方法でオプションを使用したりしているかもしれません。
         </para>
 
-        <note><para>
+        <note>
+        <para>
             Word は抽象クラスであり、直接そのインスタンスを作成することはできません。
-        </para></note>
+        </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
@@ -150,7 +152,7 @@
 
             <listitem><para>
                 <code>setFont($font)</code> と <code>getFont()</code>
-                で、使用するフォントを指定します。
+                で、使用するフォントを指定します。<code>$font</code> には、
                 使用するフォントのパスをフルパス形式で指定する必要があります。
                 この値を設定しなければ、captcha の生成時に例外がスローされます。
                 フォントは必須です。
