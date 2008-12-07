@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13036 -->
 <sect3 id="zend.view.helpers.initial.doctype">
     <title>L'aide de vue Doctype</title>
 
@@ -40,6 +40,10 @@
 
         <listitem>
             <para><code>HTML4_FRAMESET</code></para>
+        </listitem>
+
+        <listitem>
+            <para><code>HTML5</code></para>
         </listitem>
     </itemizedlist>
 
