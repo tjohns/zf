@@ -655,7 +655,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             return $this->_value;
         }
 
-        $content = current($this->getTransferAdapter()->getFileName($this->getName()));
+        $content = $this->getTransferAdapter()->getFileName($this->getName());
         if (empty($content)) {
             return null;
         }
