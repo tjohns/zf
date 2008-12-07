@@ -443,7 +443,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             Text still can be provided in any other encoding, which must be specified if it differs from a current locale.
             Only WinLatin1 characters will be actualy drawn.  
         </para>
-        <example id="zend.pdf.drawing.using-fonts.example-6">
+        <example id="zend.pdf.drawing.using-fonts.example-7">
             <title>Combining font embedding options.</title>
             <programlisting role="php"><![CDATA[
 ...
@@ -742,6 +742,7 @@ regardless of the directions in which the circles are drawn.
     </sect2>
 
     <sect2 id="zend.pdf.drawing.linear-transformations">
+        <title>Linear Transformations</title>
         <sect3 id="zend.pdf.drawing.linear-transformations.rotations">
             <title>Rotations.</title>
             <para>
