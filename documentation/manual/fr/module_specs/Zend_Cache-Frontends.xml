@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13001 -->
 <sect1 id="zend.cache.frontends">
     <title>Les frontends Zend_Cache</title>
 
@@ -508,14 +508,14 @@ $res = $cache->foobar2('1', '2');
             <title>Introduction</title>
 
             <para><code>Zend_Cache_Frontend_File</code> est un frontend piloté par la modification d'un "fichier
-            maître". C'est vraiment intéressant, par exemple, dans les problématiques de configuration ou de
-            templates.</para>
+            maître". C'est vraiment intéressant, par exemple, dans les problématiques de configuration ou de templates.
+            Il est également possible d'utiliser plusieurs fichiers maîtres.</para>
 
-            <para>Par exemple, vous avez un fichier de configuration XML qui est parsé par une fonction, celle-ci retourne
-            un "objet config" (comme avec <code>Zend_Config</code>). Avec <code>Zend_Cache_Frontend_File</code>, vous
-            pouvez stocker l'objet config dans le cache (pour éviter d'analyser le fichier de configuration XML chaque
-            fois) mais avec une sorte de forte dépendance au fichier maître. Ainsi si le fichier XML de configuration
-            est modifié, le cache est immédiatement invalide.</para>
+            <para>Par exemple, vous avez un fichier de configuration XML qui est parsé par une fonction, celle-ci
+            retourne un "objet config" (comme avec <code>Zend_Config</code>). Avec
+            <code>Zend_Cache_Frontend_File</code>, vous pouvez stocker l'objet config dans le cache (pour éviter
+            d'analyser le fichier de configuration XML chaque fois) mais avec une sorte de forte dépendance au fichier
+            maître. Ainsi si le fichier XML de configuration est modifié, le cache est immédiatement invalide.</para>
         </sect3>
 
         <sect3 id="zend.cache.frontends.file.options">
@@ -539,13 +539,48 @@ $res = $cache->foobar2('1', '2');
 
                     <tbody>
                         <row>
-                            <entry><code>master_file (mandatory)</code></entry>
+                            <entry><code>master_file (déprécié)</code></entry>
 
                             <entry><code>string</code></entry>
 
                             <entry><code></code></entry>
 
                             <entry>le chemin complet et le nom du fichier maître</entry>
+                        </row>
+
+                        <row>
+                            <entry><code>master_files</code></entry>
+
+                            <entry><code>array</code></entry>
+
+                            <entry><code></code></entry>
+
+                            <entry>un tableau de chemin complet de fichiers maîtres</entry>
+                        </row>
+
+                        <row>
+                            <entry><code>master_files_mode</code></entry>
+
+                            <entry><code>string</code></entry>
+
+                            <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+
+                            <entry><code>Zend_Cache_Frontend_File::MODE_AND</code> oU
+                            <code>Zend_Cache_Frontend_File::MODE_OR</code> ; si <code>MODE_AND</code>, alors tous les
+                            fichiers maîtres doivent être modifiés pour rendre invalide le cache, si
+                            <code>MODE_OR</code>, alors un seul fichier maître modifié est nécessaire pour invalider le
+                            cache</entry>
+                        </row>
+
+                        <row>
+                            <entry><code>ignore_missing_master_files</code></entry>
+
+                            <entry><code>boolean</code></entry>
+
+                            <entry><code>false</code></entry>
+
+                            <entry>si <code>true</code>, l'absence de fichiers maîtres est ignoré silencieusement (sinon
+                            une exception est levée)</entry>
                         </row>
                     </tbody>
                 </tgroup>
