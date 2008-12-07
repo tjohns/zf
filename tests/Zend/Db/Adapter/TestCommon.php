@@ -404,6 +404,15 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * @group ZF-2927
+     */
+    public function testAdapterDescribeView()
+    {
+        $describe = $this->_db->describeTable('temp_view');
+        $this->assertEquals(8, count($describe));
+    }
+
+    /**
      * Test the Adapter's fetchAll() method.
      */
     public function testAdapterFetchAll()
