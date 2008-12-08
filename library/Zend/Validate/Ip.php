@@ -59,7 +59,7 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
             if (!function_exists('inet_pton')) {
                 $this->_error();
                 return false;
-            } else if ((inet_pton($value) === false) ||(inet_ntop(inet_pton($value)) !== $valueString)) {
+            } else if ((@inet_pton($value) === false) ||(inet_ntop(@inet_pton($value)) !== $valueString)) {
                 $this->_error();
                 return false;
             }
