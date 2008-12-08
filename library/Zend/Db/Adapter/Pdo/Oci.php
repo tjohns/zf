@@ -182,7 +182,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
                 WHERE UPPER(TC.TABLE_NAME) = UPPER(:TBNAME)";
             $bind[':TBNAME'] = $tableName;
             if ($schemaName) {
-                $sql .= ' AND UPPER(TB.OWNER) = UPPER(:SCNAME)';
+                $sql .= ' AND UPPER(TC.OWNER) = UPPER(:SCNAME)';
                 $bind[':SCNAME'] = $schemaName;
             }
             $sql .= ' ORDER BY TC.COLUMN_ID';
