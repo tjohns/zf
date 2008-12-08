@@ -56,8 +56,13 @@ class Zend_Validate_Ip extends Zend_Validate_Abstract
         $this->_setValue($valueString);
 
         if ((ip2long($valueString) === false) || (long2ip(ip2long($valueString)) !== $valueString)) {
-            $this->_error();
-            return false;
+            if (!function_exists('inet_pton')) {
+                $this->_error();
+                return false;
+            } else if ((inet_pton($value) === false) ||(inet_ntop(inet_pton($value)) !== $valueString)) {
+                $this->_error();
+                return false;
+            }
         }
 
         return true;
