@@ -363,6 +363,14 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Http_Response.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+
+    <chapter id="zend.infocard">
+        <title>Zend_InfoCard</title>        
+		<xi:include href="module_specs/Zend_InfoCard-Basics.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_InfoCard-Basics.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+
     <chapter id="zend.json">
         <title>Zend_Json</title>
         <xi:include href="module_specs/Zend_Json-Introduction.xml">
@@ -432,8 +440,8 @@
         <xi:include href="module_specs/Zend_Log-Overview.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Log-Overview.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Log-Writers.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Log-Writers.xml" /></xi:fallback>
+        <xi:include href="module_specs/Zend_Log-Writers.xml" parse="xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Log-Writers.xml" parse="xml"/></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Log-Formatters.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Log-Formatters.xml" /></xi:fallback>
@@ -577,6 +585,14 @@
             <xi:fallback><xi:include href="../en/module_specs/Zend_Pdf-Usage.xml" /></xi:fallback>
         </xi:include>
     </chapter>
+
+    <chapter id="zend.progressbar">
+        <title>Zend_ProgressBar</title>
+        <xi:include href="module_specs/Zend_ProgressBar.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_ProgressBar.xml" /></xi:fallback>
+        </xi:include>        
+    </chapter>
+
     <chapter id="zend.registry">
         <title>Zend_Registry</title>
         <xi:include href="module_specs/Zend_Registry.xml">
