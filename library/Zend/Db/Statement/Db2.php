@@ -58,8 +58,8 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     public function _prepare($sql)
     {
         $connection = $this->_adapter->getConnection();
-        
-        // db2_prepare on i5 emits errors, these need to be 
+
+        // db2_prepare on i5 emits errors, these need to be
         // suppressed so that proper exceptions can be thrown
         $this->_stmt = @db2_prepare($connection, $sql);
 
@@ -104,8 +104,8 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
              */
             require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
-                db2_stmt_errormsg($this->_stmt),
-                db2_stmt_error($this->_stmt)
+                db2_stmt_errormsg(),
+                db2_stmt_error()
             );
         }
 
@@ -151,10 +151,15 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
     public function errorCode()
     {
         if (!$this->_stmt) {
-            return '0000';
+            return false;
         }
 
-        return db2_stmt_error($this->_stmt);
+        $error = db2_stmt_error();
+        if ($error === '') {
+        	return false;
+        }
+
+        return $error;
     }
 
     /**
@@ -165,18 +170,19 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
      */
     public function errorInfo()
     {
-        if (!$this->_stmt) {
-            return array(false, 0, '');
-        }
+    	$error = $this->errorCode();
+    	if ($error === false){
+    		return false;
+    	}
 
         /*
          * Return three-valued array like PDO.  But DB2 does not distinguish
          * between SQLCODE and native RDBMS error code, so repeat the SQLCODE.
          */
         return array(
-            db2_stmt_error($this->_stmt),
-            db2_stmt_error($this->_stmt),
-            db2_stmt_errormsg($this->_stmt)
+            $error,
+            $error,
+            db2_stmt_errormsg()
         );
     }
 
@@ -206,8 +212,8 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
              */
             require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
-                db2_stmt_errormsg($this->_stmt),
-                db2_stmt_error($this->_stmt));
+                db2_stmt_errormsg(),
+                db2_stmt_error());
         }
 
         $this->_keys = array();
