@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12965 -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
@@ -220,7 +220,6 @@ public function getScriptPaths();
  * als Objekteigenschaften
  */
 public function __set($key, $value);
-public function __get($key);
 public function __isset($key);
 public function __unset($key);
 
@@ -347,17 +346,6 @@ class Zend_View_Smarty implements Zend_View_Interface
     public function __set($key, $val)
     {
         $this->_smarty->assign($key, $val);
-    }
-
-    /**
-     * Hole eine zugewiesene Variable
-     *
-     * @param string $key der Variablenname.
-     * @return mixed der Variablenwert.
-     */
-    public function __get($key)
-    {
-        return $this->_smarty->get_template_vars($key);
     }
 
     /**
