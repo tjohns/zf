@@ -250,7 +250,7 @@ try {
       </Problems>
       </Body>
     </ContinuityOfCareRecord>\';
-    //$responseEntry = $healthService->sendHealthNotice($subject, $body, "html", $ccr);';
+    $responseEntry = $healthService->sendHealthNotice($subject, $body, "html", $ccr);';
 } catch(Zend_Gdata_App_Exception $e) {
   echo 'Error: ' . $e->getMessage();
 }
