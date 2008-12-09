@@ -1190,7 +1190,7 @@ $element->class = 'text;
     </sect2>
 <!-- @TODO: Continuar con traduccón -->
     <sect2 id="zend.form.elements.standard">
-        <title>Standard Elements</title>
+        <title>Elementos Estándar</title>
 
         <para>
             <code>Zend_Form</code> ships with a number of standard elements; please read the
