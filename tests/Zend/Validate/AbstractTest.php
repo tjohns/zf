@@ -149,8 +149,8 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
     public function testErrorMessagesAreTranslatedWhenTranslatorPresent()
     {
         $translator = new Zend_Translate(
-            'array', 
-            array('fooMessage' => 'This is the translated message for %value%'), 
+            'array',
+            array('fooMessage' => 'This is the translated message for %value%'),
             'en'
         );
         $this->validator->setTranslator($translator);
@@ -199,6 +199,16 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $message = $messages['fooMessage'];
         $this->assertNotContains('foobar', $message);
         $this->assertContains('******', $message);
+    }
+
+    /**
+     * @see ZF-4463
+     */
+    public function testDoesNotFailOnObjectInput()
+    {
+        $this->assertFalse($this->validator->isValid(new stdClass()));
+        $messages = $this->validator->getMessages();
+        $this->assertTrue(array_key_exists('fooMessage', $messages));
     }
 
     /**
