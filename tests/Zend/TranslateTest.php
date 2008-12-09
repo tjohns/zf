@@ -228,6 +228,13 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $cache = Zend_Translate::getCache();
         $this->assertTrue($cache instanceof Zend_Cache_Core);
         $this->assertTrue(Zend_Translate::hasCache());
+
+        $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('msg1' => 'Message 1 (en)'), 'en');
+        $adapter = $lang->getAdapter();
+        $this->assertTrue($adapter instanceof Zend_Translate_Adapter_Array);
+        $adaptercache = $adapter->getCache();
+        $this->assertTrue($adaptercache instanceof Zend_Cache_Core);
+
         Zend_Translate::clearCache();
         $this->assertTrue(Zend_Translate::hasCache());
         Zend_Translate::removeCache();
