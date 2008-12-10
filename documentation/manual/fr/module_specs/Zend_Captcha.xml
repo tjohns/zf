@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12740 -->
+<!-- EN-Revision: 13101 -->
 <sect1 id="zend.captcha.introduction">
     <title>Introduction</title>
 
     <para><ulink url="http://en.wikipedia.org/wiki/Captcha">CAPTCHA</ulink> est l'acronyme anglais de "Completely
-    Automated Turing test to tell Computers and Humans Apart" [NDT. : test de Turing automatisé permettant de
+    Automated Public Turing test to tell Computers and Humans Apart" [NDT. : test de Turing automatisé permettant de
     différencier un utilisateur humain d'un ordinateur], il est utilisé comme contre-réponse pour s'assurer que
     l'émetteur de l'information est un humain et pas un processus automatisé. Typiquement, un captcha est utilisé lors
     de la soumission d'un formulaire quand des utilisateurs authentifiés ne sont pas nécessaires mais si vous désirez
