@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12836 -->
+<!-- EN-Revision: 12995 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -443,8 +443,37 @@ $font = Zend_Pdf_Font::fontWithPath(
 
     </sect2>
 
+    <sect2 id="zend.pdf.drawing.standard-fonts-limitations">
+        <title>Limits der Standard PDF Schriften</title>
+        <para>
+            Die Standard PDF Schriften verwendetn intern verschiedene Single-Byte Encodings (siehe
+            <ulink url="http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf">PDF Reference, Sixth Edition, version 1.7</ulink>
+            Anhang D für Details). Diese sind generell gleich wie beim Latin1 Zeichensatz (ausser den Symbol und
+            ZapfDingbats Schriften).
+        </para>
+        <para>
+            Zend_Pdf verwendet CP1252 (WinLatin1) für das Zeichnen von Text mit Standardschriften.
+        </para>
+        <para>
+            Text kann trotzdem in jedem anderen Encoding angegeben werden, welches spezifiziert werden muß wenn
+            es sich vom aktuellen Gebietsschema unterscheidet. Nur WinLatin1 Zeichen werden aktuell gezeichnet.
+        </para>
+        <example id="zend.pdf.drawing.using-fonts.example-6">
+            <title>Kombinieren mit in Schriften enthaltenen Optionen</title>
+            <programlisting role="php"><![CDATA[
+...
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_COURIER);
+$pdfPage->setFont($font, 36)
+        ->drawText('Euro sign - €', 72, 720, 'UTF-8')
+        ->drawText('Text with umlauts - à è ì', 72, 650, 'UTF-8');
+...
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
     <sect2 id="zend.pdf.drawing.extracting-fonts">
-        <title>Beginnend mit 1.5, Schriften extrahieren</title>
+        <title>Schriften extrahieren</title>
         <para>
             Das <code>Zend_Pdf</code> Modul bietet die Möglichkeit Schriften von geladenen Dokumenten zu
             extrahieren.
