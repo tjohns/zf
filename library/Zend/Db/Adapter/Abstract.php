@@ -131,6 +131,20 @@ abstract class Zend_Db_Adapter_Abstract
         Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE
     );
 
+     /** Weither or not that object can get serialized
+      *
+      * @var bool
+      */
+     protected $_allowSerialization = true;
+
+     /**
+      * Weither or not the database should be reconnected
+      * to that adapter when waking up
+      *
+      * @var bool
+      */
+     protected $_autoReconnectOnUnserialize = false;
+
     /**
      * Constructor.
      *
@@ -221,6 +235,16 @@ abstract class Zend_Db_Adapter_Abstract
         // obtain quoting property if there is one
         if (array_key_exists(Zend_Db::AUTO_QUOTE_IDENTIFIERS, $options)) {
             $this->_autoQuoteIdentifiers = (bool) $options[Zend_Db::AUTO_QUOTE_IDENTIFIERS];
+        }
+
+        // obtain allow serialization property if there is one
+        if (array_key_exists(Zend_Db::ALLOW_SERIALIZATION, $options)) {
+            $this->_allowSerialization = (bool) $options[Zend_Db::ALLOW_SERIALIZATION];
+        }
+
+        // obtain auto reconnect on unserialize property if there is one
+        if (array_key_exists(Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE, $options)) {
+            $this->_autoReconnectOnUnserialize = (bool) $options[Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE];
         }
 
         // create a profiler object
@@ -1022,6 +1046,36 @@ abstract class Zend_Db_Adapter_Abstract
                 $value = (string) $key;
         }
         return $value;
+    }
+
+    /**
+     * called when object is getting serialized
+     * This disconnects the DB object that cant be serialized
+     * 
+     * @throws Zend_Db_Adapter_Exception
+     * @return array
+     */
+    public function __sleep()
+    {
+        if ($this->_allowSerialization == false) {
+            /** @see Zend_Db_Adapter_Exception */
+            require_once 'Zend/Db/Adapter/Exception.php';
+            throw new Zend_Db_Adapter_Exception(get_class($this) ." is not allowed to be serialized");
+        }
+        $this->_connection = false;
+        return array_keys(array_diff_key(get_object_vars($this), array('_connection'=>false)));
+    }
+
+    /**
+     * called when object is getting unserialized
+     * 
+     * @return void
+     */
+    public function __wakeup()
+    {
+        if ($this->_autoReconnectOnUnserialize == true) {
+            $this->getConnection();
+        }
     }
 
     /**

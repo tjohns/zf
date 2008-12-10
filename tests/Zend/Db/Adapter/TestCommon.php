@@ -1873,4 +1873,37 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
                     'this is the clob that never ends...';
         $this->assertEquals($expected, $value);
     }
+
+    public function testAdapterSerializationIsOkByDefault()
+    {
+        $serialized = serialize($this->_db);
+        $this->assertType('string', $serialized);
+        $this->assertThat(unserialize($serialized), new PHPUnit_Framework_Constraint_IsInstanceOf('Zend_Db_Adapter_Abstract'));
+    }
+
+    public function testAdapterSerializationFailsWhenNotAllowedToBeSerialized()
+    {
+        $params = $this->_util->getParams();
+        $params['options'] = array(
+            Zend_Db::ALLOW_SERIALIZATION => false
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $this->setExpectedException('Zend_Db_Adapter_Exception');
+        $serialized = serialize($db);
+    }
+
+    public function testAdapterUnSerializationAutoReconnection()
+    {
+        $serialized = serialize($this->_db);
+        $db = unserialize($serialized);
+        $this->assertFalse($db->isConnected());
+        
+        $params = $this->_util->getParams();
+        $params['options'] = array(
+            Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE => true
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db = unserialize(serialize($db));
+        $this->assertTrue($db->isConnected());
+    }
 }

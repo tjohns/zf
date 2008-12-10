@@ -54,6 +54,16 @@ class Zend_Db
     const AUTO_QUOTE_IDENTIFIERS = 'autoQuoteIdentifiers';
 
     /**
+     * Use the ALLOW_SERIALIZATION constant in the config of a Zend_Db_Adapter.
+     */
+    const ALLOW_SERIALIZATION = 'allowSerialization';
+
+    /**
+     * Use the AUTO_RECONNECT_ON_UNSERIALIZE constant in the config of a Zend_Db_Adapter.
+     */
+    const AUTO_RECONNECT_ON_UNSERIALIZE = 'autoReconnectOnUnserialize';
+
+    /**
      * Use the INT_TYPE, BIGINT_TYPE, and FLOAT_TYPE with the quote() method.
      */
     const INT_TYPE    = 0;

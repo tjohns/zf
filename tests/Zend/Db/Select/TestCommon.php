@@ -1458,4 +1458,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(1, $result[0]['id']);
     }
 
+    public function testSerializeSelect()
+    {
+        /* checks if the adapter has effectively gotten serialized,
+           no exceptions are thrown here, so it's all right */
+        $serialize = serialize($this->_select());
+        $this->assertType('string',$serialize);
+    }
+
 }

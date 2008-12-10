@@ -1449,6 +1449,12 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $rows = $table->fetchAll($select);
         $this->assertEquals(0, count($rows));
     }
+    
+    public function testSerialiseTable()
+    {
+        $table = $this->_table['products'];
+        $this->assertType('string', serialize($table));
+    }
 
     /**
      * Returns a clean Zend_Cache_Core with File backend
