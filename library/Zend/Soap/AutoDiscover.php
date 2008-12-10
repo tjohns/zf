@@ -61,6 +61,20 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     protected $_uri;
 
     /**
+     * soap:body operation style options
+     *
+     * @var array
+     */
+    protected $_operationBodyStyle = array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/");
+
+    /**
+     * soap:operation style
+     *
+     * @var array
+     */
+    protected $_bindingStyle = array('style' => 'rpc', 'transport' => 'http://schemas.xmlsoap.org/soap/http');
+
+    /**
      * Constructor
      *
      * @param boolean|string|Zend_Soap_Wsdl_Strategy_Interface $strategy
@@ -119,6 +133,45 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
             $this->setUri($uri);
         }
         return $uri;
+    }
+
+    /**
+     * Set options for all the binding operations soap:body elements.
+     *
+     * By default the options are set to 'use' => 'encoded' and
+     * 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/".
+     *
+     * @see    Zend_Soap_AutoDiscover_Exception
+     * @param  array $operationStyle
+     * @return Zend_Soap_AutoDiscover
+     */
+    public function setOperationBodyStyle(array $operationStyle=array())
+    {
+        if(!isset($operationStyle['use'])) {
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
+            throw new Zend_Soap_AutoDiscover_Exception("Key 'use' is required in Operation soap:body style.");
+        }
+        $this->_operationBodyStyle = $operationStyle;
+        return $this;
+    }
+
+    /**
+     * Set Binding soap:binding style.
+     *
+     * By default 'style' is 'rpc' and 'transport' is 'http://schemas.xmlsoap.org/soap/http'.
+     *
+     * @param  array $bindingStyle
+     * @return Zend_Soap_AutoDiscover
+     */
+    public function setBindingStyle(array $bindingStyle=array())
+    {
+        if(isset($bindingStyle['style'])) {
+            $this->_bindingStyle['style'] = $bindingStyle['style'];
+        }
+        if(isset($bindingStyle['transport'])) {
+            $this->_bindingStyle['transport'] = $bindingStyle['transport'];
+        }
+        return $this;
     }
 
     /**
@@ -205,7 +258,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
         $port = $wsdl->addPortType($class . 'Port');
         $binding = $wsdl->addBinding($class . 'Binding', 'tns:' .$class. 'Port');
 
-        $wsdl->addSoapBinding($binding, 'rpc');
+        $wsdl->addSoapBinding($binding, $this->_bindingStyle['style'], $this->_bindingStyle['transport']);
         $wsdl->addService($class . 'Service', $class . 'Port', 'tns:' . $class . 'Binding', $uri);
         foreach ($this->_reflection->reflectClass($class)->getMethods() as $method) {
             /* <wsdl:portType>'s */
@@ -244,7 +297,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
                 }
 
                 /* <wsdl:binding>'s */
-                $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
+                $operation = $wsdl->addBindingOperation($binding, $method->getName(),  $this->_operationBodyStyle, $this->_operationBodyStyle);
                 $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
                 /* </wsdl:binding>'s */
             }
@@ -278,7 +331,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
             $port = $wsdl->addPortType($name . 'Port');
             $binding = $wsdl->addBinding($name . 'Binding', 'tns:' .$name. 'Port');
 
-            $wsdl->addSoapBinding($binding, 'rpc');
+            $wsdl->addSoapBinding($binding, $this->_bindingStyle['style'], $this->_bindingStyle['transport']);
             $wsdl->addService($name . 'Service', $name . 'Port', 'tns:' . $name . 'Binding', $uri);
         } else {
             $wsdl = $this->_wsdl;
@@ -307,7 +360,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
                    /* </wsdl:portType>'s */
 
                 /* <wsdl:binding>'s */
-                $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
+                $operation = $wsdl->addBindingOperation($binding, $method->getName(), $this->_operationBodyStyle, $this->_operationBodyStyle);
                 $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
                 /* </wsdl:binding>'s */
 

@@ -307,4 +307,31 @@ $autodiscover->handle();
             <code>tns:</code> is a "target namespace" for a service.
         </para>
     </sect2>
+
+    <sect2 id="zend.soap.autodiscovery.wsdlstyles">
+        <title>WSDL Binding Styles</title>
+
+        <para>
+            WSDL offeres different transport mechanisms and styles. This affects the
+            <code>soap:binding</code> and <code>soap:body</code> tags within the Binding
+            section of WSDL. Different clients have different requirements as to what options
+            really work. Therefore you can set the styles before you call any <code>setClass</code>
+            or <code>addFunction</code> method on the AutoDiscover class.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
+// Default is 'use' => 'encoded' and 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
+$autodiscover->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+
+// Default is 'style' => 'rpc', 'transport' => 'http://schemas.xmlsoap.org/soap/http'
+$autodiscover->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+...
+$autodiscover->addFunction('myfunc1');
+$autodiscover->handle();
+]]>
+            </programlisting>
+        </para>
+    </sect2>
 </sect1>

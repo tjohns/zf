@@ -53,6 +53,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         ob_start();
         $server->handle();
         $dom->loadXML(ob_get_clean());
+
         $wsdl = '<?xml version="1.0"?>'
               . '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" '
               .              'xmlns:tns="' . $scriptUri . '" '
@@ -124,6 +125,90 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         unlink(dirname(__FILE__).'/_files/setclass.wsdl');
     }
 
+    function testSetClassWithDifferentStyles()
+    {
+        $scriptUri = 'http://localhost/my_script.php';
+
+        $server = new Zend_Soap_AutoDiscover();
+        $server->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+        $server->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+        $server->setClass('Zend_Soap_AutoDiscover_Test');
+        $dom = new DOMDocument();
+        ob_start();
+        $server->handle();
+        $dom->loadXML(ob_get_clean());
+
+        $wsdl = '<?xml version="1.0"?>'
+              . '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" '
+              .              'xmlns:tns="' . $scriptUri . '" '
+              .              'xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" '
+              .              'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+              .              'xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" '
+              .              'xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" '
+              .              'name="Zend_Soap_AutoDiscover_Test" '
+              .              'targetNamespace="' . $scriptUri . '">'
+              .     '<portType name="Zend_Soap_AutoDiscover_TestPort">'
+              .         '<operation name="testFunc1">'
+              .             '<input message="tns:testFunc1Request"/>'
+              .             '<output message="tns:testFunc1Response"/>'
+              .         '</operation>'
+              .         '<operation name="testFunc2">'
+              .             '<input message="tns:testFunc2Request"/>'
+              .             '<output message="tns:testFunc2Response"/>'
+              .         '</operation>'
+              .         '<operation name="testFunc3">'
+              .             '<input message="tns:testFunc3Request"/>'
+              .             '<output message="tns:testFunc3Response"/>'
+              .         '</operation><operation name="testFunc4">'
+              .             '<input message="tns:testFunc4Request"/>'
+              .             '<output message="tns:testFunc4Response"/>'
+              .         '</operation>'
+              .     '</portType>'
+              .     '<binding name="Zend_Soap_AutoDiscover_TestBinding" type="tns:Zend_Soap_AutoDiscover_TestPort">'
+              .         '<soap:binding style="document" transport="http://framework.zend.com"/>'
+              .         '<operation name="testFunc1">'
+              .             '<soap:operation soapAction="' . $scriptUri . '#testFunc1"/>'
+              .             '<input><soap:body use="literal" namespace="http://framework.zend.com"/></input>'
+              .             '<output><soap:body use="literal" namespace="http://framework.zend.com"/></output>'
+              .         '</operation>'
+              .         '<operation name="testFunc2">'
+              .             '<soap:operation soapAction="' . $scriptUri . '#testFunc2"/>'
+              .             '<input><soap:body use="literal" namespace="http://framework.zend.com"/></input>'
+              .             '<output><soap:body use="literal" namespace="http://framework.zend.com"/></output>'
+              .         '</operation>'
+              .         '<operation name="testFunc3">'
+              .             '<soap:operation soapAction="' . $scriptUri . '#testFunc3"/>'
+              .             '<input><soap:body use="literal" namespace="http://framework.zend.com"/></input>'
+              .             '<output><soap:body use="literal" namespace="http://framework.zend.com"/></output>'
+              .         '</operation>'
+              .         '<operation name="testFunc4">'
+              .             '<soap:operation soapAction="' . $scriptUri . '#testFunc4"/>'
+              .             '<input><soap:body use="literal" namespace="http://framework.zend.com"/></input>'
+              .             '<output><soap:body use="literal" namespace="http://framework.zend.com"/></output>'
+              .         '</operation>'
+              .     '</binding>'
+              .     '<service name="Zend_Soap_AutoDiscover_TestService">'
+              .         '<port name="Zend_Soap_AutoDiscover_TestPort" binding="tns:Zend_Soap_AutoDiscover_TestBinding">'
+              .             '<soap:address location="' . $scriptUri . '"/>'
+              .         '</port>'
+              .     '</service>'
+              .     '<message name="testFunc1Request"/>'
+              .     '<message name="testFunc1Response"><part name="testFunc1Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc2Request"><part name="who" type="xsd:string"/></message>'
+              .     '<message name="testFunc2Response"><part name="testFunc2Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc3Request"><part name="who" type="xsd:string"/><part name="when" type="xsd:int"/></message>'
+              .     '<message name="testFunc3Response"><part name="testFunc3Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc4Request"/>'
+              .     '<message name="testFunc4Response"><part name="testFunc4Return" type="xsd:string"/></message>'
+              . '</definitions>';
+
+        $dom->save(dirname(__FILE__).'/_files/setclass.wsdl');
+        $this->assertEquals($wsdl, $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()));
+        $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
+
+        unlink(dirname(__FILE__).'/_files/setclass.wsdl');
+    }
+
     function testAddFunctionSimple()
     {
         $scriptUri = 'http://localhost/my_script.php';
@@ -151,6 +236,51 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
                 '<soap:operation soapAction="' . $scriptUri . '#Zend_Soap_AutoDiscover_TestFunc"/>'.
                 '<input><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>'.
                 '<output><soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>'.
+                '</operation>'.
+                '</binding>'.
+                '<service name="' .$name. 'Service">'.
+                '<port name="' .$name. 'Port" binding="tns:' .$name. 'Binding">'.
+                '<soap:address location="' . $scriptUri . '"/>'.
+                '</port>'.
+                '</service>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFuncRequest"><part name="who" type="xsd:string"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="Zend_Soap_AutoDiscover_TestFuncReturn" type="xsd:string"/></message>'.
+                '</definitions>';
+        $this->assertEquals($wsdl, $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()), "Bad WSDL generated");
+        $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
+
+        unlink(dirname(__FILE__).'/_files/addfunction.wsdl');
+    }
+
+    function testAddFunctionSimpleWithDifferentStyle()
+    {
+        $scriptUri = 'http://localhost/my_script.php';
+
+        $server = new Zend_Soap_AutoDiscover();
+        $server->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+        $server->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+        $dom = new DOMDocument();
+        ob_start();
+        $server->handle();
+        $dom->loadXML(ob_get_contents());
+        $dom->save(dirname(__FILE__).'/_files/addfunction.wsdl');
+
+        ob_end_clean();
+        $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
+        $name = $parts[0];
+
+        $wsdl = '<?xml version="1.0"?>'.
+                '<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="' . $scriptUri . '" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="' .$name. '" targetNamespace="' . $scriptUri . '">'.
+                '<portType name="' .$name. 'Port">'.
+                '<operation name="Zend_Soap_AutoDiscover_TestFunc"><input message="tns:Zend_Soap_AutoDiscover_TestFuncRequest"/><output message="tns:Zend_Soap_AutoDiscover_TestFuncResponse"/></operation>'.
+                '</portType>'.
+                '<binding name="' .$name. 'Binding" type="tns:' .$name. 'Port">'.
+                '<soap:binding style="document" transport="http://framework.zend.com"/>'.
+                '<operation name="Zend_Soap_AutoDiscover_TestFunc">'.
+                '<soap:operation soapAction="' . $scriptUri . '#Zend_Soap_AutoDiscover_TestFunc"/>'.
+                '<input><soap:body use="literal" namespace="http://framework.zend.com"/></input>'.
+                '<output><soap:body use="literal" namespace="http://framework.zend.com"/></output>'.
                 '</operation>'.
                 '</binding>'.
                 '<service name="' .$name. 'Service">'.
