@@ -211,6 +211,7 @@ abstract class Zend_Db_Adapter_Abstract
                     $this->_caseFolding = $case;
                     break;
                 default:
+                    /** @see Zend_Db_Adapter_Exception */
                     require_once 'Zend/Db/Adapter/Exception.php';
                     throw new Zend_Db_Adapter_Exception('Case must be one of the following constants: '
                         . 'Zend_Db::CASE_NATURAL, Zend_Db::CASE_LOWER, Zend_Db::CASE_UPPER');
@@ -242,6 +243,7 @@ abstract class Zend_Db_Adapter_Abstract
     {
         // we need at least a dbname
         if (! array_key_exists('dbname', $config)) {
+            /** @see Zend_Db_Adapter_Exception */
             require_once 'Zend/Db/Adapter/Exception.php';
             throw new Zend_Db_Adapter_Exception("Configuration array must have a key for 'dbname' that names the database instance");
         }
@@ -354,6 +356,7 @@ abstract class Zend_Db_Adapter_Abstract
         }
 
         if (!$profilerInstance instanceof Zend_Db_Profiler) {
+            /** @see Zend_Db_Profiler_Exception */
             require_once 'Zend/Db/Profiler/Exception.php';
             throw new Zend_Db_Profiler_Exception('Class ' . get_class($profilerInstance) . ' does not extend '
                 . 'Zend_Db_Profiler');
@@ -392,7 +395,7 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Set the default statement class.
      *
-     * @return Zend_Db_Abstract Fluent interface
+     * @return Zend_Db_Adapter_Abstract Fluent interface
      */
     public function setStatementClass($class)
     {
