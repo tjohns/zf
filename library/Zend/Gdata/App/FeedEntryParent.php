@@ -113,7 +113,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
       * @see setMajorProtocolVersion()
       * @see getMajorProtocolVersion()
       */
-    protected $_majorProtocolVersion;
+    protected $_majorProtocolVersion = null;
 
     /**
       * Indicates the minor protocol version that should be used. Can be set
@@ -123,7 +123,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
       * @see setMinorProtocolVersion()
       * @see getMinorProtocolVersion()
       */
-    protected $_minorProtocolVersion;
+    protected $_minorProtocolVersion = null;
 
     /**
      * Constructs a Feed or Entry
@@ -595,8 +595,9 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     }
 
     /**
-     * Set the major protocol version that should be used. Values < 1 will
-     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     * Set the major protocol version that should be used. Values < 1
+     * (excluding NULL) will cause a Zend_Gdata_App_InvalidArgumentException
+     * to be thrown.
      *
      * @see _majorProtocolVersion
      * @param (int|NULL) $value The major protocol version to use.

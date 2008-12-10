@@ -311,4 +311,41 @@ class Zend_Gdata_App_Feed extends Zend_Gdata_App_FeedSourceParent
         return $service->getFeed($previousLinkHref, get_class($this));
     }
 
+    /**
+     * Set the major protocol version that should be used. Values < 1 will
+     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     *
+     * This value will be propogated to all child entries.
+     *
+     * @see _majorProtocolVersion
+     * @param (int|NULL) $value The major protocol version to use.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function setMajorProtocolVersion($value)
+    {
+        parent::setMajorProtocolVersion($value);
+        foreach ($this->entries as $entry) {
+            $entry->setMajorProtocolVersion($value);
+        }
+    }
+
+    /**
+     * Set the minor protocol version that should be used. If set to NULL, no
+     * minor protocol version will be sent to the server. Values < 0 will
+     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     *
+     * This value will be propogated to all child entries.
+     *
+     * @see _minorProtocolVersion
+     * @param (int|NULL) $value The minor protocol version to use.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function setMinorProtocolVersion($value)
+    {
+        parent::setMinorProtocolVersion($value);
+        foreach ($this->entries as $entry) {
+            $entry->setMinorProtocolVersion($value);
+        }
+    }
+
 }
