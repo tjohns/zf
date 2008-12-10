@@ -489,6 +489,7 @@
         <title>Zend Framework Performance Guide</title>
         <xi:include href="ref/performance-introduction.xml" />
         <xi:include href="ref/performance-classloading.xml" />
+        <xi:include href="ref/performance-database.xml" />
         <xi:include href="ref/performance-localization.xml" />
         <xi:include href="ref/performance-view.xml" />
     </appendix>
