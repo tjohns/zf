@@ -34,10 +34,21 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
     {
         $this->fileName = 'Zend/Gdata/App/_files/FeedSample1.xml';
         $this->expectedEtag = 'W/"CkcHQH8_fCp7ImA9WxRTGEw."';
+        $this->expectedMajorProtocolVersion = 1;
+        $this->expectedMinorProtocolVersion = 2;
         $this->httpEntrySample = file_get_contents(
                 'Zend/Gdata/_files/AppSample1.txt',
                 true);
-        
+        $this->httpEntrySampleWithoutVersion = file_get_contents(
+                'Zend/Gdata/_files/AppSample2.txt',
+                true);
+        $this->httpFeedSample = file_get_contents(
+                'Zend/Gdata/_files/AppSample3.txt',
+                true);
+        $this->httpFeedSampleWithoutVersion = file_get_contents(
+                'Zend/Gdata/_files/AppSample4.txt',
+                true);
+    
         $this->adapter = new Test_Zend_Gdata_MockHttpClient();
         $this->client = new Zend_Gdata_HttpClient();
         $this->client->setAdapter($this->adapter);
@@ -475,6 +486,44 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
         $entry->setEtag($etag);
         $result = $this->service->generateIfMatchHeaderData($entry, true);
         $this->assertEquals($etag, $result);
+    }
+
+    public function testImportUrlSetsVersionMajorOnEntry() {
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = $this->service->getEntry('http://www.example.com');
+        $this->assertEquals($this->expectedMajorProtocolVersion, $entry->getMajorProtocolVersion());
+    }
+
+    public function testImportUrlSetsVersionMinorOnEntry() {
+        $this->adapter->setResponse($this->httpEntrySample);
+        $entry = $this->service->getEntry('http://www.example.com');
+        $this->assertEquals($this->expectedMinorProtocolVersion, $entry->getMinorProtocolVersion());
+    }
+
+    public function testImportUrlSetsNullVersionNoVersionHeaderOnEntry() {
+        $this->adapter->setResponse($this->httpEntrySampleWithoutVersion);
+        $entry = $this->service->getEntry('http://www.example.com');
+        $this->assertEquals(null, $entry->getMinorProtocolVersion());
+        $this->assertEquals(null, $entry->getMinorProtocolVersion());
+    }
+
+    public function testImportUrlSetsVersionMajorOnFeed() {
+        $this->adapter->setResponse($this->httpFeedSample);
+        $entry = $this->service->getFeed('http://www.example.com');
+        $this->assertEquals($this->expectedMajorProtocolVersion, $entry->getMajorProtocolVersion());
+    }
+
+    public function testImportUrlSetsVersionMinorOnFeed() {
+        $this->adapter->setResponse($this->httpFeedSample);
+        $entry = $this->service->getFeed('http://www.example.com');
+        $this->assertEquals($this->expectedMinorProtocolVersion, $entry->getMinorProtocolVersion());
+    }
+
+    public function testImportUrlSetsNullVersionNoVersionHeaderOnFeed() {
+        $this->adapter->setResponse($this->httpFeedSampleWithoutVersion);
+        $entry = $this->service->getFeed('http://www.example.com');
+        $this->assertEquals(null, $entry->getMinorProtocolVersion());
+        $this->assertEquals(null, $entry->getMinorProtocolVersion());
     }
 
 }
