@@ -122,7 +122,9 @@ $user = "user@gmail.com";
 $pass = "pa$$w0rd";
 
 // Create an authenticated HTTP client
-$client = Zend_Gdata_ClientLogin::getHttpClient($user, $pass, $healthServiceName);
+$client = Zend_Gdata_ClientLogin::getHttpClient($user,
+                                                $pass,
+                                                $healthServiceName);
 
 // Create an instance of the Health service
 $service = new Zend_Gdata_Health($client);
@@ -139,17 +141,21 @@ $service = new Zend_Gdata_Health($client);
  * redirect the user after authentication is complete.
  */
 function getCurrentUrl() {
-    $phpRequestUri = htmlentities(substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'], "\n\r")), ENT_QUOTES);
+    $phpRequestUri = htmlentities(substr($_SERVER['REQUEST_URI'],
+                                         0,
+                                         strcspn($_SERVER['REQUEST_URI'],
+                                                 "\n\r")),
+                                  ENT_QUOTES);
 
-    if (isset($_SERVER['HTTPS']) &amp;&amp; strtolower($_SERVER['HTTPS']) == 'on') {
+    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
         $protocol = 'https://';
     } else {
         $protocol = 'http://';
     }
     $host = $_SERVER['HTTP_HOST'];
-    if ($_SERVER['SERVER_PORT'] != '' &amp;&amp;
-       (($protocol == 'http://' &amp;&amp; $_SERVER['SERVER_PORT'] != '80') ||
-       ($protocol == 'https://' &amp;&amp; $_SERVER['SERVER_PORT'] != '443'))) {
+    if ($_SERVER['SERVER_PORT'] != '' &&
+       (($protocol == 'http://' && $_SERVER['SERVER_PORT'] != '80') ||
+       ($protocol == 'https://' && $_SERVER['SERVER_PORT'] != '443'))) {
         $port = ':' . $_SERVER['SERVER_PORT'];
     } else {
         $port = '';
@@ -163,34 +169,42 @@ function getCurrentUrl() {
  * new HTTP client and exchange the token for a long-lived session token instead.
  */
 function setupClient($singleUseToken = null) { 
-  $client = null;  
+    $client = null;  
 
-  // Fetch a new AuthSub token?
-  if (!$singleUseToken) {
-    $next = getCurrentUrl();
-    $scope = 'https://www.google.com/health/feeds';
-    $authSubHandler = 'https://www.google.com/health/authsub';    
-    $secure = 1;
-    $session = 1;
-    $authSubURL =  Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, $session, $authSubHandler);
-    
-     // 1 - allows posting notices && allows reading profile data
-    $permission = 1;
-    $authSubURL .= '&permission=' . $permission;
-    
-    echo '<a href="' . $authSubURL . '">Link your Google Health Account</a>';
-  } else {
-    $client = new Zend_Gdata_HttpClient();
-    
-    // This sets your private key to be used to sign subsequent requests
-    $client->setAuthSubPrivateKeyFile('/path/to/your/rsa_private_key.pem', null, true);
+    // Fetch a new AuthSub token?
+    if (!$singleUseToken) {
+        $next = getCurrentUrl();
+        $scope = 'https://www.google.com/health/feeds';
+        $authSubHandler = 'https://www.google.com/health/authsub';    
+        $secure = 1;
+        $session = 1;
+        $authSubURL =  Zend_Gdata_AuthSub::getAuthSubTokenUri($next,
+                                                              $scope,
+                                                              $secure,
+                                                              $session,
+                                                              $authSubHandler);
 
-    $sessionToken = Zend_Gdata_AuthSub::getAuthSubSessionToken(trim($singleUseToken), $client);
-    
-    // Set the long-lived session token for subsequent requests
-    $client->setAuthSubToken($sessionToken);
-  }
-  return $client;
+         // 1 - allows posting notices && allows reading profile data
+        $permission = 1;
+        $authSubURL .= '&permission=' . $permission;
+
+        echo '<a href="' . $authSubURL . '">Link your Google Health Account</a>';
+    } else {
+        $client = new Zend_Gdata_HttpClient();
+
+        // This sets your private key to be used to sign subsequent requests
+        $client->setAuthSubPrivateKeyFile('/path/to/your/rsa_private_key.pem',
+                                          null,
+                                          true);
+
+        $sessionToken =
+            Zend_Gdata_AuthSub::getAuthSubSessionToken(trim($singleUseToken),
+                                                       $client);
+
+        // Set the long-lived session token for subsequent requests
+        $client->setAuthSubToken($sessionToken);
+    }
+    return $client;
 }
 
 // -> Script execution begins here <-
@@ -201,8 +215,9 @@ $client = setupClient(@$_GET['token']);
 
 // Create an instance of the Health service
 $userH9Sandbox = false;
-$healthService = new Zend_Gdata_Health($client, 'googleInc-MyTestAppName-v1.0', $userH9Sandbox);
-
+$healthService = new Zend_Gdata_Health($client,
+                                       'googleInc-MyTestAppName-v1.0',
+                                       $userH9Sandbox);
 ]]>
             </programlisting>
             <para>NOTE: the remainder of this document will assume you are using AuthSub for authentication.</para>
@@ -265,7 +280,7 @@ $profileFeed = $healthService->getHealthProfileFeed($query);
                 That returns a <code>Zend_Gdata_Health_Extension_CCR</code>: 
             </para>
             <programlisting role="php"><![CDATA[
-$entries = $profileFeed-&gt;getEntries();
+$entries = $profileFeed->getEntries();
 foreach ($entries as $entry) {
     $medications = $entry->getCcr()->getMedications();
     //$conditions = $entry->getCcr()->getConditions();
@@ -322,7 +337,9 @@ foreach ($conditions as $cond) {
                 To execute a query against the profile list feed, call the service's <code>getHealthProfileListFeed()</code> method:
             </para>
             <programlisting role="php"><![CDATA[
-$client = Zend_Gdata_ClientLogin::getHttpClient('user@gmail.com', 'pa$$word', 'health');
+$client = Zend_Gdata_ClientLogin::getHttpClient('user@gmail.com',
+                                                'pa$$word',
+                                                'health');
 $healthService = new Zend_Gdata_Health($client);
 $feed = $healthService->getHealthProfileListFeed();
 
@@ -391,7 +408,10 @@ $ccr = '<ContinuityOfCareRecord xmlns="urn:astm-org:CCR">
   </Body>
 </ContinuityOfCareRecord>';
 
-$responseEntry = $healthService->sendHealthNotice($subject, $body, "html", $ccr);
+$responseEntry = $healthService->sendHealthNotice($subject,
+                                                  $body,
+                                                  "html",
+                                                  $ccr);
 ]]>
           </programlisting>
       </sect3>
