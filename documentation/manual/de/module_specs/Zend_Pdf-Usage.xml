@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12986 -->
+<!-- EN-Revision: 13000 -->
 <sect1 id="zend.pdf.usage">
     <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
     <para>
@@ -45,7 +45,7 @@ try {
     }
 }
 
-//------------------------------------------------------------------------------------
+//------------------------------------------------------------------------
 // Kehre die Seitenreihenfolge um
 $pdf->pages = array_reverse($pdf->pages);
 
@@ -55,11 +55,13 @@ $style->setFillColor(new Zend_Pdf_Color_Rgb(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
+$fontH = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD);
+$style->setFont($fontH, 32);
 
 try {
     // Erstelle ein neues Grafikobjekt
-    $stampImage = Zend_Pdf_Image::imageWithPath(dirname(__FILE__) . '/stamp.jpg');
+    $imageFile = dirname(__FILE__) . '/stamp.jpg';
+    $stampImage = Zend_Pdf_Image::imageWithPath($imageFile);
 } catch (Zend_Pdf_Exception $e) {
     // Beispiel wie man mit Ladefehlern bei Grafiken umgeht.
     if ($e->getMessage() != 'Image Erweiterung nicht installiert.' &&
@@ -87,11 +89,14 @@ foreach ($pdf->pages as $page){
          ->restoreGS();
 }
 
-// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts (die Seite wird an das angegebene Dokument angehängt)
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts
+// (die Seite wird an das angegebene Dokument angehängt)
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
-// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts (die Seite wird nicht an das angegebene Dokument angehängt)
-$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts
+// (die Seite wird nicht an das angegebene Dokument angehängt)
+$page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE);
+$pdf->pages[] = $page2;
 
 // Erstelle einen neuen Zeichensatz
 $font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
@@ -106,7 +111,8 @@ $page2->setFont($font, 24)
       ->drawText('Helvetica 24 text string', 60, 500);
 
 // Verwenden einen anderen Zeichensatz
-$page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES), 32)
+$fontT = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES);
+$page2->setFont($fontT, 32)
       ->drawText('Times-Roman 32 text string', 60, 450);
 
 // Zeichne ein Rechteck
@@ -147,7 +153,7 @@ $page2->drawPolygon($x, $y,
                     Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
                     Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
 
-// ----------- Zeichne Figuren in einem modifizierten Koordinatensystem --------------
+// ----------- Zeichne Figuren in einem modifizierten Koordinatensystem --
 
 // Bewegung des Koordinatensystems
 $page2->saveGS();
