@@ -36,9 +36,21 @@ require_once 'Zend/Gdata/YouTube/Extension/MediaContent.php';
 require_once 'Zend/Gdata/YouTube/Extension/Duration.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_MediaRating
+ */
+require_once 'Zend/Gdata/YouTube/Extension/MediaRating.php';
+
+/**
  * @see Zend_Gdata_YouTube_Extension_Private
  */
 require_once 'Zend/Gdata/YouTube/Extension/Private.php';
+
+/**
+ * VideoID. Only available in API version 2.
+ *
+ * @see Zend_Gdata_YouTube_Extension_VideoId
+ */
+require_once 'Zend/Gdata/YouTube/Extension/VideoId.php';
 
 /**
  * This class represents the media:group element of Media RSS.
@@ -60,6 +72,8 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
 
     protected $_duration = null;
     protected $_private = null;
+    protected $_videoid = null;
+    protected $_mediarating = null;
 
     public function __construct($element = null)
     {
@@ -94,6 +108,11 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
                 $content->transferFromDOM($child);
                 $this->_content[] = $content;
                 break;
+            case $this->lookupNamespace('media') . ':' . 'rating':
+                $mediarating = new Zend_Gdata_YouTube_Extension_MediaRating();
+                $mediarating->transferFromDOM($child);
+                $this->_mediarating = $mediarating;
+                break;
             case $this->lookupNamespace('yt') . ':' . 'duration':
                 $duration = new Zend_Gdata_YouTube_Extension_Duration();
                 $duration->transferFromDOM($child);
@@ -103,6 +122,11 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
                 $private = new Zend_Gdata_YouTube_Extension_Private();
                 $private->transferFromDOM($child);
                 $this->_private = $private;
+                break;
+            case $this->lookupNamespace('yt') . ':' . 'videoid':
+                $videoid = new Zend_Gdata_YouTube_Extension_VideoId();
+                $videoid ->transferFromDOM($child);
+                $this->_videoid = $videoid;
                 break;
 
         default:
@@ -134,6 +158,28 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
     }
 
     /**
+     * Returns the videoid value of this element
+     *
+     * @return Zend_Gdata_YouTube_Extension_VideoId
+     */
+    public function getVideoId()
+    {
+        return $this->_videoid;
+    }
+
+    /**
+     * Sets the videoid value of this element
+     *
+     * @param Zend_Gdata_YouTube_Extension_VideoId $value The video id value
+     * @return Zend_Gdata_YouTube_Extension_VideoId Provides a fluent interface
+     */
+    public function setVideoId($value)
+    {
+        $this->_videoid = $value;
+        return $this;
+    }
+
+    /**
      * Returns the private value of this element
      *
      * @return Zend_Gdata_YouTube_Extension_Private
@@ -152,6 +198,28 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
     public function setPrivate($value)
     {
         $this->_private = $value;
+        return $this;
+    }
+
+    /**
+     * Returns the rating value of this element
+     *
+     * @return Zend_Gdata_YouTube_Extension_MediaRating
+     */
+    public function getMediaRating()
+    {
+        return $this->_mediarating;
+    }
+
+    /**
+     * Sets the media:rating value of this element
+     *
+     * @param Zend_Gdata_YouTube_Extension_MediaRating $value The rating element
+     * @return Zend_Gdata_YouTube_Extension_MediaGroup Provides a fluent interface
+     */
+    public function setMediaRating($value)
+    {
+        $this->_mediarating = $value;
         return $this;
     }
 

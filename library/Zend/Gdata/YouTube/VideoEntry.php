@@ -231,6 +231,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     protected function takeChildFromDOM($child)
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
+
         switch ($absoluteNodeName) {
         case $this->lookupNamespace('yt') . ':' . 'statistics':
             $statistics = new Zend_Gdata_YouTube_Extension_Statistics();
@@ -376,10 +377,18 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      * Specifies that the video has racy content.
      *
      * @param Zend_Gdata_YouTube_Extension_Racy $racy The racy flag object
+     * @throws Zend_Gdata_App_VersionException
      * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
      */
     public function setRacy($racy = null)
     {
+        if ($this->getMajorProtocolVersion() == 2) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException(
+                'Calling getRacy() on a YouTube VideoEntry is deprecated ' .
+                'in version 2 of the API.');
+        }
+
         $this->_racy = $racy;
         return $this;
     }
@@ -387,10 +396,17 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     /**
      * Returns the racy flag object.
      *
+     * @throws Zend_Gdata_App_VersionException
      * @return Zend_Gdata_YouTube_Extension_Racy|null  The racy flag object
      */
     public function getRacy()
     {
+        if ($this->getMajorProtocolVersion() == 2) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException(
+                'Calling getRacy() on a YouTube VideoEntry is deprecated ' .
+                'in version 2 of the API.');
+        }
         return $this->_racy;
     }
 
@@ -514,14 +530,20 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
      */
     public function getVideoId()
     {
-        $fullId = $this->getId()->getText();
-        $position = strrpos($fullId, '/');
-        if ($position === false) {
-            require_once 'Zend/Gdata/App/Exception.php';
-            throw new Zend_Gdata_App_Exception('Slash not found in atom:id');
+        if ($this->getMajorProtocolVersion() == 2) {
+            $videoId = $this->getMediaGroup()->getVideoId()->text;
         } else {
-            return substr($fullId, strrpos($fullId,'/') + 1);
+            $fullId = $this->getId()->getText();
+            $position = strrpos($fullId, '/');
+            if ($position === false) {
+                require_once 'Zend/Gdata/App/Exception.php';
+                throw new Zend_Gdata_App_Exception(
+                    'Slash not found in atom:id of ' . $fullId);
+            } else {
+                $videoId = substr($fullId, $position + 1);
+            }
         }
+        return $videoId;
     }
 
     /**
