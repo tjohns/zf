@@ -19,6 +19,18 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+//////////////////////////////////////////////////////////////////////////////
+// Configuration: You must change these settings before running this sample //
+//////////////////////////////////////////////////////////////////////////////
+
+// Change this to point to the location of your private signing key. See:
+// http://code.google.com/apis/health/getting_started.html#DomainRegistration
+define('HEALTH_PRIVATE_KEY', '/path/to/your/rsa_private_key.pem');
+
+//////////////////////////////////////////////////////////////////////////////
+// End Configuration                                                        //
+//////////////////////////////////////////////////////////////////////////////
+
 // Load the Zend Gdata classes.
 require_once 'Zend/Loader.php';
 Zend_Loader::loadClass('Zend_Gdata_AuthSub');
@@ -313,8 +325,7 @@ function authenticate($singleUseToken=null) {
   }
 
   $client = new Zend_Gdata_HttpClient();
-  $client->setAuthSubPrivateKeyFile('C:/InstantRails/www/myrsakey.pem',
-                                    null, true);
+  $client->setAuthSubPrivateKeyFile(HEALTH_PRIVATE_KEY, null, true);
 
   // Convert an AuthSub one-time token into a session token if needed
   if ($singleUseToken && !$sessionToken) {
