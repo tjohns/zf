@@ -209,6 +209,31 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         unlink(dirname(__FILE__).'/_files/setclass.wsdl');
     }
 
+    /**
+     * @group ZF-5072
+     */
+    function testSetClassWithResponseReturnPartCompabilityMode()
+    {
+        $scriptUri = 'http://localhost/my_script.php';
+
+        $server = new Zend_Soap_AutoDiscover();
+        $server->setResponseMessageReturnNameCompability(true);
+        $server->setClass('Zend_Soap_AutoDiscover_Test');
+        $dom = new DOMDocument();
+        ob_start();
+        $server->handle();
+        $dom->loadXML(ob_get_clean());
+
+        $dom->save(dirname(__FILE__).'/_files/setclass.wsdl');
+        $this->assertContains('<message name="testFunc1Response"><part name="return"', $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()));
+        $this->assertContains('<message name="testFunc2Response"><part name="return"', $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()));
+        $this->assertContains('<message name="testFunc3Response"><part name="return"', $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()));
+        $this->assertContains('<message name="testFunc4Response"><part name="return"', $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()));
+
+        unlink(dirname(__FILE__).'/_files/setclass.wsdl');
+    }
+
+
     function testAddFunctionSimple()
     {
         $scriptUri = 'http://localhost/my_script.php';
@@ -292,6 +317,34 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
                 '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="Zend_Soap_AutoDiscover_TestFuncReturn" type="xsd:string"/></message>'.
                 '</definitions>';
         $this->assertEquals($wsdl, $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()), "Bad WSDL generated");
+        $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
+
+        unlink(dirname(__FILE__).'/_files/addfunction.wsdl');
+    }
+
+    /**
+     * @group ZF-5072
+     */
+    function testAddFunctionSimpleInReturnNameCompabilityMode()
+    {
+        $scriptUri = 'http://localhost/my_script.php';
+
+        $server = new Zend_Soap_AutoDiscover();
+        $server->setResponseMessageReturnNameCompability(true);
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+        $dom = new DOMDocument();
+        ob_start();
+        $server->handle();
+        $dom->loadXML(ob_get_contents());
+        $dom->save(dirname(__FILE__).'/_files/addfunction.wsdl');
+
+        ob_end_clean();
+        $parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
+        $name = $parts[0];
+
+        $wsdl = $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML());
+        $this->assertContains('<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="return" type="xsd:string"/>', $wsdl);
+        $this->assertNotContains('<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="Zend_Soap_AutoDiscover_TestFuncReturn"', $wsdl);
         $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
 
         unlink(dirname(__FILE__).'/_files/addfunction.wsdl');
