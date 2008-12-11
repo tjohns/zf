@@ -206,6 +206,14 @@ $router->addRoute('user',
             is checked.
         </para>
 
+        <para>
+            If you need to determine which route was matched, you can use the
+            <code>getCurrentRouteName()</code> method, which will return the
+            identifier used when registering the route with the router. If you
+            want the actual route object, you can use
+            <code>getCurrentRoute()</code>.
+        </para>
+
         <note>
             <title>Reverse matching</title>
             <para>
