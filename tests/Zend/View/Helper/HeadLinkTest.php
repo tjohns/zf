@@ -377,6 +377,18 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * test for ZF-3271
+     *
+     */
+    public function testBooleanTrueConditionalStylesheet()
+    {
+        $this->helper->appendStylesheet(array('href' => '/bar/baz', 'conditionalStylesheet' => true));
+        $test = $this->helper->toString();
+        $this->assertNotContains('[if 1]', $test);
+        $this->assertNotContains('[if true]', $test);
+    }
+
+    /**
      * @issue ZF-3928
      * @link http://framework.zend.com/issues/browse/ZF-3928
      */

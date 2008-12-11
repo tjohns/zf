@@ -289,7 +289,8 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         }
 
         if (isset($attributes['conditionalStylesheet'])
-            && (false !== $attributes['conditionalStylesheet']))
+            && !empty($attributes['conditionalStylesheet'])
+            && is_string($attributes['conditionalStylesheet']))
         {
             $link = '<!--[if ' . $attributes['conditionalStylesheet'] . ']> ' . $link . '<![endif]-->';
         }
@@ -353,8 +354,10 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         }
         if (0 < count($args)) {
             $conditionalStylesheet = array_shift($args);
-            if (false !== $conditionalStylesheet) {
+            if(!empty($conditionalStylesheet) && is_string($conditionalStylesheet)) {
                 $conditionalStylesheet = (string) $conditionalStylesheet;
+            } else {
+                $conditionalStylesheet = null;
             }
         }
 
