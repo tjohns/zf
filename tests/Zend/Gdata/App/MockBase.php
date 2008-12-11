@@ -20,6 +20,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Gdata/App/Base.php';
 
 /**
  * Minimal implementation of Zend_Gdata_App_Base

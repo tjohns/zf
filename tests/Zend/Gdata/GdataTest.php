@@ -20,6 +20,7 @@
  */
 
 require_once 'Zend/Http/Client.php';
+require_once 'Zend/Gdata.php';
 
 /**
  * @package Zend_Gdata

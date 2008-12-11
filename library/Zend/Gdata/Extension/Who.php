@@ -36,6 +36,11 @@ require_once 'Zend/Gdata/Extension/AttendeeStatus.php';
 require_once 'Zend/Gdata/Extension/AttendeeType.php';
 
 /**
+ * @see Zend_Gdata_Extension_EntryLink
+ */
+require_once 'Zend/Gdata/Extension/EntryLink.php';
+
+/**
  * Data model class to represent a participant
  *
  * @category   Zend

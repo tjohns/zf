@@ -45,6 +45,10 @@ require_once 'Zend/Gdata/Calendar/Extension/Timezone.php';
  */
 require_once 'Zend/Gdata/Calendar/Extension/Link.php';
 
+/**
+ * @see Zend_Gdata_Calendar_Extension_QuickAdd
+ */
+require_once 'Zend/Gdata/Calendar/Extension/QuickAdd.php';
 
 /**
  * Data model class for a Google Calendar Event Entry
