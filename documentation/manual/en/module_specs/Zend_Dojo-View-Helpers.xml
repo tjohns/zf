@@ -2,7 +2,7 @@
     <title>Dijit-Specific View Helpers</title>
 
     <para>
-        To quote the Dojo manual, "Dijit is a widget system layered on top of
+        From the Dojo manual: "Dijit is a widget system layered on top of
         dojo." Dijit includes a variety of layout and form widgets designed to
         provide accessibility features, localization, and standardized (and
         themeable) look-and-feel.

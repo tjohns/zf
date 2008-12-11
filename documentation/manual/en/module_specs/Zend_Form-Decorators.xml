@@ -168,8 +168,8 @@ interface Zend_Decorator_Interface
         </para>
 
         <para>
-            As an example, let's say you wanted to reduce the number of
-            decorators you use, and build a "composite" decorator that took care
+            As an example, let's say you want to reduce the number of
+            decorators you use, and build a "composite" decorator to take care
             of rendering the label, element, any error messages, and description
             in an HTML <code>div</code>. You might build such a 'Composite'
             decorator as follows:
@@ -346,8 +346,8 @@ class My_Decorator_Errors
 
         <para>
             Since decorators can target distinct metadata of the element or form
-            they decorate, it's often useful to render an individual decorator
-            at a time. Fortunately, this feature is possible via method
+            they decorate, it's often useful to render one individual decorator
+            at a time. This behavior is possible via method
             overloading in each major form class type (forms, sub form, display
             group, element).
         </para>

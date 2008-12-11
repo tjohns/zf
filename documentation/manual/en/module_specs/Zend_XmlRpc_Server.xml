@@ -74,7 +74,7 @@ echo $server->handle();
             However, the code will do its best to guess the appropriate type
             based on the values listed in @param and @return lines. Some XML-RPC
             types have no immediate PHP equivalent, however, and should be
-            hinted using the XML-RPC type in the phpdoc. These include:
+            hinted using the XML-RPC type in the PHPDoc. These include:
         </para>
 
         <itemizedlist>

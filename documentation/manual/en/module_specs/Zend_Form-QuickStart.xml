@@ -2,8 +2,8 @@
     <title>Zend_Form Quick Start</title>
 
     <para>
-        This quick start guide is intended to cover the basics of creating,
-        validating, and rendering forms using <code>Zend_Form</code>.
+        This quick start guide covers the basics of creating,
+        validating, and rendering forms with <code>Zend_Form</code>.
     </para>
 
     <sect2 id="zend.form.quickstart.create">
@@ -120,7 +120,7 @@ $form->setAttrib('id', 'login');
         </para>
 
         <para>
-            As some examples:
+            Some examples:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -134,7 +134,7 @@ $form->addElement('text', 'username');
 
         <para>
             By default, these do not have any validators or filters. This means
-            you will need to configure your elements with minimally validators,
+            you will need to configure your elements with at least validators,
             and potentially filters. You can either do this (a) before you pass
             the element to the form, (b) via configuration options passed in
             when creating an element via <code>Zend_Form</code>, or (c) by
@@ -160,9 +160,8 @@ $username->addValidator('alnum');
         </programlisting>
 
         <para>
-            When using this second option, if the validator can accept
-            constructor arguments, you can pass those in an array as the third
-            parameter:
+            When using this second option, you can pass constructor arguments in an array as the third
+            parameter if the validator can accept tem:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -179,7 +178,7 @@ $username->addValidator('regex', false, array('/^[a-z]/i'));
 
         <para>
             You may also wish to specify an element as required. This can be
-            done using either an accessor or by passing an option when creating
+            done using an accessor or passing an option when creating
             the element. In the former case:
         </para>
 
@@ -207,7 +206,7 @@ $username->addFilter('StringtoLower');
         </programlisting>
 
         <para>
-            So, our final element setup might look like this:
+            The final element setup might look like this:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -227,11 +226,11 @@ $username->addValidators(array('alnum',
 
 
         <para>
-            Simple as this is, doing this for every single element in a form
+            Simple as this is, repeating it this for every element in a form
             can be a bit tedious. Let's try option (b) from above. When we
             create a new element using <code>Zend_Form::addElement()</code> as
             a factory, we can optionally pass in configuration options. These
-            can include validators and filters to utilize. So, to do all of the
+            can include validators and filters. To do all of the
             above implicitly, try the following:
         </para>
 
@@ -279,7 +278,7 @@ echo $form;
             <code>Zend_Form_Element</code> will attempt to use the view object
             initialized in the <code>ViewRenderer</code>, which means you won't
             need to set the view manually when using the Zend Framework MVC.
-            Rendering a form in a view script is then as simple as:
+            To render a form in a view, you simply have to do the following:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -290,7 +289,7 @@ echo $form;
         <para>
             Under the hood, <code>Zend_Form</code> uses "decorators" to perform
             rendering. These decorators can replace content, append content, or
-            prepend content, and have full introspection to the element passed
+            prepend content, and can fully introspect the element passed
             to them. As a result, you can combine multiple decorators to
             achieve custom effects. By default, <code>Zend_Form_Element</code>
             actually combines four decorators to achieve its output; setup
@@ -394,8 +393,8 @@ if ($form->isValid($_POST)) {
         </programlisting>
 
         <para>
-            With AJAX requests, you sometimes can get away with validating
-            single element, or groups of elements.
+            With AJAX requests, you can sometimes get away with validating
+            a single element, or groups of elements.
             <code>isValidPartial()</code> will validate a partial form. Unlike
             <code>isValid()</code>, however, if a particular key is not
             present, it will not run validations for that particular element:
@@ -411,7 +410,7 @@ if ($form->isValidPartial($_POST)) {
         </programlisting>
 
         <para>
-            An additional method, <code>processAjax()</code>, can also be used
+            An additional method, <code>processAjax()</code>, can be used
             for validating partial forms. Unlike <code>isValidPartial()</code>,
             it returns a JSON-formatted string containing error messages on
             failure.
@@ -441,7 +440,7 @@ $unfiltered = $form->getUnfilteredValues();
         <title>Get error status</title>
 
         <para>
-            So, your form failed validations? In most cases, you can simply
+            Did your form have failed validations on submission? In most cases, you can simply
             render the form again, and errors will be displayed when using the
             default decorators:
         </para>
@@ -574,7 +573,7 @@ class UserController extends Zend_Controller_Action
         <para>
             As you'll note from the controller code, there's more work to do:
             while the submission may be valid, you may still need to do some
-            authentication using <code>Zend_Auth</code>, for instance.
+            authentication using <code>Zend_Auth</code> or another authorization mechanism.
         </para>
     </sect2>
 
@@ -585,7 +584,7 @@ class UserController extends Zend_Controller_Action
             All <code>Zend_Form</code> classes are configurable using
             <code>Zend_Config</code>; you can either pass a
             <code>Zend_Config</code> object to the constructor or pass it in
-            via <code>setConfig()</code>. Let's look at how we might create the
+            with <code>setConfig()</code>. Let's look at how we might create the
             above form using an INI file. First, let's follow the
             recommendations, and place our configurations into sections
             reflecting the release location, and focus on the 'development'
@@ -622,7 +621,7 @@ user.login.elements.submit.type = "submit"
 </programlisting>
 
         <para>
-            You could then pass this to the form constructor:
+            You would then pass this to the form constructor:
         </para>
 
         <programlisting role="php"><![CDATA[

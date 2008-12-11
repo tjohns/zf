@@ -4,19 +4,19 @@
 
     <para>
         Zend_Db and its related classes provide a simple SQL database interface
-        for Zend Framework.  The Zend_Db_Adapter is the basic class you use to
-        connect your PHP application to an RDBMS.  There is a different Adapter
+        for Zend Framework. The Zend_Db_Adapter is the basic class you use to
+        connect your PHP application to an RDBMS. There is a different Adapter
         class for each brand of RDBMS.
     </para>
 
     <para>
-        The Zend_Db Adapters create a bridge from the vendor-specific PHP
-        extensions to a common interface, to help you write PHP applications
+        The Zend_Db adapters create a bridge from the vendor-specific PHP
+        extensions to a common interface to help you write PHP applications
         once and deploy with multiple brands of RDBMS with very little effort.
     </para>
 
     <para>
-        The interface of the Adapter class is similar to the interface of the
+        The interface of the adapter class is similar to the interface of the
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
         Zend_Db provides Adapter classes to PDO drivers for the following RDBMS
         brands:
@@ -76,7 +76,7 @@
         </listitem>
         <listitem>
             <para>
-                IBM DB2, using the <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP extension
+                IBM DB2 and DB2/i5, using the <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP extension
             </para>
         </listitem>
         <listitem>
@@ -88,9 +88,9 @@
 
     <note>
         <para>
-            Each Zend_Db Adapter uses a PHP extension.  You must have the
+            Each Zend_Db Adapter uses a PHP extension. You must have the
             respective PHP extension enabled in your PHP environment to use a
-            Zend_Db Adapter.  For example, if you use any of the PDO Zend_Db
+            Zend_Db Adapter. For example, if you use any of the PDO Zend_Db
             Adapters, you need to enable both the PDO extension and the
             PDO driver for the brand of RDBMS you use.
         </para>
@@ -98,7 +98,7 @@
 
     <sect2 id="zend.db.adapter.connecting">
 
-        <title>Connecting to a Database using an Adapter</title>
+        <title>Connecting to a Database Using an Adapter</title>
 
         <para>
             This section describes how to create an instance of a database Adapter.
@@ -111,8 +111,8 @@
             <title>Using a Zend_Db Adapter Constructor</title>
 
             <para>
-                You can create an instance of an Adapter using its constructor.
-                An Adapter constructor takes one argument, which is an array
+                You can create an instance of an adapter using its constructor.
+                An adapter constructor takes one argument, which is an array
                 of parameters used to declare the connection.
             </para>
 
@@ -136,23 +136,23 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
             <title>Using the Zend_Db Factory</title>
 
             <para>
-                As an alternative to using an Adapter constructor directly, you
-                can create an instance of an Adapter using the static method
-                <code>Zend_Db::factory()</code>.  This method dynamically loads
-                the Adapter class file on demand, using
+                As an alternative to using an adapter constructor directly, you
+                can create an instance of an adapter using the static method
+                <code>Zend_Db::factory()</code>. This method dynamically loads
+                the adapter class file on demand using
                 <link linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>.
             </para>
 
             <para>
                 The first argument is a string that names the base name of the
-                Adapter class.  For example the string 'Pdo_Mysql' corresponds
-                to the class Zend_Db_Adapter_Pdo_Mysql.  The second argument is
+                adapter class. For example the string 'Pdo_Mysql' corresponds
+                to the class Zend_Db_Adapter_Pdo_Mysql. The second argument is
                 the same array of parameters you would have given to the
-                Adapter constructor.
+                adapter constructor.
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example">
-                <title>Using the Adapter factory method</title>
+                <title>Using the Adapter Factory Method</title>
                 <programlisting role="php"><![CDATA[
 // We don't need the following statement because the
 // Zend_Db_Adapter_Pdo_Mysql file will be loaded for us by the Zend_Db
@@ -176,13 +176,13 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 If you create your own class that extends
                 Zend_Db_Adapter_Abstract, but you do not name your class with
                 the "Zend_Db_Adapter" package prefix, you can use the
-                <code>factory()</code> method to load your Adapter if you
+                <code>factory()</code> method to load your adapter if you
                 specify the leading portion of the adapter class with the
                 'adapterNamespace' key in the parameters array.
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example2">
-                <title>Using the Adapter factory method for a custom adapter class</title>
+                <title>Using the Adapter Factory Method for a Custom Adapter Class</title>
                 <programlisting role="php"><![CDATA[
 // We don't need to load the adapter class file
 // because it will be loaded for us by the Zend_Db factory method.
@@ -215,7 +215,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             <para>
                 If the first argument is a config object, it is expected to
                 contain a property named <code>adapter</code>, containing the
-                string naming the adapter class name base.  Optionally, the object
+                string naming the adapter class name base. Optionally, the object
                 may contain a property named <code>params</code>, with
                 subproperties corresponding to adapter parameter names.
                 This is used only if the second argument of the
@@ -223,13 +223,12 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>Using the Adapter factory method with a Zend_Config object</title>
+                <title>Using the Adapter Factory Method with a Zend_Config Object</title>
                 <para>
                     In the example below, a Zend_Config object is created from
-                    an array.  You can also load data from an external file,
-                    for example with
+                    an array. You can also load data from an external file using classes such as
                     <link linkend="zend.config.adapters.ini">Zend_Config_Ini</link>
-                    or <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>.
+                    and <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>.
                 </para>
                 <programlisting role="php"><![CDATA[
 $config = new Zend_Config(
@@ -253,7 +252,7 @@ $db = Zend_Db::factory($config->database);
             <para>
                 The second argument of the <code>factory()</code> method may be
                 an associative array containing entries corresponding to
-                adapter parameters.  This argument is optional.  If the first
+                adapter parameters. This argument is optional. If the first
                 argument is of type Zend_Config, it is assumed to contain all
                 parameters, and the second argument is ignored.
             </para>
@@ -265,7 +264,7 @@ $db = Zend_Db::factory($config->database);
             <title>Adapter Parameters</title>
 
             <para>
-                The list below explains common parameters recognized by Zend_Db Adapter classes.
+                The following list explains common parameters recognized by Zend_Db Adapter classes.
             </para>
 
             <itemizedlist>
@@ -273,7 +272,7 @@ $db = Zend_Db::factory($config->database);
                     <para>
                         <emphasis role="strong">host</emphasis>:
                         a string containing a hostname or IP address of the
-                        database server.  If the database is running on the
+                        database server. If the database is running on the
                         same host as the PHP application, you may use
                         'localhost' or '127.0.0.1'.
                     </para>
@@ -302,7 +301,7 @@ $db = Zend_Db::factory($config->database);
                     <para>
                         <emphasis role="strong">port</emphasis>:
                         some RDBMS servers can accept network connections on a
-                        administrator-specified port number.  The port
+                        administrator-specified port number. The port
                         parameter allow you to specify the port to which your
                         PHP application connects, to match the port configured
                         on the RDBMS server.
@@ -320,7 +319,7 @@ $db = Zend_Db::factory($config->database);
                         <emphasis role="strong">driver_options</emphasis>:
                         this parameter is an associative array of additional
                         options that are specific to a given database
-                        extension.  One typical use of this parameter is to
+                        extension. One typical use of this parameter is to
                         set attributes of a PDO driver.
                     </para>
                 </listitem>
@@ -328,7 +327,7 @@ $db = Zend_Db::factory($config->database);
                     <para>
                         <emphasis role="strong">adapterNamespace</emphasis>:
                         names the initial part of the class name for the
-                        adapter, instead of 'Zend_Db_Adapter'.  Use this if
+                        adapter, instead of 'Zend_Db_Adapter'. Use this if
                         you need to use the <code>factory()</code> method to
                         load a non-Zend database adapter class.
                     </para>
@@ -342,7 +341,7 @@ $db = Zend_Db::factory($config->database);
                     <code>Zend_Db::CASE_FOLDING</code>.
                     This corresponds to the <code>ATTR_CASE</code> attribute in
                     PDO and IBM DB2 database drivers, adjusting the case of
-                    string keys in query result sets.  The option takes values
+                    string keys in query result sets. The option takes values
                     <code>Zend_Db::CASE_NATURAL</code> (the default),
                     <code>Zend_Db::CASE_UPPER</code>, and
                     <code>Zend_Db::CASE_LOWER</code>.
@@ -369,13 +368,13 @@ $db = Zend_Db::factory('Db2', $params);
                 <title>Passing the auto-quoting option to the factory</title>
                 <para>
                     You can specify this option by the constant
-                    <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.  If the value
+                    <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>. If the value
                     is <code>true</code> (the default), identifiers like table
                     names, column names, and even aliases are delimited in all
-                    SQL syntax generated by the Adapter object.  This makes it
+                    SQL syntax generated by the Adapter object. This makes it
                     simple to use identifiers that contain SQL keywords, or
-                    special characters.  If the value is <code>false</code>,
-                    identifiers are not delimited automatically.  If you need
+                    special characters. If the value is <code>false</code>,
+                    identifiers are not delimited automatically. If you need
                     to delimit identifiers, you must do so yourself using the
                     <code>quoteIdentifier()</code> method.
                 </para>
@@ -447,10 +446,10 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
 
             <para>
                 Creating an instance of an Adapter class does not immediately
-                connect to the RDBMS server.  The Adapter saves the connection
+                connect to the RDBMS server. The Adapter saves the connection
                 parameters, and makes the actual connection on demand, the
-                first time you need to execute a query.  This ensures that
-                creating an Adapter object is quick and inexpensive.  You can
+                first time you need to execute a query. This ensures that
+                creating an Adapter object is quick and inexpensive. You can
                 create an instance of an Adapter even if you are not certain
                 that you need to run any database queries during the current
                 request your application is serving.
@@ -458,9 +457,9 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
 
             <para>
                 If you need to force the Adapter to connect to the RDBMS, use
-                the <code>getConnection()</code> method.  This method returns
+                the <code>getConnection()</code> method. This method returns
                 an object for the connection as represented by the respective
-                PHP database extension.  For example, if you use any of the
+                PHP database extension. For example, if you use any of the
                 Adapter classes for PDO drivers, then
                 <code>getConnection()</code> returns the PDO object, after
                 initiating it as a live connection to the specific database.
@@ -515,9 +514,9 @@ try {
 
         <para>
             In the documentation for Zend_Db classes, we use a set of simple
-            tables to illustrate usage of the classes and methods.  These
+            tables to illustrate usage of the classes and methods. These
             example tables could store information for tracking bugs in a
-            software development project.  The database contains four tables:
+            software development project. The database contains four tables:
         </para>
 
         <itemizedlist>
@@ -546,7 +545,7 @@ try {
             <listitem>
                 <para>
                     <emphasis role="strong">bugs_products</emphasis> stores a
-                    relationship between bugs and products.  This implements a
+                    relationship between bugs and products. This implements a
                     many-to-many relationship, because a given bug may be
                     relevant to multiple products, and of course a given
                     product can have multiple bugs.
@@ -556,7 +555,7 @@ try {
 
         <para>
             The following SQL data definition language pseudocode describes the
-            tables in this example database.  These example tables are used
+            tables in this example database. These example tables are used
             extensively by the automated unit tests for Zend_Db.
         </para>
 
@@ -626,7 +625,7 @@ CREATE TABLE bugs_products (
 
             <para>
                 The first argument to this method is a string containing a
-                SELECT statement.  Alternatively, the first argument can be an
+                SELECT statement. Alternatively, the first argument can be an
                 object of class <link linkend="zend.db.select">Zend_Db_Select</link>.
                 The Adapter automatically converts this object to a string
                 representation of the SELECT statement.
@@ -656,14 +655,14 @@ $result = $db->fetchAll($sql, 2);
 
             <para>
                 By default, <code>fetchAll()</code> returns an array of
-                rows, each of which is an associative array.  The keys of the
+                rows, each of which is an associative array. The keys of the
                 associative array are the columns or column aliases named in
                 the select query.
             </para>
 
             <para>
                 You can specify a different style of fetching results using the
-                <code>setFetchMode()</code> method.  The modes supported are
+                <code>setFetchMode()</code> method. The modes supported are
                 identified by constants:
             </para>
 
@@ -686,8 +685,8 @@ $result = $db->fetchAll($sql, 2);
                     </para>
                     <para>
                         By default, these strings are returned as they are
-                        returned by the database driver.  This is typically the
-                        spelling of the column in the RDBMS server.  You can
+                        returned by the database driver. This is typically the
+                        spelling of the column in the RDBMS server. You can
                         specify the case for these strings, using the
                         <code>Zend_Db::CASE_FOLDING</code> option.
                         Specify this when instantiating the Adapter.
@@ -697,7 +696,7 @@ $result = $db->fetchAll($sql, 2);
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_NUM</emphasis>:
-                        return data in an array of arrays.  The arrays are
+                        return data in an array of arrays. The arrays are
                         indexed by integers, corresponding to the position of
                         the respective field in the select-list of the query.
                     </para>
@@ -705,9 +704,9 @@ $result = $db->fetchAll($sql, 2);
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_BOTH</emphasis>:
-                        return data in an array of arrays.  The array keys are
+                        return data in an array of arrays. The array keys are
                         both strings as used in the FETCH_ASSOC mode, and
-                        integers as used in the FETCH_NUM mode.  Note that the
+                        integers as used in the FETCH_NUM mode. Note that the
                         number of elements in the array is double that which
                         would be in the array if you used either FETCH_ASSOC
                         or FETCH_NUM.
@@ -716,7 +715,7 @@ $result = $db->fetchAll($sql, 2);
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_COLUMN</emphasis>:
-                        return data in an array of values.  The value in each array
+                        return data in an array of values. The value in each array
                         is the value returned by one column of the result set.
                         By default, this is the first column, indexed by 0.
                     </para>
@@ -724,8 +723,8 @@ $result = $db->fetchAll($sql, 2);
                 <listitem>
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_OBJ</emphasis>:
-                        return data in an array of objects.  The default class
-                        is the PHP built-in class stdClass.  Columns of the
+                        return data in an array of objects. The default class
+                        is the PHP built-in class stdClass. Columns of the
                         result set are available as public properties of the
                         object.
                     </para>
@@ -807,15 +806,15 @@ echo $result[0];
             <para>
                 The <code>fetchPairs()</code> method returns data in an array
                 of key-value pairs, as an associative array with a single entry
-                per row.  The key of this associative array is taken from the
-                first column returned by the SELECT query.  The value is taken
-                from the second column returned by the SELECT query.  Any other
+                per row. The key of this associative array is taken from the
+                first column returned by the SELECT query. The value is taken
+                from the second column returned by the SELECT query. Any other
                 columns returned by the query are discarded.
             </para>
 
             <para>
                 You should design the SELECT query so that the first column
-                returned has unique values.  If there are duplicates values in
+                returned has unique values. If there are duplicates values in
                 the first column, entries in the associative array will be
                 overwritten.
             </para>
@@ -866,7 +865,7 @@ echo $result->bug_description;
                 of <code>fetchRow()</code> with <code>fetchCol()</code>,
                 in that it returns data only for the first row fetched from
                 the result set, and it returns only the value of the first
-                column in that row.  Therefore it returns only a single
+                column in that row. Therefore it returns only a single
                 scalar value, not an array or an object.
             </para>
 
@@ -890,7 +889,7 @@ echo $result;
 
         <para>
             You can use the Adapter class to write new data or change existing
-            data in your database.  This section describes methods to do these
+            data in your database. This section describes methods to do these
             operations.
         </para>
 
@@ -900,7 +899,7 @@ echo $result;
 
             <para>
                 You can add new rows to a table in your database using the
-                <code>insert()</code> method.  The first argument is a string
+                <code>insert()</code> method. The first argument is a string
                 that names the table, and the second argument is an associative
                 array, mapping column names to data values.
             </para>
@@ -921,7 +920,7 @@ $db->insert('bugs', $data);
 
             <para>
                 Columns you exclude from the array of data are not specified to
-                the database.  Therefore, they follow the same rules that an
+                the database. Therefore, they follow the same rules that an
                 SQL INSERT statement follows:  if the column has a DEFAULT
                 clause, the column takes that value in the row created,
                 otherwise the column is left in a NULL state.
@@ -929,16 +928,16 @@ $db->insert('bugs', $data);
 
             <para>
                 By default, the values in your data array are inserted using
-                parameters.  This reduces risk of some types of security
-                issues.  You don't need to apply escaping or quoting to values
+                parameters. This reduces risk of some types of security
+                issues. You don't need to apply escaping or quoting to values
                 in the data array.
             </para>
 
             <para>
                 You might need values in the data array to be treated as SQL
-                expressions, in which case they should not be quoted.  By
+                expressions, in which case they should not be quoted. By
                 default, all data values passed as strings are treated as
-                string literals.  To specify that the value is an SQL
+                string literals. To specify that the value is an SQL
                 expression and therefore should not be quoted, pass the value
                 in the data array as an object of type Zend_Db_Expr instead of
                 a plain string.
@@ -967,17 +966,17 @@ $db->insert('bugs', $data);
             <para>
                 Some RDBMS brands support auto-incrementing primary keys.
                 A table defined this way generates a primary key value
-                automatically during an INSERT of a new row.  The return value
+                automatically during an INSERT of a new row. The return value
                 of the <code>insert()</code> method is <emphasis>not</emphasis>
                 the last inserted ID, because the table might not have an
-                auto-incremented column.  Instead, the return value is the
+                auto-incremented column. Instead, the return value is the
                 number of rows affected (usually 1).
             </para>
 
             <para>
                 If your table is defined with an auto-incrementing primary key,
                 you can call the <code>lastInsertId()</code> method after the
-                insert.  This method returns the last value generated in the
+                insert. This method returns the last value generated in the
                 scope of the current database connection.
             </para>
 
@@ -994,14 +993,14 @@ $id = $db->lastInsertId();
 
             <para>
                 Some RDBMS brands support a sequence object, which generates
-                unique values to serve as primary key values.  To support
+                unique values to serve as primary key values. To support
                 sequences, the <code>lastInsertId()</code> method accepts two
-                optional string arguments.  These arguments name the table and
+                optional string arguments. These arguments name the table and
                 the column, assuming you have followed the convention that a
                 sequence is named using the table and column names for which
-                the sequence generates values, and a suffix "_seq".  This is
+                the sequence generates values, and a suffix "_seq". This is
                 based on the convention used by PostgreSQL when naming
-                sequences for SERIAL columns.  For example, a table "bugs" with
+                sequences for SERIAL columns. For example, a table "bugs" with
                 primary key column "bug_id" would use a sequence named
                 "bugs_bug_id_seq".
             </para>
@@ -1023,7 +1022,7 @@ $id = $db->lastInsertId('bugs');
             <para>
                 If the name of your sequence object does not follow this naming
                 convention, use the <code>lastSequenceId()</code> method
-                instead.  This method takes a single string argument, naming
+                instead. This method takes a single string argument, naming
                 the sequence literally.
             </para>
 
@@ -1043,7 +1042,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
                 Microsoft SQL Server, and SQLite, the arguments to the
                 lastInsertId() method are ignored, and the value returned is the
                 most recent value generated for any table by INSERT operations
-                during the current connection.   For these RDBMS brands, the
+                during the current connection. For these RDBMS brands, the
                 lastSequenceId() method always returns <code>null</code>.
             </para>
 
@@ -1051,15 +1050,15 @@ $id = $db->lastSequenceId('bugs_id_gen');
                 <title>Why not use "SELECT MAX(id) FROM table"?</title>
                 <para>
                     Sometimes this query returns the most recent primary key
-                    value inserted into the table.  However, this technique
+                    value inserted into the table. However, this technique
                     is not safe to use in an environment where multiple clients are
-                    inserting records to the database.  It is possible, and
+                    inserting records to the database. It is possible, and
                     therefore is bound to happen eventually, that another
                     client inserts another row in the instant between the
                     insert performed by your client application and your query
-                    for the MAX(id) value.  Thus the value returned does not
+                    for the MAX(id) value. Thus the value returned does not
                     identify the row you inserted, it identifies the row
-                    inserted by some other client.  There is no way to know
+                    inserted by some other client. There is no way to know
                     when this has happened.
                 </para>
                 <para>
@@ -1077,7 +1076,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
                 </para>
                 <para>
                     All RDBMS brands provide mechanisms to generate unique
-                    values, and to return the last value generated.  These
+                    values, and to return the last value generated. These
                     mechanisms necessarily work outside of the scope of
                     transaction isolation, so there is no chance of two clients
                     generating the same value, and there is no chance that the
@@ -1093,7 +1092,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
 
             <para>
                 You can update rows in a database table using the
-                <code>update()</code> method of an Adapter.  This method takes
+                <code>update()</code> method of an Adapter. This method takes
                 three arguments:  the first is the name of the table; the
                 second is an associative array mapping columns to change to new
                 values to assign to these columns.
@@ -1107,7 +1106,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
 
             <para>
                 The third argument is a string containing an SQL expression
-                that is used as criteria for the rows to change.  The values
+                that is used as criteria for the rows to change. The values
                 and identifiers in this argument are not quoted or escaped.
                 You are responsible for ensuring that any dynamic content is
                 interpolated into this string safely.
@@ -1170,13 +1169,13 @@ $n = $db->update('bugs', $data, $where);
             <title>Deleting Data</title>
             <para>
                 You can delete rows from a database table using the
-                <code>delete()</code> method.  This method takes two arguments:
+                <code>delete()</code> method. This method takes two arguments:
                 the first is a string naming the table.
             </para>
 
             <para>
                 The second argument is a string containing an SQL expression
-                that is used as criteria for the rows to delete.  The values
+                that is used as criteria for the rows to delete. The values
                 and identifiers in this argument are not quoted or escaped.
                 You are responsible for ensuring that any dynamic content is
                 interpolated into this string safely.
@@ -1218,7 +1217,7 @@ $n = $db->delete('bugs', 'bug_id = 3');
 
         <para>
             When you form SQL queries, often it is the case that you need to
-            include the values of PHP variables in SQL expressions.  This is
+            include the values of PHP variables in SQL expressions. This is
             risky, because if the value in a PHP string contains certain
             symbols, such as the quote symbol, it could result in invalid SQL.
             For example, notice the imbalanced quote characters in the
@@ -1236,11 +1235,11 @@ echo $sql;
         <para>
             Even worse is the risk that such code mistakes might be exploited
             deliberately by a person who is trying to manipulate the function
-            of your web application.  If they can specify the value of a PHP
+            of your web application. If they can specify the value of a PHP
             variable through the use of an HTTP parameter or other mechanism,
             they might be able to make your SQL queries do things that you
             didn't intend them to do, such as return data to which the person
-            should not have privilege to read.  This is a serious and widespread
+            should not have privilege to read. This is a serious and widespread
             technique for violating application security, known as "SQL Injection"
             (see <ulink url="http://en.wikipedia.org/wiki/SQL_Injection">http://en.wikipedia.org/wiki/SQL_Injection</ulink>).
         </para>
@@ -1260,9 +1259,9 @@ echo $sql;
 
             <para>
                 The <code>quote()</code> method accepts a single argument, a
-                scalar string value.  It returns the value with special
+                scalar string value. It returns the value with special
                 characters escaped in a manner appropriate for the RDBMS you
-                are using, and surrounded by string value delimiters.  The
+                are using, and surrounded by string value delimiters. The
                 standard SQL string value delimiter is the single-quote
                 (<code>'</code>).
             </para>
@@ -1284,7 +1283,7 @@ echo $sql;
 
             <para>
                 Note that the return value of <code>quote()</code> includes the
-                quote delimiters around the string.  This is different from
+                quote delimiters around the string. This is different from
                 some functions that escape special characters but do not add
                 the quote delimiters, for example
                 <ulink url="http://www.php.net/mysqli_real_escape_string">mysql_real_escape_string()</ulink>.
@@ -1292,7 +1291,7 @@ echo $sql;
 
             <para>
                 Values may need to be quoted or not quoted according to the SQL
-                datatype context in which they are used.  For instance, in some
+                datatype context in which they are used. For instance, in some
                 RDBMS brands, an integer value must not be quoted as a string
                 if it is compared to an integer-type column or expression.
                 In other words, the following is an error in some SQL
@@ -1323,7 +1322,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
 
             <para>
                 Each Zend_Db_Adapter class has encoded the names of numeric
-                SQL datatypes for the respective brand of RDBMS.  You can also
+                SQL datatypes for the respective brand of RDBMS. You can also
                 use the constants <code>Zend_Db::INT_TYPE</code>,
                 <code>Zend_Db::BIGINT_TYPE</code>, and
                 <code>Zend_Db::FLOAT_TYPE</code> to write code in a more
@@ -1344,8 +1343,8 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
 
             <para>
                 The most typical usage of quoting is to interpolate a PHP
-                variable into a SQL expression or statement.  You can use the
-                <code>quoteInto()</code> method to do this in one step.  This
+                variable into a SQL expression or statement. You can use the
+                <code>quoteInto()</code> method to do this in one step. This
                 method takes two arguments: the first argument is a string
                 containing a placeholder symbol (<code>?</code>), and the
                 second argument is a value or PHP variable that should be
@@ -1376,7 +1375,7 @@ echo $sql;
 
             <para>
                 You can use the optional third parameter of
-                <code>quoteInto()</code> to specify the SQL datatype.  Numeric
+                <code>quoteInto()</code> to specify the SQL datatype. Numeric
                 datatypes are not quoted, and other types are quoted.
             </para>
 
@@ -1399,9 +1398,9 @@ echo $sql;
 
             <para>
                 Values are not the only part of SQL syntax that might need to
-                be variable.  If you use PHP variables to name tables, columns,
+                be variable. If you use PHP variables to name tables, columns,
                 or other identifiers in your SQL statements, you might need to
-                quote these strings too.  By default, SQL identifiers have
+                quote these strings too. By default, SQL identifiers have
                 syntax rules like PHP and most other programming languages.
                 For example, identifiers should not contain spaces, certain
                 punctuation or special characters, or international characters.
@@ -1414,8 +1413,8 @@ echo $sql;
                 which allows broader choices for the spelling of identifiers.
                 If you enclose a SQL identifier in the proper types of quotes,
                 you can use identifiers with spellings that would be invalid
-                without the quotes.  Delimited identifiers can contain spaces,
-                punctuation, or international characters.  You can also use SQL
+                without the quotes. Delimited identifiers can contain spaces,
+                punctuation, or international characters. You can also use SQL
                 reserved words if you enclose them in identifier delimiters.
             </para>
 
@@ -1423,10 +1422,10 @@ echo $sql;
                 The <code>quoteIdentifier()</code> method works like
                 <code>quote()</code>, but it applies the identifier delimiter
                 characters to the string according to the type of Adapter you
-                use.  For example, standard SQL uses double-quotes
+                use. For example, standard SQL uses double-quotes
                 (<code>"</code>) for identifier delimiters, and most RDBMS
-                brands use that symbol.  MySQL uses back-quotes
-                (<code>`</code>) by default.  The
+                brands use that symbol. MySQL uses back-quotes
+                (<code>`</code>) by default. The
                 <code>quoteIdentifier()</code> method also escapes special
                 characters within the string argument.
             </para>
@@ -1447,7 +1446,7 @@ echo $sql
 
             <para>
                 SQL delimited identifiers are case-sensitive, unlike unquoted
-                identifiers.  Therefore, if you use delimited identifiers, you
+                identifiers. Therefore, if you use delimited identifiers, you
                 must use the spelling of the identifier exactly as it is stored
                 in your schema, including the case of the letters.
             </para>
@@ -1455,8 +1454,8 @@ echo $sql
             <para>
                 In most cases where SQL is generated within Zend_Db classes,
                 the default is that all identifiers are delimited
-                automatically.  You can change this behavior with the option
-                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.  Specify this
+                automatically. You can change this behavior with the option
+                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>. Specify this
                 when instantiating the Adapter.
                 See <xref linkend="zend.db.adapter.connecting.parameters.example2" />.
             </para>
@@ -1472,12 +1471,12 @@ echo $sql
         <para>
             Databases define transactions as logical units of work that can be
             committed or rolled back as a single change, even if they operate
-            on multiple tables.  All queries to a database are executed within
+            on multiple tables. All queries to a database are executed within
             the context of a transaction, even if the database driver manages
-            them implicitly.  This is called <emphasis>auto-commit</emphasis>
+            them implicitly. This is called <emphasis>auto-commit</emphasis>
             mode, in which the database driver creates a transaction for every
             statement you execute, and commits that transaction after your
-            SQL statement has been executed.  By default, all Zend_Db Adapter
+            SQL statement has been executed. By default, all Zend_Db Adapter
             classes operate in auto-commit mode.
         </para>
 
@@ -1485,15 +1484,15 @@ echo $sql
             Alternatively, you can specify the beginning and resolution of a
             transaction, and thus control how many SQL queries are included in
             a single group that is committed (or rolled back) as a single
-            operation.  Use the <code>beginTransaction()</code> method to
-            initiate a transaction.  Subsequent SQL statements are executed in
+            operation. Use the <code>beginTransaction()</code> method to
+            initiate a transaction. Subsequent SQL statements are executed in
             the context of the same transaction until you resolve it
             explicitly.
         </para>
 
         <para>
             To resolve the transaction, use either the <code>commit()</code> or
-            <code>rollBack()</code> methods.  The <code>commit()</code> method
+            <code>rollBack()</code> methods. The <code>commit()</code> method
             marks changes made during your transaction as committed, which
             means the effects of these changes are shown in queries run in
             other transactions.
@@ -1501,9 +1500,9 @@ echo $sql
 
         <para>
             The <code>rollBack()</code> method does the opposite: it discards
-            the changes made during your transaction.  The changes are
+            the changes made during your transaction. The changes are
             effectively undone, and the state of the data returns to how it was
-            before you began your transaction.  However, rolling back your
+            before you began your transaction. However, rolling back your
             transaction has no effect on changes made by other transactions
             running concurrently.
         </para>
@@ -1555,15 +1554,15 @@ try {
 
         <para>
             The <code>describeTable()</code> method returns an associative
-            array of metadata about a table.  Specify the name of the table
-            as a string in the first argument to this method.  The second
+            array of metadata about a table. Specify the name of the table
+            as a string in the first argument to this method. The second
             argument is optional, and names the schema in which the table
             exists.
         </para>
 
         <para>
             The keys of the associative array returned are the column names of
-            the table.  The value corresponding to each column is also an
+            the table. The value corresponding to each column is also an
             associative array, with the following keys and values:
         </para>
 
@@ -1695,7 +1694,7 @@ try {
         <title>Closing a Connection</title>
 
         <para>
-            Normally it is not necessary to close a database connection.  PHP
+            Normally it is not necessary to close a database connection. PHP
             automatically cleans up all resources and the end of a request.
             Database extensions are designed to close the connection as the
             reference to the resource object is cleaned up.
@@ -1704,7 +1703,7 @@ try {
         <para>
             However, if you have a long-duration PHP script that initiates many
             database connections, you might need to close the connection, to avoid
-            exhausting the capacity of your RDBMS server.  You can use the
+            exhausting the capacity of your RDBMS server. You can use the
             Adapter's <code>closeConnection()</code> method to explicitly close
             the underlying database connection.
         </para>
@@ -1730,11 +1729,11 @@ $db->closeConnection();
                 overhead of making connections.
             </para>
             <para>
-                Database connections have state.  That is, some objects in the
-                RDBMS server exist in session scope.  Examples are locks, user
+                Database connections have state. That is, some objects in the
+                RDBMS server exist in session scope. Examples are locks, user
                 variables, temporary tables, and information about the most
                 recently executed query, such as rows affected, and last
-                generated id value.  If you use persistent connections, your
+                generated id value. If you use persistent connections, your
                 application could access invalid or privileged data that were
                 created in a previous PHP request.
             </para>
@@ -1748,24 +1747,24 @@ $db->closeConnection();
 
         <para>
             There might be cases in which you need to access the connection
-            object directly, as provided by the PHP database extension.  Some
+            object directly, as provided by the PHP database extension. Some
             of these extensions may offer features that are not surfaced by
             methods of Zend_Db_Adapter_Abstract.
         </para>
 
         <para>
             For example, all SQL statements run by Zend_Db are prepared, then
-            executed.  However, some database features are incompatible with
-            prepared statements.  DDL statements like CREATE and ALTER cannot
-            be prepared in MySQL.  Also, SQL statements don't benefit
+            executed. However, some database features are incompatible with
+            prepared statements. DDL statements like CREATE and ALTER cannot
+            be prepared in MySQL. Also, SQL statements don't benefit
             from the <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html">MySQL Query Cache</ulink>,
             prior to MySQL 5.1.17.
         </para>
 
         <para>
             Most PHP database extensions provide a method to execute SQL
-            statements without preparing them.  For example, in PDO, this
-            method is <code>exec()</code>.  You can access the connection
+            statements without preparing them. For example, in PDO, this
+            method is <code>exec()</code>. You can access the connection
             object in the PHP extension directly using getConnection().
         </para>
 
@@ -1779,7 +1778,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
 
         <para>
             Similarly, you can access other methods or properties that are
-            specific to PHP database extensions.  Be aware, though, that by
+            specific to PHP database extensions. Be aware, though, that by
             doing this you might constrain your application to the interface
             provided by the extension for a specific brand of RDBMS.
         </para>
@@ -1787,7 +1786,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         <para>
             In future versions of Zend_Db, there will be opportunities to
             add method entry points for functionality that is common to
-            the supported PHP database extensions.  This will not affect
+            the supported PHP database extensions. This will not affect
             backward compatibility.
         </para>
 
@@ -1819,10 +1818,10 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                 <listitem>
                     <para>
                         IBM DB2 supports both sequences and auto-incrementing
-                        keys.  Therefore the arguments to
-                        <code>lastInsertId()</code> are optional.  If you give
+                        keys. Therefore the arguments to
+                        <code>lastInsertId()</code> are optional. If you give
                         no arguments, the Adapter returns the last value
-                        generated for an auto-increment key.  If you give
+                        generated for an auto-increment key. If you give
                         arguments, the Adapter returns the last value generated
                         by the sequence named according to the convention
                         '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq'.
@@ -1850,7 +1849,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         MySQL does not support sequences, so
                         <code>lastInsertId()</code> ignores its arguments and
                         always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
+                        auto-increment key. The <code>lastSequenceId()</code>
                         method returns <code>null</code>.
                     </para>
                 </listitem>
@@ -1882,7 +1881,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                 <listitem>
                     <para>
                         The Oracle extension does not support positional
-                        parameters.  You must use named parameters.
+                        parameters. You must use named parameters.
                     </para>
                 </listitem>
                 <listitem>
@@ -1938,7 +1937,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         Microsoft SQL Server does not support sequences, so
                         <code>lastInsertId()</code> ignores its arguments and
                         always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
+                        auto-increment key. The <code>lastSequenceId()</code>
                         method returns <code>null</code>.
                     </para>
                 </listitem>
@@ -1964,10 +1963,10 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                 <listitem>
                     <para>
                         You can specify <code>pdoType</code> as a key in the
-                        options array.  The value can be "mssql" (the default),
-                        "dblib", "freetds", or "sybase".  This option affects
+                        options array. The value can be "mssql" (the default),
+                        "dblib", "freetds", or "sybase". This option affects
                         the DSN prefix the adapter uses when constructing the
-                        DSN string.  Both "freetds" and "sybase" imply a prefix
+                        DSN string. Both "freetds" and "sybase" imply a prefix
                         of "sybase:", which is used for the
                         <ulink url="http://www.freetds.org/">FreeTDS</ulink> set
                         of libraries.
@@ -1999,7 +1998,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         MySQL does not support sequences, so
                         <code>lastInsertId()</code> ignores its arguments and
                         always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
+                        auto-increment key. The <code>lastSequenceId()</code>
                         method returns <code>null</code>.
                     </para>
                 </listitem>
@@ -2048,10 +2047,10 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                 <listitem>
                     <para>
                         PostgreSQL supports both sequences and auto-incrementing
-                        keys.  Therefore the arguments to
-                        <code>lastInsertId()</code> are optional.  If you give
+                        keys. Therefore the arguments to
+                        <code>lastInsertId()</code> are optional. If you give
                         no arguments, the Adapter returns the last value
-                        generated for an auto-increment key.  If you give
+                        generated for an auto-increment key. If you give
                         arguments, the Adapter returns the last value generated
                         by the sequence named according to the convention
                         '<emphasis>table</emphasis>_<emphasis>column</emphasis>_seq'.
@@ -2079,7 +2078,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         SQLite does not support sequences, so
                         <code>lastInsertId()</code> ignores its arguments and
                         always returns the last value generated for an
-                        auto-increment key.  The <code>lastSequenceId()</code>
+                        auto-increment key. The <code>lastSequenceId()</code>
                         method returns <code>null</code>.
                     </para>
                 </listitem>
@@ -2103,7 +2102,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                     <para>
                         Older versions of the SQLite driver for PHP do not seem
                         to support the PRAGMA commands necessary to ensure that
-                        short column names are used in result sets.  If you
+                        short column names are used in result sets. If you
                         have problems that your result sets are returned with
                         keys of the form "tablename.columnname" when you do a
                         join query, then you should upgrade to the current

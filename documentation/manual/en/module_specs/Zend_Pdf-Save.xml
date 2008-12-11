@@ -1,7 +1,7 @@
 <sect1 id="zend.pdf.save">
-    <title>Save changes to the PDF document.</title>
+    <title>Save Changes to PDF Documents</title>
     <para>
-    There are two methods, which provide saving changes to the PDF document. These are <code>Zend_Pdf::save()</code> and
+    There are two methods that save changes to PDF documents: the <code>Zend_Pdf::save()</code> and
     <code>Zend_Pdf::render()</code> methods.
     </para>
 
@@ -16,18 +16,18 @@
     </para>
 
     <example id="zend.pdf.save.example-1">
-        <title>Save PDF document.</title>
+        <title>Saving PDF Documents</title>
         <programlisting role="php"><![CDATA[
 ...
-// Load PDF document.
+// Load the PDF document
 $pdf = Zend_Pdf::load($fileName);
 ...
-// Update document
+// Update the PDF document
 $pdf->save($fileName, true);
 // Save document as a new file
 $pdf->save($newFileName);
 
-// Return PDF document as a string.
+// Return the PDF document as a string
 $pdfString = $pdf->render();
 
 ...

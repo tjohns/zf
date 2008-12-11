@@ -17,8 +17,8 @@
 
     <para>
         The <code>dojo()</code> view helper implementation is an example of a
-        placeholder implementation; the data set in it persists between view
-        objects, and may be directly echo'd from your layout script.
+        placeholder implementation. The data set in it persists between view
+        objects and may be directly echoed from your layout script.
     </para>
 
     <example id="zend.dojo.view.dojo.usage">
@@ -26,13 +26,13 @@
 
         <para>
             For this example, let's assume the developer will be using Dojo from
-            a local path; will need to require several dijits; and will be
+            a local path, will require several dijits, and will be
             utilizing the Tundra dijit theme.
         </para>
 
         <para>
             On many pages, the developer may not utilize Dojo at all. So, we
-            will focus on a view script where Dojo is needed, and then on the
+            will first focus on a view script where Dojo is needed and then on the
             layout script, where we will setup some of the Dojo environment and
             then render it.
         </para>

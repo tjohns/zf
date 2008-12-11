@@ -517,7 +517,7 @@ print $currency->toCurrency(1000);
         <title>Zend_Currency Performance Optimization</title>
 
         <para>
-            The work of <code>Zend_Currency</code> can be speed up by the usage of <code>Zend_Cache</code>.
+            <code>Zend_Currency</code>'s performance can be optimized using <code>Zend_Cache</code>.
             The static method <code>Zend_Currency::setCache($cache)</code> accepts one option: a
             <code>Zend_Cache</code> adapter. If the cache adapter is set, the localization data that
             Zend_Currency uses are cached. There are some static methods for manipulating the cache:

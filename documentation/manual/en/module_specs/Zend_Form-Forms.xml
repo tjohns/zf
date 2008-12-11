@@ -31,7 +31,7 @@
     <para>
         While forms created with <code>Zend_Form</code> may be complex, probably
         the best use case is for simple forms; it's best use is for Rapid
-        Application Development and prototyping.
+        Application Development (RAD) and prototyping.
     </para>
 
     <para>
@@ -48,8 +48,8 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        You can optionally pass in configuration, which will be used to set
-        object state, as well as to potentially create new elements:
+        You can optionally pass in a instance of Zend_Config or an array, which will be used to set
+        object state and potentially create new elements:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -76,7 +76,7 @@ $form = new Zend_Form($config);
         <para>
             <code>Zend_Form</code> makes use of
             <code>Zend_Loader_PluginLoader</code> to allow developers to specify
-            locations of alternate elements and decorators. Each has its own
+            the locations of alternate elements and decorators. Each has its own
             plugin loader associated with it, and general accessors are used to
             retrieve and modify each.
         </para>
@@ -166,7 +166,7 @@ $form = new Zend_Form($config);
         <title>Elements</title>
         <para>
             <code>Zend_Form</code> provides several accessors for adding and
-            removing elements from the form. These can take element object
+            removing form elements from a form. These can take element object
             instances or serve as factories for instantiating the element
             objects themselves.
         </para>
@@ -181,7 +181,7 @@ $form = new Zend_Form($config);
         </para>
 
         <para>
-            As some examples:
+            Some examples:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -317,7 +317,7 @@ $form->reset();
 
                 <para>
                     You can set prefix paths for all elements by type, or using
-                    a global prefix. As some examples:
+                    a global prefix. Some examples:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -376,7 +376,7 @@ $form->setElementDecorators(array(
                     set the specified decorators on those elements only. You
                     may also pass a third argument, a flag indicating whether
                     this list of elements is for inclusion or exclusion
-                    purposes; if false, it will decorate all elements
+                    purposes. If the flag is false, it will decorate all elements
                     <emphasis>except</emphasis> those in the passed list.
                     As with standard usage of the method, any decorators passed
                     will overwrite any previously set decorators in each
@@ -436,9 +436,9 @@ $form->setElementDecorators(
                         the various button elements (Submit, Button, Reset)
                         currently use the label as the value of the button,
                         and only use ViewHelper and DtDdWrapper decorators --
-                        preventing an additional label, errors, and hint from
-                        being rendered; the example above would duplicate some
-                        content (the label).
+                        preventing an additional labels, errors, and hints from
+                        being rendered. The example above would duplicate some
+                        content (the label) for button elements.
                     </para>
 
                     <para>
@@ -457,7 +457,7 @@ $form->setElementDecorators(
                 <title>Setting Filters for All Elements</title>
 
                 <para>
-                    In many cases, you may want to apply the same filter to all
+                    In some cases, you may want to apply the same filter to all
                     elements; a common case is to <code>trim()</code> all values:
                 </para>
 
@@ -565,7 +565,7 @@ $form->setElementFilters(array('StringTrim'));
         <para>
             The base class for display groups is
             <code>Zend_Form_DisplayGroup</code>.  While it can be instantiated
-            directly, it is typically best to use <code>Zend_Form</code>'s
+            directly, it is usually best to use <code>Zend_Form</code>'s
             <code>addDisplayGroup()</code> method to do so. This method takes an
             array of elements as its first argument, and a name for the display
             group as its second argument. You may optionally pass in an array of
@@ -957,8 +957,8 @@ $subForm = $form->subform;
         </programlisting>
 
         <para>
-            Sub forms are included in form iteration, though the elements it
-            contains are not.
+            Sub forms are included in form iteration, although the elements they
+            contain are not.
         </para>
 
         <sect3 id="zend.form.forms.subforms.global">
@@ -1322,11 +1322,10 @@ echo $form->renderFieldset("<p>This is fieldset content</p>");
 
         <para>
             A primary use case for forms is validating submitted data.
-            <code>Zend_Form</code> allows you to validate an entire form at once
-            or a partial form, as well as to automate validation responses for
+            <code>Zend_Form</code> allows you to validate an entire form, a partial form, or responses for
             XmlHttpRequests (AJAX).  If the submitted data is not valid, it has
             methods for retrieving the various error codes and messages for
-            elements and sub forms failing validations.
+            elements and sub forms.
         </para>
 
         <para>
@@ -1433,7 +1432,7 @@ $messages = $form->getMessages('username');
                 At times, you may want to specify one or more specific error
                 messages to use instead of the error messages generated by the
                 validators attached to your elements. Additionally, at times you
-                may want to mark the form invalid yourself. As of 1.6.0, this
+                may want to mark the form invalid yourself. This
                 functionality is possible via the following methods.
             </para>
 

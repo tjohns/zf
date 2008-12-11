@@ -4,7 +4,7 @@
     <para>
         Dojo provides data abstraction for data-enabled widgets via its
         dojo.data component. This component provides the ability to attach a
-        datastore, provide some metadata regarding the identity field and
+        data store, provide some metadata regarding the identity field and
         optionally a label field, and an API for querying, sorting, and
         retrieving records and sets of records from the datastore.
     </para>
@@ -12,7 +12,7 @@
     <para>
         dojo.data is often used with XmlHttpRequest to pull dynamic data from
         the server. The primary mechanism for this is to extend the
-        QueryReadStore to point at a URL and specify the query information; the
+        QueryReadStore to point at a URL and specify the query information. The
         server side then returns data in the following JSON format:
     </para>
 
@@ -85,8 +85,7 @@ $data->addItems($someMoreItems);
 
             <para>
                 Every dojo.data data store requires that the identifier column
-                be provided as metadata, and <code>Zend_Dojo_Data</code> is no
-                different. In fact, if you attempt to add items without an
+                be provided as metadata, including <code>Zend_Dojo_Data</code>. In fact, if you attempt to add items without an
                 identifier, it will raise an exception.
             </para>
         </note>
@@ -123,8 +122,8 @@ $data->addItems($someMoreItems);
 
             <listitem><para>
                 Objects implementing the <code>Traversable</code> interface
-                (which includes the interfaces <code>Iterator</code> and
-                <code>ArrayAccess</code>).
+                ,which includes the interfaces <code>Iterator</code> and
+                <code>ArrayAccess</code>.
             </para></listitem>
         </itemizedlist>
 
@@ -161,22 +160,22 @@ $data->fromJson($json);
         <title>Adding metadata to your containers</title>
 
         <para>
-            Some Dojo components require additional metadata to be returned with
+            Some Dojo components require additional metadata along with
             the dojo.data payload. As an example, <code>dojox.grid.Grid</code>
             can pull data dynamically from a
-            <code>dojox.data.QueryReadStore</code>. To allow pagination to work
+            <code>dojox.data.QueryReadStore</code>. For pagination to work
             correctly, each return payload should contain a <code>numRows</code>
             key with the total number of rows that could be returned by the
-            query; that way, the grid knows (a) when to continue making small
-            requests to the server for subsets of data, and (b) when to stop
+            query. With this data, the grid knows when to continue making small
+            requests to the server for subsets of data and when to stop
             making more requests (i.e., it has reached the last page of data).
             This technique is useful for serving large sets of data in your
             grids without loading the entire set at once.
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> allows setting such properties as
-            metadata to the object. The following illustrates usage:
+            <code>Zend_Dojo_Data</code> allows assigning metadata properties as
+            to the object. The following illustrates usage:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -215,14 +214,14 @@ $data->clearMetadata();
         <para>
             <code>Zend_Dojo_Data</code> implements the interfaces
             <code>ArrayAccess</code>, <code>Iterator</code>, and
-            <code>Countable</code>. This means that you can use the data
+            <code>Countable</code>. You can therefore use the data
             collection almost as if it were an array.
         </para>
 
         <para>
             All items are referenced by the identifier field. Since identifiers
-            must be unique, you can then use the values of this field to pull
-            individual records. There are two ways to do this: via the
+            must be unique, you can use the values of this field to pull
+            individual records. There are two ways to do this: with the
             <code>getItem()</code> method, or via array notation.
         </para>
 
@@ -305,7 +304,7 @@ $json = (string) $data; // cast to string == cast to JSON
                 <listitem><para>
                     <code>setItem($item, $id = null)</code>: set an individual
                     item, optionally passing an explicit identifier. Overwrites
-                    the item if previously in the collection. Valid items
+                    the item if it is already in the collection. Valid items
                     include associative arrays, objects implementing
                     <code>toArray()</code>, or any object with public
                     properties.
@@ -329,7 +328,7 @@ $json = (string) $data; // cast to string == cast to JSON
                 </para></listitem>
 
                 <listitem><para>
-                    <code>getItems()</code>: Retrieve all items as an array of
+                    <code>getItems()</code>: retrieve all items as an array of
                     arrays.
                 </para></listitem>
 
@@ -367,8 +366,8 @@ $json = (string) $data; // cast to string == cast to JSON
                 </para></listitem>
 
                 <listitem><para>
-                    <code>setLabel($label)</code>: set the name of a field that
-                    should be used as a display label for an item.
+                    <code>setLabel($label)</code>: set the name of a field
+                    to be used as a display label for an item.
                 </para></listitem>
 
                 <listitem><para>
@@ -376,9 +375,9 @@ $json = (string) $data; // cast to string == cast to JSON
                 </para></listitem>
 
                 <listitem><para>
-                    <code>toArray()</code>: cast the object to an array. The
-                    array will contain minimally the keys 'identifier' and
-                    'items', and the key 'label' if a label field has been set
+                    <code>toArray()</code>: cast the object to an array. At a minimum, the
+                    array will contain the keys 'identifier',
+                    'items', and 'label' if a label field has been set
                     in the object.
                 </para></listitem>
 

@@ -3,7 +3,7 @@
 
     <para>
         Zend_Form simplifies form creation and handling in your web
-        application.  It accomplishes the following goals:
+        application.  It performs the following tasks:
     </para>
 
     <itemizedlist>
@@ -15,7 +15,7 @@
     </itemizedlist>
 
     <para>
-        It heavily leverages other Zend Framework components to accomplish its
+        Zend_Form makes use of several Zend Framework components to accomplish its
         goals, including <code>Zend_Config</code>, <code>Zend_Validate</code>,
         <code>Zend_Filter</code>, <code>Zend_Loader_PluginLoader</code>, and
         optionally <code>Zend_View</code>.

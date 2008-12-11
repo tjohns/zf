@@ -1,7 +1,7 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
     <para>
-        There is two kinds of backends: standard ones and extended ones. Of course, extended backends
+        There are two kinds of backends: standard ones and extended ones. Of course, extended backends
         offer more features.
     </para>
     <sect2 id="zend.cache.backends.file">

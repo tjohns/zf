@@ -18,7 +18,7 @@
 
         <para>
             <code>Zend_Controller_Router_Rewrite</code> is designed to allow for
-            mod_rewrite-like functionality using pure php structures. It is very
+            mod_rewrite-like functionality using pure PHP structures. It is very
             loosely based on Ruby on Rails routing and does not require any
             prior knowledge of webserver URL rewriting. It is designed to work
             with a single Apache mod_rewrite rule (one of):

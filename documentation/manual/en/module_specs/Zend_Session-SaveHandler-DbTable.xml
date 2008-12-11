@@ -77,7 +77,7 @@ CREATE TABLE `session` (
 $config = array(
     'name'              => 'session', //table name as per Zend_Db_Table
     'primary'           => array(
-        'session_id',   //the sessionID given by php
+        'session_id',   //the sessionID given by PHP
         'save_path',    //session.save_path
         'name',         //session name
     ),

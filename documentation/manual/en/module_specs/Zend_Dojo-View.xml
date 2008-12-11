@@ -9,8 +9,7 @@
         <listitem><para>
             <emphasis>dojo():</emphasis> setup the Dojo environment
             for your page, including dojo configuration values, custom module
-            paths, module require statements, theme stylesheets, whether or not
-            to use the CDN, and more.
+            paths, module require statements, theme stylesheets, CDN usage, and more.
         </para></listitem>
     </itemizedlist>
 

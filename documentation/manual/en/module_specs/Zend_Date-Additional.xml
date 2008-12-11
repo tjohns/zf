@@ -225,14 +225,14 @@ foreach ($info as $sun) {
         <para>
             A <code>Zend_Date</code> object of course also stores the actual timezone. Even if the timezone
             is changed after the creation of the object it remembers the original timezone and works with it.
-            It is also not necessary to change the timezone within the code with php functions.
+            It is also not necessary to change the timezone within the code with PHP functions.
             <code>Zend_Date</code> has two built-in functions which makes it possible to handle this.
         </para>
 
         <para>
             <code>getTimezone()</code> returns the actual set timezone of within the <code>Zend_Date</code>
-            object. Remember that <code>Zend_Date</code> is not coupled with php internals. So the returned
-            timezone is not the timezone of the php script but the timezone of the object.
+            object. Remember that <code>Zend_Date</code> is not coupled with PHP internals. So the returned
+            timezone is not the timezone of the PHP script but the timezone of the object.
             <code>setTimezone($zone)</code> is the second function and makes it possible to set new timezone for
             <code>Zend_Date</code>. A given timezone is always checked. If it does not exist an exception will
             be thrown. Additionally the actual scripts or systems timezone can be set to the date object by

@@ -61,7 +61,7 @@ $feed = $docs->getDocumentListFeed();
  * @param boolean $html True if output should be formatted for display in a
  *     web browser.
  * @param string $originalFileName The name of the file to be uploaded. The
- *     mime type of the file is determined from the extension on this file
+ *     MIME type of the file is determined from the extension on this file
  *     name. For example, test.csv is uploaded as a comma seperated volume
  *     and converted into a spreadsheet.
  * @param string $temporaryFileLocation (optional) The file in which the
@@ -78,7 +78,7 @@ function uploadDocument($docs, $html, $originalFileName,
   }
 
   // Upload the file and convert it into a Google Document. The original
-  // file name is used as the title of the document and the mime type
+  // file name is used as the title of the document and the MIME type
   // is determined based on the extension on the original file name.
   $newDocumentEntry = $docs->uploadFile($fileToUpload, $originalFileName,
       null, Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);

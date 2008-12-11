@@ -1,31 +1,31 @@
 <sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
-    <title>Introduction.</title>
+    <title>Introduction</title>
     <para>
     The Zend_Pdf component is a PDF (Portable Document Format) manipulation engine.
     It can load, create, modify and save documents.
-    Thus it can help any PHP driven application to dynamically create PDF documents by modifying existing templates or generating new ones from scratch.
+    Thus it can help any PHP application dynamically create PDF documents by modifying existing documents or generating new ones from scratch.
 
-    Zend_Pdf supports the following features:
+    Zend_Pdf offers the following features:
     <itemizedlist>
         <listitem>
             <para>
-            Create new document or load existing one.
+            Create a new document or load existing one.
             <footnote>
                 <para>
-                PDF V1.4 (Acrobat 5) documents are supported for loading now.
+                Loading PDF V1.4 (Acrobat 5) documents is now supported.
                 </para>
             </footnote>
             </para>
         </listitem>
         <listitem>
             <para>
-            Retrieving specified revision of the document.
+            Retrieve a specified revision of the document.
             </para>
         </listitem>
         <listitem>
             <para>
-            Manipulate pages within document. Changing page order, adding new pages, removing pages
+            Manipulate pages within a document. Change page order, add new pages, remove pages
             from a document.
             </para>
         </listitem>

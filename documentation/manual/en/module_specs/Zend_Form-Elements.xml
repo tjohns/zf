@@ -2,7 +2,7 @@
     <title>Creating Form Elements Using Zend_Form_Element</title>
 
     <para>
-        A form is made of elements, which typically correspond to HTML form
+        A form is made of elements that typically correspond to HTML form
         input. Zend_Form_Element encapsulates single form elements, with the
         following areas of responsibility:
     </para>
@@ -99,7 +99,7 @@
 
         <para>
             Custom validators, filters, and decorators are an easy way to share
-            functionality between forms and encapsulate custom functionality.
+            functionality between forms and to encapsulate custom functionality.
         </para>
 
         <example id="zend.form.elements.loaders.customLabel">
@@ -183,9 +183,8 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             </programlisting>
 
             <para>
-                With this path added, when you add a decorator, the
-                'My/Decorator/' path will be searched first to see if the
-                decorator exists there. As a result, 'My_Decorator_Label' will
+                After it added as in the example above, the 'My/Decorator/' path will be searched first to see if the
+                decorator exists there when you add a decorator. As a result, 'My_Decorator_Label' will
                 now be used when the 'Label' decorator is requested.
             </para>
         </example>
@@ -196,14 +195,13 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
         <para>
             It's often useful and/or necessary to perform some normalization on
-            input prior to validation – for instance, you may want to strip out
+            input prior to validation. For example, you may want to strip out
             all HTML, but run your validations on what remains to ensure the
-            submission is valid. Or you may want to trim empty space surrounding
-            input so that a StringLength validator will not return a false
-            positive. These operations may be performed using
-            <code>Zend_Filter</code>, and <code>Zend_Form_Element</code> has
+            submission is valid. Or you may want to trim empty space surrounding input so that a StringLength validator will use the correct length of the input without counting leading or trailing whitespace characters.
+            These operations may be performed using
+            <code>Zend_Filter</code>. <code>Zend_Form_Element</code> has
             support for filter chains, allowing you to specify multiple,
-            sequential filters to utilize.  Filtering happens both during
+            sequential filters.  Filtering happens both during
             validation and when you retrieve the element value via
             <code>getValue()</code>:
         </para>
@@ -249,7 +247,7 @@ $element->addFilter('alnum');
         <para>
             Short names are typically the filter name minus the prefix. In the
             default case, this will mean minus the 'Zend_Filter_' prefix.
-            Additionally, the first letter need not be upper-cased.
+            The first letter can be upper-cased or lower-cased.
         </para>
 
         <note>
@@ -330,7 +328,7 @@ $unfiltered = $element->getUnfilteredValue();
 
         <para>
             If you subscribe to the security mantra of "filter input, escape
-            output," you'll want to validate ("filter input") your form input.
+            output," you'll should use validator to filter input submitted with your form.
             In <code>Zend_Form</code>, each element includes its own validator
             chain, consisting of <code>Zend_Validate_*</code> validators.
         </para>
@@ -370,7 +368,7 @@ $element->addValidator('alnum');
         <para>
             Short names are typically the validator name minus the prefix. In
             the default case, this will mean minus the 'Zend_Validate_' prefix.
-            Additionally, the first letter need not be upper-cased.
+            As is the case with filters, the first letter can be upper-cased or lower-cased.
         </para>
 
         <note>
@@ -434,9 +432,9 @@ $validator = new Zend_Validate_StringLength(6, 20);
 
             <para>
                 Some developers may wish to provide custom error messages for a
-                validator. <code>Zend_Form_Element::addValidator()</code>'s
-                <code>$options</code> argument allows you to do so by providing
-                the key 'messages' and setting it to an array of key/value pairs
+                validator. The <code>$options</code> argument of the <code>Zend_Form_Element::addValidator()</code> method
+                 allows you to do so by providing
+                the key 'messages' and mapping it to an array of key/value pairs
                 for setting the message templates. You will need to know the
                 error codes of the various validation error types for the
                 particular validator.
@@ -620,18 +618,18 @@ $messages = $element->getMessages();
                     evaluating to empty is passed to <code>isValid()</code>, the
                     validators will be skipped. You can toggle this flag using
                     the accessor <code>setAllowEmpty($flag)</code>; when the
-                    flag is false, then if a value is passed, the validators
+                    flag is false and a value is passed, the validators
                     will still run.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    By default, if an element is required, but does not contain
+                    By default, if an element is required but does not contain
                     a 'NotEmpty' validator, <code>isValid()</code> will add one
                     to the top of the stack, with the
-                    <code>breakChainOnFailure</code> flag set. This makes the
-                    required flag have semantic meaning: if no value is passed,
+                    <code>breakChainOnFailure</code> flag set. This behavior lends
+                    required flag semantic meaning: if no value is passed,
                     we immediately invalidate the submission and notify the
                     user, and prevent other validators from running on what we
                     already know is invalid data.
@@ -804,8 +802,8 @@ $messages = $element->getMessages();
         <para>
             One particular pain point for many web developers is the creation
             of the XHTML forms themselves. For each element, the developer
-            needs to create markup for the element itself, typically a label,
-            and, if they're being nice to their users, markup for displaying
+            needs to create markup for the element itself (typically a label)
+            and special markup for displaying
             validation error messages. The more elements on the page, the less
             trivial this task becomes.
         </para>
@@ -881,8 +879,8 @@ $element = new Zend_Form_Element('foo',
         </note>
 
         <para>
-            Since the order in which decorators are registered matters -- first
-            decorator registered is executed first -- you will need to make
+            Since the order in which decorators are registered matters- the first
+            decorator registered is executed first- you will need to make
             sure you register your decorators in an appropriate order, or
             ensure that you set the placement options in a sane fashion. To
             give an example, here is the code that registers the default
@@ -1092,8 +1090,8 @@ echo $element->renderHtmlTag("This is the html tag content");
             <listitem><para>
                 <emphasis>allowEmpty</emphasis>: flag indicating whether or not
                 a non-required (optional) element should attempt to validate
-                empty values. When true, and the required flag is false, empty
-                values are not passed to the validator chain, and presumed true.
+                empty values. If it is set to true and the required flag is false, empty
+                values are not passed to the validator chain and are presumed true.
                 Uses the <code>setAllowEmpty()</code> and <code>getAllowEmpty()</code>
                 accessors. This flag is true by default.
             </para></listitem>
@@ -1396,9 +1394,9 @@ decorators.label.decorator = "Label"
             creating need to be filtered with <code>StringTrim</code>,
             validated with a common regular expression, and that you want to
             use a custom decorator you've created for displaying them,
-            'My_Decorator_TextItem'; additionally, you have a number of standard
+            'My_Decorator_TextItem'. In addition, you have a number of standard
             attributes, including 'size', 'maxLength', and 'class' you wish to
-            specify. You could define such an element as follows:
+            specify. You could define an element to accomplish this as follows:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -1459,9 +1457,9 @@ class My_Element_Text extends Zend_Form_Element
         </programlisting>
 
         <para>
-            There are many ways to customize elements; be sure to read the API
-            documentation of <code>Zend_Form_Element</code> to know all the
-            methods available.
+            There are many ways to customize elements. Read the API
+            documentation of <code>Zend_Form_Element</code> to learn about all of the
+            available methods.
         </para>
     </sect2>
 </sect1>

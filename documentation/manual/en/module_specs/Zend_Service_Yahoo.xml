@@ -424,7 +424,7 @@ foreach ($results as $result) {
                             <row>
                                 <entry>MimeType</entry>
                                 <entry>string</entry>
-                                <entry>Result mimetype</entry>
+                                <entry>Result MIME type</entry>
                             </row>
                             <row>
                                 <entry>ModificationDate</entry>
