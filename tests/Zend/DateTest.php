@@ -5185,6 +5185,16 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date1  = new Zend_Date('2006-01-01 01:00:00 Europe/Paris', Zend_Date::ISO_8601);
         $this->assertEquals('Europe/Paris', $date1->getTimezone());
     }
+
+    /**
+     * Test for ZF-5203
+     */
+    public function testMultiByteWeekdaysShouldNotBeTruncated()
+    {
+        $date1  = new Zend_Date('pl');
+        $date1->setDay(3);
+        $this->assertEquals('ś', $date1->get(Zend_Date::WEEKDAY_NARROW));
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date
