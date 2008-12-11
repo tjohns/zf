@@ -382,8 +382,22 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
      */
     public function testTurnOffAutoEscapeDoesNotEncodeAmpersand()
     {
-        $this->helper->setAutoEscape(true)->appendStylesheet('/css/rules.css?id=123&foo=bar');
+        $this->helper->setAutoEscape(false)->appendStylesheet('/css/rules.css?id=123&foo=bar');
         $this->assertContains('id=123&foo=bar', $this->helper->toString());
+    }
+
+    public function testSetAlternateWithExtras()
+    {
+        $this->helper->setAlternate('/mydocument.pdf', 'application/pdf', 'foo', array('media' => array('print','screen')));
+        $test = $this->helper->toString();
+        $this->assertContains('media="print,screen"', $test);
+    }
+
+    public function testAppendStylesheetWithExtras()
+    {
+        $this->helper->appendStylesheet(array('href' => '/bar/baz', 'conditionalStylesheet' => false, 'extras' => array('id' => 'my_link_tag')));
+        $test = $this->helper->toString();
+        $this->assertContains('id="my_link_tag"', $test);
     }
 }
 
