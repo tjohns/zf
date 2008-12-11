@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11835 -->
+<!-- EN-Revision: 13141 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink ヘルパー</title>
 
@@ -18,13 +18,13 @@
 
     <itemizedlist>
         <listitem><para><code>appendStylesheet($href, $media,
-                    $conditionalStylesheet)</code></para></listitem>
+                    $conditionalStylesheet, $extras)</code></para></listitem>
         <listitem><para><code>offsetSetStylesheet($index, $href, $media,
-                    $conditionalStylesheet)</code></para></listitem>
+                    $conditionalStylesheet, $extras)</code></para></listitem>
         <listitem><para><code>prependStylesheet($href, $media,
-                    $conditionalStylesheet)</code></para></listitem>
+                    $conditionalStylesheet, $extras)</code></para></listitem>
         <listitem><para><code>setStylesheet($href, $media,
-                    $conditionalStylesheet)</code></para></listitem>
+                    $conditionalStylesheet, $extras)</code></para></listitem>
     </itemizedlist>
 
     <para>
@@ -34,6 +34,7 @@
         レンダリング時に使用します。
         特定のプラットフォームでスタイルシートの読み込みをやめたい場合などに、
         特別なコメントを使用できるようになります。
+        <code>$extras</code> は、そのタグに追加したい特別な値の配列です。
     </para>
 
     <para>
@@ -43,13 +44,13 @@
 
     <itemizedlist>
         <listitem><para><code>appendAlternate($href, $type,
-                    $title)</code></para></listitem>
+                    $title, $extras)</code></para></listitem>
         <listitem><para><code>offsetSetAlternate($index, $href, $type,
-                    $title)</code></para></listitem>
+                    $title, $extras)</code></para></listitem>
         <listitem><para><code>prependAlternate($href, $type,
-                    $title)</code></para></listitem>
+                    $title, $extras)</code></para></listitem>
         <listitem><para><code>setAlternate($href, $type,
-                    $title)</code></para></listitem>
+                    $title, $extras)</code></para></listitem>
     </itemizedlist>
 
     <para>
@@ -83,7 +84,7 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
                  ->headLink(array('rel' => 'favicon',
                                   'href' => '/img/favicon.ico'),
                                   'PREPEND')
-                 ->prependStylesheet('/styles/moz.css', 'screen', true);
+                 ->prependStylesheet('/styles/moz.css', 'screen', true, array('id' => 'my_stylesheet'));
 ?>
 <?php // リンクをレンダリングします ?>
 <?= $this->headLink() ?>
