@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 13136 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -160,7 +160,8 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
 // require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
 
-// 自動的に Zend_Db_Adapter_Pdo_Mysql クラスを読み込み、そのインスタンスを作成します
+// 自動的に Zend_Db_Adapter_Pdo_Mysql クラスを読み込み、
+// そのインスタンスを作成します
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
@@ -416,6 +417,26 @@ echo $db->getConnection()
                 </programlisting>
             </example>
 
+            <example id="zend.db.adapter.connecting.parameters.example4">
+                <title>ファクトリでのシリアライズオプションの指定</title>
+                <programlisting role="php"><![CDATA[
+$options = array(
+    Zend_Db::ALLOW_SERIALIZATION => false
+);
+
+$params = array(
+    'host'           => '127.0.0.1',
+    'username'       => 'webuser',
+    'password'       => 'xxxxxxxx',
+    'dbname'         => 'test',
+    'options'        => $options
+);
+
+$db = Zend_Db::factory('Pdo_Mysql', $params);
+]]>
+                </programlisting>
+            </example>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.getconnection">
@@ -448,6 +469,21 @@ echo $db->getConnection()
                 実際に接続を行うまで例外はスローされないので、
                 どこか一か所に例外処理をまとめておいたほうが
                 アプリケーションがシンプルになって便利でしょう。
+            </para>
+
+            <para>
+                さらに、アダプタをシリアライズしてたとえばセッション変数などに格納することもできます。
+                これは、アダプタだけでなくアダプタを利用する側
+                (<code>Zend_Db_Select</code> オブジェクトなど) にとっても有用です。
+                デフォルトではアダプタのシリアライズが許可されています。
+                シリアライズをしたくない場合は、上の例のように
+                <code>Zend_Db::ALLOW_SERIALIZATION=false</code> オプションを渡します。
+                遅延接続の理念を尊重し、アンシリアライズされたアダプタの
+                自動再接続は行いません。つまり、自分で
+                <code>getConnection()</code> をコールしなければなりません。
+                自動再接続を有効にするには、アダプタのオプションに
+                <code>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</code>
+                を渡します。
             </para>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
@@ -1893,6 +1929,16 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         返り値は、常に自動インクリメントのキーの最後の値となります。
                         <code>lastSequenceId()</code> メソッドの返り値は
                         <code>null</code> となります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        unicode 文字列を UCS-2 以外のエンコーディング (UTF-8 など)
+                        で使用する場合は、アプリケーションのコード内での変換処理
+                        あるいはバイナリカラムへのデータ格納が必要となります。
+                        詳細な情報は
+                        <ulink url="http://support.microsoft.com/kb/232580">Microsoft's Knowledge Base</ulink>
+                        を参照ください。
                     </para>
                 </listitem>
                 <listitem>
