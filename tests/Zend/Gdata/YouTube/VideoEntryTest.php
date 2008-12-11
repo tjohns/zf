@@ -381,9 +381,9 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $exceptionCaught = false;
 
         try {
-        	$videoEntry->getRacy();
+            $videoEntry->getRacy();
         } catch (Zend_Gdata_App_VersionException $e) {
-        	$exceptionCaught = true;
+            $exceptionCaught = true;
         }
 
         $this->assertTrue($exceptionCaught, 'Expected exception not caught: ' .

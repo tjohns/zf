@@ -386,7 +386,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             require_once 'Zend/Gdata/App/VersionException.php';
             throw new Zend_Gdata_App_VersionException(
                 'Calling getRacy() on a YouTube VideoEntry is deprecated ' .
-                'in version 2 of the API.');
+                'as of version 2 of the API.');
         }
 
         $this->_racy = $racy;
@@ -405,7 +405,7 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             require_once 'Zend/Gdata/App/VersionException.php';
             throw new Zend_Gdata_App_VersionException(
                 'Calling getRacy() on a YouTube VideoEntry is deprecated ' .
-                'in version 2 of the API.');
+                'as of version 2 of the API.');
         }
         return $this->_racy;
     }
