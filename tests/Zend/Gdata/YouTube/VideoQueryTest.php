@@ -51,8 +51,6 @@ class Zend_Gdata_YouTube_VideoFeedTest extends PHPUnit_Framework_TestCase
         $query->setVideoQuery('version2');
         $expectedString = '?orderby=viewCount&q=version2';
         $this->assertEquals($expectedString, $query->getQueryString(2));
-
-
     }
 
     public function testSafeSearchQueryV2() {
@@ -69,7 +67,7 @@ class Zend_Gdata_YouTube_VideoFeedTest extends PHPUnit_Framework_TestCase
             ' expected but not found');
     }
 
-    public function testLocationRadiusV2() {
+    public function testLocationRadiusV1() {
         $yt = new Zend_Gdata_YouTube();
         $query = $yt->newVideoQuery();
         $exceptionCaught = false;

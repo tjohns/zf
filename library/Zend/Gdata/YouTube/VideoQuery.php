@@ -76,23 +76,27 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
             break;
         case 'related':
             if ($videoId === null) {
-                require_once 'Zend/Gdata/App/Exception.php';
-                throw new Zend_Gdata_App_Exception('Video ID must be set for feed of type: ' . $feedType);
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Video ID must be set for feed of type: ' . $feedType);
             } else {
-                $this->_url = Zend_Gdata_YouTube::VIDEO_URI . '/' . $videoId . '/related';
+                $this->_url = Zend_Gdata_YouTube::VIDEO_URI . '/' . $videoId .
+                    '/related';
             }
             break;
         case 'responses':
             if ($videoId === null) {
-                require_once 'Zend/Gdata/App/Exception.php';
-                throw new Zend_Gdata_App_Exception('Video ID must be set for feed of type: ' . $feedType);
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_Exception(
+                    'Video ID must be set for feed of type: ' . $feedType);
             } else {
-                $this->_url = Zend_Gdata_YouTube::VIDEO_URI . '/' . $videoId . 'responses';
+                $this->_url = Zend_Gdata_YouTube::VIDEO_URI . '/' . $videoId .
+                    'responses';
             }
             break;
         case 'comments':
             if ($videoId === null) {
-                require_once 'Zend/Gdata/App/Exception.php';
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_Exception(
                     'Video ID must be set for feed of type: ' . $feedType);
             } else {
@@ -119,23 +123,35 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
      */
     public function setLocation($value)
     {
-        $parameters = explode(',', $value);
-        foreach($parameters as $param) {
-            $temp = trim($param);
-            // strip off the optional exclamation mark for numeric check
-            if (substr($temp, -1) == '!') {
-                $temp = substr($temp, -1);
-            }
-            if (!is_numeric($temp)) {
-                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
-                throw new Zend_Gdata_App_InvalidArgumentException(
-                    'Value provided to location-radius parameter must be in ' .
-                    'the form of two coordinates');
-            }
+        switch($value) {
+            case null:
+                unset($this->_params['location']);
+            default:
+                $parameters = explode(',', $value);
+                if (count($parameters) != 2) {
+                    require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                    throw new Zend_Gdata_App_InvalidArgumentException(
+                        'You must provide 2 coordinates to the location ' .
+                        'URL parameter');
+                }
+
+                foreach($parameters as $param) {
+                    $temp = trim($param);
+                    // strip off the optional exclamation mark for numeric check
+                    if (substr($temp, -1) == '!') {
+                        $temp = substr($temp, -1);
+                    }
+                    if (!is_numeric($temp)) {
+                        require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                        throw new Zend_Gdata_App_InvalidArgumentException(
+                            'Value provided to location parameter must' .
+                            ' be in the form of two coordinates');
+                    }
+                }
+                $this->_params['location'] = $value;
         }
-        $this->_params['location'] = $value;
     }
-    
+
     /**
      * Get the value of the location parameter
      *
@@ -150,7 +166,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         }
     }
 
-  
+
     /**
      * Sets the location-radius parameter for the query
      *
@@ -159,7 +175,12 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
      */
     public function setLocationRadius($value)
     {
-        $this->_params['location-radius'] = $value;
+        switch($value) {
+        	case null:
+                unset($this->_params['location-radius']);
+            default:
+                $this->_params['location-radius'] = $value;
+        }
     }
 
     /**
@@ -209,11 +230,12 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         }
         return $this;
     }
-    
+
     /**
      * Sets the value of the uploader parameter
      *
-     * @param string $value
+     * @param string $value The value of the uploader parameter. Currently this
+     *        can only be set to the value of 'partner'.
      * @throws Zend_Gdata_App_InvalidArgumentException
      * @return Zend_Gdata_YouTube_VideoQuery Provides a fluent interface
      */
@@ -228,7 +250,6 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
                 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException(
                     'Unknown value for uploader');
-                break;
         }
         return $this;
     }
@@ -304,7 +325,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
-     * Return the value of the racy parameter
+     * Whether or not to include racy videos in the search results
      *
      * @return string|null The value of racy if it exists, null otherwise.
      */
@@ -335,14 +356,12 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
      * Return the value of the video query that has been set
      *
      * @return string|null The value of the video query if it exists,
-     * null otherwise.
+     *         null otherwise.
      */
     public function getVideoQuery()
     {
         if (array_key_exists('vq', $this->_params)) {
             return $this->_params['vq'];
-        } elseif (array_key_exists('q', $this->_params)) {
-            return $this->_params['q'];
         } else {
             return null;
         }
@@ -388,12 +407,6 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     public function getQueryString($majorProtocolVersion = null,
         $minorProtocolVersion = null)
     {
-
-
-        if ($majorProtocolVersion != null) {
-            require_once 'Zend/Gdata/App/VersionException.php';
-        }
-
         $queryArray = array();
 
         foreach ($this->_params as $name => $value) {
@@ -404,6 +417,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
             switch($name) {
                 case 'location-radius':
                     if ($majorProtocolVersion == 1) {
+                        require_once 'Zend/Gdata/App/VersionException.php';
                         throw new Zend_Gdata_App_VersionException("The $name " .
                             "parameter is only supported in version 2.");
                     }
@@ -411,22 +425,25 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
 
             	case 'racy':
                     if ($majorProtocolVersion == 2) {
+                        require_once 'Zend/Gdata/App/VersionException.php';
                         throw new Zend_Gdata_App_VersionException("The $name " .
-                            "parameter is not supported in version 2." .
+                            "parameter is not supported in version 2. " .
                             "Please use 'safeSearch'.");
                     }
                     break;
 
                 case 'safeSearch':
                     if ($majorProtocolVersion == 1) {
+                        require_once 'Zend/Gdata/App/VersionException.php';
                         throw new Zend_Gdata_App_VersionException("The $name " .
-                            "parameter is only supported in version 2." .
+                            "parameter is only supported in version 2. " .
                             "Please use 'racy'.");
                     }
                     break;
 
                 case 'uploader':
                     if ($majorProtocolVersion == 1) {
+                        require_once 'Zend/Gdata/App/VersionException.php';
                         throw new Zend_Gdata_App_VersionException("The $name " .
                             "parameter is only supported in version 2.");
                     }
