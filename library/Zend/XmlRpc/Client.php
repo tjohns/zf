@@ -27,18 +27,6 @@
 require_once 'Zend/Http/Client.php';
 
 /**
- * Exception thrown when an HTTP error occurs
- * @see Zend_XmlRpc_Client_HttpException
- */
-require_once 'Zend/XmlRpc/Client/HttpException.php';
-
-/**
- * Exception thrown when an XML-RPC fault is returned
- * @see Zend_XmlRpc_Client_FaultException
- */
-require_once 'Zend/XmlRpc/Client/FaultException.php';
-
-/**
  * Enables object chaining for calling namespaced XML-RPC methods.
  * @see Zend_XmlRpc_Client_ServerProxy
  */
@@ -236,8 +224,8 @@ class Zend_XmlRpc_Client
 
     /**
      * Set skip system lookup flag
-     * 
-     * @param  bool $flag 
+     *
+     * @param  bool $flag
      * @return Zend_XmlRpc_Client
      */
     public function setSkipSystemLookup($flag = true)
@@ -248,7 +236,7 @@ class Zend_XmlRpc_Client
 
     /**
      * Skip system lookup when determining if parameter should be array or struct?
-     * 
+     *
      * @return bool
      */
     public function skipSystemLookup()
@@ -262,6 +250,7 @@ class Zend_XmlRpc_Client
      * @param Zend_XmlRpc_Request $request
      * @param null|Zend_XmlRpc_Response $response
      * @return void
+     * @throws Zend_XmlRpc_Client_HttpException
      */
     public function doRequest($request, $response = null)
     {
@@ -287,6 +276,11 @@ class Zend_XmlRpc_Client
         $httpResponse = $http->request(Zend_Http_Client::POST);
 
         if (! $httpResponse->isSuccessful()) {
+            /**
+             * Exception thrown when an HTTP error occurs
+             * @see Zend_XmlRpc_Client_HttpException
+             */
+            require_once 'Zend/XmlRpc/Client/HttpException.php';
             throw new Zend_XmlRpc_Client_HttpException(
                                     $httpResponse->getMessage(),
                                     $httpResponse->getStatus());
@@ -304,7 +298,7 @@ class Zend_XmlRpc_Client
      *
      * @param string $method Name of the method we want to call
      * @param array $params Array of parameters for the method
-     * @throws Zend_Http_Client_FaultException
+     * @throws Zend_XmlRpc_Client_FaultException
      */
     public function call($method, $params=array())
     {
@@ -332,10 +326,10 @@ class Zend_XmlRpc_Client
                             }
                         }
                         $params[$key] = array(
-                            'type'  => $type, 
+                            'type'  => $type,
                             'value' => $param
                         );
-                    } 
+                    }
                 }
             }
         }
@@ -346,6 +340,11 @@ class Zend_XmlRpc_Client
 
         if ($this->_lastResponse->isFault()) {
             $fault = $this->_lastResponse->getFault();
+            /**
+             * Exception thrown when an XML-RPC fault is returned
+             * @see Zend_XmlRpc_Client_FaultException
+             */
+            require_once 'Zend/XmlRpc/Client/FaultException.php';
             throw new Zend_XmlRpc_Client_FaultException($fault->getMessage(),
                                                         $fault->getCode());
         }
