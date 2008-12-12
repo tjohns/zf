@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13001 -->
 <sect1 id="zend.cache.frontends">
     <title>Zend_Cache Frontends</title>
 
@@ -490,7 +490,8 @@ $res = $cache->foobar2('1', '2');
             <para>
                 <code>Zend_Cache_Frontend_File</code> ist ein Frontend angetrieben durch den
                 Änderungszeitpunkt einer "Masterdatei". Es ist wirklich interessant für Beispiele
-                in Konfigurations- oder Templateanwendungen.
+                in Konfigurations- oder Templateanwendungen. Es ist auch möglich mehrere Masterdateien
+                zu verwenden.
             </para>
             <para>
                 Zum Beispiel eine XML Konfigurationsdatei, welche von einer Funktion geparsed wird
@@ -516,13 +517,42 @@ $res = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>master_File (mandatory)</code></entry>
+                              <entry><code>master_File (depreciated)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
                                   Der komplette Pfad und Name der Master Datei
                               </entry>
-                         </row>
+                          </row>
+                          <row>
+                              <entry><code>master_files</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code></code></entry>
+                              <entry>
+                                  Ein Array der kompletten Pfade der Masterdateien
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>master_files_mode</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry>
+                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> oder
+                                  <code>Zend_Cache_Frontend_File::MODE_OR</code> ;
+                                  bei <code>MODE_AND</code> müssen alle Masterdateien angegriffen werden um einen
+                                  Cache ungültig zu machen, bei <code>MODE_OR</code> ist eine eizelne angegriffene
+                                  Datei genug um den Cache ungültig zu machen
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>ignore_missing_master_files</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  bei true werden fehlende Masterdateien leise ignoriert (andernfalls wird eine
+                                  Exception geworfen)
+                              </entry>
+                          </row>
                       </tbody>
                   </tgroup>
               </table>

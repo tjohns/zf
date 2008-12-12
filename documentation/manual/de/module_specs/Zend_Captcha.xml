@@ -1,10 +1,10 @@
-<!-- EN-Revision: 12740 -->
+<!-- EN-Revision: 13102 -->
 <sect1 id="zend.captcha.introduction">
     <title>Einführung</title>
 
     <para>
         <ulink url="http://en.wikipedia.org/wiki/Captcha">CAPTCHA</ulink> steht für
-        "Completely Automated Turing test to tell Computers and Humans Apart;" es wird als
+        "Completely Automated Public Turing test to tell Computers and Humans Apart;" es wird als
         Challenge-Response verwendet um sicherzustellen das das Individuum das Informationen sendet ein
         Mensch ist und kein automatischer Prozess. Typischerweise wird ein Captcha bei der Übertragung
         von Formularen verwendet in denen keine authentifizierten Benutzer notwendig sind, aber in

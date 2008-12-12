@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12844 -->
+<!-- EN-Revision: 13136 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -395,6 +395,27 @@ echo $db->getConnection()
 ]]>
                 </programlisting>
             </example>
+
+            <example id="zend.db.adapter.connecting.parameters.example4">
+                <title>Übergabe einer Serialisierungs Option an die Factory</title>
+                <programlisting role="php"><![CDATA[
+$options = array(
+    Zend_Db::ALLOW_SERIALIZATION => false
+);
+
+$params = array(
+    'host'           => '127.0.0.1',
+    'username'       => 'webuser',
+    'password'       => 'xxxxxxxx',
+    'dbname'         => 'test',
+    'options'        => $options
+);
+
+$db = Zend_Db::factory('Pdo_Mysql', $params);
+]]>
+                </programlisting>
+            </example>
+
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.getconnection">
@@ -423,6 +444,18 @@ echo $db->getConnection()
                 auftreten. Diese Exceptions treten nicht auf, bis die tatsächliche Verbindung hergestellt ist,
                 daher kann es den Anwendungs-Code vereinfachen, wenn diese Exceptions an einer Stelle
                 bearbeitet werden, und nicht erst bei der ersten Anfrage.
+            </para>
+
+            <para>
+                Zusätzlich kann ein Adapter serialisiert werden um Ihn zu speichern, zum Beispiel in einer
+                Session Variable. Das kann sehr nütlich sein, nicht nur für den Adapter selbst, sondern auch
+                für andere Objekte die Ihn verwenden, wie ein <code>Zend_Db_Select</code> Objekt.
+                Standardmäßig, ist es Adaptern erlaubt serialisiert zu werden. Wenn man das nicht will, sollte
+                man die <code>Zend_Db::ALLOW_SERIALIZATION=false</code> Option übergeben, wie im Beispiel anbei
+                gezeigt. Um das Prinzip von Lazy Connections zu erlauben, wird der Adapter sich selbst nicht
+                wiederverbinden wenn er deserialisiert wird. Man muß <code>getConnection()</code> selbst
+                aufrufen. Mann kann den Adapter dazu bringen sich automatisch wieder zu verbinden indem
+                <code>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</code> als Option zum Adapter übergeben wird.
             </para>
 
             <example

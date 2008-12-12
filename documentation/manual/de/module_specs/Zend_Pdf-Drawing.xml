@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12997 -->
+<!-- EN-Revision: 13084 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -465,7 +465,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             Text kann trotzdem in jedem anderen Encoding angegeben werden, welches spezifiziert werden muß wenn
             es sich vom aktuellen Gebietsschema unterscheidet. Nur WinLatin1 Zeichen werden aktuell gezeichnet.
         </para>
-        <example id="zend.pdf.drawing.using-fonts.example-6">
+        <example id="zend.pdf.drawing.using-fonts.example-7">
             <title>Kombinieren mit in Schriften enthaltenen Optionen</title>
             <programlisting role="php"><![CDATA[
 ...
@@ -769,6 +769,7 @@ regardless of the directions in which the circles are drawn.
     </sect2>
 
     <sect2 id="zend.pdf.drawing.linear-transformations">
+        <title>Lineare Transformationen</title>
         <sect3 id="zend.pdf.drawing.linear-transformations.rotations">
             <title>Drehungen</title>
             <para>

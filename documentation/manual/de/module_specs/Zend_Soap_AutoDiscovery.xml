@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12836 -->
+<!-- EN-Revision: 13153 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -320,6 +320,44 @@ $autodiscover->handle();
             Wo <code>xsd:</code> ein "http://www.w3.org/2001/XMLSchema" Namespace ist, ist
             <code>soap-enc:</code> ein "http://schemas.xmlsoap.org/soap/encoding/" Namespace, und
             <code>tns:</code> ist ein "Ziel Namespace" für einen Service.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.soap.autodiscovery.wsdlstyles">
+        <title>Stile für das Binden von WSDL</title>
+
+        <para>
+            WSDL bietet verschiedene Transport Mechanismen und Stile. Das beeinträchtigt die
+            <code>soap:binding</code> und <code>soap:body</code> Tags in der Binding Sektion von WSDL.
+            Unterschiedliche Clients haben unterschiedliche Anforderungen wie diese Optionen wirklich
+            arbeiten. Hierfür kann man die Stile setzen bevor man eine <code>setClass</code> oder
+            <code>addFunction</code> Methode auf der AutoDiscovery Klasse ausführt.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
+// Standard ist 'use' => 'encoded' und 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
+$autodiscover->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+
+// Standard ist 'style' => 'rpc', 'transport' => 'http://schemas.xmlsoap.org/soap/http'
+$autodiscover->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+...
+$autodiscover->addFunction('myfunc1');
+$autodiscover->handle();
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.soap.autodiscovery.compability">
+        <title>Kompatibilität mit WSDL Client Generatoren</title>
+
+        <para>
+            Bis zur Version 1.7 wurden die WSDL Dateien mit einem Antwort Nachrichtteil erzeugt der von
+            Java oder .NET Clients zum Beispiel nicht richtig erkannt wurde. Ab der Version 1.8 wurde die
+            Funktion <code>setResponseMessageReturnNameCompability()</code> inkludiert um die Kompatibilität
+            für diese Fälle zu gestatten.
         </para>
     </sect2>
 </sect1>

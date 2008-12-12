@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12890 -->
+<!-- EN-Revision: 13154 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router</title>
     <sect2 id="zend.controller.router.introduction">
@@ -200,6 +200,13 @@ $router->addRoute('user',
             Dispatcher in das <code>Zend_Controller_Request</code> Objekt iniziiert, sowie in von Benutzern
             erstellten Controllern. Bei einem negativen Ergebnis des Vergleiches, wird die nächste Route in der
             Kette geprüft.
+        </para>
+
+        <para>
+            Wenn man herausfinden will welche Route gepasst hat, kann man die <code>getCurrentRouteName()</code>
+            Methode verwenden, die den Identifikator zurückgibt der verwendet wurde als die Route im
+            Router registriert wurde. Wenn man das aktuelle Route Objekt benötigt, kann
+            <code>getCurrentRoute()</code> verwendet werden.
         </para>
 
         <note>

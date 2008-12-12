@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 12534 -->
+<!-- EN-Revision: 13132 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -417,6 +417,9 @@
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Docs.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Docs.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Gdata_Health.xml" />
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Health.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Spreadsheets.xml" /></xi:fallback>
@@ -985,6 +988,9 @@
         </xi:include>
         <xi:include href="ref/performance-classloading.xml">
             <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="ref/performance-database.xml" />
+            <xi:fallback><xi:include href="../en/ref/performance-database.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="ref/performance-localization.xml">
             <xi:fallback><xi:include href="../en/ref/performance-localization.xml" /></xi:fallback>
