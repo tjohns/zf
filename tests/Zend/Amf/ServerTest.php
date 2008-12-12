@@ -12,6 +12,8 @@ require_once 'Zend/Amf/Server.php';
 require_once 'Zend/Amf/Request.php';
 require_once 'Zend/Amf/Parse/TypeLoader.php';
 require_once 'Zend/Amf/Value/Messaging/RemotingMessage.php';
+require_once 'ServiceA.php';
+require_once 'ServiceB.php';
 
 class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
 {
@@ -281,6 +283,41 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($acknowledgeMessage instanceof Zend_Amf_Value_Messaging_AcknowledgeMessage);
         // Check the message body is the expected data to be returned
         $this->assertEquals("String: 12345", $acknowledgeMessage->body);
+    }
+    
+    /**
+     * Test to make sure that you can have the same method name in two different classes. 
+     * 
+     * @group ZF-5040
+     * @return unknown_type
+     */
+    public function testSameMethodNameInTwoServices()
+    {
+        $this->_server->setClass('ServiceA');
+        $this->_server->setClass('ServiceB');
+        // create a mock remoting message
+        $message = new Zend_Amf_Value_Messaging_RemotingMessage();
+        $message->operation = 'getMenu';
+        $message->source = 'ServiceB';
+        $message->body = array();
+        // create a mock message body to place th remoting message inside
+        $newBody = new Zend_Amf_Value_MessageBody(null,"/1",$message);
+        $request = new Zend_Amf_Request();
+        // at the requested service to a request
+        $request->addAmfBody($newBody);
+        $request->setObjectEncoding(0x03);
+        // let the server handle mock request
+        $result = $this->_server->handle($request);
+        $response = $this->_server->getResponse();
+        $responseBody = $response->getAmfBodies();
+        $this->assertTrue(0 < count($responseBody), var_export($responseBody, 1));
+        $this->assertTrue(array_key_exists(0, $responseBody), var_export($responseBody, 1));
+        // Now check if the return data was properly set.
+        $acknowledgeMessage = $responseBody[0]->getData();
+        // check that we have a message beening returned
+        $this->assertTrue($acknowledgeMessage instanceof Zend_Amf_Value_Messaging_AcknowledgeMessage);
+        // Check the message body is the expected data to be returned
+        $this->assertEquals("myMenuB", $acknowledgeMessage->body);
     }
 
     /**
@@ -888,3 +925,4 @@ class Zend_Amf_testclassPrivate
         return 'String: '. (string) $string;
     }
 }
+

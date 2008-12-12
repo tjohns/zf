@@ -405,15 +405,6 @@ class Zend_Amf_Server implements Zend_Server_Interface
     }
 
     /**
-     * Add a file system path to a directory of services.
-     * @param string|array $path
-     */
-    public function setClassPath($path)
-    {
-
-    }
-
-    /**
      * Attach a class or object to the server
      *
      * Class may be either a class name or an instantiated object. Reflection
@@ -442,7 +433,11 @@ class Zend_Amf_Server implements Zend_Server_Interface
         if (2 < func_num_args()) {
             $argv = array_slice(func_get_args(), 2);
         }
-
+        
+        // Use the class name as the name space by default. 
+        if ($namespace == '') {
+            $namespace = substr($class, 0, strrpos($class, '.'));
+        }
         $this->_methods[] = Zend_Server_Reflection::reflectClass($class, $argv, $namespace);
         $this->_buildDispatchTable();
 
