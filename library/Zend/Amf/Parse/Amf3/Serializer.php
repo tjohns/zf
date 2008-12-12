@@ -78,7 +78,7 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
                     $this->writeObject($data);
                     break;
                 case Zend_Amf_Constants::AMF3_BYTEARRAY:
-                    $this->writeString($data);
+                    $this->writeString($data instanceof Zend_Amf_Value_ByteArray ? $data->getData() : $data);
                     break;
                 case Zend_Amf_Constants::AMF3_XMLSTRING;
                     $this->writeString($data);
