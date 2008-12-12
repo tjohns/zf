@@ -65,8 +65,8 @@ div.data{ height:600px;border:1px solid;overflow:auto; }
 <body>
 
 <div id="tokenstats">
-  <b>Token info</b>: <? echo getTokenInfo($client); ?><br>
-  <b>Session Token</b>: <? echo $client->getAuthSubToken(); ?><br>
+  <b>Token info</b>: <?php echo getTokenInfo($client); ?><br>
+  <b>Session Token</b>: <?php echo $client->getAuthSubToken(); ?><br>
 </div>
 
 <?php
