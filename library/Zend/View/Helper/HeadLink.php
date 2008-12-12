@@ -266,10 +266,6 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
             if (isset($attributes[$itemKey])) {
                 if(is_array($attributes[$itemKey])) {
                     foreach($attributes[$itemKey] as $key => $value) {
-                        // join an array value to gether to handle multiple values for an option
-                        if(is_array($value)) {
-                            $value = implode(',', $value);
-                        }
                         $link .= sprintf('%s="%s" ', $key, ($this->_autoEscape) ? $this->_escape($value) : $value);
                     }
                 } else {
@@ -350,7 +346,11 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
 
         if (0 < count($args)) {
             $media = array_shift($args);
-            $media = (string) $media;
+            if(is_array($media)) {
+                $media = implode(',', $media);
+            } else {
+                $media = (string) $media;
+            }
         }
         if (0 < count($args)) {
             $conditionalStylesheet = array_shift($args);
@@ -407,6 +407,10 @@ class Zend_View_Helper_HeadLink extends Zend_View_Helper_Placeholder_Container_S
         if(0 < count($args) && is_array($args[0])) {
             $extras = array_shift($args);
             $extras = (array) $extras;
+
+            if(isset($extras['media']) && is_array($extras['media'])) {
+                $extras['media'] = implode(',', $extras['media']);
+            }
         }
 
         $href  = (string) $href;

@@ -411,6 +411,13 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->toString();
         $this->assertContains('id="my_link_tag"', $test);
     }
+
+    public function testSetStylesheetWithMediaAsArray()
+    {
+        $this->helper->appendStylesheet('/bar/baz', array('screen','print'));
+        $test = $this->helper->toString();
+        $this->assertContains(' media="screen,print"', $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.
