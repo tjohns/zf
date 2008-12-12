@@ -32,7 +32,7 @@ require_once 'Zend/Gdata/YouTube.php';
  * @package Zend_Gdata_App
  * @subpackage UnitTests
  */
-class Zend_Gdata_YouTube_VideoFeedTest extends PHPUnit_Framework_TestCase
+class Zend_Gdata_YouTube_VideoQueryTest extends PHPUnit_Framework_TestCase
 {
 
     public function testQueryStringConstruction () {
