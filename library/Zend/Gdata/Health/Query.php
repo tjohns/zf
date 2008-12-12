@@ -155,9 +155,10 @@ class Zend_Gdata_Health_Query extends Zend_Gdata_Query
     {
         if ($value !== null) {
             if ($value <= 0 || $this->getGrouped() !== 'true') {
-              throw new Zend_Gdata_App_InvalidArgumentException(
-                'The max-results-group parameter must be set to a value greater 
-                than 0 and can only be used if grouped=true'); 
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                    'The max-results-group parameter must be set to a value
+                    greater than 0 and can only be used if grouped=true'); 
             } else {
               $this->_params['max-results-group'] = $value;
             }
