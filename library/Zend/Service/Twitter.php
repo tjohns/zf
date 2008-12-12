@@ -13,8 +13,8 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Twitter
- * @subpackage RememberTheMilk
+ * @package    Zend_Service
+ * @subpackage Twitter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id: $
@@ -367,7 +367,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         }
 
         //$this->status = $status;
-        $response     = $this->restPost($path, $data);
+        $response = $this->restPost($path, $data);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
@@ -683,7 +683,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     public function accountEndSession()
     {
         $this->_init();
-        $response = $this->restGet('/account/end_session');
+        $this->restGet('/account/end_session');
         return true;
     }
 
