@@ -153,13 +153,26 @@ class Zend_Gdata_App_FeedTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedVersion, $receivedVersion);
     }
     
-    public function testEntriesInheritFeedVersion()
+    public function testEntriesInheritFeedVersionOnCreate()
     {
-        $major = '98';
-        $minor = '12';
+        $major = 98;
+        $minor = 12;
         $this->feed->setMajorProtocolVersion($major);
         $this->feed->setMinorProtocolVersion($minor);
         $this->feed->transferFromXML($this->feedText);
+        foreach ($this->feed->entries as $entry) {
+            $this->assertEquals($major, $entry->getMajorProtocolVersion());
+            $this->assertEquals($minor, $entry->getMinorProtocolVersion());
+        }
+    }
+    
+    public function testEntriesInheritFeedVersionOnUpdate()
+    {
+        $major = 98;
+        $minor = 12;
+        $this->feed->transferFromXML($this->feedText);
+        $this->feed->setMajorProtocolVersion($major);
+        $this->feed->setMinorProtocolVersion($minor);
         foreach ($this->feed->entries as $entry) {
             $this->assertEquals($major, $entry->getMajorProtocolVersion());
             $this->assertEquals($minor, $entry->getMinorProtocolVersion());
