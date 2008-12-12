@@ -1,6 +1,6 @@
 <?php
 
-require_once('Zend/Http/Client/Adapter/Test.php');
+require_once 'Zend/Http/Client/Adapter/Test.php';
 
 class Test_Zend_Gdata_MockHttpClient_Request
 {
