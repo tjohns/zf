@@ -298,11 +298,11 @@ $server->setProduction(false);
         </programlisting>
 
         <para>
-            To re-enable it, pass a true value instead:
+            To re-enable it, pass a true boolean value instead:
         </para>
 
         <programlisting role="php"><![CDATA[
-$server->setProduction(false);
+$server->setProduction(true);
 ]]>
         </programlisting>
 
