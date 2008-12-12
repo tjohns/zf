@@ -693,6 +693,25 @@ class Zend_Gdata_App
             $feed->setEtag($etag);
         }
 
+        $protocolVersionStr = $response->getHeader('GData-Version');
+        if (!is_null($protocolVersionStr)) {
+            // Extract protocol major and minor version from header
+            $delimiterPos = strpos($protocolVersionStr, '.');
+            $length = strlen($protocolVersionStr);
+
+            $major = substr($protocolVersionStr,
+                            0,
+                            $delimiterPos);
+            $minor = substr($protocolVersionStr,
+                            $delimiterPos + 1,
+                            $length);
+            $feed->setMajorProtocolVersion($major);
+            $feed->setMinorProtocolVersion($minor);
+        } else {
+            $feed->setMajorProtocolVersion(null);
+            $feed->setMinorProtocolVersion(null);
+        }
+
         if ($this->getHttpClient() != null) {
             $feed->setHttpClient($this->getHttpClient());
         }

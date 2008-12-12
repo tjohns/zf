@@ -3,7 +3,6 @@ Content-Type: application/atom+xml; charset=UTF-8
 Last-Modified: Sun, 07 Sep 2008 17:53:51 GMT
 Cache-Control: max-age=0 private
 ETag: W/"CkcHQH8_fCp7ImA9WxRTGEw."
-Gdata-Version: 1.2
 Date: Sun, 07 Sep 2008 21:23:39 GMT
 Content-Length: 1450
 Server: GFE/1.3

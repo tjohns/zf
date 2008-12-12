@@ -460,4 +460,86 @@ class Zend_Gdata_App_EntryTest extends PHPUnit_Framework_TestCase
         $newEntry = $entry->reload();
         $this->assertEquals($className, get_class($newEntry));
     }
+    
+    public function testCanSetMajorProtocolVersion()
+    {
+        $expectedVersion = 42;
+        $entry = $this->service->newEntry();
+        $entry->setMajorProtocolVersion($expectedVersion);
+        $receivedVersion = $entry->getMajorProtocolVersion();
+        $this->assertEquals($expectedVersion, $receivedVersion);
+    }
+    
+    public function testCanSetMinorProtocolVersion()
+    {
+        $expectedVersion = 42;
+        $entry = $this->service->newEntry();
+        $entry->setMinorProtocolVersion($expectedVersion);
+        $receivedVersion = $entry->getMinorProtocolVersion();
+        $this->assertEquals($expectedVersion, $receivedVersion);
+    }
+    
+    public function testMajorProtocolVersionCannotBeZero()
+    {
+        $expectedVersion = 0;
+        $entry = $this->service->newEntry();
+        $this->setExpectedException('Zend_Gdata_App_InvalidArgumentException');
+        $entry->setMajorProtocolVersion($expectedVersion);
+    }
+    
+    public function testMajorProtocolVersionCannotBeNegative()
+    {
+        $expectedVersion = -1;
+        $entry = $this->service->newEntry();
+        $this->setExpectedException('Zend_Gdata_App_InvalidArgumentException');
+        $entry->setMajorProtocolVersion($expectedVersion);
+    }
+    
+    public function testMajorProtocolVersionMayBeNull()
+    {
+        $expectedVersion = null;
+        $entry = $this->service->newEntry();
+        $entry->setMajorProtocolVersion($expectedVersion);
+        $receivedVersion = $entry->getMajorProtocolVersion();
+        $this->assertNull($receivedVersion);
+    }
+    
+    public function testMinorProtocolVersionMayBeZero()
+    {
+        $expectedVersion = 0;
+        $entry = $this->service->newEntry();
+        $entry->setMinorProtocolVersion($expectedVersion);
+        $receivedVersion = $entry->getMinorProtocolVersion();
+        $this->assertEquals($expectedVersion, $receivedVersion);
+    }
+    
+    public function testMinorProtocolVersionCannotBeNegative()
+    {
+        $expectedVersion = -1;
+        $entry = $this->service->newEntry();
+        $this->setExpectedException('Zend_Gdata_App_InvalidArgumentException');
+        $entry->setMinorProtocolVersion($expectedVersion);
+    }
+    
+    public function testMinorProtocolVersionMayBeNull()
+    {
+        $expectedVersion = null;
+        $entry = $this->service->newEntry();
+        $entry->setMinorProtocolVersion($expectedVersion);
+        $receivedVersion = $entry->getMinorProtocolVersion();
+        $this->assertNull($receivedVersion);
+    }
+    
+    public function testDefaultMajorProtocolVersionIsNull()
+    {
+        $entry = $this->service->newEntry();
+        $this->assertNull($entry->getMajorProtocolVersion());
+    }
+    
+    public function testDefaultMinorProtocolVersionIsNull()
+    {
+        $entry = $this->service->newEntry();
+        $this->assertNull($entry->getMinorProtocolVersion());
+    }
+
 }

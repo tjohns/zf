@@ -106,6 +106,26 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     protected $_updated = null;
 
     /**
+      * Indicates the major protocol version that should be used.
+      * At present, recognized values are either 1 or 2. However, any integer
+      * value >= 1 is considered valid.
+      *
+      * @see setMajorProtocolVersion()
+      * @see getMajorProtocolVersion()
+      */
+    protected $_majorProtocolVersion;
+
+    /**
+      * Indicates the minor protocol version that should be used. Can be set
+      * to either an integer >= 0, or NULL if no minor version should be sent
+      * to the server.
+      *
+      * @see setMinorProtocolVersion()
+      * @see getMinorProtocolVersion()
+      */
+    protected $_minorProtocolVersion;
+
+    /**
      * Constructs a Feed or Entry
      */
     public function __construct($element = null)
@@ -572,6 +592,66 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      */
     public function getEtag() {
         return $this->_etag;
+    }
+
+    /**
+     * Set the major protocol version that should be used. Values < 1 will
+     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     *
+     * @see _majorProtocolVersion
+     * @param (int|NULL) $value The major protocol version to use.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function setMajorProtocolVersion($value)
+    {
+        if (!($value >= 1) && !is_null($value)) {
+            require_once('Zend/Gdata/App/InvalidArgumentException.php');
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Major protocol version must be >= 1');
+        }
+        $this->_majorProtocolVersion = $value;
+    }
+
+    /**
+     * Get the major protocol version that is in use.
+     *
+     * @see _majorProtocolVersion
+     * @return (int|NULL) The major protocol version in use.
+     */
+    public function getMajorProtocolVersion()
+    {
+        return $this->_majorProtocolVersion;
+    }
+
+    /**
+     * Set the minor protocol version that should be used. If set to NULL, no
+     * minor protocol version will be sent to the server. Values < 0 will
+     * cause a Zend_Gdata_App_InvalidArgumentException to be thrown.
+     *
+     * @see _minorProtocolVersion
+     * @param (int|NULL) $value The minor protocol version to use.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     */
+    public function setMinorProtocolVersion($value)
+    {
+        if (!($value >= 0)) {
+            require_once('Zend/Gdata/App/InvalidArgumentException.php');
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Minor protocol version must be >= 0 or null');
+        }
+        $this->_minorProtocolVersion = $value;
+    }
+
+    /**
+     * Get the minor protocol version that is in use.
+     *
+     * @see _minorProtocolVersion
+     * @return (int|NULL) The major protocol version in use, or NULL if no
+     *         minor version is specified.
+     */
+    public function getMinorProtocolVersion()
+    {
+        return $this->_minorProtocolVersion;
     }
 
 }
