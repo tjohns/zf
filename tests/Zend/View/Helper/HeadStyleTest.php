@@ -24,7 +24,7 @@ require_once 'Zend/Registry.php';
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Zend_View_Helper_HeadStyle
@@ -169,10 +169,10 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
     public function testCanBuildStyleTagsWithAttributes()
     {
         $this->helper->setStyle('a {}', array(
-            'lang'  => 'us_en', 
-            'title' => 'foo', 
-            'media' => 'projection', 
-            'dir'   => 'rtol', 
+            'lang'  => 'us_en',
+            'title' => 'foo',
+            'media' => 'projection',
+            'dir'   => 'rtol',
             'bogus' => 'unused'
         ));
         $value = $this->helper->getValue();
@@ -195,10 +195,10 @@ class Zend_View_Helper_HeadStyleTest extends PHPUnit_Framework_TestCase
     public function testRenderedStyleTagsContainHtmlEscaping()
     {
         $this->helper->setStyle('a {}', array(
-            'lang'  => 'us_en', 
-            'title' => 'foo', 
-            'media' => 'screen', 
-            'dir'   => 'rtol', 
+            'lang'  => 'us_en',
+            'title' => 'foo',
+            'media' => 'screen',
+            'dir'   => 'rtol',
             'bogus' => 'unused'
         ));
         $value = $this->helper->toString();
@@ -340,6 +340,40 @@ h1 {
                 $this->assertContains('Cannot nest', $e->getMessage());
             }
         $this->helper->headStyle()->captureEnd();
+    }
+
+    public function testMediaAttributeAsArray()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->appendStyle('
+a {
+    display: none;
+}', array('media' => array('screen', 'projection')));
+        $string = $this->helper->toString();
+
+        $scripts = substr_count($string, '    <style');
+        $this->assertEquals(1, $scripts);
+        $this->assertContains('    <!--', $string);
+        $this->assertContains('    a {', $string);
+        $this->assertContains(' media="screen,projection"', $string);
+
+    }
+
+    public function testMediaAttributeAsCommaSeperatedString()
+    {
+        $this->helper->setIndent(4);
+        $this->helper->appendStyle('
+a {
+    display: none;
+}', array('media' => 'screen,projection'));
+        $string = $this->helper->toString();
+
+        $scripts = substr_count($string, '    <style');
+        $this->assertEquals(1, $scripts);
+        $this->assertContains('    <!--', $string);
+        $this->assertContains('    a {', $string);
+        $this->assertContains(' media="screen,projection"', $string);
+
     }
 }
 
