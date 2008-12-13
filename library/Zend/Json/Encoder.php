@@ -18,13 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/**
- * Zend_Json_Exception
- */
-require_once 'Zend/Json/Exception.php';
-
-
 /**
  * Encode PHP constructs to JSON
  *
@@ -41,10 +34,10 @@ class Zend_Json_Encoder
      * @var boolean
      */
     protected $_cycleCheck;
-    
+
     /**
      * Additional options used during encoding
-     * 
+     *
      * @var array
      */
     protected $_options = array();
@@ -122,13 +115,14 @@ class Zend_Json_Encoder
     {
         if ($this->_cycleCheck) {
             if ($this->_wasVisited($value)) {
-                
+
                 if (isset($this->_options['silenceCyclicalExceptions'])
                     && $this->_options['silenceCyclicalExceptions']===true) {
-                    
+
                     return '"* RECURSION (' . get_class($value) . ') *"';
-                    
+
                 } else {
+                    require_once 'Zend/Json/Exception.php';
                     throw new Zend_Json_Exception(
                         'Cycles not supported in JSON encoding, cycle introduced by '
                         . 'class "' . get_class($value) . '"'
@@ -140,13 +134,13 @@ class Zend_Json_Encoder
         }
 
         $props = '';
-        
+
         if ($value instanceof Iterator) {
-        	$propCollection = $value;
+            $propCollection = $value;
         } else {
-        	$propCollection = get_object_vars($value);
+            $propCollection = get_object_vars($value);
         }
-        
+
         foreach ($propCollection as $name => $propValue) {
             if (isset($propValue)) {
                 $props .= ','
@@ -405,6 +399,7 @@ class Zend_Json_Encoder
     {
         $cls = new ReflectionClass($className);
         if (! $cls->isInstantiable()) {
+            require_once 'Zend/Json/Exception.php';
             throw new Zend_Json_Exception("$className must be instantiable");
         }
 
