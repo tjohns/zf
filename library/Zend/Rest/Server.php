@@ -30,11 +30,6 @@ require_once 'Zend/Server/Interface.php';
 require_once 'Zend/Server/Reflection.php';
 
 /**
- * Zend_Rest_Server_Exception
- */
-require_once 'Zend/Rest/Server/Exception.php';
-
-/**
  * Zend_Server_Abstract
  */
 require_once 'Zend/Server/Abstract.php';
@@ -114,8 +109,8 @@ class Zend_Rest_Server implements Zend_Server_Interface
 
     /**
      * Set XML encoding
-     * 
-     * @param  string $encoding 
+     *
+     * @param  string $encoding
      * @return Zend_Rest_Server
      */
     public function setEncoding($encoding)
@@ -126,7 +121,7 @@ class Zend_Rest_Server implements Zend_Server_Interface
 
     /**
      * Get XML encoding
-     * 
+     *
      * @return string
      */
     public function getEncoding()
@@ -214,6 +209,7 @@ class Zend_Rest_Server implements Zend_Server_Interface
 
                     $result = false;
                     if (count($calling_args) < count($func_args)) {
+                        require_once 'Zend/Rest/Server/Exception.php';
                         $result = $this->fault(new Zend_Rest_Server_Exception('Invalid Method Call to ' . $this->_method . '. Requires ' . count($func_args) . ', ' . count($calling_args) . ' given.'), 400);
                     }
 
@@ -526,6 +522,7 @@ class Zend_Rest_Server implements Zend_Server_Interface
             if (is_callable($func) && !in_array($func, self::$magicMethods)) {
                 $this->_functions[$func] = $this->_reflection->reflectFunction($func);
             } else {
+                require_once 'Zend/Rest/Server/Exception.php';
                 throw new Zend_Rest_Server_Exception("Invalid Method Added to Service.");
             }
         }
@@ -563,9 +560,9 @@ class Zend_Rest_Server implements Zend_Server_Interface
 
     /**
      * Call a static class method and return the result
-     * 
-     * @param  string $class 
-     * @param  array $args 
+     *
+     * @param  string $class
+     * @param  array $args
      * @return mixed
      */
     protected function _callStaticMethod($class, array $args)
@@ -580,7 +577,7 @@ class Zend_Rest_Server implements Zend_Server_Interface
 
     /**
      * Call an instance method of an object
-     * 
+     *
      * @param  string $class
      * @param  array $args
      * @return mixed
@@ -596,6 +593,7 @@ class Zend_Rest_Server implements Zend_Server_Interface
             }
         } catch (Exception $e) {
             echo $e->getMessage();
+            require_once 'Zend/Rest/Server/Exception.php';
             throw new Zend_Rest_Server_Exception('Error instantiating class ' . $class . ' to invoke method ' . $this->_functions[$this->_method]->getName(), 500);
         }
 
