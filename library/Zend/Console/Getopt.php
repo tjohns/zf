@@ -21,11 +21,6 @@
  */
 
 /**
- * @see Zend_Console_Getopt_Exception
- */
-require_once 'Zend/Console/Getopt/Exception.php';
-
-/**
  * Zend_Console_Getopt is a class to parse options for command-line
  * applications.
  *
@@ -643,9 +638,7 @@ class Zend_Console_Getopt
             $flag = $this->_ruleMap[$flag];
             if (isset($this->_rules[$alias]) || isset($this->_ruleMap[$alias])) {
                 $o = (strlen($alias) == 1 ? '-' : '--') . $alias;
-                /**
-                 * @see Zend_Console_Getopt_Exception
-                 */
+                require_once 'Zend/Console/Getopt/Exception.php';
                 throw new Zend_Console_Getopt_Exception(
                     "Option \"$o\" is being defined more than once.");
             }
@@ -764,9 +757,7 @@ class Zend_Console_Getopt
             $flag = strtolower($flag);
         }
         if (!isset($this->_ruleMap[$flag])) {
-            /**
-             * @see Zend_Console_Getopt_Exception
-             */
+            require_once 'Zend/Console/Getopt/Exception.php';
             throw new Zend_Console_Getopt_Exception(
                 "Option \"$flag\" is not recognized.",
                 $this->getUsageMessage());
@@ -778,9 +769,7 @@ class Zend_Console_Getopt
                     $param = array_shift($argv);
                     $this->_checkParameterType($realFlag, $param);
                 } else {
-                    /**
-                     * @see Zend_Console_Getopt_Exception
-                     */
+                    require_once 'Zend/Console/Getopt/Exception.php';
                     throw new Zend_Console_Getopt_Exception(
                         "Option \"$flag\" requires a parameter.",
                         $this->getUsageMessage());
@@ -819,9 +808,7 @@ class Zend_Console_Getopt
         switch ($type) {
             case 'word':
                 if (preg_match('/\W/', $param)) {
-                    /**
-                     * @see Zend_Console_Getopt_Exception
-                     */
+                    require_once 'Zend/Console/Getopt/Exception.php';
                     throw new Zend_Console_Getopt_Exception(
                         "Option \"$flag\" requires a single-word parameter, but was given \"$param\".",
                         $this->getUsageMessage());
@@ -829,9 +816,7 @@ class Zend_Console_Getopt
                 break;
             case 'integer':
                 if (preg_match('/\D/', $param)) {
-                    /**
-                     * @see Zend_Console_Getopt_Exception
-                     */
+                    require_once 'Zend/Console/Getopt/Exception.php';
                     throw new Zend_Console_Getopt_Exception(
                         "Option \"$flag\" requires an integer parameter, but was given \"$param\".",
                         $this->getUsageMessage());
@@ -853,7 +838,7 @@ class Zend_Console_Getopt
     protected function _addRulesModeGnu($rules)
     {
         $ruleArray = array();
-        
+
         /**
          * Options may be single alphanumeric characters.
          * Options may have a ':' which indicates a required string parameter.
@@ -891,7 +876,7 @@ class Zend_Console_Getopt
         {
             // this may have to translate the long parm type if there
             // are any complaints that =string will not work (even though that use
-            // case is not documented) 
+            // case is not documented)
             if (in_array(substr($ruleCode, -2, 1), array('-', '='))) {
                 $flagList  = substr($ruleCode, 0, -2);
                 $delimiter = substr($ruleCode, -2, 1);
@@ -908,17 +893,13 @@ class Zend_Console_Getopt
             $mainFlag = $flags[0];
             foreach ($flags as $flag) {
                 if (empty($flag)) {
-                    /**
-                     * @see Zend_Console_Getopt_Exception
-                     */
+                    require_once 'Zend/Console/Getopt/Exception.php';
                     throw new Zend_Console_Getopt_Exception(
                         "Blank flag not allowed in rule \"$ruleCode\".");
                 }
                 if (strlen($flag) == 1) {
                     if (isset($this->_ruleMap[$flag])) {
-                        /**
-                         * @see Zend_Console_Getopt_Exception
-                         */
+                        require_once 'Zend/Console/Getopt/Exception.php';
                         throw new Zend_Console_Getopt_Exception(
                             "Option \"-$flag\" is being defined more than once.");
                     }
@@ -926,9 +907,7 @@ class Zend_Console_Getopt
                     $rule['alias'][] = $flag;
                 } else {
                     if (isset($this->_rules[$flag]) || isset($this->_ruleMap[$flag])) {
-                        /**
-                         * @see Zend_Console_Getopt_Exception
-                         */
+                        require_once 'Zend/Console/Getopt/Exception.php';
                         throw new Zend_Console_Getopt_Exception(
                             "Option \"--$flag\" is being defined more than once.");
                     }
