@@ -18,9 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Request_Exception */
-require_once 'Zend/Controller/Request/Exception.php';
-
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
@@ -43,7 +40,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      *
      */
     const SCHEME_HTTP  = 'http';
-    
+
     /**
      * Scheme for https
      *
@@ -237,9 +234,9 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Set GET values
-     * 
-     * @param  string|array $spec 
-     * @param  null|mixed $value 
+     *
+     * @param  string|array $spec
+     * @param  null|mixed $value
      * @return Zend_Controller_Request_Http
      */
     public function setQuery($spec, $value = null)
@@ -279,9 +276,9 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Set POST values
-     * 
-     * @param  string|array $spec 
-     * @param  null|mixed $value 
+     *
+     * @param  string|array $spec
+     * @param  null|mixed $value
      * @return Zend_Controller_Request_Http
      */
     public function setPost($spec, $value = null)
@@ -557,7 +554,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $basePath = $baseUrl;
             }
         }
-        
+
         if (substr(PHP_OS, 0, 3) === 'WIN') {
             $basePath = str_replace('\\', '/', $basePath);
         }
@@ -635,8 +632,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * Set allowed parameter sources
      *
      * Can be empty array, or contain one or more of '_GET' or '_POST'.
-     * 
-     * @param  array $paramSoures 
+     *
+     * @param  array $paramSoures
      * @return Zend_Controller_Request_Http
      */
     public function setParamSources(array $paramSources = array())
@@ -647,7 +644,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Get list of allowed parameter sources
-     * 
+     *
      * @return array
      */
     public function getParamSources()
@@ -875,7 +872,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
         return false;
     }
-    
+
     /**
      * Is the request a Javascript XMLHttpRequest?
      *
@@ -890,7 +887,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Is this a Flash request?
-     * 
+     *
      * @return bool
      */
     public function isFlashRequest()
@@ -898,7 +895,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
         $header = strtolower($this->getHeader('USER_AGENT'));
         return (strstr($header, ' flash')) ? true : false;
     }
-    
+
     /**
      * Is https secure request
      *
@@ -908,7 +905,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     {
         return ($this->getScheme() === self::SCHEME_HTTPS);
     }
-    
+
     /**
      * Return the raw body of the request, if present
      *
@@ -958,7 +955,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
         return false;
     }
-    
+
     /**
      * Get the request URI scheme
      *
@@ -968,7 +965,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     {
         return ($this->getServer('HTTPS') == 'on') ? self::SCHEME_HTTPS : self::SCHEME_HTTP;
     }
-    
+
     /**
      * Get the HTTP host.
      *
@@ -984,10 +981,10 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
         if (!empty($host)) {
             return $host;
         }
-        
+
         $scheme = $this->getScheme();
         $name   = $this->getServer('SERVER_NAME');
-        $port   = $this->getServer('SERVER_PORT'); 
+        $port   = $this->getServer('SERVER_PORT');
 
         if (($scheme == self::SCHEME_HTTP && $port == 80) || ($scheme == self::SCHEME_HTTPS && $port == 443)) {
             return $name;

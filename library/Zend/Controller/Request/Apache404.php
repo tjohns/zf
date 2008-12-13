@@ -18,9 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Request_Exception */
-require_once 'Zend/Controller/Request/Exception.php';
-
 /** Zend_Controller_Request_Http */
 require_once 'Zend/Controller/Request/Http.php';
 

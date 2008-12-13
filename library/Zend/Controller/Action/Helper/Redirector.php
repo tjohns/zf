@@ -19,11 +19,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** 
- * @see Zend_Controller_Action_Exception
- */
-require_once 'Zend/Controller/Action/Exception.php';
-
 /**
  * @see Zend_Controller_Action_Helper_Abstract
  */
@@ -90,9 +85,6 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     {
         $code = (int)$code;
         if ((300 > $code) || (307 < $code) || (304 == $code) || (306 == $code)) {
-            /**
-             * @see Zend_Controller_Exception
-             */
             require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Action_Exception('Invalid redirect HTTP status code (' . $code  . ')');
         }
@@ -256,8 +248,8 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
 
         if (null === $module) {
             $module = $curModule;
-        } 
-        
+        }
+
         if ($module == $dispatcher->getDefaultModule()) {
             $module = '';
         }
@@ -485,9 +477,9 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
      * Overloading
      *
      * Overloading for old 'goto', 'setGoto', and 'gotoAndExit' methods
-     * 
-     * @param  string $method 
-     * @param  array $args 
+     *
+     * @param  string $method
+     * @param  array $args
      * @return mixed
      * @throws Zend_Controller_Action_Exception for invalid methods
      */
