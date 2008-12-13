@@ -21,9 +21,6 @@
 /** Zend_Controller_Action */
 require_once 'Zend/Controller/Action.php';
 
-/** Zend_Exception */
-require_once 'Zend/Exception.php';
-
 /**
  * Tests for Zend_Wildfire_Plugin_FirePhp
  *
@@ -34,7 +31,6 @@ require_once 'Zend/Exception.php';
  */
 class ZendWildfirePluginFirePhpController extends Zend_Controller_Action
 {
-  
     public function testgroupsAction()
     {
         Zend_Wildfire_Plugin_FirePhp::group('Group 1');
@@ -45,6 +41,4 @@ class ZendWildfirePluginFirePhpController extends Zend_Controller_Action
         Zend_Wildfire_Plugin_FirePhp::send('Test Message 3');
         Zend_Wildfire_Plugin_FirePhp::groupEnd();
     }
-    
 }
-
