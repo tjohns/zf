@@ -391,6 +391,13 @@ document.write(bar.strlen());');
         $this->helper->setAutoEscape(false)->appendFile('test.js?id=123&foo=bar');
         $this->assertEquals('<script type="text/javascript" src="test.js?id=123&foo=bar"></script>', $this->helper->toString());
     }
+
+    public function testConditionalScript()
+    {
+        $this->helper->headScript()->appendFile('/js/foo.js', 'text/javascript', array('conditional' => 'lt IE 7'));
+        $test = $this->helper->headScript()->toString();
+        $this->assertContains('<!--[if lt IE 7]>', $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.

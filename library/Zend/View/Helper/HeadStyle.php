@@ -339,6 +339,13 @@ class Zend_View_Helper_HeadStyle extends Zend_View_Helper_Placeholder_Container_
               . $indent . '<!--' . PHP_EOL . $indent . $item->content . PHP_EOL . $indent . '-->' . PHP_EOL
               . '</style>';
 
+        if (isset($item->attributes['conditional'])
+            && !empty($item->attributes['conditional'])
+            && is_string($item->attributes['conditional']))
+        {
+            $html = '<!--[if ' . $item->attributes['conditional'] . ']> ' . $html . '<![endif]-->';
+        }
+
         return $html;
     }
 

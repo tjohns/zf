@@ -375,6 +375,16 @@ a {
         $this->assertContains(' media="screen,projection"', $string);
 
     }
+
+    public function testConditionalScript()
+    {
+        $this->helper->appendStyle('
+a {
+    display: none;
+}', array('media' => 'screen,projection', 'conditional' => 'lt IE 7'));
+        $test = $this->helper->toString();
+        $this->assertContains('<!--[if lt IE 7]>', $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadStyleTest::main() if this source file is executed directly.
