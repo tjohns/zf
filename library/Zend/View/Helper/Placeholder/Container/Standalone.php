@@ -66,7 +66,6 @@ abstract class Zend_View_Helper_Placeholder_Container_Standalone extends Zend_Vi
     public function __construct()
     {
         $this->setRegistry(Zend_View_Helper_Placeholder_Registry::getRegistry());
-        $registry = $this->getRegistry();
         $this->setContainer($this->getRegistry()->getContainer($this->_regKey));
     }
 
