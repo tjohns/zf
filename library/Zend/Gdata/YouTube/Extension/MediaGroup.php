@@ -90,6 +90,12 @@ class Zend_Gdata_YouTube_Extension_MediaGroup extends Zend_Gdata_Media_Extension
         if ($this->_private !== null) {
             $element->appendChild($this->_private->getDOM($element->ownerDocument));
         }
+        if ($this->_videoid != null) {
+            $element->appendChild($this->_videoid->getDOM($element->ownerDocument));
+        }
+        if ($this->_mediarating != null) {
+            $element->appendChild($this->_mediarating->getDOM($element->ownerDocument));
+        }
         return $element;
     }
 
