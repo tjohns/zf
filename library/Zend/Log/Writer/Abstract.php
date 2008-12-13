@@ -23,9 +23,6 @@
 /** Zend_Log_Filter_Priority */
 require_once 'Zend/Log/Filter/Priority.php';
 
-/** Zend_Log_Exception */
-require_once 'Zend/Log/Exception.php';
-
 /**
  * @category   Zend
  * @package    Zend_Log

@@ -23,9 +23,6 @@
 /** Zend_Log_Formatter_Interface */
 require_once 'Zend/Log/Formatter/Interface.php';
 
-/** Zend_Log_Exception */
-require_once 'Zend/Log/Exception.php';
-
 /**
  * @category   Zend
  * @package    Zend_Log
@@ -56,6 +53,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
         }
 
         if (! is_string($format)) {
+            require_once 'Zend/Log/Exception.php';
             throw new Zend_Log_Exception('Format must be a string');
         }
 
@@ -76,7 +74,7 @@ class Zend_Log_Formatter_Simple implements Zend_Log_Formatter_Interface
             if ((is_object($value) && !method_exists($value,'__toString'))
                 || is_array($value)) {
 
-                $value = gettype($value);  
+                $value = gettype($value);
             }
 
             $output = str_replace("%$name%", $value, $output);
