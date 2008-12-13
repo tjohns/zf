@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -69,11 +68,6 @@ require_once 'Zend/Gdata/Extension/Transparency.php';
  * @see Zend_Gdata_Extension_Visibility
  */
 require_once 'Zend/Gdata/Extension/Visibility.php';
-
-/**
- * @see Zend_Gdata_Extension_RecurrenceException
- */
-require_once 'Zend/Gdata/Extension/RecurrenceException.php';
 
 /**
  * @see Zend_Gdata_Extension_ExtendedProperty
@@ -215,6 +209,7 @@ class Zend_Gdata_Kind_EventEntry extends Zend_Gdata_Entry
             $this->_visibility = $visiblity;
             break;
         case $this->lookupNamespace('gd') . ':' . 'recurrenceException';
+            require_once 'Zend/Gdata/Extension/RecurrenceException.php';
             $recurrenceException = new Zend_Gdata_Extension_RecurrenceException();
             $recurrenceException ->transferFromDOM($child);
             $this->_recurrenceException[] = $recurrenceException;
