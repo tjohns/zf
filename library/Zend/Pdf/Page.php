@@ -17,10 +17,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/** Zend_Pdf_Exception */
-require_once 'Zend/Pdf/Exception.php';
-
 /** Zend_Pdf_Resource_Font */
 require_once 'Zend/Pdf/Resource/Font.php';
 
@@ -308,6 +304,7 @@ class Zend_Pdf_Page
                  * @todo support of user defined pagesize notations, like:
                  *       "210x297mm", "595x842", "8.5x11in", "612x792"
                  */
+                require_once 'Zend/Pdf/Exception.php';
                 throw new Zend_Pdf_Exception('Wrong pagesize notation.');
             }
             /**
@@ -323,6 +320,7 @@ class Zend_Pdf_Page
             $pageHeight = $param2;
 
         } else {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Unrecognized method signature, wrong number of arguments or wrong argument types.');
         }
 
@@ -346,6 +344,7 @@ class Zend_Pdf_Page
      */
     public function __clone()
     {
+        require_once 'Zend/Pdf/Exception.php';
         throw new Zend_Pdf_Exception('Cloning Zend_Pdf_Page object using \'clone\' keyword is not supported. Use \'new Zend_Pdf_Page($srcPage)\' syntax');
     }
 
@@ -430,6 +429,7 @@ class Zend_Pdf_Page
     public function flush()
     {
         if ($this->_saveCount != 0) {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Saved graphics state is not restored');
         }
 
@@ -496,6 +496,7 @@ class Zend_Pdf_Page
         }
 
         if ($this->_attached) {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Page is attached to one documen, but rendered in context of another.');
             /**
              * @todo Page cloning must be implemented here instead of exception.
@@ -649,9 +650,11 @@ class Zend_Pdf_Page
     {
         if (!in_array($mode, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge',
                                    'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion'))) {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Unsupported transparency mode.');
         }
         if (!is_numeric($alpha)  ||  $alpha < 0  ||  $alpha > 1) {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Alpha value must be numeric between 0 (transparent) and 1 (opaque).');
         }
 
@@ -745,6 +748,7 @@ class Zend_Pdf_Page
         }
 
         $fonts = array();
+        require_once 'Zend/Pdf/Exception.php';
         foreach ($fontResourcesUnique as $resourceReference => $fontDictionary) {
             try {
                 // Try to extract font
@@ -777,6 +781,7 @@ class Zend_Pdf_Page
 
         $fontResources = $this->_pageDictionary->Resources->Font;
 
+        require_once 'Zend/Pdf/Exception.php';
         foreach ($fontResources->getKeys() as $fontResourceName) {
             $fontDictionary = $fontResources->$fontResourceName;
 
@@ -854,6 +859,7 @@ class Zend_Pdf_Page
     public function restoreGS()
     {
         if ($this->_saveCount-- <= 0) {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Restoring graphics state which is not saved');
         }
         $this->_contents .= " Q\n";
@@ -1047,8 +1053,8 @@ class Zend_Pdf_Page
      */
     public function drawContentStream($cs, $x1, $y1, $x2, $y2)
     {
-    	/** @todo implementation */
-    	return $this;
+        /** @todo implementation */
+        return $this;
     }
 
     /**
@@ -1255,8 +1261,8 @@ class Zend_Pdf_Page
      */
     public function drawLayoutBox($box, $x, $y)
     {
-    	/** @todo implementation */
-    	return $this;
+        /** @todo implementation */
+        return $this;
     }
 
     /**
@@ -1399,6 +1405,7 @@ class Zend_Pdf_Page
     public function drawText($text, $x, $y, $charEncoding = '')
     {
         if ($this->_font === null) {
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Font has not been set');
         }
 
@@ -1446,8 +1453,8 @@ class Zend_Pdf_Page
      */
     public function pathClose()
     {
-    	/** @todo implementation */
-    	return $this;
+        /** @todo implementation */
+        return $this;
     }
 
     /**
@@ -1459,8 +1466,8 @@ class Zend_Pdf_Page
      */
     public function pathLine($x, $y)
     {
-    	/** @todo implementation */
-    	return $this;
+        /** @todo implementation */
+        return $this;
     }
 
     /**
