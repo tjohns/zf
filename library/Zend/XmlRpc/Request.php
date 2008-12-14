@@ -19,11 +19,6 @@
  */
 
 /**
- * Zend_XmlRpc_Exception
- */
-require_once 'Zend/XmlRpc/Exception.php';
-
-/**
  * Zend_XmlRpc_Value
  */
 require_once 'Zend/XmlRpc/Value.php';
@@ -285,7 +280,7 @@ class Zend_XmlRpc_Request
 
     /**
      * Return parameter types
-     * 
+     *
      * @return array
      */
     public function getTypes()
