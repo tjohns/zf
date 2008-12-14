@@ -255,7 +255,8 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
             'bob.domain.com',
             'bob @domain.com',
             'bob@ domain.com',
-            'bob @ domain.com'
+            'bob @ domain.com',
+            'Abc..123@example.com'
             );
         foreach ($emailAddresses as $input) {
             $this->assertFalse($this->_validator->isValid($input));
