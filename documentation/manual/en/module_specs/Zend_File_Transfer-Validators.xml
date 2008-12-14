@@ -997,7 +997,6 @@ $upload->addValidator('Hash',
                 <para>
                     You can set multiple hashes by passing them as an array. Each file is checked, and the validation will fail only if all files fail validation.
                 </para>
-                </para>
             </listitem>
         </itemizedlist>
 
@@ -1184,7 +1183,6 @@ $upload->addValidator('NotExists', false,
 
                 <para>
                     You can set multiple hashes by passing them as an array. Each file is checked, and the validation will fail only if all files fail validation.
-                </para>
                 </para>
             </listitem>
         </itemizedlist>
