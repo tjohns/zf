@@ -1072,8 +1072,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getHash($hash = 'crc32', $files = null)
     {
-        $algorithms = hash_algos();
-        if (!isset($algorithms[$hash])) {
+        if (!in_array($hash, hash_algos())) {
             require_once 'Zend/File/Transfer/Exception.php';
             throw new Zend_File_Transfer_Exception('Unknown hash algorithm');
         }
