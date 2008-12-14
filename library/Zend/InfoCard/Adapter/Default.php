@@ -26,11 +26,6 @@
 require_once 'Zend/InfoCard/Adapter/Interface.php';
 
 /**
- * Zend_InfoCard_Adapter_Exception
- */
-require_once 'Zend/InfoCard/Adapter/Exception.php';
-
-/**
  * The default InfoCard component Adapter which serves as a pass-thru placeholder
  * for developers. Initially developed to provide a callback mechanism to store and retrieve
  * assertions as part of the validation process it can be used anytime callback facilities

@@ -59,6 +59,7 @@ class Zend_InfoCard_Xml_Security_Transform
             case 'http://www.w3.org/2001/10/xml-exc-c14n#':
                 return 'Zend_InfoCard_Xml_Security_Transform_XmlExcC14N';
             default:
+                require_once 'Zend/InfoCard/Xml/Security/Exception.php';
                 throw new Zend_InfoCard_Xml_Security_Exception("Unknown or Unsupported Transformation Requested");
         }
     }
@@ -104,6 +105,7 @@ class Zend_InfoCard_Xml_Security_Transform
             // We can't really test this check because it would require logic changes in the component itself
             // @codeCoverageIgnoreStart
             if(!($transformer instanceof Zend_InfoCard_Xml_Security_Transform_Interface)) {
+                require_once 'Zend/InfoCard/Xml/Security/Exception.php';
                 throw new Zend_InfoCard_Xml_Security_Exception("Transforms must implement the Transform Interface");
             }
             // @codeCoverageIgnoreEnd

@@ -21,11 +21,6 @@
  */
 
 /**
- * Zend_InfoCard_Cipher_Exception
- */
-require_once 'Zend/InfoCard/Cipher/Exception.php';
-
-/**
  * Provides an abstraction for encryption ciphers used in an Information Card
  * implementation
  *
@@ -97,6 +92,7 @@ class Zend_InfoCard_Cipher
                 break;
 
             default:
+                require_once 'Zend/InfoCard/Cipher/Exception.php';
                 throw new Zend_InfoCard_Cipher_Exception("Unknown Cipher URI");
         }
     }

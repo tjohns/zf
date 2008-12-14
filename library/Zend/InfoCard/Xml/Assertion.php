@@ -21,11 +21,6 @@
  */
 
 /**
- * Zend_InfoCard_Xml_Exception
- */
-require_once 'Zend/InfoCard/Xml/Exception.php';
-
-/**
  * Zend_InfoCard_Xml_Assertion_Interface
  */
 require_once 'Zend/InfoCard/Xml/Assertion/Interface.php';
@@ -71,6 +66,7 @@ final class Zend_InfoCard_Xml_Assertion
         } else if (is_string($xmlData)) {
             $strXmlData = $xmlData;
         } else {
+            require_once 'Zend/InfoCard/Xml/Exception.php';
             throw new Zend_InfoCard_Xml_Exception("Invalid Data provided to create instance");
         }
 
@@ -86,6 +82,7 @@ final class Zend_InfoCard_Xml_Assertion
             }
         }
 
+        require_once 'Zend/InfoCard/Xml/Exception.php';
         throw new Zend_InfoCard_Xml_Exception("Unable to determine Assertion type by Namespace");
     }
 }
