@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -21,7 +20,6 @@
  * @version    $Id$
  */
 
-
 /**
  * Test helper
  */
@@ -31,7 +29,6 @@ require_once dirname(__FILE__) . '/../../TestHelper.php';
  * @see Zend_Validate_EmailAddress
  */
 require_once 'Zend/Validate/EmailAddress.php';
-
 
 /**
  * @category   Zend
@@ -395,5 +392,19 @@ class Zend_Validate_EmailAddressTest extends PHPUnit_Framework_TestCase
             }
         }
         $this->assertTrue($found);
+    }
+
+    /**
+     * @see ZF-4888
+     */
+    public function testEmailsExceedingLength()
+    {
+        $emailAddresses = array(
+            'thislocalpathoftheemailadressislongerthantheallowedsizeof64characters@domain.com',
+            'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarexpialidociousspoonfulofsugar.com',
+            );
+        foreach ($emailAddresses as $input) {
+            $this->assertFalse($this->_validator->isValid($input));
+        }
     }
 }

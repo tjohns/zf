@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,18 +19,15 @@
  * @version    $Id$
  */
 
-
 /**
  * @see Zend_Validate_Abstract
  */
 require_once 'Zend/Validate/Abstract.php';
 
-
 /**
  * @see Zend_Validate_Hostname
  */
 require_once 'Zend/Validate/Hostname.php';
-
 
 /**
  * @category   Zend
@@ -41,13 +37,13 @@ require_once 'Zend/Validate/Hostname.php';
  */
 class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
 {
-
     const INVALID            = 'emailAddressInvalid';
     const INVALID_HOSTNAME   = 'emailAddressInvalidHostname';
     const INVALID_MX_RECORD  = 'emailAddressInvalidMxRecord';
     const DOT_ATOM           = 'emailAddressDotAtom';
     const QUOTED_STRING      = 'emailAddressQuotedString';
     const INVALID_LOCAL_PART = 'emailAddressInvalidLocalPart';
+    const LENGTH_EXCEEDED    = 'emailAddressLengthExceeded';
 
     /**
      * @var array
@@ -58,7 +54,8 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
         self::INVALID_MX_RECORD  => "'%hostname%' does not appear to have a valid MX record for the email address '%value%'",
         self::DOT_ATOM           => "'%localPart%' not matched against dot-atom format",
         self::QUOTED_STRING      => "'%localPart%' not matched against quoted-string format",
-        self::INVALID_LOCAL_PART => "'%localPart%' is not a valid local part for email address '%value%'"
+        self::INVALID_LOCAL_PART => "'%localPart%' is not a valid local part for email address '%value%'",
+        self::LENGTH_EXCEEDED    => "'%value%' exceeds the allowed length"
     );
 
     /**
@@ -162,6 +159,8 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
     public function isValid($value)
     {
         $valueString = (string) $value;
+        $matches     = array();
+        $length      = true;
 
         $this->_setValue($valueString);
 
@@ -173,6 +172,11 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
 
         $this->_localPart = $matches[1];
         $this->_hostname  = $matches[2];
+
+        if ((strlen($this->_localPart) > 64) || (strlen($this->_hostname) > 255)) {
+            $length = false;
+            $this->_error(self::LENGTH_EXCEEDED);
+        }
 
         // Match hostname part
         $hostnameResult = $this->hostnameValidator->setTranslator($this->getTranslator())
@@ -235,11 +239,10 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
         }
 
         // If both parts valid, return true
-        if ($localResult && $hostnameResult) {
+        if ($localResult && $hostnameResult && $length) {
             return true;
         } else {
             return false;
         }
     }
-
 }
