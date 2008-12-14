@@ -159,7 +159,7 @@ abstract class Zend_Translate_Adapter {
                         if (Zend_Locale::isLocale((string) $filename, true, false)) {
                             $locale = (string) $filename;
                         } else {
-                            $parts  = explode('.', $filename);
+                            $parts  = explode('.', $file);
                             $parts2 = array();
                             foreach($parts as $token) {
                                 $parts2 += explode('_', $token);
