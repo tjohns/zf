@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -19,7 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-
 
 /**
  * @see Zend_Validate_Abstract
@@ -53,7 +51,6 @@ require_once 'Zend/Validate/Ip.php';
  */
 class Zend_Validate_Hostname extends Zend_Validate_Abstract
 {
-
     const IP_ADDRESS_NOT_ALLOWED  = 'hostnameIpAddressNotAllowed';
     const UNKNOWN_TLD             = 'hostnameUnknownTld';
     const INVALID_DASH            = 'hostnameDashCharacter';

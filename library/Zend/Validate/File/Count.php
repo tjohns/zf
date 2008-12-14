@@ -209,6 +209,29 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
     }
 
     /**
+     * Adds a file for validation
+     *
+     * @param string|array $file
+     */
+    public function addFile($file)
+    {
+var_dump($file);
+        if (is_string($file)) {
+            $file = array($file);
+        }
+
+        if (is_array($file)) {
+            foreach ($file as $name) {
+                if (!isset($this->_files[$name])) {
+                    $this->_files[$name] = $name;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * Defined by Zend_Validate_Interface
      *
      * Returns true if and only if the file count of all checked files is at least min and
@@ -221,16 +244,8 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      */
     public function isValid($value, $file = null)
     {
-        if (is_string($value)) {
-            $value = array($value);
-        }
-
-        foreach ($value as $file) {
-            if (!isset($this->_files[$file])) {
-                $this->_files[$file] = $file;
-            }
-        }
-
+        $this->addFile($value);
+print "\nVALIDATION:";
         $this->_count = count($this->_files);
         if (($this->_max !== null) && ($this->_count > $this->_max)) {
             return $this->_throw($file, self::TOO_MUCH);
