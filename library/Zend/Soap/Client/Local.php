@@ -18,16 +18,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Soap_Client_Exception */
-require_once 'Zend/Soap/Server/Exception.php';
-
-
 /** Zend_Soap_Server */
 require_once 'Zend/Soap/Server.php';
 
 /** Zend_Soap_Client */
 require_once 'Zend/Soap/Client.php';
-
 
 if (extension_loaded('soap')) {
 

@@ -22,7 +22,6 @@
 require_once 'Zend/Server/Interface.php';
 require_once 'Zend/Soap/Wsdl.php';
 require_once 'Zend/Server/Reflection.php';
-require_once 'Zend/Server/Exception.php';
 require_once 'Zend/Server/Abstract.php';
 require_once 'Zend/Uri.php';
 
@@ -481,4 +480,3 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
         }
     }
 }
-

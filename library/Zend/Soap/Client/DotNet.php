@@ -18,20 +18,16 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Soap_Client_Exception */
-require_once 'Zend/Soap/Client/Exception.php';
-
 /** Zend_Soap_Client */
 require_once 'Zend/Soap/Client.php';
-
 
 if (extension_loaded('soap')) {
 
 /**
  * Zend_Soap_Client_Local
- * 
+ *
  * Class is intended to be used with .Net Web Services.
- * 
+ *
  * Important! Class is at experimental stage now.
  * Please leave your notes, compatiblity issues reports or
  * suggestions in fw-webservices@lists.zend.com or fw-general@lists.com
