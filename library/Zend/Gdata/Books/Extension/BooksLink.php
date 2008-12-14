@@ -22,16 +22,15 @@
  */
 
 /**
- * @see Zend_Gdata_Extension_Link
+ * @see Zend_Gdata_App_Extension_Link
  */
-require_once 'Zend/Gdata/Extension/Link.php';
+require_once 'Zend/Gdata/App/Extension/Link.php';
 
 /**
  * Extends the base Link class with Books extensions
  *
  * @category   Zend
  * @package    Zend_Gdata
- * @subpackage Books
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc.
  * (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
