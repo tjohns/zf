@@ -19,12 +19,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-
-/** Zend_Search_Lucene_Exception */
-require_once 'Zend/Search/Lucene/Exception.php';
-
-
 /**
  * @category   Zend
  * @package    Zend_Search_Lucene
@@ -210,8 +204,9 @@ abstract class Zend_Search_Lucene_Storage_File
                 (ord($str[2])          != 0) ||
                 (ord($str[3])          != 0) ||
                 ((ord($str[0]) & 0x80) != 0)) {
-                     throw new Zend_Search_Lucene_Exception('Largest supported segment size (for 32-bit mode) is 2Gb');
-                 }
+                require_once 'Zend/Search/Lucene/Exception.php';
+                throw new Zend_Search_Lucene_Exception('Largest supported segment size (for 32-bit mode) is 2Gb');
+            }
 
             return  ord($str[4]) << 24  |
                     ord($str[5]) << 16  |
@@ -244,6 +239,7 @@ abstract class Zend_Search_Lucene_Storage_File
                             chr($value     & 0xFF),   8  );
         } else {
             if ($value > 0x7FFFFFFF) {
+                require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Largest supported segment size (for 32-bit mode) is 2Gb');
             }
 
@@ -402,6 +398,7 @@ abstract class Zend_Search_Lucene_Storage_File
         }
 
         if ($chars < 0) {
+            require_once 'Zend/Search/Lucene/Exception.php';
             throw new Zend_Search_Lucene_Exception('Invalid UTF-8 string');
         }
 
