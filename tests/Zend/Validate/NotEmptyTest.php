@@ -84,6 +84,8 @@ class Zend_Validate_NotEmptyTest extends PHPUnit_Framework_TestCase
         $valuesExpected = array(
             array('word', true),
             array('', false),
+            array('    ', false),
+            array('  word  ', true),
             array(1, true),
             array(0, false),
             array(true, true),
