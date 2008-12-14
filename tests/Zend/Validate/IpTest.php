@@ -95,4 +95,16 @@ class Zend_Validate_IpTest extends PHPUnit_Framework_TestCase
     {
         $this->assertFalse($this->_validator->isValid('192.168.0.2 adfs'));
     }
+
+    /**
+     * @see ZF-2694
+     */
+    public function testIPv6addresses()
+    {
+        if (!function_exists('inet_pton')) {
+            $this->markTestIncomplete('No IPv6 support within this PHP release');
+        }
+
+        $this->assertTrue($this->_validator->isValid('::127.0.0.1'));
+    }
 }
