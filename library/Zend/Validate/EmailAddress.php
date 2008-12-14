@@ -164,8 +164,9 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        // Split email address up
-        if (!preg_match('/^(.+)@([^@]+)$/', $valueString, $matches)) {
+        // Split email address up and disallow '..'
+        if ((strpos($valueString, '..') !== false) or
+            (!preg_match('/^(.+)@([^@]+)$/', $valueString, $matches))) {
             $this->_error(self::INVALID);
             return false;
         }
