@@ -762,4 +762,31 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         $adapter = $this->getTransferAdapter();
         return $adapter->isFiltered($this->getName());
     }
+
+    /**
+     * Retrieve error messages and perform translation and value substitution
+     *
+     * @return array
+     */
+    protected function _getErrorMessages()
+    {
+        $translator = $this->getTranslator();
+        $messages   = $this->getErrorMessages();
+        $value      = $this->getFileName();
+        foreach ($messages as $key => $message) {
+            if (null !== $translator) {
+                $message = $translator->translate($message);
+            }
+            if ($this->isArray() || is_array($value)) {
+                $aggregateMessages = array();
+                foreach ($value as $val) {
+                    $aggregateMessages[] = str_replace('%value%', $val, $message);
+                }
+                $messages[$key] = $aggregateMessages;
+            } else {
+                $messages[$key] = str_replace('%value%', $value, $message);
+            }
+        }
+        return $messages;
+    }
 }
