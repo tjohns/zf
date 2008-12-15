@@ -137,7 +137,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $reflector = $view->getAllPaths();
         $paths     = $this->_filterPath($reflector[$pathType]);
-
+        
         // test default helper path
         $this->assertType('array', $paths);
         if ('script' == $pathType) {
@@ -150,7 +150,12 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
             if ($testReadability) {
                 $path = current($paths[$prefix]);
-                $this->assertTrue(Zend_Loader::isReadable($path));
+                
+                if (substr(PHP_OS, 0, 3) != 'WIN') {
+                	$this->assertTrue(Zend_Loader::isReadable($path));
+                } else {
+                	$this->assertTrue(is_dir($path));
+                }
             }
         }
     }
