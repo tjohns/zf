@@ -178,7 +178,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         // Perform request
         $client->testFunc2('World');
 
-        $expectedRequest = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+        $expectedRequest = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
                          . '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" '
                          .               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                          .               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
@@ -188,7 +188,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
                          .             '<who xsi:type="xsd:string">World</who>'
                          .         '</env:testFunc2>'
                          .     '</env:Body>'
-                         . '</env:Envelope>' . PHP_EOL;
+                         . '</env:Envelope>' . "\n";
 
         $this->assertEquals($client->getLastRequest(), $expectedRequest);
     }
@@ -203,7 +203,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         // Perform request
         $client->testFunc2('World');
 
-        $expectedResponse = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+        $expectedResponse = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
                           . '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" '
                           .               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
                           .               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
@@ -214,7 +214,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
                           .             '<testFunc2Return xsi:type="xsd:string">Hello World!</testFunc2Return>'
                           .         '</env:testFunc2Response>'
                           .     '</env:Body>'
-                          . '</env:Envelope>' . PHP_EOL;
+                          . '</env:Envelope>' . "\n";
 
         $this->assertEquals($client->getLastResponse(), $expectedResponse);
     }
