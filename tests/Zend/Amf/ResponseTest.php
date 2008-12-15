@@ -556,20 +556,6 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mockResponse, $testResponse);
     }
 
-    public function testPhpMixedArraySerializedToAmf0Array()
-    {
-        $data = array("one", "two" => "two");
-        $newBody = new Zend_Amf_Value_MessageBody('/1/onResult',null,$data);
-        $this->_response->setObjectEncoding(0x00);
-        $this->_response->addAmfBody($newBody);
-        $this->_response->finalize();
-        $testResponse = $this->_response->getResponse();
-        // Load the expected response.
-        $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/mixedArrayAmf0Response.bin');
-        // Check that the response matches the expected serialized value
-        $this->assertEquals($mockResponse, $testResponse);
-    }
-
     /**
      * Check to make sure that we can place arrays in arrays.
      *
@@ -589,20 +575,47 @@ class Zend_Amf_ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($mockResponse, $testResponse);
 
     }
-
-    public function testPhpStringArraySerializedToAmf0MixedArray()
+    
+    /**
+     * Allow sparse arrays to be retruned to Actionscript without loosing the keys. 
+     * 
+     * @group ZF-5094
+     */
+    public function testPhpSparseArraySerializedToAmf0Array()
     {
-        $data = array("one" =>"one", "two" => "two");
+        $data = array(1 => 'foo', 5 => 'bar');
         $newBody = new Zend_Amf_Value_MessageBody('/1/onResult',null,$data);
         $this->_response->setObjectEncoding(0x00);
         $this->_response->addAmfBody($newBody);
         $this->_response->finalize();
         $testResponse = $this->_response->getResponse();
         // Load the expected response.
-        $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/stringArrayAmf0Response.bin');
+        $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/sparseArrayAmf0Response.bin');
         // Check that the response matches the expected serialized value
         $this->assertEquals($mockResponse, $testResponse);
+        
     }
+    
+    /**
+     * Test to convert string keyed arrays are converted to objects so that we do not loose
+     * the key refrence in the associative array. 
+     * 
+     * @group ZF-5094
+     */
+    public function testPhpStringKeyArrayToAmf0Object()
+    {
+        $data = array('foo' => 5, 'bar' => 23);
+        $newBody = new Zend_Amf_Value_MessageBody('/1/onResult',null,$data);
+        $this->_response->setObjectEncoding(0x00);
+        $this->_response->addAmfBody($newBody);
+        $this->_response->finalize();
+        $testResponse = $this->_response->getResponse();
+        // Load the expected response.
+        $mockResponse = file_get_contents(dirname(__FILE__) .'/Response/mock/stringKeyArrayAmf0Response.bin');
+        // Check that the response matches the expected serialized value
+        $this->assertEquals($mockResponse, $testResponse);
+        
+    }   
 
 	/**
      * PHP Object to Amf0 Object

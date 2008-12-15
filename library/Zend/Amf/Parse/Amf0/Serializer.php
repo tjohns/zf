@@ -128,12 +128,19 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
                     $markerType = Zend_Amf_Constants::AMF0_NULL;
                     break;
                 case (is_array($data)):
-                    // check if it is a mixed typed array
+                    // check if it is an associative array
+                    $i = 0;
                     foreach (array_keys($data) as $key) {
-                        if (!is_numeric($key)) {
-                            $markerType = Zend_Amf_Constants::AMF0_MIXEDARRAY;
-                            break;
-                        }
+                        // check if it contains non-integer keys
+                        if (!is_numeric($key) || intval($key) != $key) { 
+                            $markerType = Zend_Amf_Constants::AMF0_OBJECT; 
+                            break; 
+                            // check if it is a sparse indexed array
+                         } else if ($key != $i) { 
+                             $markerType = Zend_Amf_Constants::AMF0_MIXEDARRAY; 
+                             break; 
+                         }
+                         $i++;
                     }
                     // Dealing with a standard numeric array
                     if(!$markerType){
