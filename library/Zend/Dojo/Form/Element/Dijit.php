@@ -163,6 +163,7 @@ abstract class Zend_Dojo_Form_Element_Dijit extends Zend_Form_Element
         if (empty($decorators)) {
             $this->addDecorator('DijitElement')
                  ->addDecorator('Errors')
+                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'))
                  ->addDecorator('HtmlTag', array('tag' => 'dd'))
                  ->addDecorator('Label', array('tag' => 'dt'));
         }
