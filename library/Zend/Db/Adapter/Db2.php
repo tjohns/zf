@@ -316,15 +316,15 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         if ($schema === null && $this->_config['schema'] != null) {
             $schema = $this->_config['schema'];
         }
-        
-        // take the most general case and assume no z/OS
-        // since listTables() takes no parameters
-        $stmt = db2_tables($this->_connection);
 
         $tables = array();
 
         if (!$this->_isI5) {
-            $stmt = db2_tables($this->_connection, NULL, $schema);
+            if ($schema) {
+                $stmt = db2_tables($this->_connection, null, $schema);
+            } else {
+                $stmt = db2_tables($this->_connection);
+            }
             while ($row = db2_fetch_assoc($stmt)) {
                 $tables[] = $row['TABLE_NAME'];
             }
@@ -332,7 +332,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             $tables = $this->_i5listTables();
         }
 
-        return $tables;
+        return $tables; 
     }
 
 
