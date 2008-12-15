@@ -412,6 +412,105 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
+     * @group ZF-5146
+     */
+    public function testAdapterLobAsString()
+    {
+        $this->assertFalse($this->_db->getLobAsString());
+        $this->_db->setLobAsString(true);
+        $this->assertTrue($this->_db->getLobAsString());
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterLobAsStringFromDriverOptions()
+    {
+        $params = $this->_util->getParams();
+        $params['driver_options'] = array(
+            'lob_as_string' => true
+        );
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $this->assertTrue($db->getLobAsString());
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchRow()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $value = $this->_db->fetchRow("SELECT * FROM $documents WHERE $document_id = 1");
+        $this->assertType('OCI-Lob', $value['doc_clob']);
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $lob = $value['doc_clob'];
+        $this->assertEquals($expected, $lob->read($lob->size()));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchRowLobAsString()
+    {
+        $this->_db->setLobAsString(true);
+        parent::testAdapterReadClobFetchRow();
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchAssoc()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $value = $this->_db->fetchAssoc("SELECT * FROM $documents WHERE $document_id = 1");
+        $this->assertType('OCI-Lob', $value[1]['doc_clob']);
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $lob = $value[1]['doc_clob'];
+        $this->assertEquals($expected, $lob->read($lob->size()));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchAssocLobAsString()
+    {
+        $this->_db->setLobAsString(true);
+        parent::testAdapterReadClobFetchAssoc();
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchOne()
+    {
+        $documents = $this->_db->quoteIdentifier('zfdocuments');
+        $document_id = $this->_db->quoteIdentifier('doc_id');
+        $document_clob = $this->_db->quoteIdentifier('doc_clob');
+        $value = $this->_db->fetchOne("SELECT $document_clob FROM $documents WHERE $document_id = 1");
+        $this->assertType('OCI-Lob', $value);
+        $expected = 'this is the clob that never ends...'.
+                    'this is the clob that never ends...'.
+                    'this is the clob that never ends...';
+        $lob = $value;
+        $this->assertEquals($expected, $lob->read($lob->size()));
+    }
+
+    /**
+     * @group ZF-5146
+     */
+    public function testAdapterReadClobFetchOneLobAsString()
+    {
+        $this->_db->setLobAsString(true);
+        parent::testAdapterReadClobFetchOne();
+    }
+
+    /**
      * Used by _testAdapterOptionCaseFoldingNatural()
      * DB2 and Oracle return identifiers in uppercase naturally,
      * so those test suites will override this method.
