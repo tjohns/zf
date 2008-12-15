@@ -12,7 +12,7 @@
             Returns <code>true</code> if and only if <code>$value</code> contains only alphabetic and digit characters.
             This validator includes an option to also consider white space characters as valid.
         </para>
-        
+
         <note>
             <para>
                 The alphabetic characters mean characters that makes up words in each language.
@@ -20,7 +20,7 @@
                 The language is specified by Zend_Locale.
             </para>
         </note>
-        
+
     </sect2>
 
     <sect2 id="zend.validate.set.alpha">
@@ -150,13 +150,16 @@
     <sect2 id="zend.validate.set.string_length">
         <title>StringLength</title>
         <para>
-            Returns <code>true</code> if and only if the string length of <code>$value</code> is at least a minimum
-            and no greater than a maximum (when the max option is not <code>null</code>). Since version 1.5.0, the
-            <code>setMin()</code> method throws an exception if the minimum length is set to a value greater than the
-            set maximum length, and the <code>setMax()</code> method throws an exception if the maximum length is set
-            to a value less than than the set minimum length. Since version 1.0.2, this class supports UTF-8 and other
+            Returns <code>true</code> if and only if the string length of <code>$value</code> is at
+            least a minimum and no greater than a maximum (when the max option is not
+            <code>null</code>). The <code>setMin()</code> method throws an exception if the minimum
+            length is set to a value greater than the set maximum length, and the
+            <code>setMax()</code> method throws an exception if the maximum length is set to a
+            value less than than the set minimum length. This class supports UTF-8 and other
             character encodings, based on the current value of
             <ulink url="http://www.php.net/manual/en/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>.
+            If you need a different encoding you can set it with the accessor methods getEncoding
+            and setEncoding.
         </para>
     </sect2>
 
