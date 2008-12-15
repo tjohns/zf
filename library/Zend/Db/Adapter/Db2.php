@@ -721,7 +721,11 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         $this->_connect();
         $server_info = db2_server_info($this->_connection);
         if ($server_info !== false) {
-            return $server_info->DBMS_VER;
+            $version = $server_info->DBMS_VER;
+            if ($this->_isI5) {
+                $version = (int) substr($version, 0, 2) . '.' . (int) substr($version, 2, 2) . '.' . (int) substr($version, 4);
+            }
+            return $version;
         } else {
             return null;
         }
