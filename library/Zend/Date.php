@@ -758,7 +758,7 @@ class Zend_Date extends Zend_Date_DateObject
                      'second'    => $this->get(self::SECOND_SHORT),
                      'timezone'  => $this->get(self::TIMEZONE),
                      'timestamp' => $this->get(self::TIMESTAMP),
-                     'weekday'   => $this->get(self::WEEKDAY_DIGIT),
+                     'weekday'   => $this->get(self::WEEKDAY_8601),
                      'dayofyear' => $this->get(self::DAY_OF_YEAR),
                      'week'      => $this->get(self::WEEK),
                      'gmtsecs'   => $this->get(self::TIMEZONE_SECS));
