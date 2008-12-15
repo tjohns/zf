@@ -401,18 +401,16 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
             // DB2 On I5 specific query
             $sql = "SELECT DISTINCT C.TABLE_SCHEMA, C.TABLE_NAME, C.COLUMN_NAME, C.ORDINAL_POSITION,
-                C.DATA_TYPE, C.COLUMN_DEFAULT, C.NULLS ,C.LENGTH, C.SCALE,
-                LEFT(C.IDENTITY,1) AS IDENTITYCOL,
-                LEFT(TC.TYPE, 1) AS TABCONSTTYPE, K.COLSEQ
-                FROM QSYS2.SYSCOLUMNS C
-                LEFT JOIN QSYS2.SYSCST TC
-                ON TC.TABLE_SCHEMA = C.TABLE_SCHEMA
-                AND TC.TABLE_NAME = C.TABLE_NAME
-                AND TC.TYPE = 'PRIMARY KEY'
-                LEFT JOIN QSYS2.SYSKEYS K
-                ON K.INDEX_SCHEMA = C.TABLE_SCHEMA
-                AND K.INDEX_NAME = C.TABLE_NAME
-                AND K.COLUMN_NAME = C.COLUMN_NAME
+                C.DATA_TYPE, C.COLUMN_DEFAULT, C.NULLS ,C.LENGTH, C.SCALE, LEFT(C.IDENTITY,1),
+                LEFT(tc.TYPE, 1) AS tabconsttype, k.COLSEQ
+                FROM QSYS2.SYSCOLUMNS C     
+                LEFT JOIN (QSYS2.syskeycst k JOIN QSYS2.SYSCST tc
+                    ON (k.TABLE_SCHEMA = tc.TABLE_SCHEMA
+                      AND k.TABLE_NAME = tc.TABLE_NAME
+                      AND LEFT(tc.type,1) = 'P'))                  
+                    ON (C.TABLE_SCHEMA = k.TABLE_SCHEMA
+                       AND C.TABLE_NAME = k.TABLE_NAME
+                       AND C.COLUMN_NAME = k.COLUMN_NAME)                          
                 WHERE "
                  . $this->quoteInto('UPPER(C.TABLE_NAME) = UPPER(?)', $tableName);
 
@@ -420,7 +418,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 $sql .= $this->quoteInto(' AND UPPER(C.TABLE_SCHEMA) = UPPER(?)', $schemaName);
             }
 
-            $sql .= " ORDER BY C.ORDINAL_POSITION FOR READ ONLY";
+            $sql .= " ORDER BY C.ORDINAL_POSITION FOR FETCH ONLY";
         }
 
         $desc = array();
@@ -752,9 +750,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     protected function _determineI5()
     {
         // first us the compiled flag.
-    	$this->_isI5 = (PHP_OS === 'AIX') ? true : false;
+        $this->_isI5 = (PHP_OS === 'AIX') ? true : false;
 
-    	// if this is set, then us it
+        // if this is set, then us it
         if (isset($this->_config['os'])){
             if (strtolower($this->_config['os']) === 'i5') {
                 $this->_isI5 = true;
