@@ -218,6 +218,99 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->_testAdapterAlternateStatement('Test_Db2Statement');
     }
 
+    /**
+     * OVERRIDDEN COMMON TEST CASE
+     *
+     * This test case will produce a value with two internally set values,
+     * autocommit = 1
+     * DB2_ATTR_CASE = 0
+     */
+    public function testAdapterZendConfigEmptyDriverOptions()
+    {
+        Zend_Loader::loadClass('Zend_Config');
+        $params = $this->_util->getParams();
+        $params['driver_options'] = '';
+        $params = new Zend_Config($params);
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        $config = $db->getConfig();
+        
+        $expectedValue = array(
+            'autocommit' => 1,
+            'DB2_ATTR_CASE' => 0
+            );
+        $this->assertEquals($expectedValue, $config['driver_options']);
+    }
+    
+    /**
+     * OVERRIDDEN COMMON TEST CASE
+     * 
+     * Test that quote() takes an array and returns
+     * an imploded string of comma-separated, quoted elements.
+     */
+    public function testAdapterQuoteArray()
+    {
+        $array = array("it's", 'all', 'right!');
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+    }
+    
+    /**
+     * OVERRRIDEEN COMMON TEST CASE
+     * 
+     * test that quote() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteDoubleQuote()
+    {
+        $string = 'St John"s Wort';
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John\"s Wort'", $value);
+    }
+    
+    /**
+     * OVERRIDDEN FROM COMMON TEST CASE
+     * 
+     * test that quote() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteSingleQuote()
+    {
+        $string = "St John's Wort";
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John''s Wort'", $value);
+    }
+    
+    /**
+     * OVERRIDDEN FROM COMMON TEST CASE
+     * 
+     * test that quoteInto() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoDoubleQuote()
+    {
+        $string = 'id=?';
+        $param = 'St John"s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id='St John\"s Wort'", $value);
+    }
+
+    /**
+     * OVERRIDDEN FROM COMMON TEST CASE
+     * 
+     * test that quoteInto() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoSingleQuote()
+    {
+        $string = 'id = ?';
+        $param = 'St John\'s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id = 'St John's Wort'", $value);
+    }
+    
     public function getDriver()
     {
         return 'Db2';

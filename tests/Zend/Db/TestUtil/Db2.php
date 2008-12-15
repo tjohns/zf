@@ -151,14 +151,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
                 . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
         }
 
-        //echo 'This is the result of fetchCol of ' . $sequenceQuery . PHP_EOL;
-
         $seqList = $this->_db->fetchCol($sequenceQuery);
-
-
-        //var_dump($seqList);
-
-        //echo 'Checking for ' . $sequenceName . ' in the array above';
 
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return null;
@@ -176,12 +169,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
                 . $this->_db->quoteInto(' WHERE UPPER(S.SEQNAME) = UPPER(?)', $sequenceName);
         }
 
-        //echo 'In _getSqlDropSequence: ' . $sequenceQuery . PHP_EOL;
-
         $seqList = $this->_db->fetchCol($sequenceQuery);
-
-        //echo 'The result of fetchCol looking for (' . $sequenceName . '): ';
-        //var_dump($seqList);
 
         if (in_array(strtoupper($sequenceName), $seqList)) {
             return 'DROP SEQUENCE ' . $this->_db->quoteIdentifier($sequenceName, true) . ' RESTRICT';
@@ -192,12 +180,7 @@ class Zend_Db_TestUtil_Db2 extends Zend_Db_TestUtil_Common
     protected function _rawQuery($sql)
     {
         $conn = $this->_db->getConnection();
-        //echo 'Attempting to run: ' . $sql . PHP_EOL;
         $result = @db2_exec($conn, $sql);
-        //var_dump($result);
-        if ($result === false) {
-        	//echo 'ERROR: ' . db2_stmt_errormsg();
-        }
 
         if (!$result) {
             $e = db2_stmt_errormsg();

@@ -60,6 +60,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      * protocol   => (string)  Protocol to use, defaults to "TCPIP"
      * port       => (integer) Port number to use for TCP/IP if protocol is "TCPIP"
      * persistent => (boolean) Set TRUE to use a persistent connection (db2_pconnect)
+     * os         => (string)  This should be set to 'i5' if the db is on an os400/i5
+     * schema     => (string)  The default schema the connection should use
      *
      * @var array
      */
@@ -71,7 +73,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         'port'         => '50000',
         'protocol'     => 'TCPIP',
         'persistent'   => false,
-        'os'           => null
+        'os'           => null,
+        'schema'       => null
     );
 
     /**
@@ -310,21 +313,23 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     {
         $this->_connect();
 
+        if ($schema === null && $this->_config['schema'] != null) {
+            $schema = $this->_config['schema'];
+        }
+        
         // take the most general case and assume no z/OS
         // since listTables() takes no parameters
         $stmt = db2_tables($this->_connection);
 
         $tables = array();
 
-        if ($schema || !$this->_isI5) {
+        if (!$this->_isI5) {
             $stmt = db2_tables($this->_connection, NULL, $schema);
             while ($row = db2_fetch_assoc($stmt)) {
                 $tables[] = $row['TABLE_NAME'];
             }
         } else {
-            if ($this->_isI5) {
-                $tables = $this->_i5listTables();
-            }
+            $tables = $this->_i5listTables();
         }
 
         return $tables;
@@ -366,6 +371,10 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
         // Ensure the connection is made so that _isI5 is set
         $this->_connect();
 
+        if ($schemaName === null && $this->_config['schema'] != null) {
+            $schemaName = $this->_config['schema'];
+        }
+        
         if (!$this->_isI5) {
 
             $sql = "SELECT DISTINCT c.tabschema, c.tabname, c.colname, c.colno,
@@ -747,8 +756,11 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 
     	// if this is set, then us it
         if (isset($this->_config['os'])){
-            if($this->_config['os'] === 'i5') {
+            if (strtolower($this->_config['os']) === 'i5') {
                 $this->_isI5 = true;
+            } else {
+                // any other value passed in, its null
+                $this->_isI5 = false;
             }
         }
 
@@ -771,9 +783,9 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             if ($schema['TABLE_SCHEM'] !== null) {
                 // list of the tables which belongs to the selected library
                 $tablesStatment = db2_tables($this->_connection, NULL, $schema['TABLE_SCHEM']);
-                if (is_resource($tablesStatment)){
-                    while($rowTables = db2_fetch_assoc($tablesStatment) ){
-                        if($rowTables['TABLE_NAME'] !== null) {
+                if (is_resource($tablesStatment)) {
+                    while ($rowTables = db2_fetch_assoc($tablesStatment) ) {
+                        if ($rowTables['TABLE_NAME'] !== null) {
                             $tables[] = $rowTables['TABLE_NAME'];
                         }
                     }
