@@ -26,6 +26,19 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 class Zend_Db_Table_Select_Db2Test extends Zend_Db_Table_Select_TestCommon
 {
 
+    /**
+     * ZF-5234: this test must be done on string field
+     */
+    protected function _selectColumnWithColonQuotedParameter ()
+    {
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $select = $this->_db->select()
+                            ->from('zfproducts')
+                            ->where($product_name . ' = ?', "as'as:x");
+        return $select;
+    }
+    
     public function testSelectJoinCross()
     {
         $this->markTestSkipped($this->getDriver() . ' does not support CROSS JOIN');

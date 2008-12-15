@@ -31,6 +31,19 @@ class Zend_Db_Select_Db2Test extends Zend_Db_Select_TestCommon
         $this->markTestSkipped($this->getDriver() . ' does not support CROSS JOIN');
     }
 
+    /**
+     * ZF-5234: this test must be done on string field
+     */
+    protected function _selectColumnWithColonQuotedParameter ()
+    {
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $select = $this->_db->select()
+                            ->from('zfproducts')
+                            ->where($product_name . ' = ?', "as'as:x");
+        return $select;
+    }
+    
     public function getDriver()
     {
         return 'Db2';
