@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11565 -->
+<!-- EN-Revision: 13225 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -23,6 +23,14 @@
 
         <listitem>
             <para>
+                <code>Crc32</code>: このバリデータはファイルの内容の crc32 ハッシュ値をチェックします。
+                <code>Hash</code> バリデータをもとにしたもので、
+                Crc32 のみをサポートする便利でシンプルなバリデータを提供します。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
                 <code>ExcludeExtension</code>: このバリデータはファイルの拡張子をチェックします。
                 渡されたファイルの拡張子が定義済みのものだった場合にエラーをスローします。
                 これにより、特定の拡張子だけを除外できるようになります。
@@ -31,9 +39,9 @@
 
         <listitem>
             <para>
-                <code>ExcludeMimeType</code>: このバリデータはファイルの mimetype をチェックします。
-                mimetype の種類を検証し、指定したファイルの mimetype
-                がそれと一致するときにエラーをスローします。
+                <code>ExcludeMimeType</code>: このバリデータはファイルの MIME 型をチェックします。
+                MIME 型の種類を検証し、指定したファイルの MIME
+                型がそれと一致するときにエラーをスローします。
             </para>
         </listitem>
 
@@ -87,9 +95,24 @@
 
         <listitem>
             <para>
-                <code>MimeType</code>: このバリデータはファイルの mimetype をチェックします。
-                mimetype の種類を検証し、指定したファイルの mimetype
-                がそれと一致しないときにエラーをスローします。
+                <code>Hash</code>: このバリデータはファイルの内容のハッシュ値をチェックします。
+                複数のアルゴリズムをサポートしています。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Md5</code>: このバリデータはファイルの内容の md5 ハッシュ値をチェックします。
+                <code>Hash</code> バリデータをもとにしたもので、
+                Md5 のみをサポートする便利でシンプルなバリデータを提供します。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>MimeType</code>: このバリデータはファイルの MIME 型をチェックします。
+                MIME 型の種類を検証し、指定したファイルの MIME
+                型がそれと一致しないときにエラーをスローします。
             </para>
         </listitem>
 
@@ -97,6 +120,14 @@
             <para>
                 <code>NotExists</code>: このバリデータはファイルの存在をチェックします。
                 指定したファイルが存在する場合にエラーをスローします。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>Sha1</code>: このバリデータはファイルの内容の sha1 ハッシュ値をチェックします。
+                <code>Hash</code> バリデータをもとにしたもので、
+                sha1 のみをサポートする便利でシンプルなバリデータを提供します。
             </para>
         </listitem>
 
@@ -125,7 +156,7 @@
         <para>
             バリデータの使い方はきわめて簡単です。
             バリデータを追加したり操作したりするには、次のメソッドを使用します。
-        </para>        
+        </para>
 
         <itemizedlist>
             <listitem>
@@ -214,13 +245,13 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 20000);
 
 // ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定します
-$upload->addValidator('Size', false, array(20, 20000));
+$upload->addValidator('Size', false, array('min' => 20, 'max' => 20000));
 
 // ファイルサイズの最小値を 20 バイト、最大値を 20000 バイトに設定し、
 // 同時にファイルの数も設定します
 $upload->setValidators(array(
-    'Size'  => array(20, 20000), 
-    'Count' => array(1, 3),
+    'Size'  => array('min' => 20, 'max' => 20000),
+    'Count' => array('min' => 1, 'max' => 3),
 ));
 ]]>
             </programlisting>
@@ -371,11 +402,8 @@ if ($upload->isValid()) {
         </itemizedlist>
 
         <para>
-            このバリデータは、両方のオプションを指定してインスタンス化することができます。
-            最初のオプションが <code>min</code>、
-            2 番目のオプションが <code>max</code> となります。
-            オプションをひとつだけ指定した場合は、<code>max</code>
-            とみなされます。しかし、後から <code>setMin()</code> や
+            文字列あるいは整数値を指定してインスタンス化すると、その値は
+            <code>max</code> とみなされます。あるいは、後から <code>setMin()</code> や
             <code>setMax()</code> でオプションを設定することもできますし、
             <code>getMin()</code> や <code>getMax()</code>
             で設定内容を取得することもできます。
@@ -391,7 +419,7 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Count', false, 2);
 
 // 最大でも 5 個、少なくとも 1 つのファイルが返されるよう制限します
-$upload->addValidator('Count', false, array(1, 5);
+$upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
 ]]>
             </programlisting>
 
@@ -402,6 +430,46 @@ $upload->addValidator('Count', false, array(1, 5);
                 最大値を超えたファイルはエラーを返します。
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.crc32">
+        <title><emphasis role="strong">Crc32</emphasis> バリデータ</title>
+
+        <para>
+            <code>Crc32</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
+            このバリデータは、PHP の hash 拡張モジュールの crc32 アルゴリズムを使用します。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: 任意のキーあるいは数値添字配列を設定します。
+                    この値を、検証対象のハッシュと比較します。
+                </para>
+
+                <para>
+                    異なるキーを使用して複数のハッシュを設定することができます。
+                    すべてのキーの内容をチェックし、
+                    どれにも一致しなかった場合にのみ検証が失敗します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.crc32.example">
+            <title>Crc32 バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// アップロードされたファイルのハッシュが指定したものと一致するかどうかをチェックします
+$upload->addValidator('Crc32', false, '3b3652f');
+
+// ふたつの異なるハッシュを指定します
+$upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
@@ -416,7 +484,8 @@ $upload->addValidator('Count', false, array(1, 5);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>extension</code>: 指定したファイルがこの拡張子を使用していないかどうかをチェックします。
+                    <code>*</code>: 任意のキーあるいは数値添字配列を指定します。
+                    指定したファイルがこの拡張子を使用していないかどうかをチェックします。
                 </para>
             </listitem>
 
@@ -454,6 +523,12 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 
 // 拡張子 php あるいは exe のファイルを許可しない設定を配列記法で行います
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
+
+ // 大文字小文字を区別するチェックを行います
+$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
+$upload->addValidator('ExcludeExtension',
+                      false,
+                      array('php', 'exe', 'case' => true));
 ]]>
             </programlisting>
 
@@ -471,27 +546,28 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
         <para>
             <code>ExcludeMimeType</code> バリデータは、
-            転送されるファイルの mimetype をチェックします。
+            転送されるファイルの MIME 型をチェックします。
             次のオプションをサポートしています。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>MimeType</code>: 検証したい mimetype 形式を設定します。
+                    <code>*</code>: 任意のキー、あるいは数値添字配列を指定します。
+                    検証したい MIME 型を設定します。
                 </para>
 
                 <para>
-                    このオプションで、許可したくないファイルの mimetype を定義することができます。
+                    このオプションで、許可したくないファイルの MIME 型を定義することができます。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            このバリデータで複数の mimetype を指定するには、
+            このバリデータで複数の MIME 型を指定するには、
             カンマ区切りの文字列あるいは配列を使用します。
             <code>setMimeType()</code>、<code>addMimeType()</code> および
-            <code>getMimeType()</code> といったメソッドで mimetype の設定や取得が可能です。
+            <code>getMimeType()</code> といったメソッドで MIME 型の設定や取得が可能です。
         </para>
 
         <example id="zend.file.transfer.validators.excludemimetype.example">
@@ -500,10 +576,10 @@ $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer();
 
-// すべてのファイルで gif 画像の mimetype を許可しません
+// すべてのファイルで gif 画像の MIME 型を許可しません
 $upload->addValidator('ExcludeMimeType', false, 'image/gif');
 
-// すべてのファイルで gif 画像および jpg 画像の mimetype を許可しません
+// すべてのファイルで gif 画像および jpg 画像の MIME 型を許可しません
 $upload->addValidator('ExcludeMimeType', false, array('image/gif', 'image/jpeg');
 
 // すべてのファイルで画像を許可しません
@@ -513,19 +589,19 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
         </example>
 
         <para>
-            上の例で示したように、複数の mimetype をひとつのグループとして扱うこともできます。
-            画像ファイルならすべて許可したいという場合は、mimetype に 'image' と指定します。
+            上の例で示したように、複数の MIME 型をひとつのグループとして扱うこともできます。
+            画像ファイルならすべて許可したいという場合は、MIME 型に 'image' と指定します。
             'image' 以外にも 'audio'、'video'、'text などが使用可能です。
         </para>
 
         <note>
             <para>
-                mimetype のグループを拒否してしまうと、意図していないものも含めて
+                MIME 型のグループを拒否してしまうと、意図していないものも含めて
                 そのグループのすべての形式のファイルを拒否してしまうことに注意しましょう。
                 たとえば 'image' を拒否したら 'image/jpeg' や 'image/vasa'
                 などすべての画像形式を拒否することになります。
                 すべての形式を拒否していいのかどうか不安な場合は、
-                グループ指定ではなく個別の mimetype を指定するようにしましょう。
+                グループ指定ではなく個別の MIME 型を指定するようにしましょう。
             </para>
         </note>
     </sect2>
@@ -542,7 +618,8 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>directory</code>: ファイルが指定したディレクトリに存在するかどうかをチェックします。
+                    <code>*</code>: 任意のキーあるいは数値添字配列を指定し、
+                    ファイルが指定したディレクトリに存在するかどうかをチェックします。
                 </para>
             </listitem>
         </itemizedlist>
@@ -564,7 +641,9 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Exists', false, '\temp');
 
 // ふたつのディレクトリを配列記法で追加します
-$upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
+$upload->addValidator('Exists',
+                      false,
+                      array('\home\images', '\home\uploads'));
 ]]>
             </programlisting>
 
@@ -589,7 +668,8 @@ $upload->addValidator('Exists', false, array('\home\images', '\home\uploads'));
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>extension</code>: 指定したファイルがこの拡張子かどうかをチェックします。
+                    <code>*</code>: 任意のキーあるいは数値添字配列を設定し、
+                    指定したファイルがこの拡張子かどうかをチェックします。
                 </para>
             </listitem>
 
@@ -629,9 +709,9 @@ $upload->addValidator('Extension', false, 'jpg,png');
 $upload->addValidator('Extension', false, array('jpg', 'png'));
 
 // 大文字小文字を区別したチェックを行います
-$upload = new Zend_File_Transfer('mo,png', true);
+$upload->addValidator('Extension', false, array('mo', 'png', 'case' => true));
 if (!$upload->isValid('C:\temp\myfile.MO')) {
-    print 'Not valid due to MO instead of mo';
+    print 'Not valid because MO and mo do not match with case sensitivity;
 }
 ]]>
             </programlisting>
@@ -658,10 +738,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
             <listitem>
                 <para>
                     <code>min</code>: ファイルサイズの総合計の最小値を設定します。
-                </para>
-
-                <para>
-                    このオプションで、転送されるファイルの合計サイズの最小値を指定することができます。
+                    このオプションで、転送されるファイルの合計サイズの最小値を指定します。
                 </para>
             </listitem>
 
@@ -691,11 +768,9 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
         </itemizedlist>
 
         <para>
-            このバリデータは、両方のオプションを指定してインスタンス化することができます。
-            最初のオプションが <code>min</code>、
-            2 番目のオプションが <code>max</code> となります。
-            オプションをひとつだけ指定した場合は、<code>max</code>
-            とみなされます。しかし、後から <code>setMin()</code> や
+            文字列を指定してインスタンス化すると、その値は
+            <code>max</code> とみなされます。
+            後から <code>setMin()</code> や
             <code>setMax()</code> でオプションを設定することもできますし、
             <code>getMin()</code> や <code>getMax()</code>
             で設定内容を取得することもできます。
@@ -704,7 +779,8 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
         <para>
             サイズの指定には SI 記法も使えます。
             これは多くのオペレーティングシステムでもサポートされているものです。
-            20000 バイトと書くかわりに、<emphasis role="strong">20kB</emphasis>
+            <emphasis role="strong">20000 bytes</emphasis>
+            と書くかわりに、<emphasis role="strong">20kB</emphasis>
             とすることができるのです。すべての単位は、1024 単位に変換されます。
             使用できる単位は <code>kB</code>、<code>MB</code>、
             <code>GB</code>、<code>TB</code>、<code>PB</code> および <code>EB</code>
@@ -717,14 +793,20 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer();
 
-// ファイルサイズの合計を 40000 バイトまでに制限します
+// アップロードされるファイルサイズの合計を 40000 バイトまでに制限します
 $upload->addValidator('FilesSize', false, 40000);
 
-// ファイルサイズの合計を最大 4MB、最小 10kB に制限します
-$upload->addValidator('FilesSize', false, array('10kB', '4MB');
+// アップロードされるファイルサイズの合計を最大 4MB、最小 10kB に制限します
+$upload->addValidator('FilesSize',
+                      false,
+                      array('min' => '10kB', 'max' => '4MB'));
 
 // さきほどと同じですが、結果をプレーンなファイルサイズで返します
-$upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
+$upload->addValidator('FilesSize',
+                      false,
+                      array('min' => '10kB',
+                            'max' => '4MB',
+                            'bytestring' => false));
 ]]>
             </programlisting>
 
@@ -751,19 +833,11 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
                 <para>
                     <code>minheight</code>: 画像の高さの最小値を設定します。
                 </para>
-
-                <para>
-                    このオプションで、検証したい画像の高さの最小値を指定することができます。
-                </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>maxheight</code>: 画像の高さの最大値を設定します。
-                </para>
-
-                <para>
-                    このオプションで、検証したい画像の高さの最大値を指定することができます。
                 </para>
             </listitem>
 
@@ -771,28 +845,16 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
                 <para>
                     <code>minwidth</code>: 画像の幅の最小値を設定します。
                 </para>
-
-                <para>
-                    このオプションで、検証したい画像の幅の最小値を指定することができます。
-                </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>maxwidth</code>: 画像の幅の最大値を設定します。
                 </para>
-
-                <para>
-                    このオプションで、検証したい画像の幅の最大値を指定することができます。
-                </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            このバリデータは、これら 4 つのオプションを指定してインスタンス化することができます。
-            <code>minheight</code> あるいは <code>minwidth</code> を省略した場合は、
-            0 に設定されます。<code>maxwidth</code> あるいは <code>maxheight</code>
-            を省略した場合は、null に設定されます。しかし、後から
             <code>setImageMin()</code> や <code>setImageMax()</code>
             で最小値・最大値を設定することもできますし、
             <code>getMin()</code> や <code>getMax()</code>
@@ -817,21 +879,15 @@ $upload->addValidator('FilesSize', false, array('10kB', '4MB', false);
 $upload = new Zend_File_Transfer();
 
 // 画像の高さを 100-200 ピクセル、幅を 40-80 ピクセルに制限します
-$upload->addValidator('ImageSize', false, 40, 100, 80, 200);
-
-// 配列表記を使用します
-$upload->addValidator('ImageSize', false, array(40, 100, 80, 200);
-
-// 連想配列表記を使用します
-$upload->addValidator('ImageSize', false, 
-                      array('minwidth' => 40, 
-                            'maxwidth' => 80, 
-                            'minheight' => 100, 
+$upload->addValidator('ImageSize', false,
+                      array('minwidth' => 40,
+                            'maxwidth' => 80,
+                            'minheight' => 100,
                             'maxheight' => 200)
                       );
 
-// 別の画像サイズを設定します
-$upload->setImageWidth(20, 200);
+// 検証用の幅をリセットします
+$upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
 ]]>
             </programlisting>
         </example>
@@ -869,10 +925,11 @@ $upload->addValidator('IsCompressed', false, 'zip');
 
         <note>
             <para>
-                指定したファイルタイプが compression
-                型であるかどうかのチェックは行われないことに注意しましょう。
-                論理的にはおかしな話ですが、gif
-                ファイルがこのバリデータを通過するように設定することも可能です。
+                指定した MIME
+                タイプがアーカイブ型であるかどうかのチェックは行われないことに注意しましょう。
+                たとえば gif ファイルがこのバリデータを通過するように設定することも可能です。
+                アーカイブ型かどうかのチェックには 'MimeType'
+                バリデータを使用したほうが読みやすいコードとなります。
             </para>
         </note>
     </sect2>
@@ -909,12 +966,123 @@ $upload->addValidator('IsImage', false, 'jpeg');
 
         <note>
             <para>
-                指定したファイルタイプが image
-                型であるかどうかのチェックは行われないことに注意しましょう。
-                論理的にはおかしな話ですが、zip
-                ファイルがこのバリデータを通過するように設定することも可能です。
+                指定した MIME
+                タイプが image 型であるかどうかのチェックは行われないことに注意しましょう。
+                たとえば gif ファイルがこのバリデータを通過するように設定することも可能です。
+                image 型かどうかのチェックには 'MimeType'
+                バリデータを使用したほうが読みやすいコードとなります。
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.hash">
+        <title><emphasis role="strong">Hash</emphasis> バリデータ</title>
+
+        <para>
+            <code>Hash</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
+            このバリデータは、PHP の hash 拡張モジュールを使用します。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: 任意のキーあるいは数値添字配列を設定します。
+                    この値と、検証対象のハッシュとを比較します。
+                </para>
+
+                <para>
+                    配列形式で複数のハッシュを設定することができます。
+                    すべてのキーの内容をチェックし、
+                    どれにも一致しなかった場合にのみ検証が失敗します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>algorithm</code>: ハッシュの取得に使用するアルゴリズムを設定します。
+                </para>
+
+                <para>
+                    複数のアルゴリズムを設定するには、<code>addHash()</code>
+                    メソッドを複数回コールします。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.hash.example">
+            <title>Hash バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// アップロードされたファイルのハッシュが指定したものと一致するかどうかをチェックします
+$upload->addValidator('Hash', false, '3b3652f');
+
+// ふたつの異なるハッシュを指定します
+$upload->addValidator('Hash', false, array('3b3652f', 'e612b69'));
+
+// 別のアルゴリズムでチェックを行います
+$upload->addValidator('Hash',
+                      false,
+                      array('315b3cd8273d44912a7',
+                            'algorithm' => 'md5'));
+]]>
+            </programlisting>
+        </example>
+
+        <note>
+            <para>
+                このバリデータは、役 34 のハッシュアルゴリズムをサポートしています。
+                よく使われるものとしては 'crc32' や 'md5' そして 'sha1' があります。
+                サポートするアルゴリズムの一覧は、
+                <ulink url="http://php.net">php.net</ulink> の
+                <ulink url="http://php.net/hash_algos">hash_algos メソッド</ulink>
+                を参照ください。
+            </para>
+        </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.md5">
+        <title><emphasis role="strong">Md5</emphasis> バリデータ</title>
+
+        <para>
+            <code>Md5</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
+            このバリデータは、PHP の hash 拡張モジュールの md5 アルゴリズムを使用します。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: 任意のキーあるいは数値添字配列を設定します。
+                </para>
+
+                <para>
+                    配列形式で複数のハッシュを設定することができます。
+                    すべてのキーの内容をチェックし、
+                    どれにも一致しなかった場合にのみ検証が失敗します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.md5.example">
+            <title>Md5 バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// アップロードされたファイルのハッシュが指定したものと一致するかどうかをチェックします
+$upload->addValidator('Md5', false, '3b3652f336522365223');
+
+// ふたつの異なるハッシュを指定します
+$upload->addValidator('Md5',
+                      false,
+                      array('3b3652f336522365223',
+                            'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.mimetype">
@@ -922,27 +1090,48 @@ $upload->addValidator('IsImage', false, 'jpeg');
 
         <para>
             <code>MimeType</code> バリデータは、
-            転送されるファイルの mimetype をチェックします。
+            転送されるファイルの MIME 型をチェックします。
             次のオプションをサポートしています。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>MimeType</code>: 検証したい mimetype 形式を設定します。
+                    <code>*</code>: 任意のキーあるいは数値添字配列を指定します。
+                   検証したい MIME 型を設定します。
                 </para>
 
                 <para>
-                    このオプションで、許可したいファイルの mimetype を定義することができます。
+                    許可したいファイルの MIME 型を定義します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>magicfile</code>: 使用する magicfile。
+                </para>
+
+                <para>
+                    このオプションで、使用する magicfile を定義します。
+                    指定しなかったり空だったりした場合は、定数 MAGIC
+                    を使用します。このオプションは Zend Framework 1.7.1
+                    以降で使用可能です。
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            このバリデータで複数の mimetype を指定するには、
+            このバリデータで複数の MIME 型を指定するには、
             カンマ区切りの文字列あるいは配列を使用します。
             <code>setMimeType()</code>、<code>addMimeType()</code> および
-            <code>getMimeType()</code> といったメソッドで mimetype の設定や取得が可能です。
+            <code>getMimeType()</code> といったメソッドで MIME 型の設定や取得が可能です。
+        </para>
+
+        <para>
+            fileinfo が使用する magicfile を設定するには、オプション 'magicfile' を使用します。
+            さらに、<code>setMagicFile()</code> や <code>getMagicFile()</code>
+            といったメソッドで後から magicfile の設定や取得が可能です。
+            これらのメソッドは Zend Framework 1.7.1 以降で使用可能です。
         </para>
 
         <example id="zend.file.transfer.validators.mimetype.example">
@@ -951,32 +1140,38 @@ $upload->addValidator('IsImage', false, 'jpeg');
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer();
 
-// mimetype を制限し、gif 画像のみを許可するようにします
+// MIME 型を制限し、gif 画像のみを許可するようにします
 $upload->addValidator('MimeType', false, 'image/gif');
 
-// すべてのファイルが gif および jpeg 画像でなければならないように mimetype を制限します
+// すべてのファイルが gif および jpeg 画像でなければならないように MIME 型を制限します
 $upload->addValidator('MimeType', false, array('image/gif', 'image/jpeg');
 
-// すべてのファイルが画像であるように mimetype を制限します
+// すべてのファイルが画像であるように MIME 型を制限します
 $upload->addValidator('MimeType', false, 'image');
+
+// 別の magicfile を使用します
+$upload->addValidator('MimeType',
+                      false,
+                      array('image',
+                            'magicfile' => '/path/to/magicfile.mgx'));
 ]]>
             </programlisting>
         </example>
 
         <para>
-            上の例で示したように、複数の mimetype をひとつのグループとして扱うこともできます。
-            画像ファイルならすべて許可したいという場合は、mimetype に 'image' と指定します。
+            上の例で示したように、複数の MIME 型をひとつのグループとして扱うこともできます。
+            画像ファイルならすべて許可したいという場合は、MIME 型に 'image' と指定します。
             'image' 以外にも 'audio'、'video'、'text などが使用可能です。
         </para>
 
         <note>
             <para>
-                mimetype のグループを許可してしまうと、アプリケーション側で対応しているか否かにかかわらず
+                MIME 型のグループを許可してしまうと、アプリケーション側で対応しているか否かにかかわらず
                 そのグループのすべての形式のファイルを許可してしまうことに注意しましょう。
                 たとえば 'image' を許可したら 'image/xpixmap' や 'image/vasa'
                 も受け付けることになりますが、おそらくこれは問題となるでしょう。
                 アプリケーション側ですべての形式を処理できるかどうか不安なら、
-                グループ指定ではなく個別の mimetype を指定するようにしましょう。
+                グループ指定ではなく個別の MIME 型を指定するようにしましょう。
             </para>
         </note>
 
@@ -985,13 +1180,13 @@ $upload->addValidator('MimeType', false, 'image');
                 このコンポーネントは、もし <code>fileinfo</code>
                 拡張モジュールが使用可能ならそれを使用します。使用できない場合は
                 <code>mime_content_type</code> 関数を使用します。
-                この関数コールが失敗した場合は、HTTP で渡された mimetype を使用します。
+                この関数コールが失敗した場合は、HTTP で渡された MIME 型を使用します。
             </para>
 
             <para>
                 <code>fileinfo</code> も <code>mime_content_type</code>
                 も使えない場合は、セキュリティの問題に注意する必要があります。
-                HTTP から取得する mimetype はセキュアではなく、
+                HTTP から取得する MIME 型はセキュアではなく、
                 容易に改ざんすることができます。
             </para>
         </note>
@@ -1009,7 +1204,8 @@ $upload->addValidator('MimeType', false, 'image');
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>directory</code>: ファイルが指定したディレクトリに存在しないかどうかをチェックします。
+                    <code>*</code>: 任意のキーあるいは数値添字配列を設定し、
+                    ファイルが指定したディレクトリに存在しないかどうかをチェックします。
                 </para>
             </listitem>
         </itemizedlist>
@@ -1045,6 +1241,47 @@ $upload->addValidator('NotExists', false,
                 指定したディレクトリのうちのどこかひとつでもファイルが存在した場合に検証が失敗します。
             </para>
         </note>
+    </sect2>
+
+<sect2 id="zend.file.transfer.validators.sha1">
+        <title><emphasis role="strong">Sha1</emphasis> バリデータ</title>
+
+        <para>
+            <code>Sha1</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
+            このバリデータは、PHP の hash 拡張モジュールの sha1 アルゴリズムを使用します。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>*</code>: 任意のキーあるいは数値添字配列を設定します。
+                </para>
+
+                <para>
+                    配列形式で複数のハッシュを設定することができます。
+                    すべてのキーの内容をチェックし、
+                    どれにも一致しなかった場合にのみ検証が失敗します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <example id="zend.file.transfer.validators.sha1.example">
+            <title>sha1 バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// アップロードされたファイルのハッシュが指定したものと一致するかどうかをチェックします
+$upload->addValidator('sha1', false, '3b3652f336522365223');
+
+// ふたつの異なるハッシュを指定します
+$upload->addValidator('Sha1',
+                      false, array('3b3652f336522365223',
+                                   'eb3365f3365ddc65365'));
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">
@@ -1092,11 +1329,8 @@ $upload->addValidator('NotExists', false,
         </itemizedlist>
 
         <para>
-            このバリデータは、両方のオプションを指定してインスタンス化することができます。
-            最初のオプションが <code>min</code>、
-            2 番目のオプションが <code>max</code> となります。
-            オプションをひとつだけ指定した場合は、<code>max</code>
-            とみなされます。しかし、後から <code>setMin()</code> や
+            文字列を指定してインスタンス化すると、その値は
+            <code>max</code> とみなされます。あるいは、後から <code>setMin()</code> や
             <code>setMax()</code> でオプションを設定することもできますし、
             <code>getMin()</code> や <code>getMax()</code>
             で設定内容を取得することもできます。
@@ -1105,7 +1339,8 @@ $upload->addValidator('NotExists', false,
         <para>
             サイズの指定には SI 記法も使えます。
             これは多くのオペレーティングシステムでもサポートされているものです。
-            20000 バイトと書くかわりに、<emphasis role="strong">20kB</emphasis>
+            <emphasis role="strong">20000 bytes</emphasis>
+            と書くかわりに、<emphasis role="strong">20kB</emphasis>
             とすることができるのです。すべての単位は、1024 単位に変換されます。
             使用できる単位は <code>kB</code>、<code>MB</code>、
             <code>GB</code>、<code>TB</code>、<code>PB</code> および <code>EB</code>
@@ -1123,7 +1358,11 @@ $upload->addValidator('Size', false, 40000);
 
 // 指定したファイルのサイズを最大 4MB、最小 10kB に制限し、
 // さらにエラー時に返す結果をユーザに優しい形式ではなくプレーンな数値とします
-$upload->addValidator('Size', false, array('10kB', '4MB', false));
+$upload->addValidator('Size',
+                      false,
+                      array('min' => '10kB',
+                            'max' => '4MB',
+                            'bytestring' => false));
 ]]>
             </programlisting>
         </example>
