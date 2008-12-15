@@ -1792,6 +1792,33 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
 
     </sect2>
 
+    <sect2 id="zend.db.adapter.server-version">
+        <title>Retrieving Server Version</title>
+
+        <para>
+            You could retrieve the server version in PHP syntax style to be
+            able to use <code>version_compare()</code>. If the information isn't
+            available, you will receive <code>null</code>.
+        </para>
+
+        <example id="zend.db.adapter.server-version.example">
+            <title>Verifying server version before running a query</title>
+            <programlisting role="php"><![CDATA[
+$version = $db->getServerVersion();
+if (!is_null($version)) {
+    if (version_compare($version, '5.0.0', '>=')) {
+        // do something
+    } else {
+        // do something else
+    }
+} else {
+    // impossible to read server version
+}
+]]>
+            </programlisting>
+        </example>
+    </sect2>
+
     <sect2 id="zend.db.adapter.adapter-notes">
 
         <title>Notes on Specific Adapters</title>
