@@ -132,6 +132,15 @@ class Zend_Dojo_Form_Element_DijitTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decorator instanceof Zend_Dojo_Form_Decorator_DijitElement, get_class($decorator));
     }
 
+    /**
+     * @group ZF-5264
+     */
+    public function testDescriptionDecoratorShouldBeEnabledByDefault()
+    {
+        $decorator = $this->element->getDecorator('Description');
+        $this->assertTrue($decorator instanceof Zend_Form_Decorator_Description, get_class($decorator));
+    }
+
     public function testRenderingShouldCreateDijit()
     {
         $html = $this->element->render();
