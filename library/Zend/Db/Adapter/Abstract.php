@@ -1144,4 +1144,10 @@ abstract class Zend_Db_Adapter_Abstract
      */
     abstract public function supportsParameters($type);
 
+    /**
+     * Retrieve server version in PHP style
+     *
+     * @return string
+     */
+    abstract public function getServerVersion();
 }

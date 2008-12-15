@@ -279,6 +279,18 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $this->assertType('integer', $mode);
     }
 
+    /**
+     * @group ZF-5099
+     */
+    public function testDbGetServerVersion()
+    {
+        $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
+        $version = $db->getServerVersion();
+        $this->assertEquals($version, '5.6.7.8');
+        $this->assertTrue(version_compare($version, '1.0.0', '>'));
+        $this->assertTrue(version_compare($version, '99.0.0', '<'));
+    }
+
     public function getDriver()
     {
         return 'Static';

@@ -1763,4 +1763,14 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         }
     }
 
+    /**
+     * @group ZF-5099
+     */
+    public function testAdapterGetServerVersion()
+    {
+        $version = $this->_db->getServerVersion();
+        $this->assertNotNull($version);
+        $this->assertTrue(version_compare($version, '1.0.0', '>'));
+        $this->assertTrue(version_compare($version, '99.0.0', '<'));
+    }
 }
