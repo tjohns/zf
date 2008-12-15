@@ -181,7 +181,7 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
      */
     public function setDescription($description = null)
     {
-        if ($this->getMajorProtocolVersion() == 2) {
+        if ($this->getMajorProtocolVersion() >= 2) {
             $this->setSummary($description);
         } else {
             $this->_description = $description;
@@ -197,7 +197,7 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
      */
     public function getDescription()
     {
-        if ($this->getMajorProtocolVersion() == 2) {
+        if ($this->getMajorProtocolVersion() >= 2) {
             return $this->getSummary();
         } else {
             return $this->_description;
@@ -215,7 +215,8 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
      */
     public function getCountHint()
     {
-        if ($this->getMajorProtocolVersion() < 2) {
+        if (($this->getMajorProtocolVersion() == null) ||
+            ($this->getMajorProtocolVersion() == 1)) {
             require_once 'Zend/Gdata/App/VersionException.php';
             throw new Zend_Gdata_App_VersionException('The yt:countHint ' . 
                 'element is not supported in versions earlier than 2.');
@@ -232,7 +233,8 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
      */
     public function getPlaylistId()
     {
-        if ($this->getMajorProtocolVersion() < 2) {
+        if (($this->getMajorProtocolVersion() == null) ||
+            ($this->getMajorProtocolVersion == 1)) {
             require_once 'Zend/Gdata/App/VersionException.php';
             throw new Zend_Gdata_App_VersionException('The yt:playlistId ' . 
                 'element is not supported in versions earlier than 2.');
@@ -287,7 +289,7 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
      */
     public function getPlaylistVideoFeedUrl()
     {
-        if ($this->getMajorProtocolVersion() == 2) {
+        if ($this->getMajorProtocolVersion() >= 2) {
             return $this->getContent()->getSrc();
         } else {
             return $this->getFeedLink(Zend_Gdata_YouTube::PLAYLIST_REL)->href;
