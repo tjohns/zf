@@ -517,7 +517,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         $server->setClass('Zend_Soap_Server_TestClass');
 
         $request =
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
           . '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '
                              . 'xmlns:ns1="http://framework.zend.com" '
                              . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
@@ -529,7 +529,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
           .             '<param0 xsi:type="xsd:string">World</param0>'
           .         '</ns1:testFunc2>'
           .     '</SOAP-ENV:Body>'
-          . '</SOAP-ENV:Envelope>' . PHP_EOL;
+          . '</SOAP-ENV:Envelope>' . "\n";
 
         $response = $server->handle($request);
 
@@ -568,7 +568,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         $server->setClass('Zend_Soap_Server_TestClass');
 
         $request =
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
           . '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '
                              . 'xmlns:ns1="http://framework.zend.com" '
                              . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
@@ -580,10 +580,10 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
           .             '<param0 xsi:type="xsd:string">World</param0>'
           .         '</ns1:testFunc2>'
           .     '</SOAP-ENV:Body>'
-          . '</SOAP-ENV:Envelope>' . PHP_EOL;
+          . '</SOAP-ENV:Envelope>' . "\n";
 
         $expectedResponse =
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
           . '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '
                              . 'xmlns:ns1="http://framework.zend.com" '
                              . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
@@ -595,7 +595,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
           .             '<return xsi:type="xsd:string">Hello World!</return>'
           .         '</ns1:testFunc2Response>'
           .     '</SOAP-ENV:Body>'
-          . '</SOAP-ENV:Envelope>' . PHP_EOL;
+          . '</SOAP-ENV:Envelope>' . "\n";
 
         $server->handle($request);
 
@@ -619,7 +619,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
 
         $request =
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
           . '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '
                              . 'xmlns:ns1="http://framework.zend.com" '
                              . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
@@ -631,10 +631,10 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
           .             '<param0 xsi:type="xsd:string">World</param0>'
           .         '</ns1:testFunc2>'
           .     '</SOAP-ENV:Body>'
-          . '</SOAP-ENV:Envelope>' . PHP_EOL;
+          . '</SOAP-ENV:Envelope>' . "\n";
 
         $expectedResponse =
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
           . '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '
                              . 'xmlns:ns1="http://framework.zend.com" '
                              . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
@@ -646,7 +646,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
           .             '<return xsi:type="xsd:string">Hello World!</return>'
           .         '</ns1:testFunc2Response>'
           .     '</SOAP-ENV:Body>'
-          . '</SOAP-ENV:Envelope>' . PHP_EOL;
+          . '</SOAP-ENV:Envelope>' . "\n";
 
         $server1 = new Zend_Soap_Server();
         $server1->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
@@ -787,7 +787,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
 
         // Requesting Method with enforced parameter without it.
         $request =
-            '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL
+            '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
           . '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" '
                              . 'xmlns:ns1="http://framework.zend.com" '
                              . 'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
@@ -797,7 +797,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
           .     '<SOAP-ENV:Body>'
           .         '<ns1:testFunc5 />'
           .     '</SOAP-ENV:Body>'
-          . '</SOAP-ENV:Envelope>' . PHP_EOL;
+          . '</SOAP-ENV:Envelope>' . "\n";
 
         $server->setClass('Zend_Soap_Server_TestClass');
         $response = $server->handle($request);
