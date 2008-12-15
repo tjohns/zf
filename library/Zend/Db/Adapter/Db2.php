@@ -753,7 +753,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     protected function _determineI5()
     {
         // first us the compiled flag.
-        $this->_isI5 = (PHP_OS === 'AIX') ? true : false;
+        $this->_isI5 = (php_uname('s') == 'OS400') ? true : false;
 
         // if this is set, then us it
         if (isset($this->_config['os'])){
