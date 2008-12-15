@@ -308,7 +308,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $string = 'id = ?';
         $param = 'St John\'s Wort';
         $value = $this->_db->quoteInto($string, $param);
-        $this->assertEquals("id = 'St John's Wort'", $value);
+        $this->assertEquals("id = 'St John''s Wort'", $value);
     }
     
     public function getDriver()
