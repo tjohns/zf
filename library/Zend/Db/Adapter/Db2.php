@@ -332,9 +332,8 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
             $tables = $this->_i5listTables();
         }
 
-        return $tables; 
+        return $tables;
     }
-
 
 
     /**
