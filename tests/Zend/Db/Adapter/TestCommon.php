@@ -1773,4 +1773,22 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertTrue(version_compare($version, '1.0.0', '>'));
         $this->assertTrue(version_compare($version, '99.0.0', '<'));
     }
+
+    public function testAdapterGetConnection()
+    {
+        $this->_db->getConnection();
+        $this->assertTrue($this->_db->isConnected());
+    }
+
+     /**
+     * @group ZF-5050
+     */
+    public function testAdapterCloseConnection()
+    {
+        $this->_db->closeConnection();
+        $this->assertFalse($this->_db->isConnected());
+        // Double closing must be without any errors
+        $this->_db->closeConnection();
+        $this->assertFalse($this->_db->isConnected());
+    }
 }

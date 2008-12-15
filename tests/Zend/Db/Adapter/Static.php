@@ -102,7 +102,7 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
         }
         $this->config = $config;
     }
-    
+
     /**
      * Prepares and executes a SQL statement with bound data.
      *
@@ -206,6 +206,16 @@ class Zend_Db_Adapter_Static extends Zend_Db_Adapter_Abstract
     {
         $this->_connection = $this;
         return;
+    }
+
+    /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return ((bool) (!is_null($this->_connection)));
     }
 
     /**

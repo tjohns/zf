@@ -136,13 +136,24 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return ((bool) (is_resource($this->_connection)
+                     && get_resource_type($this->_connection) == 'oci8 connection'));
+    }
+
+    /**
      * Force the connection to close.
      *
      * @return void
      */
     public function closeConnection()
     {
-        if (is_resource($this->_connection)) {
+        if ($this->isConnected()) {
             oci_close($this->_connection);
         }
         $this->_connection = null;

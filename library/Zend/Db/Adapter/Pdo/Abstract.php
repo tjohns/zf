@@ -146,6 +146,16 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     }
 
     /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        return ((bool) ($this->_connection instanceof PDO));
+    }
+
+    /**
      * Force the connection to close.
      *
      * @return void

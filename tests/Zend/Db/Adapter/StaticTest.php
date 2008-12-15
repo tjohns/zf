@@ -291,6 +291,18 @@ class Zend_Db_Adapter_StaticTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(version_compare($version, '99.0.0', '<'));
     }
 
+    /**
+     * @group ZF-5050
+     */
+    public function testDbCloseConnection()
+    {
+        $db = Zend_Db::factory('Static', array('dbname' => 'dummy'));
+        $db->getConnection();
+        $this->assertTrue($db->isConnected());
+        $db->closeConnection();
+        $this->assertFalse($db->isConnected());
+    }
+
     public function getDriver()
     {
         return 'Static';

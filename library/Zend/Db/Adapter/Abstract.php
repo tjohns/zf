@@ -1072,6 +1072,13 @@ abstract class Zend_Db_Adapter_Abstract
     abstract protected function _connect();
 
     /**
+     * Test if a connection is active
+     *
+     * @return boolean
+     */
+    abstract public function isConnected();
+
+    /**
      * Force the connection to close.
      *
      * @return void
