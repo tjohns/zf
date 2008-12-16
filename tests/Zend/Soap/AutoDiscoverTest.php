@@ -664,15 +664,20 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
 
         $this->assertEquals(1,
-            substr_count($wsdlOutput, 'wsdl:arrayType="tns:Zend_Soap_AutoDiscoverTestClass1[]"'));
-        $this->assertEquals(1,
-            substr_count($wsdlOutput, '<xsd:complexType name="Zend_Soap_AutoDiscoverTestClass1">')
+            substr_count($wsdlOutput, 'wsdl:arrayType="tns:Zend_Soap_AutoDiscoverTestClass1[]"'),
+            'wsdl:arrayType definition of TestClass1 has to occour once.'
         );
         $this->assertEquals(1,
-            substr_count($wsdlOutput, '<xsd:complexType name="ArrayOfZend_Soap_AutoDiscoverTestClass1">')
+            substr_count($wsdlOutput, '<xsd:complexType name="Zend_Soap_AutoDiscoverTestClass1">'),
+            'Zend_Soap_AutoDiscoverTestClass1 has to be defined once.'
+        );
+        $this->assertEquals(1,
+            substr_count($wsdlOutput, '<xsd:complexType name="ArrayOfZend_Soap_AutoDiscoverTestClass1">'),
+            'ArrayOfZend_Soap_AutoDiscoverTestClass1 should be defined once.'
         );
         $this->assertTrue(
-            substr_count($wsdlOutput, '<part name="test" type="tns:Zend_Soap_AutoDiscoverTestClass1"/>') >= 1
+            substr_count($wsdlOutput, '<part name="test" type="tns:Zend_Soap_AutoDiscoverTestClass1"/>') >= 1,
+            'Zend_Soap_AutoDiscoverTestClass1 appears once or more than once in the message parts section.'
         );
     }
 }

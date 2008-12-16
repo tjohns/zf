@@ -20,13 +20,12 @@
  * @version    $Id$
  */
 require_once dirname(__FILE__)."/../../../TestHelper.php";
-
-/** PHPUnit Test Case */
-require_once 'PHPUnit/Framework/TestCase.php';
+require_once dirname(__FILE__)."/../_files/commontypes.php";
 
 /** Zend_Soap_Wsdl */
 require_once 'Zend/Soap/Wsdl.php';
 
+/** Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex */
 require_once 'Zend/Soap/Wsdl/Strategy/ArrayOfTypeComplex.php';
 
 class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_TestCase
@@ -94,36 +93,36 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
      */
     public function testArrayOfComplexObjects()
     {
-        $return = $this->wsdl->addComplexType('ComplexObjectStructure[]');
-        $this->assertEquals("tns:ArrayOfComplexObjectStructure", $return);
+        $return = $this->wsdl->addComplexType('Zend_Soap_Wsdl_ComplexObjectStructure[]');
+        $this->assertEquals("tns:ArrayOfZend_Soap_Wsdl_ComplexObjectStructure", $return);
 
         $wsdl = $this->wsdl->toXML();
 
         $this->assertContains(
-            '<xsd:complexType name="ArrayOfComplexObjectStructure"><xsd:complexContent><xsd:restriction base="soap-enc:Array"><xsd:attribute ref="soap-enc:arrayType" wsdl:arrayType="tns:ComplexObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
+            '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexObjectStructure"><xsd:complexContent><xsd:restriction base="soap-enc:Array"><xsd:attribute ref="soap-enc:arrayType" wsdl:arrayType="tns:Zend_Soap_Wsdl_ComplexObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
             $wsdl
         );
 
         $this->assertContains(
-            '<xsd:complexType name="ComplexObjectStructure"><xsd:all><xsd:element name="boolean" type="xsd:boolean"/><xsd:element name="string" type="xsd:string"/><xsd:element name="int" type="xsd:int"/><xsd:element name="array" type="soap-enc:Array"/></xsd:all></xsd:complexType>',
+            '<xsd:complexType name="Zend_Soap_Wsdl_ComplexObjectStructure"><xsd:all><xsd:element name="boolean" type="xsd:boolean"/><xsd:element name="string" type="xsd:string"/><xsd:element name="int" type="xsd:int"/><xsd:element name="array" type="soap-enc:Array"/></xsd:all></xsd:complexType>',
             $wsdl
         );
     }
 
     public function testArrayOfObjectWithObject()
     {
-        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
-        $this->assertEquals("tns:ArrayOfComplexObjectWithObjectStructure", $return);
+        $return = $this->wsdl->addComplexType('Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]');
+        $this->assertEquals("tns:ArrayOfZend_Soap_Wsdl_ComplexObjectWithObjectStructure", $return);
 
         $wsdl = $this->wsdl->toXML();
 
         $this->assertContains(
-            '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure"><xsd:complexContent><xsd:restriction base="soap-enc:Array"><xsd:attribute ref="soap-enc:arrayType" wsdl:arrayType="tns:ComplexObjectWithObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
+            '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexObjectWithObjectStructure"><xsd:complexContent><xsd:restriction base="soap-enc:Array"><xsd:attribute ref="soap-enc:arrayType" wsdl:arrayType="tns:Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]"/></xsd:restriction></xsd:complexContent></xsd:complexType>',
             $wsdl
         );
 
         $this->assertContains(
-            '<xsd:complexType name="ComplexObjectWithObjectStructure"><xsd:all><xsd:element name="object" type="tns:Zend_Soap_Wsdl_ComplexTest"/></xsd:all></xsd:complexType>',
+            '<xsd:complexType name="Zend_Soap_Wsdl_ComplexObjectWithObjectStructure"><xsd:all><xsd:element name="object" type="tns:Zend_Soap_Wsdl_ComplexTest"/></xsd:all></xsd:complexType>',
             $wsdl
         );
 
@@ -138,16 +137,16 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
      */
     public function testAddingTypesMultipleTimesIsSavedOnlyOnce()
     {
-        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
-        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
+        $return = $this->wsdl->addComplexType('Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]');
+        $return = $this->wsdl->addComplexType('Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]');
 
         $wsdl = $this->wsdl->toXML();
 
         $this->assertEquals(1,
-            substr_count($wsdl, 'wsdl:arrayType="tns:ComplexObjectWithObjectStructure[]"')
+            substr_count($wsdl, 'wsdl:arrayType="tns:Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]"')
         );
         $this->assertEquals(1,
-            substr_count($wsdl, '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure">')
+            substr_count($wsdl, '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexObjectWithObjectStructure">')
         );
         $this->assertEquals(1,
             substr_count($wsdl, '<xsd:complexType name="Zend_Soap_Wsdl_ComplexTest">')
@@ -159,58 +158,54 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
      */
     public function testAddingSingularThenArrayTypeIsRecognizedCorretly()
     {
-        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure');
-        $return = $this->wsdl->addComplexType('ComplexObjectWithObjectStructure[]');
+        $return = $this->wsdl->addComplexType('Zend_Soap_Wsdl_ComplexObjectWithObjectStructure');
+        $return = $this->wsdl->addComplexType('Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]');
 
         $wsdl = $this->wsdl->toXML();
 
         $this->assertEquals(1,
-            substr_count($wsdl, 'wsdl:arrayType="tns:ComplexObjectWithObjectStructure[]"')
+            substr_count($wsdl, 'wsdl:arrayType="tns:Zend_Soap_Wsdl_ComplexObjectWithObjectStructure[]"')
         );
         $this->assertEquals(1,
-            substr_count($wsdl, '<xsd:complexType name="ArrayOfComplexObjectWithObjectStructure">')
+            substr_count($wsdl, '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexObjectWithObjectStructure">')
         );
         $this->assertEquals(1,
             substr_count($wsdl, '<xsd:complexType name="Zend_Soap_Wsdl_ComplexTest">')
         );
     }
-}
-
-class Zend_Soap_Wsdl_ComplexTest
-{
-    /**
-     * @var int
-     */
-    public $var = 5;
-}
-
-class ComplexObjectStructure
-{
-    /**
-     * @var boolean
-     */
-    public $boolean = true;
 
     /**
-     * @var string
+     * @group ZF-5149
      */
-    public $string = "Hello World";
+    public function testArrayOfComplexNestedObjectsIsCoveredByStrategyAndNotThrowingException()
+    {
+        try {
+            $return = $this->wsdl->addComplexType("Zend_Soap_Wsdl_ComplexTypeA");
+            $wsdl = $this->wsdl->toXml();
+        } catch(Exception $e) {
+            $this->fail("Adding object with nested structure should not throw exception.");
+        }
+    }
 
     /**
-     * @var int
+     * @group ZF-5149
      */
-    public $int = 10;
+    public function testArrayOfComplexNestedObjectsIsCoveredByStrategyAndAddsAllTypesRecursivly()
+    {
+        $return = $this->wsdl->addComplexType("Zend_Soap_Wsdl_ComplexTypeA");
+        $wsdl = $this->wsdl->toXml();
 
-    /**
-     * @var array
-     */
-    public $array = array(1, 2, 3);
-}
-
-class ComplexObjectWithObjectStructure
-{
-    /**
-     * @var Zend_Soap_Wsdl_ComplexTest
-     */
-    public $object;
+        $this->assertEquals(1,
+            substr_count($wsdl, '<xsd:complexType name="Zend_Soap_Wsdl_ComplexTypeA">'),
+            'No definition of complex type A found.'
+        );
+        $this->assertEquals(1,
+            substr_count($wsdl, '<xsd:complexType name="ArrayOfZend_Soap_Wsdl_ComplexTypeB">'),
+            'No definition of complex type B array found.'
+        );
+        $this->assertEquals(1,
+            substr_count($wsdl, 'wsdl:arrayType="tns:Zend_Soap_Wsdl_ComplexTypeB[]"'),
+            'No usage of Complex Type B array found.'
+        );
+    }
 }
