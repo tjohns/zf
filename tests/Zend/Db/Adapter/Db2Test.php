@@ -321,18 +321,33 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
      */
     public function testAdapterSchemaOptionInListTables()
     {
-        $tableCount = count($this->_db->listTables());
+        $params = $this->_util->getParams();
+        unset($params['schema']);
+        $connection = Zend_Db::factory($this->getDriver(), $params);    
+        $tableCountNoSchema = count($connection->listTables());
+        
+        $dbConfig = $this->_db->getConfig();
+        if ($this->_db->isI5()) {
+            if (isset($dbConfig['driver_options']['i5_lib'])) {
+                $schema = $dbConfig['driver_options']['i5_lib'];
+            }
+        } elseif (!$this->_db->isI5()) {
+            $schema = $this->_util->getSchema();
+        } else {
+            $this->markTestSkipped('No valid schema to test against.');
+            return;
+        }
         
         $params = $this->_util->getParams();
-        $params['schema'] = 'ZFTEST';
+        $params['schema'] = $schema;
         $connection = Zend_Db::factory($this->getDriver(), $params);
         $tableCountSchema = count($connection->listTables());
         
-        $this->assertGreaterThan(0, $tableCount, 'Adapter without schema should produce large result');
+        $this->assertGreaterThan(0, $tableCountNoSchema, 'Adapter without schema should produce large result');
         $this->assertGreaterThan(0, $tableCountSchema, 'Adapter with schema should produce large result');
-        
-        $this->assertTrue(($tableCount > $tableCountSchema), 'Table count with schema provided should be less than without.');
-    }
+
+        $this->assertTrue(($tableCountNoSchema > $tableCountSchema), 'Table count with schema provided should be less than without.');
+    } 
     
     public function getDriver()
     {
