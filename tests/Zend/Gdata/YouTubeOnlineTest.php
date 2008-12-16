@@ -162,6 +162,15 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testRetrievePlaylistV2()
+    {
+      $this->gdata->setMajorProtocolVersion(2);
+      $feed = $this->gdata->getPlaylistListFeed($this->ytAccount);
+      $firstEntry = $feed->entries[0];
+      $this->assertTrue($firstEntry instanceof Zend_Gdata_YouTube_PlaylistListEntry);
+      $this->assertTrue($firstEntry->getSummary()->text != null);                  
+    }
+
     public function testRetrievePlaylistVideoFeed()
     {
         $listFeed = $this->gdata->getPlaylistListFeed($this->ytAccount);
