@@ -309,6 +309,64 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
+     * Whether or not to include racy videos in the search results
+     *
+     * @return string|null The value of racy if it exists, null otherwise.
+     */
+    public function getRacy()
+    {
+        if (array_key_exists('racy', $this->_params)) {
+            return $this->_params['racy'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set the safeSearch parameter
+     *
+     * @param string $value The value of the parameter, currently only 'none',
+     *        'moderate' or 'strict' are allowed values.
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     * @return Zend_Gdata_YouTube_VideoQuery Provides a fluent interface
+     */
+    public function setSafeSearch($value)
+    {
+    	switch ($value) {
+            case 'none':
+                $this->_params['safeSearch'] = 'none';
+                break;
+    		case 'moderate':
+                $this->_params['safeSearch'] = 'moderate';
+                break;
+            case 'strict':
+                $this->_params['safeSearch'] = 'strict';
+                break;
+            case null:
+                unset($this->_params['safeSearch']);
+            default:
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                    'The safeSearch parameter only supports the values '.
+                    '\'none\', \'moderate\' or \'strict\'.');
+    	}
+    }
+
+    /**
+     * Return the value of the safeSearch parameter
+     *
+     * @return string|null The value of the safeSearch parameter if it has been
+     *         set, null otherwise.
+     */
+    public function getSafeSearch()
+    {
+    	if (array_key_exists('safeSearch', $this->_params)) {
+    		return $this->_params['safeSearch'];
+    	}
+        return $this;
+    }
+
+    /**
      * Set the value of the orderby parameter
      *
      * @param string $value
@@ -322,20 +380,6 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
             unset($this->_params['orderby']);
         }
         return $this;
-    }
-
-    /**
-     * Whether or not to include racy videos in the search results
-     *
-     * @return string|null The value of racy if it exists, null otherwise.
-     */
-    public function getRacy()
-    {
-        if (array_key_exists('racy', $this->_params)) {
-            return $this->_params['racy'];
-        } else {
-            return null;
-        }
     }
 
     /**
