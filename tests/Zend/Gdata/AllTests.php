@@ -166,6 +166,7 @@ require_once 'Zend/Gdata/YouTube/CommentFeedTest.php';
 require_once 'Zend/Gdata/YouTube/CommentEntryTest.php';
 require_once 'Zend/Gdata/YouTube/ContactFeedTest.php';
 require_once 'Zend/Gdata/YouTube/ContactEntryTest.php';
+require_once 'Zend/Gdata/YouTube/VideoQueryTest.php';
 
 require_once 'Zend/Gdata/Books/CollectionFeedTest.php';
 require_once 'Zend/Gdata/Books/CollectionEntryTest.php';

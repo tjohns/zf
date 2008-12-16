@@ -48,7 +48,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
      * Create Gdata_YouTube_VideoQuery object
      */
     public function __construct($url = null)
-    {   
+    {
         parent::__construct($url);
     }
 
@@ -93,9 +93,11 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         case 'comments':
             if ($videoId === null) {
                 require_once 'Zend/Gdata/App/Exception.php';
-                throw new Zend_Gdata_App_Exception('Video ID must be set for feed of type: ' . $feedType);
+                throw new Zend_Gdata_App_Exception(
+                    'Video ID must be set for feed of type: ' . $feedType);
             } else {
-                $this->_url = Zend_Gdata_YouTube::VIDEO_URI . '/' . $videoId . 'comments';
+                $this->_url = Zend_Gdata_YouTube::VIDEO_URI . '/' .
+                    $videoId . 'comments';
                 if ($entry !== null) {
                     $this->_url .= '/' . $entry;
                 }
@@ -108,11 +110,78 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         }
     }
 
+    /**
+     * Sets the location parameter for the query
+     *
+     * @param string $value
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     * @return Zend_Gdata_YouTube_VideoQuery Provides a fluent interface
+     */
+    public function setLocation($value)
+    {
+        $parameters = explode(',', $value);
+        foreach($parameters as $param) {
+            $temp = trim($param);
+            // strip off the optional exclamation mark for numeric check
+            if (substr($temp, -1) == '!') {
+                $temp = substr($temp, -1);
+            }
+            if (!is_numeric($temp)) {
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Value provided to location-radius parameter must be in ' .
+                    'the form of two coordinates');
+            }
+        }
+        $this->_params['location'] = $value;
+    }
     
+    /**
+     * Get the value of the location parameter
+     *
+     * @return string|null Return the location if it exists, null otherwise.
+     */
+    public function getLocation()
+    {
+        if (array_key_exists('location', $this->_params)) {
+            return $this->_params['location'];
+        } else {
+            return null;
+        }
+    }
+
+  
+    /**
+     * Sets the location-radius parameter for the query
+     *
+     * @param string $value
+     * @return Zend_Gdata_YouTube_VideoQuery Provides a fluent interface
+     */
+    public function setLocationRadius($value)
+    {
+        $this->_params['location-radius'] = $value;
+    }
+
+    /**
+     * Get the value of the location-radius parameter
+     *
+     * @return string|null Return the location-radius if it exists,
+     * null otherwise.
+     */
+    public function getLocationRadius()
+    {
+        if (array_key_exists('location-radius', $this->_params)) {
+            return $this->_params['location-radius'];
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Sets the time period over which this query should apply
      *
      * @param string $value
+     * @throws Zend_Gdata_App_InvalidArgumentException
      * @return Zend_Gdata_YouTube_VideoQuery Provides a fluent interface
      */
     public function setTime($value = null)
@@ -133,8 +202,32 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
             case null:
                 unset($this->_params['time']);
             default:
-                require_once 'Zend/Gdata/App/Exception.php';
-                throw new Zend_Gdata_App_Exception('Unknown time value');
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Unknown time value');
+                break;
+        }
+        return $this;
+    }
+    
+    /**
+     * Sets the value of the uploader parameter
+     *
+     * @param string $value
+     * @throws Zend_Gdata_App_InvalidArgumentException
+     * @return Zend_Gdata_YouTube_VideoQuery Provides a fluent interface
+     */
+    public function setUploader($value = null)
+    {
+        switch ($value) {
+            case 'partner':
+                $this->_params['uploader'] = 'partner';
+            case null:
+                unset($this->_params['uploader']);
+            default:
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                throw new Zend_Gdata_App_InvalidArgumentException(
+                    'Unknown value for uploader');
                 break;
         }
         return $this;
@@ -195,6 +288,8 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
+     * Set the value of the orderby parameter
+     *
      * @param string $value
      * @return Zend_Gdata_YouTube_Query Provides a fluent interface
      */
@@ -209,9 +304,9 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
-     * Whether or not to include racy videos in the search results
+     * Return the value of the racy parameter
      *
-     * @return string racy 
+     * @return string|null The value of racy if it exists, null otherwise.
      */
     public function getRacy()
     {
@@ -223,9 +318,9 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
-     * The format used for videos
+     * Return the value of the format parameter
      *
-     * @return string format 
+     * @return string|null The value of format if it exists, null otherwise.
      */
     public function getFormat()
     {
@@ -237,23 +332,26 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
-     * The video query
+     * Return the value of the video query that has been set
      *
-     * @return string video query
+     * @return string|null The value of the video query if it exists,
+     * null otherwise.
      */
     public function getVideoQuery()
     {
         if (array_key_exists('vq', $this->_params)) {
             return $this->_params['vq'];
+        } elseif (array_key_exists('q', $this->_params)) {
+            return $this->_params['q'];
         } else {
             return null;
         }
     }
 
     /**
-     * The time
+     * Return the value of the time parameter
      *
-     * @return string time 
+     * @return string|null The time parameter if it exists, null otherwise.
      */
     public function getTime()
     {
@@ -265,7 +363,9 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
-     * @return string orderby
+     * Return the value of the orderby parameter if it exists
+     *
+     * @return string|null The value of orderby if it exists, null otherwise.
      */
     public function getOrderBy()
     {
@@ -277,11 +377,88 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
     }
 
     /**
-     * Returns the generated full query URL
+     * Generate the query string from the URL parameters, optionally modifying
+     * them based on protocol version.
      *
+     * @param integer $majorProtocolVersion The major protocol version
+     * @param integer $minorProtocolVersion The minor protocol version
+     * @throws Zend_Gdata_App_VersionException
+     * @return string querystring
+     */
+    public function getQueryString($majorProtocolVersion = null,
+        $minorProtocolVersion = null)
+    {
+
+
+        if ($majorProtocolVersion != null) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+        }
+
+        $queryArray = array();
+
+        foreach ($this->_params as $name => $value) {
+            if (substr($name, 0, 1) == '_') {
+                continue;
+            }
+
+            switch($name) {
+                case 'location-radius':
+                    if ($majorProtocolVersion == 1) {
+                        throw new Zend_Gdata_App_VersionException("The $name " .
+                            "parameter is only supported in version 2.");
+                    }
+                    break;
+
+            	case 'racy':
+                    if ($majorProtocolVersion == 2) {
+                        throw new Zend_Gdata_App_VersionException("The $name " .
+                            "parameter is not supported in version 2." .
+                            "Please use 'safeSearch'.");
+                    }
+                    break;
+
+                case 'safeSearch':
+                    if ($majorProtocolVersion == 1) {
+                        throw new Zend_Gdata_App_VersionException("The $name " .
+                            "parameter is only supported in version 2." .
+                            "Please use 'racy'.");
+                    }
+                    break;
+
+                case 'uploader':
+                    if ($majorProtocolVersion == 1) {
+                        throw new Zend_Gdata_App_VersionException("The $name " .
+                            "parameter is only supported in version 2.");
+                    }
+                    break;
+
+                case 'vq':
+                    if ($majorProtocolVersion == 2) {
+                        $name = 'q';
+                    }
+                    break;
+            }
+
+            $queryArray[] = urlencode($name) . '=' . urlencode($value);
+
+        }
+        if (count($queryArray) > 0) {
+            return '?' . implode('&', $queryArray);
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Returns the generated full query URL, optionally modifying it based on
+     * the protocol version.
+     *
+     * @param integer $majorProtocolVersion The major protocol version
+     * @param integer $minorProtocolVersion The minor protocol version
      * @return string The URL
      */
-    public function getQueryUrl()
+    public function getQueryUrl($majorProtocolVersion = null,
+        $minorProtocolVersion = null)
     {
         if (isset($this->_url)) {
             $url = $this->_url;
@@ -291,7 +468,8 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         if ($this->getCategory() !== null) {
             $url .= '/-/' . $this->getCategory();
         }
-        $url = $url . $this->getQueryString();
+        $url = $url . $this->getQueryString($majorProtocolVersion,
+            $minorProtocolVersion);
         return $url;
     }
 

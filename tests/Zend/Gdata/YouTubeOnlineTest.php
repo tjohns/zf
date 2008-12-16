@@ -119,7 +119,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Google', $entry->company->text);
         $this->assertEquals('software engineering, information architecture, photography, travel', $entry->hobbies->text);
         $this->assertEquals('Mountain View, CA', $entry->hometown->text);
-        $this->assertEquals('San Francisco, CA, US', $entry->location->text);
+        $this->assertEquals('San Francisco, CA 94114, US', $entry->location->text);
         $this->assertEquals('monk, heroes, law and order, top gun', $entry->movies->text);
         $this->assertEquals('imogen heap, frou frou, thievory corp, morcheeba, barenaked ladies', $entry->music->text);
         $this->assertEquals('Developer Programs', $entry->occupation->text);
@@ -186,6 +186,46 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(5, $entry->rating->max);
             $this->assertTrue($entry->rating->numRaters > 2);
         }
+    }
+
+    public function testRetrieveTopRatedVideosV2()
+    {
+        $this->gdata->setMajorProtocolVersion(2);
+        $feed = $this->gdata->getTopRatedVideoFeed();
+        $client = $this->gdata->getHttpClient();
+        $positionOfAPIProjection = strpos(
+            $client->getLastRequest(), "/feeds/api/");
+        $this->assertTrue(is_numeric($positionOfAPIProjection));
+    }
+
+    public function testRetrieveMostViewedVideosV2()
+    {
+        $this->gdata->setMajorProtocolVersion(2);
+        $feed = $this->gdata->getMostViewedVideoFeed();
+        $client = $this->gdata->getHttpClient();
+        $positionOfAPIProjection = strpos(
+            $client->getLastRequest(), "/feeds/api/");
+        $this->assertTrue(is_numeric($positionOfAPIProjection));
+    }
+
+    public function testRetrieveRecentlyFeaturedVideosV2()
+    {
+        $this->gdata->setMajorProtocolVersion(2);
+        $feed = $this->gdata->getRecentlyFeaturedVideoFeed();
+        $client = $this->gdata->getHttpClient();
+        $positionOfAPIProjection = strpos(
+            $client->getLastRequest(), "/feeds/api/");
+        $this->assertTrue(is_numeric($positionOfAPIProjection));
+    }
+
+    public function testWatchOnMobileVideosV2()
+    {
+        $this->gdata->setMajorProtocolVersion(2);
+        $feed = $this->gdata->getWatchOnMobileVideoFeed();
+        $client = $this->gdata->getHttpClient();
+        $positionOfAPIProjection = strpos(
+            $client->getLastRequest(), "/feeds/api/");
+        $this->assertTrue(is_numeric($positionOfAPIProjection));
     }
 
     public function testRetrieveMostViewedVideos()
