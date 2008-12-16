@@ -67,7 +67,7 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
     }
 
     /**
-     * @return Zend_Gdata_App_Extension_Src
+     * @return string
      */
     public function getSrc()
     {
@@ -75,7 +75,7 @@ class Zend_Gdata_App_Extension_Content extends Zend_Gdata_App_Extension_Text
     }
 
     /**
-     * @param Zend_Gdata_App_Extension_Src $value
+     * @param string $value
      * @return Zend_Gdata_App_Entry Provides a fluent interface
      */
     public function setSrc($value)
