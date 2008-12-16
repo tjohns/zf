@@ -312,7 +312,7 @@ $autodiscover->handle();
         <title>WSDL Binding Styles</title>
 
         <para>
-            WSDL offeres different transport mechanisms and styles. This affects the
+            WSDL offers different transport mechanisms and styles. This affects the
             <code>soap:binding</code> and <code>soap:body</code> tags within the Binding
             section of WSDL. Different clients have different requirements as to what options
             really work. Therefore you can set the styles before you call any <code>setClass</code>
@@ -322,11 +322,19 @@ $autodiscover->handle();
         <para>
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
-// Default is 'use' => 'encoded' and 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
-$autodiscover->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+// Default is 'use' => 'encoded' and
+// 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
+$autodiscover->setOperationBodyStyle(
+                    array('use' => 'literal',
+                          'namespace' => 'http://framework.zend.com')
+                );
 
-// Default is 'style' => 'rpc', 'transport' => 'http://schemas.xmlsoap.org/soap/http'
-$autodiscover->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+// Default is 'style' => 'rpc' and
+// 'transport' => 'http://schemas.xmlsoap.org/soap/http'
+$autodiscover->setBindingStyle(
+                    array('style' => 'document',
+                          'transport' => 'http://framework.zend.com')
+                );
 ...
 $autodiscover->addFunction('myfunc1');
 $autodiscover->handle();
@@ -336,7 +344,7 @@ $autodiscover->handle();
     </sect2>
 
     <sect2 id="zend.soap.autodiscovery.compability">
-        <title>Compability with WSDL Client Generators</title>
+        <title>Compatibility with WSDL Client Generators</title>
 
         <para>
             Up to version 1.7 the WSDL files were generated with a response message

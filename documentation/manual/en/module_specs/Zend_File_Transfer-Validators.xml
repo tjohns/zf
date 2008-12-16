@@ -499,7 +499,9 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
 // Check in a case-sensitive fashion
-$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
+$upload->addValidator('ExcludeExtension',
+                      false,
+                      array('php', 'exe', 'case' => true));
 $upload->addValidator('ExcludeExtension',
                       false,
                       array('php', 'exe', 'case' => true));
@@ -1263,7 +1265,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 40000);
 
 // Limit the size a given file to maximum 4MB and mimimum 10kB
-// Also returns the plain number in case of an error instead of a user-friendly number
+// Also returns the plain number in case of an error
+// instead of a user-friendly number
 $upload->addValidator('Size',
                       false,
                       array('min' => '10kB',
