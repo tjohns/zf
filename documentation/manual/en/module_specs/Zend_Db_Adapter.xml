@@ -1928,6 +1928,14 @@ if (!is_null($version)) {
                         option with Oracle, you must use the PDO OCI adapter.
                     </para>
                 </listitem>
+                <listitem>
+                    <para>
+                        By default, LOB fields are returned as OCI-Lob objects. You could
+                        retrieve them as string for all requests by using driver options
+                        <code>'lob_as_string'</code> or for particular request by using
+                        <code>setLobAsString(boolean)</code> on adapter or on statement.
+                    </para>
+                </listitem>
             </itemizedlist>
         </sect3>
 
