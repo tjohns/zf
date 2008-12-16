@@ -74,7 +74,7 @@ class Zend_Gdata_YouTube_Extension_MediaRating extends Zend_Gdata_Extension
      *
      * @param DOMDocument $doc The DOMDocument used to construct DOMElements
      * @return DOMElement The DOMElement representing this element and all
-     * child properties.
+     *         child properties.
      */
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
