@@ -144,7 +144,7 @@ abstract class Zend_Date_DateObject {
      */
     protected function mktime($hour, $minute, $second, $month, $day, $year, $gmt = false)
     {
-        
+
         // complete date but in 32bit timestamp - use PHP internal
         if ((1901 < $year) and ($year < 2038)) {
 
@@ -1014,6 +1014,8 @@ abstract class Zend_Date_DateObject {
 
         if (($zone == 'UTC') or ($zone == 'GMT')) {
             $this->_dst = false;
+        } else {
+            $this->_dst = true;
         }
 
         return $this;
