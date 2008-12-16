@@ -89,6 +89,7 @@ class Zend_Gdata_YouTube_PlaylistListFeedTest extends PHPUnit_Framework_TestCase
             $playlistListFeed->author[0]->name->text);
         $this->assertEquals('http://gdata.youtube.com/feeds/api/users/' .
             'googledevelopers', $playlistListFeed->author[0]->uri->text);
+        print_r($playlistListFeed);
         $this->assertEquals(70, $playlistListFeed->totalResults->text);
     }
 
@@ -116,7 +117,6 @@ class Zend_Gdata_YouTube_PlaylistListFeedTest extends PHPUnit_Framework_TestCase
 
     public function testSampleEntryShouldHaveNoExtensionElementsV2() {
         $this->feed->transferFromXML($this->V2feedText);
-        print_r($this->feed);
         $this->assertTrue(is_array($this->feed->extensionElements));
         $this->assertEquals(0, count($this->feed->extensionElements));
     }
