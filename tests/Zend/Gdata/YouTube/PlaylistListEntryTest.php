@@ -100,24 +100,24 @@ class Zend_Gdata_YouTube_PlaylistListEntryTest extends PHPUnit_Framework_TestCas
 
     public function testEmptyEntryShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertTrue(0, count($this->entry->extensionElements));
     }
 
     public function testEmptyEntryShouldHaveNoExtensionAttributes() {
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertTrue(0, count($this->entry->extensionAttributes));
     }
 
     public function testSampleEntryShouldHaveNoExtensionElements() {
         $this->entry->transferFromXML($this->entryText);
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertTrue(0, count($this->entry->extensionElements));
     }
 
     public function testSampleEntryShouldHaveNoExtensionAttributes() {
         $this->entry->transferFromXML($this->entryText);
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertTrue(0, count($this->entry->extensionAttributes));
     }
 
     public function testEmptyPlaylistListEntryToAndFromStringShouldMatch() {
@@ -132,14 +132,14 @@ class Zend_Gdata_YouTube_PlaylistListEntryTest extends PHPUnit_Framework_TestCas
         $this->entry->transferFromXML($this->entryText);
         $this->entry->setMajorProtocolVersion(2);
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertEquals(0, count($this->entry->extensionElements));
     }
 
     public function testSampleEntryShouldHaveNoExtensionAttributesV2() {
         $this->entry->transferFromXML($this->entryText);
         $this->entry->setMajorProtocolVersion(2);
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertTrue(0, count($this->entry->extensionAttributes));
     }
 
     public function testGetFeedLinkReturnsAllStoredEntriesWhenUsedWithNoParameters() {
