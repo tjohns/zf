@@ -89,7 +89,6 @@ class Zend_Gdata_YouTube_PlaylistListFeedTest extends PHPUnit_Framework_TestCase
             $playlistListFeed->author[0]->name->text);
         $this->assertEquals('http://gdata.youtube.com/feeds/api/users/' .
             'googledevelopers', $playlistListFeed->author[0]->uri->text);
-        print_r($playlistListFeed);
         $this->assertEquals(70, $playlistListFeed->totalResults->text);
     }
 
@@ -116,12 +115,14 @@ class Zend_Gdata_YouTube_PlaylistListFeedTest extends PHPUnit_Framework_TestCase
     }
 
     public function testSampleEntryShouldHaveNoExtensionElementsV2() {
+        $this->feed->setMajorProtocolVersion(2);
         $this->feed->transferFromXML($this->V2feedText);
         $this->assertTrue(is_array($this->feed->extensionElements));
         $this->assertEquals(0, count($this->feed->extensionElements));
     }
 
     public function testSampleEntryShouldHaveNoExtensionAttributesV2() {
+        $this->feed->setMajorProtocolVersion(2);
         $this->feed->transferFromXML($this->V2feedText);
         $this->assertTrue(is_array($this->feed->extensionAttributes));
         $this->assertEquals(0, count($this->feed->extensionAttributes));
@@ -136,6 +137,7 @@ class Zend_Gdata_YouTube_PlaylistListFeedTest extends PHPUnit_Framework_TestCase
     }
 
     public function testEmptyPlaylistListFeedToAndFromStringShouldMatchV2() {
+        $this->feed->setMajorProtocolVersion(2);
         $this->feed->transferFromXML($this->V2feedText);
         $feedXml = $this->feed->saveXML();
         $newPlaylistListFeed = new Zend_Gdata_YouTube_PlaylistListFeed();
@@ -151,8 +153,8 @@ class Zend_Gdata_YouTube_PlaylistListFeedTest extends PHPUnit_Framework_TestCase
     }
 
     public function testSamplePropertiesAreCorrectV2 () {
-        $this->feed->transferFromXML($this->V2feedText);
         $this->feed->setMajorProtocolVersion(2);
+        $this->feed->transferFromXML($this->V2feedText);
         $this->verifyAllSamplePropertiesAreCorrectV2($this->feed);
     }
 
