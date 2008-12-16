@@ -329,7 +329,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
                 $tables[] = $row['TABLE_NAME'];
             }
         } else {
-            $tables = $this->_i5listTables();
+            $tables = $this->_i5listTables($schema);
         }
 
         return $tables;
@@ -775,19 +775,28 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * @return array
      */
-    protected function _i5listTables()
+    protected function _i5listTables($schema = null)
     {
         //list of i5 libraries.
         $tables = array();
-        $schemaStatement = db2_tables($this->_connection);
-        while ($schema = db2_fetch_assoc($schemaStatement)) {
-            if ($schema['TABLE_SCHEM'] !== null) {
-                // list of the tables which belongs to the selected library
-                $tablesStatment = db2_tables($this->_connection, NULL, $schema['TABLE_SCHEM']);
-                if (is_resource($tablesStatment)) {
-                    while ($rowTables = db2_fetch_assoc($tablesStatment) ) {
-                        if ($rowTables['TABLE_NAME'] !== null) {
-                            $tables[] = $rowTables['TABLE_NAME'];
+        if ($schema) {
+            $tablesStatement = db2_tables($this->_connection, null, $schema);
+            while ($rowTables = db2_fetch_assoc($tablesStatement) ) {
+                if ($rowTables['TABLE_NAME'] !== null) {
+                    $tables[] = $rowTables['TABLE_NAME'];
+                }
+            }
+        } else {
+            $schemaStatement = db2_tables($this->_connection);
+            while ($schema = db2_fetch_assoc($schemaStatement)) {
+                if ($schema['TABLE_SCHEM'] !== null) {
+                    // list of the tables which belongs to the selected library
+                    $tablesStatement = db2_tables($this->_connection, NULL, $schema['TABLE_SCHEM']);
+                    if (is_resource($tablesStatement)) {
+                        while ($rowTables = db2_fetch_assoc($tablesStatement) ) {
+                            if ($rowTables['TABLE_NAME'] !== null) {
+                                $tables[] = $rowTables['TABLE_NAME'];
+                            }
                         }
                     }
                 }

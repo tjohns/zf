@@ -311,6 +311,29 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->assertEquals("id = 'St John''s Wort'", $value);
     }
     
+    /**
+     * This is "related" to the issue.  It appears the fix for
+     * describeTable is relatively untestable due to the fact that
+     * its primary focus is to reduce the query time, not the result
+     * set.
+     * 
+     * @group ZF-5169
+     */
+    public function testAdapterSchemaOptionInListTables()
+    {
+        $tableCount = count($this->_db->listTables());
+        
+        $params = $this->_util->getParams();
+        $params['schema'] = 'ZFTEST';
+        $connection = Zend_Db::factory($this->getDriver(), $params);
+        $tableCountSchema = count($connection->listTables());
+        
+        $this->assertGreaterThan(0, $tableCount, 'Adapter without schema should produce large result');
+        $this->assertGreaterThan(0, $tableCountSchema, 'Adapter with schema should produce large result');
+        
+        $this->assertTrue(($tableCount > $tableCountSchema), 'Table count with schema provided should be less than without.');
+    }
+    
     public function getDriver()
     {
         return 'Db2';
