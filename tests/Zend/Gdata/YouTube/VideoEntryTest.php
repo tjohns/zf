@@ -428,6 +428,18 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(count($this->entry->extensionAttributes) == 0);
     }
 
+    public function testSampleEntryShouldHaveNoExtensionElementsV2() {
+        $this->entry->transferFromXML($this->v2EntryText);
+        $this->assertTrue(is_array($this->entry->extensionElements));
+        $this->assertTrue(count($this->entry->extensionElements) == 0);
+    }
+
+    public function testSampleEntryShouldHaveNoExtensionAttributesV2() {
+        $this->entry->transferFromXML($this->v2EntryText);
+        $this->assertTrue(is_array($this->entry->extensionAttributes));
+        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+    }
+
     public function testEmptyVideoEntryToAndFromStringShouldMatch() {
         $entryXml = $this->entry->saveXML();
         $newVideoEntry = new Zend_Gdata_YouTube_VideoEntry();
@@ -485,7 +497,6 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
         $videoEntry->setVideoDescription($newDescription);
         $this->assertEquals($videoEntry->getVideoDescription(), $newDescription);
     }
-
 
     public function testGetVideoWatchPageUrl() {
         $this->entry->transferFromXML($this->entryText);
@@ -756,6 +767,5 @@ class Zend_Gdata_YouTube_VideoEntryTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($rating->getValue(), $ratingValue);
     }
-
 
 }
