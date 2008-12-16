@@ -39,7 +39,7 @@
         <code>style</code> tag: lang, title, media, or dir are all permissible.
     </para>
 
-	<note>
+    <note>
         <title>Setting Conditional Comments</title>
 
         <para>
@@ -50,13 +50,12 @@
         </para>
 
         <example id="zend.view.helpers.initial.headstyle.conditional">
-
-        <programlisting role="php"><![CDATA[
+            <title>Headstyle With Conditional Comments</title>
+            <programlisting role="php"><![CDATA[
 // adding scripts
 $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
 ]]>
-        </programlisting>
-
+            </programlisting>
         </example>
     </note>
 
