@@ -347,7 +347,7 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->assertGreaterThan(0, $tableCountSchema, 'Adapter with schema should produce large result');
 
         $this->assertTrue(($tableCountNoSchema > $tableCountSchema), 'Table count with schema provided should be less than without.');
-    } 
+    }
     
     public function getDriver()
     {
