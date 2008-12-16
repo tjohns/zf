@@ -342,7 +342,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         $standardFeedUri = self::STANDARD_MOST_VIEWED_URI;
 
         if ($this->getMajorProtocolVersion() == 2) {
-        	$standardFeedUri = self::STANDARD_MOST_VIEWED_URI_V2;
+            $standardFeedUri = self::STANDARD_MOST_VIEWED_URI_V2;
         }
 
         if ($location == null) {
@@ -373,7 +373,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         $standardFeedUri = self::STANDARD_RECENTLY_FEATURED_URI;
 
         if ($this->getMajorProtocolVersion() == 2) {
-        	$standardFeedUri = self::STANDARD_RECENTLY_FEATURED_URI_V2;
+            $standardFeedUri = self::STANDARD_RECENTLY_FEATURED_URI_V2;
         }
 
         if ($location == null) {
@@ -405,7 +405,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         $standardFeedUri = self::STANDARD_WATCH_ON_MOBILE_URI;
 
         if ($this->getMajorProtocolVersion() == 2) {
-        	$standardFeedUri = self::STANDARD_WATCH_ON_MOBILE_URI_V2;
+            $standardFeedUri = self::STANDARD_WATCH_ON_MOBILE_URI_V2;
         }
 
         if ($location == null) {
