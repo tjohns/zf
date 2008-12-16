@@ -36,6 +36,11 @@ require_once 'Zend/Gdata/Extension/FeedLink.php';
 require_once 'Zend/Gdata/YouTube/Extension/Description.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_AboutMe
+ */
+require_once 'Zend/Gdata/YouTube/Extension/AboutMe.php';
+
+/**
  * @see Zend_Gdata_YouTube_Extension_Age
  */
 require_once 'Zend/Gdata/YouTube/Extension/Age.php';
@@ -101,6 +106,26 @@ require_once 'Zend/Gdata/YouTube/Extension/Gender.php';
 require_once 'Zend/Gdata/YouTube/Extension/Relationship.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_FirstName
+ */
+require_once 'Zend/Gdata/YouTube/Extension/FirstName.php';
+
+/**
+ * @see Zend_Gdata_YouTube_Extension_LastName
+ */
+require_once 'Zend/Gdata/YouTube/Extension/LastName.php';
+
+/**
+ * @see Zend_Gdata_YouTube_Extension_Statistics
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Statistics.php';
+
+/**
+ * @see Zend_Gdata_Media_Extension_MediaThumbnail
+ */
+require_once 'Zend/Gdata/Media/Extension/MediaThumbnail.php';
+
+/**
  * Represents the YouTube video playlist flavor of an Atom entry
  *
  * @category   Zend
@@ -134,6 +159,13 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
      * @var string
      */
     protected $_description = null;
+    
+    /**
+     * The contents of the 'About Me' field.
+     *
+     * @var string
+     */
+    protected $_aboutMe = null;
 
     /**
      * The age of the user
@@ -220,6 +252,34 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
     protected $_relationship = null;
 
     /**
+     * First name
+     *
+     * @var string
+     */
+    protected $_firstName = null;
+    
+    /**
+     * Last name
+     *
+     * @var string
+     */
+    protected $_lastName = null;
+    
+    /**
+     * Statistics
+     *
+     * @var Zend_Gdata_YouTube_Extension_Statistics
+     */
+    protected $_statistics = null;
+
+    /**
+     * Thumbnail
+     *
+     * @var Zend_Gdata_Media_Extension_MediaThumbnail
+     */
+    protected $_thumbnail = null;
+
+    /**
      * Creates a User Profile entry, representing an individual user
      * and their attributes.
      *
@@ -247,6 +307,9 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
         $element = parent::getDOM($doc, $majorVersion, $minorVersion);
         if ($this->_description != null) {
             $element->appendChild($this->_description->getDOM($element->ownerDocument));
+        }
+        if ($this->_aboutMe != null) {
+            $element->appendChild($this->_aboutMe->getDOM($element->ownerDocument));
         }
         if ($this->_age != null) {
             $element->appendChild($this->_age->getDOM($element->ownerDocument));
@@ -287,6 +350,18 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
         if ($this->_relationship != null) {
             $element->appendChild($this->_relationship->getDOM($element->ownerDocument));
         }
+        if ($this->_firstName != null) {
+            $element->appendChild($this->_firstName->getDOM($element->ownerDocument));
+        }
+        if ($this->_lastName != null) {
+            $element->appendChild($this->_lastName->getDOM($element->ownerDocument));
+        }
+        if ($this->_statistics != null) {
+            $element->appendChild($this->_statistics->getDOM($element->ownerDocument));
+        }
+        if ($this->_thumbnail != null) {
+            $element->appendChild($this->_thumbnail->getDOM($element->ownerDocument));
+        }
         if ($this->_feedLink != null) {
             foreach ($this->_feedLink as $feedLink) {
                 $element->appendChild($feedLink->getDOM($element->ownerDocument));
@@ -309,6 +384,11 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
             $description = new Zend_Gdata_YouTube_Extension_Description();
             $description->transferFromDOM($child);
             $this->_description = $description;
+            break;
+        case $this->lookupNamespace('yt') . ':' . 'aboutMe':
+            $aboutMe = new Zend_Gdata_YouTube_Extension_AboutMe();
+            $aboutMe->transferFromDOM($child);
+            $this->_aboutMe = $aboutMe;
             break;
         case $this->lookupNamespace('yt') . ':' . 'age':
             $age = new Zend_Gdata_YouTube_Extension_Age();
@@ -375,6 +455,26 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
             $relationship->transferFromDOM($child);
             $this->_relationship = $relationship;
             break;
+        case $this->lookupNamespace('yt') . ':' . 'firstName':
+            $firstName = new Zend_Gdata_YouTube_Extension_FirstName();
+            $firstName->transferFromDOM($child);
+            $this->_firstName = $firstName;
+            break;
+        case $this->lookupNamespace('yt') . ':' . 'lastName':
+            $lastName = new Zend_Gdata_YouTube_Extension_LastName();
+            $lastName->transferFromDOM($child);
+            $this->_lastName = $lastName;
+            break;
+        case $this->lookupNamespace('yt') . ':' . 'statistics':
+            $statistics = new Zend_Gdata_YouTube_Extension_Statistics();
+            $statistics->transferFromDOM($child);
+            $this->_statistics = $statistics;
+            break;
+        case $this->lookupNamespace('media') . ':' . 'thumbnail':
+            $thumbnail = new Zend_Gdata_Media_Extension_MediaThumbnail();
+            $thumbnail->transferFromDOM($child);
+            $this->_thumbnail = $thumbnail;
+            break;
         case $this->lookupNamespace('gd') . ':' . 'feedLink':
             $feedLink = new Zend_Gdata_Extension_FeedLink();
             $feedLink->transferFromDOM($child);
@@ -383,6 +483,165 @@ class Zend_Gdata_YouTube_UserProfileEntry extends Zend_Gdata_Entry
         default:
             parent::takeChildFromDOM($child);
             break;
+        }
+    }
+
+    /**
+     * Sets the content of the 'about me' field.
+     *
+     * @param Zend_Gdata_YouTube_Extension_AboutMe $aboutMe The 'about me'
+     *        information.
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_UserProfileEntry Provides a fluent interface
+     */
+    public function setAboutMe($aboutMe = null)
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The setAboutMe ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            $this->_aboutMe = $aboutMe;
+            return $this;
+        }
+    }
+
+    /**
+     * Returns the contents of the 'about me' field.
+     *
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_Extension_AboutMe  The 'about me' information
+     */
+    public function getAboutMe()
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The getAboutMe ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            return $this->_aboutMe;
+        }
+    }
+
+    /**
+     * Sets the content of the 'first name' field.
+     *
+     * @param Zend_Gdata_YouTube_Extension_FirstName $firstName The first name
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_UserProfileEntry Provides a fluent interface
+     */
+    public function setFirstName($firstName = null)
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The setFirstName ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            $this->_firstName = $firstName;
+            return $this;
+        }
+    }
+
+    /**
+     * Returns the first name
+     *
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_Extension_FirstName  The first name
+     */
+    public function getFirstName()
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The getFirstName ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            return $this->_firstName;
+        }
+    }
+
+    /**
+     * Sets the content of the 'last name' field.
+     *
+     * @param Zend_Gdata_YouTube_Extension_LastName $lastName The last name
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_UserProfileEntry Provides a fluent interface
+     */
+    public function setLastName($lastName = null)
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The setLastName ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            $this->_lastName = $lastName;
+            return $this;
+        }
+    }
+
+    /**
+     * Returns the last name
+     *
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_Extension_LastName  The last name
+     */
+    public function getLastName()
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The getLastName ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            return $this->_lastName;
+        }
+    }
+
+    /**
+     * Returns the statistics
+     *
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_YouTube_Extension_Statistics  The profile statistics
+     */
+    public function getStatistics()
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The getStatistics ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            return $this->_statistics;
+        }
+    }
+    
+    /**
+     * Returns the thumbnail
+     *
+     * @throws Zend_Gdata_App_VersionException
+     * @return Zend_Gdata_Media_Extension_MediaThumbnail The profile thumbnail
+     */
+    public function getThumbnail()
+    {
+        if (($this->getMajorProtocolVersion() == null) ||
+           ($this->getMajorProtocolVersion() == 1)) {
+            require_once 'Zend/Gdata/App/VersionException.php';
+            throw new Zend_Gdata_App_VersionException('The getThumbnail ' .
+                ' method is only supported as of version 2 of the YouTube ' .
+                'API.');
+        } else {
+            return $this->_thumbnail;
         }
     }
 

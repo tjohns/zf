@@ -39,6 +39,9 @@ class Zend_Gdata_YouTube_UserProfileEntryTest extends PHPUnit_Framework_TestCase
         $this->entryText = file_get_contents(
                 'Zend/Gdata/YouTube/_files/UserProfileEntryDataSample1.xml',
                 true);
+        $this->V2entryText = file_get_contents(
+                'Zend/Gdata/YouTube/_files/UserProfileEntryDataSampleV2.xml',
+                true);
         $this->entry = new Zend_Gdata_YouTube_UserProfileEntry();
     }
 
@@ -83,31 +86,84 @@ class Zend_Gdata_YouTube_UserProfileEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('http://gdata.youtube.com/schemas/2007#user.uploads', $userProfileEntry->feedLink[5]->rel);
     }
 
+    private function verifyAllSamplePropertiesAreCorrectV2 ($userProfileEntry) {
+        $this->assertEquals('tag:youtube.com,2008:user:zfgdata',
+            $userProfileEntry->id->text);
+        $this->assertEquals('2008-12-15T13:30:56.000-08:00',
+            $userProfileEntry->updated->text);
+        $this->assertEquals(
+            'http://gdata.youtube.com/schemas/2007/channeltypes.cat',
+            $userProfileEntry->category[0]->scheme);
+        $this->assertEquals(
+            'Standard',
+            $userProfileEntry->category[0]->term);
+        $this->assertEquals('zfgdata Channel',
+            $userProfileEntry->title->text);;
+        $this->assertEquals('self', $userProfileEntry->getLink('self')->rel);
+        $this->assertEquals("I'm a lonely test account, with little to do " . 
+            "but sit\naround and wait for people to use me. I get bored in " . 
+            "between\nreleases and often sleep to pass the time. Please use " .
+            "me more\noften, as I love to show off my talent in breaking " .
+            "your\ncode.", $userProfileEntry->getAboutMe()->text);
+        $this->assertEquals('88',
+            $userProfileEntry->getStatistics()->getViewCount());
+        $thumbnail = $userProfileEntry->getThumbnail();
+        $this->assertTrue(
+            $thumbnail instanceof Zend_Gdata_Media_Extension_MediaThumbnail);
+        $this->assertTrue($thumbnail->getUrl() != null);
+        $this->assertEquals('TestAccount',
+            $userProfileEntry->getLastName()->text);
+        $this->assertEquals('Lonely',
+            $userProfileEntry->getFirstName()->text);
+    }
+
     public function testEmptyEntryShouldHaveNoExtensionElements() {
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertEquals(0, count($this->entry->extensionElements));
     }
 
     public function testEmptyEntryShouldHaveNoExtensionAttributes() {
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertEquals(0, count($this->entry->extensionAttributes));
     }
 
     public function testSampleEntryShouldHaveNoExtensionElements() {
         $this->entry->transferFromXML($this->entryText);
         $this->assertTrue(is_array($this->entry->extensionElements));
-        $this->assertTrue(count($this->entry->extensionElements) == 0);
+        $this->assertEquals(0, count($this->entry->extensionElements));
     }
 
     public function testSampleEntryShouldHaveNoExtensionAttributes() {
         $this->entry->transferFromXML($this->entryText);
         $this->assertTrue(is_array($this->entry->extensionAttributes));
-        $this->assertTrue(count($this->entry->extensionAttributes) == 0);
+        $this->assertEquals(0, count($this->entry->extensionAttributes));
+    }
+
+    public function testSampleEntryShouldHaveNoExtensionElementsV2() {
+        $this->entry->transferFromXML($this->V2entryText);
+        $this->assertTrue(is_array($this->entry->extensionElements));
+        $this->assertEquals(0, count($this->entry->extensionElements));
+    }
+
+    public function testSampleEntryShouldHaveNoExtensionAttributesV2() {
+        $this->entry->transferFromXML($this->V2entryText);
+        $this->assertTrue(is_array($this->entry->extensionAttributes));
+        $this->assertEquals(0, count($this->entry->extensionAttributes));
     }
 
     public function testEmptyUserProfileEntryToAndFromStringShouldMatch() {
         $entryXml = $this->entry->saveXML();
         $newUserProfileEntry = new Zend_Gdata_YouTube_UserProfileEntry();
+        $newUserProfileEntry->transferFromXML($entryXml);
+        $newUserProfileEntryXml = $newUserProfileEntry->saveXML();
+        $this->assertTrue($entryXml == $newUserProfileEntryXml);
+    }
+
+    public function testEmptyUserProfileEntryToAndFromStringShouldMatchV2() {
+        $this->entry->setMajorProtocolVersion(2);
+        $entryXml = $this->entry->saveXML();
+        $newUserProfileEntry = new Zend_Gdata_YouTube_UserProfileEntry();
+        $newUserProfileEntry->setMajorProtocolVersion(2);
         $newUserProfileEntry->transferFromXML($entryXml);
         $newUserProfileEntryXml = $newUserProfileEntry->saveXML();
         $this->assertTrue($entryXml == $newUserProfileEntryXml);
@@ -149,12 +205,29 @@ class Zend_Gdata_YouTube_UserProfileEntryTest extends PHPUnit_Framework_TestCase
         $this->verifyAllSamplePropertiesAreCorrect($this->entry);
     }
 
+    public function testSamplePropertiesAreCorrectV2 () {
+        $this->entry->transferFromXML($this->V2entryText);
+        $this->entry->setMajorProtocolVersion(2);
+        $this->verifyAllSamplePropertiesAreCorrectV2($this->entry);
+    }
+
     public function testConvertUserProfileEntryToAndFromString() {
         $this->entry->transferFromXML($this->entryText);
         $entryXml = $this->entry->saveXML();
         $newUserProfileEntry = new Zend_Gdata_YouTube_UserProfileEntry();
         $newUserProfileEntry->transferFromXML($entryXml);
         $this->verifyAllSamplePropertiesAreCorrect($newUserProfileEntry);
+        $newUserProfileEntryXml = $newUserProfileEntry->saveXML();
+        $this->assertEquals($entryXml, $newUserProfileEntryXml);
+    }
+
+    public function testConvertUserProfileEntryToAndFromStringV2() {
+        $this->entry->transferFromXML($this->V2entryText);
+        $entryXml = $this->entry->saveXML();
+        $newUserProfileEntry = new Zend_Gdata_YouTube_UserProfileEntry();
+        $newUserProfileEntry->setMajorProtocolVersion(2);
+        $newUserProfileEntry->transferFromXML($entryXml);
+        $this->verifyAllSamplePropertiesAreCorrectV2($newUserProfileEntry);
         $newUserProfileEntryXml = $newUserProfileEntry->saveXML();
         $this->assertEquals($entryXml, $newUserProfileEntryXml);
     }
