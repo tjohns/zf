@@ -1708,6 +1708,16 @@ try {
             the underlying database connection.
         </para>
 
+        <para>
+            Since release 1.7.2, you could check you are currently connected to the RDBMS
+            server with the method <code>isConnected()</code>. This means that a connection
+            resource has been initiated and wasn't closed. This function is not currently
+            able to test for example a server side closing of the connection. This is
+            internally use to close the connection. It allow you to close the connection
+            multiple times without errors. It was already the case before 1.7.2 for PDO
+            adapters but not for the others.
+        </para>
+
         <example id="zend.db.adapter.closing.example">
             <title>Closing a database connection</title>
             <programlisting role="php"><![CDATA[
@@ -1796,9 +1806,9 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         <title>Retrieving Server Version</title>
 
         <para>
-            You could retrieve the server version in PHP syntax style to be
-            able to use <code>version_compare()</code>. If the information isn't
-            available, you will receive <code>null</code>.
+            Since release 1.7.2, you could retrieve the server version in PHP syntax
+            style to be able to use <code>version_compare()</code>. If the information
+            isn't available, you will receive <code>null</code>.
         </para>
 
         <example id="zend.db.adapter.server-version.example">
