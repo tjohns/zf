@@ -98,6 +98,14 @@ class Zend_Session_Namespace extends Zend_Session_Abstract implements IteratorAg
             throw new Zend_Session_Exception('Session namespace must not start with an underscore.');
         }
 
+        if (preg_match('#(^[0-9])#i', $namespace[0])) {
+            /**
+             * @see Zend_Session_Exception
+             */
+            require_once 'Zend/Session/Exception.php';
+            throw new Zend_Session_Exception('Session namespace must not start with a number.');
+        }
+
         if (isset(self::$_singleInstances[$namespace])) {
             /**
              * @see Zend_Session_Exception

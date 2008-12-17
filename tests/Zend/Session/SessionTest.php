@@ -375,6 +375,23 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * test for detection of illegal namespace names; expect exception complaining about name beginning
+     * with an underscore
+     *
+     * @return void
+     */
+    public function testInitNamespaceNumber()
+    {
+        try {
+            $s = new Zend_Session_Namespace('0namespace');
+            $this->fail('No exception was returned when requesting a namespace having a name beginning with '
+                . 'a number');
+        } catch (Zend_Session_Exception $e) {
+            $this->assertRegexp('/number/i', $e->getMessage());
+        }
+    }
+
+    /**
      * test iteration; expect native PHP foreach statement is able to properly iterate all items in a session namespace
      *
      * @return void
