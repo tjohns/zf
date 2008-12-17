@@ -44,7 +44,7 @@
 
         <para>
             <code>HeadStyle</code> allows you to wrap the style tag in conditional comments,
-            which allows you to hide them from specific browsers.  To add set the conditional
+            which allows you to hide it from specific browsers.  To add the conditional
             tags, pass the conditional value as part of the <code>$attributes</code> parameter in
             the method calls.
         </para>

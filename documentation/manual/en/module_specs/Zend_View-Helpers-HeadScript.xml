@@ -45,7 +45,7 @@
 
         <para>
             <code>HeadScript</code> allows you to wrap the script tag in conditional comments,
-            which allows you to hide them from specific browsers.  To add set the conditional
+            which allows you to hide it from specific browsers.  To add the conditional
             tags, pass the conditional value as part of the <code>$attrs</code> parameter in
             the method calls.
         </para>
