@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13225 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -525,7 +525,9 @@ $upload->addValidator('ExcludeExtension', false, 'php,exe');
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
  // 大文字小文字を区別するチェックを行います
-$upload->addValidator('ExcludeExtension', false, array('php', 'exe', 'case' => true));
+$upload->addValidator('ExcludeExtension',
+                      false,
+                      array('php', 'exe', 'case' => true));
 $upload->addValidator('ExcludeExtension',
                       false,
                       array('php', 'exe', 'case' => true));
@@ -1357,7 +1359,8 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('Size', false, 40000);
 
 // 指定したファイルのサイズを最大 4MB、最小 10kB に制限し、
-// さらにエラー時に返す結果をユーザに優しい形式ではなくプレーンな数値とします
+// さらにエラー時に返す結果をユーザに優しい形式ではなく
+// プレーンな数値とします
 $upload->addValidator('Size',
                       false,
                       array('min' => '10kB',

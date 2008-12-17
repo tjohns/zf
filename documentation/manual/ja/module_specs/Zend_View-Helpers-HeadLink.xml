@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13141 -->
+<!-- EN-Revision: 13327 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>HeadLink ヘルパー</title>
 
@@ -84,7 +84,10 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
                  ->headLink(array('rel' => 'favicon',
                                   'href' => '/img/favicon.ico'),
                                   'PREPEND')
-                 ->prependStylesheet('/styles/moz.css', 'screen', true, array('id' => 'my_stylesheet'));
+                 ->prependStylesheet('/styles/moz.css',
+                                     'screen',
+                                     true,
+                                     array('id' => 'my_stylesheet'));
 ?>
 <?php // リンクをレンダリングします ?>
 <?= $this->headLink() ?>
