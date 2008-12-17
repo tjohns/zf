@@ -144,7 +144,7 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      * Sets the minimum file count
      *
      * @param  integer|array $min The minimum file count
-     * @return Zend_Validate_File_Size Provides a fluent interface
+     * @return Zend_Validate_File_Count Provides a fluent interface
      * @throws Zend_Validate_Exception When min is greater than max
      */
     public function setMin($min)
