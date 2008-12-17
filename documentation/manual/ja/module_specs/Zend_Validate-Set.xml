@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12751 -->
+<!-- EN-Revision: 13277 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -13,6 +13,7 @@
             <code>$value</code> がアルファベットおよび数字のみで構成されているときにのみ <code>true</code> を返します。
             このバリデータでは、オプションとして空白文字を認めることもできます。
         </para>
+
         <note>
             <para>
              アルファベットとは各言語で単語を構成する文字を意味します。
@@ -20,6 +21,7 @@
              言語はZend_Localeで指定されます。
             </para>
         </note>
+
     </sect2>
 
     <sect2 id="zend.validate.set.alpha">
@@ -157,12 +159,14 @@
             文字列 <code>$value</code> の長さが最小値以上、
             かつ最大値以下 (最大値が <code>null</code> 以外のとき)
             の場合にのみ <code>true</code> を返します。
-            バージョン 1.5.0 以降では、<code>setMin()</code>
+            <code>setMin()</code>
             で最大値より大きい値を指定したり <code>setMax()</code>
             で最小値より小さい値を設定したりした場合に例外をスローします。
-            バージョン 1.0.2 以降では、このクラスは UTF-8 のほかに
+            このクラスは UTF-8 のほかに
             <ulink url="http://www.php.net/manual/ja/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>
             にもとづいたその他の文字エンコーディングもサポートします。
+            別の円コーディングを使用したい場合は、アクセサメソッド getEncoding
+            および setEncoding で設定します。
         </para>
     </sect2>
 
