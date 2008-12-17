@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8427 -->
+<!-- EN-Revision: 13325 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle ヘルパー</title>
 
@@ -42,6 +42,26 @@
         lang、title、media そして dir のすべてが使用可能です。
     </para>
 
+    <note>
+        <title>条件コメントの設定</title>
+
+        <para>
+            <code>HeadStyle</code> では、script タグを条件コメントで囲むことができます。
+            そうすれば、特定のブラウザでだけスクリプトを実行しないこともできます。
+            これを使用するには conditional タグを設定し、条件をメソッドコール時の
+            <code>$attributes</code> パラメータで渡します。
+        </para>
+
+        <example id="zend.view.helpers.initial.headstyle.conditional">
+            <title>Headstyle で条件コメントを使う例</title>
+            <programlisting role="php"><![CDATA[
+// スクリプトを追加します
+$this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
+]]>
+            </programlisting>
+        </example>
+    </note>
+
     <para>
         <code>HeadStyle</code> はスタイル宣言のキャプチャも行います。
         これは、宣言をプログラム上で作成してからどこか別の場所で使いたい場合に便利です。
@@ -80,10 +100,10 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // スタイルを追加します
+// スタイルを追加します
 $this->headStyle()->appendStyle($styles);
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             CSS では並び順が重要となります。
@@ -93,7 +113,7 @@ $this->headStyle()->appendStyle($styles);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // スタイルの順番を指定します
+// スタイルの順番を指定します
 
 // 特定の位置に置きます
 $this->headStyle()->offsetSetStyle(100, $customStyles);
@@ -103,8 +123,8 @@ $this->headStyle()->appendStyle($finalStyles);
 
 // 先頭に置きます
 $this->headStyle()->prependStyle($firstStyles);
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             すべてのスタイル宣言を出力する準備が整ったら、
@@ -113,7 +133,8 @@ $this->headStyle()->prependStyle($firstStyles);
 
         <programlisting role="php"><![CDATA[
 <?= $this->headStyle() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headstyle.capture">
@@ -132,7 +153,8 @@ body {
     background-color: <?= $this->bgColor ?>;
 }
 <?php $this->headStyle()->captureEnd() ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             前提条件は次のとおりです。

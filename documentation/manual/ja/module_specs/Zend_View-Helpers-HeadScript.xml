@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13325 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript ヘルパー</title>
 
@@ -40,6 +40,26 @@
         系のメソッドでは、<code>$script</code>
         はその要素に使用したいクライアント側のスクリプトとなります。
     </para>
+
+    <note>
+        <title>条件コメントの設定</title>
+
+        <para>
+            <code>HeadScript</code> では、script タグを条件コメントで囲むことができます。
+            そうすれば、特定のブラウザでだけスクリプトを実行しないこともできます。
+            これを使用するには conditional タグを設定し、条件をメソッドコール時の
+            <code>$attrs</code> パラメータで渡します。
+        </para>
+
+        <example id="zend.view.helpers.initial.headscript.conditional">
+            <title>Headscript で条件コメントを使う例</title>
+            <programlisting role="php"><![CDATA[
+// スクリプトを追加します
+$this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
+]]>
+            </programlisting>
+        </example>
+    </note>
 
     <para>
         <code>HeadScript</code> はスクリプトのキャプチャも行います。
@@ -107,7 +127,8 @@
 
         <programlisting role="php"><![CDATA[
 $this->headScript()->setAllowArbitraryAttributes(true);
-?>]]></programlisting>
+]]>
+        </programlisting>
     </note>
 
     <example id="zend.view.helpers.initial.headscript.basicusage">
@@ -120,11 +141,11 @@ $this->headScript()->setAllowArbitraryAttributes(true);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // スクリプトを追加します
+// スクリプトを追加します
 $this->headScript()->appendFile('/js/prototype.js')
                    ->appendScript($onloadScript);
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             クライアント側のスクリプトでは並び順が重要となります。
@@ -134,18 +155,18 @@ $this->headScript()->appendFile('/js/prototype.js')
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php // スクリプトの順番を指定します
+// スクリプトの順番を指定します
 
 // 特定の位置を指定し、確実に最後に読み込まれるようにします
-$this->headScript()->offsetSetScript(100, '/js/myfuncs.js');
+$this->headScript()->offsetSetFile(100, '/js/myfuncs.js');
 
 // scriptaculous のエフェクトを使用します (次のインデックスである 101 に追加されます)
-$this->headScript()->appendScript('/js/scriptaculous.js');
+$this->headScript()->appendFile('/js/scriptaculous.js');
 
 // でも、もととなる prototype スクリプトは常に最初に読み込まれるようにします
-$this->headScript()->prependScript('/js/prototype.js');
-?>
-]]></programlisting>
+$this->headScript()->prependFile('/js/prototype.js');
+]]>
+        </programlisting>
 
         <para>
             すべてのスクリプトを出力する準備が整ったら、
@@ -154,7 +175,8 @@ $this->headScript()->prependScript('/js/prototype.js');
 
         <programlisting role="php"><![CDATA[
 <?= $this->headScript() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.headscript.capture">
@@ -172,7 +194,8 @@ $this->headScript()->prependScript('/js/prototype.js');
 var action = '<?= $this->baseUrl ?>';
 $('foo_form').action = action;
 <?php $this->headScript()->captureEnd() ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             前提条件は次のとおりです。
