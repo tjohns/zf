@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13136 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -77,7 +77,7 @@
         </listitem>
         <listitem>
             <para>
-                IBM DB2 (<ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> を使用します)
+                IBM DB2 および DB2/i5 (<ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> を使用します)
             </para>
         </listitem>
         <listitem>
@@ -1689,6 +1689,16 @@ try {
             <code>closeConnection()</code> メソッドを使用します。
         </para>
 
+        <para>
+            リリース 1.7.2 以降でしゃ、現在 RDBMS に接続しているかどうかを
+            <code>isConnected()</code> メソッドで取得することができます。
+            これは、コネクションリソースが初期化されたまままだ閉じられていないことを確認します。
+            現在のところ、たとえばサーバ側で接続が切断された場合などは検出することができません。
+            内部的に、接続を閉じる際にこれを使用しています。
+            接続を複数回閉じてもエラーにはなりません。
+            1.7.2 より前でも PDO アダプタは同じ挙動でしたが、それ以外のアダプタは違いました。
+        </para>
+
         <example id="zend.db.adapter.closing.example">
             <title>データベースとの接続の解除</title>
             <programlisting role="php"><![CDATA[
@@ -1778,6 +1788,33 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             これは、過去のバージョンとの互換性を損なうことはありません。
         </para>
 
+    </sect2>
+
+    <sect2 id="zend.db.adapter.server-version">
+        <title>サーバのバージョンの取得</title>
+
+        <para>
+            リリース 1.7.2 以降では、サーバのバージョンを取得することができます。これは、
+            PHP の <code>version_compare()</code> で使用できる形式となります。
+            情報が取得できない場合は <code>null</code> が返されます。
+        </para>
+
+        <example id="zend.db.adapter.server-version.example">
+            <title>サーバのバージョンを取得してからクエリを実行する</title>
+            <programlisting role="php"><![CDATA[
+$version = $db->getServerVersion();
+if (!is_null($version)) {
+    if (version_compare($version, '5.0.0', '>=')) {
+        // 何かを行います
+    } else {
+        // 何か別のことを行います
+    }
+} else {
+    // サーバのバージョンを取得できませんでした
+}
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.db.adapter.adapter-notes">
@@ -1878,6 +1915,15 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         オプションをサポートしていません。Oracle
                         でこの機能を使用したい場合は、PDO OCI
                         アダプタを使用する必要があります。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        デフォルトでは、LOB フィールドは OCI-Lob オブジェクトで返されます。
+                        すべてのリクエストでこれを文字列として取得したい場合は、
+                        ドライバのオプション <code>'lob_as_string'</code> を使用します。
+                        特定のリクエストでだけそうしたい場合は、アダプタあるいはステートメントで
+                        <code>setLobAsString(boolean)</code> を使用します。
                     </para>
                 </listitem>
             </itemizedlist>
