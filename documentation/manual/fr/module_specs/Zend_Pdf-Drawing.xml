@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 13352 -->
+<!-- EN-Revision: 13356 -->
 <sect1 id="zend.pdf.drawing">
     <title>Dessiner</title>
 
@@ -329,9 +328,9 @@ $pdfPage->setFont($font, 36);
                 </listitem>
             </itemizedlist></para>
 
-        <para>Vous pouvez aussi prendre n'importe quelle police TrueType (extension habituelle '.ttf') ou OpenType
-        ('.otf') si elles ont une silhouette TrueType. Pour l'instant non supportée, les polices Mac Os X .dfont et les
-        collections TrueType Microsoft ('.ttc') seront intégrées dans une version future.</para>
+        <para>Vous pouvez aussi prendre n'importe quelle police TrueType (extension habituelle ".ttf") ou OpenType
+        (".otf") si elles ont une silhouette TrueType. Pour l'instant non supportée, les polices Mac Os X ".dfont" et
+        les collections TrueType Microsoft (".ttc") seront intégrées dans une version future.</para>
 
         <para>Pour utiliser une police TrueType, vous devez fournir le chemin de fichier complet vers cette police. Si
         la police ne peut pas être lue pour une quelconque raison, ou si ce n'est pas une police TrueType, la méthode
@@ -434,20 +433,21 @@ $font = Zend_Pdf_Font::fontWithPath(
     </sect2>
 
     <sect2 id="zend.pdf.drawing.standard-fonts-limitations">
-        <title>Standard PDF fonts limitations.</title>
+        <title>Limitations des polices standard PDF</title>
 
-        <para>Standard PDF fonts use several single byte encodings internaly (see <ulink
+        <para>Les polices standard PDF emploient en interne plusieurs encodages sur un seul octet (voir <ulink
         url="http://www.adobe.com/devnet/acrobat/pdfs/pdf_reference_1-7.pdf">PDF Reference, Sixth Edition, version
-        1.7</ulink> Appendix D for details). They are generally equal to Latin1 character set (except Symbol and
-        ZapfDingbats fonts).</para>
+        1.7</ulink> - Annexe D pour plus de détails). Elles sont généralement avec un jeu de caractère de type
+        Latin1(excepté les polices Symbol and ZapfDingbats).</para>
 
-        <para>Zend_Pdf uses CP1252 (WinLatin1) for drawing text with standard fonts.</para>
+        <para><code>Zend_Pdf</code> utilise l'encodage CP1252 (WinLatin1) pour tracer les textes avec les polices
+        standard.</para>
 
-        <para>Text still can be provided in any other encoding, which must be specified if it differs from a current
-        locale. Only WinLatin1 characters will be actualy drawn.</para>
+        <para>Le texte peut encore être fourni dans n'importe quel autre encodage, qui doit être spécifié s'il diffère
+        de celui en cours. Seulement les caractères WinLatin1 seront tracés réellement.</para>
 
         <example id="zend.pdf.drawing.using-fonts.example-7">
-            <title>Combining font embedding options.</title>
+            <title>Combiner les options de polices embarqués.</title>
 
             <programlisting role="php"><![CDATA[
 ...
@@ -714,21 +714,21 @@ public function setLineDashingPattern($pattern, $phase = 0);
     </sect2>
 
     <sect2 id="zend.pdf.drawing.linear-transformations">
-        <title>Linear Transformations</title>
+        <title>Transformations linéaires</title>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.rotations">
-            <title>Rotations.</title>
+            <title>Rotations</title>
 
-            <para>PDF page can be rotated before applying any draw operation. It can be done by
-            <code>Zend_Pdf_Page::rotate()</code> method:</para>
+            <para>La page PDF page peut être tourné avant d'appliquer toute opération de dessin. Ceci peut être fait
+            avec la méthode <code>Zend_Pdf_Page::rotate()</code> :</para>
 
             <programlisting role="php"><![CDATA[
 /**
- * Rotate the page.
+ * Rotation de la page
  *
- * @param float $x  - the X co-ordinate of rotation point
- * @param float $y  - the Y co-ordinate of rotation point
- * @param float $angle - rotation angle
+ * @param float $x  - la coordonnée X du point de rotation
+ * @param float $y  - la coordonnée X du point de rotation
+ * @param float $angle - angle de rotation
  * @return Zend_Pdf_Page
  */
 public function rotate($x, $y, $angle);
@@ -736,13 +736,13 @@ public function rotate($x, $y, $angle);
         </sect3>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.scale">
-            <title>Starting from ZF 1.8, scaling.</title>
+            <title>A partir de ZF 1.8, mise à l'échelle</title>
 
-            <para>Scaling transformation is provided by <code>Zend_Pdf_Page::scale()</code> method:</para>
+            <para>La mise à l'échelle est fournie par la méthode <code>Zend_Pdf_Page::scale()</code> :</para>
 
             <programlisting role="php"><![CDATA[
 /**
- * Scale coordination system.
+ * Mise à l'échelle
  *
  * @param float $xScale - X dimention scale factor
  * @param float $yScale - Y dimention scale factor
@@ -753,16 +753,17 @@ public function scale($xScale, $yScale);
         </sect3>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.translate">
-            <title>Starting from ZF 1.8, translating.</title>
+            <title>A partir de ZF 1.8, décalage</title>
 
-            <para>Coordinate system shifting is performed by <code>Zend_Pdf_Page::translate()</code> method:</para>
+            <para>Le décalage du système de coordonnées est réalisé par la méthode
+            <code>Zend_Pdf_Page::translate()</code> :</para>
 
             <programlisting role="php"><![CDATA[
 /**
- * Translate coordination system.
+ * Décalage du système de coordonnées
  *
- * @param float $xShift - X coordinate shift
- * @param float $yShift - Y coordinate shift
+ * @param float $xShift - coordonnées X du décalage
+ * @param float $yShift - coordonnées Y du décalage
  * @return Zend_Pdf_Page
  */
 public function translate($xShift, $yShift);
@@ -770,13 +771,14 @@ public function translate($xShift, $yShift);
         </sect3>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.skew">
-            <title>Starting from ZF 1.8, skewing.</title>
+            <title>A partir de ZF 1.8, mise en biais.</title>
 
-            <para>Page skewing can be done using <code>Zend_Pdf_Page::skew()</code> method:</para>
+            <para>La mise en biais de la page peut être réalisé par la méthode <code>Zend_Pdf_Page::skew()</code>
+            :</para>
 
             <programlisting role="php"><![CDATA[
 /**
- * Translate coordination system.
+ * Mise en biais du système de coordonnées
  *
  * @param float $x  - the X co-ordinate of axis skew point
  * @param float $y  - the Y co-ordinate of axis skew point
