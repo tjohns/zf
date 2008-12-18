@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12739 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - 接続アダプタ</title>
 
@@ -96,7 +96,7 @@
                     </tbody>
                 </tgroup>
             </table>
-            
+
             <note>
                 <title>持続的な TCP 接続</title>
                 <para>
@@ -117,16 +117,16 @@
                     <xref linkend="zend.http.client.configuration" />
                     で説明した Keep-Alive HTTP リクエストも有効にしておくことを推奨します。
                     そうしないと、持続的な接続の効果はほとんどといっていいほどなくなってしまいます。
-                </para> 
+                </para>
             </note>
-             
+
             <note>
                 <title>HTTPS SSL ストリームパラメータ</title>
                 <para>
                     <code>ssltransport, sslcert</code> および <code>sslpassphrase</code>
                     は、HTTPS 接続で使用する SSL レイヤーにのみ関連するものです。
                 </para>
-                <para> 
+                <para>
                     たいていの場合はデフォルトの SSL 設定でうまく動作するでしょうが、
                     接続先のサーバが特別なクライアント設定を要求している場合は
                     それにあわせた設定をする必要があるかもしれません。
@@ -146,7 +146,7 @@ $config = array(
 );
 
 // クライアントオブジェクトのインスタンスを作成します
-$client = Zend_Http_Client('https://www.example.com', $config);
+$client = new Zend_Http_Client('https://www.example.com', $config);
 
 // これ以降のリクエストは、TLS セキュア接続上で行われます
 $response = $client->request();
@@ -254,7 +254,7 @@ $config = array(
 );
 
 // クライアントオブジェクトのインスタンスを作成します
-$client = Zend_Http_Client('http://www.example.com', $config);
+$client = new Zend_Http_Client('http://www.example.com', $config);
 
 // 作業を続けます...
 ]]>
@@ -292,7 +292,7 @@ $client = Zend_Http_Client('http://www.example.com', $config);
             <programlisting role="php"><![CDATA[
 // 新しいアダプタとクライアントのインスタンスを作成します
 $adapter = new Zend_Http_Client_Adapter_Test();
-$client = Zend_Http_Client('http://www.example.com', array(
+$client = new Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
 ));
 
@@ -334,7 +334,7 @@ $response = $client->request('GET');
             <programlisting role="php"><![CDATA[
 // 新しいアダプタおよびクライアントのインスタンスを作成します
 $adapter = new Zend_Http_Client_Adapter_Test();
-$client = Zend_Http_Client('http://www.example.com', array(
+$client = new Zend_Http_Client('http://www.example.com', array(
     'adapter' => $adapter
 ));
 
