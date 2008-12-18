@@ -82,6 +82,11 @@ require_once 'Zend/Gdata/YouTube/Extension/Control.php';
 require_once 'Zend/Gdata/YouTube/Extension/Recorded.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_Location
+ */
+require_once 'Zend/Gdata/YouTube/Extension/Location.php';
+
+/**
  * Represents the YouTube video flavor of an Atom entry
  *
  * @category   Zend
@@ -161,6 +166,13 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     protected $_recorded = null;
 
     /**
+     * Location informtion for the video
+     *
+     * @var Zend_Gdata_YouTube_Extension_Location|null
+     */
+    protected $_location = null;
+
+    /**
      * Creates a Video entry, representing an individual video
      *
      * @param DOMElement $element (optional) DOMElement from which this
@@ -199,6 +211,10 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
         }
         if ($this->_recorded != null) {
             $element->appendChild($this->_recorded->getDOM(
+                $element->ownerDocument));
+        }
+        if ($this->_location != null) {
+            $element->appendChild($this->_location->getDOM(
                 $element->ownerDocument));
         }
         if ($this->_rating != null) {
@@ -247,6 +263,11 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
             $recorded = new Zend_Gdata_YouTube_Extension_Recorded();
             $recorded->transferFromDOM($child);
             $this->_recorded = $recorded;
+            break;
+        case $this->lookupNamespace('yt') . ':' . 'location':
+            $location = new Zend_Gdata_YouTube_Extension_Location();
+            $location->transferFromDOM($child);
+            $this->_location = $location;
             break;
         case $this->lookupNamespace('gd') . ':' . 'rating':
             $rating = new Zend_Gdata_Extension_Rating();
@@ -309,6 +330,29 @@ class Zend_Gdata_YouTube_VideoEntry extends Zend_Gdata_YouTube_MediaEntry
     public function getRecorded()
     {
         return $this->_recorded;
+    }
+
+    /**
+     * Sets the location information.
+     *
+     * @param Zend_Gdata_YouTube_Extension_Location $location Where the video
+     *        was recorded
+     * @return Zend_Gdata_YouTube_VideoEntry Provides a fluent interface
+     */
+    public function setLocation($location = null)
+    {
+        $this->_location = $location;
+        return $this;
+    }
+
+    /**
+     * Gets the location where the video was recorded.
+     *
+     * @return Zend_Gdata_YouTube_Extension_Location|null
+     */
+    public function getLocation()
+    {
+        return $this->_location;
     }
 
     /**
