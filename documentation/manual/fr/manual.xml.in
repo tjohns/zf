@@ -534,6 +534,9 @@
         <xi:include href="ref/performance-classloading.xml">
             <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="ref/performance-database.xml">
+            <xi:fallback><xi:include href="../en/ref/performance-database.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="ref/performance-localization.xml" />
         <xi:include href="ref/performance-view.xml">
             <xi:fallback><xi:include href="../en/ref/performance-view.xml" /></xi:fallback>
