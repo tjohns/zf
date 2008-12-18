@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12890 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.controller.router" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Routeur Standard</title>
 
@@ -169,6 +169,11 @@ Martel
         requête courante. Dès qu'une correspondance est établie, les variables sont injectées dans l'objet
         <code>Zend_Controller_Request</code> utilisé après dans le dispatcheur et dans les contrôleurs. Si aucune
         correspondance n'est trouvée, la route suivante dans la pile est analysée.</para>
+
+        <para>Si vous devez déterminer quelle route a été trouvée, vous pouvez utilisez la méthode
+        <code>getCurrentRouteName()</code>, qui vous retournera l'identifiant utilisé pour enregistrer la route dans
+        le routeur. Si vous souhaitez récupérer l'objet de la route actuelle, vous pouvez utiliser
+        <code>getCurrentRoute()</code>.</para>
 
         <note>
             <title>Pile LIFO</title>

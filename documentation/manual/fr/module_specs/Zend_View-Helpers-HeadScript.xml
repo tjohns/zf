@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12084 -->
+<!-- EN-Revision: 13335 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>L'aide de vue HeadScript</title>
 
@@ -47,6 +47,24 @@
     charger ; c'est généralement sous la forme d'une URL ou d'un chemin de fichier. Pour les méthode de type
     <code>*Script()</code>, <code>$script</code> sont les directives de script côté-client que vous souhaitez utiliser
     dans l'élément.</para>
+
+    <note>
+        <title>Paramétrez des commentaires conditionnels</title>
+
+        <para><code>HeadScript</code> vous permet d'englober vos balises de script avec des commentaires conditionnels,
+        ce qui permet de les masquer pour des navigateurs spécifiques. Pour ajouter les balises conditionnelles,
+        fournissez le paramètre <code>conditional</code> en tant que partie du paramètre <code>$attrs</code> lors de
+        l'appel de la méthode.</para>
+
+        <example id="zend.view.helpers.initial.headscript.conditional">
+            <title>Headscript avec des commentaires conditionnels</title>
+
+            <programlisting role="php"><![CDATA[
+// adding scripts
+$this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
+]]></programlisting>
+        </example>
+    </note>
 
     <para><code>HeadScript</code> vous permet aussi de capturer des scripts ; ceci peut être utile si vous voulez créer
     du script côté-client par programmation, et ensuite le placer n'importe où. Une utilisation de ceci est montré dans

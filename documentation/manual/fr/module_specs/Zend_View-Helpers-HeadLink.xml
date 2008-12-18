@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11835 -->
+<!-- EN-Revision: 13327 -->
 <sect3 id="zend.view.helpers.initial.headlink">
     <title>L'aide de vue HeadLink</title>
 
@@ -12,45 +12,46 @@
 
     <itemizedlist>
         <listitem>
-            <para><code>appendStylesheet($href, $media, $conditionalStylesheet)</code></para>
+            <para><code>appendStylesheet($href, $media, $conditionalStylesheet, $extras)</code></para>
         </listitem>
 
         <listitem>
-            <para><code>offsetSetStylesheet($index, $href, $media, $conditionalStylesheet)</code></para>
+            <para><code>offsetSetStylesheet($index, $href, $media, $conditionalStylesheet, $extras)</code></para>
         </listitem>
 
         <listitem>
-            <para><code>prependStylesheet($href, $media, $conditionalStylesheet)</code></para>
+            <para><code>prependStylesheet($href, $media, $conditionalStylesheet, $extras)</code></para>
         </listitem>
 
         <listitem>
-            <para><code>setStylesheet($href, $media, $conditionalStylesheet)</code></para>
+            <para><code>setStylesheet($href, $media, $conditionalStylesheet, $extras)</code></para>
         </listitem>
     </itemizedlist>
 
     <para>La valeur par défaut de <code>$media</code> vaut <code>screen</code>, mais peut être n'importe quelle valeur
     de média valide. <code>$conditionalStylesheet</code> est une chaîne ou le booléen <code>false</code>, et sera
     utilisé au moment du rendu pour déterminer si des commentaires spéciaux doivent être inclus pour empêcher le
-    chargement de la feuille de style sur certaines plate-formes.</para>
+    chargement de la feuille de style sur certaines plate-formes. <code>$extras</code> est un tableau de valeurs
+    supplémentaires que vous voulez ajouter à la balise.</para>
 
     <para>De plus, l'aide <code>HeadLink</code> possède des méthodes pour ajouter des liens alternatifs dans sa pile
     :</para>
 
     <itemizedlist>
         <listitem>
-            <para><code>appendAlternate($href, $type, $title)</code></para>
+            <para><code>appendAlternate($href, $type, $title, $extras)</code></para>
         </listitem>
 
         <listitem>
-            <para><code>offsetSetAlternate($index, $href, $type, $title)</code></para>
+            <para><code>offsetSetAlternate($index, $href, $type, $title, $extras)</code></para>
         </listitem>
 
         <listitem>
-            <para><code>prependAlternate($href, $type, $title)</code></para>
+            <para><code>prependAlternate($href, $type, $title, $extras)</code></para>
         </listitem>
 
         <listitem>
-            <para><code>setAlternate($href, $type, $title)</code></para>
+            <para><code>setAlternate($href, $type, $title, $extras)</code></para>
         </listitem>
     </itemizedlist>
 
@@ -77,7 +78,8 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
                             'PREPEND')
                  ->prependStylesheet('/styles/moz.css',
                                      'screen',
-                                     true);
+                                     true,
+                                     array('id' => 'my_stylesheet'));
 ?>
 
 <!-- effectuer le rendu -->

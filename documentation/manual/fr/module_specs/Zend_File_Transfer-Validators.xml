@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 12836 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.file.transfer.validators">
     <title>Validateurs pour Zend_File_Transfer</title>
 
@@ -613,26 +613,18 @@ $upload->addValidator('FilesSize', false, array('min' => '10kB',
         <itemizedlist>
             <listitem>
                 <para><code>minheight</code> : paramètre la hauteur minimum d'une image.</para>
-
-                <para>Avec cette option vous pouvez définir la hauteur minimum pour qu'une image soit validée.</para>
             </listitem>
 
             <listitem>
                 <para><code>maxheight</code> : paramètre la hauteur maximum d'une image.</para>
-
-                <para>Avec cette option vous pouvez limiter la hauteur maximum pour qu'une image soit validée.</para>
             </listitem>
 
             <listitem>
                 <para><code>minwidth</code> : paramètre la largeur minimum d'une image.</para>
-
-                <para>Avec cette option vous pouvez définir la largeur minimum pour qu'une image soit validée.</para>
             </listitem>
 
             <listitem>
                 <para><code>maxwidth</code> : paramètre la largeur maximum d'une image.</para>
-
-                <para>Avec cette option vous pouvez limiter la largeur maximum pour qu'une image soit validée.</para>
             </listitem>
         </itemizedlist>
 
@@ -967,15 +959,10 @@ $upload->addValidator('Sha1', false, array('3b3652f336522365223', 'eb3365f3365dd
         <itemizedlist>
             <listitem>
                 <para><code>min</code>: paramètre le poids minimum du fichier.</para>
-
-                <para>Avec cette option vous pouvez définir le poids minimum d'un fichier que vous souhaitez
-                transférer.</para>
             </listitem>
 
             <listitem>
                 <para><code>max</code>: paramètre le poids maximum du fichier.</para>
-
-                <para>Avec cette option vous pouvez limiter le poids d'un fichier que vous souhaitez transférer.</para>
             </listitem>
 
             <listitem>

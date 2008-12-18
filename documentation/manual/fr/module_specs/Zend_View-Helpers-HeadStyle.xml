@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13335 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>L'aide de vue HeadStyle</title>
 
@@ -37,6 +37,24 @@
     <para>Dans tous les cas, <code>$content</code> est le contenu des déclarations CSS. <code>$attributes</code> sont
     les attributs additionnels que vous pouvez fournir à la balise <code>style</code> : "lang", "title", "media", ou
     "dir" sont autorisés.</para>
+
+    <note>
+        <title>Paramétrez des commentaires conditionnels</title>
+
+        <para><code>HeadStyle</code> vous permet d'englober vos balises de style avec des commentaires conditionnels, ce
+        qui permet de les masquer pour des navigateurs spécifiques. Pour ajouter les balises conditionnelles, fournissez
+        le paramètre <code>conditional</code> en tant que partie du paramètre <code>$attrs</code> lors de l'appel de la
+        méthode.</para>
+
+        <example id="zend.view.helpers.initial.headstyle.conditional">
+            <title>HeadStyle avec des commentaires conditionnels</title>
+
+            <programlisting role="php"><![CDATA[
+// adding scripts
+$this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
+]]></programlisting>
+        </example>
+    </note>
 
     <para><code>HeadStyle</code> permet aussi la capture des déclarations de style ; ceci peut être utile si vous voulez
     créer des déclarations par programme, et ensuite les placer à un autre endroit. L'utilisation de cette

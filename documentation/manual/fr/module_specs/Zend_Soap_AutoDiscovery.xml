@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12836 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>Auto découverte</title>
 
@@ -272,5 +272,46 @@ $autodiscover->handle();
             </itemizedlist> Où <code>xsd:</code> est l'espace "http://www.w3.org/2001/XMLSchema", <code>soap-enc:</code>
         est l'espace "http://schemas.xmlsoap.org/soap/encoding/", <code>tns:</code> est "l'espace de nom cible" du
         service.</para>
+    </sect2>
+
+
+    <sect2 id="zend.soap.autodiscovery.wsdlstyles">
+        <title>Styles de liaisons WSDL</title>
+
+        <para>
+            WSDL offre différents mécanismes et styles de transport. Ceci affecte les balises <code>soap:binding</code>
+            et <code>soap:body</code> à l'intérieur de la section binding du WSDL. Différents clients ont différentes
+            conditions quant aux options qui sont vraiment utilisées. Par conséquent vous pouvez placer les styles
+            avant d'appeler n'importe quelle méthode <code>setClass</code> ou <code>addFunction</code> de la classe
+            <code>AutoDiscover</code>.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$autodiscover = new Zend_Soap_AutoDiscover();
+// Par défaut il s'agit de 'use' => 'encoded'
+// et 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
+$autodiscover->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+
+// Par défaut il s'agit de 'style' => 'rpc'
+// et 'transport' => 'http://schemas.xmlsoap.org/soap/http'
+$autodiscover->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+...
+$autodiscover->addFunction('myfunc1');
+$autodiscover->handle();
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.soap.autodiscovery.compability">
+        <title>Compatibilité avec les clients WDSL</title>
+
+        <para>
+            Jusqu'à la version 1.7, les fichiers WSQL étaient générés avec une partie de la réponse qui ne pouvait
+            pas être détecter correctement par les clients Java ou .Net par exemple. A partir de la version 1.8, la
+            fonction <code>setResponseMessageReturnNameCompability()</code> a été ajoutée pour activer la
+            compatibilité dans ces cas.
+        </para>
     </sect2>
 </sect1>

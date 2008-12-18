@@ -511,8 +511,8 @@ $table->delete($where);
         </example>
 
         <para>Cette méthode est proxiée vers <link linkend="zend.db.adapter.write.delete"><code>delete()</code></link>
-        de l'adaptateur. Si le paramètre est un tableau, chacun des éléments du tableau sera joint au suivant
-        avec l'opération <code>AND</code> pour former la clause WHERE.</para>
+        de l'adaptateur. Si le paramètre est un tableau, chacun des éléments du tableau sera joint au suivant avec
+        l'opération <code>AND</code> pour former la clause WHERE.</para>
 
         <note>
             <para>Les valeurs et les identifiants SQL ne sont pas échappés automatiquement. Si vous voulez échapper des
@@ -910,8 +910,23 @@ echo "The table name is " . $info['name'] . "\n";
         <title>Cacher les méta données de la table</title>
 
         <para>Par défaut, <code>Zend_Db_Table_Abstract</code> demande à la base de données les <link
-        linkend="zend.db.table.info">méta données de table</link>, à chaque instanciation d'objet de table. La méthode
-        <code>describeTable()</code> est utilisée pour cela.</para>
+        linkend="zend.db.table.info">méta données de table</link>, à chaque instanciation d'objet de table. L'objet de
+        table analyse les métadonnées de la table dans le SGDB en utilisant la méthode <code>describeTable()</code> de
+        l'adaptateur. Les opérations nécessitant cette introspection incluent :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><code>insert()</code></para>
+            </listitem>
+
+            <listitem>
+                <para><code>find()</code></para>
+            </listitem>
+
+            <listitem>
+                <para><code>info()</code></para>
+            </listitem>
+        </itemizedlist>
 
         <para>Cependant, il peut être dégradant pour les performances du SGBD de lui demander ces informations à chaque
         instanciation de chaque objet de chaque table. Ainsi, un système de cache pour les méta données a été mis en
@@ -1014,6 +1029,56 @@ $bugs = new Bugs(array('metadataCache' => $cache));
 
         <para>Dans nos exemples, nous utilisons <code>Zend_Cache_Backend_File</code>, mais vous pouvez utiliser le
         backend que vous souhaitez, voyez <link linkend="zend.cache">Zend_Cache</link> pour plus d'informations.</para>
+
+        <sect3 id="zend.db.table.metadata.caching.hardcoding">
+            <title>Coder en dur les métadonnées de tables</title>
+
+            <para>Pour cacher les métadonnées une étape plus avant, vous pouvez aussi choisir de coder en dur ces
+            métadonnées. Dans ce cas particulier, cependant, tout changement au schéma de la table requerra un
+            changement dans votre code. Ainsi, il est seulement recommandé pour ceux qui sont dans la phase
+            d'optimisation pour un usage en production.</para>
+
+            <para>La structure des métadonnées est comme ceci :</para>
+
+            <programlisting role="php"><![CDATA[
+protected $_metadata = array(
+    '<column_name>' => array(
+        'SCHEMA_NAME'      => <string>,
+        'TABLE_NAME'       => <string>,
+        'COLUMN_NAME'      => <string>,
+        'COLUMN_POSITION'  => <int>,
+        'DATA_TYPE'        => <string>,
+        'DEFAULT'          => NULL|<value>,
+        'NULLABLE'         => <bool>,
+        'LENGTH'           => <string - length>,
+        'SCALE'            => NULL|<value>,
+        'PRECISION'        => NULL|<value>,
+        'UNSIGNED'         => NULL|<bool>,
+        'PRIMARY'          => <bool>,
+        'PRIMARY_POSITION' => <int>,
+        'IDENTITY'         => <bool>,
+    ),
+    // additional columns...
+);
+]]></programlisting>
+
+            <para>Une manière simple de récupérer les valeurs appropriées est d'activer le cache des métadonnées et
+            d'utiliser celles présentes dans votre cache.</para>
+
+            <para>Vous pouvez désactiver cette optimisation en mettant à <code>false</code> le paramètre
+            <code>metadataCacheInClass</code> :</para>
+
+            <programlisting role="php"><![CDATA[
+// Lors de l'instanciation :
+$bugs = new Bugs(array('metadataCacheInClass' => false));
+
+// Ou plus tard :
+$bugs->setMetadataCacheInClass(false);
+]]></programlisting>
+
+            <para>Ce paramètre est activé par défaut, ce qui assure que le tableau <code>$_metadata</code> n'est chargé
+            qu'une seule fois par instance</para>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.db.table.extending">

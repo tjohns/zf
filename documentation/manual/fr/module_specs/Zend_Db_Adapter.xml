@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12844 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
@@ -320,6 +320,26 @@ echo $db->getConnection()
         ->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
 ]]></programlisting>
             </example>
+
+            <example id="zend.db.adapter.connecting.parameters.example4">
+                <title>Passer des options de sérialisation à la fabrique</title>
+                <programlisting role="php"><![CDATA[
+$options = array(
+    Zend_Db::ALLOW_SERIALIZATION => false
+);
+
+$params = array(
+    'host'           => '127.0.0.1',
+    'username'       => 'webuser',
+    'password'       => 'xxxxxxxx',
+    'dbname'         => 'test',
+    'options'        => $options
+);
+
+$db = Zend_Db::factory('Pdo_Mysql', $params);
+]]>
+                </programlisting>
+            </example>
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.getconnection">
@@ -340,6 +360,15 @@ echo $db->getConnection()
 
             <para>Afin de vérifier si les paramètres de connexion au SGBD sont corrects, surveillez les exceptions
             envoyées par la méthode <code>getConnection()</code>.</para>
+
+            <para>De plus, un adaptateur peut être sérialisé pour être stocké, par exemple, dans une variable de session.
+            Ceci peut être utile non seulement pour l'adaptateur lui-même, mais aussi pouir les autres objets qui
+            l'aggrègent, comme un objet <code>Zend_Db_Select</code>. Par défaut, les adaptateurs sont autorisés à être
+            sérialisés, si vous ne le voulez pas, vous devez passer l'option <code>Zend_Db::ALLOW_SERIALIZATION=false</code>,
+            regardez l'exemple ci-dessus. Afin de respecter le principe de connexions paresseuses, l'adaptateur ne se
+            reconectera pas après la désérialisation. Vous devez appeler vous-même <code>getConnection()</code>. Vous
+            pouvez permettre à l'adaptateur de se reconnecter automatiquement en utilisant l'option d'adaptateur 
+            <code>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</code>.</para>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
                 <title>Gérer les exceptions de connexion</title>
@@ -1279,6 +1308,13 @@ try {
         utiliser la méthode de l'adaptateur <code>closeConnection()</code> afin de fermer explicitement la connexion
         vers le SGBD.</para>
 
+        <para>A partir de la version 1.7.2, vous pouvez vérifier si vous êtes actuellement connecté au serveur SGBD grâce
+        à la méthode <code>isConnected()</code>. Ceci correspond à une ressource de connexion qui a été initiée et qui
+        n'est pas close. Cette fonction ne permet pas actuellement de tester la fermeture de la connexion au niveau du
+        SGBD par exemple. Cette fonction est utilisée en interne pour fermer la connexion. Elle vous permet entre autres
+        de fermer plusieurs fois une connexion sans erreurs. C'était déja le cas avant la version 1.7.2 pour les
+        adaptateurs de type PDO mais pas pour les autres.</para>
+
         <example id="zend.db.adapter.closing.example">
             <title>Fermer une connexion à un SGBD</title>
 
@@ -1335,6 +1371,32 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
 
         <para>Dans de futures versions de <code>Zend_Db</code>, il sera possible d'ajouter des méthodes pour des
         fonctionnalités communes aux extensions de bases de données de PHP. Ceci ne rompra pas la compatibilité.</para>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.server-version">
+        <title>Récupérer la version du serveur SGBD</title>
+
+        <para>
+            A partir de la version 1.7.2, vous pouvez récupérer la version du serveur avec le style de syntaxe PHP
+            ce qui permet d'utiliser <code>version_compare()</code>. Si cette information n'est pas disponible, vous
+            recevrez un <code>null</code>.
+        </para>
+
+        <example id="zend.db.adapter.server-version.example">
+            <title>Vérifier la version du serveur avant de lancer une requête</title>
+            <programlisting role="php"><![CDATA[
+$version = $db->getServerVersion();
+if (!is_null($version)) {
+    if (version_compare($version, '5.0.0', '>=')) {
+        // faire quelquechose
+    } else {
+        // faire autre chose
+    }
+} else {
+    // impossible de lire la version du serveur
+}
+]]></programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.db.adapter.adapter-notes">
@@ -1409,6 +1471,13 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                 <listitem>
                     <para>Actuellement l'option <code>Zend_Db::CASE_FOLDING</code> n'est pas supportée par l'adaptateur
                     Oracle. Pour l'utiliser, vous devez utiliser l'adaptateur basé sur PDO et OCI.</para>
+                </listitem>
+
+                <listitem>
+                    <para>Par défaut les champs LOB ("Large Objet Binaire") sont retournés sous la forme d'objets OCI-Lob.
+                    Vous pouvez les récupérer sous forme de chaînes pour toutes les requêtes en utilisant l'option de
+                    driver <code>'lob_as_string'</code> ou pour une requête en particulier en utilisant la méthode
+                    <code>setLobAsString(boolean)</code> de l'adaptateur ou de l'objet statement.</para>
                 </listitem>
             </itemizedlist>
         </sect3>
