@@ -176,7 +176,7 @@ abstract class Zend_Db_Adapter_Abstract
 
         $options = array(
             Zend_Db::CASE_FOLDING           => $this->_caseFolding,
-            Zend_DB::AUTO_QUOTE_IDENTIFIERS => $this->_autoQuoteIdentifiers
+            Zend_Db::AUTO_QUOTE_IDENTIFIERS => $this->_autoQuoteIdentifiers
         );
         $driverOptions = array();
 
