@@ -1,13 +1,10 @@
-<!-- EN-Revision: 9694 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="introduction.installation">
 
     <title>インストール</title>
 
     <para>
-        Zend Framework は PHP 5.1.4 以降でないと動作しません。しかし、Zend
-        としては 5.2.3 以降を使うことを強く推奨します。というのも、5.2.3
-        より前のバージョンと比べて安全性やパフォーマンスが劇的に向上しているからです。
-        詳細な情報は<link linkend="requirements">システム要件</link>
+        Zend Framework の要件についての詳細な情報は<link linkend="requirements">システム要件</link>
         を参照ください。
     </para>
 
@@ -20,7 +17,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download">最新の安定版をダウンロードする</ulink>。
+                    <ulink url="http://framework.zend.com/download/latest">最新の安定版をダウンロードする</ulink>。
                     このバージョンは <code>.zip</code> と <code>.tar.gz</code>
                     の二種類の形式で公開されており、Zend Framework
                     をはじめて使う人におすすめです。
@@ -48,24 +45,22 @@
                 </para>
                 <para>
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.export.html">エクスポート</ulink>
-                    (<ulink url="http://subversion.bluegate.org/doc/re10.html">日本語</ulink>)
                     機能を使用すると、フレームワークの特定のリビジョンを <code>.svn</code>
                     ディレクトリなしで取得できるので便利です。
                 </para>
                 <para>
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.checkout.html">チェックアウト</ulink>
-                    (<ulink url="http://subversion.bluegate.org/doc/re04.html">日本語</ulink>)
                     は、Zend Framework に対して何らかの貢献をしたい方にとって便利な方法です。
                     この方法で取得したファイルは、
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.update.html"><code>svn
-                    update</code></ulink> コマンド
-                    (<ulink url="http://subversion.bluegate.org/doc/re30.html">日本語</ulink>)
-                    で常に最新版に更新できます。
+                    update</code></ulink> コマンドで常に最新版に更新できます。
+                    また、変更内容を SVN リポジトリにコミットするには
+                    <ulink url="http://svnbook.red-bean.com/nightly/en/svn.ref.svn.c.commit.html"><code>svn
+                    commit</code></ulink> コマンドを使用します。
                 </para>
                 <para>
                     すでに SVN を使用して自身のアプリケーションを管理している開発者にとっては、
                     <ulink url="http://svnbook.red-bean.com/nightly/en/svn.advanced.externals.html">外部定義</ulink>
-                    (<ulink url="http://subversion.bluegate.org/doc/ch07s05.html">日本語</ulink>)
                     が非常に便利です。
                 </para>
                 <para>
