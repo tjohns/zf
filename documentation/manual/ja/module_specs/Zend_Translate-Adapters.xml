@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11934 -->
+<!-- EN-Revision: 13165 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
@@ -22,7 +22,7 @@
             <tbody>
                 <row>
                     <entry>Array</entry>
-                    <entry>php の配列</entry>
+                    <entry>PHP の配列</entry>
                     <entry>小さめのページ。簡単に使用できる。プログラマしかさわれない。</entry>
                 </row>
                 <row>
