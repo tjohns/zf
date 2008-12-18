@@ -98,7 +98,8 @@ class Zend_Gdata_YouTube_Extension_MediaCredit extends Zend_Gdata_Extension
             $element->setAttribute('scheme', $this->_scheme);
         }
         if ($this->_yttype !== null) {
-            $element->setAttribute('yt:type', $this->_yttype);
+            $element->setAttributeNS('http://gdata.youtube.com/schemas/2007',
+                'yt:type', $this->_yttype);
         }
         return $element;
     }
