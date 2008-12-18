@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12997 -->
+<!-- EN-Revision: 13084 -->
 <sect1 id="zend.pdf.drawing">
     <title>描画</title>
 
@@ -459,7 +459,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             現在のロケールと異なる場合はそれを指定する必要があります。
             実際に描画されるのは WinLatin1 の文字のみです。
         </para>
-        <example id="zend.pdf.drawing.using-fonts.example-6">
+        <example id="zend.pdf.drawing.using-fonts.example-7">
             <title>フォント埋め込みオプションの使用</title>
             <programlisting role="php"><![CDATA[
 ...
@@ -763,6 +763,7 @@ nonzero winding number ルールに対するもうひとつのルールが even-
     </sect2>
 
     <sect2 id="zend.pdf.drawing.linear-transformations">
+        <title>線形変換</title>
         <sect3 id="zend.pdf.drawing.linear-transformations.rotations">
             <title>回転</title>
             <para>
