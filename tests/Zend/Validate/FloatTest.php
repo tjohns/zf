@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -21,7 +20,6 @@
  * @version    $Id$
  */
 
-
 /**
  * Test helper
  */
@@ -31,7 +29,6 @@ require_once dirname(__FILE__) . '/../../TestHelper.php';
  * @see Zend_Validate_Float
  */
 require_once 'Zend/Validate/Float.php';
-
 
 /**
  * @category   Zend
@@ -87,5 +84,14 @@ class Zend_Validate_FloatTest extends PHPUnit_Framework_TestCase
     public function testGetMessages()
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
+    }
+
+    /**
+     * Ensures that set/getLocale() works
+     */
+    public function testSettingLocales()
+    {
+        $this->_validator->setLocale('de');
+        $this->assertEquals('de', $this->_validator->getLocale());
     }
 }
