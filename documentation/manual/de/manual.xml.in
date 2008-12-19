@@ -418,7 +418,7 @@
         <xi:include href="module_specs/Zend_Gdata_Docs.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Docs.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Gdata_Health.xml" />
+        <xi:include href="module_specs/Zend_Gdata_Health.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Gdata_Health.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Gdata_Spreadsheets.xml">
@@ -989,7 +989,7 @@
         <xi:include href="ref/performance-classloading.xml">
             <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="ref/performance-database.xml" />
+        <xi:include href="ref/performance-database.xml">
             <xi:fallback><xi:include href="../en/ref/performance-database.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="ref/performance-localization.xml">
