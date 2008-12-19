@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,12 +19,10 @@
  * @version    $Id$
  */
 
-
 /**
  * @see Zend_Validate_Abstract
  */
 require_once 'Zend/Validate/Abstract.php';
-
 
 /**
  * @category   Zend
@@ -85,7 +82,9 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
     public function __construct($format = null, $locale = null)
     {
         $this->setFormat($format);
-        $this->setLocale($locale);
+        if ($locale !== null) {
+            $this->setLocale($locale);
+        }
     }
 
     /**
@@ -106,22 +105,8 @@ class Zend_Validate_Date extends Zend_Validate_Abstract
      */
     public function setLocale($locale = null)
     {
-        if ($locale === null) {
-            $this->_locale = null;
-            return $this;
-        }
-
         require_once 'Zend/Locale.php';
-        if (!Zend_Locale::isLocale($locale, true, false)) {
-            if (!Zend_Locale::isLocale($locale, false, false)) {
-                require_once 'Zend/Validate/Exception.php';
-                throw new Zend_Validate_Exception("The locale '$locale' is no known locale");
-            }
-
-            $locale = new Zend_Locale($locale);
-        }
-
-        $this->_locale = (string) $locale;
+        $this->_locale = Zend_Locale::findLocale($locale);
         return $this;
     }
 
