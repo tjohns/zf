@@ -118,6 +118,9 @@
         <title>Int</title>
         <para>
             Returns <code>true</code> if and only if <code>$value</code> is a valid integer.
+            Since Zend Framework 1.8 this validator takes in accout the actual locale from browser,
+            environment or application wide set locale. You can of course use the get/setLocale accessors
+            to change the used locale or give it while creating a instance of this validator.
         </para>
     </sect2>
 
