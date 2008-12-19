@@ -234,7 +234,7 @@ class Zend_Gdata_YouTube_PlaylistListEntry extends Zend_Gdata_Entry
     public function getPlaylistId()
     {
         if (($this->getMajorProtocolVersion() == null) ||
-            ($this->getMajorProtocolVersion == 1)) {
+            ($this->getMajorProtocolVersion() == 1)) {
             require_once 'Zend/Gdata/App/VersionException.php';
             throw new Zend_Gdata_App_VersionException('The yt:playlistId ' . 
                 'element is not supported in versions earlier than 2.');
