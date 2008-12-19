@@ -531,16 +531,76 @@ class Zend_Gdata_App_EntryTest extends PHPUnit_Framework_TestCase
         $this->assertNull($receivedVersion);
     }
     
-    public function testDefaultMajorProtocolVersionIsNull()
+    public function testDefaultMajorProtocolVersionIs1()
     {
         $entry = $this->service->newEntry();
-        $this->assertNull($entry->getMajorProtocolVersion());
+        $this->assertEquals(1, $entry->getMajorProtocolVersion());
     }
     
     public function testDefaultMinorProtocolVersionIsNull()
     {
         $entry = $this->service->newEntry();
         $this->assertNull($entry->getMinorProtocolVersion());
+    }
+    
+    public function testLookupNamespaceUsesCurrentVersion()
+    {
+        $prefix = 'test';
+        $v1TestString = 'TEST-v1';
+        $v2TestString = 'TEST-v2';
+        
+        $entry = $this->service->newEntry();
+        $entry->registerNamespace($prefix, $v1TestString, 1, 0);
+        $entry->registerNamespace($prefix, $v2TestString, 2, 0);
+        $entry->setMajorProtocolVersion(1);
+        $result = $entry->lookupNamespace($prefix);
+        $this->assertEquals($v1TestString, $result);
+        $entry->setMajorProtocolVersion(2);
+        $result = $entry->lookupNamespace($prefix);
+        $this->assertEquals($v2TestString, $result);
+        $entry->setMajorProtocolVersion(null); // Should default to latest
+        $result = $entry->lookupNamespace($prefix);
+        $this->assertEquals($v2TestString, $result);
+    }
+
+    public function testLookupNamespaceObeysParentBehavior()
+    {
+        $prefix = 'test';
+        $testString10 = 'TEST-v1-0';
+        $testString20 = 'TEST-v2-0';
+        $testString11 = 'TEST-v1-1';
+        $testString21 = 'TEST-v2-1';
+        $testString12 = 'TEST-v1-2';
+        $testString22 = 'TEST-v2-2';
+        
+        $entry = $this->service->newEntry();
+        $entry->registerNamespace($prefix, $testString10, 1, 0);
+        $entry->registerNamespace($prefix, $testString20, 2, 0);
+        $entry->registerNamespace($prefix, $testString11, 1, 1);
+        $entry->registerNamespace($prefix, $testString21, 2, 1);
+        $entry->registerNamespace($prefix, $testString12, 1, 2);
+        $entry->registerNamespace($prefix, $testString22, 2, 2);
+        
+        // Assumes default version (1)
+        $result = $entry->lookupNamespace($prefix, 1, null);
+        $this->assertEquals($testString12, $result);
+        $result = $entry->lookupNamespace($prefix, 2, null);
+        $this->assertEquals($testString22, $result);
+        $result = $entry->lookupNamespace($prefix, 1, 1);
+        $this->assertEquals($testString11, $result);
+        $result = $entry->lookupNamespace($prefix, 2, 1);
+        $this->assertEquals($testString21, $result);
+        $result = $entry->lookupNamespace($prefix, null, null);
+        $this->assertEquals($testString12, $result);
+        $result = $entry->lookupNamespace($prefix, null, 1);
+        $this->assertEquals($testString11, $result);
+        
+        // Override to retrieve latest version
+        $entry->setMajorProtocolVersion(null);
+        $result = $entry->lookupNamespace($prefix, null, null);
+        $this->assertEquals($testString22, $result);
+        $result = $entry->lookupNamespace($prefix, null, 1);
+        $this->assertEquals($testString21, $result);
     }
 
 }

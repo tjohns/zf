@@ -113,7 +113,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
       * @see setMajorProtocolVersion()
       * @see getMajorProtocolVersion()
       */
-    protected $_majorProtocolVersion = null;
+    protected $_majorProtocolVersion = 1;
 
     /**
       * Indicates the minor protocol version that should be used. Can be set
@@ -653,6 +653,42 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     public function getMinorProtocolVersion()
     {
         return $this->_minorProtocolVersion;
+    }
+
+    /**
+     * Get the full version of a namespace prefix
+     *
+     * Looks up a prefix (atom:, etc.) in the list of registered
+     * namespaces and returns the full namespace URI if
+     * available. Returns the prefix, unmodified, if it's not
+     * registered.
+     * 
+     * The current entry or feed's version will be used when performing the
+     * namespace lookup unless overridden using $majorVersion and
+     * $minorVersion. If the entry/fee has a null version, then the latest
+     * protocol version will be used by default.
+     *
+     * @param string $prefix The namespace prefix to lookup.
+     * @param integer $majorVersion The major protocol version in effect.
+     *        Defaults to null (auto-select).
+     * @param integer $minorVersion The minor protocol version in effect.
+     *        Defaults to null (auto-select).
+     * @return string
+     */
+    public function lookupNamespace($prefix,
+                                    $majorVersion = null,
+                                    $minorVersion = null)
+    {
+        // Auto-select current version
+        if (is_null($majorVersion)) {
+            $majorVersion = $this->getMajorProtocolVersion();
+        }
+        if (is_null($minorVersion)) {
+            $minorVersion = $this->getMinorProtocolVersion();
+        }
+        
+        // Perform lookup
+        return parent::lookupNamespace($prefix, $majorVersion, $minorVersion);
     }
 
 }

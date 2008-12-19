@@ -37,8 +37,11 @@ class Zend_Gdata_FeedTest extends PHPUnit_Framework_TestCase
         $this->expectedEtag = 'W/"CE4BRXw4cCp7ImA9WxRVFEs."';
         $this->expectedMismatchExceptionMessage = "ETag mismatch";
         $this->feed = new Zend_Gdata_Feed();
-        $this->feedText = file_get_contents(
-                'Zend/Gdata/_files/FeedSample1.xml',
+        $this->feedTextV1 = file_get_contents(
+                'Zend/Gdata/_files/FeedSampleV1.xml',
+                true);
+        $this->feedTextV2 = file_get_contents(
+                'Zend/Gdata/_files/FeedSampleV2.xml',
                 true);
         $this->gdNamespace = 'http://schemas.google.com/g/2005';
         $this->openSearchNamespacev1 = 'http://a9.com/-/spec/opensearchrss/1.0/';
@@ -84,7 +87,7 @@ class Zend_Gdata_FeedTest extends PHPUnit_Framework_TestCase
     }
 
     public function testXMLETagsPropagateToFeed() {
-        $this->feed->transferFromXML($this->feedText);
+        $this->feed->transferFromXML($this->feedTextV2);
         $etagValue = $this->feed->getEtag();
         $this->assertEquals($this->expectedEtag, $this->feed->getEtag());
     }
@@ -93,7 +96,7 @@ class Zend_Gdata_FeedTest extends PHPUnit_Framework_TestCase
         $exceptionCaught = false;
         $this->feed->setEtag("Foo");
         try {
-            $this->feed->transferFromXML($this->feedText);
+            $this->feed->transferFromXML($this->feedTextV2);
         } catch (Zend_Gdata_App_IOException $e) {
             $exceptionCaught = true;
         }
@@ -104,7 +107,7 @@ class Zend_Gdata_FeedTest extends PHPUnit_Framework_TestCase
         $messageCorrect = false;
         $this->feed->setEtag("Foo");
         try {
-            $this->feed->transferFromXML($this->feedText);
+            $this->feed->transferFromXML($this->feedTextV2);
         } catch (Zend_Gdata_App_IOException $e) {
             if ($e->getMessage() == $this->expectedMismatchExceptionMessage)
                 $messageCorrect = true;
@@ -114,21 +117,39 @@ class Zend_Gdata_FeedTest extends PHPUnit_Framework_TestCase
 
     public function testNothingBadHappensWhenHttpAndXmlEtagsMatch() {
         $this->feed->setEtag($this->expectedEtag);
-        $this->feed->transferFromXML($this->feedText);
+        $this->feed->transferFromXML($this->feedTextV2);
         $this->assertEquals($this->expectedEtag, $this->feed->getEtag());
     }
 
     public function testLookUpOpenSearchv1Namespace() {
+        $this->feed->setMajorProtocolVersion(1);
+        $this->feed->setMinorProtocolVersion(0);
         $this->assertEquals($this->openSearchNamespacev1,
-            $this->feed->lookupNamespace('openSearch', 1, 0));
+            $this->feed->lookupNamespace('openSearch', 1));
+        $this->feed->setMinorProtocolVersion(null);
         $this->assertEquals($this->openSearchNamespacev1,
-            $this->feed->lookupNamespace('openSearch', 1, null));
+            $this->feed->lookupNamespace('openSearch', 1));
     }
 
     public function testLookupOpenSearchv2Namespace() {
+        $this->feed->setMajorProtocolVersion(2);
+        $this->feed->setMinorProtocolVersion(0);
         $this->assertEquals($this->openSearchNamespacev2,
-            $this->feed->lookupNamespace('openSearch', 2, 0));
+            $this->feed->lookupNamespace('openSearch'));
+        $this->feed->setMinorProtocolVersion(null);
         $this->assertEquals($this->openSearchNamespacev2,
-            $this->feed->lookupNamespace('openSearch', 2, null));
+            $this->feed->lookupNamespace('openSearch'));
+    }
+    
+    public function testNoExtensionElementsInV1Feed() {
+        $this->feed->setMajorProtocolVersion(1);
+        $this->feed->transferFromXML($this->feedTextV1);
+        $this->assertEquals(0, sizeof($this->feed->extensionElements));
+    }
+    
+    public function testNoExtensionElementsInV2Feed() {
+        $this->feed->setMajorProtocolVersion(2);
+        $this->feed->transferFromXML($this->feedTextV2);
+        $this->assertEquals(0, sizeof($this->feed->extensionElements));
     }
 }
