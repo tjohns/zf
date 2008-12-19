@@ -61,6 +61,11 @@ require_once 'Zend/Gdata/YouTube/Extension/Username.php';
 require_once 'Zend/Gdata/YouTube/Extension/CountHint.php';
 
 /**
+ * @see Zend_Gdata_YouTube_Extension_QueryString
+ */
+require_once 'Zend/Gdata/YouTube/Extension/QueryString.php';
+
+/**
  * Represents the YouTube video subscription flavor of an Atom entry
  *
  * @category   Zend
@@ -123,6 +128,13 @@ class Zend_Gdata_YouTube_SubscriptionEntry extends Zend_Gdata_Entry
     protected $_countHint = null;
 
     /**
+     * The queryString for this entry.
+     *
+     * @var Zend_Gdata_YouTube_Extension_QueryString
+     */
+    protected $_queryString = null;
+
+    /**
      * Creates a subscription entry, representing an individual subscription
      * in a list of subscriptions, usually associated with an individual user.
      *
@@ -162,6 +174,9 @@ class Zend_Gdata_YouTube_SubscriptionEntry extends Zend_Gdata_Entry
         }
         if ($this->_username != null) {
             $element->appendChild($this->_username->getDOM($element->ownerDocument));
+        }
+        if ($this->_queryString != null) {
+            $element->appendChild($this->_queryString->getDOM($element->ownerDocument));
         }
         if ($this->_feedLink != null) {
             foreach ($this->_feedLink as $feedLink) {
@@ -205,6 +220,11 @@ class Zend_Gdata_YouTube_SubscriptionEntry extends Zend_Gdata_Entry
             $playlistId = new Zend_Gdata_YouTube_Extension_PlaylistId();
             $playlistId->transferFromDOM($child);
             $this->_playlistId = $playlistId;
+            break;
+        case $this->lookupNamespace('yt') . ':' . 'queryString':
+            $queryString = new Zend_Gdata_YouTube_Extension_QueryString();
+            $queryString->transferFromDOM($child);
+            $this->_queryString = $queryString;
             break;
         case $this->lookupNamespace('yt') . ':' . 'username':
             $username = new Zend_Gdata_YouTube_Extension_Username();
@@ -295,6 +315,29 @@ class Zend_Gdata_YouTube_SubscriptionEntry extends Zend_Gdata_Entry
             $this->_playlistId = $id;
             return $this;
         }
+    }
+
+    /**
+     * Get the queryString of the subscription
+     *
+     * @return Zend_Gdata_YouTube_Extension_QueryString
+     */
+    public function getQueryString()
+    {
+        return $this->_queryString;
+    }
+
+    /**
+     * Sets the yt:queryString element for a new keyword subscription.
+     *
+     * @param Zend_Gdata_YouTube_Extension_QueryString $queryString The query
+     *        string to subscribe to
+     * @return Zend_Gdata_YouTube_SubscriptionEntry Provides a fluent interface
+     */
+    public function setQueryString($queryString = null)
+    {
+        $this->_queryString = $queryString;
+        return $this;
     }
 
     /**

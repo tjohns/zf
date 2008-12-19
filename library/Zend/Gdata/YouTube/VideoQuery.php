@@ -244,8 +244,10 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
         switch ($value) {
             case 'partner':
                 $this->_params['uploader'] = 'partner';
+                break;
             case null:
                 unset($this->_params['uploader']);
+                break;
             default:
                 require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException(
