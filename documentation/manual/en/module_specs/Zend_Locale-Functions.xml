@@ -1157,6 +1157,145 @@ $localelist = Zend_Locale::getLocaleList();
         </note>
     </sect2>
 
+    <sect2 id="zend.locale.detection">
+
+        <title>Detecting locales</title>
+
+        <para>
+            When you want to detect if a given input, regardless of it's source, is a locale you should use
+            the static <code>isLocale()</code> method. The first parameter of this method is the string which
+            you want to check.
+        </para>
+
+        <example id="zend.locale.detection.example-1">
+            <title>Simple locale detection</title>
+            <programlisting role="php"><![CDATA[
+$input = 'to_RU';
+if (Zend_Locale::isLocale($input)) {
+    print "'{$input}' is a locale";
+} else {
+    print "Sorry... the given input is no locale";
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            As you can see, the output of this method is always a boolean. There is only one reason you could
+            get an exception when calling this method. When your system does not provide any locale and
+            Zend Framework is not able to detect it automatically. Normally this shows that there is a problem
+            with your OS in combination with PHP's <code>setlocale()</code>.
+        </para>
+
+        <para>
+            You should also note that any given locale string will automatically be degraded if the region
+            part does not exist for this locale. In our previous example the language <code>'to'</code> does not
+            exist in the region <code>'RU'</code>, but you will still get true returned as Zend_Locale can
+            work with the given input.
+        </para>
+
+        <para>
+            Still it's sometimes usefull to prevent this automatic degrading, and this is where the second
+            parameter of <code>isLocale()</code> comes in place. The <code>strict</code> parameter defaults to
+            <code>false</code> and can be used to prevent degrading when set to <code>true</code>.
+        </para>
+
+        <example id="zend.locale.detection.example-2">
+            <title>Strict locale detection</title>
+            <programlisting role="php"><![CDATA[
+$input = 'to_RU';
+if (Zend_Locale::isLocale($input, true)) {
+    print "'{$input}' is a locale";
+} else {
+    print "Sorry... the given input is no locale";
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Now that you are able to detect if a given string is a locale you could add locale aware behaviour
+            to your own classes. But you will soon detect that this will always leads to the same 15 lines of
+            code. Something like the following example:
+        </para>
+
+        <example id="zend.locale.detection.example-3">
+            <title>Implement locale aware behaviour</title>
+            <programlisting role="php"><![CDATA[
+if ($locale === null) {
+    $locale = new Zend_Locale();
+}
+
+if (!Zend_Locale::isLocale($locale, true, false)) {
+    if (!Zend_Locale::isLocale($locale, false, false)) {
+        throw new Zend_Locale_Exception("The locale '$locale' is no known locale");
+    }
+
+    $locale = new Zend_Locale($locale);
+}
+
+if ($locale instanceof Zend_Locale) {
+    $locale = $locale->toString();
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            With Zend Framework 1.8 we added a static <code>findLocale()</code> method which returns you a locale
+            string which you can work with. It processes the following tasks:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Detects if a given string is a locale
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Degrades the locale if it does not exist in the given region
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Returns a previous set application wide locale if no input is given
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Detects the locale from browser when the previous detections failed
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Detects the locale from environment when the previous detections failed
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Detects the locale from framework when the previous detections failed
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Returns always a string which represents the found locale.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            The following example shows how these checks and the above code can be simplified with one single call:
+        </para>
+
+        <example id="zend.locale.detection.example-4">
+            <title>Locale aware behaviour as with ZF 1.8</title>
+            <programlisting role="php"><![CDATA[
+$locale = Zend_Locale::findLocale($inputstring);
+]]>
+            </programlisting>
+        </example>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
