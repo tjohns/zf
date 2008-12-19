@@ -81,7 +81,7 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-            $this->assertEquals("Invalid bind-variable position ':id'", $e->getMessage());
+            $this->assertEquals("Invalid bind-variable name ':id'", $e->getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ class Zend_Db_Statement_Db2Test extends Zend_Db_Statement_TestCommon
         } catch (Zend_Exception $e) {
             $this->assertType('Zend_Db_Statement_Exception', $e,
                 'Expecting object of type Zend_Db_Statement_Exception, got '.get_class($e));
-            $this->assertEquals("Invalid bind-variable position ':id'", $e->getMessage());
+            $this->assertEquals("Invalid bind-variable name ':id'", $e->getMessage());
         }
     }
 

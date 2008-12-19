@@ -64,7 +64,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->assertRegExp('/varchar/i',        $desc['product_name']['DATA_TYPE'], 'Expected data type to be VARCHAR');
         $this->assertEquals('',                  $desc['product_name']['DEFAULT'], 'Expected default to be empty string');
         $this->assertTrue(                       $desc['product_name']['NULLABLE'], 'Expected product_name to be nullable');
-        $this->assertEquals(0,                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        if (!$this->_db->isI5()) {
+        	$this->assertEquals(0,                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        } else {
+        	$this->assertNull(                   $desc['product_name']['SCALE'], 'Expected scale to be 0');
+        }
         $this->assertEquals(0,                   $desc['product_name']['PRECISION'], 'Expected precision to be 0');
         $this->assertFalse(                      $desc['product_name']['PRIMARY'], 'Expected product_name not to be a primary key');
         $this->assertNull(                       $desc['product_name']['PRIMARY_POSITION'], 'Expected product_name to return null for PRIMARY_POSITION');
@@ -107,7 +111,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         // create a second connection to the same database
         $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
         $dbConnection2->getConnection();
-        $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        if ($dbConnection2->isI5()) {
+        	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
+        } else {
+            $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        }
         
         // notice the number of rows in connection 2
         $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
@@ -159,7 +167,11 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         // create a second connection to the same database
         $dbConnection2 = Zend_Db::factory($this->getDriver(), $this->_util->getParams());
         $dbConnection2->getConnection();
-        $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        if ($dbConnection2->isI5()) {
+        	$dbConnection2->query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE');
+        } else {
+            $dbConnection2->query('SET ISOLATION LEVEL = UR');
+        }
         
         // notice the number of rows in connection 2
         $count = $dbConnection2->fetchOne("SELECT COUNT(*) FROM $bugs");
@@ -206,6 +218,137 @@ class Zend_Db_Adapter_Db2Test extends Zend_Db_Adapter_TestCommon
         $this->_testAdapterAlternateStatement('Test_Db2Statement');
     }
 
+    /**
+     * OVERRIDDEN COMMON TEST CASE
+     *
+     * This test case will produce a value with two internally set values,
+     * autocommit = 1
+     * DB2_ATTR_CASE = 0
+     */
+    public function testAdapterZendConfigEmptyDriverOptions()
+    {
+        Zend_Loader::loadClass('Zend_Config');
+        $params = $this->_util->getParams();
+        $params['driver_options'] = '';
+        $params = new Zend_Config($params);
+
+        $db = Zend_Db::factory($this->getDriver(), $params);
+        $db->getConnection();
+
+        $config = $db->getConfig();
+        
+        $expectedValue = array(
+            'autocommit' => 1,
+            'DB2_ATTR_CASE' => 0
+            );
+        $this->assertEquals($expectedValue, $config['driver_options']);
+    }
+    
+    /**
+     * OVERRIDDEN COMMON TEST CASE
+     * 
+     * Test that quote() takes an array and returns
+     * an imploded string of comma-separated, quoted elements.
+     */
+    public function testAdapterQuoteArray()
+    {
+        $array = array("it's", 'all', 'right!');
+        $value = $this->_db->quote($array);
+        $this->assertEquals("'it''s', 'all', 'right!'", $value);
+    }
+    
+    /**
+     * OVERRRIDEEN COMMON TEST CASE
+     * 
+     * test that quote() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteDoubleQuote()
+    {
+        $string = 'St John"s Wort';
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John\"s Wort'", $value);
+    }
+    
+    /**
+     * OVERRIDDEN FROM COMMON TEST CASE
+     * 
+     * test that quote() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteSingleQuote()
+    {
+        $string = "St John's Wort";
+        $value = $this->_db->quote($string);
+        $this->assertEquals("'St John''s Wort'", $value);
+    }
+    
+    /**
+     * OVERRIDDEN FROM COMMON TEST CASE
+     * 
+     * test that quoteInto() escapes a double-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoDoubleQuote()
+    {
+        $string = 'id=?';
+        $param = 'St John"s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id='St John\"s Wort'", $value);
+    }
+
+    /**
+     * OVERRIDDEN FROM COMMON TEST CASE
+     * 
+     * test that quoteInto() escapes a single-quote
+     * character in a string.
+     */
+    public function testAdapterQuoteIntoSingleQuote()
+    {
+        $string = 'id = ?';
+        $param = 'St John\'s Wort';
+        $value = $this->_db->quoteInto($string, $param);
+        $this->assertEquals("id = 'St John''s Wort'", $value);
+    }
+    
+    /**
+     * This is "related" to the issue.  It appears the fix for
+     * describeTable is relatively untestable due to the fact that
+     * its primary focus is to reduce the query time, not the result
+     * set.
+     * 
+     * @group ZF-5169
+     */
+    public function testAdapterSchemaOptionInListTables()
+    {
+        $params = $this->_util->getParams();
+        unset($params['schema']);
+        $connection = Zend_Db::factory($this->getDriver(), $params);    
+        $tableCountNoSchema = count($connection->listTables());
+        
+        $dbConfig = $this->_db->getConfig();
+        if ($this->_db->isI5()) {
+            if (isset($dbConfig['driver_options']['i5_lib'])) {
+                $schema = $dbConfig['driver_options']['i5_lib'];
+            }
+        } elseif (!$this->_db->isI5()) {
+            $schema = $this->_util->getSchema();
+        } else {
+            $this->markTestSkipped('No valid schema to test against.');
+            return;
+        }
+        
+        $params = $this->_util->getParams();
+        $params['schema'] = $schema;
+        $connection = Zend_Db::factory($this->getDriver(), $params);
+        $tableCountSchema = count($connection->listTables());
+        
+        $this->assertGreaterThan(0, $tableCountNoSchema, 'Adapter without schema should produce large result');
+        $this->assertGreaterThan(0, $tableCountSchema, 'Adapter with schema should produce large result');
+
+        $this->assertTrue(($tableCountNoSchema > $tableCountSchema), 'Table count with schema provided should be less than without.');
+    }
+    
     public function getDriver()
     {
         return 'Db2';
