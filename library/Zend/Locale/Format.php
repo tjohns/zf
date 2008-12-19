@@ -597,8 +597,15 @@ class Zend_Locale_Format
      */
     public static function isInteger($value, array $options = array())
     {
-        $options['precision'] = 0;
-        return self::isNumber($value, $options);
+        if (!self::isNumber($value, $options)) {
+            return false;
+        }
+
+        if (self::getInteger($value, $options) == self::getFloat($value, $options)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

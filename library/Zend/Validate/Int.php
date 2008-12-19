@@ -25,6 +25,11 @@
 require_once 'Zend/Validate/Abstract.php';
 
 /**
+ * @see Zend_Locale_Format
+ */
+require_once 'Zend/Locale/Format.php';
+
+/**
  * @category   Zend
  * @package    Zend_Validate
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
@@ -40,6 +45,38 @@ class Zend_Validate_Int extends Zend_Validate_Abstract
     protected $_messageTemplates = array(
         self::NOT_INT => "'%value%' does not appear to be an integer"
     );
+
+    protected $_locale;
+
+    /**
+     * Constructor for the integer validator
+     *
+     * @param string|Zend_Locale $locale
+     */
+    public function __construct($locale = null)
+    {
+        $this->setLocale($locale);
+    }
+
+    /**
+     * Returns the set locale
+     */
+    public function getLocale()
+    {
+        return $this->_locale;
+    }
+
+    /**
+     * Sets the locale to use
+     *
+     * @param string|Zend_Locale $locale
+     */
+    public function setLocale($locale = null)
+    {
+        require_once 'Zend/Locale.php';
+        $this->_locale = Zend_Locale::findLocale($locale);
+        return $this;
+    }
 
     /**
      * Defined by Zend_Validate_Interface
@@ -58,16 +95,16 @@ class Zend_Validate_Int extends Zend_Validate_Abstract
             return false;
         }
 
-        $locale        = localeconv();
-        $valueFiltered = str_replace($locale['decimal_point'], '.', $valueString);
-        $valueFiltered = str_replace($locale['thousands_sep'], '', $valueFiltered);
-
-        if (strval(intval($valueFiltered)) != $valueFiltered) {
+        try {
+            if (!Zend_Locale_Format::isInteger($value, array('locale' => $this->_locale))) {
+                $this->_error();
+                return false;
+            }
+        } catch (Zend_Locale_Exception $e) {
             $this->_error();
             return false;
         }
 
         return true;
     }
-
 }

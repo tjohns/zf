@@ -93,7 +93,12 @@ class Zend_Validate_Float extends Zend_Validate_Abstract
 
         $this->_setValue($valueString);
 
-        if (!Zend_Locale_Format::isFloat($value, array('locale' => $this->_locale))) {
+        try {
+            if (!Zend_Locale_Format::isFloat($value, array('locale' => $this->_locale))) {
+                $this->_error();
+                return false;
+            }
+        } catch (Zend_Locale_Exception $e) {
             $this->_error();
             return false;
         }

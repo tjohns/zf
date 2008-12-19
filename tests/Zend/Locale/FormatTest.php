@@ -280,7 +280,8 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testIsInteger()
     {
-        $this->assertTrue( Zend_Locale_Format::isInteger('-1.234.567,12345',  array('locale' => 'de_AT')));
+        $this->assertTrue( Zend_Locale_Format::isInteger('-1.234.567',  array('locale' => 'de_AT')));
+        $this->assertFalse( Zend_Locale_Format::isInteger('-1.234.567,12345',  array('locale' => 'de_AT')));
         $this->assertFalse(Zend_Locale_Format::isInteger('textwithoutnumber', array('locale' => 'de_AT')));
     }
 

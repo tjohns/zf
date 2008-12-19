@@ -93,5 +93,6 @@ class Zend_Validate_FloatTest extends PHPUnit_Framework_TestCase
     {
         $this->_validator->setLocale('de');
         $this->assertEquals('de', $this->_validator->getLocale());
+        $this->assertEquals(true, $this->_validator->isValid('10,5'));
     }
 }

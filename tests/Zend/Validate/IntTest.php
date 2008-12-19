@@ -66,6 +66,7 @@ class Zend_Validate_IntTest extends PHPUnit_Framework_TestCase
      */
     public function testBasic()
     {
+        $this->_validator->setLocale('en');
         $valuesExpected = array(
             array(1.00, true),
             array(0.00, true),
@@ -78,8 +79,10 @@ class Zend_Validate_IntTest extends PHPUnit_Framework_TestCase
             array(true, false),
             array(false, false),
             );
+
         foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $this->_validator->isValid($element[0]));
+            $this->assertEquals($element[1], $this->_validator->isValid($element[0]),
+                'Test failed with ' . var_export($element, 1));
         }
     }
 
@@ -91,5 +94,16 @@ class Zend_Validate_IntTest extends PHPUnit_Framework_TestCase
     public function testGetMessages()
     {
         $this->assertEquals(array(), $this->_validator->getMessages());
+    }
+
+    /**
+     * Ensures that set/getLocale() works
+     */
+    public function testSettingLocales()
+    {
+        $this->_validator->setLocale('de');
+        $this->assertEquals('de', $this->_validator->getLocale());
+        $this->assertEquals(false, $this->_validator->isValid('10 000'));
+        $this->assertEquals(true, $this->_validator->isValid('10.000'));
     }
 }
