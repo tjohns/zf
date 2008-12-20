@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13277 -->
+<!-- EN-Revision: 13377 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -90,6 +90,10 @@
         <title>Float</title>
         <para>
             <code>$value</code> が浮動小数点値である場合にのみ <code>true</code> を返します。
+            Zend Framework 1.8 以降では、このバリデータは
+            ブラウザや環境変数あるいはアプリケーションで設定されたロケールを考慮するようになります。
+            もちろん、アクセサ get/setLocale を使用して、
+            バリデータのインスタンスを作成する際に使用するロケールを変更することもできます。
         </para>
     </sect2>
 
@@ -122,6 +126,10 @@
         <title>Int</title>
         <para>
             <code>$value</code> が整数値である場合にのみ <code>true</code> を返します。
+            Zend Framework 1.8 以降では、このバリデータは
+            ブラウザや環境変数あるいはアプリケーションで設定されたロケールを考慮するようになります。
+            もちろん、アクセサ get/setLocale を使用して、
+            バリデータのインスタンスを作成する際に使用するロケールを変更することもできます。
         </para>
     </sect2>
 
