@@ -31,6 +31,14 @@ class Zend_Translate_Adapter_GettextTest extends PHPUnit_Framework_TestCase
     {
         $suite  = new PHPUnit_Framework_TestSuite("Zend_Translate_Adapter_GettextTest");
         $result = PHPUnit_TextUI_TestRunner::run($suite);
+        Zend_Translate_Adapter_Gettext::removeCache();
+    }
+
+    public function setUp()
+    {
+        if (Zend_Translate_Adapter_Gettext::hasCache()) {
+            Zend_Translate_Adapter_Gettext::removeCache();
+        }
     }
 
     public function testCreate()
@@ -187,7 +195,7 @@ class Zend_Translate_Adapter_GettextTest extends PHPUnit_Framework_TestCase
         if (PHP_OS == 'AIX') {
             $this->markTestSkipped('These charsets are not supported on AIX');
         }
-        
+
         $adapter = new Zend_Translate_Adapter_Gettext(dirname(__FILE__) . '/_files/translation_otherencoding.mo', 'ru');
         $adapter->addTranslation(dirname(__FILE__) . '/_files/translation_otherencoding.mo', 'ru');
         // Original message is in KOI8-R.. as unit tests are done in UTF8 we have to convert

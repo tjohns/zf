@@ -33,6 +33,13 @@ class Zend_Translate_Adapter_CsvTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
+    public function setUp()
+    {
+        if (Zend_Translate_Adapter_Csv::hasCache()) {
+            Zend_Translate_Adapter_Csv::removeCache();
+        }
+    }
+
     public function testCreate()
     {
         $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv');
