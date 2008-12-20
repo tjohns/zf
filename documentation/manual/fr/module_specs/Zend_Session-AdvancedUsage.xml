@@ -1,5 +1,5 @@
 <!-- EN-Revision: 12759 -->
-<sect1 id="zend.session.advancedusage">
+<sect1 id="zend.session.advanced_usage">
     <title>Utilisation avancée</title>
 
     <para>Même si les exemples de l'utilisation basique sont une manière parfaitement acceptable d'utiliser les sessions

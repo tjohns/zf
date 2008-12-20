@@ -1,5 +1,5 @@
 <!-- EN-Revision: 12759 -->
-<sect1 id="zend.session.basicusage">
+<sect1 id="zend.session.basic_usage">
     <title>Usage basique</title>
 
     <para>Les instances <code>Zend_Session_Namespace</code> fournissent l'API primaire pour manipuler les données de
