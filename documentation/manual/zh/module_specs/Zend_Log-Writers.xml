@@ -88,7 +88,9 @@ $logger->info('Informational message');
 
   </sect2>
   
-<xi:include href="Zend_Log-Writers-Firebug.xml" />
+<xi:include href="Zend_Log-Writers-Firebug.xml">
+    <xi:fallback href="../en/module_specs/Zend_Log-Writers-Firebug.xml"/>
+</xi:include>
 
   <sect2 id="zend.log.writers.null">
     <title>踩熄Writer</title>
