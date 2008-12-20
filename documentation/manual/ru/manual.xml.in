@@ -41,8 +41,8 @@
         <xi:include href="module_specs/Zend_Amf.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Amf.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_Server.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Server.xml" /></xi:fallback>
+        <xi:include href="module_specs/Zend_Amf-Server.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Amf-Server.xml" /></xi:fallback>
         </xi:include>
     </chapter>
     <chapter id="zend.acl">
