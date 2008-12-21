@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12403 -->
 <sect1 id="zend.gdata.introduction">
     <title>Gdata について</title>
     <para>
@@ -323,6 +323,25 @@ $gdata = new Zend_Gdata($client);
         </programlisting>
 
         <para>
+            Zend Framework 1.7 以降、プロトコルのバージョン管理のサポートが追加されました。
+            これにより、クライアントおよびサーバで新機能をサポートしつつ、
+            過去との互換性を保持できるようになります。
+            ほとんどのサービスはバージョン管理を自前で行う必要はありませんが、
+            Zend_Gdata のインスタンスを直接作成する場合 (サブクラスを使わない場合)
+            は、必要なプロトコルのバージョンを指定してサーバの機能にアクセスする必要があります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$client = new Zend_Http_Client();
+$client->setConfig( ...オプション... );
+
+$gdata = new Zend_Gdata($client);
+$gdata->setMajorProtocolVersion(2);
+$gdata->setMinorProtocolVersion(null);
+]]>
+        </programlisting>
+
+        <para>
             認証済みの Zend_Http_Client オブジェクトを作成する方法については、
             認証のセクションも参照ください。
         </para>
@@ -500,7 +519,7 @@ $feed = $gdata->getFeed($query);
 
     <sect2 id="zend.gdata.introduction.paging">
         <title>複数ページのフィードの扱い方</title>
-        
+
         <para>
             多くのエントリが含まれるフィードを取得した場合、
             そのフィードはいくつかの「ページ」に分かれていることがあるかもしれません。
@@ -509,7 +528,7 @@ $feed = $gdata->getFeed($query);
             <code>getLink('next')</code> を使用します。
             この例は、フィードの次のページを取得する方法を示すものです。
         </para>
-        
+
         <programlisting role="php"><![CDATA[
 function getNextPage($feed) {
     $nextURL = $feed->getLink('next');
@@ -545,7 +564,7 @@ $feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
             <code>set_time_limit()</code>
             で PHP の実行時間制限を拡大する必要があるかもしれません。
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
@@ -631,7 +650,7 @@ $gdata = new Zend_Gdata($authenticatedHttpClient);
 
 $entry = $gdata->newEntry();
 $entry->title = $gdata->newTitle('Playing football at the park');
-$content = 
+$content =
     $gdata->newContent('We will visit the park and play football');
 $content->setType('text');
 $entry->content = $content;
