@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11315 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -251,7 +251,7 @@ $element->addFilter('alnum');
         <para>
             短い形式の名前とは、通常はフィルタ名からプレフィックスを除いた部分のことです。
             デフォルトでは、'Zend_Filter_' を除いた部分を表します。
-            また、最初の文字を大文字にする必要はありません。
+            また、最初の文字は大文字でも小文字でもかまいません。
         </para>
 
         <note>
@@ -372,7 +372,7 @@ $element->addValidator('alnum');
         <para>
             短い形式の名前とは、通常はバリデータ名からプレフィックスを除いた部分のことです。
             デフォルトでは、バリデータ名から 'Zend_Validate_' を除いた部分を表します。
-            また、最初の文字を大文字にする必要はありません。
+            また、最初の文字は大文字でも小文字でもかまいません。
         </para>
 
         <note>
@@ -841,6 +841,12 @@ $messages = $element->getMessages();
             </para></listitem>
 
             <listitem><para>
+                <emphasis>Description</emphasis>: 要素の後に説明を追加します。
+                説明が存在しない場合は何も追加されません。デフォルトでは、
+                クラス 'description' を指定した &lt;p&gt; タグでレンダリングされます。
+            </para></listitem>
+
+            <listitem><para>
                 <emphasis>HtmlTag</emphasis>:
                 ラベルや要素、そしてエラーメッセージを HTML の
                 &lt;dd&gt; タグで囲みます。
@@ -867,12 +873,12 @@ $messages = $element->getMessages();
 
             <programlisting role="php"><![CDATA[
 $element = new Zend_Form_Element('foo',
-                                 array('disableLoadDefaultDecorators' => 
+                                 array('disableLoadDefaultDecorators' =>
                                       true)
                                 );
 ]]>
             </programlisting>
-            
+
             <para>
                 このオプションは、他のオプションと混用することもできます。
                 その場合はオプションの配列や <code>Zend_Config</code>
@@ -892,6 +898,7 @@ $element = new Zend_Form_Element('foo',
 $this->addDecorators(array(
     array('ViewHelper'),
     array('Errors'),
+    array('Description', array('tag' => 'p', 'class' => 'description')),
     array('HtmlTag', array('tag' => 'dd')),
     array('Label', array('tag' => 'dt')),
 ));
@@ -904,7 +911,9 @@ $this->addDecorators(array(
             次に 'Errors' デコレータがその要素のエラーメッセージを取得し、
             もしエラーが発生していた場合はそれをビューヘルパー
             'FormErrors' に渡してレンダリングさせます。
-            その次のデコレータである 'HtmlTag' は、要素とエラーを
+            説明が存在する場合は、'Description' デコレータがクラス 'description'
+            の段落を追加します。ここには、そのコンテンツの内容を説明するテキストが書き込まれます。
+            その次のデコレータである 'HtmlTag' は、要素とエラーと説明文を
             HTML の &lt;dd&gt; タグで囲みます。最後に、'label'
             が要素のラベルを取得します。それをビューヘルパー 'FormLabel'
             に渡し、HTML の &lt;dt&gt; で囲みます。
@@ -919,6 +928,9 @@ $this->addDecorators(array(
     <ul class="errors">
         <li>"123" is not an alphanumeric value</li>
     </ul>
+    <p class="description">
+        This is some descriptive text regarding the element.
+    </p>
 </dd>
 ]]>
 </programlisting>
