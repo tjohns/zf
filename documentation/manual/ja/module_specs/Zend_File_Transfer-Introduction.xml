@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12158 -->
+<!-- EN-Revision: 13413 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -29,12 +29,12 @@
     <note>
         <title>フォーム</title>
         <para>
-            <code>Zend_Form</code> を使う場合は、
-            <code>Zend_Form</code> の章の説明を読んでそこにある例を使うようにしましょう。
-            <code>Zend_File_Transfer</code> を手動で使用してはいけません。
-            しかし、たとえ直接使うことがないにしても本章で得られる情報は有用です。
-            すべての前提、説明、解決法は、<code>Zend_Form</code> から
-            <code>Zend_File_Transfer</code> を使う場合でも同じです。
+            <code>Zend_Form</code> を使う場合は <code>Zend_Form</code>
+            の API を使うようにし、<code>Zend_File_Transfer</code>
+            を直接使わないようにしましょう。<code>Zend_Form</code>
+            のファイル転送機能は <code>Zend_File_Transfer</code>
+            で実装されているので、この章の説明は <code>Zend_Form</code>
+            のユーザにも有用です。
         </para>
     </note>
 
@@ -49,8 +49,7 @@
     <example id="zend.file.transfer.introduction.example">
         <title>シンプルなファイルアップロードフォーム</title>
         <para>
-            この例は、<code>Zend_File_Transfer</code>
-            を使った基本的なファイルアップロード処理です。
+            これは、基本的なファイルアップロード処理の例です。
             まずはファイルアップロードフォームから。
             今回の例では。アップロードしたいファイルはひとつです。
         </para>
@@ -86,9 +85,9 @@ if (!$adapter->receive()) {
 ]]>
         </programlisting>
         <para>
-            ご覧いただいておわかりのとおり、最もシンプルな使用法は保存先を
-            <code>setDestination</code> メソッドで指定して
-            <code>receive()</code> メソッドをコールするというものです。
+            このコードは <code>Zend_File_Transfer</code> のもっともシンプルな使用法を示すものです。
+            ローカルの保存先を <code>setDestination</code> メソッドで指定して
+            <code>receive()</code> メソッドをコールします。
             アップロード時に何らかのエラーが発生した場合は、
             返された例外の中でその情報を取得することができます。
         </para>
@@ -98,7 +97,7 @@ if (!$adapter->receive()) {
     <note>
         <title>注意</title>
         <para>
-            これは最もシンプルな例であることを忘れないようにしましょう。
+            この例は、<code>Zend_File_Transfer</code> の基本的な API を説明するためだけのものです。
             これをそのまま実際の環境で使用しては
             <emphasis role="strong">いけません</emphasis>。
             深刻なセキュリティ問題を引き起こしてしまいます。
@@ -118,13 +117,6 @@ if (!$adapter->receive()) {
             にも対応できるように設計されています。
             しかし、Zend Framework 1.6 の時点で存在するアダプタは
             Http アダプタひとつだけです。
-        </para>
-
-        <para>
-            現時点ではひとつだけしかアダプタが存在しないので、
-            基底クラスはまだ使えるようになっていません。
-            <code>Zend_File_Transfer</code> を使いたい場合は、
-            アダプタを直接使用する必要があります。
         </para>
     </sect2>
 
@@ -168,7 +160,9 @@ if (!$adapter->receive()) {
                     <emphasis role="strong">isValid($files = null)</emphasis>: このメソッドは、
                     ファイルにアタッチされたバリデータを用いてそのファイルが妥当なものかどうかを検証します。
                     ファイル名を省略した場合はすべてのファイルをチェックします。
-                    このメソッドは、少なくともファイルを受信した際にはコールされることに注意しましょう。
+                    <code>isValid()</code> を <code>receive()</code> の前にコールすることもできます。
+                    この場合、<code>receive()</code> がファイルを受信する際に内部的に
+                    <code>isValid</code> をコールすることはありません。
                 </para>
             </listitem>
 
