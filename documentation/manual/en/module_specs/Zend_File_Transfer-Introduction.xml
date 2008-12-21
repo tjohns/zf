@@ -133,7 +133,8 @@ if (!$adapter->receive()) {
                     <emphasis role="strong">isValid($files = null)</emphasis>: This method will check if the
                     given files are valid, based on the validators that are attached to the files.
                     If no files are specified, all files will be checked. You can call <code>isValid()</code>
-                    before calling <code>receive()</code>; in this case, <code>receive()</code> calls <code>isValid</code> internally before receiving the file.
+                    before calling <code>receive()</code>; in this case, <code>receive()</code> will not call
+                    <code>isValid</code> internally again when receiving the file.
                 </para>
             </listitem>
 
