@@ -46,6 +46,18 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         $result = PHPUnit_TextUI_TestRunner::run($suite);
     }
 
+    public function setUp()
+    {
+        if (Zend_Translate::hasCache()) {
+            Zend_Translate::removeCache();
+        }
+
+        require_once 'Zend/Translate/Adapter/Array.php';
+        if (Zend_Translate_Adapter_Array::hasCache()) {
+            Zend_Translate_Adapter_Array::removeCache();
+        }
+    }
+
     public function testCreate()
     {
         $lang = new Zend_Translate(Zend_Translate::AN_ARRAY, array('1' => '1'));
