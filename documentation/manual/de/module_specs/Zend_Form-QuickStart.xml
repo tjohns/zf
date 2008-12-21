@@ -1,10 +1,10 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.form.quickstart">
     <title>Schnellstart mit Zend_Form</title>
 
     <para>
-        Diese Schnellstart Anleitung soll die Grundsätze der Erstellung, Validierung und
-        Darstellung von Forms mit <code>Zend_Form</code> zeigen.
+        Diese Schnellstart Anleitung beschreibt die Grundsätze der Erstellung, Validierung und
+        Darstellung von Forms mit <code>Zend_Form</code>.
     </para>
 
     <sect2 id="zend.form.quickstart.create">
@@ -132,7 +132,7 @@ $form->addElement('text', 'username');
 
         <para>
             Standardmäßig haben diese keine Prüfer oder Filter. Das bedeutet das man eigene
-            Elemente mit minimalen Prüfern und potentiellen Filtern konfigurieren muß. Man kann
+            Elemente zumindest mit Prüfern und potentiellen Filtern konfigurieren muß. Man kann
             das entweder (a) vor der Übergabe des Elements an die Form machen, (b) über
             Konfigurationsoptionen die bei der Erstellung des Elements über <code>Zend_Form</code>
             angegeben werden, oder (c) durch ziehen des Elements vom Form Objekt und dessen
@@ -157,8 +157,8 @@ $username->addValidator('alnum');
         </programlisting>
 
         <para>
-            Wenn die zweite Option verwendet wird kann, wenn der Prüfer Argumente im Konstruktor
-            akzeptiert, diesem ein Array als dritter Parameter übergeben werden:
+            Wenn die zweite Option verwendet wird, können Konstruktor Argumente in einem Array als dritter
+            Parameter übergeben werden, wenn der Prüfer das akzeptiert:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -220,12 +220,11 @@ $username->addValidators(array('alnum',
         </programlisting>
 
         <para>
-            So einfach das ist, ist das für jedes einzelne Elemet in einer Form sehr aufwendig.
-            Versuchen wir es also mit Option (b) von oben. Wenn wir ein neues Element erstellen
+            So einfach das ist, ist die Wiederholung dessen für jedes einzelne Element in einer Form sehr
+            aufwendig. Versuchen wir es also mit Option (b) von oben. Wenn wir ein neues Element erstellen
             wird <code>Zend_Form::addElement()</code> als Factory verwendet, und wir können
-            optional Konfigurationsoptionen übergeben. Diese können Prüfer und Filter enthalten
-            die angepasst werden können. Um also alles von oben implizit durchzuführen, versuchen
-            wir folgendes:
+            optional Konfigurationsoptionen übergeben. Diese können Prüfer und Filter enthalten.
+            Um alles von oben implizit durchzuführen, versuchen wir folgendes:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -271,7 +270,7 @@ echo $form;
             Standardmäßig versuchen <code>Zend_Form</code> und <code>Zend_Form_Element</code> ein
             im <code>ViewRenderer</code> initialisiertes View Objekt zu verwenden, was bedeutet das
             die View nicht manuell gesetzt werden muß wenn das Zend Framework MVC verwendet wird.
-            Die Darstellung einer Form in einem View Skript ist so einfach wie:
+            Um eine Form in einem View Skript darzustellen, muß einfach das folgende getan werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -280,10 +279,10 @@ echo $form;
         </programlisting>
 
         <para>
-            Unter der Hand verwendet <code>Zend_Form</code> "Dekorators" um die Darstellung
+            Unter der Hand verwendet <code>Zend_Form</code> "Dekoratore" um die Darstellung
             durchzuführen. Diese Dekoratore können Inhalte ersetzen, Inhalte anfügen oder
-            Inhalte voranstellen, und haben eine volle Introspektive des Elements das Ihnen
-            übergeben wurde. Als Ergebnis, können mehrere Dekoratore kombiniert werden um
+            Inhalte voranstellen, und können das Element das Ihnen übergeben wurde komplett betrachten.
+            Als Ergebnis, können mehrere Dekoratore kombiniert werden um
             eigene Effekte zu ermöglichen. Standardmüßig kombiniert <code>Zend_Form_Element</code>
             View Dekoratore um seine Ausgaben zu erstellen; das Setup sieht ähnlich diesem aus:
         </para>
@@ -398,7 +397,7 @@ if ($form->isValidPartial($_POST)) {
         </programlisting>
 
         <para>
-            Eine zusätzliche Methode, <code>processAjax()</code>, kann auch dafür verwendet werden
+            Eine zusätzliche Methode, <code>processAjax()</code>, kann dafür verwendet werden
             um Teilformen zu prüfen. Anders als <code>isValidPartial()</code> gibt Sie einen
             JSON-formatierten String zurück der bei einem Fehler die Fehlermeldungen enthält.
         </para>
@@ -428,7 +427,7 @@ $unfiltered = $form->getUnfilteredValues();
         <title>Fehlerstatus holen</title>
 
         <para>
-            So, die Form hat also die Prüfungen nicht bestanden? In den meisten Fällen kann die
+            Hat die Form die Prüfungen bei der Übertragung nicht bestanden? In den meisten Fällen kann die
             Form einfach neu dargestellt werden, und Fehler werden angezeigt wenn Standardekoratore
             verwendet werden:
         </para>
@@ -558,8 +557,8 @@ class UserController extends Zend_Controller_Action
 
         <para>
             Wie man im Controller Code sieht, gibt es mehr Arbeit zu tun: Wärend die Übertragung
-            gültig sein muß, kann es trotzdem notwendig sein, zum Beispiel, Authentifizierung mit
-            Hilfe von <code>Zend_Auth</code> durchzuführen.
+            gültig sein muß, kann es trotzdem notwendig sein, Authentifizierung mit Hilfe von
+            <code>Zend_Auth</code>, oder einem anderem Mechanismus zur Authentifizierung durchzuführen.
         </para>
     </sect2>
 
@@ -569,7 +568,7 @@ class UserController extends Zend_Controller_Action
         <para>
             Alle <code>Zend_Form</code> sind konfigurierbar indem <code>Zend_Config</code>
             verwendet wird; es kann entweder ein <code>Zend_Config</code> Objekt an den Kontruktor
-            oder es kann über <code>setConfig()</code> übergeben werden. Sehen wir uns an wie die
+            oder es kann mit <code>setConfig()</code> übergeben werden. Sehen wir uns an wie die
             obige Form erstellt werden können indem eine INI Datei verwendet wird. Zuerst folgen
             wir den Notwendigkeiten und platzieren die Konfigurationen in Sektionen die den Ort
             des Releases reflektieren, und fokusieren auf die 'development' Sektion. Als nächstes
@@ -606,7 +605,7 @@ user.login.elements.submit.type = "submit"
         </programlisting>
 
         <para>
-            Das kann dann an den Contruktor der Form übergeben werden:
+            Das könnte dann an den Contruktor der Form übergeben werden:
         </para>
 
         <programlisting role="php"><![CDATA[

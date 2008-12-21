@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.date.overview">
 
     <title>Zend_Date API Übersicht</title>
@@ -657,7 +657,7 @@ print $date;
                             </para>
                             <para>
                                 This method checks if a given date is a real date and returns true if all checks are ok.
-                                It works like php's checkdate() function but can also check for localized month names and
+                                It works like PHP's checkdate() function but can also check for localized month names and
                                 for dates extending the range of checkdate()
                                 false
                             </para>

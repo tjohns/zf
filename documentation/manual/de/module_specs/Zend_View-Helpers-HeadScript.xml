@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12084 -->
+<!-- EN-Revision: 13199 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript Helfer</title>
 
@@ -38,6 +38,26 @@
         <code>*Script()</code> Methoden sind <code>$script</code> die clientseitigen Skript Direktiven die
         in diesem Element verwendet werden sollen.
     </para>
+
+    <note>
+        <title>Abhängige Kommentare setzen</title>
+
+        <para>
+            <code>HeadScript</code> erlaubt es ein Script Tag in abhängige Kommentare zu setzen, das es
+            erlaubt es vor speziellen Browsern zu verstecken. Um abhängige Tags zu setzen, muß der
+            abhängige Wert als Teil des <code>$attrs</code> Parameters im Methodenaufruf übergeben werden.
+        </para>
+
+        <example id="zend.view.helpers.initial.headscript.conditional">
+
+        <programlisting role="php"><![CDATA[
+// Scripte hinzufügen
+$this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
+]]>
+        </programlisting>
+
+        </example>
+    </note>
 
     <para>
         <code>HeadScript</code> erlaubt auch das Erfassen von Skripten; das kann nützlich sein wenn man ein

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13196 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writer</title>
   <para>
@@ -15,8 +15,8 @@
 
     <para>
       Um Log Daten in den PHP Ausgabebuffer zu schreiben, muß die URL <code>php://output</code> verwendet werden.
-      Alternativ kann es gewünscht sein Log Daten direkt an einen Stream zu senden wie z.B. <code>STDERR</code>
-      (<code>php://stderr</code>).
+      Alternativ können Log Daten direkt an einen Stream wie z.B. <code>STDERR</code>
+      (<code>php://stderr</code>) gesendet werden.
 
       <programlisting role="php"><![CDATA[
 $writer = new Zend_Log_Writer_Stream('php://output');

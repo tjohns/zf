@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13199 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle Helfer</title>
 
@@ -38,6 +38,26 @@
         <code>$attributes</code> sind alle zusätzlichen Attribute die das <code>style</code> Tag
         erhalten soll: lang, title, media, oder dir sind alle möglich.
     </para>
+
+    <note>
+        <title>Abhängige Kommentare setzen</title>
+
+        <para>
+            <code>HeadStyle</code> erlaubt es ein Script Tag in abhängige Kommentare zu setzen, das es
+            erlaubt es vor speziellen Browsern zu verstecken. Um abhängige Tags zu setzen, muß der
+            abhängige Wert als Teil des <code>$attrs</code> Parameters im Methodenaufruf übergeben werden.
+        </para>
+
+        <example id="zend.view.helpers.initial.headstyle.conditional">
+
+        <programlisting role="php"><![CDATA[
+// Skripte hinzufügen
+$this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
+]]>
+        </programlisting>
+
+        </example>
+    </note>
 
     <para>
         <code>HeadStyle</code> erlaubt auch das Erfassen von Style Deklarationen; das kann nützlich sein wenn

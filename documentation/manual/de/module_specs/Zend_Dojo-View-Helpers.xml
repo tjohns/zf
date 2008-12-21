@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
 
     <para>
-        Um das Dojo Handbuch zu zitieren, "Dijit ist ein Widget System das über Dojo gelegt wurde.". Dijit
+        Aus dem Dojo Handbuch: "Dijit ist ein Widget System das über Dojo gelegt wurde.". Dijit
         enthält eine Vielzahl von Layout und Formular Widgets die erstellt wurden um Zugriffsfeatures,
         Lokalisation, und standardtisiertes (und themenbasierendes) Look-and-Feel zu bieten.
     </para>

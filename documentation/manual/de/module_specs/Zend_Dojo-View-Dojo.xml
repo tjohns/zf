@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -16,8 +16,8 @@
     </itemizedlist>
 
     <para>
-        Die <code>dojo()</code> View Helfer Implementation ist ein Beispiel einer Platzhalter Implementation;
-        das Datenset in Ihm ist persistent zwischen den View Objekten, und kann direkt im eigenen
+        Die <code>dojo()</code> View Helfer Implementation ist ein Beispiel einer Platzhalter Implementation.
+        Das Datenset in Ihm ist persistent zwischen den View Objekten, und kann direkt im eigenen
         Layout Skript ausgegeben werden.
     </para>
 
@@ -26,12 +26,12 @@
 
         <para>
             Für dieses Beispiel nehmen wir an das der Entwickler Dojo von einem lokalen Pfad aus verwenden
-            wird; wir verschiedene Dijits benötigen; und das Tundra Dijit Thema anpassen werden.
+            wird, verschiedene Dijits benötigt, und das Tundra Dijit Thema anpasst.
         </para>
 
         <para>
-            Auf vielen Seiten, kann der Entwickler Dojo nicht einmal verwendetn. Deshalb werden wir uns auf ein
-            View Skript fokusieren indem Dojo benötigt wird, und dann auf das Layout Skript, indem wir
+            Auf vielen Seiten, kann der Entwickler Dojo nicht einmal verwenden. Deshalb werden wir uns zuerst
+            auf ein View Skript fokusieren indem Dojo benötigt wird, und dann auf das Layout Skript, indem wir
             einiges der Dojo Umgebung einstellen und anschließend darstellen werden.
         </para>
 

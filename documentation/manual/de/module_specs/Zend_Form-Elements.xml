@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12328 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.form.elements">
     <title>Erstellen von Form Elementen mit Hilfe von Zend_Form_Element</title>
 
@@ -179,8 +179,8 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             </programlisting>
 
             <para>
-                Wird dieser Pfad hinzugefügt, wenn ein Dekorator hinzugefügt wird, wird der
-                Pfad 'My/Decorator/' zuerst durchsucht um zu sehen ob der Dekorator dort existiert.
+                Nachdem er wie im obigen Beispiel hinzugefügt wurde, wird der Pfad 'My/Decorator/' zuerst
+                durchsucht um zu sehen ob der Dekorator dort existiert, wenn ein Dekorator hinzugefügt wird..
                 Als Ergebnis wird 'My_Decorator_Label' jetzt verwendet wenn der 'Labe' Dekorator
                 angefragt wird.
             </para>
@@ -192,15 +192,15 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
 
         <para>
             Es ist oft nützlich und/oder notwendig einige Normalisierungen an Eingaben vorzunehmen
-            bevor diese geprüft werden - zum Beispiel kann es gewünscht sein alles an HTML zu
+            bevor diese geprüft werden. Zum Beispiel kann es gewünscht sein alles an HTML zu
             entfernen, aber die Prüfungen auf dem verbleibenden durchzuführen um sicherzustellen
             das die Übertragung gültig ist. Oder man will Leerzeichen bei Eingaben entfernen damit
-            eine StringLength Prüfung kein falsches "Korrekt" zurückgibt. Diese Operationen können
-            durchgeführt werden indem <code>Zend_Filter</code> verwendet wird, und
-            <code>Zend_Form_Element</code> unterstützt Filterketten, was es erlaubt mehrere,
-            sequentielle Filter zu spezifizieren und anzupassen. Das Filter geschieht wärend
-            beidem, der Prüfung und wenn der Wert des Elements über <code>getValue()</code> geholt
-            wird:
+            eine StringLength Prüfung die richtige Länge für die Eingabe verwendet ohne das führende oder
+            nachfolgende Leerzeichen gezählt werden. Diese Operationen können durchgeführt werden indem
+            <code>Zend_Filter</code> verwendet wird. <code>Zend_Form_Element</code> unterstützt
+            Filterketten, was es erlaubt mehrere, sequentielle Filter zu spezifizieren.
+            Das Filtern geschieht sowohl bei der Prüfung und auch wenn der Wert des Elements über
+            <code>getValue()</code> geholt wird:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -242,8 +242,7 @@ $element->addFilter('alnum');
 
         <para>
             Kurznamen sind typischerweise der Filtername ohne den Präfix. Im Standardfall bedeutet
-            das keinen 'Zend_Filter_' Präfix. Zusätzlich muß der erste Buchstabe nicht
-            großgeschrieben werden.
+            das keinen 'Zend_Filter_' Präfix. Der erste Buchstabe kann klein- oder großgeschrieben werden.
         </para>
 
         <note>
@@ -323,8 +322,8 @@ $unfiltered = $element->getUnfilteredValue();
 
         <para>
             Wenn man das Sicherheits-Mantra von "Eingabe filtern, Ausgabe escapen" unterschreibt
-            dann wird man die Eingabe der form prüfen ("Eingabefilterung") wollen. In
-            <code>Zend_Form</code> enthält jedes Element seine eigene Prüfkette, die aus
+            dann sollte man Prüfungen verwenden um Eingaben zu filtern die mit der Form übertragen wurden.
+            In <code>Zend_Form</code> enthält jedes Element seine eigene Prüfkette, die aus
             <code>Zend_Validate_*</code> Prüfungen besteht.
         </para>
 
@@ -362,7 +361,7 @@ $element->addValidator('alnum');
 
         <para>
             Kurznamen sind typischerweise der Prüfnamen ohne den Präfix. Im Standardfall bedeutet
-            das keinen 'Zend_Validate_' Präfix. Zusätzlich muß der erste Buchstabe nicht
+            das keinen 'Zend_Validate_' Präfix. Im Falle von Filtern kann der erste Buchstabe klein- oder
             großgeschrieben werden.
         </para>
 
@@ -426,10 +425,10 @@ $validator = new Zend_Validate_StringLength(6, 20);
             <title>Eigene Fehlermeldungen für Prüfungen anbieten</title>
 
             <para>
-                Einige Entwickler wollen eigene  Fehlermeldungen für eine Prüfung anbieten.
-                <code>Zend_Form_Element::addValidator()</code>'s <code>$options</code> Argument
-                erlaubt es das zu tun indem der Schlüssel 'messages' angegeben wird und es auf
-                ein Array von Schlüssel/Werte Paaren gesetzt wird für das Setzen der
+                Einige Entwickler wollen eigene Fehlermeldungen für eine Prüfung anbieten.
+                Das <code>$options</code> Argument der <code>Zend_Form_Element::addValidator()</code>
+                Methode erlaubt es das zu tun indem der Schlüssel 'messages' angegeben wird und es auf
+                ein Array von Schlüssel/Werte Paaren gesetzt wird für das Mappen der
                 Nachrichten Templates. Man muß die Fehlermeldungen für die verschiedenen
                 Fehlertypen von Prüfungen wissen für die betreffende Prüfung.
             </para>
@@ -607,7 +606,7 @@ $messages = $element->getMessages();
                     true. Das bedeutet das wenn ein Wert evaluiert wird der leer ist und an
                     <code>isValid()</code> übergeben wird, die Prüfung übersprungen wird. Dieses
                     Flag kann gewechselt werden mit Hilfe der Zugriffsmethode
-                    <code>setAllowEmpty($flag)</code>; Wenn das Flag false ist, und ein Wert
+                    <code>setAllowEmpty($flag)</code>; Wenn das Flag false ist und ein Wert
                     übergeben wird, werden die Prüfungen trotzdem durchlaufen.
                 </para>
             </listitem>
@@ -616,7 +615,8 @@ $messages = $element->getMessages();
                 <para>
                     Standardmäßig, wenn ein Element benötigt wird, es aber keine 'NotEmpty'
                     Prüfung hat, wird <code>isValid()</code> eine an oberster Stelle im Stack
-                    platzieren. Das heißt das das Flag folgende semantische Bedeutung bekommt:
+                    mit gesetztem <code>breakChainOnFailure</code> Flag platzieren. Dieses Verhalten
+                    führt zu folgende semantische Bedeutung für das Flag:
                     Wenn kein Wert übergeben wird, wird die Übertragung sofort ungülig und der
                     Benutzer wird informiert, was die anderen Prüfungen davon abhält ausgeführt
                     zu werden auf Daten von denen wir bereits wissen das Sie ungültig sind.
@@ -779,9 +779,9 @@ $messages = $element->getMessages();
         <para>
             Ein möglicher Schmerzpunkt für viele Webentwickler ist die Erstellung von XHTML Forms
             selbst. Für jedes Element muß der Entwickler das Markup für das Element selbst
-            erstellen, typischerweise ein Laben und, wenn Sie nett zu den Benutzern sind,
-            das Markup für die Anzeige von Fehlermeldungen von Prüfungen. Je mehr Elemente auf
-            einer Seite sind, desdo weniger trivial wird diese Aufgabe.
+            erstellen (typischerweise ein Label) und speziell das Markup für die Anzeige von
+            Fehlermeldungen von Prüfungen. Je mehr Elemente auf einer Seite sind, desdo weniger
+            trivial wird diese Aufgabe.
         </para>
 
         <para>
@@ -854,8 +854,8 @@ $element = new Zend_Form_Element('foo',
         </note>
 
         <para>
-            Da die Reihenfolge in der Dekoratre registriert werden von Bedeutung ist -- der zuerst
-            registrierte Dekorator wird als erstes ausgeführt -- man muß sicherstellen das eigene
+            Da die Reihenfolge in der Dekoratre registriert werden von Bedeutung ist- der zuerst
+            registrierte Dekorator wird als erstes ausgeführt- man muß sicherstellen das eigene
             Dekoratore in der richtigen Reihenfolge registriert werden, oder sicherstellen das die
             Platzierungs-Optionen in einem ausgewogenen Weg gesetzt werden. Um ein Beispiel zu
             geben, ist hier ein Code der dem Standarddekorator registriert:
@@ -1056,8 +1056,8 @@ echo $element->renderHtmlTag("Das ist der Inhalt des HTML Tags");
 
             <listitem><para>
                 <emphasis>allowEmpty</emphasis>: Ein Flag das indiziert ob ein nicht-benötigtes
-                (optionales) Element versuchen soll leere Werte zu prüfen. Wenn es true ist, und
-                das required Flag false, dann werden leere Werte nicht an die Prüfkette übergeben,
+                (optionales) Element versuchen soll leere Werte zu prüfen. Wenn es true gesetzt wird, und
+                das required Flag false ist, dann werden leere Werte nicht an die Prüfkette übergeben,
                 und es wird true angenommen. Verwendet die Zugriffsmethoden
                 <code>setAllowEmpty()</code> und <code>getAllowEmpty()</code>. Dieses Flag ist
                 Standardmäßig true.
@@ -1354,9 +1354,9 @@ decorators.label.decorator = "Label"
             Als Beispiel nehmen wir an das alle Text Elemente einer Form die erstellt wird mit
             <code>StringTrim</code> gefiltert werden müssen, mit einer gemeinsamen Regular
             Expression und das ein eigener Dekorator 'My_Decorator_TextItem' verwendet werden soll
-            der für die Darstellung von Ihnen erstellt wurde; zusätzlich gibt es eine Anzahl an
+            der für die Darstellung von Ihnen erstellt wurde. Zusätzlich gibt es eine Anzahl an
             Standardattributen, wie 'size', 'maxLength', und 'class' die spezifiziert werden
-            sollen. So ein Element könnte wie folgt definiert werden:
+            sollen. Ein Element dass das Durchführen kann könnte wie folgt definiert werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -1415,8 +1415,8 @@ class My_Element_Text extends Zend_Form_Element
         </programlisting>
 
         <para>
-            Es gibt viele Wege Elemente anzupassen; man sollte sicherstellen die API Dokumentation
-            von <code>Zend_Form_Element</code> zu lesen um alle vorhandenen Methoden zu kennen.
+            Es gibt viele Wege Elemente anzupassen. Lies die API Dokumentation
+            von <code>Zend_Form_Element</code> zu mehr alle vorhandenen Methoden zu lernen.
         </para>
     </sect2>
 </sect1>

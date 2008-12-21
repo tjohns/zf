@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13136 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -79,7 +79,7 @@
 
         <listitem>
             <para>
-                IBM DB2, mit der <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP Erweiterung
+                IBM DB2 und DB2/i5, mit der <ulink url="http://www.php.net/ibm_db2">ibm_db2</ulink> PHP Erweiterung
             </para>
         </listitem>
 
@@ -216,9 +216,9 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 <title>Verwenden der Factory Methode des Adapters mit einem Zend_Config Objekt</title>
                 <para>
                     Im Beispiel anbei wird ein Zend_Config Objekt von einem Array erstellt. Die Daten können
-                    auch aus einer externen Datei, zum Beispiel mit
+                    auch aus einer externen Datei geladen werden indem Klassen wie zum Beispiel
                     <link linkend="zend.config.adapters.ini">Zend_Config_Ini</link> oder
-                    <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>, geladen werden.
+                    <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link> verwendet werden.
                 </para>
                 <programlisting role="php"><![CDATA[
 $config = new Zend_Config(
@@ -252,7 +252,7 @@ $db = Zend_Db::factory($config->database);
             <title>Adapter Parameter</title>
 
             <para>
-                Die unten stehende Liste erklärt die gemeinsamen Parameter die von Zend_Db Adapterklassen erkannt
+                Die folgende Liste erklärt die gemeinsamen Parameter die von Zend_Db Adapterklassen erkannt
                 werden.
             </para>
 

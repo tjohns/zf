@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -31,7 +31,7 @@
     <para>
         Wärend Formen die mit <code>Zend_Form</code> erstellt werden komplex sein können, ist
         der warscheinlich beste Verwendungzweck eine einfache Form; die beste Verwendung ist für
-        Rapid Application Development und Prototyping.
+        Rapid Application Development (RAD) und Prototyping.
     </para>
 
     <para>
@@ -48,8 +48,8 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        Es können optional Konfigurationen übergeben werden, wie verwendet werden um den Status
-        des Objektes zu setzen, genauso wie potentiell neue Elemente zu erstellen:
+        Es kann optional eine Instanz von Zend_Config oder ein Array übergeben werden, welches verwendet
+        wird um den Status des Objektes zu setzen sowie potentiell neue Elemente zu erstellen:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -300,7 +300,7 @@ $form->reset();
 
                 <para>
                     Präfix Pfade können für alle Elemente durch den Typ oder der Verwendung eines
-                    globalen Präfix gesetzt werden. Als Beispiel:
+                    globalen Präfix gesetzt werden. Einige Beispiele:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -356,7 +356,7 @@ $form->setElementDecorators(array(
                     <code>setElementDecorators()</code> kann ein Array von Elementnamen sein; standardmäßig
                     setzt so ein Array den spezifizierten Dekrator nur auf diese Elemente. Man kann auch
                     einen dritten Parameter angeben, ein Flag das anzeigt ob diese Liste von Elementen
-                    einbezogen oder ausgegrenzt werden sollen; wenn es false ist, werden alle Elemente
+                    einbezogen oder ausgegrenzt werden sollen. Wenn das Flag false ist, werden alle Elemente
                     dekoriert <emphasis>ausser</emphasis> denen die in der Liste übergeben wurden.
                     Die normale Verwendung der Methode besteht darin, das alle übergebenen Dekoratore
                     alle vorher gesetzten Dekoratore in jedem element überschreiben.
@@ -412,8 +412,8 @@ $form->setElementDecorators(
                     Zum Beispiel verwenden die verschiedenen Button Elemente (Submit, Button,
                     Reset) aktuell das Label als Wert des Buttons, und verwenden nur den
                     ViewHelper und DtDdWrapper Dekorator -- was zusätzliche Labels, Fehler und
-                    Hinweise für die Darstellung verhindert; das obige Beispiel wurde einige
-                    Inhalte duplizieren (das Label).
+                    Hinweise für die Darstellung verhindert. Das obige Beispiel würde einige
+                    Inhalte (das Label) für Button Elemente duplizieren.
                 </para>
 
                 <para>
@@ -427,7 +427,7 @@ $form->setElementDecorators(
                 <title>Filter für alle Elemente setzen</title>
 
                 <para>
-                    In vielen Fällen will man den selben Filter auf alle Elemente anwenden; ein
+                    In einigen Fällen will man den selben Filter auf alle Elemente anwenden; ein
                     üblicher Fall ist es alle Werte zu <code>trim()</code>men:
                 </para>
 
@@ -534,7 +534,7 @@ $form->setElementFilters(array('StringTrim'));
 
         <para>
             Die Basisklasse für Anzeigegruppen ist <code>Zend_Form_DisplayGroup</code>. Wärend Sie
-            direkt Instanziert werden kann, ist es typischerweise am besten die
+            direkt Instanziert werden kann, ist es normalerweise am besten die
             <code>addDisplayGroup()</code> Methode von <code>Zend_Form</code> zu verwenden um das
             zu erledigen. Diese Methode nimmt ein Array von Elementen als erstes Argument, und
             einen Namen für die Anzeigegruppe als zweites Argument. Es kann optional ein Array von
@@ -920,7 +920,7 @@ $subForm = $form->subform;
         </programlisting>
 
         <para>
-            Subformen sind bei der Iteration der Form enthalten, aber die Elemente von Ihnen nicht.
+            Subformen sind bei der Iteration der Form enthalten, aber die Elemente die Sie enthalten nicht.
         </para>
 
         <sect3 id="zend.form.forms.subforms.global">
@@ -1273,11 +1273,10 @@ echo $form->renderFieldset("<p>Das ist der Fieldset Inhalt</p>");
 
         <para>
             Ein primärer Verwendungszweck für Forms ist die Überprüfung von übermittelten Daten.
-            <code>Zend_Form</code> erlaubt es eine komplette Form auf einmach zu überprüfen oder
-            eine teilweise Form, genauso wie die Automatisierung von Prüf-rückmeldungen für
-            XmlHttpRequests (AJAX). Wenn die übertragenen Daten nicht gültig sind, hat es Methoden
-            für das Empfangen der verschiedenen Fehlercodes und Nachrichten für Elemente und
-            Subformen die Prüfungen nicht bestehen.
+            <code>Zend_Form</code> erlaubt es eine komplette Form, eine teilweise Form, oder
+            Antworten von XmlHttpRequests (AJAX) zu prüfen. Wenn die übertragenen Daten nicht
+            gültig sind, hat es Methoden für das Empfangen der verschiedenen Fehlercodes und
+            Nachrichten für Elemente und Subformen.
         </para>
 
         <para>
@@ -1382,7 +1381,7 @@ $messages = $form->getMessages('username');
                 Von Zeit zu Zeit ist es gewünscht ein oder mehrere spezielle Fehlermeldungen zu spezifizieren
                 die statt den Fehlermeldungen verwendet werden sollen die von den Validatoren verwendet werden
                 die dem Element angehängt sind. Zusätzlich will man von Zeit zu Zeit ein Element selbst als
-                ungültig markieren. Ab 1.6.0 ist diese Funktionalität über die folgenden Methoden ermöglicht.
+                ungültig markieren. Diese Funktionalität ist über die folgenden Methoden ermöglicht.
             </para>
 
             <itemizedlist>

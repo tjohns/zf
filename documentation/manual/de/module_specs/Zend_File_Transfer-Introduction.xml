@@ -1,51 +1,48 @@
-<!-- EN-Revision: 12158 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> ermöglicht es Entwicklern die Kontrolle über Dateiuploads sowie über
-        Dateidownloads zu erhalten. Es erlaubt die Verwendung von eingebuaten Prüfungen für Dateizwecke und
-        gibt sogar die Möglichkeit Dateien mit Filtern zu verändern. <code>Zend_File_Transfer</code> arbeitet
-        mit Adaptern welche es erlauben die selbe API für unterschiedliche Transportprotokolle wie HTTP, FTP,
-        WEBDAV und andere zu verwenden.
+        <code>Zend_File_Transfer</code> bietet exzessiven Support für Datei Uploads und Downloads. Es kommt
+        mit eingebauten Prüfungen für Dateien und Funktionslitäten um Dateien mit Filtern zu verändern.
+        Protokoll-Adapter erlauben <code>Zend_File_Transfer</code> die selbe API für Transportprotokolle wie
+        HTTP, FTP, WEBDAV und andere zu verwenden.
     </para>
 
     <note>
         <title>Einschränkungen</title>
         <para>
             Die aktuelle Implementation von <code>Zend_File_Transfer</code> die in 1.6.0 ausgeliefert wird,
-            ist auf HTTP Post Uploads limitiert. Downloaden von Dateien und andere Adapter werden in einem
-            kommenden Release hinzugefügt. Nicht implementierte Methoden werfen eine Ausnahme. Deswegen
-            sollte aktuell eine Instanz von <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet
-            werden. Das wird sich in Zukunft ändern, sobald mehrere Adapter vorhanden sind.
+            ist auf HTTP Post Uploads limitiert. Andere Adapter die Downloads und andere Protokolle
+            unterstützen werden in zukünftigen Releases hinzugefügt. Aktuell sollte
+            <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet werden. Sobald andere Adapter
+            vorhanden sind, kann ein gemeinsames Interface verwendet werden.
         </para>
     </note>
 
     <note>
         <title>Formulare</title>
         <para>
-            Wenn man <code>Zend_Form</code> verwendet sollte man die Beispiele, die im Kapitel von
-            <code>Zend_Form</code> zu finden sind, lesen und verwenden und <code>Zend_File_Transfer</code>
-            nicht manuell verwenden. Aber die Information die man in diesem Kapitel lesen kann sind sehr
-            nützlich, selbst wenn man Sie nicht direkt verwendet. Alle Annahmen, Beschreibungen und
-            Lösungen sind die gleichen wenn man <code>Zend_File_Transfer</code> über <code>Zend_Form</code>
-            verwendet.
+            Wenn man <code>Zend_Form</code> verwendet sollte man die APIs die von <code>Zend_Form</code> zur
+            Verfügung gestellt werden, und <code>Zend_File_Transfer</code> nicht direkt, verwenden. Der
+            Dateitransfer Support von <code>Zend_Form</code> ist in <code>Zend_File_Transfer</code>
+            implementiert, weshalb die Informationen in diesem Kapitel für fortgeschrittene Benutzer von
+            <code>Zend_Form</code> interessant sind.
         </para>
     </note>
 
     <para>
-        Die Verwendung von <code>Zend_File_Transfer</code> ist recht einfach. Es besteht aus zwei Teilen.
-        Dem HTTP Formular das den Upload durchführt, und der Behandlung der hochgeladenen Dateien mit
-        <code>Zend_File_Transfer</code>. Siehe das folgende Beispiel:
+        Die Verwendung von <code>Zend_File_Transfer</code> ist relativ einfach. Es besteht aus zwei Teilen.
+        Dem HTTP Formular, wärend <code>Zend_File_Transfer</code> die hochgeladenen Dateien behandelt.
+        Siehe das folgende Beispiel:
     </para>
 
     <example id="zend.file.transfer.introduction.example">
-        <title>Einfaches File-Upload Formular</title>
+        <title>Einfaches Formular für File-Uploads</title>
         <para>
-            Dieses Beispiel zeigt einen einfachen Dateiupload welcher <code>Zend_File_Transfer</code>
-            verwendet. Das erste Teil ist das Dateiformular. In unserem Beispiel gibt es nur eine Datei
-            welche wir hochladen wollen.
+            Dieses Beispiel zeigt einen einfachen Dateiupload. Das erste Teil ist das Dateiformular.
+            In unserem Beispiel gibt es nur eine Datei welche wir hochladen wollen.
         </para>
 
         <programlisting><![CDATA[
@@ -59,15 +56,15 @@
         </programlisting>
 
         <para>
-            Es ist zu beachten das der Bequemlichkeit halber
+            Der Bequemlichkeit halber kann
             <link linkend="zend.form.standardElements.file">Zend_Form_Element_File</link> verwendet werden
-            sollte statt das HTML manuell zu erstellen.
+            statt das HTML manuell zu erstellen.
         </para>
 
         <para>
             Der nächste Schritt ist die Erstellung des Empfängers des Uploads. In unserem Beispiel ist der
-            Empfänger <code>/file/upload</code>. Als nächstes erstellen wir also den Kontroller
-            <code>file</code> mit der Aktion <code>upload</code>.
+            Empfänger bei <code>/file/upload</code> zu finden. Als nächstes erstellen wir also den
+            <code>file</code> Controller mit der <code>upload</code> Aktion.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -83,9 +80,10 @@ if (!$adapter->receive()) {
         </programlisting>
 
         <para>
-            Wie man sieht besteht die einfachte Verwendung darin ein Ziel mit der <code>setDestination</code>
-            Methode zu definieren und die <code>receive()</code> Methode aufzurufen. Wenn irgendwelche
-            Uploadfehler vorhanden sind werden diese als Ausnahme zurückgegeben.
+            Dieses Codebeispiel demonstriert die einfachste Verwendung von <code>Zend_File_Transfer</code>.
+            Ein lokales Ziel wird mit der <code>setDestination</code> Methode definiert, und anschließend die
+            <code>receive()</code> Methode aufgerufen. Wenn irgendwelche Uploadfehler auftreten werden diese
+            als Ausnahme zurückgegeben.
         </para>
 
     </example>
@@ -93,10 +91,11 @@ if (!$adapter->receive()) {
     <note>
         <title>Achtung</title>
         <para>
-            Beachten Sie das das nur die einfachste Verwendung ist. Man sollte dieses Beispiel
-            <emphasis role="strong">niemals</emphasis> in einer lebenden Umgebung einsetzen da es
-            massive Sicherheitslücken aufweisst. Man sollte immer Prüfungen verwenden um die
-            Sicherheit zu erhöhen.
+            Dieses Beispiel ist nur für die Demonstration der grundsätzlichen API von
+            <code>Zend_File_Transfer</code>. Man sollte dieses Code Beispiel
+            <emphasis role="strong">niemals</emphasis> in einer Produktivumgebung einsetzen da es
+            massive Sicherheitslücken aufweisst. Man sollte immer Prüfungen verwenden um die Sicherheit
+            zu erhöhen.
         </para>
     </note>
 
@@ -105,17 +104,10 @@ if (!$adapter->receive()) {
         <title>Von Zend_File_Transfer unterstützte Adapter</title>
 
         <para>
-            <code>Zend_File_Transfer</code> wurde erstellt um verschiedene Adapter und auch Richtungen zu
-            unterstützen. Es wurde designt um das Hochladen, Herunterladen und sogar das Weiterleiten
-            (Hochladen mit einem Adapter und Herunterladen mit einem anderen Adapter zur gleichen Zeit)
-            von Dateien zu erlauben. Aber mit Zend Framework 1.6 ist aktuell nur ein Adapter vorhanden,
-            der Http Adapter.
-        </para>
-
-        <para>
-            Weil aktuell nur ein Adapter vorhanden ist, kann die Basisklasse aktuell noch nicht verwendet werden.
-            Deshalb muß man, wenn man <code>Zend_File_Transfer</code> verwenden will, den Adapter direkt
-            verwenden.
+            <code>Zend_File_Transfer</code> wurde designt um verschiedenste Adapter und auch Richtungen zu
+            unterstützen. Mit <code>Zend_File_Transfer</code> kann man Dateien Hochladen, Herunterladen und
+            sogar Weiterleiten (Hochladen mit einem Adapter und Herunterladen mit einem anderen Adapter zur
+            gleichen Zeit).
         </para>
     </sect2>
 
@@ -124,19 +116,18 @@ if (!$adapter->receive()) {
         <title>Optionen für Zend_File_Transfer</title>
 
         <para>
-            <code>Zend_File_Transfer</code> und dessen Adapter unterstützen verschiedene Optionen. Alle Optionen
-            können gesetzt werden indem Sie entweder dem Constructor übergeben werden, oder durch Verwendung  von
-            <code>setOptions($options)</code>. <code>getOptions()</code> gibt die aktuell gesetzten Optionen
-            zurück. Anbei ist eine Liste aller unterstützten Optionen zu finden.
+            <code>Zend_File_Transfer</code> und seine Adapter unterstützen verschiedene Optionen. Alle Optionen
+            können gesetzt werden indem Sie entweder dem Constructor übergeben werden, oder durch Aufruf der
+            <code>setOptions($options)</code>. <code>getOptions()</code> gibt die Optionen zurück die aktuell
+            gesetzt sind. Nachfolgend ist eine Liste aller unterstützten Optionen:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <emphasis role="strong">ignoreNoFile</emphasis>: Wenn diese Option auf true gesetzt ist,
-                    ignorieren alle Prüfer die Datei wenn Sie nicht vom Formular hochgeladen wurde. Diese
-                    Option ist standardmäßig false, was heißt das ein Fehler geworfen wird, wenn die Datei
-                    nicht angegeben wurde.
+                    ignorieren alle Prüfer Dateien die nicht vom Formular hochgeladen wurde. Der
+                    Standardwert ist false, was einen Fehler verursacht wenn die Datei nicht spezifiziert wurde.
                 </para>
             </listitem>
         </itemizedlist>
@@ -144,11 +135,12 @@ if (!$adapter->receive()) {
 
     <sect2 id="zend.file.transfer.introduction.checking">
 
-        <title>Prüfen von Dateien</title>
+        <title>Dateien prüfen</title>
 
         <para>
-            <code>Zend_File_Transfer</code> hat verschiedene Methoden die auf verschiedenste Annahmen
-            prüfen welche nützlich sind wenn man Dateien bearbeiten will nachdem Sie empfangen wurden.
+            <code>Zend_File_Transfer</code> hat verschiedene Methoden die auf verschiedenste Stati von
+            spezifizierten Dateien prüfen. Diese sind nützlich wenn man Dateien bearbeiten will nachdem
+            Sie empfangen wurden. Diese Methoden beinhalten:
         </para>
 
         <itemizedlist>
@@ -156,25 +148,25 @@ if (!$adapter->receive()) {
                 <para>
                     <emphasis role="strong">isValid($files = null)</emphasis>: Diese Methode prüft ob die
                     angegebene Datei gültig ist, basierend auf den Prüfungen welche dieser Datei
-                    angehängt sind. Wenn keine Dateien angegeben wurden, werden alle Dateien geprüft.
-                    Es ist zu beachten das diese Methode mindestens dann aufgerufen wird, wenn man die
-                    Dateien empfängt.
+                    angehängt sind. Wenn keine Dateien spezifiziert wurden, werden alle Dateien geprüft.
+                    Man kann <code>isValid()</code> aufrufen bevor <code>receive()</code> aufgerufen wird;
+                    in diesem Fall ruft <code>receive()</code> intern <code>isValid()</code> nicht mehr auf.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <emphasis role="strong">isUploaded($files = null)</emphasis>: Diese Methode prüft ob die
-                    angegebene Datei vom Benutzer hochgeladen wurde. Das ist nützlich wenn man verschiedene
-                    Dateien definiert hat die optional hochzuladen sind. Wenn keine Dateien angegeben wurden,
-                    werden alle Dateien geprüft.
+                    spezifizierte Datei vom Benutzer hochgeladen wurde. Das ist nützlich wenn man eine oder
+                    mehrere Dateien definiert hat. Wenn keine Dateien spezifiziert wurden, werden alle
+                    Dateien geprüft.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <emphasis role="strong">isReceived($files = null)</emphasis>: Diese Methode prüft ob die
-                    angegebene Datei bereits empfangen wurde. Wenn keine Dateien angegeben wurden, werden
+                    spezifizierte Datei bereits empfangen wurde. Wenn keine Dateien angegeben wurden, werden
                     alle Dateien geprüft.
                 </para>
             </listitem>
@@ -186,7 +178,7 @@ if (!$adapter->receive()) {
             <programlisting role="php"><![CDATA[
 $upload = new Zend_File_Transfer();
 
-// Gibt alle bekannten internen Dateiinformationen zurück
+// Gibt alle bekannten internen Datei Informationen zurück
 $files = $upload->getFileInfo();
 
 foreach ($files as $file => $info) {
@@ -215,8 +207,8 @@ $upload->receive();
         <title>Zusätzliche Dateiinformationen</title>
 
         <para>
-            <code>Zend_File_Transfer</code> kann verschiedene zusätzliche Informationen über Dateien
-            zurückgeben. Die folgenden Methoden sind vorhanden:
+            <code>Zend_File_Transfer</code> kann zusätzliche Informationen über Dateien zurückgeben.
+            Die folgenden Methoden sind vorhanden:
         </para>
 
         <itemizedlist>
@@ -250,7 +242,7 @@ $upload->receive();
         </para>
 
         <para>
-            Standardmäßig werden Dateinamen mit Ihrem kompletten Pfad zurückgegeben. Wenn man nur den Dateinamen
+            Standardmäßig werden Dateinamen mit dem kompletten Pfad zurückgegeben. Wenn man nur den Dateinamen
             ohne Pfad benötigt, kann der zweite Parameter <code>$path</code> gesetzt werden, welcher den
             Dateinamen ausschneidet wenn er auf false gesetzt wird.
         </para>
@@ -274,18 +266,18 @@ $names = $upload->getFileName('foo');
 
         <note>
             <para>
-                Es ist zu beachten das sich der Dateinamen ändern kann wenn man die Datei empfängt (receive).
-                Das kann geschehen durch den Fakt das beim Empfangen alle Filter ausgeführt werden.
-                Deswegen sollte man <code>getFileName()</code> immer ausführen nachdem man die Dateien
-                empfangen hat.
+                Es ist zu beachten das sich der Dateinamen ändern kann nachdem die Datei empfangen wurde
+                (receive) weil alle Filter angewendet werden, sobald die Datei empfangen wurde.
+                Deswegen sollte man <code>getFileName()</code> immer ausführen nachdem die Dateien
+                empfangen wurden.
             </para>
         </note>
 
         <para>
             <code>getHash()</code> akzeptiert den Namen eines Hash Algorithmus als ersten Parameter. Für eine
-            Liste von bekannten Algorithmen kann in
+            Liste bekannter Algorithmen kann in
             <ulink url="http://php.net/hash_algos">PHP's hash_algos Methode</ulink> gesehen werden. Wenn kein
-            Algorithmus angegeben wird, wird <code>crc32</code> als Standardalgorithmus verwendet.
+            Algorithmus spezifiziert wird, wird <code>crc32</code> als Standardalgorithmus verwendet.
         </para>
 
         <example id="zend.file.transfer.introduction.informations.example2">
@@ -308,7 +300,7 @@ $names = $upload->getHash('crc32', 'foo');
         <note>
             <para>
                 Es ist zu beachten das der zurückgegebene Wert ein Array ist, wenn die Datei oder der
-                Formularname mehr als eine einzelne Datei enthält.
+                Formularname mehr als eine Datei enthält.
             </para>
         </note>
     </sect2>

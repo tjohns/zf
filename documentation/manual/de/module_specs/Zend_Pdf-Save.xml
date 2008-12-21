@@ -1,9 +1,9 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.pdf.save">
-    <title>Änderungen von PDF Dokumenten speichern</title>
+    <title>Änderungen an PDF Dokumenten speichern</title>
     <para>
-        Es gibt zwei Methoden für das Speichern von Änderungen am PDF Dokument.
-        Dies sind die Methoden <code>Zend_Pdf::save()</code> und <code>Zend_Pdf::render()</code>.
+        Es gibt zwei Methoden die Änderungen an PDF Dokumenten speichern: Die <code>Zend_Pdf::save()</code>
+        und <code>Zend_Pdf::render()</code> Methoden.
     </para>
 
     <para>
@@ -19,18 +19,18 @@
     </para>
 
     <example id="zend.pdf.save.example-1">
-        <title>Speichern eines PDF Dokuments</title>
+        <title>Speichern von PDF Dokumenten</title>
         <programlisting role="php"><![CDATA[
 ...
 // Lade das PDF Dokument.
 $pdf = Zend_Pdf::load($fileName);
 ...
-// Aktualisiere das Dokument
+// Aktualisiere das PDF Dokument
 $pdf->save($fileName);
 // Speichere das Dokument in eine neue Datei
 $pdf->save($newFileName, true);
 
-// Geb das PDF Dokument in einer Zeichenkette zurück.
+// Gib das PDF Dokument in einer Zeichenkette zurück
 $pdfString = $pdf->render();
 
 ...

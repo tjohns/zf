@@ -1,38 +1,38 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.pdf.pages">
-    <title>Dokument Seiten</title>
+    <title>Arbeiten mit Seiten</title>
     <sect2 id="zend.pdf.pages.creation">
-        <title>Erstellung von Seiten</title>
+        <title>Erstellen von Seiten</title>
         <para>
-            Die Abstraktion von PDF Dokumentseiten wird durch die Klasse <code>Zend_Pdf_Page</code>
-            abgebildet.
+            Die Seiten in einem PDF Dokument werden durch <code>Zend_Pdf_Page</code> Instanzen in
+            <code>Zend_Pdf</code> abgebildet.
         </para>
 
         <para>
-            PDF Seiten werden entweder aus einem vorhandenen PDF gelesen oder erstellt.
+            PDF Seiten werden entweder aus einem vorhandenen PDF gelesen oder erstellt indem die API von
+            <code>Zend_Pdf</code> verwendet wird.
         </para>
 
         <para>
-            Neue Seiten können durch die Erstellung eines neuen <code>Zend_Pdf_Page</code> Objektes
-            oder durch den Aufruf der <code>Zend_Pdf::newPage()</code> Methode erhalten werden, die ein
-            <code>Zend_Pdf_Page</code> Objekt zurückgibt. Der Unterschied ist, dass die
-            <code>Zend_Pdf::newPage()</code> Methode eine Seite erstellt, die bereits an das vorhandene
-            Dokument angehängt worden ist. Im Gegensatz dazu können ungebundene Seiten bei verschiedenen
-            PDF Dokumenten verwendet werden und sind ein wenig performanter
+            Neue Seiten können durch die Instanzierung neuer <code>Zend_Pdf_Page</code> Objekte erstellt
+            werden, entweder direkt oder durch den Aufruf der <code>Zend_Pdf::newPage()</code> Methode,
+            die ein <code>Zend_Pdf_Page</code> Objekt zurückgibt. <code>Zend_Pdf::newPage()</code> erstellt
+            eine Seite die bereits an ein Dokument angehängt ist. Ungebundene Seiten können nicht mit
+            verschiedenen PDF Dokumenten verwendet werden, sind aber etwas schneller.
             <footnote>
                 <para>
                 Dies ist eine Einschränkung der V1.0 Version der Zend_Pdf Komponente. Sie wird in
                 zukünftigen Versionen beseitigt werden. Aber ungebundene Seiten werden immer ein
                 besseres (also optimaleres) Ergebnis für gemeinsame Benutzung in Dokumenten liefern.
                 </para>
-            </footnote>. Du hast die Wahl, welche Vorgehensweise verwendet werden sollte.
+            </footnote>
         </para>
 
         <para>
             Die <code>Zend_Pdf::newPage()</code> Methode und der <code>Zend_Pdf_Page</code> Konstruktor
-            benötigen die gleichen Parameter welche die Größe der Seite spezifizieren. Das ist entweder
-            die Seitengröße ($x, $y) in Punkten (1/72 Zoll) oder eine vordefinierte Konstante, die als
-            Seitentyp verwendet wird:
+            benötigen die gleichen Parameter welche die Größe der Seite spezifizieren. Sie können entweder
+            die Seitengröße ($x, $y) in Punkten (1/72 Zoll) nehmen oder eine vordefinierte Konstante, die den
+            Seitentyp repräsentiert:
             <itemizedlist>
                 <listitem>
                     <para>Zend_Pdf_Page::SIZE_A4</para>
@@ -50,9 +50,9 @@
         </para>
 
         <para>
-            Dokumentseiten werden in der öffentlichen Eigenschaft <code>$pages</code> der
-            <code>Zend_Pdf</code> Klasse abgelegt. Dies ist ein Array mit <code>Zend_Pdf_Page</code>
-            Objekten. Es definiert den Satz und die Reihenfolge der Dokumentseiten und kann
+            Dokumentseiten werden im öffentlichen <code>$pages</code> Attribut der <code>Zend_Pdf</code>
+            Klasse abgelegt. Das Attribut enthält ein Array mit <code>Zend_Pdf_Page</code>
+            Objekten und definiert die komplette Instanz und die Reihenfolge der Seiten. Dieses Array kann
             wie ein normales Array verändert werden:
         </para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12877 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
@@ -78,7 +78,7 @@ echo $server->handle();
             Dennoch wird versucht, einen passenden Typ, anhand der in
             @param- und @return-Zeilen enthaltenen Werte, zu ermitteln. Einige
             XML-RPC-Typen besitzen jedoch kein direktes Äquivalent und sollten
-            deshalb mittels phpdoc auf einen XML-RPC-Typen hinweisen. Diese
+            deshalb mittels PHPdoc auf einen XML-RPC-Typen hinweisen. Diese
             beinhalten:
         </para>
 

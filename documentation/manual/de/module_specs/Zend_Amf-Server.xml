@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12309 -->
+<!-- EN-Revision: 13190 -->
 <sect1 id="zend.amf.server">
     <title>Zend_Amf_Server</title>
 
@@ -245,7 +245,6 @@ class World
 <mx:RemoteObject id="myservice"
     fault="faultHandler(event)"
     showBusyCursor="true"
-    source="RoundTrip"
     destination="zend">
 ]]>
         </programlisting>
@@ -254,8 +253,7 @@ class World
             Hier haben wir ein neues entferntes Objekt definiert das durch "myservice" identifiziert
             an das Serviceziel "zend" gebunden ist das wir in der <code>services-config.xml</code>
             Datei definiert haben. Dann rufen wir die Methoden auf Ihnen in unserem ActionScript
-            einfach durch aufruf von "myservice.&lt;method&gt;" auf. (Die Quelle "RoundTrip" ist
-            in diesem Fall der Name unserer Flex Anwendung.) Als Beispiel:
+            einfach durch Aufruf von "myservice.&lt;method&gt;" auf. Als Beispiel:
         </para>
 
         <programlisting role="ActionScript"><![CDATA[
@@ -307,11 +305,11 @@ $server->setProduction(false);
         </programlisting>
 
         <para>
-            Um Ihn wieder einzuschalten, muß stattdessen einfach der Wert true übergeben werden:
+            Um Ihn wieder einzuschalten, muß stattdessen einfach ein boolscher true Wert übergeben werden:
         </para>
 
         <programlisting role="php"><![CDATA[
-$server->setProduction(false);
+$server->setProduction(true);
 ]]>
         </programlisting>
 

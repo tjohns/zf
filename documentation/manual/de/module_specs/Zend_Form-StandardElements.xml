@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12750 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -130,7 +130,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
 
         <para>
             HTML Checkboxen erlauben es spezifische Werte zurückzugeben, arbeiten aber
-            grundsätzlich als Boolean: Wenn Sie angehackt sind, wird der Wert übertragen; wenn Sie
+            grundsätzlich als Boolean. Wenn Sie angehackt sind, wird der Wert der Checkbox übertragen. Wenn Sie
             nicht angehackt sind, wird nichts übertragen. Intern erzwingt
             Zend_Form_Element_Checkbox diesen Status.
         </para>
@@ -210,14 +210,14 @@ $form->setAttrib('enctype', 'multipart/form-data');
             </programlisting>
 
             <para>
-                Wenn das Formular erfolgreich geprüft wurde, muß man die Datei empfangen um Sie an Ihrem
-                endgültigen Ziel zu speichern indem receive() verwendet wird. Zusätzlich kann man das
-                endgültige Ziel ermittelt werden indem getFileName() verwendet wird:
+                Nachdem das Formular erfolgreich geprüft wurde, muß die Datei empfangen werden um Sie an Ihrem
+                endgültigen Ziel zu speichern indem <code>receive()</code> verwendet wird. Zusätzlich kann man
+                das endgültige Ziel ermittelt werden indem <code>getFileName()</code> verwendet wird:
             </para>
 
             <programlisting role="php"><![CDATA[
 if (!$form->isValid) {
-    print "Ohoh... Prüfungsfehler";
+    print "Uh oh... Prüfungsfehler";
 }
 
 if (!$form->foo->receive()) {
@@ -242,10 +242,11 @@ $location = $form->foo->getFileName();
             <title>Datei Werte</title>
 
             <para>
-                In HTTP hat das File Element keinen Wert. Deshalb, und aus Gründen der Sicherheit erhält
-                man nur den hochgeladenen Dateinamen wenn man getValue() aufruft und nicht den kompletten
-                Pfad. Wenn man die kompletten Informationen benötigt kann getFileName() aufgerufen werden,
-                welches den Pfad und Namen der Datei zurückgibt.
+                In HTTP hat das File Element keinen Wert. Aus diesem Grund, und aus Gründen der Sicherheit
+                erhält gibt <code>getValue()</code> nur den Dateinamen der hochgeladenen Datei zurück und
+                nicht den kompletten Pfad. Wenn man die kompletten Informationen benötigt kann
+                <code>getFileName()</code> aufgerufen werden, welches sowohl den Pfad als auch den Namen
+                der Datei zurückgibt.
             </para>
         </note>
 
@@ -306,7 +307,7 @@ if ($form->foo->isUploaded()) {
 
             <para>
                 Die Erstellung eines Multifile Elements ist das gleiche wie das Erstellen eines einzelnen
-                Elements. Nach der Erstellung muß nur zusätzlich <code>setMultiFile()</code> aufgerufen werden:
+                Elements. Man muß nur <code>setMultiFile()</code> aufrufen nachdem das Element erstellt wurde:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -338,8 +339,8 @@ $form->addElement($element, 'foo');
 
             <para>
                 Wenn File Elemente in Subformularen verwendet werden muß man eindeutige Namen setzen.
-                Sodas ein File Element in Subform1 das "file" heißt, in Subform2 einen anderen Namen
-                erhalten muß.
+                Wenn man zum Beispiel ein File Element in Subform1 "file" benennt, muß es in Subform2
+                einen anderen Namen erhalten.
             </para>
 
             <para>
@@ -349,11 +350,10 @@ $form->addElement($element, 'foo');
         </note>
 
         <para>
-            Um die Größe der Datei zu begrenzen, die vom Client hochgeladen wird, sollte man zusätzlich die
-            maximale Dateigröße setzen die das Formular akzeptiert. Das begrenzt die Größe auf der
-            Clientseite durch das Setzen der <code>MAX_FILE_SIZE</code> Option im Formular. Sobald der
-            Wert, durch die Verwendung der <code>setMaxFileSize($size)</code> Methode, gesetzt ist, wird er
-            mit dem File Element dargestellt.
+            Um die Größe der Datei zu begrenzen, die vom Client hochgeladen wird, kann die maximale
+            Dateigröße spezifiziert werden indem die <code>MAX_FILE_SIZE</code> Option im Formular
+            gesetzt wird. Sobald der Wert, durch die Verwendung der <code>setMaxFileSize($size)</code>
+            Methode, gesetzt ist, wird er mit dem File Element dargestellt.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -370,13 +370,12 @@ $form->addElement($element, 'foo');
             <title>MaxFileSize mit mehreren File Elementen</title>
 
             <para>
-                Wenn mehrere File Elemente im Formular verwendet werden muß man <code>MAX_FILE_SIZE</code>
-                nur einmal setzen. Wenn man es nochmals setzt überschreibt der vorher gesetzte Wert überschrieben.
+                Wenn mehrere File Elemente im Formular verwendet werden sollte man <code>MAX_FILE_SIZE</code>
+                nur einmal setzen. Wird es nochmals gesetzt überschreibt es den vorherigen Wert.
             </para>
 
             <para>
-                Es ist zu beachten das man <code>MAX_FILE_SIZE</code> nur einmal setzen kann, selbst wenn man
-                mehrere Formuare verwendet.
+                Beachte, das das auch der Fall ist wenn man mehrere Formulare verwendet.
             </para>
         </note>
     </sect2>
@@ -385,9 +384,9 @@ $form->addElement($element, 'foo');
         <title>Zend_Form_Element_Hidden</title>
 
         <para>
-            Versteckte Elemente fügen Daten ein die übertragen werden sollen, aber welche der
-            Benutzer nicht manipulieren soll. <code>Zend_Form_Element_Hidden</code> ermöglicht das
-            durch die Verwendung des 'formHidden' View Helfers.
+            Versteckte Elemente fügen Daten ein die übertragen werden sollen, welche der Benutzer
+            aber nicht manipulieren soll. <code>Zend_Form_Element_Hidden</code> ermöglicht das
+            mit dem 'formHidden' View Helfers.
         </para>
     </sect2>
 
@@ -402,9 +401,9 @@ $form->addElement($element, 'foo');
         </para>
 
         <para>
-            Der Name des Hash Elements sollte einmalig sein. Es ist notwendig das die
-            <literal>salt</literal> Option für das Element verwendet wird, damit zwei Hashes mit
-            dem gleichen Namen und unterschiedlichen Salts nicht kollidieren:
+            Der Name des Hash Elements sollte einmalig sein. Wir emphehlen die Verwendung der
+            <literal>salt</literal> Option für das Element- damit zwei Hashes mit dem gleichen
+            Namen und unterschiedlichen Salts nicht kollidieren:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -437,8 +436,8 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         <title>Zend_Form_Element_Image</title>
 
         <para>
-            Bilder können als Form Elemente verwendet werden und erlaubt es graphische Elemente als
-            Form Buttons zu spezifizieren.
+            Bilder können als Form Elemente verwendet werden und man kann diese Bilder als graphische
+            Elemente auf Form Buttons verwenden.
         </para>
 
         <para>
@@ -452,9 +451,9 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            Das Bild Element verwenden den
+            Bild Elemente verwenden den
             <link linkend="zend.form.standardDecorators.image">Image Decorator</link> für die
-            Darstellung (genauso wie die Standard Error, HtmlTag und Label Dekoratore). Es kann
+            Darstellung, zusätzlich zu den Standard Error, HtmlTag und Label Dekoratoren. Es kann
             optional ein Tag für den <code>Image</code> Dekorator spezifiziert werden der das
             Bild einbettet.
         </para>
@@ -499,9 +498,9 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
             <listitem><para><code>setMultiOptions(array $options)</code> (überschreibt existierende
                 Optionen)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
@@ -553,9 +552,9 @@ $element->setValue(array('bar', 'bat'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (überschreibt existierende Optionen)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
@@ -626,9 +625,9 @@ $element->setValue(array('bar', 'bat'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (überschreibt existierende Optionen)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
@@ -685,9 +684,9 @@ $element->setValue(array('bar', 'bat'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (überschreibt existierende Optionen)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
@@ -162,7 +162,7 @@ interface Zend_Decorator_Interface
 
         <para>
             Als Beispiel nehmen wir an das wir die Anzahl an verwendeten Dekoratoren verringern
-            will, und einen "gemeinsamen" Dekorator erstellt der die Darstellung von Label,
+            wollen, und einen "gemeinsamen" Dekorator erstellen der die Darstellung von Label,
             Element, jegliche Fehlermeldung, und Beschreibung in einem HTML <code>div</code>
             übernimmt. So ein 'Gemeinsamer' Dekorator kann wie folgt erstellt werden:
         </para>
@@ -338,7 +338,7 @@ class My_Decorator_Errors
         <para>
             Da Dekoratore verschiedene Metadaten, eines Elements oder Formulars das Sie darstellen,
             ansprechen, ist es oft nützlich zu bestimmten Zeiten nur einen individuellen Dekorator
-            darzustellen. Glücklicherweise ist dieses Feature über Methodenüberladung in jeder
+            darzustellen. Dieses Feature ist über Methodenüberladung in jeder
             der grundsätzlichen Klassen der Formulartypen möglich (Formulare, Unterformulare,
             Anzeigegruppen, Elemente).
         </para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.gdata.docs">
     <title>Verwenden der Google Dokumente Listen Daten API</title>
 
@@ -55,7 +55,7 @@ $feed = $docs->getDocumentListFeed();
  * @param Zend_Gdata_Docs $docs Das Service Objekt das für die Kommunikation mit dem Google Dokumenten Service
  *     verwendet wird.
  * @param boolean $html True wenn die Ausgabe für die Ausgabe in einem Web Browser formatiert sein soll.
- * @param string $originalFileName Der Name der Datei die hochgeladen werden soll. Der Mime-Typ dieser Datei
+ * @param string $originalFileName Der Name der Datei die hochgeladen werden soll. Der MIME-Typ dieser Datei
  *     wird von der erweiterung des Dateinamens eruiert. Zum Beispiel wird test.csv als Komma geteilter
  *     Inhalt hochgeladen und in eine Tabellenkalkulation konvertiert.
  * @param string $temporaryFileLocation (Optional) Die Datei in der die Daten für das Dokument gespeichert werden.
@@ -71,7 +71,7 @@ function uploadDocument($docs, $html, $originalFileName,
   }
 
   // Datei hochladen un in ein Google Dokument konvertieren Der originale Dateiname wird als Titel des
-  // Dokuments verwendet und der Mime Typ wird basieren auf der erweiterung des originalen Dateinamens
+  // Dokuments verwendet und der MIME Typ wird basieren auf der erweiterung des originalen Dateinamens
   // eruiert.
   $newDocumentEntry = $docs->uploadFile($fileToUpload, $originalFileName,
       null, Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);

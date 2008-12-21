@@ -1,19 +1,19 @@
-<!-- EN-Revision: 12834 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Einführung</title>
     <para>
         Die Komponente Zend_Pdf ist eine Manipulations Engine für PDF (Portable Document Format).
-        Es kann Dokumente laden, erstellen, verändern und speichern. Deswegen kann es jeder PHP betriebenen
-        Anwendung helfen PDF Dokumente dynamisch zu erstellen indem bestehende Templates verändert
-        oder neue von Grund auf erzeugt werden. Zend_Pdf unterstützt die folgenden Features:
+        Es kann Dokumente laden, erstellen, verändern und speichern. Deswegen kann es jeder PHP
+        Anwendung helfen PDF Dokumente dynamisch zu erstellen indem bestehende Dokumente verändert
+        oder neue von Grund auf erzeugt werden. Zend_Pdf bietet die folgenden Features:
     <itemizedlist>
         <listitem>
             <para>
                 Erstellen von neuen Dokumenten oder Laden von vorhandenen Dokumenten.
             <footnote>
                 <para>
-                PDF V1.4 (Acrobat 5) Dokumente werden für das Laden derzeit unterstützt.
+                Das Laden von PDF V1.4 (Acrobat 5) Dokumenten wird derzeit unterstützt.
                 </para>
             </footnote>
             </para>

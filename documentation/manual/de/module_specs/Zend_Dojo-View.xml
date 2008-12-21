@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.dojo.view" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Dojo View Helfer</title>
 
@@ -10,7 +10,7 @@
         <listitem><para>
             <emphasis>dojo():</emphasis> Erstellt die Dojo Umgebung für die eigene Seite, inklusive der
             Werte für die Dojo Konfiguration, eigene Modulpfade, benötigte Modulstatements, Themenstylesheets,
-            ob CDN verwendet werden soll oder nicht, und vieles mehr.
+            CDN Verwendung, und vieles mehr.
         </para></listitem>
     </itemizedlist>
 
