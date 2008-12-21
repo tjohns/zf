@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13084 -->
+<!-- EN-Revision: 13356 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -712,55 +712,55 @@ public function setLineDashingPattern($pattern, $phase = 0);
             <listitem>
                 <para>Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING (Standardverhalten)</para>
                 <para>
-                <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
-                <blockquote>
+                    <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
+                    <blockquote>
                     <para>
-The nonzero winding number rule determines whether a given point is inside a
-path by conceptually drawing a ray from that point to infinity in any direction
-and then examining the places where a segment of the path crosses the ray. Starting
-with a count of 0, the rule adds 1 each time a path segment crosses the ray
-from left to right and subtracts 1 each time a segment crosses from right to left.
-After counting all the crossings, if the result is 0 then the point is outside the path;
-otherwise it is inside.
+                        The nonzero winding number rule determines whether a given point is inside a
+                        path by conceptually drawing a ray from that point to infinity in any direction
+                        and then examining the places where a segment of the path crosses the ray. Starting
+                        with a count of 0, the rule adds 1 each time a path segment crosses the ray
+                        from left to right and subtracts 1 each time a segment crosses from right to left.
+                        After counting all the crossings, if the result is 0 then the point is outside the path;
+                        otherwise it is inside.
 
-Note: The method just described does not specify what to do if a path segment coincides
-with or is tangent to the chosen ray. Since the direction of the ray is arbitrary,
-the rule simply chooses a ray that does not encounter such problem intersections.
-For simple convex paths, the nonzero winding number rule defines the inside
-and outside as one would intuitively expect. The more interesting cases are those
-involving complex or self-intersecting paths like the ones shown in Figure 4.10
-(in a PDF Reference).
+                        Note: The method just described does not specify what to do if a path segment coincides
+                        with or is tangent to the chosen ray. Since the direction of the ray is arbitrary,
+                        the rule simply chooses a ray that does not encounter such problem intersections.
+                        For simple convex paths, the nonzero winding number rule defines the inside
+                        and outside as one would intuitively expect. The more interesting cases are those
+                        involving complex or self-intersecting paths like the ones shown in Figure 4.10
+                        (in a PDF Reference).
 
-For a path consisting of a five-pointed star, drawn with five connected straight
-line segments intersecting each other, the rule considers the inside to be the entire
-area enclosed by the star, including the pentagon in the center. For a path composed
-of two concentric circles, the areas enclosed by both circles are considered
-to be inside, provided that both are drawn in the same direction. If the circles are
-drawn in opposite directions, only the "doughnut" shape between them is inside,
-according to the rule; the "doughnut hole" is outside.
+                        For a path consisting of a five-pointed star, drawn with five connected straight
+                        line segments intersecting each other, the rule considers the inside to be the entire
+                        area enclosed by the star, including the pentagon in the center. For a path composed
+                        of two concentric circles, the areas enclosed by both circles are considered
+                        to be inside, provided that both are drawn in the same direction. If the circles are
+                        drawn in opposite directions, only the "doughnut" shape between them is inside,
+                        according to the rule; the "doughnut hole" is outside.
+                    </para>
+                    </blockquote>
                 </para>
-            </blockquote>
-            </para>
             </listitem>
             <listitem>
                 <para>Zend_Pdf_Page::FILL_METHOD_EVEN_ODD</para>
                 <para>
-                <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
-                <blockquote>
+                    <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
+                    <blockquote>
                     <para>
-An alternative to the nonzero winding number rule is the even-odd rule. This rule
-determines the "insideness" of a point by drawing a ray from that point in any
-direction and simply counting the number of path segments that cross the ray,
-regardless of direction. If this number is odd, the point is inside; if even, the point
-is outside. This yields the same results as the nonzero winding number rule for
-paths with simple shapes, but produces different results for more complex
-shapes.
+                        An alternative to the nonzero winding number rule is the even-odd rule. This rule
+                        determines the "insideness" of a point by drawing a ray from that point in any
+                        direction and simply counting the number of path segments that cross the ray,
+                        regardless of direction. If this number is odd, the point is inside; if even, the point
+                        is outside. This yields the same results as the nonzero winding number rule for
+                        paths with simple shapes, but produces different results for more complex
+                        shapes.
 
-Figure 4.11 (in a PDF Reference) shows the effects of applying the even-odd rule
-to complex paths. For the five-pointed star, the rule considers the triangular
-points to be inside the path, but not the pentagon in the center. For the two
-concentric circles, only the "doughnut" shape between the two circles is considered inside,
-regardless of the directions in which the circles are drawn.
+                        Figure 4.11 (in a PDF Reference) shows the effects of applying the even-odd rule
+                        to complex paths. For the five-pointed star, the rule considers the triangular
+                        points to be inside the path, but not the pentagon in the center. For the two
+                        concentric circles, only the "doughnut" shape between the two circles is considered inside,
+                        regardless of the directions in which the circles are drawn.
                     </para>
                 </blockquote>
             </para>

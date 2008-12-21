@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13199 -->
+<!-- EN-Revision: 13335 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle Helfer</title>
 
@@ -49,8 +49,8 @@
         </para>
 
         <example id="zend.view.helpers.initial.headstyle.conditional">
-
-        <programlisting role="php"><![CDATA[
+            <title>Headstyle mit abhängigen Kommentaren</title>
+            <programlisting role="php"><![CDATA[
 // Skripte hinzufügen
 $this->headStyle()->appendStyle($styles, array('conditional' => 'lt IE 7');
 ]]>

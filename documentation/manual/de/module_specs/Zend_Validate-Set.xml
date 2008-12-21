@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13277 -->
+<!-- EN-Revision: 13377 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Standard Prüfklassen</title>
@@ -91,6 +91,10 @@
         <title>Float</title>
         <para>
             Gibt nur dann <code>true</code> zurück wenn <code>$value</code> ein Fließkomma Wert ist.
+            Seit Zend Framework 1.8 verwendet diese Prüfung auch das aktuelle Gebietsschema des Browsers,
+            der Umgebung oder eines anwendungsweit gesetzten Gebietsschemas. Man kann natürlich die
+            Zugriffsmethoden get/setLocale verwenden um das verwendete Gebietsschema zu verändern oder es
+            bei der Erstellung einer Instanz dieser Prüfung angeben.
         </para>
     </sect2>
 
@@ -124,6 +128,10 @@
         <title>Int</title>
         <para>
             Gibt nur dann <code>true</code> zurück wenn <code>$value</code> ein gültiger Integer ist.
+            Seit Zend Framework 1.8 verwendet diese Prüfung auch das aktuelle Gebietsschema des Browsers,
+            der Umgebung oder eines anwendungsweit gesetzten Gebietsschemas. Man kann natürlich die
+            Zugriffsmethoden get/setLocale verwenden um das verwendete Gebietsschema zu verändern oder es
+            bei der Erstellung einer Instanz dieser Prüfung angeben.
         </para>
     </sect2>
 

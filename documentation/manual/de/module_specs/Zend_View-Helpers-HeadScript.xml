@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13199 -->
+<!-- EN-Revision: 13335 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript Helfer</title>
 
@@ -49,8 +49,8 @@
         </para>
 
         <example id="zend.view.helpers.initial.headscript.conditional">
-
-        <programlisting role="php"><![CDATA[
+            <title>Headscript mit abhängigen Kommentaren</title>
+            <programlisting role="php"><![CDATA[
 // Scripte hinzufügen
 $this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
 ]]>

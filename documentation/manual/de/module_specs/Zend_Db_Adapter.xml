@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -1579,6 +1579,15 @@ try {
             werden um die zugrundeliegende Datenbankverbindung explizit zu schließen.
         </para>
 
+        <para>
+            Seit Release 1.7.2, kann man prüfen ob man mit der <code>isConnected()</code> prüfen ob man
+            aktuell mit dem RDBMS Server verbunden ist. Das bedeutet das eine Verbindungs Ressource
+            initialisiert und nicht geschlossen wurde. Diese Funktion ist aktuell nicht in der Lage zu prüfen
+            ob zum Beispiel die Server Seite die Verbindung geschlossen hat. Das wird intern verwendet um
+            die Verbindung zu schließen. Das erlaubt es die Verbindung ohne Fehler mehrere Male zu schließen.
+            Das war bereits vor 1.7.2 der Fall für PDO Adapter, aber nicht für die anderen.
+        </para>
+
         <example id="zend.db.adapter.closing.example">
             <title>Schließen einer Datenbankverbindung</title>
             <programlisting role="php"><![CDATA[
@@ -1652,6 +1661,33 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
             Dies wird die Rückwärtskompatibilität nicht beeinträchtigen.
         </para>
 
+    </sect2>
+
+    <sect2 id="zend.db.adapter.server-version">
+        <title>Erhalten der Server Version</title>
+
+        <para>
+            Seit Release 1.7.2 kann man die Version des Servers in einem PHP artigen Stil erhalten damit man
+            es mit <code>version_compare()</code> verwenden kann. Wenn die Information nicht vorhanden ist
+            erhält man <code>null</code> zurück.
+        </para>
+
+        <example id="zend.db.adapter.server-version.example">
+            <title>Prüfen der Server Version bevor eine Abfrage gestartet wird</title>
+            <programlisting role="php"><![CDATA[
+$version = $db->getServerVersion();
+if (!is_null($version)) {
+    if (version_compare($version, '5.0.0', '>=')) {
+        // mach was
+    } else {
+        // mach was anderes
+    }
+} else {
+    // Server Version ist unmöglich zu lesen
+}
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.db.adapter.adapter-notes">
@@ -1742,6 +1778,14 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
                         Aktuell wird die <code>Zend_Db::CASE_FOLDING</code> Option vom Oracle Adapter nicht
                         unterstützt. Um diese Option mit Oracle zu nutzen muss der PDO OCI Adapter verwendet
                         werden.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Standardmäßig werden LOB Felder als OCI-Log Objekte zurückgegeben. Man kann Sie für
+                        alle Anfragen als String empfangen indem die Treiberoption <code>'lob_as_string'</code>
+                        verwendet wird, oder für spezielle Anfragen durch Verwendung von
+                        <code>setLobAsString(boolean)</code> auf dem Adapter oder dem Statement.
                     </para>
                 </listitem>
             </itemizedlist>

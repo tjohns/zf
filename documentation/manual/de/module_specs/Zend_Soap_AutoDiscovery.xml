@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13153 -->
+<!-- EN-Revision: 13327 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -337,11 +337,19 @@ $autodiscover->handle();
         <para>
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
-// Standard ist 'use' => 'encoded' und 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
-$autodiscover->setOperationBodyStyle(array('use' => 'literal', 'namespace' => 'http://framework.zend.com'));
+// Standard ist 'use' => 'encoded' und
+// 'encodingStyle' => 'http://schemas.xmlsoap.org/soap/encoding/'
+$autodiscover->setOperationBodyStyle(
+                    array('use' => 'literal',
+                          'namespace' => 'http://framework.zend.com')
+                );
 
-// Standard ist 'style' => 'rpc', 'transport' => 'http://schemas.xmlsoap.org/soap/http'
-$autodiscover->setBindingStyle(array('style' => 'document', 'transport' => 'http://framework.zend.com'));
+// Standard ist 'style' => 'rpc' und
+// 'transport' => 'http://schemas.xmlsoap.org/soap/http'
+$autodiscover->setBindingStyle(
+                    array('style' => 'document',
+                          'transport' => 'http://framework.zend.com')
+                );
 ...
 $autodiscover->addFunction('myfunc1');
 $autodiscover->handle();

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13368 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale verwenden</title>
@@ -1228,4 +1228,150 @@ $localelist = Zend_Locale::getLocaleList();
         </note>
     </sect2>
 
+    <sect2 id="zend.locale.detection">
+
+        <title>Erkennen von Gebietsschemata</title>
+
+        <para>
+            Wenn man erkennen will ob eine vorhandene Eingabe. unabhängig von Ihrer Quelle, ein
+            Gebietsschema ist, sollte man die statische <code>isLocale()</code> Methode verwenden. Der erste
+            Parameter dieser Methode ist der String den man prüfen will.
+        </para>
+
+        <example id="zend.locale.detection.example-1">
+            <title>Einfache Erkennung des Gebietsschemas</title>
+            <programlisting role="php"><![CDATA[
+$input = 'to_RU';
+if (Zend_Locale::isLocale($input)) {
+    print "'{$input}' ist ein Gebietsschema";
+} else {
+    print "Sorry... die vorhandene Eingabe ist kein Gebietsschema";
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Wie man sieht ist die Ausgabe dieser Methode immer ein boolscher Wert. Es gibt nur einen Grund
+            warum man eine Ausnahme erhält wenn diese Methode aufgerufen wird. Wenn das eigene System kein
+            Gebietsschema anbietet und Zend Framework nicht in der Lage ist dieses automatisch zu erkennen.
+            Normalerweise zeigt dieses, das ein Problem mit dem eigenen OS in Kombination mit PHP's
+            <code>setlocale()</code> vorhanden ist.
+        </para>
+
+        <para>
+            Man sollte auch beachten das jeder angegebene Gebietsschema String automatisch degradiert wird
+            wenn der Regionsabschnitt für dieses Gebietsschema nicht existiert. In unserem vorherigen
+            Beispiel existiert die Region <code>'RU'</code> nicht für die Sprache <code>'to'</code>, aber es
+            wird trotzdem true zurückgegeben da ZenD_Locale mit der vorhandenen Eingabe arbeiten kann.
+        </para>
+
+        <para>
+            Trotzdem ist es manchmal nützlich diese automatische Degradierung zu verhindern, und hier kommt
+            der zweite Parameter von <code>isLocale()</code> zu Tragen. Der <code>strict</code> Parameter ist
+            Standardmäßig <code>false</code und kann verwendet werden um die automatische Degradierung zu
+            verhindern wenn er auf <code>true</code> gesetzt wird.
+        </para>
+
+        <example id="zend.locale.detection.example-2">
+            <title>Strikte Erkennung des Gebietsschemas</title>
+            <programlisting role="php"><![CDATA[
+$input = 'to_RU';
+if (Zend_Locale::isLocale($input, true)) {
+    print "'{$input}' ist ein Gebietsschema";
+} else {
+    print "Sorry... die vorhandene Eingabe ist kein Gebietsschema";
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Jetzt da man in der Lage zu Erkennen ob ein vorhandenen String ein Gebietsschema ist kann man
+            Gebietsschema bezogenes Verhalten in seine eigenen Klassen hinzufügen. Aber man wird schnell
+            erkennen das das immer zu den gleichen 15 Zeilen Code führt. Etwas ähnliches wie das folgende
+            Beispiel:
+        </para>
+
+        <example id="zend.locale.detection.example-3">
+            <title>Implementierung von Gebietsschema bezogenem Verhalten</title>
+            <programlisting role="php"><![CDATA[
+if ($locale === null) {
+    $locale = new Zend_Locale();
+}
+
+if (!Zend_Locale::isLocale($locale, true, false)) {
+    if (!Zend_Locale::isLocale($locale, false, false)) {
+        throw new Zend_Locale_Exception("Das Gebietsschema '$locale' ist kein bekanntes Gebietsschema");
+    }
+
+    $locale = new Zend_Locale($locale);
+}
+
+if ($locale instanceof Zend_Locale) {
+    $locale = $locale->toString();
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Mit Zend Framework 1.8 haben wir die statische <code>findLocale()</code> Methode hinzugefügt welche
+            einen Gebietsschema-String zurückgibt mit dem man arbeiten kann. Sie führt die folgenden
+            Arbeiten durch:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Erkennt ob ein angegebener String ein Gebietsschema ist
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Degradiert das Gebietsschema wenn es in der angegebenen Region nicht existiert
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Gibt das vorher gesetzte Anwendungsweite Gebietsscheam zurück wenn keine Eingabe
+                    angegeben wurde
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Erkennt das Gebietsschema vom Browser wenn die vorherigen Erkennungen fehlgeschlagen sind
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Erkennt das Gebietsschema vom Betriebssystem wenn die vorherigen Erkennungen fehlgeschlagen
+                    sind
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Erkennt das Gebietsschema vom Framework wenn die vorherigen Erkennungen fehlgeschlagen sind
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Gibt immer einen String zurück der das gefundene Gebietsschema repräsentiert
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Das folgende Beispiel zeigt wie diese Prüfungen und der obige Code mti einem einfachen Aufruf
+            vereinfacht werden kann:
+        </para>
+
+        <example id="zend.locale.detection.example-4">
+            <title>Gebietsschema bezogenes Verhalten mit ZF 1.8</title>
+            <programlisting role="php"><![CDATA[
+$locale = Zend_Locale::findLocale($inputstring);
+]]>
+            </programlisting>
+        </example>
+    </sect2>
 </sect1>
