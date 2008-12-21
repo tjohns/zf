@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 12339 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>例</title>
 
@@ -98,9 +98,9 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
      * コンストラクタ
      *
      * 環境、ルートパス、設定を初期化します
-     * 
-     * @param  string $env 
-     * @param  string|null $root 
+     *
+     * @param  string $env
+     * @param  string|null $root
      * @return void
      */
     public function __construct($env, $root = null)
@@ -118,7 +118,7 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     /**
      * ルートの開始処理
-     * 
+     *
      * @return void
      */
     public function routeStartup(Zend_Controller_Request_Abstract $request)
@@ -133,7 +133,8 @@ class Bugapp_Plugin_Initialize extends Zend_Controller_Plugin_Abstract
 
     // この後にメソッド定義が続きます...
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             これで、起動用コールバックを次のように作れるようになります。
@@ -156,12 +157,14 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             ここまでできたら、テストを書くことができます。
             しかし、ユーザがログインした状態でのテストはどのように書けばいいでしょう?
             簡単な方法は、アプリケーションのロジックを利用する方法です。
+            <code>resetRequest()</code> メソッドや
             <code>resetResponse()</code> メソッドを使ってちょっとした細工を行い、
             別のリクエストをディスパッチさせます。
         </para>
@@ -173,22 +176,27 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function loginUser($user, $password)
     {
-        $request = $this->getRequest();
-        $request->setMethod('POST')
-                ->setPost(array(
-                    'username' => $user,
-                    'password' => $password,
-                ));
+        $this->request->setMethod('POST')
+                      ->setPost(array(
+                          'username' => $user,
+                          'password' => $password,
+                      ));
         $this->dispatch('/user/login');
         $this->assertRedirectTo('/user/view');
-        $this->resetResponse();
-        $request->setPost(array());
+
+        $this->resetRequest()
+             ->resetResponse();
+
+        $this->request->setPost(array());
+        
+        // ...
     }
 
     // ...
 }
-]]></programlisting>
-        
+]]>
+        </programlisting>
+
         <para>
             ではテストを書いてみましょう。
         </para>
@@ -238,7 +246,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQueryContentContains('h2', 'foobar');
     }
 
-    public function testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
+    public function 
+        testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
     {
         $this->loginUser('foobar', 'foobar');
         $this->request->setMethod('GET');
@@ -270,7 +279,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         $this->assertQuery('form .errors');
     }
 }
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             これらは簡潔なものであり、大半は実際の中身までは見ていないことに注意しましょう。
