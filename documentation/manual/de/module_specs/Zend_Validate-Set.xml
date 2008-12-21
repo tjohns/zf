@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12759 -->
+<!-- EN-Revision: 13277 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Standard Prüfklassen</title>
@@ -160,13 +160,15 @@
         <title>StringLength</title>
         <para>
             Gibt nur dann <code>true</code> zurück wenn die Länge des Strings von <code>$value</code>
-            mindstens ein Minimum und nicht größer als ein Maximum ist
-            (wenn die max Option nicht <code>null</code> ist). Ab Version 1.5.0 wirft die <code>setMin()</code>
-            Methode eine Ausnahme wenn die minimale Länge auf einen größeren Wert gesetzt wird als die maximale
-            Länge, und die <code>setMax()</code> Methode wirft eine Ausnahme wenn die maximale Länge auf einen
-            kleineren Wert als die minimale Länge gesetzt wird. Seit Version 1.0.2 unterstützt diese Klasse
-            UTF-8 und andere Zeichensätze, basierend auf dem aktuellen Wert von
+            mindstens ein Minimum und nicht größer als ein Maximum ist (wenn die max Option nicht
+            <code>null</code> ist). Wirft die <code>setMin()</code> Methode eine Ausnahme wenn die minimale
+            Länge auf einen größeren Wert gesetzt wird als die maximale Länge, und die <code>setMax()</code>
+            Methode wirft eine Ausnahme wenn die maximale Länge auf einen kleineren Wert als die minimale
+            Länge gesetzt wird. Seit Version 1.0.2 unterstützt diese Klasse UTF-8 und andere Zeichensätze,
+            basierend auf dem aktuellen Wert von
             <ulink url="http://www.php.net/manual/de/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>.
+            Wenn man ein anderes Encoding benötigt kann man es mit den Zugriffsmethoden getEncoding und
+            setEncoding setzen.
         </para>
     </sect2>
 
