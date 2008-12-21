@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12600 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partial ヘルパー</title>
 
@@ -16,6 +16,17 @@
         その各要素に対してレンダリングを行うものです。
     </para>
 
+    <note>
+        <title>PartialLoop カウンタ</title>
+        <para>
+            <code>PartialLoop</code> ビューヘルパーは、変数を
+            <code>partialCounter</code> というビューに代入します。
+            これは、配列の現在の位置をビュースクリプトに渡します。
+            これを利用すると、たとえばテーブルの行の色を一行おきに入れ替えるなどが簡単にできます。
+        </para>
+
+    </note>
+
     <example id="zend.view.helpers.initial.partial.usage">
         <title>Partial の基本的な使用法</title>
 
@@ -26,22 +37,26 @@
         </para>
 
         <programlisting role="php"><![CDATA[
+
 <?php // partial.phtml ?>
 <ul>
     <li>From: <?= $this->escape($this->from) ?></li>
     <li>Subject: <?= $this->escape($this->subject) ?></li>
 </ul>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             これを、ビュースクリプトから次のようにコールします。
         </para>
 
         <programlisting role="php"><![CDATA[
+
 <?= $this->partial('partial.phtml', array(
     'from' => 'Team Framework', 
     'subject' => 'view partials')); ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             レンダリングした結果は、このようになります。
@@ -52,7 +67,8 @@
     <li>From: Team Framework</li>
     <li>Subject: view partials</li>
 </ul>
-]]></programlisting>
+]]>
+</programlisting>
 
     </example>
         <note>
@@ -102,8 +118,9 @@ $view->partial()->setObjectKey('model');
 // partialLoop のオブジェクトを、最終的なビュースクリプト内で
 // 変数 'model' として渡すよう通知します
 $view->partialLoop()->setObjectKey('model');
-]]></programlisting>
-            
+]]>
+            </programlisting>
+
             <para>
                 このテクニックが特に役立つのは、
                 <code>Zend_Db_Table_Rowset</code> を
@@ -144,8 +161,8 @@ $view->partialLoop()->setObjectKey('model');
 <? // partialLoop.phtml ?>
     <dt><?= $this->key ?></dt>
     <dd><?= $this->value ?></dd>
-
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             そして "モデル" はこのようになります。
@@ -158,7 +175,8 @@ $model = array(
     array('key' => 'Reptile', 'value' => 'Asp'),
     array('key' => 'Fish', 'value' => 'Flounder'),
 );
-?>]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             そして、ビュースクリプト内で
@@ -169,10 +187,11 @@ $model = array(
 <dl>
 <?= $this->partialLoop('partialLoop.phtml', $model) ?>
 </dl>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <programlisting role="html"><![CDATA[
-<dl></dl>
+<dl>
     <dt>Mammal</dt>
     <dd>Camel</dd>
 
@@ -184,9 +203,9 @@ $model = array(
 
     <dt>Fish</dt>
     <dd>Flounder</dd>
-
 </dl>
-]]></programlisting>
+]]>
+</programlisting>
     </example>
 
     <example id="zend.view.helpers.initial.partial.modules">
@@ -207,7 +226,8 @@ $model = array(
 
         <programlisting role="php"><![CDATA[
 <?= $this->partial('pager.phtml', 'list', $pagerData) ?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             こうすると、特定の partial を他のモジュールで再利用できるようになります。
