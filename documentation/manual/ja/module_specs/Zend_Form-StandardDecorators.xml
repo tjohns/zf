@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11518 -->
+<!-- EN-Revision: 12369 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Zend Framework に同梱されている標準のデコレータ</title>
 
@@ -199,6 +199,82 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.formErrors">
+        <title>Zend_Form_Decorator_FormErrors</title>
+
+        <para>
+            開発者やデザイナの中には、
+            すべてのエラーメッセージをフォームの最上部にまとめて表示させることを好む人もいます。
+            FormErrors デコレータは、そのためのものです。
+        </para>
+        
+        <para>
+            デフォルトでは、生成されるエラー一覧は次のようなマークアップになります。
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<ul class="form-errors>
+    <li><b>[要素の label あるいは name]</b><ul>
+            <li>[エラーメッセージ]</li>
+            <li>[エラーメッセージ]</li>
+        </ul>
+    </li>
+    <li><ul>
+        <li><b>[サブフォーム要素の label あるいは name</b><ul>
+                <li>[エラーメッセージ]</li>
+                <li>[エラーメッセージ]</li>
+            </ul>
+        </li>
+    </ul></li>
+</ul>
+]]></programlisting>
+
+        <para>
+            さまざまなオプションを渡すことで、生成される出力を変更することができます。
+        </para>
+
+        <itemizedlist>
+            <listitem><para>
+                <code>ignoreSubForms</code>: サブフォームの再帰を無効にするかどうか。
+                デフォルト値: false (再帰を許可する)
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupElementLabelEnd</code>: 要素のラベルの後につけるマークアップ。
+                デフォルト値: '&lt;/b&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupElementLabelStart</code>: 要素のラベルの前につけるマークアップ。
+                デフォルト値: '&lt;b&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListEnd</code>: エラーメッセージ一覧の後につけるマークアップ。
+                デフォルト値: '&lt;/ul&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListItemEnd</code>: 個々のエラーメッセージの後につけるマークアップ。
+                デフォルト値: '&lt;/li&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListItemStart</code>: 個々のエラーメッセージの前につけるマークアップ。
+                デフォルト値: '&lt;li&gt;'
+            </para></listitem>
+
+            <listitem><para>
+                <code>markupListStart</code>: エラーメッセージ一覧の前につけるマークアップ。
+                デフォルト値: '&lt;ul class="form-errors"&gt;'
+            </para></listitem>
+        </itemizedlist>
+
+        <para>
+            FormErrors デコレータは、コンテンツの前と後の両方に追加することができます。
+        </para>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.htmlTag">
         <title>Zend_Form_Decorator_HtmlTag</title>
 
@@ -304,6 +380,28 @@ class Util
         </para>
     </sect2>
 
+    <sect2 id="zend.form.standardDecorators.prepareElements">
+        <title>Zend_Form_Decorator_PrepareElements</title>
+
+        <para>
+            フォーム、表示グループそしてサブフォームは、要素のコレクションです。
+            <link
+                linkend="zend.form.standardDecorators.viewScript">ViewScript</link>
+            デコレータをフォームやサブフォームで使用する際に、
+            ビューオブジェクトやトランスレータ、完全修飾名
+            (サブフォームの配列記法で定義されるもの) を再帰的に設定できたら便利です。
+            'PrepareElements' デコレータはそのためのものです。
+            一般的には、これをリスト内の最初のデコレータとして設定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$form->setDecorators(array(
+    'PrepareElements',
+    array('ViewScript', array('viewScript' => 'form.phtml')),
+));
+]]></programlisting>
+    </sect2>
+
     <sect2 id="zend.form.standardDecorators.viewHelper">
         <title>Zend_Form_Decorator_ViewHelper</title>
 
@@ -387,18 +485,18 @@ $element->setDecorators(array(array('ViewScript',
                                     array('class' => 'form element'))));
 ]]>
         </programlisting>
-        
+
         <para>
             そして、次のようなビュースクリプトを作成します
         </para>
 
         <programlisting role="php"><![CDATA[
 <div class="<?= $this->class ?>">
-    <?= $this->formLabel($this->element->getName(), 
+    <?= $this->formLabel($this->element->getName(),
                          $this->element->getLabel()) ?>
     <?= $this->{$this->element->helper}(
         $this->element->getName(),
-        $this->element->getValue(), 
+        $this->element->getValue(),
         $this->element->getAttribs()
     ) ?>
     <?= $this->formErrors($this->element->getMessages()) ?>
