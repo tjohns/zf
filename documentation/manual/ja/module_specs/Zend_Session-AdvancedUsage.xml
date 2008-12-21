@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.session.advanced_usage">
 
     <title>高度な使用法</title>
@@ -52,8 +52,10 @@ Zend_Session::start();
                     <code>php.ini</code> でこの設定が有効になっている、かつそれを無効にすることができない
                     という場合は、<code>.htaccess</code> ファイル (通常は HTML のドキュメントルートにあります)
                     に以下の内容を追加します。
-                    <programlisting role="httpd.conf"><![CDATA[php_value session.auto_start 0]]>
-                    </programlisting>
+                    <programlisting role="httpd.conf"><![CDATA[
+php_value session.auto_start 0
+]]>
+</programlisting>
                 </para>
             </listitem>
             <listitem>
@@ -186,7 +188,7 @@ if ($userProfileNamespace->isLocked()) {
             これにより、認証内容などの機密情報へアクセスできないようにし、
             セキュリティリスクを下げます。有効期限の設定は経過秒数によって決めることもできますし、
             "ホップ" 数によって決めることもできます。ホップ数とは、
-            一連のリクエストにおいて、最低でも一度名前空間のインスタンスを作成した回数を表します。
+            一連のリクエストの回数を表します。
         </para>
 
         <example id="zend.session.advanced_usage.expiration.example">
@@ -249,9 +251,11 @@ $s->setExpirationSeconds(60);
 // ...
 // 質問を表示するコントローラ
 $testSpace = new Zend_Session_Namespace('testSpace');
-$testSpace->setExpirationSeconds(300, 'accept_answer'); // この変数にだけ有効期限を設定します
+// この変数にだけ有効期限を設定します
+$testSpace->setExpirationSeconds(300, 'accept_answer');
 $testSpace->accept_answer = true;
-//...]]>
+//...
+]]>
             </programlisting>
 
             <para>
@@ -301,7 +305,8 @@ else {
 // 名前空間のインスタンスを作成します
 $authSpaceAccessor1 = new Zend_Session_Namespace('Zend_Auth');
 
-// 同じ名前空間で別のインスタンスを作成します。しかし今後はインスタンスを作成できないようにします
+// 同じ名前空間で別のインスタンスを作成します。
+// しかし今後はインスタンスを作成できないようにします
 $authSpaceAccessor2 = new Zend_Session_Namespace('Zend_Auth', true);
 
 // 参照をすることは可能です
@@ -314,7 +319,8 @@ assert($authSpaceAccessor2->foo, 'bar');
 try {
     $aNamespaceObject = new Zend_Session_Namespace('Zend_Auth');
 } catch (Zend_Session_Exception $e) {
-    echo "この名前空間ではインスタンスを作成できません。すでに \$authSpaceAccessor2 があるからです\n";
+    echo 'この名前空間ではインスタンスを作成できません。すでに ' .
+         '$authSpaceAccessor2 があるからです\n';
 }
 ]]>
             </programlisting>
@@ -360,7 +366,9 @@ try {
             <programlisting role="php"><![CDATA[
 $sessionNamespace = new Zend_Session_Namespace();
 $sessionNamespace->array = array();
-$sessionNamespace->array['testKey'] = 1; // PHP 5.2.1 より前のバージョンでは、期待通りに動作しません
+
+// PHP 5.2.1 より前のバージョンでは、期待通りに動作しません
+$sessionNamespace->array['testKey'] = 1;
 echo $sessionNamespace->array['testKey'];
 ]]>
             </programlisting>
@@ -511,19 +519,24 @@ exec($script . "expireAll $id expireAll", $result);
 $result = $this->sortResult($result);
 $expect = ';a === apple;o === orange;p === pear';
 $this->assertTrue($result === $expect,
-    "iteration over default Zend_Session namespace failed; expecting result === '$expect', but got '$result'");
+    "iteration over default Zend_Session namespace failed; " .
+    "expecting result === '$expect', but got '$result'");
 
-sleep(2); // long enough for things to expire (total of 6 seconds waiting, but expires in 5)
+sleep(2); // long enough for things to expire (total of 6 seconds
+          // waiting, but expires in 5)
 exec($script . "expireAll $id expireAll", $result);
 $result = array_pop($result);
 $this->assertTrue($result === '',
-    "iteration over default Zend_Session namespace failed; expecting result === '', but got '$result')");
+    "iteration over default Zend_Session namespace failed; " .
+    "expecting result === '', but got '$result')");
 session_start(); // resume artificially suspended session
 
-// We could split this into a separate test, but actually, if anything leftover from above
-// contaminates the tests below, that is also a bug that we want to know about.
+// We could split this into a separate test, but actually, if anything
+// leftover from above contaminates the tests below, that is also a
+// bug that we want to know about.
 $s = new Zend_Session_Namespace('expireGuava');
-$s->setExpirationSeconds(5, 'g'); // now try to expire only 1 of the keys in the namespace
+$s->setExpirationSeconds(5, 'g'); // now try to expire only 1 of the
+                                  // keys in the namespace
 $s->g = 'guava';
 $s->p = 'peach';
 $s->p = 'plum';
@@ -534,7 +547,8 @@ exec($script . "expireAll $id expireGuava", $result);
 $result = $this->sortResult($result);
 session_start(); // resume artificially suspended session
 $this->assertTrue($result === ';p === plum',
-    "iteration over named Zend_Session namespace failed (result=$result)");]]>
+    "iteration over named Zend_Session namespace failed (result=$result)");
+]]>
             </programlisting>
 
         </example>
