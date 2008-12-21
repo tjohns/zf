@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 12703 -->
 <sect1 id="zend.filter.input">
     <title>Zend_Filter_Input</title>
 
@@ -980,23 +980,31 @@ $input = new Zend_Filter_Input($filters, $validators, $data, $options);
         </para>
 
         <programlisting role="php"><![CDATA[
-$options = array('inputNamespace' => 'My_Namespace');
+$options = array('filterNamespace' => 'My_Namespace_Filter',
+                 'validatorNamespace' => 'My_Namespace_Validate');
 $input = new Zend_Filter_Input($filters, $validators, $data, $options);
 ]]>
         </programlisting>
 
         <para>
-            あるいは、addNamespace() メソッドを使うこともできます。
+            あるいは、<code>addValidatorPrefixPath($prefix, $path)</code> メソッドや
+            <code>addFilterPrefixPath($prefix, $path)</code> メソッドを使うこともできます。
+            これらは、Zend_Filter_Input が使うプラグインローダへの直接のプロキシとなります。
         </para>
 
         <programlisting role="php"><![CDATA[
-$input->addNamespace('Other_Namespace');
+$input->addValidatorPrefixPath('Other_Namespace', 'Other/Namespace');
+$input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
 
-// この結果、次の順序で探すことになります
-// 1. My_Namespace
+// この結果、バリデータの検索順は次のとおりとなります
+// 1. My_Namespace_Validate
 // 2. Other_Namespace
+// 3. Zend_Validate
+
+// また、フィルタの検索順は次のとおりとなります
+// 1. My_Namespace_Filter
+// 2. Foo_Namespace
 // 3. Zend_Filter
-// 4. Zend_Validate
 ]]>
         </programlisting>
 
@@ -1005,6 +1013,18 @@ $input->addNamespace('Other_Namespace');
             新しい名前空間を追加することだけが可能となっています。
             追加した名前空間を先に探し、Zend 名前空間を最後に探すという順序になります。
         </para>
+
+        <note>
+            <para>
+                バージョン 1.5 で関数 <code>addNamespace($namespace)</code> は非推奨となり、
+                代わりにプラグインローダと <code>addFilterPrefixPath</code> および
+                <code>addValidatorPrefixPath</code> が追加されました。
+                また、定数 <code>Zend_Filter_Input::INPUT_NAMESPACE</code> も非推奨となりました。
+                定数 <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> および
+                <code>Zend_Filter_Input::FILTER_NAMESPACE</code> が 1.7.0
+                以降のリリースで使用可能です。
+            </para>
+        </note>
 
         <note>
             <para>
