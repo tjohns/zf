@@ -26,7 +26,6 @@
             When you are using <code>Zend_Form</code> you should use the APIs provided by <code>Zend_Form</code> and not <code>Zend_File_Transfer</code> directly.
             The file transfer support in <code>Zend_Form</code> is implemented with <code>Zend_File_Transfer</code>, so
             the information in this chapter may be useful for advanced users of <code>Zend_Form</code>.
-            information you can read in this chapter will be helpful, even if you do not use it directly.
         </para>
     </note>
 
