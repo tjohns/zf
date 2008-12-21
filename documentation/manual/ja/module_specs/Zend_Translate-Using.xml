@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 12319 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -680,6 +680,15 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                     </row>
                     <row>
                         <entry>すべて</entry>
+                        <entry>disableNotices</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>
+                            true に設定すると、翻訳が存在しないことについての注意メッセージを無効にします。
+                            実運用環境ではこのオプションを true に設定しなければなりません。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>すべて</entry>
                         <entry>ignore</entry>
                         <entry><emphasis role="strong">.</emphasis></entry>
                         <entry>
@@ -820,9 +829,11 @@ if ($translate->isAvailable("fr")) {
 
             <para>
                 新しい翻訳ソースの追加を <code>addTranslation()</code>
-                メソッドでのみ行っている場合は、<code>Zend_Translate</code>
-                は環境にあわせて適切な言語を自動設定します。
+                メソッドでのみ行っている場合は、自動ロケール 'auto' あるいは 'browser'
+                を使用していれば <code>Zend_Translate</code>
+                が環境にあわせて適切な言語を自動設定します。
                 つまり、通常は <code>setLocale()</code> をコールする必要はありません。
+                これは、自動ソース検出と組み合わせて使用しなければなりません。
             </para>
 
             <para>
@@ -834,29 +845,37 @@ if ($translate->isAvailable("fr")) {
                 <title>言語の自動検出の動作例</title>
                 <programlisting role="php"><![CDATA[
 // ブラウザから返される言語設定は次のようなものであると仮定します
-HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
+// HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
 
 // 例 1:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_es.mo","es_UG");
+$translate = new Zend_Translate('gettext',
+                                '\my_it.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
 // 適切な言語がみつからないので、メッセージ ID を返します
 
 // 例 2:
-$translate = new Zend_Translate("gettext", "\my_en.mo", "en_US");
-$translate->addTranslation("\my_it.mo","it_IT");
-// 適切な言語は "en_US" となります
+$translate = new Zend_Translate('gettext',
+                                '\my_fr.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+// 適切な言語は 'fr' となります
 
 // 例 3:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_de.mo","de");
-// 適切な言語は "de" となります。"de_AT" の代替言語は "de" だからです
+$translate = new Zend_Translate('gettext',
+                                '\my_de.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+// 適切な言語は 'de' となります。'de_AT' の代替言語は 'de' だからです
 
 // 例 4:
-$translate = new Zend_Translate("gettext", "\my_it.mo", "it_IT");
-$translate->addTranslation("\my_ru.mo","ru");
-$translate->setLocale("it_IT");
-$translate->addTranslation("\my_de.mo","de");
-// 翻訳ソースとして "it_IT" を返します
+$translate = new Zend_Translate('gettext',
+                                '\my_it.mo',
+                                'auto',
+                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+$translate->addTranslation('\my_ru.mo', 'ru');
+$translate->setLocale('it_IT');
+// 翻訳ソースとして 'it' を返し、自動設定を上書きします
 ]]>
                 </programlisting>
             </example>
@@ -884,11 +903,19 @@ $translate->addTranslation("\my_de.mo","de");
 
             <programlisting role="php"><![CDATA[
 // 起動ファイルで
-$locale = new Zend_Locale('de_AT');
+$locale = new Zend_Locale();
 Zend_Registry::set('Zend_Locale', $locale);
 
+// リクエストされた言語が存在しない場合のデフォルト言語
+$defaultlanguage = 'en';
+
 // アプリケーションのどこかで
-$translate = new Zend_Translate("gettext", "\my_de.mo");
+$translate = new Zend_Translate('gettext', '\my_de.mo');
+if (!$translate->isAvailable($locale->getLanguage())) {
+    // 存在しない言語をリクエストされた場合はデフォルト設定を使用します
+    $translate->setLocale($defaultlanguage);
+}
+
 $translate->getLocale();
 ]]>
             </programlisting>
