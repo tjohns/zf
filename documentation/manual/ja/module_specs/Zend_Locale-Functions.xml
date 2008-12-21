@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 13368 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale の使用法</title>
@@ -1321,7 +1321,8 @@ echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
 // すべての翻訳の一覧を取得します
 $lists = $locale->getTranslationList();
 
-// 使用できるすべての翻訳を表示します (大量に出力されます。すべて英語で表示されます)
+// 使用できるすべての翻訳を表示します
+// (大量に出力されます。すべて英語で表示されます)
 foreach ($lists as $list) {
     echo "List $list = ";
     print_r($locale->getTranslationList($list));
@@ -1479,6 +1480,152 @@ $localelist = Zend_Locale::getLocaleList();
         </note>
     </sect2>
 
+    <sect2 id="zend.locale.detection">
+
+        <title>ロケールの検出</title>
+
+        <para>
+            指定した入力がロケールかどうかを知りたい場合は、静的メソッド
+            <code>isLocale()</code> を使用します。
+            このメソッドの最初のパラメータとして、調べたい文字列を指定します。
+        </para>
+
+        <example id="zend.locale.detection.example-1">
+            <title>シンプルなロケールの検出</title>
+            <programlisting role="php"><![CDATA[
+$input = 'to_RU';
+if (Zend_Locale::isLocale($input)) {
+    print "'{$input}' is a locale";
+} else {
+    print "Sorry... the given input is no locale";
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            ごらんのとおり、このメソッドの出力は常に boolean となります。
+            このメソッドをコールして唯一例外が発生するのは、
+            システム側でロケールを一切提供しておらず、Zend Framework
+            がロケールを自動検出できなかった場合です。
+            通常、このような場合は、ご利用の OS 上で PHP の
+            <code>setlocale()</code> がうまく動作しないでしょう。
+        </para>
+
+        <para>
+            指定したロケールに地域部が存在しない場合でも、
+            自動的に地域部をはずして検出してくれることにもお気づきでしょう。
+            先ほどの例では、言語 <code>'to'</code> は地域
+            <code>'RU'</code> 内に存在しません。しかし、返される結果は true となります。
+            Zend_Locale は指定した入力を処理できるからです。
+        </para>
+
+        <para>
+            しかし、この自動変換機能がじゃまになることもあるでしょう。そんな場合には
+            <code>isLocale()</code> の 2 番目のパラメータを使用します。
+            <code>strict</code> パラメータのデフォルトは
+            <code>false</code> で、自動変換を無効にするにはこれを <code>true</code>
+            とします。
+        </para>
+
+        <example id="zend.locale.detection.example-2">
+            <title>厳格なロケール検出</title>
+            <programlisting role="php"><![CDATA[
+$input = 'to_RU';
+if (Zend_Locale::isLocale($input, true)) {
+    print "'{$input}' is a locale";
+} else {
+    print "Sorry... the given input is no locale";
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            これで指定した文字列がロケールかどうかを判別できるようになったので、
+            自作のクラスでロケール対応の処理ができるようになりました。
+            しかし、すでにお気づきかもしれませんが、毎回のように次のような
+            15 行のコードを書かなければならないことになってしまいます。
+        </para>
+
+        <example id="zend.locale.detection.example-3">
+            <title>ロケールに対応した振る舞いの実装</title>
+            <programlisting role="php"><![CDATA[
+if ($locale === null) {
+    $locale = new Zend_Locale();
+}
+
+if (!Zend_Locale::isLocale($locale, true, false)) {
+    if (!Zend_Locale::isLocale($locale, false, false)) {
+        throw new Zend_Locale_Exception("The locale '$locale' is no known locale");
+    }
+
+    $locale = new Zend_Locale($locale);
+}
+
+if ($locale instanceof Zend_Locale) {
+    $locale = $locale->toString();
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Zend Framework 1.8 で、静的メソッド <code>findLocale()</code>
+            が追加されました。これは、現在使用中のロケール文字列を返します。
+            このメソッドは、次のような処理を行います。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    指定した文字列がロケールかどうかを調べる
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    指定した地域にロケールが存在しない場合は地域部をはずす
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    入力を省略した場合は、それまでにアプリケーションで設定されていたロケールを返す
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    ここまでの検出に失敗した場合はブラウザのロケールを検出する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    ここまでの検出に失敗した場合は環境変数のロケールを検出する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    ここまでの検出に失敗した場合はフレームワークのロケールを検出する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    常に、見つかったロケールを表す文字列を返す
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            次の例は、さきほどのコードをたったひとつのメソッドコールで置き換えるものです。
+        </para>
+
+        <example id="zend.locale.detection.example-4">
+            <title>ZF 1.8 以降でのロケール対応の振る舞いの実装</title>
+            <programlisting role="php"><![CDATA[
+$locale = Zend_Locale::findLocale($inputstring);
+]]>
+            </programlisting>
+        </example>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
