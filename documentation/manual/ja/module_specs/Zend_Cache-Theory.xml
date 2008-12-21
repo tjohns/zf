@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 12412 -->
 <sect1 id="zend.cache.theory">
     <title>キャッシュの仕組み</title>
     <para>
@@ -51,7 +51,10 @@ $backendOptions = array([...]);
 
 // インスタンスを作成します
 // (もちろん、最後の 2 つの引数は必須ではありません)
-$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+$cache = Zend_Cache::factory($frontendName,
+                             $backendName,
+                             $frontendOptions,
+                             $backendOptions);
 ]]>
         </programlisting>
          <para>
@@ -114,8 +117,9 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
         </programlisting>
         <para>
             削除モードとして指定可能な値は <code>CLEANING_MODE_ALL</code>、<code>CLEANING_MODE_OLD</code>、
-            <code>CLEANING_MODE_MATCHING_TAG</code> および <code>CLEANING_MODE_NOT_MATCHING_TAG</code>
-            です。後者は値は、その名が示すとおり、タグの配列と組み合わせて使用します。
+            <code>CLEANING_MODE_MATCHING_TAG</code>、<code>CLEANING_MODE_NOT_MATCHING_TAG</code> および
+            <code>CLEANING_MODE_MATCHING_ANY_TAG</code> です。
+            後者は、その名が示すとおり、タグの配列と組み合わせて使用します。
         </para>
     </sect2>
 </sect1>
