@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12738 -->
+<!-- EN-Revision: 13423 -->
 <sect1 id="zend.acl.introduction">
     <title>導入</title>
 
@@ -39,7 +39,7 @@
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
-        <title>リソースについて</title>
+        <title>リソース</title>
         <para>
             Zend_Acl では、リソースを作成するのは簡単です。Zend_Acl の
             <code>Zend_Acl_Resource_Interface</code> に、
@@ -77,7 +77,7 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-        <title>ロールについて</title>
+        <title>ロール</title>
         <para>
             リソースと同様、ロールを作成するのも簡単です。Zend_Acl の
             <code>Zend_Acl_Role_Interface</code> に、
@@ -166,10 +166,10 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>アクセス制御リスト (ACL) の作成</title>
+        <title>アクセス制御リストの作成</title>
 
         <para>
-            ACL を使用して、物理的あるいは仮想的なオブジェクトの組み合わせを
+            アクセス制御リスト (ACL) を使用して、物理的あるいは仮想的なオブジェクトの組み合わせを
             お望みどおりに表現することができます。しかしここでは、説明用として、
             基本的なコンテンツ管理システム (CMS) の ACL を考えます。
             これは、さまざまな領域で複数階層のグループを管理するものです。
