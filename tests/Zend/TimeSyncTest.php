@@ -52,7 +52,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
      * @return void
      */
     public function testInitTimeservers()
-    {        
+    {
         $server = new Zend_TimeSync($this->timeservers);
         $result = $server->getServer('server_f');
 
@@ -88,7 +88,6 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof Zend_TimeSync_Ntp);
     }
 
-
     /**
      * Test for object initialisation with a single SNTP timeserver
      *
@@ -102,7 +101,6 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($result instanceof Zend_TimeSync_Sntp);
     }
-
 
     /**
      * Test for object initialisation with an unsupported scheme. This will
@@ -125,7 +123,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function tesSetOption()
+    public function testSetOption()
     {
         $timeout = 5;
 
@@ -223,9 +221,9 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test getting a date using the fallback mechanism, will try to 
+     * Test getting a date using the fallback mechanism, will try to
      * return the date from the first server that returns a valid result
-     * 
+     *
      * @return void
      */
     public function testGetDate()
@@ -242,7 +240,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test getting a date from an ntp timeserver
-     * 
+     *
      * @return void
      */
     public function testGetNtpDate()
@@ -259,7 +257,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test getting a date from an sntp timeserver
-     * 
+     *
      * @return void
      */
     public function testGetSntpDate()
@@ -276,7 +274,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test getting a date from an invalid timeserver
-     * 
+     *
      * @return void
      */
     public function testGetInvalidDate()
@@ -292,7 +290,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
             $result = $server->getDate();
         } catch (Zend_TimeSync_Exception $e) {
             $exceptions = $e->get();
-            
+
             foreach($exceptions as $key => $exception) {
                 $this->assertTrue($exception instanceof Zend_TimeSync_Exception);
             }
@@ -301,7 +299,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test walking through the server list
-     * 
+     *
      * @return void
      */
     public function testWalkServers()
@@ -315,7 +313,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test getting info returned from the server
-     * 
+     *
      * @return void
      */
     public function testGetInfo()
