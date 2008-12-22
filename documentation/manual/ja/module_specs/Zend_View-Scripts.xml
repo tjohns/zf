@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13421 -->
+<!-- EN-Revision: 13432 -->
 <sect1 id="zend.view.scripts">
 
     <title>ビュースクリプト</title>
@@ -423,17 +423,17 @@ class Zend_View_Smarty implements Zend_View_Interface
             </para>
 
             <programlisting role="php"><![CDATA[
-//例1. InitializerのinitView()で
-require_once 'Zend/View/Smarty.php';
+//例 1. InitializerのinitView()で
 $view = new Zend_View_Smarty('/path/to/templates');
-$viewRenderer = new Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+$viewRenderer =
+    new Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 $viewRenderer->setView($view)
              ->setViewBasePathSpec($view->_smarty->template_dir)
              ->setViewScriptPathSpec(':controller/:action.:suffix')
              ->setViewScriptPathNoControllerSpec(':action.:suffix')
              ->setViewSuffix('tpl');
 
-//例. アクションコントローラでも同様に...
+//例 2. アクションコントローラでも同様に...
 class FooController extends Zend_Controller_Action
 {
     public function barAction()
@@ -448,7 +448,6 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        require_once 'Zend/View/Smarty.php';
         $this->view   = new Zend_View_Smarty('/path/to/templates');
         $viewRenderer = $this->_helper->getHelper('viewRenderer');
         $viewRenderer->setView($this->view)
