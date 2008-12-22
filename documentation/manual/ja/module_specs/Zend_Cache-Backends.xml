@@ -203,13 +203,22 @@
                       <row>
                           <entry><code>servers</code></entry>
                           <entry><code>array</code></entry>
-                          <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
+                          <entry>
+                            <code>
+                              array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 
+                              'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                            </code>
+                          </entry>
                           <entry>
                               memcached サーバの配列です。各 memcached サーバの情報は、
                               以下のような連想配列で指定します。
                               'host' => (string) : memcached サーバのサーバ名
                               'port' => (int) : memcached サーバのポート番号
                               'persistent' => (bool) : この memcached サーバに対して持続的な接続を使用するかどうか
+                              'weight' => (int) : memcached サーバの重み付け
+                              'timeout' => (int) : memcached サーバのタイムアウト
+                              'retry_interval' => (int) : memcached サーバの再試行間隔
+                              'status' => (bool) : memcached サーバのステータス
                           </entry>
                       </row>
                       <row>

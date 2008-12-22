@@ -1,7 +1,7 @@
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache backends</title>
     <para>
-        There is two kinds of backends: standard ones and extended ones. Of course, extended backends
+        There are two kinds of backends: standard ones and extended ones. Of course, extended backends
         offer more features.
     </para>
     <sect2 id="zend.cache.backends.file">
@@ -188,12 +188,21 @@
                       <row>
                           <entry><code>servers</code></entry>
                           <entry><code>array</code></entry>
-                          <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
+                          <entry>
+                            <code>
+                              array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1, 
+                              'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                            </code>
+                          </entry>
                           <entry>
                               An array of memcached servers ; each memcached server is described by an associative array :
                               'host' => (string) : the name of the memcached server,
                               'port' => (int) : the port of the memcached server,
                               'persistent' => (bool) : use or not persistent connections to this memcached server
+                              'weight' => (int) :the weight of the memcached server,
+                              'timeout' => (int) :the time out of the memcached server,
+                              'retry_interval' => (int) :the retry interval of the memcached server,
+                              'status' => (bool) :the status of the memcached server
                           </entry>
                       </row>
                       <row>
