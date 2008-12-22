@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12816 -->
+<!-- EN-Revision: 13436 -->
 <sect1 id="zend.currency.migration">
     <title>Migrer depuis des versions antérieures</title>
 
@@ -22,21 +22,28 @@ $currency = new Zend_Currency($currency, $locale);
                 <listitem>
                     <para><emphasis role="strong">position</emphasis> : Remplacement de l'ancien paramètre
                     "rules"</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">script</emphasis> : Remplacement de l'ancien paramètre "script"</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">format </emphasis>: Remplacement de l'ancien paramètre "locale" qui
                     n'affecte plus de nouvelle monnaie, mais seulement un format de nombre.</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">display </emphasis>: Remplacement de l'ancien paramètre "rules"</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">precision</emphasis> : Nouveau paramètre</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">name</emphasis> : Remplacement de l'ancien paramètre "rules". Affecte
                     le nom complet de la monnaie.</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">currency </emphasis>: Nouveau paramètre</para>
-
+                </listitem>
+                <listitem>
                     <para><emphasis role="strong">symbol</emphasis> : Nouveau paramètre</para>
                 </listitem>
             </itemizedlist></para>
