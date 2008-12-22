@@ -1,7 +1,7 @@
-<!-- EN-Revision: 11462 -->
+<!-- EN-Revision: 13418 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache のバックエンド</title>
-	<para>
+    <para>
         バックエンドには、標準と拡張の 2 種類があります。
         もちろん、拡張バックエンドのほうがより高機能となります。
     </para>
@@ -330,9 +330,9 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
             な File、Sqlite…… の 2 種類の別々のバックエンドに格納します。
         </para>
         <para>
-        	このバックエンドは priority パラメータを使用 (フロントエンドレベルで、記録開始時に指定)
-        	し、高速バックエンドの残りのスペースを用いてふたつのバックエンドの使用を最適化します。
-        	FIXME
+            このバックエンドは priority パラメータを使用 (フロントエンドレベルで、記録開始時に指定)
+            し、高速バックエンドの残りのスペースを用いてふたつのバックエンドの使用を最適化します。
+            FIXME
         </para>
         <para>
             使用可能なオプションは次のとおりです。
@@ -400,7 +400,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                               false の場合は、引数をクラス名 "Zend_Cache_Backend_[...]"
                               の最後の部分として使用します。
                           </entry>
-                      </row>    
+                      </row>
                       <row>
                           <entry><code>slow_backend_autoload</code></entry>
                           <entry><code>boolean</code></entry>
@@ -409,7 +409,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                               true の場合は、低速バックエンドに対して require_once を行いません
                               (独自のバックエンドを使用する場合にのみ有用です)。
                           </entry>
-                      </row>     
+                      </row>
                       <row>
                           <entry><code>fast_backend_autoload</code></entry>
                           <entry><code>boolean</code></entry>
@@ -418,7 +418,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                               true の場合は、高速バックエンドに対して require_once を行いません
                               (独自のバックエンドを使用する場合にのみ有用です)。
                           </entry>
-                      </row>  
+                      </row>
                       <row>
                           <entry><code>auto_refresh_fast_cache</code></entry>
                           <entry><code>boolean</code></entry>
@@ -427,7 +427,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                               true の場合は、キャッシュレコードにヒットしたときに
                               高速キャッシュを自動的にリフレッシュします。
                           </entry>
-                      </row>  
+                      </row>
                       <row>
                           <entry><code>stats_update_factor</code></entry>
                           <entry><code>integer</code></entry>
@@ -438,7 +438,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                               高速バックエンド使用率の計算は、
                               キャッシュ書き込み x 回につき 1 回の割合でランダムに行われます)。
                           </entry>
-                      </row>                              
+                      </row>
                   </tbody>
               </tgroup>
           </table>
