@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13419 -->
+<!-- EN-Revision: 13421 -->
 <sect1 id="zend.view.scripts">
 
     <title>ビュースクリプト</title>
@@ -424,31 +424,43 @@ class Zend_View_Smarty implements Zend_View_Interface
 
             <programlisting role="php"><![CDATA[
 //例1. InitializerのinitView()で
-require_once ('Zend/View/Smarty.php');
+require_once 'Zend/View/Smarty.php';
 $view = new Zend_View_Smarty('/path/to/templates');
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-$viewRenderer->setViewBasePathSpec($view->_smarty->template_dir)
-->setViewScriptPathSpec(':controller/:action.:suffix')
-->setViewScriptPathNoControllerSpec(':action.:suffix')
-->setViewSuffix('tpl');
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+$viewRenderer = new Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+$viewRenderer->setView($view)
+             ->setViewBasePathSpec($view->_smarty->template_dir)
+             ->setViewScriptPathSpec(':controller/:action.:suffix')
+             ->setViewScriptPathNoControllerSpec(':action.:suffix')
+             ->setViewSuffix('tpl');
 
-//例1. アクションコントローラーで
-$this->view->book = 'Zend PHP 5 Certification Study Guide';
-$this->view->author = 'Davey Shafik and Ben Ramsey'
+//例. アクションコントローラでも同様に...
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        $this->view->book   = 'Zend PHP 5 Certification Study Guide';
+        $this->view->author = 'Davey Shafik and Ben Ramsey'
+    }
+}
 
-//例2. アクションコントローラーで
-$this->_helper->viewRenderer->setNoRender();
-require_once ('Zend/View/Smarty.php');
-$this->view = new Zend_View_Smarty('/path/to/templates');
-$this->view->book = 'Zend PHP 5 Certification Study Guide';
-$this->view->author = 'Davey Shafik and Ben Ramsey'
-$this->view->render('bookinfo.tpl');
-            </programlisting>
-
+//例 3. アクションコントローラでのビューの初期化
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        require_once 'Zend/View/Smarty.php';
+        $this->view   = new Zend_View_Smarty('/path/to/templates');
+        $viewRenderer = $this->_helper->getHelper('viewRenderer');
+        $viewRenderer->setView($this->view)
+                     ->setViewBasePathSpec($view->_smarty->template_dir)
+                     ->setViewScriptPathSpec(':controller/:action.:suffix')
+                     ->setViewScriptPathNoControllerSpec(':action.:suffix')
+                     ->setViewSuffix('tpl');
+    }
+}
+]]></programlisting>
         </sect3>
     </sect2>
-
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
