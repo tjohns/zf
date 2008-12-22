@@ -36,32 +36,46 @@ $currency = new Zend_Currency($currency, $locale);
                         <emphasis role="strong">position</emphasis>:
                         Replacement for the old 'rules' parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">script</emphasis>:
                         Replacement for the old 'script' parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">format</emphasis>:
                         Replacement for the old 'locale' parameter which does not
                         set new currencies but only the number format.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">display</emphasis>:
                         Replacement for the old 'rules' parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">precision</emphasis>:
                         New parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">name</emphasis>:
                         Replacement for the ole 'rules' parameter. Sets the full
                         currencies name.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">currency</emphasis>:
                         New parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">symbol</emphasis>:
                         New parameter.
