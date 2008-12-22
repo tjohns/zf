@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11495 -->
+<!-- EN-Revision: 13422 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer の基本</title>
     <para>
@@ -165,7 +165,7 @@ if (isset($_POST['openid_action']) &&
 
     $consumer = new Zend_OpenId_Consumer();
     if (!$consumer->login($_POST['openid_identifier'])) {
-        $status = "OpenID でのログインに失敗しました。<br>";
+        $status = "OpenID でのログインに失敗しました。";
     }
 } else if (isset($_GET['openid_mode'])) {
     if ($_GET['openid_mode'] == "id_res") {
@@ -181,12 +181,15 @@ if (isset($_POST['openid_action']) &&
 }
 ?>
 <html><body>
-<?php echo "$status<br>";?>
-<form method="post"><fieldset>
+<?php echo "$status<br>" ?>
+<form method="post">
+<fieldset>
 <legend>OpenID ログイン</legend>
-<input type="text" name="openid_identifier" value="">
-<input type="submit" name="openid_action" value="login">
-</fieldset></form></body></html>
+<input type="text" name="openid_identifier" value=""/>
+<input type="submit" name="openid_action" value="login"/>
+</fieldset>
+</form>
+</body></html>
 ]]>
             </programlisting>
         </example>
@@ -204,7 +207,7 @@ if (isset($_POST['openid_action']) &&
     </sect2>
 
     <sect2 id="zend.openid.consumer.realm">
-        <title>レルム</title>
+        <title>コンシューマレルム</title>
         <para>
             OpenID 対応のサイトがプロバイダへの認証リクエストを通過すると、
             自分自身をレルム URL で識別するようになります。
@@ -321,6 +324,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     private $_discovery_table;
     private $_nonce_table;
 
+	// Zend_Db_Adapter オブジェクトと
+	// テーブル名を渡します
     public function __construct($db,
                                 $association_table = "association",
                                 $discovery_table = "discovery",
@@ -331,6 +336,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         $this->_discovery_table = $discovery_table;
         $this->_nonce_table = $nonce_table;
         $tables = $this->_db->listTables();
+
+        // アソシエーションテーブルが存在しない場合は作成します
         if (!in_array($association_table, $tables)) {
             $this->_db->getConnection()->exec(
                 "create table $association_table (" .
@@ -341,6 +348,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " expires timestamp" .
                 ")");
         }
+        
+        // ディスカバリーテーブルが存在しない場合は作成します
         if (!in_array($discovery_table, $tables)) {
             $this->_db->getConnection()->exec(
                 "create table $discovery_table (" .
@@ -351,6 +360,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " expires timestamp" .
                 ")");
         }
+        
+        // ノンステーブルが存在しない場合は作成します
         if (!in_array($nonce_table, $tables)) {
             $this->_db->getConnection()->exec(
                 "create table $nonce_table (" .
@@ -383,7 +394,7 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     {
         $table = $this->_association_table;
         $this->_db->query("delete from $table where expires < " . time());
-        $res = $this->_db->fetchRow('select handle, macFunc, secret, expires ' . 
+        $res = $this->_db->fetchRow('select handle, macFunc, secret, expires ' .
                                     "from $table where url = '$url'");
         if (is_array($res)) {
             $handle  = $res['handle'];
@@ -594,7 +605,7 @@ $sreg = new Zend_OpenId_Extension_Sreg(array(
 $consumer = new Zend_OpenId_Consumer();
 if (!$consumer->login($_POST['openid_identifier'],
                       'example-6_3.php',
-                      null, 
+                      null,
                       $sreg)) {
     die("OpenID でのログインに失敗しました。");
 }

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8460 -->
+<!-- EN-Revision: 13422 -->
 <sect1 id="zend.openid.introduction">
     <title>導入</title>
     <para>
@@ -31,9 +31,7 @@
         <para>
             OpenID についての詳細な情報は
             <ulink url="http://www.openid.net/">OpenID の公式サイト</ulink>
-            を参照ください。また
-            <ulink url="http://www.openidbook.com/">Rafeeq
-            Rehman による OpenID Book</ulink> も参考になります。
+            を参照ください。
         </para>
     </sect2>
 
@@ -65,8 +63,8 @@
             </listitem>
             <listitem>
                 <para>
-                    OpenID クライアントは、Diffie-Hellman
-                    キーを使用してサーバとのオプションの関連を確立します。
+                    OpenID コンシューマは、Diffie-Hellman
+                    キーを使用してプロバイダとのオプションの関連を確立します。
                     その結果、両者が共通の "共用する秘密" を保持することになり、
                     これを用いてその後のメッセージの署名や検証を行います。
                 </para>
@@ -146,7 +144,7 @@
     </sect2>
 
     <sect2 id="zend.openid.introduction.standards">
-        <title>サポートする標準規格</title>
+        <title>サポートする OpenID 標準規格</title>
         <para>
             <code>Zend_OpenId</code> コンポーネントは、
             次の標準規格に対応しています。

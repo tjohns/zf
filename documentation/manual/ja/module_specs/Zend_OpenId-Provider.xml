@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11322 -->
+<!-- EN-Revision: 13422 -->
 <sect1 id="zend.openid.provider">
     <title>Zend_OpenId_Provider</title>
     <para>
@@ -30,6 +30,7 @@
             <title>識別子</title>
             <programlisting role="php"><![CDATA[
 <?php
+// テスト用の識別子を準備します
 define("TEST_SERVER", Zend_OpenId::absoluteURL("example-8.php"));
 define("TEST_ID", Zend_OpenId::selfURL());
 define("TEST_PASSWORD", "123");
@@ -82,13 +83,15 @@ if (is_string($ret)) {
 ]]>
             </programlisting>
         </example>
-
-        <para>
-            この処理、そしてその後の対話形式のスクリプトではセキュアな接続
-            (HTTPS) を使うことをお勧めします。
-            これは、パスワードの漏洩を防ぐためです。
-        </para>
-
+	        
+	    <note>
+	        <para>
+	            この処理、そしてその後の対話形式のスクリプトではセキュアな接続
+	            (HTTPS) を使うことをお勧めします。
+	            これは、パスワードの漏洩を防ぐためです。
+	        </para>
+	   </note>
+	        
         <para>
             次のスクリプトは、識別サーバ <code>Zend_OpenId_Provider</code>
             用のログイン画面を実装したものです。
@@ -111,10 +114,12 @@ if (is_string($ret)) {
             認証処理が不要となります。
         </para>
 
-        <para>
-            このセッションは、エンドユーザと識別プロバイダの間だけのものであることに注意しましょう。
-            OpenID 対応のサイトは、このセッションについて何も知ることができません。
-        </para>
+        <note>
+	        <para>
+	            このセッションは、エンドユーザと識別プロバイダの間だけのものであることに注意しましょう。
+	            OpenID 対応のサイトは、このセッションについて何も知ることができません。
+	        </para>
+        </note>
 
         <example id="zend.openid.provider.example-3">
             <title>シンプルなログイン画面</title>
@@ -132,19 +137,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
     Zend_OpenId::redirect("example-8.php", $_GET);
 }
 ?>
-<html><body>
-<form method="post"><fieldset>
+<html>
+<body>
+<form method="post">
+<fieldset>
 <legend>OpenID ログイン</legend>
 <table border=0>
-<tr><td>Name:</td><td><input type="text" name="openid_identifier"
-value="<?php
-echo htmlspecialchars($_GET['openid_identity']);
-?>"></td></tr>
-<tr><td>Password:</td><td><input type="text"
-name="openid_password" value=""></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit"
-name="openid_action" value="login"></td></tr>
-</table></fieldset></form></body></html>
+<tr>
+<td>Name:</td>
+<td>
+<input type="text"
+       name="openid_identifier"
+       value="<?php echo htmlspecialchars($_GET['openid_identity']);?>">
+</td>
+</tr>
+<tr>
+<td>Password:</td>
+<td>
+<input type="text"
+       name="openid_password"
+       value="">
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>
+<input type="submit"
+       name="openid_action"
+       value="login">
+</td>
+</tr>
+</table>
+</fieldset>
+</form>
+</body>
+</html>
 ]]>
             </programlisting>
         </example>
@@ -185,21 +212,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
     }
 }
 ?>
-<html><body>
+<html>
+<body>
 <p>
 <a href="<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>">
-<?php echo htmlspecialchars($server->getSiteRoot($_GET));?></a>
+<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>
+</a>
 というサイトが、あなたの識別 URL
 <a href="<?php echo htmlspecialchars($server->getLoggedInUser());?>">
-<?php echo htmlspecialchars($server->getLoggedInUser());?></a>
-の確認を求めてきました。</p>
+<?php echo htmlspecialchars($server->getLoggedInUser());?>
+</a>
+の確認を求めてきました。
+</p>
 <form method="post">
 <input type="checkbox" name="forever">
 <label for="forever">永久に</label><br>
 <input type="hidden" name="openid_action" value="trust">
 <input type="submit" name="allow" value="許可する">
 <input type="submit" name="deny" value="拒否する">
-</form></body></html>
+</form>
+</body>
+</html>
 ]]>
             </programlisting>
         </example>
@@ -222,13 +255,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
             "openid.action" を追加した場所を指すことになります。
         </para>
 
-        <para>
-            次の例は完全なものではありません。
-            エンドユーザ向けの GUI を提供していませんが、
-            ログインと信頼処理を自動的に行います。
-            これはサンプルをできるだけシンプルにするための処置であり、
-            実際のサーバでは、先ほどのサンプルのようなコードも必要となります。
-        </para>
+        
+        <note>
+	        <para>
+	            次の例は完全なものではありません。
+	            エンドユーザ向けの GUI を提供していませんが、
+	            ログインと信頼処理を自動的に行います。
+	            これはサンプルをできるだけシンプルにするための処置であり、
+	            実際のサーバでは、先ほどのサンプルのようなコードも必要となります。
+	        </para>
+        </note>
 
         <example id="zend.openid.provider.example-5">
             <title>すべてをまとめたもの</title>
@@ -302,11 +338,14 @@ if (!$server->hasUser(TEST_ID)) {
     $server->logout();
 }
 ?>
-<html><head>
+<html>
+<head>
 <link rel="openid.server" href="<?php echo TEST_SERVER;?>" />
-</head><body>
+</head>
+<body>
 <?php echo TEST_ID;?>
-</body></html>
+</body>
+</html>
 ]]>
             </programlisting>
         </example>
