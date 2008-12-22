@@ -36,7 +36,7 @@
     </para>
 
     <sect2 id="zend.acl.introduction.resources">
-        <title>About Resources</title>
+        <title>Resources</title>
         <para>
             Creating a resource in Zend_Acl is very simple. Zend_Acl provides the resource,
             <code>Zend_Acl_Resource_Interface</code>, to facilitate creating resources in an application. A class need only
@@ -63,7 +63,7 @@
     </sect2>
 
     <sect2 id="zend.acl.introduction.roles">
-        <title>About Roles</title>
+        <title>Roles</title>
         <para>
             As with resources, creating a role is also very simple. All roles must implement
             <code>Zend_Acl_Role_Interface</code>. This interface consists of a single method, <code>getRoleId()</code>,
@@ -142,10 +142,10 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>Creating the Access Control List (ACL)</title>
+        <title>Creating the Access Control List</title>
 
         <para>
-            An ACL can represent any set of physical or virtual objects that you wish.
+            An Access Control List (ACL) can represent any set of physical or virtual objects that you wish.
             For the purposes of demonstration, however, we will create a basic Content Management System (CMS) ACL
             that maintains several tiers of groups over a wide variety of areas. To create a new ACL object,
             we instantiate the ACL with no parameters:
@@ -308,7 +308,7 @@ $acl->allow('administrator');
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-        <title>Querying the ACL</title>
+        <title>Querying an ACL</title>
 
         <para>
             We now have a flexible ACL that can be used to determine whether requesters have permission
