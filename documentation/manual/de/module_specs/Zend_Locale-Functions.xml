@@ -1269,7 +1269,7 @@ if (Zend_Locale::isLocale($input)) {
         <para>
             Trotzdem ist es manchmal nützlich diese automatische Degradierung zu verhindern, und hier kommt
             der zweite Parameter von <code>isLocale()</code> zu Tragen. Der <code>strict</code> Parameter ist
-            Standardmäßig <code>false</code und kann verwendet werden um die automatische Degradierung zu
+            Standardmäßig <code>false</code> und kann verwendet werden um die automatische Degradierung zu
             verhindern wenn er auf <code>true</code> gesetzt wird.
         </para>
 
