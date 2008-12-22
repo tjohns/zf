@@ -1,4 +1,4 @@
-<!-- EN-Revision: 8460 -->
+<!-- EN-Revision: 13422 -->
 <sect1 id="zend.openid.introduction">
     <title>Introduction</title>
 
@@ -6,11 +6,11 @@
     la technologie OpenID dans son applicatif internet.</para>
 
     <sect2 id="zend.openid.introduction.what">
-        <title>Qu'est ce qu'OpenID?</title>
+        <title>Qu'est ce qu'OpenID ?</title>
 
         <para>OpenID est un ensemble de protocole permettant une gestion centralisée de l'identification d'une personne.
         Ces protocoles permettent la création d'une identité en ligne, via un fournisseur d'identité. Cette identité
-        peut alors être utilisée n'importe où où OpenID est supporté. Sur les sites utilisant OpenID, il n'est plus
+        peut alors être utilisée n'importe où, où OpenID est supporté. Sur les sites utilisant OpenID, il n'est plus
         nécessaire de se souvenir d'identifiants différents, la seule et unique identité OpenID est la même partout. Une
         identité OpenID est en général matérialisée par une URL et un utilisateur est libre de choisir son fournisseur
         OpenID, ou alors même de créer son propre serveur d'identification OpenID, ceci ne nécessitant pas
@@ -102,7 +102,7 @@
     </sect2>
 
     <sect2 id="zend.openid.introduction.standards">
-        <title>Standards supportés</title>
+        <title>Standards OpenID supportés</title>
 
         <para>Le composant <code>Zend_OpenId</code> est conforme aux standards suivants :</para>
 

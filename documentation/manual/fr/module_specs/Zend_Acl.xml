@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12738 -->
+<!-- EN-Revision: 13423 -->
 <sect1 id="zend.acl.introduction">
     <title>Introduction</title>
 
@@ -15,9 +15,9 @@
                 <para>un <emphasis role="strong">rôle</emphasis> est un objet qui peut demander l'accès à une
                 ressource.</para>
             </listitem>
-        </itemizedlist> Dit simplement, <emphasis role="strong"> les rôles demandent l'accès à des
-    ressources</emphasis>. Par exemple, si une personne demande l'accès à une voiture, alors la personne est le rôle
-    demandeur et la voiture est la ressource, puisque l'accès à la voiture est soumis à un contrôle.</para>
+        </itemizedlist>Dit simplement, <emphasis role="strong"> les rôles demandent l'accès à des ressources</emphasis>.
+    Par exemple, si une personne demande l'accès à une voiture, alors la personne est le rôle demandeur et la voiture
+    est la ressource, puisque l'accès à la voiture est soumis à un contrôle.</para>
 
     <para>Grâce à la définition et à la mise en oeuvre d'une liste de contrôle d'accès (ACL), une application peut
     contrôler comment les objets demandeurs (rôles) reçoivent l'accès (ou non) à des objets protégés
@@ -121,7 +121,7 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
     </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
-        <title>Créer la Liste de Contrôle d'Accès (ACL)</title>
+        <title>Créer la Liste de Contrôle d'Accès</title>
 
         <para>Une ACL peut représenter n'importe quel ensemble d'objets physiques ou virtuels que vous souhaitez. Pour
         les besoins de la démonstration, nous allons créer un système basique d'ACL pour une Gestion de Contenus (CMS)
@@ -282,7 +282,7 @@ $acl->allow('administrateur');
     <sect2 id="zend.acl.introduction.querying">
         <title>Interroger les ACL</title>
 
-        <para>Nous avons maintenant un ACL flexible, qui peut être utilisé pour déterminer si l'objet appelant a les
+        <para>Nous avons maintenant une ACL flexible, qui peut être utilisée pour déterminer si l'objet appelant a les
         permissions pour réaliser les fonctions au sein de l'application web. Interroger l'ACL est assez simple en
         utilisant la méthode <code>isAllowed()</code> :</para>
 

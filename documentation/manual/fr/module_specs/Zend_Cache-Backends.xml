@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13418 -->
 <sect1 id="zend.cache.backends">
     <title>Les backends Zend_Cache</title>
 
@@ -224,13 +224,17 @@
 
                         <entry><code>array</code></entry>
 
-                        <entry><code>array(array('host' =&gt; 'localhost','port' =&gt; 11211, 'persistent' =&gt;
-                        true))</code></entry>
+                        <entry><code>array(array('host' =&gt; 'localhost', 'port' =&gt; 11211, 'persistent' =&gt; true,
+                        'weight' =&gt; 1, 'timeout' =&gt; 5, 'retry_interval' =&gt; 15, 'status' =&gt; true
+                        ))</code></entry>
 
                         <entry>Un tableau de serveurs memcached ; chaque serveur memcached est décrit par un tableau
                         associatif : 'host' =&gt; (string) : le nom du serveur memcached, 'port' =&gt; (int) : le port
                         du serveur memcached, 'persistent' =&gt; (bool) : utilisation ou pas des connexions persistantes
-                        pour ce serveur memcached.</entry>
+                        pour ce serveur memcached, 'weight' =&gt; (int) : le poids du serveur memcached, 'timeout' =&gt;
+                        (int) : le time out du serveur memcached, 'retry_interval' =&gt; (int) : l'intervalle avant
+                        réexécution du serveur memcached, 'status' =&gt; (bool) : le statut du serveur
+                        memcached.</entry>
                     </row>
 
                     <row>

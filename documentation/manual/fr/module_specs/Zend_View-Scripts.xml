@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12965 -->
+<!-- EN-Revision: 13432 -->
 <sect1 id="zend.view.scripts">
     <title>Scripts de vue</title>
 
@@ -390,11 +390,39 @@ class Zend_View_Smarty implements Zend_View_Interface
             <code>Zend_View</code>, et vous l'utilisez de la même façon :</para>
 
             <programlisting role="php"><![CDATA[
-$view = new Zend_View_Smarty();
-$view->setScriptPath('/chemin/vers/gabarits');
-$view->book = 'Zend PHP 5 Certification Study Guide';
-$view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');
+//Exemple 1a. Dans l'initView() de l'initializer.
+$view = new Zend_View_Smarty('/chemin/vers/les/templates');
+$viewRenderer = new Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+$viewRenderer->setView($view)
+             ->setViewBasePathSpec($view->_smarty->template_dir)
+             ->setViewScriptPathSpec(':controller/:action.:suffix')
+             ->setViewScriptPathNoControllerSpec(':action.:suffix')
+             ->setViewSuffix('tpl');
+
+//Exemple 1b. L'utilisation dans le contrôleur d'action reste la même
+class FooController extends Zend_Controller_Action
+{
+    public function barAction()
+    {
+        $this->view->book   = 'Zend PHP 5 Certification Study Guide';
+        $this->view->author = 'Davey Shafik and Ben Ramsey'
+    }
+}
+
+//Example 2. Initialisation de la vue dans le contrôleur d'action
+class FooController extends Zend_Controller_Action
+{
+    public function init()
+    {
+        $this->view   = new Zend_View_Smarty('/path/to/templates');
+        $viewRenderer = $this->_helper->getHelper('viewRenderer');
+        $viewRenderer->setView($this->view)
+                     ->setViewBasePathSpec($view->_smarty->template_dir)
+                     ->setViewScriptPathSpec(':controller/:action.:suffix')
+                     ->setViewScriptPathNoControllerSpec(':action.:suffix')
+                     ->setViewSuffix('tpl');
+    }
+}
 ]]></programlisting>
         </sect3>
     </sect2>
