@@ -434,11 +434,27 @@ class Zend_View_Smarty implements Zend_View_Interface
             </para>
 
             <programlisting role="php"><![CDATA[
-$view = new Zend_View_Smarty();
-$view->setScriptPath('/path/to/templates');
-$view->book = 'Zend PHP 5 Certification Study Guide';
-$view->author = 'Davey Shafik and Ben Ramsey'
-$rendered = $view->render('bookinfo.tpl');
+//Example 1. In initView() of initializer.
+require_once ('Zend/View/Smarty.php');
+$view = new Zend_View_Smarty('/path/to/templates');
+$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
+$viewRenderer->setViewBasePathSpec($view->_smarty->template_dir)
+->setViewScriptPathSpec(':controller/:action.:suffix')
+->setViewScriptPathNoControllerSpec(':action.:suffix')
+->setViewSuffix('tpl');
+Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+
+//Example 1. In action controller
+$this->view->book = 'Zend PHP 5 Certification Study Guide';
+$this->view->author = 'Davey Shafik and Ben Ramsey'
+
+//Example 2. In action controller
+$this->_helper->viewRenderer->setNoRender();
+require_once ('Zend/View/Smarty.php');
+$this->view = new Zend_View_Smarty('/path/to/templates');
+$this->view->book = 'Zend PHP 5 Certification Study Guide';
+$this->view->author = 'Davey Shafik and Ben Ramsey'
+$this->view->render('bookinfo.tpl');
 ]]>
             </programlisting>
 
