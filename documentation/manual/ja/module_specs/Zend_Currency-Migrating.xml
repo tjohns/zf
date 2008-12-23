@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12816 -->
+<!-- EN-Revision: 13436 -->
 <sect1 id="zend.currency.migration">
 
     <title>以前のバージョンからの移行</title>
@@ -40,33 +40,47 @@ $currency = new Zend_Currency($currency, $locale);
                         <emphasis role="strong">position</emphasis>:
                         以前の 'rules' パラメータを置き換えるものです。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">script</emphasis>:
                         以前の 'script' パラメータを置き換えるものです。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">format</emphasis>:
                         以前の 'locale' パラメータを置き換えるものです。
                         これは新しい通貨を設定するのではなく、
                         数値フォーマットのみを設定します。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">display</emphasis>:
                         以前の 'rules' パラメータを置き換えるものです。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">precision</emphasis>:
                         新しいパラメータです。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">name</emphasis>:
                         以前の 'rules' パラメータを置き換えるものです。
                         完全な通貨名を指定します。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">currency</emphasis>:
                         新しいパラメータです。
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">symbol</emphasis>:
                         新しいパラメータです。
