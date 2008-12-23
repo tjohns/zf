@@ -43,7 +43,13 @@ class Zend_Paginator implements Countable, IteratorAggregate
      * @var string
      */
     const INTERNAL_ADAPTER = 'Zend_Paginator_Adapter_Internal';
-    
+
+    /**
+     * The cache tag prefix used to namespace Paginator results in the cache
+     *
+     */
+    const CACHE_TAG_PREFIX = 'Zend_Paginator_';
+
     /**
      * Adapter plugin loader
      *
@@ -71,6 +77,20 @@ class Zend_Paginator implements Countable, IteratorAggregate
      * @var Zend_Loader_PluginLoader
      */
     protected static $_scrollingStyleLoader = null;
+
+    /**
+     * Cache object
+     *
+     * @var Zend_Cache_Core
+     */
+    protected static $_cache;
+
+    /**
+     * Enable or desable the cache by Zend_Paginator instance
+     *
+     * @var bool
+     */
+    protected $_cacheEnabled = true;
 
     /**
      * Adapter
@@ -115,13 +135,6 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected $_pageCount = null;
 
     /**
-     * A collection of page items used as temporary page cache
-     *
-     * @var array
-     */
-    protected $_pageItems = array();
-    
-    /**
      * Number of local pages (i.e., the number of discrete page numbers
      * that will be displayed, including the current page number)
      *
@@ -135,14 +148,14 @@ class Zend_Paginator implements Countable, IteratorAggregate
      * @var array
      */
     protected $_pages = null;
-    
+
     /**
      * View instance used for self rendering
      *
      * @var Zend_View_Interface
      */
     protected $_view = null;
-    
+
     /**
      * Adds an adapter prefix path to the plugin loader.
      *
@@ -153,7 +166,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         self::getAdapterLoader()->addPrefixPath($prefix, $path);
     }
-    
+
     /**
      * Adds an array of adapter prefix paths to the plugin 
      * loader.
@@ -182,7 +195,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
             }
         }
     }
-    
+
     /**
      * Adds a scrolling style prefix path to the plugin loader.
      *
@@ -222,7 +235,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
             }
         }
     }
-    
+
     /**
      * Factory.
      *
@@ -269,7 +282,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return new self(new $adapterClassName($data));
     }
-    
+
     /**
      * Returns the adapter loader.  If it doesn't exist it's created.
      *
@@ -285,7 +298,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return self::$_adapterLoader;
     }
-    
+
     /**
      * Set a global config
      *
@@ -313,7 +326,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
             self::setDefaultScrollingStyle($scrollingStyle);
         }
     }
-    
+
     /**
      * Returns the default scrolling style.
      *
@@ -323,7 +336,17 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return self::$_defaultScrollingStyle;
     }
-    
+
+    /**
+     * Sets a cache object
+     *
+     * @param Zend_Cache_Core $cache
+     */
+    public static function setCache(Zend_Cache_Core $cache)
+    {
+        self::$_cache = $cache;
+    }
+
     /**
      * Sets the default scrolling style.
      *
@@ -333,7 +356,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         self::$_defaultScrollingStyle = $scrollingStyle;
     }
-    
+
     /**
      * Returns the scrolling style loader.  If it doesn't exist it's
      * created.
@@ -373,7 +396,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
             }
         }
     }
-    
+
     /**
      * Serializes the object as a string.  Proxies to {@link render()}.
      * 
@@ -390,7 +413,19 @@ class Zend_Paginator implements Countable, IteratorAggregate
 
         return '';
     }
-    
+
+    /**
+     * Enables/Disables the cache for this instance
+     *
+     * @param bool $enable
+     * @return Zend_Paginator
+     */
+    public function setCacheEnabled($enable)
+    {
+        $this->_cacheEnabled = (bool)$enable;
+        return $this;
+    }
+
     /**
      * Returns the number of pages.
      *
@@ -423,15 +458,26 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function clearPageItemCache($pageNumber = null)
     {
-        if (null === $pageNumber) {
-            $this->_pageItems = array();
-        } else if (isset($this->_pageItems[$pageNumber])) {
-            unset($this->_pageItems[$pageNumber]);
+        if (!$this->_cacheEnabled()) {
+            return $this;
         }
-        
+
+        if (null === $pageNumber) {
+            $cleanTags = self::CACHE_TAG_PREFIX;
+            foreach (self::$_cache->getIds() as $id) {
+                if (strpos($id, self::CACHE_TAG_PREFIX) !== false) {
+                    if (preg_match('|'.self::CACHE_TAG_PREFIX."(\d+)_.*|", $id, $page)) {
+                        self::$_cache->remove($this->_getCacheId($page[1]));
+                    }
+                }
+            }
+        } else {
+            $cleanId = $this->_getCacheId($pageNumber);
+            self::$_cache->remove($cleanId);
+        }
         return $this;
     }
-    
+
     /**
      * Returns the absolute item number for the specified item.
      *
@@ -451,7 +497,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return (($pageNumber - 1) * $this->getItemCountPerPage()) + $relativeItemNumber;
     }
-    
+
     /**
      * Returns the adapter.
      *
@@ -461,7 +507,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return $this->_adapter;
     }
-    
+
     /**
      * Returns the number of items for the current page.
      *
@@ -475,7 +521,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $this->_currentItemCount;
     }
-    
+
     /**
      * Returns the items for the current page.
      *
@@ -499,7 +545,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return $this->normalizePageNumber($this->_currentPageNumber);
     }
-    
+
     /**
      * Sets the current page number.
      *
@@ -514,7 +560,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $this;
     }
-    
+
     /**
      * Returns an item from a page.  The current page is used if there's no 
      * page sepcified.
@@ -565,7 +611,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return $this->_itemCountPerPage;
     }
-    
+
     /**
      * Sets the number of items per page.
      *
@@ -579,7 +625,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
             $this->_itemCountPerPage = 1;
         }
         $this->_pageCount        = $this->_calculatePageCount();
-        $this->_pageItems        = array();
+        if ($this->_cacheEnabled()) {
+            $this->clearPageItemCache();
+        }
         $this->_currentItems     = null;
         $this->_currentItemCount = null;
         
@@ -599,9 +647,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         if (is_array($items) or $items instanceof Countable) {
             $itemCount = count($items);
         } else { // $items is something like LimitIterator
-            foreach ($items as $item) {
-                $itemCount++;
-            }
+            $itemCount = iterator_count($items);
         }
 
         return $itemCount;
@@ -616,8 +662,11 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         $pageNumber = $this->normalizePageNumber($pageNumber);
         
-        if (isset($this->_pageItems[$pageNumber])) {
-            return $this->_pageItems[$pageNumber];
+        if ($this->_cacheEnabled()) {
+            $data = self::$_cache->load($this->_getCacheId($pageNumber)); 
+            if ($data !== false) {
+                return $data;
+            }
         }
         
         $offset = ($pageNumber - 1) * $this->_itemCountPerPage;
@@ -628,7 +677,9 @@ class Zend_Paginator implements Countable, IteratorAggregate
             $items = new ArrayIterator($items);
         }
         
-        $this->_pageItems[$pageNumber] = $items;
+        if ($this->_cacheEnabled()) {
+            self::$_cache->save($items, $this->_getCacheId($pageNumber));
+        }
         
         return $items;
     }
@@ -642,7 +693,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return $this->getCurrentItems();
     }
-    
+
     /**
      * Returns the page range (see property declaration above).
      *
@@ -652,7 +703,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return $this->_pageRange;
     }
-    
+
     /**
      * Sets the page range (see property declaration above).
      *
@@ -701,7 +752,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $pages;
     }
-    
+
     /**
      * Returns the page item cache.
      *
@@ -709,9 +760,19 @@ class Zend_Paginator implements Countable, IteratorAggregate
      */
     public function getPageItemCache()
     {
-        return $this->_pageItems;
+        $data = array();
+        if ($this->_cacheEnabled()) {
+            foreach (self::$_cache->getIds() as $id) {
+                if (strpos($id, self::CACHE_TAG_PREFIX) !== false) {
+                    if (preg_match('|'.self::CACHE_TAG_PREFIX."(\d+)_.*|", $id, $page)) {
+                        $data[$page[1]] = self::$_cache->load($this->_getCacheId($page[1]));
+                    }
+                }
+            }
+        }
+        return $data;
     }
-    
+
     /**
      * Retrieves the view instance.  If none registered, attempts to pull f
      * rom ViewRenderer.
@@ -735,7 +796,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
 
         return $this->_view;
     }
-    
+
     /**
      * Sets the view object.
      * 
@@ -748,7 +809,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $this;
     }
-    
+
     /**
      * Brings the item number in range of the page.
      *
@@ -767,7 +828,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $itemNumber;
     }
-    
+
     /**
      * Brings the page number in range of the paginator.
      *
@@ -788,7 +849,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
         
         return $pageNumber;
     }
-    
+
     /**
      * Renders the paginator.
      * 
@@ -815,7 +876,33 @@ class Zend_Paginator implements Countable, IteratorAggregate
     {
         return Zend_Json::encode($this->getCurrentItems());
     }
-    
+
+    /**
+     * Tells if there is an active cache object
+     * and if the cache has not been desabled
+     *
+     * @return bool
+     */
+    protected function _cacheEnabled()
+    {
+        return (!is_null(self::$_cache) && $this->_cacheEnabled);
+    }
+
+    /**
+     * Makes an Id for the cache
+     * Depends on the object and the page number
+     *
+     * @param int $page
+     * @return string
+     */
+    protected function _getCacheId($page = null)
+    {
+        if (is_null($page)) {
+            $page = $this->getCurrentPageNumber();
+        }
+        return self::CACHE_TAG_PREFIX . $page . '_' . spl_object_hash($this);
+    }
+
     /**
      * Calculates the page count.
      *
@@ -870,7 +957,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
 
         return $pages;
     }
-    
+
     /**
      * Loads a scrolling style.
      *

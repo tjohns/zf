@@ -121,6 +121,111 @@ Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
             </programlisting>
         </para>
     </sect2>
+
+    <sect2 id="zend.paginator.advanced.caching">
+        <title>Caching features</title>
+
+        <para>
+            <code>Zend_Paginator</code> can be told to cache the data it has already
+            passed on, preventing the adapter from fetching them each time they are used.
+            To tell paginator to automatically cache the adapter's data, just pass to
+            its <code>setCache()</code> method a <code>Zend_Cache_Core</code> instance.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+$fO = array('lifetime' => 3600, 'automatic_serialization' => true);
+$bO = array('cache_dir'=>'/tmp');
+$cache = Zend_cache::factory('Core', 'File', $fO, $bO);
+Zend_Paginator::setCache($cache);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            As far as Zend_Paginator has got a Zend_Cache_Core instance, data will
+            be cached. Sometimes you would like not to cache data even if you already passed
+            a cache instance. You should then use <code>setCacheEnable()</code> for that.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+// $cache is a Zend_Cache_Core instance
+Zend_Paginator::setCache($cache);
+// ... later on the script
+$paginator->setCacheEnable(false);
+// cache is now desabled
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            When a cache is set, data are automatically stored in it and pulled out from
+            it. It then can be usefull to empty the cache manually. You can get this done by
+            calling <code>clearPageItemCache($pageNumber)</code>.
+            If you dont pass any param, the whole cache will be empty. You can optionnaly
+            pass a param representing the page number to empty in the cache :
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+Zend_Paginator::setCache($cache);
+$items = $paginator->getCurrentItems();
+// page 1 is now in cache
+$page3Items = $paginator->getItemsByPage(3);
+// page 3 is now in cache
+
+// clear the cache of the results for page 3
+$paginator->clearPageItemCache(3);
+
+// clear all the cache data
+$paginator->clearPageItemCache();
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Changing the item count per page will empty the whole cache
+            as it would have become invalid :
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+Zend_Paginator::setCache($cache);
+// fetch some items
+$items = $paginator->getCurrentItems();
+
+// all the cache data will be flushed :
+$paginator->setItemCountPerPage(2);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            It is also possible to see the data in cache and ask for them directly.
+            <code>getPageItemCache()</code> can be used for that:
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+$paginator->setItemCountPerPage(3);
+Zend_Paginator::setCache($cache);
+
+// fetch some items
+$items = $paginator->getCurrentItems();
+$otherItems = $paginator->getItemsPerPage(4);
+
+// see the cached items as a two-dimension array :
+var_dump($paginator->getPageItemCache());
+]]>
+            </programlisting>
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

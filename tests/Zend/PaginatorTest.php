@@ -71,6 +71,11 @@ require_once 'Zend/Paginator/_files/Zf4207.php';
 require_once 'Zend/Paginator/_files/TestTable.php';
 
 /**
+ * @see Zend_Cache
+ */
+require_once 'Zend/Cache.php';
+
+/**
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
@@ -87,6 +92,8 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     protected $_paginator = null;
 
     protected $_testCollection = null;
+
+    protected $_cache;
 
     protected $_query = null;
 
@@ -113,6 +120,13 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         // get a fresh new copy of ViewRenderer in each tests
         Zend_Controller_Action_HelperBroker::resetHelpers();
 
+        $fO = array('lifetime' => 3600, 'automatic_serialization' => true);
+        $bO = array('cache_dir'=>dirname(__FILE__) .'/Paginator/_files/cachedata');
+
+        $this->_cache = Zend_Cache::factory('Core', 'File', $fO, $bO);
+
+        Zend_Paginator::setCache($this->_cache);
+
         $this->_restorePaginatorDefaults();
     }
 
@@ -138,6 +152,9 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $loader = Zend_Paginator::getScrollingStyleLoader();
         $loader->clearPaths();
         $loader->addPrefixPath('Zend_Paginator_ScrollingStyle', 'Zend/Paginator/ScrollingStyle');
+
+        $this->_cache->clean();
+        $this->_paginator->setCacheEnabled(true);
     }
 
     public function testFactoryReturnsArrayAdapter()
@@ -680,7 +697,7 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
 
     public function testClearPageItemCache()
     {
-    	$this->_paginator->setCurrentPageNumber(1)->getCurrentItems();
+        $this->_paginator->setCurrentPageNumber(1)->getCurrentItems();
     	$this->_paginator->setCurrentPageNumber(2)->getCurrentItems();
     	$this->_paginator->setCurrentPageNumber(3)->getCurrentItems();
 
@@ -708,6 +725,42 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
         $pageItems = $this->_paginator->getPageItemCache();
 
         $this->assertEquals(array(), $pageItems);
+    }
+
+    public function testWithCacheDisabled()
+    {
+        $this->_paginator->setCacheEnabled(false);
+        $this->_paginator->setCurrentPageNumber(1)->getCurrentItems();
+
+        $cachedPageItems = $this->_paginator->getPageItemCache();
+        $expected = new ArrayIterator(range(1, 10));
+
+        $this->assertEquals(array(), $cachedPageItems);
+
+        $pageItems = $this->_paginator->getCurrentItems();
+
+        $this->assertEquals($expected, $pageItems);
+    }
+
+    public function testCacheDoesNotDisturbResultsWhenChangingParam()
+    {
+        $pageItems = $this->_paginator->setCurrentPageNumber(1)->getCurrentItems();
+        $expected = new ArrayIterator(range(1, 10));
+        $this->assertEquals($expected, $pageItems);
+
+        $pageItems = $this->_paginator->setItemCountPerPage(5)->getCurrentItems();
+        $expected = new ArrayIterator(range(1, 5));
+        $this->assertEquals($expected, $pageItems);
+
+        $pageItems = $this->_paginator->getItemsByPage(2);
+        $expected = new ArrayIterator(range(6, 10));
+        $this->assertEquals($expected, $pageItems);
+
+        $this->_paginator->setItemCountPerPage(2)->getCurrentItems();
+        $pageItems = $this->_paginator->getPageItemCache();
+        $expected = array(1 =>new ArrayIterator(range(1, 2)));
+
+        $this->assertEquals($expected, $pageItems);
     }
 
     public function testToJson()
