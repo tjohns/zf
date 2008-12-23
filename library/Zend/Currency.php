@@ -109,40 +109,12 @@ class Zend_Currency
         }
 
         // Get the format
-        $this->_options['position'] = $this->_updateFormat();
         $this->_options['display']  = self::NO_SYMBOL;
         if (empty($this->_options['symbol']) === false) {
             $this->_options['display'] = self::USE_SYMBOL;
         } else if (empty($this->_options['currency']) === false) {
             $this->_options['display'] = self::USE_SHORTNAME;
         }
-    }
-
-    /**
-     * Gets the information required for formating the currency from Zend_Locale
-     *
-     * @return Zend_Currency
-     */
-    protected function _updateFormat()
-    {
-        $locale = (empty($this->_options['format']) === true) ? $this->_locale : $this->_options['format'];
-
-        // Getting the format information of the currency
-        $format = Zend_Locale_Data::getContent($locale, 'currencynumber');
-
-        iconv_set_encoding('internal_encoding', 'UTF-8');
-        if (iconv_strpos($format, ';') !== false) {
-            $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
-        }
-
-        // Knowing the sign positioning information
-        if (iconv_strpos($format, '¤') === 0) {
-            $position = self::LEFT;
-        } else if (iconv_strpos($format, '¤') === (iconv_strlen($format) - 1)) {
-            $position = self::RIGHT;
-        }
-
-        return $position;
     }
 
     /**
@@ -164,12 +136,34 @@ class Zend_Currency
         $options = $this->_checkOptions($options) + $this->_options;
 
         // Format the number
-        if (empty($options['format']) === true) {
-            $options['format'] = $this->_locale;
+        $format = $options['format'];
+        $locale = $this->_locale;
+        if (empty($format) === true) {
+            $format = Zend_Locale_Data::getContent($this->_locale, 'currencynumber');
+        } else if (Zend_Locale::isLocale($format, true, false)) {
+            $locale = $format;
+            $format = Zend_Locale_Data::getContent($format, 'currencynumber');
         }
 
-        $value = Zend_Locale_Format::toNumber($value, array('locale' => $options['format'],
-                                                            'precision' => $options['precision']));
+        $symbols = Zend_Locale_Data::getList($locale, 'symbols');
+        $value   = Zend_Locale_Format::toNumber($value, array('locale'        => $locale,
+                                                              'number_format' => $format,
+                                                              'precision'     => $options['precision']));
+
+        if ($options['position'] !== self::STANDARD) {
+            $value = str_replace('¤', '', $value);
+            $space = '';
+            if (iconv_strpos($value, ' ') !== false) {
+                $value = str_replace(' ', '', $value);
+                $space = ' ';
+            }
+
+            if ($options['position'] == self::LEFT) {
+                $value = '¤' . $space . $value;
+            } else {
+                $value = $value . $space . '¤';
+            }
+        }
 
         // Localize the number digits
         if (empty($options['script']) === false) {
@@ -178,35 +172,30 @@ class Zend_Currency
 
         // Get the sign to be placed next to the number
         if (is_numeric($options['display']) === false) {
-            $sign = ' ' . $options['display'] . ' ';
+            $sign = $options['display'];
         } else {
             switch($options['display']) {
                 case self::USE_SYMBOL:
-                    $sign = ' ' . $options['symbol'] . ' ';
+                    $sign = $options['symbol'];
                     break;
 
                 case self::USE_SHORTNAME:
-                    $sign = ' ' . $options['currency'] . ' ';
+                    $sign = $options['currency'];
                     break;
 
                 case self::USE_NAME:
-                    $sign = ' ' . $options['name'] . ' ';
+                    $sign = $options['name'];
                     break;
 
                 default:
                     $sign = '';
+                    $value = str_replace(' ', '', $value);
                     break;
             }
         }
 
-        // Place the sign next to the number
-        if ($options['position'] === self::RIGHT) {
-            $value = $value . $sign;
-        } else if ($options['position'] === self::LEFT) {
-            $value = $sign . $value;
-        }
-
-        return trim($value);
+        $value = str_replace('¤', $sign, $value);
+        return $value;
     }
 
     /**
@@ -537,9 +526,6 @@ class Zend_Currency
                         throw new Zend_Currency_Exception("Unknown position '" . $value . "'");
                     }
 
-                    if ($value === self::STANDARD) {
-                        $options['position'] = $this->_updateFormat();
-                    }
                     break;
 
                 case 'format':

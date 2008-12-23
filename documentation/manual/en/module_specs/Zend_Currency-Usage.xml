@@ -252,9 +252,10 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">format</emphasis>: Defines which locale should be used for displaying
-                    numbers. This number-format includes for example the thousand separator. If no format is set
-                    the locale from the <code>Zend_Currency</code> object will be used.
+                    <emphasis role="strong">format</emphasis>: Defines the format which should be used for displaying
+                    numbers. This number-format includes for example the thousand separator. You can eighter use
+                    a default format by giving a locale identifier, or define the number-format manually.
+                    If no format is set the locale from the <code>Zend_Currency</code> object will be used.
                 </para>
             </listitem>
             <listitem>
@@ -368,14 +369,18 @@ $currency = new Zend_Currency('en_US');
 // prints 'US$ 1,000.00'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME,
-                     'position' => Zend_Currency::RIGHT);
+$currency->setFormat(array('display' => Zend_Currency::USE_NAME,
+                           'position' => Zend_Currency::RIGHT));
 
 // prints '1.000,00 US Dollar'
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('name' => 'American Dollar');
+$currency->setFormat(array('name' => 'American Dollar'));
 // prints '1.000,00 American Dollar'
+echo $currency->toCurrency(1000);
+
+$currency->setFormat(array('format' => '##0.00'));
+// prints '1000,00 American Dollar'
 echo $currency->toCurrency(1000);
 ]]>
             </programlisting>

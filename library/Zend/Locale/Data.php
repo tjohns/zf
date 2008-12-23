@@ -54,7 +54,7 @@ class Zend_Locale_Data
 
     /**
      * Internal cache for ldml values
-     * 
+     *
      * @var Zend_Cache_Core
      * @access private
      */
@@ -507,7 +507,7 @@ class Zend_Locale_Data
                 }
                 $temp = self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\'' . $value . '\']/dateTimeFormats/availableFormats/dateFormatItem', 'id');
                 break;
-                
+
             case 'field':
                 if (empty($value)) {
                     $value = "gregorian";
@@ -928,7 +928,7 @@ class Zend_Locale_Data
                 }
                 $temp = self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\'' . $value . '\']/dateTimeFormats/dateTimeFormatLength/dateTimeFormat/pattern', '', 'pattern');
                 break;
-                
+
             case 'field':
                 if (!is_array($value)) {
                     $temp = $value;
@@ -1154,7 +1154,7 @@ class Zend_Locale_Data
 
     /**
      * Returns the set cache
-     * 
+     *
      * @return Zend_Cache_Core The set cache
      */
     public static function getCache()
@@ -1164,7 +1164,7 @@ class Zend_Locale_Data
 
     /**
      * Set a cache for Zend_Locale_Data
-     * 
+     *
      * @param Zend_Cache_Core $cache A cache frontend
      */
     public static function setCache(Zend_Cache_Core $cache)

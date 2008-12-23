@@ -377,6 +377,7 @@ class Zend_Locale_Format
             }
             $value = Zend_Locale_Math::normalize($value);
         }
+
         if (strpos($format, '0') === false) {
             require_once 'Zend/Locale/Exception.php';
             throw new Zend_Locale_Exception('Wrong format... missing 0');
@@ -418,12 +419,15 @@ class Zend_Locale_Format
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
+
         if (($prec == 0) and ($options['precision'] > 0)) {
             $prec = "0.0";
         }
+
         if (($options['precision'] + 2) > iconv_strlen($prec)) {
             $prec = str_pad((string) $prec, $options['precision'] + 2, "0", STR_PAD_RIGHT);
         }
+
         if (iconv_strpos($number, '-') !== false) {
             $number = iconv_substr($number, 1);
         }
@@ -435,15 +439,19 @@ class Zend_Locale_Format
         if (($value < 0) && (strpos($format, '.'))) {
             $rest   = substr(substr($format, strpos($format, '.') + 1), -1, 1);
         }
+
         if ($options['precision'] == '0') {
             $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 2);
         } else {
             $format = iconv_substr($format, 0, $point) . $symbols['decimal']
-                               . iconv_substr($prec, 2) . iconv_substr($format, iconv_strrpos($format, '#') + 2 + strlen($prec) - 2);
+                               . iconv_substr($prec, 2)
+                               . iconv_substr($format, iconv_strrpos($format, '#') + 1 + strlen($prec));
         }
+
         if (($value < 0) and ($rest != '0') and ($rest != '#')) {
             $format .= $rest;
         }
+
         // Add seperation
         if ($group == 0) {
             // no seperation
@@ -454,7 +462,7 @@ class Zend_Locale_Format
             for ($x = iconv_strlen($number); $x > $seperation; $x -= $seperation) {
                 if (iconv_substr($number, 0, $x - $seperation) !== "") {
                     $number = iconv_substr($number, 0, $x - $seperation) . $symbols['group']
-                             . iconv_substr($number, $x - $seperation);
+                            . iconv_substr($number, $x - $seperation);
                 }
             }
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
@@ -468,10 +476,9 @@ class Zend_Locale_Format
 
                 if ((iconv_strlen($number) - 1) > ($point - $group + 1)) {
                     $seperation2 = ($group - $group2 - 1);
-
                     for ($x = iconv_strlen($number) - $seperation2 - 2; $x > $seperation2; $x -= $seperation2) {
-                         $number = iconv_substr($number, 0, $x - $seperation2) . $symbols['group']
-                                 . iconv_substr($number, $x - $seperation2);
+                        $number = iconv_substr($number, 0, $x - $seperation2) . $symbols['group']
+                                . iconv_substr($number, $x - $seperation2);
                     }
                 }
 
@@ -486,6 +493,7 @@ class Zend_Locale_Format
                 $format = str_replace('-', $symbols['minus'], $format);
             }
         }
+
         return (string) $format;
     }
 
