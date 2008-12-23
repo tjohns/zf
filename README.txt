@@ -6,7 +6,7 @@ RELEASE INFORMATION
 ---------------
 
 Zend Framework 1.7.2 ([INSERT REV NUM HERE]).
-Released on 2008-12-22.
+Released on 2008-12-23.
 
 SPECIAL NOTICE
 --------------
