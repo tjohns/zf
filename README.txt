@@ -1,12 +1,12 @@
-Welcome to Zend Framework 1.7.1! This is the first maintenance release in the 
+Welcome to Zend Framework 1.7.2! This is the second maintenance release in the 
 Zend Framework 1.7 series. This release maintains backwards compatibility
 with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.7.1 ([INSERT REV NUM HERE]).
-Released on 2008-12-01.
+Zend Framework 1.7.2 ([INSERT REV NUM HERE]).
+Released on 2008-12-23.
 
 SPECIAL NOTICE
 --------------
@@ -61,12 +61,13 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10903
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10923
 
 SYSTEM REQUIREMENTS
 -------------------
 
-Zend Framework requires PHP 5.1.4 or later and works best with 5.2.3 or later.
+Zend recommends the most current release of PHP for critical security and
+performance enhancements, and currently supports PHP 5.2.4 or later.
 Please see our reference guide for more detailed system requirements:
 
 http://framework.zend.com/manual/en/requirements.html
@@ -74,7 +75,7 @@ http://framework.zend.com/manual/en/requirements.html
 INSTALLATION
 ------------
 
-Please see /INSTALL.txt.
+Please see INSTALL.txt.
 
 QUESTIONS AND FEEDBACK
 ----------------------
@@ -99,7 +100,7 @@ LICENSE
 -------
 
 The files in this archive are released under the Zend Framework license. You can
-find a copy of this license in /LICENSE.txt.
+find a copy of this license in LICENSE.txt.
 
 ACKNOWLEDGEMENTS
 ----------------
