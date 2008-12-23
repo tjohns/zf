@@ -235,8 +235,9 @@ $config = new Zend_Config(
     array(
         'database' => array(
             'adapter' => 'Mysqli',
-            'params' => array(
-                'dbname' => 'test',
+            'params'  => array(
+                'host'     => '127.0.0.1',
+                'dbname'   => 'test',
                 'username' => 'webuser',
                 'password' => 'secret',
             )
