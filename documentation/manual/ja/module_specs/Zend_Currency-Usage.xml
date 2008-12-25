@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12816 -->
+<!-- EN-Revision: 13450 -->
 <sect1 id="zend.currency.usage">
 
     <title>通貨の操作方法</title>
@@ -284,6 +284,8 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                     <emphasis role="strong">format</emphasis>:
                     数値を表示する際に使用するロケールを定義します。
                     数値フォーマットに含まれる内容としては、たとえば 3 桁ごとの区切り文字などがあります。
+                    ロケール ID を指定してデフォルトのフォーマットを使用することもできますし、
+                    数値フォーマットを手動で定義することもできます。
                     省略した場合は <code>Zend_Currency</code> オブジェクトのロケールを使用します。
                 </para>
             </listitem>
@@ -402,14 +404,18 @@ $currency = new Zend_Currency('en_US');
 // 'US$ 1,000.00' と表示します
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME,
-                     'position' => Zend_Currency::RIGHT);
+$currency->setFormat(array('display' => Zend_Currency::USE_NAME,
+                           'position' => Zend_Currency::RIGHT));
 
 // '1.000,00 US Dollar' と表示します
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('name' => 'American Dollar');
+$currency->setFormat(array('name' => 'American Dollar'));
 // '1.000,00 American Dollar' と表示します
+echo $currency->toCurrency(1000);
+
+$currency->setFormat(array('format' => '##0.00'));
+// '1000,00 American Dollar' と表示します
 echo $currency->toCurrency(1000);
 ]]>
             </programlisting>
