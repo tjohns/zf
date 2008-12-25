@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12200 -->
+<!-- EN-Revision: 13439 -->
 <sect1 id="zend.paginator.advanced">
     <title>高度な使用法</title>
 
@@ -119,6 +119,112 @@ return $paginator->getPagesInRange($lowerBound, $upperBound);
 $prefix = 'My_Paginator_ScrollingStyle';
 $path   = 'My/Paginator/ScrollingStyle/';
 Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.paginator.advanced.caching">
+        <title>キャッシュ機能</title>
+
+        <para>
+            <code>Zend_Paginator</code> は、渡されたデータをキャッシュする機能があります。
+            これを使用すると、アダプタが毎回データを取得することを回避できます。
+            アダプタのデータを自動的にキャッシュさせるよう設定するには、
+            <code>setCache()</code> メソッドに <code>Zend_Cache_Core</code> のインスタンスを渡します。
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+$fO = array('lifetime' => 3600, 'automatic_serialization' => true);
+$bO = array('cache_dir'=>'/tmp');
+$cache = Zend_cache::factory('Core', 'File', $fO, $bO);
+Zend_Paginator::setCache($cache);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Zend_Paginator が Zend_Cache_Core のインスタンスを受け取ると、
+            データがキャッシュされるようになります。キャッシュインスタンスを渡した後でも、
+            場合によってはデータをキャッシュしたくないこともあるでしょう。そんな場合は
+            <code>setCacheEnable()</code> を使用します。
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+// $cache は Zend_Cache_Core のインスタンスです
+Zend_Paginator::setCache($cache);
+// ... スクリプトの後半で次のようにすると
+$paginator->setCacheEnable(false);
+// キャッシュが無効になります
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            キャッシュが設定されると、データは自動的に格納され、必要に応じて取り出されるようになります。
+            キャッシュを手動で空にできると便利でしょう。そうするには
+            <code>clearPageItemCache($pageNumber)</code> をコールします。
+            何もパラメータを渡さなければ、キャッシュ全体が空になります。
+            ページ番号をパラメータとして渡すと、そのページのキャッシュを空にします。
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+Zend_Paginator::setCache($cache);
+$items = $paginator->getCurrentItems();
+// これで 1 ページ目がキャッシュに入りました
+$page3Items = $paginator->getItemsByPage(3);
+// これで 3 ページ目がキャッシュに入りました
+
+// 3 ページ目のキャッシュをクリアします
+$paginator->clearPageItemCache(3);
+
+// すべてのキャッシュをクリアします
+$paginator->clearPageItemCache();
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            1 ページあたりのアイテム数を変更すると、キャッシュ全体が空になります。
+            キャッシュの内容が無効になるからです。
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+Zend_Paginator::setCache($cache);
+// アイテムを取得します
+$items = $paginator->getCurrentItems();
+
+// すべてのキャッシュデータが消去されます
+$paginator->setItemCountPerPage(2);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            キャッシュ内のデータを見たり、直接アクセスしたりすることもできます。その場合には
+            <code>getPageItemCache()</code> を使用します。
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+$paginator->setItemCountPerPage(3);
+Zend_Paginator::setCache($cache);
+
+// アイテムを取得します
+$items = $paginator->getCurrentItems();
+$otherItems = $paginator->getItemsPerPage(4);
+
+// キャッシュされたアイテムを二次元配列で取得します
+var_dump($paginator->getPageItemCache());
 ]]>
             </programlisting>
         </para>
