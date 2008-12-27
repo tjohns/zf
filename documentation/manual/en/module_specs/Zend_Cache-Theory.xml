@@ -105,6 +105,20 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
 ]]>
         </programlisting>
         <para>
+            If you want to remove cache entries not matching the tags 'tagA' or 'tagC':
+        </para>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
+        </programlisting>
+        <para>
+            If you want to remove cache entries matching the tags 'tagA' or 'tagC':
+        </para>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, array('tagA', 'tagC'));
+]]>
+        </programlisting>
+        <para>
             Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
             <code>CLEANING_MODE_MATCHING_TAG</code>, <code>CLEANING_MODE_NOT_MATCHING_TAG</code> and
             <code>CLEANING_MODE_MATCHING_ANY_TAG</code>.
