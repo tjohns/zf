@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12412 -->
+<!-- EN-Revision: 13460 -->
 <sect1 id="zend.cache.theory">
     <title>キャッシュの仕組み</title>
     <para>
@@ -113,6 +113,20 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
         </para>
         <programlisting role="php"><![CDATA[
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
+        </programlisting>
+        <para>
+            タグ 'tagA' にも 'tagC' にも該当しないキャッシュエントリを削除するには、このようにします。
+        </para>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
+        </programlisting>
+        <para>
+            タグ 'tagA' または 'tagC' に該当するキャッシュエントリを削除するには、このようにします。
+        </para>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, array('tagA', 'tagC'));
 ]]>
         </programlisting>
         <para>
