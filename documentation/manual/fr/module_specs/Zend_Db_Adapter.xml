@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13327 -->
+<!-- EN-Revision: 13469 -->
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
@@ -176,7 +176,8 @@ $config = new Zend_Config(
         'database' => array(
             'adapter' => 'Mysqli',
             'params' => array(
-                'dbname' => 'test',
+                'host'     => '127.0.0.1',
+                'dbname'   => 'test',
                 'username' => 'webuser',
                 'password' => 'secret',
             )

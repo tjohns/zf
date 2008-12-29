@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13464 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
 
@@ -11,7 +11,7 @@
     (<code>:</code>) et le nom de la section de laquelle des données doivent être héritées.</para>
 
     <note>
-        <title>parse_ini_file</title>
+        <title>Analyse d'un fichier INI</title>
 
         <para><code>Zend_Config_Ini</code> utilise la fonction <ulink
         url="http://fr.php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> de PHP. Veuillez prendre
