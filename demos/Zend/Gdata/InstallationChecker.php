@@ -135,7 +135,7 @@ class InstallationChecker {
                         $this->checkAndAddHTMLLink($documentationLink);
                 }
 
-                if ($referToLink) {
+                if ($documentationLink) {
                     $phpExtensionErrors[] = $requiredExtensionError .
                         ' - refer to ' . $documentationLink;
                 }
