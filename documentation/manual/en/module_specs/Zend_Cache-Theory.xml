@@ -1,5 +1,5 @@
 <sect1 id="zend.cache.theory">
-    <title>The theory of caching</title>
+    <title>The Theory of Caching</title>
     <para>
         There are three key concepts in Zend_Cache. One is the unique identifier (a string) that is used
         to identify cache records. The second one is the <code>'lifetime'</code> directive as seen in the
@@ -22,7 +22,7 @@
         other hand, the backend automatically fetches the record from cache transparently.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>The <code>Zend_Cache</code> factory method</title>
+        <title>The <code>Zend_Cache</code> Factory Method</title>
         <para>
             A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
             in the following example :
@@ -60,7 +60,7 @@ $cache = Zend_Cache::factory($frontendName,
     </sect2>
 
     <sect2 id="zend.cache.tags">
-        <title>Tagging records</title>
+        <title>Tagging Records</title>
         <para>
             Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
             method, you can set an array of tags to apply for this record. Then you will be
@@ -76,7 +76,7 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
         </para></note>
     </sect2>
     <sect2 id="zend.cache.clean">
-        <title>Cleaning the cache</title>
+        <title>Cleaning the Cache</title>
         <para>
             To remove/invalidate in particular cache id, you can use the <code>remove()</code>
             method :

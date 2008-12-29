@@ -15,7 +15,7 @@
         for convenience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
     </para>
     <example id="zend.cache.introduction.example-1">
-        <title>Getting a frontend with <code>Zend_Cache::factory()</code></title>
+        <title>Getting a Frontend with <code>Zend_Cache::factory()</code></title>
         <para>
             <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
@@ -42,7 +42,7 @@ $cache = Zend_Cache::factory('Core',
     </example>
 
     <note>
-        <title>Frontends and Backends consisting of multiple words</title>
+        <title>Frontends and Backends Consisting of Multiple Words</title>
         <para>
             Some frontends and backends are named using multiple words, such
             as 'ZendPlatform'. When specifying them to the factory, separate
@@ -52,7 +52,7 @@ $cache = Zend_Cache::factory('Core',
     </note>
 
     <example id="zend.cache.introduction.example-2">
-        <title>Caching a database query result</title>
+        <title>Caching a Database Query Result</title>
 
         <para>
             Now that we have a frontend, we can cache any type of data (we turned on serialization). For
@@ -87,7 +87,7 @@ print_r($result);
     </example>
 
     <example id="zend.cache.introduction.example-3">
-        <title>Caching output with <code>Zend_Cache</code> output frontend</title>
+        <title>Caching Output with <code>Zend_Cache</code> Output Frontend</title>
         <para>
             We 'mark up' sections in which we want to cache output by adding some conditional logic,
             encapsulating the section within <code>start()</code> and <code>end()</code> methods (this

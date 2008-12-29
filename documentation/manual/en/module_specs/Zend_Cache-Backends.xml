@@ -1,5 +1,5 @@
 <sect1 id="zend.cache.backends">
-    <title>Zend_Cache backends</title>
+    <title>Zend_Cache Backends</title>
     <para>
         There are two kinds of backends: standard ones and extended ones. Of course, extended backends
         offer more features.
@@ -13,7 +13,7 @@
             Available options are :
         </para>
         <table id="zend.cache.backends.file.table">
-            <title>File backend options</title>
+            <title>File Backend Options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -123,7 +123,7 @@
             Available options are :
         </para>
         <table id="zend.cache.backends.sqlite.table">
-            <title>Sqlite backend options</title>
+            <title>Sqlite Backend Options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -174,7 +174,7 @@
             Available options are :
         </para>
         <table id="zend.cache.backends.memcached.table">
-            <title>Memcached backend options</title>
+            <title>Memcached Backend Options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -247,7 +247,7 @@
             Available options are :
         </para>
         <table id="zend.cache.backends.xcache.table">
-            <title>Xcache backend options</title>
+            <title>Xcache Backend Options</title>
             <tgroup cols="4">
                  <thead>
                       <row>
@@ -314,7 +314,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
             Available options are :
         </para>
         <table id="zend.cache.backends.twolevels.table">
-            <title>TwoLevels backend options</title>
+            <title>TwoLevels Backend Options</title>
             <tgroup cols="4">
                  <thead>
                       <row>

@@ -1,5 +1,5 @@
 <sect1 id="zend.cache.frontends">
-    <title>Zend_Cache frontends</title>
+    <title>Zend_Cache Frontends</title>
 
     <sect2 id="zend.cache.frontends.core">
         <title>Zend_Cache_Core</title>
@@ -21,7 +21,7 @@
                 These options are passed to the factory method as demonstrated in previous examples.
             </para>
             <table id="zend.cache.frontends.core.options.table">
-                <title>Core frontend options</title>
+                <title>Core Frontend Options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -240,7 +240,7 @@ if (!($cache->test($id))) {
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.output.options">
-            <title>Available options</title>
+            <title>Available Options</title>
             <para>
                 This frontend doesn't have any specific options other than those of
                 <code>Zend_Cache_Core</code>.
@@ -285,9 +285,9 @@ echo 'This is never cached ('.time().').';
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.function.options">
-            <title>Available options</title>
+            <title>Available Options</title>
             <table id="zend.cache.frontends.function.options.table">
-                <title>Function frontend options</title>
+                <title>Function Frontend Options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -365,9 +365,9 @@ $cache->call('veryExpensiveFunc', $params);
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.class.options">
-            <title>Available options</title>
+            <title>Available Options</title>
             <table id="zend.cache.frontends.class.options.table">
-                <title>Class frontend options</title>
+                <title>Class Frontend Options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -491,9 +491,9 @@ $result = $cache->foobar2('1', '2');
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
-            <title>Available options</title>
+            <title>Available Options</title>
             <table id="zend.cache.frontends.file.options.table">
-                <title>File frontend options</title>
+                <title>File Frontend Options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -575,9 +575,9 @@ $result = $cache->foobar2('1', '2');
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.page.options">
-            <title>Available options</title>
+            <title>Available Options</title>
             <table id="zend.cache.frontends.page.options.table">
-                <title>Page frontend options</title>
+                <title>Page Frontend Options</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -804,7 +804,7 @@ $cache->start();
             </programlisting>
         </sect3>
         <sect3 id="zend.cache.frontends.page.cancel">
-            <title>The specific cancel method</title>
+            <title>The Specific Cancel Method</title>
             <para>
                 Because of design issues, in some cases (for example when using non HTTP/200 return codes),
                 you could need to cancel the current cache process. So we introduce for this
