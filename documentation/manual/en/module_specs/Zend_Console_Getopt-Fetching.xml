@@ -92,7 +92,7 @@ $p_parameter = $opts->getOption('p');
             implemented.
         </para>
         <example id="zend.console.getopt.fetching.byname.example.magic">
-            <title>Using __get() and __isset() magic methods</title>
+            <title>Using __get() and __isset() Magic Methods</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
 if (isset($opts->b)) {

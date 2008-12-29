@@ -95,7 +95,7 @@
         code which flags the user specified.
     </para>
     <note>
-        <title>Getopt is not an application framework</title>
+        <title>Getopt is not an Application Framework</title>
         <para>
             <code>Zend_Console_Getopt</code> does <emphasis>not</emphasis>
             interpret the meaning of flags and parameters, nor does this class

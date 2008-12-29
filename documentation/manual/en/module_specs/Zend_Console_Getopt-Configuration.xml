@@ -152,7 +152,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <code>setOption()</code> method.
         </para>
         <note>
-            <title>Clarifying the term "option"</title>
+            <title>Clarifying the Term "option"</title>
             <para>
                 The term "option" is used for configuration of the
                 <code>Zend_Console_Getopt</code> class to match terminology
