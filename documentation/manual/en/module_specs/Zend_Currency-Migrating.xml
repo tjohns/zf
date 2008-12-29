@@ -11,7 +11,7 @@
 
     <sect2 id="zend.currency.usage.migration.fromonezerotwo">
 
-        <title>Migrating from 1.0.2 to 1.0.3 or newer</title>
+        <title>Migrating from 1.0.2 to 1.0.3 or Newer</title>
 
         <para>
             Creating an object of <code>Zend_Currency</code> has become simpler.
