@@ -87,7 +87,7 @@ $server->addDirectory(dirname(__FILE__) .'/../package/');
     </example>
 
     <note>
-        <title>All attached methods and functions need docblocks</title>
+        <title>All Attached Methods and Functions Need Docblocks</title>
 
         <para>
             Like all other server components in Zend Framework, you must
@@ -135,7 +135,7 @@ class World
     </note>
 
     <sect2 id="zend.amf.server.flex">
-        <title>Connecting to the server from Flex</title>
+        <title>Connecting to the Server from Flex</title>
 
         <para>
             Connecting to your <code>Zend_Amf_Server</code> from your Flex
@@ -310,7 +310,7 @@ $server->setProduction(true);
             <title>Disable production mode sparingly!</title>
 
             <para>
-                We suggest disabling production mode only when in development.
+                We recommend disabling production mode only when in development.
                 Exception messages and backtraces can contain sensitive system
                 information that you may not wish for outside parties to access.
                 Even though AMF is a binary format, the specification is now
@@ -475,7 +475,7 @@ private function getContactHandler(event:ResultEvent):void {
     </sect2>
 
     <sect2 id="zend.amf.server.flash">
-        <title>Connecting to the server from Flash</title>
+        <title>Connecting to the Server from Flash</title>
 
         <para>
             Connecting to your <code>Zend_Amf_Server</code> from your Flash
