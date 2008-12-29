@@ -117,7 +117,7 @@
             </para>
 
             <example id="zend.db.adapter.connecting.constructor.example">
-                <title>Using an Adapter constructor</title>
+                <title>Using an Adapter Constructor</title>
                 <programlisting role="php"><![CDATA[
 $db = new Zend_Db_Adapter_Pdo_Mysql(array(
     'host'     => '127.0.0.1',
@@ -336,7 +336,7 @@ $db = Zend_Db::factory($config->database);
             </itemizedlist>
 
             <example id="zend.db.adapter.connecting.parameters.example1">
-                <title>Passing the case-folding option to the factory</title>
+                <title>Passing the Case-Folding Option to the Factory</title>
                 <para>
                     You can specify this option by the constant
                     <code>Zend_Db::CASE_FOLDING</code>.
@@ -366,7 +366,7 @@ $db = Zend_Db::factory('Db2', $params);
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example2">
-                <title>Passing the auto-quoting option to the factory</title>
+                <title>Passing the Auto-Quoting Option to the Factory</title>
                 <para>
                     You can specify this option by the constant
                     <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>. If the value
@@ -398,7 +398,7 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example3">
-                <title>Passing PDO driver options to the factory</title>
+                <title>Passing PDO Driver Options to the Factory</title>
                 <programlisting role="php"><![CDATA[
 $pdoParams = array(
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
@@ -421,7 +421,7 @@ echo $db->getConnection()
             </example>
 
             <example id="zend.db.adapter.connecting.parameters.example4">
-                <title>Passing serialization options to the factory</title>
+                <title>Passing Serialization Options to the Factory</title>
                 <programlisting role="php"><![CDATA[
 $options = array(
     Zend_Db::ALLOW_SERIALIZATION => false
@@ -491,7 +491,7 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
             </para>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
-                <title>Handling connection exceptions</title>
+                <title>Handling Connection Exceptions</title>
                 <programlisting role="php"><![CDATA[
 try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
@@ -511,7 +511,7 @@ try {
 
     <sect2 id="zend.db.adapter.example-database">
 
-        <title>The example database</title>
+        <title>Example Database</title>
 
         <para>
             In the documentation for Zend_Db classes, we use a set of simple
@@ -906,7 +906,7 @@ echo $result;
             </para>
 
             <example id="zend.db.adapter.write.insert.example">
-                <title>Inserting to a table</title>
+                <title>Inserting in a Table</title>
                 <programlisting role="php"><![CDATA[
 $data = array(
     'created_on'      => '2007-03-22',
@@ -945,7 +945,7 @@ $db->insert('bugs', $data);
             </para>
 
             <example id="zend.db.adapter.write.insert.example2">
-                <title>Inserting expressions to a table</title>
+                <title>Inserting Expressions in a Table</title>
                 <programlisting role="php"><![CDATA[
 $data = array(
     'created_on'      => new Zend_Db_Expr('CURDATE()'),
@@ -982,7 +982,7 @@ $db->insert('bugs', $data);
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-1">
-                <title>Using lastInsertId() for an auto-increment key</title>
+                <title>Using lastInsertId() for an Auto-Increment Key</title>
                 <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
 
@@ -1007,7 +1007,7 @@ $id = $db->lastInsertId();
             </para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-2">
-                <title>Using lastInsertId() for a sequence</title>
+                <title>Using lastInsertId() for a Sequence</title>
                 <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
 
@@ -1048,7 +1048,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
             </para>
 
             <note>
-                <title>Why not use "SELECT MAX(id) FROM table"?</title>
+                <title>Why Not Use "SELECT MAX(id) FROM table"?</title>
                 <para>
                     Sometimes this query returns the most recent primary key
                     value inserted into the table. However, this technique
@@ -1121,7 +1121,7 @@ $id = $db->lastSequenceId('bugs_id_gen');
             </para>
 
             <example id="zend.db.adapter.write.update.example">
-                <title>Updating rows</title>
+                <title>Updating Rows</title>
                 <programlisting role="php"><![CDATA[
 $data = array(
     'updated_on'      => '2007-03-23',
@@ -1145,7 +1145,7 @@ $n = $db->update('bugs', $data, 'bug_id = 2');
             </para>
 
             <example id="zend.db.adapter.write.update.example-array">
-                <title>Updating rows using an array of expressions</title>
+                <title>Updating Rows Using an Array of Expressions</title>
                 <programlisting role="php"><![CDATA[
 $data = array(
     'updated_on'      => '2007-03-23',
@@ -1190,7 +1190,7 @@ $n = $db->update('bugs', $data, $where);
             </para>
 
             <example id="zend.db.adapter.write.delete.example">
-                <title>Deleting rows</title>
+                <title>Deleting Rows</title>
                 <programlisting role="php"><![CDATA[
 $n = $db->delete('bugs', 'bug_id = 3');
 ]]>
@@ -1268,7 +1268,7 @@ echo $sql;
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example">
-                <title>Using quote()</title>
+                <title>Using <code>quote()</code></title>
                 <programlisting role="php"><![CDATA[
 $name = $db->quote("O'Reilly");
 echo $name;
@@ -1312,7 +1312,7 @@ SELECT * FROM atable WHERE intColumn = '123'
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example-2">
-                <title>Using quote() with a SQL type</title>
+                <title>Using <code>quote()</code> with a SQL Type</title>
                 <programlisting role="php"><![CDATA[
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
@@ -1364,7 +1364,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example">
-                <title>Using quoteInto()</title>
+                <title>Using <code>quoteInto()</code></title>
                 <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
@@ -1381,7 +1381,7 @@ echo $sql;
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example-2">
-                <title>Using quoteInto() with a SQL type</title>
+                <title>Using <code>quoteInto()</code> with a SQL Type</title>
                 <programlisting role="php"><![CDATA[
 $sql = $db
     ->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');
@@ -1515,7 +1515,7 @@ echo $sql
         </para>
 
         <example id="zend.db.adapter.transactions.example">
-            <title>Managing a transaction to ensure consistency</title>
+            <title>Managing a Transaction to Ensure Consistency</title>
             <programlisting role="php"><![CDATA[
 // Start a transaction explicitly.
 $db->beginTransaction();
@@ -1568,7 +1568,7 @@ try {
         </para>
 
         <table frame="all" cellpadding="5" id="zend.db.adapter.list-describe.metadata">
-            <title>Metadata fields returned by describeTable()</title>
+            <title>Metadata Fields Returned by describeTable()</title>
             <tgroup cols="3" align="left" colsep="1" rowsep="1">
                 <thead>
                     <row>
@@ -1653,7 +1653,7 @@ try {
         </table>
 
         <note>
-            <title>How the IDENTITY metadata field relates to specific RDBMS</title>
+            <title>How the IDENTITY Metadata Field Relates to Specific RDBMSs</title>
             <para>
                 The IDENTITY metadata field was chosen as an 'idiomatic' term to
                 represent a relation to surrogate keys. This field can be
@@ -1720,7 +1720,7 @@ try {
         </para>
 
         <example id="zend.db.adapter.closing.example">
-            <title>Closing a database connection</title>
+            <title>Closing a Database Connection</title>
             <programlisting role="php"><![CDATA[
 $db->closeConnection();
 ]]>
@@ -1728,7 +1728,7 @@ $db->closeConnection();
         </example>
 
         <note>
-            <title>Does Zend_Db support persistent connections?</title>
+            <title>Does Zend_Db Support Persistent Connections?</title>
             <para>
                 The usage of persistent connections is not supported
                 or encouraged in Zend_Db.
@@ -1780,7 +1780,7 @@ $db->closeConnection();
         </para>
 
         <example id="zend.db.adapter.other-statements.example">
-            <title>Running a non-prepared statement in a PDO adapter</title>
+            <title>Running a Non-Prepared Statement in a PDO Adapter</title>
             <programlisting role="php"><![CDATA[
 $result = $db->getConnection()->exec('DROP TABLE bugs');
 ]]>
