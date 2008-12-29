@@ -176,7 +176,7 @@ Array
         </para>
 
         <note>
-            <title>What is a DN?</title>
+            <title>What is a Distinguished Name?</title>
             <para>
                 A DN or "distinguished name" is a string that represents the path to an object within the LDAP
                 directory. Each comma-separated component is an attribute and value representing a node. The components
@@ -201,7 +201,7 @@ Array
         </para>
 
         <note>
-            <title>The Gory Details - What exactly happens in the authenticate method?</title>
+            <title>The Gory Details: What Happens in the Authenticate Method?</title>
             <para>
                 When the <code>authenticate()</code> method is called, the adapter iterates over each set of server
                 options, sets them on the internal <code>Zend_Ldap</code> instance, and calls the

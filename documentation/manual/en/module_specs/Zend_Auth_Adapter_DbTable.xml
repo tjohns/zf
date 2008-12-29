@@ -172,7 +172,7 @@ Array
         </example>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
-        <title>Advanced Use: Persisting a DbTable Result Object</title>
+        <title>Advanced Usage: Persisting a DbTable Result Object</title>
         <para>
             By default, <code>Zend_Auth_Adapter_DbTable</code> returns the
             identity supplied back to the auth object upon successful
