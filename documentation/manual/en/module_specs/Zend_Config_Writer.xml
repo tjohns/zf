@@ -95,7 +95,7 @@ $writer->write('config.xml', $config);
     </example>
 
     <example id="zend.config.writer.modifying">
-        <title>Modifying an existing config</title>
+        <title>Modifying an Existing Config</title>
         <para>
             This example demonstrates how to edit an existing config file.
         </para>
@@ -118,7 +118,7 @@ $writer->write();
     </example>
 
     <note>
-        <title>Loading a config file</title>
+        <title>Loading a Config File</title>
         <para>
             When loading an existing config file for modifications it is very
             important to load all sections and to skip the extends, so that

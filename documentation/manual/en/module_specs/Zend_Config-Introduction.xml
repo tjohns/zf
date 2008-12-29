@@ -9,7 +9,7 @@
         <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
     </para>
     <example id="zend.config.introduction.example.using">
-        <title>Using Zend_Config Per Se</title>
+        <title>Using Zend_Config</title>
         <para>
             Normally it is expected that users would use one of the adapter classes such as
             <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> or

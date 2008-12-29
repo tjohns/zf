@@ -9,7 +9,7 @@
         colon character (<code>:</code>) and the name of the section from which data are to be inherited.
     </para>
     <note>
-        <title>parse_ini_file</title>
+        <title>Parsing the INI File</title>
         <para>
             <code>Zend_Config_Ini</code> utilizes the
             <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
@@ -77,7 +77,7 @@ echo $config->database->params->dbname; // prints "dbname"
     </example>
     <note>
     <table id="zend.config.adapters.ini.table">
-        <title>Zend_Config_Ini Constructor parameters</title>
+        <title>Zend_Config_Ini Constructor Parameters</title>
         <tgroup cols="2">
             <thead>
                   <row>
