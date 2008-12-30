@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12817 -->
+<!-- EN-Revision: 13467 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
@@ -194,9 +194,9 @@ Array
         </para>
 
         <note>
-            <title>DN とは?</title>
+            <title>Distinguished Name とは?</title>
             <para>
-                DN とは "distinguished name" の略で、
+                DN ("distinguished name") とは、
                 LDAP ディレクトリ内のオブジェクトへのパスを表す文字列のことです。
                 カンマで区切られた各部分が、ノードを表す属性と値となります。
                 各部分は逆順に評価されます。たとえば、ユーザアカウント
