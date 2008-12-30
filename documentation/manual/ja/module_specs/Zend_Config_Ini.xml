@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13464 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
@@ -14,7 +14,7 @@
         そしてその後に継承元のセクション名を指定することで表します。
     </para>
     <note>
-        <title>parse_ini_file</title>
+        <title>INI ファイルのパース</title>
         <para>
             <code>Zend_Config_Ini</code> は、PHP の
             <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
