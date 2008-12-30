@@ -38,7 +38,7 @@ class Zend_Gdata_Gapps_EmailListRecipientEntryTest extends PHPUnit_Framework_Tes
     }
 
     private function verifyAllSamplePropertiesAreCorrect ($emailListRecipientEntry) {
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/SusanJones%40example.com',
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/SusanJones%40example.com',
             $emailListRecipientEntry->id->text);
         $this->assertEquals('1970-01-01T00:00:00.000Z', $emailListRecipientEntry->updated->text);
         $this->assertEquals('http://schemas.google.com/g/2005#kind', $emailListRecipientEntry->category[0]->scheme);
@@ -47,10 +47,10 @@ class Zend_Gdata_Gapps_EmailListRecipientEntryTest extends PHPUnit_Framework_Tes
         $this->assertEquals('SusanJones', $emailListRecipientEntry->title->text);;
         $this->assertEquals('self', $emailListRecipientEntry->getLink('self')->rel);
         $this->assertEquals('application/atom+xml', $emailListRecipientEntry->getLink('self')->type);
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/SusanJones%40example.com', $emailListRecipientEntry->getLink('self')->href);
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/SusanJones%40example.com', $emailListRecipientEntry->getLink('self')->href);
         $this->assertEquals('edit', $emailListRecipientEntry->getLink('edit')->rel);
         $this->assertEquals('application/atom+xml', $emailListRecipientEntry->getLink('edit')->type);
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/SusanJones%40example.com', $emailListRecipientEntry->getLink('edit')->href);
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/SusanJones%40example.com', $emailListRecipientEntry->getLink('edit')->href);
         $this->assertEquals('SusanJones@example.com', $emailListRecipientEntry->who->email);
     }
 

@@ -66,7 +66,7 @@ require_once 'Zend/Gdata/Gapps/EmailListRecipientFeed.php';
 class Zend_Gdata_Gapps extends Zend_Gdata
 {
 
-    const APPS_BASE_FEED_URI = 'https://www.google.com/a/feeds';
+    const APPS_BASE_FEED_URI = 'https://apps-apis.google.com/a/feeds';
     const AUTH_SERVICE_NAME = 'apps';
 
     /**

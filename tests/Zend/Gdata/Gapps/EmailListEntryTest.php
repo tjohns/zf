@@ -38,7 +38,7 @@ class Zend_Gdata_Gapps_EmailListEntryTest extends PHPUnit_Framework_TestCase
     }
 
     private function verifyAllSamplePropertiesAreCorrect ($emailListEntry) {
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/emailList/2.0/us-sales',
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales',
             $emailListEntry->id->text);
         $this->assertEquals('1970-01-01T00:00:00.000Z', $emailListEntry->updated->text);
         $this->assertEquals('http://schemas.google.com/g/2005#kind', $emailListEntry->category[0]->scheme);
@@ -47,13 +47,13 @@ class Zend_Gdata_Gapps_EmailListEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('us-sales', $emailListEntry->title->text);;
         $this->assertEquals('self', $emailListEntry->getLink('self')->rel);
         $this->assertEquals('application/atom+xml', $emailListEntry->getLink('self')->type);
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/emailList/2.0/us-sales', $emailListEntry->getLink('self')->href);
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales', $emailListEntry->getLink('self')->href);
         $this->assertEquals('edit', $emailListEntry->getLink('edit')->rel);
         $this->assertEquals('application/atom+xml', $emailListEntry->getLink('edit')->type);
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/emailList/2.0/us-sales', $emailListEntry->getLink('edit')->href);
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales', $emailListEntry->getLink('edit')->href);
         $this->assertEquals('us-sales', $emailListEntry->emailList->name);
         $this->assertEquals('http://schemas.google.com/apps/2006#emailList.recipients', $emailListEntry->getFeedLink('http://schemas.google.com/apps/2006#emailList.recipients')->rel);
-        $this->assertEquals('http://www.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/', $emailListEntry->getFeedLink('http://schemas.google.com/apps/2006#emailList.recipients')->href);
+        $this->assertEquals('http://apps-apis.google.com/a/feeds/example.com/emailList/2.0/us-sales/recipient/', $emailListEntry->getFeedLink('http://schemas.google.com/apps/2006#emailList.recipients')->href);
     }
 
     public function testEmptyEntryShouldHaveNoExtensionElements() {

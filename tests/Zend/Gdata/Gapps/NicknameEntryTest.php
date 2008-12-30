@@ -38,7 +38,7 @@ class Zend_Gdata_Gapps_NicknameEntryTest extends PHPUnit_Framework_TestCase
     }
 
     private function verifyAllSamplePropertiesAreCorrect ($nicknameEntry) {
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/nickname/2.0/Susy',
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/nickname/2.0/Susy',
             $nicknameEntry->id->text);
         $this->assertEquals('1970-01-01T00:00:00.000Z', $nicknameEntry->updated->text);
         $this->assertEquals('http://schemas.google.com/g/2005#kind', $nicknameEntry->category[0]->scheme);
@@ -47,10 +47,10 @@ class Zend_Gdata_Gapps_NicknameEntryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Susy', $nicknameEntry->title->text);;
         $this->assertEquals('self', $nicknameEntry->getLink('self')->rel);
         $this->assertEquals('application/atom+xml', $nicknameEntry->getLink('self')->type);
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/nickname/2.0/Susy', $nicknameEntry->getLink('self')->href);
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/nickname/2.0/Susy', $nicknameEntry->getLink('self')->href);
         $this->assertEquals('edit', $nicknameEntry->getLink('edit')->rel);
         $this->assertEquals('application/atom+xml', $nicknameEntry->getLink('edit')->type);
-        $this->assertEquals('https://www.google.com/a/feeds/example.com/nickname/2.0/Susy', $nicknameEntry->getLink('edit')->href);
+        $this->assertEquals('https://apps-apis.google.com/a/feeds/example.com/nickname/2.0/Susy', $nicknameEntry->getLink('edit')->href);
         $this->assertEquals('Susy', $nicknameEntry->nickname->name);
         $this->assertEquals('SusanJones', $nicknameEntry->login->username);
         $this->assertEquals(false, $nicknameEntry->login->suspended);
