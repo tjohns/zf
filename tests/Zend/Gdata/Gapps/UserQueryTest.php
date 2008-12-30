@@ -39,7 +39,7 @@ class Zend_Gdata_Gapps_UserQueryTest extends PHPUnit_Framework_TestCase
     public function testDefaultQueryURIGeneration()
     {
         $this->query->setDomain("foo.bar.invalid");
-        $this->assertEquals("https://www.google.com/a/feeds/foo.bar.invalid/user/2.0",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/foo.bar.invalid/user/2.0",
                 $this->query->getQueryUrl());
     }
 
@@ -49,12 +49,12 @@ class Zend_Gdata_Gapps_UserQueryTest extends PHPUnit_Framework_TestCase
     {
         $this->query->setDomain("my.domain.com");
         $this->assertEquals("my.domain.com", $this->query->getDomain());
-        $this->assertEquals("https://www.google.com/a/feeds/my.domain.com/user/2.0",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/my.domain.com/user/2.0",
                 $this->query->getQueryUrl());
 
         $this->query->setDomain("hello.world.baz");
         $this->assertEquals("hello.world.baz", $this->query->getDomain());
-        $this->assertEquals("https://www.google.com/a/feeds/hello.world.baz/user/2.0",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/hello.world.baz/user/2.0",
                 $this->query->getQueryUrl());
     }
 
@@ -65,12 +65,12 @@ class Zend_Gdata_Gapps_UserQueryTest extends PHPUnit_Framework_TestCase
         $this->query->setDomain("my.domain.com");
         $this->query->setUsername("foo");
         $this->assertEquals("foo", $this->query->getUsername());
-        $this->assertEquals("https://www.google.com/a/feeds/my.domain.com/user/2.0/foo",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/my.domain.com/user/2.0/foo",
                 $this->query->getQueryUrl());
 
         $this->query->setUsername("bar");
         $this->assertEquals("bar", $this->query->getUsername());
-        $this->assertEquals("https://www.google.com/a/feeds/my.domain.com/user/2.0/bar",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/my.domain.com/user/2.0/bar",
                 $this->query->getQueryUrl());
     }
 
@@ -81,12 +81,12 @@ class Zend_Gdata_Gapps_UserQueryTest extends PHPUnit_Framework_TestCase
         $this->query->setDomain("my.domain.com");
         $this->query->setStartUsername("foo");
         $this->assertEquals("foo", $this->query->getStartUsername());
-        $this->assertEquals("https://www.google.com/a/feeds/my.domain.com/user/2.0?startUsername=foo",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/my.domain.com/user/2.0?startUsername=foo",
                 $this->query->getQueryUrl());
 
         $this->query->setStartUsername(null);
         $this->assertEquals(null, $this->query->getStartUsername());
-        $this->assertEquals("https://www.google.com/a/feeds/my.domain.com/user/2.0",
+        $this->assertEquals("https://apps-apis.google.com/a/feeds/my.domain.com/user/2.0",
                 $this->query->getQueryUrl());
     }
 
