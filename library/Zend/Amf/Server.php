@@ -30,6 +30,9 @@ require_once 'Zend/Amf/Constants.php';
 /** Zend_Amf_Value_MessageBody */
 require_once 'Zend/Amf/Value/MessageBody.php';
 
+/** Zend_Amf_Value_MessageHeader */
+require_once 'Zend/Amf/Value/MessageHeader.php';
+
 /** Zend_Amf_Value_Messaging_CommandMessage */
 require_once 'Zend/Amf/Value/Messaging/CommandMessage.php';
 
@@ -79,6 +82,24 @@ class Zend_Amf_Server implements Zend_Server_Interface
      * @var array
      */
     protected $_table = array();
+    
+    /**
+     * 
+     * @var bool session flag; whether or not to add a session to each response.
+     */
+    protected $_session = false;
+    
+    /**
+     * Namespace allows all AMF calls to not clobber other php session variables
+     * @var Zend_Session_NameSpace default session namespace zend_amf
+     */
+    protected $_sesionNamespace = 'zend_amf';
+    
+    /**
+     * Set the default session.name if php_
+     * @var unknown_type
+     */
+    protected $_sessionName = 'PHPSESSID';
 
     /**
      * Set production flag
@@ -101,7 +122,27 @@ class Zend_Amf_Server implements Zend_Server_Interface
     {
         return $this->_production;
     }
-
+    
+    /**
+     * @param namespace of all incoming sessions defaults to Zend_Amf
+     * @return Zend_Amf_Server
+     */
+    public function setSession($namespace = 'Zend_Amf')
+    {
+        require_once 'Zend/Session.php';
+        $this->_session = true;
+        $this->_sesionNamespace = new Zend_Session_Namespace($namespace);
+        return $this;
+    }
+    
+    /**
+     * Whether of not the server is using sessions
+     * @return bool
+     */
+    public function isSession()
+    {
+        return $this->_session;
+    }
 
     /**
      * Loads a remote class or method and executes the function and returns
@@ -295,6 +336,21 @@ class Zend_Amf_Server implements Zend_Server_Interface
             $newBody     = new Zend_Amf_Value_MessageBody($responseURI, null, $return);
             $response->addAmfBody($newBody);
         }
+        // Add a session header to the body if session is requested. 
+        if($this->isSession()) {
+           $currentID = session_id(); 
+           if(!strpos($_SERVER['QUERY_STRING'], $currentID) !== FALSE) {
+               if(strrpos($_SERVER['QUERY_STRING'], "?") !== FALSE) {
+                    $joint = "&";
+                } else {
+                    $joint = "?";
+                }
+                // create a new AMF message header with the session id as a variable.
+                $sessionValue = $joint . $this->_sessionName . "=" . $currentID;
+                $sessionHeader = new Zend_Amf_Value_MessageHeader("AppendToGatewayUrl", false, $sessionValue);
+            }
+            $response->addAmfHeader($sessionHeader);
+        }
 
         // serialize the response and return serialized body.
         $response->finalize();
@@ -313,6 +369,12 @@ class Zend_Amf_Server implements Zend_Server_Interface
             $request = $this->getRequest();
         } else {
             $this->setRequest($request);
+        }
+        if ($this->isSession()) {
+             // Check if a session is being sent from the amf call
+             if($_COOKIE[$this->_sessionName]) {
+                 session_id($_COOKIE[$this->_sessionName]);
+            }
         }
 
         // Check for errors that may have happend in deserialization of Request.
@@ -499,7 +561,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
      */
     public function getDirectory()
     {
-        return $_directory;
+        return $this->_directories;
     }
 
     /**
@@ -544,6 +606,8 @@ class Zend_Amf_Server implements Zend_Server_Interface
         }
         $this->_table = $table;
     }
+    
+ 	
 
     /**
      * Raise a server fault
