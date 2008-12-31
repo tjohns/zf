@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 13486 -->
 <sect1 id="zend.form.forms">
     <title>Zend_Form によるフォームの作成</title>
 
@@ -32,7 +32,7 @@
     <para>
         <code>Zend_Form</code> で作成したフォームが複雑なものになることもありますが、
         シンプルなフォームで使用するのがもっともよくある使用例でしょう。
-        手早いアプリケーション開発やプロトタイピングでの使用に最適です。
+        手早いアプリケーション開発 (RAD) やプロトタイピングでの使用に最適です。
     </para>
 
     <para>
@@ -49,7 +49,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        オプションで設定を渡すことができます。
+        Zend_Config のインスタンスあるいは配列で設定を渡すことができます。
         これを使用すると、オブジェクトの状態を設定したり新しい要素を作成したりすることができます。
     </para>
 
@@ -191,7 +191,7 @@ $element = new Zend_Form_Element_Text('foo');
 $form->addElement($element);
 
 // ファクトリを使用します
-// 
+//
 // Zend_Form_Element_Text 型で
 // 'foo' という名前の要素を作成します
 $form->addElement('text', 'foo');
@@ -606,13 +606,13 @@ $login = $form->login;
 
             <programlisting role="php"><![CDATA[
 $form->addDisplayGroup(
-    array('foo', 'bar'), 
-    'foobar', 
+    array('foo', 'bar'),
+    'foobar',
     array('disableLoadDefaultDecorators' => true)
 );
 ]]>
             </programlisting>
-            
+
             <para>
                 このオプションは、他のオプションと混用することもできます。
                 その場合はオプションの配列や <code>Zend_Config</code>
@@ -684,7 +684,7 @@ $form->setDisplayGroupDecorators(array(
             <programlisting role="php"><![CDATA[
 // 'My_DisplayGroup' クラスを使用します
 $form->addDisplayGroup(
-    array('username', 'password'), 
+    array('username', 'password'),
     'user',
     array('displayGroupClass' => 'My_DisplayGroup')
 );
@@ -1197,7 +1197,7 @@ $form->setDecorators(array(
 $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
 ]]>
             </programlisting>
-            
+
             <para>
                 このオプションは、他のオプションと混用することもできます。
                 その場合はオプションの配列や <code>Zend_Config</code>
@@ -1243,7 +1243,7 @@ $form = $element->getDecorator('FooBar');
 $form->addDecorators(
     array('HtmlTag', array('tag' => 'div')),
     array(
-        'decorator' => array('FooBar' => 'HtmlTag'), 
+        'decorator' => array('FooBar' => 'HtmlTag'),
         'options' => array('tag' => 'dd')
     ),
 );
@@ -1328,7 +1328,7 @@ echo $form->renderFieldset("<p>This is fieldset content</p>");
             <code>Zend_Form</code> は、フォーム全体あるいはその一部を一度に検証したり、
             XmlHttpRequests (AJAX) のレスポンスを自動的に検証したりすることができます。
             送信されたデータが無効な場合は、
-            検証に失敗した要素やサブフォームについて
+            要素やサブフォームについて
             検証エラーのコードやメッセージを取得するメソッドが用意されています。
         </para>
 
@@ -1393,7 +1393,7 @@ $json = $form->processAjax($data);
 
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors();
-$messages = $form->getMessage();
+$messages = $form->getMessages();
 ]]>
         </programlisting>
 
@@ -1435,7 +1435,7 @@ $messages = $form->getMessages('username');
                 時には、要素にアタッチされたバリデータが生成するエラーメッセージではなく
                 独自のエラーメッセージを指定したくなることもあるでしょう。
                 さらに、時には自分自身でフォームを無効だとマークしたいこともあるでしょう。
-                1.6.0 以降、次のメソッドでこの機能を使用できるようになりました。
+                次のメソッドでこの機能を使用できます。
             </para>
 
             <itemizedlist>
