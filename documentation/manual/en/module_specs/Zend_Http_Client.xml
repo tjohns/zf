@@ -147,7 +147,7 @@ $response = $client->request();
               </para>
             </footnote>.
             For convenience, these are all defined as class constants:
-            Zend_Http_Request::GET, Zend_Http_Request::POST and so on.
+            Zend_Http_Client::GET, Zend_Http_Client::POST and so on.
         </para>
         <para>
             If no method is specified, the method set by the last setMethod()
