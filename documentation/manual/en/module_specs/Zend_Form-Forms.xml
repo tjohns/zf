@@ -1389,7 +1389,7 @@ $json = $form->processAjax($data);
 
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors();
-$messages = $form->getMessage();
+$messages = $form->getMessages();
 ]]>
         </programlisting>
 
