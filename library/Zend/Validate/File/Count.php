@@ -245,7 +245,6 @@ var_dump($file);
     public function isValid($value, $file = null)
     {
         $this->addFile($value);
-print "\nVALIDATION:";
         $this->_count = count($this->_files);
         if (($this->_max !== null) && ($this->_count > $this->_max)) {
             return $this->_throw($file, self::TOO_MUCH);
