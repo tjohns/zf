@@ -461,9 +461,7 @@
     <chapter id="zend.text">
         <title>Zend_Text</title>
         <xi:include href="module_specs/Zend_Text_Figlet.xml" />
-        <xi:include href="module_specs/Zend_Text_Table.xml">
-            <xi:fallback><xi:include href="../en/module_specs/Zend_Text_Table.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="module_specs/Zend_Text_Table.xml" />
     </chapter>
 
     <chapter id="zend.timesync">
@@ -516,9 +514,7 @@
     <xi:include href="ref/coding_standard.xml" />
     <appendix id="performance">
         <title>Zend Framework パフォーマンスガイド</title>
-        <xi:include href="ref/performance-introduction.xml">
-            <xi:fallback><xi:include href="../en/ref/performance-introduction.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="ref/performance-introduction.xml" />
         <xi:include href="ref/performance-classloading.xml">
             <xi:fallback><xi:include href="../en/ref/performance-classloading.xml" /></xi:fallback>
         </xi:include>
