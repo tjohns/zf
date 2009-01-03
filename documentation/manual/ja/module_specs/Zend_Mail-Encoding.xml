@@ -1,7 +1,7 @@
 <sect1 id="zend.mail.encoding">
     <title>エンコーディング</title>
     <para>
-        テキストおよび HTML メッセージの本文は、デフォルトでは
+        テキストおよび HTML メッセージの本文およびヘッダーは、デフォルトでは
         quotedprintable 方式でエンコードされます。その他の添付ファイルは、デフォルトでは
         base64 でエンコードされますが、<code>addAttachment()</code> のコール時に変更したり
         MIME パートオブジェクトに後から代入して変更することもできます。
