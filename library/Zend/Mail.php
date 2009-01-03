@@ -456,7 +456,6 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _storeHeader($headerName, $value, $append = false)
     {
-// ??        $value = strtr($value,"\r\n\t",'???');
         if (isset($this->_headers[$headerName])) {
             $this->_headers[$headerName][] = $value;
         } else {
@@ -494,7 +493,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _addRecipientAndHeader($headerName, $name, $email)
     {
-        $email = strtr($email,"\r\n\t",'???');
+    	$email = $this->_filterEmail($email);
         $this->_addRecipient($email, ('To' == $headerName) ? true : false);
         if ($name !== '' && $name !== null && $name !== $email) {
             $encodedName = $this->_encodeHeader($name);
@@ -569,7 +568,7 @@ class Zend_Mail extends Zend_Mime_Message
     public function setFrom($email, $name = null)
     {
         if ($this->_from === null) {
-            $email = strtr($email,"\r\n\t",'???');
+        	$email = $this->_filterEmail($email);
             $this->_from = $email;
             if ($name !== null && $name !== $email) {
                 $encodedName = $this->_encodeHeader($name);
@@ -613,7 +612,7 @@ class Zend_Mail extends Zend_Mime_Message
     public function setReturnPath($email)
     {
         if ($this->_returnPath === null) {
-            $email = strtr($email,"\r\n\t",'???');
+            $email = $this->_filterEmail($email);
             $this->_returnPath = $email;
             $this->_storeHeader('Return-Path', $email, false);
         } else {
@@ -782,6 +781,18 @@ class Zend_Mail extends Zend_Mime_Message
         $transport->send($this);
 
         return $this;
+    }
+
+    /**
+     * Filter of email data
+     *
+     * @param string $email
+     * @return string
+     */
+    protected function _filterEmail($email)
+    {
+        return strtr($email, array("\r" => '', "\n" => '', "\t" => '',
+                                   ','  => '?', '"' => '?'));
     }
 
 }
