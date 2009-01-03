@@ -74,6 +74,12 @@ class Zend_Mail extends Zend_Mime_Message
     protected $_headers = array();
 
     /**
+     * Encoding of Mail headers
+     * @var string
+     */
+    protected $_encodingOfHeaders = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
+
+    /**
      * From: address
      * @var string
      */
@@ -238,6 +244,41 @@ class Zend_Mail extends Zend_Mime_Message
         return $this->_mimeBoundary;
     }
 
+	/**
+	 * Return the encoding of mail headers
+	 *
+	 * @return string
+	 */
+	public function getEncodingOfHeaders()
+	{
+		return $this->_encodingOfHeaders;
+	}
+
+	/**
+	 * Set the encoding of mail headers
+	 *
+	 * @param string $encoding
+     * @return Zend_Mail Provides fluent interface
+	 *
+	 */
+	public function setEncodingOfHeaders($encoding)
+	{
+        $allowed = array(
+            Zend_Mime::ENCODING_BASE64,
+            Zend_Mime::ENCODING_QUOTEDPRINTABLE
+        );
+        if (!in_array($encoding, $allowed)) {
+            /**
+             * @see Zend_Mail_Exception
+             */
+            require_once 'Zend/Mail/Exception.php';
+            throw new Zend_Mail_Exception('Invalid encoding "' . $encoding . '"');
+        }
+		$this->_encodingOfHeaders = $encoding;
+
+		return $this;
+	}
+
     /**
      * Sets the text body for the message.
      *
@@ -389,10 +430,17 @@ class Zend_Mail extends Zend_Mime_Message
     {
       if (Zend_Mime::isPrintable($value)) {
           return $value;
-      } else {
+      } elseif ($this->_encodingOfHeaders === Zend_Mime::ENCODING_QUOTEDPRINTABLE) {
           $quotedValue = Zend_Mime::encodeQuotedPrintable($value);
           $quotedValue = str_replace(array('?', ' ', '_'), array('=3F', '=20', '=5F'), $quotedValue);
           return '=?' . $this->_charset . '?Q?' . $quotedValue . '?=';
+      } elseif ($this->_encodingOfHeaders === Zend_Mime::ENCODING_BASE64) {
+      	  return '=?' . $this->_charset . '?B?' . Zend_Mime::encodeBase64($value) . '?=';
+      } else {
+          /**
+           * @todo 7Bit and 8Bit is currently handled the same way.
+           */
+      	  return $value;
       }
     }
 
@@ -626,7 +674,7 @@ class Zend_Mail extends Zend_Mime_Message
     {
         return $this->_subject;
     }
-    
+
     /**
      * Sets Date-header
      *
