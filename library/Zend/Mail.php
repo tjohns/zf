@@ -469,6 +469,18 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
+     * Clear header from the message
+     *
+     * @param string $headerName
+     */
+    protected function _clearHeader($headerName)
+    {
+    	if (isset($this->_headers[$headerName])){
+    		unset($this->_headers[$headerName]);
+    	}
+    }
+
+    /**
      * Add a recipient
      *
      * @param string $email
@@ -558,6 +570,23 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
+     * Clears list of recipient email addresses
+     *
+     * @return Zend_Mail Provides fluent interface
+     */
+    public function clearRecipients()
+    {
+    	$this->_recipients = array();
+    	$this->_to = array();
+
+    	$this->_clearHeader('To');
+        $this->_clearHeader('Cc');
+        $this->_clearHeader('Bcc');
+
+        return $this;
+    }
+
+    /**
      * Sets From-header and sender of the message
      *
      * @param  string    $email
@@ -603,7 +632,20 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Sets the Return-Path header for an email
+     * Clears the sender from the mail
+     *
+     * @return Zend_Mail Provides fluent interface
+     */
+    public function clearFrom()
+    {
+    	$this->_from = null;
+    	$this->_clearHeader('From');
+
+    	return $this;
+    }
+
+    /**
+     * Sets the Return-Path header of the message
      *
      * @param  string    $email
      * @return Zend_Mail Provides fluent interface
@@ -626,7 +668,7 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Returns the current Return-Path address for the email
+     * Returns the current Return-Path address of the message
      *
      * If no Return-Path header is set, returns the value of {@link $_from}.
      *
@@ -639,6 +681,19 @@ class Zend_Mail extends Zend_Mime_Message
         }
 
         return $this->_from;
+    }
+
+    /**
+     * Clears the current Return-Path address from the message
+     *
+     * @return Zend_Mail Provides fluent interface
+     */
+    public function clearReturnPath()
+    {
+    	$this->_returnPath = null;
+    	$this->_clearHeader('Return-Path');
+
+    	return $this;
     }
 
     /**
@@ -672,6 +727,19 @@ class Zend_Mail extends Zend_Mime_Message
     public function getSubject()
     {
         return $this->_subject;
+    }
+
+    /**
+     * Clears the encoded subject from the message
+     *
+     * @return  Zend_Mail Provides fluent interface
+     */
+    public function clearSubject()
+    {
+    	$this->_subject = null;
+    	$this->_clearHeader('Subject');
+
+    	return $this;
     }
 
     /**
@@ -717,6 +785,19 @@ class Zend_Mail extends Zend_Mime_Message
     public function getDate()
     {
         return $this->_date;
+    }
+
+    /**
+     * Clears the formatted date from the message
+     *
+     * @return Zend_Mail Provides fluent interface
+     */
+    public function clearDate()
+    {
+    	$this->_date = null;
+    	$this->_clearHeader('Date');
+
+    	return $this;
     }
 
     /**
