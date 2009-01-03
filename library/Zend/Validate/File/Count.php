@@ -215,7 +215,6 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
      */
     public function addFile($file)
     {
-var_dump($file);
         if (is_string($file)) {
             $file = array($file);
         }
