@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13418 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
     <para>
@@ -192,13 +192,22 @@
                       <row>
                           <entry><code>servers</code></entry>
                           <entry><code>array</code></entry>
-                          <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
+                          <entry>
+                              <code>
+                                  array(array('host' => 'localhost','port' => 11211, 'persistent' => true, 'weight' => 1,
+                                  'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                              </code>
+                          </entry>
                           <entry>
                               Ein Array von Memcached Servern; jeder Memcached Server wird durch ein
                               assoziatives Array beschrieben :
                               'host' => (string) : Der Name des Memcached Servers,
                               'port' => (int) : Der Port des Memcached Servers,
                               'persistent' => (bool) : Persistente Verbindungen für diesen Memcached Server verwenden oder nicht
+                              'weight' => (int) : Das Gewicht des Memcached Servers,
+                              'timeout' => (int) : Das Timeout des Memcached Servers,
+                              'retry_interval' => (int) : Das Wiederholungsintervall des Memcached Servers,
+                              'status' => (bool) : Der Status des Memcached Servers
                           </entry>
                       </row>
                       <row>
