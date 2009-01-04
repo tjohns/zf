@@ -142,35 +142,35 @@
 
             <listitem>
                 <para><code>assertRedirectTo($url, $message = '')</code> : vérifie qu'une redirection est apparue, et
-                que la valeur de l'entête "<code>Location</code>" est l' <code>$url</code> fourni.</para>
+                que la valeur de l'en-tête "<code>Location</code>" est l' <code>$url</code> fourni.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertNotRedirectTo($url, $message = '') </code>: vérifie soit qu'aucune redirection n'est
-                apparue, ou que la valeur de l'entête "<code>Location</code>" n'est pas l' <code>$url</code>
+                apparue, ou que la valeur de l'en-tête "<code>Location</code>" n'est pas l' <code>$url</code>
                 fourni.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertRedirectRegex($pattern, $message = '') </code>: vérifie qu'une redirection est
-                apparue, et que la valeur de l'entête "<code>Location</code>" correspond à l'expression régulière fourni
+                apparue, et que la valeur de l'en-tête "<code>Location</code>" correspond à l'expression régulière fourni
                 dans <code>$pattern</code>.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertNotRedirectRegex($pattern, $message = '')</code> : vérifie soit qu'aucune redirection
-                n'est apparue, ou que la valeur de l'entête "<code>Location</code>" ne correspond pas à l'expression
+                n'est apparue, ou que la valeur de l'en-tête "<code>Location</code>" ne correspond pas à l'expression
                 régulière fourni dans <code>$pattern</code>.</para>
             </listitem>
         </itemizedlist>
     </sect3>
 
     <sect3 id="zend.test.phpunit.assertions.header">
-        <title>Les assertions d'entêtes de réponses</title>
+        <title>Les assertions d'en-têtes de réponses</title>
 
-        <para>En plus de vérifier les entêtes de redirection, vous avez souvent besoin de vérifier des codes de réponse
-        HTTP et des entêtes spécifiques - par exemple, pour déterminer si une action entraînera une réponse 404 ou 500,
-        ou pour s'assurer qu'une réponse JSON contient bien l'entête <code>Content-Type</code> approprié. Les assertions
+        <para>En plus de vérifier les en-têtes de redirection, vous avez souvent besoin de vérifier des codes de réponse
+        HTTP et des en-têtes spécifiques - par exemple, pour déterminer si une action entraînera une réponse 404 ou 500,
+        ou pour s'assurer qu'une réponse JSON contient bien l'en-tête <code>Content-Type</code> approprié. Les assertions
         suivantes sont disponibles :</para>
 
         <itemizedlist>
@@ -180,18 +180,18 @@
             </listitem>
 
             <listitem>
-                <para><code>assertHeader($header, $message = '')</code> : vérifie qu'une réponse renvoie l'entête
+                <para><code>assertHeader($header, $message = '')</code> : vérifie qu'une réponse renvoie l'en-tête
                 fourni.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertHeaderContains($header, $match, $message = '')</code> : vérifie qu'une réponse renvoie
-                l'entête fourni et que son contenu vaut la chaîne fournie.</para>
+                l'en-tête fourni et que son contenu vaut la chaîne fournie.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertHeaderRegex($header, $pattern, $message = '') </code>: vérifie qu'une réponse renvoie
-                l'entête fourni et que son contenu correspond à l'expression régulière fournie.</para>
+                l'en-tête fourni et que son contenu correspond à l'expression régulière fournie.</para>
             </listitem>
         </itemizedlist>
 

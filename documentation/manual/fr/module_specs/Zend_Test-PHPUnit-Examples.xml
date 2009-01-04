@@ -259,7 +259,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 ]]></programlisting>
 
         <para>Notez que ces tests sont laconiques, et, pour la plupart, ne recherchent pas le contenu réel. Au lieu de
-        cela, ils recherchent des objets construits dans la réponse - codes et entêtes de réponse, et noeuds DOM. Ceci
+        cela, ils recherchent des objets construits dans la réponse - codes et en-têtes de réponse, et noeuds DOM. Ceci
         vous permet de vérifier que la structure est comme prévue - sans entraîner un échec dans vos tests à chaque fois
         qu'un contenu est ajouté au site. </para>
 

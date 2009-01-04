@@ -399,10 +399,10 @@ $ctrl->setControllerDirectory('/chemin/vers/controleurs');
 $ctrl->dispatch();
 ]]></programlisting>
 
-        <para>Nous encourageons l'utilisation de l'objet Réponse pour agréger le contenu et les entêtes. Ceci permet un
+        <para>Nous encourageons l'utilisation de l'objet Réponse pour agréger le contenu et les en-têtes. Ceci permet un
         basculement plus flexible entre les formats d'affichage (par exemple, JSON ou XML au lieu de XHTML) dans vos
         applications. Par défaut, <code>dispatch()</code> va effectuer le rendu de la réponse, envoyant à la fois les
-        entêtes et tout contenu. Vous pouvez aussi avoir le contrôleur frontal qui retourne la réponse en utilisant
+        en-têtes et tout contenu. Vous pouvez aussi avoir le contrôleur frontal qui retourne la réponse en utilisant
         <code>returnResponse()</code>, et qui ensuite effectue le rendu de la réponse suivant votre propre logique. Une
         version future du contrôleur frontal peut mettre en application l'utilisation de l'objet Réponse via la <ulink
         url="http://php.net/manual/fr/ref.outcontrol.php">bufferisation de sortie</ulink>.</para>

@@ -122,7 +122,7 @@
             les convertir. Il existe une seule restriction :</para>
 
             <para>Quand vous utilisez des sources basées sur le format XML comme TMX ou XLIFF vous devez définir
-            l'encodage dans l'entête des fichiers XML, car tout fichier XML sans définition d'encodage sera traité par
+            l'encodage dans l'en-tête des fichiers XML, car tout fichier XML sans définition d'encodage sera traité par
             défaut en UTF-8 par un analyseur XML. Vous devez aussi prendre en compte que les encodages des fichiers XML
             sont limités aux encodages supportés par PHP, c'est-à-dire UTF-8, ISO-8859-1 and US-ASCII.</para>
         </note>

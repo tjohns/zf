@@ -91,7 +91,7 @@ php_value session.auto_start 0
                 session PHP sous-jacente sera automatiquement démarrée. Ceci permet un usage extrêmement simple qui
                 fonctionne dans la plupart des cas. Cependant, vous êtes responsable de vous assurer que le premier
                 <code>new Zend_Session_Namespace()</code> intervient <emphasis role="strong">avant</emphasis> que toute
-                sortie (par exemple <ulink url="http://www.php.net/headers_sent">entêtes HTTP</ulink>) ait été envoyée
+                sortie (par exemple <ulink url="http://www.php.net/headers_sent">en-têtes HTTP</ulink>) ait été envoyée
                 par PHP au client, si vous utilisez le réglage par défaut, sessions basées sur les cookies (fortement
                 recommandé). Voir <xref linkend="zend.session.global_session_management.headers_sent" /> pour plus
                 d'informations.</para>

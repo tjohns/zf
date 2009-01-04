@@ -9,7 +9,7 @@
     width="310"></inlinegraphic></para>
 
     <para>Toutes les données sont envoyées via le composant <code>Zend_Wildfire_Channel_HttpHeaders</code> qui utilise
-    les entêtes HTTP pour s'assurer que le contenu de la page n'est pas perturbé. Déboguer les requêtes AJAX qui
+    les en-têtes HTTP pour s'assurer que le contenu de la page n'est pas perturbé. Déboguer les requêtes AJAX qui
     requière du JSON "propre" ou un réponse XML est possible avec cette approche.</para>
 
     <para>Éléments requis :</para>
@@ -175,7 +175,7 @@ $logger->err($exception);
         <title>Journalisation sous forme de tableau</title>
 
         <para>Vous pouvez aussi journaliser des données en les formatant comme un tableau. Les colonnes sont
-        automatiquement reconnues et la première ligne de données devient automatiquement la ligne d'entêtes.</para>
+        automatiquement reconnues et la première ligne de données devient automatiquement la ligne d'en-têtes.</para>
 
         <programlisting role="php"><![CDATA[
 $writer->setPriorityStyle(8, 'TABLE');

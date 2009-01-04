@@ -52,7 +52,7 @@ class FooControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
             'host'      => 'foobar',
         ));
 
-        // Ajouter des entêtes :
+        // Ajouter des en-têtes :
         $this->request->setHeader('X-Requested-With', 'XmlHttpRequest');
 
         // Définir le type de requête :

@@ -613,7 +613,7 @@ $res = $cache->foobar2('1', '2');
             terminé.</para>
 
             <para>Pour le moment, ceci n'est pas implémenté mais nous prévoyons d'ajouter un système de condition HTTP
-            pour économiser de la bande passante (le système enverra une entête "HTTP 304 Not Modified" si le cache est
+            pour économiser de la bande passante (le système enverra un en-tête "HTTP 304 Not Modified" si le cache est
             trouvé, et si le navigateur a déjà la bonne version).</para>
         </sect3>
 
@@ -771,7 +771,7 @@ $res = $cache->foobar2('1', '2');
 
                             <entry><code>array()</code></entry>
 
-                            <entry>un tableau de chaînes correspondant aux noms d'entêtes HTTP. Les entêtes listées
+                            <entry>un tableau de chaînes correspondant aux noms d'en-têtes HTTP. Les en-têtes listés
                             seront stockées avec les données de cache et renvoyées lorsque le cache sera
                             rappelé.</entry>
                         </row>

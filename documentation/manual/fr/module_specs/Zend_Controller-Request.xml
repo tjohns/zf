@@ -73,7 +73,7 @@
             <para>Des superglobales spécifiques peuvent être accédées en utilisant une méthode publique comme
             alternative. Par exemple, la valeur directe <code>$_POST['user']</code> peut être accédée en appelant
             <code>getPost('user')</code> sur l'objet de requête. Ceci inclue <code>getQuery()</code> pour rechercher des
-            éléments $<code>$_GET</code>, et <code>getHeader()</code> pour récupérer les entêtes de la requête.</para>
+            éléments $<code>$_GET</code>, et <code>getHeader()</code> pour récupérer les en-têtes de la requête.</para>
 
             <note>
                 <title>Données GET et POST</title>
@@ -222,11 +222,11 @@ $response   = $controller->dispatch();
             <title>Détecter les requêtes AJAX</title>
 
             <para><code>Zend_Controller_Request_Http</code> possède une méthode rudimentaire pour détecter les requêtes
-            AJAX : <code>isXmlHttpRequest()</code>. Cette méthode parcourt les entêtes de la requête HTTP à la recherche
+            AJAX : <code>isXmlHttpRequest()</code>. Cette méthode parcourt les en-têtes de la requête HTTP à la recherche
             de <code>X-Requested-With</code> ayant la valeur "XMLHttpRequest" ; si celui-ci est trouvé, la méthode
             retourne <code>true</code>.</para>
 
-            <para>Actuellement, on sait que cet entête est fourni par défaut par les bibliothèques JS suivantes :</para>
+            <para>Actuellement, on sait que cet en-tête est fourni par défaut par les bibliothèques JS suivantes :</para>
 
             <itemizedlist>
                 <listitem>
@@ -246,8 +246,8 @@ $response   = $controller->dispatch();
                 </listitem>
             </itemizedlist>
 
-            <para>La plupart des librairies AJAX vous permettent d'envoyer vos propres entêtes de requête HTTP ; si
-            votre librairie n'envoie pas cet entête, ajoutez le simplement afin d'être sûr que la méthode
+            <para>La plupart des librairies AJAX vous permettent d'envoyer vos propres en-têtes de requête HTTP ; si
+            votre librairie n'envoie pas cet en-tête, ajoutez le simplement afin d'être sûr que la méthode
             <code>isXmlHttpRequest()</code> fonctionne dans votre cas.</para>
         </sect3>
     </sect2>

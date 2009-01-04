@@ -42,7 +42,7 @@ $response = Zend_Http_Response::factory($str);
             </listitem>
 
             <listitem>
-                <para><code>$headers</code> : un tableau associatif d'entêtes de réponse HTTP (par ex. "Host" =&gt;
+                <para><code>$headers</code> : un tableau associatif d'en-têtes de réponse HTTP (par ex. "Host" =&gt;
                 "exemple.com")</para>
             </listitem>
 
@@ -122,18 +122,18 @@ if ($response->isError()) {
                 </listitem>
 
                 <listitem>
-                    <para><code>array getHeaders()</code> : récupère les entêtes de la réponse HTTP sous la forme d'un
+                    <para><code>array getHeaders()</code> : récupère les en-têtes de la réponse HTTP sous la forme d'un
                     tableau associatif (par ex. 'Content-type' =&gt; 'text/html')</para>
                 </listitem>
 
                 <listitem>
-                    <para><code>string|array getHeader($header)</code> : récupère un entête spécifique de la réponse
+                    <para><code>string|array getHeader($header)</code> : récupère un en-tête spécifique de la réponse
                     HTTP, spécifié par <code>$header</code></para>
                 </listitem>
 
                 <listitem>
                     <para><code>string getHeadersAsString($status_line = true, $br = "\n")</code> : récupère l'ensemble
-                    des entêtes sous la forme d'une chaîne. Si <code>$status_line</code> est à <code>true</code>
+                    des en-têtes sous la forme d'une chaîne. Si <code>$status_line</code> est à <code>true</code>
                     (défaut), la première ligne de statut (par ex. "HTTP/1.1 200 OK") sera aussi retournée. Les lignes
                     sont coupées avec le paramètre <code>$br</code> (par ex. "&lt;br /&gt;")</para>
                 </listitem>
@@ -157,12 +157,12 @@ if ($response->getStatus() == 200) {
             </example> <note>
                 <title>Vérifier toujours la valeur retournée</title>
 
-                <para>Puisqu'une réponse peut contenir plusieurs exemplaires du même entête, la méthode
+                <para>Puisqu'une réponse peut contenir plusieurs exemplaires du même en-tête, la méthode
                 <code>getHeader()</code> et la méthode <code>getHeaders()</code> peuvent renvoyer l'un comme l'autre
-                soit une chaîne seule, soit un tableau de chaînes pour chaque entête. Vous devez donc toujours vérifier
+                soit une chaîne seule, soit un tableau de chaînes pour chaque en-tête. Vous devez donc toujours vérifier
                 si la valeur retournée est une chaîne ou un tableau.</para>
             </note> <example id="zend.http.response.acessors.example-2">
-                <title>Accéder aux entêtes de réponse</title>
+                <title>Accéder aux en-têtes de réponse</title>
 
                 <programlisting role="php"><![CDATA[
 $ctype = $response->getHeader('Content-type');
@@ -203,7 +203,7 @@ echo $body;
 
                 <listitem>
                     <para><code>array Zend_Http_Response::extractHeaders($response_str)</code> : extrait et retourne les
-                    entêtes de la réponse HTTP issus de <code>$response_str</code> sous la forme d'un tableau</para>
+                    en-têtes de la réponse HTTP issus de <code>$response_str</code> sous la forme d'un tableau</para>
                 </listitem>
 
                 <listitem>

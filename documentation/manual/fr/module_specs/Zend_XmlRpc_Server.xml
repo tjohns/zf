@@ -156,7 +156,7 @@ $server->addFunction('somefunc', 'funcs');
         <title>Réponses personnalisées</title>
 
         <para>Comme avec les objets de requête, <code>Zend_XmlRpc_Server</code> peut retourner des objets de réponse
-        personnalisés. Par défaut il s'agit d'objets <code>Zend_XmlRpc_Response_Http</code> qui envoient un entête HTTP
+        personnalisés. Par défaut il s'agit d'objets <code>Zend_XmlRpc_Response_Http</code> qui envoient un en-tête HTTP
         Content-Type HTTP pour XML-RPC. Vous pourriez utiliser des objets de réponse personnalisés pour par exemple
         renvoyer les réponses vers STDOUT, ou les journaliser.</para>
 

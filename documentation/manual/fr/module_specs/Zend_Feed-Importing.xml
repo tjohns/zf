@@ -224,7 +224,7 @@ assert($feed instanceof Zend_Feed_Abstract);
 // décharge le flux dans l'affichage standard
 print $feed->saveXML();
 
-// envoie les entêtes et décharge le flux
+// envoie les en-têtes et décharge le flux
 $feed->send();
 ]]></programlisting>
         </sect3>

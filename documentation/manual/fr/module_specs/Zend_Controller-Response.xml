@@ -6,7 +6,7 @@
         <title>Utilisation</title>
 
         <para>L'objet de réponse équilibre la balance du modèle MVC avec <link linkend="zend.controller.request">l'objet
-        de requête</link>.Son but est de collecter du contenu et des en-têtes, afin d'être rendue. De plus, le
+        de requête</link>. Son but est de collecter du contenu et des en-têtes, afin d'être rendue. De plus, le
         contrôleur frontal passe les exceptions qu'il a rencontré à l'objet de réponse, vous offrant une possibilité
         élégante de les gérer. Ce comportement peut être changé avec
         <code>Zend_Controller_Front::throwExceptions(true)</code>:</para>

@@ -288,7 +288,7 @@ Zend_Controller_Front::run('../application/controllers');
 
                 <para>Les raisons de la récupération de la réponse incluent le désir de vérifier l'existence
                 d'exceptions avant d'émettre la réponse, la nécessité d'enregistrer certains aspects de la réponse
-                (comme les entêtes), etc.</para>
+                (comme les en-têtes), etc.</para>
             </listitem>
         </itemizedlist>
     </sect2>

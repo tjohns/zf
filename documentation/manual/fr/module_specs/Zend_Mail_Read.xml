@@ -257,11 +257,11 @@ unset($mail[$messageNum]);
     <sect2 id="zend.mail.read-message">
         <title>Travailler avec les messages</title>
 
-        <para>Après avoir extrait les messages avec <code>getMessage()</code> vous voulez extraire les entêtes, le
-        contenu ou une partie d'un message multipart. Tous les entêtes peuvent être accédées via les propriétés ou la
-        méthode <code>getHeader()</code> si vous voulez plus de contrôle ou avoir accès à des entêtes peu communs. Les
-        noms des entêtes gérés en interne avec une casse minuscule, ainsi la casse du nom de l'entête importe peu. En
-        outre les entêtes avec un tiret-bas peuvent être écrit avec la <ulink
+        <para>Après avoir extrait les messages avec <code>getMessage()</code> vous voulez extraire les en-têtes, le
+        contenu ou une partie d'un message multipart. Tous les en-têtes peuvent être accédés via les propriétés ou la
+        méthode <code>getHeader()</code> si vous voulez plus de contrôle ou avoir accès à des en-têtes peu communs. Les
+        noms des en-têtes gérés en interne avec une casse minuscule, ainsi la casse du nom de l'en-tête importe peu. En
+        outre les en-têtes avec un tiret-bas peuvent être écrit avec la <ulink
         url="http://en.wikipedia.org/wiki/CamelCase">notation Camel</ulink>.</para>
 
         <programlisting role="php"><![CDATA[
@@ -271,16 +271,16 @@ $message = $mail->getMessage(1);
 // afficher le sujet du message
 echo $message->subject . "\n";
 
-// récupérer l'entête content-type
+// récupérer l'en-tête content-type
 $type = $message->contentType;
 ]]></programlisting>
 
-        <para>Si vous avez plusieurs entêtes avec le même nom, par exemple les entêtes "Received", vous pourriez les
+        <para>Si vous avez plusieurs en-têtes avec le même nom, par exemple les en-têtes "Received", vous pourriez les
         vouloir sous la forme d'un tableau plutôt qu'en tant que chaîne. Ceci est possible avec la méthode
         <code>getHeader()</code>.</para>
 
         <programlisting role="php"><![CDATA[
-// récupérer l'entête comme une propriété - le résultat est toujours
+// récupérer l'en-tête comme une propriété - le résultat est toujours
 // une chaîne, avec de nouvelles lignes entre chaque occurence
 // dans le message
 $received = $message->received;
@@ -295,19 +295,19 @@ foreach ($received as $line) {
 }
 
 // si vous ne définissez pas de format vous récupérerez la représentation
-// interne (chaîne pour entêtes uniques, tableau pour entêtes multiples
+// interne (chaîne pour en-têtes uniques, tableau pour en-têtes multiples
 $received = $message->getHeader('received');
 if (is_string($received)) {
-    // seulement un entête received trouvé dans le message
+    // seulement un en-tête received trouvé dans le message
 }
 ]]></programlisting>
 
         <para>La méthode <code>getHeaders()</code> retourne tous les headers sous forme de tableau avec des clés en
-        minuscules et des valeurs en tant que tableau pour des entêtes multiples ou une chaîne pour des entêtes
+        minuscules et des valeurs en tant que tableau pour des en-têtes multiples ou une chaîne pour des en-têtes
         uniques.</para>
 
         <programlisting role="php"><![CDATA[
-// récupère tous les entêtes
+// récupère tous les en-têtes
 foreach ($message->getHeaders() as $name => $value) {
     if (is_string($value)) {
         echo "$name: $value\n";
@@ -320,7 +320,7 @@ foreach ($message->getHeaders() as $name => $value) {
 ]]></programlisting>
 
         <para>Si vous n'avez pas de message de type multipart, extraire le contenu est facilité avec
-        <code>getContent()</code>. A la différence des entêtes, le contenu est seulement extrait en cas de besoin (alias
+        <code>getContent()</code>. A la différence des en-têtes, le contenu est seulement extrait en cas de besoin (alias
         late-fetch).</para>
 
         <programlisting role="php"><![CDATA[
@@ -335,7 +335,7 @@ echo '</pre>';
         méthode <code>getPart()</code>. <code>Zend_Mail_Part</code> est la classe de base de
         <code>Zend_Mail_Message</code>, donc vous avez les mêmes méthodes : <code>getHeader()</code>,
         <code>getHeaders()</code>, <code>getContent()</code>, <code>getPart()</code>, <code>isMultipart</code> et les
-        propriétés pour les entêtes.</para>
+        propriétés pour les en-têtes.</para>
 
         <programlisting role="php"><![CDATA[
 // récupérer la première partie non-multipart

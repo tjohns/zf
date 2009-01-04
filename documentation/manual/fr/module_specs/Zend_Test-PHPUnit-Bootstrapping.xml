@@ -80,7 +80,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
             <para>N'espérez pas faire des tests spécifiques de serveur. Autrement dit, ces tests ne garantissent pas que
             le code va s'exécuter sur un serveur avec une configuration spécifique, mais simplement que l'application va
             fonctionner comme souhaité si le routeur est capable de router une requête donnée. À cet effet, ne
-            paramétrez pas d'entêtes spécifiques au serveur dans l'objet de requête.</para>
+            paramétrez pas d'en-têtes spécifiques au serveur dans l'objet de requête.</para>
         </listitem>
     </itemizedlist>
 

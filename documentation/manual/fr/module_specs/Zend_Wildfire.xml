@@ -12,7 +12,7 @@
 
     <para>En ce qui concerne le log vers Firebug le composant <link
     linkend="zend.log.writers.firebug"><code>Zend_Log_Writer_Firebug</code></link> est fourni et un protocole de
-    communication a été développé, celui-ci utilise les requêtes HTTP et les entêtes de réponse pour envoyer des données
+    communication a été développé, celui-ci utilise les requêtes HTTP et les en-têtes de réponse pour envoyer des données
     entre le serveur et les composants clients. C'est intéressant pour journaliser des données, générées durant
     l'exécution du script, vers le navigateur sans interférer avec le contenu de la page. Déboguer les requêtes AJAX qui
     requière du JSON "propre" ou un réponse XML est possible avec cette approche.</para>

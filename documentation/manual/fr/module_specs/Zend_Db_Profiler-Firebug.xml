@@ -6,7 +6,7 @@
     url="http://www.getfirebug.com/">console Firebug</ulink>.</para>
 
     <para>Toutes les données sont envoyées via le composant <code>Zend_Wildfire_Channel_HttpHeaders</code> qui utilise
-    les entêtes HTTP pour s'assurer que le contenu de la page n'est pas perturbé. Déboguer les requêtes AJAX qui
+    les en-têtes HTTP pour s'assurer que le contenu de la page n'est pas perturbé. Déboguer les requêtes AJAX qui
     requière du JSON "propre" ou un réponse XML est possible avec cette approche.</para>
 
     <para>Éléments requis :</para>
