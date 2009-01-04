@@ -11,7 +11,7 @@
         <para>SOAP est un protocole d'échange de données indépendant d'un langage. Il peut donc être utilisé avec une
         autre technologie que PHP.</para>
 
-        <para>Il y a trois configurations d'utilisation de SOAP avec Zend Framework: <orderedlist>
+        <para>Il y a trois configurations d'utilisation de SOAP avec Zend Framework :<orderedlist>
                 <listitem>
                     <simpara>SOAP serveur application PHP &lt;---&gt; SOAP client application PHP</simpara>
                 </listitem>
@@ -50,7 +50,7 @@
                 </listitem>
             </itemizedlist></para>
 
-        <para>Ces deux façons sont supportées par la fonctionnalité d'auto génération du Zend Framework.</para>
+        <para>Ces deux façons sont supportées par la fonctionnalité d'auto génération de Zend Framework.</para>
 
         <para>Zend_Soap_AutoDiscovery supporte aussi la correspondance des types PHP vers <ulink
         url="http://www.w3.org/TR/xmlschema-2/">les types XSD</ulink>.</para>

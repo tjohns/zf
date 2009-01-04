@@ -10,7 +10,7 @@
 
     <itemizedlist>
         <listitem>
-            <para>Automatiser le rendu des layouts lorsqu'ils sont utilisés avec les composants MVC du Zend
+            <para>Automatiser le rendu des layouts lorsqu'ils sont utilisés avec les composants MVC de Zend
             Framework.</para>
         </listitem>
 

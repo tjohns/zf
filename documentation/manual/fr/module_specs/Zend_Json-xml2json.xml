@@ -25,7 +25,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
     conversion, cette fonction lèvera une exception. La logique de conversion emploie également des techniques
     récursives à travers l'arbre XML. Il supporte la récursivité jusqu'à 25 niveaux de profondeur. Au delà de cette
     profondeur, elle lèvera une <code>Zend_Json_Exception</code>. Il y a plusieurs fichiers XML, avec différents niveaux
-    de complexité, fournis dans le répertoire tests du Zend Framework. Ils peuvent être utilisés pour tester la
+    de complexité, fournis dans le répertoire tests de Zend Framework. Ils peuvent être utilisés pour tester la
     fonctionnalité du dispositif xml2json.</para>
 
     <para>Ce qui suit est un exemple simple qui montre à la fois la chaîne XML fournie et la chaîne JSON retournée en

@@ -11,7 +11,7 @@
     qu'elle prétend être (c.-à-d. identification), sur la base d'identifiants fournis. L'autorisation, l'action de
     décider si une entité donnée peut accéder à d'autres entités et/ou exécuter des opérations sur celles-ci ne fait pas
     partie des prérogatives de <code>Zend_Auth</code>. Pour plus d'informations sur les autorisations et le contrôle
-    d'accès via le Zend Framework, voyez <link linkend="zend.acl">Zend_Acl</link>.</para>
+    d'accès via Zend Framework, voyez <link linkend="zend.acl">Zend_Acl</link>.</para>
 
     <note>
         <para>La classe <code>Zend_Auth</code> inclut un singleton - uniquement une instance de la classe est disponible

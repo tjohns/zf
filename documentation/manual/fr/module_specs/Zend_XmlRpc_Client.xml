@@ -5,7 +5,7 @@
     <sect2 id="zend.xmlrpc.client.introduction">
         <title>Introduction</title>
 
-        <para>Le Zend Framework possède la capacité de consommer des services distants XML-RPC, via la classe
+        <para>Zend Framework possède la capacité de consommer des services distants XML-RPC, via la classe
         <code>Zend_XmlRpc_Client</code>. Ses caractéristiques principales sont la conversion automatique des types entre
         PHP et XML-RPC, un objet proxy de serveur, et des possibilités d'introspection du serveur.</para>
     </sect2>

@@ -19,7 +19,7 @@
     <sect2 id="zend.date.setdefaulttimezone">
         <title>Définissez toujours un fuseau horaire par défaut</title>
 
-        <para>Avant toute manipulation de date, que ce soit par les fonctions PHP, ou par le Zend Framework, soyez sûrs
+        <para>Avant toute manipulation de date, que ce soit par les fonctions PHP, ou par Zend Framework, soyez sûrs
         que votre fuseau horaire par défaut est défini. Configurez votre variable d'environnement TZ,
         <code>date.timezone</code> dans le php.ini, ou utilisez <ulink
         url="http://php.net/date_default_timezone_set">date_default_timezone_set()</ulink>. En PHP nous pouvons ajuster

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13327 -->
 <sect1 id="zend.file.transfer.validators">
     <title>Validateurs pour Zend_File_Transfer</title>
@@ -821,7 +820,7 @@ $upload->addValidator('Md5', false, array('3b3652f336522365223', 'eb3365f3365ddc
 
                 <para>Avec cette option vous pouvez définir le magicfile à utiliser. Quand il n'est pas utilisé ou vide,
                 la constante <code>MAGIC</code> sera utilisée. Cette option est disponible à partir de la version 1.7.1
-                du Zend Framework.</para>
+                de Zend Framework.</para>
             </listitem>
         </itemizedlist>
 

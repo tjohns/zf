@@ -4,7 +4,7 @@
 
     <para><code>Zend_Cache</code> fournit un moyen générique de mettre en cache des données.</para>
 
-    <para>Le cache dans le Zend Framework est réalisé via les frontends alors que les caches d'enregistrements sont
+    <para>Le cache dans Zend Framework est réalisé via les frontends alors que les caches d'enregistrements sont
     stockés grâce à des adaptateurs de backend (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) grâce
     à un système souple d'ID et de balises. En les utilisant, il est simple de supprimer des types spécifiques
     d'enregistrements par la suite (par exemple: "supprime tous les enregistrements de cache marqués avec une balise

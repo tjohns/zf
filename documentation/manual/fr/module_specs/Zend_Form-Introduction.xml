@@ -27,7 +27,7 @@
         </listitem>
     </itemizedlist>
 
-    <para>Il utilise fortement d'autres composants du Zend Framework pour accomplir ses buts, incluant
+    <para>Il utilise fortement d'autres composants de Zend Framework pour accomplir ses buts, incluant
     <code>Zend_Config</code>, <code>Zend_Validate</code>, <code>Zend_Filter</code>,
     <code>Zend_Loader_PluginLoader</code>, et optionnellement <code>Zend_View</code>.</para>
 </sect1>

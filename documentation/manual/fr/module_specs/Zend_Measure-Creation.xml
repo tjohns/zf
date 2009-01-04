@@ -37,7 +37,7 @@ echo $unite;
     <sect2 id="zend.measure.creation.string">
         <title>Créer des mesures à partir de chaînes de caractères</title>
 
-        <para>Beaucoup de mesures reçues comme entrée des applications ZF peuvent seulement être passées aux classes
+        <para>Beaucoup de mesures reçues comme entrée des applications Zend Framework peuvent seulement être passées aux classes
         <code>Zend_Measure_*</code> comme des chaînes, telles que des nombres écrits en utilisant les <ulink
         url="http://fr.wikipedia.org/wiki/Num%C3%A9ration_romaine">chiffres romains</ulink> ou les valeurs binaires
         extrêmement grandes qui excèdent la précision native de PHP des nombres entiers ou décimaux. Puisque les nombres
@@ -107,7 +107,7 @@ echo $unite; // affiche "1234.50 m"
 ]]></programlisting>
         </example>
 
-        <para>Depuis la version 1.7.0 du Zend Framework, <code>Zend_Measure</code> supporte aussi l'utilisation d'une
+        <para>Depuis la version 1.7.0 de Zend Framework, <code>Zend_Measure</code> supporte aussi l'utilisation d'une
         application pleinement localisée. Vous pouvez simplement paramétrer une instance <code>Zend_Locale</code> dans
         le registre comme présenté ci-dessous. Avec cette notation vous pouvez ne pas paramétrer cette valeur
         manuellement à chaque fois quand vous utilisez la même localisation plusieurs fois.</para>

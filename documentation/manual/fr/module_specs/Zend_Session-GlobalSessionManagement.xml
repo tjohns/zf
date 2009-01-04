@@ -201,7 +201,7 @@ Zend_Session::setOptions($config->toArray());
     <sect2 id="zend.session.global_session_management.session_identifiers">
         <title>Identifiants de session</title>
 
-        <para>Les bonnes pratiques d'utilisation des sessions avec ZF passent par un cookie, plutôt que se reporter à
+        <para>Les bonnes pratiques d'utilisation des sessions avec Zend Framework passent par un cookie, plutôt que se reporter à
         l'URL concernant l'identifiant de session. Par défaut, le composant Zend_Session est bloqué sur l'utilisation
         unique du cookie comme moyen de propagation de l'identifiant de session. La session PHP va alors utiliser cet
         identifiant de manière à identifier de manière unique chaque client (navigateur) qui s'y connecte, et maintenir

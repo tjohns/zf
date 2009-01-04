@@ -5,7 +5,7 @@
     <sect2 id="zend.controller.quickstart.introduction">
         <title>Introduction</title>
 
-        <para><code>Zend_Controller</code> est le coeur du système MVC du Zend Framework. MVC équivaut à <ulink
+        <para><code>Zend_Controller</code> est le coeur du système MVC de Zend Framework. MVC équivaut à <ulink
         url="http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur">Modèle-Vue-Contrôleur</ulink> et est un motif
         de conception ("design pattern") visant à séparer la logique d'application de la logique d'affichage.
         <code>Zend_Controller_Front</code> implémente un modèle de <ulink
@@ -130,7 +130,7 @@ Zend_Controller_Front::run('/chemin/vers/application/controllers');
             <title>Créer votre contrôleur d'action par défaut</title>
 
             <para>Avant de discuter des contrôleurs d'action, vous devez d'abord comprendre comment les requêtes sont
-            dirigées dans le Zend Framework. Par défaut, le premier segment d'un chemin d'URL correspond à un
+            dirigées dans Zend Framework. Par défaut, le premier segment d'un chemin d'URL correspond à un
             contrôleur, et le second à une action. Par exemple, l'URL est
             <code>http://framework.zend.com/roadmap/components</code>, le chemin est <code>/roadmap/components</code>,
             qui correspondra au contrôleur <code>roadmap</code> et à l'action <code>components</code>. Si aucune action

@@ -116,7 +116,7 @@
 
         <note>
             <para>En choisissant votre adaptateur vous devriez également prendre en compte l'encodage utilisé. Même si
-            le Zend Framework déclare UTF-8 comme encodage par défaut, il vous sera parfois nécessaire d'utiliser un
+            Zend Framework déclare UTF-8 comme encodage par défaut, il vous sera parfois nécessaire d'utiliser un
             autre encodage. Zend_Translate ne changera pas l'encodage défini dans votre fichier source ce qui veut dire
             que si votre source Gettext est construite en ISO-8859-1, il retournera les chaînes dans cet encodage sans
             les convertir. Il existe une seule restriction :</para>
@@ -259,7 +259,7 @@
         qui définit déjà tout ce qui est nécessaire pour la traduction. Ce qui doit être fait par vous, est la
         définition du lecteur des données traduites.</para>
 
-        <para>L'usage du préfixe "Zend" devrait être limité au Zend Framework. Si vous étendez
+        <para>L'usage du préfixe "Zend" devrait être limité à Zend Framework. Si vous étendez
         <code>Zend_Translate</code> avec votre propre adaptateur, vous devriez le nommer
         "MonEntreprise_Translate_Adapter_MonFormat". Le code suivant montre un exemple de la manière dont une classe
         d'adaptateur personnalisée peut être implémentée :</para>

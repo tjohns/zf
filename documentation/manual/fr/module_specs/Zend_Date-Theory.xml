@@ -2,10 +2,10 @@
 <sect1 id="zend.date.definition.theory">
     <title>Aspect théorique</title>
 
-    <para>Pourquoi n'existe-il que l'unique classe <code>Zend_Date</code> pour gérer les dates et les heures dans le
+    <para>Pourquoi n'existe-il que l'unique classe <code>Zend_Date</code> pour gérer les dates et les heures dans
     Zend Framework ?</para>
 
-    <para>Beaucoup de langages divisent la gestion des heures et des dates de calendrier en deux classes. Cependant le
+    <para>Beaucoup de langages divisent la gestion des heures et des dates de calendrier en deux classes. Cependant
     Zend Framework lutte pour une extrême simplicité, et forcer le développeur à gérer différents objets avec
     différentes méthodes pour les heures et les dates entraîne un fardeau dans beaucoup de situations. Puisque les
     méthodes de <code>Zend_Date</code> supporte le travail avec des dates ambiguës qui n'incluraient pas toutes les

@@ -124,7 +124,7 @@ Zend_Loader::registerAutoload();
 ]]></programlisting>
         </example>
 
-        <para>Après avoir inscrit le callback vers l'autoload du Zend Framework, vous pouvez appeler une classe de Zend
+        <para>Après avoir inscrit le callback vers l'autoload de Zend Framework, vous pouvez appeler une classe de Zend
         Framework sans l'avoir explicitement chargé auparavant. La méthode autoload utilise automatiquement
         <code>Zend_Loader::loadClass()</code> quand vous appelez une classe.</para>
 

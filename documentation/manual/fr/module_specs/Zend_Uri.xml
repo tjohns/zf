@@ -7,7 +7,7 @@
 
         <para><code>Zend_Uri</code> est un composant destiné à aider à la manipulation et à la validation des <ulink
         url="http://www.w3.org/Addressing/"> Uniform Resource Identifiers</ulink> (URIs). <code>Zend_Uri</code> existe
-        dans le but d'aider les autres composants du Zend Framework tels que <code>Zend_Http_Client</code> mais peut
+        dans le but d'aider les autres composants de Zend Framework tels que <code>Zend_Http_Client</code> mais peut
         aussi être utilisé comme composant individuel.</para>
 
         <para>Les URIs commence toujours avec la définition de leur schéma, suivie d'un double-points. La construction

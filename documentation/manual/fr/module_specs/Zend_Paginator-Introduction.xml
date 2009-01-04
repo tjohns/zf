@@ -21,7 +21,7 @@
             </listitem>
 
             <listitem>
-                <para>faiblement coupler <code>Zend_Paginator</code> envers les autres composants du Zend Framework,
+                <para>faiblement coupler <code>Zend_Paginator</code> envers les autres composants de Zend Framework,
                 ainsi les utilisateurs qui voudront l'utiliser indépendamment de <code>Zend_View</code>,
                 <code>Zend_Db</code>, etc. pourront le faire.</para>
             </listitem>

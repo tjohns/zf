@@ -2,7 +2,7 @@
 <sect1 id="zend.session.introduction">
     <title>Introduction</title>
 
-    <para>L'équipe Auth du Zend Framework apprécie considérablement votre feedback et vos contributions sur notre liste
+    <para>L'équipe Auth de Zend Framework apprécie considérablement votre feedback et vos contributions sur notre liste
     émail : <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>.</para>
 
     <para>Dans les applications Web écrites en PHP, une <emphasis role="bold">session</emphasis> représente un
@@ -26,13 +26,13 @@
     espaces de noms de session persistants. <code>Zend_Session_Namespace</code> fournit une interface normalisée et
     orientée objet pour travailler en espaces de noms persistants à l'intérieur du mécanisme standard des sessions de
     PHP. Le support existe pour les espaces de noms anonymes et les espaces de nom de session authentifiés (par exemple,
-    "login"). <code>Zend_Auth</code>, le composant d'authentification du Zend Framework emploie
+    "login"). <code>Zend_Auth</code>, le composant d'authentification de Zend Framework emploie
     <code>Zend_Session_Namespace</code> pour stocker les informations liées aux utilisateurs authentifiés. Puisque
     <code>Zend_Session</code> emploie les fonctions normales de l'extension session de PHP, tous les options et réglages
     familiers de configuration s'appliquent (voir <ulink
     url="http://www.php.net/manual/fr/ref.session.php">http://www.php.net/session</ulink>), avec en bonus la facilité
     d'accès par une interface orientée objet et un comportement par défaut fournissant les meilleures pratiques et une
-    intégration sans problèmes dans le Zend Framework. Ainsi, un id standard de session PHP, stocké soit dans un cookie
+    intégration sans problèmes dans Zend Framework. Ainsi, un id standard de session PHP, stocké soit dans un cookie
     côté client ou incorporé dans l'URL, maintient l'association entre un client et des données de session.</para>
 
     <para>La fonction de gestion de session par défaut <ulink

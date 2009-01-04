@@ -3,7 +3,7 @@
     <title>Zend_Db_Adapter</title>
 
     <para><code>Zend_Db</code> et ses autres sous classes proposent une interface de connexion aux bases de données avec
-    le Zend Framework. <code>Zend_Db_Adapter</code> est la classe de base que vous utilisez pour vous connecter aux
+    Zend Framework. <code>Zend_Db_Adapter</code> est la classe de base que vous utilisez pour vous connecter aux
     bases de données (SGBDs). Il y a différentes classes d'adaptateur par SGBD.</para>
 
     <para>Les classes <code>Adapters</code> de <code>Zend_Db</code> créent un pont entre les extensions PHP et une

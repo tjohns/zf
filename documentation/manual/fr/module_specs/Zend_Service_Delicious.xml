@@ -228,13 +228,13 @@ $delicious = new Zend_Service_Delicious('nom_d_utilisateur',
 
 // créé et sauvegarde une nouvelle entrée (en chainant les méthodes)
 $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
-          ->setNotes('Page d\'accueil du Zend Framework')
+          ->setNotes('Page d\'accueil de Zend Framework')
           ->save();
 
 // créé et sauvegarde une nouvelle entrée (sans enchaîner les méthodes)
 $newPost = $delicious->createNewPost('Zend Framework',
                                      'http://framework.zend.com');
-$newPost->setNotes('Page d\'accueil du Zend Framework');
+$newPost->setNotes('Page d\'accueil de Zend Framework');
 $newPost->save();
 ]]></programlisting>
         </example>

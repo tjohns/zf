@@ -251,7 +251,7 @@ $bugsAssignedToUser = $user1234->findDependentRowset('Bugs',
         <note>
             <para>Certains frameworks tels que Rails pour Ruby, utilise un mécanisme dit d'inflexion, qui permet de
             transformer les noms des identifiants (nom de table, de rôle...) d'une certaine manière bien spécifique dans
-            les méthodes appelées. Cela n'est pas le cas du Zend Framework : vous devez, dans vos méthodes magiques,
+            les méthodes appelées. Cela n'est pas le cas de Zend Framework : vous devez, dans vos méthodes magiques,
             utiliser l'orthographe exacte des noms des rôles et classes, tels que vous les définissez.</para>
         </note>
 

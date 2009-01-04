@@ -2,7 +2,7 @@
 <sect1 id="zend.filter.set">
     <title>Classes de filtre standards</title>
 
-    <para>Le Zend Framework est fourni avec un jeu de filtres standards, qui sont directement utilisables.</para>
+    <para>Zend Framework est fourni avec un jeu de filtres standards, qui sont directement utilisables.</para>
 
     <sect2 id="zend.filter.set.alnum">
         <title>Alnum</title>

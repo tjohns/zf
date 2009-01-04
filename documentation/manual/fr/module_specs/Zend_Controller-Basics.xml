@@ -82,7 +82,7 @@
                 <title>Conventions de nommage (casse)</title>
 
                 <para>Puisque les humains sont notoirement incompatibles avec le respect des majuscules et des
-                minuscules quand ils tapent des liens, le Zend Framework normalise les chemins en lettres minuscules.
+                minuscules quand ils tapent des liens, Zend Framework normalise les chemins en lettres minuscules.
                 Ceci, naturellement, affectera votre manière d'appeler vos contrôleurs et actions... ou vous vous
                 référez à eux dans les liens.</para>
 

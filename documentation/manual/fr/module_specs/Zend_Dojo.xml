@@ -29,7 +29,7 @@
     </itemizedlist>
 
     <para>La distribution Dojo elle-même peut être trouvée dans le dossier <code>externals/dojo/</code> de la
-    distribution du Zend Framework. Il s'agit d'une distribution source, qui inclue le code source javascript complet de
+    distribution de Zend Framework. Il s'agit d'une distribution source, qui inclue le code source javascript complet de
     Dojo, les tests unitaires et les outils de construction. Vous pouvez créer un lien symbolique dans votre répertoire
     javascript, le copier ou utiliser l'outil de construction pour créer votre propre paquet que vous pourrez inclure
     dans votre projet. De manière alternative, vous pouvez utiliser l'un des <ulink

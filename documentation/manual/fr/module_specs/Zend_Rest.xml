@@ -7,7 +7,7 @@
     paramètres URL (données GET) ou les informations du chemin pour demander des données, et les données POST pour
     envoyer des données.</para>
 
-    <para>Le Zend Framework fournit les possibilités de client et de serveur, qui, une fois utilisées ensemble tiennent
+    <para>Zend Framework fournit les possibilités de client et de serveur, qui, une fois utilisées ensemble tiennent
     compte de beaucoup plus d'expérience d'interface "locale" par l'intermédiaire de l'accès aux propriétés d'objet
     virtuel. Le composant serveur comporte l'exposition automatique des fonctions et des classes employant un format
     compréhensible et simple de XML. En accédant à ces services via le client, il est possible de rechercher facilement

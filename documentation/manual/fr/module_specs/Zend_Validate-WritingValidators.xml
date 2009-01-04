@@ -14,7 +14,7 @@
     linkend="zend.filter.input"><code>Zend_Filter_Input</code></link>.</para>
 
     <para>Comme vous avez déjà pu déduire de la description ci-dessus de <code>Zend_Validate_Interface</code>, les
-    classes de validation fournie avec le Zend Framework retourne une valeur booléenne pour savoir si une valeur est
+    classes de validation fournie avec Zend Framework retourne une valeur booléenne pour savoir si une valeur est
     validée ou non. Elles fournissent également des informations sur la raison pour laquelle la validation a échoué sur
     une valeur. La mise à disposition de ces raisons d'échec de validation peut être utilisée par une application dans
     différents buts, tels que fournir des statistiques pour l'analyse de la facilité d'utilisation.</para>

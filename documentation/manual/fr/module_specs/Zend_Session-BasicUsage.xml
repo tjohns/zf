@@ -3,7 +3,7 @@
     <title>Usage basique</title>
 
     <para>Les instances <code>Zend_Session_Namespace</code> fournissent l'API primaire pour manipuler les données de
-    session dans le Zend Framework. Les espaces de noms sont utilisés pour isoler toutes les données de session, bien
+    session dans Zend Framework. Les espaces de noms sont utilisés pour isoler toutes les données de session, bien
     qu'un espace de noms par défaut existe pour ceux qui veulent juste un endroit pour stocker toutes leurs données de
     session. <code>Zend_Session</code> utilise ext/session et sa superglobale spéciale <code>$_SESSION</code> comme
     mécanisme de stockage pour les données d'état de session. Bien que <code>$_SESSION</code> est toujours disponible
@@ -60,7 +60,7 @@ echo "Page demandée lors de cette session : ",
         changement accidentel dû à des collisions de noms.</para>
 
         <para>Les noms des espaces de noms sont limités à des chaînes de caractères PHP non-vides qui ne commencent par
-        un tiret-bas ("<code>_</code>"). De plus, seuls les composants coeur du Zend Framework devraient employer un nom
+        un tiret-bas ("<code>_</code>"). De plus, seuls les composants coeur de Zend Framework devraient employer un nom
         d'espace de noms commençant par "<code>Zend</code>".</para>
 
         <example id="zend.session.basic_usage.basic_examples.example.namespaces.new">

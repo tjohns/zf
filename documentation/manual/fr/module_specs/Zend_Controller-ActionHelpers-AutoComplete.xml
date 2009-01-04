@@ -97,7 +97,7 @@ class FooController extends Zend_Controller_Action
         <code>QueryReadStore</code> ; voyez la documentation de <ulink
         url="http://dojotoolkit.org/book/dojo-book-0-9/part-3-programmatic-dijit-and-dojo/data-retrieval-dojo-data-0">dojo.data</ulink></para>
 
-        <para>Dans le Zend Framework, vous pouvez passer un simple tableau indexé à l'aide
+        <para>Dans Zend Framework, vous pouvez passer un simple tableau indexé à l'aide
         <code>AutoCompleteDojo</code>, elle retournera une réponse JSON compatible avec la structure de données Dojo
         :</para>
 
@@ -115,7 +115,7 @@ $this->_helper->autoCompleteDojo($data);
             javascript à utiliser pour initialiser l'auto-complétion coté serveur.</para>
 
             <para>Voyons le javascript nécessaire. Dojo est une librairie qui propose des objets haut niveau pour
-            l'auto-complétion (entre autres), un peu comme le Zend Framework pour PHP. Il est possible de créer des
+            l'auto-complétion (entre autres), un peu comme Zend Framework pour PHP. Il est possible de créer des
             pseudo-namespaces en utilisant l'arborescence des répertoires. Nous allons créer un répertoire "custom" au
             même niveau que le répertoire Dojo. A l'intérieur, nous allons créer un fichier javascript,
             <filename>TestNameReadStore.js</filename>, avec le contenu suivant :</para>

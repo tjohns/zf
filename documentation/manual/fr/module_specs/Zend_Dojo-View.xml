@@ -2,7 +2,7 @@
 <sect1 id="zend.dojo.view" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Les aides de vues Dojo</title>
 
-    <para>Le Zend Framework fournit les aides de vues spécifiques à Dojo suivantes :</para>
+    <para>Zend Framework fournit les aides de vues spécifiques à Dojo suivantes :</para>
 
     <itemizedlist>
         <listitem>

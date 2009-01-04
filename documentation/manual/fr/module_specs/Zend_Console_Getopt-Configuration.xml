@@ -134,7 +134,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
             <title>Clarifier le terme "option"</title>
 
             <para>Le terme "option" est employé pour la configuration de la classe <code>Zend_Console_Getopt</code> afin
-            de correspondre à la terminologie utilisée dans le reste du Zend Framework. Ce n'est pas la même chose que
+            de correspondre à la terminologie utilisée dans le reste de Zend Framework. Ce n'est pas la même chose que
             les options de la ligne de commande qui sont analysées par la classe
             <code>Zend_Console_Getopt</code>.</para>
         </note>

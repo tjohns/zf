@@ -93,7 +93,7 @@ Zend_Controller_Action_HelperBroker::addHelper($helper);
             <listitem>
                 <para><code>addPrefix()</code> prend un préfixe de classe et l'utilise pour déterminer le chemin des
                 dossiers dans lesquels les classes d'aides ont été définies. Ceci suppose que le préfixe de la classe
-                respecte la convention de nommage du Zend Framework.</para>
+                respecte la convention de nommage de Zend Framework.</para>
 
                 <programlisting role="php"><![CDATA[
 // Ajoute les aides préfixées Mes_Action_Helpers dans Mes/Action/Helpers/
@@ -171,7 +171,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
     <sect2 id="zend.controller.actionhelper.stockhelpers">
         <title>Aides d'action intégrées</title>
 
-        <para>Le Zend Framework inclue plusieurs aides d'action par défaut : <code>AutoComplete</code> pour des réponses
+        <para>Zend Framework inclue plusieurs aides d'action par défaut : <code>AutoComplete</code> pour des réponses
         automatiques à des auto-complétions AJAX ; <code>ContextSwitch</code> et <code>AjaxContext</code> pour
         distribuer des formats de réponse alternatifs pour vos actions ; <code>FlashMessenger</code> pour gérer des
         messages entre les sessions ; <code>Redirector</code>, qui fournit différentes implémentations pour rediriger

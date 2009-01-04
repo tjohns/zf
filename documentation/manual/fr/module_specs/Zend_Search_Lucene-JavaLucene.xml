@@ -10,7 +10,7 @@
 
         <para>Une description détaillée de ce format est disponible ici: <ulink
         url="http://lucene.apache.org/java/docs/fileformats.html"></ulink><footnote>
-                <para>La version du format de fichier supporté actuellement est la 2.3 (depuis ZF 1.6).</para>
+                <para>La version du format de fichier supporté actuellement est la 2.3 (depuis Zend Framework 1.6).</para>
             </footnote>.</para>
     </sect2>
 

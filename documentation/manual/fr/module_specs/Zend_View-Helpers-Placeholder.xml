@@ -164,7 +164,7 @@ foreach ($this->data as $datum): ?>
     <sect4 id="zend.view.helpers.initial.placeholder.implementations">
         <title>Implémentation concrète des Placeholder</title>
 
-        <para>Le Zend Framework embarque certaines implémentations concrètes de placeholders. Celles-ci sont destinées à
+        <para>Zend Framework embarque certaines implémentations concrètes de placeholders. Celles-ci sont destinées à
         des placeholders communément utilisés : doctype, titre de page, et les différents éléments &lt;head&gt;. Dans
         tous les cas, appeler le placeholder sans arguments retournera l'élément lui-même.</para>
 

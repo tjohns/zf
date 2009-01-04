@@ -2,7 +2,7 @@
 <sect1 id="zend.translate.introduction">
     <title>Introduction</title>
 
-    <para><code>Zend_Translate</code> est la solution du Zend Framework pour des applications multilingues.</para>
+    <para><code>Zend_Translate</code> est la solution de Zend Framework pour des applications multilingues.</para>
 
     <para>Dans des applications multilingues, le contenu doit être traduit en plusieurs langues et l'affichage du
     contenu dépend de la langue de l'utilisateur. PHP offre déjà plusieurs manières de manipuler de tels problèmes,

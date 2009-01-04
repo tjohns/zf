@@ -86,7 +86,7 @@ if (!$adapter->receive()) {
         <para><code>Zend_File_Transfer</code> est construit pur supporter différents adaptateurs et différentes
         directions. Il est conçu pour permettre l'upload, le téléchargement et même l'envoi bidirectionnel (upload avec
         un adaptateur et télécharge avec un autre adaptateur en même temps) de fichiers. Cependant avec la version 1.6
-        du Zend Framework, il n'y a qu'un seul adaptateur disponible, l'adaptateur Http.</para>
+        de Zend Framework, il n'y a qu'un seul adaptateur disponible, l'adaptateur Http.</para>
 
         <para>Puisqu'il n'y a qu'un seul adaptateur disponible pour le moment, la classe principale n'est pas prête à
         l'utilisation. Si vous souhaitez utiliser <code>Zend_File_Transfer</code>, vous devez utiliser l'adaptateur

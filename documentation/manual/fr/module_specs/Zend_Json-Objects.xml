@@ -23,7 +23,7 @@ $phpNatif = Zend_Json::decode($valeurEncodee, Zend_Json::TYPE_OBJECT);
     décodés et retournés comme des objets de type <code>StdClass</code>, avec leurs propriétés correspondantes aux
     paires clé/valeur de la notation JSON.</para>
 
-    <para>La recommandation du Zend Framework est que le développeur doit décider comment décoder les objets JSON. Si un
+    <para>La recommandation de Zend Framework est que le développeur doit décider comment décoder les objets JSON. Si un
     objet d'un type spécifié doit être créé, il peut être créé dans le code du développeur et définit avec les valeurs
     décodées en utilisant <code>Zend_Json</code>.</para>
 </sect1>

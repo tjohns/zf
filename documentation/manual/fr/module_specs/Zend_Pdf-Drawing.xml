@@ -736,7 +736,7 @@ public function rotate($x, $y, $angle);
         </sect3>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.scale">
-            <title>A partir de ZF 1.8, mise à l'échelle</title>
+            <title>A partir de Zend Framework 1.8, mise à l'échelle</title>
 
             <para>La mise à l'échelle est fournie par la méthode <code>Zend_Pdf_Page::scale()</code> :</para>
 
@@ -753,7 +753,7 @@ public function scale($xScale, $yScale);
         </sect3>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.translate">
-            <title>A partir de ZF 1.8, décalage</title>
+            <title>A partir de Zend Framework 1.8, décalage</title>
 
             <para>Le décalage du système de coordonnées est réalisé par la méthode
             <code>Zend_Pdf_Page::translate()</code> :</para>
@@ -771,7 +771,7 @@ public function translate($xShift, $yShift);
         </sect3>
 
         <sect3 id="zend.pdf.drawing.linear-transformations.skew">
-            <title>A partir de ZF 1.8, mise en biais.</title>
+            <title>A partir de Zend Framework 1.8, mise en biais.</title>
 
             <para>La mise en biais de la page peut être réalisé par la méthode <code>Zend_Pdf_Page::skew()</code>
             :</para>

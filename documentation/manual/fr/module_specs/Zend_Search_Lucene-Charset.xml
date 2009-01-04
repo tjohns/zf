@@ -58,7 +58,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <warning>
             <title/>
-            <para>Les analyseurs UTF-8 ont été améliorés dans ZF 1.5. Les anciennes versions considéraient les
+            <para>Les analyseurs UTF-8 ont été améliorés dans Zend Framework 1.5. Les anciennes versions considéraient les
             caractères non-ASCII comme des lettres. Les nouveaux analyseurs sont quant à eux plus précis sur ce
             point.</para>
 

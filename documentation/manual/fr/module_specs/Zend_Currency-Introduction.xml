@@ -2,7 +2,7 @@
 <sect1 id="zend.currency.introduction">
     <title>Introduction à Zend_Currency</title>
 
-    <para><code>Zend_Currency</code> est une partie du coeur de l'i18n ("internationalisation") du Zend_Framework. Elle
+    <para><code>Zend_Currency</code> est une partie du coeur de l'i18n ("internationalisation") de Zend Framework. Elle
     permet le traitement de toutes les questions liées à la monnaie, à la représentation de l'argent et de son
     formatage. Elle fournit aussi les méthodes supplémentaires qui incluent des informations régionalisées sur des
     devises, des informations sur quelle monnaie est utilisée dans quelle région et autres.</para>

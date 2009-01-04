@@ -3,7 +3,7 @@
     <title>Utilisation avancée</title>
 
     <para>Même si les exemples de l'utilisation basique sont une manière parfaitement acceptable d'utiliser les sessions
-    dans le Zend Framework, il existe de bonnes pratiques à considérer. Cette section détaille plus finement le
+    dans Zend Framework, il existe de bonnes pratiques à considérer. Cette section détaille plus finement le
     traitement des sessions et présente des utilisations plus avancées du composant <code>Zend_Session</code>.</para>
 
     <sect2 id="zend.session.advanced_usage.starting_a_session">
@@ -76,7 +76,7 @@ php_value session.auto_start 0
 
                 <para>L'option <code>strict</code> empêche <code>new Zend_Session_Namespace()</code> d'automatiquement
                 démarrer une session en utilisant <code>Zend_Session::start()</code>. Ainsi, cette option aide les
-                développeurs d'application ZF universelles à imposer une décision de conception afin d'empêcher
+                développeurs d'application Zend Framework universelles à imposer une décision de conception afin d'empêcher
                 l'utilisation de sessions pour certaines requêtes, puisqu'une erreur sera levée en utilisant cette
                 option et en instanciant <code>Zend_Session_Namespace</code>, avant un appel explicite de
                 <code>Zend_Session::start()</code>. N'employez pas cette option dans le code de la librairie coeur du
@@ -349,7 +349,7 @@ echo $myNamespace->someArray['foo']; // affiche "bar"
     <sect2 id="zend.session.advanced_usage.testing">
         <title>Utiliser les sessions avec les tests unitaires</title>
 
-        <para>Le Zend Framework s'appuie sur PHPUnit pour faciliter ses propres tests. Beaucoup de développeurs étendent
+        <para>Zend Framework s'appuie sur PHPUnit pour faciliter ses propres tests. Beaucoup de développeurs étendent
         la suite des tests unitaires pour couvrir le code de leurs applications. L'exception "<emphasis
         role="strong">Zend_Session is currently marked as read-only</emphasis>" (NDT. : "Zend_Session est actuellement
         marquée en lecture seule") est levée lors de l'exécution des tests unitaires, si une méthode d'écriture est

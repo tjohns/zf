@@ -5,7 +5,7 @@
     <para>Comme noté dans <link linkend="zend.test.phpunit.loginexample">l'exemple de login</link>, tous les tests MVC
     doivent étendre <code>Zend_Test_PHPUnit_ControllerTestCase</code>. Cette classe étend elle-même
     <code>PHPUnit_Framework_TestCase</code>, et vous fournit donc toute la structure et les assertions que vous attendez
-    de PHPUnit - ainsi que quelques échafaudages et assertions spécifiques à l'implémentation MVC du Zend
+    de PHPUnit - ainsi que quelques échafaudages et assertions spécifiques à l'implémentation MVC de Zend
     Framework.</para>
 
     <para>Si vous voulez tester votre application MVC, vous devez d'abord l'amorcer ("bootstrap"). Il existe plusieurs
