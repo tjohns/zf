@@ -2,7 +2,7 @@
 <sect2 id="zend.log.writers.firebug">
     <title>Écrire vers Firebug</title>
 
-    <para><code>Zend_Log_Writer_Firebug</code> envoie des données de journalisation vers la <ulink
+    <para><code>Zend_Log_Writer_Firebug</code> envoie des données d'historisation vers la <ulink
     url="http://www.getfirebug.com/">console Firebug</ulink>.</para>
 
     <para><inlinegraphic fileref="figures/zend.wildfire.firebug.console.png" format="PNG" scale="100"
@@ -63,7 +63,7 @@ ob_start();
 // Maintenant vous pouvez appeler le logguer
 $logger->log('Ceci est un message de log !', Zend_Log::INFO);
 
-// Envoi des données de journalisation vers le navigateur
+// Envoi des données d'historisation vers le navigateur
 $channel->flush();
 $response->sendHeaders();
 ]]></programlisting>
@@ -89,7 +89,7 @@ $writer->setDefaultPriorityStyle('TRACE');
 ]]></programlisting>
 
         <para>Les styles supportés sont les suivants : <table id="zend.log.writers.firebug.priority-styles.table">
-                <title>Styles de journalisation de Firebug</title>
+                <title>Styles d'historisation de Firebug</title>
 
                 <tgroup cols="2">
                     <thead>
@@ -104,44 +104,44 @@ $writer->setDefaultPriorityStyle('TRACE');
                         <row>
                             <entry><code>LOG</code></entry>
 
-                            <entry>Affiche un message de journalisation basique</entry>
+                            <entry>Affiche un message d'historisation basique</entry>
                         </row>
 
                         <row>
                             <entry><code>INFO</code></entry>
 
-                            <entry>Affiche un message de journalisation de type information</entry>
+                            <entry>Affiche un message d'historisation de type information</entry>
                         </row>
 
                         <row>
                             <entry><code>WARN</code></entry>
 
-                            <entry>Affiche un message de journalisation de type avertissement</entry>
+                            <entry>Affiche un message d'historisation de type avertissement</entry>
                         </row>
 
                         <row>
                             <entry><code>ERROR</code></entry>
 
-                            <entry>Affiche un message de journalisation de type erreur (celui-ci incrémente le compteur
+                            <entry>Affiche un message d'historisation de type erreur (celui-ci incrémente le compteur
                             d'erreur de Firebug)</entry>
                         </row>
 
                         <row>
                             <entry><code>TRACE</code></entry>
 
-                            <entry>Affiche un message de journalisation avec une trace extensible</entry>
+                            <entry>Affiche un message d'historisation avec une trace extensible</entry>
                         </row>
 
                         <row>
                             <entry><code>EXCEPTION</code></entry>
 
-                            <entry>Affiche un message de journalisation de type erreur avec une trace extensible</entry>
+                            <entry>Affiche un message d'historisation de type erreur avec une trace extensible</entry>
                         </row>
 
                         <row>
                             <entry><code>TABLE</code></entry>
 
-                            <entry>Affiche un message de journalisation avec une table extensible</entry>
+                            <entry>Affiche un message d'historisation avec une table extensible</entry>
                         </row>
                     </tbody>
                 </tgroup>
@@ -149,17 +149,17 @@ $writer->setDefaultPriorityStyle('TRACE');
     </sect3>
 
     <sect3 id="zend.log.writers.firebug.preparing-data">
-        <title>Préparer les données pour la journalisation</title>
+        <title>Préparer les données pour l'historisation</title>
 
         <para>Toute variable PHP peut être journalisée avec les priorités incorporées, un formatage spécial est requis
-        si vous utilisez des styles de journalisation un peu plus spécialisé.</para>
+        si vous utilisez des styles d'historisation un peu plus spécialisé.</para>
 
         <para>Les styles <code>LOG</code>, <code>INFO</code>, <code>WARN</code>, <code>ERROR</code> et
         <code>TRACE</code> ne requièrent pas de formatage spécial.</para>
     </sect3>
 
     <sect3 id="zend.log.writers.firebug.preparing-data.exception">
-        <title>Journalisation des exceptions</title>
+        <title>Historisation des exceptions</title>
 
         <para>Pour journaliser une <code>Zend_Exception</code>, fournissez simplement l'objet exception au logguer. Il
         n'y a pas d'importance sur la priorité ou le style que vous avez fourni puisque l'exception est automatiquement
@@ -172,7 +172,7 @@ $logger->err($exception);
     </sect3>
 
     <sect3 id="zend.log.writers.firebug.preparing-data.table">
-        <title>Journalisation sous forme de tableau</title>
+        <title>Historisation sous forme de tableau</title>
 
         <para>Vous pouvez aussi journaliser des données en les formatant comme un tableau. Les colonnes sont
         automatiquement reconnues et la première ligne de données devient automatiquement la ligne d'en-têtes.</para>

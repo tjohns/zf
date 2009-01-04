@@ -30,7 +30,7 @@ $response->sendResponse();
 $front->returnResponse(true);
 $response = $front->dispatch();
 
-// opérations, comme une journalisation...
+// opérations, comme une historisation...
 // et rendu de la réponse:
 $response->sendResponse();
 ]]></programlisting>
