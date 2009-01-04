@@ -10,7 +10,7 @@
         de conception ("design pattern") visant à séparer la logique d'application de la logique d'affichage.
         <code>Zend_Controller_Front</code> implémente un modèle de <ulink
         url="http://www.martinfowler.com/eaaCatalog/frontController.html">contrôleur frontal ("Front
-        Controller")</ulink>, dans lequel toutes les demandes sont arrêtées par le contrôleur frontal et dispatchées
+        Controller")</ulink>, dans lequel toutes les demandes sont arrêtées par le contrôleur frontal et distribuées
         vers différents contrôleurs d'action ("Action Controller") basés sur l'URL demandé.</para>
 
         <para>Le système <code>Zend_Controller</code> a été construit dans un souci d'extensibilité, soit par
@@ -122,7 +122,7 @@ RewriteRule ^.*$ index.php [NC,L]
 Zend_Controller_Front::run('/chemin/vers/application/controllers');
 ]]></programlisting>
 
-            <para>Ceci va instancier et dispatcher le contrôleur frontal, qui conduira les demandes vers les contrôleurs
+            <para>Ceci va instancier et distribuer le contrôleur frontal, qui conduira les demandes vers les contrôleurs
             d'action.</para>
         </sect3>
 
@@ -138,7 +138,7 @@ Zend_Controller_Front::run('/chemin/vers/application/controllers');
             <code>index</code> est présumé (suivant la convention Apache qui fait correspondre un
             <code>DirectoryIndex</code> automatiquement).</para>
 
-            <para>Le dispatcheur du <code>Zend_Controller</code> prend alors la valeur du contrôleur et le fait
+            <para>Le distributeur du <code>Zend_Controller</code> prend alors la valeur du contrôleur et le fait
             correspondre à une classe. Par défaut, il s'agit du nom du contrôleur suivi du mot <code>Controller</code>.
             Ainsi, dans notre exemple ci-dessus, le contrôleur <code>roadmap</code> correspond à la classe
             <code>RoadmapController</code>.</para>

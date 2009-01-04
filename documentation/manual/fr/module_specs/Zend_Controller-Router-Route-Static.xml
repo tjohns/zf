@@ -14,16 +14,16 @@ $route = new Zend_Controller_Router_Route_Static(
 $router->addRoute('login', $route);
 ]]></programlisting>
 
-    <para>La route ci-dessus correspond à l'URL <code>http://domain.com/login</code>, et dispatche l'action
+    <para>La route ci-dessus correspond à l'URL <code>http://domain.com/login</code>, et distribue l'action
     <code>AuthController::loginAction()</code>.</para>
 
     <note id="zend.controller.router.routes.static.warning">
         <title>ATTENTION : Les routes statiques doivent contenir des valeurs par défaut saines</title>
 
         <para>Puisqu'une route statique ne fournit aucune partie de l'URL à l'objet de requête en tant que paramètres,
-        vous devez fournir par défaut pour la route tous les paramètres nécessaires au dispatchage de la requête.
+        vous devez fournir par défaut pour la route tous les paramètres nécessaires à la distribution de la requête.
         Oubliez les valeurs par défaut de "controller" ou "action" entraînera des résultats non attendus, et peut-être
-        une requête non-dispatchable.</para>
+        une requête non-distribuable.</para>
 
         <para>En général, fournissez toujours chacune des valeurs par défaut suivantes :</para>
 

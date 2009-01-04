@@ -12,7 +12,7 @@
         <para>Pour utiliser <code>Zend_Controller_Action</code>, vous devez la sous-classer dans vos propres classes de
         contrôleurs d'action (ou la sous-classer pour créer votre propre classe de base pour vos contrôleurs d'action).
         L'opération la plus basique est de la sous-classer, et de créer vos méthodes d'action qui correspondent aux
-        différentes actions que vous souhaitez gérer. La gestion du routage et du dispatching des
+        différentes actions que vous souhaitez gérer. La gestion du routage et de la distribution des
         <code>Zend_Controller</code> va rechercher automatiquement les méthodes dont le nom termine par 'Action' dans
         votre classe et les considérer comme des actions potentiellement valides de votre contrôleur.</para>
 
@@ -160,7 +160,7 @@ $this->getResponse()->appendBody($content);
 
             <listitem>
                 <para><emphasis>Arguments d'invocation</emphasis> : le contrôleur frontal peut transmettre des
-                paramètres au routeur, au dispatcheur, et au contrôleur d'action. Pour récupérer individuellement
+                paramètres au routeur, au distributeur, et au contrôleur d'action. Pour récupérer individuellement
                 ceux-ci utilisez <code>getInvokeArg($key)</code> ; alternativement, récupérer la liste entière en
                 utilisant <code>getInvokeArgs()</code>.</para>
             </listitem>
@@ -266,7 +266,7 @@ string render(string $action = null,
             <note>
                 <para>Puisque le contrôleur et des noms d'action peuvent contenir des caractères délimiteurs de mot
                 comme '_', '.' et '-', <code>render()</code> normalise ceux-ci à '-' en déterminant le nom du script. En
-                interne, il utilise le délimiteur de mot et de chemin du dispatcheur pour faire cette normalisation.
+                interne, il utilise le délimiteur de mot et de chemin du distributeur pour faire cette normalisation.
                 Ainsi, une requête pour <code>/foo.bar/baz-bat</code> rendra le script
                 <code>foo-bar/baz-bat.phtml</code>. Si votre méthode d'action contient des notationsCamel, veuillez vous
                 souvenir que ceci va résulter avec des mots séparés par '-' en déterminant le nom de fichier du script
@@ -434,7 +434,7 @@ class MyController extends Zend_Controller_Action
         </example>
 
         <para>En plus de la surcharge de <code>__call()</code>, chacune des méthodes d'initialisation , utilitaires,
-        d'accesseurs, de vues et de détournement de dispatching mentionnées ci-dessus peuvent être surchargées dans le
+        d'accesseurs, de vues et de détournement de la distribution mentionnées ci-dessus peuvent être surchargées dans le
         but de personnaliser vos contrôleurs. Par exemple, si vous stockez votre objet de vue dans le registre, vous
         pouvez vouloir modifier votre méthode <code>initView()</code> avec une code comme celui-ci :</para>
 

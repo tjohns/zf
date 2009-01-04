@@ -38,7 +38,7 @@ $profiler->setEnabled(true);
 // Attacher le profileur à votre adaptateur de base de données
 $db->setProfiler($profiler)
 
-// Dispatcher votre contrôleur frontal
+// Distribuer votre contrôleur frontal
 
 // Toutes les requêtes dans vos fichiers de modèles, vues et
 // contrôleurs seront maintenant profilées et envoyées à Firebug

@@ -51,7 +51,7 @@ $values = array(
 );
 ]]></programlisting>
 
-    <para>Plus tard, <code>Zend_Controller_Dispatcher_Standard</code> va dispatcher vers la méthode
+    <para>Plus tard, <code>Zend_Controller_Dispatcher_Standard</code> va distribuer vers la méthode
     <code>userinfoAction()</code> de <code>ProfileController</code> (dans le module par défaut) selon ces valeurs. A cet
     endroit, il sera possible d'accéder à toutes les variables de la requête grâce à
     <code>Zend_Controller_Action::_getParam()</code> ou <code>Zend_Controller_Request::getParam()</code> :</para>
@@ -114,7 +114,7 @@ $route = new Zend_Controller_Router_Route(
 $router->addRoute('archive', $route);
 ]]></programlisting>
 
-        <para>Cette route va alors donner un dispatching vers la méthode <code>showAction()</code> de
+        <para>Cette route va alors donner une distribution vers la méthode <code>showAction()</code> de
         <code>ArchiveController</code>.</para>
     </sect4>
 

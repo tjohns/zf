@@ -2,7 +2,7 @@
 <sect1 id="zend.controller.migration">
     <title>Migrer depuis des versions précédentes</title>
 
-    <para>L'API des composants MVC a changé plusieurs fois. Si vous avez débuté avec des versions antérieures du Zend
+    <para>L'API des composants MVC a changé plusieurs fois. Si vous avez débuté avec des versions antérieures de Zend
     Framework, suivez les recommandations suivantes pour migrer vos scripts afin d'utiliser la nouvelle
     architecture.</para>
 
@@ -14,8 +14,8 @@
 
             <para>Les utilisateurs ont portés l'attention sur le fait que
             <code>Zend_Controller_Action_Helper_ViewRenderer</code> utilisait une méthode de la classe abstraite du
-            dispatcheur standard qui n'était pas présente dans l'interface Dispatcher.La méthode suivante a donc été
-            ajoutée pour s'assurer que les dispatcheurs personnalisés continueront à fonctionner avec les
+            distributeur standard qui n'était pas présente dans l'interface Dispatcher.La méthode suivante a donc été
+            ajoutée pour s'assurer que les distributeurs personnalisés continueront à fonctionner avec les
             implémentations embarquées :</para>
 
             <itemizedlist>
@@ -35,9 +35,9 @@
             <title>Changement dans l'interface Dispatcher</title>
 
             <para>Les utilisateurs ont porté à notre connaissance le fait que <code>Zend_Controller_Front</code> et
-            <code>Zend_Controller_Router_Route_Module</code> utilisent tous les deux des méthodes du dispatcheur qui ne
+            <code>Zend_Controller_Router_Route_Module</code> utilisent tous les deux des méthodes du distributeur qui ne
             sont pas dans l'interface associée. Nous avons donc ajouté les trois méthodes suivantes pour s'assurer que
-            les dispatcheurs personnalisés continueront à fonctionner avec les implémentations embarquées :</para>
+            les distributeurs personnalisés continueront à fonctionner avec les implémentations embarquées :</para>
 
             <itemizedlist>
                 <listitem>
@@ -64,11 +64,11 @@
 
         <para>Quand vous écrivez des URLs, la manière documentée d'écrire les noms d'action en notationCamel est
         d'utiliser un séparateur de mot ; ceux ci sont "." ou "-" par défaut, mais ils peuvent être configurés dans le
-        dispatcheur. Le dispatcheur en interne transforme les noms d'action en minuscules, et utilise ces séparateurs de
+        distributeur. Le distributeur en interne transforme les noms d'action en minuscules, et utilise ces séparateurs de
         mots pour ré-assembler la méthode d'action en utilisant la notationCamel. Cependant, comme les fonctions PHP ne
         sont pas sensibles à la casse, vous <emphasis>pouvez</emphasis> toujours écrire les URLs en utilisant la
-        notationCamel, et le dispatcheur les résoudra de la même manière. Par exemple, "notation-camel" deviendra
-        "notationCamelAction" dans le dispatcheur, tandis que "notationCamel" deviendra "notationcamelAction" ;
+        notationCamel, et le distributeur les résoudra de la même manière. Par exemple, "notation-camel" deviendra
+        "notationCamelAction" dans le distributeur, tandis que "notationCamel" deviendra "notationcamelAction" ;
         cependant, à cause de l'insensibilité à la casse de PHP, dans les deux cas cela exécutera la même
         méthode.</para>
 
@@ -81,7 +81,7 @@
 
         <para>Quelques développeurs se sont fondés sur ce "dispositif", qui n'a jamais été prévu. Plusieurs changements
         de l'arbre 1.5.0, cependant, l'ont fait de sorte que le <code>ViewRenderer</code> ne résout plus ces chemins ;
-        le lien sémantique est maintenant imposé. A partir de maintenant, le dispatcheur impose la sensibilité à la
+        le lien sémantique est maintenant imposé. A partir de maintenant, le distributeur impose la sensibilité à la
         casse dans les noms d'action. Ceci veut dire que la référence vers vos actions dans l'URL en utilisant la
         notationCamel ne résoudra plus les mêmes méthodes qu'en utilisant les séparateurs de mots (par ex.,
         "notation-camel"). Ceci entraîne qu'à partir de maintenant le <code>ViewRenderer</code> honorera seulement les
@@ -123,7 +123,7 @@ $inflector->setFilterRule(':action', array(
             </listitem>
 
             <listitem>
-                <para>Option la moins souhaitable : vous pouvez forcer le dispatcheur à dispatcher les noms d'action
+                <para>Option la moins souhaitable : vous pouvez forcer le distributeur à distribuer les noms d'action
                 écrits en notationCamel avec un nouveau drapeau du contrôleur frontal,
                 <code>useCaseSensitiveActions</code> :</para>
 
@@ -166,8 +166,8 @@ $front->setParam('noErrorHandler', true);
         l'action.</para>
 
         <para>Il existe plusieurs possibilités pour mettre à jour votre code. Dans un premier temps, vous pouvez
-        globalement désactiver <code>ViewRenderer</code> dans votre fichier d'amorçage du contrôleur frontal avant tout
-        dispatching :</para>
+        globalement désactiver <code>ViewRenderer</code> dans votre fichier d'amorçage du contrôleur frontal avant toute
+        distribution :</para>
 
         <programlisting role="php"><![CDATA[
 // En considérant que $front est une instance de Zend_Controller_Front
@@ -253,7 +253,7 @@ public function preDispatch()
 
         <itemizedlist>
             <listitem>
-                <para>Avant le dispatching d'une instance de contrôleur frontal :</para>
+                <para>Avant la distribution d'une instance de contrôleur frontal :</para>
 
                 <programlisting role="php"><![CDATA[
 // En considérant que $view a déjà été définie
@@ -394,7 +394,7 @@ $router->addRoute('user', 'user/:username', array('controller' => 'user',
 $ctrl = Zend_Controller_Front::getInstance();
 $ctrl->setRouter($router);
 
-/* -- régler le répertoire des contrôleurs et dispatcher -- */
+/* -- régler le répertoire des contrôleurs et distribuer -- */
 $ctrl->setControllerDirectory('/chemin/vers/controleurs');
 $ctrl->dispatch();
 ]]></programlisting>
@@ -447,12 +447,12 @@ echo $response;
 
             <listitem>
                 <para><code>Zend_Controller_Dispatcher_Interface::dispatch()</code> accepte maintenant et retourne un
-                objet <xref linkend="zend.controller.request" /> au lieu d'un élément du dispatcheur.</para>
+                objet <xref linkend="zend.controller.request" /> au lieu d'un élément du distributeur.</para>
             </listitem>
 
             <listitem>
                 <para><code>Zend_Controller_Router_Interface::route()</code> accepte maintenant et retourne un objet
-                <xref linkend="zend.controller.request" /> au lieu d'un élément du dispatcheur.</para>
+                <xref linkend="zend.controller.request" /> au lieu d'un élément du distributeur.</para>
             </listitem>
 
             <listitem>
@@ -556,7 +556,7 @@ public function __call($method, $args)
             <listitem>
                 <para><code>Zend_Controller_Plugin_Interface</code> a été remplacée par
                 <code>Zend_Controller_Plugin_Abstract</code>. Toutes les méthodes acceptent et retournent maintenant un
-                objet <xref linkend="zend.controller.request" /> au lieu d'un élément du dispatcheur.</para>
+                objet <xref linkend="zend.controller.request" /> au lieu d'un élément du distributeur.</para>
             </listitem>
         </itemizedlist>
     </sect2>

@@ -6,7 +6,7 @@
         <title>Introduction</title>
 
         <para>L'objet requête est un objet simple de valeur qui est passé entre <code>Zend_Controller_Front</code> et le
-        routeur, le dispatcheur, et les classes de contrôleur. Il empaquette les noms du module demandé, du contrôleur,
+        routeur, le distributeur, et les classes de contrôleur. Il empaquette les noms du module demandé, du contrôleur,
         de l'action, et des paramètres facultatifs, aussi bien que le reste de l'environnement de requête, que ce soit
         le HTTP, du CLI, ou de PHP-GTK.</para>
 
@@ -38,8 +38,8 @@
         requête, l'information sur le chemin, les paramètres <code>$_GET</code> et <code>$_POST</code>, etc.</para>
 
         <para>L'objet requête est passé au contrôleur frontal, ou si aucun n'est fourni, il est instancié au début du
-        processus de dispatching, avant que le routage ne se produise. Il est passé à travers chaque objet dans la
-        chaîne de dispatching.</para>
+        processus de distribution, avant que le routage ne se produise. Il est passé à travers chaque objet dans la
+        chaîne de distribution.</para>
 
         <para>De plus, l'objet requête est particulièrement utile pour les tests. Le développeur peut simuler
         l'environnement de requête, y compris le module, le contrôleur, l'action, les paramètres, l'URI, etc., et passe
@@ -79,7 +79,7 @@
                 <title>Données GET et POST</title>
 
                 <para>Soyez prudent en accédant à des données de l'objet de requête car il n'est pas du tout filtré. Le
-                routeur et le dispatcheur valident et filtrent les données pour leur usage, mais laissent les données
+                routeur et le distributeur valident et filtrent les données pour leur usage, mais laissent les données
                 intactes dans l'objet de requête.</para>
             </note>
 
@@ -170,7 +170,7 @@ $front->setRequest($request);
 
             <programlisting role="php"><![CDATA[
 /**
- * Dispatche la requête avec une base d'URL réglé
+ * Distribue la requête avec une base d'URL réglé
  * avec Zend_Controller_Front.
  */
 $router     = new Zend_Controller_Router_Rewrite();
@@ -344,7 +344,7 @@ abstract class Zend_Controller_Request_Abstract
 
         <para>L'objet de requête est un conteneur pour l'environnement de la requête. La chaîne de contrôleur doit
         seulement savoir régler et récupérer le contrôleur, l'action, les paramètres facultatifs, et le statut
-        dispatché. Par défaut, la demande recherchera ses propres paramètres en utilisant les clés de contrôleur ou
+        distribué. Par défaut, la demande recherchera ses propres paramètres en utilisant les clés de contrôleur ou
         d'action afin de déterminer le contrôleur et l'action.</para>
 
         <para>Étendez cette classe, ou une de ses dérivés, quand vous avez besoin de la classe de requête pour interagir

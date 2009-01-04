@@ -80,7 +80,7 @@
 
         <para><code>Zend_Layout::startMvc()</code> crée une instance de <code>Zend_Layout</code> avec des paramètres de
         configuration optionnels. Cette méthode enregistre aussi un plugin de contrôleur frontal qui s'occupe du rendu
-        du layout rempli, lorsque la boucle de dispatching est terminée. Elle enregistre également une aide d'action qui
+        du layout rempli, lorsque la boucle de distribution est terminée. Elle enregistre également une aide d'action qui
         permet aux actions d'accéder à l'objet <code>layout</code>. Enfin, l'aide de vue layout, elle, donne accès à
         l'objet layout depuis la vue.</para>
 

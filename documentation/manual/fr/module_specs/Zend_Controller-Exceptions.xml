@@ -105,7 +105,7 @@ if ($response->isException()) {
     <sect2 id="zend.controller.exceptions.internal">
         <title>Différents types d'exceptions que vous pouvez rencontrer</title>
 
-        <para>Les composants MVC sont nombreux, - requête, routeur, dispatcheur, contrôleur, et réponse - chaque objet
+        <para>Les composants MVC sont nombreux, - requête, routeur, distributeur, contrôleur, et réponse - chaque objet
         risque de renvoyer une exception qui lui est propre. Certaines peuvent être créées ou dérivées, d'autres par
         défaut indiquent un problème de l'application.</para>
 
@@ -120,7 +120,7 @@ if ($response->isException()) {
                     <listitem>
                         <para>Initialisez le paramètre <code>useDefaultControllerAlways</code></para>
 
-                        <para>Dans votre contrôleur frontal, ou dispatcheur, ajoutez la directive suivante :</para>
+                        <para>Dans votre contrôleur frontal, ou distributeur, ajoutez la directive suivante :</para>
 
                         <programlisting role="php"><![CDATA[
 $front->setParam('useDefaultControllerAlways', true);
@@ -128,8 +128,8 @@ $front->setParam('useDefaultControllerAlways', true);
 $dispatcher->setParam('useDefaultControllerAlways', true);
 ]]></programlisting>
 
-                        <para>Lorsque ceci est injecté, le dispatcheur utilisera le contrôleur par défaut s'il
-                        s'aperçoit qu'il ne peut dispatcher un contrôleur spécifique, plutôt que de renvoyer une
+                        <para>Lorsque ceci est injecté, le distributeur utilisera le contrôleur par défaut s'il
+                        s'aperçoit qu'il ne peut distribuer un contrôleur spécifique, plutôt que de renvoyer une
                         exception. Méfiez vous des moteurs de recherche qui n'aiment pas que plusieurs URI pointent sur
                         un même contenu. En effet, avec ce paramètre activé, les utilisateurs orthographiant mal votre
                         site, seront redirigés vers la page d'accueil de celui-ci, ce qui peut aboutir à du "duplicate
@@ -148,7 +148,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para><code>Zend_Controller_Action::__call()</code> enverra une
-                <code>Zend_Controller_Action_Exception</code> s'il n'est pas possible de dispatcher l'action demandée.
+                <code>Zend_Controller_Action_Exception</code> s'il n'est pas possible de distribuer l'action demandée.
                 Il est facile de changer ce comportement :</para>
 
                 <itemizedlist>
@@ -208,7 +208,7 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                         <para>L'exemple précédant vérifie si l'action existe dans le contrôleur demandé. Si ce n'est pas
                         le cas, il redéfinit l'action en spécifiant celle par défaut.</para>
 
-                        <para>Cette méthode permet de changer l'action avant le dispatching. Attention une fois encore
+                        <para>Cette méthode permet de changer l'action avant la distribution. Attention une fois encore
                         aux erreurs de syntaxes dans l'URL, qui devraient mener vers une page d'erreur
                         quelconque.</para>
                     </listitem>
@@ -219,8 +219,8 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
                         invalides.</para>
 
                         <para>En dérivant <code>Zend_Controller_Action</code> pour y modifier
-                        <code>preDispatch()</code>, vous agissez sur la globalité de vos contrôleurs, avant même le
-                        dispatching de l'action demandée.</para>
+                        <code>preDispatch()</code>, vous agissez sur la globalité de vos contrôleurs, avant même la
+                        distribution de l'action demandée.</para>
 
                         <para>L'utilisation d'un plugin offre une flexibilité supplémentaire : Si tous vos contrôleurs
                         n'héritent pas de la même classe, plutôt que de dupliquer du code, un plugin va agir
@@ -257,7 +257,7 @@ class My_Controller_PreDispatchPlugin
 }
 ]]></programlisting>
 
-                        <para>Dans cet exemple, nous vérifions si l'action demandée existe dans le contrôleur dispatché.
+                        <para>Dans cet exemple, nous vérifions si l'action demandée existe dans le contrôleur distribué.
                         Si ce n'est pas le cas, nous exécutons une redirection immédiate.</para>
                     </listitem>
                 </itemizedlist>

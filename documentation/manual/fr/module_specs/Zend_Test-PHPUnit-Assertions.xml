@@ -209,17 +209,17 @@
         <itemizedlist>
             <listitem>
                 <para><code>assertModule($module, $message = '') </code>: vérifie que le module fourni a été utilisé
-                lors de la dernière action dispatchée.</para>
+                lors de la dernière action distribuée.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertController($controller, $message = '')</code> : vérifie que le contrôleur fourni a été
-                utilisé lors de la dernière action dispatchée.</para>
+                utilisé lors de la dernière action distribuée.</para>
             </listitem>
 
             <listitem>
                 <para><code>assertAction($action, $message = '')</code> : vérifie que l'action fournie est bien la
-                dernière dispatchée.</para>
+                dernière distribuée.</para>
             </listitem>
 
             <listitem>

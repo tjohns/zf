@@ -50,7 +50,7 @@
             ou retirez l'objet du gestionnaire d'aides (helper broker)
             (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).</para>
 
-            <para>Si vous voulez modifier un paramètre du <code>ViewRenderer</code> avant le dispatching du contrôleur
+            <para>Si vous voulez modifier un paramètre du <code>ViewRenderer</code> avant la distribution du contrôleur
             frontal, il existe deux moyens :</para>
 
             <itemizedlist>
@@ -421,7 +421,7 @@ class Foo_BarController extends Zend_Controller_Action
         $this->view->foo = 'bar';
     }
 
-    // Ne rend rien, car on demande un nouveau jeton de dispatching
+    // Ne rend rien, car on demande un nouveau jeton de distribution
     public function bazAction()
     {
         $this->_forward('index');
@@ -439,17 +439,17 @@ class Foo_BarController extends Zend_Controller_Action
         <note>
             <title>Conventions de noms : délimiteurs de mots dans les noms de contrôleur et d'action</title>
 
-            <para>Si les noms de votre contrôleur ou de votre action sont composés de plusieurs mots, le dispatcheur
+            <para>Si les noms de votre contrôleur ou de votre action sont composés de plusieurs mots, le distributeur
             s'attend à ce qu'ils soient séparés par des caractères bien définis, dans l'URL. Le
             <code>ViewRenderer</code> les transforme alors en '/' pour les chemins, ou tirets '-' pour les mots. Ainsi,
-            un appel à <code>/foo.bar/baz.bat</code> dispatchera <code>FooBarController::bazBatAction()</code> dans
+            un appel à <code>/foo.bar/baz.bat</code> distribuera <code>FooBarController::bazBatAction()</code> dans
             FooBarController.php, et ceci rendra <code>foo-bar/baz-bat.phtml</code>. Un appel à
-            <code>/bar_baz/baz-bat</code> dispatchera vers <code>Bar_BazController::bazBatAction()</code> dans
+            <code>/bar_baz/baz-bat</code> distribuera vers <code>Bar_BazController::bazBatAction()</code> dans
             <code>Bar/BazController.php</code> (notez la séparation du chemin), et rend
             <code>bar/baz/baz-bat.phtml</code>.</para>
 
             <para>Notez dans le second exemple, le module est celui par défaut, mais comme un séparateur de chemin
-            (tiret bas ou "_") est donné, alors le contrôleur dispatché devient <code>Bar_BazController</code>, dans
+            (tiret bas ou "_") est donné, alors le contrôleur distribué devient <code>Bar_BazController</code>, dans
             <code>Bar/BazController.php</code>.</para>
         </note>
 
@@ -492,7 +492,7 @@ class Bar_BatController extends Zend_Controller_Action
             <title>Choix d'un script de vue différent</title>
 
             <para>Il peut arriver que vous éprouviez le besoin de rendre un script de vue différent de celui
-            correspondant à l'action en cours de dispatching. Par exemple, un contrôleur qui possède deux actions ajout
+            correspondant à l'action en cours de distribution. Par exemple, un contrôleur qui possède deux actions ajout
             et édition, qui sont susceptibles toutes les deux de rendre le même script de vue. Utilisez alors
             <code>setScriptAction()</code>, <code>setRender()</code>, ou appelez l'aide ViewRenderer directement
             :</para>

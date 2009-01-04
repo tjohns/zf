@@ -6,7 +6,7 @@
     vous auriez pu faire avec une suite de test PHPUnit ("test suite"), avec quelques petites différences
     mineures.</para>
 
-    <para>Premièrement, vous devez dispatcher l'URL à tester en utilisant la méthode <code>dispatch()</code> de TestCase
+    <para>Premièrement, vous devez distribuer l'URL à tester en utilisant la méthode <code>dispatch()</code> de TestCase
     :</para>
 
     <programlisting role="php"><![CDATA[
@@ -58,7 +58,7 @@ class FooControllerTest extends Zend_Test_PHPUnit_Controller_TestCase
         // Définir le type de requête :
         $this->request->setMethod('POST');
 
-        // Dispatcher :
+        // Distribuer :
         $this->dispatch('/foo/bar');
 
         // ...

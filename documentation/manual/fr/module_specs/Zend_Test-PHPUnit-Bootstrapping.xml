@@ -13,7 +13,7 @@
     <code>$bootstrap</code>.</para>
 
     <para>Premièrement, vous pouvez paramétrer cette propriété pour qu'elle pointe vers un fichier. Si vous faîtes ceci,
-    le fichier ne doit pas dispatcher le contrôleur frontal, mais seulement paramétrer celui-ci et faire tout réglage
+    le fichier ne doit pas distribuer le contrôleur frontal, mais seulement paramétrer celui-ci et faire tout réglage
     spécifique à votre application.</para>
 
     <programlisting role="php"><![CDATA[

@@ -51,7 +51,7 @@
 
     <para><code>Zend_Controller_Plugin_ErrorHandler</code> agit en <code>postDispatch()</code> et analyse <link
     linkend="zend.controller.response">l'objet de réponse</link> à la recherche d'éventuelles exceptions. Si il y en a,
-    alors le plugin modifie la requête pour dispatcher le contrôleur et l'action d'erreur.</para>
+    alors le plugin modifie la requête pour distribuer le contrôleur et l'action d'erreur.</para>
 
     <para>Si une exception arrive lorsque le plugin agit, alors celui-ci ordonne au contrôleur frontal de renvoyer
     l'exception. C'est pour cela qu'il faudrait systématiquement entourer sa méthode <code>dispatch</code>, du

@@ -10,7 +10,7 @@
         contrôleur et action doivent recevoir la requête. Ces valeurs sont encapsulées dans un objet de requête
         <code>Zend_Controller_Request_Http</code> qui est alors injecté dans
         <code>Zend_Controller_Dispatcher_Standard</code> pour y être traité Le routage n'est effectué qu'une seule fois
-        par requête : juste avant que le premier contrôleur ne soit traité (dispatché)</para>
+        par requête : juste avant que le premier contrôleur ne soit traité (distribué)</para>
 
         <para><code>Zend_Controller_Router_Rewrite</code> intervient pour fournir un environnement de requête similaire
         à "mod_rewrite", tout en utilisant uniquement du PHP. Il est désigné sur les principes de Ruby on Rails et ne
@@ -167,7 +167,7 @@ Martel
 
         <para>Le routage consiste simplement à itérer toutes les routes reçues et à les faire correspondre à l'URI de la
         requête courante. Dès qu'une correspondance est établie, les variables sont injectées dans l'objet
-        <code>Zend_Controller_Request</code> utilisé après dans le dispatcheur et dans les contrôleurs. Si aucune
+        <code>Zend_Controller_Request</code> utilisé après dans le distributeur et dans les contrôleurs. Si aucune
         correspondance n'est trouvée, la route suivante dans la pile est analysée.</para>
 
         <para>Si vous devez déterminer quelle route a été trouvée, vous pouvez utilisez la méthode
@@ -191,8 +191,8 @@ Martel
         </note>
 
         <para>Il y a trois valeurs spéciales qui peuvent être utilisées dans la définition de vos routes : - "module",
-        "controller" et "action" -. Ces valeurs sont utilisées par Zend_Controller_Dispatcher pour trouver les
-        contrôleurs et action à dispatcher.</para>
+        "controller" et "action" -. Ces valeurs sont utilisées par <code>Zend_Controller_Dispatcher</code> pour trouver les
+        contrôleurs et action à distribuer.</para>
 
         <note>
             <title>Valeurs spéciales</title>
@@ -379,7 +379,7 @@ interface Zend_Controller_Router_Interface
 
         <para>Le processus de routage n'intervient qu'une fois : lorsque la requête est reçue par le système. Le routeur
         doit alors déterminer un contrôleur, une action et de paramètres optionnel et les spécifier dans un objet de
-        requête, qui est ensuite passé au dispatcher. Si il n'est pas possible de router une requête, alors l'objet de
+        requête, qui est ensuite passé au distributeur. Si il n'est pas possible de router une requête, alors l'objet de
         requête devrait être laissé tel-quel.</para>
     </sect2>
 </sect1>

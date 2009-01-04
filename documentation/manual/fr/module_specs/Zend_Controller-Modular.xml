@@ -54,7 +54,7 @@ application/
             <title>Pas de namespace pour le module par défaut</title>
 
             <para>Notez que dans le module par défaut, les contrôleurs n'ont pas besoin d'être préfixés par le nom du
-            module ("Default_"). Ils sont simplement dispatchés tels quels. Ce n'est pas le cas pour les autres
+            module ("Default_"). Ils sont simplement distribués tels quels. Ce n'est pas le cas pour les autres
             contrôleurs.</para>
         </note>
 
@@ -154,7 +154,7 @@ $front->addModuleDirectory('/path/to/application/modules');
         </itemizedlist>
 
         <para>Ainsi, elle va trouver les contrôleurs et actions, avec ou sans module les précédant. Un module ne sera
-        trouvé que si sa clé existe dans le tableau d'options passé au contrôleur frontal ou au dispatcheur.</para>
+        trouvé que si sa clé existe dans le tableau d'options passé au contrôleur frontal ou au distributeur.</para>
     </sect2>
 
     <sect2 id="zend.controller.modular.defaultcontroller">
@@ -162,7 +162,7 @@ $front->addModuleDirectory('/path/to/application/modules');
 
         <para>Dans le routeur par défaut, si aucun contrôleur n'est indiqué dans l'URL, un contrôleur par défaut sera
         utilisé (<code>IndexController</code>, sauf si l'on décide de changer ce paramètre). Avec des modules indiqués
-        dans l'URL, si aucun contrôleur n'est indiqué, alors le dispatcheur cherchera dans le module demandé le
+        dans l'URL, si aucun contrôleur n'est indiqué, alors le distributeur cherchera dans le module demandé le
         contrôleur par défaut. Si celui-ci est absent, c'est celui du module "default" qui sera utilisé.</para>
 
         <para>Si vous voulez renvoyer directement vers le contrôleur par défaut du module "default", passez le paramètre

@@ -207,11 +207,11 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
             </listitem>
 
             <listitem>
-                <para><code>preDispatch()</code> est déclenchée avant le dispatching d'une action.</para>
+                <para><code>preDispatch()</code> est déclenchée avant la distribution d'une action.</para>
             </listitem>
 
             <listitem>
-                <para><code>postDispatch()</code> est déclenchée quand une action a été dispatchée - même si un plugin
+                <para><code>postDispatch()</code> est déclenchée quand une action a été distribuée - même si un plugin
                 <code>preDispatch()</code> a évité l'action. Principalement utile pour le nettoyage.</para>
             </listitem>
 

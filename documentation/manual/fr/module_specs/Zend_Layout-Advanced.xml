@@ -75,7 +75,7 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')
         <title>Plugin de contrôleur frontal personnalisé</title>
 
         <para>Lorsqu'utilisé avec les composants MVC, <code>Zend_Layout</code> enregistre un plugin de contrôleur
-        frontal qui se charge du rendu du layout juste avant la fin de la boucle de dispatching. Ceci convient à la
+        frontal qui se charge du rendu du layout juste avant la fin de la boucle de distribution. Ceci convient à la
         majorité des cas, si cependant vous avez besoin de construire votre propre plugin, passez son nom dans l'option
         <code>pluginClass</code> de la méthode <code>startMvc()</code>.</para>
 

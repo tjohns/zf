@@ -22,8 +22,8 @@ $response->sendResponse();
 ]]></programlisting>
 
         <note>
-            <para>Par défaut le contrôleur frontal appelle <code>sendResponse()</code> lorsque le dispatching est
-            terminé. Vous pouvez changer ce comportement avec <code>Zend_Controller_Front::returnResponse(true)</code>
+            <para>Par défaut le contrôleur frontal appelle <code>sendResponse()</code> lorsque la distribution est
+            terminée. Vous pouvez changer ce comportement avec <code>Zend_Controller_Front::returnResponse(true)</code>
             :</para>
 
             <programlisting role="php"><![CDATA[
@@ -59,10 +59,10 @@ $this->getResponse()
         créer un objet de réponse d'erreur, comme un 404, et journaliser l'exception, etc...</para>
 
         <para>Pour prendre la main sur l'objet de réponse, demandez le au contrôleur frontal via un accesseur, ou
-        commandez lui de vous retourner la celle-ci lors après le dispatching.</para>
+        commandez lui de vous retourner la celle-ci lors après la distribution.</para>
 
         <programlisting role="php"><![CDATA[
-// récupère la réponse après dispatching et affichage:
+// récupère la réponse après distribution et affichage:
 $front->dispatch();
 $response = $front->getResponse();
 if ($response->isException()) {
@@ -260,9 +260,9 @@ array(
     <sect2 id="zend.controller.response.exceptions">
         <title>Manipulation des exceptions dans l'objet de réponse</title>
 
-        <para>Comme déjà mentionné, par défaut, les exceptions rencontrées durant le processus MVC de dispatching, sont
+        <para>Comme déjà mentionné, par défaut, les exceptions rencontrées durant le processus MVC de distribution, sont
         ajoutées à l'objet de réponse. Elles le sont dans une pile, ce qui vous permet de toutes les garder -- les
-        exceptions d'application, les exceptions de dispatching, les exceptions de plugin -- etc... Si vous voulez
+        exceptions d'application, les exceptions de distribution, les exceptions de plugin -- etc... Si vous voulez
         manipuler finement celles-ci, voyez plutôt les méthodes ci-après:</para>
 
         <itemizedlist>
