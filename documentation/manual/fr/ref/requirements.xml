@@ -1,8 +1,8 @@
 <!-- EN-Revision: 12887 -->
 <appendix id="requirements">
-    <title>Configuration système requise par le Zend Framework</title>
+    <title>Configuration système requise par Zend Framework</title>
 
-    <para>Le Zend Framework requière un interpréteur PHP5 avec un serveur web configuré pour gérer correctement les
+    <para>Zend Framework requière un interpréteur PHP5 avec un serveur web configuré pour gérer correctement les
     scripts PHP. Certaines fonctionnalités requièrent des extensions additionnelles ou des fonctionnalités du serveur
     web ; dans la plupart des cas le framework peut être utilisées sans celle-ci, bien que l'exécution puisse perdre en
     performance ou les fonctionnalités auxiliaires peuvent ne pas être entièrement fonctionnelles. Un exemple d'un telle
@@ -27,8 +27,8 @@
         <title>Extensions PHP</title>
 
         <para>Ci-dessous, la table recense toutes les extensions typiquement trouvées dans PHP et comment elles sont
-        utilisées dans le Zend Framework. Cela peut aider à vous guider pour savoir quelles extensions sont exigées pour
-        votre application. Cependant toutes les extensions utilisées par le Zend Framework ne sont pas exigées pour
+        utilisées dans Zend Framework. Cela peut aider à vous guider pour savoir quelles extensions sont exigées pour
+        votre application. Cependant toutes les extensions utilisées par Zend Framework ne sont pas exigées pour
         chaque application.</para>
 
         <para>Une dépendance de type "forte" indique que le composant ou la classe ne pourra pas fonctionner
@@ -39,7 +39,7 @@
         pas.</para>
 
         <table frame="all" id="requirements.extensions.table-1">
-            <title>Extensions PHP utilisées par composant dans le Zend Framework</title>
+            <title>Extensions PHP utilisées par composant dans Zend Framework</title>
 
             <tgroup cols="3">
                 <!--<colspec colwidth="1in" />
@@ -54,7 +54,7 @@
 
                         <entry>Type de dépendance</entry>
 
-                        <entry>Utilisée par les composants du Zend Framework</entry>
+                        <entry>Utilisée par les composants de Zend Framework</entry>
                     </row>
                 </thead>
 
@@ -1037,11 +1037,11 @@
     </sect1>
 
     <sect1 id="requirements.zendcomponents">
-        <title>Les composants du Zend Framework</title>
+        <title>Les composants de Zend Framework</title>
 
-        <para>Ci-dessous vous trouverez un tableau qui liste tous les composants disponibles du Zend Framework ainsi que
+        <para>Ci-dessous vous trouverez un tableau qui liste tous les composants disponibles de Zend Framework ainsi que
         les extensions PHP dont ils ont besoin. Ceci peut vous aider pour connaître les extensions requises pour votre
-        application. Les extensions par le Zend Framework ne sont pas utiles pour toutes les applications.</para>
+        application. Les extensions par Zend Framework ne sont pas utiles pour toutes les applications.</para>
 
         <para>Une dépendance de type "forte" indique que le composant ou la classe ne pourra pas fonctionner
         correctement si l'extension respective n'est pas disponible, tandis qu'une dépendance de type "faible" indique
@@ -1051,7 +1051,7 @@
         pas.</para>
 
         <table frame="all" id="requirements.zendcomponents.table-1">
-            <title>Composants du Zend Framework et les extensions PHP qu'ils utilisent</title>
+            <title>Composants de Zend Framework et les extensions PHP qu'ils utilisent</title>
 
             <tgroup cols="4">
                 <!-- <colspec colwidth='3in'/>
@@ -1060,7 +1060,7 @@
                 <colspec colwidth='3in'/> -->
                 <thead>
                     <row>
-                        <entry>Composant du Zend Framework</entry>
+                        <entry>Composant de Zend Framework</entry>
 
                         <entry>Type de dépendance</entry>
 
@@ -2027,10 +2027,10 @@
     </sect1>
 
     <sect1 id="requirements.dependencies">
-        <title>Dépendances internes du Zend Framework</title>
+        <title>Dépendances internes de Zend Framework</title>
 
-        <para>Ci-dessous vous trouverez un tableau listant les composants du Zend Framework ainsi que leurs dépendances
-        envers les autres composants du Zend Framework. Ceci peut vous aider si vous utilisez un composant seul au lieu
+        <para>Ci-dessous vous trouverez un tableau listant les composants de Zend Framework ainsi que leurs dépendances
+        envers les autres composants de Zend Framework. Ceci peut vous aider si vous utilisez un composant seul au lieu
         de la bibliothèque complète.</para>
 
         <para>Une dépendance de type "forte" indique que le composant ou la classe ne pourra pas fonctionner
@@ -2038,13 +2038,13 @@
         que le composant peut avoir besoin du composant dans certains cas.</para>
 
         <note>
-            <para>Bien qu'il soit possible d'utiliser uniquement certains composants au lieu du Zend Framework complet,
+            <para>Bien qu'il soit possible d'utiliser uniquement certains composants au lieu de Zend Framework complet,
             vous devriez avoir à l'esprit que ceci peut entraîner des problèmes quand des fichiers sont manquants ou que
             des composants sont utilisés dynamiquement.</para>
         </note>
 
         <table frame="all" id="requirements.dependencies.table-1">
-            <title>Composants du Zend Framework et leurs dépendances envers les autres composants du Zend
+            <title>Composants de Zend Framework et leurs dépendances envers les autres composants de Zend
             Framework</title>
 
             <tgroup cols="3">
@@ -2056,11 +2056,11 @@
 
                 <thead>
                     <row>
-                        <entry>Composant du Zend Framework</entry>
+                        <entry>Composant de Zend Framework</entry>
 
                         <entry>Type de dépendance</entry>
 
-                        <entry>Dépend du composant du Zend Framework</entry>
+                        <entry>Dépend du composant de Zend Framework</entry>
                     </row>
                 </thead>
 

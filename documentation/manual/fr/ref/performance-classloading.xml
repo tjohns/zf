@@ -14,7 +14,7 @@
 
         <para>Une optimisation triviale pour accélérer la vitesse de chargement des classes est de faire attention à
         votre <code>include_path</code>. En particulier, vous devriez faire quatre choses : utilisez des chemins absolus
-        (ou des chemins relatifs à des chemins absolus), réduire le nombre des chemins à inclure, définir le dossier du
+        (ou des chemins relatifs à des chemins absolus), réduire le nombre des chemins à inclure, définir le dossier de
         Zend Framework le plus tôt possible dans l'<code>include_path</code> et inclure le dossier courant en dernier
         dans votre <code>include_path</code>.</para>
 
@@ -65,7 +65,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
             avez défini dans votre include_path pour déterminer si vous avez réellement besoin d'une fonctionnalité dans
             votre application ; si ce n'est pas le cas, enlevez le.</para>
 
-            <para>Une autre optimisation consiste en la combinaison de chemins. Par exemple, le Zend Framework suit la
+            <para>Une autre optimisation consiste en la combinaison de chemins. Par exemple, Zend Framework suit la
             convention de nommage PEAR ; ainsi , si vous utilisez des librairies PEAR (ou d'autres framework ou
             librairies de composants qui respectent la convention de nommage PEAR), essayez de mettre toutes ces
             librairies dans le même chemin de l'<code>include_path</code>. Ceci peut souvent être réalisé par quelque
@@ -74,11 +74,11 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
         </sect3>
 
         <sect3 id="performance.classloading.includepath.early">
-            <title>Définir le dossier du Zend Framework le plus tôt possible dans l'include_path</title>
+            <title>Définir le dossier de Zend Framework le plus tôt possible dans l'include_path</title>
 
             <para>Pour continuer avec les suggestions précédentes, une autre optimisation évidente est de définir le
-            dossier du Zend Framework le plus tôt possible dans votre <code>include_path</code>. Dans la plupart des
-            cas, il devrait être le premier de la liste. Ceci permet de s'assurer les fichiers du Zend Framework à
+            dossier de Zend Framework le plus tôt possible dans votre <code>include_path</code>. Dans la plupart des
+            cas, il devrait être le premier de la liste. Ceci permet de s'assurer les fichiers de Zend Framework à
             inclure le sont dès le premier scan.</para>
         </sect3>
 
@@ -89,14 +89,14 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
             ("<code>.</code>"). Ceci est pratique pour s'assurer que les scripts dans le même dossier que le fichier
             courant peuvent aussi être chargés. Cependant ces mêmes exemples montrent souvent ce dossier comme étant le
             premier de la liste des include_path - ce qui veut dire l'arbre de dossiers courant est toujours scanné en
-            premier. La plupart du temps, avec le Zend Framework, ce n'est pas nécessaire, et ce dossier peut tout
+            premier. La plupart du temps, avec Zend Framework, ce n'est pas nécessaire, et ce dossier peut tout
             naturellement être mis en dernière position de la liste.</para>
 
             <example id="performance.classloading.includepath.example">
                 <title>Exemple : optimisation de l'include_path</title>
 
                 <para>Essayons de mettre ensemble toutes ces suggestions. Considérons que nous utilisons une ou
-                plusieurs composants PEAR en conjonction avec le Zend Framework - par exemple les composants PHPUnit et
+                plusieurs composants PEAR en conjonction avec Zend Framework - par exemple les composants PHPUnit et
                 Archive_Tar - et qu'il est occasionnellement nécessaire d'inclure les fichiers relativement au fichier
                 courant.</para>
 
@@ -121,7 +121,7 @@ library
                 code dans le système de fichiers, sans devoir éditer l'<code>include_path</code> à chaque fois.</para>
 
                 <para>Nous emprunterons des idées à chacune des suggestions ci-dessus : nous utiliserons les chemins
-                absolus, déterminé en utilisant le <code>realpath()</code> ; nous positionnerons le Zend Framework au
+                absolus, déterminé en utilisant le <code>realpath()</code> ; nous positionnerons Zend Framework au
                 plus tôt dans l'<code>include_path</code> ; nous avons déjà vérifié les chemins d'inclusions nécessaires
                 ; et nous mettrons le dossier courant comme dernier chemin. En fait, nous faisons tout bien ici - nous
                 allons donc terminer avec seulement deux chemins. </para>
@@ -147,7 +147,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
         plusieurs callbacks à exécuter dans le but de faire correspondre un nom de classe à un fichier.</para>
 
         <para>Cependant, la plupart des avantages que vous pourrez retirer de l'autoloading sont diminués si le code de
-        votre librairie exécute toujours des appels à <code>require_once</code> - ce qui est précisément le cas du Zend
+        votre librairie exécute toujours des appels à <code>require_once</code> - ce qui est précisément le cas de Zend
         Framework. La question est donc : comment éliminer ces déclarations <code>require_once</code> dans le but de
         maximiser les performances de l'autoloader.</para>
 
@@ -185,7 +185,7 @@ Zend_Loader::registerAutoload();
         <title>Comment accélérer le chargement des plugins ?</title>
 
         <para>Certains composants utilisent les plugins, ce qui vous permet de créer vos propres classes afin de les
-        utiliser avec le composant, de même que de surcharger les plugins standard existants embarqués dans le Zend
+        utiliser avec le composant, de même que de surcharger les plugins standard existants embarqués dans Zend
         Framework. Ceci fournit une importante flexibilité au framework, mais a un prix : le chargement des plugins est
         une tâche assez coûteuse.</para>
 

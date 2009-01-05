@@ -41,7 +41,7 @@
                 </listitem>
 
                 <listitem>
-                    <para><emphasis>Gettext</emphasis> : l'adaptateur Gettext du Zend Framework <emphasis>n'utilise
+                    <para><emphasis>Gettext</emphasis> : l'adaptateur Gettext de Zend Framework <emphasis>n'utilise
                     pas</emphasis> l'extension gettext puisqu'elle n'est pas thread safe et ne permet pas de spécifier
                     plus d'une locale par serveur. En conséquence, il est plus lent que d'utiliser l'extension Gettext
                     directement, mais comme le format Gettext est binaire, il reste plus rapide à analyser qu'un format

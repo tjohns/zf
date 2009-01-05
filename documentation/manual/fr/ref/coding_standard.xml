@@ -1,6 +1,6 @@
 <!-- EN-Revision: 12892 -->
 <appendix id="coding-standard">
-    <title>Convention de codage PHP du Zend Framework</title>
+    <title>Convention de codage PHP de Zend Framework</title>
 
     <sect1 id="coding-standard.overview">
         <title>Vue d'ensemble</title>
@@ -9,17 +9,17 @@
             <title>Portée</title>
 
             <para>Ce document fournit les lignes directrices pour le formatage de code et la documentation pour les
-            contributeurs individuels et les équipes contributrices au Zend Framework. Un certain nombre de développeurs
-            utilisant le Zend Framework ont trouvé ces conventions de codage pratique car leurs styles de codage sont
-            cohérents avec l'ensemble du code du Zend Framework. Il est également à noter qu'il exige un effort
+            contributeurs individuels et les équipes contributrices à Zend Framework. Un certain nombre de développeurs
+            utilisant Zend Framework ont trouvé ces conventions de codage pratique car leurs styles de codage sont
+            cohérents avec l'ensemble du code de Zend Framework. Il est également à noter qu'il exige un effort
             significatif pour spécifier entièrement des normes de codage. Note: parfois les développeurs considèrent
             l'établissement d'une norme plus important que ce que cette norme suggère réellement en tout cas au niveau
-            de l'analyse détaillée de la conception. Les lignes directrices dans les conventions de codage du Zend
-            Framework effectuent un cliché des pratiques qui ont bien fonctionnées dans le projet ZF. Vous pouvez
+            de l'analyse détaillée de la conception. Les lignes directrices dans les conventions de codage de Zend
+            Framework effectuent un cliché des pratiques qui ont bien fonctionnées dans le projet Zend Framework. Vous pouvez
             modifier ces règles ou les utiliser comme telles en accord avec les termes de votre <ulink
             url="http://framework.zend.com/license">licence.</ulink></para>
 
-            <para>Les sujets traités dans les conventions de codage du ZF sont : <itemizedlist>
+            <para>Les sujets traités dans les conventions de codage de Zend Framework sont : <itemizedlist>
                     <listitem>
                         <para>Formatage des fichiers PHP</para>
                     </listitem>
@@ -58,7 +58,7 @@
             l'injection accidentelle d'espaces blancs dans la sortie.</para>
 
             <para><emphasis>IMPORTANT :</emphasis> L'inclusion de données binaires arbitraires comme il est permis par
-            <code>__HALT_COMPILER()</code> est prohibé dans tout fichier PHP du Zend Framework, ainsi que dans tout
+            <code>__HALT_COMPILER()</code> est prohibé dans tout fichier PHP de Zend Framework, ainsi que dans tout
             fichier dérivé. L'utilisation de cette possibilité est uniquement permise pour des scripts spéciaux
             d'installation.</para>
         </sect2>
@@ -95,9 +95,9 @@
         <sect2 id="coding-standard.naming-conventions.classes">
             <title>Classes</title>
 
-            <para>Le Zend Framework emploie une convention de nommage des classes où les noms des classes mènent
-            directement dans les répertoires dans lesquels elles sont stockées. Le répertoire racine du Zend Framework
-            est le répertoire "Zend/", tandis que le répertoire racine de la librairie extras du ZF est "ZendX/". Toutes
+            <para>Zend Framework emploie une convention de nommage des classes où les noms des classes mènent
+            directement dans les répertoires dans lesquels elles sont stockées. Le répertoire racine de Zend Framework
+            est le répertoire "Zend/", tandis que le répertoire racine de la librairie extras de Zend Framework est "ZendX/". Toutes
             les classes sont stockées de façon hiérarchique sous ces dossiers racines.</para>
 
             <para>Les noms de classes ne peuvent contenir que des caractères alphanumériques. Les nombres sont
@@ -108,7 +108,7 @@
             majuscule. La mise en majuscule de lettres successives n'est pas autorisée, c'est-à-dire qu'une classe
             "Zend_PDF" est interdit alors que "Zend_Pdf" est autorisé.</para>
 
-            <para>Ces conventions définissent un pseudo mécanisme d'espace de noms pour le Zend Framework. Le Zend
+            <para>Ces conventions définissent un pseudo mécanisme d'espace de noms pour Zend Framework. Zend
             Framework adoptera la fonctionnalité des espaces de noms de PHP quand celle-ci sera disponible et qu'il sera
             possible pour les développeurs de l'utiliser dans leurs applications.</para>
 
@@ -332,7 +332,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
             <sect3 id="coding-standard.coding-style.classes.declaration">
                 <title>Déclaration de classes</title>
 
-                <para>Les classes doivent être nommées conformément aux conventions de nommage du Zend Framework.</para>
+                <para>Les classes doivent être nommées conformément aux conventions de nommage de Zend Framework.</para>
 
                 <para>L'accolade est toujours écrite dans la ligne sous le nom de la classe.</para>
 
@@ -361,7 +361,7 @@ class SampleClass
             <sect3 id="coding-standard.coding-style.classes.member-variables">
                 <title>Variables membres de la classe</title>
 
-                <para>Les variables membres doivent être nommées en respectant les conventions de nommage du Zend
+                <para>Les variables membres doivent être nommées en respectant les conventions de nommage de Zend
                 Framework.</para>
 
                 <para>Toute variable déclarée dans une classe doit être listée en haut de cette classe, avant toute
@@ -380,7 +380,7 @@ class SampleClass
             <sect3 id="coding-standard.coding-style.functions-and-methods.declaration">
                 <title>Déclaration de fonctions et de méthodes</title>
 
-                <para>Les fonctions doivent être nommées en respectant les conventions de nommage du Zend
+                <para>Les fonctions doivent être nommées en respectant les conventions de nommage de Zend
                 Framework.</para>
 
                 <para>Les fonctions internes aux classes doivent toujours déclarer leur visibilité en utilisant la
@@ -567,7 +567,7 @@ switch ($numPeople) {
                 phpDocumentor. La description du format phpDocumentor n'est pas du ressort de ce document. Pour plus
                 d'information, visitez <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink></para>
 
-                <para>Tous les fichiers de code source écrits pour le Zend Framework ou qui opèrent avec ce framework
+                <para>Tous les fichiers de code source écrits pour Zend Framework ou qui opèrent avec ce framework
                 doivent contenir un docblock du fichier, en haut de chaque fichier, et un docblock de classe
                 immédiatement au dessus de chaque classe. Ci-dessous vous trouverez des exemples de tels
                 docblocs.</para>
