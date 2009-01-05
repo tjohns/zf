@@ -401,8 +401,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                     }
                 }
             } else {
-                require_once 'Zend/Form/Exception.php';
-                throw new Zend_Form_Exception('Invalid validator passed to addValidators()');
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception('Invalid validator passed to addValidators()');
             }
         }
 
