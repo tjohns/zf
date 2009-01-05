@@ -1,37 +1,37 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch Zend_Form_Decorator</title>
 
     <para>
         Die Darstellung eines Form Objektes ist komplett optional -- <code>Zend_Form</code>'s
         render() Methoden müssen nicht einmal verwendet werden. Wenn es trotzdem so gemacht wird,
-        dann werden Dekoratoren verwendet um die verschiedenen Form Objekte darzustellen.
+        dann werden Dekoratoren verwendet, um die verschiedenen Form Objekte darzustellen.
     </para>
 
     <para>
-        Eine Vielzahl an Dekoratoren kann jedem Teil angefügt werden (Elemente, Display Gruppen,
-        Sub Forms, oder das Form Objekt selbst); trotzdem kann nur ein Dekorator eines bestimmten
-        Typs jedem Teil engefügt werden. Dekoratoren werden in der Reihenfolge aufgerufen in der
-        Sie registriert werden. Abhängig vom Dekorator, kann dieser den Inhalt ersetzen der Ihm
-        übergeben wurde, oder Inhalt anhängen oder voranstellen.
+        Eine Vielzahl an Dekoratoren kann jedem Teil angefügt werden (Elemente, Anzeigegruppen,
+        Unterformulare, oder das Form Objekt selbst); trotzdem kann nur ein Dekorator eines
+        bestimmten Typs jedem Teil engefügt werden. Dekoratoren werden in der Reihenfolge aufgerufen
+        in der sie registriert werden. Abhängig vom Dekorator, kann dieser den Inhalt ersetzen, der
+        Ihm übergeben wurde, oder Inhalt anhängen oder voranstellen.
     </para>
 
     <para>
-        Der Objektstatus wird durch Konfigurations Optionen gesetzt die dem Konstruktor oder der
+        Der Objektstatus wird durch Konfigurationsoptionen gesetzt die dem Konstruktor oder der
         <code>setOptions()</code> Methode des Dekorators übergeben werden. Wenn Dekoratoren, über
-        <code>addDecorator()</code> des Teils oder ähnliche Methoden, erstellt werden können der
-        Methode Optionen als Argument übergeben werden. Diese können verwendet werden um eine
-        Platzierung zu spezifizieren, einen Separator der zwischen übergebenem Inhalt und neu
-        erstelltem Inhalt verwendet wird, oder welche Option der Dekorator auch immer unterstützt.
+        <code>addDecorator()</code> oder ähnliche Methoden erstellt werden, können der Methode
+        Optionen als Argument übergeben werden. Diese können verwendet werden um eine Platzierung
+        zu spezifizieren, einen Separator festzulegen, der zwischen übergebenem Inhalt und neu
+        erstelltem Inhalt verwendet wird, oder welche Option der Dekorator sonst noch unterstützt.
     </para>
 
     <para>
         Bevor jede <code>render()</code> Methode der Dekoratoren aufgerufen wird, wird das aktuelle
-        Teil im Dekorator mit <code>setElement()</code> gesetzt, was dem Dekorator zeigt welches
-        Teil dargestellt werden soll. Das erlaubt es Dekoratoren zu erstellen die nur spezielle
-        Abschnitte des Teils darstellen -- wie das Label, den Wert, Fehlermeldungen, usw. Durch die
-        Verbindung von verschiedenen Dekoratoren die ein spezielles Segment des Elements darstellen
-        kann ein komplexes Markup gebaut werden das das komplette Teil repräsentiert.
+        Element im Dekorator mit <code>setElement()</code> gesetzt, was dem Dekorator zeigt welches
+        Element dargestellt werden soll. Das erlaubt es Dekoratoren zu erstellen, die nur spezielle
+        Abschnitte eines Elements darstellen -- wie das Label, den Wert, Fehlermeldungen, usw. Durch
+        die Verbindung von verschiedenen Dekoratoren, die ein spezielles Segment des Elements
+        darstellen, kann ein komplexes Markup gebaut werden, das das komplette Element repräsentiert.
     </para>
 
     <sect2 id="zend.form.decorators.operation">
@@ -54,7 +54,7 @@
                     sein (unabhängig von der Schreibweise), und definiert ob der Inhalt der
                     <code>render()</code> übergeben wird, angehängt oder vorangestellt wird. Im
                     Fall das ein Dekorator den Inhalt ersetzt wird diese Einstellung ignoriert.
-                    Der Standardwert ist anhängen.
+                    Der Standardwert ist anhängen (append).
             </para></listitem>
 
             <listitem><para>
@@ -62,7 +62,7 @@
                     <code>render()</code> übergeben wird und durch den Dekorator neu erstelltem
                     Inhalt verwendet, oder zwischen Teilen die durch den Dekorator dargestellt
                     werden (z.B. FormElements verwenden Separatoren zwischen jedem dargestellten
-                    Teil). Im Fall das ein Dekoratpr den Inhalt ersetzt, wird diese Einstellung
+                    Element). Im Fall das ein Dekorator den Inhalt ersetzt, wird diese Einstellung
                     ignoriert. Der Standardwert ist <code>PHP_EOL</code>.
             </para></listitem>
         </itemizedlist>
@@ -78,7 +78,7 @@
             </para></listitem>
 
             <listitem><para>
-                    <code>getOption($key)</code>: eine einzelne Optionswert erhalten.
+                    <code>getOption($key)</code>: einen einzelnen Optionswert erhalten.
             </para></listitem>
 
             <listitem><para>
@@ -95,45 +95,45 @@
         </itemizedlist>
 
         <para>
-            Dekoratore sollen mit den verschiedenen <code>Zend_Form</code> Klassentypen
+            Dekoratoren sollen mit den verschiedenen <code>Zend_Form</code> Klassentypen
             interagieren: <code>Zend_Form</code>, <code>Zend_Form_Element</code>,
-            <code>Zend_Form_DisplayGroup</code>, und allen von Ihnen abgeleiteten Klassen. Die
-            Methode <code>setElement()</code> erlaubt es das Objekt des Dekorators mit den aktuell
-            gearbeitet wird, zu setzen und <code>getElement()</code> wird verwendet um es zu
-            empfangen.
+            <code>Zend_Form_DisplayGroup</code>, und allen von ihnen abgeleiteten Klassen. Die
+            Methode <code>setElement()</code> erlaubt es, das Objekt des Dekorators, mit den
+            aktuell gearbeitet wird, zu setzen und <code>getElement()</code> wird verwendet
+            um es zu empfangen.
         </para>
 
         <para>
-            Die <code>render()</code> Methode jeden Dekorators akzeptiert einen String
+            Die <code>render()</code> Methode jedes Dekorators akzeptiert einen String
             <code>$content</code>. Wenn der erste Dekorator aufgerufen wird, ist dieser String
             typischerweise leer, wärend er bei nachfolgenden Aufrufen bekannt sein wird. Basierend
-            auf dem Typ des Dekorators und den Ihm übergebenen Optionen, wird der Dekorator
-            entweder diesen String ersetzen, den String voranstellen oder den String anfügen; ein
-            optionaler Separator wird in den späteren zwei Siturationen verwendet.
+            auf dem Typ des Dekorators und den ihm übergebenen Optionen, wird der Dekorator
+            entweder diesen String ersetzen, voranstellen oder anfügen; ein optionaler Separator
+            wird in den späteren zwei Situationen verwendet.
         </para>
     </sect2>
 
     <sect2 id="zend.form.decorators.standard">
-        <title>Standard Dekoratore</title>
+        <title>Standard Dekoratoren</title>
 
         <para>
             <code>Zend_Form</code> wird mit vielen Standard Dekoratoren ausgeliefert; siehe
-            <link linkend="zend.form.standardDecorators">das Kapitel über Standard Dekorator</link>
+            <link linkend="zend.form.standardDecorators">das Kapitel über Standard Dekoratoren</link>
             für Details.
         </para>
     </sect2>
 
     <sect2 id="zend.form.decorators.custom">
-        <title>Eigene Dekoratore</title>
+        <title>Eigene Dekoratoren</title>
 
         <para>
-            Wenn man der Meinung ist das die Notwendigkeiten der Darstellung sehr komplex sind oder
-            starke Anpassungen benötigt, sollte man an die Erstellung eines eigenen Dekorators
-            überlegen.
+            Wenn man der Meinung ist, dass die Notwendigkeiten der Darstellung sehr komplex sind,
+            oder starke Anpassungen benötigt, sollte man sich überlegen einen eigenen Dekorator
+            zu erstellen.
         </para>
 
         <para>
-            Dekoratore implementieren nur <code>Zend_Decorator_Interface</code>. Das Interface
+            Dekoratoren implementieren nur <code>Zend_Decorator_Interface</code>. Das Interface
             spezifiziert folgendes:
         </para>
 
@@ -156,15 +156,15 @@ interface Zend_Decorator_Interface
         </programlisting>
 
         <para>
-            Um das einfacher zu machen, kann man einfach <code>Zend_Decorator_Abstract</code>
+            Um es sich einfacher zu machen, kann man <code>Zend_Decorator_Abstract</code>
             erweitern, welches alle Methoden außer <code>render()</code> implementiert.
         </para>
 
         <para>
-            Als Beispiel nehmen wir an das wir die Anzahl an verwendeten Dekoratoren verringern
+            Als Beispiel nehmen wir an, dass wir die Anzahl an verwendeten Dekoratoren verringern
             wollen, und einen "gemeinsamen" Dekorator erstellen der die Darstellung von Label,
-            Element, jegliche Fehlermeldung, und Beschreibung in einem HTML <code>div</code>
-            übernimmt. So ein 'Gemeinsamer' Dekorator kann wie folgt erstellt werden:
+            Element, jeglicher Fehlermeldungen, und Beschreibung in einem HTML <code>div</code>
+            übernimmt. So ein 'gemeinsamer' Dekorator kann wie folgt erstellt werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -255,7 +255,7 @@ class My_Decorator_Composite extends Zend_Form_Decorator_Abstract
         </programlisting>
 
         <para>
-            Das kann das in den Dekorator Pfad platziert werden:
+            Danach kannst du ihn in den Dekoratoren Pfad platzieren:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -272,7 +272,7 @@ $form->addElementPrefixPath('My_Decorator',
         </programlisting>
 
         <para>
-            Man kann dann diesen Dekorator als 'Gemeinsam' spezifizieren und diesen an ein Element
+            Man kann dann diesen Dekorator als 'gemeinsam' spezifizieren und diesen an ein Element
             anfügen:
         </para>
 
@@ -283,20 +283,18 @@ $element->setDecorators(array('Composite'));
         </programlisting>
 
         <para>
-            Wärend dieses Beispiel zeigt wie ein Dekorator erstellt werden kann der komplexe
-            Ausgaben von verschiedenen Element-Eigenschaften darstellt können auch Dekoratore
+            Während dieses Beispiel zeigt, wie ein Dekorator erstellt werden kann, der komplexe
+            Ausgaben von verschiedenen Element-Eigenschaften darstellt, können auch Dekoratoren
             erstellt werden die einzelne Aspekte eines Elements handhaben; die 'Decorator' und
-            'Label' Dekoratore sind exzellente Beispiele dieser Praxis. Das erlaubt es Dekotatore
-            zu mischen und zu anzupassen um komplexe Ausgaben zu erhalten -- und auch die
-            Überladung von einzelnen Aspekten der Dekoration für die Anpassung an eigene
-            Bedürfnisse.
+            'Label' Dekoratoren sind exzellente Beispiele dieser Praxis. Das erlaubt es Dekotatoren
+            zu mischen und anzupassen, um komplexe Ausgaben zu erhalten -- und auch die Überladung
+            von einzelnen Aspekten der Dekoration für die Anpassung an eigene Bedürfnisse.
         </para>
 
         <para>
-            Wenn man ,zum Beispiel, eine einfache Anzeige benötigt, das ein Fehler aufgetreten ist
-            wären ein Element überprüft wurde, aber nicht jede der individuellen Validator
-            Fehlermeldungen angezeigt werden soll, kann ein eigener 'Errors' Dekorator erstellt
-            werden:
+            Wenn man, zum Beispiel, eine einfache Anzeige benötigt, welche die, während der Validierung
+            aufgetretenen, Fehlermeldungen ignoriert und dafür eine eigene Fehlermeldung anzeigt, kann
+            man sich einen eigenen 'Errors' Dekorator erstellen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -323,28 +321,28 @@ class My_Decorator_Errors
         </programlisting>
 
         <para>
-            In diesem speziellen Beispiel, weil das letzte Segment, 'Errors', des Dekorators auf
-            <code>Zend_Form_Decorator_Errors</code> passt wird er <emphasis>statt</emphasis> diesem
-            Dekorator dargestellt -- was bedeutet das kein Dekorator verändert werden muß um die
+            In diesem speziellen Beispiel, weil das letzte Segment 'Errors' des Dekorators auf
+            <code>Zend_Form_Decorator_Errors</code> passt, wird er <emphasis>statt</emphasis> diesem
+            Dekorator dargestellt -- was bedeutet, dass kein Dekorator verändert werden muß um die
             Ausgabe anzupassen. Durch die Benennung des Dekorators nach dem bestehenden Standard
-            Dekorator, kann die Dekoration verändert werden ohne das der Dekorator des Elements
-            verändert werden muß.
+            Dekorator, kann die Dekoration verändert werden ohne, dass der Dekorator des Elements
+            verändert werden muss.
         </para>
     </sect2>
 
     <sect2 id="zend.form.decorators.individual">
-        <title>Darstellung individueller Dekoratore</title>
+        <title>Darstellung individueller Dekoratoren</title>
 
         <para>
-            Da Dekoratore verschiedene Metadaten, eines Elements oder Formulars das Sie darstellen,
+            Da Dekoratoren verschiedene Metadaten, eines Elements oder Formulars das sie darstellen,
             ansprechen, ist es oft nützlich zu bestimmten Zeiten nur einen individuellen Dekorator
-            darzustellen. Dieses Feature ist über Methodenüberladung in jeder
+            darzustellen. Erfreulicherweise ist dieses Feature über Methodenüberladung in jeder
             der grundsätzlichen Klassen der Formulartypen möglich (Formulare, Unterformulare,
             Anzeigegruppen, Elemente).
         </para>
 
         <para>
-            Um das zu tun muß einfach <code>render[DecoratorName]()</code> aufgerufen werden, wobei
+            Um das zu tun muss einfach <code>render[DecoratorName]()</code> aufgerufen werden, wobei
             "[DecoratorName]" der "Kurzname" des eigenen Dekorators ist; optional kann Inhalt eingefügt
             werden der dargestellt werden soll. Zum Beispiel:
         </para>
@@ -365,8 +363,8 @@ echo $form->renderHtmlTag('wrap this content');
         </para>
 
         <para>
-            Das kann speziell dann nützlich sein wenn ein Formular mit dem ViewScript Dekorator
-            dargestellt wird; jedes Element kann seine angehängten Dekoratore verwenden um Inhalte
+            Das kann speziell dann nützlich sein, wenn ein Formular mit dem ViewScript Dekorator
+            dargestellt wird; jedes Element kann seine angehängten Dekoratoren verwenden um Inhalte
             darzustellen, aber mit fein-abgestimmter Kontrolle.
         </para>
     </sect2>

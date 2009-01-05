@@ -12,11 +12,11 @@
         <title>Array Schreibweise</title>
 
         <para>
-            Viele fortgeschrittene Entwickler gruppieren zusammengehörige Form Elemente durch
+            Viele fortgeschrittene Entwickler gruppieren zusammengehörige Formularelemente durch
             Verwendung einer Array Schreibweise in den Namen der Elemente. Zum Beispiel, wenn man
             zwei Adressen hat die geholt werden sollen, eine Versand- und eine Rechnungsadresse,
             hat man identische Elemente; durch deren Gruppierung in einem Array, kann
-            sichergestellt werden das wie separat geholt werden. Nehmen wir die folgende Form
+            sichergestellt werden, dass sie separat geholt werden. Nehmen wir die folgende Form
             als Beispiel an:
         </para>
 
@@ -75,8 +75,8 @@
 
         <para>
             In diesem Beispiel enthalten die Rechnungs- und Versanadresse einige identische
-            Felder, was bedeueten würde das sie sich gegenseitig überschreiben. Wir können das
-            durch die Verwendung der Array Schreibweise lösen:
+            Felder, was bedeueten würde, dass sie sich gegenseitig überschreiben. Wir können
+            das durch die Verwendung der Array Schreibweise lösen:
         </para>
 
         <programlisting role="html"><![CDATA[
@@ -144,26 +144,26 @@
 
         <para>
             In dem obigen Beispiel erhalten wir jetzt separate Adressen. In der übermittelten Form
-            haben wir jetzt drei Elemente, 'shipping' und 'billing', jedes mit Schlüsseln für
+            haben wir jetzt zwei Elemente, 'shipping' und 'billing', jedes mit Schlüsseln für
             deren verschiedene Elemente.
         </para>
 
         <para>
             <code>Zend_Form</code> versucht diesen Prozess mit seinen
-            <link linkend="zend.form.forms.subforms">Subformen</link> zu automatisieren.
-            Standardmäßig werden Subformen dargestellt indem die Array Schreibweise verwendet wird
-            wir im vorherigen HTML Form Code gezeigt, komplett mit Ids. Der Arrayname basiert auf
-            dem Namen der Subform, mit den Schlüsseln basierend auf den Elementen die in der
-            Subform enthalten sind. Subformen können beliebig tief verschachtelt sein, und das
-            erzeugt verschachtelte Arrays um die Struktur zu reflektieren. Zusätzlich beachten
-            die verschiedenen Prüfroutinen in <code>Zend_Form</code> die Arraystruktur, und
-            stellen sicher das die Form korrekt überprüft wird, egal wie tief verschachtelt
-            die Subformen sind. Es muß nichts getan werden um davon zu profitieren; dieses
-            Verhalten ist standardmäßig aktiviert.
+            <link linkend="zend.form.forms.subforms">Unterformularen</link> zu automatisieren.
+            Standardmäßig werden Unterformulare dargestellt, indem die Array Schreibweise, wie im
+            vorherigen HTML Form Code gezeigt, komplett mit Ids, verwendet wird. Der Arrayname
+            basiert auf dem Namen des Unterformulars, mit den Schlüsseln basierend auf den
+            Elementen, die im Unterformualr enthalten sind. Unterformulare können beliebig tief
+            verschachtelt sein, und das erzeugt verschachtelte Arrays um die Struktur zu
+            reflektieren. Zusätzlich beachten die verschiedenen Prüfroutinen in <code>Zend_Form</code>
+            die Arraystruktur, und stellen sicher, dass die Form korrekt überprüft wird, egal wie
+            tief verschachtelt die Unterformulare sind. Es muss nichts getan werden, um davon zu
+            profitieren; dieses Verhalten ist standardmäßig aktiviert.
         </para>
 
         <para>
-            Zusätzlich gibt es Möglichkeiten die es erlauben die Array Schreibweise fallweise
+            Zusätzlich gibt es Möglichkeiten, die es erlauben die Array Schreibweise fallweise
             zu aktivieren, wie auch die Spezifikation eines speziellen Array zu welchem ein
             Element oder eine Sammlung gehört:
         </para>
@@ -172,24 +172,24 @@
             <listitem>
                 <para>
                     <code>Zend_Form::setIsArray($flag)</code>: Durch das Setzen dieses Flags auf
-                    true, kann angezeigt werden das die komplette Form als Array behandelt werden
-                    soll. Standardmäßig wird der Name der Form als Name des Arrays verwendet,
-                    solange <code>setElementsBelongTo()</code> aufgerufen wurde. Wenn die Form
-                    keinen Namen spezifiziert hat, oder <code>setElementsBelongTo()</code> nicht
-                    gesetzt wurde, wird dieses Flag ignoriert (da es kein Arraynamen gibt zu dem
-                    Elemente gehören).
+                    <code>true</code>, kann angezeigt werden, dass das komplette Formular als Array
+                    behandelt werden soll. Standardmäßig wird der Name des Formulars als Name des
+                    Arrays verwendet, solange <code>setElementsBelongTo()</code> aufgerufen wurde.
+                    Wenn das Formular keinen Namen spezifiziert hat, oder <code>setElementsBelongTo()</code>
+                    nicht gesetzt wurde, wird dieses Flag ignoriert (da es kein Arraynamen gibt zu dem
+                    die Elemente gehören).
                 </para>
 
                 <para>
-                    Man kann auswählen ob eine Form als Array behandelt wird indem die
+                    Man kann auswählen, ob ein Formular als Array behandelt wird, indem die
                     Zugriffsmethode <code>isArray()</code> verwendet wird.
                 </para>
             </listitem>
 
             <listitem><para>
                     <code>Zend_Form::setElementsBelongTo($array)</code>: Durch Verwendung dieser
-                    Methode kann der Name eines Arrays spezifiziert werden dem alle Elemente der
-                    Form angehören. Der Name kann durch Verwendung der Zugriffsmethode
+                    Methode kann der Name eines Arrays spezifiziert werden dem alle Elemente des
+                    Formulars angehören. Der Name kann durch Verwendung der Zugriffsmethode
                     <code>getElementsBelongTo()</code> eruiert werden.
             </para></listitem>
         </itemizedlist>
@@ -204,35 +204,35 @@
     </sect2>
 
     <sect2 id="zend.form.advanced.multiPage">
-        <title>Mehrfach-Seiten Forms</title>
+        <title>Mehrseitige Formulare</title>
 
         <para>
-            Aktuell werden Mehrfach-Seiten Forms nicht offiziell in <code>Zend_Form</code>
+            Aktuell werden mehrseitige Formulare nicht offiziell in <code>Zend_Form</code>
             unterstützt; trotzdem ist die meiste Unterstützung für deren Implementierung bereits
             vorhanden und kann mit etwas extra Code angepasst werden.
         </para>
 
         <para>
-            Der Schlüssel in der Erstellung von Mehrfach-Seiten Form ist die Anpassung von
-            Subforms, aber der Anzeige von nur einer solcher Subform pro Seite. Das erlaubt es
-            eine einzelne Subform auf einmal zu übertragen und diese zu prüfen, aber die Form
-            nicht zu bearbeiten bis alle Subforms komplett sind.
+            Der Schlüssel in der Erstellung von mehrseitigen Formularen, ist die Anpassung von
+            Unterformularen, aber der Anzeige, von nur einem Unterformular pro Seite. Das erlaubt
+            es, ein einzelnes Unterformular auf einmal zu übertragen und diese zu prüfen, aber das
+            Formular nicht zu bearbeiten bis alle weiteren Unterformulare komplett sind.
         </para>
 
         <example id="zend.form.advanced.multiPage.registration">
-            <title>Registration Form Example</title>
+            <title>Beispiel: Anmeldeformular</title>
 
             <para>
-                Verwenden wir also eine Registrierungs Form als Beispiel. Für unsere Zwecke
-                wollen wir auf der ersten Seiten einen gewünschten Benutzernamen und Passwort
-                holen, dann die Metadaten des Benutzers -- das heißt Vorname, Familienname und
-                Ort -- und letztendlich die Auswahl welcher Mailingliste, wenn überhaupt,
-                der Benutzer angehören will.
+                Verwenden wir also ein Anmeldeformular als Beispiel. Für unsere Zwecke wollen wir
+                auf der ersten Seite einen gewünschten Benutzernamen und Passwort holen, dann die
+                Metadaten des Benutzers -- das heißt Vorname, Familienname und Wohnort -- und
+                letztendlich die Auswahl welcher Mailingliste, wenn überhaupt, der Benutzer
+                angehören will.
             </para>
 
             <para>
-                Erstellen wir als erstes die eigene Form und definieren in Ihr verschiedene
-                Subformen:
+                Erstellen wir als erstes unser, eigenes, Formular und definieren in diesem die
+                verschiedenen Unterformulare:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -338,12 +338,13 @@ class My_Form_Registration extends Zend_Form
             </programlisting>
 
             <para>
-                Es ist zu beachten das es keinen Sendebutton gibt, und das wir nichts mit den
-                Dekoratoren der Subform gemacht haben -- was bedeutet das Sie standardmäßig als
-                Fieldsets angezeigt werden. Wir müssen das Überladen wenn wir jede individuelle
-                Subform anzeigen wollen und einen Sendebutton hinzufügen damit wir Sie dann
-                bearbeiten können -- was auch Aktions und Methodeneigenschaften benötigt. Fügen
-                wir also etwas Futter in unsere Klasse und bieten diese Information:
+                Es ist zu beachten, dass es keinen 'Abschicken' Button gibt, und, dass wir
+                nichts mit den Dekoratoren des Unterformulars gemacht haben -- was bedeutet,
+                dass Sie standardmäßig als Fieldsets angezeigt werden. Wir müssen das Überladen
+                wenn wir jedes individuelle Unterformular anzeigen wollen und einen 'Abschicken'
+                Button hinzufügen, damit wir sie dann bearbeiten können -- was auch Aktions- und
+                Methodeneigenschaften benötigt. Füllen wir unsere Klasse ein wenig und bieten
+                diese Information:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -426,19 +427,19 @@ class My_Form_Registration extends Zend_Form
             </programlisting>
 
             <para>
-                Als nächstes benötigen wir etwas Futter für unseren Action Kontroller, und haben
-                verschiedene Entscheidungen zu treffen. Zuerst müssen wir sicherstellen das die
-                Formdaten zwischen den Anfragen fixiert werden, sodas wir feststellen können wann
-                abgebrochen wird. Zweitens wird etwas Logik benötigt um festzustellen welche
-                Formteile bereits übermittelt wurden, und welche Subform, basierend auf dieser
-                Information, angezeigt werden soll. Wir verwenden
+                Als nächstes benötigen wir das Grundgerüst für unseren Action Controller, und wir
+                haben verschiedene Entscheidungen zu treffen. Zuerst müssen wir sicherstellen, dass
+                die Formulardaten zwischen den Anfragen fixiert werden, sodass wir feststellen
+                können wann abgebrochen wird. Zweitens wird etwas Logik benötigt, um festzustellen
+                welche Formularteile bereits übermittelt wurden und welches Unterformular, basierend
+                auf dieser Information, angezeigt werden soll. Wir verwenden
                 <code>Zend_Session_Namespace</code> um Daten zu fixieren, was uns auch hilft die
-                Frage zu beantworten welche form zu übertragen ist.
+                Frage zu beantworten welches Formular zu übertragen ist.
             </para>
 
             <para>
-                Erstellen wir also unseren Kontroller, und fügen eine Methode für den Empfang der
-                Form Instanz hinzu:
+                Erstellen wir also unseren Controller, und fügen eine Methode für den Empfang der
+                Formular Instanz hinzu:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -458,12 +459,13 @@ class RegistrationController extends Zend_Controller_Action
             </programlisting>
 
             <para>
-                Fügen wir also etwas Funktionalität hinzu für das Erkennen welche Form angezeigt
-                werden soll. Grundsätzlich müssen wir, bis die komplette Form als gültig angenommen
-                wird, die Darstellung der Form Abschnitte weiterführen. Zusätzlich müssen wir
-                Sicherstellen das Sie in einer bestimmten Reihenfolge sind: Benutzer, Zusätze und
-                dann Listen. Wir können feststellen das Daten übertragen wurden durch die Prüfung
-                des Session Namespaces für spezielle Schlüssel die jede Subform repräsentieren.
+                Füllen wir unseren Controller nun um die Funktionalität, zu erkennen, welches
+                Formular angezeigt werden soll. Grundsätzlich müssen wir, bis das komplette
+                Formular als gültig angenommen wird, die Darstellung der Formularabschnitte
+                weiterführen. Zusätzlich müssen wir sicherstellen, dass sie in einer bestimmten
+                Reihenfolge sind: Benutzer, Zusätze und dann Listen. Wir können feststellen, ob
+                Daten übertragen wurden, indem wir im Namensraum der Session nach speziellen
+                Schlüssen suchen, die jedes Unterformular repräsentieren.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -561,28 +563,28 @@ class RegistrationController extends Zend_Controller_Action
             </programlisting>
 
             <para>
-                Die obigen Methoden erlauben uns Schreibweise wie
-                "<code>$subForm = $this-&gt;getCurrentSubForm();</code>" um die aktuelle Subform
-                für die Prüfung zu erhalten, oder
-                "<code>$next = $this-&gt;getNextSubForm();</code>" um die nächste anzuzeigen.
+                Die obigen Methoden erlauben uns eine Schreibweise wie
+                <code>$subForm = $this-&gt;getCurrentSubForm();</code> um das aktuelle Unterformular
+                für die Prüfung zu erhalten, oder <code>$next = $this-&gt;getNextSubForm();</code>,
+                um die nächste anzuzeigen.
             </para>
 
             <para>
-                Sehen wir uns also an wie die verschiedenen Subformen bearbeitet und angezeigt
-                werden können. Wie können <code>getCurrentSubForm()</code> verwenden um
-                herauszufinden ob eine Subform übertragen wurde (false Rückgabewerte zeigen an
-                das keine angezeigt oder übertragen wurden), und <code>getNextSubForm()</code>
-                empfängt die Form die angezeigt werden soll. Wir können die
-                <code>prepareSubForm()</code> Methode der Form verwenden um sicherzustellen das
-                die Form bereit zur Anzeige ist.
+                Sehen wir uns nun an, wie die verschiedenen Unterformulare bearbeitet und angezeigt
+                werden können. Wir können <code>getCurrentSubForm()</code> verwenden um
+                herauszufinden ob ein Unterformular übertragen wurde (<code>false</code> Rückgabewerte
+                zeigen an, dass keine angezeigt oder übertragen wurden) und <code>getNextSubForm()</code>
+                empfängt die Form die angezeigt werden soll. Wir können die <code>prepareSubForm()</code>
+                Methode des Formulars verwenden, um sicherzustellen, dass das Formular bereit zur Anzeige
+                ist.
             </para>
 
             <para>
-                Wenn eine Form übertragen wird, kann die Subform bestätigt werden, und dann
-                kann geprüft werden ob die komplette Form gültig ist. Um diese Arbeiten
-                durchzuführen werden zusätzliche Methoden benötigt die sicherstellen das die
-                übermittelten Daten der Session hinzugefügt werden, und das, wenn die komplette
-                Form geprüft wird, die Prüfung gegen alle Teile der Session durchgeführt wird:
+                Wenn ein Formular übertragen wird, kann das Unterformular bestätigt werden, und dann kann
+                geprüft werden, ob das komplette Formular gültig ist. Um diese Arbeiten durchzuführen
+                werden zusätzliche Methoden benötigt die sicherstellen, dass die übermittelten Daten der
+                Session hinzugefügt werden, und, dass, wenn das komplette Formular geprüft wird, die
+                Prüfung gegen alle Teile der Session durchgeführt wird:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -628,9 +630,9 @@ class RegistrationController extends Zend_Form
             </programlisting>
 
             <para>
-                Jetzt da die Kleinarbeiten aus dem Weg sind können die Aktionen für diesen
-                Kontroller gebaut werden. Es wird eine Grundseite für die Form und dann eine
-                'process' (Bearbeiten) Aktion für die Bearbeitung der Form benötigt.
+                Jetzt, da die Kleinarbeiten aus dem Weg sind, können die Aktionen für diesen
+                Controller erstellt werden. Es wird eine Grundseite für das Formular und dann
+                eine 'process' (Bearbeiten) Aktion für die Bearbeitung des Formulars benötigt.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -676,13 +678,13 @@ class RegistrationController extends Zend_Controller_Action
             </programlisting>
 
             <para>
-                Wie festzustellen ist, ist der aktuelle Code für die Bearbeitung der Form relativ
-                einfach. Wir prüfen um zu sehen ob wir eine aktuelle Übertragung einer Subform
-                haben, oder nicht, und wir versuchen Sie zu prüfen, und sie nochmals darzustellen
-                wenn es fehlschlägt. Wenn die Subform gültig ist muß anschließend geprüft werden ob
-                die Form gültig ist, was dann bedeuten würde das wir fertig sind; wen nicht muß das
-                nächste Formsegment angezeigt werden. Letztendlich wird eine Prüfseite mit dem
-                Inhalt der Session angezeigt.
+                Wie festzustellen ist, ist der aktuelle Code für die Bearbeitung des Formulars
+                relativ einfach. Wir prüfen, um zu sehen ob wir eine aktuelle Übertragung eines
+                Unterformulars haben, oder nicht, und wir versuchen sie zu prüfen, und sie nochmals
+                darzustellen wenn es fehlschlägt. Wenn das Unterformular gültig ist, muss anschließend
+                geprüft werden, ob das Formular gültig ist, was dann bedeuten würde, dass wir fertig
+                sind; wen nicht muss das nächste Formularsegment angezeigt werden. Letztendlich wird
+                eine Prüfseite mit dem Inhalt der Session angezeigt.
             </para>
 
             <para>
@@ -725,9 +727,10 @@ endforeach ?>
 
             <para>
                 Kommende Releases des Zend Frameworks werden Komponenten enthalten die
-                Mehrfach-Seiten Forms einfacher machen durch die Abstraktion der Session und der
-                Reihungslogik. In der Zwischenzeit sollte das obige Beispiel als angemessene
-                Grundlage dienen wie dieser Task für eigene Seiten realisiert werden kann.
+                mehrseitige Formulare einfacher machen - durch die Abstraktion der Session
+                und der Reihungslogik. In der Zwischenzeit sollte das obige Beispiel als
+                angemessene Grundlage dienen, wie diese Aufgabe für eigene Seiten realisiert
+                werden kann.
             </para>
         </example>
     </sect2>
