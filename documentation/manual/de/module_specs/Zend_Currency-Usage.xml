@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13450 -->
 <sect1 id="zend.currency.usage">
 
     <title>Arbeiten mit Währungen</title>
@@ -281,9 +281,11 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
             </listitem>
             <listitem>
                 <para>
-                    <emphasis role="strong">format</emphasis>: Definiert welches Gebietsschema verwendet werden
+                    <emphasis role="strong">format</emphasis>: Definiert das Format welches verwendet werden
                     soll um Nummern darzustellen. Dieses Nummern-Format enthält zum Beispiel das
-                    Trennzeichen für Tausender. Wenn kein Format gesetzt wurde, wird das Gebietsschema vom
+                    Trennzeichen für Tausender. Man kann entweder ein Standardformat verwenden indem ein
+                    Identifikator für ein Gebietsschema angegeben wird, oder das Nummern-Format manuell
+                    definieren. Wenn kein Format gesetzt wurde, wird das Gebietsschema vom
                     <code>Zend_Currency</code> Objekt verwendet.
                 </para>
             </listitem>
@@ -400,13 +402,17 @@ $currency = new Zend_Currency('en_US');
 // Gibt 'US$ 1,000.00' aus
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('display' => Zend_Currency::USE_NAME,
-                     'position' => Zend_Currency::RIGHT);
+$currency->setFormat(array('display' => Zend_Currency::USE_NAME,
+                           'position' => Zend_Currency::RIGHT));
 // Gibt '1.000,00 US Dollar' aus
 echo $currency->toCurrency(1000);
 
-$currency->setFormat('name' => 'Amerikanische Dollar');
+$currency->setFormat(array('name' => 'Amerikanische Dollar'));
 // Gibt '1.000,00 Amerikanische Dollar' aus
+echo $currency->toCurrency(1000);
+
+$currency->setFormat(array('format' => '##0.00'));
+// Gibt '1000,00 Amerikanische Dollar' aus
 echo $currency->toCurrency(1000);
 ]]>
             </programlisting>

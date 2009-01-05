@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13421 -->
+<!-- EN-Revision: 13432 -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
@@ -430,9 +430,9 @@ class Zend_View_Smarty implements Zend_View_Interface
 
             <programlisting role="php"><![CDATA[
 // Beispiel 1. In initView() des Initialisers.
-require_once 'Zend/View/Smarty.php';
 $view = new Zend_View_Smarty('/Pfad/der/Templates');
-$viewRenderer = new Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+$viewRenderer =
+    new Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
 $viewRenderer->setView($view)
              ->setViewBasePathSpec($view->_smarty->template_dir)
              ->setViewScriptPathSpec(':controller/:action.:suffix')
@@ -454,7 +454,6 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        require_once 'Zend/View/Smarty.php';
         $this->view   = new Zend_View_Smarty('/path/to/templates');
         $viewRenderer = $this->_helper->getHelper('viewRenderer');
         $viewRenderer->setView($this->view)

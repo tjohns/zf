@@ -1,31 +1,33 @@
-<!-- EN-Revision: 11322 -->
+<!-- EN-Revision: 13422 -->
 <sect1 id="zend.openid.provider">
     <title>Zend_OpenId_Provider</title>
     <para>
-        <code>Zend_OpenId_Provider</code> wird verwendet um OpenID Server zu implementieren. Dieses Kapitel
-        bietet sehr grundsätzliche Beispiele für die Implementation eines produktiven OpenID Servers
-        (wie <ulink url="http://www.myopenid.com">www.myopenid.com</ulink>) aber es kann notwendig sein mit viel
+        <code>Zend_OpenId_Provider</code> kann verwendet werden um OpenID Server zu implementieren. Dieses
+        Kapitel bietet Beispiele die Demonstrieren wie ein sehr einfacher Server erstellt werden kann. Für
+        die Implementierung eines produktiven OpenId Servers (wie zum Beispiel
+        <ulink url="http://www.myopenid.com">www.myopenid.com</ulink>) kann es aber notwendig sein mit
         komplexeren Problemen umzugehen.
     </para>
 
     <sect2 id="zend.openid.provider.start">
         <title>Schellstart</title>
         <para>
-            Die folgende Identität beinhaltet den Code für das erstellen eines Benutzerzugang indem
+            Das folgende Beispiel beinhaltet Code für das Erstellen eines Benutzerzugang indem
             <code>Zend_OpenId_Provider::register</code> verwendet wird. Das Link-Element mit
             <code>rel="openid.server"</code> zeigt auf das eigene Serverscript. Wenn diese Identität zu einer
             OpenID-aktivierten Seite übertragen wird, wird eine Authentifizierung zu diesem Server durchgeführt.
         </para>
 
         <para>
-            Der Code vor &lt;html&gt; ist nur ein Trick der automatisch den Benutzerzugang erstellt. Man benötigt
-            solchen Code nicht wenn echte Identitäten verwendet werden.
+            Der Code vor dem &lt;html&gt; Tag ist nur ein Trick der automatisch den Benutzerzugang erstellt.
+            Man benötigt solch einen Code nicht wenn echte Identitäten verwendet werden.
         </para>
 
         <example id="zend.openid.provider.example-1">
             <title>Die Identität</title>
             <programlisting role="php"><![CDATA[
 <?php
+// eine Testidentität erstellen
 define("TEST_SERVER", Zend_OpenId::absoluteURL("example-8.php"));
 define("TEST_ID", Zend_OpenId::selfURL());
 define("TEST_PASSWORD", "123");
@@ -45,17 +47,18 @@ if (!$server->hasUser(TEST_ID)) {
 
         <para>
             Das folgende Identitäts-Serverscript behandelt zwei Arten von Anfragen von OpenID-aktivierten Sites
-            (for Assoziation und Authentifizierung). Beide von Ihnen werden von der gleichen Methode
-            <code>Zend_OpenId_Provider::handle</code> behandelt. Die zwei Argumente für
-            <code>Zend_OpenId_Provider</code> sind die URLs des Logins und der Vertrauten Seite, welche die
-            Interaktion vom End-Benutzer abfragen.
+            (for Assoziation und Authentifizierung). Beide von Ihnen werden von der gleichen Methode behandelt:
+            <code>Zend_OpenId_Provider::handle</code>. Die zwei Argumente für
+            <code>Zend_OpenId_Provider</code> Konstruktor sind die URLs des Logins und der Vertrauten Seite,
+            welche die Eingabe des End-Benutzers abfragen.
         </para>
 
         <para>
             Bei Erfolg gibt die Methode <code>Zend_OpenId_Provider::handle</code> einen String zurück der zur
             OpenID-aktivierten Seite zurück übergeben werden sollte. Bei einem fehler wird <code>false</code>
-            zurückgegeben - in diesem Beispiel wird eine HTTP 403 Antwort zurückgegeben. Man erhält diese
-            wenn man versucht diese Seite von einem Web-Browser zu öffnen, weil diese eine nicht-OpenID
+            zurückgegeben. Dieses Beispiel gibt eine HTTP 403 Antwort zurück wenn
+            <code>Zend_OpenId_Provider::handle</code> fehlschlägt. Man erhält diese Antwort
+            wenn man dieses Skript mit einem Web-Browser öffnet, weil es eine nicht-OpenID
             konforme Anfrage sendet.
         </para>
 
@@ -75,35 +78,39 @@ if (is_string($ret)) {
             </programlisting>
         </example>
 
+        <note>
+            <para>
+                Es ist eine gute Idee eine sichere Verbindung (HTTPS) für diese Skripte zu verwenden - und
+                speziell für die folgenden interaktiven Scripte - um den Diebstahl von Passwörtern zu verhindern.
+            </para>
+        </note>
+
         <para>
-            Es ist eine gute Idee eine sichere Verbindung (HTTPS) hierfür zu verwenden und speziell für die
-            folgenden interaktiven Scripts, um den Diebstahl von Passwörtern zu verhindern.
+            Das folgende Skript implementiert einen Login Schirm für einen Identitäts Server indem
+            <code>Zend_OpenId_Provider</code> verwendet wird und leitet zu dieser Seite weiter wenn ein
+            benötigter Benutzer sich noch nicht eingeloggt hat. Auf dieser Seite gibt der Benutzer sein
+            Passwort an um sich anzumelden.
         </para>
 
         <para>
-            Das folgende Skript implementiert einen Login Schirm für einen Identitäts Server
-            <code>Zend_OpenId_Provider</code> und leitet zu dieser Seite weiter wenn ein benötigter Benutzer
-            sich noch nicht eingeloggt hat. Auf dieser Seite gibt der Benutzer ein Passwort an um sich anzumelden.
-        </para>
-
-        <para>
-            Es sollte das Passwort "123" verwendet werden das wärend einer trickreichen Benutzerregistration von
-            einem Identitäts Skript verwendet wurde.
+            Es sollte das Passwort "123" verwendet werden das im obigen Identitäts Skript verwendet wurde.
         </para>
 
         <para>
             Bei Abschicken, ruft das Skript <code>Zend_OpenId_Provider::login</code> mit der akzeptierten
-            End-Benutzer Identität und dem Passwort auf, und leitet anschließend zum Hauptskript des Identitäts
+            Benutzer Identität und dem Passwort auf, und leitet anschließend zum Hauptskript des Identitäts
             Providers zurück. Bei Erfolg baut <code>Zend_OpenId_Provider::login</code> eine Session zwischen dem
-            End-Benutzer und dem Identitäts-Provider auf und speichert die Informationen über eingeloggte
-            Benutzer.  Damit benötigen alle folgenden Anfragen vom gleichen End-Benutzer keine Login-Prozedur
-            (selbst wenn diese von einer anderen OpenID aktivierten Web-Seite kommen).
+            Benutzer und dem Identitäts-Provider auf und speichert die Informationen über den Benutzer der nun
+            angemeldet ist. Alle folgenden Anfragen vom gleichen Benutzer benötigen keine Login-Prozedur mehr -
+            selbst wenn diese von einer anderen OpenID aktivierten Web-Seite kommen.
         </para>
 
-        <para>
-            Es ist zu beachten das die Session nur zwischen den End-Benutzer und dem Identitäts-Provider
-            existiert. OpenID aktivierte Seiten wissen nichts darüber.
-        </para>
+        <note>
+            <para>
+                Es ist zu beachten das die Session nur zwischen den End-Benutzer und dem Identitäts-Provider
+                existiert. OpenID aktivierte Seiten wissen nichts darüber.
+            </para>
+        </note>
 
         <example id="zend.openid.provider.example-3">
             <title>Einfacher Login Schirm</title>
@@ -121,30 +128,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
     Zend_OpenId::redirect("example-8.php", $_GET);
 }
 ?>
-<html><body>
-<form method="post"><fieldset>
+<html>
+<body>
+<form method="post">
+<fieldset>
 <legend>OpenID Login</legend>
 <table border=0>
-<tr><td>Name:</td><td><input type="text" name="openid_identifier"
-value="<?php
-echo htmlspecialchars($_GET['openid_identity']);
-?>"></td></tr>
-<tr><td>Passwort:</td><td><input type="text"
-name="openid_password" value=""></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit"
-name="openid_action" value="login"></td></tr>
-</table></fieldset></form></body></html>
+<tr>
+<td>Name:</td>
+<td>
+<input type="text"
+       name="openid_identifier"
+       value="<?php echo htmlspecialchars($_GET['openid_identity']);?>">
+</td>
+</tr>
+<tr>
+<td>Passwort:</td>
+<td>
+<input type="text"
+       name="openid_password"
+       value="">
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>
+<input type="submit"
+       name="openid_action"
+       value="login">
+</td>
+</tr>
+</table>
+</fieldset>
+</form>
+</body>
+</html>
 ]]>
             </programlisting>
         </example>
 
         <para>
-            Der Fakt das der Benutzer angemeldet ist bedeutet nicht das die Authentifizierung erfolgreich sein
-            muß. Der Benutzer kann entscheiden ob er dem speziellen OpenID aktivierten Seite vertraut oder nicht.
-            Der folgende Vertrauens-Schirm erlaubt dem End-Benutzer diese Wahl zu treffen. Diese Wahl kann nur
-            für die aktuelle Anfrage oder für "immer" gemacht werden. Im letzteren Fall werden Informationen über
-            vertrauenswürdige/nicht vertrauenswürdige Seiten in einer internen Datenbank gespeichert und alle
-            folgenden Authentifizierungs Anfragen von dieser Seite werden automatisch gehandhabt, ohne einer
+            Der Fakt das der Benutzer jetzt angemeldet ist bedeutet nicht das die Authentifizierung
+            notwendigerweise erfolgreich sein muß. Der Benutzer kann entscheiden das er der betreffenden
+            OpenID aktivierten Seite nicht vertraut. Der folgende Vertrauens-Schirm erlaubt dem Endbenutzer
+            diese Wahl zu treffen. Diese Wahl kann entweder nur für die aktuelle Anfrage oder für "immer"
+            gemacht werden. Im zweiten Fall werden Informationen über vertrauenswürdige/nicht
+            vertrauenswürdige Seiten in einer internen Datenbank gespeichert, und alle folgenden
+            Authentifizierungs Anfragen von dieser Seite werden automatisch gehandhabt ohne einer
             Interaktion des Benutzers.
         </para>
 
@@ -172,46 +202,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' &&
     }
 }
 ?>
-<html><body>
+<html>
+<body>
 <p>Eine Seite die sich als
 <a href="<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>
-<?php echo htmlspecialchars($server->getSiteRoot($_GET));?></a>
+<?php echo htmlspecialchars($server->getSiteRoot($_GET));?>
+</a>
 identifiziert hat uns nach Bestätigung  gefragt ob
 <a href="<?php echo htmlspecialchars($server->getLoggedInUser());?>">
-<?php echo htmlspecialchars($server->getLoggedInUser());?></a>
-Ihre Identitäts URL ist.</p>
+<?php echo htmlspecialchars($server->getLoggedInUser());?>
+</a>
+ihre Identitäts URL ist.
+</p>
 <form method="post">
 <input type="checkbox" name="forever">
 <label for="forever">für immer</label><br>
 <input type="hidden" name="openid_action" value="trust">
 <input type="submit" name="allow" value="Allow">
 <input type="submit" name="deny" value="Deny">
-</form></body></html>
+</form>
+</body>
+</html>
 ]]>
             </programlisting>
         </example>
 
         <para>
             Produktive OpenID Server unterstützen normalerweise die einfache Registrierungs Erweiterung die
-            es Benutzern erlaubt nach einigen Informationen über Benutzer vom Provider nachzufragen. In dem Fall
-            wird die Vertraute Seite normalerweise mit der Möglichkeit erweitert benötigte Felder anzugeben oder
-            Benutzerprofile auszuwählen.
+            es Benutzern erlaubt einige Informationen über ein Benutzerformular beim Provider nachzufragen.
+            In diesem Fall kann die Vertraute Seite erweitert werden um die Eingabe von angefragten Feldern
+            zu erlauben oder ein spezielles Benutzerprofil auszuwählen.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.provider.all">
-        <title>Alles zusammen kombinieren</title>
+        <title>Kombinierte Skripte</title>
         <para>
             Es ist möglich alle Provider Funktionalitäten in einem Skript zusammen zu kombinieren. In diesem Fall
             werden Login und Vertraute URLs unterdrückt, und <code>Zend_OpenId_Provider</code> nimmt an das diese
             auf die gleiche Seite zeigen mit einem zusätzlichen "openid.action" GET Argument.
         </para>
 
-        <para>
-            Das folgende Beispiel ist nicht komplett. Es bietet kein GUI für End-Benutzer wie es sein sollte, aber
-            es führt automatisches Login und Vertrauen durch. Das wird getan um das Beispiel zu vereinfachen, und
-            echte Server müssen Code von den vorherigen Beispielen inkludieren.
-        </para>
+        <note>
+            <para>
+                Das folgende Beispiel ist nicht komplett. Es bietet kein GUI für End-Benutzer wie es sein
+                sollte, aber es führt automatisches Login und Vertrauen durch. Das wird getan um das Beispiel
+                zu vereinfachen, und echte Server müssen Code von den vorherigen Beispielen inkludieren.
+            </para>
+        </note>
 
         <example id="zend.openid.provider.example-5">
             <title>Alles zusammen</title>
@@ -246,20 +284,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
         </example>
 
         <para>
-            Wenn dieses Beispiel mit dem vorherigen Beispiel das in verschiedene Seiten aufgeteilt ist, vergleicht
-            sieht man, zusätzlich zum Dispatch Code, nur einen Unterschied -
-            <code>unset($_GET['openid_action'])</code>. Dieses <code>unset</code> ist notwendig um die nächste
-            Anfrage zum Haupthandler zu routen.
+            Wenn man dieses Beispiel mit den vorherigen Beispielen vergleicht, die in einzelne Seiten aufgeteilt
+            sind, sieht man zusätzlich zum Dispatch Code, nur einen Unterschied:
+            <code>unset($_GET['openid_action'])</code>. Dieser Aufruf von <code>unset</code> ist notwendig um
+            die nächste Anfrage zum Haupthandler zu routen.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.provider.sreg">
         <title>Einfache Registrierungs Erweiterung (SREG)</title>
         <para>
-            Die folgende Identitäts Seite führt wieder einen Trick aus. Sie erstelt einen neuen
-            Benutzerzugang und assoziiert Ihn mit einem Profil (Spitzname und Passwort). Solche Tricks werden
-            im wirklichen Leben nicht benötigt wo sich End-Benutzer auf OpenID Servern registrieren und Ihre
-            Profile eintragen, aber die Implementierung dieser GUI ist nicht Bestandteil dieses Handbuches.
+            Wieder ist der Code vor dem &lt;html&gt; Tag nur ein Trick um die Funktionalität zu demonstrieren.
+            Er erstellt einen neuen Benutzerzugang und assoziiert Ihn mit einem Profil (Spitzname und
+            Passwort). Solche Tricks werden bei ausgelieferten Providern nicht benötigt wo sich End Benutzer
+            auf OpenID Servern registrieren und Ihre Profile eintragen. Die Implementierung dieses GUI würde
+            den Rahmen dieses Handbuches sprengen.
         </para>
 
         <example id="zend.openid.provider.example-6">
@@ -283,34 +322,37 @@ if (!$server->hasUser(TEST_ID)) {
     $server->logout();
 }
 ?>
-<html><head>
+<html>
+<head>
 <link rel="openid.server" href="<?php echo TEST_SERVER;?>" />
-</head><body>
+</head>
+<body>
 <?php echo TEST_ID;?>
-</body></html>
+</body>
+</html>
 ]]>
             </programlisting>
         </example>
 
         <para>
-            Diese Identität sollte der OpenID-aktivierten Seite übergeben werden (verwende das einfache
-            Registrierungs Erweiterung Beispiel aus dem vorherigen Kapitel) und es wird das folgende OpenID
+            Die Identität sollte jetzt der OpenID-aktivierten Webseite übergeben werden (verwende das einfache
+            Registrierungs Erweiterung Beispiel aus dem vorherigen Kapitel) und sie sollte das folgende OpenID
             Server Skript verwenden.
         </para>
 
         <para>
-            Es ist eine Variation des vorherigen "Alles zusammen" Beispiels. Es verwendet den gleichen
+            Dieses Skript ist eine Variation des Skripts im "Alles zusammen" Beispiel. Es verwendet den gleichen
             automatischen Login Mechanismus, aber es enthält keinen Code für die Vertrauens-Seite. Der Benutzer
-            vertraut bereits "für immer" im Beispielskript. Dieses Vertrauen wurde von der
-            <code>Zend_OpenId_Provider::alowSite</code> Methode im Identitäts Skript durchgeführt. Die gleiche
-            Methode assoziiert Profile mit der vertrauten Seite und dieses Profil wird automatisch bei einer
-            Anfrage von dieser vertrauten URL zurückgegeben.
+            hat dem Beispielskript bereits für immer vertraut. Dieses Vertrauen wurde durch den Aufruf der
+            <code>Zend_OpenId_Provider::allowSite()</code> Methode im Identitäts Skript hergestellt. Die gleiche
+            Methode assoziiert das Profil mit der vertrauten Seite. Dieses Profil wird automatisch für eine
+            Anfrage von der vertrauten URL zurückgegeben.
         </para>
 
         <para>
-            Die einzige Sache die notwendig ist um die einfache Registrierungs Erweiterung funktionsfähig zu
-            machen ist die Übergabe eines Objekts von <code>Zend_OpenId_Extension_Sreg</code> als zweites
-            Argument zu <code>Zend_OpenId_Provider::handle</code>.
+            Um die einfache Registrierungs Erweiterung funktionsfähig zu machen ist einfach die Übergabe einer
+            Instanz von <code>Zend_OpenId_Extension_Sreg</code> als zweites Argument der
+            <code>Zend_OpenId_Provider::handle()</code> Methode.
         </para>
 
         <example id="zend.openid.provider.example-7">
@@ -347,44 +389,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' &&
     </sect2>
 
     <sect2 id="zend.openid.provider.else">
-        <title>Was noch ?</title>
+        <title>Sonst noch was?</title>
         <para>
-            Das erstellen von OpenID Servern ist eine seltenere Aufgabe als das erstellen von OpenID-aktivierten
-            Sites, weswegen dieses Handbuch nicht versucht alle <code>Zend_OpenId_Provider</code> Features
-            abzudecken wie es für <code>Zend_OpenId_Consumer</code> getan wurde.
+            Das Erstellen von OpenID Providern ist eine viel seltenere Aufgabe als die Erstellung von
+            OpenID-aktivierten Sites, weswegen dieses Handbuch nicht alle <code>Zend_OpenId_Provider</code>
+            Features so ausführlich abdeckt wie es für <code>Zend_OpenId_Consumer</code> getan wurde.
         </para>
 
         <para>
-            Zwei Worte darüber was zusätzlich geboten wird:
+            Zusammenfassend enthält <code>Zend_OpenId_Provider</code>:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    ein Set von Methoden um End-Benutzer GUI Interfaces zu erstellen die dem Benutzer erlauben sich
-                    zu registrieren, und Ihre vertrauten Seiten und Profile zu managen.
+                    Ein Set von Methoden um ein End-Benutzer GUI zu Erstellen das es Benutzern erlauben sich
+                    zu registrieren und Ihre vertrauten Seiten und Profile zu managen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    einen Abstraktions Speicher Layer um Informationen über Benutzer, Ihre Seiten und Profile zu
-                    speichern. Es werden auch Assoziationen zwischen Providern und OpenID-aktivierten Seiten
-                    gespeichert. Dieser Layer ist ähnlich dem von <code>Zend_OpenId_Consumer</code>. Er verwendet
-                    standardmäßg auch den Dateispeicher kann aber mit anderen Implementationen abgeleitet werden.
+                    Einen abstrakten Speicherlayer um Informationen über Benutzer, Ihre Seiten und Ihre Profile
+                    zu speichern. Es speichert auch Assoziationen zwischen Providern und OpenID-aktivierten
+                    Seiten. Dieser Layer ist ähnlich dem der <code>Zend_OpenId_Consumer</code> Klasse. Er
+                    verwendet standardmäßg auch den Dateispeicher, kann aber mit anderen Backends abgeleitet
+                    werden.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    einen Abtraktions Benutzer-Assoziierungs Layer der Web-Browser von End-Benutzern mit eingeloggten
-                    Identitäten verknüpfen kann.
+                    Einen Abtraktions Benutzer-Assoziierungs Layer der Web-Browser von Benutzern mit
+                    eingeloggten Identitäten verknüpfen kann.
                 </para>
             </listitem>
         </itemizedlist>
 
         <para>
-            <code>Zend_OpenId_Provider</code> versucht nicht alle möglichen Features abzudecken die von
-            OpenID Servern implementiert werden können (wie digitale Zertifikate), kann aber einfach durch
-            <code>Zend_OpenId_Extension</code>s oder durch Erstellung einer Kind-Klasse erweitert werden.
+            Die <code>Zend_OpenId_Provider</code> Klasse versucht nicht alle möglichen Features abzudecken die
+            von OpenID Servern implementiert werden können, z.B. wie digitale Zertifikate, kann aber einfach
+            erweitert werden durch <code>Zend_OpenId_Extension</code>s oder durch standardmäßige
+            Objektorientierte Erweiterungen.
         </para>
     </sect2>
 </sect1>

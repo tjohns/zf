@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12816 -->
+<!-- EN-Revision: 13436 -->
 <sect1 id="zend.currency.migration">
 
     <title>Migration von vorhergehenden Versionen</title>
@@ -38,31 +38,45 @@ $currency = new Zend_Currency($currency, $locale);
                         <emphasis role="strong">position</emphasis>:
                         Ersetzt den alten 'rules' Parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">script</emphasis>:
                         Ersetzt den alten 'script' Parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">format</emphasis>:
                         Ersetzt den alten 'locale' Parameter welcher keine neue Währung, sondern
                         nur das Format der Nummern setzt.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">display</emphasis>:
                         Ersetzt den alten 'rules' Parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">precision</emphasis>:
                         Neuer Parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">name</emphasis>:
                         Ersetzt den alten 'rules' Parameter. Setzt den vollständigen Namen der Währung.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">currency</emphasis>:
                         Neuer Parameter.
                     </para>
+                </listitem>
+                <listitem>
                     <para>
                         <emphasis role="strong">symbol</emphasis>:
                         Neuer Parameter.

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12200 -->
+<!-- EN-Revision: 13439 -->
 <sect1 id="zend.paginator.advanced">
     <title>Advanced usage</title>
 
@@ -109,6 +109,111 @@ return $paginator->getPagesInRange($lowerBound, $upperBound);
 $prefix = 'My_Paginator_ScrollingStyle';
 $path   = 'My/Paginator/ScrollingStyle/';
 Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
+]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.paginator.advanced.caching">
+        <title>Caching features</title>
+
+        <para>
+            <code>Zend_Paginator</code> kann gesagt werden das es die Daten die Ihm bereits übergeben wurden,
+            cachen soll, um zu verhindern das der Adapter sie jedes mal wenn Sie verwendet werden holen muß.
+            Um dem Paginator zu sagen das die Daten des Adapters automatisch gecacht werden, muß der-
+            <code>setCache()</code> Methode nur eine <code>Zend_Cache_Core</code> Instanz übergeben werden.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+$fO = array('lifetime' => 3600, 'automatic_serialization' => true);
+$bO = array('cache_dir'=>'/tmp');
+$cache = Zend_cache::factory('Core', 'File', $fO, $bO);
+Zend_Paginator::setCache($cache);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Sobald Zend_Paginator eine Zend_Cache_Core Instanz erhalten hat, werden Daten gecacht. Manchmal will
+            man Daten nicht cachen selbst wenn man bereits eine Cacheinstanz übergeben hat. Man sollte dann
+            hierfür <code>setCacheEnable()</code> verwenden.
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+// $cache ist eine Zend_Cache_Core Instanz
+Zend_Paginator::setCache($cache);
+// ... später im Skript
+$paginator->setCacheEnable(false);
+// Der Cache ist nun ausgeschaltet
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Wenn ein Cache gesetzt ist, werden Daten automatisch in Ihm gespeichert und von Ihm herausgeholt.
+            Es kann nützlich sein den Cache manuell zu entleeren. Das kann durch den Aufruf von
+            <code>clearPageItemCache($pageNumber)</code> getan werden. Wenn kein Parameter übergeben wird,
+            wird der komplette Cache entleert. Optional kann ein Parameter übergeben werden der die
+            Seitenanzahl repräsentiert die den Cache löschen :
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+Zend_Paginator::setCache($cache);
+$items = $paginator->getCurrentItems();
+// Seite 1 ist nun in Cache
+$page3Items = $paginator->getItemsByPage(3);
+// Seite 3 ist nun in Cache
+
+// Den Cache für die Ergebnisse der Seite 3 löschen
+$paginator->clearPageItemCache(3);
+
+// Alle Cachedaten löschen
+$paginator->clearPageItemCache();
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Das Ändern das Anzahl der Teile pro Seite wird den kompletten Cache leeren, das er ungültig
+            geworden wäre :
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+Zend_Paginator::setCache($cache);
+// Einige Teile holen
+$items = $paginator->getCurrentItems();
+
+// Alle Cachedaten werden ausgegeben :
+$paginator->setItemCountPerPage(2);
+]]>
+            </programlisting>
+        </para>
+
+        <para>
+            Es ist auch möglich zu sehen welche Daten im Cache sind und direkt nach Ihnen zu fragen. Hierfür
+            kann <code>getPageItemCache()</code> verwendet werden:
+        </para>
+
+        <para>
+            <programlisting role="php"><![CDATA[
+$paginator = Zend_Paginator::factory($someData);
+$paginator->setItemCountPerPage(3);
+Zend_Paginator::setCache($cache);
+
+// Einige Teile holen
+$items = $paginator->getCurrentItems();
+$otherItems = $paginator->getItemsPerPage(4);
+
+// Die gecachten Teile als zwei-dimensionales Array sehen
+var_dump($paginator->getPageItemCache());
 ]]>
             </programlisting>
         </para>

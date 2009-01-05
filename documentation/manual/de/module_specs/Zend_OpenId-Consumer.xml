@@ -1,48 +1,47 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13422 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer Grundlagen</title>
     <para>
-        <code>Zend_OpenId_Consumer</code> wird verwendet um das OpenID Authentifizierungs Schema auf Webseiten
+        <code>Zend_OpenId_Consumer</code> kann verwendet werdeb um OpenID Authentifizierung auf Webseiten
         zu implementieren.
     </para>
 
     <sect2 id="zend.openid.consumer.authentication">
         <title>OpenID Authentifikation</title>
         <para>
-            Aus der Sicht eines Site Entwicklers, geschieht die Authentifikation von OpenID in drei Schritten:
+            Aus der Sicht eines Website Entwicklers, geschieht die Authentifikation von OpenID in drei Schritten:
         </para>
 
         <orderedlist>
             <listitem>
                 <para>
-                    Zeige das OpenID Authentifikations Formular.
+                    Zeige das OpenID Authentifikations Formular
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    Akzeptiere die OpenID Identität und übergib Sie an den OpenID Provider.
+                    Akzeptiere die OpenID Identität und übergib Sie an den OpenID Provider
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    Überprüfe die Antwort des OpenID Providers.
+                    Überprüfe die Antwort des OpenID Providers
                 </para>
             </listitem>
         </orderedlist>
 
         <para>
-            In Wirklichkeit führt das OpenID Authentifikations Protokoll mehr Schritte durch, aber die meisten
-            von Ihnen sind innerhalb von <code>Zend_OpenId_Consumer</code> gekapselt, und sind für den
-            Entwickler transparent.
+            Das OpenID Authentifikations Protokoll benötigt aktuell mehrere, aber viele von Ihnen sind
+            innerhalb von <code>Zend_OpenId_Consumer</code> gekapselt, und deshalb für den Entwickler transparent.
         </para>
 
         <para>
-            Der OpenID Authentifikations Prozess wird vom End-Benutzer, durch das Ausfüllen seiner Identifikation
-            im entsprechenden Formular und dem Senden des selben, durchgeführt. Das folgende Beispiel zeigt ein
+            Der End-Benutzer initiiert den OpenID Authentifikations Prozess indem er Seine oder Ihre
+            Identifikations Daten in der entsprechenden Form übermittelt. Das folgende Beispiel zeigt ein
             einfaches Formular das einen OpenID Identifikator akzeptiert. Es gilt zu beachten das das Beispiel
-            nur einen Login zeigt.
+            nur einen Login demonstriert.
         </para>
 
         <example id="zend.openid.consumer.example-1">
@@ -59,11 +58,11 @@
         </example>
 
         <para>
-            Beim Übertragen übergibt dieses Formular eine OpenID Identität an das folgende PHP Skript welches
-            den zweiten Schritt der Authentifizierung durchführt. Das einzige Ding für das dieses PHP Skript
-            benötigt wird ist in diesem Schritt die <code>Zend_OpenId_Consumer::login()</code> Methode auszurufen.
-            Das erste Argument dieser Methode akzeptiert eine OpenID Identität und das zweite ist eine URL des
-            Skripts das den dritten und letzten Schritt der Authentifizierung behandelt.
+            Dieses Formular übergibt bei der Übertragung eine OpenID Identität an das folgende PHP Skript welches
+            den zweiten Schritt der Authentifizierung durchführt. Das PHP Skript muss in diesem Schritt nur die
+            <code>Zend_OpenId_Consumer::login()</code> Methode aufrufen. Das erste Argument dieser Methode
+            akzeptiert eine OpenID Identität, und das zweite ist die URL des Skripts das den dritten und letzten
+            Schritt der Authentifizierung behandelt.
         </para>
 
         <example id="zend.openid.consumer.example-1_2">
@@ -78,34 +77,35 @@ if (!$consumer->login($_POST['openid_identifier'], 'example-1_3.php')) {
         </example>
 
         <para>
-            <code>Zend_OpenId_Consumer::login()</code> führt eine Suche nach einem gegebenen Identifizierer
+            Die <code>Zend_OpenId_Consumer::login()</code> Methode führt eine Suche nach einem gegebenen Identifikator
             durch und findet, bei Erfolg, die Adresse des Identitäts Providers und dessen Lokalen Idenzifizierer
             durch. Dann erstellt es eine Assoziation zum gegebenen Provider sodas beide, die Site und der
-            Provider, um das gleiche Geheimnis wissen das verwendet wurde um die nachfolgende Nachricht zu
-            verschlüsseln. Das wird eine Authentifikations Anfrage an den Provider übergeben. Es ist zu
-            beachten das der Web-Browser des End-Benutzers zu einer OpenID Server Site umleitet, wo die
-            Benutzer die Möglcihkeit haben den Authentifizierungs Prozess fortzuführen.
+            Provider, um das gleiche Geheimnis teilen das verwendet wird um nachfolgende Nachrichten zu
+            verschlüsseln. Letztendlich wird eine Authentifikations Anfrage an den Provider übergeben. Diese
+            Anfrage leitet den Web-Browser des End-Benutzers zu einer OpenID Server Site um, wo der
+            Benutzer die Möglichkeit habt den Authentifizierungs Prozess fortzuführen.
         </para>
 
         <para>
-            Ein OpenID Server fragt nochmalerweise Benutzer nach Ihrem Passwort (wenn Sie vorher noch nicht
+            Ein OpenID Provider fragt nochmalerweise Benutzer nach Ihrem Passwort (wenn Sie vorher noch nicht
             angemeldet waren), wenn der Benutzer dieser Site vertraut und welche Informationen zu der Site
-            zurückgegeben werden können. Diese Interaktionen sind für die OpenID-aktivierte Site nicht sichtbar
-            sodas es für diese keine Möglichkeit gibt ein Benutzerpasswort oder andere Informationen zu
-            bekommen die nicht geöffnet wurden.
+            zurückgegeben werden können. Diese Interaktionen sind für den OpenID Konsument nicht sichtbar
+            sodas es für Ihn keine Möglichkeit gibt das Benutzerpasswort oder andere Informationen zu
+            bekommen bei denen der Benutzer nicht gesagt hat das der OpenId Provider Sie teilen darf.
         </para>
 
         <para>
-            Bei Erfolg wird <code>Zend_OpenId_Consumer::login()</code> nie zurückkommen, weil es eine HTTP
-            Umleitung durchführt, aber im Falle eine Fehler ein false zurückgeben wird. Fehler können durch
-            eine ungültige Identität, einen toten Provider, Kommunikations Fehler, usw. auftreten.
+            Bei Erfolg wird <code>Zend_OpenId_Consumer::login()</code> nicht zurückkommen, sondern eine HTTP
+            Umleitung durchführt. Trotzdem wird im Falle eine Fehler ein false zurückgeben wird. Fehler können
+            durch eine ungültige Identität, einen Provider der nicht antwortet, Kommunikations Fehler, usw.
+            auftreten.
         </para>
 
         <para>
-            Der dritte Schritt der Authentifikation wird durch eine Antwort vom OpenID Provider initiiert,
+            Der dritte Schritt der Authentifikation wird durch die Antwort vom OpenID Provider initiiert,
             nachdem dieser das Benutzerpasswort authentifiziert hat. Diese Antwort wird indirekt, als HTTP
-            Umleitung des Webbrowsers des End-Benutzers, übergeben. Und das einzige, was die Site tun muß,
-            ist zu prüfen ob Antwort gültig ist.
+            Umleitung übergeben, indem der Webbrowsers des End-Benutzers verwendet wird. Der Konsument muß nun
+            einfach prüfen ob die Antwort gültig ist.
         </para>
 
         <example id="zend.openid.consumer.example-1_3">
@@ -124,20 +124,20 @@ if ($consumer->verify($_GET, $id)) {
         <para>
             Diese Prüfung wird durchgeführt indem die <code>Zend_OpenId_Consumer::verify</code> Methode
             verwendet wird, welche ein ganzes Array von HTTP Anfrage Argumenten entgegennimmt und prüft ob
-            diese Antwort durch einen entsprechenden OpenID Provider richtig signiert wurde. Sie kann auch
-            die erhaltete OpenID Identität, die vom End-Benutzer im ersten Schritt in das zweite (optionale)
-            Argument eingegeben wurde, zuordnen.
+            diese Antwort durch den OpenID Provider richtig signiert wurde. Sie kann die erhaltete OpenID
+            Identität, die vom Endbenutzer im ersten Schritt angegeben wurde, zuordnen, indem ein zweites,
+            optionales, Argument eingegeben wird.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.combine">
         <title>Alle Schritte in einer Seite kombinieren</title>
         <para>
-            Das folgende Beispiel kombiniert alle drei Schritte. Es bietet keine zusätzlichen Funktionalitäten.
-            Der einzige Vorteil ist, das Entwickler jetzt keine URLs für Skripte definieren müssen, die den
-            nächsten Schritt handhaben. Standardmäßig verwenden alle Schritte die gleiche URL. Trotzdem
-            enthält das Skript den Dispatchcode der den korrekten Code für jeden Schritt der Authentifikation
-            aufruft.
+            Das folgende Beispiel kombiniert alle drei Schritte in einem Skript. Es bietet keine neuen
+            Funktionalitäten. Der Vorteil der Verwendung eines einzelnen Skripts ist, das Entwickler keine
+            URLs für das Skript definieren muss, das den nächsten Schritt durchführt. Standardmäßig verwenden
+            alle Schritte die gleiche URL. Trotzdem enthält das Skript nun etwas Dispatchcode um den korrekten
+            Code für jeden Schritt der Authentifikation aufzurufen.
         </para>
 
         <example id="zend.openid.consumer.example-2">
@@ -150,7 +150,7 @@ if (isset($_POST['openid_action']) &&
 
     $consumer = new Zend_OpenId_Consumer();
     if (!$consumer->login($_POST['openid_identifier'])) {
-        $status = "OpenID Login fehlgeschlagen.<br>";
+        $status = "OpenID Login fehlgeschlagen.";
     }
 } else if (isset($_GET['openid_mode'])) {
     if ($_GET['openid_mode'] == "id_res") {
@@ -166,43 +166,46 @@ if (isset($_POST['openid_action']) &&
 }
 ?>
 <html><body>
-<?php echo "$status<br>";?>
-<form method="post"><fieldset>
+<?php echo "$status<br>" ?>
+<form method="post">
+<fieldset>
 <legend>OpenID Login</legend>
-<input type="text" name="openid_identifier" value="">
-<input type="submit" name="openid_action" value="login">
-</fieldset></form></body></html>
+<input type="text" name="openid_identifier" value=""/>
+<input type="submit" name="openid_action" value="login"/>
+</fieldset>
+</form>
+</body></html>
 ]]>
             </programlisting>
         </example>
 
         <para>
-            Zusätzlich unterscheidet dieser Code zwischen abgebrochen und falschen Authentifizierungs Antworten.
-            Der Provider gibt eine abgebrochene Antwort in den Fällen zurück, wenn ein Identitäts Provider
-            die gegebene Identität nicht kennt oder der Benutzer nicht angemeldet ist oder dieser der Seite
-            nicht vertraut. Eine falsche Antwort nimmt an das die Antwort falsch oder nicht korrekt signiert
-            wurde.
+            Zusätzlich unterscheidet dieser Code zwischen abgebrochen und ungültigen Authentifizierungs Antworten.
+            Der Provider gibt eine abgebrochene Antwort zurück, wenn der Identitäts Provider die gegebene
+            Identität nicht unterstützt, der Benutzer nicht angemeldet ist, oder der Benutzer der Seite
+            nicht vertraut. Eine ungültige Antwort zeigt an das die Antwort dem OpenId Protokoll nicht
+            entspricht oder nicht korrekt signiert wurde.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.realm">
-        <title>Bereiche</title>
+        <title>Konsumenten Bereiche</title>
         <para>
             Wenn eine OpenID-aktivierte Site eine Authentifikations Anfrage an einen Provider übergibt,
             identifiziert diese sich selbst mit einer Bereichs URL. Diese URL kann als Root der vertrauten
-            Site betrachtet werden. Wenn der Benutzer der URL vertraut, dann vertraut er der passenden und
-            den untergeordneten URLs.
+            Site betrachtet werden. Wenn der Benutzer der Bereichs URL vertraut, dann sollte er oder Sie das
+            auch bei der passenden und den untergeordneten URLs tun.
         </para>
 
         <para>
             Standardmäßig wird der Bereich automatisch auf die URL des Verzeichnisses gesetzt indem das Login
-            Skript ist. Diese Wahl ist für die meisten, aber nicht alle, Fälle ausreichend. Zeitweise wird
-            die komplette Site und nicht ein Verzeichnis verwendet, oder sogar eine Kombination von
-            verschiedenen Server aus einer Domain.
+            Skript ist. Dieser Standardwert ist für die meisten, aber nicht alle, Fälle ausreichend. Manchmal
+            sollte einer komplette Domain, und nicht einem Verzeichnis vertraut werden. Oder sogar einer
+            Kombination von verschiedenen Servern in einer Domain.
         </para>
 
         <para>
-            Um diese Fähigkeit zu implementieren müssen Entwickler den realm Wert als drittes Argument an die
+            Um den Standardwert zu überschreiben müssen Entwickler die Bereichs URL als drittes Argument an die
             <code>Zend_OpenId_Consumer::login</code> Methode übergeben. Im folgenden Beispiel fragt eine einzelne
             Interaktion nach vertrauten Zugriff auf alle php.net Sites.
         </para>
@@ -221,20 +224,20 @@ if (!$consumer->login($_POST['openid_identifier'],
         </example>
 
         <para>
-            Das Beispiel implementiert nur den zweiten Schritt der Authentifikation, der erste und dritte
-            Schritt sind die gleichen wie im ersten Beispiel.
+            Dieses Beispiel implementiert nur den zweiten Schritt der Authentifikation; der erste und dritte
+            Schritt sind die identisch mit dem ersten Beispiel.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.check">
         <title>Sofortige Prüfung</title>
         <para>
-            In einigen Situationen ist es notwendig zu sehen ob ein Benutzer bereits auf einem vertrauten
+            In einigen Fällen muß eine Anwendung nur prüfen ob ein Benutzer bereits auf einem vertrauten
             OpenID Server eingeloggt ist ohne einer Interaktion mit dem Benutzer. Die
-            <code>Zend_OpenId_Consumer::check</code> Methode führt genau das durch. Sie wird mit genau den
+            <code>Zend_OpenId_Consumer::check</code> Methode führt genau das durch. Sie wird mit den
             gleichen Argumenten wie <code>Zend_OpenId_Consumer::login</code> ausgeführt, aber Sie zeigt dem
-            Benutzer keine OpenID Serverseiten. Deswegen ist Sie aus Sicht des Benutzers transparent und es
-            scheint als ob er nie die Site verlassen hätte. Der dritte Schritt ist erfolgreich wenn der
+            Benutzer keine OpenID Serverseiten. Aus Sicht des Benutzers ist dieser Prozess transparent, und es
+            scheint als ob er die Site nie verlässt. Der dritte Schritt ist erfolgreich wenn der
             Benutzer bereits angemeldet ist und der Site vertraut, andernfalls ist er erfolglos.
         </para>
 
@@ -250,8 +253,8 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
         </example>
 
         <para>
-            Das Beispiel implementiert nur den zweiten Schritt der Authentifikation, der erste und dritte
-            Schritt sind die gleichen wie im ersten Beispiel.
+            Das Beispiel implementiert nur den zweiten Schritt der Authentifikation; der erste und dritte
+            Schritt sind dem obigen Beispiel ähnlich.
         </para>
     </sect2>
 
@@ -264,23 +267,24 @@ if (!$consumer->check($_POST['openid_identifier'], 'example-4_3.php')) {
         </para>
 
         <para>
-            Entwickler müssen auf diese Speicherung keine Acht geben weil <code>Zend_OpenId_Consumer</code>
-            standardmäßig einen dateibasierten Speicher unter /tmp verwendet, ähnlich wie PHP Sessions.
-            Trotzdem kann dieser Speicher nicht in allen Situationen richtig sein. Einige wollen Informationen
-            in einer Datenbank speichern, wärend andere einen üblichen Speicher für große Web-Farmen verwenden
-            wollen. Glücklicherweise können Entwickler den Standardspeicher sehr einfach mit Ihrem eigenen
-            tauschen. Das einzige was implementiert werden muß ist eine eigene Speicherklasse als Kind von
-            der <code>Zend_OpenId_Consumer_Storage</code> Methode und diese als erstes Argument an den
-            <code>Zend_OpenId_Consumer</code> Konsturktor zu übergeben.
+            Entwickler müssen sich nicht notwendigerweise um die Speicherung kümmern weil
+            <code>Zend_OpenId_Consumer</code> standardmäßig einen dateibasierten Speicher im temporären
+            Verzeichnis verwendet, ähnlich wie PHP Sessions. Trotzdem ist dieser Speicher nicht in allen
+            Situationen richtig. Einige Entwickler wollen Informationen in einer Datenbank speichern, wärend
+            andere einen üblichen Speicher für große Server-Farmen verwenden wollen. Glücklicherweise können
+            Entwickler den Standardspeicher sehr einfach mit Ihrem eigenen tauschen. Um einen eigenen
+            Speichermechanismus zu spezifizieren muß nur die <code>Zend_OpenId_Consumer_Storage</code>
+            Klasse erweitert werden und diese Unterklasse dem <code>Zend_OpenId_Consumer</code> Konstruktor
+            im ersten Argument übergeben werden.
         </para>
 
         <para>
-            Das folgende Beispiel demonstriert einen einfachen Speicher der <code>Zend_Db</code> als Backend
-            verwendet und drei Gruppen von Funktionen enthält. Der erste ist für die Arbeit mit Assoziationen,
-            der zweite dient dazu erkannte Informationen zu cachen und der dritte ist die Antwort eindeutig zu
-            prüfen. Die Klasse ist in einer Art implementiert das Sie einfach mit bestehenden oder neuen
-            Datenbaknen verwendet werden kann. Wenn das notwendig ist, wird eine Datenbanktabelle erstellt
-            wenn diese nicht existiert.
+            Das folgende Beispiel demonstriert einen einfachen Speicher Mechanismus der <code>Zend_Db</code>
+            als sein Backend verwendet und drei Gruppen von Funktionen bereitstellt. Der erste Gruppe enthält
+            Funktionen für die Arbeit mit Assoziationen, wärend die zweite Gruppe erkannte Informationen cacht,
+            und die dritte Gruppe kann verwendet werden um zu prüfen ob die Antwort eindeutig ist. Die Klasse
+            kann einfach mit bestehenden oder neuen Datenbanken verwendet werden; wenn die benötigten Tabellen
+            nicht existieren, wird er Sie erstellen.
         </para>
 
         <example id="zend.openid.consumer.example-5">
@@ -293,6 +297,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     private $_discovery_table;
     private $_nonce_table;
 
+    // Übergib das Zend_Db_Adapter Objekt und die Namen der
+    // benötigten Tabellen
     public function __construct($db,
                                 $association_table = "association",
                                 $discovery_table = "discovery",
@@ -303,6 +309,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         $this->_discovery_table = $discovery_table;
         $this->_nonce_table = $nonce_table;
         $tables = $this->_db->listTables();
+
+        // Erstelle die Assoziationstabellen wenn Sie nicht existieren
         if (!in_array($association_table, $tables)) {
             $this->_db->getConnection()->exec(
                 "create table $association_table (" .
@@ -313,6 +321,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " expires timestamp" .
                 ")");
         }
+
+        // Erstelle die Discoverytabellen wenn Sie nicht existieren
         if (!in_array($discovery_table, $tables)) {
             $this->_db->getConnection()->exec(
                 "create table $discovery_table (" .
@@ -323,6 +333,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " expires timestamp" .
                 ")");
         }
+
+        // Erstelle die Nouncetabellen wenn Sie nicht existieren
         if (!in_array($nonce_table, $tables)) {
             $this->_db->getConnection()->exec(
                 "create table $nonce_table (" .
@@ -462,15 +474,16 @@ $consumer = new Zend_OpenId_Consumer($storage);
         </example>
 
         <para>
-            Das Beispiel enthält keinen OpenID Authentifikations Code, aber er basiert auf der gleichen Logik
-            wie die vorhergehenden oder folgenden Beispiele.
+            Dieses Beispiel zeigt keinen OpenID Authentifikations Code, aber dieser Code würde der gleiche sein
+            wie der für die anderen Beispiel in diesem Kapitel.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.sreg">
         <title>Einfache Registrations Erweiterung</title>
         <para>
-            Zusätzlich zur Authentifikation kann OpenID für einen leichtgewichtigen Profiltausch verwendet werden.
+            Zusätzlich zur Authentifikation kann OpenID Standard für einen leichtgewichtigen Profiltausch
+            verwendet werden, um Informationen über einen Benutzer über mehrere Sites hinweg portabel zu machen.
             Dieses Feature wird nicht durch die OpenID Authentifikations Spezifikation abgedeckt, aber vom
             OpenID Einfachen Registrierungs Erweiterungs Protokoll unterstützt. Dieses Protokoll erlaubt es
             OpenID-aktivierten Sites nach Informationen über End-Benutzern von OpenID Providers zu fragen.
@@ -481,60 +494,61 @@ $consumer = new Zend_OpenId_Consumer($storage);
             <listitem>
                 <para>
                     <emphasis>nickname</emphasis>
-                     - ein UTF-8 String den der End-Benutzer als Spitzname verwenden will.
+                     - ein UTF-8 String den der End-Benutzer als Spitzname verwendet.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>email</emphasis>
-                    - die Email Adresse des End-Benutzers wie in Sektion 3.4.1 von RFC2822 spezifiziert.
+                    - die Email Adresse des Benutzers wie in Sektion 3.4.1 von RFC2822 spezifiziert.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>fullname</emphasis>
-                    - eine UTF-8 String Repräsentation des kompletten Namens des End-Benutzers.
+                    - eine UTF-8 String Repräsentation des kompletten Namens des Benutzers.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>dob</emphasis>
-                    - das Geburtsdatum des End-Benutzers als YYYY-MM-DD. Jeder Wert dessen Repräsentation weniger
-                    als die speifizierte Anzahl an Ziffern verwendet sollte mit Nullen aufgefüllt werden. Die Länge
-                    dieses Wertes muß immer 10 sein. Wenn der End-Benutzer irgendeinen Teil dieser Komponente nicht
-                    angeben will, dann muß dieser auf Null gesetzt werden. Wenn ein Benutzer zum Beispiel angeben
-                    will das sein Geburtsdatum um 1980 war, aber nicht den Monat oder Tag, dann sollte der
-                    zurückgegebene Wert "1980-00-00" sein.
+                    - das Geburtsdatum des Benutzers im Format 'YYYY-MM-DD'. Jeder Wert dessen Repräsentation
+                    weniger als die speifizierte Anzahl an Ziffern in diesem Format verwendet sollte mit Nullen
+                    aufgefüllt werden. In anderen Worten, die Länge dieses Wertes muß immer 10 sein. Wenn der
+                    Benutzer irgendeinen Teil dieses Wertes (z.B. Jahr, Monat oder Tag) nicht angeben will,
+                    dann muß dieser auf Null gesetzt werden. Wenn ein Benutzer zum Beispiel angeben will das
+                    sein Geburtsdatum in das Jahr 1980 fällt, aber nicht den Monat oder Tag angeben will, dann
+                    sollte der zurückgegebene Wert '1980-00-00' sein.
                 </para>
             </listitem>
             <listitem>
                 <para>
                 <emphasis>gender</emphasis>
-                - das Geschlecht des End-Benutzers, "M" für männlich, "F" für weiblich.
+                - das Geschlecht des Benutzers: "M" für männlich, "F" für weiblich
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>postcode</emphasis>
-                    - UTF-8 String der dem Postleitzahl System des Landes des End-Benutzers entsprechen sollte.
+                    - ein UTF-8 String der dem Postleitzahl System des Landes des End-Benutzers entspricht
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>country</emphasis>
-                    - das Land des Wohnsitzes des End-Benutzers wie spezifiziert in ISO3166.
+                    - das Land des Wohnsitzes des Benutzers wie spezifiziert in ISO3166
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>language</emphasis>
-                    - die bevorzugte Sprache des End-Benutzers wie spezifiziert in ISO639.
+                    - die bevorzugte Sprache des Benutzers wie spezifiziert in ISO639
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis>timezone</emphasis>
-                    - ASCII String von der Zeitzonen Datenbank. Zum Beispiel, "Europe/Paris" oder
+                    - ein ASCII String von der Zeitzonen Datenbank. Zum Beispiel, "Europe/Paris" oder
                     "America/Los_Angeles".
                 </para>
             </listitem>
@@ -542,11 +556,11 @@ $consumer = new Zend_OpenId_Consumer($storage);
 
         <para>
             Eine OpenID-aktivierte Web-Seite kann nach jeder beliebigen Kombination dieser Felder fragen.
-            Sie kann auch einige Informationen strikt fordern und es End-Benutzern erlauben andere Informationen
-            anzubieten oder zu verstecken. Das folgende Beispiel erzeugt ein Objekt der
-            <code>Zend_OpenId_Extension_Sreg</code> Klasse das einen <emphasis>Spitznamen</emphasis>
-            (nickname) benötigt und optional nach einer <emphasis>E-Mail</emphasis> (email) und einem
-            <emphasis>vollständigen Namen</emphasis> (fullname) fragt.
+            Sie kann auch einige Informationen strikt fordern und es Benutzern erlauben zusätzliche Informationen
+            anzubieten oder zu verstecken. Das folgende Beispiel Instanziiert die
+            <code>Zend_OpenId_Extension_Sreg</code> Klasse die einen <emphasis>nickname</emphasis>
+            (Spitzname) benötigt und optional eine <emphasis>email</emphasis> (E-Mail) und einen
+            <emphasis>fullname</emphasis> (vollständigen Namen) benötigt.
         </para>
 
         <example id="zend.openid.consumer.example-6_2">
@@ -568,16 +582,17 @@ if (!$consumer->login($_POST['openid_identifier'],
         </example>
 
         <para>
-            Wie man sieht akzeptiert der <code>Zend_OpenId_Extension_Sreg</code> Konstruktor ein Array an
-            abgefragten Feldern. Das Array hat den Namen der Felder als Indezes und die erfordert Flags als
-            Werte. <emphasis>true</emphasis> bedeutet der Wert wird benötigt und <emphasis>false</emphasis>
-            bedeutet das Feld ist optional. <code>Zend_OpenId_Consumer::login</code> akzeptiert Erweiterungen
-            oder Listen von Erweiterungen als viertes Argument.
+            Wie man sieht akzeptiert der <code>Zend_OpenId_Extension_Sreg</code> Konstruktor ein Array von
+            OpenId Feldern. Das Array hat den Namen der Felder als Indezes zu einem Flag das anzeigt ob das
+            Feld benötigt wird oder nicht. <emphasis>true</emphasis> bedeutet der Wert wird benötigt und
+            <emphasis>false</emphasis> bedeutet das Feld ist optional. Die Methode
+            <code>Zend_OpenId_Consumer::login</code> akzeptiert eine Erweiterung oder ein Array von
+            Erweiterungen als sein viertes Argument.
         </para>
 
         <para>
             Im dritten Schritt der Authentifikation sollte das <code>Zend_OpenId_Extension_Sreg</code> Objekt
-            an <code>Zend_OpenId_Consumer::verify</code> übergeben werden. Anschließend wird
+            an <code>Zend_OpenId_Consumer::verify</code> übergeben werden. Anschließend wird die Methode
             <code>Zend_OpenId_Extension_Sreg::getProperties</code>, bei erfolgreicher Authentifizierung,
             ein assoziatives Array von benötigten Feldern zurückgeben.
         </para>
@@ -610,31 +625,31 @@ if ($consumer->verify($_GET, $id, $sreg)) {
         </example>
 
         <para>
-            Wenn <code>Zend_OpenId_Extension_Sreg</code> ohne Argumente erstellt wurde, sollte der Benutzercode
-            selbst das Vorhandensein der benötigten Daten prüfen. Trotzdem, wenn das Objekt mit der gleichen
-            Liste an benötigten Feldern wie im zweiten Schritt erstellt wird, wird es automatisch die Existenz
-            der benötigten Daten prüfen. In diesem Fall wird <code>Zend_OpenId_Consumer::verify</code>
+            Wenn das <code>Zend_OpenId_Extension_Sreg</code> Objekt ohne Argumente erstellt wurde, sollte der
+            Benutzercode selbst das Vorhandensein der benötigten Daten prüfen. Trotzdem, wenn das Objekt mit
+            der gleichen Liste an benötigten Feldern wie im zweiten Schritt erstellt wird, wird es automatisch
+            die Existenz der benötigten Daten prüfen. In diesem Fall wird <code>Zend_OpenId_Consumer::verify</code>
             <emphasis>false</emphasis> zurückgeben wenn irgendeines der benötigten Felder fehlt.
         </para>
 
         <para>
-            Standardmäßig verwendet <code>Zend_OpenId_Extension_Sreg</code> die Version 1.0 weil die
+            <code>Zend_OpenId_Extension_Sreg</code> verwendet standardmäßig die Version 1.0 weil die
             Spezifikation der Version 1.1 noch nicht fertiggestellt wurde. Trotzdem unterstützen einige
             Bibliotheken die Version 1.0 nicht vollständig. Zum Beispiel benötigt www.myopenid.com einen
-            SREG Namensraum in den Anfragen der nur in 1.1 vorhanden ist. Um mit diesem Server zu Arbeiten
-            muß die Version 1.1 explizit im <code>Zend_OpenId_Extension_Sreg</code> Konstruktor gesetzt werden.
+            SREG Namensraum in den Anfragen der nur in 1.1 vorhanden ist. Um mit so einem Server zu Arbeiten
+            muß man die Version 1.1 explizit im <code>Zend_OpenId_Extension_Sreg</code> Konstruktor setzen.
         </para>
 
         <para>
             Das zweite Argument des <code>Zend_OpenId_Extension_Sreg</code> Konstruktors ist eine Policy URL,
-            die dem End-Benutzer durch den Identitäts Provider zur Verfügung gestellt werden sollte.
+            die dem Benutzer durch den Identitäts Provider zur Verfügung gestellt werden sollte.
         </para>
     </sect2>
 
     <sect2 id="zend.openid.consumer.auth">
         <title>Integration mit Zend_Auth</title>
         <para>
-            Zend Framework bietet eine spezielle Klasse für die Unterstützung von Benutzer Authentifikation -
+            Zend Framework bietet eine spezielle Klasse für die Unterstützung von Benutzer Authentifikation:
             <code>Zend_Auth</code>. Diese Klasse kann zusammen mit <code>Zend_OpenId_Consumer</code> verwendet
             werden. Das folgende Beispiel zeigt wie <code>OpenIdAdapter</code> das
             <code>Zend_Auth_Adapter_Interface</code> mit der <code>authenticate</code> Methode implementiert.
@@ -726,17 +741,17 @@ if ((isset($_POST['openid_action']) &&
     <sect2 id="zend.openid.consumer.mvc">
         <title>Integration mit Zend_Controller</title>
         <para>
-            Zuletzt ein paar Worte über die Integration in Model-View-Controller Anwendungen. Solche
+            Zuletzt ein paar Worte über die Integration in Model-View-Controller Anwendungen: Solche
             Zend Framework Anwendungen werden implementiert durch Verwenden der <code>Zend_Controller</code>
             Klasse und Sie verwenden die <code>Zend_Controller_Response_Http</code> Klasse um HTTP Antworten
-            vorzubereiten und an den Web-Browser des End-Benutzers zurückzusenden.
+            vorzubereiten und an den Web Browser des Benutzers zurückzusenden.
         </para>
 
         <para>
             <code>Zend_OpenId_Consumer</code> bietet keine GUI Möglichkeiten aber es führt HTTP Umleitungen
             bei erflgreichen <code>Zend_OpenId_Consumer::login</code> und
-            <code>Zend_OpenId_Consumer::check</code> durch. Diese Umleitungen könnten nicht richtig funktionieren
-            oder sogar überhaupt nicht Arbeiten wenn einige Daten bereits an den Web-Browser gesendet wurden. Um
+            <code>Zend_OpenId_Consumer::check</code> durch. Diese Umleitungen könnten nicht richtig funktionieren,
+            oder sogar überhaupt nicht, wenn einige Daten bereits an den Web Browser gesendet wurden. Um
             HTTP Umleitungen im MVC Code richtig durchzuführen sollte die echte
             <code>Zend_Controller_Response_Http</code> als letztes Argument an
             <code>Zend_OpenId_Consumer::login</code> oder <code>Zend_OpenId_Consumer::check</code> gesendet
