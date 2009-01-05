@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13464 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
@@ -12,7 +12,7 @@
         Doppelpunkt (<code>:</code>) notiert, gefolgt vom Namen der zu beerbenden Sektion.
     </para>
     <note>
-        <title>parse_ini_file</title>
+        <title>Die Ini Datei parsen</title>
         <para>
             <code>Zend_Config_Ini</code> verwendet die PHP-Funktion
             <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>. Deren

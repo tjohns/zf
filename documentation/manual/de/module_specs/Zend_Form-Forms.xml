@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13486 -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von Zend_Form</title>
 
@@ -1339,7 +1339,7 @@ $json = $form->processAjax($data);
 
         <programlisting role="php"><![CDATA[
 $codes = $form->getErrors();
-$messages = $form->getMessage();
+$messages = $form->getMessages();
 ]]>
         </programlisting>
 

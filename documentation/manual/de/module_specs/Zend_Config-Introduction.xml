@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12741 -->
+<!-- EN-Revision: 13464 -->
 <sect1 id="zend.config.introduction">
     <title>Einleitung</title>
     <para>
@@ -12,7 +12,7 @@
         das Einlesen von Daten aus Textfiles zur Verfügung.
     </para>
     <example id="zend.config.introduction.example.using">
-        <title>Zend-Config ohne Adapter benutzen</title>
+        <title>Zend-Config verwenden</title>
         <para>
             In der Regel geht man davon aus, dass Anwender eine der Adapter-Klassen wie
             <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> oder

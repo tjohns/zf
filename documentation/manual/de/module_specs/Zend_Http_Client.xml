@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13484 -->
 <sect1 id="zend.http.client">
     <title>Zend_Http_Client - Einführung</title>
 
@@ -153,7 +153,7 @@ $response = $client->request();
               </para>
             </footnote>.
             Zur Erleichterung sind alle als Klassenkonstanten definiert:
-            Zend_Http_Request::GET, Zend_Http_Request::POST und so weiter.
+            Zend_Http_Client::GET, Zend_Http_Client::POST und so weiter.
         </para>
         <para>
             Wenn keine Methode angegeben worden ist, wird die durch den letzten Aufruf von

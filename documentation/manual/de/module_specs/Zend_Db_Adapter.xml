@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13444 -->
+<!-- EN-Revision: 13469 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -481,7 +481,7 @@ try {
 
     <sect2 id="zend.db.adapter.example-database">
 
-        <title>Die Beispiel Datenbank</title>
+        <title>Beispiel Datenbank</title>
 
         <para>
             In der Dokumentation für die Zend_Db Klassen verwenden wir einige einfache Tabellen um die Verwendung
@@ -1172,7 +1172,7 @@ echo $sql;
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example">
-                <title>Nutzung von quote()</title>
+                <title>Nutzung von <code>quote()</code></title>
                 <programlisting role="php"><![CDATA[
 $name = $db->quote("O'Reilly");
 echo $name;
@@ -1213,7 +1213,7 @@ SELECT * FROM atable WHERE intColumn = '123'
             </para>
 
             <example id="zend.db.adapter.quoting.quote.example-2">
-                <title>Verwenden von quote() mit einem SQL Typ</title>
+                <title>Verwenden von <code>quote()</code> mit einem SQL Typ</title>
                 <programlisting role="php"><![CDATA[
 $value = '1234';
 $sql = 'SELECT * FROM atable WHERE intColumn = '
@@ -1257,7 +1257,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example">
-                <title>Nutzung von quoteInto()</title>
+                <title>Nutzung von <code>quoteInto()</code></title>
                 <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?", "O'Reilly");
 
@@ -1274,7 +1274,7 @@ echo $sql;
             </para>
 
             <example id="zend.db.adapter.quoting.quote-into.example-2">
-                <title>Verwenden von quoteInto() mit einem SQL Typ</title>
+                <title>Verwenden von <code>quoteInto()</code> mit einem SQL Typ</title>
                 <programlisting role="php"><![CDATA[
 $sql = $db
     ->quoteInto("SELECT * FROM bugs WHERE bug_id = ?", '1234', 'INTEGER');

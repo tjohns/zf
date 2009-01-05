@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12817 -->
+<!-- EN-Revision: 13467 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP Authentifizierung</title>
@@ -190,7 +190,7 @@ Array
         </para>
 
         <note>
-            <title>Was ist ein DN?</title>
+            <title>Was ist ein Distinguished Name?</title>
             <para>
                 Ein DN oder "distinguished name" ist ein String der den Pfad zu einem Objekt im
                 LDAP Verzeichnis repräsentiert. Jede komma-seperierte Komponente ist ein Attribut
@@ -219,7 +219,7 @@ Array
         </para>
 
         <note>
-            <title>Die blutigen Details - Was wirklich im der Authentifizierungs Methode passiert??</title>
+            <title>Die glorreichen Details: Was passiert bei der Authentifizierungs Methode?</title>
             <para>
                 Wenn die <code>authenticate()</code> Methode aufgerufen wird, iteriert der Adapter
                 über jedes Set von Serveroptione, setzt diese auf der internen
