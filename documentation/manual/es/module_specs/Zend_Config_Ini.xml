@@ -1,44 +1,89 @@
 <sect1 id="zend.config.adapters.ini">
-    <title>Zend_Config_Ini</title>
-    <para>
-        <code>Zend_Config_Ini</code> permite a los desarrolladores almacenar datos de configuraciÛn en un formato de datos INI familiar, y leer de ellos en la aplicaciÛn usando una sint·xis de propiedades de objetos anidados. El formato INI se especializa en proveer tanto la habilidad de mantener una jerarquÌa de claves de datos (data keys) de configuraciÛn como la de mantener una jerarquÌa entre secciones de datos de configuraciÛn.
-		Las jerarquÌas de datos de configuraciÛn son provistas separando las claves mediante el car·cter punto 
-        (<code>.</code>). Una secciÛn puede extender o heredar de otra secciÛn indicando el nombre de la secciÛn seguido de dos puntos (<code>:</code>) y el nombre de la secciÛn desde la cual se quieren heredar los datos.
-    </para>
-    <note>
-        <title>parse_ini_file</title>
-        <para>
-            <code>Zend_Config_Ini</code> utiliza la funciÛn
-            <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
-            de PHP. Por favor, revise esta documentaciÛn para observar sus comportamientos especÌficos,
-            que se propagan a <code>Zend_Config_Ini</code>, tales como la forma en que los valores especiales:
-            <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code>,
-            y <code>null</code> son manejados.
-        </para>
-    </note>
-    <note>
-        <title>Separador de clave</title>
-        <para>
-            Por defecto, el car·cter separador de clave es el punto (<code>.</code>). Puede ser reemplazado, no obstante,cambiando la clave de <code>$options</code> llamada <code>'nestSeparator'</code> al construir el objeto
-            <code>Zend_Config_Ini</code>. Por ejemplo:
-            <programlisting role="php"><![CDATA[
+	<title>Zend_Config_Ini</title>
+	<para>
+		<code>Zend_Config_Ini</code>
+		permite a los desarrolladores almacenar datos de configuraci√≥n
+		en un formato de datos INI familiar, y leer de ellos en la
+		aplicaci√≥n usando una sint√°xis de propiedades de objetos
+		anidados. El formato INI se especializa en proveer tanto la
+		habilidad de mantener una jerarqu√≠a de claves de datos (data
+		keys) de configuraci√≥n como la de mantener una jerarqu√≠a entre
+		secciones de datos de configuraci√≥n. Las jerarqu√≠as de datos de
+		configuraci√≥n son provistas separando las claves mediante el
+		car√°cter punto (
+		<code>.</code>
+		). Una secci√≥n puede extender o heredar de otra secci√≥n
+		indicando el nombre de la secci√≥n seguido de dos puntos (
+		<code>:</code>
+		) y el nombre de la secci√≥n desde la cual se quieren heredar los
+		datos.
+	</para>
+	<note>
+		<title>parse_ini_file</title>
+		<para>
+			<code>Zend_Config_Ini</code>
+			utiliza la funci√≥n
+			<ulink url="http://php.net/parse_ini_file">
+				<code>parse_ini_file()</code>
+			</ulink>
+			de PHP. Por favor, revise esta documentaci√≥n para observar
+			sus comportamientos espec√≠ficos, que se propagan a
+			<code>Zend_Config_Ini</code>
+			, tales como la forma en que los valores especiales:
+			<code>true</code>
+			,
+			<code>false</code>
+			,
+			<code>yes</code>
+			,
+			<code>no</code>
+			, y
+			<code>null</code>
+			son manejados.
+		</para>
+	</note>
+	<note>
+		<title>Separador de clave</title>
+		<para>
+			Por defecto, el car√°cter separador de clave es el punto (
+			<code>.</code>
+			). Puede ser reemplazado, no obstante,cambiando la clave de
+			<code>$options</code>
+			llamada
+			<code>'nestSeparator'</code>
+			al construir el objeto
+			<code>Zend_Config_Ini</code>
+			. Por ejemplo:
+			<programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
 $config = new Zend_Config_Ini('/path/to/config.ini',
                               'pruebas',
                               $options);
 ]]>
-            </programlisting>
-        </para>
-    </note>
-    <example id="zend.config.adapters.ini.example.using">
-        <title>Utilizando Zend_Config_Ini</title>
-        <para>
-            Este ejemplo muestra una forma de uso b·sica de <code>Zend_Config_Ini</code> para cargar datos de configuraciÛn de un archivo INI.
-			En este ejemplo hay datos de configuraciÛn tanto para un sistema de producciÛn como para un sistema en fase de pruebas. Debido a que los datos de la fase de pruebas son muy parecidos a los de producciÛn, la secciÛn de pruebas hereda de la secciÛn de producciÛn. En este caso, la decisiÛn es arbitraria y podrÌa haberse escrito a la inversa, con la secciÛn de producciÛn heredando de la secciÛn de pruebas, a pesar de que Èste no serÌa el caso para situaciones m·s complejas. Supongamos, entonces, que los siguientes datos de configuraciÛn est·n contenidos en
-            <code>/path/to/config.ini</code>:
-        </para>
-        <programlisting role="ini"><![CDATA[
-; Datos de configuraciÛn de la web de producciÛn
+			</programlisting>
+		</para>
+	</note>
+	<example id="zend.config.adapters.ini.example.using">
+		<title>Utilizando Zend_Config_Ini</title>
+		<para>
+			Este ejemplo muestra una forma de uso b√°sica de
+			<code>Zend_Config_Ini</code>
+			para cargar datos de configuraci√≥n de un archivo INI. En
+			este ejemplo hay datos de configuraci√≥n tanto para un
+			sistema de producci√≥n como para un sistema en fase de
+			pruebas. Debido a que los datos de la fase de pruebas son
+			muy parecidos a los de producci√≥n, la secci√≥n de pruebas
+			hereda de la secci√≥n de producci√≥n. En este caso, la
+			decisi√≥n es arbitraria y podr√≠a haberse escrito a la
+			inversa, con la secci√≥n de producci√≥n heredando de la
+			secci√≥n de pruebas, a pesar de que √©ste no ser√≠a el caso
+			para situaciones m√°s complejas. Supongamos, entonces, que
+			los siguientes datos de configuraci√≥n est√°n contenidos en
+			<code>/path/to/config.ini</code>
+			:
+		</para>
+		<programlisting role="ini"><![CDATA[
+; Datos de configuraci√≥n de la web de producci√≥n
 [produccion]
 webhost                  = www.example.com
 database.adapter         = pdo_mysql
@@ -47,60 +92,99 @@ database.params.username = dbuser
 database.params.password = secret
 database.params.dbname   = dbname
 
-; Los datos de configuraciÛn de la fase de pruebas heredan de la producciÛn
+; Los datos de configuraci√≥n de la fase de pruebas heredan de la producci√≥n
 ; y sobreescribren valores si es necesario
 [pruebas : produccion]
 database.params.host     = dev.example.com
 database.params.username = devuser
 database.params.password = devsecret
 ]]>
-</programlisting>
-        <para>
-            Ahora, asuma que el desarrollador de aplicaciones necesita los datos de configuraciÛn de la etapa de pruebas del archivo INI. Resulta f·cil cargar estos datos especificando el archivo INI en la secciÛn de la etapa de pruebas:
-        </para>
-        <programlisting role="php"><![CDATA[
+		</programlisting>
+		<para>
+			Ahora, asuma que el desarrollador de aplicaciones necesita
+			los datos de configuraci√≥n de la etapa de pruebas del
+			archivo INI. Resulta f√°cil cargar estos datos especificando
+			el archivo INI en la secci√≥n de la etapa de pruebas:
+		</para>
+		<programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('/path/to/config.ini', 'pruebas');
 
 echo $config->database->params->host;   // muestra "dev.example.com"
 echo $config->database->params->dbname; // muestra "dbname"
 ]]>
-        </programlisting>
-    </example>
-    <note>
-    <table id="zend.config.adapters.ini.table">
-        <title>Par·metros del constructor Zend_Config_Ini</title>
-        <tgroup cols="2">
-            <thead>
-                  <row>
-                    <entry>Par·metros</entry>
-                    <entry>Notas</entry>
-                </row>
-            </thead>
-            <tbody>
-                <row>
-                    <entry><code>$filename</code></entry>
-                    <entry>El archivo INI que se va a cargar.</entry>
-                </row>
-                <row>
-                    <entry><code>$section</code></entry>
-                    <entry>La [secciÛn] contenida en el archivo ini que se va a cargar. Fijar
-                        este par·metro a null cargar· todas las secciones. Alternativamente, se puede
-                        introducir un vector de nombres de secciÛn para cargar multiples secciones.</entry>
-                </row>
-                <row>
-                    <entry><code>$options = false</code></entry>
-                    <entry>Vector de opciones. Las siguientes claves est·n aceptadas:
-                        <itemizedlist>
-                            <listitem><para><emphasis>allowModifications</emphasis>: Fijar a <emphasis>true</emphasis>para permitir modificaciones subsiguientes del archivo cargado. Por defecto es <emphasis>false</emphasis></para></listitem>
-                            <listitem><para><emphasis>nestSeparator</emphasis>: Car·cter que utilizar como separador de anidamiento. Por defecto es "."</para></listitem>
-                        </itemizedlist>
-                    </entry>
-                </row>
-            </tbody>
-        </tgroup>
-    </table>
-    </note>
+		</programlisting>
+	</example>
+	<note>
+		<table id="zend.config.adapters.ini.table">
+			<title>Par√°metros del constructor Zend_Config_Ini</title>
+			<tgroup cols="2">
+				<thead>
+					<row>
+						<entry>Par√°metros</entry>
+						<entry>Notas</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<code>$filename</code>
+						</entry>
+						<entry>
+							El archivo INI que se va a cargar.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>$section</code>
+						</entry>
+						<entry>
+							La [secci√≥n] contenida en el archivo ini que
+							se va a cargar. Fijar este par√°metro a null
+							cargar√° todas las secciones.
+							Alternativamente, se puede introducir un
+							array de nombres de secci√≥n para cargar
+							multiples secciones.
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<code>$options = false</code>
+						</entry>
+						<entry>
+							Array de opciones. Las siguientes claves
+							est√°n aceptadas:
+							<itemizedlist>
+								<listitem>
+									<para>
+										<emphasis>
+											allowModifications
+										</emphasis>
+										: Fijar a
+										<emphasis>true</emphasis>
+										para permitir modificaciones
+										subsiguientes del archivo
+										cargado. Por defecto es
+										<emphasis>false</emphasis>
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<emphasis>
+											nestSeparator
+										</emphasis>
+										: Car√°cter que utilizar como
+										separador de anidamiento. Por
+										defecto es "."
+									</para>
+								</listitem>
+							</itemizedlist>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</note>
 </sect1>
 <!--
-vim:se ts=4 sw=4 et:
+	vim:se ts=4 sw=4 et:
 -->
