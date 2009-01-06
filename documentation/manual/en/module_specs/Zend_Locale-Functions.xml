@@ -536,6 +536,19 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry>Returns a list of timezones for localized city names. The localized city is
                             used as array key and the ISO timezone name as array value</entry>
                     </row>
+                    <row>
+                        <entry><emphasis role="strong">PhoneToTerritory</emphasis></entry>
+                        <entry>Returns a list of phone codes which are known to be used within a territory.
+                            The territory (region) is used as array key and the telephone code
+                            as array value</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToPhone</emphasis></entry>
+                        <entry>Returns a list of territories where a phone is used . The phone code
+                            is used as array key and the territory (region) as array value. When a
+                            phone code is used in several territories these territories are separated with a
+                            whitespace</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -881,6 +894,18 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry><emphasis role="strong">TimezoneToCity</emphasis></entry>
                         <entry>Returns the ISO timezone for a given localized city name. Not for all cities
                             does a timezone exist</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">PhoneToTerritory</emphasis></entry>
+                        <entry>Returns the telephone code for a given territory (region). The territory code
+                            has to be given as ISO3166 string for example 'AT' for austria</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToPhone</emphasis></entry>
+                        <entry>Returns the territory (region) where a telephone code is used. The telephone
+                            code has to be given as plain integer code for example '43' for +43. When a
+                            telephone code is used in multiple territories (regions), these territories are
+                            separated with a whitespace character</entry>
                     </row>
                 </tbody>
             </tgroup>

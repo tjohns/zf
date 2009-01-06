@@ -202,7 +202,6 @@ class Zend_Locale_Data
         return true;
     }
 
-
     /**
      * Read the right LDML file
      *
@@ -235,7 +234,6 @@ class Zend_Locale_Data
         }
         return $temp;
     }
-
 
     /**
      * Find the details for supplemental calendar datas
@@ -744,6 +742,28 @@ class Zend_Locale_Data
                 }
                 break;
 
+            case 'phonetoterritory':
+                $_temp = self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory', 'territory');
+                foreach ($_temp as $key => $keyvalue) {
+                    $temp += self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory[@territory=\'' . $key . '\']/telephoneCountryCode', 'code', $key);
+                }
+                break;
+
+            case 'territorytophone':
+                $_temp = self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory', 'territory');
+                foreach ($_temp as $key => $keyvalue) {
+                    $val = self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory[@territory=\'' . $key . '\']/telephoneCountryCode', 'code', $key);
+                    if (!isset($val[$key])) {
+                        continue;
+                    }
+                    if (!isset($temp[$val[$key]])) {
+                        $temp[$val[$key]] = $key;
+                    } else {
+                        $temp[$val[$key]] .= " " . $key;
+                    }
+                }
+                break;
+
             default :
                 require_once 'Zend/Locale/Exception.php';
                 throw new Zend_Locale_Exception("Unknown list ($path) for parsing locale data.");
@@ -1133,6 +1153,32 @@ class Zend_Locale_Data
                         }
                     }
                     unset($temp[$key]);
+                }
+                break;
+
+            case 'phonetoterritory':
+                $temp = self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory[@territory=\'' . $value . '\']/telephoneCountryCode', 'code', $value);
+                break;
+
+            case 'territorytophone':
+                $_temp2 = self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory', 'territory');
+                $_temp = array();
+                foreach ($_temp2 as $key => $found) {
+                    $_temp += self::_getFile('telephoneCodeData', '/supplementalData/telephoneCodeData/codesByTerritory[@territory=\'' . $key . '\']/telephoneCountryCode', 'code', $key);
+                }
+                $temp = array();
+                foreach($_temp as $key => $found) {
+                    $_temp3 = explode(" ", $found);
+                    foreach($_temp3 as $found3) {
+                        if ($found3 !== $value) {
+                            continue;
+                        }
+                        if (!isset($temp[$found3])) {
+                            $temp[$found3] = (string) $key;
+                        } else {
+                            $temp[$found3] .= " " . $key;
+                        }
+                    }
                 }
                 break;
 
