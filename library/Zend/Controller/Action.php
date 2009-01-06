@@ -462,19 +462,19 @@ abstract class Zend_Controller_Action
      * overridden to implement magic (dynamic) actions, or provide run-time
      * dispatching.
      *
-     * @param string $methodName
-     * @param array $args
+     * @param  string $methodName
+     * @param  array $args
+     * @return void
+     * @throws Zend_Controller_Action_Exception
      */
     public function __call($methodName, $args)
     {
+        require_once 'Zend/Controller/Action/Exception.php';
         if ('Action' == substr($methodName, -6)) {
-            require_once 'Zend/Controller/Action/Exception.php';
             $action = substr($methodName, 0, strlen($methodName) - 6);
-            require_once 'Zend/Controller/Action/Exception.php';
             throw new Zend_Controller_Action_Exception(sprintf('Action "%s" does not exist and was not trapped in __call()', $action), 404);
         }
 
-        require_once 'Zend/Controller/Action/Exception.php';
         throw new Zend_Controller_Action_Exception(sprintf('Method "%s" does not exist and was not trapped in __call()', $methodName), 500);
     }
 
