@@ -134,7 +134,7 @@ class Zend_InfoCard
      */
     public function getAdapter()
     {
-        if(is_null($this->_adapter)) {
+        if($this->_adapter === null) {
             require_once 'Zend/InfoCard/Adapter/Default.php';
             $this->setAdapter(new Zend_InfoCard_Adapter_Default());
         }
@@ -243,7 +243,7 @@ class Zend_InfoCard
                                 'public'      => $public_key_file,
                                 'type_uri'    => $type);
 
-                if(!is_null($password)) {
+                if($password !== null) {
                     $this->_keyPairs[$key_id]['password'] = $password;
                 } else {
                     $this->_keyPairs[$key_id]['password'] = null;

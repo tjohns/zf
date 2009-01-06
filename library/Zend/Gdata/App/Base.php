@@ -197,7 +197,7 @@ abstract class Zend_Gdata_App_Base
      */
     public function getDOM($doc = null, $majorVersion = 1, $minorVersion = null)
     {
-        if (is_null($doc)) {
+        if ($doc === null) {
             $doc = new DOMDocument('1.0', 'utf-8');
         }
         if ($this->_rootNamespaceURI != null) {
@@ -467,7 +467,7 @@ abstract class Zend_Gdata_App_Base
         $method = 'set'.ucfirst($name);
         if (method_exists($this, $method)) {
             return call_user_func(array(&$this, $method), $val);
-        } else if (isset($this->{'_' . $name}) || is_null($this->{'_' . $name})) {
+        } else if (isset($this->{'_' . $name}) || ($this->{'_' . $name} === null)) {
             $this->{'_' . $name} = $val;
         } else {
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';

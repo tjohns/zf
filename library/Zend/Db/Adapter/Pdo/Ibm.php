@@ -260,7 +260,7 @@ class Zend_Db_Adapter_Pdo_Ibm extends Zend_Db_Adapter_Pdo_Abstract
         $newbind = array();
         if (is_array($bind)) {
             foreach ($bind as $name => $value) {
-                if(!is_null($value)) {
+                if($value !== null) {
                     $newbind[$name] = $value;
                 }
             }

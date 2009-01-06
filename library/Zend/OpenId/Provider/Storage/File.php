@@ -53,7 +53,7 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
      */
     public function __construct($dir = null)
     {
-        if (is_null($dir)) {
+        if ($dir === null) {
             $tmp = getenv('TMP');
             if (empty($tmp)) {
                 $tmp = getenv('TEMP');
@@ -378,7 +378,7 @@ class Zend_OpenId_Provider_Storage_File extends Zend_OpenId_Provider_Storage
         if (!empty($data)) {
             list($storedId, $storedPassword, $sites) = unserialize($data);
             if ($id === $storedId) {
-                if (is_null($trusted)) {
+                if ($trusted === null) {
                     unset($sites[$site]);
                 } else {
                     $sites[$site] = $trusted;

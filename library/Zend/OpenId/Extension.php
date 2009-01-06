@@ -41,7 +41,7 @@ abstract class Zend_OpenId_Extension
      */
     static public function forAll($extensions, $func, &$params)
     {
-        if (!is_null($extensions)) {
+        if ($extensions !== null) {
             if (is_array($extensions)) {
                 foreach ($extensions as $ext) {
                     if ($ext instanceof Zend_OpenId_Extension) {

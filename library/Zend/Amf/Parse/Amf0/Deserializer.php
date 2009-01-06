@@ -68,7 +68,7 @@ class Zend_Amf_Parse_Amf0_Deserializer extends Zend_Amf_Parse_Deserializer
      */
     public function readTypeMarker($typeMarker = null)
     {
-        if (is_null($typeMarker)) {
+        if ($typeMarker === null) {
             $typeMarker = $this->_stream->readByte();
         }
 
@@ -152,7 +152,7 @@ class Zend_Amf_Parse_Amf0_Deserializer extends Zend_Amf_Parse_Deserializer
      */
     public function readObject($object = null)
     {
-        if (is_null($object)) {
+        if ($object === null) {
             $object = array();
         }
 

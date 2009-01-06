@@ -310,7 +310,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
                     // Suppress warnings here
                     // Ignore it if it's not a valid constant
                     $option = @constant(strtoupper($option));
-                    if(is_null($option))
+                    if($option === null)
                         continue;
                 }
                 mysqli_options($this->_connection, $option, $value);

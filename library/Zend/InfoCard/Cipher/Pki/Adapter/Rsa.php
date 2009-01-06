@@ -82,7 +82,7 @@ class Zend_InfoCard_Cipher_Pki_Adapter_Rsa
             throw new Zend_InfoCard_Cipher_Exception("Failed to load private key");
         }
 
-        if(!is_null($padding)) {
+        if($padding !== null) {
             try {
                 $this->setPadding($padding);
             } catch(Exception $e) {

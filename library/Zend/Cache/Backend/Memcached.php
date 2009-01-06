@@ -273,9 +273,9 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             // #ZF-3490 : For the memcached backend, there is a lifetime limit of 30 days (2592000 seconds)
             $this->_log('memcached backend has a limit of 30 days (2592000 seconds) for the lifetime');
         }
-        if (is_null($lifetime)) {
-        	// #ZF-4614 : we tranform null to zero to get the maximal lifetime
-        	parent::setDirectives(array('lifetime' => 0));
+        if ($lifetime === null) {
+            // #ZF-4614 : we tranform null to zero to get the maximal lifetime
+            parent::setDirectives(array('lifetime' => 0));
         }
     }
 

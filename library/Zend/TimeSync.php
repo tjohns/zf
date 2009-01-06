@@ -87,7 +87,7 @@ class Zend_TimeSync implements IteratorAggregate
      */
     public function __construct($target = null, $alias = null)
     {
-        if (!is_null($target)) {
+        if ($target !== null) {
             $this->addServer($target, $alias);
         }
     }

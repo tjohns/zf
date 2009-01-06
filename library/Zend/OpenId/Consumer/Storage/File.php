@@ -53,7 +53,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
      */
     public function __construct($dir = null)
     {
-        if (is_null($dir)) {
+        if ($dir === null) {
             $tmp = getenv('TMP');
             if (empty($tmp)) {
                 $tmp = getenv('TEMP');
@@ -155,7 +155,7 @@ class Zend_OpenId_Consumer_Storage_File extends Zend_OpenId_Consumer_Storage
             @unlink($name1);
             $ret = true;
         } else {
-        	$ret = false;
+            $ret = false;
         }
         fclose($f);
         fclose($lock);

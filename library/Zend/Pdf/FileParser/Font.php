@@ -174,7 +174,7 @@ abstract class Zend_Pdf_FileParser_Font extends Zend_Pdf_FileParser
      */
     public function __set($property, $value)
     {
-        if (is_null($value)) {
+        if ($value === null) {
             unset($this->_fontProperties[$property]);
         } else {
             $this->_fontProperties[$property] = $value;

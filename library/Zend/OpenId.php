@@ -627,14 +627,14 @@ class Zend_OpenId
                     'p' => $p,
                     'g' => $g
                 );
-            if (!is_null($priv_key)) {
+            if ($priv_key !== null) {
                 $dh_details['priv_key'] = $priv_key;
             }
             return openssl_pkey_new(array('dh'=>$dh_details));
         } else {
             $bn_p        = self::binToBigNum($p);
             $bn_g        = self::binToBigNum($g);
-            if (is_null($priv_key)) {
+            if ($priv_key === null) {
                 $priv_key    = self::randomBytes(Zend_OpenId::strlen($p));
             }
             $bn_priv_key = self::binToBigNum($priv_key);

@@ -86,7 +86,7 @@ class Zend_InfoCard_Cipher_Symmetric_Adapter_Aes256cbc
     public function decrypt($encryptedData, $decryptionKey, $iv_length = null)
     {
 
-        $iv_length = is_null($iv_length) ? self::IV_LENGTH : $iv_length;
+        $iv_length = ($iv_length === null) ? self::IV_LENGTH : $iv_length;
 
         $mcrypt_iv = null;
 

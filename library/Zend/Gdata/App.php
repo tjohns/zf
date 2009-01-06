@@ -471,7 +471,7 @@ class Zend_Gdata_App
     {
         // As a convenience, if $headers is null, we'll convert it back to
         // an empty array.
-        if (is_null($headers)) {
+        if ($headers === null) {
             $headers = array();
         }
 
@@ -582,7 +582,7 @@ class Zend_Gdata_App
         $minor = $this->getMinorProtocolVersion();
         if ($major >= 2) {
             $headers['GData-Version'] = $major +
-                    (is_null($minor) ? '.' + $minor : '');
+                    (($minor === null) ? '.' + $minor : '');
         }
 
         // check the overridden method
@@ -689,12 +689,12 @@ class Zend_Gdata_App
         $feed = self::importString($feedContent, $className);
 
         $etag = $response->getHeader('ETag');
-        if (!is_null($etag)) {
+        if ($etag !== null) {
             $feed->setEtag($etag);
         }
 
         $protocolVersionStr = $response->getHeader('GData-Version');
-        if (!is_null($protocolVersionStr)) {
+        if ($protocolVersionStr !== null) {
             // Extract protocol major and minor version from header
             $delimiterPos = strpos($protocolVersionStr, '.');
             $length = strlen($protocolVersionStr);
@@ -874,7 +874,7 @@ class Zend_Gdata_App
         $returnEntry->setHttpClient(self::getstaticHttpClient());
 
         $etag = $response->getHeader('ETag');
-        if (!is_null($etag)) {
+        if ($etag !== null) {
             $returnEntry->setEtag($etag);
         }
 
@@ -908,7 +908,7 @@ class Zend_Gdata_App
         $returnEntry->setHttpClient(self::getstaticHttpClient());
 
         $etag = $response->getHeader('ETag');
-        if (!is_null($etag)) {
+        if ($etag !== null) {
             $returnEntry->setEtag($etag);
         }
 
@@ -1026,7 +1026,7 @@ class Zend_Gdata_App
         }
         $nextLinkHref = $nextLink->getHref();
 
-        if (is_null($className)) {
+        if ($className === null) {
             $className = get_class($feed);
         }
 
@@ -1053,7 +1053,7 @@ class Zend_Gdata_App
         }
         $previousLinkHref = $previousLink->getHref();
 
-        if (is_null($className)) {
+        if ($className === null) {
             $className = get_class($feed);
         }
 
@@ -1076,7 +1076,7 @@ class Zend_Gdata_App
         if ($this->_majorProtocolVersion >= 2 &&
                 $data instanceof Zend_Gdata_App_Entry) {
             $etag = $data->getEtag();
-            if (!is_null($etag) &&
+            if (($etag !== null) &&
                     ($allowWeek || substr($etag, 0, 2) != 'W/')) {
                 $result = $data->getEtag();
             }

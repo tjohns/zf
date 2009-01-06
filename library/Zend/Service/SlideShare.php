@@ -520,11 +520,11 @@ class Zend_Service_SlideShare
                         'hash' => sha1($this->getSharedSecret().$timestamp),
                         $key => $value);
 
-        if(!is_null($offset)) {
+        if($offset !== null) {
             $params['offset'] = (int)$offset;
         }
 
-        if(!is_null($limit)) {
+        if($limit !== null) {
             $params['limit'] = (int)$limit;
         }
 

@@ -57,7 +57,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
     public function __construct($timeserver, $port)
     {
         $this->_timeserver = 'udp://' . $timeserver;
-        if (is_null($port) === false) {
+        if ($port !== null) {
             $this->_port = $port;
         }
     }

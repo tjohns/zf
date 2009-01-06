@@ -173,7 +173,7 @@ class Zend_Date extends Zend_Date_DateObject
             $date = null;
         }
 
-        if (is_null($date)) {
+        if ($date === null) {
             $date = self::now($locale);
             if (($part !== null) && ($part !== self::TIMESTAMP)) {
                 $date = $date->get($part);
@@ -1367,7 +1367,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _calculate($calc, $date, $part, $locale)
     {
-        if (is_null($date) === true) {
+        if ($date === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $date must be set, null is not allowed');
         }
@@ -2664,7 +2664,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _time($calc, $time, $format, $locale)
     {
-        if (is_null($time)) {
+        if ($time === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $time must be set, null is not allowed');
         }
@@ -2808,7 +2808,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _date($calc, $date, $format, $locale)
     {
-        if (is_null($date)) {
+        if ($date === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $date must be set, null is not allowed');
         }
@@ -3352,7 +3352,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _calcvalue($calc, $value, $type, $parameter, $locale)
     {
-        if (is_null($value)) {
+        if ($value === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception("parameter $type must be set, null is not allowed");
         }
@@ -3487,7 +3487,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _month($calc, $month, $locale)
     {
-        if (is_null($month)) {
+        if ($month === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $month must be set, null is not allowed');
         }
@@ -3642,7 +3642,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _day($calc, $day, $locale)
     {
-        if (is_null($day)) {
+        if ($day === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $day must be set, null is not allowed');
         }
@@ -3790,7 +3790,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     private function _weekday($calc, $weekday, $locale)
     {
-        if (is_null($weekday)) {
+        if ($weekday === null) {
             require_once 'Zend/Date/Exception.php';
             throw new Zend_Date_Exception('parameter $weekday must be set, null is not allowed');
         }

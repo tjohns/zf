@@ -113,13 +113,10 @@ class Zend_InfoCard_Claims
      */
     public function getDefaultNamespace()
     {
-
-        if(is_null($this->_defaultNamespace)) {
-
+        if($this->_defaultNamespace === null) {
             $namespaces = array();
             $leader = '';
             foreach($this->_claims as $claim) {
-
                 if(!isset($namespaces[$claim['namespace']])) {
                     $namespaces[$claim['namespace']] = 1;
                 } else {
@@ -206,7 +203,7 @@ class Zend_InfoCard_Claims
      */
     public function setClaims(Array $claims)
     {
-        if(!is_null($this->_claims)) {
+        if($this->_claims !== null) {
             require_once 'Zend/InfoCard/Exception.php';
             throw new Zend_InfoCard_Exception("Claim objects are read-only");
         }

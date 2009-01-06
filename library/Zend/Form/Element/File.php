@@ -651,7 +651,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getValue()
     {
-        if (!is_null($this->_value)) {
+        if ($this->_value !== null) {
             return $this->_value;
         }
 
