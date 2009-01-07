@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!ENTITY zf                         "Zend Framework">
+<!ENTITY book.title                 "Programmer's Reference Guide">
+<!ENTITY book.edition               "Programmer's Reference Guide for Zend Framework">
+<!ENTITY book.pubdate.format        "Y-m-d">
+
+<!ENTITY chapter.introduction.title "Introduction to Zend Framework">
+
+<!ENTITY true                       "<code>true</code>">
+<!ENTITY false                      "<code>false</code>">

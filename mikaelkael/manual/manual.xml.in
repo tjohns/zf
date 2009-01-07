@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "@DOCBOOK_DTD@"
+[
+    <!ENTITY % xinclude SYSTEM "xinclude.mod">
+    %xinclude;
+    <!ENTITY % language-defs SYSTEM "@ZF_LANG@/language-defs.ent">
+    %language-defs;
+]>
+<book id="manual" lang="fr">
+    <bookinfo>
+        <title>&book.title;</title>
+        <subtitle>&zf;</subtitle>
+        <edition>&book.edition;</edition>
+        <pubdate><?dbtimestamp format="d/m/Y"?></pubdate>
+        <copyright>
+            <year>2005-<?dbtimestamp format="Y"?></year>
+            <holder>
+                Zend Technologies Inc.
+                (<ulink url="http://www.zend.com" />)
+            </holder>
+        </copyright>
+    </bookinfo>
+
+    <chapter id="introduction">
+        <title>&chapter.introduction.title;</title>
+        <xi:include href="./@ZF_LANG@/ref/overview.xml">
+            <xi:fallback><xi:include href="en/ref/overview.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="./@ZF_LANG@/ref/installation.xml">
+            <xi:fallback><xi:include href="en/ref/installation.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+    
+    <chapter id="zend.acl">
+        <title>Zend_Acl</title>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Acl/Introduction.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Acl/Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Acl/Refining.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Acl/Refining.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Acl/Advanced.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Acl/Advanced.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+
+    <chapter id="zend.amf">
+        <title>Zend_Amf</title>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Amf/Introduction.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Amf/Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Amf/Server.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Amf/Server.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+
+    <chapter id="zend.auth">
+        <title>Zend_Auth</title>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Auth/Introduction.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Auth/Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Auth/Adapter/DbTable.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Auth/Adapter/DbTable.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Auth/Adapter/Digest.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Auth/Adapter/Digest.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Auth/Adapter/Http.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Auth/Adapter/Http.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Auth/Adapter/Ldap.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Auth/Adapter/Ldap.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="@ZF_LANG@/module_specs/Zend/Auth/Adapter/OpenId.xml">
+            <xi:fallback><xi:include href="en/module_specs/Zend/Auth/Adapter/OpenId.xml" /></xi:fallback>
+        </xi:include>
+    </chapter>
+
+    <xi:include href="@ZF_LANG@/ref/copyrights.xml">
+        <xi:fallback><xi:include href="en/ref/copyrights.xml" /></xi:fallback>
+    </xi:include>
+</book>

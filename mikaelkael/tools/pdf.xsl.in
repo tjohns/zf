@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"   
+                xmlns:xslthl="http://xslthl.sf.net"
+                exclude-result-prefixes="xslthl"
+				version="1.0">
+
+    <xsl:import href="@DOCBOOK_FO_XSL@"/>
+
+    <xsl:param name="body.font.family">Helvetica</xsl:param>
+    <xsl:param name="fop1.extensions" select="1"></xsl:param>
+    <xsl:param name="ulink.show" select="0"></xsl:param>
+    <xsl:param name="section.autolabel" select="1"></xsl:param>
+	<xsl:param name="section.label.includes.component.label">1</xsl:param>
+    <xsl:param name="chapter.autolabel" select="0"></xsl:param>    
+	<xsl:param name="admon.graphics">1</xsl:param>
+    <xsl:param name="draft.mode">yes</xsl:param>
+    <xsl:param name="draft.watermark.image">images/draft.png</xsl:param>
+    <xsl:param name="header.image.filename">images/logo_small.gif</xsl:param>
+    <xsl:param name="tablecolumns.extension" select="1"></xsl:param>
+    <xsl:param name="keep.relative.image.uris" select="1"></xsl:param>
+
+    <xsl:template match="title" mode="book.titlepage.recto.auto.mode">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="60pt" padding-top="100pt" font-weight="bold" font-family="{$title.fontset}" color="#000080">
+        <xsl:call-template name="division.title">
+        <xsl:with-param name="node" select="ancestor-or-self::book[1]"/>
+        </xsl:call-template>
+        </fo:block>
+    </xsl:template>
+
+    <xsl:template match="subtitle" mode="book.titlepage.recto.auto.mode">
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" xsl:use-attribute-sets="book.titlepage.recto.style" text-align="center" font-size="42pt" padding-top="200pt" font-family="{$title.fontset}" color="#000080">
+        <xsl:apply-templates select="." mode="book.titlepage.recto.mode"/>
+        </fo:block>
+    </xsl:template>
+
+    <xsl:attribute-set name="chapter.titlepage.recto.style">
+      <xsl:attribute name="font-size">20pt</xsl:attribute>
+      <xsl:attribute name="margin-top">0</xsl:attribute>
+      <xsl:attribute name="padding-left">2.3em</xsl:attribute>
+      <xsl:attribute name="color">#006400</xsl:attribute>
+      <xsl:attribute name="background-color">#EEFFEE</xsl:attribute>
+      <xsl:attribute name="border-width">0.5pt</xsl:attribute>
+      <xsl:attribute name="border-style">solid</xsl:attribute>
+      <xsl:attribute name="border-color">#006400</xsl:attribute>
+    </xsl:attribute-set>
+    
+    <xsl:attribute-set name="appendix.titlepage.recto.style">
+      <xsl:attribute name="font-size">20pt</xsl:attribute>
+      <xsl:attribute name="color">#006400</xsl:attribute>
+    </xsl:attribute-set>
+    
+    <xsl:attribute-set name="section.title.level1.properties">
+      <xsl:attribute name="font-size">16pt</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="section.title.level2.properties">
+      <xsl:attribute name="font-size">14pt</xsl:attribute>
+      <xsl:attribute name="margin-left">2em</xsl:attribute>
+      <xsl:attribute name="color">#000080</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="section.title.level3.properties">
+      <xsl:attribute name="font-size">12pt</xsl:attribute>
+      <xsl:attribute name="margin-left">4em</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="section.title.level4.properties">
+      <xsl:attribute name="font-size">10pt</xsl:attribute>
+      <xsl:attribute name="margin-left">6em</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="example.properties">
+        <xsl:attribute name="margin-left">2em</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="formal.title.properties">
+        <xsl:attribute name="font-family">Helvetica</xsl:attribute>
+        <xsl:attribute name="font-size">10pt</xsl:attribute>
+        <xsl:attribute name="margin-left">2em</xsl:attribute>
+        <xsl:attribute name="text-decoration">underline</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="xref.properties">
+      <xsl:attribute name="color">#009EEB</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:param name="shade.verbatim" select="1"/>
+    <xsl:attribute-set name="shade.verbatim.style">
+      <xsl:attribute name="background-color">#EDF7FF</xsl:attribute>
+      <xsl:attribute name="border-width">0.5pt</xsl:attribute>
+      <xsl:attribute name="border-style">solid</xsl:attribute>
+      <xsl:attribute name="border-color">#D3E0EB</xsl:attribute>
+      <xsl:attribute name="padding">3pt</xsl:attribute>
+      <xsl:attribute name="font-size">9pt</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:param name="admon.textlabel" select="0" />
+    <xsl:attribute-set name="admonition.properties">
+        <xsl:attribute name="background-color">#E7E7E7</xsl:attribute>
+        <xsl:attribute name="padding-top">1pt</xsl:attribute>
+        <xsl:attribute name="padding-bottom">3pt</xsl:attribute>
+        <xsl:attribute name="padding-left">7pt</xsl:attribute>
+        <xsl:attribute name="padding-right">7pt</xsl:attribute>
+        <xsl:attribute name="margin">0pt</xsl:attribute>
+    </xsl:attribute-set>
+    <xsl:attribute-set name="admonition.title.properties">
+        <xsl:attribute name="background-color">#DDDDDD</xsl:attribute>
+        <xsl:attribute name="font-size">12pt</xsl:attribute>
+        <xsl:attribute name="color">#008000</xsl:attribute>
+        <xsl:attribute name="padding">0pt</xsl:attribute>
+        <xsl:attribute name="margin">0pt</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:attribute-set name="header.content.properties">
+      <xsl:attribute name="font-family">Helvetica</xsl:attribute>
+      <xsl:attribute name="font-weight">bold</xsl:attribute>
+      <xsl:attribute name="font-size">9pt</xsl:attribute>
+    </xsl:attribute-set>
+
+    <xsl:template name="table.cell.block.properties">
+      <xsl:if test="ancestor::thead or ancestor::tfoot">
+        <xsl:attribute name="font-weight">bold</xsl:attribute>
+        <xsl:attribute name="background-color">#CCCCCC</xsl:attribute>
+        <xsl:attribute name="text-align">center</xsl:attribute>
+      </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="draft.text"></xsl:template>
+
+    <xsl:template match="programlisting|screen|synopsis">
+      <xsl:param name="suppress-numbers" select="'0'"/>
+      <xsl:variable name="id"><xsl:call-template name="object.id"/></xsl:variable>
+
+      <xsl:variable name="content">
+        <xsl:choose>
+          <xsl:when test="$suppress-numbers = '0'
+                          and @linenumbering = 'numbered'
+                          and $use.extensions != '0'
+                          and $linenumbering.extension != '0'">
+            <xsl:call-template name="number.rtf.lines">
+              <xsl:with-param name="rtf">
+            <xsl:call-template name="apply-highlighting"/>
+              </xsl:with-param>
+            </xsl:call-template>
+          </xsl:when>
+          <xsl:otherwise>
+        <xsl:call-template name="apply-highlighting"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+
+      <xsl:choose>
+        <xsl:when test="$shade.verbatim != 0">
+          <fo:block id="{$id}"
+                    xsl:use-attribute-sets="monospace.verbatim.properties shade.verbatim.style" codehl="php">
+            <xsl:choose>
+              <xsl:when test="$hyphenate.verbatim != 0 and function-available('exsl:node-set')">
+                <xsl:apply-templates select="exsl:node-set($content)" mode="hyphenate.verbatim"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:copy-of select="$content"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </fo:block>
+        </xsl:when>
+        <xsl:otherwise>
+          <fo:block id="{$id}"
+                    xsl:use-attribute-sets="monospace.verbatim.properties" codehl="php">
+            <xsl:choose>
+              <xsl:when test="$hyphenate.verbatim != 0 and function-available('exsl:node-set')">
+                <xsl:apply-templates select="exsl:node-set($content)" mode="hyphenate.verbatim"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:copy-of select="$content"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </fo:block>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
+</xsl:stylesheet>

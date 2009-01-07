@@ -1,0 +1,184 @@
+#
+# Zend Framework
+#
+# LICENSE
+#
+# This source file is subject to the new BSD license that is bundled
+# with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://framework.zend.com/license/new-bsd
+# If you did not receive a copy of the license and are unable to
+# obtain it through the world-wide-web, please send an email
+# to license@zend.com so we can send you a copy immediately.
+#
+# @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+# @license    http://framework.zend.com/license/new-bsd     New BSD License
+#
+
+#
+# Makefile - build Zend Framework product and documentation
+#
+# Main targets:
+#  all - render DocBook manual in HTML.
+#  clean - remove staged files.
+#  check - validate DocBook manual using xmllint.
+#  check1 - validate one DocBook XML file using xmllint.
+#    Requires that you set the XMLFILE variable.
+#
+
+# -- parameters you are likely to want to change --
+
+# XMLFILE is the name of one DocBook XML file that you want to
+#   test with xmllint, using the 'check1' target.
+
+XEP=@XEP@
+XINC=@XINC@
+FOP=@FOP@
+XSLTPROC=@XSLTPROC@
+XMLLINT=@XMLLINT@
+ECSRC=@ECSRC@
+HERE=@HERE@
+HHC=@HHC@
+
+# External link (could be set via ENVIRONMENT variable)
+DOCBOOK_DTD=http://framework.zend.com/docbook/xml/4.5/docbookx.dtd
+DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/html/chunk.xsl
+DOCBOOK_XSL_HTMLHELP=http://framework.zend.com/docbook-xsl/htmlhelp/htmlhelp.xsl
+DOCBOOK_XSL_WEBSITE=http://framework.zend.com/docbook-xsl/website/website.xsl
+DOCBOOK_FO_XSL=http://framework.zend.com/docbook-xsl/fo/docbook.xsl
+
+HTML_XSL=html.xsl
+HTMLHELP_XSL=htmlhelp.xsl
+PDF_XSL=pdf.xsl
+
+MANUAL_XML=manual.xml
+MANUAL_LINT_XML=manual-lint.xml.in
+MODULE=module_specs
+
+XMLFILE=
+ZF_LANG=en
+
+# "make" or "make -e"
+all:	$(MANUAL_XML) htmlhelp
+
+$(MANUAL_XML): ../manual/$(MANUAL_XML).in rev-svn
+	@echo "Creating temporary manual and preprocessing it..."
+	@sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' -e 's!@ZF_LANG@!$(ZF_LANG)!' $< > ../manual/$@
+	@[ -d output ] || mkdir output
+	@$(XMLLINT) --xinclude --output ./temp/manual.xml ../manual/$(MANUAL_XML)
+	@php -f ManualXML.php
+	@rm -f ../manual/$(MANUAL_XML)
+
+rev-svn:
+	@[ -d temp ] || mkdir temp
+	@svn info ../manual/$(ZF_LANG) | grep '^Revision' | sed -e 's!Revision: !!m' -e 's!(\n)!!' > ./temp/svn_rev \
+	    || @echo "Impossible to read svn revision"
+
+
+# Build the docs in HTML format
+html: $(MANUAL_XML) $(HTML_XSL)
+	@rm -Rf output/html/$(ZF_LANG)/
+	@echo "Rendering the whole manual as html..."
+	@$(XSLTPROC) --xinclude --output output/html/$(ZF_LANG)/index.html ./temp/$(HTML_XSL) ./temp/manual.xml
+	@mkdir output/html/$(ZF_LANG)/figures
+	@mkdir  output/html/$(ZF_LANG)/images
+	@cp -f ../manual/figures/*.* output/html/$(ZF_LANG)/figures
+	@cp -f images/*.* output/html/$(ZF_LANG)/images
+	@cp -f styles/*.* output/html/$(ZF_LANG)
+	@php -f HighlightHTML.php html/$(ZF_LANG)
+
+htmlhelp: $(MANUAL_XML) $(HTMLHELP_XSL)
+	@rm -Rf output/htmlhelp/$(ZF_LANG)/
+	@echo "Rendering the whole manual as htmlhelp..."
+	@$(XSLTPROC) --xinclude --output output/htmlhelp/$(ZF_LANG)/index.html ./temp/$(HTMLHELP_XSL) ./temp/manual.xml
+	@mkdir output/htmlhelp/$(ZF_LANG)/figures
+	@mkdir output/htmlhelp/$(ZF_LANG)/images
+	@cp -f ../manual/figures/*.* output/htmlhelp/$(ZF_LANG)/figures
+	@cp -f images/*.* output/htmlhelp/$(ZF_LANG)/images
+	@cp -f styles/*.* output/htmlhelp/$(ZF_LANG)
+	@php -f HighlightHTML.php htmlhelp/$(ZF_LANG)
+
+chm: htmlhelp
+#	$(HHC) ./output/htmlhelp/$(ZF_LANG)/htmlhelp.hhp
+
+chm-full:
+	$(MAKE) -e chm ZF_LANG=en
+	$(MAKE) -e chm ZF_LANG=fr
+	$(MAKE) -e chm ZF_LANG=de
+	$(MAKE) -e chm ZF_LANG=ja
+	$(MAKE) -e chm ZF_LANG=ru
+	$(MAKE) -e chm ZF_LANG=zh
+
+$(HTML_XSL): $(HTML_XSL).in
+	@sed -e 's!@DOCBOOK_XSL@!$(DOCBOOK_XSL)!' -e 's!@ZF_LANG@!$(ZF_LANG)!' $< > ./temp/$@
+
+$(HTMLHELP_XSL): $(HTML_XSL).in
+	@sed -e 's!@DOCBOOK_XSL@!$(DOCBOOK_XSL_HTMLHELP)!' -e 's!@ZF_LANG@!$(ZF_LANG)!' $< > ./temp/$@
+
+
+# Build the docs in PDF format
+pdf: $(MANUAL_XML) $(PDF_XSL)
+	@$(XSLTPROC) --xinclude --output ./temp/Zend_Framework_$(ZF_LANG).fo ./temp/$(PDF_XSL) ./temp/manual.xml
+	@[ -d output/pdf ] || mkdir output/pdf
+	@php -f HighlightPDF.php $(ZF_LANG)
+
+pdf-xep: pdf
+	@echo "Rendering the whole manual as pdf with xep..."
+	@"$(XEP)" -fo ./temp/Zend_Framework_$(ZF_LANG).fo -pdf ./output/pdf/Zend_Framework_$(ZF_LANG).pdf
+
+pdf-fop: pdf
+	@echo "Rendering the whole manual as pdf with fop..."
+	@"$(FOP)" -c fop.cfg -fo ./temp/Zend_Framework_$(ZF_LANG).fo -pdf ./output/pdf/Zend_Framework_$(ZF_LANG).pdf
+
+pdf-full:
+	$(MAKE) -e pdf-fop ZF_LANG=en
+	$(MAKE) -e pdf-fop ZF_LANG=fr
+	$(MAKE) -e pdf-fop ZF_LANG=de
+	$(MAKE) -e pdf-fop ZF_LANG=ja
+	$(MAKE) -e pdf-fop ZF_LANG=ru
+	$(MAKE) -e pdf-fop ZF_LANG=zh
+
+$(PDF_XSL): $(PDF_XSL).in
+	@sed -e 's!@DOCBOOK_FO_XSL@!$(DOCBOOK_FO_XSL)!' $< > ./temp/$@
+
+
+# checking manual
+check: $(MANUAL_XML)
+	@echo "Checking the whole manual..."
+	@$(XMLLINT) --valid --noout --postvalid ./temp/manual.xml && echo "OK"
+
+check1: $(MANUAL_LINT_XML)
+	@if [ -n "$(XMLFILE)" ] ; then \
+	    if [ -f "$(MODULE)/$(XMLFILE)" ] ; then \
+		@echo "Checking $(XMLFILE)..." ; \
+		@sed -e 's!@XMLFILE@!$(MODULE)/$(XMLFILE)!' -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $(MANUAL_LINT_XML) \
+		| $(XMLLINT) --xinclude --output ./temp/$(XMLFILE) - ; \
+		@$(XMLLINT) --valid --noout --postvalid ./temp/$(XMLFILE) \
+		  && echo "OK" ; \
+	    else  \
+		@echo "File $(MODULE)/$(XMLFILE) not found." ; \
+	    fi ; \
+	else \
+	    @echo "Please specify a filename, e.g. 'make XMLFILE=filename.xml lint'" ; \
+	fi
+
+check-full:
+	$(MAKE) -e check ZF_LANG=en
+	$(MAKE) -e check ZF_LANG=fr
+	$(MAKE) -e check ZF_LANG=de
+	$(MAKE) -e check ZF_LANG=ja
+	$(MAKE) -e check ZF_LANG=ru
+	$(MAKE) -e check ZF_LANG=zh
+
+# cleaning
+clean:
+	-rm -Rf ./output
+	-rm -Rf ./temp
+
+cleanall: clean
+	-rm -f config.* configure
+	-rm -rf autom4te.cache
+	-rm -f Makefile
+	-rm -f $(HTML_XSL) $(MANUAL_XML)
+
+full: check-full chm-full pdf-full

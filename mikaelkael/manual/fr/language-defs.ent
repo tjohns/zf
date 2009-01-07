@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!ENTITY book.title                 'Guide de référence du programmeur'>
+<!ENTITY book.subtitle              'Zend Framework'>
+<!ENTITY book.edition               'Guide de référence du Framework Zend destiné au programmeur'>
+<!ENTITY book.pubdate.format        'd/m/Y'>
+
+<!ENTITY chapter.introduction.title 'Introduction au Zend Framework'>
