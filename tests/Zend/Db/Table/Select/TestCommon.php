@@ -214,10 +214,24 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
         $table = $this->_getSelectTable('products');
 
         try {
-            $select = $table->select()->columns('id');
+            $select = $table->select()->columns('product_id');
+
             $this->assertType('Zend_Db_Table_Select', $select);
-        } catch (Exception $e) {
-            $this->fail('Exception thrown');
+        } catch (Zend_Db_Table_Select_Exception $e) {
+            $this->fail('Exception thrown: ' . $e->getMessage());
         }
+    }
+
+    // ZF-5424
+    public function testColumnsPartDoesntContainWildcardAfterSettingColumns()
+    {
+        $table = $this->_getSelectTable('products');
+
+        $select = $table->select()->columns('product_id');
+
+        $columns = $select->getPart(Zend_Db_Select::COLUMNS);
+
+        $this->assertEquals(1, count($columns));
+        $this->assertEquals('product_id', $columns[0][1]);
     }
 }
