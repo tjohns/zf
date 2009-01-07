@@ -74,7 +74,7 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
         if (!array_key_exists($table, $this->_table)) {
             throw new Zend_Exception('Non-existent table name');
         }
-        
+
         return $this->_table[$table];
     }
 
@@ -143,7 +143,7 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
         $table = $this->_getSelectTable($tableName);
 
         $select = $table->select();
-        
+
         if ($useTable) {
             $select->from($table, $fields);
         }
@@ -193,7 +193,31 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
     {
         $table = $this->_getSelectTable('products');
         $select = $table->select();
-        
+
         $this->assertType('Zend_Db_Table_TableProducts', $select->getTable());
+    }
+
+    // ZF-3239
+    public function testFromPartIsAvailableRightAfterInstantiation()
+    {
+        $table = $this->_getSelectTable('products');
+        $select = $table->select();
+
+        $keys = array_keys($select->getPart(Zend_Db_Select::FROM));
+
+        $this->assertEquals('zfproducts', array_pop($keys));
+    }
+
+    // ZF-3239 (from comments)
+    public function testColumnsMethodDoesntThrowExceptionRightAfterInstantiation()
+    {
+        $table = $this->_getSelectTable('products');
+
+        try {
+            $select = $table->select()->columns('id');
+            $this->assertType('Zend_Db_Table_Select', $select);
+        } catch (Exception $e) {
+            $this->fail('Exception thrown');
+        }
     }
 }

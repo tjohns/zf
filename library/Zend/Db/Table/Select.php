@@ -46,6 +46,14 @@ require_once 'Zend/Db/Table/Abstract.php';
 class Zend_Db_Table_Select extends Zend_Db_Select
 {
     /**
+     * A flag that keeps track of the from() method usage.
+     * If it's set to false, the from() method hasn't been used yet.
+     *
+     * @var boolean
+     */
+    protected $_fromUsed = false;
+
+    /**
      * Table schema for parent Zend_Db_Table.
      *
      * @var array
@@ -65,7 +73,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      * @var Zend_Db_Table_Abstract
      */
     protected $_table;
-    
+
     /**
      * Class constructor
      *
@@ -86,7 +94,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     {
         return $this->_table;
     }
-    
+
     /**
      * Sets the primary table name and retrieves the table schema.
      *
@@ -95,10 +103,28 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      */
     public function setTable(Zend_Db_Table_Abstract $table)
     {
+        if ($this->_table !== null) {
+            /**
+             * @see Zend_Db_Table_Select_Exception
+             */
+            require_once 'Zend/Db/Table/Select/Exception.php';
+
+            throw new Zend_Db_Table_Select_Exception('Table already set.');
+        }
+
         $this->_adapter = $table->getAdapter();
         $this->_info    = $table->info();
         $this->_table   = $table;
-        
+
+        $name   = $this->_info[Zend_Db_Table_Abstract::NAME];
+        $schema = null;
+
+        if (isset($this->_info[Zend_Db_Table_Abstract::SCHEMA])) {
+            $schema = $this->_info[Zend_Db_Table_Abstract::SCHEMA];
+        }
+
+        $this->joinInner($name, null, self::SQL_WILDCARD, $schema);
+
         return $this;
     }
 
@@ -139,7 +165,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
             if ($alias !== null) {
                 $column = $alias;
             }
-            
+
             switch (true) {
                 case ($column == self::SQL_WILDCARD):
                     break;
@@ -159,8 +185,8 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      *
      * The table name can be expressed
      *
-     * @param  array|string|Zend_Db_Expr|Zend_Db_Table_Abstract $name The table name or an 
-                                                                      associative array relating 
+     * @param  array|string|Zend_Db_Expr|Zend_Db_Table_Abstract $name The table name or an
+                                                                      associative array relating
                                                                       table name to correlation
                                                                       name.
      * @param  array|string|Zend_Db_Expr $cols The columns to select from this table.
@@ -176,6 +202,15 @@ class Zend_Db_Table_Select extends Zend_Db_Select
                 $schema = $info[Zend_Db_Table_Abstract::SCHEMA];
             }
         }
+
+        $tableName = $this->getTable()->info(Zend_Db_Table_Abstract::NAME);
+
+        if (!$this->_fromUsed && in_array($tableName, (array) $name)) {
+            $this->reset(self::FROM);
+            $this->reset(self::COLUMNS);
+        }
+
+        $this->_fromUsed = true;
 
         return $this->joinInner($name, null, $cols, $schema);
     }
@@ -203,7 +238,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
         if ($this->_integrityCheck !== false) {
             foreach ($fields as $columnEntry) {
                 list($table, $column) = $columnEntry;
-                
+
                 // Check each column to ensure it only references the primary table
                 if ($column) {
                     if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
