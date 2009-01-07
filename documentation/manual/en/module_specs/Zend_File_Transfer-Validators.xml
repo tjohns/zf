@@ -36,7 +36,7 @@
         <listitem>
             <para>
                 <code>ExcludeMimeType</code>: This validator validates the MIME type of files. It can also
-                validate MIME types and will throw an error if the MIME type of a specified
+                validate MIME types and will throw an error if the MIME type of specified
                 file matches.
             </para>
         </listitem>
@@ -135,6 +135,14 @@
                 resulted in an error. You must not set it, as it's automatically set by
                 <code>Zend_File_Transfer</code> itself. So you do not use this validator directly. You should only
                 know that it exists.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>WordCount</code>: This validator is able to check the number of words within files. It
+                provides a minimum and maximum count and will throw an error when either of these thesholds
+                are crossed.
             </para>
         </listitem>
     </itemizedlist>
@@ -1274,6 +1282,52 @@ $upload->addValidator('Size',
                             'bytestring' => false));
 ]]>
             </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.wordcount">
+        <title><emphasis role="strong">WordCount</emphasis> Validator</title>
+
+        <para>
+            The <code>WordCount</code> validator checks for the number of words within provided files. It
+            supports the following option keys:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: Sets the minimum number of words to be found.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: Sets the maximum number of words to be found.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            If you initiate this validator with a string or integer, the value will be used as <code>max</code>.
+            Or you can also use the methods <code>setMin()</code> and <code>setMax()</code> to set both
+            options afterwards and <code>getMin()</code> and <code>getMax()</code> to retrieve the actual
+            set values.
+        </para>
+
+        <example id="zend.file.transfer.validators.wordcount.example">
+            <title>Using the WordCount Validator</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limit the amount of words within files to maximum 2000
+$upload->addValidator('WordCount', false, 2000);
+
+// Limit the amount of words within files to maximum 5000 and minimum 1000 words
+$upload->addValidator('WordCount', false, array('min' =>1000, 'max' => 5000));
+]]>
+            </programlisting>
+
         </example>
     </sect2>
 </sect1>
