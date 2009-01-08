@@ -86,6 +86,14 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $this->assertEquals($expectedReferences, $references);
     }
 
+    // ZF-2666
+    public function testIsIdentity()
+    {
+        $bugs = $this->_table['bugs'];
+
+        $this->assertTrue($bugs->isIdentity('bug_id'));
+    }
+
     /**
      * @group ZF-2510
      */

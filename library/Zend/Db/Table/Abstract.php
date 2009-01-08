@@ -977,6 +977,29 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
+     * Check if the provided column is an identity of the table
+     *
+     * @param  string $column
+     * @throws Zend_Db_Table_Exception
+     * @return boolean
+     */
+    public function isIdentity($column)
+    {
+        $this->_setupPrimaryKey();
+
+        if (!isset($this->_metadata[$column])) {
+            /**
+             * @see Zend_Db_Table_Exception
+             */
+            require_once 'Zend/Db/Table/Exception.php';
+
+            throw new Zend_Db_Table_Exception('Column "' . $column . '" not found in table.');
+        }
+
+        return (bool) $this->_metadata[$column]['IDENTITY'];
+    }
+
+    /**
      * Updates existing rows.
      *
      * @param  array        $data  Column-value pairs.
