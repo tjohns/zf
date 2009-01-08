@@ -223,7 +223,7 @@ public function errorAction()
 
         <para>
             If you dispatch multiple actions in a request, or if your action
-            makes multiple calls to <code>render()</code>, its possible that the
+            makes multiple calls to <code>render()</code>, it's possible that the
             response object already has content stored within it. This can lead
             to rendering a mixture of expected content and error content.
         </para>
@@ -244,7 +244,7 @@ $this->getResponse()->clearBody();
         <title>Plugin Usage Examples</title>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-1">
-            <title>Standard usage</title>
+            <title>Standard Usage</title>
             <programlisting role="php"><![CDATA[
 $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
@@ -253,7 +253,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-2">
-            <title>Setting a different error handler</title>
+            <title>Setting a Different Error Handler</title>
             <programlisting role="php"><![CDATA[
 $front = Zend_Controller_Front::getInstance();
 $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
@@ -266,7 +266,7 @@ $front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler(array(
         </example>
 
         <example id="zend.controller.plugins.standard.errorhandler.examples.example-3">
-            <title>Using accessors</title>
+            <title>Using Accessors</title>
             <programlisting role="php"><![CDATA[
 $plugin = new Zend_Controller_Plugin_ErrorHandler();
 $plugin->setErrorHandlerModule('mystuff')
