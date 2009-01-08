@@ -3,29 +3,33 @@
     <title>Using Exceptions</title>
 
     <para>
-        All exceptions thrown by Zend Framework classes should throw
-        an exception that derives from the base class Zend_Exception.
+        All exceptions thrown by classes in Zend Framework should extend the base class Zend_Exception.
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Example of catching an exception</title>
+        <title>Catching an Exception</title>
+        <para>
+            The following code listing demonstrates how to catch an exception thrown within a Zend Framework class:
+        </para>
         <programlisting role="php"><![CDATA[
 try {
+    // Calling Zend_Loader::loadClass() with a non-existant class will cause
+    // an exception to be thrown in Zend_Loader
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "Caught exception: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
-    // other code to recover from the failure.
+    // Other code to recover from the error
 }
 ]]>
         </programlisting>
     </example>
 
     <para>
-        See the documentation for each respective Zend Framework
-        component for more specific information on which methods
-        throw exceptions, the circumstances for the exceptions,
-        and which exception classes derive from Zend_Exception.
+        The documentation for each Zend Framework
+        component and class will contain specific information on which methods
+        throw exceptions, the circumstances that cause an exception to be thrown,
+        and the class of all exceptions that may be thrown.
     </para>
 
 </sect1>
