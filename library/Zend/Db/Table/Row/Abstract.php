@@ -121,6 +121,9 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         if (isset($config['table']) && $config['table'] instanceof Zend_Db_Table_Abstract) {
             $this->_table = $config['table'];
             $this->_tableClass = get_class($this->_table);
+        } else if ($this->_tableClass !== null) {
+            Zend_Loader::loadClass($this->_tableClass);
+            $this->_table = new $this->_tableClass();
         }
 
         if (isset($config['data'])) {

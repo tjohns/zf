@@ -124,6 +124,22 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
         }
     }
 
+    // ZF-1144
+    public function testTableRowContructorWithTableNameSpecifiedInSubclass()
+    {
+        /**
+         * @see Zend_Db_Table_Row_TestStandaloneRow
+         */
+        require_once 'Zend/Db/Table/Row/TestStandaloneRow.php';
+
+        Zend_Db_Table_Abstract::setDefaultAdapter($this->_db);
+
+        $row = new Zend_Db_Table_Row_TestStandaloneRow();
+        $this->assertType('Zend_Db_Table_Abstract', $row->getTable());
+
+        Zend_Db_Table_Abstract::setDefaultAdapter();
+    }
+
     public function testTableRowReadOnly()
     {
         $table = $this->_table['bugs'];
