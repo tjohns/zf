@@ -815,8 +815,8 @@ $product1234->delete();
             <para>
                 No cascading update is done in the example below if the primary key value in the
                 parent class is changed. The <code>'onUpdate'</code> element of the reference map
-                entry is <code>self::RESTRICT</code>. You can get the same result using the value
-                <code>self::NO_ACTION</code>, or by omitting the <code>'onUpdate'</code> entry.
+                entry is <code>self::RESTRICT</code>. You can get the same result by omitting
+                the <code>'onUpdate'</code> entry.
             </para>
 
             <programlisting role="php"><![CDATA[
