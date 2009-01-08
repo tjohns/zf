@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Overview of the Select Object</title>
+        <title>Introduction</title>
 
         <para>
             The Zend_Db_Select object represents a SQL <code>SELECT</code> query statement. The

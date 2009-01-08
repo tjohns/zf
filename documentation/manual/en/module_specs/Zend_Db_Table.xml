@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.table.introduction">
 
-        <title>Introduction to Table Class</title>
+        <title>Introduction</title>
 
         <para>
             The Zend_Db_Table class is an object-oriented interface to database tables. It provides
