@@ -114,7 +114,7 @@ url.rewrite-once = (
     </sect2>
 
     <sect2 id="zend.controller.router.usage">
-        <title>Using a router</title>
+        <title>Using a Router</title>
 
         <para>
             To properly use the rewrite router you have to instantiate it, add
@@ -137,7 +137,7 @@ $router->addRoute(
     </sect2>
 
     <sect2 id="zend.controller.router.basic">
-        <title>Basic Rewrite Router operation</title>
+        <title>Basic Rewrite Router Operation</title>
 
         <para>
             The heart of the RewriteRouter is the definition of user defined
@@ -215,7 +215,7 @@ $router->addRoute('user',
         </para>
 
         <note>
-            <title>Reverse matching</title>
+            <title>Reverse Matching</title>
             <para>
                 Routes are matched in reverse order so make sure your most
                 generic routes are defined first.
@@ -223,7 +223,7 @@ $router->addRoute('user',
         </note>
 
         <note>
-            <title>Returned values</title>
+            <title>Returned Values</title>
             <para>
                 Values returned from routing come from URL parameters or user
                 defined route defaults. These variables are later accessible
@@ -240,7 +240,7 @@ $router->addRoute('user',
         </para>
 
         <note>
-            <title>Special variables</title>
+            <title>Special Variables</title>
             <para>
                 The names of these special variables may be different if you
                 choose to alter the defaults in
@@ -253,7 +253,7 @@ $router->addRoute('user',
     </sect2>
 
     <sect2 id="zend.controller.router.default-routes">
-        <title>Default routes</title>
+        <title>Default Routes</title>
 
         <para>
             Zend_Controller_Router_Rewrite comes preconfigured with a default
@@ -339,7 +339,7 @@ $router->removeDefaultRoutes();
     </sect2>
 
     <sect2 id="zend.controller.router.rewritebase">
-        <title>Base URL and subdirectories</title>
+        <title>Base URL and Subdirectories</title>
 
         <para>
             The rewrite router can be used in subdirectories (e.g.,
@@ -366,7 +366,7 @@ $request->setBaseUrl('/~user/application-root/');
     </sect2>
 
     <sect2 id="zend.controller.router.global.parameters">
-        <title>Global parameters</title>
+        <title>Global Parameters</title>
 
         <para>
             You can set global parameters in a router which are automatically

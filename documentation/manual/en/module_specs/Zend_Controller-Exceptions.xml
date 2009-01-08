@@ -23,7 +23,7 @@
     </sect2>
 
     <sect2 id="zend.controller.exceptions.handling">
-        <title>How can you handle exceptions?</title>
+        <title>Handling Exceptions</title>
 
         <para>
             Several mechanisms are built in to the MVC components already to

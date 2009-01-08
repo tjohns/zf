@@ -60,7 +60,7 @@ application/
         </para>
 
         <note>
-            <title>No namespacing in the default module</title>
+            <title>No Namespacing in the Default Module</title>
             <para>
                 Note that in the default module, controllers do not need a
                 namespace prefix. Thus, in the example above, the controllers in
@@ -178,7 +178,7 @@ $front->addModuleDirectory('/path/to/application/modules');
     </sect2>
 
     <sect2 id="zend.controller.modular.router">
-        <title>Routing to modules</title>
+        <title>Routing to Modules</title>
 
         <para>
             The default route in <code>Zend_Controller_Router_Rewrite</code> is

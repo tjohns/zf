@@ -23,7 +23,7 @@ $router->addRoute('login', $route);
     </para>
 
     <note id="zend.controller.router.routes.static.warning">
-        <title>Warning: Static routes must contain sane defaults</title>
+        <title>Warning: Static Routes must Contain Sane Defaults</title>
 
         <para>
             Since a static route does not pass any part of the URL to the

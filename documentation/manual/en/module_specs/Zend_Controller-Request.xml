@@ -81,7 +81,7 @@
             </para>
 
             <note>
-                <title>Superglobal data</title>
+                <title>Superglobal Data</title>
                 <para>
                     When accessing superglobal data through
                     <code>Zend_Controller_Request_Http</code> as public member
@@ -103,7 +103,7 @@
             </para>
 
             <note>
-                <title>GET and POST data</title>
+                <title>GET and POST Data</title>
                 <para>
                     Be cautious when accessing data from the request object as
                     it is not filtered in any way. The router and dispatcher
@@ -113,7 +113,7 @@
             </note>
 
             <note>
-                <title>Retrieve the Raw POST Data, Too!</title>
+                <title>Retrieving the Raw POST Data</title>
 
                 <para>
                     As of 1.5.0, you can also retrieve the raw post data via the
@@ -137,7 +137,7 @@
             </para>
 
             <note>
-                <title>getParam() retrieves more than user params</title>
+                <title>getParam() Retrieves More than User Parameters</title>
 
                 <para>
                     In order to do some of its work, <code>getParam()</code> actually
@@ -216,7 +216,7 @@ $front->setRequest($request);
             </para>
 
             <note>
-                <title>URL detection is case sensitive</title>
+                <title>URL Detection is Case Sensitive</title>
                 <para>
                     Automatic base URL detection is case sensitive, so make sure your URL
                     will match a subdirectory name in a filesystem (even on Windows

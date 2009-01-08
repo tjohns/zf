@@ -40,7 +40,7 @@ $router->addRoute('user', $route);
     </para>
 
     <note>
-        <title>Character usage</title>
+        <title>Character Usage</title>
         <para>
             The current implementation allows you to use any character (except a
             slash) as a variable identifier, but it is strongly recommended that
@@ -105,7 +105,7 @@ $router->addRoute('default', $route);
     </programlisting>
 
     <sect4 id="zend.controller.router.routes.standard.variable-defaults">
-        <title>Variable defaults</title>
+        <title>Variable Defaults</title>
 
         <para>
             Every variable in the route can have a default and this is what the
@@ -162,7 +162,7 @@ $router->addRoute('archive', $route);
     </sect4>
 
     <sect4 id="zend.controller.router.routes.standard.variable-requirements">
-        <title>Variable requirements</title>
+        <title>Variable Requirements</title>
 
         <para>
             One can add a third parameter to the

@@ -128,7 +128,7 @@ class FooController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.controller.action.initialization">
-        <title>Object initialization</title>
+        <title>Object Initialization</title>
 
         <para>
             While you can always override the action controller's constructor,
@@ -265,7 +265,7 @@ if ($this->_hasParam('id') {
         <title>View Integration</title>
 
         <note id="zend.controller.action.viewintegration.viewrenderer">
-            <title>Default view integration is via the ViewRenderer</title>
+            <title>Default View Integration is Via the ViewRenderer</title>
 
             <para>
                 The content in this section is only valid when you have
@@ -506,7 +506,7 @@ class MyController extends Zend_Controller_Action
         </para>
 
         <example id="zend.controller.action.subclassing.example-call">
-            <title>How to Handle Non-Existent Actions</title>
+            <title>Handling Non-Existent Actions</title>
 
             <para>
                 If a request to a controller is made that includes an undefined

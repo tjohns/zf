@@ -257,7 +257,7 @@ class ForwardController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.redirector.basicusage.example-4">
-            <title>Using route assembly with gotoRoute()</title>
+            <title>Using Route Assembly with gotoRoute()</title>
 
             <para>
                 The following example uses the <link

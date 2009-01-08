@@ -533,10 +533,10 @@ Zend_Controller_Front::run('../application/controllers');
     </sect2>
 
     <sect2 id="zend.controller.front.subclassing">
-        <title>Subclassing the Front Controller</title>
+        <title>Extending the Front Controller</title>
 
         <para>
-            To subclass the Front Controller, at the very minimum you will need
+            To extend the Front Controller, at the very minimum you will need
             to override the <code>getInstance()</code> method:
         </para>
 

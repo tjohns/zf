@@ -50,7 +50,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     </para>
 
     <note>
-        <title>Parameter priority</title>
+        <title>Parameter Priority</title>
         <para>
             When chaining routes like the hostname route and the path route
             together, the parameters of the hostname route have a higher
@@ -61,7 +61,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     </note>
 
     <sect4 id="zend.controller.router.routes.hostname.config">
-        <title>Hostname routes via Zend_Config</title>
+        <title>Hostname Routes via Zend_Config</title>
 
         <para>
             To chain hostname routes and path routes together, there is an

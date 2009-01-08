@@ -659,7 +659,7 @@ class Foo_BarController extends Zend_Controller_Action
         </example>
 
         <note>
-            <title>Naming Conventions: Word delimiters in controller and action names</title>
+            <title>Naming Conventions: Word Delimiters in Controller and Action Names</title>
             <para>
                 If your controller or action name is composed of several
                 words, the dispatcher requires that these are separated on
@@ -689,7 +689,7 @@ class Foo_BarController extends Zend_Controller_Action
         </note>
 
         <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-2">
-            <title>Disabling autorender</title>
+            <title>Disabling Autorender</title>
 
             <para>
                 For some actions or controllers, you may want to turn off the
@@ -734,7 +734,7 @@ class Bar_BatController extends Zend_Controller_Action
         </note>
 
         <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-3">
-            <title>Choosing a different view script</title>
+            <title>Choosing a Different View Script</title>
 
             <para>
                 Some situations require that you render a different script than
@@ -781,7 +781,7 @@ class Foo_BarController extends Zend_Controller_Action
         </example>
 
         <example id="zend.controller.actionhelper.viewrenderer.basicusage.example-4">
-            <title>Modifying the registered view</title>
+            <title>Modifying the Registered View</title>
 
             <para>
                 What if you need to modify the view object -- for instance,
@@ -817,7 +817,7 @@ class Foo_BarController extends Zend_Controller_Action
         <title>Advanced Usage Examples</title>
 
         <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-1">
-            <title>Changing the path specifications</title>
+            <title>Changing the Path Specifications</title>
 
             <para>
                 In some circumstances, you may decide that the default path
@@ -859,7 +859,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
         </example>
 
         <example id="zend.controller.actionhelper.viewrenderer.advancedusage.example-2">
-            <title>Rendering multiple view scripts from a single action</title>
+            <title>Rendering Multiple View Scripts from a Single Action</title>
 
             <para>
                 At times, you may need to render multiple view scripts from a

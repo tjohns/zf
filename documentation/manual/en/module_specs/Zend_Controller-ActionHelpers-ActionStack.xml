@@ -11,7 +11,7 @@
     </para>
 
     <note>
-        <title>Invoking ActionStack helper initializes ActionStack Plugin</title>
+        <title>Invoking ActionStack Helper Initializes the ActionStack Plugin</title>
 
         <para>
             Invoking the <code>ActionStack</code> helper implicitly registers
@@ -22,7 +22,7 @@
     </note>
 
     <example id="zend.controller.actionhelpers.actionstack.simple">
-        <title>Adding a task using action, controller and module names</title>
+        <title>Adding a Task Using Action, Controller and Module Names</title>
 
         <para>
             Often, it's simplest to simply specify the action, controller, and
@@ -54,7 +54,7 @@ class FooController extends Zend_Controller_Action
     </example>
 
     <example id="zend.controller.actionhelpers.actionstack.simple2">
-        <title>Adding a task using a request object</title>
+        <title>Adding a Task Using a Request Object</title>
 
         <para>
             Sometimes the OOP nature of a request object makes most sense; you
