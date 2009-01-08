@@ -423,7 +423,7 @@ class Contact
 
         <para>
             Although we have created the ContactVO on the server we now need to make
-            it's corresponding class in AS3 for the server object to be mapped to.
+            its corresponding class in AS3 for the server object to be mapped to.
         </para>
         <para>
             Right click on the src folder of the Flex project and select New -> ActionScript
