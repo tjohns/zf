@@ -205,8 +205,8 @@ widgetFactory()
             </para>
 
             <para>
-                For methods on objects that are declared with the "private" or "protected" modified,
-                the first character of the variable name must be an underscore. This is the only
+                For methods on objects that are declared with the "private" or "protected" modifier,
+                the first character of the method name must be an underscore. This is the only
                 acceptable application of an underscore in a method name. Methods declared "public"
                 should never contain an underscore.
             </para>
