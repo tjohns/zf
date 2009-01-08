@@ -326,6 +326,37 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
+     * Add a reference to the reference map
+     *
+     * @param string $ruleKey
+     * @param string|array $columns
+     * @param string $refTableClass
+     * @param string|array $refColumns
+     * @param string $onDelete
+     * @param string $onUpdate
+     * @return Zend_Db_Table_Abstract
+     */
+    public function addReference($ruleKey, $columns, $refTableClass, $refColumns,
+                                 $onDelete = null, $onUpdate = null)
+    {
+        $reference = array(self::COLUMNS         => (array) $columns,
+                           self::REF_TABLE_CLASS => $refTableClass,
+                           self::REF_COLUMNS     => (array) $refColumns);
+
+        if (!empty($onDelete)) {
+            $reference[self::ON_DELETE] = $onDelete;
+        }
+
+        if (!empty($onUpdate)) {
+            $reference[self::ON_UPDATE] = $onUpdate;
+        }
+
+        $this->_referenceMap[$ruleKey] = $reference;
+
+        return $this;
+    }
+
+    /**
      * @param array $referenceMap
      * @return Zend_Db_Table_Abstract Provides a fluent interface
      */
@@ -546,10 +577,10 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Indicate whether metadata should be cached in the class for the duration 
+     * Indicate whether metadata should be cached in the class for the duration
      * of the instance
-     * 
-     * @param  bool $flag 
+     *
+     * @param  bool $flag
      * @return Zend_Db_Table_Abstract
      */
     public function setMetadataCacheInClass($flag)
@@ -559,9 +590,9 @@ abstract class Zend_Db_Table_Abstract
     }
 
     /**
-     * Retrieve flag indicating if metadata should be cached for duration of 
+     * Retrieve flag indicating if metadata should be cached for duration of
      * instance
-     * 
+     *
      * @return bool
      */
     public function metadataCacheInClass()
@@ -713,7 +744,7 @@ abstract class Zend_Db_Table_Abstract
 
     /**
      * Retrieve table columns
-     * 
+     *
      * @return array
      */
     protected function _getCols()

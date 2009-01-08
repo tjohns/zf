@@ -68,6 +68,24 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $table = new Zend_Db_Table_TableBugs($config);
     }
 
+    // ZF-2379
+    public function testAddReference()
+    {
+        $expectedReferences = array(
+            'columns'           => array('reported_by'),
+            'refTableClass'     => 'Zend_Db_Table_TableAccounts',
+            'refColumns'        => array('account_name')
+        );
+
+        $products = $this->_table['products'];
+        $products->addReference('Reporter', 'reported_by',
+                                'Zend_Db_Table_TableAccounts', 'account_name');
+
+        $references = $products->getReference('Zend_Db_Table_TableAccounts');
+
+        $this->assertEquals($expectedReferences, $references);
+    }
+
     /**
      * @group ZF-2510
      */
@@ -1290,7 +1308,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
     }
 
     /**
-     * Ensures that table metadata caching can be persistent in the object even 
+     * Ensures that table metadata caching can be persistent in the object even
      * after a flushed cache, if the setMetadataCacheInClass property is true.
      *
      * @group  ZF-2510
@@ -1449,7 +1467,7 @@ abstract class Zend_Db_Table_TestCommon extends Zend_Db_Table_TestSetup
         $rows = $table->fetchAll($select);
         $this->assertEquals(0, count($rows));
     }
-    
+
     public function testSerialiseTable()
     {
         $table = $this->_table['products'];
