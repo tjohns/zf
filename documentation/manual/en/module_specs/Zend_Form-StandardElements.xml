@@ -53,9 +53,9 @@
         <para>
             The Captcha form element allows you to specify which <link
                 linkend="zend.captcha.adapters">Zend_Captcha adapter</link> you
-            wish to utilize as a form captcha. It then sets this adapter as a
+            wish to utilize as a form CAPTCHA. It then sets this adapter as a
             validator to the object, and uses a Captcha decorator for rendering
-            (which proxies to the captcha adapter).
+            (which proxies to the CAPTCHA adapter).
         </para>
 
         <para>
@@ -72,8 +72,8 @@ $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
 
         <para>
             Captcha's may then be registered using the <code>setCaptcha()</code>
-            method, which can take either a concrete captcha instance, or the
-            short name of a captcha adapter:
+            method, which can take either a concrete CAPTCHA instance, or the
+            short name of a CAPTCHA adapter:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -193,7 +193,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
                 arcane, but actual usage is relatively trivial:
             </para>
 
-            <programlisting role="php"><![CDATA[
+            <programlisting role="php" <![CDATA[
 $element = new Zend_Form_Element_File('foo');
 $element->setLabel('Upload an image:')
         ->setDestination('/var/www/upload');
