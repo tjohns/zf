@@ -192,7 +192,8 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
      */
     public function testRss100Sample1()
     {
-        $this->_importRssValid('RssTest100Sample1.xml');
+        $feed = $this->_importRssValid('RssTest100Sample1.xml');
+        $this->assertEquals(2, $feed->count());
     }
 
     /**
@@ -200,7 +201,8 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
      */
     public function testRss100Sample2()
     {
-        $this->_importRssValid('RssTest100Sample2.xml');
+        $feed = $this->_importRssValid('RssTest100Sample2.xml');
+        $this->assertEquals(1, $feed->count());
     }
 
     /**
@@ -423,6 +425,7 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
 
         $feed = Zend_Feed::import('http://localhost');
         $this->assertType('Zend_Feed_Rss', $feed);
+        return $feed;
     }
 
     /**
