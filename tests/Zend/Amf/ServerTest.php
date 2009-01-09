@@ -97,6 +97,16 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * ZF-5393
+     */
+    public function testSetClassUsingObject()
+    {
+        $testClass = new Zend_Amf_testclass();
+        $this->_server->setClass($testClass);
+        $this->assertEquals(6, count($this->_server->getFunctions()));
+    }
+
+    /**
      * addFunction() test
      *
      * Call as method call
@@ -284,10 +294,10 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         // Check the message body is the expected data to be returned
         $this->assertEquals("String: 12345", $acknowledgeMessage->body);
     }
-    
+
     /**
-     * Test to make sure that you can have the same method name in two different classes. 
-     * 
+     * Test to make sure that you can have the same method name in two different classes.
+     *
      * @group ZF-5040
      * @return unknown_type
      */
