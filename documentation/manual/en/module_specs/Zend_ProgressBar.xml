@@ -16,7 +16,7 @@
     <sect2 id="zend.progressbar.basic">
         <title>Basic usage of Zend_Progressbar</title>
         <para>
-            <code>Zend_ProgressBar</code> is quite easy in it's usage. You
+            <code>Zend_ProgressBar</code> is quite easy in its usage. You
             simply create a new instance of Zend_Progressbar, defining a
             min- and a max-value, and choose an adapter to output the data. If
             you want to process a file, you would do something like:

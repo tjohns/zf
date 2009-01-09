@@ -4,7 +4,7 @@
         <code>Zend_ProgressBar_Adapter_JsPush</code> is an adapter which let's
         you update a progressbar in a browser via Javascript Push. This means
         that no second connection is required to gather the status about a
-        running process, but that the process itself sends it's status directly
+        running process, but that the process itself sends its status directly
         to the browser.
     </para>
     <para>
