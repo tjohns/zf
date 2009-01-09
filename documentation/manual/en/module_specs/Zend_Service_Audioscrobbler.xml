@@ -4,7 +4,7 @@
 
     <sect2 id="zend.service.audioscrobbler.introduction">
 
-        <title>Introduction to Searching Audioscrobbler</title>
+        <title>Introduction</title>
 
         <para>
             <code>Zend_Service_Audioscrobbler</code> is a simple API for using the Audioscrobbler REST Web Service. The
