@@ -4,7 +4,7 @@
 
     <para>
         The API of <code>Zend_Locale</code> has changed from time to time.
-        If you started to use <code>Zend_Locale</code> and it's subcomponents
+        If you started to use <code>Zend_Locale</code> and its subcomponents
         in earlier versions follow the guidelines below to migrate your scripts to
         use the new API.
     </para>

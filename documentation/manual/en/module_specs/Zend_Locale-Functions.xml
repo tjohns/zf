@@ -1100,7 +1100,7 @@ foreach($list as $language => $content) {
                 <para>
                     <emphasis role="strong">yesarray and noarray</emphasis>: An array with all known yes and
                     no responses. Several languages have more than just two responses. In general this is the
-                    full string and it's abbreviation.
+                    full string and its abbreviation.
                 </para>
 
                 <para>
@@ -1187,7 +1187,7 @@ $localelist = Zend_Locale::getLocaleList();
         <title>Detecting locales</title>
 
         <para>
-            When you want to detect if a given input, regardless of it's source, is a locale you should use
+            When you want to detect if a given input, regardless of its source, is a locale you should use
             the static <code>isLocale()</code> method. The first parameter of this method is the string which
             you want to check.
         </para>

@@ -436,7 +436,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
         <para>
             Suppose a web form collected a numeric input expressed using Eastern Arabic digits "١‎٠٠".
             Most software and PHP functions expect input using Arabic numerals. Fortunately, converting this input
-            to it's equivalent Latin numerals "100" requires little effort using
+            to its equivalent Latin numerals "100" requires little effort using
             <code>convertNumerals($inputNumeralString, $sourceNumeralSystem, $destNumeralSystem)</code>
             , which returns the <code>$input</code> with numerals in the script <code>$sourceNumeralSystem</code>
             converted to the script <code>$destNumeralSystem</code>.

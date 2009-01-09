@@ -113,7 +113,7 @@
         </para>
 
         <para>
-            A locale string or object identifying a supported locale gives <code>Zend_Locale</code> and it's subclasses
+            A locale string or object identifying a supported locale gives <code>Zend_Locale</code> and its subclasses
             access to information about the language and region expected by the user. Correct formatting, normalization,
             and conversions are made based on this information.
         </para>
@@ -252,7 +252,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
             any language or region. They are "automatic" locales which means that they have the same effect
             as the method <code>getDefault()</code> but without the negative effects like creating an instance.
             These "automatic" locales can be used anywhere, where also a standard locale and also the
-            definition of a locale, it's string representation, can be used. This offers simplicity for
+            definition of a locale, its string representation, can be used. This offers simplicity for
             situations like working with locales which are provided by a browser.
         </para>
 
