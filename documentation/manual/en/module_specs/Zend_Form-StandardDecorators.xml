@@ -53,8 +53,8 @@ class Util
 
         <para>
             The Captcha decorator is for use with the <link
-                linkend="zend.form.standardElements.captcha">Captcha form
-                element</link>. It utilizes the captcha adapter's
+                linkend="zend.form.standardElements.captcha">CAPTCHA form
+                element</link>. It utilizes the CAPTCHA adapter's
             <code>render()</code> method to generate the output.
         </para>
 
@@ -62,7 +62,7 @@ class Util
             A variant on the Captcha decorator, 'Captcha_Word', is also commonly
             used, and creates two elements, an id and input. The id indicates
             the session identifier to compare against, and the input is for the
-            user verification of the captcha. These are validated as a single
+            user verification of the CAPTCHA. These are validated as a single
             element.
         </para>
     </sect2>

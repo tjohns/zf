@@ -30,7 +30,7 @@
 
     <para>
         While forms created with <code>Zend_Form</code> may be complex, probably
-        the best use case is for simple forms; it's best use is for Rapid
+        the best use case is for simple forms; its best use is for Rapid
         Application Development (RAD) and prototyping.
     </para>
 
