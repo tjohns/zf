@@ -14,7 +14,7 @@
             using the factory() method, which reads a string containing an HTTP
             response message, and returns a new Zend_Http_Response object:
             <example id="zend.http.response.introduction.example-1">
-                <title>Instantiating a Zend_Http_Response object using the factory method</title>
+                <title>Instantiating a Zend_Http_Response Object Using the Factory Method</title>
                 <programlisting role="php"><![CDATA[
 $str = '';
 $sock = fsockopen('www.example.com', 80);

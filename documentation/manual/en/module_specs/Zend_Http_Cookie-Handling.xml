@@ -417,7 +417,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 <listitem>
                     <para>
                     <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>:
-                    Get a single cookie from the jar, according to it's URI (domain and path)
+                    Get a single cookie from the jar, according to its URI (domain and path)
                     and name. $uri is either a string or a Zend_Uri_Http object representing the
                     URI. $cookie_name is a string identifying the cookie name. $ret_as
                     specifies the return type as described above. $ret_type is optional, and
