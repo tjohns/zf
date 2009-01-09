@@ -747,7 +747,7 @@ $service->delete($event->getEditLink()->href);
         <title>Accessing Event Comments</title>
         <para>
             When using the full event view, comments are not directly stored within an entry. Instead,
-            each event contains a URL to it's associated comment feed which must be manually requested.
+            each event contains a URL to its associated comment feed which must be manually requested.
         </para>
         <para>
             Working with comments is fundamentally similar to working with events, with the only

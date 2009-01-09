@@ -1,5 +1,5 @@
 <sect1 id="zend.gdata.introduction">
-    <title>Introduction to Gdata</title>
+    <title>Introduction</title>
     <para>
         Google Data APIs provide programmatic interface to some of Google's
         online services.  The Google data Protocol is based upon the
@@ -334,7 +334,7 @@ $gdata = new Zend_Gdata($client);
             protocol versioning. This allows the client and server to support
             new features while maintaining backwards compatibility. While most
             services will manage this for you, if you create a Zend_Gdata
-            instance directly (as opposed to one of it's subclasses), you may
+            instance directly (as opposed to one of its subclasses), you may
             need to specify the desired protocol version to access certain
             server functionality.
         </para>
@@ -357,7 +357,7 @@ $gdata->setMinorProtocolVersion(null);
     </sect2>
 
     <sect2 id="zend.gdata.introduction.parameters">
-        <title>Common query parameters</title>
+        <title>Common Query Parameters</title>
 
         <para>
             You can specify parameters to customize queries with Zend_Gdata.
@@ -499,7 +499,7 @@ $query->resetParameters();      // clears all parameters
     </sect2>
 
     <sect2 id="zend.gdata.introduction.getfeed">
-        <title>Fetching a feed</title>
+        <title>Fetching a Feed</title>
 
         <para>
             Use the <code>getFeed()</code> function to retrieve
@@ -528,7 +528,7 @@ $feed = $gdata->getFeed($query);
     </sect2>
 
     <sect2 id="zend.gdata.introduction.paging">
-        <title>Working with multi-page feeds</title>
+        <title>Working with Multi-page Feeds</title>
 
         <para>
             When retrieving a feed that contains a large number of entries,
@@ -576,7 +576,7 @@ $feed = $gdata->retrieveAllEntriesForFeed($gdata->getFeed($query));
     </sect2>
 
     <sect2 id="zend.gdata.introduction.usefeedentry">
-        <title>Working with data in feeds and entries</title>
+        <title>Working with Data in Feeds and Entries</title>
 
         <para>
             After retrieving a feed, you can read the data from the feed
@@ -603,7 +603,7 @@ foreach ($feed as $entry) {
     </sect2>
 
     <sect2 id="zend.gdata.introduction.updateentry">
-        <title>Updating entries</title>
+        <title>Updating Entries</title>
 
         <para>
             After retrieving an entry, you can update that entry and save
@@ -631,7 +631,7 @@ foreach ($feed as $entry) {
     </sect2>
 
     <sect2 id="zend.gdata.introduction.post">
-        <title>Posting entries to Google servers</title>
+        <title>Posting Entries to Google Servers</title>
 
         <para>
             The Zend_Gdata object has a function <code>post()</code>
@@ -681,7 +681,7 @@ echo 'The <id> of the resulting entry is: ' . $entryResult->id->text;
     </sect2>
 
     <sect2 id="zend.gdata.introduction.delete">
-        <title>Deleting entries on Google servers</title>
+        <title>Deleting Entries on Google Servers</title>
 
         <para>
             Option 1: The Zend_Gdata object has a function <code>delete()</code>
