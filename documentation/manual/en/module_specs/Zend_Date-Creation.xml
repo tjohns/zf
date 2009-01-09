@@ -1,6 +1,6 @@
 <sect1 id="zend.date.creation">
 
-    <title>Creation of dates</title>
+    <title>Creation of Dates</title>
 
     <para>
         <code>Zend_Date</code> provides several different ways to create a new instance of itself. As there are
@@ -9,7 +9,7 @@
 
     <sect2 id="zend.date.creation.actual">
 
-        <title>Create the actual date</title>
+        <title>Create the Actual Date</title>
 
         <para>
             The simplest way of creating a date object is to create the actual date. You can either create a new
@@ -21,7 +21,7 @@
 
         <example id="zend.date.creation.actual.example-1">
 
-            <title>Date creation by instance</title>
+            <title>Date Creation by Instance</title>
 
             <para>
                 Date creation by creating a new instance means that you do not need to give an parameter. Of course
@@ -38,7 +38,7 @@ $date = new Zend_Date();
 
         <example id="zend.date.creation.actual.example-2">
 
-            <title>Static date creation</title>
+            <title>Static Date Creation</title>
 
             <para>
                 Sometimes it is easier to use a static method for date creation. Therefor you can use the
@@ -58,10 +58,10 @@ $date = Zend_Date::now();
 
     <sect2 id="zend.date.creation.database">
 
-        <title>Create a date from database</title>
+        <title>Create a Date from Database</title>
 
         <para>
-            Databases are often used to store date values. But the problem is, that every database outputs it's
+            Databases are often used to store date values. But the problem is, that every database outputs its
             date values in a different way. <code>MsSQL</code> databases use a quite different standard date
             output than <code>MySQL</code> databases. But for simplification <code>Zend_Date</code> makes it very
             easy to create a date from database date values.
@@ -80,7 +80,7 @@ $date = Zend_Date::now();
 
         <example id="zend.date.creation.database.example-1">
 
-            <title>Quick creation of dates from database date values</title>
+            <title>Quick Creation of Dates from Database Date Values</title>
 
             <para>
                 All databases are known to handle queries as fast as possible. They are built to act and respond
@@ -99,7 +99,7 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
 
         <example id="zend.date.creation.database.example-2">
 
-            <title>Convenient creation of dates from database date values</title>
+            <title>Convenient Creation of Dates from Database Date Values</title>
 
             <para>
                 The standard output of all databases is quite different even if it looks the same on the first
@@ -125,7 +125,7 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
 
     <sect2 id="zend.date.creation.array">
 
-        <title>Create dates from an array</title>
+        <title>Create Dates from an Array</title>
 
         <para>
             Dates can also be created by the usage of an array. This is a simple and easy way. The used array
@@ -169,7 +169,7 @@ $date = new Zend_Date($datecolumn, Zend_Date::ISO_8601);
 
         <example id="zend.date.creation.array.example">
 
-            <title>Date creation by array</title>
+            <title>Date Creation by Array</title>
 
             <para>
                 Normally you will give a complete date array for creation of a new date instance. But when you

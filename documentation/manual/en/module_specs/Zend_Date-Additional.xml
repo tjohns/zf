@@ -1,6 +1,6 @@
 <sect1 id="zend.date.additional">
 
-    <title>Working examples</title>
+    <title>Working Examples</title>
 
     <para>
         Within this chapter, we will describe several additional functions which are also available through
@@ -10,7 +10,7 @@
 
     <sect2 id="zend.date.additional.checking">
 
-        <title>Checking dates</title>
+        <title>Checking Dates</title>
 
         <para>
             Probably most dates you will get as input are strings. But the problem with strings is that
@@ -47,7 +47,7 @@
         </para>
 
         <example id="zend.date.additional.checking.example-1">
-            <title>Checking dates</title>
+            <title>Checking Dates</title>
             <programlisting role="php"><![CDATA[
 // Checking dates
 $date = '01.03.2000';
@@ -102,7 +102,7 @@ if (Zend_Date::isDate($date,'dd MMMM yyyy', 'en')) {
         </para>
 
         <example id="zend.date.additional.sunrise-sunset.example-1">
-            <title>Getting all available cities</title>
+            <title>Getting all Available Cities</title>
             <programlisting role="php"><![CDATA[
 // Output the complete list of available cities
 print_r (Zend_Date_Cities::getCityList());
@@ -123,7 +123,7 @@ print_r (Zend_Date_Cities::getCityList());
         </para>
 
         <table id="zend.date.additional.sunrise-sunset.table">
-            <title>Types of supported horizons for sunset and sunrise</title>
+            <title>Types of Supported Horizons for Sunset and Sunrise</title>
             <tgroup cols="3">
                 <thead>
                     <row>
@@ -163,7 +163,7 @@ print_r (Zend_Date_Cities::getCityList());
         </para>
 
         <example id="zend.date.additional.sunrise-sunset.example-2">
-            <title>Getting the location for a city</title>
+            <title>Getting the Location for a City</title>
             <programlisting role="php"><![CDATA[
 // Get the location for a defined city
 // uses the effective horizon as no horizon is defined
@@ -187,7 +187,7 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
         </para>
 
         <example id="zend.date.additional.sunrise-sunset.example-3">
-            <title>Calculating sun informations</title>
+            <title>Calculating Sun Information</title>
             <programlisting role="php"><![CDATA[
 // Get the location for a defined city
 $city = Zend_Date_Cities::City('Vienna');
@@ -212,10 +212,10 @@ foreach ($info as $sun) {
 
     <sect2 id="zend.date.additional.timezones">
 
-        <title>Timezones</title>
+        <title>Time Zones</title>
 
         <para>
-            Timezones are as important as dates themselves. There are several timezones depending on where
+            Time zones are as important as dates themselves. There are several time zones depending on where
             in the world a user lives. So working with dates also means to set the proper timezone.
             This may sound complicated but it's easier as expected. As already mentioned in the first chapter
             of <code>Zend_Date</code> the default timezone has to be set. Either by <code>php.ini</code> or
@@ -241,7 +241,7 @@ foreach ($info as $sun) {
         </para>
 
         <example id="zend.date.additional.timezones.example-1">
-            <title>Working with timezones</title>
+            <title>Working with Time Zones</title>
             <programlisting role="php"><![CDATA[
 // Set a default timezone... this has to be done within the bootstrap
 // file or php.ini.
@@ -284,7 +284,7 @@ print $date->getIso();
         </para>
 
         <example id="zend.date.additional.timezones.example-2">
-            <title>Multiple timezones</title>
+            <title>Multiple Time Zones</title>
             <programlisting role="php"><![CDATA[
 // Set a default timezone... this has to be done within the bootstrap
 // file or php.ini.

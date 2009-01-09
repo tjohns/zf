@@ -23,7 +23,7 @@
         </para>
 
         <table id="zend.date.constants.using.table">
-            <title>Operations involving Zend_Date::HOUR</title>
+            <title>Operations Involving Zend_Date::HOUR</title>
             <tgroup cols="4">
                 <thead>
                     <row>
@@ -680,7 +680,7 @@
         </para>
 
         <example id="zend.date.constants.selfdefinedformats.example-1">
-            <title>Example usage for self-defined ISO formats</title>
+            <title>Self-Defined ISO Formats</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 $date = new Zend_Date(1234567890, false, $locale);
@@ -690,7 +690,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
         </example>
 
         <table id="zend.date.constants.selfdefinedformats.table">
-            <title>Constants for <emphasis role="strong">ISO 8601 date output</emphasis>
+            <title>Constants for <emphasis role="strong">ISO 8601 Date Output</emphasis>
             </title>
             <tgroup cols="4">
                 <thead>
@@ -1109,7 +1109,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
     <sect2 id="zend.date.constants.phpformats">
 
-        <title>Self-defined OUTPUT formats using PHP's date() format specifiers</title>
+        <title>Self-Defined OUTPUT Formats Using PHP's date() Format Specifiers</title>
 
         <para>
             If you are more comfortable with PHP's date format specifier than with ISO format specifiers, then you can
@@ -1126,7 +1126,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
         </para>
 
         <example id="zend.date.constants.phpformats.example-1">
-            <title>Example usage for self-defined formats with PHP specifier</title>
+            <title>Self-Defined Formats with PHP Specifier</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
 Zend_Date::setOptions(array('format_type' => 'php'));
@@ -1149,7 +1149,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
         </para>
 
         <table id="zend.date.constants.phpformats.table">
-            <title>Constants for <emphasis role="strong">PHP date output</emphasis>
+            <title>Constants for <emphasis role="strong">PHP Date Output</emphasis>
             </title>
             <tgroup cols="5">
                 <thead>

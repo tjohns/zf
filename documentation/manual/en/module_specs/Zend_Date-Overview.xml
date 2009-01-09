@@ -13,7 +13,7 @@
 
         <sect3 id="zend.date.options.formattype">
 
-            <title>Selecting the date format type</title>
+            <title>Selecting the Date Format Type</title>
 
             <para>
                 Several methods use date format strings, in a way similar to PHP's <code>date()</code>.
@@ -83,7 +83,7 @@
 
         <sect3 id="zend.date.options.cache">
 
-            <title>Speed up date localization and normalization with Zend_Cache</title>
+            <title>Speed up Date Localization and Normalization with Zend_Cache</title>
 
             <para>
                 You can speed up <code>Zend_Date</code> by using an <code>Zend_Cache</code> adapter.
@@ -98,7 +98,7 @@
 
         <sect3 id="zend.date.options.timesync">
 
-            <title>Receiving syncronised timestamps with Zend_TimeSync</title>
+            <title>Receiving Syncronised Timestamps with Zend_TimeSync</title>
 
             <para>
                 Normally the clocks from servers and computers differ from each other. <code>Zend_Date</code>
@@ -150,7 +150,7 @@
         </para>
 
         <example id="zend.date.values.example-1">
-            <title>User-specified input date format</title>
+            <title>User-Specified Input Date Format</title>
             <programlisting role="php"><![CDATA[
 $date1 = new Zend_Date('Feb 31, 2007', null, 'en_US');
 echo $date1, "\n"; // outputs "Mar 3, 2007 12:00:00 AM"

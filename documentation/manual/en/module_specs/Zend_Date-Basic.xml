@@ -20,7 +20,7 @@
 
     <sect2 id="zend.date.basic.creation">
 
-        <title>The current date</title>
+        <title>Current Date</title>
 
         <para>
             Without any arguments, constructing an instance returns an object in the default locale with the current,
@@ -32,7 +32,7 @@
         </para>
 
         <example id="zend.date.basic.creation.example-1">
-            <title>Creating the current date</title>
+            <title>Creating the Current Date</title>
             <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
 
@@ -63,7 +63,7 @@ print $date;
             </para>
 
             <example id="zend.date.simple.functions.get.example-1">
-                <title>get() - output a date</title>
+                <title>get() - Output a Date</title>
                 <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
 
@@ -85,7 +85,7 @@ print $date->get();
             </para>
 
             <example id="zend.date.simple.functions.set.example-1">
-                <title>set() - set a date</title>
+                <title>set() - Set a Date</title>
                 <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
 
@@ -110,7 +110,7 @@ print $date->get(Zend_Date::W3C);
             </para>
 
             <example id="zend.date.simple.functions.add.example-1">
-                <title>add() - adding dates</title>
+                <title>add() - Adding Dates</title>
                 <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
 
@@ -129,7 +129,7 @@ echo "Date via toString() = ", $date, "\n";
 
         <sect3 id="zend.date.simple.functions.compare">
 
-            <title>Comparison of dates</title>
+            <title>Comparison of Dates</title>
 
             <para>
                 All basic <code>Zend_Date</code> methods can operate on entire dates contained in the objects, or can
@@ -139,7 +139,7 @@ echo "Date via toString() = ", $date, "\n";
             </para>
 
             <example id="zend.date.simple.functions.compare.example-1">
-                <title>compare() - compare dates</title>
+                <title>compare() - Compare Dates</title>
                 <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
 
@@ -158,7 +158,7 @@ if ($date->compare(10, Zend_Date::MINUTE) == -1) {
             </para>
 
             <example id="zend.date.simple.functions.compare.example-2">
-                <title>equals() - identify a date or date part</title>
+                <title>equals() - Identify a Date or Date Part</title>
                 <programlisting role="php"><![CDATA[
 $date = new Zend_Date();
 
