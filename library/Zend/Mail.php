@@ -511,6 +511,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _addRecipientAndHeader($headerName, $name, $email)
     {
+    	$name  = $this->_filterName($name);
         $email = $this->_filterEmail($email);
         $this->_addRecipient($email, ('To' == $headerName) ? true : false);
         if ($name !== '' && $name !== null && $name !== $email) {
@@ -604,6 +605,7 @@ class Zend_Mail extends Zend_Mime_Message
     {
         if ($this->_from === null) {
             $email = $this->_filterEmail($email);
+            $name  = $this->_filterName($name);
             $this->_from = $email;
             if ($name !== null && $name !== $email) {
                 $encodedName = $this->_encodeHeader($name);
@@ -981,8 +983,35 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _filterEmail($email)
     {
-        return strtr($email, array("\r" => '', "\n" => '', "\t" => '',
-                                   ','  => '?', '"' => '?'));
+    	$rule = array("\r" => '',
+    	              "\n" => '',
+    	              "\t" => '',
+                      '"'  => '',
+    	              ','  => '',
+                      '<'  => '',
+                      '>'  => '',
+    	);
+
+        return strtr($email, $rule);
+    }
+
+    /**
+     * Filter of name data
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function _filterName($name)
+    {
+    	$rule = array("\r" => '',
+                      "\n" => '',
+                      "\t" => '',
+                      '"'  => "'",
+                      '<'  => '[',
+    	              '>'  => ']',
+    	);
+
+        return strtr($name, $rule);
     }
 
 }
