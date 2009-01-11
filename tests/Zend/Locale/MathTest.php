@@ -1538,6 +1538,11 @@ class Zend_Locale_MathTest extends PHPUnit_Framework_TestCase
 
     public function testExponent()
     {
+        if (!extension_loaded('bcmath')) {
+            $this->markTestSkipped('BCMath extension not loaded, test skipped');
+            return;
+        }
+
         $this->assertEquals('1000', Zend_Locale_Math::exponent('1e3'));
         $this->assertEquals('10320', Zend_Locale_Math::exponent('1.032e4'));
         $this->assertEquals('10320', Zend_Locale_Math::exponent('10.32e3'));
