@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__)."/../../TestHelper.php";
 require_once 'Zend/XmlRpc/Response.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'PHPUnit/Framework/IncompleteTestError.php';
@@ -102,6 +103,31 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
         $parsed = $this->_response->loadXml($xml);
         $this->assertTrue($parsed, $xml);
         $this->assertEquals('Return value', $this->_response->getReturnValue());
+    }
+
+    /**
+     * @group ZF-5404
+     */
+    public function testNilResponseFromXmlRpcServer()
+    {
+        $rawResponse = <<<EOD
+<methodResponse><params><param><value><array><data><value><struct><member><name>id</name><value><string>1</string></value></member><member><name>name</name><value><string>birdy num num!</string></value></member><member><name>description</name><value><nil/></value></member></struct></value></data></array></value></param></params></methodResponse>
+EOD;
+        try {
+            $response = new Zend_XmlRpc_Response();
+            $ret      = $response->loadXml($rawResponse);
+        } catch(Exception $e) {
+            $this->fail("Parsing the response should not throw an exception.");
+        }
+
+        $this->assertTrue($ret);
+        $this->assertEquals(array(
+            0 => array(
+                'id'            => 1,
+                'name'          => 'birdy num num!',
+                'description'   => null,
+            )
+        ), $response->getReturnValue());
     }
 
     /**
