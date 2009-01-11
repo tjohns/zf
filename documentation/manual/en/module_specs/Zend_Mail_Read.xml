@@ -250,7 +250,7 @@ echo $message->subject . "\n";
 // get content-type header
 $type = $message->contentType;
 
-// check if X-SPAM-Score was set:
+// check if CC isset:
 if( isset($message->cc) ) { // or $message->headerExists('cc');
     $cc = $message->cc;
 }
