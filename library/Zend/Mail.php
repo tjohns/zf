@@ -434,20 +434,54 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _encodeHeader($value)
     {
-      if (Zend_Mime::isPrintable($value)) {
-          return $value;
-      } elseif ($this->_encodingOfHeaders === Zend_Mime::ENCODING_QUOTEDPRINTABLE) {
-          $quotedValue = Zend_Mime::encodeQuotedPrintable($value);
-          $quotedValue = str_replace(array('?', ' ', '_'), array('=3F', '=20', '=5F'), $quotedValue);
-          return '=?' . $this->_charset . '?Q?' . $quotedValue . '?=';
-      } elseif ($this->_encodingOfHeaders === Zend_Mime::ENCODING_BASE64) {
-            return '=?' . $this->_charset . '?B?' . Zend_Mime::encodeBase64($value) . '?=';
-      } else {
-          /**
-           * @todo 7Bit and 8Bit is currently handled the same way.
-           */
+    	//At first, No changes.
+    	if (Zend_Mime::isPrintable($value))	{
             return $value;
-      }
+    	}
+
+    	//At second, Uses mb_encode_mimeheader() or iconv_mime_encode() function.
+    	$encoding = ($this->_encodingOfHeaders === Zend_Mime::ENCODING_QUOTEDPRINTABLE) ? 'Q' : 'B';
+
+    	if (function_exists('mb_encode_mimeheader')) {
+
+        	return mb_encode_mimeheader($value, $this->_charset,
+        	                            $encoding,
+        	                            Zend_Mime::LINEEND, Zend_Mime::LINELENGTH);
+
+    	} elseif (function_exists('iconv_mime_encode')) {
+
+	        $mimePrefs = array(
+	            'scheme'           => $encoding,
+	            'input-charset'    => $this->_charset,
+	            'output-charset'   => $this->_charset,
+	            'line-length'      => Zend_Mime::LINELENGTH,
+	            'line-break-chars' => Zend_Mime::LINEEND
+	        );
+
+            //Character X is dummy.
+	        return preg_replace("#^X\:#", '', iconv_mime_encode('X', $value, $mimePrefs));
+
+    	}
+
+    	//At last, uses Zend_Mime function.
+        $prefix = '=?' . $this->_charset . '?' . $encoding . '?';
+        $suffix = '?=';
+    	$remainingLength = Zend_Mime::LINELENGTH - strlen($prefix) - strlen($suffix);
+
+        if ($encoding === 'Q') {
+
+        	$remainingLength += 1;//last equal mark in each line will be removed.
+            $encodedValue = str_replace(array('?', ' ', '_'), array('???', '   ', '___'), $value);
+            $encodedValue = Zend_Mime::encodeQuotedPrintable($encodedValue, $remainingLength, Zend_Mime::LINEEND);
+            $encodedValue = str_replace(array('???', '   ', '___'), array('=3F', '=20', '=5F'), $encodedValue);
+            $encodedValue = str_replace('=' . Zend_Mime::LINEEND, $suffix . Zend_Mime::LINEEND . ' ' . $prefix, $encodedValue);
+
+        } else {
+        	$encodedValue = Zend_Mime::encodeBase64($value, $remainingLength, Zend_Mime::LINEEND);
+            $encodedValue = str_replace(Zend_Mime::LINEEND, $suffix . Zend_Mime::LINEEND . ' ' . $prefix, $encodedValue);
+        }
+
+        return ' ' . $prefix . $encodedValue . $suffix;
     }
 
     /**
