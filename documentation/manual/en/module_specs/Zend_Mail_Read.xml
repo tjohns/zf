@@ -237,7 +237,8 @@ unset($mail[$messageNum]);
         or single parts of a multipart message. All headers can be accessed via properties or the method
         <code>getHeader()</code> if you want more control or have unusual header names. The header names are
         lower-cased internally, thus the case of the header name in the mail message doesn't matter. Also headers
-        with a dash can be written in camel-case.</para>
+        with a dash can be written in camel-case. If no header is found for both notations an exception is thrown.
+        To encounter this the method <code>headerExists()</code> can be used to check the existance of a header.</para>
 
         <programlisting role="php"><![CDATA[
 // get the message object
@@ -248,6 +249,11 @@ echo $message->subject . "\n";
 
 // get content-type header
 $type = $message->contentType;
+
+// check if X-SPAM-Score was set:
+if( isset($message->cc) ) { // or $message->headerExists('cc');
+    $cc = $message->cc;
+}
 ]]>
         </programlisting>
 
