@@ -270,7 +270,7 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         $this->fail('no exception raised while getting content of message without body');
     }
 
-    public function testEmptyMessage()
+    public function testEmptyHeader()
     {
         $message = new Zend_Mail_Message(array());
         $this->assertEquals(array(), $message->getHeaders());
@@ -285,7 +285,10 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
         if ($subject) {
             $this->fail('no exception raised while getting header from empty message');
         }
+    }
 
+    public function testEmptyBody()
+    {
         $message = new Zend_Mail_Message(array());
         $part = null;
         try {
@@ -299,6 +302,20 @@ class Zend_Mail_MessageTest extends PHPUnit_Framework_TestCase
 
         $message = new Zend_Mail_Message(array());
         $this->assertTrue($message->countParts() == 0);
+    }
+
+    /**
+     * @group ZF-5209
+     */
+    public function testCheckingHasHeaderFunctionality()
+    {
+        $message = new Zend_Mail_Message(array('headers' => array('subject' => 'foo')));
+
+        $this->assertTrue( $message->headerExists('subject'));
+        $this->assertTrue( isset($message->subject) );
+        $this->assertTrue( $message->headerExists('SuBject'));
+        $this->assertTrue( isset($message->suBjeCt) );
+        $this->assertFalse($message->headerExists('From'));
     }
 
     public function testWrongMultipart()
