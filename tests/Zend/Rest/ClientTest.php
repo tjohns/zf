@@ -4,6 +4,8 @@
  * @subpackage UnitTests
  */
 
+require_once dirname(__FILE__)."/../../TestHelper.php";
+
 /** Zend_Rest_Client */
 require_once 'Zend/Rest/Client.php';
 
