@@ -340,7 +340,12 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
     public function getServerVersion()
     {
         $this->_connect();
-        $version = $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        try {
+            $version = $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        } catch (PDOException $e) {
+            // In case of the driver doesn't support getting attributes
+            return null;
+        }
         $matches = null;
         if (preg_match('/((?:[0-9]{1,2}\.){1,3}[0-9]{1,2})/', $version, $matches)) {
             return $matches[1];
