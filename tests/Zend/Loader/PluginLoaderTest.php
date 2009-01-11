@@ -402,6 +402,20 @@ class Zend_Loader_PluginLoaderTest extends PHPUnit_Framework_TestCase
         $cache = file_get_contents($cacheFile);
         $this->assertContains('CacheTest.php', $cache);
     }
+
+    /**
+     * @group ZF-5208
+     */
+    public function testStaticRegistryNamePersistsInDifferentLoaderObjects()
+    {
+        $loader1 = new Zend_Loader_PluginLoader(array(), "PluginLoaderStaticNamespace");
+        $loader1->addPrefixPath("Zend_View_Helper", "Zend/View/Helper");
+
+        $loader2 = new Zend_Loader_PluginLoader(array(), "PluginLoaderStaticNamespace");
+        $this->assertEquals(array(
+            "Zend_View_Helper_" => array("Zend/View/Helper/"),
+        ), $loader2->getPaths());
+    }
 }
 
 // Call Zend_Loader_PluginLoaderTest::main() if this source file is executed directly.
