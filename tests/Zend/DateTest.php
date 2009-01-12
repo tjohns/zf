@@ -5192,8 +5192,22 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testMultiByteWeekdaysShouldNotBeTruncated()
     {
         $date1  = new Zend_Date('pl');
-        $date1->setDay(3);
+        $date1->setWeekday(3);
         $this->assertEquals('ś', $date1->get(Zend_Date::WEEKDAY_NARROW));
+    }
+
+    /**
+     * Test for False Month Addition
+     */
+    public function testAddingMonthWhenChangingTimezone()
+    {
+        $date  = new Zend_Date(mktime(22, 59, 59, 1, 10, 2009));
+        $this->assertEquals(10, $date->toString('d'));
+        $this->assertEquals( 1, $date->toString('M'));
+        $date->setTimezone('Europe/Berlin');
+        $date->addMonth(1);
+        $this->assertEquals(10, $date->toString('d'));
+        $this->assertEquals( 2, $date->toString('M'));
     }
 }
 
