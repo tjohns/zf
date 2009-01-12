@@ -470,7 +470,7 @@ class Zend_Mail extends Zend_Mime_Message
 
         if ($encoding === 'Q') {
 
-        	$remainingLength += 1;//last equal mark in each line will be removed.
+        	$remainingLength ++;//last equal mark in each line will be removed.
             $encodedValue = str_replace(array('?', ' ', '_'), array('???', '   ', '___'), $value);
             $encodedValue = Zend_Mime::encodeQuotedPrintable($encodedValue, $remainingLength, Zend_Mime::LINEEND);
             $encodedValue = str_replace(array('???', '   ', '___'), array('=3F', '=20', '=5F'), $encodedValue);
@@ -748,7 +748,7 @@ class Zend_Mail extends Zend_Mime_Message
     public function setSubject($subject)
     {
         if ($this->_subject === null) {
-            $subject = strtr($subject,"\r\n\t",'???');
+            $subject = $this->_filterOther($subject);
             $this->_subject = $this->_encodeHeader($subject);
             $this->_storeHeader('Subject', $this->_subject);
         } else {
@@ -874,6 +874,7 @@ class Zend_Mail extends Zend_Mime_Message
     	}
 
         if ($this->_messageId === null) {
+        	$id = $this->_filterOther($id);
             $this->_messageId = $id;
             $this->_storeHeader('Message-Id', $this->_messageId);
         } else {
@@ -964,7 +965,7 @@ class Zend_Mail extends Zend_Mime_Message
             throw new Zend_Mail_Exception('Cannot set standard header from addHeader()');
         }
 
-        $value = strtr($value,"\r\n\t",'???');
+        $value = $this->_filterOther($value);
         $value = $this->_encodeHeader($value);
         $this->_storeHeader($name, $value, $append);
 
@@ -1046,6 +1047,22 @@ class Zend_Mail extends Zend_Mime_Message
     	);
 
         return strtr($name, $rule);
+    }
+
+    /**
+     * Filter of other data
+     *
+     * @param string $data
+     * @return string
+     */
+    protected function _filterOther($data)
+    {
+        $rule = array("\r" => '',
+                      "\n" => '',
+                      "\t" => '',
+        );
+
+        return strtr($data, $rule);
     }
 
 }
