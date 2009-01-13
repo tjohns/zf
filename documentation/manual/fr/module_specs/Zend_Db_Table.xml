@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12846 -->
+<!-- EN-Revision: 13564 -->
 <sect1 id="zend.db.table">
     <title>Zend_Db_Table</title>
 
     <sect2 id="zend.db.table.introduction">
-        <title>Introduction aux classes de Table</title>
+        <title>Introduction</title>
 
         <para>La classe <code>Zend_Db_Table</code> est une interface orientée objet vers les tables d'une base de
         données. Elle fournit des méthodes pour la gestion de la plupart des opérations concernant une table. Bien

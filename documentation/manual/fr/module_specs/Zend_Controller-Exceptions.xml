@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12821 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.exceptions">
     <title>Exceptions avec MVC</title>
 
@@ -16,7 +16,7 @@
     </sect2>
 
     <sect2 id="zend.controller.exceptions.handling">
-        <title>Comment gérer les exceptions?</title>
+        <title>Gestion des exceptions</title>
 
         <para>Plusieurs mécanismes vont vous permettre de traiter les exceptions dans le modèle MVC de Zend
         Framework.</para>

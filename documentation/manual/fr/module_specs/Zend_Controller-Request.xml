@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.request">
     <title>L'objet Requête</title>
 
@@ -84,7 +84,7 @@
             </note>
 
             <note>
-                <title>Récupérer les données POST brutes, aussi !</title>
+                <title>Récupérer les données POST brutes</title>
 
                 <para>A partir de la version 1.5.0, vous pouvez aussi les données POST brutes avec la méthode
                 <code>getRawBody()</code>. La méthode retourne <code>false</code> si aucune donnée n'a été envoyé, et le

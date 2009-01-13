@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13593 -->
 <sect1 id="zend.mail.read">
     <title>Lire des émail</title>
 
@@ -262,7 +262,9 @@ unset($mail[$messageNum]);
         méthode <code>getHeader()</code> si vous voulez plus de contrôle ou avoir accès à des en-têtes peu communs. Les
         noms des en-têtes gérés en interne avec une casse minuscule, ainsi la casse du nom de l'en-tête importe peu. En
         outre les en-têtes avec un tiret-bas peuvent être écrit avec la <ulink
-        url="http://en.wikipedia.org/wiki/CamelCase">notation Camel</ulink>.</para>
+        url="http://en.wikipedia.org/wiki/CamelCase">notation Camel</ulink>. Si aucun en-tête n'est trouvé pour les deux
+        notations, une exception est levée. Pour éviter ceci, la méthode <code>headerExists()</code> peut être utilisée
+        pour vérifier l'existence d'un en-tête.</para>
 
         <programlisting role="php"><![CDATA[
 // récupérer l'objet message
@@ -273,6 +275,11 @@ echo $message->subject . "\n";
 
 // récupérer l'en-tête content-type
 $type = $message->contentType;
+
+// vérifier si CC est spécifié :
+if( isset($message->cc) ) { // ou $message->headerExists('cc');
+    $cc = $message->cc;
+}
 ]]></programlisting>
 
         <para>Si vous avez plusieurs en-têtes avec le même nom, par exemple les en-têtes "Received", vous pourriez les

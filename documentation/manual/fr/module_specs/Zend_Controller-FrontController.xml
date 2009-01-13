@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13033 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.front">
     <title>Le contrôleur frontal (Front Controller)</title>
 
@@ -353,9 +353,9 @@ Zend_Controller_Front::run('../application/controllers');
     </sect2>
 
     <sect2 id="zend.controller.front.subclassing">
-        <title>Sous-classer le contrôleur frontal</title>
+        <title>Étendre le contrôleur frontal</title>
 
-        <para>Pour sous-classer le contrôleur frontal, vous devez au minimum surcharger la méthode
+        <para>Pour étendre le contrôleur frontal, vous devez au minimum surcharger la méthode
         <code>getInstance()</code> :</para>
 
         <programlisting role="php"><![CDATA[

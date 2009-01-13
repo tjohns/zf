@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13327 -->
+<!-- EN-Revision: 13617 -->
 <sect1 id="zend.file.transfer.validators">
     <title>Validateurs pour Zend_File_Transfer</title>
 
@@ -101,6 +101,12 @@
             <para><code>Upload</code> : ce validateur est interne, il vérifie si l'upload a produit une erreur. Vous ne
             devez pas le paramétrer, il est automatiquement activé par<code> Zend_File_Transfer</code> lui-même. Vous
             pouvez donc oublier ce validateur. Il faut juste savoir qu'il existe.</para>
+        </listitem>
+
+        <listitem>
+            <para><code>WordCount</code> : ce validateur est capable de vérifier le nombre de mots à l'intérieur du
+            fichier. Il permet de définir des valeurs minimum et maximum et émettra une erreur si l'un ou l'autre des
+            seuils est dépassé.</para>
         </listitem>
     </itemizedlist>
 
@@ -998,8 +1004,52 @@ $upload->addValidator('Size', false, 40000);
 
 // Limite la taille du fichier 'uploadfile' dans une plage de 10kB à 4MB
 // Additionally returns the plain number in case of an error instead of a userfriendly one
-$upload->addValidator('Size', false, array('min' => '10kB', 'max' => '4MB', 'bytestring' => false));
+$upload->addValidator('Size', false, array('min' => '10kB',
+                                           'max' => '4MB',
+                                           'bytestring' => false));
 ]]></programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.wordcount">
+        <title>Validateur <emphasis role="strong">WordCount</emphasis></title>
+
+        <para>Le validateur <code>WordCount</code> vérifie le nombre de mots à l'intérieur des fichiers fournis. Il
+        supporte les options suivantes :</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code> : spécifie le nombre de mots minimum qui doivent être trouvés.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code> : spécifie le nombre de mots maximum qui doivent être trouvés.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Si vous initialisez ce validateur avec une chaîne ou un entier, la valeur sera utilisée en tant que
+        <code>max</code>. Mais vous pouvez aussi utiliser les méthodes <code>setMin()</code> et
+        <code>setMax()</code> pour paramétrer ces options plus tard et <code>getMin()</code> et
+        <code>getMax()</code> pour les récupérer.</para>
+
+        <example id="zend.file.transfer.validators.wordcount.example">
+            <title>Utiliser le validateur WordCount</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Limite le nombre maximum de mots dans les fichiers à 2000
+$upload->addValidator('WordCount', false, 2000);
+
+// Limite le nombre de mots dans les fichiers entre un minimum de 1000
+// et un maximum de 5000 mots
+$upload->addValidator('WordCount', false, array('min' => 1000, 'max' => 5000));
+]]></programlisting>
+
         </example>
     </sect2>
 </sect1>
