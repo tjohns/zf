@@ -141,7 +141,7 @@
         <listitem>
             <para>
                 <code>WordCount</code>: This validator is able to check the number of words within files. It
-                provides a minimum and maximum count and will throw an error when either of these thesholds
+                provides a minimum and maximum count and will throw an error when either of these thresholds
                 are crossed.
             </para>
         </listitem>
@@ -1324,7 +1324,7 @@ $upload = new Zend_File_Transfer();
 $upload->addValidator('WordCount', false, 2000);
 
 // Limit the amount of words within files to maximum 5000 and minimum 1000 words
-$upload->addValidator('WordCount', false, array('min' =>1000, 'max' => 5000));
+$upload->addValidator('WordCount', false, array('min' => 1000, 'max' => 5000));
 ]]>
             </programlisting>
 
