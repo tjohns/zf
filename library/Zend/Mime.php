@@ -266,7 +266,7 @@ class Zend_Mime
 
         $encodedValue = self::encodeBase64($str, $remainingLength, Zend_Mime::LINEEND);
         $encodedValue = str_replace(Zend_Mime::LINEEND, $suffix . Zend_Mime::LINEEND . ' ' . $prefix, $encodedValue);
-        $encodedValue = ' ' . $prefix . $encodedValue . $suffix;
+        $encodedValue = $prefix . $encodedValue . $suffix;
         return $encodedValue;
     }
 
