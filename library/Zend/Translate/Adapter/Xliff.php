@@ -122,8 +122,14 @@ class Zend_Translate_Adapter_Xliff extends Zend_Translate_Adapter {
                         $this->_target = $attrib['target-language'];
                     }
 
-                    $this->_translate[$this->_source] = array();
-                    $this->_translate[$this->_target] = array();
+                    if (!isset($this->_translate[$this->_source])) {
+                        $this->_translate[$this->_source] = array();
+                    }
+
+                    if (!isset($this->_translate[$this->_target])) {
+                        $this->_translate[$this->_target] = array();
+                    }
+
                     break;
                 case 'trans-unit':
                     $this->_transunit = true;
