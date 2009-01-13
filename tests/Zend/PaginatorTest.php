@@ -76,6 +76,11 @@ require_once 'Zend/Paginator/_files/TestTable.php';
 require_once 'Zend/Cache.php';
 
 /**
+ * @see Zend_Filter_Callback
+ */
+require_once 'Zend/Filter/Callback.php';
+
+/**
  * @category   Zend
  * @package    Zend_Paginator
  * @subpackage UnitTests
@@ -770,7 +775,30 @@ class Zend_PaginatorTest extends PHPUnit_Framework_TestCase
     	$json = $this->_paginator->toJson();
 
     	$expected = '"0":1,"1":2,"2":3,"3":4,"4":5,"5":6,"6":7,"7":8,"8":9,"9":10';
-    	
+
         $this->assertContains($expected, $json);
+    }
+
+    // ZF-5519
+    public function testFilter()
+    {
+        $filter = new Zend_Filter_Callback(array($this, 'filterCallback'));
+        $paginator = Zend_Paginator::factory(range(1, 10));
+        $paginator->setFilter($filter);
+
+        $page = $paginator->getCurrentItems();
+
+        $this->assertEquals(new ArrayIterator(range(10, 100, 10)), $page);
+    }
+
+    public function filterCallback($value)
+    {
+        $data = array();
+
+        foreach ($value as $number) {
+            $data[] = ($number * 10);
+        }
+
+        return $data;
     }
 }

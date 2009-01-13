@@ -121,6 +121,13 @@ class Zend_Paginator implements Countable, IteratorAggregate
     protected $_currentPageNumber = 1;
 
     /**
+     * Result filter
+     *
+     * @var Zend_Filter_Interface
+     */
+    protected $_filter = null;
+
+    /**
      * Number of items per page
      *
      * @var integer
@@ -562,6 +569,29 @@ class Zend_Paginator implements Countable, IteratorAggregate
     }
 
     /**
+     * Get the filter
+     *
+     * @return Zend_Filter_Interface
+     */
+    public function getFilter()
+    {
+        return $this->_filter;
+    }
+
+    /**
+     * Set a filter chain
+     *
+     * @param Zend_Filter_Interface $filter
+     * @return Zend_Paginator
+     */
+    public function setFilter(Zend_Filter_Interface $filter)
+    {
+        $this->_filter = $filter;
+
+        return $this;
+    }
+
+    /**
      * Returns an item from a page.  The current page is used if there's no
      * page sepcified.
      *
@@ -672,6 +702,12 @@ class Zend_Paginator implements Countable, IteratorAggregate
         $offset = ($pageNumber - 1) * $this->_itemCountPerPage;
 
         $items = $this->_adapter->getItems($offset, $this->_itemCountPerPage);
+
+        $filter = $this->getFilter();
+
+        if ($filter !== null) {
+            $items = $filter->filter($items);
+        }
 
         if (!$items instanceof Traversable) {
             $items = new ArrayIterator($items);
