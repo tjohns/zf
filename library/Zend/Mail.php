@@ -434,60 +434,17 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _encodeHeader($value)
     {
-    	//At first, No changes.
     	if (Zend_Mime::isPrintable($value))	{
             return $value;
-    	}
-
-    	//At second, Uses mb_encode_mimeheader() or iconv_mime_encode() function.
-    	$encoding = ($this->_headerEncoding === Zend_Mime::ENCODING_QUOTEDPRINTABLE) ? 'Q' : 'B';
-
-    	if (function_exists('mb_encode_mimeheader')) {
-
-    		$formerEncoding = mb_internal_encoding();
-            mb_internal_encoding($this->_charset);
-        	$encodedValue = mb_encode_mimeheader($value, $this->_charset,
-        	                                     $encoding, Zend_Mime::LINEEND);
-        	mb_internal_encoding($formerEncoding);
-        	return ' ' . $encodedValue;
-
-    	} elseif (function_exists('iconv_mime_encode')) {
-
-	        $mimePrefs = array(
-	            'scheme'           => $encoding,
-	            'input-charset'    => $this->_charset,
-	            'output-charset'   => $this->_charset,
-	            'line-length'      => Zend_Mime::LINELENGTH,
-	            'line-break-chars' => Zend_Mime::LINEEND
-	        );
-
-            $encodedValue = iconv_mime_encode('X', $value, $mimePrefs);
-            if ($encodedValue !== false) {
-            	//'X:' is dummy field name added by iconv_mime_encode().
-            	return preg_replace("#^X\:#", '', $encodedValue);
+    	} else {
+            $encoding = ($this->getHeaderEncoding() === Zend_Mime::ENCODING_QUOTEDPRINTABLE) ? 'Q' : 'B';
+            if ($encoding == 'Q') {
+                $encodedValue = Zend_Mime::encodeQuotedPrintableHeader($value, $this->getCharset(), Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
+            } elseif($encoding == 'B') {
+                $encodedValue = Zend_Mime::encodeBase64Header($value, $this->getCharset(), Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
             }
-
-    	}
-
-    	//At last, uses Zend_Mime function.
-        $prefix = '=?' . $this->_charset . '?' . $encoding . '?';
-        $suffix = '?=';
-    	$remainingLength = Zend_Mime::LINELENGTH - strlen($prefix) - strlen($suffix);
-
-        if ($encoding === 'Q') {
-
-        	$remainingLength ++;//last equal mark in each line will be removed.
-            $encodedValue = str_replace(array('?', ' ', '_'), array('???', '   ', '___'), $value);
-            $encodedValue = Zend_Mime::encodeQuotedPrintable($encodedValue, $remainingLength, Zend_Mime::LINEEND);
-            $encodedValue = str_replace(array('???', '   ', '___'), array('=3F', '=20', '=5F'), $encodedValue);
-            $encodedValue = str_replace('=' . Zend_Mime::LINEEND, $suffix . Zend_Mime::LINEEND . ' ' . $prefix, $encodedValue);
-
-        } else {
-        	$encodedValue = Zend_Mime::encodeBase64($value, $remainingLength, Zend_Mime::LINEEND);
-            $encodedValue = str_replace(Zend_Mime::LINEEND, $suffix . Zend_Mime::LINEEND . ' ' . $prefix, $encodedValue);
+            return $encodedValue;
         }
-
-        return ' ' . $prefix . $encodedValue . $suffix;
     }
 
     /**
@@ -963,10 +920,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addHeader($name, $value, $append = false)
     {
-    	$forbidden = array('to', 'cc', 'bcc', 'from', 'subject',
-    	                   'return-path', 'date', 'message-id',
-    	                   );
-        if (in_array(strtolower($name), $forbidden)) {
+        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path', 'date'))) {
             /**
              * @see Zend_Mail_Exception
              */
