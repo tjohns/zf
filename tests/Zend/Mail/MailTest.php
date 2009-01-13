@@ -165,31 +165,60 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
      */
     public function testHeaderEncoding()
     {
-        $this->markTestSkipped("UTF-8 characters should be specified in sequence syntax.");
-        $mail = new Zend_Mail();
+        $mail = new Zend_Mail("UTF-8");
         $mail->setBodyText('My Nice Test Text');
         // try header injection:
         $mail->addTo("testmail@example.com\nCc:foobar@example.com");
         $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
         // try special Chars in Header Fields:
-        $mail->setFrom('mymail@example.com', '�������');
-        $mail->addTo('testmail2@example.com', '�������');
-        $mail->addCc('testmail3@example.com', '�������');
-        $mail->setSubject('�������');
-        $mail->addHeader('X-MyTest', 'Test-�������', true);
+        $mail->setFrom('mymail@example.com', "\xC6\x98\xC6\x90\xC3\xA4\xC4\xB8");
+        $mail->addTo('testmail2@example.com', "\xC4\xA7\xC4\xAF\xC7\xAB");
+        $mail->addCc('testmail3@example.com', "\xC7\xB6\xC7\xB7");
+        $mail->setSubject("\xC7\xB1\xC7\xAE");
+        $mail->addHeader('X-MyTest', "Test-\xC7\xB1", true);
 
         $mock = new Zend_Mail_Transport_Mock();
         $mail->send($mock);
 
         $this->assertTrue($mock->called);
-        $this->assertContains('From: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
-        $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
-        $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?= <testmail2@example.com>', $mock->header);
-        $this->assertContains('Cc: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?= <testmail3@example.com>', $mock->header);
-        $this->assertContains('Subject: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
-        $this->assertContains('X-MyTest:', $mock->header);
-        $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
-        $this->assertContains('=?iso-8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
+        $this->assertContains(
+            'From: =?UTF-8?Q?=C6=98=C6=90=C3=A4=C4=B8?=',
+            $mock->header,
+            "From: Header was encoded unexpectedly."
+        );
+        $this->assertContains(
+            "Cc:foobar@example.com",
+            $mock->header
+        );
+        $this->assertNotContains(
+            "\nCc:foobar@example.com",
+            $mock->header,
+            "Injection into From: header is possible."
+        );
+        $this->assertContains(
+            '=?UTF-8?Q?=C4=A7=C4=AF=C7=AB?= <testmail2@example.com>',
+            $mock->header
+        );
+        $this->assertContains(
+            'Cc: =?UTF-8?Q?=C7=B6=C7=B7?= <testmail3@example.com>',
+            $mock->header
+        );
+        $this->assertContains(
+            'Subject: =?UTF-8?Q?=C7=B1=C7=AE?=',
+            $mock->header
+        );
+        $this->assertContains(
+            'X-MyTest:',
+            $mock->header
+        );
+        $this->assertNotContains(
+            "\nCc:foobar2@example.com",
+            $mock->header
+        );
+        $this->assertContains(
+            '=?UTF-8?Q?Test-=C7=B1?=',
+            $mock->header
+        );
     }
 
     /**
@@ -199,33 +228,58 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
      */
     public function testHeaderEncoding2()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('still working on cross-platform tests');
-        $mail = new Zend_Mail();
+        $mail = new Zend_Mail("UTF-8");
         $mail->setBodyText('My Nice Test Text');
         // try header injection:
         $mail->addTo("testmail@example.com\nCc:foobar@example.com");
         $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
         // try special Chars in Header Fields:
-        $mail->setFrom('mymail@example.com', '�������');
-        $mail->addTo('testmail2@example.com', '�������');
-        $mail->addCc('testmail3@example.com', '�������');
-        $mail->setSubject('�������');
-        $mail->addHeader('X-MyTest', 'Test-�������', true);
+        $mail->setFrom('mymail@example.com', "\xC6\x98\xC6\x90\xC3\xA4\xC4\xB8");
+        $mail->addTo('testmail2@example.com', "\xC4\xA7\xC4\xAF\xC7\xAB");
+        $mail->addCc('testmail3@example.com', "\xC7\xB6\xC7\xB7");
+        $mail->setSubject("\xC7\xB1\xC7\xAE");
+        $mail->addHeader('X-MyTest', "Test-\xC7\xB1", true);
 
         $mock = new Zend_Mail_Transport_Sendmail_Mock();
         $mail->send($mock);
 
         $this->assertTrue($mock->called);
-        $this->assertContains('From: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
-        $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
-        $this->assertContains('Cc: "=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail3@example.com>', $mock->header);
-        $this->assertContains('X-MyTest:', $mock->header);
-        $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
-        $this->assertContains('=?iso-8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
-
-        $this->assertNotContains('Subject: ', $mock->header);
-        $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->subject);
-        $this->assertContains('"=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=" <testmail2@example.com>', $mock->recipients, $mock->recipients);
+        $this->assertContains(
+            'From: =?UTF-8?Q?=C6=98=C6=90=C3=A4=C4=B8?=',
+            $mock->header,
+            "From: Header was encoded unexpectedly."
+        );
+        $this->assertNotContains(
+            "\nCc:foobar@example.com",
+            $mock->header,
+            "Injection into From: header is possible."
+        );
+        // To is done by mail() not in headers
+        $this->assertNotContains(
+            'To: =?UTF-8?Q?=C4=A7=C4=AF=C7=AB?= <testmail2@example.com>',
+            $mock->header
+        );
+        $this->assertContains(
+            'Cc: =?UTF-8?Q?=C7=B6=C7=B7?= <testmail3@example.com>',
+            $mock->header
+        );
+        // Subject is done by mail() not in headers
+        $this->assertNotContains(
+            'Subject: =?UTF-8?Q?=C7=B1=C7=AE?=',
+            $mock->header
+        );
+        $this->assertContains(
+            'X-MyTest:',
+            $mock->header
+        );
+        $this->assertNotContains(
+            "\nCc:foobar2@example.com",
+            $mock->header
+        );
+        $this->assertContains(
+            '=?UTF-8?Q?Test-=C7=B1?=',
+            $mock->header
+        );
     }
 
     /**
@@ -680,12 +734,12 @@ class Zend_Mail_MailTest extends PHPUnit_Framework_TestCase
         return array(
             array("Simple Ascii Subject"),
             array("Subject with US Specialchars: &%$/()"),
-            array("Gimme more €!"),
-            array("This is än germän multiline sübject with randöm ümläuts."),
-            array("Alle meine Entchen schwimmen in dem See, schwimmen in dem See, Köpfchen in das Wasser, Schwänzchen in die Höh!"),
-            array("ääääxxxxxääääääääääääääääääääääääääääääääääääääääääää"),
-            array("机器视觉组件生产商 机器视觉组件生产商"),
-            array("Ich. Denke. Also. Bin. Ich! (Ein Ümläütautomat!)"),
+            array("Gimme more \xe2\x82\xa0!"),
+            array("This is \xc3\xa4n germ\xc3\xa4n multiline s\xc3\xbcbject with rand\xc3\xb6m \xc3\xbcml\xc3\xa4uts."),
+            array("Alle meine Entchen schwimmen in dem See, schwimmen in dem See, K\xc3\xb6pfchen in das Wasser, Schw\xc3\xa4nzchen in die H\xc3\xb6h!"),
+            array("\xc3\xa4\xc3\xa4xxxxx\xc3\xa4\xc3\xa4\xc3\xa4\xc3\xa4\xc3\xa4\xc3\xa4\xc3\xa4"),
+            array("\xd0\x90\xd0\x91\xd0\x92\xd0\x93\xd0\x94\xd0\x95 \xd0\x96\xd0\x97\xd0\x98\xd0\x99 \xd0\x9a\xd0\x9b\xd0\x9c\xd0\x9d"),
+            array("Ich. Denke. Also. Bin. Ich! (Ein \xc3\xbcml\xc3\xa4\xc3\xbctautomat!)"),
         );
     }
 
