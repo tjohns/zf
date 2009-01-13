@@ -77,7 +77,7 @@ class Zend_Mail extends Zend_Mime_Message
      * Encoding of Mail headers
      * @var string
      */
-    protected $_encodingOfHeaders = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
+    protected $_headerEncoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
 
     /**
      * From: address
@@ -255,9 +255,9 @@ class Zend_Mail extends Zend_Mime_Message
      *
      * @return string
      */
-    public function getEncodingOfHeaders()
+    public function getHeaderEncoding()
     {
-        return $this->_encodingOfHeaders;
+        return $this->_headerEncoding;
     }
 
     /**
@@ -267,7 +267,7 @@ class Zend_Mail extends Zend_Mime_Message
      * @return Zend_Mail Provides fluent interface
      *
      */
-    public function setEncodingOfHeaders($encoding)
+    public function setHeaderEncoding($encoding)
     {
         $allowed = array(
             Zend_Mime::ENCODING_BASE64,
@@ -280,7 +280,7 @@ class Zend_Mail extends Zend_Mime_Message
             require_once 'Zend/Mail/Exception.php';
             throw new Zend_Mail_Exception('Invalid encoding "' . $encoding . '"');
         }
-        $this->_encodingOfHeaders = $encoding;
+        $this->_headerEncoding = $encoding;
 
         return $this;
     }
@@ -440,13 +440,16 @@ class Zend_Mail extends Zend_Mime_Message
     	}
 
     	//At second, Uses mb_encode_mimeheader() or iconv_mime_encode() function.
-    	$encoding = ($this->_encodingOfHeaders === Zend_Mime::ENCODING_QUOTEDPRINTABLE) ? 'Q' : 'B';
+    	$encoding = ($this->_headerEncoding === Zend_Mime::ENCODING_QUOTEDPRINTABLE) ? 'Q' : 'B';
 
     	if (function_exists('mb_encode_mimeheader')) {
 
-        	return mb_encode_mimeheader($value, $this->_charset,
-        	                            $encoding,
-        	                            Zend_Mime::LINEEND, Zend_Mime::LINELENGTH);
+    		$formerEncoding = mb_internal_encoding();
+            mb_internal_encoding($this->_charset);
+        	$encodedValue = mb_encode_mimeheader($value, $this->_charset,
+        	                                     $encoding, Zend_Mime::LINEEND);
+        	mb_internal_encoding($formerEncoding);
+        	return ' ' . $encodedValue;
 
     	} elseif (function_exists('iconv_mime_encode')) {
 
@@ -458,8 +461,11 @@ class Zend_Mail extends Zend_Mime_Message
 	            'line-break-chars' => Zend_Mime::LINEEND
 	        );
 
-            //Character X is dummy.
-	        return preg_replace("#^X\:#", '', iconv_mime_encode('X', $value, $mimePrefs));
+            $encodedValue = iconv_mime_encode('X', $value, $mimePrefs);
+            if ($encodedValue !== false) {
+            	//'X:' is dummy field name added by iconv_mime_encode().
+            	return preg_replace("#^X\:#", '', $encodedValue);
+            }
 
     	}
 
@@ -957,7 +963,10 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addHeader($name, $value, $append = false)
     {
-        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path', 'date'))) {
+    	$forbidden = array('to', 'cc', 'bcc', 'from', 'subject',
+    	                   'return-path', 'date', 'message-id',
+    	                   );
+        if (in_array(strtolower($name), $forbidden)) {
             /**
              * @see Zend_Mail_Exception
              */
