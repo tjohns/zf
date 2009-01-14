@@ -1007,8 +1007,10 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         $interInfo = $intersectionTable->info();
         $interDb   = $intersectionTable->getAdapter();
         $interName = $interInfo['name'];
+        $interSchema = isset($interInfo['schema']) ? $interInfo['schema'] : null;
         $matchInfo = $matchTable->info();
         $matchName = $matchInfo['name'];
+        $matchSchema = isset($matchInfo['schema']) ? $matchInfo['schema'] : null;
 
         $matchMap = $this->_prepareReference($intersectionTable, $matchTable, $matchRefRule);
 
@@ -1019,8 +1021,8 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         }
         $joinCond = implode(' AND ', $joinCond);
 
-        $select->from(array('i' => $interName))
-               ->joinInner(array('m' => $matchName), $joinCond)
+        $select->from(array('i' => $interName), Zend_Db_Select::SQL_WILDCARD, $interSchema)
+               ->joinInner(array('m' => $matchName), $joinCond, Zend_Db_Select::SQL_WILDCARD, $matchSchema)
                ->setIntegrityCheck(false);
 
         $callerMap = $this->_prepareReference($intersectionTable, $this->_getTable(), $callerRefRule);
