@@ -193,7 +193,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
                 arcane, but actual usage is relatively trivial:
             </para>
 
-            <programlisting role="php" <![CDATA[
+            <programlisting role="php"><![CDATA[
 $element = new Zend_Form_Element_File('foo');
 $element->setLabel('Upload an image:')
         ->setDestination('/var/www/upload');

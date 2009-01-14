@@ -10,6 +10,7 @@
         <xref linkend="zend.http.response" />).
     </para>
     <sect2 id="zend.http.client.usage">
+        <title>Using Zend_Http_Client</title>
         <para>
             The class constructor optionally accepts a URL as its first parameter
             (can be either a string or a Zend_Uri_Http object), and an optional
