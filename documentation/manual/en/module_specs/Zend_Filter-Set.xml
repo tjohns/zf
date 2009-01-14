@@ -12,7 +12,7 @@
             Returns the string <code>$value</code>, removing all but alphabetic and digit characters. This filter
             includes an option to also allow white space characters.
         </para>
-        
+
         <note>
             <para>
                 The alphabetic characters mean characters that makes up words in each language.
@@ -20,7 +20,7 @@
                 The language is specified by Zend_Locale.
             </para>
         </note>
-        
+
     </sect2>
 
     <sect2 id="zend.filter.set.alpha">
@@ -39,6 +39,8 @@
         </para>
     </sect2>
 
+    <xi:include href="Zend_Filter-Encryption.xml" />
+
     <sect2 id="zend.filter.set.digits">
         <title>Digits</title>
         <para>
@@ -52,6 +54,8 @@
             Returns directory name component of path.
         </para>
     </sect2>
+
+    <xi:include href="Zend_Filter-Encryption.xml" />
 
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
