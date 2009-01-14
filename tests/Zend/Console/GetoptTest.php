@@ -505,4 +505,30 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
           )
         );
     }
+
+    /**
+     * @group ZF-5345
+     */
+    public function testUsingDashWithoutOptionNameAsLastArgumentIsRecognizedAsRemainingArgument()
+    {
+        $opts = new Zend_Console_Getopt("abp:", array("-"));
+        $opts->parse();
+
+        $this->assertEquals(1, count($opts->getRemainingArgs()));
+        $this->assertEquals(array("-"), $opts->getRemainingArgs());
+    }
+
+    /**
+     * @group ZF-5345
+     */
+    public function testUsingDashWithoutOptionNotAsLastArgumentThrowsException()
+    {
+        $opts = new Zend_Console_Getopt("abp:", array("-", "file1"));
+        try {
+            $opts->parse();
+            $this->fail();
+        } catch(Exception $e) {
+            $this->assertTrue($e instanceof Zend_Console_Getopt_Exception);
+        }
+    }
 }
