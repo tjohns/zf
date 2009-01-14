@@ -228,11 +228,16 @@ class Zend_Service_Amazon
             $code = $xpath->query('//az:Error/az:Code/text()')->item(0)->data;
             $message = $xpath->query('//az:Error/az:Message/text()')->item(0)->data;
 
-            /**
-             * @see Zend_Service_Exception
-             */
-            require_once 'Zend/Service/Exception.php';
-            throw new Zend_Service_Exception("$message ($code)");
+            switch($code) {
+                case 'AWS.ECommerceService.NoExactMatches':
+                    break;
+                default:
+                    /**
+                     * @see Zend_Service_Exception
+                     */
+                    require_once 'Zend/Service/Exception.php';
+                    throw new Zend_Service_Exception("$message ($code)");
+            }
         }
     }
 }
