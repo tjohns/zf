@@ -319,7 +319,7 @@ class Zend_Http_Cookie
         }
 
         if ($name !== '') {
-            return new Zend_Http_Cookie($name, $value, $domain, $expires, $path, $secure);
+            return new self($name, $value, $domain, $expires, $path, $secure);
         } else {
             return false;
         }
