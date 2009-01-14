@@ -37,6 +37,7 @@ require_once 'Zend/Log/Writer/DbTest.php';
 if (PHP_OS != 'AIX') {
     require_once 'Zend/Log/Writer/FirebugTest.php';
 }
+require_once 'Zend/Log/Writer/MailTest.php';
 require_once 'Zend/Log/Writer/MockTest.php';
 require_once 'Zend/Log/Writer/NullTest.php';
 require_once 'Zend/Log/Writer/StreamTest.php';
@@ -74,6 +75,7 @@ class Zend_Log_AllTests
         if (PHP_OS != 'AIX') {
             $suite->addTestSuite('Zend_Log_Writer_FirebugTest');
         }
+        $suite->addTestSuite('Zend_Log_Writer_MailTest');
         $suite->addTestSuite('Zend_Log_Writer_MockTest');
         $suite->addTestSuite('Zend_Log_Writer_NullTest');
         $suite->addTestSuite('Zend_Log_Writer_StreamTest');
