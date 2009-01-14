@@ -36,22 +36,22 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     /**
      * @var Zend_Soap_Wsdl
      */
-    private $_wsdl = null;
+    protected $_wsdl = null;
 
     /**
      * @var Zend_Server_Reflection
      */
-    private $_reflection = null;
+    protected $_reflection = null;
 
     /**
      * @var array
      */
-    private $_functions = array();
+    protected $_functions = array();
 
     /**
      * @var boolean
      */
-    private $_strategy;
+    protected $_strategy;
 
     /**
      * Url where the WSDL file will be available at.
