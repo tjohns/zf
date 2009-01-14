@@ -98,11 +98,13 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                           ->setParam('noErrorHandler', true)
                           ->setParam('noViewRenderer', true)
                           ->throwExceptions(false);
+                          
+        Zend_Wildfire_Plugin_FirePhp::getInstance()->setOption('includeLineNumbers', false);
 
         $this->_request->setUserAgentExtensionEnabled(true);
     }
 
-    protected function _setupWithoutFrontController()
+    protected function _setupWithoutFrontController($ModifyOptions=true)
     {
         $this->_request = new Zend_Wildfire_WildfireTest_Request();
         $this->_response = new Zend_Wildfire_WildfireTest_Response();
@@ -111,6 +113,10 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $channel->setRequest($this->_request);
         $channel->setResponse($this->_response);
 
+        if ($ModifyOptions) {
+          Zend_Wildfire_Plugin_FirePhp::getInstance()->setOption('includeLineNumbers', false);
+        }
+        
         $this->_request->setUserAgentExtensionEnabled(true);
     }
 
@@ -210,7 +216,8 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
 
     public function testSetControllerPluginStackIndex2()
     {
-        $this->_setupWithoutFrontController();
+        $this->_setupWithoutFrontController(false);
+        
         $controller = Zend_Controller_Front::getInstance();
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 
@@ -320,10 +327,13 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($this->_response->verifyHeaders($headers));
     }
-
+    
+    /**
+     * @group ZF-4927
+     */
     public function testAdvancedLogging()
     {
-    	$this->markTestSkipped('Mark as skipped to avoid ZF unit tests stopping');
+        Zend_Wildfire_Plugin_FirePhp::getInstance()->setOption('maxTraceDepth',0);
 
         $this->_setupWithoutFrontController();
 
@@ -553,19 +563,19 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
 
     public function testChannelFlush()
     {
-        $this->_setupWithoutFrontController();
+        $this->_setupWithoutFrontController(false);
 
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 
-        $this->assertFalse($channel->flush());
+        $this->assertFalse($channel->flush(), 'Nothing to flush - No messages');
 
         Zend_Wildfire_Plugin_FirePhp::send('Hello World');
 
-        $this->assertTrue($channel->flush());
+        $this->assertTrue($channel->flush(), 'One message to flush');
 
         $this->_request->setUserAgentExtensionEnabled(false);
 
-        $this->assertFalse($channel->flush());
+        $this->assertFalse($channel->flush(), 'Nothing to flush - Extension not in UserAgent');
     }
 
     public function testFirePhpPluginSubclass()
@@ -675,7 +685,163 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                           && substr($messages[4]['value'],0,10)=='| Data 318'
                           && substr($messages[4]['value'],-7,7)=='399"]]|');
     }
+    
+    /**
+     * @group ZF-5540
+     */
+    public function testOptions()
+    {
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        
+        $_options = array(
+            'traceOffset' => 1, /* The offset in the trace which identifies the source of the message */
+            'maxTraceDepth' => 99, /* Maximum depth for stack traces */
+            'maxObjectDepth' => 10, /* The maximum depth to traverse objects when encoding */
+            'maxArrayDepth' => 20, /* The maximum depth to traverse nested arrays when encoding */
+            'includeLineNumbers' => true /* Whether to include line and file info for each message */
+        );
+              
+        $this->assertEquals($firephp->getOptions(), $_options, 'Ensure defaults stay the same');
+  
+        $this->assertEquals($firephp->setOption('includeLineNumbers',false),
+                            $_options['includeLineNumbers'],
+                            'Should return old value');
+        
+        $this->assertEquals($firephp->getOption('includeLineNumbers'),
+                            false,
+                            'Should contain new value');
+    }
+    
+    /**
+     * @group ZF-5540
+     */
+    public function testObjectFilter()
+    {
+        $this->_setupWithoutFrontController();
+
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $obj = new Zend_Wildfire_WildfireTest_TestObject1();
+
+        $firephp->send($obj);
+
+        $firephp->setObjectFilter('Zend_Wildfire_WildfireTest_TestObject1',array('value'));
+
+        $firephp->send($obj);
+
+        $messages = $protocol->getMessages();
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [0];
+
+        $this->assertEquals($message,
+                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value"}]');
+        
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [1];
+
+        $this->assertEquals($message,
+                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"** Excluded by Filter **"}]');
+    }
+    
+    public function testObjectMembers()
+    {
+        $this->_setupWithoutFrontController();
+
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $obj = new Zend_Wildfire_WildfireTest_TestObject2();
+
+        $firephp->send($obj);
+
+        $messages = $protocol->getMessages();
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [0];
+
+        if (version_compare(phpversion(), '5.3' , '<')) {
+          
+          $this->assertEquals($message,
+                              '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject2","public:public":"Public","private:private":"Private","protected:protected":"Protected","public:static:static":"Static","private:static:staticPrivate":"** Need PHP 5.3 to get value **","protected:static:staticProtected":"** Need PHP 5.3 to get value **"}]');
+          
+        } else
+        if (version_compare(phpversion(), '5.3' , '>=')) {
+          // TODO
+        }
+    }
+    
+    /**
+     * @group ZF-5540
+     */
+    public function testMaxObjectArrayDepth()
+    {
+        $this->_setupWithoutFrontController();
+
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+        $firephp->setOption('maxObjectDepth',2);
+        $firephp->setOption('maxArrayDepth',1);
+
+        $obj = new Zend_Wildfire_WildfireTest_TestObject1();
+        $obj->testArray = array('val1',array('val2',array('Hello World')));
+        $obj->child = clone $obj;
+        $obj->child->child = clone $obj;
+
+        $firephp->send($obj);
+
+
+        $table = array();
+        $table[] = array('Col1', 'Col2');
+        $table[] = array($obj, $obj);
+        
+        $firephp->send($table, 'Label', Zend_Wildfire_Plugin_FirePhp::TABLE);
+
+
+        $messages = $protocol->getMessages();
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [0];
+
+        $this->assertEquals($message,
+                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]');
+                
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [1];
+
+        $this->assertEquals($message,
+                            '[{"Type":"TABLE","Label":"Label"},[["Col1","Col2"],[{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]]]');
+    }
+        
 }
+
+class Zend_Wildfire_WildfireTest_TestObject1
+{
+  var $name = 'Name';
+  var $value = 'Value';
+}
+
+class Zend_Wildfire_WildfireTest_TestObject2
+{
+  var $public = 'Public';
+  private $private = 'Private';
+  protected $protected = 'Protected';
+  
+  static $static = 'Static';
+  static private $staticPrivate = 'StaticPrivate';
+  static protected $staticProtected = 'StaticProtected';
+}
+
 
 class Zend_Wildfire_WildfireTest_JsonEncodingTestClass
 {

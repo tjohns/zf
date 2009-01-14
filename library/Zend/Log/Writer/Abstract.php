@@ -83,7 +83,8 @@ abstract class Zend_Log_Writer_Abstract
      * @param  Zend_Log_Formatter_Interface $formatter
      * @return void
      */
-    public function setFormatter($formatter) {
+    public function setFormatter($formatter)
+    {
         $this->_formatter = $formatter;
     }
 
