@@ -434,4 +434,21 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
     	$this->assertType('array', $cookies);
     	$this->assertEquals(2, count($cookies));    	
     }
+
+    public function testIteratorAndCountable()
+    {
+        $jar = new Zend_Http_CookieJar();
+        $cookies = array(
+            Zend_Http_Cookie::fromString('foo1=bar1; domain=.example.com; path=/a/b'),
+            Zend_Http_Cookie::fromString('foo2=bar2; domain=.example.com; path=/a/b/')
+        );
+        foreach ($cookies as $cookie) $jar->addCookie($cookie);
+        foreach ($jar as $cookie) {
+            $this->assertType('Zend_Http_Cookie', $cookie);
+        }
+        $this->assertEquals(2, count($jar));
+        $this->assertFalse($jar->isEmpty());
+        $jar->reset();
+        $this->assertTrue($jar->isEmpty());
+    }
 }
