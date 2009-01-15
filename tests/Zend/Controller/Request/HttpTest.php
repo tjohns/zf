@@ -626,6 +626,18 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $test = $request->getRequestUri();
         $this->assertEquals('/foo/bar', $test);
     }
+
+    /**
+     * @group ZFI-233
+     */
+    public function testStrippingProtocolHostAndPortShouldStripFromBeginningOfUri()
+    {
+        $_SERVER['REQUEST_URI'] = 'http://foo.example.com/foo/bar?r=http://foo.example.com/bar/baz';
+        $_SERVER['HTTP_HOST']   = 'foo.example.com';
+        $request = new Zend_Controller_Request_Http();
+        $test = $request->getRequestUri();
+        $this->assertEquals('/foo/bar?r=http://foo.example.com/bar/baz', $test);
+    }
 }
 
 // Call Zend_Controller_Request_HttpTest::main() if this source file is executed directly.
