@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13196 -->
+<!-- EN-Revision: 13626 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Rédacteurs (Writers)</title>
 
@@ -74,6 +74,7 @@ $logger->info("Message d'information");
     </sect2>
 
     <xi:include href="Zend_Log-Writers-Firebug.xml" />
+    <xi:include href="Zend_Log-Writers-Mail.xml" />
 
     <sect2 id="zend.log.writers.null">
         <title>Déraciner les rédacteurs</title>

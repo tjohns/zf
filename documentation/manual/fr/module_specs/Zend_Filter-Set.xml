@@ -1,5 +1,5 @@
-<!-- EN-Revision: 12759 -->
-<sect1 id="zend.filter.set">
+<!-- EN-Revision: 13630 -->
+<sect1 id="zend.filter.set" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Classes de filtre standards</title>
 
     <para>Zend Framework est fourni avec un jeu de filtres standards, qui sont directement utilisables.</para>
@@ -31,6 +31,8 @@
         fichier.</para>
     </sect2>
 
+    <xi:include href="Zend_Filter-Decryption.xml" />
+
     <sect2 id="zend.filter.set.digits">
         <title>Digits</title>
 
@@ -42,6 +44,8 @@
 
         <para>Retourne la partie correspondant au nom de dossier dans le chemin spécifié.</para>
     </sect2>
+
+    <xi:include href="Zend_Filter-Encryption.xml" />
 
     <sect2 id="zend.filter.set.htmlentities">
         <title>HtmlEntities</title>
