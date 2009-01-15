@@ -225,6 +225,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                         $result[$form . '_' . $number . '_']['validated'] = false;
                         $result[$form . '_' . $number . '_']['received']  = false;
                         $result[$form . '_' . $number . '_']['filtered']  = false;
+                        $result[$form]['multifiles'][] = $form . '_' . $number . '_';
                     }
                 }
             } else {

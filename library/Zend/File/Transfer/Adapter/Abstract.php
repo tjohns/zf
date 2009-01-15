@@ -1243,6 +1243,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $found[] = $file;
                         break;
                     }
+
+                    if (isset($content['multifiles'])) {
+                        foreach ($content['multifiles'] as $multifile) {
+                            $found[] = $multifile;
+                        }
+                    }
                 }
 
                 if (empty($found)) {
