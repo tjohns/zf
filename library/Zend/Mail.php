@@ -920,7 +920,10 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addHeader($name, $value, $append = false)
     {
-        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path', 'date'))) {
+        $prohibit = array('to', 'cc', 'bcc', 'from', 'subject',
+                          'return-path', 'date', 'message-id',
+                         );
+        if (in_array(strtolower($name), $prohibit)) {
             /**
              * @see Zend_Mail_Exception
              */
