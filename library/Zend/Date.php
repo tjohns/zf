@@ -174,8 +174,10 @@ class Zend_Date extends Zend_Date_DateObject
         }
 
         if ($date === null) {
-            $date = self::now($locale);
-            if (($part !== null) && ($part !== self::TIMESTAMP)) {
+            if ($part === null) {
+                $date = time();
+            } else if ($part !== self::TIMESTAMP) {
+                $date = self::now($locale);
                 $date = $date->get($part);
             }
         }
