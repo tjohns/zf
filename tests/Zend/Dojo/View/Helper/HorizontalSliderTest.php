@@ -177,13 +177,13 @@ class Zend_Dojo_View_Helper_HorizontalSliderTest extends PHPUnit_Framework_TestC
         );
     }
 
-    public function disabledShouldAllowDeclarativeDijitCreation()
+    public function testShouldAllowDeclarativeDijitCreation()
     {
         $html = $this->getElement();
         $this->assertRegexp('/<div[^>]*(dojoType="dijit.form.HorizontalSlider")/', $html, $html);
     }
 
-    public function disabledShouldAllowProgrammaticDijitCreation()
+    public function testShouldAllowProgrammaticDijitCreation()
     {
         Zend_Dojo_View_Helper_Dojo::setUseProgrammatic();
         $html = $this->getElement();
@@ -191,13 +191,13 @@ class Zend_Dojo_View_Helper_HorizontalSliderTest extends PHPUnit_Framework_TestC
         $this->assertNotNull($this->view->dojo()->getDijit('elementId-slider'));
     }
 
-    public function disabledShouldCreateOnChangeAttributeByDefault()
+    public function testShouldCreateOnChangeAttributeByDefault()
     {
         $html = $this->getElement();
         $this->assertContains('onChange="dojo.byId(\'elementId\').value = arguments[0];"', $html, $html);
     }
 
-    public function disabledShouldCreateHiddenElementWithValue()
+    public function testShouldCreateHiddenElementWithValue()
     {
         $html = $this->getElement();
         if (!preg_match('/(<input[^>]*(type="hidden")[^>]*>)/', $html, $m)) {
@@ -207,16 +207,16 @@ class Zend_Dojo_View_Helper_HorizontalSliderTest extends PHPUnit_Framework_TestC
         $this->assertContains('value="', $m[1]);
     }
 
-    public function disabledShouldCreateTopAndBottomDecorationsWhenRequested()
+    public function testShouldCreateTopAndBottomDecorationsWhenRequested()
     {
         $html = $this->getElement();
         $this->assertRegexp('/<div[^>]*(dojoType="dijit.form.HorizontalRule")/', $html, $html);
-        $this->assertRegexp('/<div[^>]*(dojoType="dijit.form.HorizontalRuleLabels")/', $html, $html);
+        $this->assertRegexp('/<ol[^>]*(dojoType="dijit.form.HorizontalRuleLabels")/', $html, $html);
         $this->assertContains('topDecoration', $html);
         $this->assertContains('bottomDecoration', $html);
     }
 
-    public function disabledShouldIgnoreLeftAndRightDecorationsWhenPassed()
+    public function testShouldIgnoreLeftAndRightDecorationsWhenPassed()
     {
         $html = $this->getElement();
         $this->assertNotContains('leftDecoration', $html);
@@ -226,12 +226,12 @@ class Zend_Dojo_View_Helper_HorizontalSliderTest extends PHPUnit_Framework_TestC
     /**
      * @expectedException Zend_Dojo_View_Exception
      */
-    public function disabledSliderShouldRaiseExceptionIfMissingRequiredParameters()
+    public function testSliderShouldRaiseExceptionIfMissingRequiredParameters()
     {
         $this->helper->prepareSlider('foo', 4);
     }
 
-    public function disabledShouldAllowPassingLabelParametersViaDecorationParameters()
+    public function testShouldAllowPassingLabelParametersViaDecorationParameters()
     {
         $html = $this->helper->horizontalSlider(
             'elementId', 
@@ -308,6 +308,16 @@ class Zend_Dojo_View_Helper_HorizontalSliderTest extends PHPUnit_Framework_TestC
         $this->assertContains('id="slidertab-slide1-slider"', $html);
         $this->assertContains('id="slidertab-slide1-slider-topDecoration"', $html);
         $this->assertContains('id="slidertab-slide1-slider-topDecoration-labels"', $html);
+    }
+
+    /**
+     * @group ZF-5220
+     */
+    public function testLabelDivShouldOpenAndCloseBeforeLabelOl()
+    {
+        $html = $this->getElement();
+        $this->assertNotRegexp('/<div[^>]*(dojoType="dijit.form.HorizontalRuleLabels")[^>]*><\/div>\s*<ol/s', $html, $html);
+        $this->assertRegexp('/<div[^>]*><\/div>\s*<ol[^>]*(dojoType="dijit.form.HorizontalRuleLabels")/s', $html, $html);
     }
 }
 
