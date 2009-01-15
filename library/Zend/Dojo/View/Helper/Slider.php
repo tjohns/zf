@@ -216,7 +216,19 @@ abstract class Zend_Dojo_View_Helper_Slider extends Zend_Dojo_View_Helper_Dijit
 
         $labelList = $this->_prepareLabelsList($id, $labelsParams, $labelsAttribs, $labels);
 
-        return $this->_createLayoutContainer($id, $labelList, $containerParams, $containerAttribs, $dijit);
+        $dijit = 'dijit.form.' . ucfirst($this->_sliderType) . 'Rule';
+        $containerAttribs['id'] = $id;
+        $containerAttribs = $this->_prepareDijit($containerAttribs, $containerParams, 'layout', $dijit);
+        $containerHtml = '<div' . $this->_htmlAttribs($containerAttribs) . "></div>\n";
+
+        switch ($position) {
+            case 'topDecoration':
+            case 'leftDecoration':
+                return $labelList . $containerHtml;
+            case 'bottomDecoration':
+            case 'rightDecoration':
+                return $containerHtml . $labelList;
+        }
     }
 
     /**
