@@ -1,6 +1,6 @@
-<!-- EN-Revision: 13468 -->
+<!-- EN-Revision: 13560 -->
 <sect1 id="zend.console.getopt.introduction">
-    <title>Einführung in Getopt</title>
+    <title>Einführung</title>
     <para>
         Die <code>Zend_Console_Getopt</code> Klasse hilft Kommandozeilen Anwendungen
         Ihre Optionen und Argumente zu Analysieren.

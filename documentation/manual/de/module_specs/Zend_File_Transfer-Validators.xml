@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13327 -->
+<!-- EN-Revision: 13540 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -143,6 +143,14 @@
                 Fehler geführt hat. Dieser darf nicht gesetzt werden, da er automatisch durch
                 <code>Zend_File_Transfer</code> selbst gesetzt wird. Deshalb darf diese Prüfung nicht
                 direkt verwendet werden. Man sollte nur wissen das Sie existiert.
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>WordCount</code>: Diese Prüfung ist fähig die Anzahl von Wörtern in Dateien zu
+                prüfen. Sie bietet eine Mindest- und Maximalanzahl und wirft einen Fehler wenn eine der
+                Grenzen überschritten wird.
             </para>
         </listitem>
     </itemizedlist>
@@ -1309,6 +1317,53 @@ $upload->addValidator('Size',
                             'bytestring' => false));
 ]]>
             </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.wordcount">
+        <title><emphasis role="strong">WordCount</emphasis> Prüfung</title>
+
+        <para>
+            Die <code>WordCount</code> Prüfung checkt die Anzahl von Wörtern in angegebenen Dateien. Sie
+            Unterstützt die folgenden Optionen:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: Setzt die mindeste Anzahl an Wörtern die gefunden werden soll.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: Setzt die maximale Anzahl an Wörtern die gefunden werden soll.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Wenn man diese Prüfung mit einem String oder Integer initiiert, wird der Wert als
+            <code>max</code> verwendet. Oder man verwendet die <code>setMin()</code> und <code>setMax()</code>
+            Methoden um beide Optionen im Nachhinein zu setzen und <code>getMin()</code> sowie
+            <code>getMax()</code> um die aktuell gesetzten Werte zu erhalten.
+        </para>
+
+        <example id="zend.file.transfer.validators.wordcount.example">
+            <title>Verwendung der WordCount Prüfung</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// Begrenzt die Anzahl der Wörter in Dateien auf maximal 2000
+$upload->addValidator('WordCount', false, 2000);
+
+// Begrenzt die Anzahl der Wörter in Dateien auf maximal 5000
+// und mindestens 1000 Wörter
+$upload->addValidator('WordCount', false, array('min' =>1000, 'max' => 5000));
+]]>
+            </programlisting>
+
         </example>
     </sect2>
 </sect1>

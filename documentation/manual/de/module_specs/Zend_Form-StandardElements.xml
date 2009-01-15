@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13559 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -50,9 +50,9 @@
 
         <para>
             Das Captcha Formularelement erlaubt es den
-            <link linkend="zend.captcha.adapters">Zend_Captcha Adapter</link> der als Formular Captcha
+            <link linkend="zend.captcha.adapters">Zend_Captcha Adapter</link> der als Formular CAPTCHA
             verwendet werden soll anzupassen. Er setzt dann diesen Adapter als Prüfung für das Objekt,
-            und verwendet den Captcha Dekorator für die Darstellung (welche den Captcha Adapter aufruft).
+            und verwendet den Captcha Dekorator für die Darstellung (welche den CAPTCHA Adapter aufruft).
         </para>
 
         <para>
@@ -69,7 +69,7 @@ $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
 
         <para>
             Captcha's können dann durch Verwendung der <code>setCaptcha()</code> Methode registriert werden,
-            welche entweder eine konkrete Captcha Instanz, oder den Kurznamen des Captcha Adapters nimmt:
+            welche entweder eine konkrete CAPTCHA Instanz, oder den Kurznamen des CAPTCHA Adapters nimmt:
         </para>
 
         <programlisting role="php"><![CDATA[

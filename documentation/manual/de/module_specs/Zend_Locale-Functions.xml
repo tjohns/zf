@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13368 -->
+<!-- EN-Revision: 13527 -->
 <sect1 id="zend.locale.functions">
 
     <title>Zend_Locale verwenden</title>
@@ -586,6 +586,19 @@ print $locale->getTranslation('de', 'language', 'zh');
                             lokalisierte Stadt wird als Arrayschlüssel und der ISO Name der Zeitzone als
                             Arraywert zurückgegeben</entry>
                     </row>
+                    <row>
+                        <entry><emphasis role="strong">PhoneToTerritory</emphasis></entry>
+                        <entry>Gibt eine Liste von Telefoncodes zurück die in einem bestimmten Territorium
+                            verwendet werden. Das Territorium (Region) wird als Arrayschlüssel und der
+                            Telefoncode als Arraywert verwendet</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToPhone</emphasis></entry>
+                        <entry>Gibt eine Liste von Territorien zurück in denen ein Telefoncode verwendet
+                            wird. Der Telefoncode wird als Arrayschlüssel und das Territorium (Region) als
+                            Arraywert verwendet. Wenn ein Telefoncode in verschiedenen Territorien verwendet
+                            wird, sind diese mit einem Leerzeichen getrennt</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -967,6 +980,19 @@ print $locale->getTranslation('de', 'language', 'zh');
                         <entry><emphasis role="strong">TimezoneToCity</emphasis></entry>
                         <entry>Gibt die ISO Zeitzone für einen angegebenen lokalisierten Namen einer Stadt
                             zurück. Nicht für alle Städte existiert eine Zeitzone</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">PhoneToTerritory</emphasis></entry>
+                        <entry>Gibt den Telefoncode für ein angegebenes Territorium (Region) zurück.
+                            Der Code des Territoriums muß als ISO3166 String angegeben werden, z.B.
+                            'AT' für Österreich</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToPhone</emphasis></entry>
+                        <entry>Gibt das Territorium (Region) zurück in dem ein Telefoncode verwendet wird.
+                            Der Telefoncode muß als reiner Integerwert angegeben werden, z.B. '43' für
+                            +43. Wenn ein Telefoncode verwendet wird der in mehreren Territorien (Regionen)
+                            verwendet wird, werden diese Territorien mit einem Leerzeichen getrennt</entry>
                     </row>
                 </tbody>
             </tgroup>

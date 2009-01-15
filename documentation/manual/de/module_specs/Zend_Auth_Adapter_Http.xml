@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13537 -->
 <sect1 id="zend.auth.adapter.http">
 
     <title>HTTP Authentication Adapter</title>
@@ -200,7 +200,7 @@
                 durch einen Doppelpunkt. Das Zeugnis Feld ist für den Datei Auflöser nicht sichtbar; es gibt
                 den Wert einfach, wie er ist, an den Aufrufer zurück. Deswegen kann dieses Dateiformat sowohl
                 Basis als auch Digest Authentifizierung behandeln. In der Basis Authentifizierung sollte
-                das Zeugnis Feld das Base64 kodierte Benutzer Passwort sein. In der Digest Authentifizierung
+                das Zeugnis Feld im Klartext stehen. In der Digest Authentifizierung
                 sollte es der oben beschriebene MD5 Hash sein.
             </para>
 
