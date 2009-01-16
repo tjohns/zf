@@ -438,10 +438,19 @@ abstract class Zend_Db_TestUtil_Common
         }
     }
 
+    protected function _getSqlCreateView($viewName)
+    {
+        return 'CREATE VIEW ' . $this->_db->quoteIdentifier($viewName, true);
+    }
+
+    protected function _getSqlDropView($viewName)
+    {
+        return 'DROP VIEW ' . $this->_db->quoteIdentifier($viewName, true);
+    }
+
     public function createView()
     {
-        $sql = 'CREATE VIEW '
-             . $this->_db->quoteIdentifier('temp_view', true)
+        $sql = $this->_getSqlCreateView('temp_view')
              . ' AS SELECT * FROM '
              . $this->_db->quoteIdentifier('zfbugs', true);
         $result = $this->_rawQuery($sql);
@@ -452,7 +461,7 @@ abstract class Zend_Db_TestUtil_Common
 
     public function dropView()
     {
-        $sql = 'DROP VIEW ' . $this->_db->quoteIdentifier('temp_view', true);
+        $sql = $this->_getSqlDropView('temp_view');
         $result = $this->_rawQuery($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);
