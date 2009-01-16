@@ -725,9 +725,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
         }
 
         // Set Zend_Soap_Server error handler
-        $displayErrorsOriginalState = ini_get('display_errors');
-        ini_set('display_errors', false);
-        set_error_handler(array($this, 'handlePhpErrors'), E_USER_ERROR);
+        $displayErrorsOriginalState = $this->_initializeSoapErrorContext();
 
         require_once 'Zend/Soap/Server/Exception.php';
         try {
@@ -762,6 +760,19 @@ class Zend_Soap_Server implements Zend_Server_Interface
         }
 
         return $this->_response;
+    }
+
+    /**
+     * Method initalizes the error context that the SOAPServer enviroment will run in.
+     *
+     * @return boolean display_errors original value
+     */
+    protected function _initializeSoapErrorContext()
+    {
+        $displayErrorsOriginalState = ini_get('display_errors');
+        ini_set('display_errors', false);
+        set_error_handler(array($this, 'handlePhpErrors'), E_USER_ERROR);
+        return $displayErrorsOriginalState;
     }
 
     /**
