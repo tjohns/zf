@@ -82,7 +82,13 @@ class Zend_Db_Table_Select extends Zend_Db_Select
     public function __construct(Zend_Db_Table_Abstract $table)
     {
         parent::__construct($table->getAdapter());
+
         $this->setTable($table);
+
+        $name   = $table->info(Zend_Db_Table_Abstract::NAME);
+        $schema = $table->info(Zend_Db_Table_Abstract::SCHEMA);
+
+        $this->joinInner($name, null, self::SQL_WILDCARD, $schema);
     }
 
     /**
@@ -106,17 +112,6 @@ class Zend_Db_Table_Select extends Zend_Db_Select
         $this->_adapter = $table->getAdapter();
         $this->_info    = $table->info();
         $this->_table   = $table;
-
-        if (!$this->_queryModified) {
-            $name   = $this->_info[Zend_Db_Table_Abstract::NAME];
-            $schema = null;
-
-            if (isset($this->_info[Zend_Db_Table_Abstract::SCHEMA])) {
-                $schema = $this->_info[Zend_Db_Table_Abstract::SCHEMA];
-            }
-
-            $this->joinInner($name, null, self::SQL_WILDCARD, $schema);
-        }
 
         return $this;
     }
@@ -199,8 +194,8 @@ class Zend_Db_Table_Select extends Zend_Db_Select
         $tableName = $this->getTable()->info(Zend_Db_Table_Abstract::NAME);
 
         if (!$this->_queryModified && in_array($tableName, (array) $name)) {
-            $this->reset(self::FROM)
-                 ->reset(self::COLUMNS);
+            $this->reset(self::FROM);
+            $this->reset(self::COLUMNS);
         }
 
         $this->_queryModified = true;
