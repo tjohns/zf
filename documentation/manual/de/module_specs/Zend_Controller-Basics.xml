@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.basics">
     <title>Zend_Controller Grundlagen</title>
 
@@ -120,7 +120,7 @@
                 </para>
 
                 <note>
-                    <title>CaseNamensKonvention</title>
+                    <title>Konventionen von Namens-Schreibweisen</title>
 
                     <para>
                         Da Menschen grundsätzlich inkonsistent sind im Behandeln und der Gründlichkeit beim

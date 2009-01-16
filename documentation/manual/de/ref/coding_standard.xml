@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12892 -->
+<!-- EN-Revision: 13549 -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
@@ -220,7 +220,7 @@ widgetFactory()
 
             <para>
                  Für Methoden in Objekten die mit dem "private" oder "protected" Modifikator deklariert
-                 sind, muß das erste Zeichen des variablen Namens ein einzelner Unterstrich sein. Das
+                 sind, muß das erste Zeichen des Namens der Methode ein einzelner Unterstrich sein. Das
                  ist die einzige akzeptable Anwendung von einem Unterstrich im Namen einer Methode.
                  Methoden die als "public" deklariert sind sollten nie einem Unterstrich enthalten.
             </para>

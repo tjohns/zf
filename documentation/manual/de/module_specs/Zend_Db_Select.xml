@@ -1,11 +1,11 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13564 -->
 <sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Übersicht des Select Objekts</title>
+        <title>Einführung</title>
 
         <para>
             Das Zend_Db_Select Objekt repräsentiert ein SQL <code>SELECT</code> Anfrage Statement.

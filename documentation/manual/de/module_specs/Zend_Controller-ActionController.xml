@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12876 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
@@ -457,7 +457,7 @@ class MyController extends Zend_Controller_Action
         </para>
 
         <example id="zend.controller.action.subclassing.example-call">
-            <title>Wie nicht-vorhandene Aktionen behandelt werden</title>
+            <title>Behandeln nicht-vorhandener Aktionen</title>
 
             <para>
                 Wenn eine Anfrage an einen Kontroller durchgeführt wird die eine undefinierte Aktions Methode

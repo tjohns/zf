@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13540 -->
+<!-- EN-Revision: 13617 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -1360,7 +1360,7 @@ $upload->addValidator('WordCount', false, 2000);
 
 // Begrenzt die Anzahl der Wörter in Dateien auf maximal 5000
 // und mindestens 1000 Wörter
-$upload->addValidator('WordCount', false, array('min' =>1000, 'max' => 5000));
+$upload->addValidator('WordCount', false, array('min' => 1000, 'max' => 5000));
 ]]>
             </programlisting>
 

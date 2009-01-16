@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13593 -->
 <sect1 id="zend.mail.read">
     <title>Lesen von Mail Nachrichten</title>
 
@@ -246,7 +246,9 @@ unset($mail[$messageNum]);
         Eigenschaften oder die Methode <code>getHeader()</code>, wenn man mehr Kontrolle oder ungewöhnliche
         Kopfzeilen hat, zugegriffen werden. Die Kopfzeilen sind intern kleingeschrieben, weswegen die Groß- und
         Kleinschreibung der Kopfzeilen in der Mail Nachricht egal ist. Kopfzeilen mit einem Bindestrich können auch
-        in camel-case Schreibweise geschrieben werden.</para>
+        in camel-case Schreibweise geschrieben werden. Wenn für beide Schreibweisen kein Header gefunden wird,
+        wird eine Ausnahme geworfen. Um das zu verhindern kann die <code>headerExists()</code> Methode verwendet
+        werden um die Existenz einer Kopfzeile zu prüfen.</para>
 
         <programlisting role="php"><![CDATA[
 // Nachrichten Objekt holen
@@ -257,6 +259,11 @@ echo $message->subject . "\n";
 
 // Inhalts-Typ der Kopfzeile holen
 $type = $message->contentType;
+
+// Prüfen ob CC gesetzt ist:
+if( isset($message->cc) ) { // oder $message->headerExists('cc');
+    $cc = $message->cc;
+}
 ]]>
         </programlisting>
 

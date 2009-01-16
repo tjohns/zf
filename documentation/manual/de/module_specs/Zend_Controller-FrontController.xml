@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13033 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.front">
     <title>Der Front Controller</title>
 
@@ -481,11 +481,11 @@ Zend_Controller_Front::run('../application/controllers');
     </sect2>
 
     <sect2 id="zend.controller.front.subclassing">
-        <title>Klassen vom Front-Controller ableiten</title>
+        <title>Erweitern des Front-Controllers</title>
 
         <para>
-            Um Klassen vom Front-Controller abzuleiten, muss als Minimalanforderung auf jeden Fall die Methode
-            <code>getInstance()</code> überschrieben werden:
+            Um den Front-Controller zu erweitern, muss als Minimalanforderung auf jeden Fall
+            die Methode <code>getInstance()</code> überschrieben werden:
         </para>
 
         <programlisting role="php"><![CDATA[

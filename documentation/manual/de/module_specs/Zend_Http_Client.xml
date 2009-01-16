@@ -1,18 +1,19 @@
-<!-- EN-Revision: 13484 -->
+<!-- EN-Revision: 13623 -->
 <sect1 id="zend.http.client">
-    <title>Zend_Http_Client - Einführung</title>
+    <title>Einführung</title>
 
-    <sect2 id="zend.http.client.introduction">
-        <title>Einführung</title>
-        <para>
-            Zend_Http_Client stellt eine einfache Schnittstelle für das Durchführen von Hyper-Text
-            Transfer Protocol (HTTP) Anfragen. Zend_Http_Client unterstützt die meisten einfachen
-            Funktionen, die man von einem HTTP Client erwartet, sowie einige komplexere Funktionen,
-            wie z.B. HTTP Authentifizierung und Dateiuploads. Erfolgreiche Anfragen (und die meisten
-            nicht erfolgreichen ebenfalls) liefern ein Zend_Http_Response Objekt zurück, welches den
-            Zugriff auf die Header und den Hauptteil der Antwort ermöglichen (siehe
-            <xref linkend="zend.http.response" />).
-        </para>
+    <para>
+        Zend_Http_Client stellt eine einfache Schnittstelle für das Durchführen von Hyper-Text
+        Transfer Protocol (HTTP) Anfragen. Zend_Http_Client unterstützt die meisten einfachen
+        Funktionen, die man von einem HTTP Client erwartet, sowie einige komplexere Funktionen,
+        wie z.B. HTTP Authentifizierung und Dateiuploads. Erfolgreiche Anfragen (und die meisten
+        nicht erfolgreichen ebenfalls) liefern ein Zend_Http_Response Objekt zurück, welches den
+        Zugriff auf die Header und den Hauptteil der Antwort ermöglichen (siehe
+        <xref linkend="zend.http.response" />).
+    </para>
+
+    <sect2 id="zend.http.client.usage">
+        <title>Zend_Http_Client verwenden</title>
         <para>
             Der Klassenkonstruktor akzeptiert optional eine URL als seinen ersten Parameter (kann
             entweder ein String oder ein Zend_Uri_Http Objekt sein) und ein optionales Array mit

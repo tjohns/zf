@@ -1,11 +1,11 @@
-<!-- EN-Revision: 12846 -->
+<!-- EN-Revision: 13564 -->
 <sect1 id="zend.db.table">
 
     <title>Zend_Db_Table</title>
 
     <sect2 id="zend.db.table.introduction">
 
-        <title>Einführung in die Table Klasse</title>
+        <title>Einführung</title>
 
         <para>
             Die Zend_Db_Table Klasse ist eine Objekt-Orientierte Schnittstelle zu Datenbank

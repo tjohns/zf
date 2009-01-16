@@ -1,6 +1,6 @@
-<!-- EN-Revision: 12403 -->
+<!-- EN-Revision: 13570 -->
 <sect1 id="zend.gdata.introduction">
-    <title>Einführung zu Gdata</title>
+    <title>Einführung</title>
     <para>
         Die APIs von Google Data bieten ein programmtechnisches Interface zu einigen von Google's Online
         Services. Das Google Data Protokoll basiert auf dem

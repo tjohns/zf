@@ -1,18 +1,23 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 13565 -->
 <sect1 id="zend.exception.using">
 
     <title>Verwenden von Ausnahmen</title>
 
     <para>
-        Alle Ausnahmen welche von Zend Framework Klassen geworfen werden
-        sollten eine Ausnahme werfen welche von der Basis Klasse
-        Zend_Exception abgeleitet ist.
+        Alle Ausnahmen welche von Klassen im Zend Framework geworfen werden
+        sollten sie Basisklasse Zend_Exception erweitern.
     </para>
 
     <example id="zend.exception.using.example">
-        <title>Beispiel für das Fangen einer Ausnahme</title>
+        <title>Fangen einer Ausnahme</title>
+        <para>
+            Das folgende Code Beispiel demonstriert wie eine Ausnahme gefangen werden
+            kann die in einer Zend Framework Klasse geworfen wird:
+        </para>
         <programlisting role="php"><![CDATA[
 try {
+    // Der Aufruf von Zend_Loader::loadClass() mit eine nicht-existierenden Klasse
+    // wird eine Ausnahme in Zend_Loader werfen
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "Gefangene Ausnahme: " . get_class($e) . "\n";
@@ -24,10 +29,10 @@ try {
     </example>
 
     <para>
-        In der Dokumentation der einzelnen Zend Framework Komponenten
-        stehen detailiertere Informationen darüber welche Methoden
-        eine Ausnahme werfen, die Gründe für Ausnahmen und welche
-        Ausnahme-Klassen von Zend_Exception abgeleitet sind.
+        Die Dokumentation der einzelnen Zend Framework Komponenten und Klassen
+        enthält spezielle Informationen darüber welche Methoden Ausnahmen werfen,
+        die Gründe die dazu führen das eine Ausnahme geworfen wird, und die Klassen
+        aller Ausnahmen die geworfen werden können.
     </para>
 
 </sect1>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12369 -->
+<!-- EN-Revision: 13569 -->
 <sect1 id="zend.form.standardDecorators">
     <title>Standard Formular Dekoratoren die mit dem Zend Framework ausgeliefert werden</title>
 
@@ -51,14 +51,14 @@ class Util
 
         <para>
             Der Captcha Dekorator ist für die Verwendung mit dem
-            <link linkend="zend.form.standardElements.captcha">Captcha Formularelement</link>. Es verwendet
-            die <code>render()</code> Methode des Captcha Adapters um die Ausgabe er erzeugen.
+            <link linkend="zend.form.standardElements.captcha">CAPTCHA Formularelement</link>. Es verwendet
+            die <code>render()</code> Methode des CAPTCHA Adapters um die Ausgabe zu erzeugen.
         </para>
 
         <para>
             Eine Variante des Captcha Dekorators, 'Captcha_Word', wird auch üblicherweise verwendet, und
             erstellt zwei Elemente, eine Id und eine Eingabe. Die Id zeigt den Identifikator der Session
-            gegen den verglichen wird, und die Eingabe ist für die Benutzerverifikation des Captchas.
+            gegen den verglichen wird, und die Eingabe ist für die Benutzerverifikation des CAPTCHA.
             Beide werden als einzelnes Element geprüft.
         </para>
     </sect2>

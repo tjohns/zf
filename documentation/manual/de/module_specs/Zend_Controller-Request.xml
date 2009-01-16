@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.request">
     <title>Das Request Objekt</title>
     <sect2 id="zend.controller.request.introduction">
@@ -102,7 +102,7 @@
             </note>
 
             <note>
-                <title>Gleichzeitiges Empfangen der rohen POST Daten!</title>
+                <title>Empfangen der rohen POST Daten!</title>
 
                 <para>
                     Mit 1.5.0 können auch die rohen Post Daten über die <code>getRawBody()</code>

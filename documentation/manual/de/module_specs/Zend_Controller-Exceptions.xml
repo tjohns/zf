@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12821 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.exceptions">
     <title>MVC Ausnahmen</title>
 
@@ -21,7 +21,7 @@
     </sect2>
 
     <sect2 id="zend.controller.exceptions.handling">
-        <title>Wie können Ausnahmen behandelt werden ?</title>
+        <title>Behandeln von Ausnahmen</title>
 
         <para>
             Verschiedene Mechanismen sind bereits in die MVC Komponenten eingebaut um die Behandlung von

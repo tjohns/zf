@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13568 -->
 <sect1 id="zend.date.basic">
 
     <title>Basis Methoden</title>
@@ -23,7 +23,7 @@
 
     <sect2 id="zend.date.basic.creation">
 
-        <title>Das aktuelle Datum</title>
+        <title>Aktuelles Datum</title>
 
         <para>
             Ohne jegliche Argumente bedeutet die Erstellung einer Instanz das ein Objekt mit dem aktuellen

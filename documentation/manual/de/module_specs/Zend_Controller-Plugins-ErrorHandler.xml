@@ -3,7 +3,7 @@
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> biete ein Einwurf Plugin für die Handhabung von Ausnahmen
+        <code>Zend_Controller_Plugin_ErrorHandler</code> bietet ein Plugin für die Handhabung von Ausnahmen
         die von der Anwendung geworfen werden, inklusive denen die aus fehlenden Kontrollern oder Aktionen
         resultieren; das ist eine Alternative zu den Methoden die in der
         <link linkend="zend.controller.exceptions">Sektion MVC Ausnahmen</link> aufgeführt sind.
@@ -24,8 +24,8 @@
     </itemizedlist>
 
     <para>
-        Mit anderen Worten ist das <code>ErrorHandler</code> Plugin kreiert worden um HTTP 404 Typ Fehler zu
-        behandeln (fehlende Seite) und 500 Typ Fehler (interner Fehler). Es ist nicht dazu gedacht Ausnahmen
+        Mit anderen Worten ist das <code>ErrorHandler</code> Plugin kreiert worden um HTTP 404 Fehler zu
+        behandeln (fehlende Seite) und 500 Fehler (interner Fehler). Es ist nicht dazu gedacht Ausnahmen
         zu fangen die in anderen Plugins oder durch das Routen verursacht werden.
     </para>
 
