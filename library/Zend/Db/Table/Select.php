@@ -103,27 +103,20 @@ class Zend_Db_Table_Select extends Zend_Db_Select
      */
     public function setTable(Zend_Db_Table_Abstract $table)
     {
-        if ($this->_table !== null) {
-            /**
-             * @see Zend_Db_Table_Select_Exception
-             */
-            require_once 'Zend/Db/Table/Select/Exception.php';
-
-            throw new Zend_Db_Table_Select_Exception('Table already set.');
-        }
-
         $this->_adapter = $table->getAdapter();
         $this->_info    = $table->info();
         $this->_table   = $table;
 
-        $name   = $this->_info[Zend_Db_Table_Abstract::NAME];
-        $schema = null;
+        if (!$this->_queryModified) {
+            $name   = $this->_info[Zend_Db_Table_Abstract::NAME];
+            $schema = null;
 
-        if (isset($this->_info[Zend_Db_Table_Abstract::SCHEMA])) {
-            $schema = $this->_info[Zend_Db_Table_Abstract::SCHEMA];
+            if (isset($this->_info[Zend_Db_Table_Abstract::SCHEMA])) {
+                $schema = $this->_info[Zend_Db_Table_Abstract::SCHEMA];
+            }
+
+            $this->joinInner($name, null, self::SQL_WILDCARD, $schema);
         }
-
-        $this->joinInner($name, null, self::SQL_WILDCARD, $schema);
 
         return $this;
     }
@@ -206,8 +199,8 @@ class Zend_Db_Table_Select extends Zend_Db_Select
         $tableName = $this->getTable()->info(Zend_Db_Table_Abstract::NAME);
 
         if (!$this->_queryModified && in_array($tableName, (array) $name)) {
-            $this->reset(self::FROM);
-            $this->reset(self::COLUMNS);
+            $this->reset(self::FROM)
+                 ->reset(self::COLUMNS);
         }
 
         $this->_queryModified = true;
