@@ -1,0 +1,127 @@
+<sect1 id="zend.acl.advanced">
+
+	<title>Uso Avanzado</title>
+
+	<sect2 id="zend.acl.advanced.storing">
+
+		<title>Almacenamiento Permanente de los Datos ACL</title>
+
+		<para>
+			Zend_Acl fue diseñado de tal manera que no requiere ninguna
+			tecnología particular como bases de datos o un servidor de
+			cache para el almacenamiento de datos ACL. Al poseer una
+			implementación completamente construida en PHP, es posible
+			contruir herramientas de administración personalizadas sobre
+			Zend_Acl con relativa facilidad y flexibilidad. En muchas
+			situaciones se requiere alguna forma de mantenimiento
+			interactivo de una ACL, y Zend_Acl provee métodos para
+			configurar, y consultar, los controles de acceso de una
+			aplicación.
+		</para>
+
+		<para>
+			El almacenamiento de los datos ACL es una tarea que se
+			delega al desarrollador, puesto que la utilización variará
+			exténsamente en distintas situaciones. Dado que Zend_Acl es
+			serializable, los objetos ACL pueden serializarse con la
+			función
+			<ulink url="http://php.net/serialize">
+				<code>serialize()</code>
+			</ulink>
+			de PHP, y los resultados pueden ser almacenados donde sea
+			que el desarrollador lo desee, en un archivo, base de datos,
+			o mecanismo de cache
+		</para>
+
+	</sect2>
+
+	<sect2 id="zend.acl.advanced.assertions">
+
+		<title>
+			Escribiendo reglas condicionales ACL con aserciones
+		</title>
+
+		<para>
+			Sometimes a rule for allowing or denying a role access to a
+			resource should not be absolute but dependent upon various
+			criteria. For example, suppose that certain access should be
+			allowed, but only between the hours of 8:00am and 5:00pm.
+			Another example would be denying access because a request
+			comes from an IP address that has been flagged as a source
+			of abuse. Zend_Acl has built-in support for implementing
+			rules based on whatever conditions the developer needs.
+		</para>
+
+		<para>
+			Zend_Acl provides support for conditional rules with
+			<code>Zend_Acl_Assert_Interface</code>
+			. In order to use the rule assertion interface, a developer
+			writes a class that implements the
+			<code>assert()</code>
+			method of the interface:
+		</para>
+
+		<programlisting role="php"><![CDATA[
+class CleanIPAssertion implements Zend_Acl_Assert_Interface
+{
+    public function assert(Zend_Acl $acl,
+                           Zend_Acl_Role_Interface $role = null,
+                           Zend_Acl_Resource_Interface $resource = null,
+                           $privilege = null)
+    {
+        return $this->_isCleanIP($_SERVER['REMOTE_ADDR']);
+    }
+
+    protected function _isCleanIP($ip)
+    {
+        // ...
+    }
+}
+]]>
+		</programlisting>
+
+		<para>
+			Once an assertion class is available, the developer must
+			supply an instance of the assertion class when assigning
+			conditional rules. A rule that is created with an assertion
+			only applies when the assertion method returns true.
+		</para>
+
+		<programlisting role="php"><![CDATA[
+$acl = new Zend_Acl();
+$acl->allow(null, null, null, new CleanIPAssertion());
+]]>
+		</programlisting>
+
+		<para>
+			The above code creates a conditional allow rule that allows
+			access to all privileges on everything by everyone, except
+			when the requesting IP is "blacklisted." If a request comes
+			in from an IP that is not considered "clean," then the allow
+			rule does not apply. Since the rule applies to all roles,
+			all resources, and all privileges, an "unclean" IP would
+			result in a denial of access. This is a special case,
+			however, and it should be understood that in all other cases
+			(i.e., where a specific role, resource, or privilege is
+			specified for the rule), a failed assertion results in the
+			rule not applying, and other rules would be used to
+			determine whether access is allowed or denied.
+		</para>
+
+		<para>
+			The
+			<code>assert()</code>
+			method of an assertion object is passed the ACL, role,
+			resource, and privilege to which the authorization query
+			(i.e.,
+			<code>isAllowed()</code>
+			) applies, in order to provide a context for the assertion
+			class to determine its conditions where needed.
+		</para>
+
+	</sect2>
+
+</sect1>
+<!--
+	vim:se ts=4 sw=4 et:
+-->
