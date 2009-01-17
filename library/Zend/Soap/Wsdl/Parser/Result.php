@@ -25,27 +25,110 @@
  * @category   Zend
  * @package    Zend_Soap
  */
-class Zend_Soap_Wsdl_Parser_Result {
+class Zend_Soap_Wsdl_Parser_Result
+{
+    /**
+     * Service Name
+     * 
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * WSDL Specification Version
+     */
+    protected $version;
+
+    /**
+     * Operations
+     * 
+     * @var Zend_Soap_Wsdl_Element_Collection
+     */
+    protected $operations;
+
+    /**
+     * Ports
+     *
+     * @var Zend_Soap_Wsdl_Element_Collection
+     */
+    protected $ports;
+
+    /**
+     * Bindings
+     *
+     * @var Zend_Soap_Wsdl_Element_Collection
+     */
+    protected $bindings;
+
+    /**
+     * Services
+     *
+     * @var Zend_Soap_Wsdl_Element_Collection
+     */
+    protected $services;
+
+    /**
+     * Types
+     *
+     * @var Zend_Soap_Wsdl_Element_Collection
+     */
+    protected $types;
+
+    /**
+     * Webservice Documentation
+     *
+     * @var string
+     */
+    protected $documentation;
     
-    public $wsdl_file = '';
-    
-    public $name;
-    
-    public $documentation;
-    
-    public $operations;
-    
-    public $portType;
-    
-    public $binding;
-    
-    public $service;
-    
-    public $targetNamespace;
-    
-    public function __construct($wsdl)
+    public function __construct($name,
+        $version,
+        Zend_Soap_Wsdl_Element_Collection $operations,
+        Zend_Soap_Wsdl_Element_Collection $ports,
+        Zend_Soap_Wsdl_Element_Collection $bindings,
+        Zend_Soap_Wsdl_Element_Collection $services,
+        Zend_Soap_Wsdl_Element_Collection $types,
+        $documentation)
     {
-        $this->wsdl_file = $wsdl;
+        $this->name             = $name;
+        $this->version          = $version;
+        $this->operations       = $operations;
+        $this->ports            = $ports;
+        $this->bindings         = $bindings;
+        $this->services         = $services;
+        $this->types            = $types;
+        $this->documentation    = $documentation;
+    }
+
+    public function __get($name)
+    {
+        if(isset($this->$name)) {
+            return $this->$name;
+        } else {
+            require_once "Zend/Soap/Wsdl/Parser/Exception.php";
+            throw new Zend_Soap_Wsdl_Parser_Exception(sprintf(
+                "Trying to access illegal value '%s' in SOAP Parser Result.",
+                 $name
+            ));
+        }
+    }
+
+    /**
+     * Get webservice name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get WSDL specification version
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 }
 

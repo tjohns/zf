@@ -5,6 +5,7 @@
         <para>
             <code>Zend_Soap_Wsdl</code> class is used by Zend_Soap_Server component internally to operate with WSDL
             documents. Nevertheless, you could also use functionality provided by this class for your own needs.
+            The Zend_Soap_Wsdl package contains both a parser and a builder of WSDL documents.
         </para>
         <para>
             If you don't plan to do this, you can skip this documentation section.
@@ -428,6 +429,65 @@ $soapMyClassType = $wsdl->getType('MyClass');
             <code>toXML()</code>, <code>toDomDocument()</code> and <code>dump($filename = false)</code> methods may be used to get
             WSDL document as an XML, DOM structure or a file.
         </para>
+    </sect2>
+
+    <sect2 id="zend.soap.wsdl.parser">
+        <title>Parsing WSDL documents</title>
+
+        <para>
+            Zend_Soap_Wsdl also contains a parser for WSDL documents that has its main application in unit-testing and code-generation
+            for SOAP Webservices (Client and Server). The following example will show how the Parser can be used:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Load WSDL into DOMDocument
+$dom = new DOMDocument();
+$dom->loadXML($wsdlString);
+
+// Create parser
+$parser = Zend_Soap_Wsdl_Parser::factory($dom);
+$result = $parser->parse();
+
+// Webservice Name
+echo $result->getName();
+
+// Access Ports and inner elements
+foreach($result->ports AS $port) {
+    echo $port->getName();
+    foreach($port->bindings AS $binding) {
+        echo $binding->getName();
+
+        foreach($binding->operations AS $operation) {
+            echo $operation->getName();
+            echo $operation->inputMessage->getName();
+            echo $operation->outputMessage->getName();
+        }
+    }
+}
+// You can access bindings, messages and operations and other elements directly too
+foreach($result->operations AS $operation) {
+    // do stuff
+}
+foreach($result->bindings AS $binding {
+    // do stuff
+}
+foreach($result->messages AS $message) {
+    // do stuff
+}
+foreach($result->services AS $service) {
+    // do stuff
+}
+foreach($result->types AS $type) {
+    // do stuff
+}
+]]>
+        </programlisting>
+
+        <para>All elements implement the interface <code>Zend_Soap_Wsdl_Element_Interface</code>
+        that prodies a <code>getName()</code> and a <code>getDocumentation()</code> function with the
+        unique identifier of the element and its documentation respectivly. All the elements have
+        public properties that describe its state in more detail and also contain their nested
+        dependencies for easy iteratable access.</para>
     </sect2>
 
 </sect1>
