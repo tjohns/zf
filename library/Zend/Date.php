@@ -893,8 +893,7 @@ class Zend_Date extends Zend_Date_DateObject
 
 
             case self::YEAR_SHORT_8601 :
-                $year = $this->date('o', $this->getUnixTimestamp(), false);
-                return iconv_substr($year, -2, 2, 'UTF-8');
+                return substr($this->date('o', $this->getUnixTimestamp(), false), -2, 2);
                 break;
 
             // time formats
