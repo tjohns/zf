@@ -5192,7 +5192,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testMultiByteWeekdaysShouldNotBeTruncated()
     {
         $date1  = new Zend_Date('pl');
-        $date1->setDay(3);
+        $date1->setWeekday(3);
         $this->assertEquals('ś', $date1->get(Zend_Date::WEEKDAY_NARROW));
     }
 }
