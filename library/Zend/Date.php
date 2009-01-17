@@ -495,7 +495,7 @@ class Zend_Date extends Zend_Date_DateObject
 
                     // eras
                 case 'GGGGG' :
-                    $output[$i] = iconv_substr($this->get(self::ERA, $locale), 0, 1) . ".";
+                    $output[$i] = iconv_substr($this->get(self::ERA, $locale), 0, 1, 'UTF-8') . ".";
                     break;
 
                 case 'GGGG' :
@@ -520,7 +520,7 @@ class Zend_Date extends Zend_Date_DateObject
 
                 // months
                 case 'MMMMM' :
-                    $output[$i] = iconv_substr($this->get(self::MONTH_NAME_NARROW, $locale), 0, 1);
+                    $output[$i] = iconv_substr($this->get(self::MONTH_NAME_NARROW, $locale), 0, 1, 'UTF-8');
                     break;
 
                 case 'MMMM' :
@@ -679,19 +679,19 @@ class Zend_Date extends Zend_Date_DateObject
             // fill variable tokens
             if ($notset == true) {
                 if (($output[$i][0] !== "'") and (preg_match('/y+/', $output[$i]))) {
-                    $length     = iconv_strlen($output[$i]);
+                    $length     = iconv_strlen($output[$i], 'UTF-8');
                     $output[$i] = $this->get(self::YEAR, $locale);
                     $output[$i] = str_pad($output[$i], $length, '0', STR_PAD_LEFT);
                 }
 
                 if (($output[$i][0] !== "'") and (preg_match('/Y+/', $output[$i]))) {
-                    $length     = iconv_strlen($output[$i]);
+                    $length     = iconv_strlen($output[$i], 'UTF-8');
                     $output[$i] = $this->get(self::YEAR_8601, $locale);
                     $output[$i] = str_pad($output[$i], $length, '0', STR_PAD_LEFT);
                 }
 
                 if (($output[$i][0] !== "'") and (preg_match('/A+/', $output[$i]))) {
-                    $length = iconv_strlen($output[$i]);
+                    $length = iconv_strlen($output[$i], 'UTF-8');
                     $hour   = $this->get(self::HOUR,        $locale);
                     $minute = $this->get(self::MINUTE,      $locale);
                     $second = $this->get(self::SECOND,      $locale);
@@ -702,7 +702,10 @@ class Zend_Date extends Zend_Date_DateObject
                 }
 
                 if ($output[$i][0] === "'") {
-                    $output[$i] = iconv_substr($output[$i], 1);
+                    $output[$i] = iconv_substr($output[$i],
+                                               1,
+                                               iconv_strlen($output[$i], 'UTF-8') - 1,
+                                               'UTF-8');
                 }
             }
             $notset = false;
@@ -798,7 +801,7 @@ class Zend_Date extends Zend_Date_DateObject
             case self::WEEKDAY_SHORT :
                 $weekday = strtolower($this->date('D', $this->getUnixTimestamp(), false));
                 $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'wide', $weekday));
-                return iconv_substr($day, 0, 3);
+                return iconv_substr($day, 0, 3, 'UTF-8');
                 break;
 
             case self::DAY_SHORT :
@@ -829,7 +832,7 @@ class Zend_Date extends Zend_Date_DateObject
             case self::WEEKDAY_NARROW :
                 $weekday = strtolower($this->date('D', $this->getUnixTimestamp(), false));
                 $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'format', 'abbreviated', $weekday));
-                return iconv_substr($day, 0, 1);
+                return iconv_substr($day, 0, 1, 'UTF-8');
                 break;
 
             case self::WEEKDAY_NAME :
@@ -868,7 +871,7 @@ class Zend_Date extends Zend_Date_DateObject
             case self::MONTH_NAME_NARROW :
                 $month = $this->date('n', $this->getUnixTimestamp(), false);
                 $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'format', 'abbreviated', $month));
-                return iconv_substr($mon, 0, 1);
+                return iconv_substr($mon, 0, 1, 'UTF-8');
                 break;
 
             // year formats
@@ -891,7 +894,7 @@ class Zend_Date extends Zend_Date_DateObject
 
             case self::YEAR_SHORT_8601 :
                 $year = $this->date('o', $this->getUnixTimestamp(), false);
-                return iconv_substr($year, -2);
+                return iconv_substr($year, -2, 2, 'UTF-8');
                 break;
 
             // time formats
@@ -1542,7 +1545,7 @@ class Zend_Date extends Zend_Date_DateObject
                 $cnt = 0;
 
                 foreach ($daylist as $key => $value) {
-                    if (strtoupper(iconv_substr($value, 0, 3)) == strtoupper($date)) {
+                    if (strtoupper(iconv_substr($value, 0, 3, 'UTF-8')) == strtoupper($date)) {
                          $found = $cnt;
                         break;
                     }
@@ -1636,7 +1639,7 @@ class Zend_Date extends Zend_Date_DateObject
                 $weekday = (int) $this->get(self::WEEKDAY_DIGIT, $locale);
                 $cnt = 0;
                 foreach ($daylist as $key => $value) {
-                    if (strtoupper(iconv_substr($value, 0, 1)) == strtoupper($date)) {
+                    if (strtoupper(iconv_substr($value, 0, 1, 'UTF-8')) == strtoupper($date)) {
                         $found = $cnt;
                         break;
                     }
@@ -2110,7 +2113,11 @@ class Zend_Date extends Zend_Date_DateObject
                 }
                 $tmpdate = $date;
                 if (!empty($datematch)) {
-                    $tmpdate = iconv_substr($date, iconv_strlen($datematch[0]));
+                    $dateMatchCharCount = iconv_strlen($datematch[0], 'UTF-8');
+                    $tmpdate = iconv_substr($date,
+                                            $dateMatchCharCount,
+                                            iconv_strlen($date, 'UTF-8') - $dateMatchCharCount,
+                                            'UTF-8');
                 }
                 // (T)hh:mm:ss
                 preg_match('/[T,\s]{0,1}(\d{2}):(\d{2}):(\d{2})/', $tmpdate, $timematch);
@@ -2122,13 +2129,17 @@ class Zend_Date extends Zend_Date_DateObject
                     throw new Zend_Date_Exception("unsupported ISO8601 format ($date)", $date);
                 }
                 if (!empty($timematch)) {
-                    $tmpdate = iconv_substr($tmpdate, iconv_strlen($timematch[0]));
+                    $timeMatchCharCount = iconv_strlen($timematch[0], 'UTF-8');
+                    $tmpdate = iconv_substr($tmpdate,
+                                            $timeMatchCharCount,
+                                            iconv_strlen($tmpdate, 'UTF-8') - $timeMatchCharCount,
+                                            'UTF-8');
                 }
                 if (empty($datematch)) {
                     $datematch[1] = 1970;
                     $datematch[2] = 1;
                     $datematch[3] = 1;
-                } else if (iconv_strlen($datematch[1]) == 2) {
+                } else if (iconv_strlen($datematch[1], 'UTF-8') == 2) {
                     $datematch[1] = self::getFullYear($datematch[1]);
                 }
                 if (empty($timematch)) {
@@ -2403,7 +2414,11 @@ class Zend_Date extends Zend_Date_DateObject
                     require_once 'Zend/Date/Exception.php';
                     throw new Zend_Date_Exception("invalid date ($date) operand, COOKIE format expected", $date);
                 }
-                $match[0] = iconv_substr($match[0], iconv_strpos($match[0], ' ')+1);
+                $matchStartPos = iconv_strpos($match[0], ' ', 0, 'UTF-8') + 1;
+                $match[0] = iconv_substr($match[0],
+                                         $matchStartPos,
+                                         iconv_strlen($match[0], 'UTF-8') - $matchStartPos,
+                                         'UTF-8');
 
                 $months    = $this->_getDigitFromName($match[2]);
                 $match[3] = self::getFullYear($match[3]);
@@ -3527,7 +3542,7 @@ class Zend_Date extends Zend_Date_DateObject
                 }
                 if ($found == 0) {
                     foreach ($monthlist2 as $key => $value) {
-                        if (strtoupper(iconv_substr($value, 0, 1)) == strtoupper($month)) {
+                        if (strtoupper(iconv_substr($value, 0, 1, 'UTF-8')) == strtoupper($month)) {
                             $found = $key + 1;
                             break;
                         }
@@ -3668,7 +3683,7 @@ class Zend_Date extends Zend_Date_DateObject
                 throw new Zend_Date_Exception("no day given in array");
             }
         } else {
-            switch (iconv_strlen($day)) {
+            switch (iconv_strlen($day, 'UTF-8')) {
                 case 1 :
                    $type = self::WEEKDAY_NARROW;
                     break;
@@ -3816,7 +3831,7 @@ class Zend_Date extends Zend_Date_DateObject
                 throw new Zend_Date_Exception("no weekday given in array");
             }
         } else {
-            switch(iconv_strlen($weekday)) {
+            switch(iconv_strlen($weekday, 'UTF-8')) {
                 case 1:
                    $type = self::WEEKDAY_NARROW;
                     break;
