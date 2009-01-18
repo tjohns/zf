@@ -548,6 +548,13 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($list['de']));
         $this->assertEquals(array('de' => 1, 'en_UK' => 0.5, 'en_US' => 0.5,
                                   'en' => 0.5, 'fr_FR' => 0.2, 'fr' => 0.2), $list);
+
+        Zend_LocaleTestHelper::resetObject();
+        putenv("HTTP_ACCEPT_LANGUAGE=");
+
+        $value = new Zend_LocaleTestHelper();
+        $list = $value->getBrowser();
+        $this->assertEquals(array(), $list);
     }
 
     /**
@@ -629,6 +636,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Locale_Exception $e) {
             $this->assertContains("full qualified locale", $e->getMessage());
         }
+
         try {
             Zend_LocaleTestHelper::setDefault('de_XX');
             $locale = new Zend_LocaleTestHelper();
@@ -636,11 +644,27 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Locale_Exception $e) {
             $this->fail(); // de_XX should automatically degrade to 'de'
         }
+
         try {
             Zend_LocaleTestHelper::setDefault('xy_ZZ');
             $this->fail();
         } catch (Zend_Locale_Exception $e) {
             $this->assertContains("Unknown locale", $e->getMessage());
+        }
+
+        try {
+            Zend_LocaleTestHelper::setDefault('de', 101);
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertContains("Quality must be between", $e->getMessage());
+        }
+
+        try {
+            Zend_LocaleTestHelper::setDefault('de', 90);
+            $locale = new Zend_LocaleTestHelper();
+            $this->assertTrue($locale instanceof Zend_Locale); // should defer to 'de' or any other standard locale
+        } catch (Zend_Locale_Exception $e) {
+            $this->fail();
         }
     }
 
@@ -656,6 +680,42 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         Zend_LocaleTestHelper::$compatibilityMode = true;
         $this->assertTrue(array_key_exists('de', Zend_LocaleTestHelper::getDefault(Zend_Locale::BROWSER)));
         restore_error_handler();
+    }
+
+    /**
+     * Caching method tests
+     */
+    public function testCaching()
+    {
+        $cache = Zend_LocaleTestHelper::getCache();
+        $this->assertTrue($cache instanceof Zend_Cache_Core);
+        $this->assertTrue(Zend_LocaleTestHelper::hasCache());
+
+        Zend_LocaleTestHelper::clearCache();
+        $this->assertTrue(Zend_LocaleTestHelper::hasCache());
+
+        Zend_LocaleTestHelper::removeCache();
+        $this->assertFalse(Zend_LocaleTestHelper::hasCache());
+    }
+
+    /**
+     * Caching method tests
+     */
+    public function testFindingTheProperLocale()
+    {
+        $this->assertTrue(is_string(Zend_LocaleTestHelper::findLocale()));
+        $this->assertEquals('de', Zend_LocaleTestHelper::findLocale('de'));
+        $this->assertEquals('de', Zend_LocaleTestHelper::findLocale('de_XX'));
+
+        try {
+            $locale = Zend_LocaleTestHelper::findLocale('xx_YY');
+            $this->fail();
+        } catch (Zend_Locale_Exception $e) {
+            $this->assertContains('is no known locale', $e->getMessage());
+        }
+
+        Zend_Registry::set('Zend_Locale', 'de');
+        $this->assertEquals('de', Zend_LocaleTestHelper::findLocale());
     }
 
     /**
