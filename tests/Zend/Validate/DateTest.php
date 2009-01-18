@@ -137,8 +137,12 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
     public function testUseManualFormat()
     {
         $this->assertTrue($this->_validator->setFormat('dd.MM.YYYY')->isValid('10.01.2008'));
+        $this->assertEquals('dd.MM.YYYY', $this->_validator->getFormat());
+
         $this->assertTrue($this->_validator->setFormat('MMM yyyy')->isValid('Jan 2010'));
         $this->assertFalse($this->_validator->setFormat('dd/MM/yyyy')->isValid('2008/10/22'));
+        $this->assertTrue($this->_validator->setFormat('dd/MM/yy')->isValid('22/10/08'));
+        $this->assertFalse($this->_validator->setFormat('dd/MM/yy')->isValid('22/10'));
         set_error_handler(array($this, 'errorHandlerIgnore'));
         $result = $this->_validator->setFormat('s')->isValid(0);
         restore_error_handler();
@@ -181,10 +185,23 @@ class Zend_Validate_DateTest extends PHPUnit_Framework_TestCase
             }
             $this->_errorOccurred = false;
         }
+        $this->assertEquals('de_AT', $this->_validator->getLocale());
         restore_error_handler();
         if ($errorOccurredLocal) {
             $this->markTestSkipped('Affected by bug described in ZF-2789');
         }
+    }
+
+    /**
+     * Ensures that the validator can handle different dateformats from locale
+     *
+     * @see    http://framework.zend.com/issues/browse/ZF-2003
+     * @return void
+     */
+    public function testLocaleContructor()
+    {
+        $valid = new Zend_Validate_Date('dd.MM.YYYY', 'de');
+        $this->assertTrue($valid->isValid('10.April.2008'));
     }
 
     /**
