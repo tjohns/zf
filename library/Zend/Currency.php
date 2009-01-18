@@ -96,13 +96,6 @@ class Zend_Currency
             $currency = $temp;
         }
 
-        if (empty($locale)) {
-            require_once 'Zend/Registry.php';
-            if (Zend_Registry::isRegistered('Zend_Locale') === true) {
-                $locale = Zend_Registry::get('Zend_Locale');
-            }
-        }
-
         $this->setLocale($locale);
 
         // Get currency details
@@ -485,16 +478,13 @@ class Zend_Currency
      */
     public function setLocale($locale = null)
     {
-        if (!Zend_Locale::isLocale($locale, false, false)) {
-            if (!Zend_Locale::isLocale($locale, true, false)) {
-                require_once 'Zend/Currency/Exception.php';
-                throw new Zend_Currency_Exception("Given locale (" . (string) $locale . ") does not exist");
-            } else {
-                $locale = new Zend_Locale();
-            }
+        require_once 'Zend/Locale.php';
+        try {
+            $this->_locale = Zend_Locale::findLocale($locale);
+        } catch (Zend_Locale_Exception $e) {
+            require_once 'Zend/Currency/Exception.php';
+            throw new Zend_Currency_Exception($e->getMessage());
         }
-
-        $this->_locale = (string) $locale;
 
         // Get currency details
         $this->_options['currency'] = $this->getShortName(null, $this->_locale);
