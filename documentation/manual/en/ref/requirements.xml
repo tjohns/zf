@@ -1108,7 +1108,7 @@
                             <entry><ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
                         </row>
                         <row>
-                            <entry valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.soap.php"><code>soap</code></ulink></emphasis></entry>
+                            <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.soap.php"><code>soap</code></ulink></emphasis></entry>
                         </row>
                         <row>
                             <entry><emphasis role="strong"><ulink url="http://framework.zend.com/manual/en/zend.test.html"><code>Zend_Test</code></ulink></emphasis></entry>
