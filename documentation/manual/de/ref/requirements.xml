@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13490 -->
+<!-- EN-Revision: 13698 -->
 <appendix id="requirements">
 
     <title>Zend Framework Voraussetzungen</title>
@@ -1111,7 +1111,7 @@
                             <entry><ulink url="http://www.php.net/manual/de/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
                         </row>
                         <row>
-                            <entry morerows="1" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/de/ref.soap.php"><code>soap</code></ulink></emphasis></entry>
+                            <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/de/ref.soap.php"><code>soap</code></ulink></emphasis></entry>
                         </row>
                         <row>
                             <entry><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.test.html"><code>Zend_Test</code></ulink></emphasis></entry>
@@ -1769,7 +1769,7 @@
                             <entry><ulink url="http://framework.zend.com/manual/de/zend.registry.html"><code>Zend_Registry</code></ulink></entry>
                         </row>
                         <row>
-                            <entry morerows="2" valign="middle"><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.file.transfer.html"><code>Zend_File_Transfer</code></ulink></emphasis></entry>
+                            <entry morerows="1" valign="middle"><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.file.transfer.html"><code>Zend_File_Transfer</code></ulink></emphasis></entry>
                             <entry>Hard</entry>
                             <entry><ulink url="http://framework.zend.com/manual/de/zend.exception.html"><code>Zend_Exception</code></ulink></entry>
                         </row>
@@ -3320,7 +3320,7 @@
                             <entry><ulink url="http://framework.zend.com/manual/de/zend.wildfire.html"><code>Zend_Wildfire</code></ulink></entry>
                         </row>
                         <row>
-                            <entry morerows="2" valign="middle"><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.text.html"><code>Zend_Text</code></ulink></emphasis></entry>
+                            <entry morerows="1" valign="middle"><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.text.html"><code>Zend_Text</code></ulink></emphasis></entry>
                             <entry>Hard</entry>
                             <entry><ulink url="http://framework.zend.com/manual/de/zend.exception.html"><code>Zend_Exception</code></ulink></entry>
                         </row>
@@ -3413,7 +3413,7 @@
                             <entry>---</entry>
                         </row>
                         <row>
-                            <entry morerows="22" valign="middle"><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.view.html"><code>Zend_View</code></ulink></emphasis></entry>
+                            <entry morerows="21" valign="middle"><emphasis role="strong"><ulink url="http://framework.zend.com/manual/de/zend.view.html"><code>Zend_View</code></ulink></emphasis></entry>
                             <entry morerows="4" valign="middle">Hard</entry>
                             <entry><ulink url="http://framework.zend.com/manual/de/zend.controller.html"><code>Zend_Controller</code></ulink></entry>
                         </row>
