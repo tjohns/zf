@@ -405,7 +405,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
             <para>
                 See <ulink url="http://www.w3.org/TR/wsdl#_types"/> for the details.
             </para>
-            
+
         </sect3>
     </sect2>
 
@@ -484,7 +484,7 @@ foreach($result->types AS $type) {
         </programlisting>
 
         <para>All elements implement the interface <code>Zend_Soap_Wsdl_Element_Interface</code>
-        that prodies a <code>getName()</code> and a <code>getDocumentation()</code> function with the
+        that proxies a <code>getName()</code> and a <code>getDocumentation()</code> function with the
         unique identifier of the element and its documentation respectivly. All the elements have
         public properties that describe its state in more detail and also contain their nested
         dependencies for easy iteratable access.</para>
