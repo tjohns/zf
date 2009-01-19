@@ -201,7 +201,7 @@ $filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/seco
         <para>
             When you want to encode also the keys, then you have to provide a passphrase with the
             <code>setPassphrase()</code> method. When you want to decode content which was encoded with
-            a passphrase you will not only need the public key, but also the passphrase to encode the
+            a passphrase you will not only need the public key, but also the passphrase to decode the
             encrypted key.
         </para>
 
