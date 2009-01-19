@@ -662,9 +662,9 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
 
             $members = (array)$object;
 
-            foreach ($properties as $raw_name => $property) {
+            foreach ($properties as $just_name => $property) {
         
-                $name = $raw_name;
+                $name = $raw_name = $just_name;
   
                 if ($property->isStatic()) {
                     $name = 'static:'.$name;
@@ -683,7 +683,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
 
                 if (!(isset($this->_objectFilters[$class])
                       && is_array($this->_objectFilters[$class])
-                      && in_array($raw_name,$this->_objectFilters[$class]))) {
+                      && in_array($just_name,$this->_objectFilters[$class]))) {
                 
                     if (array_key_exists($raw_name,$members)
                         && !$property->isStatic()) {
@@ -708,9 +708,9 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
 
             // Include all members that are not defined in the class
             // but exist in the object
-            foreach($members as $raw_name => $value) {
+            foreach($members as $just_name => $value) {
               
-                $name = $raw_name;
+                $name = $raw_name = $just_name;
 
                 if ($name{0} == "\0") {
                     $parts = explode("\0", $name);
@@ -721,7 +721,7 @@ class Zend_Wildfire_Plugin_FirePhp implements Zend_Wildfire_Plugin_Interface
 
                     if (!(isset($this->objectFilters[$class])
                           && is_array($this->objectFilters[$class])
-                          && in_array($raw_name,$this->objectFilters[$class]))) {
+                          && in_array($just_name,$this->objectFilters[$class]))) {
                       
                       $return[$name] = $this->_encodeObject($value, $objectDepth + 1, 1);
                     } else {

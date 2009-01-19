@@ -140,11 +140,11 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
 
         $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
 
-        $this->assertTrue($channel->isReady());
+        $this->assertTrue($channel->isReady(true));
 
         $this->_request->setUserAgentExtensionEnabled(false);
 
-        $this->assertFalse($channel->isReady());
+        $this->assertFalse($channel->isReady(true));
     }
 
     public function testIsReady2()
@@ -727,7 +727,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
 
         $firephp->send($obj);
 
-        $firephp->setObjectFilter('Zend_Wildfire_WildfireTest_TestObject1',array('value'));
+        $firephp->setObjectFilter('Zend_Wildfire_WildfireTest_TestObject1',array('value', 'protectedStatic'));
 
         $firephp->send($obj);
 
@@ -737,15 +737,23 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
                             [0];
 
-        $this->assertEquals($message,
-                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value"}]');
+        if (version_compare(phpversion(), '5.3' , '<')) {
+          
+          $this->assertEquals($message,
+                              '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","protected:static:protectedStatic":"** Need PHP 5.3 to get value **"}]');
+        } else
+        if (version_compare(phpversion(), '5.3' , '>=')) {
+
+          $this->assertEquals($message,
+                              '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","protected:static:protectedStatic":"ProtectedStatic"}]');
+        }
         
         $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
                             [1];
 
         $this->assertEquals($message,
-                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"** Excluded by Filter **"}]');
+                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"** Excluded by Filter **","protected:static:protectedStatic":"** Excluded by Filter **"}]');
     }
     
     public function testObjectMembers()
@@ -773,7 +781,9 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
           
         } else
         if (version_compare(phpversion(), '5.3' , '>=')) {
-          // TODO
+
+          $this->assertEquals($message,
+                              '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject2","public:public":"Public","private:private":"Private","protected:protected":"Protected","public:static:static":"Static","private:static:staticPrivate":"StaticPrivate","protected:static:staticProtected":"StaticProtected"}]');
         }
     }
     
@@ -791,7 +801,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $firephp->setOption('maxObjectDepth',2);
         $firephp->setOption('maxArrayDepth',1);
 
-        $obj = new Zend_Wildfire_WildfireTest_TestObject1();
+        $obj = new Zend_Wildfire_WildfireTest_TestObject3();
         $obj->testArray = array('val1',array('val2',array('Hello World')));
         $obj->child = clone $obj;
         $obj->child->child = clone $obj;
@@ -813,14 +823,14 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                             [0];
 
         $this->assertEquals($message,
-                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]');
+                            '[{"Type":"LOG"},{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]');
                 
         $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
                             [1];
 
         $this->assertEquals($message,
-                            '[{"Type":"TABLE","Label":"Label"},[["Col1","Col2"],[{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}},{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject1","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]]]');
+                            '[{"Type":"TABLE","Label":"Label"},[["Col1","Col2"],[{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}},{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]]]');
     }
         
 }
@@ -829,6 +839,7 @@ class Zend_Wildfire_WildfireTest_TestObject1
 {
   var $name = 'Name';
   var $value = 'Value';
+  protected static $protectedStatic = 'ProtectedStatic';
 }
 
 class Zend_Wildfire_WildfireTest_TestObject2
@@ -842,6 +853,11 @@ class Zend_Wildfire_WildfireTest_TestObject2
   static protected $staticProtected = 'StaticProtected';
 }
 
+class Zend_Wildfire_WildfireTest_TestObject3
+{
+  var $name = 'Name';
+  var $value = 'Value';
+}
 
 class Zend_Wildfire_WildfireTest_JsonEncodingTestClass
 {
