@@ -61,4 +61,17 @@ abstract class Zend_Db_Statement_Pdo_TestCommon extends Zend_Db_Statement_TestCo
         $stmt->closeCursor();
     }
 
+    /**
+     * @group ZF-4486
+     */
+    public function testStatementIsIterableThroughtForeach()
+    {
+        $select = $this->_db->select()->from('zfproducts');
+        $stmt = $this->_db->query($select);
+        $stmt->setFetchMode(Zend_Db::FETCH_OBJ);
+        foreach ($stmt as $test) {
+            $this->assertTrue($test instanceof stdClass);
+        }
+        $this->assertType('int', iterator_count($stmt));
+    }
 }
