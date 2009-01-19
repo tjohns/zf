@@ -29,6 +29,9 @@ require_once 'Zend/Log.php';
 /** Zend_Log_Writer_Firebug */
 require_once 'Zend/Log/Writer/Firebug.php';
 
+/** Zend_Log_Formatter_Firebug */
+require_once 'Zend/Log/Formatter/Firebug.php';
+
 /** Zend_Wildfire_Channel_HttpHeaders */
 require_once 'Zend/Wildfire/Channel/HttpHeaders.php';
 
@@ -95,6 +98,8 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         $this->_writer->setEnabled(true);
 
         $this->_logger = new Zend_Log($this->_writer);
+        
+        Zend_Wildfire_Plugin_FirePhp::getInstance()->setOption('includeLineNumbers', false);
     }
 
     public function tearDown()
@@ -121,15 +126,72 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         $log->log('hi', 2);
     }
 
-
+    /**
+     * @group ZF-4952
+     */
     public function testSetFormatter()
     {
-        try {
-            $this->_writer->setFormatter(null);
-            $this->fail('Should not be able to setFormatter() on log writer');
-        } catch (Exception $e) {
-            // success
-        }
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+      
+        $this->_logger->log('Test Message 1', Zend_Log::INFO);
+      
+        $formatter = new Zend_Log_Writer_FirebugTest_Formatter();
+        $this->_writer->setFormatter($formatter);
+        
+        $this->_logger->setEventItem('testLabel','Test Label');
+
+        $this->_logger->log('Test Message 2', Zend_Log::INFO);
+
+        $messages = $protocol->getMessages();
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [0];        
+
+        $this->assertEquals($message,
+                            '[{"Type":"INFO"},"Test Message 1"]');
+      
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [1];        
+
+        $this->assertEquals($message,
+                            '[{"Type":"INFO"},"Test Label : Test Message 2"]');
+    }
+    
+    /**
+     * @group ZF-4952
+     */
+    public function testEventItemLabel()
+    {
+        $firephp = Zend_Wildfire_Plugin_FirePhp::getInstance();
+        $channel = Zend_Wildfire_Channel_HttpHeaders::getInstance();
+        $protocol = $channel->getProtocol(Zend_Wildfire_Plugin_FirePhp::PROTOCOL_URI);
+
+
+        $this->_logger->log('Test Message 1', Zend_Log::INFO);
+
+        $this->_logger->setEventItem('firebugLabel','Test Label');
+
+        $this->_logger->log('Test Message 2', Zend_Log::INFO);
+
+        $messages = $protocol->getMessages();
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [0];
+
+        $this->assertEquals($message,
+                            '[{"Type":"INFO"},"Test Message 1"]');
+
+        $message = $messages[Zend_Wildfire_Plugin_FirePhp::STRUCTURE_URI_FIREBUGCONSOLE]
+                            [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI]
+                            [1];
+
+        $this->assertEquals($message,
+                            '[{"Type":"INFO","Label":"Test Label"},"Test Message 2"]');
     }
 
     public function testLogStyling()
@@ -168,9 +230,13 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_response->verifyHeaders($headers));
     }
 
+
+    /**
+     * @group ZF-4934
+     */
     public function testAdvancedLogging()
     {
-    	$this->markTestSkipped('takes too much resources if whole ZF suite is running.');
+        Zend_Wildfire_Plugin_FirePhp::getInstance()->setOption('maxTraceDepth',0);
 
         $message = 'This is a log message!';
         $label = 'Test Label';
@@ -220,6 +286,15 @@ class Zend_Log_Writer_FirebugTest extends PHPUnit_Framework_TestCase
                             serialize($messages));
     }
 }
+
+class Zend_Log_Writer_FirebugTest_Formatter extends Zend_Log_Formatter_Firebug
+{
+    public function format($event)
+    {
+        return $event['testLabel'].' : '.$event['message'];
+    }
+}
+
 
 class Zend_Log_Writer_FirebugTest_Request extends Zend_Controller_Request_Http
 {
