@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12836 -->
+<!-- EN-Revision: 13628 -->
 <sect1 id="zend.file.transfer.filters">
 
     <title>Filter für Zend_File_Transfer</title>
@@ -15,6 +15,16 @@
     </para>
 
     <itemizedlist>
+        <listitem>
+            <para>
+                <code>Decrypt</code>: Dieser Filter kann verschlüsselte Dateien entschlüsseln.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <code>Encrypt</code>: Dieser Filter kann Dateien verschlüsseln.
+            </para>
+        </listitem>
         <listitem>
             <para>
                 <code>LowerCase</code>: Dieser Filter kann den Inhalt einer Textdatei auf Kleinschreibung
@@ -173,6 +183,116 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
             </para>
         </note>
 
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.decrypt">
+        <title><emphasis role="strong">Decrypt</emphasis> Filter</title>
+
+        <para>
+            Der <code>Decrypt</code> Filter erlaubt es verschlüsselte Dateien zu entschlüsseln.
+        </para>
+
+        <para>
+            Dieser Filter verwendet <code>Zend_Filter_Decrypt</code>. Er unterstützt die Erweiterungen
+            <code>Mcrypt</code> und <code>OpenSSL</code> von PHP. Lesen Sie bitte das betreffende Kapitel
+            für Details darüber wie Optionen für die Entschlüsselung gesetzt werden können und welche
+            Optionen unterstützt werden.
+        </para>
+
+        <para>
+            Dieser Filter unterstützt eine zusätzliche Option die verwendet werden kann um die
+            entschlüsselte Datei unter einem anderen Dateinamen zu speichern. Setze die <code>filename</code>
+            Option um den Dateinamen zu ändern unter dem die entschlüsselte Datei abgespeichert wird.
+            Wenn diese Option nicht angegeben wird, überschreibt die entschlüsselte Datei die verschlüsselte
+            Originaldatei.
+        </para>
+
+        <example id="zend.file.transfer.filters.decrypt.example1">
+            <title>Verwenden des Decrypt Filters mit Mcrypt</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+
+// Fügt einen Filter hinzu um die hochgeladene verschlüsselte Datei
+// mit Mcrypt und dem Schlüssel mykey zu entschlüsseln
+// with mcrypt and the key mykey
+$upload->addFilter('Decrypt',
+    array('adapter' => 'mcrypt', 'key' => 'mykey'));
+]]>
+            </programlisting>
+
+        </example>
+
+        <example id="zend.file.transfer.filters.decrypt.example2">
+            <title>Verwenden des Decrypt Filters mit OpenSSL</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+
+// Fügt einen Filter hinzu um die hochgeladene verschlüsselte Datei
+// mit openssl und den angegebenen Schlüsseln zu entschlüseln
+$upload->addFilter('Decrypt',
+    array('adapter' => 'openssl',
+          'private' => '/path/to/privatekey.pem',
+          'envelope' => '/path/to/envelopekey.pem'));
+]]>
+            </programlisting>
+
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.filters.encrypt">
+        <title><emphasis role="strong">Encrypt</emphasis> Filter</title>
+
+        <para>
+            Der <code>Encrypt</code> Filter erlaubt es eine Datei zu verschlüsseln.
+        </para>
+
+        <para>
+            Dieser Filter verwendet <code>Zend_Filter_Encrypt</code>. Er unterstützt die Erweiterungen
+            <code>Mcrypt</code> und <code>OpenSSL</code> von PHP. Lesen Sie bitte das betreffende Kapitel
+            für Details darüber wie Optionen für die Entschlüsselung gesetzt werden können und welche
+            Optionen unterstützt werden.
+        </para>
+
+        <para>
+            Dieser Filter unterstützt eine zusätzliche Option die verwendet werden kann um die
+            verschlüsselte Datei unter einem anderen Dateinamen zu speichern. Setze die <code>filename</code>
+            Option um den Dateinamen zu ändern unter dem die verschlüsselte Datei abgespeichert wird.
+            Wenn diese Option nicht angegeben wird, überschreibt die verschlüsselte Datei die
+            Originaldatei.
+        </para>
+
+        <example id="zend.file.transfer.filters.encrypt.example1">
+            <title>Verwenden des Encrypt Filters mit Mcrypt</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+
+// Fügt einen Filter hinzu um die hochgeladene Datei mit mcrypt
+// und dem Schlüssel mykey zu verschlüsseln
+$upload->addFilter('Encrypt',
+    array('adapter' => 'mcrypt', 'key' => 'mykey'));
+]]>
+            </programlisting>
+
+        </example>
+
+        <example id="zend.file.transfer.filters.encrypt.example2">
+            <title>Verwenden des Encrypt Filters mit OpenSSL</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer_Adapter_Http();
+
+// Fügt einen Filter hinzu um die hochgeladene Datei mit openssl
+// und den angegebenen Schlüsseln zu verschlüsseln
+$upload->addFilter('Encrypt',
+    array('adapter' => 'openssl',
+          'public' => '/path/to/publickey.pem'));
+]]>
+            </programlisting>
+
+        </example>
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.lowercase">
