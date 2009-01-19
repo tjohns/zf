@@ -468,14 +468,14 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
 
         if (!oci_fetch($this->_stmt)) {
             // if no error, there is simply no record
-            if (!oci_error($this->_stmt)) {
+            if (!$error = oci_error($this->_stmt)) {
                 return false;
             }
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
+            throw new Zend_Db_Statement_Oracle_Exception($error);
         }
 
         $data = oci_result($this->_stmt, $col+1); //1-based
