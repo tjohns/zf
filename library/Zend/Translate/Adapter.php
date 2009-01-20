@@ -222,14 +222,19 @@ abstract class Zend_Translate_Adapter {
     public function setOptions(array $options = array())
     {
         $change = false;
+        $locale = null;
         foreach ($options as $key => $option) {
             if ($key == "locale") {
-                $this->setLocale($option);
+                $locale = $option;
             } else if ((isset($this->_options[$key]) and ($this->_options[$key] != $option)) or
                     !isset($this->_options[$key])) {
                 $this->_options[$key] = $option;
                 $change = true;
             }
+        }
+
+        if ($locale !== null) {
+            $this->setLocale($option);
         }
 
         if (isset(self::$_cache) and ($change == true)) {
