@@ -1,0 +1,9 @@
+FONT LICENSES:
+
+Caslon Roman
+- Filename: CaslonRoman.sfd
+- Downloaded from: http://pfaedit.sourceforge.net/sfds/CaslonRoman.sfd.gz
+- Reference page: http://pfaedit.sourceforge.net/sfds/index.html
+- Author: George Williams
+- More info: http://en.wikipedia.org/wiki/Caslon_Roman
+- License type: BSD license
