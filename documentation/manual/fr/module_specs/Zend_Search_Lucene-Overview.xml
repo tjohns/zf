@@ -154,93 +154,99 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.understanding-field-types">
-        <title>Understanding Field Types</title>
+        <title>Comprendre les types de champs</title>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Keyword</code> fields are stored and indexed, meaning that they can be searched as well
-                    as displayed in search results. They are not split up into separate words by tokenization.
-                    Enumerated database fields usually translate well to Keyword fields in Zend_Search_Lucene.
+                    Les champs <code>Keyword</code> (mot-clé) sont stockés ET indexés. Cela signifie
+                    qu'ils peuvent être aussi bien cherchés dans l'index qu'affichés dans les
+                    résultats de la recherche. Ils ne sont pas divisés en plusieurs mots par "tokenization".
+                    Les champs d'énumérations dans une base de donnée se transposent généralement assez bien
+                    en champs de type Keyword dans Zend_Search_Lucene.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnIndexed</code> fields are not searchable, but they are returned with search hits.  Database
-                    timestamps, primary keys, file system paths, and other external identifiers are good
-                    candidates for UnIndexed fields.
+                    Les champs <code>UnIndexed</code> (non-indexé) ne peuvent pas être utilisés dans la recherche.
+                    En revenche, ils peuvent être retournés dans les résultats. Des timestamps de base de données,
+                    des clés primaires, des chemins de fichiers et d'autres identifiants externes sont autant de
+                    bons exemples d'utilisation des champs de type UnIndexed.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Binary</code> fields are not tokenized or indexed, but are stored for retrieval with search hits.
-                    They can be used to store any data encoded as a binary string, such as an image icon.
+                    Les champs <code>Binary</code> (binaire) ne sont ni "tokenizés", ni indexés, mais ils sont stockés dans
+                    le but d'être retournés dans les résultats de recherche. Ils peuvent être utilisés pour stocker
+                    n'importe quelle donnée encodée en chaîne binaire, telle qu'une icône par exemple.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Text</code> fields are stored, indexed, and tokenized. Text fields are appropriate for storing
-                    information like subjects and titles that need to be searchable as well as returned with
-                    search results.
+                    Les champs <code>Text</code> (texte) sont stockés, indexés et "tokenizés". Les champs de type Text
+                    sont appropriés pour stocker des informations telles que sujets et titres sur lesquels on veut pouvoir
+                    effectuer des recherches, mais également les utiliser dans l'affichage des résultats.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnStored</code> fields are tokenized and indexed, but not stored in the index. Large amounts of
-                    text are best indexed using this type of field. Storing data creates a larger index on
-                    disk, so if you need to search but not redisplay the data, use an UnStored field.
-                    UnStored fields are practical when using a Zend_Search_Lucene index in
-                    combination with a relational database. You can index large data fields with UnStored
-                    fields for searching, and retrieve them from your relational database by using a separate
-                    field as an identifier.
+                    Les champs <code>UnStored</code> sont "tokenizés" et indexés, mais pas stockés dans l'index. Il
+                    est recommandé d'utiliser ce type de champ pour indexer les textes conséquents. Stocker des données
+                    implique la création d'index plus volumineux sur le disque. Donc si vous disposez de données sur
+                    lesquelles vous voulez uniquement effectuer des recherches sans nécessairement afficher ces données
+                    dans les résultats, utilisez un champ de type UnStored.
+                    Le type UnStored est pratique lorsque vous utilisez un index Zend_Search_Lucene en combinaison
+                    avec une base de données relationnelle. Vous pouvez indexer des gros champs de données dans
+                    des champs de type UnStored et les extraire de la base de données relationnelle en utilisant
+                    un champ séparé en tant qu'identifiant.
                </para>
 
                 <table id="zend.search.lucene.index-creation.understanding-field-types.table">
-                    <title>Zend_Search_Lucene_Field Types</title>
+                    <title>Les types Zend_Search_Lucene_Field</title>
                     <tgroup cols="5">
                         <thead>
                             <row>
-                                <entry>Field Type</entry>
-                                <entry>Stored</entry>
-                                <entry>Indexed</entry>
-                                <entry>Tokenized</entry>
-                                <entry>Binary</entry>
+                                <entry>Type de champ</entry>
+                                <entry>Stocké</entry>
+                                <entry>Indexé</entry>
+                                <entry>"Tokenizé"</entry>
+                                <entry>Binaire</entry>
                             </row>
                         </thead>
                         <tbody>
                             <row>
                                 <entry>Keyword</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
                             </row>
                             <row>
                                 <entry>UnIndexed</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
                             </row>
                             <row>
                                 <entry>Binary</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
+                                <entry>Oui</entry>
                             </row>
                             <row>
                                 <entry>Text</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
                             </row>
                             <row>
                                 <entry>UnStored</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>Non</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
                             </row>
                         </tbody>
                     </tgroup>
