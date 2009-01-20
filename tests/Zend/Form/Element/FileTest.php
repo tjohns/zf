@@ -231,6 +231,27 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, substr_count($output, 'file[]'));
     }
 
+    public function testMultiFileWithOneFile()
+    {
+        $form = new Zend_Form();
+        $element = new Zend_Form_Element_File('file');
+        $element->setMultiFile(1);
+
+        $subform0 = new Zend_Form_SubForm();
+        $subform0->addElement($element);
+        $subform1 = new Zend_Form_SubForm();
+        $subform1->addSubform($subform0, 'subform0');
+        $subform2 = new Zend_Form_SubForm();
+        $subform2->addSubform($subform1, 'subform1');
+        $subform3 = new Zend_Form_SubForm();
+        $subform3->addSubform($subform2, 'subform2');
+        $form->addSubform($subform3, 'subform3');
+
+        $form->setView(new Zend_View());
+        $output = (string) $form;
+        $this->assertNotContains('name="file[]"', $output);
+    }
+
     public function testSettingMaxFileSize()
     {
         $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
@@ -264,6 +285,59 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->element->translatorIsDisabled());
         $this->element->setDisableTranslator($translate);
         $this->assertTrue($this->element->translatorIsDisabled());
+    }
+
+    public function testFileNameWithoutPath()
+    {
+        $this->element->setTransferAdapter(new Zend_Form_Element_FileTest_MockAdapter());
+        $this->element->setDestination(dirname(__FILE__));
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'foo.jpg', $this->element->getFileName('foo', true));
+        $this->assertEquals('foo.jpg', $this->element->getFileName('foo', false));
+    }
+
+    public function testEmptyFileName()
+    {
+        $this->element->setTransferAdapter(new Zend_Form_Element_FileTest_MockAdapter());
+        $this->element->setDestination(dirname(__FILE__));
+        $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'foo.jpg', $this->element->getFileName());
+    }
+
+    public function testIsReceived()
+    {
+        $this->element->setTransferAdapter(new Zend_Form_Element_FileTest_MockAdapter());
+        $this->assertEquals(false, $this->element->isReceived());
+    }
+
+    public function testIsUploaded()
+    {
+        $this->element->setTransferAdapter(new Zend_Form_Element_FileTest_MockAdapter());
+        $this->assertEquals(true, $this->element->isUploaded());
+    }
+
+    public function testIsFiltered()
+    {
+        $this->element->setTransferAdapter(new Zend_Form_Element_FileTest_MockAdapter());
+        $this->assertEquals(true, $this->element->isFiltered());
+    }
+
+    public function testDefaultDecorators()
+    {
+        $this->element->clearDecorators();
+        $this->assertEquals(array(), $this->element->getDecorators());
+        $this->element->setDisableLoadDefaultDecorators(true);
+        $this->element->loadDefaultDecorators();
+        $this->assertEquals(array(), $this->element->getDecorators());
+        $this->element->setDisableLoadDefaultDecorators(false);
+        $this->element->loadDefaultDecorators();
+        $this->assertNotEquals(array(), $this->element->getDecorators());
+    }
+
+    public function testValueGetAndSet()
+    {
+        $this->element->setTransferAdapter(new Zend_Form_Element_FileTest_MockAdapter());
+        $this->assertEquals(null, $this->element->getValue());
+        $this->element->setValue('something');
+        $this->assertEquals(null, $this->element->getValue());
     }
 
     private function _convertIniToInteger($setting)

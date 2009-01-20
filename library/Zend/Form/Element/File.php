@@ -518,16 +518,17 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     /**
      * Get the final filename
      *
-     * @param  string $value (Optional) Element or file to return
+     * @param  string  $value (Optional) Element or file to return
+     * @param  boolean $path  (Optional) Return also the path, defaults to true
      * @return string
      */
-    public function getFileName($value = null)
+    public function getFileName($value = null, $path = true)
     {
         if (empty($value)) {
             $value = $this->getName();
         }
 
-        return $this->getTransferAdapter()->getFileName($value);
+        return $this->getTransferAdapter()->getFileName($value, $path);
     }
 
     /**

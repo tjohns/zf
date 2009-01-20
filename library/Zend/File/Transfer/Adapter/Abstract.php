@@ -473,6 +473,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         foreach ($validators as $validator) {
             $result[$validator] = $this->_validators[$validator];
         }
+
         return $result;
     }
 
