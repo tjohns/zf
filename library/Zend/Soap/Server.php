@@ -71,6 +71,21 @@ class Zend_Soap_Server implements Zend_Server_Interface
     protected $_encoding;
 
     /**
+     * SOAP Server Features
+     *
+     * @var int
+     */
+    protected $_features;
+
+    /**
+     * WSDL Caching Options of SOAP Server
+     *
+     * @var
+     */
+    protected $_wsdlCache;
+
+
+    /**
      * Registered fault exceptions
      * @var array
      */
@@ -192,6 +207,12 @@ class Zend_Soap_Server implements Zend_Server_Interface
                 case 'wsdl':
                     $this->setWsdl($value);
                     break;
+                case 'featues':
+                    $this->setSoapFeatures($value);
+                    break;
+                case 'cache_wsdl':
+                    $this->setWsdlCache($value);
+                    break;
                 default:
                     break;
             }
@@ -226,6 +247,14 @@ class Zend_Soap_Server implements Zend_Server_Interface
 
         if (null !== $this->_uri) {
             $options['uri'] = $this->_uri;
+        }
+
+        if(null !== $this->_features) {
+            $options['features'] = $this->_features;
+        }
+
+        if(null !== $this->_wsdlCache) {
+            $options['cache_wsdl'] = $this->_wsdlCache;
         }
 
         return $options;
@@ -416,6 +445,48 @@ class Zend_Soap_Server implements Zend_Server_Interface
     public function getWsdl()
     {
         return $this->_wsdl;
+    }
+
+    /**
+     * Set the SOAP Feature options.
+     *
+     * @param  string|int $feature
+     * @return Zend_Soap_Server
+     */
+    public function setSoapFeatures($feature)
+    {
+        $this->_features = $feature;
+        return $this;
+    }
+
+    /**
+     * Return current SOAP Features options
+     * 
+     * @return int
+     */
+    public function getSoapFeatures()
+    {
+        return $this->_features;
+    }
+
+    /**
+     * Set the SOAP Wsdl Caching Options
+     *
+     * @param string|int|boolean $caching
+     * @return Zend_Soap_Server
+     */
+    public function setWsdlCache($options)
+    {
+        $this->_wsdlCache = $options;
+        return $this;
+    }
+
+    /**
+     * Get current SOAP Wsdl Caching option
+     */
+    public function getWsdlCache()
+    {
+        return $this->_wsdlCache;
     }
 
     /**

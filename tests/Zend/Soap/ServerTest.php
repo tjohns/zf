@@ -828,6 +828,34 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         $server->setOptions($config);
         $this->assertEquals($options, $server->getOptions());
     }
+
+    /**
+     * @group ZF-5300
+     */
+    public function testSetAndGetFeatures()
+    {
+        $server = new Zend_Soap_Server();
+        $this->assertNull($server->getSoapFeatures());
+        $server->setSoapFeatures(100);
+        $this->assertEquals(100, $server->getSoapFeatures());
+        $options = $server->getOptions();
+        $this->assertTrue(isset($options['features']));
+        $this->assertEquals(100, $options['features']);
+    }
+
+    /**
+     * @group ZF-5300
+     */
+    public function testSetAndGetWsdlCache()
+    {
+        $server = new Zend_Soap_Server();
+        $this->assertNull($server->getWsdlCache());
+        $server->setWsdlCache(100);
+        $this->assertEquals(100, $server->getWsdlCache());
+        $options = $server->getOptions();
+        $this->assertTrue(isset($options['cache_wsdl']));
+        $this->assertEquals(100, $options['cache_wsdl']);
+    }
 }
 
 
