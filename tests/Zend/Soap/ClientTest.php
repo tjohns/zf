@@ -79,6 +79,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 		                        'passphrase'     => 'some pass phrase',
 
                                 'stream_context' => $ctx,
+                                'cache_wsdl'     => 8,
+                                'features'       => 4,
 
 		                        'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5);
 

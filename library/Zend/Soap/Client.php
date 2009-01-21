@@ -77,6 +77,8 @@ class Zend_Soap_Client
     protected $_compression         = null;
     protected $_connection_timeout  = null;
     protected $_stream_context      = null;
+    protected $_features            = null;
+    protected $_cache_wsdl          = null;
 
     /**
      * WSDL used to access server
@@ -218,6 +220,12 @@ class Zend_Soap_Client
                 case 'stream_context':
                     $this->setStreamContext($value);
                     break;
+                case 'features':
+                    $this->setSoapFeatures($value);
+                    break;
+                case 'cache_wsdl':
+                    $this->setWsdlCache($value);
+                    break;
 
                 // Not used now
                 // case 'connection_timeout':
@@ -262,6 +270,8 @@ class Zend_Soap_Client
         $options['compression']    = $this->getCompressionOptions();
         //$options['connection_timeout'] = $this->_connection_timeout;
         $options['stream_context'] = $this->getStreamContext();
+        $options['cache_wsdl']     = $this->getWsdlCache();
+        $options['features']       = $this->getSoapFeatures();
 
         foreach ($options as $key => $value) {
             if ($value == null) {
@@ -764,6 +774,48 @@ class Zend_Soap_Client
     public function getStreamContext()
     {
         return $this->_stream_context;
+    }
+
+    /**
+     * Set the SOAP Feature options.
+     *
+     * @param  string|int $feature
+     * @return Zend_Soap_Server
+     */
+    public function setSoapFeatures($feature)
+    {
+        $this->_features = $feature;
+        return $this;
+    }
+
+    /**
+     * Return current SOAP Features options
+     *
+     * @return int
+     */
+    public function getSoapFeatures()
+    {
+        return $this->_features;
+    }
+
+    /**
+     * Set the SOAP Wsdl Caching Options
+     *
+     * @param string|int|boolean $caching
+     * @return Zend_Soap_Server
+     */
+    public function setWsdlCache($options)
+    {
+        $this->_cache_wsdl = $options;
+        return $this;
+    }
+
+    /**
+     * Get current SOAP Wsdl Caching option
+     */
+    public function getWsdlCache()
+    {
+        return $this->_cache_wsdl;
     }
 
     /**
