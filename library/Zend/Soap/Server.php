@@ -828,7 +828,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
      * @param  string $code SOAP Fault Codes
      * @return SoapFault
      */
-    public function fault($fault = null, $code = "Reciever")
+    public function fault($fault = null, $code = "Receiver")
     {
         if ($fault instanceof Exception) {
             $class = get_class($fault);
@@ -850,7 +850,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
             'Sender', 'Receiver', 'Server'
         );
         if(!in_array($code, $allowedFaultModes)) {
-            $code = "Reciever";
+            $code = "Receiver";
         }
 
         return new SoapFault($code, $message);
@@ -869,6 +869,6 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function handlePhpErrors($errno, $errstr, $errfile = null, $errline = null, array $errcontext = null)
     {
-        throw $this->fault($errstr, "Reciever");
+        throw $this->fault($errstr, "Receiver");
     }
 }
