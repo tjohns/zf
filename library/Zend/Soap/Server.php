@@ -161,11 +161,15 @@ class Zend_Soap_Server implements Zend_Server_Interface
      *
      * Allows setting options as an associative array of option => value pairs.
      *
-     * @param  array $options
+     * @param  array|Zend_Config $options
      * @return Zend_Soap_Server
      */
-    public function setOptions(array $options)
+    public function setOptions($options)
     {
+        if($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+
         foreach ($options as $key => $value) {
             switch ($key) {
                 case 'actor':

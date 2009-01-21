@@ -28,6 +28,8 @@ require_once 'Zend/Soap/Server.php';
 
 require_once 'Zend/Soap/Server/Exception.php';
 
+require_once "Zend/Config.php";
+
 /**
  * Zend_Soap_Server
  *
@@ -806,6 +808,25 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
             '<SOAP-ENV:Fault><faultcode>Receiver</faultcode><faultstring>Test Message</faultstring></SOAP-ENV:Fault>',
             $response
         );
+    }
+
+    /**
+     * @group ZF-5597
+     */
+    public function testServerAcceptsZendConfigObject()
+    {
+        $options = array('soap_version' => SOAP_1_1,
+                         'actor' => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
+                         'classmap' => array('TestData1' => 'Zend_Soap_Server_TestData1',
+                                             'TestData2' => 'Zend_Soap_Server_TestData2',),
+                         'encoding' => 'ISO-8859-1',
+                         'uri' => 'http://framework.zend.com/Zend_Soap_ServerTest.php'
+                        );
+        $config = new Zend_Config($options);
+
+        $server = new Zend_Soap_Server();
+        $server->setOptions($config);
+        $this->assertEquals($options, $server->getOptions());
     }
 }
 
