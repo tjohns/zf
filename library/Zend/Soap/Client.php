@@ -76,6 +76,7 @@ class Zend_Soap_Client
     protected $_passphrase          = null;
     protected $_compression         = null;
     protected $_connection_timeout  = null;
+    protected $_stream_context      = null;
 
     /**
      * WSDL used to access server
@@ -210,6 +211,9 @@ class Zend_Soap_Client
                 case 'compression':
                     $this->setCompressionOptions($value);
                     break;
+                case 'stream_context':
+                    $this->setStreamContext($value);
+                    break;
 
                 // Not used now
                 // case 'connection_timeout':
@@ -252,7 +256,8 @@ class Zend_Soap_Client
         $options['local_cert']     = $this->getHttpsCertificate();
         $options['passphrase']     = $this->getHttpsCertPassphrase();
         $options['compression']    = $this->getCompressionOptions();
-//        $options['connection_timeout'] = $this->_connection_timeout;
+        //$options['connection_timeout'] = $this->_connection_timeout;
+        $options['stream_context'] = $this->getStreamContext();
 
         foreach ($options as $key => $value) {
             if ($value == null) {
@@ -724,6 +729,37 @@ class Zend_Soap_Client
     public function getProxyPassword()
     {
         return $this->_proxy_password;
+    }
+
+    /**
+     * Set Stream Context
+     *
+     * @return Zend_Soap_Client
+     */
+    public function setStreamContext($context)
+    {
+        if(!is_resource($context) || get_resource_type($context) !== "stream-context") {
+            /**
+             * @see Zend_Soap_Client_Exception
+             */
+            require_once "Zend/Soap/Client/Exception.php";
+            throw new Zend_Soap_Client_Exception(
+                "Invalid stream context resource given."
+            );
+        }
+
+        $this->_stream_context = $context;
+        return $this;
+    }
+
+    /**
+     * Get Stream Context
+     *
+     * @return resource
+     */
+    public function getStreamContext()
+    {
+        return $this->_stream_context;
     }
 
     /**

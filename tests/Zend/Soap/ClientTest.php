@@ -54,6 +54,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 
     	$this->assertTrue($client->getOptions() == array('encoding' => 'UTF-8', 'soap_version' => SOAP_1_2));
 
+        $ctx = stream_context_create();
+
     	$nonWsdlOptions = array('soap_version'   => SOAP_1_1,
 		                        'classmap'       => array('TestData1' => 'Zend_Soap_Client_TestData1',
 		                                            'TestData2' => 'Zend_Soap_Client_TestData2',),
@@ -73,6 +75,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 
 		                        'local_cert'     => dirname(__FILE__).'/_files/cert_file',
 		                        'passphrase'     => 'some pass phrase',
+
+                                'stream_context' => $ctx,
 
 		                        'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5);
 
@@ -103,6 +107,8 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 
                              'local_cert'     => dirname(__FILE__).'/_files/cert_file',
                              'passphrase'     => 'some pass phrase',
+
+                             'stream_context' => $ctx,
 
                              'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5);
 
