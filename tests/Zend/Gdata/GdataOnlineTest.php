@@ -294,4 +294,35 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testDisableXMLToObjectMappingReturnsStringForFeed()
+    {
+        $gdata = new Zend_Gdata();
+        $gdata->useObjectMapping(false);
+        $xmlString = $gdata->getFeed(
+            'http://gdata.youtube.com/feeds/api/standardfeeds/top_rated');
+        $this->assertEquals('string', gettype($xmlString));
+    }
+
+    public function testDisableXMLToObjectMappingReturnsStringForEntry()
+    {
+        $gdata = new Zend_Gdata();
+        $gdata->useObjectMapping(false);
+        $xmlString = $gdata->getFeed(
+            'http://gdata.youtube.com/feeds/api/videos/O4SWAfisH-8');
+        $this->assertEquals('string', gettype($xmlString));
+    }
+
+    public function testDisableAndReEnableXMLToObjectMappingReturnsObject()
+    {
+        $gdata = new Zend_Gdata();
+        $gdata->useObjectMapping(false);
+        $xmlString = $gdata->getEntry(
+            'http://gdata.youtube.com/feeds/api/videos/O4SWAfisH-8');
+        $this->assertEquals('string', gettype($xmlString));
+        $gdata->useObjectMapping(true);
+        $entry = $gdata->getEntry(
+            'http://gdata.youtube.com/feeds/api/videos/O4SWAfisH-8');
+        $this->assertTrue($entry instanceof Zend_Gdata_Entry);
+    }
+
 }

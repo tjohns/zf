@@ -155,6 +155,13 @@ class Zend_Gdata_App
     protected $_minorProtocolVersion;
 
     /**
+     * Whether we want to use XML to object mapping when fetching data.
+     *
+     * @var boolean
+     */
+    protected $_useObjectMapping = true;
+
+    /**
      * Create Gdata object
      *
      * @param Zend_Http_Client $client
@@ -183,27 +190,33 @@ class Zend_Gdata_App
     }
 
     /**
-     * Retreive feed object
+     * Retrieve feed as string or object
      *
      * @param string $uri The uri from which to retrieve the feed
      * @param string $className The class which is used as the return type
-     * @return Zend_Gdata_App_Feed
+     * @return string|Zend_Gdata_App_Feed Returns string only if the object
+     *                                    mapping has been disabled explicitly
+     *                                    by passing false to the
+     *                                    useObjectMapping() function.
      */
     public function getFeed($uri, $className='Zend_Gdata_App_Feed')
     {
-        return $this->importUrl($uri, $className);
+        return $this->importUrl($uri, $className, null);
     }
 
     /**
-     * Retreive entry object
+     * Retrieve entry as string or object
      *
      * @param string $uri
      * @param string $className The class which is used as the return type
-     * @return Zend_Gdata_App_Entry
+     * @return string|Zend_Gdata_App_Entry Returns string only if the object
+     *                                     mapping has been disabled explicitly
+     *                                     by passing false to the
+     *                                     useObjectMapping() function.
      */
     public function getEntry($uri, $className='Zend_Gdata_App_Entry')
     {
-        return $this->importUrl($uri, $className);
+        return $this->importUrl($uri, $className, null);
     }
 
     /**
@@ -489,7 +502,8 @@ class Zend_Gdata_App
         } elseif ($data instanceof Zend_Gdata_App_MediaEntry) {
             $rawData = $data->encode();
             if ($data->getMediaSource() !== null) {
-                $finalContentType = 'multipart/related; boundary="' . $data->getBoundary() . '"';
+                $finalContentType = 'multipart/related; boundary="' .
+                    $data->getBoundary() . '"';
                 $headers['MIME-version'] = '1.0';
                 $headers['Slug'] = $data->getMediaSource()->getSlug();
             } else {
@@ -549,7 +563,9 @@ class Zend_Gdata_App
             $finalContentType = $contentTypeOverride;
         }
 
-        return array('method' => $method, 'url' => $url, 'data' => $rawData, 'headers' => $headers, 'contentType' => $finalContentType);
+        return array('method' => $method, 'url' => $url,
+            'data' => $rawData, 'headers' => $headers,
+            'contentType' => $finalContentType);
     }
 
     /**
@@ -567,7 +583,8 @@ class Zend_Gdata_App
      *                              s results in one
      * @return Zend_Http_Response The response object
      */
-    public function performHttpRequest($method, $url, $headers = null, $body = null, $contentType = null, $remainingRedirects = null)
+    public function performHttpRequest($method, $url, $headers = null,
+        $body = null, $contentType = null, $remainingRedirects = null)
     {
         require_once 'Zend/Http/Client/Exception.php';
         if ($remainingRedirects === null) {
@@ -655,15 +672,22 @@ class Zend_Gdata_App
      * @param  Zend_Http_Client $client The client used for communication
      * @param  string $className The class which is used as the return type
      * @throws Zend_Gdata_App_Exception
-     * @return Zend_Gdata_App_Feed
+     * @return string|Zend_Gdata_App_Feed Returns string only if the object
+     *                                    mapping has been disabled explicitly
+     *                                    by passing false to the
+     *                                    useObjectMapping() function.
      */
-    public static function import($uri, $client = null, $className='Zend_Gdata_App_Feed')
+    public static function import($uri, $client = null,
+        $className='Zend_Gdata_App_Feed')
     {
         $app = new Zend_Gdata_App($client);
         $requestData = $app->prepareRequest('GET', $uri);
         $response = $app->performHttpRequest($requestData['method'], $requestData['url']);
 
         $feedContent = $response->getBody();
+        if (!$this->_useObjectMapping) {
+            return $feedContent;
+        }
         $feed = self::importString($feedContent, $className);
         if ($client != null) {
             $feed->setHttpClient($client);
@@ -679,13 +703,20 @@ class Zend_Gdata_App
      * @param array $extraHeaders Extra headers to add to the request, as an
      *        array of string-based key/value pairs.
      * @throws Zend_Gdata_App_Exception
-     * @return Zend_Gdata_App_Feed
+     * @return string|Zend_Gdata_App_Feed Returns string only if the object
+     *                                    mapping has been disabled explicitly
+     *                                    by passing false to the
+     *                                    useObjectMapping() function.
      */
-    public function importUrl($url, $className='Zend_Gdata_App_Feed', $extraHeaders = array())
+    public function importUrl($url, $className='Zend_Gdata_App_Feed',
+        $extraHeaders = array())
     {
         $response = $this->get($url, $extraHeaders);
 
         $feedContent = $response->getBody();
+        if (!$this->_useObjectMapping) {
+            return $feedContent;
+        }
         $feed = self::importString($feedContent, $className);
 
         $etag = $response->getHeader('ETag');
@@ -727,7 +758,8 @@ class Zend_Gdata_App
      * @throws Zend_Gdata_App_Exception
      * @return Zend_Gdata_App_Feed
      */
-    public static function importString($string, $className='Zend_Gdata_App_Feed')
+    public static function importString($string,
+        $className='Zend_Gdata_App_Feed')
     {
         // Load the feed as an XML DOMDocument object
         @ini_set('track_errors', 1);
@@ -1082,6 +1114,33 @@ class Zend_Gdata_App
             }
         }
         return $result;
+    }
+
+    /**
+     * Determine whether service object is using XML to object mapping.
+     *
+     * @return boolean True if service object is using XML to object mapping,
+     *                 false otherwise.
+     */
+    public function usingObjectMapping()
+    {
+        return $this->_useObjectMapping;
+    }
+
+    /**
+     * Enable/disable the use of XML to object mapping.
+     *
+     * @param boolean $value Pass in true to use the XML to object mapping.
+     *                       Pass in false or null to disable it.
+     * @return void
+     */
+    public function useObjectMapping($value)
+    {
+        if ($value === True) {
+            $this->_useObjectMapping = true;
+        } else {
+            $this->_useObjectMapping = false;
+        }
     }
 
 }
