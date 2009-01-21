@@ -680,6 +680,56 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
             'Zend_Soap_AutoDiscoverTestClass1 appears once or more than once in the message parts section.'
         );
     }
+
+    /**
+     * @group ZF-5330
+     */
+    public function testDumpOrXmlOfAutoDiscover()
+    {
+        $server = new Zend_Soap_AutoDiscover();
+        $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
+
+        ob_start();
+        $server->handle();
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals(
+            $this->sanatizeWsdlXmlOutputForOsCompability($wsdlOutput),
+            $this->sanatizeWsdlXmlOutputForOsCompability($server->toXml())
+        );
+
+        ob_start();
+        $server->dump(false);
+        $wsdlOutput = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals(
+            $this->sanatizeWsdlXmlOutputForOsCompability($wsdlOutput),
+            $this->sanatizeWsdlXmlOutputForOsCompability($server->toXml())
+        );
+    }
+
+    /**
+     * @group ZF-5330
+     */
+    public function testDumpOrXmlOnlyAfterGeneratedAutoDiscoverWsdl()
+    {
+        $server = new Zend_Soap_AutoDiscover();
+        try {
+            $server->dump(false);
+            $this->fail();
+        } catch(Exception $e) {
+            $this->assertTrue($e instanceof Zend_Soap_AutoDiscover_Exception);
+        }
+
+        try {
+            $server->toXml();
+            $this->fail();
+        } catch(Exception $e) {
+            $this->assertTrue($e instanceof Zend_Soap_AutoDiscover_Exception);
+        }
+    }
 }
 
 /* Test Functions */

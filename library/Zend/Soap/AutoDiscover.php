@@ -431,6 +431,40 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     }
 
     /**
+     * Proxy to WSDL dump function
+     *
+     * @param string $filename
+     */
+    public function dump($filename)
+    {
+        if($this->_wsdl !== null) {
+            return $this->_wsdl->dump($filename);
+        } else {
+            /**
+             * @see Zend_Soap_AutoDiscover_Exception
+             */
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
+            throw new Zend_Soap_AutoDiscover_Exception("Cannot dump autodiscovered contents, WSDL file has not been generated yet.");
+        }
+    }
+
+    /**
+     * Proxy to WSDL toXml() function
+     */
+    public function toXml()
+    {
+        if($this->_wsdl !== null) {
+            return $this->_wsdl->toXml();
+        } else {
+            /**
+             * @see Zend_Soap_AutoDiscover_Exception
+             */
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
+            throw new Zend_Soap_AutoDiscover_Exception("Cannot return autodiscovered contents, WSDL file has not been generated yet.");
+        }
+    }
+
+    /**
      * Return an array of functions in the WSDL
      *
      * @return array

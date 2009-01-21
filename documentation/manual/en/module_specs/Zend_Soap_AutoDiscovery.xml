@@ -70,7 +70,9 @@
 
 
         <para>
-            Here is an example of common usage of the autodiscovery functionality:
+            Here is an example of common usage of the autodiscovery functionality. The <code>handle()</code>
+            function generates the WSDL file and posts it to the browser.
+
             <programlisting role="php"><![CDATA[
 class My_SoapServer_Class {
 ...
@@ -81,6 +83,12 @@ $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
 ]]>
             </programlisting>
+        </para>
+
+        <para>
+            If you need access to the generated WSDL file either to save it to a file or
+            as an XML string you can use the <code>dump($filename)</code> or <code>toXml()</code>
+            functions the AutoDiscover class provides.
         </para>
 
         <note id="zend.soap.autodiscovery.introduction.noserver">
@@ -144,7 +152,7 @@ $autodiscover->handle();
                 <listitem>
                     <para>
                         <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> is used
-                        as an URI where the WSDL is available.
+                        as an URI where the WSDL is available by default but can be overwritten via <code>setUri()</code> method.
                     </para>
                     <para>
                          It's also used as a target namespace for all service related names (including
