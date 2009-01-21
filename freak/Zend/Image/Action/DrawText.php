@@ -3,70 +3,70 @@ require_once 'Zend/Image/Action/Abstract.php';
 require_once 'Zend/Image/Point.php';
 
 class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
-    /*
+    /**
      * Position of the text
      *
      * @var integer _position
      */
 	protected $_position = null;
 
-    /*
+    /**
      * The color of the line (hex)
      *
      * @var int color
      */
     protected $_color = 000000;
 
-    /*
+    /**
      * The alpha channel of the arc
      *
      * @var int alphachannel
      */
     protected $_alpha = 127;
 
-    /*
+    /**
      * The text that needs to be drawn
      *
      * @var string Text
      */
     protected $_text = '';
 
-    /*
+    /**
      * The size of the text that is drawn
      *
      * @var int size
      */
     protected $_size = 10;
 
-    /*
+    /**
      * The font to use
      *
      * @var string Path to font
      */
     protected $_font = 'Zend/Image/Fonts/CaslonRoman.ttf';
 
-    /*
+    /**
      * The amount of degrees the text needs to be rotated
      *
      * @var int rotation
      */
     protected $_rotation = 0;
 
-    /*
+    /**
      * X-Offset
      *
      * @var int offsetX
      */
     protected $_offsetX = 0;
 
-    /*
+    /**
      * Y-offset
      *
      * @var int offsetY
      */
     protected $_offsetY = 0;
 
-	/*
+	/**
 	 * The name of this action
 	 */
 	const NAME  = 'DrawArc';
@@ -139,12 +139,12 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
 	   return $this;
 	}
 
-	/*
+	/**
 	 * Get the X-offset of the text
 	 *
 	 * @return integer offsetX
 	 */
-	public function getOffsetX($x) {
+	public function getOffsetX() {
 	    return $this->_offsetX;
 	}
 
@@ -159,12 +159,12 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
        return $this;
     }
 
-    /*
+    /**
      * Get the Y-offset of the text
      *
      * @return integer offsetY
      */
-    public function getOffsetY($x) {
+    public function getOffsetY() {
         return $this->_offsetY;
     }
 
@@ -218,7 +218,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
        return $this->_color;
     }
 
-    /*
+    /**
      * Set the rotation of the text
      *
      * @param int $rotation The rotation of the text
@@ -229,7 +229,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         return $this;
     }
 
-    /*
+    /**
      * Get the rotation of the text
      *
      * @return integer rotation of the text
@@ -238,7 +238,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         return $this->_rotation;
     }
 
-    /*
+    /**
      * Set the font to use for the text
      *
      * @param string $fontPath Path to font
@@ -253,7 +253,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         $this->_font = $fontPath;
     }
 
-    /*
+    /**
      * Get the path of the font
      *
      * @return string path of font
@@ -262,7 +262,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         return $this->_font;
     }
 
-    /*
+    /**
      * Set the text to print on the image
      *
      * @param string $text Text to print
@@ -273,7 +273,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         return $this;
     }
 
-    /*
+    /**
      * Get the text that will be printed
      *
      * @return string text to be printed on image
@@ -282,7 +282,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         return $this->_text;
     }
 
-    /*
+    /**
      * Set the size of the text
      *
      * @param string $size of text
@@ -293,7 +293,7 @@ class Zend_Image_Action_DrawText extends Zend_Image_Action_Abstract {
         return $this;
     }
 
-    /*
+    /**
      * Get the size of the text
      *
      * @return int size of the text

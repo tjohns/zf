@@ -1,163 +1,157 @@
 <?php
 require_once 'Zend/Loader.php';
 
-
-class Zend_Image {
-	/*
-	 * Adapter: GD
-	 */
-	const ADAPTER_GD = 'Gd';
-
-	/*
-	 * Adapter: Imagemick
-	 */
-	const ADAPTER_IMAGEMICK = 'Imagemick';
-
-	/*
-	 * Names of Actions available
-	 */
+class Zend_Image
+{
+    /**
+     * Adapter: GD
+     */
+    const ADAPTER_GD = 'Gd';
+    /**
+     * Adapter: Imagemick
+     */
+    const ADAPTER_IMAGEMICK = 'Imagemick';
+    /**
+     * Names of Actions available
+     */
     const LINE = 'DrawLine';
     const POLYGON = 'DrawPolygon';
     const ELLIPSE = 'DrawEllipse';
     const ARC = 'DrawArc';
 
-	/*
-	 * Adapter set to use for image operation
-	 *
-	 * @var Zend_Image_Adapter
-	 */
-	protected $_adapter = null;
+    /**
+     * Adapter set to use for image operation
+     *
+     * @var Zend_Image_Adapter
+     */
+    protected $_adapter = null;
 
-	/*
-	 * Path of the location of the image
-	 */
-	protected $_imagePath = null;
+    /**
+     * Path of the location of the image
+     */
+    protected $_imagePath = null;
 
-
-    /*
+    /**
      * Loads the image, if a path is given
      *
      * @param string $path (Optional) Path to the image
      */
-	public function __construct($path=null) {
-		if(!is_array($path)) {
-			$this->setImagePath($path);
-		}
-	}
+    public function __construct ($path = null)
+    {
+        if (! is_array($path)) {
+            $this->setImagePath($path);
+        }
+    }
 
-	/*
-	 * Sets the adapter to use
-	 * Currently only GD is available
-	 * ImageMagick will follow soon
-	 *
-	 * @param string   $adapter (Optional) The adapter to use
-	 * @param boolean  $check (Optional) If ture, check if the adapter is available
-	 * @throw Zend_Image_Exception When checked for availability of unavailable adapter
-	 */
-	public function setAdapter($adapter=null,$check=true) {
-		if($adapter) {
-			$name = 'Zend_Image_Adapter_'.$adapter;
-			Zend_Loader::loadClass($name);
+    /**
+     * Sets the adapter to use
+     * Currently only GD is available
+     * ImageMagick will follow soon
+     *
+     * @param string   $adapter (Optional) The adapter to use
+     * @param boolean  $check (Optional) If ture, check if the adapter is available
+     * @throw Zend_Image_Exception When checked for availability of unavailable adapter
+     */
+    public function setAdapter ($adapter = null, $check = true)
+    {
+        if ($adapter) {
+            $name = 'Zend_Image_Adapter_' . $adapter;
+            Zend_Loader::loadClass($name);
+            $this->_adapter = new $name();
+        } else {
+            /* No adapter was set. Attempt to detect. */
+            $check = false;
+            $this->setAdapter($this->_detectAdapter());
+        }
+        if ($check && ! $this->_adapter->isAvailable()) {
+            require_once 'Zend/Image/Exception.php';
+            throw new Zend_Image_Exception("Adapter '$adapter' is not available.");
+        }
+        $this->setImagePath();
+    }
 
-			$this->_adapter = new $name();
-		} else {
-			/* No adapter was set. Attempt to detect. */
-			$check = false;
-			$this->setAdapter($this->_detectAdapter());
-		}
+    /**
+     * Detects the adapter to use.
+     * Order: GD, ImageMick
+     *
+     * @return Available adapter
+     */
+    protected function _detectAdapter ()
+    {
+        if (function_exists('gd_info')) {
+            return self::ADAPTER_GD;
+        } elseif(false) {
+            return self::ADAPTER_IMAGEMICK;
+        }
+        return null;
+    }
 
-		if($check && !$this->_adapter->isAvailable()) {
-			require_once 'Zend/Image/Exception.php';
-			throw new Zend_Image_Exception("Adapter '$adapter' is not available.");
-		}
-		$this->setImagePath();
-	}
+    /**
+     * Set the path of the image
+     *
+     * @param string   $path (Optional) The path of the image
+     * @throw Zend_Image_Exception if path is set on nonexistent adapter
+     */
+    public function setImagePath ($path = null)
+    {
+        if (null !== $path) {
+            $this->_imagePath = $path;
+            if (null !== $this->_adapter) {
+                $this->setImagePath();
+            }
+        } else {
+            if (null === $this->_adapter) {
+                require_once 'Zend/Image/Exception.php';
+                throw new Zend_Image_Exception('Cannot set image path on an adapter that hasn\'t been set.');
+            } elseif (! file_exists($this->_imagePath)) {
+                require_once 'Zend/Image/Exception.php';
+                throw new Zend_Image_Exception('Image path does not exist.');
+            }
+            $this->_adapter->setPath($this->_imagePath);
+        }
+    }
 
-	/*
-	 * Detects the adapter to use.
-	 * Order: GD, ImageMick
-	 *
-	 * @return Available adapter
-	 */
-	protected function _detectAdapter() {
-		if(function_exists('gd_info')) {
-			return self::ADAPTER_GD;
-		} else {
-			return self::ADAPTER_IMAGEMICK;
-		}
-		return null;
-	}
-
-	/*
-	 * Set the path of the image
-	 *
-	 * @param string   $path (Optional) The path of the image
-	 * @throw Zend_Image_Exception if path is set on nonexistent adapter
-	 */
-	public function setImagePath($path=null) {
-		if(null!==$path) {
-			$this->_imagePath = $path;
-			if(null!==$this->_adapter) {
-				$this->setImagePath();
-			}
-		} else {
-			if(null===$this->_adapter) {
-				require_once 'Zend/Image/Exception.php';
-				throw new Zend_Image_Exception('Cannot set image path on an adapter that hasn\'t been set.');
-			} elseif(!file_exists($this->_imagePath)) {
-				require_once 'Zend/Image/Exception.php';
-				throw new Zend_Image_Exception('Image path does not exist.');
-			}
-			$this->_adapter->setPath($this->_imagePath);
-		}
-	}
-
-	/*
-	 * Perform an action on the image
-	 * @param mixed $param1
-	 * @param array $options Options that will be parsed on to the action
-	 * @return Zend_Image
-	 * @todo: use plugin loader.
-	 */
-	public function apply($param1, $options=null) {
-		if($param1 instanceof Zend_Image_Object_Abstract || $param1 instanceof Zend_Image_Action_Abstract) {
-			$object = $param1;
-		} else {
-/*			switch($param1) {
-				case self::LINE:
-					require_once 'Zend/Image/Action/DrawLine.php';
-					$object = new Zend_Image_Action_DrawLine($options);
-				break;
-			}*/
-		    $name = 'Zend_Image_Action_'.$param1;
-		    Zend_Loader::loadClass($name);
+    /**
+     * Perform an action on the image
+     * @param mixed $param1
+     * @param array $options Options that will be parsed on to the action
+     * @return Zend_Image
+     * @todo: use plugin loader.
+     */
+    public function apply ($param1, $options = null)
+    {
+        if ($param1 instanceof Zend_Image_Object_Abstract || $param1 instanceof Zend_Image_Action_Abstract) {
+            $object = $param1;
+        } else {
+            $name = 'Zend_Image_Action_' . $param1;
+            Zend_Loader::loadClass($name);
             $object = new $name($options);
-		}
+        }
+        if (! $this->_adapter) {
+            $this->setAdapter();
+        }
+        $this->_adapter->apply($object);
+        return $this;
+    }
 
-		if(!$this->_adapter) {
-			$this->setAdapter();
-		}
+    /**
+     * Get a string containing the image
+     *
+     * @param string $format (Optional) The format of the image to return
+     * @return string The actual image
+     */
+    public function render ($format = 'png')
+    {
+        return $this->_adapter->getImage($format);
+    }
 
-		$this->_adapter->apply($object);
-		return $this;
-	}
-
-	/*
-	 * Get a string containing the image
-	 *
-	 * @param string $format (Optional) The format of the image to return
-	 * @return string The actual image
-	 */
-	public function render($format='png') {
-	   return $this->_adapter->getImage($format);
-	}
-
-	/*
-	 * Get a string containing the image
-	 *
-	 * @return string The image
-	 */
-	public function __toString() {
-	   return $this->render();
-	}
+    /**
+     * Get a string containing the image
+     *
+     * @return string The image
+     */
+    public function __toString ()
+    {
+        return $this->render();
+    }
 }

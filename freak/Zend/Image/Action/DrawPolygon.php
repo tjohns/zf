@@ -3,28 +3,28 @@ require_once 'Zend/Image/Action/Abstract.php';
 require_once 'Zend/Image/Point.php';
 
 class Zend_Image_Action_DrawPolygon extends Zend_Image_Action_Abstract {
-	/*
+	/**
      * Determines if the polygon is filled
      *
      * @var boolean filled
      */
 	public $filled = true;
 
-    /*
+    /**
      * The color of the polygon (hex)
      *
      * @var int color
      */
 	public $color = 000000;
 
-	/*
+	/**
      * The alpha channel of this polygon
      *
      * @var int alpha
      */
 	public $alpha = 0;
 
-	/*
+	/**
 	 * The points to which the polygon
 	 * needs to be drawn
 	 *

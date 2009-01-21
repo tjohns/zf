@@ -1,6 +1,6 @@
 <?php
 class Zend_Image_Color {
-    /*
+    /**
      * Calculate the decimal values for each color
      * based on the given hexvalue
      *

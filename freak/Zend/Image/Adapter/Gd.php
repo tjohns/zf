@@ -3,14 +3,14 @@ require_once 'Zend/Image/Adapter/Abstract.php';
 require_once 'Zend/Loader.php';
 
 class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
-    /*
+    /**
      * The handle of this adapter
      *
      * @var object $_handle
      */
 	protected $_handle = null;
 
-    /*
+    /**
      * The path of the image
      *
      * @var string $_path
@@ -20,54 +20,54 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 
 //	protected $_imageInfo = null;
 
-    /*
+    /**
      * The width of the image
      *
      * @var int $_imageWidth
      */
 	protected $_imageWidth = null;
 
-    /*
+    /**
      * The height of the image
      *
      * @var int $_height
      */
 	protected $_imageHeight = null;
 
-    /*
+    /**
      * The type of the image
      *
      * @var string $_imageType
      */
 	protected $_imageType = null;
 
-	/*
+	/**
      * The amount of bits of the image
      *
      * @var int $_imageBits
      */
 	protected $_imageBits = null;
 
-    /*
+    /**
      * The amount of channels of the image
      *
      * @var int $_imageChannels
      */
 	protected $_imageChannels = null;
 
-    /*
+    /**
      * The mime-type of the image
      *
      * @var string $_imageMime
      */
 	protected $_imageMime = null;
 
-	/*
+	/**
 	 * The name of the adapter
 	 */
 	const NAME = 'Gd';
 
-    /*
+    /**
      * Checks if the GD-library is available
      *
      * @return boolean True if GD is available
@@ -76,7 +76,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 		return function_exists ( 'gd_info' );
 	}
 
-	/*
+	/**
 	 * Applies an action on the image
 	 *
      * @param Zend_Image_Action_Abstract $object The object that is applied on the image
@@ -92,14 +92,14 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 		$actionObject = new $name ( );
 		$actionObject->perform ( $this->_handle, $object );
 
-		/*
+		/**
 		 * @todo: remove when save() and get() methods are implemented.
 		 */
 //		header('Content-type: image/png');
 //		imagepng($this->_handle);
 	}
 
-    /*
+    /**
      * Create/load the handle of this adapter
      *
      */
@@ -114,7 +114,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 		}
 	}
 
-	/*
+	/**
      * Set the image info on this adapter
      *
      * @param string $path The path of the image of the info requested
@@ -134,7 +134,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 		return true;
 	}
 
-	/*
+	/**
 	 * Get the image as a string.
 	 *
 	 * @param string $format (Optional) The format or mimetype to return
@@ -149,7 +149,7 @@ class Zend_Image_Adapter_Gd extends Zend_Image_Adapter_Abstract {
 	   }
 	}
 
-	/*
+	/**
      * Sets the path of an image to the adapter
      *
      * @param string $path The path to the image

@@ -3,7 +3,7 @@ require_once 'Zend/Image/Color.php';
 
 class Zend_Image_Adapter_Gd_Action_DrawEllipse {
 
-    /*
+    /**
      * Draws an ellipse on the handle
      *
      * @param GD-object $handle The handle on which the ellipse is drawn

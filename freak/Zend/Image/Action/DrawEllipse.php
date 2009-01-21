@@ -3,49 +3,49 @@ require_once 'Zend/Image/Action/Abstract.php';
 require_once 'Zend/Image/Point.php';
 
 class Zend_Image_Action_DrawEllipse extends Zend_Image_Action_Abstract {
-    /*
+    /**
      * The point to start the ellipse at
      *
      * @var Zend_Image_Point _location
      */
 	protected $_location = null;
 
-    /*
+    /**
      * The width of the ellipse
      *
      * @var integer width
      */
     public $_width = null;
 
-    /*
+    /**
      * The height of the ellipse
      *
      * @var integer height
      */
     public $_height = null;
 
-	/*
+	/**
      * Determines if the ellipse is filled
      *
      * @var boolean filled
      */
 	public $_filled = true;
 
-    /*
+    /**
      * The color of the ellipse (hex)
      *
      * @var int color
      */
 	public $_color = 000000;
 
-	/*
+	/**
      * The alpha layer of this ellipse
      *
      * @var int alpha
      */
 	public $_alpha = 0;
 
-	/*
+	/**
 	 * The name of this action
 	 */
 	const NAME  = 'DrawEllipse';

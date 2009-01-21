@@ -3,7 +3,7 @@ require_once 'Zend/Image/Color.php';
 
 class Zend_Image_Adapter_Gd_Action_DrawPolygon {
 
-    /*
+    /**
      * Draws a polygon on the handle
      *
      * @param GD-object $handle The handle on which the polygon is drawn
@@ -29,7 +29,7 @@ class Zend_Image_Adapter_Gd_Action_DrawPolygon {
 		return $handle;
 	}
 
-    /*
+    /**
      * Parse the points to something the GD library understands
      *
      * @param array $points An array filled with instances of Zend_Image_Point
