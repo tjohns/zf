@@ -256,9 +256,10 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $contents));
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.html-documents">
-        <title>HTML documents</title>
+        <title>Documents HTML</title>
         <para>
-            Zend_Search_Lucene offers a HTML parsing feature. Documents can be created directly from a HTML file or string:
+            Zend_Search_Lucene offre une fonctionnalité de parsage HTML. Les documents
+            peuvent être créés directement à d'un fichier ou d'une chaîne HTML :
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($filename);
 $index->addDocument($doc);
@@ -270,37 +271,48 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Document_Html</code> class uses the <code>DOMDocument::loadHTML()</code> and
-            <code>DOMDocument::loadHTMLFile()</code> methods to parse the source HTML, so it doesn't need HTML to be well formed or
-            to be XHTML. On the other hand, it's sensitive to the encoding specified by the "meta http-equiv" header tag.
+            La classe <code>Zend_Search_Lucene_Document_Html</code> utilise les méthodes
+            <code>DOMDocument::loadHTML()</code> et <code>DOMDocument::loadHTMLFile()</code>
+            pour parser la source HTML, ainsi il n'est pas nécessaire que le HTML soit bien
+            formé ou au format XHTML. Par contre, ces méthodes prennent en compte l'encodage
+            spécifié dans la balise meta "http-equiv".
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Document_Html</code> class recognizes document title, body and document header meta tags.
+            La classe <code>Zend_Search_Lucene_Document_Html</code> reconnaît le titre d'une
+            page HTML, son body, ainsi les métadonnées de son entête.
         </para>
 
         <para>
-            The 'title' field is actually the /html/head/title value. It's stored within the index, tokenized and available for search.
+            Le champ 'title' correspond au contenu de la balise /html/head/title.
+            Il est stocké dans l'index, "tokenizé" et disponible pour la recherche.
         </para>
 
         <para>
-            The 'body' field is the actual body content of the HTML file or string. It doesn't include scripts, comments or attributes.
+            Le champ 'body' correspond au contenu de la balise 'body' du fichier ou
+            de la chaîne HTML. Il ne prend pas en compte les scripts, les commentaires
+            ou les attributs.
         </para>
 
         <para>
-            The <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods of <code>Zend_Search_Lucene_Document_Html</code> class
-            also have second optional argument. If it's set to true, then body content is also stored within index and can
-            be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
+            Les méthodes <code>loadHTML()</code> et <code>loadHTMLFile()</code> de la
+            classe <code>Zend_Search_Lucene_Document_Html</code> possèdent également
+            un deuxième argument optionnel. Si sa valeur est true, le body sera alors
+            stocké dans l'index et pourra être retourné dans les résultats de recherche.
+            Par défaut, le body est "tokenizé", indexé, mais pas stocké.
         </para>
 
         <para>
-            Other document header meta tags produce additional document fields. The field 'name' is taken from 'name' attribute, and
-            the 'content' attribute populates the field 'value'. Both are tokenized, indexed and stored, so documents may be searched by their meta tags
-            (for example, by keywords).
+            Les autres metatags génèrent des champs additionnels dans le document. Le
+            champ 'name' prend sa valeur dans l'attribut 'name' du metatag. Le champ
+            'value' prend sa valeur dans l'attribut 'content' du metatag. Ces deux
+            champs sont "tokenizés", indexés et stockés. Ainsi les documents peuvent
+            être cherchés à travers leur metadonnées (p. ex. par mots-clés).
         </para>
 
         <para>
-            Parsed documents may be augmented by the programmer with any other field:
+            Les documents parsés peuvent être enrichis par le programmeur avec
+            d'autres champs :
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
@@ -315,9 +327,9 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            Document links are not included in the generated document, but may be retrieved with
-            the <code>Zend_Search_Lucene_Document_Html::getLinks()</code> and <code>Zend_Search_Lucene_Document_Html::getHeaderLinks()</code>
-            methods:
+            Les liens des documents ne sont pas inclus dans le document généré, mais ils peuvent
+            être récupérés avec les méthodes <code>Zend_Search_Lucene_Document_Html::getLinks()</code>
+            et <code>Zend_Search_Lucene_Document_Html::getHeaderLinks()</code> :
             <programlisting role="php"><![CDATA[
 $doc = Zend_Search_Lucene_Document_Html::loadHTML($htmlString);
 $linksArray = $doc->getLinks();
@@ -327,12 +339,14 @@ $headerLinksArray = $doc->getHeaderLinks();
         </para>
 
         <para>
-            Starting from ZF 1.6 it's also possible to exclude links with <code>rel</code> attribute set to <code>'nofollow'</code>.
-            Use <code>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</code> to turn on this option.
+            A partir du ZF 1.6, il est également possible d'exclure les balises 'link' dont
+            l'attribut <code>rel</code> vaut <code>'nofollow'</code>. Utilisez
+            <code>Zend_Search_Lucene_Document_Html::setExcludeNoFollowLinks($true)</code> pour
+            activer cette option.
         </para>
         <para>
-            <code>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</code> method returns current state of 
-            "Exclude nofollow links" flag.
+            La méthode <code>Zend_Search_Lucene_Document_Html::getExcludeNoFollowLinks()</code>
+            retourne la valeur courante du flag "Exclude nofollow links".
         </para>
     </sect2>
 
