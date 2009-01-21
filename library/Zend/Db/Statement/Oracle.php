@@ -514,12 +514,12 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
 
         $obj = oci_fetch_object($this->_stmt);
 
-        if ($obj === false) {
+        if ($error = oci_error($this->_stmt)) {
             /**
              * @see Zend_Db_Adapter_Oracle_Exception
              */
             require_once 'Zend/Db/Statement/Oracle/Exception.php';
-            throw new Zend_Db_Statement_Oracle_Exception(oci_error($this->_stmt));
+            throw new Zend_Db_Statement_Oracle_Exception($error);
         }
 
         /* @todo XXX handle parameters */
