@@ -5,24 +5,24 @@
 	<para>
 		Zend_Db y sus clases relacionadas proporcionan una interfaz
 		simple de base de datos SQL para Zend Framework. El
-		Zend_Db_Adapter es la clase base que se utiliza para conectar
-		nuestra aplicación PHP A una base de datos (RDBMS). Existen
-		diferentes clases Adapters(Adaptador) para cada tipo de base de
-		datos (RDBMS).
+		Zend_Db_Adapter es la clase base que se utiliza para conectar su
+		aplicación PHP A una base de datos (RDBMS). Existen diferentes
+		clases Adapters(Adaptador) para cada tipo de base de datos
+		(RDBMS).
 	</para>
 
 	<para>
 		Las clases
 		<code>Adapters</code>
 		de Zend_Db crean un puente entre las extensiones de base de
-		datos de PHP hacia una interfaz común, para ayudarnos a escribir
-		aplicaciones php una sola vez y poder mostrarlo com multiples
-		tipos de base de datos (RDBMS) con muy poco esfuerzo
+		datos de PHP hacia una interfaz común, para ayudarle a escribir
+		aplicaciones PHP una sola vez y poder desplegar multiples
+		tipos de base de datos (RDBMS) con muy poco esfuerzo.
 	</para>
 
 	<para>
 		La Interfaz de la clase adaptador (adapter) es similar a la
-		intefaz de la extención
+		intefaz de la extensión
 		<ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>
 		. Zend_Db proporciona clases Adaptadoras para los drivers PDO de
 		los siguientes tipos de RDBMS:
@@ -113,40 +113,44 @@
 
 	<note>
 		<para>
-			Cada Zend_Db_Adaptador utiliza una extensión PHP. Deberiamos
-			de tener habilitado la respectiva extensión en nuestro
-			entorno PHP para utilizar un Zend_Db_Adapter. Por ejemplo,
-			si utilizamos una clase Zend_Db_Adapter basados sobre los
-			PDO nesecitamos habilitar tanto la extensión del PDO como el
-			driver del PDO del tipo de base de datos que utilizamos
+			Cada Zend_Db_Adaptador utiliza una extensión PHP. Se debe de
+			tener habilitada la respectiva extensión en su entorno PHP
+			para utilizar un Zend_Db_Adapter. Por ejemplo, si se utiliza
+			una clase Zend_Db_Adapter basada en PDO, tiene que
+			habilitar tanto la extensión PDO como el driver PDO del tipo
+			de base de datos que se utiliza.
 
 		</para>
 	</note>
 
 	<sect2 id="zend.db.adapter.connecting">
 
-		<title>Conexión a una base de datos utilizando un adaptador</title>
+		<title>
+			Conexión a una Base de Datos utilizando un Adaptador
+		</title>
 
 		<para>
-			This section describes how to create an instance of a
-			database Adapter. This corresponds to making a connection to
-			your RDBMS server from your PHP application.
+			Esta sección describe cómo crear una instancia de un
+			Adaptador de base de datos. Esto corresponde a establecer
+			una conexión a un servidor de Base de Datos (RDBMS) desde su
+			aplicación PHP.
 		</para>
 
 		<sect3 id="zend.db.adapter.connecting.constructor">
 
-			<title>Using a Zend_Db Adapter Constructor</title>
+			<title>Usando un Constructor de Zend_Db Adapter</title>
 
 			<para>
-				You can create an instance of an Adapter using its
-				constructor. An Adapter constructor takes one argument,
-				which is an array of parameters used to declare the
-				connection.
+				Se puede crear una instancia de un Adaptador utilizando
+				su constructor. Un constructor de adaptador toma un
+				argumento, que es un conjunto de parámetros utilizados
+				para declarar la conexión.
 			</para>
+
 
 			<example
 				id="zend.db.adapter.connecting.constructor.example">
-				<title>Using an Adapter constructor</title>
+				<title>Usando el Constructor de un Adaptador</title>
 				<programlisting role="php"><![CDATA[
 $db = new Zend_Db_Adapter_Pdo_Mysql(array(
     'host'     => '127.0.0.1',
@@ -162,15 +166,15 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
 		<sect3 id="zend.db.adapter.connecting.factory">
 
-			<title>Using the Zend_Db Factory</title>
+			<title>Usando el Factory de Zend_Db</title>
 
 			<para>
-				As an alternative to using an Adapter constructor
-				directly, you can create an instance of an Adapter using
-				the static method
+				Como alternativa a la utilización directa del
+				constructor de un adaptador, se puede crear una
+				instancia del adaptador que use el método estático
 				<code>Zend_Db::factory()</code>
-				. This method dynamically loads the Adapter class file
-				on demand, using
+				. Este método carga dinámicamente el archivo de clase
+				Adaptador bajo demanda, usando
 				<link linkend="zend.loader.load.class">
 					Zend_Loader::loadClass()
 				</link>
@@ -178,24 +182,29 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 			</para>
 
 			<para>
-				The first argument is a string that names the base name
-				of the Adapter class. For example the string 'Pdo_Mysql'
-				corresponds to the class Zend_Db_Adapter_Pdo_Mysql. The
-				second argument is the same array of parameters you
-				would have given to the Adapter constructor.
+				El primer argumento es una cadena que nombra al nombre base
+				de la clase Adaptador. Por ejemplo, la cadena
+				'Pdo_Mysql' corresponde a la clase
+				Zend_Db_Adapter_Pdo_Mysql. El segundo argumento es el
+				mismo array de parámetros que hubiera enviado al
+				constructor del adaptador.
 			</para>
 
+
+
+
+
 			<example id="zend.db.adapter.connecting.factory.example">
-				<title>Using the Adapter factory method</title>
+				<title>Usando el Adaptador del método factory</title>
 				<programlisting role="php"><![CDATA[
-// We don't need the following statement because the
-// Zend_Db_Adapter_Pdo_Mysql file will be loaded for us by the Zend_Db
-// factory method.
+// No necesitamos la siguiente declaración, porque 
+// el archivo Zend_Db_Adapter_Pdo_Mysql será cargado para nosotros por el método  
+// factory de Zend_Db.
 
 // require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
 
-// Automatically load class Zend_Db_Adapter_Pdo_Mysql
-// and create an instance of it.
+// carga automaticamente la clase Zend_Db_Adapter_Pdo_Mysql
+// y crea una instancia de la misma 
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'     => '127.0.0.1',
     'username' => 'webuser',
@@ -217,17 +226,28 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 				key in the parameters array.
 			</para>
 
+			Si crea su propia clase que extiende a
+			Zend_Db_Adapter_Abstract, pero no nombra su clase con el prefijo
+			de paquete "Zend_Db_Adapter", se puede utilizar el método
+			<code>factory()</code>
+			para cargar su adaptador si se especifica la parte principal
+			de la clase del adaptador con la clave "adapterNamespace" en
+			el conjunto de parámetros
+
+
+
 			<example id="zend.db.adapter.connecting.factory.example2">
 				<title>
-					Using the Adapter factory method for a custom
-					adapter class
+					Usando el método factory para una clase Adaptador
+					personalizada
 				</title>
 				<programlisting role="php"><![CDATA[
-// We don't need to load the adapter class file
-// because it will be loaded for us by the Zend_Db factory method.
+// No tenemos que cargar el archivo de clase Adaptador 
+// porque será cargado para nosotros por el método factory de Zend_Db.
 
-// Automatically load class MyProject_Db_Adapter_Pdo_Mysql and create
-// an instance of it.
+// Automáticamente carga la clase MyProject_Db_Adapter_Pdo_Mysql
+// y crea una instancia de ella.
+
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'             => '127.0.0.1',
     'username'         => 'webuser',
@@ -243,12 +263,13 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
 		<sect3 id="zend.db.adapter.connecting.factory-config">
 
-			<title>Using Zend_Config with the Zend_Db Factory</title>
+			<title>Uso de Zend_Config con Zend_Db Factory</title>
 
 			<para>
-				Optionally, you may specify either argument of the
+				Opcionalmente, se puede especificar cualquier
+				argumento del método
 				<code>factory()</code>
-				method as an object of type
+				como un objeto de tipo
 				<link linkend="zend.config">Zend_Config</link>
 				.
 			</para>
@@ -266,6 +287,19 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 				<code>factory()</code>
 				method is absent.
 			</para>
+
+			<test>
+				Si el primer argumento es un objeto de configuración, se
+				espera que contenga una propiedad llamada
+				<code>adapter</code>
+				, conteniendo la cadena que da nombre al nombre base de la
+				clase de adaptador. Opcionalmente, el objeto puede
+				contener una propiedad llamada
+				<code>params</code>
+				, con subpropiedades correspondientes a nombres de parámetros
+				del adaptador. Esto es usado sólo si el segundo
+				argumento del método <code>factory()</code> se ha omitido.
+			</test>
 
 			<example id="zend.db.adapter.connecting.factory.example1">
 				<title>
