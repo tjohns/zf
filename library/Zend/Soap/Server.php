@@ -18,7 +18,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Server_Interface */
+/**
+ * @see Zend_Server_Interface
+ */
 require_once 'Zend/Server/Interface.php';
 
 /**
@@ -360,11 +362,17 @@ class Zend_Soap_Server implements Zend_Server_Interface
     public function setClassmap($classmap)
     {
         if (!is_array($classmap)) {
+            /**
+             * @see Zend_Soap_Server_Exception
+             */
             require_once 'Zend/Soap/Server/Exception.php';
             throw new Zend_Soap_Server_Exception('Classmap must be an array');
         }
         foreach ($classmap as $type => $class) {
             if (!class_exists($class)) {
+                /**
+                 * @see Zend_Soap_Server_Exception
+                 */
                 require_once 'Zend/Soap/Server/Exception.php';
                 throw new Zend_Soap_Server_Exception('Invalid class in class map');
             }
@@ -392,8 +400,6 @@ class Zend_Soap_Server implements Zend_Server_Interface
      */
     public function setWsdl($wsdl)
     {
-        is_readable($wsdl);
-
         $this->_wsdl = $wsdl;
         return $this;
     }
@@ -608,7 +614,7 @@ class Zend_Soap_Server implements Zend_Server_Interface
             }
 
             $dom = new DOMDocument();
-            if (!$dom->loadXML($xml)) {
+            if(strlen($xml) == 0 || !$dom->loadXML($xml)) {
                 require_once 'Zend/Soap/Server/Exception.php';
                 throw new Zend_Soap_Server_Exception('Invalid XML');
             }
@@ -727,17 +733,21 @@ class Zend_Soap_Server implements Zend_Server_Interface
         // Set Zend_Soap_Server error handler
         $displayErrorsOriginalState = $this->_initializeSoapErrorContext();
 
+        $setRequestException = null;
+        /**
+         * @see Zend_Soap_Server_Exception
+         */
         require_once 'Zend/Soap/Server/Exception.php';
         try {
             $this->_setRequest($request);
-        } catch (Zend_Soap_Server_Exception $setRequestException) {
-            // Do nothing. Catch exception and store it in the $setRequestException variable is all what we need.
+        } catch (Zend_Soap_Server_Exception $e) {
+            $setRequestException = $e;
         }
 
         $soap = $this->_getSoap();
 
         ob_start();
-        if (isset($setRequestException)) {
+        if($setRequestException instanceof Exception) {
             // Send SOAP fault message if we've catched exception
             $soap->fault("Sender", $setRequestException->getMessage());
         } else {
