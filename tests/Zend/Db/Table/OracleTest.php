@@ -31,6 +31,11 @@ class Zend_Db_Table_OracleTest extends Zend_Db_Table_TestCommon
         $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
     }
 
+    public function testIsIdentity()
+    {
+        $this->markTestSkipped($this->getDriver().' does not support auto-increment columns.');
+    }
+
     /**
      * ZF-4330: Oracle needs sequence
      */
