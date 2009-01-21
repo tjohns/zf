@@ -121,17 +121,17 @@
                         may be used like this:
                         <programlisting role="php"><![CDATA[
 // Accept response compression
-$client = new SoapClient("some.wsdl",
+$client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
 
 // Compress requests using gzip with compression level 5
-$client = new SoapClient("some.wsdl",
+$client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
 
 // Compress requests using deflate compression
-$client = new SoapClient("some.wsdl",
+$client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
 ]]>
                         </programlisting>
@@ -193,7 +193,7 @@ $client = new SoapClient("some.wsdl",
 //                End of server code
 //****************************************************************
 
-$client = new SoapClient("MyService.wsdl");
+$client = new Zend_Soap_Client("MyService.wsdl");
 ...
 
 // $result1 is a string
