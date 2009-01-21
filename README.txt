@@ -1,4 +1,4 @@
-Welcome to Zend Framework 1.7.3! This is the second maintenance release in the 
+Welcome to Zend Framework 1.7.3! This is a bug fix/maintenance release in the 
 Zend Framework 1.7 series. This release maintains backwards compatibility
 with all Zend Framework 1.x releases.
 
@@ -6,7 +6,7 @@ RELEASE INFORMATION
 ---------------
 
 Zend Framework 1.7.3 ([INSERT REV NUM HERE]).
-Released on 2009-01-19.
+Released on 2009-01-21.
 
 SPECIAL NOTICE
 --------------
@@ -17,7 +17,7 @@ Zend_Amf has been tested on machines with 32- and 64-bit Intel-based
 processors. Specifically, it has not been tested on Power (i5),
 PowerPC, and Sparc processors. Zend_Amf may work with these
 architectures, but is not currently supported. We intend to add support
-for additional archtectures in upcoming mini releases.
+for additional architectures in upcoming mini releases.
 
 NEW FEATURES
 ------------
@@ -61,7 +61,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10923
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10934
 
 SYSTEM REQUIREMENTS
 -------------------
