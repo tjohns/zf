@@ -460,6 +460,10 @@ class Zend_Soap_Wsdl
      */
     public function getSchema()
     {
+        if($this->_schema == null) {
+            $this->addSchemaTypeSection();
+        }
+
         return $this->_schema;
     }
 

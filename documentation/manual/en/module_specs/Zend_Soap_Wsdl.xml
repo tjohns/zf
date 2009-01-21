@@ -381,6 +381,15 @@ $soapMyClassType = $wsdl->getType('MyClass');
                     <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> and an array is wrapped
                     around that definition.</para>
                 </listitem>
+                <listitem>
+                    <para>Class <code>Zend_Soap_Wsdl_Strategy_Composite</code>: This strategy can
+                    combine all strategies by connecting PHP Complex types (Classnames) to the desired strategy
+                    via the <code>connectTypeToStrategy($type, $strategy)</code> method. A complete typemap can be
+                    given to the constructor as an array with <code>$type</code> -> <code>$strategy</code> pairs.
+                    The second parameter specifies the default strategy that will be used if an unknown type is
+                    requested for adding. This parameter defaults to the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
+                    strategy.
+                </listitem>
             </itemizedlist>
 
             <para>
