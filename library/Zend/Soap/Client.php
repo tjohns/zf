@@ -150,12 +150,16 @@ class Zend_Soap_Client
      *
      * Allows setting options as an associative array of option => value pairs.
      *
-     * @param  array $options
+     * @param  array|Zend_Config $options
      * @return Zend_Soap_Client
      * @throws Zend_SoapClient_Exception
      */
-    public function setOptions(array $options)
+    public function setOptions($options)
     {
+        if($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+
         foreach ($options as $key => $value) {
             switch ($key) {
                 case 'classmap':

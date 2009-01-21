@@ -29,6 +29,8 @@ require_once 'Zend/Soap/Server.php';
 /** Zend_Soap_Client */
 require_once 'Zend/Soap/Client.php';
 
+require_once 'Zend/Config.php';
+
 /**
  * Zend_Soap_Client
  *
@@ -233,6 +235,42 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
 
         $this->assertEquals($client->testFunc2('World'), 'Hello World!');
+    }
+
+    public function testSetOptionsWithZendConfig()
+    {
+        $ctx = stream_context_create();
+
+    	$nonWsdlOptions = array('soap_version'   => SOAP_1_1,
+		                        'classmap'       => array('TestData1' => 'Zend_Soap_Client_TestData1',
+		                                            'TestData2' => 'Zend_Soap_Client_TestData2',),
+		                        'encoding'       => 'ISO-8859-1',
+		                        'uri'            => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
+		                        'location'       => 'http://framework.zend.com/Zend_Soap_ServerTest.php',
+		                        'use'            => SOAP_ENCODED,
+		                        'style'          => SOAP_RPC,
+
+		                        'login'          => 'http_login',
+		                        'password'       => 'http_password',
+
+		                        'proxy_host'     => 'proxy.somehost.com',
+    	                        'proxy_port'     => 8080,
+    	                        'proxy_login'    => 'proxy_login',
+    	                        'proxy_password' => 'proxy_password',
+
+		                        'local_cert'     => dirname(__FILE__).'/_files/cert_file',
+		                        'passphrase'     => 'some pass phrase',
+
+                                'stream_context' => $ctx,
+
+		                        'compression'    => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5
+        );
+
+        $config = new Zend_Config($nonWsdlOptions);
+
+        $client = new Zend_Soap_Client(null, $config);
+
+        $this->assertEquals($nonWsdlOptions, $client->getOptions());
     }
 }
 
