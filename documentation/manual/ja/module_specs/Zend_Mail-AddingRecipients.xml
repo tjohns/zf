@@ -1,3 +1,4 @@
+<!-- EN-Revision: 13740 -->
 <sect1 id="zend.mail.adding-recipients">
     <title>受信者の追加</title>
     <para>
@@ -14,11 +15,16 @@
         </listitem>
         </itemizedlist>
     </para>
+    <para>
+        <code>getRecipients()</code>によりあて先一覧を取得します。 
+        <code>clearRecipients()</code>によりあて先一覧を消去します。
+    </para>
     <note>
         <title>追加のパラメータ</title>
         <para>
             <code>addTo()</code> および <code>addCc()</code> では、
             2 番目の引数として、人間が読みやすい形式のあて先を指定することができます。
+                                 その引き数中の２重引用符は単一引用符に、山括弧は角括弧に変更されます。
         </para>
     </note>
 </sect1>
