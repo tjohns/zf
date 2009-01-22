@@ -371,7 +371,7 @@ class Zend_Db_Table_Select_StaticTest extends Zend_Db_Select_TestCommon
         $this->assertEquals('SELECT "zfprice".* FROM "zfprice" WHERE ("price_total" = 200.450000)', $sql);
     }
 
-    /** 
+    /**
      *      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
 
@@ -597,6 +597,12 @@ class Zend_Db_Table_Select_StaticTest extends Zend_Db_Select_TestCommon
         $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" ORDER BY "product_id" ASC LIMIT 1 OFFSET 0', $sql);
     }
 
+    /**
+     * Not applicable in static test
+     * @group ZF-5263
+     */
+    public function testSelectLimitFetchCol()
+    {}
 
     public function testSelectLimitNone()
     {

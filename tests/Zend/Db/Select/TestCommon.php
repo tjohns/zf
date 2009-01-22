@@ -733,7 +733,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
                          . $this->_db->quoteIdentifier('subqueryTable') . '))';
         $this->assertEquals($query, $cmp);
     }
-    
+
     protected function _selectWhereArray()
     {
         $product_id = $this->_db->quoteIdentifier('product_id');
@@ -743,7 +743,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
             ->where("$product_id IN (?)", array(1, 2, 3));
         return $select;
     }
-    
+
     public function testSelectWhereArray()
     {
         $select = $this->_selectWhereArray();
@@ -860,7 +860,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         setlocale(LC_ALL, $locale);
     }
 
-    /** 
+    /**
      * Test adding an OR WHERE clause to a Zend_Db_Select object.
      */
     protected function _selectWhereOr()
@@ -1331,6 +1331,23 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(1, $result[0]['product_id']);
+    }
+
+    /**
+     * @group ZF-5263
+     */
+    public function testSelectLimitFetchCol()
+    {
+        $product_id = $this->_db->quoteIdentifier('product_id');
+
+        $select = $this->_db->select()
+            ->from('zfproducts', 'product_name')
+            ->where($product_id . ' = ?', 3)
+            ->limit(1);
+
+        $result = $this->_db->fetchCol($select);
+        $this->assertEquals(1, count($result));
+        $this->assertEquals('OS X', $result[0]);
     }
 
     protected function _selectLimitNone()

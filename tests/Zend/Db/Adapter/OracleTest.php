@@ -311,42 +311,6 @@ class Zend_Db_Adapter_OracleTest extends Zend_Db_Adapter_TestCommon
     }
 
     /**
-     * Test the Adapter's limit() method.
-     * Fetch 1 row.  Then fetch 1 row offset by 1 row.
-     */
-    public function testAdapterLimit()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-
-        $sql = $this->_db->limit("SELECT * FROM $products", 1);
-
-        $stmt = $this->_db->query($sql);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result),
-            'Expecting row count to be 1');
-        $this->assertEquals(3, count($result[0]),
-            'Expecting column count to be 3');
-        $this->assertEquals(1, $result[0]['product_id'],
-            'Expecting to get product_id 1');
-    }
-
-    public function testAdapterLimitOffset()
-    {
-        $products = $this->_db->quoteIdentifier('zfproducts');
-
-        $sql = $this->_db->limit("SELECT * FROM $products", 1, 1);
-
-        $stmt = $this->_db->query($sql);
-        $result = $stmt->fetchAll();
-        $this->assertEquals(1, count($result),
-            'Expecting row count to be 1');
-        $this->assertEquals(3, count($result[0]),
-            'Expecting column count to be 3');
-        $this->assertEquals(2, $result[0]['product_id'],
-            'Expecting to get product_id 2');
-    }
-
-    /**
      * Test that quote() takes an array and returns
      * an imploded string of comma-separated, quoted elements.
      */
