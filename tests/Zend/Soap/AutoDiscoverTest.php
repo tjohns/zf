@@ -730,6 +730,36 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof Zend_Soap_AutoDiscover_Exception);
         }
     }
+
+    /**
+     * @group ZF-5604
+     */
+    public function testReturnSameArrayOfObjectsResponseOnDifferentMethodsWhenArrayComplex()
+    {
+        $autodiscover = new Zend_Soap_AutoDiscover('Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex');
+        $autodiscover->setClass('Zend_Soap_AutoDiscover_MyService');
+        $wsdl = $autodiscover->toXml();
+
+        $this->assertEquals(1, substr_count($wsdl, '<xsd:complexType name="ArrayOfZend_Soap_AutoDiscover_MyResponse">'));
+
+        $this->assertEquals(0, substr_count($wsdl, 'tns:My_Response[]'));
+    }
+
+    /**
+     * @group ZF-5430
+     */
+    public function testReturnSameArrayOfObjectsResponseOnDifferentMethodsWhenArraySequence()
+    {
+        $autodiscover = new Zend_Soap_AutoDiscover('Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence');
+        $autodiscover->setClass('Zend_Soap_AutoDiscover_MyServiceSequence');
+        $wsdl = $autodiscover->toXml();
+
+        $this->assertEquals(1, substr_count($wsdl, '<xsd:complexType name="ArrayOfString">'));
+        $this->assertEquals(1, substr_count($wsdl, '<xsd:complexType name="ArrayOfArrayOfString">'));
+        $this->assertEquals(1, substr_count($wsdl, '<xsd:complexType name="ArrayOfArrayOfArrayOfString">'));
+
+        $this->assertEquals(0, substr_count($wsdl, 'tns:string[]'));
+    }
 }
 
 /* Test Functions */

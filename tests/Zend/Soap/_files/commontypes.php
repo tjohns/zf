@@ -59,3 +59,64 @@ class Zend_Soap_Wsdl_ComplexObjectWithObjectStructure
      */
     public $object;
 }
+
+class Zend_Soap_AutoDiscover_MyService
+{
+    /**
+     *	@param string $foo
+     *	@return Zend_Soap_AutoDiscover_MyResponse[]
+     */
+    public function foo($foo) {
+    }
+    /**
+     *	@param string $bar
+     *	@return Zend_Soap_AutoDiscover_MyResponse[]
+     */
+    public function bar($bar) {
+    }
+
+    /**
+     *	@param string $baz
+     *	@return Zend_Soap_AutoDiscover_MyResponse[]
+     */
+    public function baz($baz) {
+    }
+}
+
+class Zend_Soap_AutoDiscover_MyServiceSequence
+{
+    /**
+     *	@param string $foo
+     *	@return string[]
+     */
+    public function foo($foo) {
+    }
+    /**
+     *	@param string $bar
+     *	@return string[]
+     */
+    public function bar($bar) {
+    }
+
+    /**
+     *	@param string $baz
+     *	@return string[]
+     */
+    public function baz($baz) {
+    }
+
+    /**
+     *	@param string $baz
+     *	@return string[][][]
+     */
+    public function bazNested($baz) {
+    }
+}
+
+class Zend_Soap_AutoDiscover_MyResponse
+{
+    /**
+     * @var string
+     */
+    public $p1;
+}

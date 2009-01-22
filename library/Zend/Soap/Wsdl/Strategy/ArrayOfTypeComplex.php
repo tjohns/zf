@@ -72,23 +72,26 @@ class Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex extends Zend_Soap_Wsdl_Strategy
         $dom = $this->getContext()->toDomDocument();
 
         $xsdComplexTypeName = $this->_getXsdComplexTypeName($singularType);
-        $complexType = $dom->createElement('xsd:complexType');
-        $complexType->setAttribute('name', $xsdComplexTypeName);
 
-        $complexContent = $dom->createElement("xsd:complexContent");
-        $complexType->appendChild($complexContent);
+        if(!in_array($xsdComplexTypeName, $this->getContext()->getTypes())) {
+            $complexType = $dom->createElement('xsd:complexType');
+            $complexType->setAttribute('name', $xsdComplexTypeName);
 
-        $xsdRestriction = $dom->createElement("xsd:restriction");
-        $xsdRestriction->setAttribute('base', 'soap-enc:Array');
-        $complexContent->appendChild($xsdRestriction);
+            $complexContent = $dom->createElement("xsd:complexContent");
+            $complexType->appendChild($complexContent);
 
-        $xsdAttribute = $dom->createElement("xsd:attribute");
-        $xsdAttribute->setAttribute("ref", "soap-enc:arrayType");
-        $xsdAttribute->setAttribute("wsdl:arrayType", sprintf("tns:%s[]", $singularType));
-        $xsdRestriction->appendChild($xsdAttribute);
+            $xsdRestriction = $dom->createElement("xsd:restriction");
+            $xsdRestriction->setAttribute('base', 'soap-enc:Array');
+            $complexContent->appendChild($xsdRestriction);
 
-        $this->getContext()->getSchema()->appendChild($complexType);
-        $this->getContext()->addType($type);
+            $xsdAttribute = $dom->createElement("xsd:attribute");
+            $xsdAttribute->setAttribute("ref", "soap-enc:arrayType");
+            $xsdAttribute->setAttribute("wsdl:arrayType", sprintf("tns:%s[]", $singularType));
+            $xsdRestriction->appendChild($xsdAttribute);
+
+            $this->getContext()->getSchema()->appendChild($complexType);
+            $this->getContext()->addType($xsdComplexTypeName);
+        }
 
         return $xsdComplexTypeName;
     }
