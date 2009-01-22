@@ -357,12 +357,12 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
          */
         $limit_sql = "SELECT z2.*
             FROM (
-                SELECT ROWNUM AS zend_db_rownum, z1.*
+                SELECT z1.*, ROWNUM AS \"zend_db_rownum\"
                 FROM (
                     " . $sql . "
                 ) z1
             ) z2
-            WHERE z2.zend_db_rownum BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
+            WHERE z2.\"zend_db_rownum\" BETWEEN " . ($offset+1) . " AND " . ($offset+$count);
         return $limit_sql;
     }
 
