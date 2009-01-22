@@ -47,6 +47,13 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
     protected $_pdoType = 'oci';
 
     /**
+     * Default class name for a DB statement.
+     *
+     * @var string
+     */
+    protected $_defaultStmtClass = 'Zend_Db_Statement_Pdo_Oci';
+
+    /**
      * Keys are UPPERCASE SQL datatypes or the constants
      * Zend_Db::INT_TYPE, Zend_Db::BIGINT_TYPE, or Zend_Db::FLOAT_TYPE.
      *

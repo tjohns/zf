@@ -692,6 +692,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     /**
      * Test the Adapter's limit() method.
      * Fetch 1 row.  Then fetch 1 row offset by 1 row.
+     * @group ZF-4246
      */
     public function testAdapterLimit()
     {
@@ -708,8 +709,16 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'Expecting column count to be 2');
         $this->assertEquals(1, $result[0]['product_id'],
             'Expecting to get product_id 1');
+
+        // Check that extra field ZEND_DB_ROWNUM isn't present
+        // (particulary with Db2 & Oracle)
+        $this->assertArrayNotHasKey('zend_db_rownum', $result[0]);
+        $this->assertArrayNotHasKey('ZEND_DB_ROWNUM', $result[0]);
     }
 
+    /**
+     * @group ZF-4246
+     */
     public function testAdapterLimitOffset()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -725,6 +734,11 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'Expecting column count to be 2');
         $this->assertEquals(2, $result[0]['product_id'],
             'Expecting to get product_id 2');
+
+        // Check that extra field ZEND_DB_ROWNUM isn't present
+        // (particulary with Db2 & Oracle)
+        $this->assertArrayNotHasKey('zend_db_rownum', $result[0]);
+        $this->assertArrayNotHasKey('ZEND_DB_ROWNUM', $result[0]);
     }
 
     public function testAdapterLimitInvalidArgumentException()
@@ -1897,7 +1911,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $serialized = serialize($this->_db);
         $db = unserialize($serialized);
         $this->assertFalse($db->isConnected());
-        
+
         $params = $this->_util->getParams();
         $params['options'] = array(
             Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE => true

@@ -1313,6 +1313,17 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     }
 
     /**
+     * @group ZF-4246
+     */
+    protected function _checkExtraField($result)
+    {
+        // Check that extra field ZEND_DB_ROWNUM isn't present
+        // (particulary with Db2 & Oracle)
+        $this->assertArrayNotHasKey('zend_db_rownum', $result);
+        $this->assertArrayNotHasKey('ZEND_DB_ROWNUM', $result);
+    }
+
+    /**
      * Test adding a LIMIT clause to a Zend_Db_Select object.
      */
     protected function _selectLimit()
@@ -1324,6 +1335,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         return $select;
     }
 
+    /**
+     * @group ZF-4246
+     */
     public function testSelectLimit()
     {
         $select = $this->_selectLimit();
@@ -1331,10 +1345,12 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(1, $result[0]['product_id']);
+        $this->_checkExtraField($result[0]);
     }
 
     /**
      * @group ZF-5263
+     * @group ZF-4246
      */
     public function testSelectLimitFetchCol()
     {
@@ -1348,6 +1364,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $this->_db->fetchCol($select);
         $this->assertEquals(1, count($result));
         $this->assertEquals('OS X', $result[0]);
+        $this->_checkExtraField($result);
     }
 
     protected function _selectLimitNone()
@@ -1359,12 +1376,16 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         return $select;
     }
 
+    /**
+     * @group ZF-4246
+     */
     public function testSelectLimitNone()
     {
         $select = $this->_selectLimitNone();
         $stmt = $this->_db->query($select);
         $result = $stmt->fetchAll();
         $this->assertEquals(3, count($result));
+        $this->_checkExtraField($result[0]);
     }
 
     protected function _selectLimitOffset()
@@ -1376,6 +1397,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         return $select;
     }
 
+    /**
+     * @group ZF-4246
+     */
     public function testSelectLimitOffset()
     {
         $select = $this->_selectLimitOffset();
@@ -1383,6 +1407,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(2, $result[0]['product_id']);
+        $this->_checkExtraField($result[0]);
     }
 
     /**
@@ -1397,6 +1422,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         return $select;
     }
 
+    /**
+     * @group ZF-4246
+     */
     public function testSelectLimitPageOne()
     {
         $select = $this->_selectLimitPageOne();
@@ -1404,6 +1432,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(1, $result[0]['product_id']);
+        $this->_checkExtraField($result[0]);
     }
 
     protected function _selectLimitPageTwo()
@@ -1415,6 +1444,9 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         return $select;
     }
 
+    /**
+     * @group ZF-4246
+     */
     public function testSelectLimitPageTwo()
     {
         $select = $this->_selectLimitPageTwo();
@@ -1422,6 +1454,7 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
         $result = $stmt->fetchAll();
         $this->assertEquals(1, count($result));
         $this->assertEquals(2, $result[0]['product_id']);
+        $this->_checkExtraField($result[0]);
     }
 
     /**
