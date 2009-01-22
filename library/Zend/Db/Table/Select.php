@@ -46,14 +46,6 @@ require_once 'Zend/Db/Table/Abstract.php';
 class Zend_Db_Table_Select extends Zend_Db_Select
 {
     /**
-     * Flag to see if the query has been modified through the from()
-     * or columns() method.
-     *
-     * @var boolean
-     */
-    protected $_queryModified = false;
-
-    /**
      * Table schema for parent Zend_Db_Table.
      *
      * @var array
@@ -84,11 +76,6 @@ class Zend_Db_Table_Select extends Zend_Db_Select
         parent::__construct($table->getAdapter());
 
         $this->setTable($table);
-
-        $name   = $table->info(Zend_Db_Table_Abstract::NAME);
-        $schema = $table->info(Zend_Db_Table_Abstract::SCHEMA);
-
-        $this->joinInner($name, null, self::SQL_WILDCARD, $schema);
     }
 
     /**
@@ -191,37 +178,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
             }
         }
 
-        $tableName = $this->getTable()->info(Zend_Db_Table_Abstract::NAME);
-
-        if (!$this->_queryModified && in_array($tableName, (array) $name)) {
-            $this->reset(self::FROM);
-            $this->reset(self::COLUMNS);
-        }
-
-        $this->_queryModified = true;
-
         return $this->joinInner($name, null, $cols, $schema);
-    }
-
-    /**
-     * Specifies the columns used in the FROM clause.
-     *
-     * The parameter can be a single string or Zend_Db_Expr object,
-     * or else an array of strings or Zend_Db_Expr objects.
-     *
-     * @param  array|string|Zend_Db_Expr $cols The columns to select from this table.
-     * @param  string $correlationName Correlation name of target table. OPTIONAL
-     * @return Zend_Db_Select This Zend_Db_Select object.
-     */
-    public function columns($cols = '*', $correlationName = null)
-    {
-        if (!$this->_queryModified) {
-            $this->reset(self::COLUMNS);
-        }
-
-        $this->_queryModified = true;
-
-        return parent::columns($cols, $correlationName);
     }
 
     /**

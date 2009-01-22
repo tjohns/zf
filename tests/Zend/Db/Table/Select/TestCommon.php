@@ -198,40 +198,40 @@ abstract class Zend_Db_Table_Select_TestCommon extends Zend_Db_Select_TestCommon
     }
 
     // ZF-3239
-    public function testFromPartIsAvailableRightAfterInstantiation()
-    {
-        $table = $this->_getSelectTable('products');
-        $select = $table->select();
-
-        $keys = array_keys($select->getPart(Zend_Db_Select::FROM));
-
-        $this->assertEquals('zfproducts', array_pop($keys));
-    }
+//    public function testFromPartIsAvailableRightAfterInstantiation()
+//    {
+//        $table = $this->_getSelectTable('products');
+//        $select = $table->select();
+//
+//        $keys = array_keys($select->getPart(Zend_Db_Select::FROM));
+//
+//        $this->assertEquals('zfproducts', array_pop($keys));
+//    }
 
     // ZF-3239 (from comments)
-    public function testColumnsMethodDoesntThrowExceptionRightAfterInstantiation()
-    {
-        $table = $this->_getSelectTable('products');
-
-        try {
-            $select = $table->select()->columns('product_id');
-
-            $this->assertType('Zend_Db_Table_Select', $select);
-        } catch (Zend_Db_Table_Select_Exception $e) {
-            $this->fail('Exception thrown: ' . $e->getMessage());
-        }
-    }
+//    public function testColumnsMethodDoesntThrowExceptionRightAfterInstantiation()
+//    {
+//        $table = $this->_getSelectTable('products');
+//
+//        try {
+//            $select = $table->select()->columns('product_id');
+//
+//            $this->assertType('Zend_Db_Table_Select', $select);
+//        } catch (Zend_Db_Table_Select_Exception $e) {
+//            $this->fail('Exception thrown: ' . $e->getMessage());
+//        }
+//    }
 
     // ZF-5424
-    public function testColumnsPartDoesntContainWildcardAfterSettingColumns()
-    {
-        $table = $this->_getSelectTable('products');
-
-        $select = $table->select()->columns('product_id');
-
-        $columns = $select->getPart(Zend_Db_Select::COLUMNS);
-
-        $this->assertEquals(1, count($columns));
-        $this->assertEquals('product_id', $columns[0][1]);
-    }
+//    public function testColumnsPartDoesntContainWildcardAfterSettingColumns()
+//    {
+//        $table = $this->_getSelectTable('products');
+//
+//        $select = $table->select()->columns('product_id');
+//
+//        $columns = $select->getPart(Zend_Db_Select::COLUMNS);
+//
+//        $this->assertEquals(1, count($columns));
+//        $this->assertEquals('product_id', $columns[0][1]);
+//    }
 }
