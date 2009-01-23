@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12750 -->
+<!-- EN-Revision: 13623 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -55,8 +55,8 @@
                 linkend="zend.captcha.adapters">Zend_Captcha アダプタ</link>
             を使用するかを選択することができます。
             それからこのアダプタをオブジェクトのバリデータとして設定し、
-            Captcha デコレータを使用してレンダリングを行います
-            (captcha アダプタへのプロキシとなります)。
+            CAPTCHA デコレータを使用してレンダリングを行います
+            (CAPTCHA アダプタへのプロキシとなります)。
         </para>
 
         <para>
@@ -72,9 +72,9 @@ $element->addPrefixPath('My_Captcha', 'My/Captcha/', 'captcha');
         </programlisting>
 
         <para>
-            Captcha を登録するには <code>setCaptcha()</code>
+            CAPTCHA を登録するには <code>setCaptcha()</code>
             メソッドを使用します。ここには、具象インスタンスあるいは
-            captcha アダプタの短い名前を指定します。
+            CAPTCHA アダプタの短い名前を指定します。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -229,9 +229,9 @@ $form->setAttrib('enctype', 'multipart/form-data');
             </programlisting>
 
             <para>
-                フォームの検証が成功したら、receive()
+                フォームの検証が成功したら、<code>receive()</code>
                 でファイルを受信して最終的な場所に保存しなければなりません。
-                さらに、最終的な場所を取得するには getFileName() を使用します。
+                さらに、最終的な場所を取得するには <code>getFileName()</code> を使用します。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -264,9 +264,9 @@ $location = $form->foo->getFileName();
             <para>
                 HTTP 内で、file 要素は値を持ちません。
                 したがって、またセキュリティ上の理由もあって、
-                getValue() ではアップロードしたファイル名だけしか取得できません。
+                <code>getValue()</code> ではアップロードしたファイル名だけしか取得できません。
                 完全パスを取得することはできません。完全な情報が欲しい場合は、
-                getFileName() をコールすればパスおよびファイル名が得られます。
+                <code>getFileName()</code> をコールすればパスおよびファイル名が得られます。
             </para>
         </note>
 
@@ -400,8 +400,7 @@ $form->addElement($element, 'foo');
             </para>
 
             <para>
-                また、複数のフォームを使用する場合であっても
-                <code>MAX_FILE_SIZE</code> を設定するのは一度だけであることに注意しましょう。
+                また、複数のフォームを使用する場合であってもこれがあてはまることに注意しましょう。
             </para>
         </note>
     </sect2>
@@ -533,9 +532,9 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (既存のオプションを上書きします)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
@@ -590,9 +589,9 @@ $element->setValue(array('bar', 'bat'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (既存のオプションを上書きします)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
@@ -670,9 +669,9 @@ $element->setValue(array('bar', 'bat'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (既存のオプションを上書きします)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
@@ -733,9 +732,9 @@ $element->setValue(array('bar', 'bat'));
             <listitem><para><code>setMultiOptions(array $options)</code>
                     (既存のオプションを上書きします)</para></listitem>
 
-            <listitem><para>getMultiOption($option)</para></listitem>
+            <listitem><para><code>getMultiOption($option)</code></para></listitem>
 
-            <listitem><para>getMultiOptions()</para></listitem>
+            <listitem><para><code>getMultiOptions()</code></para></listitem>
 
             <listitem><para><code>removeMultiOption($option)</code></para></listitem>
 
