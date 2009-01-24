@@ -166,12 +166,12 @@ class Zend_Tag_Cloud_Decorator_HtmlTag extends Zend_Tag_Cloud_Decorator_Tag
         
         foreach ($tags as $tag) {
             if ($this->_classList === null) {
-                $attribute = sprintf('style="font-size: %d%s"', $tag['weightValue'], $this->_fontSizeUnit);
+                $attribute = sprintf('style="font-size: %d%s"', $tag->getWeightValue(), $this->_fontSizeUnit);
             } else {
-                $attribute = sprintf('class="%s"', htmlspecialchars($tag['weightValue']));
+                $attribute = sprintf('class="%s"', htmlspecialchars($tag->getWeightValue()));
             }
             
-            $tagHtml = sprintf('<a href="%s" %s>%s</a>', $tag['url'], $attribute, $tag['title']);
+            $tagHtml = sprintf('<a href="%s" %s>%s</a>', $tag->getUrl(), $attribute, $tag->getTitle());
             
             foreach ($this->_htmlTags as $key => $data) {
                 if (is_array($data)) {

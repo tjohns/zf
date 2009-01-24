@@ -21,6 +21,11 @@
  */
 
 /**
+ * @see Zend_Tag_Item
+ */
+require_once 'Zend/Tag/Item.php';
+
+/**
  * @category   Zend
  * @package    Zend_Tag
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
@@ -47,7 +52,7 @@ class Zend_Tag_Cloud
      *
      * @var array
      */
-    protected $_tags = array();
+    protected $_tags;
 
     /**
      * Plugin loader for decorators
@@ -136,22 +141,29 @@ class Zend_Tag_Cloud
     public function setTags(array $tags)
     {
         // Validate and cleanup the tags
+        $this->_tags = array();
+        
         foreach ($tags as &$tag) {
-            if (!is_array($tag)) {
-                require_once 'Zend/TagCloud/Exception.php';
-                throw new Zend_Tag_Cloud_Exception('Tag is no array');
-            } else if (!isset($tag['title'])) {
-                require_once 'Zend/TagCloud/Exception.php';
-                throw new Zend_Tag_Cloud_Exception('Tag contains no title');
-            } else if (!isset($tag['weight'])) {
-                require_once 'Zend/TagCloud/Exception.php';
-                throw new Zend_Tag_Cloud_Exception('Tag contains no weight');
-            } else if (!isset($tag['url'])) {
-                $tag['url'] = null;
+            if ($tag instanceof Zend_Tag_Item) {
+                $this->_tags[] = $tag;
+            } else {
+                if (!is_array($tag)) {
+                    require_once 'Zend/TagCloud/Exception.php';
+                    throw new Zend_Tag_Cloud_Exception('Tag is no array');
+                } else if (!isset($tag['title'])) {
+                    require_once 'Zend/TagCloud/Exception.php';
+                    throw new Zend_Tag_Cloud_Exception('Tag contains no title');
+                } else if (!isset($tag['weight'])) {
+                    require_once 'Zend/TagCloud/Exception.php';
+                    throw new Zend_Tag_Cloud_Exception('Tag contains no weight');
+                } else if (!isset($tag['url'])) {
+                    $tag['url'] = null;
+                }
+                
+                $this->_tags[] = new Zend_Tag_Item($tag['title'], $tag['weight'], $tag['url']);
             }
         }
 
-        $this->_tags = $tags;
         return $this;
     }
 
@@ -281,11 +293,11 @@ class Zend_Tag_Cloud
         
         foreach ($this->_tags as $tag) {
             if ($minWeight === null && $maxWeight === null) {
-                $minWeight = $tag[$this->_weightKey];
-                $maxWeight = $tag[$this->_weightKey];
+                $minWeight = $tag->getWeight();
+                $maxWeight = $tag->getWeight();
             } else {
-                $minWeight = min($minWeight, $tag[$this->_weightKey]);
-                $maxWeight = max($maxWeight, $tag[$this->_weightKey]);                
+                $minWeight = min($minWeight, $tag->getWeight());
+                $maxWeight = max($maxWeight, $tag->getWeight());                
             }
         }
         
@@ -304,7 +316,7 @@ class Zend_Tag_Cloud
             $threshold = 100 * log($tag[$this->_weightKey] + 2); 
             for ($i = 0; $i <= $steps; $i++) {
                 if ($threshold <= $thresholds[$i]) {
-                    $tag['weightValue'] = $weightList[$i];
+                    $tag->setWeightValue($weightList[$i]);
                     break;
                 }
             }
