@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 13562 -->
 <sect3 id="zend.controller.plugins.standard.errorhandler">
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
@@ -183,8 +183,7 @@ class ErrorController extends Zend_Controller_Action
             <code>exception</code> を使用します。
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 public function errorAction()
 {
         $errors = $this->_getParam('error_handler');
@@ -212,7 +211,7 @@ public function errorAction()
                         '/tmp/applicationException.log'
                     )
                 );
-                $log->debug($exception->getMessage() . "\n" . 
+                $log->debug($exception->getMessage() . "\n" .
                             $exception->getTraceAsString());
                 break;
         }
