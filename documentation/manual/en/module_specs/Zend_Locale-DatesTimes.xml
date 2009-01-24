@@ -166,10 +166,10 @@ Array
 
 // alternatively, some types of problems with input data can be
 // automatically corrected
-$date2 = Zend_Locale_Format::getDate('04.13.2006',
-                                     array('date_format' => 'dd.MM.yyyy',
-                                           'fix_date' => true)
-                                    );
+$date = Zend_Locale_Format::getDate('04.13.2006',
+                                    array('date_format' => 'dd.MM.yyyy',
+                                          'fix_date' => true)
+                                   );
 
 print_r($date); // outputs:
 
