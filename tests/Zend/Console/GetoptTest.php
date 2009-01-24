@@ -531,4 +531,18 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($e instanceof Zend_Console_Getopt_Exception);
         }
     }
+    
+    /**
+     * @group ZF-5624
+     */
+    public function testEqualsCharacterInLongOptionsValue()
+    {
+        $fooValue = 'some text containing an = sign which breaks';
+
+        $opts = new Zend_Console_Getopt(
+            array('foo=s' => 'Option One (string)'),
+            array('--foo='.$fooValue)
+        );
+        $this->assertEquals($fooValue, $opts->foo);
+    }
 }

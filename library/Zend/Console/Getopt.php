@@ -712,7 +712,7 @@ class Zend_Console_Getopt
     protected function _parseLongOption(&$argv)
     {
         $optionWithParam = ltrim(array_shift($argv), '-');
-        $l = explode('=', $optionWithParam);
+        $l = explode('=', $optionWithParam, 2);
         $flag = array_shift($l);
         $param = array_shift($l);
         if (isset($param)) {
