@@ -388,7 +388,7 @@ $soapMyClassType = $wsdl->getType('MyClass');
                     given to the constructor as an array with <code>$type</code> -> <code>$strategy</code> pairs.
                     The second parameter specifies the default strategy that will be used if an unknown type is
                     requested for adding. This parameter defaults to the <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code>
-                    strategy.
+                    strategy.</para>
                 </listitem>
             </itemizedlist>
 
