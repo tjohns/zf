@@ -3343,8 +3343,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date = new Zend_Date(1234567890,null,$locale);
         $result = $date->addDate('02-03-05');
-        $this->assertSame('2014-05-17T04:31:30+05:00', $result->get(Zend_Date::W3C));
-        $this->assertSame('2014-05-17T04:31:30+05:00', $date->get(Zend_Date::W3C));
+        $this->assertSame('4014-05-17T04:31:30+05:00', $result->get(Zend_Date::W3C));
+        $this->assertSame('4014-05-17T04:31:30+05:00', $date->get(Zend_Date::W3C));
 
         $date = new Zend_Date(1234567890,null,$locale);
         $date->addDate('05-03-02','YY-MM-dd');

@@ -792,6 +792,7 @@ class Zend_Locale_Format
                      || (iconv_substr($format, $year, 4) == 'YYYY')) {
                         $length = 4;
                     }
+
                     if ($split === false) {
                         if (count($splitted[0]) > $cnt) {
                             $result['year']   = $splitted[0][$cnt];
@@ -800,6 +801,7 @@ class Zend_Locale_Format
                         $result['year']   = iconv_substr($splitted[0][0], $split, $length);
                         $split += $length;
                     }
+
                     ++$cnt;
                     break;
                 case 'H':
@@ -913,6 +915,21 @@ class Zend_Locale_Format
                 }
             }
         }
+
+        if (isset($result['year'])) {
+            if (((iconv_strlen($result['year']) == 2) && ($result['year'] < 10)) ||
+                (((iconv_strpos($format, 'yy') !== false) && (iconv_strpos($format, 'yyyy') === false)) ||
+                ((iconv_strpos($format, 'YY') !== false) && (iconv_strpos($format, 'YYYY') === false)))) {
+                if (($result['year'] >= 0) && ($result['year'] < 100)) {
+                    if ($result['year'] < 70) {
+                        $result['year'] = (int) $result['year'] + 100;
+                    }
+
+                    $result['year'] = (int) $result['year'] + 1900;
+                }
+            }
+        }
+
         return $result;
     }
 

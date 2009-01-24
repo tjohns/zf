@@ -301,10 +301,15 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array(Zend_Locale_Format::getDate('10.10.06')));
         $this->assertEquals(5, count(Zend_Locale_Format::getDate('10.10.06', array('date_format' => 'dd.MM.yy'))));
 
+        $value = Zend_Locale_Format::getDate('10.11.6', array('date_format' => 'dd.MM.yy'));
+        $this->assertEquals(10, $value['day']  );
+        $this->assertEquals(11, $value['month']);
+        $this->assertEquals(2006, $value['year'] );
+
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'dd.MM.yy'));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(11, $value['month']);
-        $this->assertEquals(06, $value['year'] );
+        $this->assertEquals(2006, $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10.11.2006', array('date_format' => 'dd.MM.yy'));
         $this->assertEquals(10,   $value['day']  );
@@ -338,7 +343,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::getDate('101106', array('date_format' => 'ddMMyy'));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(11, $value['month']);
-        $this->assertEquals(6,  $value['year'] );
+        $this->assertEquals(2006,  $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10112006', array('date_format' => 'ddMMyyyy'));
         $this->assertEquals(10,   $value['day']  );
@@ -401,17 +406,17 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'yy.dd.MM'));
         $this->assertEquals(11, $value['day']  );
         $this->assertEquals(6,  $value['month']);
-        $this->assertEquals(10, $value['year'] );
+        $this->assertEquals(2010, $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'dd.yy.MM'));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(6,  $value['month']);
-        $this->assertEquals(11, $value['year'] );
+        $this->assertEquals(2011, $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10.11.06', array('locale' => 'de_AT'));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(11, $value['month']);
-        $this->assertEquals(6,  $value['year'] );
+        $this->assertEquals(2006,  $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10.11.2006', array('locale' => 'de_AT'));
         $this->assertEquals(10,   $value['day']  );
@@ -445,7 +450,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::getDate('101106', array('locale' => 'de_AT'));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(11, $value['month']);
-        $this->assertEquals(6,  $value['year'] );
+        $this->assertEquals(2006,  $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10112006', array('locale' => 'de_AT'));
         $this->assertEquals(10,   $value['day']  );
@@ -532,12 +537,12 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'd.m.Y'));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(11, $value['month']);
-        $this->assertEquals(6,  $value['year'] );
+        $this->assertEquals(2006,  $value['year'] );
 
         $value = Zend_Locale_Format::getDate('10.11.06', array('date_format' => 'd.m.Y', 'fix_date' => true));
         $this->assertEquals(10, $value['day']  );
         $this->assertEquals(11, $value['month']);
-        $this->assertEquals(6,  $value['year'] );
+        $this->assertEquals(2006,  $value['year'] );
 
         $this->assertTrue(is_array(Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss'))));
         Zend_Locale_Format::setOptions(array('format_type' => 'iso'));
