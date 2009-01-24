@@ -1983,23 +1983,19 @@ class Zend_Form implements Iterator, Countable, Zend_Validate_Interface
             $element->setTranslator($translator);
             if (!isset($data[$key])) {
                 $valid = $element->isValid(null, $data) && $valid;
-                var_dump($element->getErrors());
             } else {
                 $valid = $element->isValid($data[$key], $data) && $valid;
-                var_dump($element->getErrors());
             }
         }
         foreach ($this->getSubForms() as $key => $form) {
             $form->setTranslator($translator);
             if (isset($data[$key])) {
                 $valid = $form->isValid($data[$key]) && $valid;
-                var_dump($form->getErrors());
             } else {
                 $valid = $form->isValid($data) && $valid;
-                var_dump($form->getErrors());
             }
         }
-die();
+
         $this->_errorsExist = !$valid;
         return $valid;
     }
