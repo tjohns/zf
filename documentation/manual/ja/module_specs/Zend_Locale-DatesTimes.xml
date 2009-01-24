@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12151 -->
+<!-- EN-Revision: 13776 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>日付および時刻の扱い</title>
@@ -173,10 +173,10 @@ Array
 )
 
 // 入力値に何らかの問題がある場合に、自動的に修正します
-$date2 = Zend_Locale_Format::getDate('04.13.2006',
-                                     array('date_format' => 'dd.MM.yyyy',
-                                           'fix_date' => true)
-                                    );
+$date = Zend_Locale_Format::getDate('04.13.2006',
+                                    array('date_format' => 'dd.MM.yyyy',
+                                          'fix_date' => true)
+                                   );
 
 print_r($date); // 出力は、このようになります
 
