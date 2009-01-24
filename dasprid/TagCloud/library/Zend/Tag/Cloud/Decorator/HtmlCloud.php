@@ -12,28 +12,29 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_TagCloud
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Tag
+ * @subpackage Cloud
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @see Zend_TagCloud_Decorator_Cloud
+ * @see Zend_Tag_Cloud_Decorator_Cloud
  */
-require_once 'Zend/TagCloud/Decorator/Cloud.php';
+require_once 'Zend/Tag/Cloud/Decorator/Cloud.php';
 
 /**
  * Simple HTML decorator for clouds
  *
  * @category  Zend
- * @package   Zend_TagCloud
- * @uses      Zend_TagCloud_Decorator_Cloud
+ * @package   Zend_Tag
+ * @uses      Zend_Tag_Cloud_Decorator_Cloud
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
+class Zend_Tag_Cloud_Decorator_HtmlCloud extends Zend_Tag_Cloud_Decorator_Cloud
 {
     /**
      * List of HTML tags
@@ -41,7 +42,7 @@ class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
      * @var array
      */
     protected $_htmlTags = array(
-        'ul' => array('class' => 'zend_tagcloud')
+        'ul' => array('class' => 'Zend_Tag_Cloud')
     );
     
     /**
@@ -55,7 +56,7 @@ class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
      * Set the HTML tags surrounding all tags
      *
      * @param  array $htmlTags
-     * @return Zend_TagCloud_Decorator_HtmlCloud
+     * @return Zend_Tag_Cloud_Decorator_HtmlCloud
      */
     public function setHtmlTags(array $htmlTags)
     {
@@ -67,7 +68,7 @@ class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
      * Set the separator between the single tags
      *
      * @param  string
-     * @return Zend_TagCloud_Decorator_HtmlCloud
+     * @return Zend_Tag_Cloud_Decorator_HtmlCloud
      */
     public function setSeparator($separator)
     {
@@ -76,7 +77,7 @@ class Zend_TagCloud_Decorator_HtmlCloud extends Zend_TagCloud_Decorator_Cloud
     }
     
     /**
-     * Defined by Zend_TagCloud_Decorator_Cloud
+     * Defined by Zend_Tag_Cloud_Decorator_Cloud
      *
      * @param  array $tags
      * @return array

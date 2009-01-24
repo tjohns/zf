@@ -12,28 +12,29 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_TagCloud
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Tag
+ * @subpackage Cloud
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @see Zend_TagCloud_Decorator_Tag
+ * @see Zend_Tag_Cloud_Decorator_Tag
  */
-require_once 'Zend/TagCloud/Decorator/Tag.php';
+require_once 'Zend/Tag/Cloud/Decorator/Tag.php';
 
 /**
  * Simple HTML decorator for tags
  *
  * @category  Zend
- * @package   Zend_TagCloud
- * @uses      Zend_TagCloud_Decorator_Tag
+ * @package   Zend_Tag
+ * @uses      Zend_Tag_Cloud_Decorator_Tag
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
+class Zend_Tag_Cloud_Decorator_HtmlTag extends Zend_Tag_Cloud_Decorator_Tag
 {
     /**
      * List of HTML tags
@@ -77,7 +78,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
      * Set the HTML tags surrounding the <a> element
      *
      * @param  array $htmlTags
-     * @return Zend_TagCloud_Decorator_HtmlTag
+     * @return Zend_Tag_Cloud_Decorator_HtmlTag
      */
     public function setHtmlTags(array $htmlTags)
     {
@@ -89,7 +90,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
      * Set minimum font size
      *
      * @param  string $minFontSize
-     * @return Zend_TagCloud_Decorator_HtmlTag
+     * @return Zend_Tag_Cloud_Decorator_HtmlTag
      */
     public function setMinFontSize($minFontSize)
     {
@@ -103,7 +104,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
      * Automatically resets the class list
      *
      * @param  string $maxFontSize
-     * @return Zend_TagCloud_Decorator_HtmlTag
+     * @return Zend_Tag_Cloud_Decorator_HtmlTag
      */
     public function setMaxFontSize($maxFontSize)
     {
@@ -118,7 +119,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
      * Automatically resets the class list
      * 
      * @param  string $fontSizeUnit
-     * @return Zend_TagCloud_Decorator_HtmlTag
+     * @return Zend_Tag_Cloud_Decorator_HtmlTag
      */
     public function setFontSizeUnit($fontSizeUnit)
     {
@@ -131,7 +132,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
      * Set a list of classes to use instead of fontsizes
      *
      * @param  array $classList
-     * @return Zend_TagCloud_Decorator_HtmlTag
+     * @return Zend_Tag_Cloud_Decorator_HtmlTag
      */
     public function setClassList(array $classList)
     {
@@ -140,7 +141,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
     }
     
     /**
-     * Defined by Zend_TagCloud_Decorator_Tag 
+     * Defined by Zend_Tag_Cloud_Decorator_Tag 
      * 
      * @return array
      */
@@ -154,7 +155,7 @@ class Zend_TagCloud_Decorator_HtmlTag extends Zend_TagCloud_Decorator_Tag
     }
     
     /**
-     * Defined by Zend_TagCloud_Decorator_Tag
+     * Defined by Zend_Tag_Cloud_Decorator_Tag
      *
      * @param  array $tags
      * @return array

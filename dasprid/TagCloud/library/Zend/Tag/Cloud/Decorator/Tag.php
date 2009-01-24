@@ -12,22 +12,23 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_TagCloud
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Tag
+ * @subpackage Cloud
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * Abstract class for cloud decorators
+ * Abstract class for tag decorators
  *
  * @category  Zend
- * @package   Zend_TagCloud
+ * @package   Zend_Tag
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_TagCloud_Decorator_Cloud
+abstract class Zend_Tag_Cloud_Decorator_Tag
 {
     /**
      * Option keys to skip when calling setOptions()
@@ -57,7 +58,7 @@ abstract class Zend_TagCloud_Decorator_Cloud
      * Set options from array
      *
      * @param  array $options Configuration for the decorator
-     * @return Zend_TagCloud
+     * @return Zend_Tag_Cloud
      */
     public function setOptions(array $options)
     {
@@ -79,7 +80,7 @@ abstract class Zend_TagCloud_Decorator_Cloud
      * Set options from config object
      *
      * @param  Zend_Config $config Configuration for the decorator
-     * @return Zend_TagCloud
+     * @return Zend_Tag_Cloud
      */
     public function setConfig(Zend_Config $config)
     {
@@ -87,10 +88,19 @@ abstract class Zend_TagCloud_Decorator_Cloud
     }
     
     /**
-     * Render a list of formated tags
+     * Get a list of weight values
+     * 
+     * The values will be assigned to the tags based on their given weight. 
+     * 
+     * @return array
+     */
+    abstract public function getWeightList();
+    
+    /**
+     * Render a list of tags
      *
      * @param  array $tags
-     * @return string
+     * @return array
      */
     abstract public function render(array $tags);
 }

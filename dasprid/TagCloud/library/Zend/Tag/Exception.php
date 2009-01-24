@@ -13,7 +13,7 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category  Zend
- * @package   Zend_TagCloud
+ * @package   Zend_Tag
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  * @version   $Id$
@@ -25,14 +25,14 @@
 require_once 'Zend/Exception.php';
 
 /**
- * Exception class for Zend_TagCloud
+ * Exception class for Zend_Tag
  *
  * @category  Zend
- * @package   Zend_TagCloud
+ * @package   Zend_Tag
  * @uses      Zend_Exception
  * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_TagCloud_Exception extends Zend_Exception
+class Zend_Tag_Exception extends Zend_Exception
 {
 }
