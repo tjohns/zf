@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12754 -->
+<!-- EN-Revision: 13593 -->
 <sect1 id="zend.mail.read">
     <title>メールメッセージの読み込み</title>
 
@@ -39,7 +39,7 @@
                     <entry>Yes</entry>
                 </row>
                 <row>
-                    <entry>mime パートの取得</entry>
+                    <entry>MIME パートの取得</entry>
                     <entry>エミュレート</entry>
                     <entry>エミュレート</entry>
                     <entry>エミュレート</entry>
@@ -259,7 +259,9 @@ unset($mail[$messageNum]);
         ヘッダ名は、内部では小文字で表されます。
         したがって、メールメッセージ内のでのヘッダ名は関係ありません。
         また、ヘッダ名にダッシュが入っている場合は、
-        camel-case で保持されます。</para>
+        camel-case で保持されます。どちらの記法でもヘッダが見つからなかった場合は、例外がスローされます。
+        そんな場合は、<code>headerExists()</code> メソッドを使用すれば
+        ヘッダが存在するかどうかを調べることができます。</para>
 
         <programlisting role="php"><![CDATA[
 // メッセージオブジェクトを取得します
@@ -270,6 +272,11 @@ echo $message->subject . "\n";
 
 // content-type ヘッダを取得します
 $type = $message->contentType;
+
+// CC が設定されているかどうかを調べます
+if( isset($message->cc) ) { // あるいは $message->headerExists('cc');
+    $cc = $message->cc;
+}
 ]]>
         </programlisting>
 
