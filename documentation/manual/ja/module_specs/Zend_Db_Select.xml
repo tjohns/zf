@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 13564 -->
 <sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Select オブジェクトの概要</title>
+        <title>導入</title>
 
         <para>
             Zend_Db_Select オブジェクトは、SQL の <code>SELECT</code> 文を表すものです。
@@ -172,8 +172,7 @@ $select = $db->select()
 
                 <title>from() メソッドの例</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 // できあがるクエリは、このようになります
 //   SELECT *
 //   FROM "products"
@@ -198,8 +197,7 @@ $select = $db->select()
 
                 <title>テーブルの相関名を指定する例</title>
 
-                <programlisting role="php">
-<![CDATA[
+                <programlisting role="php"><![CDATA[
 // できあがるクエリは、このようになります
 //   SELECT p.*
 //   FROM "products" AS p
