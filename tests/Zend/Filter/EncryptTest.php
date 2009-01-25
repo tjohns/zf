@@ -258,7 +258,7 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
         $this->assertEquals('Mcrypt', $filter->getAdapter());
 
         try {
-            $filter->setAdapter('TestAdapter');
+            $filter->setAdapter('TestAdapter2');
             $this->fail('Exception expected on setting a non adapter');
         } catch (Zend_Filter_Exception $e) {
             $this->assertContains('does not implement Zend_Filter_Encrypt_Interface', $e->getMessage());
@@ -284,6 +284,6 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
     }
 }
 
-class TestAdapter
+class TestAdapter2
 {
 }
