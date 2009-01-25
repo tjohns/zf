@@ -1,4 +1,4 @@
-<!-- EN-Revision: 9345 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.basics">
     <title>Zend_Controller の基本</title>
 
@@ -125,7 +125,7 @@
                 </para>
 
                 <note>
-                    <title>Case 命名規約</title>
+                    <title>大文字小文字の命名規約</title>
 
                     <para>
                         人はみな、リンクをタイプする際に大文字小文字の区別をあまり気にしないものです。

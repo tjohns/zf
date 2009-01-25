@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 13563 -->
 <sect3 id="zend.controller.actionhelpers.viewrenderer">
     <title>ViewRenderer</title>
 
@@ -105,7 +105,8 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
                     </para>
 
                     <programlisting role="php"><![CDATA[
-$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
+$viewRenderer =
+    Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 $viewRenderer->setView($view)
              ->setViewSuffix('php');
 ]]>
@@ -878,7 +879,7 @@ class SearchController extends Zend_Controller_Action
     public function resultsAction()
     {
         // $this->model に現在のモデルが設定されているものとします
-        $this->view->results = 
+        $this->view->results =
             $this->model->find($this->_getParam('query', '');
 
         // render() は、デフォルトでは ViewRenderer へのプロキシとなります。

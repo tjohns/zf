@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12821 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.exceptions">
     <title>MVC での例外</title>
 
@@ -27,7 +27,7 @@
     </sect2>
 
     <sect2 id="zend.controller.exceptions.handling">
-        <title>例外を処理する方法は?</title>
+        <title>例外の処理</title>
 
         <para>
             MVC コンポーネント内で例外を処理するための仕組みが組み込まれています。

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13033 -->
+<!-- EN-Revision: 13563 -->
 <sect1 id="zend.controller.front">
     <title>フロントコントローラ</title>
 
@@ -512,10 +512,10 @@ Zend_Controller_Front::run('../application/controllers');
     </sect2>
 
     <sect2 id="zend.controller.front.subclassing">
-        <title>フロントコントローラのサブクラスの作成</title>
+        <title>フロントコントローラの継承</title>
 
         <para>
-            フロントコントローラのサブクラスを作成する際は、
+            フロントコントローラを継承する際には、
             最低限 <code>getInstance()</code> メソッドをオーバーライドしなければなりません。
         </para>
 
