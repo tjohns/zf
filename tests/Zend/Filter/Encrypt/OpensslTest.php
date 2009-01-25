@@ -114,6 +114,31 @@ bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt');
     }
 
     /**
+     * Ensures that the filter allows de/encryption
+     *
+     * @return void
+     */
+    public function testEncryptionWithDecryptionSingleOptionOpenssl()
+    {
+        $filter = new Zend_Filter_Encrypt_Openssl();
+        $filter->setPublicKey(dirname(__FILE__) . '/../_files/publickey.pem');
+        $output = $filter->encrypt('teststring');
+        $envelopekeys = $filter->getEnvelopeKey();
+        $this->assertNotEquals('teststring', $output);
+
+        $phrase = 'zPUp9mCzIrM7xQOEnPJZiDkBwPBV9UlITY0Xd3v4bfIwzJ12yPQCAkcR5BsePGVw
+RK6GS5RwXSLrJu9Qj8+fk0wPj6IPY5HvA9Dgwh+dptPlXppeBm3JZJ+92l0DqR2M
+ccL43V3Z4JN9OXRAfGWXyrBJNmwURkq7a2EyFElBBWK03OLYVMevQyRJcMKY0ai+
+tmnFUSkH2zwnkXQfPUxg9aV7TmGQv/3TkK1SziyDyNm7GwtyIlfcigCCRz3uc77U
+Izcez5wgmkpNElg/D7/VCd9E+grTfPYNmuTVccGOes+n8ISJJdW0vYX1xwWv5l
+bK22CwD/l7SMBOz4M9XH0Jb0OhNxLza4XMDu0ANMIpnkn1KOcmQ4gB8fmAbBt';
+        $filter->setPrivateKey(dirname(__FILE__) . '/../_files/privatekey.pem', $phrase);
+        $filter->setEnvelopeKey($envelopekeys);
+        $input = $filter->decrypt($output);
+        $this->assertEquals('teststring', trim($input));
+    }
+
+    /**
      * @return void
      */
     public function testSetPublicKey()
