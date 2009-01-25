@@ -1,6 +1,6 @@
-<!-- EN-Revision: 12403 -->
+<!-- EN-Revision: 13570 -->
 <sect1 id="zend.gdata.introduction">
-    <title>Gdata について</title>
+    <title>導入</title>
     <para>
         Google Data API は、Google のオンラインサービスに対するプログラマ向けのインターフェイスです。
         Google data Protocol は
