@@ -99,8 +99,16 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                     $directory = $destination . DIRECTORY_SEPARATOR;
                 }
 
+                $filename = $directory . $content['name'];
+                $rename   = $this->getFilter('Rename');
+                if ($rename !== null) {
+                    $filename = $rename->getNewName($directory . $content['name']);
+                    $key      = array_search('Rename', $this->_files[$file]['filters']);
+                    unset($this->_files[$file]['filters'][$key]);
+                }
+
                 // Should never return false when it's tested by the upload validator
-                if (!move_uploaded_file($content['tmp_name'], ($directory . $content['name']))) {
+                if (!move_uploaded_file($content['tmp_name'], $filename)) {
                     if ($content['options']['ignoreNoFile']) {
                         $this->_files[$file]['received'] = true;
                         $this->_files[$file]['filtered'] = true;
