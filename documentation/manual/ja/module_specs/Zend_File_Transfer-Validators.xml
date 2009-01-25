@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13327 -->
+<!-- EN-Revision: 13617 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -146,6 +146,13 @@
                 <code>Zend_File_Transfer</code> 自身が自動的に設定します。
                 ですので、このバリデータのことは忘れてしまってもかまいません。
                 ただ、そういうバリデータが存在することだけを覚えておきましょう。
+            </para>
+        </listitem>
+
+        <listitem>
+            <para>
+                <code>WordCount</code>: このバリデータはファイル内の単語数をチェックします。
+                最小値と最大値を指定し、そのいずれかに違反した場合にエラーをスローします。
             </para>
         </listitem>
     </itemizedlist>
@@ -1368,6 +1375,54 @@ $upload->addValidator('Size',
                             'bytestring' => false));
 ]]>
             </programlisting>
+        </example>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.validators.wordcount">
+        <title><emphasis role="strong">WordCount</emphasis> バリデータ</title>
+
+        <para>
+            <code>WordCount</code> バリデータは、
+            指定したファイル内の単語数をチェックします。
+            次のオプションをサポートしています。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>min</code>: 見つかった単語数の最小値を設定します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>max</code>: 見つかった単語数の最大値を設定します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            文字列あるいは整数値を指定してインスタンス化すると、その値は
+            <code>max</code> とみなされます。あるいは、後から <code>setMin()</code> や
+            <code>setMax()</code> でオプションを設定することもできますし、
+            <code>getMin()</code> や <code>getMax()</code>
+            で設定内容を取得することもできます。
+        </para>
+
+        <example id="zend.file.transfer.validators.wordcount.example">
+            <title>WordCount バリデータの使用法</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+
+// ファイル内の単語数を 2000 語までに制限します
+$upload->addValidator('WordCount', false, 2000);
+
+// ファイル内の単語数を最大 5000 語、最小 1000 語に制限します
+$upload->addValidator('WordCount', false, array('min' => 1000, 'max' => 5000));
+]]>
+            </programlisting>
+
         </example>
     </sect2>
 </sect1>
