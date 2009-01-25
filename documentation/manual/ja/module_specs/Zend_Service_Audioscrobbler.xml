@@ -1,11 +1,11 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13582 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
 
     <sect2 id="zend.service.audioscrobbler.introduction">
 
-        <title>Audioscrobbler の検索の概要</title>
+        <title>導入</title>
 
         <para>
             <code>Zend_Service_Audioscrobbler</code> は、Audioscrobbler REST ウェブサービス

@@ -1,8 +1,8 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13582 -->
 <sect1 id="zend.service.flickr">
     <title>Zend_Service_Flickr</title>
     <sect2 id="zend.service.flickr.introduction">
-        <title>Flickr 検索の導入</title>
+        <title>導入</title>
         <para>
             <code>Zend_Service_Flickr</code> は、Flickr の REST Web Service
             を使用するためのシンプルな API です。
