@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13327 -->
+<!-- EN-Revision: 13722 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -74,7 +74,9 @@
         </para>
 
         <para>
-            Hier ist ein Beispiel einer üblichen Verwendung der Autodiscovery Funktionalität:
+            Hier ist ein Beispiel einer üblichen Verwendung der Autodiscovery Funktionalität. Die
+            Funktion <code>handle()</code> erzeugt die WSDL Datei und postet Sie an den Browser.
+
             <programlisting role="php"><![CDATA[
 class My_SoapServer_Class {
 ...
@@ -85,6 +87,12 @@ $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
 ]]>
             </programlisting>
+        </para>
+
+        <para>
+            Wenn man auf die erzeugte WSDL Datei zugreifen muß um Sie in eine Datei oder als XML String
+            abzuspeichern, kann man die Funktionen <code>dump($filename)</code> oder <code>toXml()</code>
+            verwenden die die AutoDiscovery Klasse anbietet.
         </para>
 
         <note id="zend.soap.autodiscovery.introduction.noserver">
@@ -147,7 +155,8 @@ $autodiscover->handle();
                 <listitem>
                     <para>
                         <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> wird als URI
-                        verwendet so das WSDL vorhanden ist.
+                        verwendet wenn das WSDL standardmäßig vorhanden ist und kann über die
+                        <code>setUri()</code> Methode überschrieben werden.
                     </para>
                     <para>
                          Es wird auch als Ziel Namespace für alle Service bezogenen Namen verwendet (inklusive

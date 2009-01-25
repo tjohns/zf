@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13699 -->
+<!-- EN-Revision: 13768 -->
 <sect1 id="zend.soap.wsdl">
     <title>WSDL Zugriffsmethoden</title>
 
@@ -411,6 +411,16 @@ $soapMyClassType = $wsdl->getType('MyClass');
                     erlaubt die Erkennung von sehr komplexen Arrays von Objekten. Objekttypen werden basierend
                     auf <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> erkannt und ein Array wird
                     um diese Definition gewrappt.</para>
+                </listitem>
+                <listitem>
+                    <para>Klasse <code>Zend_Soap_Wsdl_Strategy_Composite</code>: Diese Strategie kann
+                    alle Strategien kombinieren indem PHP komplexe Typen (Klassennamen) zu der gewünschten
+                    Strategie über die <code>connectTypeToStrategy($type, $strategy)</code> Methode verbunden
+                    werden. Eine komplette Typemap kann dem Contructor als Array, mit
+                    <code>$type</code> -> <code>$strategy</code> Paaren angegeben werden. Der zweite Parameter
+                    spezifiziert die Standardstrategie die verwendet wird wenn ein unbekannter Typ hinzugefügt
+                    werden soll. Diese Parameter ist standardmäßig die
+                    <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> Strategie.</para>
                 </listitem>
             </itemizedlist>
 

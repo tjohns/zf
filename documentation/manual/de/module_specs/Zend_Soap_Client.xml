@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13732 -->
 <sect1 id="zend.soap.client">
     <title>Zend_Soap_Client</title>
 
@@ -133,17 +133,17 @@
                         können:
                         <programlisting role="php"><![CDATA[
 // Komprimierung der Antworten akzeptieren
-$client = new SoapClient("some.wsdl",
+$client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT));
 ...
 
 // Anfragen komprimieren durch Verwendung von gzip mit Komprimierungs-Level 5
-$client = new SoapClient("some.wsdl",
+$client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP | 5));
 ...
 
 // Anfragen komprimieren durch Verwendung der Deflate Komprimierung
-$client = new SoapClient("some.wsdl",
+$client = new Zend_Soap_Client("some.wsdl",
   array('compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_DEFLATE));
 ]]>
                         </programlisting>
@@ -206,7 +206,7 @@ $client = new SoapClient("some.wsdl",
 //                Ende des Server Codes
 //****************************************************************
 
-$client = new SoapClient("MyService.wsdl");
+$client = new Zend_Soap_Client("MyService.wsdl");
 ...
 
 // $result1 ist ein String

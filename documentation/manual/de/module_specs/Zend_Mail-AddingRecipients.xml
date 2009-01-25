@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1723 -->
+<!-- EN-Revision: 13740 -->
 <sect1 id="zend.mail.adding-recipients">
     <title>Empfänger hinzufügen</title>
     <para>
@@ -15,11 +15,16 @@
         </listitem>
         </itemizedlist>
     </para>
+    <para>
+        <code>getRecipients()</code> bietet eine Liste von Empfängern. <code>clearRecipients()</code>
+        löscht die Liste.
+    </para>
     <note>
         <title>Zusätzliche Parameter</title>
         <para>
             <code>addTo()</code> und <code>addCc()</code> akzeptieren einen zweiten, optionalen
             Parameter, der für einen visuell lesbaren Namen des Empfängers in der Kopfzeile verwendet wird.
+            Im Parameter werden doppelte Anführungszeichen auf einfache und runde Klammern zu eckigen getauscht.
         </para>
     </note>
 </sect1>
