@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13762 -->
 <sect1 id="zend.form.elements">
     <title>Zend_Form_Element を用いたフォーム要素の作成</title>
 
@@ -1435,7 +1435,7 @@ class My_Element_Text extends Zend_Form_Element
 
         <programlisting role="php"><![CDATA[
 $form->addPrefixPath('My_Element', 'My/Element/', 'element')
-     ->addElement('foo', 'text');
+     ->addElement('text', 'foo');
 ]]>
         </programlisting>
 
