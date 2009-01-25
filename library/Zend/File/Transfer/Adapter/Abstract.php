@@ -587,9 +587,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                         $validator->setTranslator($translator);
                     }
 
-                    $tocheck = $content['tmp_name'];
                     if (($class === 'Zend_Validate_File_Upload') and (empty($content['tmp_name']))) {
                         $tocheck = $key;
+                    } else {
+                        $tocheck = $content['tmp_name'];
                     }
 
                     if (!$validator->isValid($tocheck, $content)) {
