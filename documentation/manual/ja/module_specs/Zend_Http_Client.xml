@@ -1,18 +1,17 @@
-<!-- EN-Revision: 13484 -->
+<!-- EN-Revision: 13571 -->
 <sect1 id="zend.http.client">
-    <title>Zend_Http_Client - 導入</title>
-
-    <sect2 id="zend.http.client.introduction">
-        <title>導入</title>
-        <para>
-            Zend_Http_Client は、Hyper-Text Transfer Protocol (HTTP)
-            リクエストを簡単に扱うためのインターフェイスを提供します。
-            Zend_Http_Client は、HTTP クライアントとしての最低限の機能をサポートしているだけでなく、
-            HTTP 認証やファイルのアップロードといった高度な機能もサポートしています。
-            リクエストに成功すると (失敗しても) Zend_Http_Response
-            オブジェクトを返します。これを使用すると、レスポンスのヘッダや本文にアクセスできます
-            (<xref linkend="zend.http.response" /> を参照ください)。
-        </para>
+    <title>導入</title>
+    <para>
+        Zend_Http_Client は、Hyper-Text Transfer Protocol (HTTP)
+        リクエストを簡単に扱うためのインターフェイスを提供します。
+        Zend_Http_Client は、HTTP クライアントとしての最低限の機能をサポートしているだけでなく、
+        HTTP 認証やファイルのアップロードといった高度な機能もサポートしています。
+        リクエストに成功すると (失敗しても) Zend_Http_Response
+        オブジェクトを返します。これを使用すると、レスポンスのヘッダや本文にアクセスできます
+        (<xref linkend="zend.http.response" /> を参照ください)。
+    </para>
+    <sect2 id="zend.http.client.usage">
+        <title>Zend_Http_Client の使用法</title>
         <para>
             クラスのコンストラクタには、オプションの引数として URL を指定することができます
             (文字列か Zend_Uri_Http オブジェクトのどちらでも可能です)。
