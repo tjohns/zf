@@ -434,17 +434,15 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _encodeHeader($value)
     {
-    	if (Zend_Mime::isPrintable($value))	{
-            return $value;
-    	} else {
-            $encoding = ($this->getHeaderEncoding() === Zend_Mime::ENCODING_QUOTEDPRINTABLE) ? 'Q' : 'B';
-            if ($encoding == 'Q') {
-                $encodedValue = Zend_Mime::encodeQuotedPrintableHeader($value, $this->getCharset(), Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
-            } elseif($encoding == 'B') {
-                $encodedValue = Zend_Mime::encodeBase64Header($value, $this->getCharset(), Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
+    	if (Zend_Mime::isPrintable($value) === false) {
+            if ($this->getHeaderEncoding() === Zend_Mime::ENCODING_QUOTEDPRINTABLE) {
+                $value = Zend_Mime::encodeQuotedPrintableHeader($value, $this->getCharset(), Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
+            } else {
+                $value = Zend_Mime::encodeBase64Header($value, $this->getCharset(), Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
             }
-            return $encodedValue;
         }
+
+        return $value;
     }
 
     /**
@@ -484,45 +482,19 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Add a recipient
-     *
-     * @param string $email
-     * @param boolean $to
-     */
-    protected function _addRecipient($email, $to = false)
-    {
-        // prevent duplicates
-        $this->_recipients[$email] = 1;
-
-        if ($to) {
-            $this->_to[] = $email;
-        }
-    }
-
-    /**
      * Helper function for adding a recipient and the corresponding header
      *
      * @param string $headerName
-     * @param string $name
      * @param string $email
+     * @param string $name
      */
-    protected function _addRecipientAndHeader($headerName, $name, $email)
+    protected function _addRecipientAndHeader($headerName, $email, $name)
     {
-    	$name  = $this->_filterName($name);
         $email = $this->_filterEmail($email);
-        $this->_addRecipient($email, ('To' == $headerName) ? true : false);
-        if ($name !== '' && $name !== null && $name !== $email) {
-            $encodedName = $this->_encodeHeader($name);
-            if ($encodedName === $name && strpos($name, ',') !== false) {
-                $format = '"%s" <%s>';
-            } else {
-                $format = '%s <%s>';
-            }
-            $destination = sprintf($format, $encodedName, $email);
-        } else {
-            $destination = $email;
-        }
-        $this->_storeHeader($headerName, $destination, true);
+        $name  = $this->_filterName($name);
+        // prevent duplicates
+        $this->_recipients[$email] = 1;
+        $this->_storeHeader($headerName, $this->_formatAddress($email, $name), true);
     }
 
     /**
@@ -534,7 +506,8 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addTo($email, $name='')
     {
-        $this->_addRecipientAndHeader('To', $name, $email);
+        $this->_addRecipientAndHeader('To', $email, $name);
+        $this->_to[] = $email;
         return $this;
     }
 
@@ -547,7 +520,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addCc($email, $name='')
     {
-        $this->_addRecipientAndHeader('Cc', $name, $email);
+        $this->_addRecipientAndHeader('Cc', $email, $name);
         return $this;
     }
 
@@ -559,7 +532,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addBcc($email)
     {
-        $this->_addRecipientAndHeader('Bcc', '', $email);
+        $this->_addRecipientAndHeader('Bcc', $email, '');
         return $this;
     }
 
@@ -604,18 +577,7 @@ class Zend_Mail extends Zend_Mime_Message
             $email = $this->_filterEmail($email);
             $name  = $this->_filterName($name);
             $this->_from = $email;
-            if ($name !== null && $name !== $email) {
-                $encodedName = $this->_encodeHeader($name);
-                if ($encodedName === $name && strpos($name, ',') !== false) {
-                    $format = '"%s" <%s>';
-                } else {
-                    $format = '%s <%s>';
-                }
-                $from = sprintf($format, $encodedName, $email);
-            } else {
-                $from = $email;
-            }
-            $this->_storeHeader('From', $from, true);
+            $this->_storeHeader('From', $this->_formatAddress($email, $name), true);
         } else {
             /**
              * @see Zend_Mail_Exception
@@ -1012,7 +974,7 @@ class Zend_Mail extends Zend_Mime_Message
     	              '>'  => ']',
     	);
 
-        return strtr($name, $rule);
+        return trim(strtr($name, $rule));
     }
 
     /**
@@ -1029,6 +991,28 @@ class Zend_Mail extends Zend_Mime_Message
         );
 
         return strtr($data, $rule);
+    }
+
+    /**
+     * Formats e-mail address
+     *
+     * @param string $email
+     * @param string $name
+     * @return string
+     */
+    protected function _formatAddress($email, $name)
+    {
+        if ($name === '' || $name === null || $name === $email) {
+            return $email;
+        } else {
+            $encodedName = $this->_encodeHeader($name);
+            if ($encodedName === $name && strpos($name, ',') !== false) {
+                $format = '"%s" <%s>';
+            } else {
+                $format = '%s <%s>';
+            }
+            return sprintf($format, $encodedName, $email);
+        }
     }
 
 }
