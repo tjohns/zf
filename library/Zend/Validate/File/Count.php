@@ -221,7 +221,7 @@ class Zend_Validate_File_Count extends Zend_Validate_Abstract
 
         if (is_array($file)) {
             foreach ($file as $name) {
-                if (!isset($this->_files[$name])) {
+                if (!isset($this->_files[$name]) && !empty($name)) {
                     $this->_files[$name] = $name;
                 }
             }

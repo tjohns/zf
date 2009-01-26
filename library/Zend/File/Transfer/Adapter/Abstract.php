@@ -574,6 +574,20 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $translator      = $this->getTranslator();
         $this->_messages = array();
         $break           = false;
+        foreach($check as $key => $content) {
+            if (in_array('Zend_Validate_File_Count', $content['validators'])) {
+                $validator = $this->_validators['Zend_Validate_File_Count'];
+                $validator->addFile($content['tmp_name']);
+                $count = $content;
+            }
+        }
+
+        if (isset($count)) {
+            if (!$validator->isValid($count['tmp_name'], $count)) {
+                $this->_messages += $validator->getMessages();
+            }
+        }
+
         foreach ($check as $key => $content) {
             $fileerrors  = array();
             if ($content['validated'] === true) {
