@@ -792,6 +792,30 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Render form element
+     * Checks for decorator interface to prevent errors
+     *
+     * @param  Zend_View_Interface $view
+     * @return string
+     */
+    public function render(Zend_View_Interface $view = null)
+    {
+        $marker = false;
+        foreach ($this->getDecorators() as $decorator) {
+            if ($decorator instanceof Zend_Form_Decorator_Marker_File_Interface) {
+                $marker = true;
+            }
+        }
+
+        if (!$marker) {
+            require_once 'Zend/Form/Element/Exception.php';
+            throw new Zend_Form_Element_Exception('No file decorator found... unable to render file element');
+        }
+
+        return parent::render($view);
+    }
+
+    /**
      * Retrieve error messages and perform translation and value substitution
      *
      * @return array

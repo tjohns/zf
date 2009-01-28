@@ -340,6 +340,19 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $this->element->getValue());
     }
 
+    public function testMarkerInterfaceForFileElement()
+    {
+        $this->element->setDecorators(array('ViewHelper'));
+        $this->assertEquals(1, count($this->element->getDecorators()));
+
+        try {
+            $content = $this->element->render(new Zend_View());
+            $this->fail();
+        } catch (Zend_Form_Element_Exception $e) {
+            $this->assertContains('No file decorator found', $e->getMessage());
+        }
+    }
+
     private function _convertIniToInteger($setting)
     {
         if (!is_numeric($setting)) {
