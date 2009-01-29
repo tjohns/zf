@@ -3,7 +3,7 @@
 
     <para>
         <code>Zend_Controller_Router_Route</code> is the standard framework
-        route. It combines ease of use with flexible route definition.  Each
+        route. It combines ease of use with flexible route definition. Each
         route consists primarily of URL mapping (of static and dynamic parts
         (variables)) and may be initialized with defaults as well as with
         variable requirements.
@@ -32,10 +32,10 @@ $router->addRoute('user', $route);
 
     <para>
         The first parameter in the <code>Zend_Controller_Router_Route</code>
-        constructor is a route definition that will be matched to a URL.  Route
+        constructor is a route definition that will be matched to a URL. Route
         definitions consist of static and dynamic parts separated by the slash
-        ('/') character.  Static parts are just simple text:
-        <code>author</code>.  Dynamic parts, called variables, are marked by
+        ('/') character. Static parts are just simple text:
+        <code>author</code>. Dynamic parts, called variables, are marked by
         prepending a colon to the variable name: <code>:username</code>.
     </para>
 
@@ -91,7 +91,7 @@ public function userinfoAction()
     <para>
         Route definition can contain one more special character - a wildcard
         - represented by '*' symbol. It is used to gather parameters similarly
-        to the default Module route (var => value pairs defined in the URI).  The
+        to the default Module route (var => value pairs defined in the URI). The
         following route more-or-less mimics the Module route behavior:
     </para>
 
@@ -132,10 +132,10 @@ $router->addRoute('archive', $route);
 
         <para>
             This example will result in injecting a year variable to the request
-            object.  Since no routing information is present (no controller and
+            object. Since no routing information is present (no controller and
             action parameters are defined), the application will be dispatched
             to the default controller and action method (which are both defined
-            in <code>Zend_Controller_Dispatcher_Abstract</code>).  To make it
+            in <code>Zend_Controller_Dispatcher_Abstract</code>). To make it
             more usable, you have to provide a valid controller and a valid
             action as the route's defaults:
         </para>

@@ -246,7 +246,7 @@ $this->_helper->contextSwitch()->setAutoJsonSerialization(false);
             <listitem><para>
                 <code>addContexts(array $contexts)</code>: add many contexts at
                 once. The <code>$contexts</code> array should be an array of
-                context/specification pairs.  If any of the contexts already
+                context/specification pairs. If any of the contexts already
                 exists, it will throw an exception.
             </para></listitem>
 

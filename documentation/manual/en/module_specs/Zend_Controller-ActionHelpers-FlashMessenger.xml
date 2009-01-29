@@ -5,13 +5,13 @@
         <title>Introduction</title>
         <para>
             The <code>FlashMessenger</code> helper allows you to pass messages
-            that the user may need to see on the next request.  To accomplish
+            that the user may need to see on the next request. To accomplish
             this, <code>FlashMessenger</code> uses
             <code>Zend_Session_Namespace</code> to store messages for future or
-            next request retrieval.  It is generally a good idea that if you
+            next request retrieval. It is generally a good idea that if you
             plan on using <code>Zend_Session</code> or
             <code>Zend_Session_Namespace</code>, that you initialize with
-            <code>Zend_Session::start()</code> in your bootstrap file.  (See the
+            <code>Zend_Session::start()</code> in your bootstrap file. (See the
             <link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link>
             documentation for more details on its usage.)
         </para>

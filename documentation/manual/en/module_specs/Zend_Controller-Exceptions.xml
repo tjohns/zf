@@ -65,7 +65,7 @@
                     By passing a boolean true value to this method, you can tell
                     the front controller that instead of aggregating exceptions
                     in the response object or using the error handler plugin,
-                    you'd rather handle them yourself.  As an example:
+                    you'd rather handle them yourself. As an example:
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -155,7 +155,7 @@ if ($response->isException()) {
                 <para>
                     <code>Zend_Controller_Dispatcher::dispatch()</code> will,
                     by default, throw an exception if an invalid controller is
-                    requested.  There are two recommended ways to deal with
+                    requested. There are two recommended ways to deal with
                     this.
                 </para>
 
@@ -246,7 +246,7 @@ class My_Controller_Action extends Zend_Controller_Action
                         <para>
                             Subclass <code>Zend_Controller_Dispatcher</code>
                             and override the <code>getAction()</code> method to
-                            verify the action exists.  As an example:
+                            verify the action exists. As an example:
                         </para>
 
                         <programlisting role="php"><![CDATA[

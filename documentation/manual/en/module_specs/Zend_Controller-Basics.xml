@@ -3,7 +3,7 @@
 
     <para>
         The <code>Zend_Controller</code> system is designed to be
-        lightweight, modular, and extensible.  It is a minimalist design to
+        lightweight, modular, and extensible. It is a minimalist design to
         permit flexibility and some freedom to users while providing enough
         structure so that systems built around <code>Zend_Controller</code>
         share some common conventions and similar code layout.
@@ -21,7 +21,7 @@
 
     <para>
         The <code>Zend_Controller</code> workflow is implemented by several
-        components.  While it is not necessary to completely understand the
+        components. While it is not necessary to completely understand the
         underpinnings of all of these components to use the system, having a
         working knowledge of the process is helpful.
     </para>
@@ -30,7 +30,7 @@
             <listitem>
                 <para>
                     <code>Zend_Controller_Front</code> orchestrates the entire
-                    workflow of the <code>Zend_Controller</code> system.  It is
+                    workflow of the <code>Zend_Controller</code> system. It is
                     an interpretation of the FrontController pattern.
                     <code>Zend_Controller_Front</code> processes all requests
                     received by the server and is ultimately responsible for
@@ -47,7 +47,7 @@
                     retrieving the controller and action names and any request
                     parameters. Additionally it keeps track of whether or not
                     the action it contains has been dispatched by
-                    <code>Zend_Controller_Dispatcher</code>.  Extensions to the
+                    <code>Zend_Controller_Dispatcher</code>. Extensions to the
                     abstract request object can be used to encapsulate the
                     entire request environment, allowing routers to pull
                     information from the request environment in order to set the
@@ -64,12 +64,12 @@
             <listitem>
                 <para>
                     <code>Zend_Controller_Router_Interface</code> is used to
-                    define routers.  Routing is the process of examining the
+                    define routers. Routing is the process of examining the
                     request environment to determine which controller, and
-                    action of that controller, should receive the request.  This
+                    action of that controller, should receive the request. This
                     controller, action, and optional parameters are then set in
                     the request object to be processed by
-                    <code>Zend_Controller_Dispatcher_Standard</code>.  Routing
+                    <code>Zend_Controller_Dispatcher_Standard</code>. Routing
                     occurs only once: when the request is initially received and
                     before the first controller is dispatched.
                 </para>
@@ -98,7 +98,7 @@
             <listitem>
                 <para>
                     <code>Zend_Controller_Dispatcher_Interface</code> is used to
-                    define dispatchers.  Dispatching is the process of pulling
+                    define dispatchers. Dispatching is the process of pulling
                     the controller and action from the request object and
                     mapping them to a controller file/class and action method in
                     the controller class. If the controller or action do not
@@ -161,7 +161,7 @@
             <listitem>
                 <para>
                     <code>Zend_Controller_Action</code> is the base action
-                    controller component.  Each controller is a single class
+                    controller component. Each controller is a single class
                     that extends the <code>Zend_Controller_Action class</code>
                     and should contain one or more action methods.
                 </para>
@@ -184,20 +184,20 @@
         </itemizedlist>
 
     <para>
-        The workflow of <code>Zend_Controller</code> is relatively simple.  A
+        The workflow of <code>Zend_Controller</code> is relatively simple. A
         request is received by <code>Zend_Controller_Front</code>, which in turn
         calls <code>Zend_Controller_Router_Rewrite</code> to determine which
         controller (and action in that controller) to dispatch.
         <code>Zend_Controller_Router_Rewrite</code> decomposes the URI in order
         to set the controller and action names in the request.
-        <code>Zend_Controller_Front</code> then enters a dispatch loop.  It
+        <code>Zend_Controller_Front</code> then enters a dispatch loop. It
         calls <code>Zend_Controller_Dispatcher_Standard</code>, passing it the
         request, to dispatch to the controller and action specified in the
-        request (or use defaults).  After the controller has finished, control
-        returns to <code>Zend_Controller_Front</code>.  If the controller has
+        request (or use defaults). After the controller has finished, control
+        returns to <code>Zend_Controller_Front</code>. If the controller has
         indicated that another controller should be dispatched by resetting the
         dispatched status of the request, the loop continues and another
-        dispatch is performed.  Otherwise, the process ends.
+        dispatch is performed. Otherwise, the process ends.
     </para>
 </sect1>
 

@@ -5,7 +5,7 @@
         <para>
             The request object is a simple value object that is passed between
             <code>Zend_Controller_Front</code> and the router, dispatcher, and
-            controller classes.  It packages the names of the requested module,
+            controller classes. It packages the names of the requested module,
             controller, action, and optional parameters, as well as the rest of
             the request environment, be it HTTP, the CLI, or PHP-GTK.
         </para>
@@ -75,7 +75,7 @@
                 controller and action router variables, and all additional
                 parameters parsed from the URI. It additionally allows access to
                 values contained in the superglobals as public members, and
-                manages the current Base URL and Request URI.  Superglobal
+                manages the current Base URL and Request URI. Superglobal
                 values cannot be set on a request object, instead use the
                 setParam/getParam methods to set or retrieve user parameters.
             </para>
@@ -144,7 +144,7 @@
                     retrieves from several sources. In order of priority, these
                     include: user parameters set via <code>setParam()</code>,
                     <code>GET</code> parameters, and finally <code>POST</code>
-                    parameters.  Be aware of this when pulling data via this
+                    parameters. Be aware of this when pulling data via this
                     method.
                 </para>
 
@@ -197,8 +197,8 @@ $front->setRequest($request);
 
             <para>
                 <code>Zend_Controller_Request_Http</code> allows
-                Zend_Controller_Router_Rewrite to be used in subdirectories.
-                Zend_Controller_Request_Http will attempt to automatically
+                <code>Zend_Controller_Router_Rewrite</code> to be used in subdirectories.
+                <code>Zend_Controller_Request_Http</code> will attempt to automatically
                 detect your base URL and set it accordingly.
             </para>
 

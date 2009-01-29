@@ -196,7 +196,7 @@ $this->foo(); // call Foo_View_Helper_Foo::foo()
                     disable or enable autorendering globally, i.e., for all
                     controllers. If set to true, <code>postDispatch()</code>
                     will not automatically call <code>render()</code> in the
-                    current controller.  <code>getNeverRender()</code> retrieves
+                    current controller. <code>getNeverRender()</code> retrieves
                     the current value.
                 </para>
             </listitem>
@@ -389,7 +389,7 @@ $viewRenderer =
                     you to change the path specification used to determine the
                     path to an individual view script when
                     <code>noController</code> is in effect (minus the base view
-                    script path).  The default specification is
+                    script path). The default specification is
                     <code>:action.:suffix</code>. You may retrieve the current
                     specification at any time using
                     <code>getViewScriptPathNoControllerSpec()</code>.

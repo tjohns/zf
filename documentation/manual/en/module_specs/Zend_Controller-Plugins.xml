@@ -7,7 +7,7 @@
         <para>
             The controller architecture includes a plugin system that allows
             user code to be called when certain events occur in the controller
-            process lifetime.  The front controller uses a plugin broker as a
+            process lifetime. The front controller uses a plugin broker as a
             registry for user plugins, and the plugin broker ensures that event
             methods are called on each plugin registered with the front
             controller.
@@ -115,7 +115,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         <para>
             Plugin classes are registered with
             <code>Zend_Controller_Front::registerPlugin()</code>, and may be
-            registered at any time.  The following snippet illustrates how a
+            registered at any time. The following snippet illustrates how a
             plugin may be used in the controller chain:
         </para>
 

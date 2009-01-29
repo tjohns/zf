@@ -5,7 +5,7 @@
         The <code>ActionStack</code> helper allows you to push requests to the
         <link linkend="zend.controller.plugins.standard.actionstack">ActionStack</link>
         front controller plugin, effectively helping you create a queue of
-        actions to execute during the request.  The helper allows you to add
+        actions to execute during the request. The helper allows you to add
         actions either by specifying new request objects or
         action/controller/module sets.
     </para>

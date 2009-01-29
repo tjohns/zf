@@ -217,7 +217,7 @@ class IndexController extends Zend_Controller_Action
                     linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
                 action helper is enabled. What this means is that by simply
                 defining an action method and a corresponding view script, you
-                will immediately get content rendered.  By default,
+                will immediately get content rendered. By default,
                 <code>Zend_View</code> is used as the View layer in the MVC. The
                 <code>ViewRenderer</code> does some magic, and uses the
                 controller name (e.g., <code>index</code>) and the current

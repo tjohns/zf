@@ -15,7 +15,7 @@
 
             <para>
                 Users brought to our attention the fact that
-                <code>Zend_Controller_Action_Helper_ViewRenderer </code> were
+                <code>Zend_Controller_Action_Helper_ViewRenderer</code> were
                 using a method of the dispatcher abstract class that was not in
                 the dispatcher interface. We have now added the following method to
                 ensure that custom dispatchers will continue to work with the
@@ -728,7 +728,7 @@ public function __call($method, $args)
             <listitem><para>
                 <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> has
                 been removed. Use <code>Zend_Controller_Front::setBaseUrl()</code>
-                instead (or Zend_Controller_Request_Http::setBaseUrl(), if using
+                instead (or <code>Zend_Controller_Request_Http::setBaseUrl()</code>, if using
                 that request class).
             </para></listitem>
 

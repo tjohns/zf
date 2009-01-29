@@ -108,7 +108,7 @@ $front = Zend_Controller_Front::getInstance();
                     linkend="zend.controller.dispatcher">the dispatcher</link>
                 where to look for <link
                     linkend="zend.controller.action">action controller</link>
-                class files.  It accepts either a single path or an associative
+                class files. It accepts either a single path or an associative
                 array of module/path pairs.
             </para>
 
@@ -295,7 +295,7 @@ Zend_Controller_Front::run('../application/controllers');
                 <para>
                     <code>(set|get)DefaultAction()</code> let you specify a
                     different name to use for the default action ('index' is
-                    used otherwise) and retrieve the current value.  They proxy
+                    used otherwise) and retrieve the current value. They proxy
                     to <link linkend="zend.controller.dispatcher">the
                         dispatcher</link>.
                 </para>
@@ -410,7 +410,7 @@ Zend_Controller_Front::run('../application/controllers');
                     controller whether to return the response
                     (<code>true</code>) from <code>dispatch()</code>, or if the
                     response should be automatically emitted
-                    (<code>false</code>).  By default, the response is
+                    (<code>false</code>). By default, the response is
                     automatically emitted (by calling
                     <code>Zend_Controller_Response_Abstract::sendResponse()</code>);
                     turning on <code>returnResponse()</code> will override this

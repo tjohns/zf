@@ -55,7 +55,7 @@ $values = array(
     <note>
         <para>
             Line start and line end anchors ('^' and '$', respectively) are
-            automatically pre- and appended to all expressions.  Thus, you
+            automatically pre- and appended to all expressions. Thus, you
             should not use these in your regular expressions, and you should
             match the entire string.
         </para>
@@ -65,7 +65,7 @@ $values = array(
         <para>
             This route class uses the <code>#</code> character for a delimiter.
             This means that you will need to escape hash characters ('#') but
-            not forward slashes ('/') in your route definitions.  Since the '#'
+            not forward slashes ('/') in your route definitions. Since the '#'
             character (named anchor) is rarely passed to the webserver, you will
             rarely need to use that character in your regex.
         </para>
@@ -192,7 +192,7 @@ $route = new Zend_Controller_Router_Route_Regex(
     </programlisting>
 
     <para>
-        Which will result in mixed values available in the Request.  As an
+        Which will result in mixed values available in the Request. As an
         example, the URL <code>http://domain.com/archive/2006/page/10</code>
         will result in following values:
     </para>
@@ -228,7 +228,7 @@ $route = new Zend_Controller_Router_Route_Regex(
         All of this is something which was already possible by the means of a
         standard route object, so where's the benefit in using the Regex route,
         you ask?  Primarily, it allows you to describe any type of URL without
-        any restrictions.  Imagine you have a blog and wish to create URLs like:
+        any restrictions. Imagine you have a blog and wish to create URLs like:
         <code>http://domain.com/blog/archive/01-Using_the_Regex_Router.html</code>,
         and have it decompose the last path element,
         <code>01-Using_the_Regex_Router.html</code>, into an article ID and

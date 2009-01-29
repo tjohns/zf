@@ -4,7 +4,7 @@
     <para>
         Many AJAX javascript libraries offer functionality for providing
         autocompletion whereby a selectlist of potentially matching results is
-        displayed as the user types.  The <code>AutoComplete</code> helper aims
+        displayed as the user types. The <code>AutoComplete</code> helper aims
         to simplify returning acceptable responses to such methods.
     </para>
 

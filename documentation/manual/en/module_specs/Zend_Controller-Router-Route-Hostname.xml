@@ -32,7 +32,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
 
     <para>
         The first parameter in the <code>Zend_Controller_Router_Route_Hostname</code>
-        constructor is a route definition that will be matched to a hostname.  Route
+        constructor is a route definition that will be matched to a hostname. Route
         definitions consist of static and dynamic parts separated by the dot
         ('.') character. Dynamic parts, called variables, are marked by
         prepending a colon to the variable name: <code>:username</code>.
@@ -61,7 +61,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     </note>
 
     <sect4 id="zend.controller.router.routes.hostname.config">
-        <title>Hostname Routes via Zend_Config</title>
+        <title>Hostname Routes via <code>Zend_Config</code></title>
 
         <para>
             To chain hostname routes and path routes together, there is an

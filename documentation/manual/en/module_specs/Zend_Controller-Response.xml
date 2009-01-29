@@ -143,7 +143,7 @@ $front->dispatch();
 
         <para>
             As stated previously, one aspect of the response object's duties is
-            to collect and emit HTTP response headers.  A variety of methods
+            to collect and emit HTTP response headers. A variety of methods
             exist for this:
         </para>
 

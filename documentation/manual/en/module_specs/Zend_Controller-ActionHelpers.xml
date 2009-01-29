@@ -6,13 +6,13 @@
         <para>
             Action Helpers allow developers to inject runtime and/or on-demand
             functionality into any Action Controllers that extend
-            Zend_Controller_Action.  Action Helpers aim to minimize the
+            <code>Zend_Controller_Action</code>. Action Helpers aim to minimize the
             necessity to extend the abstract Action Controller in order to
             inject common Action Controller functionality.
         </para>
 
         <para>
-            There are a number of ways to use Action Helpers.  Action Helpers
+            There are a number of ways to use Action Helpers. Action Helpers
             employ the use of a brokerage system, similar to the types of
             brokerage you see in <link
                 linkend="zend.view.helpers">Zend_View_Helper</link>, and that
@@ -21,7 +21,7 @@
             Action Helpers (like <code>Zend_View_Helper</code>) may be
             loaded and called on demand, or they may be instantiated at
             request time (bootstrap) or action controller creation time
-            (init()).  To understand this more fully, please see the usage
+            (init()). To understand this more fully, please see the usage
             section below.
         </para>
     </sect2>

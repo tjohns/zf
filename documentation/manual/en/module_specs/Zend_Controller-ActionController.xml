@@ -4,7 +4,7 @@
     <sect2 id="zend.controller.action.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Controller_Action</code> is an abstract class you may use
+            <code><code>Zend_Controller</code>_Action</code> is an abstract class you may use
             for implementing Action Controllers for use with the Front
             Controller when building a website based on the
             Model-View-Controller (MVC) pattern.
@@ -16,7 +16,7 @@
             to create your own base class for action controllers). The most
             basic operation is to subclass it, and create action methods that
             correspond to the various actions you wish the controller to handle
-            for your site.  Zend_Controller's routing and dispatch handling will
+            for your site. <code>Zend_Controller</code>'s routing and dispatch handling will
             autodiscover any methods ending in 'Action' in your class as
             potential controller actions.
         </para>
@@ -132,7 +132,7 @@ class FooController extends Zend_Controller_Action
 
         <para>
             While you can always override the action controller's constructor,
-            we do not recommend this. Zend_Controller_Action::__construct()
+            we do not recommend this. <code>Zend_Controller_Action::__construct()</code>
             performs some important tasks, such as registering the request and
             response objects, as well as any custom invocation arguments passed
             in from the front controller. If you must override the constructor,
@@ -143,7 +143,7 @@ class FooController extends Zend_Controller_Action
         <para>
             The more appropriate way to customize instantiation is to use the
             <code>init()</code> method, which is called as the last task of
-            <code>__construct()</code>.  For example, if you want to connect to
+            <code>__construct()</code>. For example, if you want to connect to
             a database at instantiation:
         </para>
 
@@ -529,7 +529,7 @@ class MyController extends Zend_Controller_Action
 
             <para>
                 You should override this functionality if you wish to perform
-                other operations.  For instance, if you wish to display an error
+                other operations. For instance, if you wish to display an error
                 message, you might write something like this:
             </para>
 

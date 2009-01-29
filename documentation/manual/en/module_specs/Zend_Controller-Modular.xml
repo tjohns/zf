@@ -85,14 +85,14 @@ application/
             the controller directory list in the front controller. In the basic
             MVC series, you pass either an array or a string to
             <code>setControllerDirectory()</code>, or a path to
-            <code>addControllerDirectory()</code>.  When using modules, you need
+            <code>addControllerDirectory()</code>. When using modules, you need
             to alter your calls to these methods slightly.
         </para>
 
         <para>
             With <code>setControllerDirectory()</code>, you will need to pass an
             associative array and specify key/value pairs of module
-            name/directory paths.  The special key <code>default</code> will be
+            name/directory paths. The special key <code>default</code> will be
             used for global controllers (those not needing a module namespace).
             All entries should contain a string key pointing to a single path,
             and the <code>default</code> key must be present. As an example:
