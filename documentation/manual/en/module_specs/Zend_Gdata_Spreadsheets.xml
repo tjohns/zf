@@ -28,7 +28,7 @@
         <para>
             You can get a list of spreadsheets for a particular user by using
             the <code>getSpreadsheetFeed</code> method of the Spreadsheets
-            service.  The service will return a
+            service. The service will return a
             <code>Zend_Gdata_Spreadsheets_SpreadsheetFeed</code> object
             containing a list of spreadsheets associated with the authenticated
             user.
@@ -239,7 +239,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData,
 
             <para>
                 The <code>$rowData</code> parameter contains an array of column
-                keys to data values.  The method returns a
+                keys to data values. The method returns a
                 <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code> object
                 which represents the inserted row.
             </para>
@@ -268,7 +268,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
 
             <para>
                 The <code>$oldListEntry</code> parameter contains the list entry
-                to be updated.  <code>$newRowData</code> contains an array of
+                to be updated. <code>$newRowData</code> contains an array of
                 column keys to data values, to be used as the new row data.
                 The method returns a
                 <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code> object
@@ -337,7 +337,7 @@ $cellFeed = $spreadsheetService->getCellFeed($query);
                 server. Among other things, this feed contains an array of
                 <code>Zend_Gdata_Spreadsheets_CellEntry</code> objects
                 (<code>$cellFeed>entries</code>), each of which represents
-                a single cell in a worksheet.  You can display this information:
+                a single cell in a worksheet. You can display this information:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -396,7 +396,7 @@ $updatedCell = $spreadsheetService->updateCell($row,
             <para>
                 The new data is placed in the specified cell in the worksheet.
                 If the specified cell contains data already, it will be
-                overwritten.  Note: Use <code>updateCell</code> to change
+                overwritten. Note: Use <code>updateCell</code> to change
                 the data in a cell, even if the cell is empty.
             </para>
         </sect3>

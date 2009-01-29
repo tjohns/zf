@@ -189,7 +189,7 @@ function getAuthSubUrl()
  * with Google using AuthSub authentication.
  *
  * Uses the $_SESSION['sessionToken'] to store the AuthSub session token after
- * it is obtained.  The single use token supplied in the URL when redirected
+ * it is obtained. The single use token supplied in the URL when redirected
  * after the user succesfully authenticated to Google is retrieved from the
  * $_GET['token'] variable.
  *
@@ -226,7 +226,7 @@ $service = new Zend_Gdata_Photos();
     <sect2 id="zend.gdata.photos.queries">
         <title>Understanding and Constructing Queries</title>
         <para>
-            The primary method to request data from the service is by constructing a query.  There are query
+            The primary method to request data from the service is by constructing a query. There are query
             classes for each of the following types:
         </para>
 
@@ -267,85 +267,85 @@ $query->setUser("sample.user");
 
         <para>
             For each query, a number of parameters limiting the search can be requested, or specified,
-            with get(Parameter) and set(Parameter), respectively.  They are as follows:
+            with get(Parameter) and set(Parameter), respectively. They are as follows:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
                     <firstterm>Projection</firstterm>
-                    sets the format of the data returned in the feed, as either "api" or "base".  Normally,
-                    "api" is desired.  The default is "api".
+                    sets the format of the data returned in the feed, as either "api" or "base". Normally,
+                    "api" is desired. The default is "api".
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>Type</firstterm>
-                    sets the type of element to be returned, as either "feed" or "entry".  The default is "feed".
+                    sets the type of element to be returned, as either "feed" or "entry". The default is "feed".
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>Access</firstterm>
-                    sets the visibility of items to be returned, as "all", "public", or "private".  The default is
-                    "all".  Non-public elements will only be returned if the query is searching for the
+                    sets the visibility of items to be returned, as "all", "public", or "private". The default is
+                    "all". Non-public elements will only be returned if the query is searching for the
                     authenticated user.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>Tag</firstterm>
-                    sets a tag filter for returned items.  When a tag is set, only items tagged with this value
+                    sets a tag filter for returned items. When a tag is set, only items tagged with this value
                     will return.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>Kind</firstterm>
-                    sets the kind of elements to return.  When kind is specified, only entries that match this
+                    sets the kind of elements to return. When kind is specified, only entries that match this
                     value will be returned.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>ImgMax</firstterm>
-                    sets the maximum image size for entries returned.  Only image entries smaller than this value
+                    sets the maximum image size for entries returned. Only image entries smaller than this value
                     will be returned.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>Thumbsize</firstterm>
-                    sets the thumbsize of entries that are returned.  Any retrieved entry will have a thumbsize
+                    sets the thumbsize of entries that are returned. Any retrieved entry will have a thumbsize
                     equal to this value.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>User</firstterm>
-                    sets the user whose data is being searched for.  The default is "default".
+                    sets the user whose data is being searched for. The default is "default".
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>AlbumId</firstterm>
-                    sets the id of the album being searched for.  This element only applies to album and photo queries.
-                    In the case of photo queries, this specifies the album that contains the requested photo.  The
-                    album id is mutually exclusive with the album's name.  Setting one unsets the other.
+                    sets the id of the album being searched for. This element only applies to album and photo queries.
+                    In the case of photo queries, this specifies the album that contains the requested photo. The
+                    album id is mutually exclusive with the album's name. Setting one unsets the other.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>AlbumName</firstterm>
-                    sets the name of the album being searched for.  This element only applies to the album and photo
-                    queries.  In the case of photo queries, this specifies the album that contains the requested photo.
-                    The album name is mutually exclusive with the album's id.  Setting one unsets the other.
+                    sets the name of the album being searched for. This element only applies to the album and photo
+                    queries. In the case of photo queries, this specifies the album that contains the requested photo.
+                    The album name is mutually exclusive with the album's id. Setting one unsets the other.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <firstterm>PhotoId</firstterm>
-                    sets the id of the photo being searched for.  This element only applies to photo queries.
+                    sets the id of the photo being searched for. This element only applies to photo queries.
                 </para>
             </listitem>
         </itemizedlist>
@@ -361,7 +361,7 @@ $query->setUser("sample.user");
         <sect3 id="zend.gdata.photos.user_retrieval">
             <title>Retrieving A User</title>
             <para>
-                The service supports retrieving a user feed and list of the user's content.  If the requested
+                The service supports retrieving a user feed and list of the user's content. If the requested
                 user is also the authenticated user, entries marked as "<code>hidden</code>" will also be returned.
             </para>
 
@@ -440,7 +440,7 @@ try {
             </programlisting>
 
             <para>
-                Alternatively, the query object can be given an album name with <code>setAlbumName</code>.  Setting
+                Alternatively, the query object can be given an album name with <code>setAlbumName</code>. Setting
                 the album name is mutually exclusive with setting the album id, and setting one will unset the other.
             </para>
 
@@ -513,7 +513,7 @@ try {
         <sect3 id="zend.gdata.photos.comment_retrieval">
             <title>Retrieving A Comment</title>
             <para>
-                The service supports retrieving comments from a feed of a different type.  By setting a query
+                The service supports retrieving comments from a feed of a different type. By setting a query
                 to return a kind of "comment", a feed request can return comments associated with a specific user,
                 album, or photo.
             </para>
@@ -548,7 +548,7 @@ try {
         <sect3 id="zend.gdata.photos.tag_retrieval">
             <title>Retrieving A Tag</title>
             <para>
-                The service supports retrieving tags from a feed of a different type.  By setting a query
+                The service supports retrieving tags from a feed of a different type. By setting a query
                 to return a kind of "tag", a feed request can return tags associated with a specific photo.
             </para>
 
@@ -782,7 +782,7 @@ $service->deleteTagEntry($tagEntry, true);
             <title>Optimistic Concurrency (Notes On Deletion)</title>
             <para>
                 GData feeds, including those of the Picasa Web Albums service, implement optimistic concurrency,
-                a versioning system that prevents users from overwriting changes, inadvertently.  When
+                a versioning system that prevents users from overwriting changes, inadvertently. When
                 deleting a entry through the service class, if the entry has been modified since it was
                 last fetched, an exception will be thrown, unless explicitly set otherwise (in which case
                 the deletion is retried on the updated entry).

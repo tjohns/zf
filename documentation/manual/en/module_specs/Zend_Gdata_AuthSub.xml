@@ -17,21 +17,21 @@
         for "installed applications" whereas the AuthSub mechanism is
         for "web applications."  The difference is that AuthSub requires
         interaction from the user, and a browser interface that can react
-        to redirection requests.  The ClientLogin solution uses PHP code to
+        to redirection requests. The ClientLogin solution uses PHP code to
         supply the account credentials; the user is not required to enter her
         credentials interactively.
     </para>
 
     <para>
         The account credentials supplied via the AuthSub mechanism are
-        entered by the user of the web application.  Therefore they must be
+        entered by the user of the web application. Therefore they must be
         account credentials that are known to that user.
     </para>
 
     <note>
         <title>Registered applications</title>
         <para>
-            Zend_Gdata currently does not support use of secure tokens, because
+            <code>Zend_Gdata</code> currently does not support use of secure tokens, because
             the AuthSub authentication does not support passing a digital certificate
             to acquire a secure token.
         </para>
@@ -42,9 +42,9 @@
 
         <para>
             Your PHP application should provide a hyperlink to the
-            Google URL that performs authentication.  The static function
+            Google URL that performs authentication. The static function
             <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code>
-            provides the correct URL.  The arguments to this function include
+            provides the correct URL. The arguments to this function include
             the URL to your PHP application so that Google can redirect the
             user's browser back to your application after the user's
             credentials have been verified.
@@ -63,7 +63,7 @@
         <para>
             Then use the token value in a call to
             <code>Zend_Gdata_AuthSub::getHttpClient()</code>.
-            This function returns an instance of Zend_Http_Client,
+            This function returns an instance of <code>Zend_Http_Client</code>,
             with appropriate headers set so that subsequent requests your
             application submits using that Http Client are also authenticated.
         </para>
@@ -71,7 +71,7 @@
         <para>
             Below is an example of PHP code for a web application
             to acquire authentication to use the Google Calendar service
-            and create a Zend_Gdata client object using that authenticated
+            and create a <code>Zend_Gdata</code> client object using that authenticated
             Http Client.
         </para>
 
@@ -112,7 +112,7 @@ $cal = new Zend_Gdata_Calendar($client);
         <para>
             To terminate the authenticated status of a given token, use the
             <code>Zend_Gdata_AuthSub::AuthSubRevokeToken()</code>
-            static function.  Otherwise, the token is still valid for
+            static function. Otherwise, the token is still valid for
             some time.
         </para>
 
@@ -137,7 +137,7 @@ if (isset($_GET['logout'])) {
         <para>
             The treatment of the <code>$php_self</code> variable in the
             example above is a general security guideline, it is not
-            specific to Zend_Gdata.  You should always filter content you
+            specific to <code>Zend_Gdata</code>. You should always filter content you
             output to http headers.
         </para>
         <para>

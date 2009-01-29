@@ -3,8 +3,8 @@
 
     <para>
         The <code>Zend_Gdata_App_Exception</code> class is a base class
-        for exceptions thrown by Zend_Gdata.  You can catch any exception
-        thrown by Zend_Gdata by catching Zend_Gdata_App_Exception.
+        for exceptions thrown by <code>Zend_Gdata</code>. You can catch any exception
+        thrown by <code>Zend_Gdata</code> by catching <code>Zend_Gdata_App_Exception</code>.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -19,7 +19,7 @@ try {
     </programlisting>
 
     <para>
-        The following exception subclasses are used by Zend_Gdata:
+        The following exception subclasses are used by <code>Zend_Gdata</code>:
 
         <itemizedlist>
             <listitem>
@@ -32,7 +32,7 @@ try {
                 <para>
                     <code>Zend_Gdata_App_BadMethodCallException</code>
                     indicates that a method was called for a service
-                    that does not support the method.  For example,
+                    that does not support the method. For example,
                     the CodeSearch service does not support <code>post()</code>.
                 </para>
             </listitem>
@@ -40,7 +40,7 @@ try {
                 <para>
                     <code>Zend_Gdata_App_HttpException</code>
                     indicates that an HTTP request was not successful.
-                    Provides the ability to get the full Zend_Http_Response
+                    Provides the ability to get the full <code>Zend_Http_Response</code>
                     object to determine the exact cause of the failure in
                     cases where <code>$e->getMessage()</code> does not provide
                     enough details.
@@ -50,7 +50,7 @@ try {
                 <para>
                     <code>Zend_Gdata_App_InvalidArgumentException</code>
                     is thrown when the application provides a value that
-                    is not valid in a given context.  For example,
+                    is not valid in a given context. For example,
                     specifying a Calendar visibility value of "banana",
                     or fetching a Blogger feed without specifying
                     any blog name.
@@ -79,8 +79,8 @@ try {
 
     <para>
         You can use these exception subclasses to handle specific exceptions
-        differently.  See the API documentation for information on which
-        exception subclasses are thrown by which methods in Zend_Gdata.
+        differently. See the API documentation for information on which
+        exception subclasses are thrown by which methods in <code>Zend_Gdata</code>.
     </para>
 
     <programlisting role="php"><![CDATA[

@@ -31,7 +31,7 @@
             and debugging purposes. Please visit <ulink url="http://code.google.com/apis/youtube/dashboard/">http://code.google.com/apis/youtube/dashboard/</ulink> to obtain a developer key and client ID. The example below demonstrates how to pass the developer key and client ID to the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink> service object.
         </para>
         <example id="zend.gdata.youtube.developer_key.example">
-          <title>Passing a Developer Key and ClientID to Zend_Gdata_YouTube</title>
+          <title>Passing a Developer Key and ClientID to <code>Zend_Gdata_YouTube</code></title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient,
                              $applicationId,
@@ -93,9 +93,9 @@ foreach ($videoFeed as $videoEntry) {
             <para>
                 For more details on the different query parameters, please
                 refer to the <ulink url="http://code.google.com/apis/youtube/reference.html#Searching_for_videos">
-                Reference Guide</ulink>.  The available helper functions in
+                Reference Guide</ulink>. The available helper functions in
               <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoQuery.html">
-                Zend_Gdata_YouTube_VideoQuery</ulink> for each of these parameters are
+                <code>Zend_Gdata_YouTube_VideoQuery</code></ulink> for each of these parameters are
                 described in more detail in the <ulink url="http://code.google.com/apis/youtube/developers_guide_php.html#SearchingVideos">PHP Developer's Guide</ulink>.
             </para>
         </sect3>
@@ -106,7 +106,7 @@ foreach ($videoFeed as $videoEntry) {
             <para>
                 Searching for videos in specific categories is done by
                 generating a <ulink url="http://code.google.com/apis/youtube/reference.html#Category_search">
-                specially formatted URL</ulink>.  For example, to search for
+                specially formatted URL</ulink>. For example, to search for
                 comedy videos which contain the keyword dog:
             </para>
              <example id="zend.gdata.youtube.videos.searchingcategories.example">
@@ -129,7 +129,7 @@ $videoFeed = $yt->getVideoFeed($query);
             <para>
               The YouTube Data API has a number of
                 <ulink url="http://code.google.com/apis/youtube/reference.html#Standard_feeds">
-                standard feeds</ulink>.  These standard feeds can be retrieved
+                standard feeds</ulink>. These standard feeds can be retrieved
                 as <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoFeed.html">Zend_Gdata_YouTube_VideoFeed</ulink> objects using the specified
                 URLs, using the predefined constants within the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube.html">Zend_Gdata_YouTube</ulink> class
                 (Zend_Gdata_YouTube::STANDARD_TOP_RATED_URI for example) or
@@ -156,7 +156,7 @@ $videoFeed = $yt->getTopRatedVideoFeed();
                 For example, to retrieve the top rated videos for today:
             </para>
 <example id="zend.gdata.youtube.videos.standard.example-2">
-          <title>Using a Zend_Gdata_YouTube_VideoQuery to retrieve videos</title>
+          <title>Using a <code>Zend_Gdata_YouTube_VideoQuery</code> to Retrieve Videos</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -242,7 +242,7 @@ $videoFeed = $yt->getVideoResponseFeed('abc123813abc');
 
         <para>
             The comments for each YouTube video can be retrieved in
-            several ways.  To retrieve the comments for the video with
+            several ways. To retrieve the comments for the video with
             the ID 'abc123813abc', use the following code:
         </para>
             <example id="zend.gdata.youtube.videos.comments.example-1">
@@ -265,7 +265,7 @@ foreach ($commentFeed as $commentEntry) {
             a copy of the <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoEntry.html">Zend_Gdata_YouTube_VideoEntry</ulink> object:
         </para>
            <example id="zend.gdata.youtube.videos.comments.example-2">
-          <title>Retrieving a feed of video comments from a Zend_Gdata_YouTube_VideoEntry</title>
+          <title>Retrieving a Feed of Video Comments from a <code>Zend_Gdata_YouTube_VideoEntry</code></title>
 
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
@@ -292,7 +292,7 @@ $commentFeed = $yt->getVideoCommentFeed(null,
 
             <para>
                 The library provides a helper method to retrieve
-                the playlists associated with a given user.  To retrieve the
+                the playlists associated with a given user. To retrieve the
                 playlists for the user 'liz':
             </para>
                        <example id="zend.gdata.youtube.playlists.user.example">
@@ -317,7 +317,7 @@ foreach ($playlistListFeed as $playlistEntry) {
 
             <para>
                 The library provides a helper method to retrieve
-                the videos associated with a given playlist.  To retrieve the
+                the videos associated with a given playlist. To retrieve the
                 playlists for a specific playlist entry:
             </para>
           <example id="zend.gdata.youtube.playlists.special.example">
@@ -364,7 +364,7 @@ foreach ($subscriptionFeed as $subscriptionEntry) {
 
         <para>
             You can retrieve the public profile information
-            for any YouTube user.  To retrieve the profile
+            for any YouTube user. To retrieve the profile
             for the user 'liz':
         </para>
                   <example id="zend.gdata.youtube.profile.example">
@@ -605,7 +605,7 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
         if ($state instanceof Zend_Gdata_YouTube_Extension_State) {
             print 'Upload status: '
                   . $state->getName()
-                  .' '.  $state->getText();
+                  .' '. $state->getText();
         } else {
             print 'Not able to retrieve the video status information'
                   .' yet. ' . "Please try again shortly.\n";

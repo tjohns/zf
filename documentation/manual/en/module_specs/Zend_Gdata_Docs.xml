@@ -20,7 +20,7 @@
         <para>
             You can get a list of the Google Documents for a particular user by using
             the <code>getDocumentListFeed</code> method of the docs
-            service.  The service will return a
+            service. The service will return a
             <code>Zend_Gdata_Docs_DocumentListFeed</code> object
             containing a list of documents associated with the authenticated
             user.
