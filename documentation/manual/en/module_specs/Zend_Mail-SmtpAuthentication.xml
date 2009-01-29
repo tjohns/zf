@@ -8,7 +8,7 @@
   expect a 'username' and 'password' value in the configuration array.</para>
 
   <example id="zend.mail.smtp-authentication.example-1">
-    <title>Enabling authentication within Zend_Mail_Transport_Smtp</title>
+    <title>Enabling authentication within <code>Zend_Mail_Transport_Smtp</code></title>
 
     <programlisting role="php"><![CDATA[
 $config = array('auth' => 'login',

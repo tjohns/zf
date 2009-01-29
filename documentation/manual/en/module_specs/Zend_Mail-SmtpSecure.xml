@@ -8,8 +8,7 @@
   supplied, otherwise it defaults to 25 for TLS or 465 for SSL.</para>
 
   <example id="zend.mail.smtp-secure.example-1">
-    <title>Enabling a secure connection within
-    Zend_Mail_Transport_Smtp</title>
+    <title>Enabling a secure connection within <code>Zend_Mail_Transport_Smtp</code></title>
 
     <programlisting role="php"><![CDATA[
 $config = array('ssl' => 'tls',
