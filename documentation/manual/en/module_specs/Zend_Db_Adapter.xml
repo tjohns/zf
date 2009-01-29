@@ -3,14 +3,14 @@
     <title>Zend_Db_Adapter</title>
 
     <para>
-        Zend_Db and its related classes provide a simple SQL database interface
-        for Zend Framework. The Zend_Db_Adapter is the basic class you use to
+        <code>Zend_Db</code> and its related classes provide a simple SQL database interface
+        for Zend Framework. The <code>Zend_Db_Adapter</code> is the basic class you use to
         connect your PHP application to an RDBMS. There is a different Adapter
         class for each brand of RDBMS.
     </para>
 
     <para>
-        The Zend_Db adapters create a bridge from the vendor-specific PHP
+        The <code>Zend_Db</code> adapters create a bridge from the vendor-specific PHP
         extensions to a common interface to help you write PHP applications
         once and deploy with multiple brands of RDBMS with very little effort.
     </para>
@@ -18,7 +18,7 @@
     <para>
         The interface of the adapter class is similar to the interface of the
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
-        Zend_Db provides Adapter classes to PDO drivers for the following RDBMS
+        <code>Zend_Db</code> provides Adapter classes to PDO drivers for the following RDBMS
         brands:
     </para>
 
@@ -59,7 +59,7 @@
     </itemizedlist>
 
     <para>
-        In addition, Zend_Db provides Adapter classes that utilize PHP database
+        In addition, <code>Zend_Db</code> provides Adapter classes that utilize PHP database
         extensions for the following RDBMS brands:
     </para>
 
@@ -88,9 +88,9 @@
 
     <note>
         <para>
-            Each Zend_Db Adapter uses a PHP extension. You must have the
+            Each <code>Zend_Db</code> Adapter uses a PHP extension. You must have the
             respective PHP extension enabled in your PHP environment to use a
-            Zend_Db Adapter. For example, if you use any of the PDO Zend_Db
+            <code>Zend_Db</code> Adapter. For example, if you use any of the PDO <code>Zend_Db</code>
             Adapters, you need to enable both the PDO extension and the
             PDO driver for the brand of RDBMS you use.
         </para>
@@ -108,7 +108,7 @@
 
         <sect3 id="zend.db.adapter.connecting.constructor">
 
-            <title>Using a Zend_Db Adapter Constructor</title>
+            <title>Using a <code>Zend_Db</code> Adapter Constructor</title>
 
             <para>
                 You can create an instance of an adapter using its constructor.
@@ -133,7 +133,7 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
         <sect3 id="zend.db.adapter.connecting.factory">
 
-            <title>Using the Zend_Db Factory</title>
+            <title>Using the <code>Zend_Db</code> Factory</title>
 
             <para>
                 As an alternative to using an adapter constructor directly, you
@@ -174,7 +174,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
             <para>
                 If you create your own class that extends
-                Zend_Db_Adapter_Abstract, but you do not name your class with
+                <code>Zend_Db_Adapter_Abstract_Adapter</code>, but you do not name your class with
                 the "Zend_Db_Adapter" package prefix, you can use the
                 <code>factory()</code> method to load your adapter if you
                 specify the leading portion of the adapter class with the
@@ -185,7 +185,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 <title>Using the Adapter Factory Method for a Custom Adapter Class</title>
                 <programlisting role="php"><![CDATA[
 // We don't need to load the adapter class file
-// because it will be loaded for us by the Zend_Db factory method.
+// because it will be loaded for us by the <code>Zend_Db</code> factory method.
 
 // Automatically load class MyProject_Db_Adapter_Pdo_Mysql and create
 // an instance of it.
@@ -204,7 +204,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
         <sect3 id="zend.db.adapter.connecting.factory-config">
 
-            <title>Using Zend_Config with the Zend_Db Factory</title>
+            <title>Using Zend_Config with the <code>Zend_Db</code> Factory</title>
 
             <para>
                 Optionally, you may specify either argument of the
@@ -223,9 +223,9 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>Using the Adapter Factory Method with a Zend_Config Object</title>
+                <title>Using the Adapter Factory Method with a <code>Zend_Config Object</code></title>
                 <para>
-                    In the example below, a Zend_Config object is created from
+                    In the example below, a <code>Zend_Config</code> object is created from
                     an array. You can also load data from an external file using classes such as
                     <link linkend="zend.config.adapters.ini">Zend_Config_Ini</link>
                     and <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>.
@@ -254,7 +254,7 @@ $db = Zend_Db::factory($config->database);
                 The second argument of the <code>factory()</code> method may be
                 an associative array containing entries corresponding to
                 adapter parameters. This argument is optional. If the first
-                argument is of type Zend_Config, it is assumed to contain all
+                argument is of type <code>Zend_Config</code>, it is assumed to contain all
                 parameters, and the second argument is ignored.
             </para>
 
@@ -265,7 +265,7 @@ $db = Zend_Db::factory($config->database);
             <title>Adapter Parameters</title>
 
             <para>
-                The following list explains common parameters recognized by Zend_Db Adapter classes.
+                The following list explains common parameters recognized by <code>Zend_Db</code> Adapter classes.
             </para>
 
             <itemizedlist>
@@ -312,7 +312,7 @@ $db = Zend_Db::factory($config->database);
                     <para>
                         <emphasis role="strong">options</emphasis>:
                         this parameter is an associative array of options
-                        that are generic to all Zend_Db_Adapter classes.
+                        that are generic to all <code>Zend_Db_Adapter</code> classes.
                     </para>
                 </listitem>
                 <listitem>
@@ -514,7 +514,7 @@ try {
         <title>Example Database</title>
 
         <para>
-            In the documentation for Zend_Db classes, we use a set of simple
+            In the documentation for <code>Zend_Db</code> classes, we use a set of simple
             tables to illustrate usage of the classes and methods. These
             example tables could store information for tracking bugs in a
             software development project. The database contains four tables:
@@ -557,7 +557,7 @@ try {
         <para>
             The following SQL data definition language pseudocode describes the
             tables in this example database. These example tables are used
-            extensively by the automated unit tests for Zend_Db.
+            extensively by the automated unit tests for <code>Zend_Db</code>.
         </para>
 
         <programlisting role="sql"><![CDATA[
@@ -673,7 +673,7 @@ $result = $db->fetchAll($sql, 2);
                         <emphasis role="strong">Zend_Db::FETCH_ASSOC</emphasis>:
                         return data in an array of associative arrays.
                         The array keys are column names, as strings.
-                        This is the default fetch mode for Zend_Db_Adapter classes.
+                        This is the default fetch mode for <code>Zend_Db_Adapter</code> classes.
                     </para>
                     <para>
                         Note that if your select-list contains more than one
@@ -940,7 +940,7 @@ $db->insert('bugs', $data);
                 default, all data values passed as strings are treated as
                 string literals. To specify that the value is an SQL
                 expression and therefore should not be quoted, pass the value
-                in the data array as an object of type Zend_Db_Expr instead of
+                in the data array as an object of type <code>Zend_Db_Expr</code> instead of
                 a plain string.
             </para>
 
@@ -1246,7 +1246,7 @@ echo $sql;
         </para>
 
         <para>
-            The Zend_Db Adapter class provides convenient functions to help you
+            The <code>Zend_Db</code> Adapter class provides convenient functions to help you
             reduce vulnerabilities to SQL Injection attacks in your PHP code.
             The solution is to escape special characters such as quotes in PHP
             values before they are interpolated into your SQL strings.
@@ -1322,7 +1322,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </example>
 
             <para>
-                Each Zend_Db_Adapter class has encoded the names of numeric
+                Each <code>Zend_Db_Adapter</code> class has encoded the names of numeric
                 SQL datatypes for the respective brand of RDBMS. You can also
                 use the constants <code>Zend_Db::INT_TYPE</code>,
                 <code>Zend_Db::BIGINT_TYPE</code>, and
@@ -1331,7 +1331,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </para>
 
             <para>
-                Zend_Db_Table specifies SQL types to <code>quote()</code>
+                <code>Zend_Db_Table</code> specifies SQL types to <code>quote()</code>
                 automatically when generating SQL queries that reference a
                 table's key columns.
             </para>
@@ -1453,7 +1453,7 @@ echo $sql
             </para>
 
             <para>
-                In most cases where SQL is generated within Zend_Db classes,
+                In most cases where SQL is generated within <code>Zend_Db</code> classes,
                 the default is that all identifiers are delimited
                 automatically. You can change this behavior with the option
                 <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>. Specify this
@@ -1477,7 +1477,7 @@ echo $sql
             them implicitly. This is called <emphasis>auto-commit</emphasis>
             mode, in which the database driver creates a transaction for every
             statement you execute, and commits that transaction after your
-            SQL statement has been executed. By default, all Zend_Db Adapter
+            SQL statement has been executed. By default, all <code>Zend_Db</code> Adapter
             classes operate in auto-commit mode.
         </para>
 
@@ -1728,10 +1728,10 @@ $db->closeConnection();
         </example>
 
         <note>
-            <title>Does Zend_Db Support Persistent Connections?</title>
+            <title>Does <code>Zend_Db</code> Support Persistent Connections?</title>
             <para>
                 The usage of persistent connections is not supported
-                or encouraged in Zend_Db.
+                or encouraged in <code>Zend_Db</code>.
             </para>
             <para>
                 Using persistent connections can cause an excess of idle
@@ -1760,11 +1760,11 @@ $db->closeConnection();
             There might be cases in which you need to access the connection
             object directly, as provided by the PHP database extension. Some
             of these extensions may offer features that are not surfaced by
-            methods of Zend_Db_Adapter_Abstract.
+            methods of <code>Zend_Db_Adapter_Abstract</code>.
         </para>
 
         <para>
-            For example, all SQL statements run by Zend_Db are prepared, then
+            For example, all SQL statements run by <code>Zend_Db</code> are prepared, then
             executed. However, some database features are incompatible with
             prepared statements. DDL statements like CREATE and ALTER cannot
             be prepared in MySQL. Also, SQL statements don't benefit
@@ -1795,7 +1795,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         </para>
 
         <para>
-            In future versions of Zend_Db, there will be opportunities to
+            In future versions of <code>Zend_Db</code>, there will be opportunities to
             add method entry points for functionality that is common to
             the supported PHP database extensions. This will not affect
             backward compatibility.
@@ -1998,7 +1998,7 @@ if (!is_null($version)) {
                 </listitem>
                 <listitem>
                     <para>
-                        Zend_Db_Adapter_Pdo_Mssql sets <code>QUOTED_IDENTIFIER ON</code>
+                        <code>Zend_Db_Adapter_Pdo_Mssql</code> sets <code>QUOTED_IDENTIFIER ON</code>
                         immediately after connecting to a SQL Server database.
                         This makes the driver use the standard SQL identifier
                         delimiter symbol (<code>"</code>) instead of the

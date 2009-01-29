@@ -42,13 +42,13 @@ $db->getProfiler()->setEnabled(true);
 
         <para>
             The value of the '<code>profiler</code>' option is flexible. It is interpreted differently depending on its
-            type.  Most often, you should use a simple boolean value, but other types enable you to customize the
+            type. Most often, you should use a simple boolean value, but other types enable you to customize the
             profiler behavior.
         </para>
 
         <para>
             A boolean argument sets the profiler to enabled if it is a <code>true</code> value, or disabled if
-            <code>false</code>.  The profiler class is the adapter's default profiler class,
+            <code>false</code>. The profiler class is the adapter's default profiler class,
             <code>Zend_Db_Profiler</code>.
             <programlisting role="php"><![CDATA[
 $params['profiler'] = true;
@@ -58,7 +58,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
         </para>
 
         <para>
-            An instance of a profiler object makes the adapter use that object.  The object type must be
+            An instance of a profiler object makes the adapter use that object. The object type must be
             <code>Zend_Db_Profiler</code> or a subclass thereof. Enabling the profiler is done separately.
             <programlisting role="php"><![CDATA[
 $profiler = MyProject_Db_Profiler();
@@ -87,7 +87,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
         </para>
 
         <para>
-            Finally, the argument can be an object of type <code>Zend_Config</code> containing properties, which are treated as the array keys described above.  For example, a file "config.ini" might contain the following data:
+            Finally, the argument can be an object of type <code>Zend_Config</code> containing properties, which are treated as the array keys described above. For example, a file "config.ini" might contain the following data:
             <programlisting role="ini"><![CDATA[
 [main]
 db.profiler.class   = "MyProject_Db_Profiler"
@@ -197,7 +197,7 @@ $profiler = $db->getProfiler();
                     <code>getQueryParams()</code> returns an array of
                     parameter values used when executing a prepared query.
                     This includes both bound parameters and arguments to the
-                    statement's <code>execute()</code> method.  The keys of
+                    statement's <code>execute()</code> method. The keys of
                     the array are the positional (1-based) or named (string)
                     parameter indices.
                 </para>
@@ -402,7 +402,7 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
 
         <para>
             A Specialized Profiler is an object that inherits from
-            <code>Zend_Db_Profiler</code>.  Specialized Profilers treat
+            <code>Zend_Db_Profiler</code>. Specialized Profilers treat
             profiling information in specific ways.
         </para>
 

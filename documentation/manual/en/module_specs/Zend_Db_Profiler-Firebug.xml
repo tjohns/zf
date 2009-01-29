@@ -10,7 +10,7 @@
     <para>
         All data is sent via the <code>Zend_Wildfire_Channel_HttpHeaders</code>
         component which uses HTTP headers to ensure the page content is not
-        disturbed.  Debugging AJAX requests that require clean JSON and XML
+        disturbed. Debugging AJAX requests that require clean JSON and XML
         responses is possible with this approach.
     </para>
 

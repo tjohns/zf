@@ -6,12 +6,12 @@
         In addition to convenient methods such as <code>fetchAll()</code> and
         <code>insert()</code> documented in <xref linkend="zend.db.adapter" />,
         you can use a statement object to gain more options for running
-        queries and fetching result sets.  This section describes how to get an
+        queries and fetching result sets. This section describes how to get an
         instance of a statement object, and how to use its methods.
     </para>
 
     <para>
-        Zend_Db_Statement is based on the PDOStatement object in the
+        <code>Zend_Db_Statement</code> is based on the PDOStatement object in the
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> extension.
     </para>
 
@@ -48,9 +48,9 @@ $stmt = $db->query(
 
         <para>
             You can create a statement with its constructor, but this is less
-            typical usage.  There is no factory method to create this object,
+            typical usage. There is no factory method to create this object,
             so you need to load the specific statement class and call its
-            constructor.  Pass the Adapter object as the first argument, and
+            constructor. Pass the Adapter object as the first argument, and
             a string containing an SQL statement as the second argument.
             The statement is prepared, but not executed.
         </para>
@@ -74,8 +74,8 @@ $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
         <para>
             You need to execute a statement object if you create it using its
             constructor, or if you want to execute the same statement multiple
-            times.  Use the <code>execute()</code> method of the statement
-            object.  The single argument is an array of value to bind to
+            times. Use the <code>execute()</code> method of the statement
+            object. The single argument is an array of value to bind to
             parameter placeholders in the statement.
         </para>
 
@@ -119,8 +119,8 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
 
         <para>
             PDO statements support both positional parameters and named
-            parameters, but not both types in a single SQL statement.  Some of
-            the Zend_Db_Statement classes for non-PDO extensions may support
+            parameters, but not both types in a single SQL statement. Some of
+            the <code>Zend_Db_Statement</code> classes for non-PDO extensions may support
             only one type of parameter or the other.
         </para>
 
@@ -132,11 +132,11 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
 
         <para>
             You can call methods on the statement object to retrieve rows from
-            SQL statements that produce result set.  SELECT, SHOW, DESCRIBE and
+            SQL statements that produce result set. SELECT, SHOW, DESCRIBE and
             EXPLAIN are examples of statements that produce a result set.
             INSERT, UPDATE, and DELETE are examples of statements that don't
-            produce a result set.  You can execute the latter SQL statements
-            using Zend_Db_Statement, but you cannot call methods to fetch rows
+            produce a result set. You can execute the latter SQL statements
+            using <code>Zend_Db_Statement</code>, but you cannot call methods to fetch rows
             of results from them.
         </para>
 
@@ -154,7 +154,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
                 <listitem>
                     <para>
                         <emphasis role="strong">Fetch style</emphasis> is the
-                        first argument.  This controls the structure in which
+                        first argument. This controls the structure in which
                         the row is returned.
                         See <xref linkend="zend.db.adapter.select.fetch-mode" />
                         for a description of the valid values and the
@@ -164,7 +164,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
                 <listitem>
                     <para>
                         <emphasis role="strong">Cursor orientation</emphasis>
-                        is the second argument.  The default is
+                        is the second argument. The default is
                         Zend_Db::FETCH_ORI_NEXT, which simply means that each
                         call to <code>fetch()</code> returns the next row in
                         the result set, in the order returned by the RDBMS.
@@ -213,10 +213,10 @@ while ($row = $stmt->fetch()) {
 
             <para>
                 To retrieve all the rows of the result set in one step, use the
-                <code>fetchAll()</code> method.  This is equivalent to calling
+                <code>fetchAll()</code> method. This is equivalent to calling
                 the <code>fetch()</code> method in a loop and returning all
-                the rows in an array.  The <code>fetchAll()</code> method accepts
-                two arguments.  The first is the fetch style, as described above,
+                the rows in an array. The <code>fetchAll()</code> method accepts
+                two arguments. The first is the fetch style, as described above,
                 and the second indicates the number of the column to return,
                 when the fetch style is Zend_Db::FETCH_COLUMN.
             </para>
@@ -247,9 +247,9 @@ echo $rows[0]['bug_description'];
                 By default, the statement object returns rows of the result set
                 as associative arrays, mapping column names to column values.
                 You can specify a different format for the statement class to
-                return rows, just as you can in the Adapter class.  You can use
+                return rows, just as you can in the Adapter class. You can use
                 the <code>setFetchMode()</code> method of the statement object
-                to specify the fetch mode.  Specify the fetch mode using
+                to specify the fetch mode. Specify the fetch mode using
                 Zend_Db class constants FETCH_ASSOC, FETCH_NUM, FETCH_BOTH,
                 FETCH_COLUMN, and FETCH_OBJ.
                 See <xref linkend="zend.db.adapter.select.fetch-mode" />
@@ -284,8 +284,8 @@ echo $rows[0][0];
 
             <para>
                 To return a single column from the next row of the result set,
-                use <code>fetchColumn()</code>.  The optional argument is the
-                integer index of the column, and it defaults to 0.  This method
+                use <code>fetchColumn()</code>. The optional argument is the
+                integer index of the column, and it defaults to 0. This method
                 returns a scalar value, or <code>false</code> if all rows of
                 the result set have been fetched.
             </para>
@@ -322,10 +322,10 @@ $bug_status = $stmt->fetchColumn(2);
 
             <para>
                 To retrieve a row from the result set structured as an object,
-                use the <code>fetchObject()</code>.  This method takes two
-                optional arguments.  The first argument is a string that names
+                use the <code>fetchObject()</code>. This method takes two
+                optional arguments. The first argument is a string that names
                 the class name of the object to return; the default is
-                'stdClass'.  The second argument is an array of values that
+                'stdClass'. The second argument is an array of values that
                 will be passed to the constructor of that class.
             </para>
 
