@@ -2,7 +2,7 @@
     <title>Zend_Service_StrikeIron: Bundled Services</title>
 
     <para>
-      Zend_Service_StrikeIron comes with wrapper classes for three popular StrikeIron services.
+      <code>Zend_Service_StrikeIron</code> comes with wrapper classes for three popular StrikeIron services.
     </para>
 
     <sect2 id="zend.service.strikeiron.bundled-services.zip-code-information">
@@ -10,7 +10,7 @@
 
       <para>
         <code>Zend_Service_StrikeIron_ZipCodeInfo</code> provides a client for StrikeIron's
-        Zip Code Information Service.  For more information on this service, visit these
+        Zip Code Information Service. For more information on this service, visit these
         StrikeIron resources:
 
         <itemizedlist>
@@ -75,7 +75,7 @@ $status = $response->serviceStatus;
 
       <para>
         <code>Zend_Service_StrikeIron_USAddressVerification</code> provides a client for
-        StrikeIron's U.S. Address Verification Service.  For more information on this
+        StrikeIron's U.S. Address Verification Service. For more information on this
         service, visit these StrikeIron resources:
 
         <itemizedlist>
@@ -103,7 +103,7 @@ $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
 // Get a client for the Zip Code Information service
 $verifier = $strikeIron->getService(array('class' => 'USAddressVerification'));
 
-// Address to verify.  Not all fields are required but
+// Address to verify. Not all fields are required but
 // supply as many as possible for the best results.
 $address = array('firm'           => 'Zend Technologies',
                  'addressLine1'   => '19200 Stevens Creek Blvd',
@@ -137,7 +137,7 @@ if ($result->addressErrorNumber != 0) {
 
       <para>
         <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code> provides a client for
-        StrikeIron's Sales &amp; Use Tax Basic service.  For more information on this
+        StrikeIron's Sales &amp; Use Tax Basic service. For more information on this
         service, visit these StrikeIron resources:
 
         <itemizedlist>

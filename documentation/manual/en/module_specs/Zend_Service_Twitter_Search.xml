@@ -7,7 +7,7 @@
         <para>
             <code>Zend_Service_Twitter_Search</code> provides a client for the <ulink
                 url="http://apiwiki.twitter.com/Search+API+Documentation">Twitter Search API</ulink>.
-            The Twitter Search service is use to search Twitter.  Currently it only
+            The Twitter Search service is use to search Twitter. Currently it only
             returns data in Atom or JSON format but a full REST service is in the future
             which will support XML responses.
         </para>

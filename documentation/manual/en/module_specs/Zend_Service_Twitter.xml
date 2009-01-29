@@ -7,7 +7,7 @@
         <para>
             <code>Zend_Service_Twitter</code> provides a client for the <ulink
                 url="http://apiwiki.twitter.com/REST+API+Documentation">Twitter REST API</ulink>.
-            Zend_Service_Twitter will allow you to query the public timeline and if you provide a username
+            <code>Zend_Service_Twitter</code> will allow you to query the public timeline and if you provide a username
             and password for Twitter it will allow you to get and update your status, reply to friends,
             direct message friends, mark tweets as favorite and much more.
         </para>
@@ -39,7 +39,7 @@
 
             <listitem>
                 <para>
-                    <code>user</code>, retrieves the friends, followers for the authenticated user.  With the
+                    <code>user</code>, retrieves the friends, followers for the authenticated user. With the
                     show method you can return extended information about the passed in user.
                 </para>
             </listitem>
@@ -239,7 +239,7 @@ $response = $twitter->status->userTimeline();
 
             <listitem>
                 <para>
-                    <code>show</code>, Returns a single status, specified by the id parameter below.  The status's author will be returned inline.
+                    <code>show</code>, Returns a single status, specified by the id parameter below. The status's author will be returned inline.
                     This method required a tweet id to be passed in.
                 </para>
 
@@ -256,7 +256,7 @@ $response = $twitter->status->show(1234);
             <listitem>
                 <para>
                     <code>update</code>, Updates the authenticating user's status. This method requires that you pass in the status update that
-                    you want to post to twitter.  A second optional parameter is the id of the tweet that you are replying to.
+                    you want to post to twitter. A second optional parameter is the id of the tweet that you are replying to.
                 </para>
 
                 <example id="zend.service.twitter.status.update">

@@ -11,7 +11,7 @@
     <para>
         In addition to being able to extend the <code>Zend_Service</code> and
         use <code>Zend_Rest_Client</code> for REST-based web services, Zend also
-        provides support for popular web services.  See the following sections
+        provides support for popular web services. See the following sections
         for specific information on each supported web service.
     </para>
 

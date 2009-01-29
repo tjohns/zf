@@ -2,7 +2,7 @@
     <title>Zend_Service_StrikeIron: Advanced Uses</title>
 
     <para>
-      This section describes the more advanced uses of Zend_Service_StrikeIron.
+      This section describes the more advanced uses of <code>Zend_Service_StrikeIron</code>.
     </para>
 
     <sect2 id="zend.service.strikeiron.advanced-uses.services-by-wsdl">
@@ -41,7 +41,7 @@ echo $result->listingName;
 
       <para>
         Using StrikeIron services from the WSDL will require at least some understanding
-        of the WSDL files.  StrikeIron has many resources on its site to help with this.
+        of the WSDL files. StrikeIron has many resources on its site to help with this.
         Also,
         <ulink url="http://janschneider.de">Jan Schneider</ulink> from the
         <ulink url="http://horde.org">Horde project</ulink> has written a
@@ -61,7 +61,7 @@ echo $result->listingName;
       <title>Viewing SOAP Transactions</title>
 
       <para>
-        All communication with StrikeIron is done using the SOAP extension.  It
+        All communication with StrikeIron is done using the SOAP extension. It
         is sometimes useful to view the XML exchanged with StrikeIron for debug
         purposes.
       </para>
@@ -76,7 +76,7 @@ echo $result->listingName;
         PHP's
         <ulink url="http://www.php.net/manual/en/function.soap-soapclient-construct.php">SOAPClient</ulink>
         has a <code>trace</code> option that causes it to remember the XML exchanged during the last transaction.
-        Zend_Service_StrikeIron does not enable the <code>trace</code> option by default but this
+        <code>Zend_Service_StrikeIron</code> does not enable the <code>trace</code> option by default but this
         can easily by changed by specifying the options that will be passed to the <code>SOAPClient</code> constructor.
       </para>
 

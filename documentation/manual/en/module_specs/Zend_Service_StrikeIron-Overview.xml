@@ -2,8 +2,8 @@
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-        Zend_Service_StrikeIron provides a PHP 5 client to StrikeIron
-        web services.  See the following sections:
+        <code>Zend_Service_StrikeIron</code> provides a PHP 5 client to StrikeIron
+        web services. See the following sections:
     </para>
 
     <para>
@@ -42,7 +42,7 @@
           StrikeIron's services may be used through the
           <ulink url="http://us.php.net/soap">PHP 5 SOAP extension</ulink> alone.
           However, using StrikeIron this way does not give an ideal PHP-like interface.
-          The Zend_Service_StrikeIron component provides a lightweight layer on
+          The <code>Zend_Service_StrikeIron</code> component provides a lightweight layer on
           top of the SOAP extension for working with StrikeIron services in a
           more convenient, PHP-like manner.
         </para>
@@ -50,12 +50,12 @@
         <note>
           <para>
             The PHP 5 SOAP extension must be installed and enabled to use
-            Zend_Service_StrikeIron.
+            <code>Zend_Service_StrikeIron</code>.
           </para>
         </note>
 
         <para>
-          The Zend_Service_StrikeIron component provides:
+          The <code>Zend_Service_StrikeIron</code> component provides:
 
           <itemizedlist>
             <listitem>
@@ -93,14 +93,14 @@
     <sect2 id="zend.service.strikeiron.registering">
       <title>Registering with StrikeIron</title>
       <para>
-        Before you can get started with Zend_Service_StrikeIron, you must first
+        Before you can get started with <code>Zend_Service_StrikeIron</code>, you must first
         <ulink url="http://strikeiron.com/Register.aspx">register</ulink> for a
         StrikeIron developer account.
       </para>
 
       <para>
         After registering, you will receive a StrikeIron username and password.
-        These will be used when connecting to StrikeIron using Zend_Service_StrikeIron.
+        These will be used when connecting to StrikeIron using <code>Zend_Service_StrikeIron</code>.
       </para>
 
       <para>
@@ -120,12 +120,12 @@
         Once you have <ulink url="http://strikeiron.com/Register.aspx">registered</ulink>
         for a StrikeIron account and signed up for the
         <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">Super Data Pack</ulink>,
-        you're ready to start using Zend_Service_StrikeIron.
+        you're ready to start using <code>Zend_Service_StrikeIron</code>.
       </para>
 
       <para>
         StrikeIron consists of hundreds of different web services.
-        Zend_Service_StrikeIron can be used with many of these services but provides supported
+        <code>Zend_Service_StrikeIron</code> can be used with many of these services but provides supported
         wrappers for three of them:
       </para>
 
@@ -167,7 +167,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
 
       <para>
         The <code>getService()</code> method can also return a client for
-        a StrikeIron service that does not yet have a PHP wrapper.  This is
+        a StrikeIron service that does not yet have a PHP wrapper. This is
         explained in
         <link linkend="zend.service.strikeiron.advanced-uses.services-by-wsdl">Using Services by WSDL</link>.
       </para>
@@ -215,7 +215,7 @@ echo $rateInfo->GST;
       </para>
 
       <para>
-        Many of the StrikeIron services are as simple to use as the example above.  See
+        Many of the StrikeIron services are as simple to use as the example above. See
         <link linkend="zend.service.strikeiron.bundled-services">Bundled Services</link>
         for detailed information on three StrikeIron services.
       </para>
@@ -225,8 +225,8 @@ echo $rateInfo->GST;
       <title>Examining Results</title>
       <para>
         When learning or debugging the StrikeIron services, it's often useful to dump the
-        result returned from a method call.  The result will always be an object that is an
-        instance of <code>Zend_Service_StrikeIron_Decorator</code>.  This is a
+        result returned from a method call. The result will always be an object that is an
+        instance of <code>Zend_Service_StrikeIron_Decorator</code>. This is a
         small <ulink url="http://en.wikipedia.org/wiki/Decorator_pattern">decorator</ulink>
         object that wraps the results from the method call.
       </para>
@@ -271,7 +271,7 @@ Zend_Service_StrikeIron_Decorator Object
 
       <para>
         This means that <code>$rateInfo</code> has public properties like <code>abbreviation</code>,
-        <code>province</code>, and <code>GST</code>.  These are accessed like <code>$rateInfo->province</code>.
+        <code>province</code>, and <code>GST</code>. These are accessed like <code>$rateInfo->province</code>.
       </para>
 
       <tip>
@@ -349,7 +349,7 @@ try {
     <sect2 id="zend.service.strikeiron.checking-subscription">
       <title>Checking Your Subscription</title>
       <para>
-        StrikeIron provides many different services.  Some of these are
+        StrikeIron provides many different services. Some of these are
         free, some are available on a trial basis, and some are pay subscription only.
         When using StrikeIron, it's important to be aware of your subscription
         status for the services you are using and check it regularly.
@@ -376,18 +376,18 @@ echo $subscription->remainingHits;
 
       <para>
         The <code>getSubscriptionInfo()</code> method will return an object
-        that typically has a <code>remainingHits</code> property.  It's
-        important to check the status on each service that you are using.  If
+        that typically has a <code>remainingHits</code> property. It's
+        important to check the status on each service that you are using. If
         a method call is made to StrikeIron after the remaining hits have been
         used up, an exception will occur.
       </para>
 
       <para>
         Checking your subscription to a service does not use any remaining
-        hits to the service.  Each time any method call to the service is made,
+        hits to the service. Each time any method call to the service is made,
         the number of hits remaining will be cached and this cached value will
         be returned by <code>getSubscriptionInfo()</code> without connecting
-        to the service again.  To force <code>getSubscriptionInfo()</code>
+        to the service again. To force <code>getSubscriptionInfo()</code>
         to override its cache and query the subscription information again, use
         <code>getSubscriptionInfo(true)</code>.
       </para>

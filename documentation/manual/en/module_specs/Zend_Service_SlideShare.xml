@@ -14,7 +14,7 @@
         <title>Getting Started with <code>Zend_Service_SlideShare</code></title>
 
         <para>
-            In order to use the Zend_Service_SlideShare component you must first create an account
+            In order to use the <code>Zend_Service_SlideShare</code> component you must first create an account
             on the slideshare.net servers (more information can be found
             <ulink url="http://www.slideshare.net/developers/">here</ulink>) in order to receive an
             API key, username, password and shared secret value -- all of which are needed in order
