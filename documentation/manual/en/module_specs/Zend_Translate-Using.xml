@@ -29,7 +29,7 @@ print "Fix language here is line two\n";
     <para>
         The next step is to include Zend Translate in your existing code.
         Of course it is much easier if you are writing your code using
-        Zend_Translate instead of changing your code afterwards.
+        <code>Zend_Translate</code> instead of changing your code afterwards.
     </para>
 
     <example id="zend.translate.using.example2">
@@ -52,7 +52,7 @@ print $translate->_("Fix language here is line two") . "\n";
 
     <para>
         Now let's get a deeper look into what has been done and how to
-        integrate Zend_Translate into your code.
+        integrate <code>Zend_Translate</code> into your code.
     </para>
 
     <para>
@@ -127,10 +127,10 @@ print $translate->_(2)."\n";
     <para>
         Also you will get problems if some strings are not translated.
         You always must imagine how translation works.
-        First Zend_Translate looks if the set language has a translation
+        First <code>Zend_Translate</code> looks if the set language has a translation
         for the given message id or string.
         If no translation string has been found it refers to the next lower
-        language as defined within Zend_Locale.
+        language as defined within <code>Zend_Locale</code>.
         So "<emphasis role="strong">de_AT</emphasis>" becomes
         "<emphasis role="strong">de</emphasis>" only.
         If there is no translation found for
@@ -138,7 +138,7 @@ print $translate->_(2)."\n";
         then the original message is returned.
         This way you always have an output, in case the message translation
         does not exist in your message storage.
-        Zend_Translate never throws an error or exception when translating
+        <code>Zend_Translate</code> never throws an error or exception when translating
         strings.
     </para>
 
@@ -155,7 +155,7 @@ print $translate->_(2)."\n";
 
         <para>
             You should know where to store your translation source files.
-            With Zend_Translate you are not bound to any restriction.
+            With <code>Zend_Translate</code> you are not bound to any restriction.
             The following structures are preferable:
         </para>
 
@@ -176,7 +176,7 @@ print $translate->_(2)."\n";
 
                 <para>
                     Positive: All source files for every languages can be
-                    found in one directory.  No splitting of related files.
+                    found in one directory. No splitting of related files.
                 </para>
             </listitem>
             <listitem>
@@ -221,7 +221,7 @@ print $translate->_(2)."\n";
 
                 <para>
                     Positive: All source files for every languages can be
-                    found in one directory.  No splitting of related files.
+                    found in one directory. No splitting of related files.
                 </para>
 
                 <para>
@@ -296,7 +296,7 @@ print $translate->_(2)."\n";
 
         <para>
             Single structured and language structured source files are most
-            usable for Zend_Translate.
+            usable for <code>Zend_Translate</code>.
         </para>
 
         <para>
@@ -311,10 +311,10 @@ print $translate->_(2)."\n";
         <title>Creating array source files</title>
 
         <para>
-            Array source files are just arrays.  But you have to define them
+            Array source files are just arrays. But you have to define them
             manually because there is no tool for this.
             But because they are so simple, it's the fastest way to look up
-            messages if your code works as expected.  It's generally the best
+            messages if your code works as expected. It's generally the best
             adapter to get started with translation business.
         </para>
 
@@ -384,7 +384,7 @@ $translate->addTranslation('path/to/german.mo', 'de');
         <para>
             As you can see the adapters are used exactly the same way,
             with only just one small difference.
-            Change 'array' to 'gettext'.  All other usages are exactly
+            Change 'array' to 'gettext'. All other usages are exactly
             the same as with all other adapters.
             With the gettext adapter you no longer have to be aware of
             gettext's standard directory structure,
@@ -682,8 +682,8 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                         <entry>scan</entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
                         <entry>If set to null, no scanning of the directory structure will be done.
-                        If set to Zend_Translate::LOCALE_DIRECTORY the locale will be detected within the
-                        directory. It set to Zend_Translate::LOCALE_FILENAME the locale will be detected
+                        If set to <code>Zend_Translate::LOCALE_DIRECTORY</code> the locale will be detected within the
+                        directory. It set to <code>Zend_Translate::LOCALE_FILENAME</code> the locale will be detected
                         within the filename. See <xref linkend="zend.translate.using.detection" />
                         for details</entry>
                     </row>
@@ -887,8 +887,8 @@ $translate->getLocale();
         <title>Automatic source detection</title>
 
         <para>
-            Zend_Translate can detect translation sources automatically. So you don't have
-            to declare each source file manually. You can let Zend_Translate do this job and
+            <code>Zend_Translate</code> can detect translation sources automatically. So you don't have
+            to declare each source file manually. You can let <code>Zend_Translate</code> do this job and
             scan the complete directory structure for source files.
         </para>
 
@@ -919,8 +919,8 @@ $translate = new Zend_Translate('tmx', '/language');
         </example>
 
         <para>
-            So Zend_Translate does not only search the given directory, but also all subdirectories for
-            translation source files. This makes the usage quite simple. But Zend_Translate will ignore all
+            So <code>Zend_Translate</code> does not only search the given directory, but also all subdirectories for
+            translation source files. This makes the usage quite simple. But <code>Zend_Translate</code> will ignore all
             files which are not sources or which produce failures while reading the translation data. So you
             have to make sure that all of your translation sources are correct and readable because you will
             not get any failure if a file is bogus or can not be read.
@@ -929,7 +929,7 @@ $translate = new Zend_Translate('tmx', '/language');
         <note>
             <para>
                 Depending on how deep your directory structure is and how much files are within this structure
-                it can take a long time for Zend_Translate to complete.
+                it can take a long time for <code>Zend_Translate</code> to complete.
             </para>
         </note>
 
@@ -951,7 +951,7 @@ $translate = new Zend_Translate('tmx', '/language');
             </para>
 
             <para>
-                Zend_Translate needs the 'scan' option to know that it should search the names of all
+                <code>Zend_Translate</code> needs the 'scan' option to know that it should search the names of all
                 directories for languages. See the following example for details:
             </para>
 
@@ -1069,7 +1069,7 @@ $translate = new Zend_Translate('gettext',
                 <title>Filename tokens</title>
 
                 <para>
-                    Zend_Translate is also capable of detecting the language if it is included within the
+                    <code>Zend_Translate</code> is also capable of detecting the language if it is included within the
                     filename. But if you use this way you will have to separate the language with a token.
                     There are three supported tokens which can be used: A point '.', a underline '_', or
                     a hyphen '-'.

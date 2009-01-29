@@ -16,7 +16,7 @@
 
             <para>
                 When using automatic detection of languages, or setting languages manually
-                to Zend_Translate you may have mentioned that from time to time a
+                to <code>Zend_Translate</code> you may have mentioned that from time to time a
                 notice is thrown about not added or empty translations. In some previous
                 release also an exception was raised in some cases.
             </para>

@@ -3,14 +3,14 @@
     <title>Adapters for Zend_Translate</title>
 
     <para>
-        Zend_Translate can handle different adapters for translation.
+        <code>Zend_Translate</code> can handle different adapters for translation.
         Each adapter has its own advantages and disadvantages.
         Below is a comprehensive list of all supported adapters for
         translation source files.
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title>Adapters for Zend_Translate</title>
+        <title>Adapters for <code>Zend_Translate</code></title>
         <tgroup cols="3">
             <thead>
                 <row>
@@ -79,7 +79,7 @@
         <title>How to decide which translation adapter to use</title>
 
         <para>
-            You should decide which Adapter you want to use for Zend_Translate.
+            You should decide which Adapter you want to use for <code>Zend_Translate</code>.
             Frequently, external criteria such as a project requirement or
             a customer requirement determines this for you, but if you are in
             the position to do this yourself, the following hints may simplify
@@ -159,11 +159,11 @@
 
             <para>
                 The Gettext Adapter is the Adapter which is used most
-                frequently.  Gettext is a translation source format which was
+                frequently. Gettext is a translation source format which was
                 introduced by GNU, and is now used worldwide.
                 It is not human readable, but there are several freeware tools
                 (for instance, <ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink>), which are very helpful.
-                The Zend_Translate Gettext Adapter is not implemented using
+                The <code>Zend_Translate</code> Gettext Adapter is not implemented using
                 PHP's gettext extension.
                 You can use the Gettext Adapter even if you do not have
                 the PHP gettext extension installed.
@@ -174,7 +174,7 @@
             <para>
                 Most people will use this adapter.
                 With the available tools, professional translation is
-                very simple.  But gettext data are is stored in a
+                very simple. But gettext data are is stored in a
                 machine-readable format, which is not readable without tools.
             </para>
         </sect3>
@@ -304,21 +304,21 @@
         <title>Integrate self written Adapters</title>
 
         <para>
-            Zend_Translate allows you to integrate and use self written Adapter
+            <code>Zend_Translate</code> allows you to integrate and use self written Adapter
             classes. They can be used like the standard Adapter classes which
-            are already included within Zend_Translate.
+            are already included within <code>Zend_Translate</code>.
         </para>
 
         <para>
-            Any adapter class you want to use with Zend_Translate must be a subclass
-            of Zend_Translate_Adapter. Zend_Translate_Adapter is an abstract class
+            Any adapter class you want to use with <code>Zend_Translate</code> must be a subclass
+            of <code>Zend_Translate_Adapter</code>. <code>Zend_Translate_Adapter</code> is an abstract class
             which already defines all what is needed for translation. What has to be
             done by you, is the definition of the reader for translation datas.
         </para>
 
         <para>
-            The usage of the prefix "Zend" should be limited to the Zend_Framework.
-            If you extend Zend_Translate with your own adapter, you should name it
+            The usage of the prefix "Zend" should be limited to Zend Framework.
+            If you extend <code>Zend_Translate</code> with your own adapter, you should name it
             like "Company_Translate_Adapter_MyFormat". The following code shows an
             example of how a self written adapter class could be implemented:
         </para>

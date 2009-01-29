@@ -3,7 +3,7 @@
     <title>Introduction</title>
 
     <para>
-        Zend_Translate is Zend Framework's solution for multilingual
+        <code>Zend_Translate</code> is Zend Framework's solution for multilingual
         applications.
     </para>
 
@@ -50,16 +50,16 @@
     </itemizedlist>
 
     <para>
-        Zend_Translate does not have the above problems. This is why we
-        recommend using Zend_Translate instead of PHP's native functions.
-        The benefits of Zend_Translate are:
+        <code>Zend_Translate</code> does not have the above problems. This is why we
+        recommend using <code>Zend_Translate</code> instead of PHP's native functions.
+        The benefits of <code>Zend_Translate</code> are:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
                 <emphasis role="strong">Supports multiple source formats:</emphasis>
-                Zend_Translate supports several source formats, including
+                <code>Zend_Translate</code> supports several source formats, including
                 those supported by PHP, and other formats including TMX
                 and CSV files.
             </para>
@@ -67,14 +67,14 @@
         <listitem>
             <para>
                 <emphasis role="strong">Thread-safe gettext:</emphasis>
-                The gettext reader of Zend_Translate is thread-safe.
+                The gettext reader of <code>Zend_Translate</code> is thread-safe.
                 There are no problems using it in multi-threaded environments.
             </para>
         </listitem>
         <listitem>
             <para>
                 <emphasis role="strong">Easy and generic API:</emphasis>
-                The API of Zend_Translate is very simple and requires only a
+                The API of <code>Zend_Translate</code> is very simple and requires only a
                 handful of functions.
                 So it's easy to learn and easy to maintain.
                 All source formats are handled the same way, so if the format
@@ -87,13 +87,13 @@
             <para>
                 <emphasis role="strong">Detection of the user's standard language:</emphasis>
                 The preferred language of the user accessing the site can be
-                detected and used by Zend_Translate.
+                detected and used by <code>Zend_Translate</code>.
             </para>
         </listitem>
         <listitem>
             <para>
                 <emphasis role="strong">Automatic source detection:</emphasis>
-                Zend_Translate is capable of detecting and integrating multiple source files
+                <code>Zend_Translate</code> is capable of detecting and integrating multiple source files
                 and additionally detect the locale to be used depending on directory or filenames.
             </para>
         </listitem>
@@ -121,7 +121,7 @@
             </listitem>
             <listitem>
                 <para>
-                    Create your view and integrate Zend_Translate in your code;
+                    Create your view and integrate <code>Zend_Translate</code> in your code;
                 </para>
             </listitem>
             <listitem>
