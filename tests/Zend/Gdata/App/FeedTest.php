@@ -195,6 +195,7 @@ class Zend_Gdata_App_FeedTest extends PHPUnit_Framework_TestCase
         $v1TestString = 'TEST-v1';
         $v2TestString = 'TEST-v2';
         
+        Zend_Gdata_App_Base::flushNamespaceLookupCache();
         $feed = $this->feed;
         $feed->registerNamespace($prefix, $v1TestString, 1, 0);
         $feed->registerNamespace($prefix, $v2TestString, 2, 0);
@@ -218,6 +219,7 @@ class Zend_Gdata_App_FeedTest extends PHPUnit_Framework_TestCase
         $testString12 = 'TEST-v1-2';
         $testString22 = 'TEST-v2-2';
         
+        Zend_Gdata_App_Base::flushNamespaceLookupCache();
         $feed = $this->feed;
         $feed->registerNamespace($prefix, $testString10, 1, 0);
         $feed->registerNamespace($prefix, $testString20, 2, 0);
