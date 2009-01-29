@@ -5,12 +5,12 @@
         <title>UTF-8 and single-byte character set support</title>
 
         <para>
-            Zend_Search_Lucene works with the UTF-8 charset internally. Index files store
-            unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
+            <code>Zend_Search_Lucene</code> works with the UTF-8 charset internally. Index files store
+            unicode data in Java's "modified UTF-8 encoding". <code>Zend_Search_Lucene</code> core
             completely supports this encoding with one exception.
             <footnote>
                <para>
-                   Zend_Search_Lucene supports only Basic Multilingual Plane
+                   <code>Zend_Search_Lucene</code> supports only Basic Multilingual Plane
                    (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
                    "supplementary characters" (characters whose code points are
                    greater than 0xFFFF)
@@ -27,7 +27,7 @@
         </para>
 
         <para>
-            Actual input data encoding may be specified through Zend_Search_Lucene API. Data will
+            Actual input data encoding may be specified through <code>Zend_Search_Lucene</code> API. Data will
             be automatically converted into UTF-8 encoding.
         </para>
     </sect2>
@@ -62,7 +62,7 @@
         <title>UTF-8 compatible text analyzers</title>
 
         <para>
-            Zend_Search_Lucene also contains a set of UTF-8 compatible analyzers: <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>,
+            <code>Zend_Search_Lucene</code> also contains a set of UTF-8 compatible analyzers: <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>,
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</code>, <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</code>,
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</code>.
         </para>

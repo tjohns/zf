@@ -5,13 +5,13 @@
         <title>Creating a New Index</title>
 
         <para>
-            Index creation and updating capabilities are implemented within the Zend_Search_Lucene component, as well as the Java Lucene project.
-            You can use either of these options to create indexes that Zend_Search_Lucene can search.
+            Index creation and updating capabilities are implemented within the <code>Zend_Search_Lucene</code> component, as well as the Java Lucene project.
+            You can use either of these options to create indexes that <code>Zend_Search_Lucene</code> can search.
         </para>
 
         <para>
             The PHP code listing below provides an example of how to index a file
-            using Zend_Search_Lucene indexing API:
+            using <code>Zend_Search_Lucene</code> indexing API:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -88,7 +88,7 @@ foreach ($hits as $hit) {
         <title>Retrieving Index Size</title>
 
         <para>
-            There are two methods to retrieve the size of an index in Zend_Search_Lucene.
+            There are two methods to retrieve the size of an index in <code>Zend_Search_Lucene</code>.
         </para>
 
         <para>
@@ -224,7 +224,7 @@ $index->optimize();
             <para>
                 Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
                 can also be used to optimize an index. Latest Luke release (v0.8) is based on Lucene v2.3 and compatible with
-                current implementation of Zend_Search_Lucene component (ZF 1.6). Earlier versions of Zend_Search_Lucene implementations
+                current implementation of <code>Zend_Search_Lucene</code> component (ZF 1.6). Earlier versions of <code>Zend_Search_Lucene</code> implementations
                 need another versions of Java Lucene tools to be compatible:
                 <itemizedlist>
                     <listitem>
@@ -278,7 +278,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>Supported Filesystems</title>
             <para>
-                Zend_Search_Lucene uses <code>flock()</code> to provide concurrent searching, index updating and optimization.
+                <code>Zend_Search_Lucene</code> uses <code>flock()</code> to provide concurrent searching, index updating and optimization.
             </para>
 
             <para>
@@ -287,7 +287,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
             </para>
 
             <para>
-                Do not use networked file systems with Zend_Search_Lucene.
+                Do not use networked file systems with <code>Zend_Search_Lucene</code>.
             </para>
         </sect3>
     </sect2>

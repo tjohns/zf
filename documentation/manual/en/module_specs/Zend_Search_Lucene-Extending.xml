@@ -285,7 +285,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
 
         <para>
             The scoring algorithm can be customized by defining your own Similarity class. To do this
-            extend the Zend_Search_Lucene_Search_Similarity class as defined below, then use
+            extend the <code>Zend_Search_Lucene_Search_Similarity</code> class as defined below, then use
             the <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code> method to set it as default.
         </para>
 

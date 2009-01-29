@@ -5,7 +5,7 @@
         <title>Starting from 1.6, handling index format transformations.</title>
 
         <para>
-            Zend_Search_Lucene component works with Java Lucene 1.4-1.9, 2.1 and 2.3 index formats.
+            <code>Zend_Search_Lucene</code> component works with Java Lucene 1.4-1.9, 2.1 and 2.3 index formats.
         </para>
 
         <para>
@@ -37,7 +37,7 @@
         </para>
         
         <para>
-            In a such case Zend_Search_Lucene may convert index to the higher format version. 
+            In a such case <code>Zend_Search_Lucene</code> may convert index to the higher format version. 
             That <emphasis role="strong">always</emphasis> happens for the indices in <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> format, 
             which are automatically converted to 2.1 format.
         </para>
@@ -123,7 +123,7 @@ Searcher::initIndex();
         </para>
 
         <para>
-            Zend_Search_Lucene provides a workaround to this problem with the <code>commit()</code> method. It saves all unsaved changes and frees memory used for storing new segments.
+            <code>Zend_Search_Lucene</code> provides a workaround to this problem with the <code>commit()</code> method. It saves all unsaved changes and frees memory used for storing new segments.
             You are free to use the commit operation any time- or even several times- during script execution. You can still use the <code>Zend_Search_Lucene</code> object for searching,
             adding or deleting document after the commit operation. But the <code>commit()</code> call guarantees that if there are no document added or deleted after the call to <code>commit()</code>, then
             the <code>Zend_Search_Lucene</code> destructor has nothing to do and will not throw exception:

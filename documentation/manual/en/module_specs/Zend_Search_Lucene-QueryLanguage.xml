@@ -2,7 +2,7 @@
     <title>Query Language</title>
 
     <para>
-        Java Lucene and Zend_Search_Lucene provide quite powerful query languages.
+        Java Lucene and <code>Zend_Search_Lucene</code> provide quite powerful query languages.
     </para>
 
     <para>
@@ -48,7 +48,7 @@
             <emphasis>all fields</emphasis> by default.
         </para>
         <para>
-            There are two static methods in the Zend_Search_Lucene class which allow the developer to configure these settings:
+            There are two static methods in the <code>Zend_Search_Lucene</code> class which allow the developer to configure these settings:
         </para>
         <programlisting role="php"><![CDATA[
 $defaultSearchField = Zend_Search_Lucene::getDefaultSearchField();
@@ -170,7 +170,7 @@ title:{Aida TO Carmen}
             Inclusive range queries are denoted by square brackets. Exclusive range queries are denoted by curly brackets.
         </para>
         <para>
-            If field is not specified then Zend_Search_Lucene searches for specified interval through all fields by default.
+            If field is not specified then <code>Zend_Search_Lucene</code> searches for specified interval through all fields by default.
             <programlisting role="querystring"><![CDATA[
 {Aida TO Carmen}
 ]]>
@@ -181,7 +181,7 @@ title:{Aida TO Carmen}
     <sect2 id="zend.search.lucene.query-language.fuzzy">
         <title>Fuzzy Searches</title>
         <para>
-            Zend_Search_Lucene as well as Java Lucene supports fuzzy searches based on the Levenshtein Distance, or Edit Distance algorithm. 
+            <code>Zend_Search_Lucene</code> as well as Java Lucene supports fuzzy searches based on the Levenshtein Distance, or Edit Distance algorithm. 
             To do a fuzzy search use the tilde, "~", symbol at the end of a Single word Term. For example to search for a term similar 
             in spelling to "roam" use the fuzzy search:
 
@@ -222,7 +222,7 @@ roam~0.8
         <title>Boosting a Term</title>
 
         <para>
-            Java Lucene and Zend_Search_Lucene provide the relevance level of matching documents based
+            Java Lucene and <code>Zend_Search_Lucene</code> provide the relevance level of matching documents based
             on the terms found. To boost the relevance of a term use the caret, "^", symbol with a boost factor (a number)
             at the end of the term you are searching. The higher the boost factor, the more relevant
             the term will be.
@@ -257,12 +257,12 @@ PHP^4 framework
         <para>
             Boolean operators allow terms to be combined through logic operators.
             Lucene supports AND, "+", OR, NOT and "-" as Boolean operators.
-            Java Lucene requires boolean operators to be ALL CAPS. Zend_Search_Lucene does not.
+            Java Lucene requires boolean operators to be ALL CAPS. <code>Zend_Search_Lucene</code> does not.
         </para>
 
         <para>
             AND, OR, and NOT operators and "+", "-" defines two different styles to construct boolean queries.
-            Unlike Java Lucene, Zend_Search_Lucene doesn't allow these two styles to be mixed.
+            Unlike Java Lucene, <code>Zend_Search_Lucene</code> doesn't allow these two styles to be mixed.
         </para>
         <para>
             If the AND/OR/NOT style is used, then an AND or OR operator must be present between all query terms.
@@ -385,13 +385,13 @@ PHP^4 framework
         <title>Grouping</title>
 
         <para>
-            Java Lucene and Zend_Search_Lucene support using parentheses to group clauses to form sub queries. This can be
+            Java Lucene and <code>Zend_Search_Lucene</code> support using parentheses to group clauses to form sub queries. This can be
             useful if you want to control the precedence of boolean logic operators for a query or mix different boolean query styles:
             <programlisting role="querystring"><![CDATA[
 +(framework OR library) +php
 ]]>
 </programlisting>
-            Zend_Search_Lucene supports subqueries nested to any level.
+            <code>Zend_Search_Lucene</code> supports subqueries nested to any level.
         </para>
     </sect2>
 

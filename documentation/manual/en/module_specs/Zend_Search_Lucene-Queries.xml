@@ -31,7 +31,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
                 </para>
             </listitem>
         </itemizedlist>
-        It's a good idea to catch Zend_Search_Lucene_Search_QueryParserExceptions and handle it appropriately:
+        It's a good idea to catch <code>Zend_Search_Lucene_Search_QueryParserException</code>s and handle them appropriately:
         <programlisting role="php"><![CDATA[
 try {
     $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
@@ -43,7 +43,7 @@ try {
         </para>
 
         <para>
-            The same technique should be used for the find() method of a Zend_Search_Lucene object.
+            The same technique should be used for the find() method of a <code>Zend_Search_Lucene</code> object.
         </para>
 
         <para>
@@ -87,7 +87,7 @@ $hits  = $index->find($query);
         </programlisting>
 
         <para>
-            The term field is optional. Zend_Search_Lucene searches through all indexed fields in each document if the field is not specified:
+            The term field is optional. <code>Zend_Search_Lucene</code> searches through all indexed fields in each document if the field is not specified:
             <programlisting role="php"><![CDATA[
 // Search for 'word1' in all indexed fields
 $term  = new Zend_Search_Lucene_Index_Term('word1');
@@ -407,7 +407,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            The term field is optional. Zend_Search_Lucene searches through all fields on each document if a field is not specified:
+            The term field is optional. <code>Zend_Search_Lucene</code> searches through all fields on each document if a field is not specified:
             <programlisting role="php"><![CDATA[
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -472,7 +472,7 @@ $hits  = $index->find($query);
 
 
         <para>
-            The term field is optional. Zend_Search_Lucene searches through all fields on each document if a field is not specified:
+            The term field is optional. <code>Zend_Search_Lucene</code> searches through all fields on each document if a field is not specified:
             <programlisting role="php"><![CDATA[
 
 $term = new Zend_Search_Lucene_Index_Term('test');
@@ -535,7 +535,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            Zend_Search_Lucene_Search_Query_Phrase class constructor takes three optional arguments:
+            <code>Zend_Search_Lucene_Search_Query_Phrase</code> class constructor takes three optional arguments:
         </para>
         <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_Query_Phrase(
@@ -649,12 +649,12 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));
 
         <para>
             The slop factor sets the number of other words permitted between specified words in the query phrase. If set to zero,
-            then the corresponding query is an exact phrase search.  For larger values this works like the WITHIN or NEAR
+            then the corresponding query is an exact phrase search. For larger values this works like the WITHIN or NEAR
             operators.
         </para>
         <para>
             The slop factor is in fact an edit distance, where the edits correspond to moving terms in the query
-            phrase.  For example, to switch the order of two words requires two moves (the
+            phrase. For example, to switch the order of two words requires two moves (the
             first move places the words atop one another), so to permit re-orderings of phrases, the slop factor
             must be at least two.
         </para>
@@ -713,7 +713,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Term fields are optional. Zend_Search_Lucene searches through all fields if the field is not specified:
+            Term fields are optional. <code>Zend_Search_Lucene</code> searches through all fields if the field is not specified:
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');
@@ -726,7 +726,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Either (but not both) of the boundary terms may be set to null. Zend_Search_Lucene searches from the beginning or
+            Either (but not both) of the boundary terms may be set to null. <code>Zend_Search_Lucene</code> searches from the beginning or
             up to the end of the dictionary for the specified field(s) in this case:
             <programlisting role="php"><![CDATA[
 // searches for ['20020101' TO ...]

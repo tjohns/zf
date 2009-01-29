@@ -7,7 +7,7 @@
         <para>
             There are two ways to search the index. The first method uses
             query parser to construct a query from a string. The second is
-            to programmatically create your own queries through the Zend_Search_Lucene API.
+            to programmatically create your own queries through the <code>Zend_Search_Lucene</code> API.
         </para>
 
         <para>
@@ -66,7 +66,7 @@ $index->find($query);
         </programlisting>
         <para>
             The <code>Zend_Search_Lucene::find()</code> method determines the input type automatically and
-            uses the query parser to construct an appropriate Zend_Search_Lucene_Search_Query object
+            uses the query parser to construct an appropriate <code>Zend_Search_Lucene_Search_Query</code> object
             from an input of type string.
         </para>
 
@@ -149,15 +149,15 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
     <sect2 id="zend.search.lucene.searching.results">
         <title>Search Results</title>
         <para>
-            The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
+            The search result is an array of <code>Zend_Search_Lucene_Search_QueryHit</code> objects. Each of these has
             two properties: <code>$hit->document</code> is a document number within
             the index and <code>$hit->score</code> is a score of the hit in
             a search result. The results are ordered by score (descending from highest score).
         </para>
 
         <para>
-            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found in the search 
-            as a property of the hit.  In the following example, a hit is returned with two fields from the corresponding document: title and author.
+            The <code>Zend_Search_Lucene_Search_QueryHit</code> object also exposes each field of the <code>Zend_Search_Lucene_Document</code> found in the search 
+            as a property of the hit. In the following example, a hit is returned with two fields from the corresponding document: title and author.
         </para>
         <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open('/data/my_index');
@@ -177,8 +177,8 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Optionally, the original Zend_Search_Lucene_Document object can be returned from the
-            Zend_Search_Lucene_Search_QueryHit.
+            Optionally, the original <code>Zend_Search_Lucene_Document</code> object can be returned from the
+            <code>Zend_Search_Lucene_Search_QueryHit</code>.
 
             You can retrieve stored parts of the document by using the <code>getDocument()</code>
             method of the index object and then get them by
@@ -205,8 +205,8 @@ foreach ($hits as $hit) {
 ]]>
         </programlisting>
         <para>
-        The fields available from the Zend_Search_Lucene_Document object are determined at
-        the time of indexing.  The document fields are either indexed, or
+        The fields available from the <code>Zend_Search_Lucene_Document</code> object are determined at
+        the time of indexing. The document fields are either indexed, or
         index and stored, in the document by the indexing application
         (e.g. LuceneIndexCreation.jar).
         </para>
@@ -225,7 +225,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Zend_Search_Lucene gives the possibility to limit result set size with <code>getResultSetLimit()</code> and
+            <code>Zend_Search_Lucene</code> gives the possibility to limit result set size with <code>getResultSetLimit()</code> and
             <code>setResultSetLimit()</code> methods:
             <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
@@ -244,7 +244,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);
     <sect2 id="zend.search.lucene.searching.results-scoring">
         <title>Results Scoring</title>
         <para>
-            Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
+            <code>Zend_Search_Lucene</code> uses the same scoring algorithms as Java Lucene.
             All hits in the search result are ordered by score by default. Hits with greater score come first, and
             documents having higher scores should match the query more precisely than documents having lower scores.
         </para>
@@ -268,7 +268,7 @@ foreach ($hits as $hit) {
         </programlisting>
 
         <para>
-            The Zend_Search_Lucene_Search_Similarity class is used to calculate the score for each hit.
+            The <code>Zend_Search_Lucene_Search_Similarity</code> class is used to calculate the score for each hit.
             See <link linkend="zend.search.lucene.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
         </para>
 

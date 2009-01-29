@@ -5,7 +5,7 @@
         <title>Field names</title>
 
         <para>
-            There are no limitations for field names in Zend_Search_Lucene.
+            There are no limitations for field names in <code>Zend_Search_Lucene</code>.
         </para>
 
         <para>
@@ -114,7 +114,7 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    All these options are Zend_Search_Lucene object properties- not index properties. They affect only current
+                    All these options are <code>Zend_Search_Lucene</code> object properties- not index properties. They affect only current
                     <code>Zend_Search_Lucene</code> object behavior and may vary for different scripts.
                 </para>
             </note>
@@ -150,7 +150,7 @@ $index->optimize();
 
         <para>
             Small segments generally decrease index quality. Many small segments may also trigger
-            the "Too many open files" error determined by OS limitations <footnote><para>Zend_Search_Lucene keeps each segment file opened
+            the "Too many open files" error determined by OS limitations <footnote><para><code>Zend_Search_Lucene</code> keeps each segment file opened
             to improve search performance.</para></footnote>.
         </para>
 
@@ -178,7 +178,7 @@ $index->optimize();
         </para>
 
         <para>
-            Zend_Search_Lucene checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
+            <code>Zend_Search_Lucene</code> checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
             into the next group. If yes, then merging is performed.
         </para>
 
@@ -319,7 +319,7 @@ foreach ($docIds as $id) {
         <title>Memory Usage</title>
 
         <para>
-            Zend_Search_Lucene is a relatively memory-intensive module.
+            <code>Zend_Search_Lucene</code> is a relatively memory-intensive module.
         </para>
 
         <para>
@@ -332,7 +332,7 @@ foreach ($docIds as $id) {
 
         <para>
             The terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
-            <footnote><para>The Lucene file format allows you to configure this number, but Zend_Search_Lucene doesn't expose this
+            <footnote><para>The Lucene file format allows you to configure this number, but <code>Zend_Search_Lucene</code> doesn't expose this
             in its API. Nevertheless you still have the ability to configure this value if the index is prepared with another
             Lucene implementation.</para></footnote> term of the full dictionary.
         </para>
@@ -362,7 +362,7 @@ foreach ($docIds as $id) {
         <title>Encoding</title>
 
         <para>
-            Zend_Search_Lucene works with UTF-8 strings internally. So all strings returned by Zend_Search_Lucene are UTF-8 encoded.
+            <code>Zend_Search_Lucene</code> works with UTF-8 strings internally. So all strings returned by <code>Zend_Search_Lucene</code> are UTF-8 encoded.
         </para>
 
         <para>
@@ -374,7 +374,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            Zend_Search_Lucene offers a wide range of encoding possibilities for indexed documents and parsed queries.
+            <code>Zend_Search_Lucene</code> offers a wide range of encoding possibilities for indexed documents and parsed queries.
         </para>
 
         <para>
@@ -448,7 +448,7 @@ $hits = $index->find($queryStr);
         <title>Index maintenance</title>
 
         <para>
-            It should be clear that Zend_Search_Lucene as well as any other Lucene implementation does not comprise a "database".
+            It should be clear that <code>Zend_Search_Lucene</code> as well as any other Lucene implementation does not comprise a "database".
         </para>
 
         <para>
@@ -457,7 +457,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            Nevertheless, Zend_Search_Lucene attempts to keep indexes in a consistent state at all times.
+            Nevertheless, <code>Zend_Search_Lucene</code> attempts to keep indexes in a consistent state at all times.
         </para>
 
         <para>
