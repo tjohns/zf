@@ -1,7 +1,7 @@
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writers</title>
   <para>
-    A Writer is an object that inherits from <code>Zend_Log_Writer_Abstract</code>.  A Writer's
+    A Writer is an object that inherits from <code>Zend_Log_Writer_Abstract</code>. A Writer's
     responsibility is to record log data to a storage backend.
   </para>
 
@@ -13,7 +13,7 @@
     </para>
 
     <para>
-      To write log data to the PHP output buffer, use the URL <code>php://output</code>.  Alternatively,
+      To write log data to the PHP output buffer, use the URL <code>php://output</code>. Alternatively,
       you can send log data directly to a stream like <code>STDERR</code>
       (<code>php://stderr</code>).
 
@@ -40,7 +40,7 @@ $logger->info('Informational message');
       </programlisting>
 
       By default, the stream opens in the append mode (<code>"a"</code>).
-      To open it with a different mode, the Zend_Log_Writer_Stream constructor
+      To open it with a different mode, the <code>Zend_Log_Writer_Stream</code> constructor
       accepts an optional second parameter for the mode.
     </para>
 
@@ -69,7 +69,7 @@ $logger->info('Informational message');
     <title>Writing to Databases</title>
     <para>
       <code>Zend_Log_Writer_Db</code> writes log information to a database table using
-      <code>Zend_Db</code>.  The constructor of <code>Zend_Log_Writer_Db</code> receives
+      <code>Zend_Db</code>. The constructor of <code>Zend_Log_Writer_Db</code> receives
       a <code>Zend_Db_Adapter</code> instance, a table name, and a mapping of database
       columns to event data items:
 
@@ -90,7 +90,7 @@ $logger->info('Informational message');
       </programlisting>
 
       The example above writes a single row of log data to the database table named
-      <code>log_table_name</code> table.  The database column named <code>lvl</code>
+      <code>log_table_name</code> table. The database column named <code>lvl</code>
       receives the priority number and the column named <code>msg</code> receives the
       log message.
     </para>

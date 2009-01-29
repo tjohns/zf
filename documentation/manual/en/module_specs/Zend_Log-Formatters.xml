@@ -6,8 +6,8 @@
   </para>
 
   <para>
-    Some Writers are not line-oriented and cannot use a Formatter.  An example is the
-    Database Writer, which inserts the event items directly into database columns.  For
+    Some Writers are not line-oriented and cannot use a Formatter. An example is the
+    Database Writer, which inserts the event items directly into database columns. For
     Writers that cannot support a Formatter, an exception is thrown if you attempt to
     set a Formatter.
   </para>
@@ -15,8 +15,8 @@
   <sect2 id="zend.log.formatters.simple">
     <title>Simple Formatting</title>
     <para>
-      <code>Zend_Log_Formatter_Simple</code> is the default formatter.  It is configured
-      automatically when you specify no formatter.  The default configuration is equivalent
+      <code>Zend_Log_Formatter_Simple</code> is the default formatter. It is configured
+      automatically when you specify no formatter. The default configuration is equivalent
       to the following:
 
       <programlisting role="php"><![CDATA[
@@ -47,8 +47,8 @@ $logger->info('there');
 
     <para>
       The constructor of <code>Zend_Log_Formatter_Simple</code> accepts a single
-      parameter: the format string.  This string contains keys surrounded by
-      percent signs (e.g. <code>%message%</code>).  The format string may
+      parameter: the format string. This string contains keys surrounded by
+      percent signs (e.g. <code>%message%</code>). The format string may
       contain any key from the event data array.
       You can retrieve the default keys by using the DEFAULT_FORMAT constant from
       <code>Zend_Log_Formatter_Simple</code>.
@@ -90,7 +90,7 @@ $logger->info('informational message');
 
     <para>
       It's possible to customize the root element as well as specify a mapping
-      of XML elements to the items in the event data array.  The constructor
+      of XML elements to the items in the event data array. The constructor
       of <code>Zend_Log_Formatter_Xml</code> accepts a string with the name of
       the root element as the first parameter and an associative array with
       the element mapping as the second parameter:
@@ -111,8 +111,8 @@ $logger->info('informational message');
       </programlisting>
 
       The code above changes the root element from its default of
-      <code>logEntry</code> to <code>log</code>.  It also maps the element
-      <code>msg</code> to the event data item <code>message</code>.  This
+      <code>logEntry</code> to <code>log</code>. It also maps the element
+      <code>msg</code> to the event data item <code>message</code>. This
       results in the following output:
 
       <programlisting role="xml"><![CDATA[

@@ -52,7 +52,7 @@ $logger->addWriter($writer);
         </programlisting>
 
         It is important to note that the Log must
-        have at least one Writer.  You can add any number of Writers using the
+        have at least one Writer. You can add any number of Writers using the
         Log's <code>addWriter()</code> method.
       </para>
 
@@ -83,8 +83,8 @@ $logger->log('Informational message', Zend_Log::INFO);
       </programlisting>
 
       The first parameter of the <code>log()</code> method is a string <code>message</code> and the second
-      parameter is an integer <code>priority</code>.  The priority must be one of the priorities recognized
-      by the Log instance.  This is explained in the next section.
+      parameter is an integer <code>priority</code>. The priority must be one of the priorities recognized
+      by the Log instance. This is explained in the next section.
     </para>
 
     <para>
