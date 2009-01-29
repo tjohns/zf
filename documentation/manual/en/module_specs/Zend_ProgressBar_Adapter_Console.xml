@@ -17,7 +17,7 @@
     </note>
     <para>
         You can set the adapter options either via the <code>set*</code> methods
-        or give an array or a Zend_Config instance with options as first
+        or give an array or a <code>Zend_Config</code> instance with options as first
         parameter to the constructor. The available options are:
     </para>
     <itemizedlist>
