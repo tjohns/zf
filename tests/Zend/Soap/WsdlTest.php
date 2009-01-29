@@ -12,6 +12,11 @@ require_once 'PHPUnit/Framework/TestCase.php';
 /** Zend_Soap_Wsdl */
 require_once 'Zend/Soap/Wsdl.php';
 
+/**
+ * Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence
+ */
+require_once 'Zend/Soap/Wsdl/Strategy/ArrayOfTypeSequence.php';
+
 
 /**
  * Test cases for Zend_Soap_Wsdl
@@ -582,6 +587,23 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("xsd:int", $wsdl->getType("INTEGER"));
         $this->assertEquals("xsd:float", $wsdl->getType("FLOAT"));
         $this->assertEquals("xsd:float", $wsdl->getType("douBLE"));
+    }
+
+    /**
+     * @group ZF-5430
+     */
+    public function testMultipleSequenceDefinitionsOfSameTypeWillBeRecognizedOnceBySequenceStrategy()
+    {
+        $wsdl = new Zend_Soap_Wsdl("MyService", "http://localhost/MyService.php");
+        $wsdl->setComplexTypeStrategy(new Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence());
+
+        $wsdl->addComplexType("string[]");
+        $wsdl->addComplexType("int[]");
+        $wsdl->addComplexType("string[]");
+
+        $xml = $wsdl->toXml();
+        $this->assertEquals(1, substr_count($xml, "ArrayOfString"), "ArrayOfString should appear only once.");
+        $this->assertEquals(1, substr_count($xml, "ArrayOfInt"),    "ArrayOfInt should appear only once.");
     }
 }
 
