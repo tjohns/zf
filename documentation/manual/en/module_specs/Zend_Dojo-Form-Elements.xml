@@ -576,7 +576,7 @@ $form->addElement(
                 <para>
                     <emphasis>focusOnLoad</emphasis> is used to determine
                     whether this particular editor will receive focus when the
-                    page has loaded. By default, this is false.  The method
+                    page has loaded. By default, this is false. The method
                     <code>setFocusOnLoad($flag)</code> may be used to
                     set the value, while <code>getFocusOnLoad()</code>
                     will retrieve it.
@@ -586,7 +586,7 @@ $form->addElement(
             <listitem>
                 <para>
                     <emphasis>height</emphasis> specifies the height of the
-                    editor; by default, this is 300px.  The method
+                    editor; by default, this is 300px. The method
                     <code>setHeight($height)</code> may be used to set the
                     value, while <code>getHeight()</code> will retrieve it.
                 </para>
@@ -596,8 +596,8 @@ $form->addElement(
                 <para>
                     <emphasis>inheritWidth</emphasis> is used to determine
                     whether the editor will use the parent container's width or
-                    simply default to 100% width.  By default, this is false
-                    (i.e., it will fill the width of the window).  The method
+                    simply default to 100% width. By default, this is false
+                    (i.e., it will fill the width of the window). The method
                     <code>setInheritWidth($flag)</code> may be used to set the
                     value, while <code>getInheritWidth()</code> will retrieve
                     it.
@@ -618,7 +618,7 @@ $form->addElement(
                     <emphasis>styleSheets</emphasis> indicate what additional
                     CSS stylesheets should be used to affect the display of the
                     Editor. By default, none are registered, and it inherits the
-                    page styles.  The following accessors and mutators are
+                    page styles. The following accessors and mutators are
                     available for manipulating editor stylesheets:
                 </para>
 

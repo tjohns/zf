@@ -2,12 +2,12 @@
     <title>Dojo Form Examples</title>
 
     <example id="zend.dojo.form.examples.dojoform">
-        <title>Using Zend_Dojo_Form</title>
+        <title>Using <code>Zend_Dojo_Form</code></title>
 
         <para>
             The easiest way to utilize Dojo with <code>Zend_Form</code> is to
             utilize <code>Zend_Dojo_Form</code>, either through direct usage or
-            by extending it. This example shows extending Zend_Dojo_Form, and
+            by extending it. This example shows extending <code>Zend_Dojo_Form</code>, and
             shows usage of all dijit elements. It creates four sub forms, and
             decorates the form to utilize a TabContainer, showing each sub form
             in its own tab.
@@ -405,8 +405,8 @@ class My_Custom_Form extends Zend_Form
 
         <para>
             Of course, if you can do that... you could and should simply alter
-            the class to inherit from Zend_Dojo_Form, which is a drop-in
-            replacement of Zend_Form that's already Dojo-enabled...
+            the class to inherit from <code>Zend_Dojo_Form</code>, which is a drop-in
+            replacement of <code>Zend_Form</code> that's already Dojo-enabled...
         </para>
     </example>
 </sect2>

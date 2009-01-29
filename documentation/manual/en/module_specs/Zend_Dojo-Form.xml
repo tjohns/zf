@@ -51,7 +51,7 @@
         <title>Enabling Dojo in your existing forms</title>
 
         <para>
-            "But wait," you say; "I'm already extending Zend_Form with my own
+            "But wait," you say; "I'm already extending <code>Zend_Form</code> with my own
             custom form class! How can I Dojo-enable it?'"
         </para>
 

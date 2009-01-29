@@ -69,7 +69,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title>Appending data to Zend_Dojo_Data</title>
+            <title>Appending data to <code>Zend_Dojo_Data</code></title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -133,7 +133,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title>Specifying a label field in Zend_Dojo_Data</title>
+            <title>Specifying a label field in <code>Zend_Dojo_Data</code></title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -147,7 +147,7 @@ $data->setLabel('name');
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>Populating Zend_Dojo_Data from JSON</title>
+            <title>Populating <code>Zend_Dojo_Data</code> from JSON</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
@@ -297,7 +297,7 @@ $json = (string) $data; // cast to string == cast to JSON
                 <listitem><para>
                     <code>setItems($items)</code>: set multiple items at once,
                     overwriting any items that were previously set in the
-                    object.  <code>$items</code> should be an array or a
+                    object. <code>$items</code> should be an array or a
                     <code>Traversable</code> object.
                 </para></listitem>
 

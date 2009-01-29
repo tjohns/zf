@@ -64,7 +64,7 @@
                 not completely necessary for use with dijit form elements, will
                 ensure that if an attempt is made to submit a form that does
                 not validate against client-side validations, submission will
-                be halted and validation error messages raised.  The form dijit
+                be halted and validation error messages raised. The form dijit
                 view helper expects the following arguments:
             </para>
 
