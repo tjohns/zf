@@ -5,7 +5,7 @@
         <title>Introduction</title>
 
         <para>
-            Zend_Server_Reflection provides a standard mechanism for performing
+            <code>Zend_Server_Reflection</code> provides a standard mechanism for performing
             function and class introspection for use with server classes. It is
             based on PHP 5's Reflection API, augmenting it with methods
             for retrieving parameter and return value types and descriptions, a
