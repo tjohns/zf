@@ -95,9 +95,9 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
     <sect2 id="zend.xmlrpc.value.parameters">
         <title>Types and Conversions</title>
         <para>
-            Some remote method calls require parameters.  These are given to
+            Some remote method calls require parameters. These are given to
             the <code>call()</code> method of <code>Zend_XmlRpc_Client</code>
-            as an array in the second parameter.  Each parameter may be
+            as an array in the second parameter. Each parameter may be
             given as either a native PHP type which will be automatically
             converted, or as an object representing a specific XML-RPC type
             (one of the <code>Zend_XmlRpc_Value</code> objects).
@@ -197,7 +197,7 @@ $result = $client->call('foo.bar', array(array()));
             <title><code>Zend_XmlRpc_Value</code> Objects as Parameters</title>
             <para>
                 Parameters may also be created as <code>Zend_XmlRpc_Value</code>
-                instances to specify an exact XML-RPC type.  The primary reasons
+                instances to specify an exact XML-RPC type. The primary reasons
                 for doing this are:
 
                 <itemizedlist>
@@ -312,7 +312,7 @@ $result = $client->call('foo.bar', array(array()));
         <title>Server Proxy Object</title>
         <para>
             Another way to call remote methods with the XML-RPC client is to
-            use the server proxy.  This is a PHP object that proxies a remote
+            use the server proxy. This is a PHP object that proxies a remote
             XML-RPC namespace, making it work as close to a native PHP object
             as possible.
         </para>
@@ -342,7 +342,7 @@ $hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) returns "hello"
             The <code>getProxy()</code> method receives an optional argument
             specifying which namespace of the remote server to proxy. If it
             does not receive a namespace, the default namespace will be
-            proxied.  In the next example, the <code>test</code> namespace
+            proxied. In the next example, the <code>test</code> namespace
             will be proxied:
         </para>
 
@@ -477,13 +477,13 @@ try {
         <title>Server Introspection</title>
         <para>
             Some XML-RPC servers support the de facto introspection methods under the XML-RPC
-            <code>system.</code> namespace.  <code>Zend_XmlRpc_Client</code> provides special
+            <code>system.</code> namespace. <code>Zend_XmlRpc_Client</code> provides special
             support for servers with these capabilities.
         </para>
 
         <para>
             A <code>Zend_XmlRpc_Client_ServerIntrospection</code> instance may be retrieved by calling
-            the <code>getIntrospector()</code> method of <code>Zend_XmlRpcClient</code>.  It can
+            the <code>getIntrospector()</code> method of <code>Zend_XmlRpcClient</code>. It can
             then be used to perform introspection operations on the server.
         </para>
     </sect2>
@@ -547,9 +547,9 @@ $client->doRequest($request);
         </para>
 
         <para>
-            The <code>setHttpClient()</code> is particularly useful for unit testing.  When combined
+            The <code>setHttpClient()</code> is particularly useful for unit testing. When combined
             with the <code>Zend_Http_Client_Adapter_Test</code>, remote services can be mocked
-            out for testing.  See the unit tests for <code>Zend_XmlRpc_Client</code> for examples
+            out for testing. See the unit tests for <code>Zend_XmlRpc_Client</code> for examples
             of how to do this.
         </para>
     </sect2>
