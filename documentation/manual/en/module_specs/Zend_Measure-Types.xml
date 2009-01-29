@@ -262,7 +262,7 @@
 
     <sect2 id="zend.measure.types.binary">
 
-        <title>Hints for Zend_Measure_Binary</title>
+        <title>Hints for <code>Zend_Measure_Binary</code></title>
 
         <para>
             Some popular binary conventions, include terms like kilo-, mega-, giga, etc. in normal language use imply
@@ -282,7 +282,7 @@
 
     <sect2 id="zend.measure.types.decimal">
 
-        <title>Hints for Zend_Measure_Number</title>
+        <title>Hints for <code>Zend_Measure_Number</code></title>
 
         <para>
             The best known number format is the decimal system. Additionally this class supports the octal system, the
