@@ -7,7 +7,7 @@
             <code>SoapClient</code> objects (<ulink
             url="http://www.php.net/soap">SOAP web service extension</ulink>).
             You can simply call the REST service procedures as
-            <code>Zend_Rest_Client</code> methods.  Specify the service's full
+            <code>Zend_Rest_Client</code> methods. Specify the service's full
             address in the <code>Zend_Rest_Client</code> constructor.
         </para>
 

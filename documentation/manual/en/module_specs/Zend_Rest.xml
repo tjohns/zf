@@ -12,7 +12,7 @@
     <para>
         Zend Framework provides both Client and Server capabilities, which,
         when used together allow for a much more "local" interface experience
-        via virtual object property access.  The Server component features
+        via virtual object property access. The Server component features
         automatic exposition of functions and classes using a meaningful and
         simple XML format. When accessing these services using the Client, it is
         possible to easily retrieve the return data from the remote call. Should
