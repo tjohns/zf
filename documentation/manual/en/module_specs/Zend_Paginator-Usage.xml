@@ -6,8 +6,8 @@
 
         <para>
             In order to paginate items into pages, <code>Zend_Paginator</code>
-            must have a generic way of accessing that data.  For that reason,
-            all data access takes place through data source adapters.  Several
+            must have a generic way of accessing that data. For that reason,
+            all data access takes place through data source adapters. Several
             adapters ship with Zend Framework by default:
         </para>
 
@@ -71,7 +71,7 @@
 
             <para>
                 Because of this, a second query is dynamically generated to
-                determine the total number of matching rows.  However, it is
+                determine the total number of matching rows. However, it is
                 possible to directly supply a count or count query yourself.
                 See the <code>setRowCount()</code> method in the DbSelect
                 adapter for more information.
@@ -218,16 +218,16 @@ $this->view->paginator = $paginator;
         </para>
 
         <para>
-            Notice the view helper call near the end.  PaginationControl
+            Notice the view helper call near the end. PaginationControl
             accepts up to four parameters: the paginator instance, a scrolling
             style, a view partial, and an array of additional parameters.
         </para>
 
         <para>
-            The second and third parameters are very important.  Whereas the
+            The second and third parameters are very important. Whereas the
             view partial is used to determine how the pagination control should
             <emphasis>look</emphasis>, the scrolling style is used to control
-            how it should <emphasis>behave</emphasis>.  Say the view partial is
+            how it should <emphasis>behave</emphasis>. Say the view partial is
             in the style of a search pagination control, like the one below:
         </para>
 
@@ -239,7 +239,7 @@ $this->view->paginator = $paginator;
 
         <para>
             What happens when the user clicks the "next" link a few times?
-            Well, any number of things could happen.  The current page number
+            Well, any number of things could happen. The current page number
             could stay in the middle as you click through (as it does on
             Yahoo!), or it could advance to the end of the page range and then
             appear again on the left when the user clicks "next" one more time.
@@ -265,9 +265,9 @@ $this->view->paginator = $paginator;
                     <row>
                         <entry>All</entry>
                         <entry>
-                            Returns every page.  This is useful for dropdown
+                            Returns every page. This is useful for dropdown
                             menu pagination controls with relatively few
-                            pages.  In these cases, you want all pages
+                            pages. In these cases, you want all pages
                             available to the user at once.
                         </entry>
                     </row>
@@ -291,7 +291,7 @@ $this->view->paginator = $paginator;
                         <entry>
                             A Yahoo!-like scrolling style that positions the
                             current page number in the center of the page
-                            range, or as close as possible.  This is the
+                            range, or as close as possible. This is the
                             default style.
                         </entry>
                     </row>
@@ -302,7 +302,7 @@ $this->view->paginator = $paginator;
         <para>
             The fourth and final parameter is reserved for an optional
             associative array of additional variables that you want available
-            in your view partial (available via <code>$this</code>).  For
+            in your view partial (available via <code>$this</code>). For
             instance, these values could include extra URL parameters for
             pagination links.
         </para>
@@ -339,7 +339,7 @@ $paginator->setView($view);
         <note>
             <para>
                 Of course, it's possible to use <code>Zend_Paginator</code>
-                with other template engines.  For example, with Smarty you
+                with other template engines. For example, with Smarty you
                 might do the following:
             </para>
 
