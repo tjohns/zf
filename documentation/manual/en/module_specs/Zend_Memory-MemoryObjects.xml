@@ -59,7 +59,7 @@ $memObject = $memoryManager->createLocked($data);
         <para>
             The locked objects class (<code>Zend_Memory_Container_Locked</code>)
             guarantees virtually the same performance as working with a string
-            variable.  The overhead is a single dereference to get the class property.
+            variable. The overhead is a single dereference to get the class property.
         </para>
 
     </sect2>
@@ -90,8 +90,8 @@ $memObject->value = substr($memObject->value, $start, $length);
         <para>
             An alternative way to access memory object data is to use the
             <link linkend="zend.memory.memory-objects.api.getRef"><code>getRef()</code></link>
-            method.  This method <emphasis>must</emphasis> be used for PHP
-            versions before 5.2.  It also may have to be used in some other
+            method. This method <emphasis>must</emphasis> be used for PHP
+            versions before 5.2. It also may have to be used in some other
             cases for performance reasons.
         </para>
     </sect2>
@@ -119,7 +119,7 @@ public function &getRef();
 
             <para>
                 Movable objects are loaded from the cache at this moment if the
-                object is not already in memory.  If the object is loaded from
+                object is not already in memory. If the object is loaded from
                 the cache, this might cause swapping of other objects if the
                 memory limit would be exceeded by having all the managed
                 objects in memory.
@@ -257,7 +257,7 @@ public function isLocked();
 
             <para>
                 The <code>isLocked()</code> method can be used to check if
-                object is locked.  It returns <code>true</code> if the object
+                object is locked. It returns <code>true</code> if the object
                 is locked, or <code>false</code> if it is not locked.
                 This is always <code>true</code> for "locked" objects,
                 and may be either <code>true</code> or <code>false</code>

@@ -14,7 +14,7 @@
 
         <para>
             The first argument <code>$backendName</code> is a string that
-            names one of the backend implementations supported by Zend_Cache.
+            names one of the backend implementations supported by <code>Zend_Cache</code>.
         </para>
 
         <para>
@@ -32,13 +32,13 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
         </programlisting>
 
         <para>
-            Zend_Memory uses <link linkend="zend.cache.backends">Zend_Cache backends</link>
+            <code>Zend_Memory</code> uses <link linkend="zend.cache.backends"><code>Zend_Cache backends</code></link>
             as storage providers.
         </para>
 
         <para>
             You may use the special name '<code>None</code>' as a backend name,
-            in addition to standard Zend_Cache backends.
+            in addition to standard <code>Zend_Cache</code> backends.
 
             <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');
@@ -48,7 +48,7 @@ $memoryManager = Zend_Memory::factory('None');
 
         <para>
             If you use '<code>None</code>' as the backend name, then the memory
-            manager never swaps memory blocks.  This is useful if you know that
+            manager never swaps memory blocks. This is useful if you know that
             memory is not limited or the overall size of objects never reaches
             the memory limit.
         </para>
@@ -84,7 +84,7 @@ $memObject = $memoryManager->create($data);
 
             <para>
                 The <code>$data</code> argument is optional and used to
-                initialize the object value.  If the <code>$data</code>
+                initialize the object value. If the <code>$data</code>
                 argument is omitted, the value is an empty string.
             </para>
 
@@ -105,7 +105,7 @@ $memObject = $memoryManager->createLocked($data);
 
             <para>
                 The <code>$data</code> argument is optional and used to
-                initialize the object value.  If the <code>$data</code>
+                initialize the object value. If the <code>$data</code>
                 argument is omitted, the value is an empty string.
             </para>
 
@@ -203,8 +203,8 @@ $memoryManager->setMemoryLimit($newLimit);     // Set memory limit in bytes
 
             <para>
                 MinSize is a minimal size of memory objects, which may be
-                swapped by memory manager.  The memory manager does not swap
-                objects that are smaller than this value.  This reduces the
+                swapped by memory manager. The memory manager does not swap
+                objects that are smaller than this value. This reduces the
                 number of swap/load operations.
             </para>
 
