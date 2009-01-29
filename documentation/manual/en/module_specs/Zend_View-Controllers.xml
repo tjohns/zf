@@ -2,7 +2,7 @@
     <title>Controller Scripts</title>
 
     <para>
-        The controller is where you instantiate and configure Zend_View.
+        The controller is where you instantiate and configure <code>Zend_View</code>.
         You then assign variables to the view, and tell the view to
         render output using a particular script.
     </para>
@@ -13,7 +13,7 @@
 
         <para>
             Your controller script should assign necessary variables to the view
-            before it hands over control to the view script.  Normally, you
+            before it hands over control to the view script. Normally, you
             can do assignments one at a time by assigning to property names
             of the view instance:
         </para>
@@ -82,8 +82,8 @@ $view->assign('c', "Sea");
 
         <para>
             Once you have assigned all needed variables, the controller
-            should tell Zend_View to render a particular view script.
-            Do so by calling the render() method.  Note that the method will
+            should tell <code>Zend_View</code> to render a particular view script.
+            Do so by calling the render() method. Note that the method will
             return the rendered view, not print it, so you need to print or
             echo it yourself at the appropriate time.
         </para>
@@ -104,16 +104,16 @@ echo $view->render('someView.php');
         <title>View Script Paths</title>
 
         <para>
-            By default, Zend_View expects your view scripts to be relative to
-            your calling script.  For example, if your controller script is at
+            By default, <code>Zend_View</code> expects your view scripts to be relative to
+            your calling script. For example, if your controller script is at
             "/path/to/app/controllers" and it calls
-            $view->render('someView.php'), Zend_View will look for
+            $view->render('someView.php'), <code>Zend_View</code> will look for
             "/path/to/app/controllers/someView.php".
         </para>
 
         <para>
-            Obviously, your view scripts are probably located elsewhere.  To
-            tell Zend_View where it should look for view scripts, use the
+            Obviously, your view scripts are probably located elsewhere. To
+            tell <code>Zend_View</code> where it should look for view scripts, use the
             setScriptPath() method.
         </para>
 
@@ -130,9 +130,9 @@ $view->setScriptPath('/path/to/app/views');
 
         <para>
             In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, Zend_View will look
+            method. As you add paths to the stack, <code>Zend_View</code> will look
             at the most-recently-added path for the requested view
-            script.  This allows you override default views with custom
+            script. This allows you override default views with custom
             views so that you may create custom "themes" or "skins" for
             some views, while leaving others alone.
         </para>

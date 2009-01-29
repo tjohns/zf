@@ -44,7 +44,7 @@
 
         <para>
             <code>HeadStyle</code> allows you to wrap the style tag in conditional comments,
-            which allows you to hide it from specific browsers.  To add the conditional
+            which allows you to hide it from specific browsers. To add the conditional
             tags, pass the conditional value as part of the <code>$attributes</code> parameter in
             the method calls.
         </para>
@@ -139,7 +139,7 @@ $this->headStyle()->prependStyle($firstStyles);
 
         <para>
             Sometimes you need to generate CSS style declarations
-            programmatically.  While you could use string concatenation,
+            programmatically. While you could use string concatenation,
             heredocs, and the like, often it's easier just to do so by creating
             the styles and sprinkling in PHP tags. <code>HeadStyle</code> lets
             you do just that, capturing it to the stack:

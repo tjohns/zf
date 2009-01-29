@@ -40,14 +40,14 @@
 
     <para>
         A registered instance of <code>Zend_Translate</code> is the preferred
-        usage for this helper.  You can also select the locale to be used simply
+        usage for this helper. You can also select the locale to be used simply
         before you add the adapter to the registry.
     </para>
 
     <note>
         <para>
             We are speaking of locales instead of languages because a language
-            also may contain a region.  For example English is spoken in
+            also may contain a region. For example English is spoken in
             different dialects. There may be a translation for British and one
             for American English. Therefore, we say "locale" instead of
             "language."

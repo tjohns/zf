@@ -3,9 +3,9 @@
 
     <para>
         <code>Zend_View</code> is a class for working with the "view" portion of
-        the model-view-controller pattern.  That is, it exists to
+        the model-view-controller pattern. That is, it exists to
         help keep the view script separate from the model and
-        controller scripts.  It provides a system of helpers, output
+        controller scripts. It provides a system of helpers, output
         filters, and variable escaping.
     </para>
 
@@ -19,8 +19,8 @@
     <para>
         Essentially, using <code>Zend_View</code> happens in two major steps:
 
-        1.  Your controller script creates an instance of
-        Zend_View and assigns variables to that instance.
+        1. Your controller script creates an instance of
+        <code>Zend_View</code> and assigns variables to that instance.
 
         2. The controller tells the <code>Zend_View</code> to render a particular
         view, thereby handing control over the view script, which
@@ -32,7 +32,7 @@
 
         <para>
             As a simple example, let us say your controller has a list
-            of book data that it wants to have rendered by a view.  The
+            of book data that it wants to have rendered by a view. The
             controller script might look something like this:
         </para>
 
@@ -73,10 +73,10 @@ echo $view->render('booklist.php');
             Now we need the associated view script, "booklist.php".
             This is a PHP script like any other, with one exception:  it
             executes inside the scope of the <code>Zend_View</code> instance, which
-            means that references to $this point to the Zend_View
-            instance properties and methods.  (Variables assigned to the
+            means that references to $this point to the <code>Zend_View</code>
+            instance properties and methods. (Variables assigned to the
             instance by the controller are public properties of the
-            Zend_View instance.)  Thus, a very basic view script could
+            <code>Zend_View</code> instance.)  Thus, a very basic view script could
             look like this:
         </para>
 
@@ -185,7 +185,7 @@ base/path/
             <code>&lt;?</code> and <code>&lt;?=</code>. In addition, we
             typically use the <ulink
                 url="http://us.php.net/manual/en/control-structures.alternative-syntax.php">alternate
-                syntax for control structures</ulink>.  These are convenient
+                syntax for control structures</ulink>. These are convenient
             shorthands to use when writing view scripts, as they make the
             constructs more terse, and keep statements on single lines.
         </para>

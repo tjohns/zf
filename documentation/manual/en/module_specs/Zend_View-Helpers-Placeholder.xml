@@ -70,7 +70,7 @@
                     <code>setIndent($prefix)</code> can be used to set an
                     indentation value for content. If an integer is passed,
                     that number of spaces will be used; if a string is passed,
-                    the string will be used.  Use <code>getIndent()</code>
+                    the string will be used. Use <code>getIndent()</code>
                     at any time to determine what the current setting is.
             </para></listitem>
         </itemizedlist>

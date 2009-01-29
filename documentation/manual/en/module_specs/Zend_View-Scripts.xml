@@ -3,25 +3,25 @@
     <title>View Scripts</title>
 
     <para>
-        Once your controller has assigned variables and called render(),
-        Zend_View then includes the requested view script and executes
-        it "inside" the scope of the Zend_View instance.  Therefore,
+        Once your controller has assigned variables and called <code>render()</code>,
+        <code>Zend_View</code> then includes the requested view script and executes
+        it "inside" the scope of the <code>Zend_View</code> instance. Therefore,
         in your view scripts, references to $this actually point to the
-        Zend_View instance itself.
+        <code>Zend_View</code> instance itself.
     </para>
 
     <para>
         Variables assigned to the view from the controller are referred
-        to as instance properties.  For example, if the controller were
+        to as instance properties. For example, if the controller were
         to assign a variable 'something', you would refer to it as
-        $this->something in the view script.  (This allows you to keep
+        $this->something in the view script. (This allows you to keep
         track of which values were assigned to the script, and which are
         internal to the script itself.)
     </para>
 
     <para>
         By way of reminder, here is the example view script from the
-        Zend_View introduction.
+        <code>Zend_View</code> introduction.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -65,7 +65,7 @@
         </para>
 
         <para>
-            Zend_View comes with a method called escape() that does such
+            <code>Zend_View</code> comes with a method called escape() that does such
             escaping for you.
         </para>
 
@@ -80,9 +80,9 @@ echo $this->escape($this->variable);
 
         <para>
             By default, the escape() method uses the PHP htmlspecialchars()
-            function for escaping.  However, depending on your environment,
-            you may wish for escaping to occur in a different way.  Use the
-            setEscape() method at the controller level to tell Zend_View
+            function for escaping. However, depending on your environment,
+            you may wish for escaping to occur in a different way. Use the
+            setEscape() method at the controller level to tell <code>Zend_View</code>
             what escaping callback to use.
         </para>
 
@@ -119,9 +119,9 @@ echo $view->render(...);
         <para>
             Although PHP is itself a powerful template system, many developers
             feel it is too powerful or complex for their template designers and
-            will want to use an alternate template engine. Zend_View provides
+            will want to use an alternate template engine. <code>Zend_View</code> provides
             two mechanisms for doing so, the first through view scripts, the
-            second by implementing Zend_View_Interface.
+            second by implementing <code>Zend_View_Interface</code>.
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -129,7 +129,7 @@ echo $view->render(...);
 
             <para>
                 A view script may be used to instantiate and manipulate a
-                separate template object, such as a PHPLIB-style template.  The
+                separate template object, such as a PHPLIB-style template. The
                 view script for that kind of activity might look something like
                 this:
             </para>
@@ -189,7 +189,7 @@ if ($this->books) {
             <title>Template Systems Using Zend_View_Interface</title>
 
             <para>
-                Some may find it easier to simply provide a Zend_View-compatible
+                Some may find it easier to simply provide a <code>Zend_View</code>-compatible
                 template engine. <code>Zend_View_Interface</code> defines the
                 minimum interface needed for compatability:
             </para>
@@ -248,7 +248,7 @@ public function render($name);
 
             <para>
                 Using this interface, it becomes relatively easy to wrap a
-                third-party template engine as a Zend_View-compatible class. As
+                third-party template engine as a <code>Zend_View</code>-compatible class. As
                 an example, the following is one potential wrapper for Smarty:
             </para>
 

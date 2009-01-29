@@ -4,13 +4,13 @@
     <para>
         In your view scripts, often it is necessary to perform certain
         complex functions over and over: e.g., formatting a date,
-        generating form elements, or displaying action links.  You can
+        generating form elements, or displaying action links. You can
         use helper classes to perform these behaviors for you.
     </para>
 
     <para>
         A helper is simply a class. Let's say we want a helper named 'fooBar'.
-        By default, the class is prefixed with <code>'Zend_View_Helper_'</code>
+        By default, the class is prefixed with 'Zend_View_Helper_'
         (you can specify a custom prefix when setting a helper path), and the
         last segment of the class name is the helper name; this segment should
         be TitleCapped; the full class name is then:
@@ -45,7 +45,7 @@
         <code>$this->helperName()</code>. Behind the scenes,
         <code>Zend_View</code> will load the
         <code>Zend_View_Helper_HelperName</code> class, create an object
-        instance of it, and call its <code>helperName()</code> method.  The
+        instance of it, and call its <code>helperName()</code> method. The
         object instance is persistent within the <code>Zend_View</code>
         instance, and is reused for all future calls to
         <code>$this->helperName()</code>.
@@ -68,7 +68,7 @@
                 <code>declareVars():</code> Primarily for use when using
                 <code>strictVars()</code>, this helper can be used to declare
                 template variables that may or may not already be set in the
-                view object, as well as to set default values.  Arrays passed as
+                view object, as well as to set default values. Arrays passed as
                 arguments to the method will be used to set default values;
                 otherwise, if the variable does not exist, it is set to an empty
                 string.
@@ -249,9 +249,9 @@ echo $this->formCheckbox('foo',
             <listitem><para>
                 <code>formRadio($name, $value, $attribs, $options):</code>
                 Creates a series of &lt;input type="radio" /&gt; elements, one
-                for each of the $options elements.  In the $options array, the
+                for each of the $options elements. In the $options array, the
                 element key is the radio value, and the element value is the
-                radio label.  The $value radio will be preselected for you.
+                radio label. The $value radio will be preselected for you.
             </para></listitem>
 
             <listitem><para>
@@ -262,9 +262,9 @@ echo $this->formCheckbox('foo',
             <listitem><para>
                 <code>formSelect($name, $value, $attribs, $options):</code>
                 Creates a &lt;select&gt;...&lt;/select&gt; block, with one
-                &lt;option&gt;one for each of the $options elements.  In the
+                &lt;option&gt;one for each of the $options elements. In the
                 $options array, the element key is the option value, and the
-                element value is the option label.  The $value option(s) will be
+                element value is the option label. The $value option(s) will be
                 preselected for you.
             </para></listitem>
 
@@ -377,7 +377,7 @@ echo $this->formCheckbox('foo',
             <code>Zend_View</code> looks in "Zend/View/Helper/*" for helper
             classes. You can tell <code>Zend_View</code> to look in other
             locations using the <code>setHelperPath()</code> and
-            <code>addHelperPath()</code> methods.  Additionally, you can
+            <code>addHelperPath()</code> methods. Additionally, you can
             indicate a class prefix to use for helpers in the path provided, to
             allow namespacing your helper classes. By default, if no class
             prefix is provided, 'Zend_View_Helper_' is assumed.
@@ -396,7 +396,7 @@ $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
             In fact, you can "stack" paths using the
             <code>addHelperPath()</code> method. As you add paths to the stack,
             <code>Zend_View</code> will look at the most-recently-added path for
-            the requested helper class.  This allows you to add to (or even
+            the requested helper class. This allows you to add to (or even
             override) the initial distribution of helpers with your own custom
             helpers.
         </para>
@@ -442,7 +442,7 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
             <listitem><para>
                 The class name must, at the very minimum, end with the helper
-                name itself, using MixedCaps.  E.g., if you were writing a
+                name itself, using MixedCaps. E.g., if you were writing a
                 helper called "specialPurpose", the class name would minimally
                 need to be "SpecialPurpose". You may, and should, give the class
                 name a prefix, and it is recommended that you use 'View_Helper'
@@ -455,20 +455,20 @@ $view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
             <listitem><para>
                 The class must have a public method that matches the
                 helper name; this is the method that will be called when
-                your template calls "$this->specialPurpose()".  In our
+                your template calls "$this->specialPurpose()". In our
                 "specialPurpose" helper example, the required method
                 declaration would be "public function specialPurpose()".
             </para></listitem>
 
             <listitem><para>
                 In general, the class should not echo or print or otherwise
-                generate output.  Instead, it should return values to be
-                printed or echoed.  The returned values should be escaped
+                generate output. Instead, it should return values to be
+                printed or echoed. The returned values should be escaped
                 appropriately.
             </para></listitem>
 
             <listitem><para>
-                The class must be in a file named after the helper class.  Again
+                The class must be in a file named after the helper class. Again
                 using our "specialPurpose" helper example, the file has to be
                 named "SpecialPurpose.php".
             </para></listitem>
