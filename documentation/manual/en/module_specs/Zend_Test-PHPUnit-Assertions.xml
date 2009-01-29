@@ -28,7 +28,7 @@
             arguments and/or an error message, based on the assertion type. You
             can find the rules for writing the CSS selectors in the <link
                 linkend="zend.dom.query.operation">Zend_Dom_Query theory of
-                operation chapter</link>.  Query assertions include:
+                operation chapter</link>. Query assertions include:
         </para>
 
         <itemizedlist>
