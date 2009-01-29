@@ -30,7 +30,7 @@
     </note>
 
     <example id="zend.feed.introduction.example.rss">
-        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
+        <title>Putting <code>Zend_Feed</code> to Work on RSS Feed Data</title>
         <programlisting role="php"><![CDATA[
 // Fetch the latest Slashdot headlines
 try {

@@ -40,7 +40,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 
         <para>
             <code>Zend_Feed</code> enables developers to create custom feeds very easily. You just have to create an
-            array and to import it with Zend_Feed. This array can be imported with <code>Zend_Feed::importArray()</code>
+            array and to import it with <code>Zend_Feed</code>. This array can be imported with <code>Zend_Feed::importArray()</code>
             or with <code>Zend_Feed::importBuilder()</code>. In this last case the array will be computed on the fly by
             a custom data source implementing <code>Zend_Feed_Builder_Interface</code>.
         </para>
