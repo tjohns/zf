@@ -1,5 +1,5 @@
 <sect1 id="zend.form.forms">
-    <title>Creating Forms Using Zend_Form</title>
+    <title>Creating Forms Using <code>Zend_Form</code></title>
 
     <para>
         The <code>Zend_Form</code> class is used to aggregate form elements,
@@ -48,7 +48,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        You can optionally pass in a instance of Zend_Config or an array, which will be used to set
+        You can optionally pass in a instance of <code>Zend_Config</code> or an array, which will be used to set
         object state and potentially create new elements:
     </para>
 
@@ -95,7 +95,7 @@ $form = new Zend_Form($config);
             <listitem><para>
                 <code>setPluginLoader($loader, $type)</code>: $loader is the
                 plugin loader object itself, while type is one of the types
-                specified above.  This sets the plugin loader for the given type
+                specified above. This sets the plugin loader for the given type
                 to the newly specified loader object.
             </para></listitem>
 
@@ -173,7 +173,7 @@ $form = new Zend_Form($config);
 
         <para>
             The most basic method for adding an element is
-            <code>addElement()</code>.  This method can take either an object of
+            <code>addElement()</code>. This method can take either an object of
             type <code>Zend_Form_Element</code> (or of a class extending
             <code>Zend_Form_Element</code>), or arguments for building a new
             element -- including the element type, name, and any configuration
@@ -208,7 +208,7 @@ $form->addElement('text', 'foo', array('label' => 'Foo:'));
                 to say, it returns the <code>Zend_Form</code> object, and not
                 the element. This is done to allow you to chain together
                 multiple addElement() methods or other form methods that
-                implement the fluent interface (all setters in Zend_Form
+                implement the fluent interface (all setters in <code>Zend_Form</code>
                 implement the pattern).
             </para>
 
@@ -564,7 +564,7 @@ $form->setElementFilters(array('StringTrim'));
 
         <para>
             The base class for display groups is
-            <code>Zend_Form_DisplayGroup</code>.  While it can be instantiated
+            <code>Zend_Form_DisplayGroup</code>. While it can be instantiated
             directly, it is usually best to use <code>Zend_Form</code>'s
             <code>addDisplayGroup()</code> method to do so. This method takes an
             array of elements as its first argument, and a name for the display
@@ -915,7 +915,7 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
             <listitem><para>
                 Creating multi-page forms. Since sub forms are simply forms, you
                 can display a separate sub form per page, building up multi-page
-                forms where each form has its own validation logic.  Only once
+                forms where each form has its own validation logic. Only once
                 all sub forms validate would the form be considered complete.
             </para></listitem>
 
@@ -1068,7 +1068,7 @@ $form->setAction('/user/login')
 
         <para>
             You may also specify the form encoding type specifically using the
-            enctype accessors. Zend_Form defines two constants,
+            enctype accessors. <code>Zend_Form</code> defines two constants,
             <code>Zend_Form::ENCTYPE_URLENCODED</code> and
             <code>Zend_Form::ENCTYPE_MULTIPART</code>, corresponding to the
             values 'application/x-www-form-urlencoded' and
@@ -1323,7 +1323,7 @@ echo $form->renderFieldset("<p>This is fieldset content</p>");
         <para>
             A primary use case for forms is validating submitted data.
             <code>Zend_Form</code> allows you to validate an entire form, a partial form, or responses for
-            XmlHttpRequests (AJAX).  If the submitted data is not valid, it has
+            XmlHttpRequests (AJAX). If the submitted data is not valid, it has
             methods for retrieving the various error codes and messages for
             elements and sub forms.
         </para>
@@ -1695,7 +1695,7 @@ $messages = $form->getMessages('username');
             <code>Zend_Form</code> is fully configurable via
             <code>setOptions()</code> and <code>setConfig()</code> (or by
             passing options or a <code>Zend_Config</code> object to the
-            constructor).  Using these methods, you can specify form elements,
+            constructor). Using these methods, you can specify form elements,
             display groups, decorators, and metadata.
         </para>
 

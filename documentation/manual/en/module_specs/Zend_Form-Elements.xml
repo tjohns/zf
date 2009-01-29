@@ -1,9 +1,9 @@
 <sect1 id="zend.form.elements">
-    <title>Creating Form Elements Using Zend_Form_Element</title>
+    <title>Creating Form Elements Using <code>Zend_Form_Element</code></title>
 
     <para>
         A form is made of elements that typically correspond to HTML form
-        input. Zend_Form_Element encapsulates single form elements, with the
+        input. <code>Zend_Form_Element</code> encapsulates single form elements, with the
         following areas of responsibility:
     </para>
 
@@ -67,7 +67,7 @@
             <listitem><para>
                 <code>setPluginLoader($loader, $type)</code>:
                 <code>$loader</code> is the plugin loader object itself, while
-                <code>$type</code> is one of the types specified above.  This
+                <code>$type</code> is one of the types specified above. This
                 sets the plugin loader for the given type to the newly
                 specified loader object.
             </para></listitem>
@@ -201,7 +201,7 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             These operations may be performed using
             <code>Zend_Filter</code>. <code>Zend_Form_Element</code> has
             support for filter chains, allowing you to specify multiple,
-            sequential filters.  Filtering happens both during
+            sequential filters. Filtering happens both during
             validation and when you retrieve the element value via
             <code>getValue()</code>:
         </para>
@@ -539,7 +539,7 @@ if ($element->isValid($value)) {
                 <code>Zend_Form::isValid()</code> passes the entire array of
                 data being processed to <code>$context</code> when validating a
                 form, and <code>Zend_Form_Element::isValid()</code>, in turn,
-                passes it to each validator.  This means you can write
+                passes it to each validator. This means you can write
                 validators that are aware of data passed to other form
                 elements. As an example, consider a standard registration form
                 that has fields for both password and a password confirmation;
@@ -902,7 +902,7 @@ $this->addDecorators(array(
             The initial content is created by the 'ViewHelper' decorator, which
             creates the form element itself. Next, the 'Errors' decorator
             fetches error messages from the element, and, if any are present,
-            passes them to the 'FormErrors' view helper to render.  If a
+            passes them to the 'FormErrors' view helper to render. If a
             description is present, the 'Description' decorator will append a
             paragraph of class 'description' containing the descriptive text to
             the aggregated content. The next decorator, 'HtmlTag', wraps the

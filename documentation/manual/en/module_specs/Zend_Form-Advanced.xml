@@ -1,5 +1,5 @@
 <sect1 id="zend.form.advanced">
-    <title>Advanced Zend_Form Usage</title>
+    <title>Advanced <code>Zend_Form</code> Usage</title>
 
     <para>
         <code>Zend_Form</code> has a wealth of functionality, much of it aimed
@@ -432,11 +432,11 @@ class My_Form_Registration extends Zend_Form
 
             <para>
                 Next, we need to add some scaffolding in our action controller,
-                and have several considerations.  First, we need to make sure we
+                and have several considerations. First, we need to make sure we
                 persist form data between requests, so that we can determine
-                when to quit.  Second, we need some logic to determine what form
+                when to quit. Second, we need some logic to determine what form
                 segments have already been submitted, and what sub form to
-                display based on that information.  We'll use
+                display based on that information. We'll use
                 <code>Zend_Session_Namespace</code> to persist data, which will
                 also help us answer the question of which form to submit.
             </para>

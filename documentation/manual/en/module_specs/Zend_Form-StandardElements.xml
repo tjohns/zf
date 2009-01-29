@@ -138,7 +138,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             HTML checkboxes allow you return a specific value, but basically
             operate as booleans. When checked, the checkbox's value is submitted.
             When the checkbox is not checked, nothing is submitted. Internally,
-            Zend_Form_Element_Checkbox enforces this state.
+            <code>Zend_Form_Element_Checkbox</code> enforces this state.
         </para>
 
         <para>

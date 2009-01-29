@@ -47,7 +47,7 @@ $form->setAction('/resource/process')
         <para>
             You can set additional HTML attributes for the
             <code>&lt;form&gt;</code> tag by using the setAttrib() or
-            setAttribs() methods.  For instance, if you wish to set the id, set
+            setAttribs() methods. For instance, if you wish to set the id, set
             the "id" attribute:
         </para>
 
@@ -260,7 +260,7 @@ $form->addElement('text', 'username', array(
         <para>
             Rendering a form is simple. Most elements use a
             <code>Zend_View</code> helper to render themselves, and thus need a
-            view object in order to render.  Other than that, you have two
+            view object in order to render. Other than that, you have two
             options: use the form's render() method, or simply echo it.
         </para>
 
@@ -485,7 +485,7 @@ if (!$form->isValid($_POST)) {
             For our purposes, let's assume that a valid username should be
             alphanumeric characters only, start with a letter, have a minimum
             length of 6, and maximum length of 20; they will be normalized to
-            lowercase. Passwords must be a minimum of 6 characters.  We'll
+            lowercase. Passwords must be a minimum of 6 characters. We'll
             simply toss the submit value when done, so it can remain
             unvalidated.
         </para>
@@ -578,7 +578,7 @@ class UserController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Using a Zend_Config object</title>
+        <title>Using a <code>Zend_Config</code> Object</title>
 
         <para>
             All <code>Zend_Form</code> classes are configurable using

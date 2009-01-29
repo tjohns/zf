@@ -245,7 +245,7 @@ class Util
 
             <listitem><para>
                 <code>markupListEnd</code>: Markup to append error message lists
-                with.  Default value: '&lt;/ul&gt;'.
+                with. Default value: '&lt;/ul&gt;'.
             </para></listitem>
 
             <listitem><para>

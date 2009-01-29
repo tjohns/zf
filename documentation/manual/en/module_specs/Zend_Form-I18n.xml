@@ -1,9 +1,9 @@
 <sect1 id="zend.form.i18n">
-    <title>Internationalization of Zend_Form</title>
+    <title>Internationalization of <code>Zend_Form</code></title>
 
     <para>
         Increasingly, developers need to tailor their content for multiple
-        languages and regions. Zend_Form aims to make such a task trivial, and
+        languages and regions. <code>Zend_Form</code> aims to make such a task trivial, and
         leverages functionality in both <link
             linkend="zend.translate">Zend_Translate</link> and <link
             linkend="zend.validate">Zend_Validate</link> to do so.
@@ -38,7 +38,7 @@
             In order to initialize I18n in forms, you will need either a
             <code>Zend_Translate</code> object or a
             <code>Zend_Translate_Adapter</code> object, as detailed in the
-            <code>Zend_Translate</code> documentation.  Once you have a
+            <code>Zend_Translate</code> documentation. Once you have a
             translation object, you have several options:
         </para>
 

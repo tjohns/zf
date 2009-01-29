@@ -1,5 +1,5 @@
 <sect1 id="zend.form.decorators">
-    <title>Creating Custom Form Markup Using Zend_Form_Decorator</title>
+    <title>Creating Custom Form Markup Using <code>Zend_Form_Decorator</code></title>
 
     <para>
         Rendering a form object is completely optional -- you do not need to use
@@ -11,7 +11,7 @@
         An arbitrary number of decorators may be attached to each item
         (elements, display groups, sub forms, or the form object itself);
         however, only one decorator of a given type may be attached to each
-        item.  Decorators are called in the order they are registered. Depending
+        item. Decorators are called in the order they are registered. Depending
         on the decorator, it may replace the content passed to it, or append or
         prepend the content.
     </para>
