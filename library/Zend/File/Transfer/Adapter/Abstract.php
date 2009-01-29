@@ -110,7 +110,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * Available options for file transfers
      */
     protected $_options = array(
-        'ignoreNoFile' => false
+        'ignoreNoFile'  => false,
+        'useByteString' => true
     );
 
     /**
@@ -575,7 +576,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         $this->_messages = array();
         $break           = false;
         foreach($check as $key => $content) {
-            if (in_array('Zend_Validate_File_Count', $content['validators'])) {
+            if (array_key_exists('validators', $content) &&
+                in_array('Zend_Validate_File_Count', $content['validators'])) {
                 $validator = $this->_validators['Zend_Validate_File_Count'];
                 $validator->addFile($content['tmp_name']);
                 $count = $content;
@@ -590,7 +592,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         foreach ($check as $key => $content) {
             $fileerrors  = array();
-            if ($content['validated'] === true) {
+            if (array_key_exists('validator', $content) && $content['validated']) {
                 continue;
             }
 
@@ -1108,6 +1110,56 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         }
 
         return $result;
+    }
+
+    /**
+     * Returns the real filesize of the file
+     *
+     * @param string|array $files Files to get the filesize from
+     * @return string|array Filesize
+     */
+    public function getFileSize($files = null)
+    {
+        $files  = $this->_getFiles($files);
+        $result = array();
+        foreach($files as $key => $value) {
+            if (file_exists($value['name'])) {
+                $size = sprintf("%u", @filesize($value['name']));
+            } else if (file_exists($value['tmp_name'])) {
+                $size = sprintf("%u", @filesize($value['tmp_name']));
+            } else {
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception("File '{$value['name']}' does not exist");
+            }
+
+            if ($value['options']['useByteString']) {
+                $result[$key] = $this->_toByteString($size);
+            } else {
+                $result[$key] = $size;
+            }
+        }
+
+        if (count($result) == 1) {
+            return current($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the formatted size
+     *
+     * @param  integer $size
+     * @return string
+     */
+    protected function _toByteString($size)
+    {
+        $sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        for ($i=0; $size >= 1024 && $i < 9; $i++) {
+            $size /= 1024;
+        }
+
+        return round($size, 2) . $sizes[$i];
     }
 
     /**

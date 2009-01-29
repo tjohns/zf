@@ -792,6 +792,17 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Returns the filesize for this file element
+     *
+     * @return string|array Filesize
+     */
+    public function getFileSize()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->getFileSize($this->getName());
+    }
+
+    /**
      * Render form element
      * Checks for decorator interface to prevent errors
      *

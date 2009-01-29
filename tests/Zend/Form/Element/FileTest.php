@@ -353,6 +353,17 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testFileSize()
+    {
+        $element = new Zend_Form_Element_File('baz');
+        $adapter = new Zend_Form_Element_FileTest_MockAdapter();
+        $element->setTransferAdapter($adapter);
+
+        $this->assertEquals('8B', $element->getFileSize('baz.text'));
+        $adapter->setOptions(array('useByteString' => false));
+        $this->assertEquals(8, $element->getFileSize('baz.text'));
+    }
+
     private function _convertIniToInteger($setting)
     {
         if (!is_numeric($setting)) {
@@ -398,12 +409,14 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
 
     public function __construct()
     {
+        $testfile = dirname(__FILE__) . '/../../File/Transfer/Adapter/_files/test.txt';
         $this->_files = array(
             'foo' => array(
                 'name'       => 'foo.jpg',
                 'type'       => 'image/jpeg',
                 'size'       => 126976,
                 'tmp_name'   => '/tmp/489127ba5c89c',
+                'options'   => array('ignoreNoFile' => false, 'useByteString' => true),
                 'validated'  => false,
                 'received'   => false,
                 'filtered'   => false,
@@ -414,6 +427,7 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
                 'type'       => 'image/png',
                 'size'       => 91136,
                 'tmp_name'   => '/tmp/489128284b51f',
+                'options'   => array('ignoreNoFile' => false, 'useByteString' => true),
                 'validated'  => false,
                 'received'   => false,
                 'filtered'   => false,
@@ -423,7 +437,8 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
                 'name'       => 'baz.text',
                 'type'       => 'text/plain',
                 'size'       => 1172,
-                'tmp_name'   => '/tmp/4891286cceff3',
+                'tmp_name'   => $testfile,
+                'options'   => array('ignoreNoFile' => false, 'useByteString' => true),
                 'validated'  => false,
                 'received'   => false,
                 'filtered'   => false,
@@ -434,6 +449,7 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
                 'type'       => 'text/plain',
                 'size'       => 1172,
                 'tmp_name'   => '/tmp/4891286cceff3',
+                'options'   => array('ignoreNoFile' => false, 'useByteString' => true),
                 'validated'  => false,
                 'received'   => false,
                 'filtered'   => false,
@@ -444,6 +460,7 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
                 'type'       => 'text/plain',
                 'size'       => 1172,
                 'tmp_name'   => '/tmp/4891286cceff3',
+                'options'   => array('ignoreNoFile' => false, 'useByteString' => true),
                 'validated'  => false,
                 'received'   => false,
                 'filtered'   => false,
