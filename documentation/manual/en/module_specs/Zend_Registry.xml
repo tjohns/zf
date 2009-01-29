@@ -219,7 +219,7 @@ var_dump($registry->index);
         </para>
 
         <example id="zend.registry.using.isset.example-isregistered">
-            <title>Example of isRegistered() method</title>
+            <title>Example of isRegistered() Method Usage</title>
             <programlisting role="php"><![CDATA[
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
@@ -235,7 +235,7 @@ if (Zend_Registry::isRegistered($index)) {
         </para>
 
         <example id="zend.registry.using.isset.example-isset">
-            <title>Example of Using the <code>isset()</code> Method</title>
+            <title>Example of <code>isset()</code> Method Usage</title>
             <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
 
@@ -319,7 +319,7 @@ Zend_Registry::set('index', $value);
         </para>
 
         <example id="zend.registry.using.unsetting.example">
-            <title>Example of the <code>_unsetInstance()</code> Method</title>
+            <title>Example of <code>_unsetInstance()</code> Method Usage</title>
             <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
 
