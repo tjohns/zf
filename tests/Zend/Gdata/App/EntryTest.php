@@ -549,6 +549,7 @@ class Zend_Gdata_App_EntryTest extends PHPUnit_Framework_TestCase
         $v1TestString = 'TEST-v1';
         $v2TestString = 'TEST-v2';
         
+        Zend_Gdata_App_Base::flushNamespaceLookupCache();
         $entry = $this->service->newEntry();
         $entry->registerNamespace($prefix, $v1TestString, 1, 0);
         $entry->registerNamespace($prefix, $v2TestString, 2, 0);
@@ -573,6 +574,7 @@ class Zend_Gdata_App_EntryTest extends PHPUnit_Framework_TestCase
         $testString12 = 'TEST-v1-2';
         $testString22 = 'TEST-v2-2';
         
+        Zend_Gdata_App_Base::flushNamespaceLookupCache();
         $entry = $this->service->newEntry();
         $entry->registerNamespace($prefix, $testString10, 1, 0);
         $entry->registerNamespace($prefix, $testString20, 2, 0);
