@@ -803,7 +803,7 @@ class Zend_Soap_ServerTest extends PHPUnit_Framework_TestCase
         $response = $server->handle($request);
 
         $this->assertContains(
-            '<SOAP-ENV:Fault><faultcode>Reciever</faultcode><faultstring>Test Message</faultstring></SOAP-ENV:Fault>',
+            '<SOAP-ENV:Fault><faultcode>Receiver</faultcode><faultstring>Test Message</faultstring></SOAP-ENV:Fault>',
             $response
         );
     }
