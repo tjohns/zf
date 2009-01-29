@@ -51,7 +51,7 @@
     </para>
 
     <example id="zend.config.writer.example.using">
-        <title>Using Zend_Config_Writer</title>
+        <title>Using <code>Zend_Config_Writer</code></title>
         <para>
             This example illustrates the basic use of
             <code>Zend_Config_Writer_Xml</code> to create a new config file:

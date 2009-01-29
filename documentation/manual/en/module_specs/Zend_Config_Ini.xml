@@ -35,7 +35,7 @@ $config = new Zend_Config_Ini('/path/to/config.ini',
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
-        <title>Using Zend_Config_Ini</title>
+        <title>Using <code>Zend_Config_Ini</code></title>
         <para>
             This example illustrates a basic use of <code>Zend_Config_Ini</code> for loading configuration data from an
             INI file. In this example there are configuration data for both a production system and for a staging
