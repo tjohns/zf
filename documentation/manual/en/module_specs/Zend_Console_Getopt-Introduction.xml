@@ -6,24 +6,24 @@
     </para>
     <para>
         Users may specify command-line arguments when
-        they execute your application.  These arguments have meaning to the
+        they execute your application. These arguments have meaning to the
         application, to change the behavior in some way, or choose resources,
-        or specify parameters.  Many options have developed customary meaning,
+        or specify parameters. Many options have developed customary meaning,
         for example "<code>--verbose</code>" enables extra output from many
-        applications.  Other options may have a meaning that is different for
-        each application.  For example, "<code>-c</code>" enables different
+        applications. Other options may have a meaning that is different for
+        each application. For example, "<code>-c</code>" enables different
         features in <command>grep</command>, <command>ls</command>, and
         <command>tar</command>.
     </para>
     <para>
-        Below are a few definitions of terms.  Common usage of the terms
+        Below are a few definitions of terms. Common usage of the terms
         varies, but this documentation will use the definitions below.
     </para>
     <itemizedlist>
         <listitem>
             <para>
                 "argument": a string that occurs on the command-line
-                following the name of the command.  Arguments may be
+                following the name of the command. Arguments may be
                 options or else may appear without an option, to name
                 resources on which the command operates.
             </para>
@@ -37,7 +37,7 @@
         <listitem>
             <para>
                 "flag": the first part of an option, identifies
-                the purpose of the option.  A flag is preceded
+                the purpose of the option. A flag is preceded
                 conventionally by one or two dashes
                 ("<code>-</code>" or "<code>--</code>").
                 A single dash precedes a single-character flag
@@ -50,9 +50,9 @@
             <para>
                 "parameter": the secondary part of an option; a data value
                 that may accompany a flag, if it is applicable to the
-                given option.  For example, many commands accept a
+                given option. For example, many commands accept a
                 "<code>--verbose</code>" option, but typically
-                this option has no parameter.  However, an option like
+                this option has no parameter. However, an option like
                 "<code>--user</code>" almost always requires
                 a following parameter.
             </para>
@@ -71,8 +71,8 @@
             <para>
                 "cluster": multiple single-character flags combined
                 in a single string argument and preceded by a single
-                dash.  For example, "<command>ls -1str</command>"
-                uses a cluster of four short flags.  This command is
+                dash. For example, "<command>ls -1str</command>"
+                uses a cluster of four short flags. This command is
                 equivalent to "<command>ls -1 -s -t -r</command>".
                 Only single-character flags can be clustered.
                 You cannot make a cluster of long flags.
