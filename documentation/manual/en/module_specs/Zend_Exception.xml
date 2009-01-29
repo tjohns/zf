@@ -3,13 +3,13 @@
     <title>Using Exceptions</title>
 
     <para>
-        All exceptions thrown by classes in Zend Framework should extend the base class Zend_Exception.
+        <code>Zend_Exception</code> is simply the base class for all exceptions thrown within Zend Framework.
     </para>
 
     <example id="zend.exception.using.example">
         <title>Catching an Exception</title>
         <para>
-            The following code listing demonstrates how to catch an exception thrown within a Zend Framework class:
+            The following code listing demonstrates how to catch an exception thrown in a Zend Framework class:
         </para>
         <programlisting role="php"><![CDATA[
 try {
@@ -24,6 +24,11 @@ try {
 ]]>
         </programlisting>
     </example>
+    <para>
+        <code>Zend_Exception</code> can be used as a catch-all exception class in a
+        catch block to trap all exceptions thrown by Zend Framework classes. This can
+        be useful when the program can not recover by catching a specific exception type.
+    </para>
 
     <para>
         The documentation for each Zend Framework
