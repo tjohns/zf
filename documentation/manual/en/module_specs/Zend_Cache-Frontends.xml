@@ -2,7 +2,7 @@
     <title>Zend_Cache Frontends</title>
 
     <sect2 id="zend.cache.frontends.core">
-        <title>Zend_Cache_Core</title>
+        <title><code>Zend_Cache_Core</code></title>
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>Introduction</title>
             <para>
@@ -230,7 +230,7 @@ if (!($cache->test($id))) {
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title>Zend_Cache_Frontend_Output</title>
+        <title><code>Zend_Cache_Frontend_Output</code></title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>Introduction</title>
             <para>
@@ -275,7 +275,7 @@ echo 'This is never cached ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title>Zend_Cache_Frontend_Function</title>
+        <title><code><Zend_Cache_Frontend_Function</code></title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>Introduction</title>
             <para>
@@ -356,7 +356,7 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title>Zend_Cache_Frontend_Class</title>
+        <title><code>Zend_Cache_Frontend_Class</code></title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>Introduction</title>
             <para>
@@ -472,7 +472,7 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title>Zend_Cache_Frontend_File</title>
+        <title><code>Zend_Cache_Frontend_File</code></title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Introduction</title>
             <para>
@@ -553,7 +553,7 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title>Zend_Cache_Frontend_Page</title>
+        <title><code>Zend_Cache_Frontend_Page</code></title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>Introduction</title>
             <para>
@@ -735,7 +735,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.examples">
             <title>Examples</title>
             <para>
-                Use of Zend_Cache_Frontend_Page is really trivial :
+                Use of <code>Zend_Cache_Frontend_Page</code> is really trivial:
             </para>
             <programlisting role="php"><![CDATA[
 // [...] // require, configuration and factory
@@ -749,7 +749,7 @@ $cache->start();
             </programlisting>
             <para>
                 a more complex example which shows a way to get a centralized cache management in a bootstrap file
-                (for using with Zend_Controller for example)
+                (for using with <code>Zend_Controller</code> for example)
             </para>
             <programlisting role="php"><![CDATA[
 /*

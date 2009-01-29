@@ -134,7 +134,7 @@ echo 'This is never cached ('.time().').';
        </para>
     </example>
     <note><para>
-        When using Zend_Cache, pay attention to the important cache identifier (passed to <code>save()</code>
+        When using <code>Zend_Cache</code>, pay attention to the important cache identifier (passed to <code>save()</code>
         and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
         cache records may wipe each other or, even worse, be displayed in place of the other.
     </para></note>
