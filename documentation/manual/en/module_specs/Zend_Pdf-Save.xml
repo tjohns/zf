@@ -11,7 +11,7 @@
     </para>
 
     <para>
-    <code>Zend_Pdf::render($newSegmentOnly = false)</code> returns the PDF document as a string.  If
+    <code>Zend_Pdf::render($newSegmentOnly = false)</code> returns the PDF document as a string. If
     $newSegmentOnly is true, then only the new PDF file segment is returned.
     </para>
 

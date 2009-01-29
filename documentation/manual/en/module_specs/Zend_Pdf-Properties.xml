@@ -8,7 +8,7 @@
     <para>
         Historically this information is stored using special Info structure. This structure
         is available for read and writing as an associative array using <code>properties</code> public property
-        of Zend_Pdf objects:
+        of <code>Zend_Pdf</code> objects:
             <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 

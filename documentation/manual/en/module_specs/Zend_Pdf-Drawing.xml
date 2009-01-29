@@ -22,7 +22,7 @@ $height = $pdfPage->getHeight();
     <sect2 id="zend.pdf.drawing.color">
         <title>Colors</title>
         <para>
-        PDF has a powerful capabilities for colors representation. Zend_Pdf module supports Gray Scale,
+        PDF has a powerful capabilities for colors representation. <code>Zend_Pdf</code> module supports Gray Scale,
         RGB and CMYK color spaces. Any of them can be used in any place, where <code>Zend_Pdf_Color</code>
         object is required. <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> and
         <code>Zend_Pdf_Color_Cmyk</code> classes provide this functionality:
@@ -218,7 +218,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         By default, text strings are interpreted using the character encoding method of the current locale. If
         you have a string that uses a different encoding method (such as a UTF-8 string read from a file on disk,
         or a MacRoman string obtained from a legacy database), you can indicate the character encoding at draw
-        time and Zend_Pdf will handle the conversion for you. You can supply source strings in any encoding
+        time and <code>Zend_Pdf</code> will handle the conversion for you. You can supply source strings in any encoding
         method supported by PHP's <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> function:
         </para>
         <example id="zend.pdf.drawing.text-drawing.example-2">
@@ -259,7 +259,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
         styles), Helvetica (4 styles), Times (4 styles), Symbol, and Zapf Dingbats.
         </para>
         <para>
-        Zend_Pdf currently supports the standard 14 PDF fonts as well as your own custom TrueType fonts. Font
+        <code>Zend_Pdf</code> currently supports the standard 14 PDF fonts as well as your own custom TrueType fonts. Font
         objects are obtained via one of two factory methods: <code>Zend_Pdf_Font::fontWithName($fontName)</code>
         for the standard 14 PDF fonts or <code>Zend_Pdf_Font::fontWithPath($filePath)</code> for custom fonts.
         </para>
@@ -437,11 +437,11 @@ $font = Zend_Pdf_Font::fontWithPath(
              Appendix D for details). They are generally equal to Latin1 character set (except Symbol and ZapfDingbats fonts).   
         </para>
         <para>
-            Zend_Pdf uses CP1252 (WinLatin1) for drawing text with standard fonts.
+            <code>Zend_Pdf</code> uses CP1252 (WinLatin1) for drawing text with standard fonts.
         </para>
         <para>
             Text still can be provided in any other encoding, which must be specified if it differs from a current locale.
-            Only WinLatin1 characters will be actually drawn.  
+            Only WinLatin1 characters will be actually drawn.
         </para>
         <example id="zend.pdf.drawing.using-fonts.example-7">
             <title>Combining font embedding options.</title>
@@ -855,7 +855,7 @@ public function restoreGS();
     <sect2 id="zend.pdf.drawing.clipping">
         <title>Clipping draw area</title>
         <para>
-        PDF and Zend_Pdf module support clipping of draw area.
+        PDF and <code>Zend_Pdf</code> module support clipping of draw area.
         Current clip area limits the regions of the page affected by painting operators. It's a whole page initially.
         </para>
         <para>

@@ -2,11 +2,11 @@
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Introduction</title>
     <para>
-    The Zend_Pdf component is a PDF (Portable Document Format) manipulation engine.
+    The <code>Zend_Pdf</code> component is a PDF (Portable Document Format) manipulation engine.
     It can load, create, modify and save documents.
     Thus it can help any PHP application dynamically create PDF documents by modifying existing documents or generating new ones from scratch.
 
-    Zend_Pdf offers the following features:
+    <code>Zend_Pdf</code> offers the following features:
     <itemizedlist>
         <listitem>
             <para>

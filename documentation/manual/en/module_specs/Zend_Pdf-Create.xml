@@ -12,7 +12,7 @@
     <para>
     <code>Zend_Pdf</code> class also provides two static methods to load an existing PDF document.
     These are the <code>Zend_Pdf::load()</code> and <code>Zend_Pdf::parse()</code> methods.
-    Both of them return Zend_Pdf objects as a result or throw an exception if an error occurs.
+    Both of them return <code>Zend_Pdf</code> objects as a result or throw an exception if an error occurs.
     </para>
 
     <example id="zend.pdf.create.example-1">
@@ -35,7 +35,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     <para>
     The PDF file format supports incremental document update. Thus each time a document
     is updated, then a new revision of the document is created.
-    Zend_Pdf component supports the retrieval of a specified revision.
+    <code>Zend_Pdf</code> component supports the retrieval of a specified revision.
     </para>
     <para>
     A revision can be specified as a second parameter to the <code>Zend_Pdf::load()</code> and
