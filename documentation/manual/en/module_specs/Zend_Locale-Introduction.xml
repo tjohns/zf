@@ -21,8 +21,8 @@
         explicit support to systems for special needs of these unique groups, such as language translation, and support
         for local customs or conventions for communicating plurals, dates, times, currencies, names, symbols, sorting
         and ordering, etc. <code>L10n</code> and <code>I18n</code> compliment each other. Zend Framework provides
-        support for these through a combination of components, including Zend_Locale, Zend_Date, Zend_Measure,
-        Zend_Translate, Zend_Currency, and Zend_TimeSync.
+        support for these through a combination of components, including <code>Zend_Locale</code>, <code>Zend_Date</code>, <code>Zend_Measure</code>,
+        <code>Zend_Translate</code>, <code>Zend_Currency</code>, and <code>Zend_TimeSync</code>.
     </para>
 
     <tip>
@@ -136,7 +136,7 @@
             <para>
                 Be aware that there exist not only locales with 2 characters as most people think. Also there
                 are languages and regions which are not only abbreviated with 2 characters. Therefor you should
-                NOT strip the region and language yourself, but use Zend_Locale when you want to strip language
+                NOT strip the region and language yourself, but use <code>Zend_Locale</code> when you want to strip language
                 or region from a locale string. Otherwise you could have unexpected behaviour within your code
                 when you do this yourself.
             </para>
@@ -498,8 +498,8 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
         </example>
 
         <para>
-            For working with the standard definitions of a locale the option Zend_Locale_Format::STANDARD can be used.
-            Setting the option Zend_Locale_Format::STANDARD for date_format uses the standard definitions from the actual
+            For working with the standard definitions of a locale the option <code>Zend_Locale_Format::STANDARD</code> can be used.
+            Setting the option <code>Zend_Locale_Format::STANDARD</code> for <code>date_format</code> uses the standard definitions from the actual
             set locale. Setting it for number_format uses the standard number format for this locale.
             And setting it for locale uses the standard locale for this environment or browser.
         </para>
@@ -526,7 +526,7 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
     <sect2 id="zend.locale.cache">
 
-        <title>Speed up Zend_Locale and its subclasses</title>
+        <title>Speed up <code>Zend_Locale</code> and its subclasses</title>
 
         <para>
             <code>Zend_Locale</code> and its subclasses can be speed up by the usage of <code>Zend_Cache</code>.

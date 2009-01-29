@@ -71,11 +71,11 @@
         <para>
             For those needing to specify explicitly the format of the date string, the following format token specifiers
             are supported. If an invalid format specifier is used, such as the PHP 'i' specifier when in ISO format
-            mode, then an error will be thrown by the methods in Zend_Locale_Format that support user-defined formats.
+            mode, then an error will be thrown by the methods in <code>Zend_Locale_Format</code> that support user-defined formats.
         </para>
 
         <para>
-            These specifiers (below) are a small subset of the full "ISO" set supported by Zend_Date's
+            These specifiers (below) are a small subset of the full "ISO" set supported by <code>Zend_Date</code>'s
             <code>toString()</code>. If you need to use PHP <code>date()</code> compatible format specifiers, then first
             call <code>setOptions(array('format_type' => 'php'))</code>. And if you want to convert only one special format
             string from PHP <code>date()</code> compatible format to "ISO" format use <code>convertPhpToIsoFormat()</code>.
@@ -332,7 +332,7 @@ print_r ($date);
         <note>
             <title>Database date format</title>
             <para>
-                To parse a database date value (f.e. MySql or MsSql), use Zend_Date's ISO_8601 format instead of
+                To parse a database date value (f.e. MySql or MsSql), use <code>Zend_Date</code>'s ISO_8601 format instead of
                 getDate().
             </para>
         </note>

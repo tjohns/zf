@@ -1,6 +1,6 @@
 <sect1 id="zend.locale.functions">
 
-    <title>Using Zend_Locale</title>
+    <title>Using <code>Zend_Locale</code></title>
 
     <para>
         <code>Zend_Locale</code> also provides localized information about locales for each locale,
@@ -133,8 +133,8 @@ print_r($found2);
         <para>
             A new locale can be set with the function <code>setLocale()</code>. This function takes a locale string as
             parameter. If no locale is given, a locale is
-            <link linkend="zend.locale.selection">automatically selected</link>
-            . Since Zend_Locale objects are "light", this method exists primarily to cause side-effects for code that
+            <link linkend="zend.locale.selection">automatically selected</link>.
+            Since <code>Zend_Locale</code> objects are "light", this method exists primarily to cause side-effects for code that
             have references to the existing instance object.
         </para>
 
@@ -1047,7 +1047,7 @@ foreach ($lists as $list) {
         </example>
 
         <para>
-            To generate a list of all languages known by Zend_Locale, with each language name shown in its own language,
+            To generate a list of all languages known by <code>Zend_Locale</code>, with each language name shown in its own language,
             try the example below in a web page. Similarly, <code>getCountryTranslationList()</code> and
             <code>getCountryTranslation()</code> could be used to create a table mapping your native language names for
             regions to the names of the regions shown in another language. Use a
@@ -1215,7 +1215,7 @@ if (Zend_Locale::isLocale($input)) {
         <para>
             You should also note that any given locale string will automatically be degraded if the region
             part does not exist for this locale. In our previous example the language <code>'to'</code> does not
-            exist in the region <code>'RU'</code>, but you will still get true returned as Zend_Locale can
+            exist in the region <code>'RU'</code>, but you will still get true returned as <code>Zend_Locale</code> can
             work with the given input.
         </para>
 

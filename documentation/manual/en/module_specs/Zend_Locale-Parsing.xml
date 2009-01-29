@@ -3,7 +3,7 @@
     <title>Normalization and Localization</title>
 
     <para>
-        <code>Zend_Locale_Format</code> is a internal component used by Zend_Locale. All locale aware classes use
+        <code>Zend_Locale_Format</code> is a internal component used by <code>Zend_Locale</code>. All locale aware classes use
         <code>Zend_Locale_Format</code> for normalization and localization of numbers and dates. Normalization involves
         parsing input from a variety of data representations, like dates, into a standardized, structured
         representation, such as a PHP array with year, month, and day elements.
@@ -421,7 +421,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             sometimes used with the Arabic language to express numerals. Attempts to use an unsupported numeral system
             will result in an exception, to avoid accidentally performing an incorrect conversion due to a spelling
             error. All characters in the input, which are not numerals for the selected numeral system, are copied to
-            the output with no conversion provided for unit separator characters.  <code>Zend_Locale*</code> components
+            the output with no conversion provided for unit separator characters. <code>Zend_Locale</code>* components
             rely on the data provided by CLDR (see their
             <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_scripts.html?sortby=date">
                 list of scripts grouped by language</ulink>).
