@@ -82,7 +82,7 @@
                 </para>
                 <para>
                     If you want to work with a time service within a batch file or within a
-                    command line application, Zend_TimeSync may be of use.
+                    command line application, <code>Zend_TimeSync</code> may be of use.
                 </para>
             </listitem>
         </itemizedlist>
