@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.best-practice">
     <title>Die besten Anwendungen</title>
 
@@ -6,7 +6,7 @@
         <title>Feldnamen</title>
 
         <para>
-            Es gibt keine Begrenzungen für Feldnamen in Zend_Search_Lucene.
+            Es gibt keine Begrenzungen für Feldnamen in <code>Zend_Search_Lucene</code>.
         </para>
 
         <para>
@@ -129,7 +129,7 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    Alle diese Optionen sind Objekteigenschaften von Zend_Search_Lucene, aber keine
+                    Alle diese Optionen sind Objekteigenschaften von <code>Zend_Search_Lucene</code>, aber keine
                     Indexeigenschaften. Sie beeinflussen nur das Verhalten des aktuellen
                     <code>Zend_Search_Lucene</code> Objekts und können sich für verschiedene Skripte
                     unterscheiden.
@@ -184,7 +184,7 @@ $index->optimize();
 
             <footnote>
                 <para>
-                    Zend_Search_Lucene hält jedes Segment offen um die Geschwindigkeit des Suchens zu erhöhen.
+                    <code>Zend_Search_Lucene</code> hält jedes Segment offen um die Geschwindigkeit des Suchens zu erhöhen.
                 </para>
             </footnote>
         </para>
@@ -230,7 +230,7 @@ $index->optimize();
         </para>
 
         <para>
-            Zend_Search_Lucene prüft wärend jedem Aufruf von <code>addDocument()</code> ob das Zusammenführen
+            <code>Zend_Search_Lucene</code> prüft wärend jedem Aufruf von <code>addDocument()</code> ob das Zusammenführen
             von Segmentgruppen dazu führt das neu erstellte Segmente in die nächste Gruppe verschoben
             werden. Wenn ja, wird das Zusammenführen durchgeführt.
         </para>
@@ -390,7 +390,7 @@ foreach ($docIds as $id) {
         <title>Speicherverwendung</title>
 
         <para>
-            Zend_Search_Lucene ist ein relativ speicherintensives Modul.
+            <code>Zend_Search_Lucene</code> ist ein relativ speicherintensives Modul.
         </para>
 
         <para>
@@ -408,7 +408,7 @@ foreach ($docIds as $id) {
 
             <footnote>
                 <para>
-                    Das Lucene Dateiformat erlaubt es diese Zahl zu ändern, aber Zend_Search_Lucene bietet
+                    Das Lucene Dateiformat erlaubt es diese Zahl zu ändern, aber <code>Zend_Search_Lucene</code> bietet
                     keine Möglichkeit das über seine API durchzuführen. Trotzdem gibt es die Möglichkeit
                     diesen Wert zu ändern wenn er mit einer anderen Lucene Implementation vorbereitet wird.
                 </para>
@@ -446,8 +446,8 @@ foreach ($docIds as $id) {
         <title>Verschlüsselung</title>
 
         <para>
-            Zend_Search_Lucene arbeitet intern mit UTF-8 Strings. Das bedeutet also das alle von
-            Zend_Search_Lucene zurückgegebenen Strings UTF-8 verschlüsselt sind.
+            <code>Zend_Search_Lucene</code> arbeitet intern mit UTF-8 Strings. Das bedeutet also das alle von
+            <code>Zend_Search_Lucene</code> zurückgegebenen Strings UTF-8 verschlüsselt sind.
         </para>
 
         <para>
@@ -461,7 +461,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            Zend_Search_Lucene bietet einen breite Palette von Möglichkeiten für die Verschlüsselung
+            <code>Zend_Search_Lucene</code> bietet einen breite Palette von Möglichkeiten für die Verschlüsselung
             von indizierten Dokumenten und analysierten Abfragen.
         </para>
 
@@ -543,7 +543,7 @@ $hits = $index->find($queryStr);
         <title>Index Wartung</title>
 
         <para>
-            Es sollte klar sein das Zend_Search_Lucene, genauso wie jede andere Lucene Implementation,
+            Es sollte klar sein das <code>Zend_Search_Lucene</code>, genauso wie jede andere Lucene Implementation,
             keine "Datenbank" ersetzt.
         </para>
 
@@ -554,7 +554,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            Trotzdem versucht Zend_Search_Lucene Indizes jederzeit in einem gültigen Status zu halten.
+            Trotzdem versucht <code>Zend_Search_Lucene</code> Indizes jederzeit in einem gültigen Status zu halten.
         </para>
 
         <para>

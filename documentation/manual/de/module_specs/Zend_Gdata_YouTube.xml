@@ -636,7 +636,7 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
         if ($state instanceof Zend_Gdata_YouTube_Extension_State) {
             print 'Upload Status: '
                   . $state->getName()
-                  .' '.  $state->getText();
+                  .' '. $state->getText();
         } else {
             print 'Die Status Informationen des Videos konnten bis jetzt nicht empfangen'
                   . " werden. Bitte versuchen Sie es etwas später nochmals.\n";

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13826 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -12,7 +12,7 @@
 
     <para>
         Ein Helfer ist einfach eine Klasse. Nehmen wir an wir wollen einen Helfer der 'fooBar' heißt.
-        Standardmäßig wird der Klasse <code>'Zend_View_Helper_'</code> vorangestellt (Es kann ein
+        Standardmäßig wird der Klasse 'Zend_View_Helper_' vorangestellt (Es kann ein
         eigener Prefix definiert werden wenn ein Pfad für die Helfer definiert wird), und das letzte
         Segment des Klassennamens ist der Name des Helfers; Dieses Segment sollte TitelGroßgeschrieben
         sein; der volle Klassenname ist dann: <code>Zend_View_Helper_FooBar</code>. Diese Klasse
@@ -34,7 +34,7 @@
 
         <para>
             Der Standard Helfer Pfad zeigt immer zu den View Helfern des Zend Frameworks,
-            normalerweise 'Zend/View/Helper/'.  Selbst wenn <code>setHelperPath()</code> ausgerufen
+            normalerweise 'Zend/View/Helper/'. Selbst wenn <code>setHelperPath()</code> ausgerufen
             wird um den existierenden Pfad zu überschreiben, wird dieser Pfad gesetzt um
             sicherzustellen das die Standard Helfer arbeiten.
         </para>

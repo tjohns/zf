@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.index-creation">
     <title>Indexerstellung</title>
 
@@ -7,13 +7,13 @@
 
         <para>
             Die Funktionen für das Erstellen und Aktualisieren eines Index wurden innerhalb der
-            Zend_Search_Lucene Komponente implementiert genau wie im Java Lucene Projekt. Man kann beide dieser
-            Optionen verwenden um einen Index zu erstellen der mit Zend_Search_Lucene durchsucht werden kann.
+            <code>Zend_Search_Lucene</code> Komponente implementiert genau wie im Java Lucene Projekt. Man kann beide dieser
+            Optionen verwenden um einen Index zu erstellen der mit <code>Zend_Search_Lucene</code> durchsucht werden kann.
         </para>
 
         <para>
             Der PHP Quellcode unten zeigt ein Beispiel, wie eine Datei durch Verwendung der
-            Zend_Search_Lucene Programmierschnittstelle (API) indiziert werden kann:
+            <code>Zend_Search_Lucene</code> API indiziert werden kann:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -93,7 +93,7 @@ foreach ($hits as $hit) {
         <title>Die Größe des Index erhalten</title>
 
         <para>
-            Es gibt zwei Methoden um die Größe eines Index in Zend_Search_Lucene zu erhalten.
+            Es gibt zwei Methoden um die Größe eines Index in <code>Zend_Search_Lucene</code> zu erhalten.
         </para>
 
         <para>
@@ -241,7 +241,7 @@ $index->optimize();
                 Lucene Java und Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
                 können auch für die Optimierung eines Index verwendet werden. Das letzte Luke Relese (v0.8)
                 basiert auf Lucene v2.3 und ist kompatibel mit den aktuellen Implementation der
-                Zend_Search_Lucene Komponente (ZF 1.6). Frühere Versionen der Zend_Search_Lucene
+                <code>Zend_Search_Lucene</code> Komponente (ZF 1.6). Frühere Versionen der <code>Zend_Search_Lucene</code>
                 Implementation benötigen andere Versionen des Java Lucene Tools um kompatibel zu sein:
                 <itemizedlist>
                     <listitem>
@@ -297,7 +297,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
             <title>Unterstützte Dateisysteme</title>
             <para>
-                Zend_Search_Lucene verwendet <code>flock()</code> um gleichzeitiges Suchen, Updaten und
+                <code>Zend_Search_Lucene</code> verwendet <code>flock()</code> um gleichzeitiges Suchen, Updaten und
                 Optimierung des Index zu unterstützen.
             </para>
 
@@ -307,7 +307,7 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
             </para>
 
             <para>
-                Verwende keine Netzwerk Dateisysteme mit Zend_Search_Lucene.
+                Verwende keine Netzwerk Dateisysteme mit <code>Zend_Search_Lucene</code>.
             </para>
         </sect3>
     </sect2>

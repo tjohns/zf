@@ -192,7 +192,7 @@ if (!validator->isValid('word')) {
             verwendet werden als alternativer Stil des Aufrufs. Das erste Argument dieser
             Methode ist ein Datenwert, der an die <code>isValid()</code> Methode übergeben werden
             würde. Das zweite Argument ist ein String, welcher mit dem Basisnamen der Prüfklasse
-            übereinstimmt, relativ zum Namensraum von <code>Zend_Validate</code>.  Die <code>is()</code>
+            übereinstimmt, relativ zum Namensraum von <code>Zend_Validate</code>. Die <code>is()</code>
             Methode lädt die Klasse automatisch, erstellt eine Instanz und wendet die
             <code>isValid()</code> Methode an den Eingabedaten an.
 

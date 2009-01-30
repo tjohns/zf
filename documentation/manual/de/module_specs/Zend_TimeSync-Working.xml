@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12814 -->
+<!-- EN-Revision: 13828 -->
 <sect1 id="zend.timesync.working">
 
     <title>Arbeiten mit Zend_TimeSync</title>
@@ -48,8 +48,8 @@ print $server->getDate()->getIso();
         </para>
 
         <para>
-            Für Details über <code>Zend_Date</code> und dessen Methoden siehe unter
-            <link linkend="zend.date.introduction">Zend_Date</link> nach.
+            Für Details über <code>Zend_Date</code> und dessen Methoden siehe unter der Dokumentation
+            von <link linkend="zend.date.introduction"><code>Zend_Date</code></link> nach.
         </para>
 
     </sect2>

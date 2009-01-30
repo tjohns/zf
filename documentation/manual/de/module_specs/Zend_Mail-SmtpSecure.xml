@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13839 -->
 <sect1 id="zend.mail.smtp-secure">
   <title>SMTP Übertragungen sichern</title>
 
@@ -8,7 +8,7 @@
   Ein Port kann optional angegeben werden, andernfalls ist er standardmäßig 25 für TLS oder 465 für SSL.</para>
 
   <example id="zend.mail.smtp-secure.example-1">
-    <title>Aktivieren einer sicheren Verbindung innerhalb von Zend_Mail_Transport_Smtp</title>
+    <title>Aktivieren einer sicheren Verbindung innerhalb von <code>Zend_Mail_Transport_Smtp</code></title>
 
     <programlisting role="php"><![CDATA[
 $config = array('ssl' => 'tls',

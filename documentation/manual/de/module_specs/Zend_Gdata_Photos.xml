@@ -323,7 +323,7 @@ $query->setUser("sample.user");
                 <para>
                     <firstterm>AlbumId</firstterm> setzt die ID des Albums nachdem gesucht wird. Dieses Element
                     ist nur für Album und Photo Abfragen gültig. Im Fall von Photo Abfragen spezifiziert dieser
-                    Wert das Album das die angefragten Photos enthält.  Die Album ID schließt sich gegenseitig
+                    Wert das Album das die angefragten Photos enthält. Die Album ID schließt sich gegenseitig
                     mit dem Album Namen aus. Das Setzen des einen Entfernt den anderen.
                 </para>
             </listitem>

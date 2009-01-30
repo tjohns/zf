@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.searching">
     <title>Einen Index durchsuchen</title>
 
@@ -8,8 +8,8 @@
         <para>
             Es gibt zwei Arten, den Index zu durchsuchen. Die erste Methode verwendet den
             Query Parser, um eine Abfrage aus einem String zu erstellen. Die zweite kann
-            programmtechnisch eigene Abfragen über die Zend_Search_Lucene Programmierschnittstelle
-            (API) erstellen.
+            programmtechnisch eigene Abfragen über die <code>Zend_Search_Lucene</code> API
+            erstellen.
         </para>
 
         <para>
@@ -20,7 +20,7 @@
                     <para>
                         Wenn du deine Abfragestrings programmseitig erstellst und dann durch den Query
                         Parser verarbeiten lässt, solltest du darüber nachdenken, deine
-                        Abfragen direkt mit der Programmierschnittstelle (API) für Abfragen zu erstellen.
+                        Abfragen direkt mit der API für Abfragen zu erstellen.
                         In anderen Worten, der Query Parser wurde für von Menschen eingegebene Texte
                         und nicht für von Programmen erstellte Texte entwickelt.
                     </para>
@@ -72,7 +72,7 @@ $index->find($query);
 
         <para>
             Die <code>Zend_Search_Lucene::find()</code> Methode ermittelt den Eingabetyp automatisch
-            und verwendet den Query Parser, um ein entsprechendes Zend_Search_Lucene_Search_Query
+            und verwendet den Query Parser, um ein entsprechendes <code>Zend_Search_Lucene_Search_Query</code>
             Objekt aus einer Eingabe vom Typ String zu erstellen.
         </para>
         <para>
@@ -158,7 +158,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
     <sect2 id="zend.search.lucene.searching.results">
         <title>Suchergebnisse</title>
         <para>
-            Das Suchergebnis ist ein Array mit Zend_Search_Lucene_Search_QueryHit Objekten. Jedes
+            Das Suchergebnis ist ein Array mit <code>Zend_Search_Lucene_Search_QueryHit</code> Objekten. Jedes
             davon hat zwei Eigenschaften: <code>$hit->document</code> ist eine Dokumentnummer
             innerhalb des Index und <code>$hit->score</code> ist ein Punktwert für den Treffer im
             Suchergebnis. Das Ergebnis wird anhand der Punktwerte sortiert (absteigend von der besten
@@ -166,8 +166,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
         </para>
 
         <para>
-            Das Zend_Search_Lucene_Search_QueryHit Objekt beinhaltet zudem jedes Feld des
-            Zend_Search_Lucene_Document, das bei der Suche gefunden wurde, als Eigenschaft des Treffers. Im
+            Das <code>Zend_Search_Lucene_Search_QueryHit</code> Objekt beinhaltet zudem jedes Feld des
+            <code>Zend_Search_Lucene_Document</code>, das bei der Suche gefunden wurde, als Eigenschaft des Treffers. Im
             folgenden Beispiel, wird ein Treffer mit zwei Feldern des entsprechenden Dokuments
             zurückgegeben: Titel und Autor.
         </para>
@@ -190,8 +190,8 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Optional kann das originale Zend_Search_Lucene_Document Objekt vom
-            Zend_Search_Lucene_Search_QueryHit Objekt zurückgegeben werden.
+            Optional kann das originale <code>Zend_Search_Lucene_Document</code> Objekt vom
+            <code>Zend_Search_Lucene_Search_QueryHit</code> Objekt zurückgegeben werden.
 
             Du kannst gespeicherte Teile des Dokuments durch Verwendung der <code>getDocument()</code>
             Methode des Indexobjektes zurückerhalten und diese dann durch die
@@ -219,7 +219,7 @@ foreach ($hits as $hit) {
         </programlisting>
 
         <para>
-            Die Felder, die in einem Zend_Search_Lucene_Document Objekt verfügbar sind, werden beim
+            Die Felder, die in einem <code>Zend_Search_Lucene_Document</code> Objekt verfügbar sind, werden beim
             Indizieren festgelegt. Die Dokumentenfelder werden durch die Indizieranwendung
             (z.B. LuceneIndexCreation.jar) im Dokument entweder nur indiziert oder indiziert und
             gespeichert.
@@ -240,7 +240,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Zend_Search_Lucene bietet die Möglichkeit die Ergebnisse mit den <code>getResultSetLimit()</code> und
+            <code>Zend_Search_Lucene</code> bietet die Möglichkeit die Ergebnisse mit den <code>getResultSetLimit()</code> und
             <code>setResultSetLimit()</code> Methoden zu begrenzen:
             <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
@@ -261,7 +261,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);
     <sect2 id="zend.search.lucene.searching.results-scoring">
         <title>Ergebnisgewichtung</title>
         <para>
-            Zend_Search_Lucene verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Alle
+            <code>Zend_Search_Lucene</code> verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Alle
             Treffer in den Suchergebnisse werden standardmäßig nach einem Punktwert sortiert.
             Treffer mit höherem Punktwert kommen zuerst, und Dokumente mit höherem Punktwert passen
             präziser auf die Abfrage als solche mit niedrigerem Punktwert.
@@ -288,7 +288,7 @@ foreach ($hits as $hit) {
         </programlisting>
 
         <para>
-            Die Zend_Search_Lucene_Search_Similarity Klasse wird verwendet, um den Punktwert für jeden Treffer zu
+            Die <code>Zend_Search_Lucene_Search_Similarity</code> Klasse wird verwendet, um den Punktwert für jeden Treffer zu
             berechnen. Beachte den <link linkend="zend.search.lucene.extending.scoring">Erweiterbarkeit.
             Algorithmen für Punktwertermittlung</link> Abschnitt für weitere Details.
         </para>

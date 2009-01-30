@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Zusammenarbeit Mit Java Lucene</title>
 
@@ -6,7 +6,7 @@
         <title>Dateiformate</title>
 
         <para>
-            Zend_Search_Lucene Indexdateiformate sind binär kompatibel mit der Java Lucene Version 1.4 und größer.
+            <code>Zend_Search_Lucene</code> Indexdateiformate sind binär kompatibel mit der Java Lucene Version 1.4 und größer.
         </para>
 
         <para>

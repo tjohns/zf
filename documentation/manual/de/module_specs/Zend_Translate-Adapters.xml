@@ -1,16 +1,16 @@
-<!-- EN-Revision: 13165 -->
+<!-- EN-Revision: 13827 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>
 
     <para>
-        Zend_Translate kann unterschiedliche Adapter für die Übersetzung verwenden.
+        <code>Zend_Translate</code> kann unterschiedliche Adapter für die Übersetzung verwenden.
         Jeder Adapter hat seine eigenen Vor- und Nachteile. Hier ist eine kurze
         Liste aller unterstützten Adapter für Übersetzungs Quell Dateien.
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title>Adapter für Zend_Translate</title>
+        <title>Adapter für <code>Zend_Translate</code></title>
         <tgroup cols="3">
             <thead>
                 <row>
@@ -80,7 +80,7 @@
 
         <para>
             Zuerst muss man die Entscheidung treffen welchen der Adapter man für
-            Zend_Translate benutzen soll. Oft sind externe Kriterien wie die Vorgaben
+            <code>Zend_Translate</code> benutzen soll. Oft sind externe Kriterien wie die Vorgaben
             durch ein Projekt oder durch eien Kunden dafür ausschlaggebend. Aber
             wenn die Entscheidungsgewalt in den eigenen Händen liegt, werden die folgenden
             Hinweise die Entscheidung vereinfachen.
@@ -160,7 +160,7 @@
                 und jetzt weltweit Verwendung findet.
                 Es ist nicht menschlich lesbar, allerdings existieren einige kostenlose
                 Freeware Tools (zum Beispiel, <ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink>),
-                welche sehr nützlich sind. Der Zend_Translate Gettext Adapter ist nicht
+                welche sehr nützlich sind. Der <code>Zend_Translate</code> Gettext Adapter ist nicht
                 mit Hilfe von PHP's Gettext Erweiterung realisiert worden.
                 Der Gettext Adapter kann also verwendet werden selbst wenn PHP's Gettext
                 Erweiterung nicht verfügbar ist.
@@ -293,20 +293,20 @@
         <title>Selbst geschriebene Adapter integrieren</title>
 
         <para>
-            Zend_Translate erlaubt es, selbst geschriebene Adapter Klassen zu integrieren und zu verwenden. Diese
-            können wie die Standard Adapter Klassen, welche bereits in Zend_Translate inkludiert sind, verwendet
+            <code>Zend_Translate</code> erlaubt es, selbst geschriebene Adapter Klassen zu integrieren und zu verwenden. Diese
+            können wie die Standard Adapter Klassen, welche bereits in <code>Zend_Translate</code> inkludiert sind, verwendet
             werden.
         </para>
 
         <para>
-            Jede Adapter Klasse die mit Zend_Translate verwendet werden soll muß eine Subklasse von
-            Zend_Translate_Adapter sein. Zend_Translate_Adapter ist eine abstrakte Klasse welche bereits alles
+            Jede Adapter Klasse die mit <code>Zend_Translate</code> verwendet werden soll muß eine Subklasse von
+            <code>Zend_Translate_Adapter</code> sein. <code>Zend_Translate_Adapter</code> ist eine abstrakte Klasse welche bereits alles
             definiert was für eine Übersetzung notwendig ist. Was noch getan werden muß, ist die Definition des
             Lesers für die Übersetzungsdaten.
         </para>
 
         <para>
-            Die Verwendung des Prefixes "Zend" sollte dem Zend_Framework vorbehalten sein. Wenn Zend_Translate
+            Die Verwendung des Prefixes "Zend" sollte dem Zend_Framework vorbehalten sein. Wenn <code>Zend_Translate</code>
             mit einem eigenen Adapter erweitert wird, sollte er in etwa "Firma_Translate_Adapter_MeinFormat"
             heißen. Der folgende Code zeigt ein Beispiel davon, wie eine selbst geschriebene Adapter Klasse
             implmentiert werden sollte:

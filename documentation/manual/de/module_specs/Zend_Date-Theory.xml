@@ -9,7 +9,7 @@
     </para>
 
     <para>
-        Viele Sprachen teilen das Arbeiten mit Zeiten und Kalendern in zwei Klassen.  Aber Zend Framework
+        Viele Sprachen teilen das Arbeiten mit Zeiten und Kalendern in zwei Klassen. Aber Zend Framework
         strebt nach extremer Vereinfachung und die Entwickler zu zwingen verschiedene Objekte mit verschiedenen
         Methoden für Zeiten und Daten zu verwenden ist in vielen Situationen eine Belastung. Da die Methoden von
         <code>Zend_Date</code> das Arbeiten mit vieldeutigen Daten unterstützen die möglicherweise nicht alle

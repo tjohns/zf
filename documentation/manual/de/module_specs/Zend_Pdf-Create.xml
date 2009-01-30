@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13835 -->
 <sect1 id="zend.pdf.create">
     <title>Erstellen und Laden von PDF Dokumenten</title>
     <para>
@@ -14,7 +14,7 @@
     <para>
         Die <code>Zend_Pdf</code> Klasse stellt zwei statische Methoden zum Laden von bestehenden
         PDF Dokumenten bereit. Dies sind die <code>Zend_Pdf::load()</code> und <code>Zend_Pdf::parse()</code>
-        Methoden. Beide geben als Ergebnis Zend_Pdf Objekte zurück oder werfen eine Ausnahme, wenn ein
+        Methoden. Beide geben als Ergebnis <code>Zend_Pdf</code> Objekte zurück oder werfen eine Ausnahme, wenn ein
         Fehler auftritt.
     </para>
 
@@ -38,7 +38,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     <para>
         Das PDF Datei Format unterstützt die schrittweise Aktualisierung von Dokumenten. Jedes Mal,
         wenn ein Dokument aktualisiert wird, wird eine neue Revision des Dokuments erstellt. Die
-        Zend_Pdf Komponente unterstützt die Rückgabe einer vorgegebenen Revision des Dokuments.
+        <code>Zend_Pdf</code> Komponente unterstützt die Rückgabe einer vorgegebenen Revision des Dokuments.
     </para>
     <para>
         Die Revision kann den Methoden <code>Zend_Pdf::load()</code> and

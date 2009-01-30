@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.extending">
     <title>Erweiterbarkeit</title>
 
@@ -295,7 +295,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
         <para>
             Der Algorithmen für die Punktwertermittlung kann durch die Definition einer eigenen
             Ähnlichkeitsklasse angepasst werden. Hierfür muss die
-            Zend_Search_Lucene_Search_Similarity Klasse wie unten angegeben erweitert und anschließend die
+            <code>Zend_Search_Lucene_Search_Similarity</code> Klasse wie unten angegeben erweitert und anschließend die
             <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code> Methode verwendet
             werden um Sie als Standard zu setzen.
         </para>

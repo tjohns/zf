@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.query-api">
     <title>Abfrage Erzeugungs API</title>
 
@@ -33,7 +33,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
                     </para>
                 </listitem>
             </itemizedlist>
-            Es ist eine gute Idee die Zend_Search_Lucene_Search_QueryParserException abzufangen und
+            Es ist eine gute Idee die <code>Zend_Search_Lucene_Search_QueryParserException</code>s abzufangen und
             richtig abzuarbeiten:
             <programlisting role="php"><![CDATA[
 try {
@@ -46,7 +46,7 @@ try {
         </para>
 
         <para>
-            Die selbe Technik sollte für die find() Methode des Zend_Search_Lucene Objektes verwendet werden.
+            Die selbe Technik sollte für die find() Methode des <code>Zend_Search_Lucene</code> Objektes verwendet werden.
         </para>
 
         <para>
@@ -89,7 +89,7 @@ $hits  = $index->find($query);
         </programlisting>
 
         <para>
-            Das Term Feld ist optional. Zend_Search_Lucene durchsucht alle indizierten Felder in jedem
+            Das Term Feld ist optional. <code>Zend_Search_Lucene</code> durchsucht alle indizierten Felder in jedem
             Dokument wenn das Feld nicht spezifiziert
             wurde:
             <programlisting role="php"><![CDATA[
@@ -414,7 +414,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Die Ausdrucksfelder sind optional. Zend_Search_Lucene durchsucht alle Felder in jedem
+            Die Ausdrucksfelder sind optional. <code>Zend_Search_Lucene</code> durchsucht alle Felder in jedem
             Dokument wenn kein Feld spezifiziert wurde:
             <programlisting role="php"><![CDATA[
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
@@ -478,7 +478,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Das term Feld ist optional. Zend_Search_Lucene durchsucht alle Felder in jedem Dokument ob ein
+            Das Term Feld ist optional. <code>Zend_Search_Lucene</code> durchsucht alle Felder in jedem Dokument ob ein
             Feld nicht spezifiziert ist:
             <programlisting role="php"><![CDATA[
 $term = new Zend_Search_Lucene_Index_Term('test');
@@ -544,7 +544,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            Der Zend_Search_Lucene_Search_Query_Phrase Klassenkonstruktor nimmt drei optionale
+            Der <code>Zend_Search_Lucene_Search_Query_Phrase</code> Klassenkonstruktor nimmt drei optionale
             Argumente entgegen:
         </para>
         <programlisting role="php"><![CDATA[
@@ -731,7 +731,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Begriffsfelder sind optional. Zend_Search_Lucene durchsucht alle Felder wenn das Feld nicht spezifiziert
+            Begriffsfelder sind optional. <code>Zend_Search_Lucene</code> durchsucht alle Felder wenn das Feld nicht spezifiziert
             wurde:
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
@@ -745,7 +745,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Jede (aber nicht beide) der Begrenzungsausdrücke kann auf null gesetzt werden. Zend_Search_Lucene sucht
+            Jede (aber nicht beide) der Begrenzungsausdrücke kann auf null gesetzt werden. <code>Zend_Search_Lucene</code> sucht
             vom Anfang oder bis zum Ende des Verzeichnisses für die spezifizierten Feld(er) für diesen Fall:
             <programlisting role="php"><![CDATA[
 // Sucht nach ['20020101' TO ...]

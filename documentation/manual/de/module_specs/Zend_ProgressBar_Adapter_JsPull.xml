@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12309 -->
+<!-- EN-Revision: 13834 -->
 <sect3 id="zend.progressbar.adapter.jspull">
     <title>Zend_ProgressBar_Adapter_JsPull</title>
     <para>
@@ -12,7 +12,7 @@
     </para>
     <para>
         Die Adapteroptionen kann man entweder über die <code>set*</code> Methoden oder durch die Übergabe
-        eines Arrays oder einer Instanz von Zend_Config mit den Optionen als ersten Parameter an den
+        eines Arrays oder einer Instanz von <code>Zend_Config</code> mit den Optionen als ersten Parameter an den
         Constructor setzen. Die vorhandenen Optionen sind:
     </para>
     <itemizedlist>

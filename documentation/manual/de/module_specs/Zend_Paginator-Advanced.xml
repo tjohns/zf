@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13470 -->
+<!-- EN-Revision: 13836 -->
 <sect1 id="zend.paginator.advanced">
     <title>Advanced usage</title>
 
@@ -136,7 +136,7 @@ Zend_Paginator::setCache($cache);
         </para>
 
         <para>
-            Sobald Zend_Paginator eine Zend_Cache_Core Instanz erhalten hat, werden Daten gecacht. Manchmal will
+            Sobald <code>Zend_Paginator</code> eine <code>Zend_Cache_Core</code> Instanz erhalten hat, werden Daten gecacht. Manchmal will
             man Daten nicht cachen selbst wenn man bereits eine Cacheinstanz übergeben hat. Man sollte dann
             hierfür <code>setCacheEnable()</code> verwenden.
         </para>

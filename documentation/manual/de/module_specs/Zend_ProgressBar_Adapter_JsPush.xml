@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13583 -->
+<!-- EN-Revision: 13834 -->
 <sect3 id="zend.progressbar.adapter.jspush">
     <title>Zend_ProgressBar_Adapter_JsPush</title>
     <para>
@@ -9,7 +9,7 @@
     </para>
     <para>
         Man kann auch die Optionen des Adapters entweder über die <code>set*</code> Methoden oder durch die
-        Übergabe eines Arrays, oder einer Instanz von Zend_Config, an den Constructor mit dem Optionen als
+        Übergabe eines Arrays, oder einer Instanz von <code>Zend_Config</code>, an den Constructor mit dem Optionen als
         ersten Parameter. Die möglichen Optionen sind:
     </para>
     <itemizedlist>
@@ -28,7 +28,7 @@
         </listitem>
     </itemizedlist>
     <para>
-        Die Verwendung dieses Adapters ist recht einfach.  Zuerst wird ein Fortschrittsbalken im Browser
+        Die Verwendung dieses Adapters ist recht einfach. Zuerst wird ein Fortschrittsbalken im Browser
         erstellt, entweder mit JavaScript oder mit vorher erstelltem reinen HTML. Dann definiert man die
         Update Methode und optional die Finish Methode in JavaScript, die beide ein Json Objekt als
         einziges Argument nehmen. Das wird die Webseite mit einem lange laufenden Prozess, in einem

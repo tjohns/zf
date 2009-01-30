@@ -433,7 +433,7 @@ print $date;
 
             <para>
                 Die unten angeführten Basisoperationen können statt den bequemlichen Operationen für spezielle
-                Datumsabschnitte verwendet werden.  Die
+                Datumsabschnitte verwendet werden. Die
                 <link linkend="zend.date.constants.list">entsprechenden Konstanten</link> werden für den
                 <code>$part</code> Parameter verwendet.
             </para>

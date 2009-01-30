@@ -36,7 +36,7 @@
         <para>
             Ein Array mit allen <code>Zend_Mime_Part</code> Objekten der
             <code>Zend_Mime_Message</code> wird von der Methode
-            <code>->getParts()</code> zurück gegeben.  Das Zend_Mime_Part Objekt
+            <code>->getParts()</code> zurück gegeben. Das Zend_Mime_Part Objekt
             kann dann geändert werden, da es im Array als Referenz gespeichert wird.
             Wenn Abschnitte zum Array hinzugefügt werden oder die Sequenz geändert wird,
             muß das Array dem <code>Zend_Mime_Message</code> Objekt zurückgegeben werden,

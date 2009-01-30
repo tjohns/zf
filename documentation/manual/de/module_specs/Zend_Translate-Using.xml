@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12319 -->
+<!-- EN-Revision: 13827 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -30,7 +30,7 @@ print "Fixe Sprache hier ist Zeile zwei\n";
     <para>
         Der nächste Schritt ist also die Einarbeitung von Zend_Translate in den
         existierenden Code. Natürlich ist das viel einfacher wenn der Code bereits
-        so geschrieben wird das er Zend_Translate benutzt anstatt das er im
+        so geschrieben wird das er <code>Zend_Translate</code> benutzt anstatt das er im
         Nachhinein hierfür geändert wird.
     </para>
 
@@ -53,8 +53,8 @@ print $translate->_("Fixe Sprache hier ist Zeile zwei") . "\n";
     </example>
 
     <para>
-        Nun nehmen wir einen tieferen Blick in was getan wurde und wie
-        Zend_Translate in den eigenen Code integriert wird.
+        Nun nehmen wir einen tieferen Blick darin, was getan wurde, und wie
+        <code>Zend_Translate</code> in den eigenen Code integriert wird.
     </para>
 
     <para>
@@ -126,17 +126,17 @@ print $translate->_(2)."\n";
     <para>
         Auch werden Probleme auftreten wenn einige Strings nicht übersetzt worden sind.
         Man muß sich immer vor Augen halten wie Übersetzungen funktionieren.
-        Zuerst sieht Zend_Translate nach ob in der gesetzten Sprache für die angegebene
+        Zuerst sieht <code>Zend_Translate</code> nach ob in der gesetzten Sprache für die angegebene
         Message ID oder String eine Übersetzung vorhanden ist.
         Wenn kein Übersetzung gefunden wurde, wird in der nächst tiefer gelegenen
-        Sprache gesucht wie in Zend_Locale definiert.
+        Sprache gesucht wie in <code>Zend_Locale</code> definiert.
         "<emphasis role="strong">de_AT</emphasis>" wird also zu
         "<emphasis role="strong">de</emphasis>".
         Wenn auch hier keine Übersetzung in der Sprache "<emphasis role="strong">de</emphasis>"
         gefunden wurde, wird der Original String zurück gegeben.
         Das bedeutet also das immer eine Ausgabe existiert, selbst wenn für eine Message ID
         keine Übersetzung in der Quelle vorhanden ist.
-        Zend_Translate wird niemals eine Exception oder einen Fehler ausgeben wenn ein
+        <code>Zend_Translate</code> wird niemals eine Exception oder einen Fehler ausgeben wenn ein
         String übersetzt werden soll.
     </para>
 
@@ -153,7 +153,7 @@ print $translate->_(2)."\n";
 
         <para>
             Zuerst muß überlegt werden wo die Übersetzung Dateien gespeichert werden.
-            Mit Zend_Translate bestehen hierbei keinerlei Einschränkungen.
+            Mit <code>Zend_Translate</code> bestehen hierbei keinerlei Einschränkungen.
             Trotzdem sollten die folgenden Strukturen bevorzugt verwendet werden:
         </para>
 
@@ -295,7 +295,7 @@ print $translate->_(2)."\n";
 
         <para>
             Einzeln strukturierte und sprachlich strukturierte Quell Dateien sind
-            für Zend_Translate am besten benutzbar.
+            für <code>Zend_Translate</code> am besten benutzbar.
         </para>
 
         <para>
@@ -686,8 +686,8 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                         <entry>scan</entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
                         <entry>Wenn null gesetzt wird, wird die Verzechnisstruktur nicht gescannt.
-                        Wenn Zend_Translate::LOCALE_DIRECTORY gesetzt wird, wird das Gebietsschema im
-                        Verzeichnis gesucht. Wenn Zend_Translate::LOCALE_FILENAME gesetzt wird, wird das
+                        Wenn <code>Zend_Translate::LOCALE_DIRECTORY</code> gesetzt wird, wird das Gebietsschema im
+                        Verzeichnis gesucht. Wenn <code>Zend_Translate::LOCALE_FILENAME</code> gesetzt wird, wird das
                         Gebietsschema im Dateinamen gesucht. Siehe
                         <xref linkend="zend.translate.using.detection" /> für Details</entry>
                     </row>
@@ -896,8 +896,8 @@ $translate->getLocale();
         <title>Automatische Erkennung von Quellen</title>
 
         <para>
-            Zend_Translate kann Übersetzungsquellen automatisch erkennen. Es muß also nicht jede Quelldatei
-            manuell deklariert werden. Man kann diesen Job Zend_Translate überlassen welches die komplette
+            <code>Zend_Translate</code> kann Übersetzungsquellen automatisch erkennen. Es muß also nicht jede Quelldatei
+            manuell deklariert werden. Man kann diesen Job <code>Zend_Translate</code> überlassen welches die komplette
             Verzeichnisstruktur nach Quelldateien durchsucht.
         </para>
 
@@ -929,9 +929,9 @@ $translate = new Zend_Translate('tmx', '/language');
         </example>
 
         <para>
-            Zend_Translate muß also nicht nur das angegebene Verzeichnis durchsuchen, sondern auch alle
-            Unterverzeichnisse nach Dateien für Übersetzungsen. Das macht die Verwendung sehr einfach.
-            Aber Zend_Translate wird alle Dateien ignorieren, welche keine Quellen sind, oder wärend des
+            <code>Zend_Translate</code> muß also nicht nur das angegebene Verzeichnis durchsuchen, sondern auch alle
+            Unterverzeichnisse nach Dateien für Übersetzungen. Das macht die Verwendung sehr einfach.
+            Aber <code>Zend_Translate<code> wird alle Dateien ignorieren, welche keine Quellen sind, oder wärend des
             Einlesens der Übersetzungsdaten Fehler produzieren. Man sollte also sicherstellen das alle
             Übersetzungsquellen korrekt sind und gelesen werden können weil man keinen Fehler erhält wenn
             eine Datei fehlerhaft ist oder nicht gelesen werden kann.
@@ -940,7 +940,7 @@ $translate = new Zend_Translate('tmx', '/language');
         <note>
             <para>
                 Abhängig davon wie tief die Verzeichnisstruktur ist und wieviele Dateien innerhalb dieser
-                Struktur vorhanden sind, kann es eine sehr lange Zeit dauern bis Zend_Translate fertig ist.
+                Struktur vorhanden sind, kann es eine sehr lange Zeit dauern bis <code>Zend_Translate</code> fertig ist.
             </para>
         </note>
 
@@ -962,7 +962,7 @@ $translate = new Zend_Translate('tmx', '/language');
             </para>
 
             <para>
-                Zend_Translate benötigt die 'scan' Option um zu wissen das es die Namen aller Verzeichnisse
+                <code>Zend_Translate</code> benötigt die 'scan' Option um zu wissen das es die Namen aller Verzeichnisse
                 nach Sprachen durchsuchen soll. Siehe das folgende Beispiel für Details:
             </para>
 

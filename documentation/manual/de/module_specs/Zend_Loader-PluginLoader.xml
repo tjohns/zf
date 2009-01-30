@@ -218,7 +218,7 @@ if ($loader->isLoaded('Adapter')) {
             </para>
 
             <programlisting role="php"><![CDATA[
-$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+$classFileIncCache = APPLICATION_PATH . '/../data/pluginLoaderCache.php';
 if (file_exists($classFileIncCache)) {
     include_once $classFileIncCache;
 }
@@ -238,7 +238,7 @@ Zend_Loader_PluginLoader::setIncludeFileCache($classFileIncCache);
             </para>
 
             <programlisting role="php"><![CDATA[
-$classFileIncCache = APPLICATION_PATH .  '/../data/pluginLoaderCache.php';
+$classFileIncCache = APPLICATION_PATH . '/../data/pluginLoaderCache.php';
 if (file_exists($classFileIncCache)) {
     include_once $classFileIncCache;
 }

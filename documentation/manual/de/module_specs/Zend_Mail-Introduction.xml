@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13740 -->
+<!-- EN-Revision: 13839 -->
 <sect1 id="zend.mail.introduction">
 
     <title>Einführung</title>
@@ -16,7 +16,7 @@
 
         <example id="zend.mail.introduction.example-1">
 
-            <title>Einfache E-Mail mit Zend_Mail</title>
+            <title>Einfache E-Mail mit <code>Zend_Mail</code></title>
 
             <para>
                 Eine einfache E-Mail besteht aus einigen Empfängern, einem Betreff, einem Hauptteil und
@@ -93,7 +93,7 @@ $mail->setBodyText('Das ist der Text der Nachricht.')
 
         <example id="zend.mail.introduction.sendmail.example-1">
 
-            <title>Zusätzliche Parameter einem Zend_Mail_Transport_Sendmail Transport übergeben</title>
+            <title>Zusätzliche Parameter einem <code>Zend_Mail_Transport_Sendmail</code> Transport übergeben</title>
 
             <para>
                 Dieses Beispiel zeigt wie der Rückgabe-Pfad der

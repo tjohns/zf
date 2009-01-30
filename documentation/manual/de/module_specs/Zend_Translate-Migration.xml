@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13566 -->
+<!-- EN-Revision: 13827 -->
 <sect1 id="zend.translate.migration">
 
     <title>Migration von vorhergehenden Versionen</title>
@@ -17,7 +17,7 @@
 
             <para>
                 Wenn man die automatische Erkennung von Sprachen verwendet, oder Sprachen manuell auf
-                Zend_Translate setzt kann es sein das man von Zeit zu Zeit eine Notiz geworfen bekommen die
+                <code>Zend_Translate</code> setzt kann es sein das man von Zeit zu Zeit eine Notiz geworfen bekommen die
                 über nicht hinzugefügte oder leere Übersetzungen schreibt. In einigen vorhergehenden Releases
                 wurde in einigen Fällen auch eine Exception geworfen.
             </para>

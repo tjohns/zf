@@ -65,7 +65,7 @@
 
             <para>
                 Für Dateien, welche nur PHP Code beinhalten ist der schliessende Tag ("?>") nicht
-                zugelassen.  Er wird von PHP nicht benötigt, und das Weglassen verhindert das
+                zugelassen. Er wird von PHP nicht benötigt, und das Weglassen verhindert das
                 versehentlich Leerzeilen in die Antwort eingefügt werden.
             </para>
 
@@ -503,7 +503,7 @@ class SampleClass
                     vor der Deklaration von allen Methoden.
                 </para>
                 <para>
-                    Das <code>var</code> Konstrukt ist nicht gestattet.  Klassenvariablen definieren Ihre
+                    Das <code>var</code> Konstrukt ist nicht gestattet. Klassenvariablen definieren Ihre
                     Sichtbarkeit durch die Verwendung des <code>private</code>, <code>protected</code>,
                     oder <code>public</code> Modifikatoren. Das gestatten von direktem Zugriff auf
                     Klassenvariablen durch deren Deklaration als public ist gestattet aber es wird davon

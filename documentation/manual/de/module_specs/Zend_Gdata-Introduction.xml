@@ -270,7 +270,7 @@ $entry->cell = $cell;
 
         <para>
             Der einzige optionale Parameter für den Konstruktor von Zend_Gdata_App ist eine Instanz von
-            <link linkend="zend.http.client">Zend_Http_Client</link>.  Wenn dieser Parameter nicht
+            <link linkend="zend.http.client">Zend_Http_Client</link>. Wenn dieser Parameter nicht
             übergeben wird, erstellt Zend_Gdata ein standardmäßiges Zend_Http_Client Objekt, welches keine
             Zugangsdaten zugeordnet hat um auf private Feeds zugreifen zu können. Die Spezifizierung des
             Zend_Http_Client Objektes erlaubt es auch Konfigurationsoptionen an das Client Objekt zu übergeben.

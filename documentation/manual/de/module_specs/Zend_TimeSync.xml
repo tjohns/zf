@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12814 -->
+<!-- EN-Revision: 13828 -->
 <sect1 id="zend.timesync.introduction">
 
     <title>Einführung</title>
@@ -80,7 +80,7 @@
                     <emphasis role="strong">Mehrere Server</emphasis>
                 </para>
                 <para>
-                    Wenn die anwendung auf mehr als einem Server läuft, und die Zeitbasis dieser
+                    Wenn die Anwendung auf mehr als einem Server läuft, und die Zeitbasis dieser
                     Server nicht miteinander gekoppelt sind, kann das zu Problemen in der Anwendung
                     führen wenn Teile der Anwendung von einem Server und andere von einem anderen
                     Server kommen.
@@ -92,7 +92,7 @@
                 </para>
                 <para>
                     Wenn man mit einem Zeitserver arbeiten oder Ihn in einer Batchdatei oder in
-                    einer Kommandozeilen Anwendung inkludieren will, kann Zend_TimeSync nützlich sein.
+                    einer Kommandozeilen Anwendung inkludieren will, kann <code>Zend_TimeSync</code> nützlich sein.
                 </para>
             </listitem>
         </itemizedlist>

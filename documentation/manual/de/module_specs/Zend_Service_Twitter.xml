@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12545 -->
+<!-- EN-Revision: 13830 -->
 <sect1 id="zend.service.twitter" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Service_Twitter</title>
 
@@ -8,7 +8,7 @@
         <para>
             <code>Zend_Service_Twitter</code> bietet einen Client für die
             <ulink url="http://apiwiki.twitter.com/REST+API+Documentation">REST API von Twitter</ulink>.
-            Zend_Service_Twitter erlaubt es eine öffentliche Zeitachse abzufragen und wenn man einen
+            <code>Zend_Service_Twitter</code> erlaubt es eine öffentliche Zeitachse abzufragen und wenn man einen
             Benutzernamen und ein Passwort für Twitter angibt, ist es auch erlaubt den eigenen Status zu
             erhalten und zu aktualisieren, Freunden zu antworten, Nachrichten an Freunde schicken, Tweets
             als Favoriten markieren und vieles mehr.

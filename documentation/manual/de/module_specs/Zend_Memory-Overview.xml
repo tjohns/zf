@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13838 -->
 <sect1 id="zend.memory.overview">
     <title>Übersicht</title>
 
     <sect2 id="zend.memory.introduction">
         <title>Einführung</title>
         <para>
-            Die Zend_Memory Komponente ist dafür gedacht Daten in
+            Die <code>Zend_Memory</code> Komponente ist dafür gedacht Daten in
             Systemen mit limitiertem Speicher zu Verwalten.
         </para>
 
@@ -31,7 +31,7 @@
         </para>
 
         <example id="zend.memory.introduction.example-1">
-            <title>Verwenden der Zend_Memory Komponente</title>
+            <title>Verwenden der <code>Zend_Memory</code> Komponente</title>
             <para>
                 <code>Zend_Memory::factory()</code> instantiiert das Speichermanager
                 Objekt mit den definierten Backend Optionen.
@@ -68,7 +68,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         <title>Theorie der Verwendung</title>
 
         <para>
-            Die Zend_Memory Konponente arbeitet mit den folgenden Konzepten:
+            Die <code>Zend_Memory</code> Komponente arbeitet mit den folgenden Konzepten:
             <itemizedlist>
                 <listitem>
                     <para>Memory Manager</para>
@@ -157,7 +157,7 @@ $memObject->value = substr($memObject->value, $start, $length);
 
             <para>
                 Verschiebbare Memory Objekte werden transparent geswappt und
-                geladen von und in das Cache Backend durch Zend_Memory wenn das
+                geladen von und in das Cache Backend durch <code>Zend_Memory</code> wenn das
                 notwendig wird.
             </para>
 

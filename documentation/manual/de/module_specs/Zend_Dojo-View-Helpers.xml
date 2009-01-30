@@ -865,7 +865,7 @@ echo $view->passwordTextBox(
             <listitem>
                 <para>
                     <emphasis>RadioButton</emphasis>: dijit.form.RadioButton. Ein Set von Optionen von denen
-                    nur eine ausgewählt werden kann.  Dieses Verhalten entspricht auf jedem Tall dem normaler
+                    nur eine ausgewählt werden kann. Dieses Verhalten entspricht auf jedem Tall dem normaler
                     Radio Buttons, hat aber das Look-and-Feel das mit dem anderer Dijit konsistent ist.
                 </para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 13826 -->
 <sect1 id="zend.view.introduction">
     <title>Einführung</title>
 
@@ -17,7 +17,7 @@
     <para>
         Im Wesentlichen verläuft die Verwendung von <code>Zend_View</code> in zwei Hauptschritten:
 
-        1. Dein Controller Skript erstellt eine Instanz von Zend_View und übergibt Variablen an
+        1. Dein Controller Skript erstellt eine Instanz von <code>Zend_View</code> und übergibt Variablen an
         diese Instanz.
 
         2. Der Controller teilt <code>Zend_View</code> mit, ein bestimmtes View Skript zu verarbeiten. Dabei
@@ -71,8 +71,8 @@ echo $view->render('booklist.php');
             Nun benötigen wir das zugehörige View Skript "booklist.php". Dies ist ein PHP Skript
             wie jedes andere mit einer Ausnahme: es wird innerhalb der <code>Zend_View</code> Instanz ausgeführt,
             was bedeutet, dass Referenzen auf $this auf die Eigenschaften und Methoden der
-            Zend_View Instanz weisen. (Variablen, die vom Controller an die Instanz übergeben
-            wurden, sind öffentliche (public) Eigenschaften der Zend_View Instanz.) Dadurch kann
+            <code>Zend_View</code> Instanz weisen. (Variablen, die vom Controller an die Instanz übergeben
+            wurden, sind öffentliche (public) Eigenschaften der <code>Zend_View</code> Instanz.) Dadurch kann
             ein sehr einfaches View Skript wie folgt aussehen:
         </para>
 

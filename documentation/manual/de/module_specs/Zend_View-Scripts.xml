@@ -1,13 +1,13 @@
-<!-- EN-Revision: 13432 -->
+<!-- EN-Revision: 13826 -->
 <sect1 id="zend.view.scripts">
 
     <title>View Scripte</title>
 
     <para>
-        Sobald dein Controller die Variablen übergeben und die render() Methode aufgerufen hat,
-        inkludiert Zend_View das angeforderte View Skript und führt es "innerhalb" des
-        Gültigkeitsbereichs der Zend_View Instanz aus. Deshalb weisen Referenzen auf $this in
-        deinem View Skript auf die Zend_View Instanz selber.
+        Sobald dein Controller die Variablen übergeben und die <code>render()</code> Methode aufgerufen hat,
+        inkludiert <code>Zend_View</code> das angeforderte View Skript und führt es "innerhalb" des
+        Gültigkeitsbereichs der <code>Zend_View</code> Instanz aus. Deshalb weisen Referenzen auf $this in
+        deinem View Skript auf die <code>Zend_View</code> Instanz selber.
     </para>
 
     <para>
@@ -19,7 +19,7 @@
     </para>
 
     <para>
-        Zur Erinnerung hier noch einmal das Beispiel View Skript aus der Zend_View Einführung.
+        Zur Erinnerung hier noch einmal das Beispiel View Skript aus der <code>Zend_View</code> Einführung.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -78,7 +78,7 @@ echo $this->escape($this->variable);
             Standardmäßig verwendet escape() die PHP htmlspecialchars() Funktion für die Maskierung.
             Allerdings könntest du abhängig von deiner Umgebung den Wunsch haben, die Maskierung
             anders durchzuführen. Verwende die setEscape() Methode auf der Controller Ebene, um
-            Zend_View mitzuteilen, welche Maskierungsmöglichkeit als Callback verwendet werden soll.
+            <code>Zend_View</code> mitzuteilen, welche Maskierungsmöglichkeit als Callback verwendet werden soll.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -116,9 +116,9 @@ echo $view->render(...);
         <para>
             Obwohl PHP selber eine mächtiges Templatesystem ist, haben viele Entwickler das Gefühl,
             dass es zu mächtig oder komplex für die Template Designer ist und möchten ein
-            alternatives Templatesystem verwenden. Zend_View stellt zwei Mechanismen bereit,
+            alternatives Templatesystem verwenden. <code>Zend_View</code> stellt zwei Mechanismen bereit,
             um dies zu realisieren, die erste durch Viewskripte und die zweite durch
-            Implementierung von Zend_View_Interface.
+            Implementierung von <code>Zend_View_Interface</code>.
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -184,7 +184,7 @@ if ($this->books) {
             <title>Ein Templatesystem mit Hilfe von Zend_View_Interface verwenden</title>
 
             <para>
-                Manche finden es einfacher, ein Zend_View kompatibles Templatesystem zu verwenden.
+                Manche finden es einfacher, ein <code>Zend_View</code> kompatibles Templatesystem zu verwenden.
                 <code>Zend_View_Interface</code> definiert die minimale Schnittstelle, die zur
                 Kompatibilität benötigt wird.
             </para>
@@ -243,7 +243,7 @@ public function render($name);
 
             <para>
                 Durch Verwendung dieses Interfaces ist es relativ einfach, das Templatesystem eines
-                Dritten in eine Zend_View kompatible Klasse zu umhüllen. Als Beispiel folgt ein
+                Dritten in eine <code>Zend_View</code> kompatible Klasse zu umhüllen. Als Beispiel folgt ein
                 möglicher Wrapper für Smarty:
             </para>
 

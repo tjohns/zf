@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12236 -->
+<!-- EN-Revision: 13834 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
@@ -17,7 +17,7 @@
     </note>
     <para>
         Man kann auch die Optionen des Adapters entweder über die <code>set*</code> Methoden oder durch die
-        Übergabe eines Arrays, oder einer Instanz von Zend_Config, an den Constructor mit dem Optionen als
+        Übergabe eines Arrays, oder einer Instanz von <code>Zend_Config</code>, an den Constructor mit dem Optionen als
         ersten Parameter. Die möglichen Optionen sind:
     </para>
     <itemizedlist>

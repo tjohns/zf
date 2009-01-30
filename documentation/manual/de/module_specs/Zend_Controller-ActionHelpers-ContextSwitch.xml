@@ -667,7 +667,7 @@ $contextSwitch->initContext();
 
         <para>
             Zuerst, verwendet es eine andere Action Kontroller Eigenschaft<code>$ajaxable</code>
-            um Kontexte festzustellen.  Damit kann man verschiedene Kontexte verwenden für AJAX
+            um Kontexte festzustellen. Damit kann man verschiedene Kontexte verwenden für AJAX
             gegenüber normalen HTTP Anfragen. Die verschiedenen <code>*ActionContext*()</code>
             Methoden von <code>AjaxContext</code> schreiben in diese Eigenschaft.
         </para>

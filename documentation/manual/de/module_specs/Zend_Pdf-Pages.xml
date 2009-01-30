@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13835 -->
 <sect1 id="zend.pdf.pages">
     <title>Arbeiten mit Seiten</title>
     <sect2 id="zend.pdf.pages.creation">
@@ -21,7 +21,7 @@
             verschiedenen PDF Dokumenten verwendet werden, sind aber etwas schneller.
             <footnote>
                 <para>
-                Dies ist eine Einschränkung der V1.0 Version der Zend_Pdf Komponente. Sie wird in
+                Dies ist eine Einschränkung der V1.0 Version der <code>Zend_Pdf</code> Komponente. Sie wird in
                 zukünftigen Versionen beseitigt werden. Aber ungebundene Seiten werden immer ein
                 besseres (also optimaleres) Ergebnis für gemeinsame Benutzung in Dokumenten liefern.
                 </para>

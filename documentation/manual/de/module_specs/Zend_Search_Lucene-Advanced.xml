@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>Erweitert</title>
 
@@ -6,7 +6,7 @@
         <title>Starting from 1.6, handling index format transformations.</title>
 
         <para>
-            Die Zend_Search_Lucene Komponente arbeitet mit den Index Formaten der Java Lucene Version 1.4-1.9, 2.1
+            Die <code>Zend_Search_Lucene</code> Komponente arbeitet mit den Index Formaten der Java Lucene Version 1.4-1.9, 2.1
             und 2.3.
         </para>
 
@@ -41,7 +41,7 @@
         </para>
 
         <para>
-            In solch einem Fall kann Zend_Search_Lucene den Index in eine höhere Formatversion konvertieren.
+            In solch einem Fall kann <code>Zend_Search_Lucene</code> den Index in eine höhere Formatversion konvertieren.
             Das geschieht <emphasis role="strong">immer</emphasis> für Indezes welche im
             <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> sind. Diese werden automatisch ins Format 2.1
             konvertiert.
@@ -140,7 +140,7 @@ Searcher::initIndex();
         </para>
 
         <para>
-            Zend_Search_Lucene bietet einen Workaround zu diesem Problem, mit der <code>commit()</code> Methode,
+            <code>Zend_Search_Lucene</code> bietet einen Workaround zu diesem Problem, mit der <code>commit()</code> Methode,
             an. Diese speichert alle ungespeicherten Änderungen und leert den Speicher der für das Speichern der
             neuen Segmente verwendet wird. Man kann die commit Operation jederzeit oder auch mehrmals während der
             Ausführung des Skripts anwenden. Man kann das <code>Zend_Search_Lucene</code> Objekt trotzdem für das

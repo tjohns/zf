@@ -11,7 +11,7 @@
             Modul, Controller und Aktion Namen sowie die optionalen Parameter zu extrahieren und
             dann den Controller zu instanzieren und die Aktion dieses Controllers aufzurufen.
             Wenn kein Modul, kein Controller oder keine Aktion gefunden wurde, werden dafür
-            Standardwerte verwendet.  <code>Zend_Controller_Dispatcher_Standard</code> legt
+            Standardwerte verwendet. <code>Zend_Controller_Dispatcher_Standard</code> legt
             <code>index</code> für beide als Standardwert fest, aber erlaubt dem Entwickler auch,
             diese durch Verwendung der <code>setDefaultController()</code>,
             <code>setDefaultAction()</code> und <code>setDefaultModule()</code> Methoden zu

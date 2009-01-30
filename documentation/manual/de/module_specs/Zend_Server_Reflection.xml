@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12756 -->
+<!-- EN-Revision: 13833 -->
 <sect1 id="zend.server.reflection">
     <title>Zend_Server_Reflection</title>
 
@@ -6,7 +6,7 @@
         <title>Einführung</title>
 
         <para>
-            Zend_Server_Reflection stellt einen Standardmechanismus für Funktion und Klassen
+            <code>Zend_Server_Reflection</code> stellt einen Standardmechanismus für Funktion und Klassen
             Introspektion für die Verwendung der Serverklassen bereit. Es basiert auf der PHP 5
             Reflection API und erweitert es, um Methoden für die Erhaltung von Parameter und
             Rückgabewerttypen und Beschreibung, eine komplette Liste mit Funktion und Methoden

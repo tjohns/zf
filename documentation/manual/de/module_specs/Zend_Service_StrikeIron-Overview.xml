@@ -1,9 +1,9 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13830 -->
 <sect1 id="zend.service.strikeiron">
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-        Zend_Service_StrikeIron bietet einen PHP 5 Clienten zu den Web Services von StrikeIron. Siehe die folgenden
+        <code>Zend_Service_StrikeIron</code> bietet einen PHP 5 Clienten zu den Web Services von StrikeIron. Siehe die folgenden
         Sektionen:
     </para>
 
@@ -39,19 +39,19 @@
         <para>
           Die Services von StrikeIron können schon alleine durch die
           <ulink url="http://us.php.net/soap">PHP 5 SOAP Erweiterung</ulink> verwendet werden. Trotzdem bietet die
-          Verwendung von StrikeIron auf diesem Weg kein ideales PHP-artiges Interface. Die Zend_Service_StrikeIron
+          Verwendung von StrikeIron auf diesem Weg kein ideales PHP-artiges Interface. Die <code>Zend_Service_StrikeIron</code>
           Componente bietet einen leichtgewichtigen Layer aufbauend auf der SOAP Erweiterung für die Arbeit mit
           den Services von StrikeIron auf einem bequemeren und PHP-artigeren Weg.
         </para>
 
         <note>
           <para>
-            Die PHP 5 SOAP Erweiterung muß installiert und aktiviert sein um Zend_Service_StrikeIron zu verwenden.
+            Die PHP 5 SOAP Erweiterung muß installiert und aktiviert sein um <code>Zend_Service_StrikeIron</code> zu verwenden.
           </para>
         </note>
 
         <para>
-          Die Zend_Service_StrikeIron Komponente bietet:
+          Die <code>Zend_Service_StrikeIron</code> Komponente bietet:
 
           <itemizedlist>
             <listitem>
@@ -88,13 +88,13 @@
     <sect2 id="zend.service.strikeiron.registering">
       <title>Registrieren mit StrikeIron</title>
       <para>
-        Bevor man mit Zend_Service_StrikeIron beginnen kann, muß man sich zuerst für einen StrikeIron
+        Bevor man mit <code>Zend_Service_StrikeIron</code> beginnen kann, muß man sich zuerst für einen StrikeIron
         Entwickler Zugang <ulink url="http://strikeiron.com/Register.aspx">registrieren</ulink>.
       </para>
 
       <para>
         Nach der Registrierung erhält man einen StrikeIron Benutzernamen und ein Passwort. Diese werden
-        Verwendet wenn man sich auf StrikeIron verbindet indem man Zend_Service_StrikeIron verwendet.
+        Verwendet wenn man sich auf StrikeIron verbindet indem man <code>Zend_Service_StrikeIron</code> verwendet.
       </para>
 
       <para>
@@ -114,11 +114,11 @@
         Sobald man sich für einen StrikeIron Account
         <ulink url="http://strikeiron.com/Register.aspx">registriert</ulink> und für das
         <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">Super Data Pack</ulink> angemeldet hat,
-        ist man für die Benutzung von Zend_Service_StrikeIron bereit.
+        ist man für die Benutzung von <code>Zend_Service_StrikeIron</code> bereit.
       </para>
 
       <para>
-        StrikeIron besteht aus hunderten von verschiedenen WebServices. Zend_Service_StrikeIron kann mit vielen
+        StrikeIron besteht aus hunderten von verschiedenen WebServices. <code>Zend_Service_StrikeIron</code> kann mit vielen
         dieser Services verwendet werden bietet aber nur für drei von Ihnen unterstützte Wrapper:
       </para>
 

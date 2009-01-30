@@ -1,9 +1,9 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>Abfragesprache</title>
 
     <para>
-        Java Lucene und Zend_Search_Lucene bieten sehr mächtige Abfragesprachen.
+        Java Lucene und <code>Zend_Search_Lucene</code> bieten sehr mächtige Abfragesprachen.
     </para>
 
     <para>
@@ -51,7 +51,7 @@
             über <emphasis>alle Felder</emphasis> gesucht werden.
         </para>
         <para>
-            Es gibt zwei statishce Methoden in der Zend_Search_Lucene Klasse welche dem Entwickler das
+            Es gibt zwei statische Methoden in der <code>Zend_Search_Lucene</code> Klasse welche dem Entwickler das
             Konfigurieren dieser Einstellungen erlauben:
         </para>
         <programlisting role="php"><![CDATA[
@@ -187,7 +187,7 @@ title:{Aida TO Carmen}
             werden durch geschlungene Klammern abgegrenzt.
         </para>
         <para>
-            Wenn kein Feld spezifiziert wurde sucht Zend_Search_Lucene standardmäßig nach spezifizierten
+            Wenn kein Feld spezifiziert wurde sucht <code>Zend_Search_Lucene</code> standardmäßig nach spezifizierten
             Intervallen in allen Feldern.
             <programlisting role="querystring"><![CDATA[
 {Aida TO Carmen}
@@ -199,7 +199,7 @@ title:{Aida TO Carmen}
     <sect2 id="zend.search.lucene.query-language.fuzzy">
         <title>Fuzzy Suchen</title>
         <para>
-            Zend_Search_Lucene unterstützt, genauso wie Java Lucene, die Fuzzy Suche basierend auf der
+            <code>Zend_Search_Lucene</code> unterstützt, genauso wie Java Lucene, die Fuzzy Suche basierend auf der
             Levenshtein Distanz oder dem Edit Algorithmus. Um eine Fuzzy Suche durchzuführen muß das Tilde
             Symbol "~", am Ende eines einzelnen Wortbegriffs verwendet werden. Um zum Beispiel nach einem
             Begriff zu suchen der in der Aussprache ähnlich zu "Raum" ist kann die folgende Fuzzy Suche
@@ -239,7 +239,7 @@ roam~0.8
         <title>Einen Ausdruck schneller machen</title>
 
         <para>
-            Java Lucene und Zend_Search_Lucene bieten einen Level der Relevanz von passenden Dokumenten basierend
+            Java Lucene und <code>Zend_Search_Lucene</code> bieten einen Level der Relevanz von passenden Dokumenten basierend
             auf den gefundenen Ausdrücken. Um die Relevanz eines Ausdrucks zu erhöhen kann das Karet, "^", Symbol mit
             einem Boost Faktor (einer Zahl) am Ende des Ausdrucks nach dem gesucht wird, verwendet werden. Je
             höher Boost Faktor ist, desdo relevanter wird der Ausdruck werden.
@@ -275,12 +275,12 @@ PHP^4 framework
         <para>
             Boolsche Operatoren erlauben es Ausdrücke durch logische Operatoren zu kombinieren. Lucene
             unterstützt AND, "+", OR, NOT und "-" als boolsche Operatoren. In Java Lucene müssen alle boolschen
-            Operatoren GROßGESCHRIEBEN werden. In Zend_Search_Lucene nicht.
+            Operatoren GROßGESCHRIEBEN werden. In <code>Zend_Search_Lucene</code> nicht.
         </para>
 
         <para>
             AND, OR, und NOT Operatoren und "+", "-" definieren zwei unterschiedliche Stile um boolsche Abfragen
-            zu erstellen. Im Gegensatz zu Java Lucene erlaubt es Zend_Search_Lucene nicht diese zwei Stile zu
+            zu erstellen. Im Gegensatz zu Java Lucene erlaubt es <code>Zend_Search_Lucene</code> nicht diese zwei Stile zu
             mischen.
         </para>
         <para>
@@ -416,14 +416,14 @@ PHP^4 framework
         <title>Gruppieren</title>
 
         <para>
-            Java Lucene und Zend_Search_Lucene unterstützen die Verwendung von Klammern um Fälle zu gruppieren
+            Java Lucene und <code>Zend_Search_Lucene</code> unterstützen die Verwendung von Klammern um Fälle zu gruppieren
             und Unterabfragen zu erstellen. Das kann nützlich sein wenn man die boolsche Operatoren für eine
             Abfrage kontrollieren will, oder unterschiedliche Abfragestile mischen will:
             <programlisting role="querystring"><![CDATA[
 +(Framework OR Bibliothek) +php
 ]]>
             </programlisting>
-            Zend_Search_Lucene unterstützt Unterabfragen von beliebigen Ebenen.
+            <code>Zend_Search_Lucene</code> unterstützt Unterabfragen von beliebigen Ebenen.
         </para>
     </sect2>
 

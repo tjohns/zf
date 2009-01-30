@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13413 -->
+<!-- EN-Revision: 13822 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -228,6 +228,13 @@ $upload->receive();
 
             <listitem>
                 <para>
+                    <emphasis role="strong">getFileSize($file = null)</emphasis>: Diese Methode gibt die
+                    echte dateigröße für die angegebene Datei zurück.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>: Diese Methode
                     gibt einen Hash des Inhalts einer angegebenen übertragenen Datei zurück.
                 </para>
@@ -272,6 +279,30 @@ $names = $upload->getFileName('foo');
                 empfangen wurden.
             </para>
         </note>
+
+        <para>
+            <code>getFileSize()</code> gibt standardmäßig die echte Dateigröße in SI Schreibweise zurück
+            was bedeutet das man <code>2kB</code> statt <code>2048</code> erhält. Wenn man die reine
+            Größe benötigt muß man die <code>useByteString</code> Option auf false setzen.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example.getfilesize">
+            <title>Die Größe einer Datei erhalten</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Gibt die Größen aller Dateien als Array zurück wenn mehr als eine Datei hochgeladen wurde
+$size = $upload->getFileSize();
+
+// Wechsle die SI Schreibweise damit reine Nummern zurückgegeben werden
+$upload->setOption(array('useByteString' => false));
+$size = $upload->getFileSize();
+]]>
+            </programlisting>
+
+        </example>
 
         <para>
             <code>getHash()</code> akzeptiert den Namen eines Hash Algorithmus als ersten Parameter. Für eine

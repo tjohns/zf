@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13356 -->
+<!-- EN-Revision: 13835 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -21,7 +21,7 @@ $height = $pdfPage->getHeight();
     <sect2 id="zend.pdf.drawing.color">
         <title>Farben</title>
         <para>
-            PDF bietet leistungsfähige Möglichkeiten für die Farbdarstellung. Die Zend_Pdf
+            PDF bietet leistungsfähige Möglichkeiten für die Farbdarstellung. Die <code>Zend_Pdf</code>
             Komponente unterstützt die Grauskala sowie RGB und CYMK Farbräume. Jede kann überall
             verwendet werden, wo ein <code>Zend_Pdf_Color</code> Objekt benötigt wird. Die
             <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_Rgb</code> und
@@ -221,7 +221,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
             Zeichenkodierungsmethode verwendet (wie zum Beispiel ein UTF-8 String, der aus einer
             Datei auf der Platte gelesen wurde, oder ein MacRoman String, der aus einer älteren
             Datenbank erhalten wurde), kannst du die Zeichenkodierung zum Zeitpunkt des Zeichnens
-            angeben und Zend_Pdf wird die Konvertierung für dich durchführen. Du kannst Quellstrings
+            angeben und <code>Zend_Pdf</code> wird die Konvertierung für dich durchführen. Du kannst Quellstrings
             in jeder Kodierungsmethode übergeben, die von PHP's
             <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
             Funktion unterstützt wird.
@@ -266,7 +266,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
             Courier (4 Stile), Helvetica (4 Stile), Times (4 Stile), Symbol und Zapf Dingbats.
         </para>
         <para>
-            Die Zend_Pdf Komponente unterstützt derzeit diese 14 Standardzeichensätze sowie deine
+            Die <code>Zend_Pdf</code> Komponente unterstützt derzeit diese 14 Standardzeichensätze sowie deine
             eigenen TrueType Zeichensätze. Zeichensatzobjekte können über eine der zwei
             Fabrikmethoden (factory methods) erhalten werden:
             <code>Zend_Pdf_Font::fontWithName($fontName)</code> für die 14 PDF Standardzeichensätze
@@ -459,7 +459,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             ZapfDingbats Schriften).
         </para>
         <para>
-            Zend_Pdf verwendet CP1252 (WinLatin1) für das Zeichnen von Text mit Standardschriften.
+            <code>Zend_Pdf</code> verwendet CP1252 (WinLatin1) für das Zeichnen von Text mit Standardschriften.
         </para>
         <para>
             Text kann trotzdem in jedem anderen Encoding angegeben werden, welches spezifiziert werden muß wenn
@@ -885,7 +885,7 @@ public function restoreGS();
     <sect2 id="zend.pdf.drawing.clipping">
         <title>Zeichenbereich</title>
         <para>
-            PDF und die Zend_Pdf Komponente unterstützen die Begrenzung des Zeichenbereichs. Der
+            PDF und die <code>Zend_Pdf</code> Komponente unterstützen die Begrenzung des Zeichenbereichs. Der
             aktuelle Zeichenbereich begrenzt den Seitenbereich, der von Zeichenoperationen
             beeinflusst werden kann. Zu Beginn ist dies die gesamte Seite.
         </para>

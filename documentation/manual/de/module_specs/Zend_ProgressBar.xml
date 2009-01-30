@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13583 -->
+<!-- EN-Revision: 13834 -->
 <sect1 id="zend.progressbar.introduction" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_ProgressBar</title>
 
@@ -14,10 +14,10 @@
     </sect2>
 
     <sect2 id="zend.progressbar.basic">
-        <title>Grundsätzliche Verwendung von Zend_Progressbar</title>
+        <title>Grundsätzliche Verwendung von <code>Zend_Progressbar</code></title>
         <para>
-            <code>Zend_ProgressBar</code> ist sehr einfach in seiner Verwendung.  Man erstellt einfach eine
-            neue Instanz von Zend_Progressbar, definiert einen minimalen und einen maximalan Wert, und wählt
+            <code>Zend_ProgressBar</code> ist sehr einfach in seiner Verwendung. Man erstellt einfach eine
+            neue Instanz von <code>Zend_Progressbar</code>, definiert einen minimalen und einen maximalan Wert, und wählt
             den Adapter der die Daten ausgibt. Wenn man die Datei ausführen will, muß man etwas ähnliches
             wie folgt machen:
         </para>

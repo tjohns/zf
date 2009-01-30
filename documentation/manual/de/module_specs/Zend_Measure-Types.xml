@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11495 -->
+<!-- EN-Revision: 13837 -->
 <sect1 id="zend.measure.types">
 
     <title>Arten von Maßeinheiten</title>
@@ -232,7 +232,7 @@
 
     <sect2 id="zend.measure.types.binary">
 
-        <title>Hinweise für Zend_Measure_Binary</title>
+        <title>Hinweise für <code>Zend_Measure_Binary</code></title>
 
         <para>
             Einige übliche Binäre Konventionen beinhalten Terme wie Kilo-, Mega-, Giga-, usw. die im normalen
@@ -254,7 +254,7 @@
 
     <sect2 id="zend.measure.types.decimal">
 
-        <title>Hinweise für Zend_Measure_Number</title>
+        <title>Hinweise für <code>Zend_Measure_Number</code></title>
 
         <para>
             Das bekannteste Zahlenformat ist das Dezimalsystem. Zusätzlich unterstützt diese Klasse das Oktalsystem,

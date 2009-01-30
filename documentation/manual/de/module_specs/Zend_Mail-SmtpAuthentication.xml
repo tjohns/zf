@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12754 -->
+<!-- EN-Revision: 13839 -->
 <sect1 id="zend.mail.smtp-authentication">
   <title>SMTP Authentifizierung</title>
 
@@ -8,7 +8,7 @@
   einen Benutzernamen- ('username') und einen Passwortwert ('password') im Konfigurations Array erwarten.</para>
 
   <example id="zend.mail.smtp-authentication.example-1">
-    <title>Authentifizierung innerhalb von Zend_Mail_Transport_Smtp einschalten</title>
+    <title>Authentifizierung innerhalb von <code>Zend_Mail_Transport_Smtp</code> einschalten</title>
 
     <programlisting role="php"><![CDATA[
 $config = array('auth' => 'login',

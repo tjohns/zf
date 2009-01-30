@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13830 -->
 <sect1 id="zend.service.slideshare">
 
     <title>Einführung</title>
@@ -16,7 +16,7 @@
         <title>Mit <code>Zend_Service_SlideShare</code> beginnen</title>
 
         <para>
-            Um die Zend_Service_SlideShare Komponente zu verwenden muß zuerst ein Account auf
+            Um die <code>Zend_Service_SlideShare</code> Komponente zu verwenden muß zuerst ein Account auf
             den slideshare.net Servern erstellt werden (mehr Informationen können
             <ulink url="http://www.slideshare.net/developers/">hier</ulink> gefunden werden) um
             einen API Schlüssel, Benutzername, Passwort und einen geteilten geheimen Wert zu

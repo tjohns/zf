@@ -377,7 +377,7 @@ $select = $db->select()
 
             <para>
                 In den oben stehenden Fällen ändern Zend_Db_Select den String nicht mit
-                Beziehungsnamen oder Bezeichnerquotierung.  Wenn diese Änderungen notwendig sein
+                Beziehungsnamen oder Bezeichnerquotierung. Wenn diese Änderungen notwendig sein
                 sollten um doppeldeutigkeiten auf zu lösen, muss dies manuell am String geändert
                 werden.
             </para>
