@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13413 -->
+<!-- EN-Revision: 13822 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -240,6 +240,13 @@ $upload->receive();
 
             <listitem>
                 <para>
+                    <emphasis role="strong">getFileSize($file = null)</emphasis>:
+                    このメソッドは、指定したaifるの実際のファイルサイズを返します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
                     <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>:
                     このメソッドは、転送されたファイルの内容のハッシュを返します。
                 </para>
@@ -285,6 +292,31 @@ $names = $upload->getFileName('foo');
                 <code>getFileName()</code> をコールするのは、ファイルを受信してからでなければなりません。
             </para>
         </note>
+
+        <para>
+            <code>getFileSize()</code> は、デフォルトではファイルサイズを SI 記法で返します。
+            つまり、たとえば <code>2048</code> ではなく <code>2kB</code>
+            のようになるということです。単にサイズだけが知りたい場合は、オプション
+            <code>useByteString</code> を false に設定してください。
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.example.getfilesize">
+            <title>ファイルのサイズの取得</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// 複数のファイルがアップロードされた場合は、すべてのファイルのサイズを配列で返します
+$size = $upload->getFileSize();
+
+// SI 記法を無効にし、数値のみを返すようにします
+$upload->setOption(array('useByteString' => false));
+$size = $upload->getFileSize();
+]]>
+            </programlisting>
+
+        </example>
 
         <para>
             <code>getHash()</code> の最初のパラメータには、ハッシュアルゴリズムの名前を指定します。
