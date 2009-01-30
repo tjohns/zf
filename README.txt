@@ -61,7 +61,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10943
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10944
 
 SYSTEM REQUIREMENTS
 -------------------
