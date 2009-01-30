@@ -205,7 +205,7 @@ class Zend_Config_Xml extends Zend_Config
 
     /**
      * Merge two arrays recursively, overwriting keys of the same name
-     * in $array1 with the value in $array2.
+     * in $firstArray with the value in $secondArray.
      *
      * @param  mixed $firstArray  First array
      * @param  mixed $secondArray Second array to merge into first array
