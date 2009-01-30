@@ -931,7 +931,7 @@ $translate = new Zend_Translate('tmx', '/language');
         <para>
             <code>Zend_Translate</code> muß also nicht nur das angegebene Verzeichnis durchsuchen, sondern auch alle
             Unterverzeichnisse nach Dateien für Übersetzungen. Das macht die Verwendung sehr einfach.
-            Aber <code>Zend_Translate<code> wird alle Dateien ignorieren, welche keine Quellen sind, oder wärend des
+            Aber <code>Zend_Translate</code> wird alle Dateien ignorieren, welche keine Quellen sind, oder wärend des
             Einlesens der Übersetzungsdaten Fehler produzieren. Man sollte also sicherstellen das alle
             Übersetzungsquellen korrekt sind und gelesen werden können weil man keinen Fehler erhält wenn
             eine Datei fehlerhaft ist oder nicht gelesen werden kann.

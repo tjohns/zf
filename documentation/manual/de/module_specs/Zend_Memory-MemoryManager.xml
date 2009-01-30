@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12150 -->
+<!-- EN-Revision: 13838 -->
 <sect1 id="zend.memory.memory-manager">
     <title>Memory Manager</title>
 
@@ -15,7 +15,7 @@
 
         <para>
             Das erste Argument <code>$backendName</code> ist eine Zeichenkette die
-            eine der Backend Implementationen benennt welche durch Zend_Cache
+            eine der Backend Implementationen benennt welche durch <code>Zend_Cache</code>
             unterstützt werden.
         </para>
 
@@ -34,13 +34,13 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
         </programlisting>
 
         <para>
-            Zend_Memory verwendet <link linkend="zend.cache.backends">Zend_Cache Backends</link>
+            <code>Zend_Memory</code> verwendet <link linkend="zend.cache.backends"><code>Zend_Cache Backends</code></link>
             als Speicheranbieter.
         </para>
 
         <para>
             Der spezielle Name '<code>None</code>' kann als Backend Name verwendet werden,
-            zusätzlich zu den Standard Zend_Cache Backends.
+            zusätzlich zu den Standard <code>Zend_Cache</code> Backends.
 
             <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');

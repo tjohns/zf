@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13626 -->
+<!-- EN-Revision: 13840 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writer</title>
   <para>
@@ -41,7 +41,7 @@ $logger->info('Informative Nachricht');
       </programlisting>
 
       Standardmäßig wird der Stream im Anhänge-Modus geöffnet (<code>"a"</code>). Um Ihn in einem anderen Modus
-      zu öffnen, akzeptiert der Zend_Log_Writer_Stream Konstruktor einen optionalen zweiten Parameter für den
+      zu öffnen, akzeptiert der <code>Zend_Log_Writer_Stream</code> Konstruktor einen optionalen zweiten Parameter für den
       Modus.
     </para>
 
