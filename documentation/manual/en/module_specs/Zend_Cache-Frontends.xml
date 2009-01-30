@@ -275,7 +275,7 @@ echo 'This is never cached ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title><code><Zend_Cache_Frontend_Function</code></title>
+        <title><code>Zend_Cache_Frontend_Function</code></title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>Introduction</title>
             <para>

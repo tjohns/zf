@@ -209,7 +209,7 @@ $server->addFunction('somefunc', 'funcs');
 
         <para>
             To use a custom response class, use
-            <code>Zend_XmlRpc_Server::setResponseClass()<code> prior to calling <code>handle()</code>.
+            <code>Zend_XmlRpc_Server::setResponseClass()</code> prior to calling <code>handle()</code>.
         </para>
     </sect2>
 

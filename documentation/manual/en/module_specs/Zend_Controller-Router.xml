@@ -256,7 +256,7 @@ $router->addRoute('user',
         <title>Default Routes</title>
 
         <para>
-            <code>Zend_Controller_Router_Rewrite<code> comes preconfigured with a default
+            <code>Zend_Controller_Router_Rewrite</code> comes preconfigured with a default
             route, which will match URIs in the shape of
             <code>controller/action</code>. Additionally, a module name may be
             specified as the first path element, allowing URIs of the form
