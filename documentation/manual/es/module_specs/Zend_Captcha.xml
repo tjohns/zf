@@ -1,0 +1,29 @@
+<sect1 id="zend.captcha.introduction">
+	<title>Introducción</title>
+
+	<para>
+		<ulink url="http://en.wikipedia.org/wiki/Captcha">
+			CAPTCHA
+		</ulink>
+		es el acrónimo de "Completely Automated Public Turing test to
+		tell Computers and Humans Apart" (Prueba de Turing pública y
+		automática para diferenciar a máquinas y humanos). it is used as
+		a challenge-response to ensure that the individual submitting
+		information is a human and not an automated process. Typically,
+		a captcha is used with form submissions where authenticated
+		users are not necessary, but you desire to prevent spam
+		submissions.
+	</para>
+
+	<para>
+		Los Captchas pueden presentarse en multitud de formas, incluyendo 
+		preguntas lógicas, caracteres trastocados o presentar imágenes y preguntar
+		cómo se relacionan. Zend_Captcha intenta proveer una amalgama de backends
+		que pueden ser utilizados por separado o en conjunción con
+		<code>Zend_Form</code>
+		.
+	</para>
+</sect1>
+<!--
+	vim:se ts=4 sw=4 et:
+-->
