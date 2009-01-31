@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13072 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -179,7 +179,7 @@ $row9->save();
             ist ein Integer für die gewünschte Position. Der zweite optionale Parameter ist ein
             Boolean; Es teilt dem Rowset Iterator mit ob er zur gleichen Zeit diese Position
             suchen muss, oder nicht (standard ist nicht). Diese Methode gibt standardmäßig ein
-            Zend_Db_Table_Row Objekt zurück. Wenn die angefragte Position nicht existiert wird
+            <code>Zend_Db_Table_Row</code> Objekt zurück. Wenn die angefragte Position nicht existiert wird
             eine Ausnahme geworfen. Hier ist ein Beispiel:
         </para>
 
@@ -368,7 +368,7 @@ $row->save();
 
         <para>
             Es können auch alternative Klassen für Zeilensätze benutzt werden, wenn diese
-            Zend_Db_Table_Rowset_Abstract erweitern. Der Name der eigenen Zeilensatz-Klasse wird entweder
+            <code>Zend_Db_Table_Rowset_Abstract</code> erweitern. Der Name der eigenen Zeilensatz-Klasse wird entweder
             in der geschützten Tabellenklassen-Eigenschaft <code>$_rowsetClass</code> oder als Teil des
             Array-Arguments des Konstruktors eines Tabellenobjekts übergeben.
         </para>
@@ -397,7 +397,7 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
         </example>
 
         <para>
-            Typischerweise reicht die Standardklasse Zend_Db_Rowset für die meisten Benutzungsfälle aus.
+            Typischerweise reicht die Standardklasse <code>Zend_Db_Rowset</code> für die meisten Benutzungsfälle aus.
             Trotzdem könnte es nützlich sein, neue Logik in einen Zeilensatz einzubauen, die für eine
             bestimmte Tabelle nötig ist. Beispielsweise könnte eine neue Methode einen Durchschnitt aller
             Zeilen im Zeilensatz errechnen.

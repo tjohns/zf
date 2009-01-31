@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12111 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Action Helfer</title>
 
@@ -6,7 +6,7 @@
         <title>Einführung</title>
         <para>
             Aktion Helfer erlauben Entwicklern Runtime und/oder On-Demand Funktionalität in jeden Aktion Kontroller
-            zu inizieren der Zend_Controller_Action erweitert. Aktion Kontroller versuchen den Notwendigkeit zu
+            zu inizieren der <code>Zend_Controller_Action</code> erweitert. Aktion Kontroller versuchen den Notwendigkeit zu
             minimieren, den abstrakten Aktion Kontroller zu erweitern um damit normale Aktion Kontroller
             Funktionen inizieren.
         </para>

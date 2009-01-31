@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13845 -->
 <sect1 id="zend.dojo.form" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Dojo Form Elemente und Dekoratore</title>
 
@@ -46,7 +46,7 @@
         <title>Aktivieren von Dojo in bestehenden Formularen</title>
 
         <para>
-            "Warte mal,", wird man sagen; "Ich erweitere bereits Zend_Form mit meiner eigenen Formularklasse!
+            "Warte mal,", wird man sagen; "Ich erweitere bereits <code>Zend_Form</code> mit meiner eigenen Formularklasse!
             Wie kann ich Sie Dojo-verwendbar machen?'"
         </para>
 

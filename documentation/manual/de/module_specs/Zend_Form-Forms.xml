@@ -1,6 +1,6 @@
-<!-- EN-Revision: 13569 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.forms">
-    <title>Erstellen von Form durch Verwendung von Zend_Form</title>
+    <title>Erstellen von Form durch Verwendung von <code>Zend_Form</code></title>
 
     <para>
         Die <code>Zend_Form</code> Klasse wird verwendet um Form Element, Anzeigegruppen und
@@ -48,7 +48,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        Es kann optional eine Instanz von Zend_Config oder ein Array übergeben werden, welches verwendet
+        Es kann optional eine Instanz von <code>Zend_Config</code> oder ein Array übergeben werden, welches verwendet
         wird um den Status des Objektes zu setzen sowie potentiell neue Elemente zu erstellen:
     </para>
 
@@ -195,7 +195,7 @@ $form->addElement('text', 'foo', array('label' => 'Foo:'));
                 <code>addElement()</code> implementiert das Fluent Interface; das heißt es gibt das
                 <code>Zend_Form</code> Objekt zurück und nicht das Element. Das wird getan um es zu
                 erlauben das mehrere addElement() Methoden gekettet werden können oder andere
-                Methoden die das Fluent Interface implementieren (alle Setzer in Zend_Form
+                Methoden die das Fluent Interface implementieren (alle Setzer in <code>Zend_Form</code>
                 implementieren dieses Pattern).
             </para>
 
@@ -1028,7 +1028,7 @@ $form->setAction('/user/login')
 
         <para>
             Man kann auch den Encoding Typ des Formulars spezifizieren indem die Enctype Zugriffsmethode
-            verwendet wird. Zend_Form definiert zwei Konstanten, <code>Zend_Form::ENCTYPE_URLENCODED</code>
+            verwendet wird. <code>Zend_Form</code> definiert zwei Konstanten, <code>Zend_Form::ENCTYPE_URLENCODED</code>
             und <code>Zend_Form::ENCTYPE_MULTIPART</code>, die den Werten 'application/x-www-form-urlencoded'
             und 'multipart/form-data' entsprechen; trotzdem kann das auf jeden gewünschten Encodingtyp
             gesetzt werden.

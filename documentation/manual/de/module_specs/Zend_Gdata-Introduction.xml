@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13570 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.introduction">
     <title>Einführung</title>
     <para>
@@ -7,8 +7,8 @@
         <ulink url="http://ietfreport.isoc.org/idref/draft-ietf-atompub-protocol/">Atom Publishing Protokoll</ulink>
         und erlaubt Client Anwendungen das Empfangen von passenden Anfragen zu Daten, senden von Daten,
         modifizieren von Daten und löschen von Daten wobei Standard HTTP und das Atom Syndication Format verwendet
-        wird. Die Zend_Gdata Komponente ist ein PHP 5 Interface für den Zugriff auf Daten von Google von PHP
-        aus. Die Zend_Gdata Komponente unterstützt auch den Zugriff auf andere Services die das Atom
+        wird. Die <code>Zend_Gdata</code> Komponente ist ein PHP 5 Interface für den Zugriff auf Daten von Google von PHP
+        aus. Die <code>Zend_Gdata</code> Komponente unterstützt auch den Zugriff auf andere Services die das Atom
         Publishing Protokoll implementieren.
     </para>
 
@@ -18,7 +18,7 @@
     </para>
 
     <para>
-        Die Services auf die durch Zend_Gdata zugegriffen werden kann beinhalten unter anderem:
+        Die Services auf die durch <code>Zend_Gdata</code> zugegriffen werden kann beinhalten unter anderem:
 
         <itemizedlist>
             <listitem>
@@ -91,29 +91,29 @@
     <note>
         <title>Nicht unterstützte Services</title>
         <para>
-            Zend_Gdata bietet kein Interface zu irgendwelchen anderen Google Services wie Search, Gmail,
+            <code>Zend_Gdata</code> bietet kein Interface zu irgendwelchen anderen Google Services wie Search, Gmail,
             Translation oder Maps. Nur Services die das Google Data API unterstützen werden unterstützt.
         </para>
     </note>
 
     <sect2 id="zend.gdata.introduction.structure">
-        <title>Struktur von Zend_Gdata</title>
+        <title>Struktur von <code>Zend_Gdata</code></title>
         <para>
-            Zend_Gata besteht aus verschiedenen Typen von Klassen:
+            <code>Zend_Gata</code> besteht aus verschiedenen Typen von Klassen:
             <itemizedlist>
                 <listitem>
                     <para>
-                        Service Klassen - abgeleitet von Zend_Gdata_App. Diese beinhalten auch andere Klassen
-                        wie Zend_Gdata, Zend_Gdata_Spreadsheeps, usw. Diese Klassen erlauben die Interaktion
+                        Service Klassen - abgeleitet von <code>Zend_Gdata_App</code>. Diese beinhalten auch andere Klassen
+                        wie <code>Zend_Gdata</code>, <code>Zend_Gdata_Spreadsheeps</code>, usw. Diese Klassen erlauben die Interaktion
                         mit APP oder GData Services und bieten die Möglichkeit Feeds und Einträge zu empfangen,
                         Einträge zu senden, zu aktualisieren und zu löschen.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Abfrage Klassen - abgeleitet von Zend_Gdata_Query. Diese beinhalten auch andere Klassen
-                        für spezielle Services, wie Zend_Gdata_Spreadsheet_ListQuery und
-                        Zend_Gdata_Spreadsheets_CellQuery. Abfrage Klassen bieten Methoden die verwendet werden
+                        Abfrage Klassen - abgeleitet von <code>Zend_Gdata_Query</code>. Diese beinhalten auch andere Klassen
+                        für spezielle Services, wie <code>Zend_Gdata_Spreadsheet_ListQuery</code> und
+                        <code>Zend_Gdata_Spreadsheets_CellQuery</code>. Abfrage Klassen bieten Methoden die verwendet werden
                         können um Abfragen für Daten zu erstellen die von GData Services empfangen werden.
                         Die Methoden inkludieren Getter und Setter wie <code>setUpdatedMin()</code>,
                         <code>setStartIndex()</code>, und <code>getPublishedMin()</code>. Die Abfrage Klassen
@@ -124,17 +124,17 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Feed Klassen - abgeleitet von Zend_Gdata_App_Feed. Diese beinhalten auch andere
-                        Klassen wie Zend_Gdata_Feed, Zend_Gdata_Spreadsheets_SpreadsheetFeed, und
-                        Zend_Gdata_Spreadsheets_ListFeed. Diese Klassen repräsentieren Feeds von Einträgen
+                        Feed Klassen - abgeleitet von <code>Zend_Gdata_App_Feed</code>. Diese beinhalten auch andere
+                        Klassen wie <code>Zend_Gdata_Feed</code>, <code>Zend_Gdata_Spreadsheets_SpreadsheetFeed</code>, und
+                        <code>Zend_Gdata_Spreadsheets_ListFeed</code>. Diese Klassen repräsentieren Feeds von Einträgen
                         die von Services empfangen wurden. Sie werden primär verwendet um Daten die von
                         Services zurückgegeben werden zu erhalten.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Eingabe Klassen - abgeleitet von Zend_Gdata_App_Entry. Diese beinhalten auch andere
-                        Klassen wie Zend_Gdata_Entry, und Zend_Gdata_Spreadsheets_ListEntry. Diese Klassen
+                        Eingabe Klassen - abgeleitet von <code>Zend_Gdata_App_Entry</code>. Diese beinhalten auch andere
+                        Klassen wie <code>Zend_Gdata_Entry</code>, und <code>Zend_Gdata_Spreadsheets_ListEntry</code>. Diese Klassen
                         repräsentieren Einträge die von Services empfangen oder für die Erstellung von Daten,
                         die an Services geschickt werden, verwendet werden. Zusätzlich zur Möglichkeit die
                         Eigenschaften eines Eintrages (wie den Zellen Wert der Tabellenkalkulation) zu setzen,
@@ -147,10 +147,10 @@
                 </listitem>
                 <listitem>
                     <para>
-                        Andere Daten Modell Klassen - abgeleitet von Zend_Gdata_App_Extension. Diese beinhalten
-                        Klassen wie Zend_Gdata_App_Extension_Title (repräsentiert das atom:title XML Element),
-                        Zend_Gdata_Extension_When (repräsentiert das gd:when XML Element das von dem GData Event
-                        "Kind" verwendet wird), und Zend_Gdata_Extension_Cell (repräsentiert das gs:cell XML
+                        Andere Daten Modell Klassen - abgeleitet von <code>Zend_Gdata_App_Extension</code>. Diese beinhalten
+                        Klassen wie <code>Zend_Gdata_App_Extension_Title</code> (repräsentiert das atom:title XML Element),
+                        <code>Zend_Gdata_Extension_When</code> (repräsentiert das gd:when XML Element das von dem GData Event
+                        "Kind" verwendet wird), und <code>Zend_Gdata_Extension_Cell</code> (repräsentiert das gs:cell XML
                         Element das von Google Tabellenkalkulation verwendet wird). Diese Klassen werden pur
                         verwendet um von den Server zurückgegebene Daten zu speichern und für die Erstellung von
                         Daten die an Services gesendet werden. Diese beinhalten Getter und Setter wie
@@ -171,21 +171,21 @@
         <title>Mit Google Services interagieren</title>
         <para>
             Google Daten Services basieren auf dem Atom Publishing Protokoll (APP) und dem Atom Syndication
-            Format. Um mit APP oder den Google Services zu interagieren indem Zend_Gdata verwendet wird,
-            müssen Service Klassen wie Zend_Gdata_App, Zend_Gdata, Zend_Gdata_Spreadsheets, usw. verwendet
+            Format. Um mit APP oder den Google Services zu interagieren indem <code>Zend_Gdata</code> verwendet wird,
+            müssen Service Klassen wie <code>Zend_Gdata_App</code>, <code>Zend_Gdata</code>, <code>Zend_Gdata_Spreadsheets</code>, usw. verwendet
             werden. Diese Service Klassen bieten Methoden um Daten von Services als Feeds zu empfangen, neue
             Einträge in Feeds einzufügen, Einträge zu aktuslieieren und Einträge zu löschen.
         </para>
 
         <para>
-            Achtung: Ein komplettes Beispiel davon wie mit Zend_Gdata gearbeitet werden kann ist im
+            Achtung: Ein komplettes Beispiel davon wie mit <code>Zend_Gdata</code> gearbeitet werden kann ist im
             <code>demos/Zend/Gdata</code> Verzeichnis vorhanden. Dieses Beispiel läuft von der Kommandozeile
             aus, aber die enthaltenen Methoden sind einfach in einem Web Anwendung zu portieren.
         </para>
     </sect2>
 
     <sect2 id="zend.gdata.introdduction.magicfactory">
-        <title>Instanzen von Zend_Gdata Klassen erhalten</title>
+        <title>Instanzen von <code>Zend_Gdata</code> Klassen erhalten</title>
         <para>
             Der Zend Framework Namensstandard erzwingt das alle Klassen nach der Verzeichnis Struktur benannt
             werden in welcher sie vorhanden sind. Zum Beispiel eine Erweiterung die zu Tabellenkalkulation
@@ -194,8 +194,8 @@
             Tipparbeit wenn versucht wird eine neue Instanz eines Zellen Elements zu erstellen!
         </para>
         <para>
-            Wir haben eine magische Fabriksmethode in alle Service Klassen (wie Zend_Gdata_App, Zend_Gdata,
-            Zend_Gdata_Spreadsheets) implementiert welche die Erstellung neuer Instanzen von Daten Modellen,
+            Wir haben eine magische Fabriksmethode in alle Service Klassen (wie <code>Zend_Gdata_App</code>, <code>Zend_Gdata</code>,
+            <code>Zend_Gdata_Spreadsheets</code>) implementiert welche die Erstellung neuer Instanzen von Daten Modellen,
             Abfragen und anderen Klassen viel einfacher macht. Diese magische Fabriksmethode ist durch die
             Verwendung der magischen <code>__call</code> Methode implementiert um auf alle Versuche
             <code>$service->newXXX(arg1, arg2, ...)</code> aufzurufen, angewendet zu werden. Basieren auf dem
@@ -235,7 +235,7 @@ $entry->cell = $cell;
             authentifiziert bevor auf private Daten zugegriffen, oder Daten gespeichert oder gelöscht werden
             können. Es gibt zwei Implementationen der Authentifizierung für Google Daten:
             <link linkend="zend.gdata.authsub">AuthSub</link> und
-            <link linkend="zend.gdata.clientlogin">ClientLogin</link>. Zend_Gdata bietet Klassen Interfaces
+            <link linkend="zend.gdata.clientlogin">ClientLogin</link>. <code>Zend_Gdata</code> bietet Klassen Interfaces
             für beide dieser Methoden.
         </para>
 
@@ -248,14 +248,14 @@ $entry->cell = $cell;
     <sect2 id="zend.gdata.introduction.dependencies">
         <title>Abhängigkeiten</title>
         <para>
-            Zend_Gdata verwendet <link linkend="zend.http.client">Zend_Http_Client</link> um Anfragen an
+            <code>Zend_Gdata</code> verwendet <link linkend="zend.http.client">Zend_Http_Client</link> um Anfragen an
             google.com zu senden und Ergebnisse zu erhalten. Die Antworter der meisten Google Data Anfragen
-            werden als Subklasse von Zend_Gdata_App_Feed oder Zend_Gdata_App_Entry Klassen zurückgegeben.
+            werden als Subklasse von <code>Zend_Gdata_App_Feed</code> oder <code>Zend_Gdata_App_Entry</code> Klassen zurückgegeben.
         </para>
 
         <para>
-            Zend_Gdata nimmt an das die PHP Anwendung auf einem Host läuft der eine direkte Verbindung zum
-            Internet hat. Der Zend_Gdata Client arbeitet indem er zu Google Daten Servern Kontakt aufnimmt.
+            <code>Zend_Gdata</code> nimmt an das die PHP Anwendung auf einem Host läuft der eine direkte Verbindung zum
+            Internet hat. Der <code>Zend_Gdata</code> Client arbeitet indem er zu Google Daten Servern Kontakt aufnimmt.
         </para>
 
     </sect2>
@@ -264,16 +264,16 @@ $entry->cell = $cell;
         <title>Erstellen eines neuen Gdata Klienten</title>
 
         <para>
-            Man muß ein neues Objekt der Klasse Zend_Gdata_App, Zend_Gdata, oder einer dessen Subklassen
+            Man muß ein neues Objekt der Klasse <code>Zend_Gdata_App</code>, <code>Zend_Gdata</code>, oder einer dessen Subklassen
             erstellen die Helfer Methoden für servicespezifische Verhaltensweisen anbieten.
         </para>
 
         <para>
-            Der einzige optionale Parameter für den Konstruktor von Zend_Gdata_App ist eine Instanz von
+            Der einzige optionale Parameter für den Konstruktor von <code>Zend_Gdata_App</code> ist eine Instanz von
             <link linkend="zend.http.client">Zend_Http_Client</link>. Wenn dieser Parameter nicht
-            übergeben wird, erstellt Zend_Gdata ein standardmäßiges Zend_Http_Client Objekt, welches keine
+            übergeben wird, erstellt <code>Zend_Gdata</code> ein standardmäßiges <code>Zend_Http_Client</code> Objekt, welches keine
             Zugangsdaten zugeordnet hat um auf private Feeds zugreifen zu können. Die Spezifizierung des
-            Zend_Http_Client Objektes erlaubt es auch Konfigurationsoptionen an das Client Objekt zu übergeben.
+            <code>Zend_Http_Client</code> Objektes erlaubt es auch Konfigurationsoptionen an das Client Objekt zu übergeben.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -288,7 +288,7 @@ $gdata = new Zend_Gdata($client);
             Beginnend mit Zend Framework 1.7, wurde die Unterstützung für die Versionierung des Protkolls
             hinzugefügt. Das erlaut dem Client und Server neue Fesatures zu unterstützen, wärend die
             Rückwärts Kompatibilität gewahrt bleibt. Wärend die meisten Services das für dich selbst
-            durchführen, wenn man eine Zend_Gdata Instanz direkt erstellt (als Gegensatz zu einer Ihrer
+            durchführen, wenn man eine <code>Zend_Gdata</code> Instanz direkt erstellt (als Gegensatz zu einer Ihrer
             Unterklassen), kann es sein das man die gewünschte Version des Protokolls spezifizieren will um
             auf spezielle Serverfunktionalitäten zugreifen zu können.
         </para>
@@ -305,7 +305,7 @@ $gdata->setMinorProtocolVersion(null);
 
         <para>
             Siehe auch die Sektion über Authentifizierung für Methoden, um ein authentifiziertes
-            Zend_Http_Cleint Objekt zu erstellen.
+            <code>Zend_Http_Client</code> Objekt zu erstellen.
         </para>
 
     </sect2>
@@ -314,8 +314,8 @@ $gdata->setMinorProtocolVersion(null);
         <title>Übliche Abfrage Parameter</title>
 
         <para>
-            Es können Parameter spezifiziert werden um Abfragen mit Zend_Gdata anzupassen. Abfrageparameter
-            werden spezifiziert indem Subklassen von Zend_Gdata_Query verwendet werden. Die Zend_Gdata_Query
+            Es können Parameter spezifiziert werden um Abfragen mit <code>Zend_Gdata</code> anzupassen. Abfrageparameter
+            werden spezifiziert indem Subklassen von <code>Zend_Gdata_Query</code> verwendet werden. Die <code>Zend_Gdata_Query</code>
             Klasse beinhaltet Methoden um alle Abfrageparameter zu setzen die von Gdata Services verwendet
             werden. Individuelle Services, wie Tabellenkalkulationen, bieten auch Abfrageklassen zu definierten
             Parametern welche an das spezielle Service und die Feeds angepasst sind. Tabellenkalkulationen
@@ -402,7 +402,7 @@ echo $query->getMaxResults();   // gibt 10 zurück
         </programlisting>
 
         <para>
-            Die Zend_Gdata Klasse implementiert auch "magische" Getter und Setter Methoden, es kann also der
+            Die <code>Zend_Gdata</code> Klasse implementiert auch "magische" Getter und Setter Methoden, es kann also der
             Name des Parameters als virtuelles Mitglied der Klasse verwendet werden.
         </para>
 
@@ -415,7 +415,7 @@ echo $query->maxResults;        // gibt 10 zurück
 
         <para>
             Es können alle Parameter mit der <code>resetParameters()</code> Funktion gelöscht werden. Das
-            ist nützlich wenn ein Zend_Gdata Objekt für mehrfache Abfragen wiederverwendet werden soll.
+            ist nützlich wenn ein <code>Zend_Gdata</code> Objekt für mehrfache Abfragen wiederverwendet werden soll.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -560,7 +560,7 @@ foreach ($feed as $entry) {
         <title>Einträge an Google Server schicken</title>
 
         <para>
-            The Zend_Gdata object has a function <code>post()</code>
+            The <code>Zend_Gdata</code> object has a function <code>post()</code>
             with which you can upload data to save new entries
             to Google Data services.
         </para>
@@ -568,8 +568,8 @@ foreach ($feed as $entry) {
         <para>
             Die Daten Modell Klassen jedes Services kann verwendet werden um einen entsprechenden Eintrag zu
             erstellen und an Google's Services zu schicken. Die <code>post()</code> Funktion akzeptiert ein
-            Kind von Zend_Gdata_App_Entry als Daten die an den Service geschickt werden. Die Methode gibt ein
-            Kind von Zend_Gdata_App_Entry zurück welches den Status des Eintrages repräsentiert der vom
+            Kind von <code>Zend_Gdata_App_Entry</code> als Daten die an den Service geschickt werden. Die Methode gibt ein
+            Kind von <code>Zend_Gdata_App_Entry</code> zurück welches den Status des Eintrages repräsentiert der vom
             Server zurückgegeben wurde.
         </para>
 
@@ -596,8 +596,8 @@ echo 'Die <id> des resultierenden Eintrages ist: ' . $entryResult->id->text;
         </programlisting>
 
         <para>
-            Um Einträge zu senden, muß ein authentifizierter Zend_Http_Client verwendet werden der mit Hilfe der
-            Zend_Gdata_AuthSub oder Zend_Gdata_ClientLogin Klassen erstellt wurde.
+            Um Einträge zu senden, muß ein authentifizierter <code>Zend_Http_Client</code> verwendet werden der mit Hilfe der
+            <code>Zend_Gdata_AuthSub</code> oder <code>Zend_Gdata_ClientLogin</code> Klassen erstellt wurde.
         </para>
 
     </sect2>
@@ -606,7 +606,7 @@ echo 'Die <id> des resultierenden Eintrages ist: ' . $entryResult->id->text;
         <title>Einträge auf einem Google Server löschen</title>
 
         <para>
-            Option 1: Das Zend_Gdata Objekt hat eine <code>delete()</code> Funktion mit der Einträge von Google
+            Option 1: Das <code>Zend_Gdata</code> Objekt hat eine <code>delete()</code> Funktion mit der Einträge von Google
             Daten Services gelöscht werden können. Der bearbeitete URL Wert eines Feed Eintrages kann der
             <code>delete()</code> Methode übergeben werden.
         </para>
@@ -632,8 +632,8 @@ foreach ($feed as $feedEntry) {
         </programlisting>
 
         <para>
-            Um Einträge zu löschen, muß ein authentifizierter Zend_Http_Client verwendet werden der mit Hilfe der
-            Zend_Gdata_AuthSub oder Zend_Gdata_ClientLogin Klassen erstellt wurde.
+            Um Einträge zu löschen, muß ein authentifizierter <code>Zend_Http_Client</code> verwendet werden der mit Hilfe der
+            <code>Zend_Gdata_AuthSub</code> oder <code>Zend_Gdata_ClientLogin</code> Klassen erstellt wurde.
         </para>
 
     </sect2>

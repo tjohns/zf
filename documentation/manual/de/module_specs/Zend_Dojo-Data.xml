@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13845 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data Envelopes</title>
 
@@ -68,7 +68,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title>Hinzufügen von Daten bei Zend_Dojo_Data</title>
+            <title>Hinzufügen von Daten bei <code>Zend_Dojo_Data</code></title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -131,7 +131,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title>Spezifizierung eines Labelfeldes in Zend_Dojo_Data</title>
+            <title>Spezifizierung eines Labelfeldes in <code>Zend_Dojo_Data</code></title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -145,7 +145,7 @@ $data->setLabel('name');
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>Zend_Dojo_Data von JSON aus bekanntgeben</title>
+            <title><code>Zend_Dojo_Data</code> von JSON aus bekanntgeben</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);

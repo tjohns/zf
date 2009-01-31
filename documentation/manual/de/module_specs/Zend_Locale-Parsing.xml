@@ -1,10 +1,10 @@
-<!-- EN-Revision: 13584 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.parsing">
 
     <title>Normalisierung und Lokalisierung</title>
 
     <para>
-        <code>Zend_Locale_Format</code> ist eine interne Komponente welche von Zend_Locale verwendet wird.
+        <code>Zend_Locale_Format</code> ist eine interne Komponente welche von <code>Zend_Locale</code> verwendet wird.
         Alle lokalisierbaren Klassen benutzen <code>Zend_Locale_Format</code> für Normalisierung und
         Lokalisierung von Nummern und Daten. Normalisierung beinhaltet das Analysieren von Eingaben von einer
         Vielfalt von Werten wie Datumswerte in eine standardisierten, strukturieren Art wie zum Beispiel
@@ -434,7 +434,7 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
             unterstütztes Zahlensystem zu benutzen führt zu einer Ausnahme um eine irrtümliche falsche Konvertierung
             wegen eines Schreibfehlers zu verhindern. Alle Zeichen der Eingabe, welche keine Ziffern des angegebenen
             Zahlenformates sind, werden in den Ausgabestring kopiert ohne das Sie verändert werden. Das beinhaltet
-            auch die Trennzeichen der Zahlen. <code>Zend_Locale*</code> Komponenten sind abhängig von den Daten welche
+            auch die Trennzeichen der Zahlen. <code>Zend_Locale</code>* Komponenten sind abhängig von den Daten welche
             durch die CLDR liefert (hier ist eine
             <ulink url="http://unicode.org/cldr/data/diff/supplemental/languages_and_scripts.html?sortby=date">
             Liste von Schreibweisen gruppiert nach Sprachen</ulink>).

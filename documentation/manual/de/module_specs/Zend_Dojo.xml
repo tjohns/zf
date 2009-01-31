@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13845 -->
 <sect1 id="zend.dojo.introduction">
     <title>Einführung</title>
 
@@ -12,8 +12,8 @@
         <listitem><para>JSON-RPC Unterstützung</para></listitem>
         <listitem><para>dojo.data Kompatibilität</para></listitem>
         <listitem><para>View Helfer um beim Setup der Dojo Umgebung zu helfen</para></listitem>
-        <listitem><para>Dijit-spezifische Zend_View Helfer</para></listitem>
-        <listitem><para>Dijit-spezifische Zend_Form Elemente und Dekoratore</para></listitem>
+        <listitem><para>Dijit-spezifische <code>Zend_View</code> Helfer</para></listitem>
+        <listitem><para>Dijit-spezifische <code>Zend_Form</code> Elemente und Dekoratore</para></listitem>
     </itemizedlist>
 
     <para>

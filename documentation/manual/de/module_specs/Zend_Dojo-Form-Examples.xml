@@ -1,14 +1,14 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13845 -->
 <sect2 id="zend.dojo.form.examples">
     <title>Dojo Formular Beispiele</title>
 
     <example id="zend.dojo.form.examples.dojoform">
-        <title>Zend_Dojo_Form verwenden</title>
+        <title><code>Zend_Dojo_Form</code> verwenden</title>
 
         <para>
             Der einfachste Weg um Dojo mit <code>Zend_Form</code> zu verwenden besteht darin
             <code>Zend_Dojo_Form</code> zu verwenden, entweder durch direkte Verwendung oder indem Sie erweitert
-            wird. Dieses Beispiel zeigt die Erweiterung von Zend_Dojo_Form und die Verwendung aller Dijit
+            wird. Dieses Beispiel zeigt die Erweiterung von <code>Zend_Dojo_Form</code> und die Verwendung aller Dijit
             Elemente. Es erstellt vier Unterformulare, und dekoriert das Formular damit ein TabContainer
             verwendet wird, welcher jedes Unterformular in seinem eigenen Tab zeigt.
         </para>
@@ -404,7 +404,7 @@ class My_Custom_Form extends Zend_Form
 
         <para>
             Natürlich kann auch das getan werden... man könnte und sollte einfach die Klasse so verändern das
-            Sie Zend_Dojo_Form ableitet, was eine eins-zu-eins Ersetzung von Zend_Form ist, die bereits
+            Sie <code>Zend_Dojo_Form</code> ableitet, was eine eins-zu-eins Ersetzung von <code>Zend_Form</code> ist, die bereits
             Dojo versteht...
         </para>
     </example>

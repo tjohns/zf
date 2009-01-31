@@ -1,7 +1,7 @@
-<!-- EN-Revision: 13584 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.functions">
 
-    <title>Zend_Locale verwenden</title>
+    <title><code>Zend_Locale</code> verwenden</title>
 
     <para>
         <code>Zend_Locale</code> liefert auch lokalisierte Informationen über Gebietsschema für jedes
@@ -137,7 +137,7 @@ print_r($found2);
             Ein neues Gebietsschema kann mit der Funktion <code>setLocale()</code> gesetzt werden. Diese Funktion
             nimmt eine Gebietsschema Zeichenkette als Parameter an. Wenn kein Gebietsschema angegeben wurde, wird ein
             <link linkend="zend.locale.selection">automatisch gewähltes</link> Gebietsschema benutzt. Da
-            Zend_Locale Objekte sehr "leicht" sind, existiert diese Methode hauptsächlich um Nebeneffekte
+            <code>Zend_Locale</code> Objekte sehr "leicht" sind, existiert diese Methode hauptsächlich um Nebeneffekte
             auszuschließen, für Klassen die ein existierendes angelegtes Objekt referenzieren.
         </para>
 
@@ -1134,7 +1134,7 @@ foreach ($lists as $list) {
         </example>
 
         <para>
-            Um von Zend_Locale eine Liste aller bekannten Sprachen zu bekommen wobei jede Sprache in Ihrer eigenen
+            Um von <code>Zend_Locale</code> eine Liste aller bekannten Sprachen zu bekommen wobei jede Sprache in Ihrer eigenen
             Sprache geschrieben wird, kann das untere Beispiel in einer Web Seite benutzt werden. Genauso können
             <code>getCountryTranslationList()</code> und <code>getCountryTranslation()</code> benutzt werden um eine
             Tabelle zu erhalten die Namen für Muttersprachen einer Region und Namen für Regionen in einer anderen
@@ -1289,7 +1289,7 @@ if (Zend_Locale::isLocale($input)) {
             Man sollte auch beachten das jeder angegebene Gebietsschema String automatisch degradiert wird
             wenn der Regionsabschnitt für dieses Gebietsschema nicht existiert. In unserem vorherigen
             Beispiel existiert die Region <code>'RU'</code> nicht für die Sprache <code>'to'</code>, aber es
-            wird trotzdem true zurückgegeben da ZenD_Locale mit der vorhandenen Eingabe arbeiten kann.
+            wird trotzdem true zurückgegeben da <code>Zend_Locale</code> mit der vorhandenen Eingabe arbeiten kann.
         </para>
 
         <para>

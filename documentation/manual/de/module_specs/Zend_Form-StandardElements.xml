@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13623 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
 
@@ -132,7 +132,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             HTML Checkboxen erlauben es spezifische Werte zurückzugeben, arbeiten aber
             grundsätzlich als Boolean. Wenn Sie angehackt sind, wird der Wert der Checkbox übertragen. Wenn Sie
             nicht angehackt sind, wird nichts übertragen. Intern erzwingt
-            Zend_Form_Element_Checkbox diesen Status.
+            <code>Zend_Form_Element_Checkbox</code> diesen Status.
         </para>
 
         <para>

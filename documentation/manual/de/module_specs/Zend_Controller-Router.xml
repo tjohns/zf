@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13563 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router</title>
     <sect2 id="zend.controller.router.introduction">
@@ -178,7 +178,7 @@ $router->addRoute('user',
 
         <note>
             <para>
-                Die gewöhnlichste Verwendung des Namens der Route ist gegeben durch die Zwecke des Zend_View
+                Die gewöhnlichste Verwendung des Namens der Route ist gegeben durch die Zwecke des <code>Zend_View</code>
                 Url Helfers:
             </para>
 
@@ -229,7 +229,7 @@ $router->addRoute('user',
 
         <para>
             Es gibt drei spezielle Variablen welche in den Routen verwendet werden können - 'module', 'controller'
-            und 'action'. Diese speziellen Variablen werden durch Zend_Controller_Dispatcher verwendet um
+            und 'action'. Diese speziellen Variablen werden durch <code>Zend_Controller_Dispatcher</code> verwendet um
             einen Kontroller und die Aktion zu funden zu der verwiesen wird.
         </para>
 
@@ -248,7 +248,7 @@ $router->addRoute('user',
         <title>Standard Routen</title>
 
         <para>
-            Zend_Controller_Router_Rewrite kommt mit einer Standard Route vorkonfiguriert, welche URIs im Sinn
+            <code>Zend_Controller_Router_Rewrite</code> kommt mit einer Standard Route vorkonfiguriert, welche URIs im Sinn
             von <code>controller/action</code> entspricht. Zusätzlich kann ein Modul Name als erstes Pfad Element
             definiert werden, welches URIs in der Form von <code>module/controller/action</code> erlaubt.
             Letztendlich wird es auch allen zusätzlichen Parametern entsprechen die der URI standardmäßig
@@ -382,13 +382,13 @@ $router->setGlobalParam('lang', 'en');
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">
-        <title>Zend_Config mit dem RewriteRouter verwenden</title>
+        <title><code>Zend_Config</code> mit dem RewriteRouter verwenden</title>
 
         <para>
             Manchmal ist es praktischer, eine Konfigurationsdatei mit neuen Routen zu
             aktualisieren, als den Code zu ändern. Dies ist mit Hilfe der
             <code>addConfig()</code> Methode möglich. Im Wesentlichen kann man eine
-            Zend_Config kompatible Konfiguration erstellen, in seinem Code einlesen und an den
+            <code>Zend_Config</code> kompatible Konfiguration erstellen, in seinem Code einlesen und an den
             RewriteRouter übergeben:
         </para>
 

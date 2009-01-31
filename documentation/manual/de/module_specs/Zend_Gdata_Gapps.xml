@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.gapps">
     <title>Google Apps Provisionierung verwenden</title>
 
@@ -95,7 +95,7 @@ $query = $gdata->newUserQuery($arg);
 
         <para>
             Jeder Benutzerzugang zu einer Google Apps gehosteten Domain wird als Instanz von
-            Zend_Gdata_Gapps_UserEntry repräsentiert. Diese Klasse bietet Zugriff zu allen Zugangseigenschaften
+            <code>Zend_Gdata_Gapps_UserEntry</code> repräsentiert. Diese Klasse bietet Zugriff zu allen Zugangseigenschaften
             inklusive Name, Benutzername, Passwort, Zugriffsrehte und aktuellen Quoten.
         </para>
 
@@ -163,7 +163,7 @@ echo 'Hat den Regeln zugestimmt: ' .
             </programlisting>
 
             <para>
-                Benutzer kann man auch erhalten indem eine Instanz von Zend_Gdata_Gapps_UserQuery erstellt wird,
+                Benutzer kann man auch erhalten indem eine Instanz von <code>Zend_Gdata_Gapps_UserQuery</code> erstellt wird,
                 und dessen username Eigenschaft dem Benutzernamen des Benutzers entspricht den man erhalten will
                 und <code>getUserEntry()</code> auf einem Serviceobjekt mit dieser Abfrage aufruft.
             </para>
@@ -186,7 +186,7 @@ echo 'Hat den Regeln zugestimmt: ' .
 
             <para>
                 Wenn der spezifizierte Benutzer nicht gefunden werden kann wird eine ServiceException mit einem
-                Fehlercode von Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST geworfen. ServiceExceptions werden
+                Fehlercode von <code>Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST</code> geworfen. ServiceExceptions werden
                 in <xref linkend="zend.gdata.gapps.exceptions" /> behandelt.
             </para>
 
@@ -211,7 +211,7 @@ foreach ($feed as $user) {
             </programlisting>
 
             <para>
-                Das wird ein Zend_Gdata_Gapps_UserFeed Objekt erstellen welches jeden Benutzer dieser Domain
+                Das wird ein <code>Zend_Gdata_Gapps_UserFeed</code> Objekt erstellen welches jeden Benutzer dieser Domain
                 enthält.
             </para>
 
@@ -395,7 +395,7 @@ $gdata->deleteUser('foo');
         </para>
 
         <para>
-            Spitznamen werden repräsentiert als Instanz von Zend_Gdata_Gapps_NicknameEntry.
+            Spitznamen werden repräsentiert als Instanz von <code>Zend_Gdata_Gapps_NicknameEntry</code>.
         </para>
 
         <sect3 id="zend.gdata.gapps.nicknames.creating">
@@ -445,7 +445,7 @@ echo 'Eigentümer: ' . $nickname->login->username . "\n";
             </programlisting>
 
             <para>
-                Individuelle Spitznamen können durch Erstellung einer Zend_Gdata_Gapps_NicknameQuery Instanz
+                Individuelle Spitznamen können durch Erstellung einer <code>Zend_Gdata_Gapps_NicknameQuery</code> Instanz
                 erhalten werden, indem dessen nickname Eigenschaft dem Spitznamen gleichgesetzt wird der
                 empfangen werden soll, und  <code>getNicknameEntry()</code> auf einem Server Objekt mit dieser
                 Abfrage aufgerufen wird.
@@ -462,7 +462,7 @@ echo 'Eigentümer: ' . $nickname->login->username . "\n";
 
             <para>
                 Genau wie bei den Benutzern wird eine ServiceException geworfen wenn kein entsprechender
-                Spitzname gefunden wurde und ein Fehlercode von Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST
+                Spitzname gefunden wurde und ein Fehlercode von <code>Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST</code>
                 zurückgegeben. Auch das wird in <xref linkend="zend.gdata.gapps.exceptions" /> beschrieben.
             </para>
 
@@ -486,12 +486,12 @@ foreach ($feed as $nickname) {
             </programlisting>
 
             <para>
-                Das erzeugt ein Zend_Gdata_Gapps_NicknameFeed Objekt welches jeden mit dem spezifizierten
+                Das erzeugt ein <code>Zend_Gdata_Gapps_NicknameFeed</code> Objekt welches jeden mit dem spezifizierten
                 Benutzer assoziierten Spitznamen enthält.
             </para>
 
             <para>
-                Alternativ setzt das erstellen einer neuen Zend_Gdata_Gapps_NicknameQuery dessen username
+                Alternativ setzt das Erstellen einer neuen <code>Zend_Gdata_Gapps_NicknameQuery</code> dessen username
                 Eigenschaft auf den gewünschten Benutzer, und überträgt die Abfrage durch den Aufruf von
                 <code>getNicknameFeed()</code> auf dem Service Objekt.
             </para>
@@ -527,7 +527,7 @@ foreach ($feed as $nickname) {
             </programlisting>
 
             <para>
-                Das wird ein Zend_Gdata_Gapps_NicknameFeed Objekt erstellen welches jeden Spitznamen in der
+                Das wird ein <code>Zend_Gdata_Gapps_NicknameFeed</code> Objekt erstellen welches jeden Spitznamen in der
                 Domain enthält.
             </para>
 
@@ -586,7 +586,7 @@ $gdata->deleteNickname('bar');
         </para>
 
         <para>
-            Jede Email Liste einer Domain wird als Instanz von Zend_Gdata_Gapps_EmailListEntry repräsentiert.
+            Jede Email Liste einer Domain wird als Instanz von <code>Zend_Gdata_Gapps_EmailListEntry</code> repräsentiert.
         </para>
 
         <sect3 id="zend.gdata.gapps.emailLists.creating">
@@ -635,12 +635,12 @@ foreach ($feed as $list) {
             </programlisting>
 
             <para>
-                Das erstelle ein Zend_Gdata_Gapps_EmailListFeed Objekt welches jede Email Liste enthält die
+                Das erstellt ein <code>Zend_Gdata_Gapps_EmailListFeed</code> Objekt welches jede Email Liste enthält die
                 mit dem speziellen Empfänger assoziiert ist.
             </para>
 
             <para>
-                Alternativ kann ein neues Zend_Gdata_Gapps_EmailListQuery erstellt werden, dessen recipient
+                Alternativ kann ein neues <code>Zend_Gdata_Gapps_EmailListQuery</code> erstellt werden, dessen recipient
                 Eigenschaft auf die gewünschte Email Adresse gesetzt werden, und die Abfrage durch den Aufruf
                 von <code>getEmailListFeed()</code> auf dem Service Objekt übermittelt werden.
             </para>
@@ -676,7 +676,7 @@ foreach ($feed as $list) {
             </programlisting>
 
             <para>
-                Das erzeugt ein Zend_Gdata_Gapps_EmailListFeed Objekt welches jede Email Liste der Domain
+                Das erzeugt ein <code>Zend_Gdata_Gapps_EmailListFeed</code> Objekt welches jede Email Liste der Domain
                 enthält.
             </para>
 
@@ -717,7 +717,7 @@ $gdata->deleteEmailList('friends');
 
         <para>
             Jeder Empfänger der bei einer Email Liste eingeschrieben ist, wird durch eine Instanz von
-            Zend_Gdata_Gapps_EmailListRecipient repräsentiert. Durch diese Klasse können individuelle
+            <code>Zend_Gdata_Gapps_EmailListRecipient</code> repräsentiert. Durch diese Klasse können individuelle
             Empfänger hinzugefügt und von Email Listen entfernt werden.
         </para>
 
@@ -771,7 +771,7 @@ foreach ($feed as $recipient) {
             </programlisting>
 
             <para>
-                Das erstellt ein Zend_Gdata_Gapps_EmailListRecipientFeed Objekt welche jeden Empfänger für die
+                Das Erstellt ein <code>Zend_Gdata_Gapps_EmailListRecipientFeed</code> Objekt welche jeden Empfänger für die
                 ausgewählte Email Liste enthält.
             </para>
 
@@ -799,7 +799,7 @@ $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
         <title>Fehler handhaben</title>
 
         <para>
-            Zusätzlich zur Standardsuite von Ausnahmen die von Zend_Gdata geworfen werden, können Anfragen die
+            Zusätzlich zur Standardsuite von Ausnahmen die von <code>Zend_Gdata</code> geworfen werden, können Anfragen die
             die Provisionierungs API verwenden auch eine <code>Zend_Gdata_Gapps_ServiceException</code>
             werfen. Diese Ausnahme zeigt das ein API spezieller Fehler aufgetreten ist welche verhindert das
             die Anfrage fertiggestellt werden kann.
@@ -809,7 +809,7 @@ $gdata->removeRecipientFromEmailList('baz@somewhere.com', 'friends');
             Jede ServiceException Instanz kann einen oder mehrere Fehler Objekte enthalten. Jedes dieser
             Objekte enthalten einen Fehlercode, Grund und (optional) die Eingave welche die Ausnahme
             getriggert hat. Eine komplette Liste von bekannten Fehlercodes wird in der Zend Framework API
-            Dokumentation unter Zend_Gdata_Gapps_Error angeboten. Zusätzlich ist die maßgebliche
+            Dokumentation unter <code>Zend_Gdata_Gapps_Error</code> angeboten. Zusätzlich ist die maßgebliche
             Fehlerliste online unter <ulink
             url="http://code.google.com/apis/apps/gdata_provisioning_api_v2.0_reference.html#appendix_d">Google
             Apps Provisioning API V2.0 Reference: Appendix D</ulink> vorhanden.

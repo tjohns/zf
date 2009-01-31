@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13776 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>Arbeiten mit Daten und Zeiten</title>
@@ -75,12 +75,12 @@
             Für jene die ein spezielles Format für Datumseingaben definieren müssen, werden die nachfolgend
             angegebenen Format Zeichen unterstützt. Wenn ein ungültiges Format Zeichen verwendet wird, so wie
             PHP's 'i' Zeichen in einem ISO Format, dann wird ein Fehler von den Methoden, die benutzer definierte
-            Formate in Zend_Locale_Format unterstützen, geworfen.
+            Formate in <code>Zend_Locale_Format</code> unterstützen, geworfen.
         </para>
 
         <para>
             Die unten angegebenen Zeichen sind nur ein kleiner Teil des kompletten "ISO" Sets welches von
-            Zend_Date's <code>toString()</code> unterstützt werden. Wenn PHP <code>date()</code> kompatible
+            <code>Zend_Date</code>'s <code>toString()</code> unterstützt werden. Wenn PHP <code>date()</code> kompatible
             Format Zeichen benutzt werden müssen, dann muß zuerst <code>setOptions(array('format_type' => 'php'))</code>
             aufgerufen werden. Und wenn eine spezielle Format Zeichenkette vom PHP <code>date()</code> kompatiblen
             Format in ein "ISO" Format konvertiert werden muß kann <code>convertPhpToIsoFormat()</code>
@@ -341,7 +341,7 @@ print_r ($date);
             <title>Datumsformate für Datenbanken</title>
             <para>
                 Um einen Datumswert einer Datenbank zu analysieren (zum Beispiel MySql oder MsSql) sollte
-                Zend_Date's ISO_8601 Format statt getDate() benutzt werden.
+                <code>Zend_Date</code>'s ISO_8601 Format statt getDate() benutzt werden.
             </para>
         </note>
 

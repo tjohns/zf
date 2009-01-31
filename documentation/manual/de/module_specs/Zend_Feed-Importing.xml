@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13844 -->
 <sect1 id="zend.feed.importing">
 
     <title>Feeds importieren</title>
@@ -43,7 +43,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 
         <para>
             <code>Zend_Feed</code> ermöglicht es Entwicklern Ihre eigenen Feeds sehr einfach zu erstellen. Man
-            muß nur ein Array erstellen und es in Zend_Feed importieren, Dieses Array kann mit
+            muß nur ein Array erstellen und es in <code>Zend_Feed</code> importieren, Dieses Array kann mit
             <code>Zend_Feed::importArray()</code> oder mit <code>Zend_Feed::importBuilder()</code>
             importiert werden. Im letzteren Fall wird das Array on the Fly durch eine eigene Datenquelle
             berechnet die <code>Zend_Feed_Builder_Interface</code> implementiert.

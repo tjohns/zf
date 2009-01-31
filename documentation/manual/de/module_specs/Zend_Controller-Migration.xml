@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13561 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.migration">
     <title>Migration von vorhergehenden Versionen</title>
 
@@ -16,7 +16,7 @@
 
             <para>
                 Benutzer haben uns darauf aufmerksam gemacht das
-                <code>Zend_Controller_Action_Helper_ViewRenderer </code> Methoden auf der abstrakten
+                <code>Zend_Controller_Action_Helper_ViewRenderer</code> Methoden auf der abstrakten
                 Dispatcher Klasse verwendet hat die nicht im Dispatcher Interface waren. Die folgenden
                 Methoden wurden hinzugefügt um sicherzustellen das eigene Dispatcher weiterhin mit den
                 ausgelieferten Implementierungen funktionieren:
@@ -686,7 +686,7 @@ public function __call($method, $args)
             <listitem><para>
                 <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> wurde entfernt.
                 Stattdessen soll <code>Zend_Controller_Front::setBaseUrl()</code> verwendet werden
-                (oder Zend_Controller_Request_Http::setBaseUrl(), wenn die Request Klasse verwendet
+                (oder <code>Zend_Controller_Request_Http::setBaseUrl()</code>, wenn die Request Klasse verwendet
                 wird).
             </para></listitem>
 

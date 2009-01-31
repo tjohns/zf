@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.quickstart">
     <title>Schnellstart mit Zend_Form</title>
 
@@ -299,7 +299,7 @@ $element->addDecorators(array(
 ));
 ]]>
         </programlisting>
-        
+
         <!-- TODO: Wozu gehört dieser Paragraph? Ich sehe nirgends "HELPERNAME". -->
         <para>
             (Wobei &lt;HELPERNAME&gt; der Name des View Helfers ist der verwendet wird, und
@@ -567,7 +567,7 @@ class UserController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Ein Zend_Config Objekt verwenden</title>
+        <title>Ein <code>Zend_Config</code> Objekt verwenden</title>
 
         <para>
             Alle <code>Zend_Form</code>'s sind konfigurierbar, indem <code>Zend_Config</code>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13849 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
@@ -39,7 +39,7 @@ $config = new Zend_Config_Ini('/path/to/config.ini',
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
-        <title>Zend_Config_Ini benutzen</title>
+        <title><code>Zend_Config_Ini</code> benutzen</title>
         <para>
             Dieses Beispiel zeigt die grundlegende Nutzung von <code>Zend_Config_Ini</code> um
             Konfigurations-Daten aus einem XML-File zu laden. In diesem Beispiel gibt es

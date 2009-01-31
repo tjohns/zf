@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.authsub">
     <title>Authentifizierung mit AuthSub</title>
 
@@ -28,7 +28,7 @@
     <note>
         <title>Registrierte Anwendungen</title>
         <para>
-            Zend_Gdata unterstützt aktuell die Verwendung von sicheren Tokens nicht, weil die AuthSub
+            <code>Zend_Gdata</code> unterstützt aktuell die Verwendung von sicheren Tokens nicht, weil die AuthSub
             Authentifizierung die Übergabe von Digitalen Zertifikaten, um ein sicheres Token zu erhalten,
             nicht unterstützt.
         </para>
@@ -60,7 +60,7 @@
 
         <para>
             Nachfolgend ist ein Beispiel von PHP Code für eine Web Anwendung um eine Authentifizierung zu erlangen
-            damit der Google Calender Service verwendet werden kann, und der ein Zend_Gdata Client Objekt erstellt
+            damit der Google Calender Service verwendet werden kann, und der ein <code>Zend_Gdata</code> Client Objekt erstellt
             das diesen authentifizierten Http Client verwendet.
         </para>
 
@@ -124,7 +124,7 @@ if (isset($_GET['logout'])) {
         <title>Sicherheitshinweise</title>
         <para>
             Das vermeiden der <code>$php_self</code> Variable im obigen Beispiel ist eine generelle Sicherheits
-            Richtlinie, die nicht nur für Zend_Gdata gilt. Inhalt der zu Http Headern ausgegeben wird sollte immer
+            Richtlinie, die nicht nur für <code>Zend_Gdata</code> gilt. Inhalt der zu Http Headern ausgegeben wird sollte immer
             gefiltert werden.
         </para>
         <para>

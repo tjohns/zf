@@ -1,10 +1,10 @@
-<!-- EN-Revision: 13762 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.elements">
-    <title>Erstellen von Form Elementen mit Hilfe von Zend_Form_Element</title>
+    <title>Erstellen von Form Elementen mit Hilfe von <code>Zend_Form_Element</code></title>
 
     <para>
         Ein Formular ist aus Elementen gemacht, die typischerweise mit einer HTML Form Eingabe
-        korrespondieren. Zend_Form_Element kapselt einzelne Formularelemente mit den folgenden
+        korrespondieren. <code>Zend_Form_Element</code> kapselt einzelne Formularelemente mit den folgenden
         Bereichen die erfüllt werden sollen:
     </para>
 

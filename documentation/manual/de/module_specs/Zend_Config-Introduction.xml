@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13849 -->
 <sect1 id="zend.config.introduction">
     <title>Einleitung</title>
     <para>
@@ -12,7 +12,7 @@
         das Einlesen von Daten aus Textfiles zur Verfügung.
     </para>
     <example id="zend.config.introduction.example.using">
-        <title>Zend-Config verwenden</title>
+        <title><code>Zend-Config</code> verwenden</title>
         <para>
             In der Regel geht man davon aus, dass Anwender eine der Adapter-Klassen wie
             <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> oder
@@ -67,7 +67,7 @@ $host = $config->database->get('host', 'localhost');
 ]]>
     </programlisting>
     <example id="zend.config.introduction.example.file.php">
-        <title>Zend_Config mit einer PHP Konfigurationsdatei verwenden</title>
+        <title><code>Zend_Config</code> mit einer PHP Konfigurationsdatei verwenden</title>
         <para>
             Es ist oft gewünscht eine reine PHP-basierende Konfigurationsdatei zu verwenden. Der folgende
             Code zeigt wie das ganz einfach erreicht werden kann:

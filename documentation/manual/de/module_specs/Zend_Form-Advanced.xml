@@ -1,6 +1,6 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.advanced">
-    <title>Fortgeschrittene Verwendung von Zend_Form</title>
+    <title>Fortgeschrittene Verwendung von <code>Zend_Form</code></title>
 
     <para>
         <code>Zend_Form</code> hat eine Vielzahl an Funktionalitäten, von denen viele auf

@@ -1,11 +1,11 @@
-<!-- EN-Revision: 13563 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
     <sect2 id="zend.controller.action.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Controller_Action</code> ist eine abstrakte Klasse die verwendet werden kann um Aktion
+            <code><code>Zend_Controller</code>_Action</code> ist eine abstrakte Klasse die verwendet werden kann um Aktion
             Kontroller zu implementieren die mit dem Front Kontroller verwendet werden können um eine WebSeite
             zu erstellen die auf dem Model-View-Controller (MVC) Pattern basiert.
         </para>
@@ -15,7 +15,7 @@
             Aktions Kontroller Klasse ererbt werden (oder von dieser erben um eine eigene Basisklasse für Aktion
             Kontroller zu erstellen). Die grundsätzlichste Operation ist es von Ihr zu erben und Aktions Methoden
             zu erstellen die den verschiedenen Aktionen entsprechen die der Kontroller der eigenen Seite handhaben
-            soll. Das Handhaben von Routen und Dispatchen des Zend_Controller's wird automatisch jegliche Methode
+            soll. Das Handhaben von Routen und Dispatchen des <code>Zend_Controller</code>'s wird automatisch jegliche Methode
             die in der eigenen Klasse auf 'Action' endet, als potentielle Kontroller Aktion herausfinden.
         </para>
 
@@ -119,7 +119,7 @@ class FooController extends Zend_Controller_Action
 
         <para>
             Wärend man immer den Konstruktor des Aktion Kontroller's überschreiben kann ist das nicht notwendig.
-            Zend_Controller_Action::__construct() führt einige wichtige Aufgabe aus, wie das registrieren der Anfrage
+            <code>Zend_Controller_Action::__construct()</code> führt einige wichtige Aufgabe aus, wie das registrieren der Anfrage
             und Antwort Objekte, sowie alle eigene einleitenden Argumente die von Front Kontroller übergeben wurden.
             Wenn der Konstruktor überschrieben werden muß, muß sichergestellt sein das
             <code>parent::__construct($request, $response, $invokeArgs)</code> aufgerufen wird.

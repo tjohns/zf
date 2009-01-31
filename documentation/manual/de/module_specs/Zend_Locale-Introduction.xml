@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13584 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.introduction">
 
     <title>Einführung</title>
@@ -21,7 +21,7 @@
         Sprachübersetzung, Unterstützung von lokalen Konventionen für Plurale, Daten, Zeiten, Währungen, Namen,
         Symbolen, Sortierungen, Reihungen und viele mehr. <code>L10n</code> und <code>I18n</code> sind einander
         sehr ähnlich. Zend Framework bietet Unterstützung für diese Konventionen durch eine Kombination von
-        Komponenten wie Zend_Locale, Zend_Date, Zend_Measure, Zend_Translate, Zend_Currency und Zend_TimeSync.
+        Komponenten wie <code>Zend_Locale</code>, <code>Zend_Date</code>, <code>Zend_Measure</code>, <code>Zend_Translate</code>, <code>Zend_Currency</code> und <code>Zend_TimeSync</code>.
     </para>
 
     <tip>
@@ -137,7 +137,7 @@
             <para>
                 Man muß darauf achten das nicht nur Gebietsschemata mit 2 Zeichen existieren wie die meisten
                 Leute denken. Es gibt auch Sprachen und Regionen die nicht nur mit 2 Zeichen abgekürzt werden.
-                Deswegen sollte man die Region und Sprache NICHT selbst trennen, sondern Zend_Locale verwenden
+                Deswegen sollte man die Region und Sprache NICHT selbst trennen, sondern <code>Zend_Locale</code> verwenden
                 um die Sprache oder Region von einem Gebietsschema String zu trennen. Andernfalls kann es zu
                 unerwartetem Verhalten im eigenen Code kommen wenn man versucht das selbst zu machen.
             </para>
@@ -519,8 +519,8 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
 
         <para>
             Um mit den Standarddefinitionen eines Gebietsschemas zu arbeiten kann die Konstante
-            Zend_Locale_Format::STANDARD verwendet werden. Das Setzen der Konstante Zend_Locale_Format::STANDARD
-            für 'date_format' benutzt die Standarddefinition des aktuellen Gebietsschemas. Das Setzen für
+            <code>Zend_Locale_Format::STANDARD</code> verwendet werden. Das Setzen der Konstante <code>Zend_Locale_Format::STANDARD</code>
+            für '<code>date_format</code>' benutzt die Standarddefinition des aktuellen Gebietsschemas. Das Setzen für
             'number_format' benutzt das Standard Nummernformat dieses Gebietsschemas. Und das Setzen für 'locale'
             verwendet das Standard Gebietsschema des Servers oder Browsers.
         </para>
@@ -546,7 +546,7 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
     <sect2 id="zend.locale.cache">
 
-        <title>Zend_Locale und dessen Subklassen schneller machen</title>
+        <title><code>Zend_Locale</code> und dessen Subklassen schneller machen</title>
 
         <para>
             <code>Zend_Locale</code> und dessen Subklassen können durch die Verwendung von

@@ -1,6 +1,6 @@
-<!-- EN-Revision: 13468 -->
+<!-- EN-Revision: 13848 -->
 <sect1 id="zend.console.getopt.configuration">
-    <title>Konfigurieren von Zend_Console_Getopt</title>
+    <title>Konfigurieren von <code>Zend_Console_Getopt</code></title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>Regeln für das Hinzufügen von Optionen</title>

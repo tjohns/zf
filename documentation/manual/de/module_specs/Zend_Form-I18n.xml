@@ -1,10 +1,10 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.i18n">
-    <title>Internationalisierung von Zend_Form</title>
+    <title>Internationalisierung von <code>Zend_Form</code></title>
 
     <para>
         Immer mehr Entwickler müssen ihren Inhalt für mehere Sprachen und Regionen zur Verfügung
-        stellen. Zend_Form versucht so einen Arbeitsschritt so einfach wie möglich zu machen und
+        stellen. <code>Zend_Form</code> versucht so einen Arbeitsschritt so einfach wie möglich zu machen und
         verwendet Funktionalitäten sowohl in <link linkend="zend.translate">Zend_Translate</link>,
         als auch in <link linkend="zend.validate">Zend_Validate</link> um das zu tun.
     </para>

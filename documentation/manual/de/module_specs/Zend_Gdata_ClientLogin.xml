@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>Authentifizieren mit ClientLogin</title>
 
@@ -33,7 +33,7 @@
             Der Prozess der Erstellung eines autentifizierten Http Clients durch Verwendung des ClientLogin
             Mechanismus besteht darin die statische Funktion <code>Zend_Gdata_ClientLogin::getHttpClient()</code>
             aufzurufen und die Google Account Zugangsdaten als reinen Text zu übergeben. Der Rückgabewert dieser
-            Funktion ist ein Objekt der Klasse Zend_Http_Client.
+            Funktion ist ein Objekt der Klasse <code>Zend_Http_Client</code>.
         </para>
 
         <para>
@@ -43,9 +43,9 @@
         </para>
 
         <para>
-            Der optionale vierte Parameter ist eine Instanz von Zend_Http_Client. Das erlaubt das Setzen von Optionen
+            Der optionale vierte Parameter ist eine Instanz von <code>Zend_Http_Client</code>. Das erlaubt das Setzen von Optionen
             an den Client, wie z.B. Proxy Server Einstellungen. Wenn für diesen Parameter <code>null</code> übergeben
-            wird, wird ein generisches Zend_Http_Client Objekt erstellt.
+            wird, wird ein generisches <code>Zend_Http_Client</code> Objekt erstellt.
         </para>
 
         <para>
@@ -68,8 +68,8 @@
 
         <para>
             Anbei ist ein Beispiel in PHP Code für eine Web Anwendung die Authentifizierung benötigt um das
-            Google Calendar Service zu verwenden und ein Zend_Gdata Client Objekt zu erstellen das diesen
-            authentifizierten Zend_Http_Client verwendet.
+            Google Calendar Service zu verwenden und ein <code>Zend_Gdata</code> Client Objekt zu erstellen das diesen
+            authentifizierten <code>Zend_Http_Client</code> verwendet.
         </para>
 
         <programlisting role="php"><![CDATA[

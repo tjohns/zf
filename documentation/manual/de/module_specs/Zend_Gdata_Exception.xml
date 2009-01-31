@@ -1,11 +1,11 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata Ausnahmen auffangen</title>
 
     <para>
-        Die <code>Zend_Gdata_App_Exception</code> Klasse ist eine Basis Klasse für Ausnahmen die durch Zend_Gdata
-        geworfen werden. Man kann jede durch Zend_Gdata geworfene Ausnahme auffangen indem
-        Zend_Gdata_App_Exception aufgefangen wird.
+        Die <code>Zend_Gdata_App_Exception</code> Klasse ist eine Basis Klasse für Ausnahmen die durch <code>Zend_Gdata</code>
+        geworfen werden. Man kann jede durch <code>Zend_Gdata</code> geworfene Ausnahme auffangen indem
+        <code>Zend_Gdata_App_Exception</code> aufgefangen wird.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -20,7 +20,7 @@ try {
     </programlisting>
 
     <para>
-        Die folgenden Ausnahme Subklassen werden von Zend_Gdata verwendet:
+        Die folgenden Ausnahme Subklassen werden von <code>Zend_Gdata</code> verwendet:
 
         <itemizedlist>
             <listitem>
@@ -39,7 +39,7 @@ try {
             <listitem>
                 <para>
                     <code>Zend_Gdata_App_HttpException</code> indiziert das eine HTTP Anfrage nicht erfolgreich
-                    war. Bietet die Möglichkeit das komplette Zend_Http_Request Objekt zu erhalten um den
+                    war. Bietet die Möglichkeit das komplette <code>Zend_Http_Request</code> Objekt zu erhalten um den
                     exakten Grund des Fehlers festzustellen in den Fällen in denen <code>$e->getMessage()</code>
                     nicht genug Details liefert.
                 </para>
@@ -72,7 +72,7 @@ try {
     <para>
         Man kann diese Ausnahme Subklassen verwenden um spezielle Ausnahmen unterschiedlich zu handhaben. Siehe
         die API Dokumentation für Informationen darüber welche Ausnahme Subklassen durch welche Methoden in
-        Zend_Gdata geworfen werden.
+        <code>Zend_Gdata</code> geworfen werden.
     </para>
 
     <programlisting role="php"><![CDATA[
