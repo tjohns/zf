@@ -378,8 +378,10 @@ class Zend_Feed
          */
         require_once 'Zend/Loader.php';
         Zend_Loader::loadClass($obj);
-        Zend_Loader::loadClass('Zend_Feed_Builder');
-
+        /**
+         * @see Zend_Feed_Builder
+         */
+        require_once 'Zend/Feed/Builder.php';
         return new $obj(null, null, new Zend_Feed_Builder($data));
     }
 
