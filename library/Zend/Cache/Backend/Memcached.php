@@ -273,9 +273,9 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             // #ZF-3490 : For the memcached backend, there is a lifetime limit of 30 days (2592000 seconds)
             $this->_log('memcached backend has a limit of 30 days (2592000 seconds) for the lifetime');
         }
-        if (is_null($lifetime)) {
-        	// #ZF-4614 : we tranform null to zero to get the maximal lifetime
-        	parent::setDirectives(array('lifetime' => 0));
+        if ($lifetime === null) {
+            // #ZF-4614 : we tranform null to zero to get the maximal lifetime
+            parent::setDirectives(array('lifetime' => 0));
         }
     }
 
@@ -351,15 +351,29 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     public function getFillingPercentage()
     {
-        $mem = $this->_memcache->getStats();
-        $memSize = $mem['limit_maxbytes'];
-        $memUsed= $mem['bytes'];
-        if ($memSize == 0) {
-            Zend_Cache::throwException('can\'t get memcache memory size');
+        $mems = $this->_memcache->getExtendedStats();
+
+        $memSize = 0;
+        $memUsed = 0;
+        foreach ($mems as $key => $mem) {
+        	if ($mem === false) {
+                Zend_Cache::throwException('can\'t get stat from ' . $key);
+        	} else {
+        		$eachSize = $mem['limit_maxbytes'];
+        		if ($eachSize == 0) {
+                    Zend_Cache::throwException('can\'t get memory size from ' . $key);
+        		}
+
+        		$eachUsed = $mem['bytes'];
+		        if ($eachUsed > $eachSize) {
+		            $eachUsed = $eachSize;
+		        }
+
+        		$memSize += $eachSize;
+        		$memUsed += $eachUsed;
+        	}
         }
-        if ($memUsed > $memSize) {
-            return 100;
-        }
+
         return ((int) (100. * ($memUsed / $memSize)));
     }
 
