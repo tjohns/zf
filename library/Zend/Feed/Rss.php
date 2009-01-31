@@ -174,6 +174,11 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
             $channel->appendChild($copyright);
         }
 
+        if (isset($array->category)) {
+            $category = $this->_element->createElement('category', $array->category);
+            $channel->appendChild($category);
+        }
+
         if (!empty($array->image)) {
             $image = $this->_element->createElement('image');
             $url = $this->_element->createElement('url', $array->image);
@@ -206,6 +211,11 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
             $cloud->setAttribute('registerProcedure', $array->cloud['procedure']);
             $cloud->setAttribute('protocol', $array->cloud['protocol']);
             $channel->appendChild($cloud);
+        }
+
+        if (isset($array->ttl)) {
+            $ttl = $this->_element->createElement('ttl', $array->ttl);
+            $channel->appendChild($ttl);
         }
 
         if (isset($array->rating)) {
