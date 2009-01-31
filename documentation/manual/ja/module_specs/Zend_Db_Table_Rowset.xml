@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13072 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.table.rowset">
 
     <title>Zend_Db_Table_Rowset</title>
@@ -182,7 +182,7 @@ $row9->save();
                 2 番目のパラメータはオプションで、boolean 値を指定します。
                 これは、Rowset イテレータも同時にその場所に移動させるのかどうかを表します
                 (デフォルトは false です)。このメソッドはデフォルトでは
-                Zend_Db_Table_Row オブジェクトを返します。
+                <code>Zend_Db_Table_Row</code> オブジェクトを返します。
                 指定した位置が存在しない場合は例外をスローします。
                 例を示します。
             </para>
@@ -372,7 +372,7 @@ $row->save();
         <title>行セットクラスの拡張</title>
 
         <para>
-            Zend_Db_Table_Rowset_Abstract を継承した新たな具象クラスを作成し、
+            <code>Zend_Db_Table_Rowset_Abstract</code> を継承した新たな具象クラスを作成し、
             それを用いて行セットのインスタンスを作成することができます。
             独自の行クラスを指定するには、テーブルクラスの protected
             メンバである <code>$_rowsetClass</code> を使用するか、
@@ -403,7 +403,7 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
         </example>
 
         <para>
-            一般的には、標準の具象クラス Zend_Db_Rowset
+            一般的には、標準の具象クラス <code>Zend_Db_Rowset</code>
             でたいていの場合は十分でしょう。しかし、
             特定のテーブルに固有の処理を行セットに追加したくなることもあります。
             たとえば、行セット内のすべての行の内容の集計用のメソッドなどです。

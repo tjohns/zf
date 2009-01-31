@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12236 -->
+<!-- EN-Revision: 13834 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
@@ -21,7 +21,7 @@
     <para>
         アダプタのオプションを設定するには、<code>set*</code>
         メソッドを使用するか、あるいはコンストラクタの最初のパラメータで
-        配列か Zend_Config インスタンスを渡します。
+        配列か <code>Zend_Config</code> インスタンスを渡します。
         使用できるオプションは次のとおりです。
     </para>
     <itemizedlist>

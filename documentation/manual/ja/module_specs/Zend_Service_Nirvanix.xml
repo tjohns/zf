@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 13830 -->
 <sect1 id="zend.service.nirvanix">
     <title>Zend_Service_Nirvanix</title>
 
@@ -218,7 +218,7 @@ $imfs = $nirvanix->getService('IMFS');
 $result = $imfs->renameFile(array('filePath' => '/path/to/foo.txt',
                                   'newFileName' => 'bar.txt'));
 ]]>
-        </programlisting>        
+        </programlisting>
 
         <para>
             上の例では、<code>IMFS</code> 名前空間へのプロキシを作成します。
@@ -325,7 +325,7 @@ Zend_Service_Nirvanix_Response Object
 </Response>
 ]]>
 </programlisting>
-    
+
         <para>
             上の例のように <code>ResponseCode</code> がゼロの場合は、
             その操作が成功したことを表します。操作が成功しなかった場合は

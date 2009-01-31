@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13853 -->
 <sect1 id="zend.registry.using">
 
     <title>レジストリの使用法</title>
@@ -27,7 +27,7 @@
         </para>
 
         <example id="zend.registry.using.storing.example">
-            <title>set() メソッドの例</title>
+            <title><code>set()</code> メソッドの使用例</title>
             <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
 ]]>
@@ -41,7 +41,7 @@ Zend_Registry::set('index', $value);
         </para>
 
         <para>
-            インデックスにはスカラー値を指定します。文字列あるいは整数のいずれかで、
+            インデックスにはスカラー値 (<code>null</code>、文字列あるいは整数) を指定します。
             通常の配列と同じです。
         </para>
 
@@ -57,7 +57,7 @@ Zend_Registry::set('index', $value);
         </para>
 
         <example id="zend.registry.using.retrieving.example">
-            <title>get() メソッドの例</title>
+            <title><code>get()</code> メソッドの使用例</title>
             <programlisting role="php"><![CDATA[
 $value = Zend_Registry::get('index');
 ]]>
@@ -66,11 +66,9 @@ $value = Zend_Registry::get('index');
 
         <para>
             <code>getInstance()</code> メソッドは、
-            静的なレジストリオブジェクトを返します。
-        </para>
-
-        <para>
-            レジストリオブジェクトは順次処理をすることが可能 (iterable) です。
+            シングルトンレジストリオブジェクトを返します。
+            このレジストリオブジェクトは順次処理をすることが可能 (iterable) で、
+            レジストリ内の値に簡単にアクセスできます。
         </para>
 
         <example id="zend.registry.using.retrieving.example-iterating">
@@ -104,9 +102,11 @@ foreach ($registry as $index => $value) {
         </para>
 
         <para>
-            レジストリのインスタンスを作成するには、
+            <code>Zend_Registry</code> のインスタンスを作成するには、
             ごく普通に <code>new</code> コンストラクタを使用します。
-            これにより、レジストリのエントリを連想配列として初期化できるようになります。
+            コンストラクタで <code>Zend_Registry</code>
+            のインスタンスを作成する際に連想配列を渡すと、
+            レジストリのエントリを初期化できるようになります。
         </para>
 
         <example id="zend.registry.using.constructing.example">
@@ -118,13 +118,15 @@ $registry = new Zend_Registry(array('index' => $value));
         </example>
 
         <para>
-            このインスタンスを作成すると、配列風の方法でアクセスできるようになります。
+            <code>Zend_Registry</code> のインスタンスを作成すると、
+            配列風の方法でアクセスできるようになります。
             あるいは、静的メソッド <code>setInstance()</code>
-            を使用することで、このインスタンスを静的インスタンスに設定することもできます。
+            を使用することで、このインスタンスを <code>Zend_Registry</code>
+            のシングルトンインスタンスに設定することもできます。
         </para>
 
         <example id="zend.registry.using.constructing.example-setinstance">
-            <title>静的レジストリの初期化の例</title>
+            <title>シングルトンレジストリの初期化の例</title>
             <programlisting role="php"><![CDATA[
 $registry = new Zend_Registry(array('index' => $value));
 
@@ -136,7 +138,7 @@ Zend_Registry::setInstance($registry);
         <para>
             <code>setInstance()</code> メソッドは、もしすでに
             静的レジストリが初期化されている場合に
-            Zend_Exception をスローします。
+            <code>Zend_Exception</code> をスローします。
         </para>
 
     </sect2>
@@ -175,10 +177,16 @@ var_dump( $registry['index'] );
             を指定してレジストリオブジェクトを明示的に作成し、
             静的インスタンスを初期化しなければなりません。
             これは、静的レジストリへの最初のアクセスが発生する前に行う必要があります。
-            このオプションを使用する際には <emphasis role="strong">注意</emphasis>
-            しましょう。PHP のバージョンによっては、
-            このオプションを指定してレジストリを使用するとバグが発生することがあります。
         </para>
+            <warning>
+                <title><code>ArrayObject::ARRAY_AS_PROPS</code> オプションの既知の問題</title>
+
+                <para>
+                    PHP のバージョンによっては、
+                    <code>ArrayObject::ARRAY_AS_PROPS</code>
+                    オプションを指定してレジストリを使用するとバグが発生することがあります。
+                </para>
+            </warning>
 
         <example id="zend.registry.using.array-object.example">
             <title>オブジェクト形式のアクセスの例</title>
@@ -216,7 +224,7 @@ var_dump($registry->index);
         </para>
 
         <example id="zend.registry.using.isset.example-isregistered">
-            <title>isRegistered() メソッドの例</title>
+            <title>isRegistered() メソッドの使用例</title>
             <programlisting role="php"><![CDATA[
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);
@@ -231,7 +239,7 @@ if (Zend_Registry::isRegistered($index)) {
         </para>
 
         <example id="zend.registry.using.isset.example-isset">
-            <title>isset() メソッドの例</title>
+            <title><code>isset()</code> メソッドの使用例</title>
             <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
 
@@ -255,17 +263,19 @@ if (isset($registry->index)) {
         <title>レジストリの拡張</title>
 
         <para>
-            静的レジストリは Zend_Registry クラスのインスタンスです。
+            静的レジストリは <code>Zend_Registry</code> クラスのインスタンスです。
             レジストリに何らかの機能を追加したい場合は、
-            Zend_Registry を継承したクラスを作成し、
-            それを静的レジストリで使用するクラスとして指定します。
+            <code>Zend_Registry</code> を継承したクラスを作成し、
+            それを静的レジストリで使用するシングルトンとして指定します。
             クラスを指定するには、静的メソッド
             <code>setClassName()</code> を使用します。
-            このクラスは Zend_Registry を継承していなければなりません。
+            <note>
+                このクラスは <code>Zend_Registry</code> のサブクラスでなければなりません。
+            </note>
         </para>
 
         <example id="zend.registry.using.subclassing.example">
-            <title>静的レジストリのクラス名を指定する例</title>
+            <title>シングルトンレジストリのクラス名を指定する例</title>
             <programlisting role="php"><![CDATA[
 Zend_Registry::setClassName('My_Registry');
 
@@ -276,7 +286,7 @@ Zend_Registry::set('index', $value);
 
         <para>
             最初にレジストリにアクセスした後でクラス名を設定しようとすると、
-            レジストリは Zend_Exception をスローします。静的レジストリのクラス名は、
+            レジストリは <code>Zend_Exception</code> をスローします。静的レジストリのクラス名は、
             アプリケーションの起動ファイルで指定することをお勧めします。
         </para>
 
@@ -292,21 +302,23 @@ Zend_Registry::set('index', $value);
             を使用します。
         </para>
 
-        <note>
+        <warning>
             <title>データを失うリスク</title>
             <para>
                 <code>_unsetInstance()</code> を使用すると、
                 静的レジストリ内の全データが破棄され、
                 復旧することはできません。
             </para>
-        </note>
+        </warning>
 
         <para>
             このメソッドを使用するのは、たとえば、
-            静的レジストリオブジェクトを初期化した後で
+            シングルトンレジストリオブジェクトを初期化した後で
             <code>setInstance()</code> や <code>setClassName()</code>
-            を使用する場合です。静的インスタンスを削除することで、
-            これらのメソッドを使用できるようになります。
+            を使用する場合です。シングルトンインスタンスを削除することで、
+            シングルトンレジストリオブジェクトを設定した後であっても
+            これらのメソッドを使用できるようになります。特別な場合を除き、
+            <code>Zend_Registry</code> をこの方式で使うことは推奨しません。
         </para>
 
         <example id="zend.registry.using.unsetting.example">

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11118 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Zend_Db_Profiler</title>
@@ -228,8 +228,7 @@ $profiler = $db->getProfiler();
             例えば、直近に実行されたクエリが実際のところどんなものだったのかを知るには次のようにします。
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 $query = $profiler->getLastQueryProfile();
 
 echo $query->getQuery();
@@ -242,8 +241,7 @@ echo $query->getQuery();
             それから、個々のクエリを調べ、一番時間がかかっているのはどれかを見つけます。
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 $totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
@@ -256,7 +254,7 @@ foreach ($profiler->getQueryProfiles() as $query) {
     }
 }
 
-echo '全部で ' . $queryCount . ' 件のクエリが ' . $totalTime . 
+echo '全部で ' . $queryCount . ' 件のクエリが ' . $totalTime .
      ' 秒で実行されました' . "\n";
 echo '平均の所要時間: ' . $totalTime / $queryCount . ' 秒' . "\n";
 echo '1 秒あたりのクエリ実行数: ' . $queryCount / $totalTime . "\n";
@@ -286,8 +284,7 @@ echo "一番時間のかかっているクエリ: \n" . $longestQuery . "\n";
                 メソッドに null 値を渡します。
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 // 所要時間が 5 秒以上のクエリのみ調べます
 $profiler->setFilterElapsedSecs(5);
 
@@ -393,8 +390,7 @@ $profiler->setFilterQueryType(null);
                 を参照ください。
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 // SELECT クエリの情報のみを取得します
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 

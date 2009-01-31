@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13583 -->
+<!-- EN-Revision: 13834 -->
 <sect1 id="zend.progressbar.introduction" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_ProgressBar</title>
 
@@ -14,10 +14,10 @@
     </sect2>
 
     <sect2 id="zend.progressbar.basic">
-        <title>Zend_Progressbar の基本的な使用法</title>
+        <title><code>Zend_Progressbar</code> の基本的な使用法</title>
         <para>
             <code>Zend_ProgressBar</code> の使い方はきわめて簡単です。
-            単純に Zend_Progressbar の新しいインスタンスを作成し、
+            単純に <code>Zend_Progressbar</code> の新しいインスタンスを作成し、
             最小値と最大値を指定した上でデータ出力用のアダプタを選択するだけです。
             何かのファイルの処理を行いたい場合は、たとえば次のようになります。
         </para>

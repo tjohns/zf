@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13626 -->
+<!-- EN-Revision: 13840 -->
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>ライター</title>
   <para>
@@ -43,7 +43,7 @@ $logger->info('Informational message');
       </programlisting>
 
       デフォルトでは、ストリームを追記モード (<code>"a"</code>) でオープンします。
-      別のモードでオープンするには、Zend_Log_Writer_Stream
+      別のモードでオープンするには、<code>Zend_Log_Writer_Stream</code>
       のコンストラクタで二番目のオプション引数にモードを指定します。
     </para>
 

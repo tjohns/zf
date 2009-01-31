@@ -1,11 +1,11 @@
-<!-- EN-Revision: 13762 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.elements">
-    <title>Zend_Form_Element を用いたフォーム要素の作成</title>
+    <title><code>Zend_Form_Element</code> を用いたフォーム要素の作成</title>
 
     <para>
         フォームは、いくつかの要素から構成されています。
         これらの要素は、HTML フォームの入力項目に対応します。
-        Zend_Form_Element は個々のフォーム要素をカプセル化し、
+        <code>Zend_Form_Element</code> は個々のフォーム要素をカプセル化し、
         以下の機能を提供します。
     </para>
 

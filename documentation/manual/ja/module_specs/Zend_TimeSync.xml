@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12814 -->
+<!-- EN-Revision: 13828 -->
 <sect1 id="zend.timesync.introduction">
 
     <title>導入</title>
@@ -90,7 +90,7 @@
                 </para>
                 <para>
                     バッチファイルやコマンドラインアプリケーションで
-                    タイムサービスを使用したい場合。
+                    タイムサービスを使用したい場合、<code>Zend_TimeSync</code> が使えるでしょう。
                 </para>
             </listitem>
         </itemizedlist>

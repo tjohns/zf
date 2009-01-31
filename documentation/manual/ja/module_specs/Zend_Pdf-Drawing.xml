@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13356 -->
+<!-- EN-Revision: 13835 -->
 <sect1 id="zend.pdf.drawing">
     <title>描画</title>
 
@@ -23,7 +23,7 @@ $height = $pdfPage->getHeight();
     <sect2 id="zend.pdf.drawing.color">
         <title>色</title>
         <para>
-        PDF には、色を表現するためのさまざまな方法があります。Zend_Pdf では、
+        PDF には、色を表現するためのさまざまな方法があります。<code>Zend_Pdf</code> では、
         グレイスケール、RGB および CMYK 色空間をサポートしています。
         <code>Zend_Pdf_Color</code> オブジェクトが要求される箇所では、
         これらのどれでも使用することができます。それぞれの色空間に対応する機能を提供するのが
@@ -223,7 +223,7 @@ $pdfPage->drawText('Hello world!', 72, 720);
         (例えば、ディスク上のファイルから UTF-8 の文字列を読み込んだり
         レガシーなデータベースから MacRoman の文字列を取得したりなど) は、
         描画の際に文字エンコーディングを指定することができます。
-        そうすることで、Zend_Pdf が変換処理を行います。PHP の
+        そうすることで、<code>Zend_Pdf</code> が変換処理を行います。PHP の
         <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
         関数がサポートしているエンコーディングなら、すべて入力として使用することが可能です。
         </para>
@@ -268,7 +268,7 @@ public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);
         そして Zapf Dingbats です。
         </para>
         <para>
-        現在 Zend_Pdf は、標準の 14 種類の PDF フォントだけでなく
+        現在 <code>Zend_Pdf</code> は、標準の 14 種類の PDF フォントだけでなく
         独自の TrueType フォントもサポートしています。フォントオブジェクトを取得するには、
         2 種類のファクトリーメソッドのいずれかを使用します。使用するメソッドは、
         標準の 14 種類の PDF フォントの場合は <code>Zend_Pdf_Font::fontWithName($fontName)</code>、
@@ -452,7 +452,7 @@ $font = Zend_Pdf_Font::fontWithPath(
             フォントは例外です)。
         </para>
         <para>
-            Zend_Pdf は、標準フォントでのテキストの描画時に CP1252 (WinLatin1) を使用します。
+            <code>Zend_Pdf</code> は、標準フォントでのテキストの描画時に CP1252 (WinLatin1) を使用します。
         </para>
         <para>
             他のエンコーディングでもテキストは描画できますが、
@@ -876,7 +876,7 @@ public function restoreGS();
     <sect2 id="zend.pdf.drawing.clipping">
         <title>描画領域のクリッピング</title>
         <para>
-        PDF および Zend_Pdf モジュールは、描画領域のクリッピングに対応しています。
+        PDF および <code>Zend_Pdf</code> モジュールは、描画領域のクリッピングに対応しています。
         描画演算子が影響を及ぼす範囲を、このクリップ領域内に制限します。
         クリップ領域の初期値は、ページ全体です。
         </para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13561 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.migration">
     <title>以前のバージョンからの移行</title>
 
@@ -17,7 +17,7 @@
 
             <para>
                 ユーザからの指摘により、
-                <code>Zend_Controller_Action_Helper_ViewRenderer </code>
+                <code>Zend_Controller_Action_Helper_ViewRenderer</code>
                 が使っているディスパッチャ抽象クラスのメソッドの中で
                 ディスパッチャインターフェイスに存在しないものがあることに気づきました。
                 次のメソッドを追加し、
@@ -727,7 +727,7 @@ public function __call($method, $args)
                 は削除されました。かわりに
                 <code>Zend_Controller_Front::setBaseUrl()</code> を使用してください
                 (あるいは、リクエストクラスを使用している場合は
-                Zend_Controller_Request_Http::setBaseUrl() を使用します)。
+                <code>Zend_Controller_Request_Http::setBaseUrl()</code> を使用します)。
             </para></listitem>
 
             <listitem><para>

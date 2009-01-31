@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 13863 -->
 <sect1 id="zend.pdf.pages">
-    <title>ドキュメントのページ</title>
+    <title>ページの操作</title>
     <sect2 id="zend.pdf.pages.creation">
         <title>ページの作成</title>
         <para>
-            PDF ドキュメントのページの抽象化を行うのが
-            <code>Zend_Pdf_Page</code> クラスです。
+            PDF ドキュメントのページは、<code>Zend_Pdf</code> の
+            <code>Zend_Pdf_Page</code> クラスで表されます。
         </para>
 
         <para>
@@ -23,7 +23,7 @@
             多少高速になります
             <footnote>
                 <para>
-                これは Zend_Pdf モジュールのバージョン 1.0 の制限事項であり、
+                これは現在のバージョンの ZF の制限事項であり、
                 将来のバージョンではなくなる予定です。
                 しかし、ドキュメント間でページを共有するには、
                 アタッチされていないページのほうが常によい結果となるでしょう。

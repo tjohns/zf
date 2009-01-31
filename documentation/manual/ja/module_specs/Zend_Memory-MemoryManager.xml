@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13838 -->
 <sect1 id="zend.memory.memory-manager">
     <title>メモリマネージャ</title>
 
@@ -15,7 +15,7 @@
 
         <para>
             最初の引数 <code>$backendName</code> は文字列で、
-            Zend_Cache がサポートするバックエンド実装のいずれかの名前を指定します。
+            <code>Zend_Cache</code> がサポートするバックエンド実装のいずれかの名前を指定します。
         </para>
 
         <para>
@@ -33,12 +33,12 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
         </programlisting>
 
         <para>
-            Zend_Memory は <link linkend="zend.cache.backends">Zend_Cache のバックエンド</link>
+            <code>Zend_Memory</code> は <link linkend="zend.cache.backends">Zend_Cache のバックエンド</link>
             を使用してデータを保存します。
         </para>
 
         <para>
-            標準の Zend_Cache のバックエンドに加え、特別な名前
+            標準の <code>Zend_Cache</code> のバックエンドに加え、特別な名前
             '<code>None</code>' をバックエンド名として使用することもできます。
 
             <programlisting role="php"><![CDATA[
@@ -143,7 +143,8 @@ function foo()
 
     ...
     // $memObject1 はここで破棄されますが、
-    // $memObject3 オブジェクトはまだ $memList に参照されており、破棄されていません
+    // $memObject3 オブジェクトはまだ $memList に参照されており、
+    // 破棄されていません
 }
 ]]>
                 </programlisting>

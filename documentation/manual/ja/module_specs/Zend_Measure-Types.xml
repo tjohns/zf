@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11495 -->
+<!-- EN-Revision: 13837 -->
 <sect1 id="zend.measure.types">
 
     <title>計測値の型</title>
@@ -259,7 +259,7 @@
 
     <sect2 id="zend.measure.types.binary">
 
-        <title>Zend_Measure_Binary のヒント</title>
+        <title><code>Zend_Measure_Binary</code> のヒント</title>
 
         <para>
             よく使われるバイナリの規約では、キロ、メガ、ギガ
@@ -284,7 +284,7 @@
 
     <sect2 id="zend.measure.types.decimal">
 
-        <title>Zend_Measure_Number のヒント</title>
+        <title><code>Zend_Measure_Number</code> のヒント</title>
 
         <para>
             いちばんよく知られている形式は、十進法です。

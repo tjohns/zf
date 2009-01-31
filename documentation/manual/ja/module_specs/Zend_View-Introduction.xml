@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13826 -->
 <sect1 id="zend.view.introduction">
 
     <title>導入</title>
@@ -21,7 +21,7 @@
     <para>
         基本的に、<code>Zend_View</code> を使用する際には 2 つの段階をとることになります。
 
-        1.  コントローラスクリプトが Zend_View のインスタンスを作成し、
+        1.  コントローラスクリプトが <code>Zend_View</code> のインスタンスを作成し、
         そのインスタンスに変数を代入します。
 
         2. コントローラが <code>Zend_View</code> に対して適切なビューをレンダリングするように指示し、
@@ -62,7 +62,8 @@ $view = new Zend_View();
 $view->books = $data;
 
 // "booklist.php" というビュースクリプトをレンダリングします
-echo $view->render('booklist.php');]]>
+echo $view->render('booklist.php');
+]]>
         </programlisting>
 
     </sect2>
@@ -75,14 +76,15 @@ echo $view->render('booklist.php');]]>
             次に必要なのは、関連付けるビュースクリプト "booklist.php" です。
             これは一般的な PHP スクリプトと同じですが、ひとつだけ違いがあります。
             <code>Zend_View</code> インスタンスのスコープで実行されるということです。
-            つまり $this への参照は、Zend_View
+            つまり $this への参照は、<code>Zend_View</code>
             のインスタンスのプロパティやメソッドを指すことになるのです
             (コントローラによってインスタンスに代入された変数は、
-            Zend_View インスタンスの public プロパティとなります)。
+            <code>Zend_View</code> インスタンスの public プロパティとなります)。
             したがって、基本的なビュースクリプトはこのようになります。
         </para>
 
-        <programlisting role="php"><![CDATA[ if ($this->books): ?>
+        <programlisting role="php"><![CDATA[
+ if ($this->books): ?>
 
     <!-- 本の一覧 -->
     <table>
@@ -104,7 +106,8 @@ echo $view->render('booklist.php');]]>
 
     <p>表示する本がありません。</p>
 
-<?php endif;?>]]>
+<?php endif;?>
+]]>
         </programlisting>
 
         <para>
@@ -134,7 +137,8 @@ echo $view->render('booklist.php');]]>
 base/path/
     helpers/
     filters/
-    scripts/]]>
+    scripts/
+]]>
                 </programlisting>
 
                 <para>
@@ -216,7 +220,8 @@ base/path/
 
                 <programlisting role="apache"><![CDATA[
 php_value "short_open_tag" "on"
-]]></programlisting>
+]]>
+</programlisting>
 
                 <para>
                     これは、<code>.htaccess</code>
@@ -233,7 +238,8 @@ php_value "short_open_tag" "on"
 
         <programlisting role="php"><![CDATA[
 $view->setUseStreamWrapper(true);
-]]></programlisting>
+]]>
+        </programlisting>
 
                 <para>
                     これは、<code>Zend_View_Stream</code>

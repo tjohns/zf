@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13563 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.action">
     <title>アクションコントローラ</title>
 
@@ -18,7 +18,7 @@
             基本的な使い方としては、まずサブクラスを作成し、
             そしてあなたのサイト上で処理したいさまざまなアクションに対応する
             アクションメソッドを作成するという流れになります。
-            Zend_Controller は、このクラス内のメソッドで 'Action'
+            <code>Zend_Controller</code> は、このクラス内のメソッドで 'Action'
             という名前で終わるものを見つけると、
             ルーティングやディスパッチの際にそれらを自動的にアクションとして扱います。
         </para>
@@ -136,7 +136,7 @@ class FooController extends Zend_Controller_Action
 
         <para>
             アクションコントローラのコンストラクタをオーバーライドすることもできますが、
-            お勧めしません。Zend_Controller_Action::__construct()
+            お勧めしません。<code>Zend_Controller_Action::__construct()</code>
             は、リクエストオブジェクトやレスポンスオブジェクトを登録するなどの重要な作業を行います。
             また、フロントコントローラから渡された起動時引数の処理も行います。
             コンストラクタをオーバーライドする場合は、必ずその中で

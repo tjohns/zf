@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13623 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -141,7 +141,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             しかし、基本的には boolean として扱います。
             チェックされている場合はその値が送信され、
             チェックされていない場合はなにも送信されません。
-            内部的に、Zend_Form_Element_Checkbox はこの状態を強制します。
+            内部的に、<code>Zend_Form_Element_Checkbox</code> はこの状態を強制します。
         </para>
 
         <para>

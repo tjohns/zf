@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.best-practice">
     <title>ベストプラクティス</title>
 
@@ -6,7 +6,7 @@
         <title>フィールド名</title>
 
         <para>
-            Zend_Search_Lucene では、フィールド名に関する制限は特にありません。
+            <code>Zend_Search_Lucene</code> では、フィールド名に関する制限は特にありません。
         </para>
 
         <para>
@@ -136,7 +136,7 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    これらのオプションはすべて Zend_Search_Lucene
+                    これらのオプションはすべて <code>Zend_Search_Lucene</code>
                     オブジェクトのプロパティであり、インデックスのプロパティではありません。
                     したがって、この設定は現在使用中の
                     <code>Zend_Search_Lucene</code> オブジェクトに対してのみ働くようになり、
@@ -202,7 +202,7 @@ $index->optimize();
             というエラーが発生するかもしれません
             <footnote>
               <para>
-                Zend_Search_Lucene は、セグメントファイルをずっとオープンしたままにしておきます。
+                <code>Zend_Search_Lucene</code> は、セグメントファイルをずっとオープンしたままにしておきます。
                 これによって検索の効率を上げています。
               </para>
             </footnote>。
@@ -397,7 +397,7 @@ foreach ($docIds as $id) {
         <title>メモリの使用法</title>
 
         <para>
-            Zend_Search_Lucene はメモリを消費するモジュールです。
+            <code>Zend_Search_Lucene</code> は、比較的メモリを消費するモジュールです。
         </para>
 
         <para>
@@ -413,7 +413,7 @@ foreach ($docIds as $id) {
             これは、実際の辞書に登録されている単語が 128件
             <footnote><para>
                 Lucene のファイルフォーマットでは、この件数を変更することもできます。しかし
-                Zend_Search_Lucene の API ではそれをサポートしていません。
+                <code>Zend_Search_Lucene</code> の API ではそれをサポートしていません。
                 別の Lucene 実装を使用してインデックスをサポートすれば、
                 この値を変更することも可能です。
             </para></footnote>
@@ -452,7 +452,7 @@ foreach ($docIds as $id) {
         <title>エンコーディング</title>
 
         <para>
-            Zend_Search_Lucene は、内部で UTF-8 文字列を使用しています。
+            <code>Zend_Search_Lucene</code> は、内部で UTF-8 文字列を使用しています。
             したがって、Zend_Search_Lucene が返す文字列は、すべて UTF-8
             でエンコードされています。
         </para>
@@ -468,7 +468,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            Zend_Search_Lucene は、ドキュメントやクエリのエンコーディングとしてさまざまなものに対応しています。
+            <code>Zend_Search_Lucene</code> は、ドキュメントやクエリのエンコーディングとしてさまざまなものに対応しています。
         </para>
 
         <para>
@@ -547,7 +547,7 @@ $hits = $index->find($queryStr);
         <title>インデックスの保守</title>
 
         <para>
-            まずはっきりさせておくべきなのは、Zend_Search_Lucene やその他の
+            まずはっきりさせておくべきなのは、<code>Zend_Search_Lucene</code> やその他の
             Lucene 実装は決して "データベース" ではないということです。
         </para>
 
@@ -558,7 +558,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            しかし、Zend_Search_Lucene はインデックスの一貫性を保持するための機能は持っています。
+            しかし、<code>Zend_Search_Lucene</code> はインデックスの一貫性を保持するための機能は持っています。
         </para>
 
         <para>

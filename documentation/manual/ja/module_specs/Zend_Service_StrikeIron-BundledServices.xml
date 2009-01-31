@@ -1,9 +1,9 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13830 -->
 <sect1 id="zend.service.strikeiron.bundled-services">
     <title>Zend_Service_StrikeIron: バンドルされているサービス</title>
 
     <para>
-      Zend_Service_StrikeIron には、StrikeIron
+      <code>Zend_Service_StrikeIron</code> には、StrikeIron
       のサービスのうち人気のある 3 つについてのラッパークラスが含まれています。
     </para>
 

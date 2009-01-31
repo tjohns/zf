@@ -114,7 +114,7 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
             $token = new Zend_Search_Lucene_Analysis_Token(
                                       substr($this->_input,
                                              $termStartPosition,
-                                             $this->_position - 
+                                             $this->_position -
                                              $termStartPosition),
                                       $termStartPosition,
                                       $this->_position);
@@ -304,7 +304,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
         <para>
             重み付けのアルゴリズムを変更するには、独自の Similatity
             クラスを定義します。そのためには以下のように
-            Zend_Search_Lucene_Search_Similarity クラスを継承し、
+            <code>Zend_Search_Lucene_Search_Similarity</code> クラスを継承し、
             <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code>
             メソッドでそれをデフォルトとして設定します。
         </para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.advanced">
     <title>応用</title>
 
@@ -6,7 +6,7 @@
         <title>1.6 以降でサポートするインデックスフォーマット変換</title>
 
         <para>
-            Zend_Search_Lucene コンポーネントは、Java Lucene 1.4-1.9、2.1 そして 2.3
+            <code>Zend_Search_Lucene</code> コンポーネントは、Java Lucene 1.4-1.9、2.1 そして 2.3
             形式のインデックスフォーマットに対応しています。
         </para>
 
@@ -44,7 +44,7 @@
         </para>
 
         <para>
-            Zend_Search_Lucene が、インデックスを上位バージョンのフォーマットに変換することがあります。
+            <code>Zend_Search_Lucene</code> が、インデックスを上位バージョンのフォーマットに変換することがあります。
             <code>Zend_Search_Lucene::FORMAT_PRE_2_1</code> フォーマットの場合はこれが
             <emphasis role="strong">常に</emphasis> 起こり、
             自動的に 2.1 フォーマットに変換されます。
@@ -149,7 +149,7 @@ Searcher::initIndex();
         </para>
 
         <para>
-            Zend_Search_Lucene は、この問題を <code>commit()</code>
+            <code>Zend_Search_Lucene</code> は、この問題を <code>commit()</code>
             メソッドで処理できるようにしています。これは、未保存の変更内容をすべて保存し、
             新しいセグメントを保存するために使用しているメモリを解放します。
             コミット操作は、スクリプトの実行中にいつでも何度でも行うことができます。

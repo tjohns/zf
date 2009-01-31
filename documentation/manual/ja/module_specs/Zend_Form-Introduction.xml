@@ -1,9 +1,9 @@
-<!-- EN-Revision: 8312 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.introduction">
     <title>Zend_Form</title>
 
     <para>
-        Zend_Form は、ウェブアプリケーションにおける
+        <code>Zend_Form</code> は、ウェブアプリケーションにおける
         フォームの作成や処理を簡単に行うためのものです。
         次のような機能を持っています。
     </para>
@@ -17,7 +17,8 @@
     </itemizedlist>
 
     <para>
-        これらの機能を実現するために、Zend Framework の他のコンポーネントを活用しています。
+        <code>Zend_Form</code> は、これらの機能を実現するために
+        Zend Framework の他のコンポーネントを活用しています。
         たとえば <code>Zend_Config</code>, <code>Zend_Validate</code>,
         <code>Zend_Filter</code>, <code>Zend_Loader_PluginLoader</code>,
         そしてオプションで <code>Zend_View</code> を使用します。

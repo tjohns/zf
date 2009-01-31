@@ -1,16 +1,16 @@
-<!-- EN-Revision: 13165 -->
+<!-- EN-Revision: 13827 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
 
     <para>
-        Zend_Translate は、さまざまなアダプタを使用して翻訳を行えます。
+        <code>Zend_Translate</code> は、さまざまなアダプタを使用して翻訳を行えます。
         それぞれのアダプタによって利点や欠点があります。
         以下に、翻訳の入力ファイルとしてサポートしているすべてのアダプタについてまとめます。
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title>Zend_Translate のアダプタ</title>
+        <title><code>Zend_Translate</code> のアダプタ</title>
         <tgroup cols="3">
             <thead>
                 <row>
@@ -79,7 +79,7 @@
         <title>使用するアダプタを決める方法</title>
 
         <para>
-            Zend_Translate でどのアダプタを使用するのかを決める必要があります。
+            <code>Zend_Translate</code> でどのアダプタを使用するのかを決める必要があります。
             プロジェクトの制約や顧客からの要望などの外的要因でアダプタが決まることもよくありますが、
             もしあなたに決定権があるのなら、以下のヒントを参考にしてください。
         </para>
@@ -165,7 +165,7 @@
                 可読形式ではありませんが、便利なフリーウェア
                 (<ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink> など)
                 が公開されています。
-                Zend_Translate の Gettext アダプタは、PHP の gettext
+                <code>Zend_Translate</code> の Gettext アダプタは、PHP の gettext
                 拡張モジュールを使わずに実装しています。
                 PHP の gettext 拡張モジュールをインストールしていなくても
                 Gettext アダプタを使用することが可能です。
@@ -300,20 +300,20 @@
         <title>自作のアダプタの組み込み</title>
 
         <para>
-            Zend_Translate に、自作のアダプタクラスを組み込むこともできます。
-            これは、Zend_Translate に組み込まれている標準のアダプタクラスと同様に使うことができます。
+            <code>Zend_Translate</code> に、自作のアダプタクラスを組み込むこともできます。
+            これは、<code>Zend_Translate</code> に組み込まれている標準のアダプタクラスと同様に使うことができます。
         </para>
 
         <para>
-            Zend_Translate で使用するアダプタクラスは、
-            Zend_Translate_Adapter のサブクラスでなければなりません。
-            Zend_Translate_Adapter は抽象クラスであり、翻訳に必要なものをすべて定義しています。
+            <code>Zend_Translate</code> で使用するアダプタクラスは、
+            <code>Zend_Translate_Adapter</code> のサブクラスでなければなりません。
+            <code>Zend_Translate_Adapter</code> は抽象クラスであり、翻訳に必要なものをすべて定義しています。
             あなたがすべきことは、翻訳データの読み込み方法を定義することだけです。
         </para>
 
         <para>
             名前の先頭に "Zend" をつけることができるのは Zend_Framework
-            内のパッケージだけです。Zend_Translate で使うためのアダプタを自作する場合は、
+            内のパッケージだけです。<code>Zend_Translate</code> で使うためのアダプタを自作する場合は、
             その名前はたとえば "Company_Translate_Adapter_MyFormat" のようにする必要があります。
             次のコードは、独自のアダプタクラスを実装する例を示すものです。
         </para>

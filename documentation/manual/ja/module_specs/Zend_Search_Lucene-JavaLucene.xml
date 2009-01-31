@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.java-lucene">
     <title>Java Lucene との相互運用</title>
 
     <sect2 id="zend.search.lucene.index-creation.file-formats">
         <title>ファイルフォーマット</title>
         <para>
-          Zend_Search_Lucene のインデックスファイルのフォーマットは、
+          <code>Zend_Search_Lucene</code> のインデックスファイルのフォーマットは、
           Lucene バージョン 1.4 以降のフォーマットとバイナリ互換性があります。
         </para>
 

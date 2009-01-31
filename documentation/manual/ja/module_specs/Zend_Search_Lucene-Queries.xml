@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.query-api">
     <title>クエリ作成用の API</title>
 
@@ -35,7 +35,7 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
                 </para>
             </listitem>
         </itemizedlist>
-        つまり、Zend_Search_Lucene_Search_QueryParserException
+        つまり、<code>Zend_Search_Lucene_Search_QueryParserException</code>
         を捕捉して適切なメッセージを表示させるようにしておくことが大切です。
         <programlisting role="php"><![CDATA[
 try {
@@ -48,7 +48,7 @@ try {
         </para>
 
         <para>
-            Zend_Search_Lucene オブジェクトの find() メソッドでも同様のテクニックを使えます。
+            <code>Zend_Search_Lucene</code> オブジェクトの find() メソッドでも同様のテクニックを使えます。
         </para>
 
         <para>
@@ -95,7 +95,7 @@ $hits  = $index->find($query);
 
         <para>
             単語のフィールドは任意で指定します。
-            指定しなかった場合は、Zend_Search_Lucene
+            指定しなかった場合は、<code>Zend_Search_Lucene</code>
             は全フィールドを対象に検索します。
             <programlisting role="php"><![CDATA[
 // インデックス化されている全フィールドから 'word1' を探します
@@ -368,11 +368,11 @@ $hits  = $index->find($query);
         
         <para>
             boolean 演算子を使用する各クエリは、符号記法や API を用いて書き換えることができます。たとえば
-	        <programlisting role="querystring"><![CDATA[
+            <programlisting role="querystring"><![CDATA[
 word1 AND (word2 AND word3 AND NOT word4) OR word5
 ]]>
 </programlisting>
-	        は次のクエリと同等です。
+            は次のクエリと同等です。
             <programlisting role="querystring"><![CDATA[
 (+(word1) +(+word2 +word3 -word4)) (word5)
 ]]>
@@ -418,7 +418,7 @@ $hits  = $index->find($query);
 
         <para>
             フィールドの指定はオプションです。省略した場合は、
-            Zend_Search_Lucene は全フィールドを対象に検索を行います。
+            <code>Zend_Search_Lucene</code> は全フィールドを対象に検索を行います。
             <programlisting role="php"><![CDATA[
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
 $query = new Zend_Search_Lucene_Search_Query_Wildcard($pattern);
@@ -484,7 +484,7 @@ $hits  = $index->find($query);
 
         <para>
             単語のフィールドはオプションです。
-            このフィールドを省略した場合、Zend_Search_Lucene
+            このフィールドを省略した場合、<code>Zend_Search_Lucene</code>
             は各ドキュメントのすべてのフィールドを検索します。
             <programlisting role="php"><![CDATA[
 
@@ -551,7 +551,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <para>
-            Zend_Search_Lucene_Search_Query_Phrase クラスのコンストラクタで、
+            <code>Zend_Search_Lucene_Search_Query_Phrase</code> クラスのコンストラクタで、
             オプションの 3 つの引数を指定することができます。
         </para>
         <programlisting role="php"><![CDATA[
@@ -741,7 +741,7 @@ $hits  = $index->find($query);
 
         <para>
             フィールドの指定はオプションです。省略した場合は、
-            Zend_Search_Lucene は全フィールドを対象に検索を行います。
+            <code>Zend_Search_Lucene</code> は全フィールドを対象に検索を行います。
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
 $to   = new Zend_Search_Lucene_Index_Term('Carmen');

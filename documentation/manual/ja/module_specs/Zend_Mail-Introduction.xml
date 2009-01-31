@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13740 -->
+<!-- EN-Revision: 13839 -->
 <sect1 id="zend.mail.introduction">
 
     <title>導入</title>
@@ -18,7 +18,7 @@
 
         <example id="zend.mail.introduction.example-1">
 
-            <title>Zend_Mail を使用したシンプルなメール送信</title>
+            <title><code>Zend_Mail</code> を使用したシンプルなメール送信</title>
 
             <para>
                 受信者、表題、本文および送信者を指定しただけの単純なメールです。
@@ -98,7 +98,7 @@ $mail->setBodyText('This is the text of the mail.')
 
         <example id="zend.mail.introduction.sendmail.example-1">
 
-            <title>Zend_Mail_Transport_Sendmail トランスポートへの追加パラメータの渡し方</title>
+            <title><code>Zend_Mail_Transport_Sendmail</code> トランスポートへの追加パラメータの渡し方</title>
 
             <para>
                 この例は、<ulink url="http://php.net/mail"><code>mail()</code></ulink>

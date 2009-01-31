@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13835 -->
 <sect1 id="zend.pdf.create">
     <title>PDF ドキュメントの作成および読み込み</title>
     <para>
@@ -15,7 +15,7 @@
     <code>Zend_Pdf</code> クラスでは、既存の PDF を読み込むための
     2 つの静的メソッドも提供しています。
     <code>Zend_Pdf::load()</code> および <code>Zend_Pdf::parse()</code> です。
-    これらは両方とも Zend_Pdf オブジェクトを返します。
+    これらは両方とも <code>Zend_Pdf</code> オブジェクトを返します。
     エラーが発生した場合には例外がスローされます。
     </para>
 
@@ -39,7 +39,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     <para>
     PDF ファイルでは、ドキュメントのインクリメンタルな更新がサポートされています。
     つまり、ドキュメントを更新するたびに、そのドキュメントの新しい版が作成されます。
-    Zend_Pdf モジュールには、指定した版を取得する機能も含まれています。
+    <code>Zend_Pdf</code> モジュールには、指定した版を取得する機能も含まれています。
     </para>
     <para>
     版を指定するには <code>Zend_Pdf::load()</code> および

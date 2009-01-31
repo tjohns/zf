@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.authsub">
     <title>AuthSub による認証</title>
 
@@ -32,7 +32,7 @@
     <note>
         <title>登録されたアプリケーション</title>
         <para>
-            Zend_Gdata は、現在はセキュアなトークンの使用をサポートしていません。
+            <code>Zend_Gdata</code> は、現在はセキュアなトークンの使用をサポートしていません。
             なぜなら、デジタル証明書によるセキュアなトークンの取得を
             AuthSub 認証がサポートしていないからです。
         </para>
@@ -60,7 +60,7 @@
         <para>
             そしてそのトークンの値は使用して
             <code>Zend_Gdata_AuthSub::getHttpClient()</code>
-            をコールします。この関数は Zend_Http_Client
+            をコールします。この関数は <code>Zend_Http_Client</code>
             のインスタンスを返します。このインスタンスには適切なヘッダが設定されており、
             後でこの Http クライアントを使用して送信したリクエストは認証済みのものとなります。
         </para>
@@ -68,7 +68,7 @@
         <para>
             以下の例は、PHP のウェブアプリケーションのコードです。
             Google Calendar サービスに対する認証を行い、
-            認証済みの Http クライアントを使用して Zend_Gdata
+            認証済みの Http クライアントを使用して <code>Zend_Gdata</code>
             クライアントオブジェクトを作成します。
         </para>
 
@@ -78,7 +78,7 @@ $my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
         // single-use トークンをセッショントークンに変換します
-        $session_token = 
+        $session_token =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
         // セッショントークンをセッションに保存します
         $_SESSION['cal_token'] = $session_token;
@@ -133,7 +133,7 @@ if (isset($_GET['logout'])) {
         <para>
             上の例における <code>$php_self</code> の扱い方は、
             一般的なセキュリティ問題の対応法に従ったものです。
-            Zend_Gdata に固有のものではありません。
+            <code>Zend_Gdata</code> に固有のものではありません。
             http ヘッダに出力する内容は、つねにフィルタリングするようにしましょう。
         </para>
         <para>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12702 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.statement">
 
     <title>Zend_Db_Statement</title>
@@ -13,7 +13,7 @@
     </para>
 
     <para>
-        Zend_Db_Statement は、
+        <code>Zend_Db_Statement</code> は、
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>
         拡張モジュールの PDOStatement オブジェクトをもとにしたものです。
     </para>
@@ -125,7 +125,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
         <para>
             PDO のステートメントは位置指定パラメータと名前つきパラメータの両方をサポートしています。
             しかし、ひとつの SQL の中で両方を使用することはできません。
-            Zend_Db_Statement クラスの中には PDO を使用していないものもありますが、
+            <code>Zend_Db_Statement</code> クラスの中には PDO を使用していないものもありますが、
             それらの中にはいずれか一種類の形式のパラメータしかサポートしないものもあるかもしれません。
         </para>
 
@@ -141,7 +141,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
             SELECT、SHOW、DESCRIBE そして EXPLAIN
             などのステートメントが結果セットを返します。
             INSERT、UPDATE そして DELETE などのステートメントは結果セットを返しません。
-            後者のような SQL 文も Zend_Db_Statement で実行できますが、
+            後者のような SQL 文も <code>Zend_Db_Statement</code> で実行できますが、
             その結果から行を取得するメソッドをコールすることはできません。
         </para>
 

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13830 -->
 <sect1 id="zend.service.slideshare">
 
     <title>導入</title>
@@ -18,7 +18,7 @@
         <title><code>Zend_Service_SlideShare</code> の使い方</title>
 
         <para>
-            Zend_Service_SlideShare コンポーネントを使うには、まず
+            <code>Zend_Service_SlideShare</code> コンポーネントを使うには、まず
             slideshare.net のアカウントを作成して (詳細は
             <ulink url="http://www.slideshare.net/developers/">こちら</ulink> を参照ください)
             API キーやユーザ名、パスワード、そして共有する秘密の値を取得しなければなりません。
@@ -36,7 +36,7 @@
 $ss = new Zend_Service_SlideShare('APIKEY',
                                   'SHAREDSECRET',
                                   'USERNAME',
-                                  'PASSWORD'); 
+                                  'PASSWORD');
 ]]>
         </programlisting>
 

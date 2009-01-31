@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13838 -->
 <sect1 id="zend.memory.overview">
     <title>概要</title>
 
     <sect2 id="zend.memory.introduction">
         <title>導入</title>
         <para>
-            Zend_Memory コンポーネントは、
+            <code>Zend_Memory</code> コンポーネントは、
             限られたメモリ環境でデータを管理するためのものです。
         </para>
 
@@ -31,7 +31,7 @@
         </para>
 
         <example id="zend.memory.introduction.example-1">
-            <title>Zend_Memory コンポーネントの使用法</title>
+            <title><code>Zend_Memory</code> コンポーネントの使用法</title>
             <para>
                 <code>Zend_Memory::factory()</code> は、
                 指定したバックエンドオプションでメモリマネージャオブジェクトの
@@ -69,7 +69,7 @@ $loadedFiles[$index3]->value[$charIndex] = '_';
         <title>動作原理</title>
 
         <para>
-            Zend_Memory コンポーネントは、以下の概念で構成されています。
+            <code>Zend_Memory</code> コンポーネントは、以下の概念で構成されています。
             <itemizedlist>
                 <listitem>
                     <para>メモリマネージャ</para>
@@ -156,7 +156,7 @@ $memObject->value = substr($memObject->value, $start, $length);
 
             <para>
                 移動可能なメモリオブジェクトは、
-                必要に応じて Zend_Memory がキャッシュにスワップしたり
+                必要に応じて <code>Zend_Memory</code> がキャッシュにスワップしたり
                 キャッシュから読み戻したりします。この処理は透過的に行われます。
             </para>
 

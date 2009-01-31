@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13564 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
@@ -8,7 +8,7 @@
         <title>導入</title>
 
         <para>
-            Zend_Db_Select オブジェクトは、SQL の <code>SELECT</code> 文を表すものです。
+            <code>Zend_Db_Select</code> オブジェクトは、SQL の <code>SELECT</code> 文を表すものです。
             このクラスには、クエリの各部分を追加するためのメソッドが用意されています。
             PHP のメソッドやデータをもとにクエリの各部分を指定すると、
             このクラスが正確な SQL 文を作成してくれます。クエリを作成したら、
@@ -16,7 +16,7 @@
         </para>
 
         <para>
-            Zend_Db_Select は次のような機能を提供します。
+            <code>Zend_Db_Select</code> は次のような機能を提供します。
         </para>
 
         <itemizedlist>
@@ -49,11 +49,11 @@
         </itemizedlist>
 
         <para>
-            必ず Zend_Db_Select を使わなければならないというわけではありません。
+            必ず <code>Zend_Db_Select</code> を使わなければならないというわけではありません。
             単純な SELECT クエリを実行するのなら、SQL クエリ全体を文字列で指定し、
             アダプタの <code>query()</code> メソッドや <code>fetchAll()</code>
             メソッドを使用したほうがずっとシンプルになるでしょう。
-            Zend_Db_Select を使うと便利なのは、
+            <code>Zend_Db_Select</code> を使うと便利なのは、
             何らかの条件にもとづいて、アプリケーション内で
             SELECT クエリを動的に組み立てていく必要があるような場合です。
         </para>
@@ -65,8 +65,8 @@
         <title>Select オブジェクトの作成</title>
 
         <para>
-            Zend_Db_Select オブジェクトのインスタンスを作成するには、
-            Zend_Db_Adapter_Abstract オブジェクトの
+            <code>Zend_Db_Select</code> オブジェクトのインスタンスを作成するには、
+            <code>Zend_Db_Adapter_Abstract</code> オブジェクトの
             <code>select()</code> メソッドを使用します。
         </para>
 
@@ -82,7 +82,7 @@ $select = $db->select();
         </example>
 
         <para>
-            Zend_Db_Select オブジェクトを作成するもうひとつの方法は、
+            <code>Zend_Db_Select</code> オブジェクトを作成するもうひとつの方法は、
             コンストラクタの引数でデータベースアダプタを指定することです。
         </para>
 
@@ -105,7 +105,7 @@ $select = new Zend_Db_Select($db);
 
         <para>
             クエリを作成する際に、クエリの句を個別に追加していくことができます。
-            Zend_Db_Select オブジェクトには、
+            <code>Zend_Db_Select</code> オブジェクトには、
             個々の句を追加していくメソッドが用意されています。
         </para>
 
@@ -130,7 +130,7 @@ $select->order( ...ソート条件を指定します... );
         </example>
 
         <para>
-            Zend_Db_Select オブジェクトの大半のメソッドで、便利な
+            <code>Zend_Db_Select</code> オブジェクトの大半のメソッドで、便利な
             「流れるようなインターフェイス」形式を利用できます。これは、
             各メソッドが、自分自身への参照を結果として返すということです。
             つまり、その結果を使用してすぐに別のメソッドをコールできるのです。
@@ -164,7 +164,7 @@ $select = $db->select()
             <para>
                 このクエリのテーブルを指定するために <code>from()</code>
                 メソッドを使用します。テーブル名は、単純に文字列で指定することができます。
-                Zend_Db_Select はテーブル名を識別子としてクォートするので、
+                <code>Zend_Db_Select</code> はテーブル名を識別子としてクォートするので、
                 特殊文字を使用することもできます。
             </para>
 
@@ -190,7 +190,7 @@ $select = $db->select()
                 単純な文字列ではなく連想配列を使用し、相関名とテーブル名の対応を指定します。
                 SQL のその他の句で、この相関名を使用できるようになります。
                 複数のテーブルを結合したクエリを作成する場合は、
-                Zend_Db_Select はそのテーブル名に基づいた一意な相関名を作成します。
+                <code>Zend_Db_Select</code> はそのテーブル名に基づいた一意な相関名を作成します。
             </para>
 
             <example id="zend.db.select.building.from.example-cname">
@@ -213,7 +213,7 @@ $select = $db->select()
                 RDBMS によっては、テーブル名の前にスキーマ名をつなげる方式をサポートしているものもあります。
                 テーブル名として、"<code>schemaName.tableName</code>"
                 のように指定することができます。この場合、
-                Zend_Db_Select は各部分を個別にクォートします。
+                <code>Zend_Db_Select</code> は各部分を個別にクォートします。
                 あるいはスキーマ名とテーブル名を別々に指定することもできます。
                 もし両方でスキーマ名を指定した場合は、
                 テーブル名と同時に指定したもののほうが優先されます。
@@ -273,7 +273,7 @@ $select = $db->select()
                 カラム名を
                 "<code>correlationName.columnName</code>"
                 の形式で指定することもできます。この場合、
-                Zend_Db_Select は各部分を個別にクォートします。
+                <code>Zend_Db_Select</code> は各部分を個別にクォートします。
                 カラムの correlationName (相関名) を指定しなかった場合は、
                 現在の <code>from()</code> メソッドで指定したテーブルの名前を使用します。
             </para>
@@ -321,15 +321,15 @@ $select = $db->select()
                 SQL クエリでは、単にテーブルのカラムを使用するだけでなく
                 何らかの式をカラムとして使用することもあります。
                 このような場合は、相関名をつけたりクォートを適用したりしてはいけません。
-                カラム文字列に括弧が含まれている場合に、Zend_Db_Select
+                カラム文字列に括弧が含まれている場合に、<code>Zend_Db_Select</code>
                 はそれを式として扱います。
             </para>
 
             <para>
-                Zend_Db_Expr 型のオブジェクトを明示的に作成し、
+                <code>Zend_Db_Expr</code> 型のオブジェクトを明示的に作成し、
                 文字列がカラム名と解釈されてしまうことを防ぐこともできます。
-                Zend_Db_Expr は、文字列をひとつだけ含む最小限のクラスです。
-                Zend_Db_Select は Zend_Db_Expr 型のオブジェクトを認識し、
+                <code>Zend_Db_Expr</code> は、文字列をひとつだけ含む最小限のクラスです。
+                <code>Zend_Db_Select</code> は <code>Zend_Db_Expr</code> 型のオブジェクトを認識し、
                 それを文字列に変換しますが、
                 その際にクォートや相関名などの処理を適用しません。
             </para>
@@ -338,8 +338,8 @@ $select = $db->select()
 
                 <para>
                     カラムとして使用する式に括弧が含まれている場合は、
-                    カラム名で Zend_Db_Expr を指定する必要はありません。
-                    Zend_Db_Select は、括弧を発見すると自動的にその文字列を式として扱います。
+                    カラム名で <code>Zend_Db_Expr</code> を指定する必要はありません。
+                    <code>Zend_Db_Select</code> は、括弧を発見すると自動的にその文字列を式として扱います。
                     クォートや相関名の設定はされません。
                 </para>
 
@@ -386,7 +386,7 @@ $select = $db->select()
             </example>
 
             <para>
-                上の例では、Zend_Db_Select は
+                上の例では、<code>Zend_Db_Select</code> は
                 相関名の設定や識別子のクォートといった処理を行いません。
                 あいまいさを解決するためにそのような処理が必要な場合は、
                 手動で文字列を変更する必要があります。
@@ -484,7 +484,7 @@ $select = $db->select()
             <para>
                 有用なクエリの多くは、<code>JOIN</code>
                 を使用して複数テーブルの行を結合しています。
-                テーブルを Zend_Db_Select クエリに追加するには、
+                テーブルを <code>Zend_Db_Select</code> クエリに追加するには、
                 <code>join()</code> メソッドを使用します。
                 このメソッドの使用法は <code>from()</code>
                 メソッドと似ていますが、ほとんどの場合に結合条件を指定するという点が異なります。
@@ -532,7 +532,7 @@ $select = $db->select()
                 <code>join()</code> の三番目の引数はカラム名を表す配列です。
                 これは <code>from()</code> メソッドで使用する形式と似ています。
                 デフォルトは "<code>*</code>" です。
-                相関名や式、Zend_Db_Expr についての扱いは、
+                相関名や式、<code>Zend_Db_Expr</code> についての扱いは、
                 <code>from()</code> メソッドにおけるカラム名の配列と同じです。
             </para>
 
@@ -572,7 +572,7 @@ $select = $db->select()
 
             <para>
                 SQL の結合にはいくつかの形式があります。
-                以下に、Zend_Db_Select がサポートする結合の形式をまとめます。
+                以下に、<code>Zend_Db_Select</code> がサポートする結合の形式をまとめます。
             </para>
 
             <itemizedlist>
@@ -703,7 +703,7 @@ $select = $db->select()
                 これらの結合メソッドに加え、クエリを単純にするために
                 JoinUsing メソッドを使用することができます。完全な結合条件を渡すかわりに、
                 単純に結合するカラム名の配列を渡してやれば
-                Zend_Db_Select オブジェクトが結合条件を作成してくれます。
+                <code>Zend_Db_Select</code> オブジェクトが結合条件を作成してくれます。
             </para>
 
             <example id="zend.db.select.building.joinusing.example">
@@ -727,7 +727,7 @@ $select = $db->select()
             </example>
 
             <para>
-                Zend_Db_Select の結合メソッドには、
+                <code>Zend_Db_Select</code> の結合メソッドには、
                 それぞれ対応する 'using' メソッドがあります。
             </para>
 
@@ -804,7 +804,7 @@ $select = $db->select()
             <para>
                 <code>where()</code> メソッドの二番目の引数はオプションです。
                 これは式を置き換える値となります。
-                Zend_Db_Select は値をクォートし、式の中の
+                <code>Zend_Db_Select</code> は値をクォートし、式の中の
                 クエスチョンマーク ("<code>?</code>") をその値で置き換えます。
             </para>
 
@@ -836,7 +836,7 @@ $select = $db->select()
             </example>
 
             <para>
-                Zend_Db_Select オブジェクト上で、<code>where()</code>
+                <code>Zend_Db_Select</code> オブジェクト上で、<code>where()</code>
                 メソッドを複数回実行することもできます。その結果のクエリは、
                 指定した条件を <code>AND</code> でひとつにまとめたものとなります。
             </para>
@@ -899,7 +899,7 @@ $select = $db->select()
             </example>
 
             <para>
-                Zend_Db_Select は、<code>where()</code> メソッドや
+                <code>Zend_Db_Select</code> は、<code>where()</code> メソッドや
                 <code>orWhere()</code> メソッドで指定した式の両側に
                 自動的に括弧をつけます。これにより、
                 論理演算子が予期せぬ結果を引き起こすことを防ぎます。
@@ -933,7 +933,7 @@ $select = $db->select()
             <para>
                 上の例では、括弧がなければ結果はまったく異なるものとなります。
                 なぜなら、<code>AND</code> のほうが <code>OR</code>
-                よりも優先順位が高いからです。Zend_Db_Select
+                よりも優先順位が高いからです。<code>Zend_Db_Select</code>
                 は括弧をつけるので、それぞれの <code>where()</code>
                 で指定された式の結合度が <code>AND</code>
                 より高くなります。
@@ -953,7 +953,7 @@ $select = $db->select()
             </para>
 
             <para>
-                Zend_Db_Select では、行のグループ化を行うためのカラムを
+                <code>Zend_Db_Select</code> では、行のグループ化を行うためのカラムを
                 <code>group()</code> メソッドで指定します。
                 このメソッドへの引数は、<code>GROUP BY</code>
                 句で使用するカラムあるいは複数カラムの配列となります。
@@ -987,7 +987,7 @@ $select = $db->select()
                 カラム名には相関名を使用することができます。また、
                 カラム名は識別子としてクォートされます。
                 ただし、文字列に括弧が含まれたり
-                Zend_Db_Expr 型のオブジェクトを指定したりした場合は別です。
+                <code>Zend_Db_Expr</code> 型のオブジェクトを指定したりした場合は別です。
             </para>
 
         </sect3>
@@ -1006,7 +1006,7 @@ $select = $db->select()
             </para>
 
             <para>
-                Zend_Db_Select では、グループに対する制約を指定するには
+                <code>Zend_Db_Select</code> では、グループに対する制約を指定するには
                 <code>having()</code> メソッドを使用します。
                 このメソッドの使用法は <code>where()</code> メソッドと似ています。
                 最初の引数が SQL の式を含む文字列です。二番目の引数はオプションで、
@@ -1072,7 +1072,7 @@ $select = $db->select()
             </para>
 
             <para>
-                Zend_Db_Select では、<code>order()</code> メソッドを使用して
+                <code>Zend_Db_Select</code> では、<code>order()</code> メソッドを使用して
                 並べ替えの基準となるカラムあるいはカラムの配列を指定します。
                 配列の各要素はカラム名を表す文字列です。オプションとして、
                 スペースをはさんでキーワード
@@ -1083,7 +1083,7 @@ $select = $db->select()
                 <code>from()</code> メソッドや <code>group()</code>
                 メソッドと同様、カラム名は識別子としてクォートされます。
                 ただし、文字列に括弧が含まれたり
-                Zend_Db_Expr 型のオブジェクトを指定したりした場合は別です。
+                <code>Zend_Db_Expr</code> 型のオブジェクトを指定したりした場合は別です。
             </para>
 
             <example id="zend.db.select.building.order.example">
@@ -1128,7 +1128,7 @@ $select = $db->select()
             </para>
 
             <para>
-                Zend_Db_Select では、<code>limit()</code>
+                <code>Zend_Db_Select</code> では、<code>limit()</code>
                 メソッドを使用して結果の行数および読み飛ばしの行数を指定します。
                 このメソッドの最初の引数は取得したい行数、
                 そして二番目の引数は読み飛ばす行数となります。
@@ -1159,7 +1159,7 @@ $select = $db->select()
                     <code>LIMIT</code> 構文は、すべての RDBMS
                     でサポートされているわけではありません。RDBMS によっては、
                     似た機能を別の構文でサポートしているものもあります。
-                    各 Zend_Db_Adapter_Abstract クラスには、
+                    各 <code>Zend_Db_Adapter_Abstract</code> クラスには、
                     その RDBMS に対応した適切な SQL を作成するメソッドが用意されています。
                 </para>
 
@@ -1259,7 +1259,7 @@ $select = $db->select()
         <title>Select クエリの実行</title>
 
         <para>
-            この節では、Zend_Db_Select オブジェクトが表すクエリを実行する方法を説明します。
+            この節では、<code>Zend_Db_Select</code> オブジェクトが表すクエリを実行する方法を説明します。
         </para>
 
         <sect3 id="zend.db.select.execute.query-adapter">
@@ -1267,15 +1267,15 @@ $select = $db->select()
             <title>Db アダプタからの Select クエリの実行</title>
 
             <para>
-                Zend_Db_Select オブジェクトが表すクエリを実行するには、それを
-                Zend_Db_Adapter_Abstract オブジェクトの <code>query()</code>
+                <code>Zend_Db_Select</code> オブジェクトが表すクエリを実行するには、それを
+                <code>Zend_Db_Adapter_Abstract</code> オブジェクトの <code>query()</code>
                 メソッドの最初の引数として渡します。すると、
-                文字列のクエリのかわりに Zend_Db_Select オブジェクトを使用するようになります。
+                文字列のクエリのかわりに <code>Zend_Db_Select</code> オブジェクトを使用するようになります。
             </para>
 
             <para>
                 <code>query()</code> メソッドは、アダプタの型によって
-                Zend_Db_Statement あるいは PDOStatement
+                <code>Zend_Db_Statement</code> あるいは PDOStatement
                 型のオブジェクトを返します。
             </para>
 
@@ -1302,11 +1302,11 @@ $result = $stmt->fetchAll();
 
             <para>
                 アダプタオブジェクトの <code>query()</code>
-                メソッドを使用する以外の方法としては、Zend_Db_Select
+                メソッドを使用する以外の方法としては、<code>Zend_Db_Select</code>
                 オブジェクトの <code>query()</code>
                 メソッドを使用するものがあります。
                 どちらのメソッドも、アダプタの型によって
-                Zend_Db_Statement あるいは PDOStatement
+                <code>Zend_Db_Statement</code> あるいは PDOStatement
                 型のオブジェクトを返します。
             </para>
 
@@ -1332,7 +1332,7 @@ $result = $stmt->fetchAll();
             <title>Select オブジェクトから SQL 文字列への変換</title>
 
             <para>
-                Zend_Db_Select オブジェクトに対応する
+                <code>Zend_Db_Select</code> オブジェクトに対応する
                 SQL クエリ文字列にアクセスしたい場合は、
                 <code>__toString()</code> メソッドを使用します。
             </para>
@@ -1364,7 +1364,7 @@ echo "$sql\n";
         <title>その他のメソッド</title>
 
         <para>
-            この節では、これまでにあげてこなかった Zend_Db_Select
+            この節では、これまでにあげてこなかった <code>Zend_Db_Select</code>
             クラスのメソッドである <code>getPart()</code> および
             <code>reset()</code> について説明します。
         </para>
@@ -1397,7 +1397,7 @@ echo "$sql\n";
             </para>
 
             <para>
-                Zend_Db_Select クラスでは、SQL クエリの各部分を指定するための定数を定義しています。
+                <code>Zend_Db_Select</code> クラスでは、SQL クエリの各部分を指定するための定数を定義しています。
                 これらの定数、あるいはリテラル文字列のいずれかで指定することができます。
             </para>
 
@@ -1512,7 +1512,7 @@ print_r( $orderData );
             <para>
                 パラメータを省略すると、<code>reset()</code>
                 はクエリのすべての部分をデフォルトの状態に戻します。
-                これにより、Zend_Db_Select オブジェクトは初期状態と同等になります。
+                これにより、<code>Zend_Db_Select</code> オブジェクトは初期状態と同等になります。
                 つまり、最初にインスタンスを作成したときと同じ状態ということです。
             </para>
 

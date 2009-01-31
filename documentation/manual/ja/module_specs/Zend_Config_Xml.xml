@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13849 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
@@ -22,7 +22,7 @@
         </para>
     </note>
     <example id="zend.config.adapters.xml.example.using">
-        <title>Zend_Config_Xml の使用法</title>
+        <title><code>Zend_Config_Xml</code> の使用法</title>
         <para>
             この例は、<code>Zend_Config_Xml</code> を使用して
             XML ファイルから設定データを読み込むための基本的な方法を説明するものです。
@@ -74,9 +74,9 @@ echo $config->database->params->dbname; // "dbname" と出力します
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
-        <title>Zend_Config_Xml におけるタグの属性の使用</title>
+        <title><code>Zend_Config_Xml</code> におけるタグの属性の使用</title>
         <para>
-            Zend_Config_Xml では、設定内でノードを定義する際にさらに 2 通りの方法を用意しています。
+            <code>Zend_Config_Xml</code> では、設定内でノードを定義する際にさらに 2 通りの方法を用意しています。
             どちらも属性を使用するものです。<code>extends</code> 属性や
             <code>value</code> 属性は予約語
             (後者は、属性を使う 2 番目の方法で使用します)

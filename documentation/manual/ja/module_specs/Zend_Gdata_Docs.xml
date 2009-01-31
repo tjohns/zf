@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.docs">
     <title>Google Documents List Data API の使用法</title>
 
@@ -64,7 +64,7 @@ $feed = $docs->getDocumentListFeed();
  * @param boolean $html True if output should be formatted for display in a
  *     web browser.
  * @param string $originalFileName The name of the file to be uploaded. The
- *     mime type of the file is determined from the extension on this file
+ *     MIME type of the file is determined from the extension on this file
  *     name. For example, test.csv is uploaded as a comma seperated volume
  *     and converted into a spreadsheet.
  * @param string $temporaryFileLocation (optional) The file in which the
@@ -81,7 +81,7 @@ function uploadDocument($docs, $html, $originalFileName,
   }
 
   // Upload the file and convert it into a Google Document. The original
-  // file name is used as the title of the document and the mime type
+  // file name is used as the title of the document and the MIME type
   // is determined based on the extension on the original file name.
   $newDocumentEntry = $docs->uploadFile($fileToUpload, $originalFileName,
       null, Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);
@@ -120,7 +120,7 @@ function uploadDocument($docs, $html, $originalFileName,
             Documents List Data API リファレンスガイド</ulink>
             を参照ください。
         </para>
-    
+
         <sect3 id="zend.gdata.docs.listwpdocuments">
             <title>ワープロ文書の一覧の取得</title>
             <para>
@@ -128,7 +128,7 @@ function uploadDocument($docs, $html, $originalFileName,
                 たとえば、ワープロ文書の一覧を取得するには、
                 次のようなカテゴリクエリを使用します。
             </para>
-    
+
             <programlisting role="php"><![CDATA[
 $feed = $docs->getDocumentListFeed(
     'http://docs.google.com/feeds/documents/private/full/-/document');]]>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11683 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -569,7 +569,7 @@ class UserController extends Zend_Controller_Action
             $this->view->form = $form;
             return $this->render('form');
         }
-        
+
         $values = $form->getValues();
         // ここで認証処理を行います
     }
@@ -596,7 +596,7 @@ class UserController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Zend_Config オブジェクトの使用法</title>
+        <title><code>Zend_Config</code> オブジェクトの使用法</title>
 
         <para>
             <code>Zend_Form</code> のすべてのクラスは

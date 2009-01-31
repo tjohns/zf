@@ -1,6 +1,6 @@
-<!-- EN-Revision: 13463 -->
+<!-- EN-Revision: 13868 -->
 <sect1 id="zend.cache.frontends">
-    <title>Zend_Cache のフロントエンド</title>
+    <title><code>Zend_Cache</code> のフロントエンド</title>
 
     <sect2 id="zend.cache.frontends.core">
         <title>Zend_Cache_Core</title>
@@ -245,7 +245,7 @@ if (!($cache->test($id))) {
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title>Zend_Cache_Frontend_Output</title>
+        <title><code>Zend_Cache_Frontend_Output</code></title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>導入</title>
             <para>
@@ -291,7 +291,7 @@ echo 'これはキャッシュされません ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title>Zend_Cache_Frontend_Function</title>
+        <title><code>Zend_Cache_Frontend_Function</code></title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>導入</title>
             <para>
@@ -371,7 +371,7 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title>Zend_Cache_Frontend_Class</title>
+        <title><code>Zend_Cache_Frontend_Class</code></title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>導入</title>
             <para>
@@ -487,7 +487,7 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title>Zend_Cache_Frontend_File</title>
+        <title><code>Zend_Cache_Frontend_File</code></title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>導入</title>
             <para>
@@ -574,7 +574,7 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title>Zend_Cache_Frontend_Page</title>
+        <title><code>Zend_Cache_Frontend_Page</code></title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>導入</title>
             <para>
@@ -754,7 +754,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.examples">
             <title>例</title>
             <para>
-                Zend_Cache_Frontend_Page の使用法は、きわめて簡単です。
+                <code>Zend_Cache_Frontend_Page</code> の使用法は、きわめて簡単です。
             </para>
             <programlisting role="php"><![CDATA[
 // [...] // require、設定そしてファクトリ
@@ -768,7 +768,7 @@ $cache->start();
             </programlisting>
             <para>
                 もう少し複雑な例を見てみましょう。これは、起動ファイル
-                (例えば Zend_Controller など) 内でキャッシュを集中管理する方法を示したものです。
+                (例えば <code>Zend_Controller</code> など) 内でキャッシュを集中管理する方法を示したものです。
             </para>
             <programlisting role="php"><![CDATA[
 /*

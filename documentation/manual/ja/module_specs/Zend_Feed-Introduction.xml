@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13844 -->
 <sect1 id="zend.feed.introduction">
     <title>導入</title>
     <para>
@@ -33,7 +33,7 @@
     </note>
 
     <example id="zend.feed.introduction.example.rss">
-        <title>Zend_Feed による RSS フィードデータの使用</title>
+        <title><code>Zend_Feed</code> による RSS フィードデータの使用</title>
         <programlisting role="php"><![CDATA[
 // 最新の Slashdot ヘッドラインを取得します
 try {

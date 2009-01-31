@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13584 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
@@ -28,9 +28,9 @@
         記号、並び順など) が該当します。
         <code>L10n</code> と <code>I18n</code> は、お互い補完しあうものです。
         Zend Framework では、いくつかのコンポーネントを組み合わせることで
-        これらのサポートを提供しています。たとえば Zend_Locale、Zend_Date、
-        Zend_Measure、Zend_Translate、Zend_Currency そして Zend_TimeSync
-        といったコンポーネントがあります。
+        これらのサポートを提供しています。たとえば <code>Zend_Locale</code>、<code>Zend_Date</code>、
+        <code>Zend_Measure</code>、<code>Zend_Translate</code>、<code>Zend_Currency</code>
+        そして <code>Zend_TimeSync</code> といったコンポーネントがあります。
     </para>
 
     <tip>
@@ -152,7 +152,7 @@
                 大半の人の予想に反して、実はロケールは 2 文字とは限りません。
                 言語についても地域についても、短縮形が 2 文字にならないものがあります。
                 したがって、地域や言語の切り出しは自前では行わないようにしましょう。
-                ロケール文字列から言語や地域を切り出したい場合は Zend_Locale を使用しましょう。
+                ロケール文字列から言語や地域を切り出したい場合は <code>Zend_Locale</code> を使用しましょう。
                 自前で行ってしまうと、予期せぬ結果となってしまうことがあります。
             </para>
         </note>
@@ -550,8 +550,8 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
         </example>
 
         <para>
-            ロケールの標準の定義を使用する場合は、オプション Zend_Locale_Format::STANDARD
-            を指定します。date_format に Zend_Locale_Format::STANDARD を設定すると、
+            ロケールの標準の定義を使用する場合は、オプション <code>Zend_Locale_Format::STANDARD</code>
+            を指定します。<code>date_format</code> に <code>Zend_Locale_Format::STANDARD</code> を設定すると、
             実際に設定されているロケールの標準定義を使用します。
             これを number_format に設定すると、このロケールの標準数値書式を使用します。
             また、locale に設定すると、この環境あるいはブラウザの標準のロケールを使用します。
@@ -579,7 +579,7 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
     <sect2 id="zend.locale.cache">
 
-        <title>Zend_Locale とそのサブクラスの高速化</title>
+        <title><code>Zend_Locale</code> とそのサブクラスの高速化</title>
 
         <para>
             <code>Zend_Locale</code> およびそのサブクラスを高速化するには、

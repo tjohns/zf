@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11282 -->
+<!-- EN-Revision: 13845 -->
 <sect1 id="zend.dojo.data">
     <title>Zend_Dojo_Data: dojo.data エンベロープ</title>
 
@@ -21,7 +21,7 @@
     </para>
 
     <programlisting role="javascript"><![CDATA[
-{ 
+{
     identifier: '<name>',
     <label: '<label>',>
     items: [
@@ -74,7 +74,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title>Zend_Dojo_Data へのデータの追加</title>
+            <title><code>Zend_Dojo_Data</code> へのデータの追加</title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -140,7 +140,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title>Zend_Dojo_Data での label フィールドの指定</title>
+            <title><code>Zend_Dojo_Data</code> での label フィールドの指定</title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -155,7 +155,7 @@ $data->setLabel('name');
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title>JSON からの Zend_Dojo_Data の作成</title>
+            <title>JSON からの <code>Zend_Dojo_Data</code> の作成</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
@@ -174,8 +174,8 @@ $data->fromJson($json);
             <code>dojox.data.QueryReadStore</code> から取得することができます。
             ページ移動を正しく行うには、返されるデータの中に <code>numRows</code>
             というキーのデータ (中身はクエリが返す行の数) が必要となります。
-            これにより、グリッドが (a) サーバ側へのリクエストをいつ送ったらいいのか、
-            そして (b) いつリクエストが不要になるのか
+            これによりグリッドが、サーバ側へのリクエストをいつ送ったらいいのか、
+            そしていつリクエストが不要になるのか
             (つまり最終ページに達するのがいつなのか) を知ることができるようになります。
             このテクニックを使用すると、大規模なデータセットをグリッドに表示させる際に
             データ全体をいちどに取得する必要はなくなります。

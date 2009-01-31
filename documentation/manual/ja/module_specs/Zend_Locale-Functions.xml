@@ -1,7 +1,7 @@
-<!-- EN-Revision: 13584 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.functions">
 
-    <title>Zend_Locale の使用法</title>
+    <title><code>Zend_Locale</code> の使用法</title>
 
     <para>
         <code>Zend_Locale</code> は、各ロケールについての情報も、
@@ -141,7 +141,7 @@ print_r($found2);
             を使用します。この関数は、ロケール文字列をパラメータとして受け取ります。
             ロケールを省略した場合は、ロケールが
             <link linkend="zend.locale.selection">自動的に選択</link>
-            されます。Zend_Locale オブジェクトは "light"
+            されます。<code>Zend_Locale</code> オブジェクトは "light"
             なので、このメソッドは既存のインスタンスを参照しているすべてのコードに影響をおよぼします。
         </para>
 
@@ -1368,7 +1368,7 @@ foreach ($lists as $list) {
         </example>
 
         <para>
-            Zend_Locale で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
+            <code>Zend_Locale</code> で使用できるすべての言語の一覧を、それぞれの言語での表記で取得するには、
             以下の例をウェブページで使用してみましょう。
             同様に <code>getCountryTranslationList()</code> および
             <code>getCountryTranslation()</code> を使用すると、
@@ -1553,7 +1553,7 @@ if (Zend_Locale::isLocale($input)) {
             自動的に地域部をはずして検出してくれることにもお気づきでしょう。
             先ほどの例では、言語 <code>'to'</code> は地域
             <code>'RU'</code> 内に存在しません。しかし、返される結果は true となります。
-            Zend_Locale は指定した入力を処理できるからです。
+            <code>Zend_Locale</code> は指定した入力を処理できるからです。
         </para>
 
         <para>

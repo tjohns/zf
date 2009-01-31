@@ -1,18 +1,18 @@
-<!-- EN-Revision: 13469 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
 
     <para>
-        Zend_Db とその関連クラス群は、Zend Framework
+        <code>Zend_Db</code> とその関連クラス群は、Zend Framework
         において SQL データベースとのインターフェイスを担当します。
-        Zend_Db_Adapter は、PHP アプリケーションから RDBMS
+        <code>Zend_Db_Adapter</code> は、PHP アプリケーションから RDBMS
         に接続する際に使用する基本クラスです。
         RDBMS の種類に応じて、それぞれ個別のアダプタクラスがあります。
     </para>
 
     <para>
-        Zend_Db のアダプタは、
+        <code>Zend_Db</code> のアダプタは、
         ベンダ固有の PHP 拡張モジュールを共通インターフェイスにとりまとめる役割を果たします。
         これにより、いちど書いた PHP アプリケーションが
         ほんの少しの手間で複数 RDBMS に対応するようになります。
@@ -22,7 +22,7 @@
         アダプタクラスのインターフェイスは、
         <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>
         拡張モジュールのインターフェイスと似ています。
-        Zend_Db では、次の RDBMS 用の PDO ドライバに対するアダプタクラスを用意しています。
+        <code>Zend_Db</code> では、次の RDBMS 用の PDO ドライバに対するアダプタクラスを用意しています。
     </para>
 
     <itemizedlist>
@@ -60,7 +60,7 @@
     </itemizedlist>
 
     <para>
-        さらに、Zend_Db では、
+        さらに、<code>Zend_Db</code> では、
         以下の RDBMS 用の拡張モジュールを使用するアダプタクラスも用意しています。
     </para>
 
@@ -89,8 +89,8 @@
 
     <note>
         <para>
-            Zend_Db のアダプタは、どれも PHP の拡張モジュールを使用しています。
-            Zend_Db のアダプタを使用するには、
+            <code>Zend_Db</code> のアダプタは、どれも PHP の拡張モジュールを使用しています。
+            <code>Zend_Db</code> のアダプタを使用するには、
             対応する PHP 拡張モジュールが使用できる環境でなければなりません。
             たとえば、PDO 系の Zend_Db アダプタを使用するのなら、
             PDO 拡張モジュールが必要で、
@@ -110,7 +110,7 @@
 
         <sect3 id="zend.db.adapter.connecting.constructor">
 
-            <title>Zend_Db アダプタのコンストラクタの使用</title>
+            <title><code>Zend_Db</code> アダプタのコンストラクタの使用</title>
 
             <para>
                 コンストラクタを使用して、アダプタのインスタンスを作成することができます。
@@ -135,7 +135,7 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
 
         <sect3 id="zend.db.adapter.connecting.factory">
 
-            <title>Zend_Db のファクトリの使用</title>
+            <title><code>Zend_Db</code> のファクトリの使用</title>
 
             <para>
                 コンストラクタを直接使用する以外の方法として、静的メソッド
@@ -173,7 +173,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </example>
 
             <para>
-                独自に Zend_Db_Adapter_Abstract
+                独自に <code>Zend_Db_Adapter_Abstract</code>
                 の派生クラスを作成し、そのクラス名のプレフィックスが
                 "Zend_Db_Adapter" でない場合に <code>factory()</code>
                 でそのアダプタを読み込むには、
@@ -187,7 +187,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 // アダプタのクラスファイルの読み込みは不要です
 // Zend_Db の factory メソッドが読み込みます
 
-// 自動的に MyProject_Db_Adapter_Pdo_Mysql クラスを読み込み、
+// 自動的に <code>MyProject_Db_Adapter_Pdo_Mysql</code> クラスを読み込み、
 // インスタンスを作成します
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'             => '127.0.0.1',
@@ -204,7 +204,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
         <sect3 id="zend.db.adapter.connecting.factory-config">
 
-            <title>Zend_Db ファクトリでの Zend_Config の使用</title>
+            <title><code>Zend_Db</code> ファクトリでの Zend_Config の使用</title>
 
             <para>
                 <code>factory()</code> メソッドの引数として、
@@ -223,9 +223,9 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>アダプタのファクトリメソッドでの Zend_Config オブジェクトの使用</title>
+                <title>アダプタのファクトリメソッドでの <code>Zend_Config</code> オブジェクトの使用</title>
                 <para>
-                    次の例では、配列から Zend_Config オブジェクトを作成します。
+                    次の例では、配列から <code>Zend_Config</code> オブジェクトを作成します。
                     それ以外にも、
                     <link linkend="zend.config.adapters.ini">Zend_Config_Ini</link>
                     や <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link>
@@ -254,7 +254,7 @@ $db = Zend_Db::factory($config->database);
             <para>
                 <code>factory()</code> メソッドの 2 番目の引数には、
                 アダプタのパラメータに対応するエントリをもつ連想配列となります。
-                この引数はオプションです。最初の引数が Zend_Config
+                この引数はオプションです。最初の引数が <code>Zend_Config</code>
                 である場合は、そこにすべてのパラメータが含まれているものとみなし、
                 2 番目の引数は無視されます。
             </para>
@@ -266,7 +266,7 @@ $db = Zend_Db::factory($config->database);
             <title>アダプタのパラメータ</title>
 
             <para>
-                Zend_Db のアダプタクラスで使用できるパラメータを以下にまとめます。
+                <code>Zend_Db</code> のアダプタクラスで使用できるパラメータを以下にまとめます。
             </para>
 
             <itemizedlist>
@@ -309,7 +309,7 @@ $db = Zend_Db::factory($config->database);
                 <listitem>
                     <para>
                         <emphasis role="strong">options</emphasis>:
-                        このパラメータは、すべての Zend_Db_Adapter
+                        このパラメータは、すべての <code>Zend_Db_Adapter</code>
                         クラスで共通のオプションを連想配列で指定します。
                     </para>
                 </listitem>
@@ -511,7 +511,7 @@ try {
         <title>サンプルデータベース</title>
 
         <para>
-            Zend_Db クラスのドキュメントでは、
+            <code>Zend_Db</code> クラスのドキュメントでは、
             クラスやメソッドの使用法を説明するために単純なデータベースを使用します。
             これは、とあるソフトウェア開発プロジェクトにおけるバグ管理を想定したものです。
             次の 4 つのテーブルで構成されています。
@@ -551,7 +551,7 @@ try {
         <para>
             このサンプルデータベースを作成するための SQL
             の擬似コードは、次のようになります。
-            これらのテーブルは、Zend_Db 自体のユニットテストでも使用します。
+            これらのテーブルは、<code>Zend_Db</code> 自体のユニットテストでも使用します。
         </para>
 
         <programlisting role="sql"><![CDATA[
@@ -666,7 +666,7 @@ $result = $db->fetchAll($sql, 2);
                         <emphasis role="strong">Zend_Db::FETCH_ASSOC</emphasis>:
                         データを、連想配列の配列として返します。
                         配列のキーは、カラム名を文字列で表したものとなります。
-                        これは、Zend_Db_Adapter クラスのデフォルトのフェッチモードです。
+                        これは、<code>Zend_Db_Adapter</code> クラスのデフォルトのフェッチモードです。
                     </para>
                     <para>
                         select で取得する一覧の中に同名のカラムが含まれている場合
@@ -927,7 +927,7 @@ $db->insert('bugs', $data);
                 クォートしたくない場合もあるかもしれません。
                 デフォルトでは、文字列として渡した値はすべて文字列リテラルとして扱われます。
                 その値が SQL の式であること、つまりクォートしてはいけないということを指定するには、
-                文字列ではなく Zend_Db_Expr 型のオブジェクトをデータ配列に渡します。
+                文字列ではなく <code>Zend_Db_Expr</code> 型のオブジェクトをデータ配列に渡します。
             </para>
 
             <example id="zend.db.adapter.write.insert.example2">
@@ -1222,7 +1222,7 @@ echo $sql;
         </para>
 
         <para>
-            Zend_Db Adapter クラスの提供する便利な関数を使用すると、
+            <code>Zend_Db</code> Adapter クラスの提供する便利な関数を使用すると、
             あなたの PHP コードが SQL インジェクション攻撃を受ける危険性を軽減することができます。
             この攻撃を回避する方法は、PHP のクォート文字のような特殊文字を
             正しくエスケープしてから SQL に使用することです。
@@ -1298,7 +1298,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </example>
 
             <para>
-                各 Zend_Db_Adapter クラスでは、その RDBMS
+                各 <code>Zend_Db_Adapter</code> クラスでは、その RDBMS
                 用の SQL 数値データ型の名前がコード化されています。
                 それら以外にも
                 <code>Zend_Db::INT_TYPE</code> や
@@ -1309,7 +1309,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </para>
 
             <para>
-                Zend_Db_Table は、テーブルのキーとなるカラムを使用する際には
+                <code>Zend_Db_Table</code> は、テーブルのキーとなるカラムを使用する際には
                 自動的に SQL データ型を <code>quote()</code> に指定します。
             </para>
 
@@ -1430,7 +1430,7 @@ echo $sql
             </para>
 
             <para>
-                たいていの場合は Zend_Db クラスで自動的に SQL
+                たいていの場合は <code>Zend_Db</code> クラスで自動的に SQL
                 を生成することになるでしょう。デフォルトでは、
                 すべての識別子が自動的にクォートされます。
                 この挙動を変更するには、オプション
@@ -1458,7 +1458,7 @@ echo $sql
             このモードでは、あらゆるクエリを実行する前に
             ドライバが自動的にトランザクションを開始し、
             実行が完了したら自動的にトランザクションをコミットします。
-            デフォルトでは、すべての Zend_Db
+            デフォルトでは、すべての <code>Zend_Db</code>
             アダプタクラスは自動コミットモードで動作ｓｈます。
         </para>
 
@@ -1709,9 +1709,9 @@ $db->closeConnection();
         </example>
 
         <note>
-            <title>Zend_Db は持続的な接続をサポートしていますか？</title>
+            <title><code>Zend_Db</code> は持続的な接続をサポートしていますか？</title>
             <para>
-                Zend_Db では、持続的な接続の使用はサポートしていません。
+                <code>Zend_Db</code> では、持続的な接続の使用はサポートしていません。
             </para>
             <para>
                 持続的な接続を使用すると、RDBMS サーバに余計な接続がたまってしまいます。
@@ -1740,12 +1740,12 @@ $db->closeConnection();
         <para>
             PHP のデータベース関連拡張モジュールが提供する接続オブジェクトを、
             直接操作したくなることがあるかもしれません。
-            Zend_Db_Adapter_Abstract が対応していないような
+            <code>Zend_Db_Adapter_Abstract</code> が対応していないような
             そのデータベース固有の機能を使用したい場合などです。
         </para>
 
         <para>
-            Zend_Db で SQL 文を実行する場合は、
+            <code>Zend_Db</code> で SQL 文を実行する場合は、
             常にプリペア/実行の二段階に分けて処理されます。
             しかし、データベースの機能の中には
             プリペアドステートメントに対応していないようなものもあります。
@@ -1783,7 +1783,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         </para>
 
         <para>
-            将来のバージョンの Zend_Db では、
+            将来のバージョンの <code>Zend_Db</code> では、
             データベースの拡張モジュールがサポートする機能への
             メソッドエントリポイントを追加できるようにする予定です。
             これは、過去のバージョンとの互換性を損なうことはありません。
@@ -1990,7 +1990,7 @@ if (!is_null($version)) {
                 </listitem>
                 <listitem>
                     <para>
-                        Zend_Db_Adapter_Pdo_Mssql は、SQL Server
+                        <code>Zend_Db_Adapter_Pdo_Mssql</code> は、SQL Server
                         に接続した直後に <code>QUOTED_IDENTIFIER ON</code>
                         を設定します。これにより、SQL の識別子をクォートする際に
                         標準の区切り文字 (<code>"</code>) を使用するようになります。

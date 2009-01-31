@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12319 -->
+<!-- EN-Revision: 13827 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -30,7 +30,7 @@ print "Fix language here is line two\n";
     <para>
         次のステップは、既存のコードに Zend Translate をインクルードすることです。
         もちろん、あとからコードを変更するよりも
-        最初から Zend_Translate を使ったコードを書くほうがずっと簡単です。
+        最初から <code>Zend_Translate</code> を使ったコードを書くほうがずっと簡単です。
     </para>
 
     <example id="zend.translate.using.example2">
@@ -53,7 +53,7 @@ print $translate->_("Fix language here is line two") . "\n";
 
     <para>
         では、何が起こっているのか、そしてどうやって
-        Zend_Translate をコードに組み込むのかについて
+        <code>Zend_Translate</code> をコードに組み込むのかについて
         もうすこし詳しく見ていきましょう。
     </para>
 
@@ -129,16 +129,16 @@ print $translate->_(2)."\n";
     <para>
         また、文字列の一部が翻訳されていない場合にも問題が起こるでしょう。
         翻訳の動作原理について考えてみましょう。
-        まず Zend_Translate は、指定した ID あるいは文字列に対応する翻訳が
+        まず <code>Zend_Translate</code> は、指定した ID あるいは文字列に対応する翻訳が
         その言語に存在するかどうかを探します。
-        翻訳文字列が見つからない場合は、Zend_Locale
+        翻訳文字列が見つからない場合は、<code>Zend_Locale</code>
         で定義されているその次の言語の翻訳を探します。
         つまり "<emphasis role="strong">de_AT</emphasis>" の場合は
         "<emphasis role="strong">de</emphasis>" のみで探します。
         "<emphasis role="strong">de</emphasis>" の翻訳も見つからない場合は、
         もとのメッセージをそのまま返します。
         このようにして、たとえ翻訳文字列がなくても何らかの出力を得ることになっています。
-        Zend_Translate は、文字列の翻訳の際に
+        <code>Zend_Translate</code> は、文字列の翻訳の際に
         エラーや例外を発生させることはありません。
     </para>
 
@@ -154,7 +154,7 @@ print $translate->_(2)."\n";
 
         <para>
             どこに翻訳ソースファイルを保存すべきなのかを知っておきましょう。
-            Zend_Translate では特に制限はありませんが、
+            <code>Zend_Translate</code> では特に制限はありませんが、
             以下のような構造を推奨します。
         </para>
 
@@ -290,7 +290,7 @@ print $translate->_(2)."\n";
         </itemizedlist>
 
         <para>
-            Zend_Translate で最も便利なのは、単一構造か
+            <code>Zend_Translate</code> で最も便利なのは、単一構造か
             言語ごとに分けた構造でしょう。
         </para>
 
@@ -707,9 +707,9 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                         <entry><emphasis role="strong">null</emphasis></entry>
                         <entry>
                             null にすると、ディレクトリ構造のスキャンを行いません。
-                            Zend_Translate::LOCALE_DIRECTORY にすると、
+                            <code>Zend_Translate::LOCALE_DIRECTORY</code> にすると、
                             ディレクトリからロケールを検出します。
-                            Zend_Translate::LOCALE_FILENAME にすると、
+                            <code>Zend_Translate::LOCALE_FILENAME</code> にすると、
                             ファイル名からロケールを検出します。
                             詳細は <xref linkend="zend.translate.using.detection" />
                             を参照ください。
@@ -929,9 +929,9 @@ $translate->getLocale();
         <title>自動的なソースの検出</title>
 
         <para>
-            Zend_Translate は、翻訳ソースを自動的に検出することができます。
+            <code>Zend_Translate</code> は、翻訳ソースを自動的に検出することができます。
             つまり、各ソースファイルを手動で宣言する必要はないということです。
-            そんな作業は Zend_Translate に任せてしまい、
+            そんな作業は <code>Zend_Translate</code> に任せてしまい、
             ディレクトリ内からソースファイルを見つけさせることができるのです。
         </para>
 
@@ -964,10 +964,10 @@ $translate = new Zend_Translate('tmx', '/language');
         </example>
 
         <para>
-            Zend_Translate は、指定したディレクトリだけでなく
+            <code>Zend_Translate</code> は、指定したディレクトリだけでなく
             そのサブディレクトリすべてから翻訳ソースファイルを探します。
             おかげで、非常に簡単に使用できるようになっています。
-            しかし、Zend_Translate では
+            しかし、<code>Zend_Translate</code> では
             ソースを含まないファイルは無視します。
             また翻訳データの読み込みに失敗した場合もそのファイルを無視します。
             つまり、翻訳ソースが正しい形式であることと
@@ -978,7 +978,7 @@ $translate = new Zend_Translate('tmx', '/language');
         <note>
             <para>
                 ディレクトリ階層の深さやその中のファイルの数によっては、
-                Zend_Translate の処理に長い時間がかかることもあります。
+                <code>Zend_Translate</code> の処理に長い時間がかかることもあります。
             </para>
         </note>
 
@@ -1001,7 +1001,7 @@ $translate = new Zend_Translate('tmx', '/language');
             </para>
 
             <para>
-                Zend_Translate に 'scan' オプションを指定すると、
+                <code>Zend_Translate</code> に 'scan' オプションを指定すると、
                 ディレクトリ名から言語を検出させることができます。
                 詳細は次の例を参照ください。
             </para>
@@ -1118,7 +1118,7 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                 <title>ファイル名の一部</title>
 
                 <para>
-                    Zend_Translate は、
+                    <code>Zend_Translate</code> は、
                     ファイル名の一部に言語名が含まれている場合にもそれを検出することができます。
                     しかし、この方式を使用する場合は言語名をトークンで分割する必要があります。
                     トークンとしてサポートされているのは、小数点 '.' かアンダーライン '_'、

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13776 -->
+<!-- EN-Revision: 13841 -->
 <sect1 id="zend.locale.date.datesandtimes">
 
     <title>日付および時刻の扱い</title>
@@ -77,12 +77,12 @@
 
         <para>
             日付文字列の書式を明示的に指定したい場合のために、次のような書式トークン指定子をサポートしています。
-            Zend_Locale_Format のメソッドでユーザ定義書式に対応しているものの中で無効な書式指定子を使用した場合、
+            <code>Zend_Locale_Format</code> のメソッドでユーザ定義書式に対応しているものの中で無効な書式指定子を使用した場合、
             たとえば ISO モードで PHP の 'i' 指定子を使用した場合などには例外がスローされます。
         </para>
 
         <para>
-            これらの (以下の) 指定子は、Zend_Date の <code>toString()</code> がサポートしている完全な "ISO"
+            これらの (以下の) 指定子は、<code>Zend_Date</code> の <code>toString()</code> がサポートしている完全な "ISO"
             セットの一部です。PHP の <code>date()</code> 関数と同じ形式の指定子を使用したい場合は、
             まず最初に <code>setOptions(array('format_type' => 'php'))</code> をコールしてください。
             特定のひとつの書式文字列だけを PHP の <code>date()</code> 互換形式から
@@ -347,7 +347,7 @@ print_r ($date);
             <title>データベースの日付書式</title>
             <para>
                 データベース (たとえば MySql や MsSql など) の日付値をパースするには、
-                getDate() のかわりに Zend_Date の ISO_8601 書式を使用します。
+                getDate() のかわりに <code>Zend_Date</code> の ISO_8601 書式を使用します。
             </para>
         </note>
 

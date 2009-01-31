@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13470 -->
+<!-- EN-Revision: 13836 -->
 <sect1 id="zend.paginator.advanced">
     <title>高度な使用法</title>
 
@@ -146,7 +146,7 @@ Zend_Paginator::setCache($cache);
         </para>
 
         <para>
-            Zend_Paginator が Zend_Cache_Core のインスタンスを受け取ると、
+            <code>Zend_Paginator</code> が <code>Zend_Cache_Core</code> のインスタンスを受け取ると、
             データがキャッシュされるようになります。キャッシュインスタンスを渡した後でも、
             場合によってはデータをキャッシュしたくないこともあるでしょう。そんな場合は
             <code>setCacheEnable()</code> を使用します。

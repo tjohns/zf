@@ -1,10 +1,10 @@
-<!-- EN-Revision: 9876 -->
+<!-- EN-Revision: 13827 -->
 <sect1 id="zend.translate.introduction">
 
     <title>導入</title>
 
     <para>
-        Zend_Translate は、Zend Framework
+        <code>Zend_Translate</code> は、Zend Framework
         で多言語対応のアプリケーションを作成するためのパッケージです。
     </para>
 
@@ -51,17 +51,17 @@
     </itemizedlist>
 
     <para>
-        Zend_Translate にはここであげたような問題はありません。
+        <code>Zend_Translate</code> にはここであげたような問題はありません。
         というわけで、PHP のネイティブ関数ではなく
-        Zend_Translate を使用することを推奨します。
-        Zend_Translate の利点は、以下のとおりです。
+        <code>Zend_Translate</code> を使用することを推奨します。
+        <code>Zend_Translate</code> の利点は、以下のとおりです。
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
                 <emphasis role="strong">複数の入力フォーマットのサポート:</emphasis>
-                Zend_Translate はいくつかの入力フォーマットに対応しています。
+                <code>Zend_Translate</code> はいくつかの入力フォーマットに対応しています。
                 PHP でサポートしているもののほかに、TMX や CSV
                 形式のファイルにも対応しています。
             </para>
@@ -69,14 +69,14 @@
         <listitem>
             <para>
                 <emphasis role="strong">スレッドセーフな gettext:</emphasis>
-                Zend_Translate の gettext リーダーはスレッドセーフです。
+                <code>Zend_Translate</code> の gettext リーダーはスレッドセーフです。
                 マルチスレッド環境でも問題なく使用できます。
             </para>
         </listitem>
         <listitem>
             <para>
                 <emphasis role="strong">簡単で汎用的な API:</emphasis>
-                Zend_Translate の API は非常にシンプルで、使用する関数はほんの少しだけです。
+                <code>Zend_Translate</code> の API は非常にシンプルで、使用する関数はほんの少しだけです。
                 そのため、容易に覚えることができ、保守も簡単です。
                 すべての入力フォーマットを同じように処理できます。
                 つまり、仮に入力ファイルが gettext から TMX に変わったとしても、
@@ -87,13 +87,13 @@
             <para>
                 <emphasis role="strong">ユーザの標準言語の検出:</emphasis>
                 ユーザがサイトにアクセスする際の preferred language
-                設定を検出し、Zend_Translate で使用することができます。
+                設定を検出し、<code>Zend_Translate</code> で使用することができます。
             </para>
         </listitem>
         <listitem>
             <para>
                 <emphasis role="strong">自動的なソースの検出:</emphasis>
-                Zend_Translate は、複数のソースファイルを検出して統合することができます。
+                <code>Zend_Translate</code> は、複数のソースファイルを検出して統合することができます。
                 さらに、ディレクトリやファイル名に応じて使用するロケールを自動検出することもできます。
             </para>
         </listitem>
@@ -121,7 +121,7 @@
             </listitem>
             <listitem>
                 <para>
-                    ビューを作成し、Zend_Translate をコードに組み込む
+                    ビューを作成し、<code>Zend_Translate</code> をコードに組み込む
                 </para>
             </listitem>
             <listitem>

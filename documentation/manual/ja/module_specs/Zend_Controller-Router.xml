@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13563 -->
+<!-- EN-Revision: 13868 -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>標準のルータ</title>
     <sect2 id="zend.controller.router.introduction">
@@ -182,7 +182,7 @@ $router->addRoute('user',
         <note>
             <para>
                 ルート名のもっとも一般的な使用例は、
-                Zend_View の url ヘルパーです。
+                <code>Zend_View</code> の url ヘルパーです。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -234,7 +234,7 @@ $router->addRoute('user',
 
         <para>
             ルートで使用される変数のうち、'module'、'controller' および 'action'
-            の 3 つは特別な扱いとなります。これらの特殊変数は、Zend_Controller_Dispatcher
+            の 3 つは特別な扱いとなります。これらの特殊変数は、<code>Zend_Controller_Dispatcher</code>
             がディスパッチ先のコントローラとアクションを決定するために使用されます。
         </para>
 
@@ -253,7 +253,7 @@ $router->addRoute('user',
         <title>デフォルトのルート</title>
 
         <para>
-            Zend_Controller_Router_Rewrite がデフォルトのルートとして設定されています。
+            <code>Zend_Controller_Router_Rewrite</code> がデフォルトのルートとして設定されています。
             これは <code>controller/action</code> 形式の URI にマッチします。
             さらに、パス要素の最初の部分にモジュール名を指定することができます。つまり
             <code>module/controller/action</code> のような URI も可能です。
@@ -388,13 +388,13 @@ $router->setGlobalParam('lang', 'en');
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">
-        <title>RewriteRouter での Zend_Config の使用法</title>
+        <title>RewriteRouter での <code>Zend_Config</code> の使用法</title>
 
         <para>
             新しいルートを追加する際に、
             いちいちコードを書き換えるのではなく設定ファイルの変更で対応できると便利でしょう。
             そんなときには <code>addConfig()</code> メソッドを使用します。基本的な使用法は、
-            まず Zend_Config 互換の設定を作成し、それをコードに読み込み、
+            まず <code>Zend_Config</code> 互換の設定を作成し、それをコードに読み込み、
             そして RewriteRouter に渡すことです。
         </para>
 

@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.i18n">
-    <title>Zend_Form の国際化</title>
+    <title><code>Zend_Form</code> の国際化</title>
 
     <para>
         作成したコンテンツを複数の言語や地域に対応させるという作業は、
         日増しに重要になってきています。
-        Zend_Form はそんな作業も簡単にできるように作られており、
+        <code>Zend_Form</code> はそんな作業も簡単にできるように作られており、
         <link
             linkend="zend.translate">Zend_Translate</link> と <link
             linkend="zend.validate">Zend_Validate</link>

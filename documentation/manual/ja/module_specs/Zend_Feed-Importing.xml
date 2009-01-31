@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13844 -->
 <sect1 id="zend.feed.importing">
 
     <title>フィードの読み込み</title>
@@ -44,7 +44,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 
         <para>
             <code>Zend_Feed</code> を使用すると、独自のフィードを簡単に作成することができます。
-            単に、配列を作成してそれを Zend_Feed で読み込むだけでいいのです。
+            単に、配列を作成してそれを <code>Zend_Feed</code> で読み込むだけでいいのです。
             配列を読み込むには <code>Zend_Feed::importArray()</code> あるいは
             <code>Zend_Feed::importBuilder()</code> を使用します。
             この場合、<code>Zend_Feed_Builder_Interface</code>
@@ -239,7 +239,7 @@ array(
 
             <programlisting role="php"><![CDATA[
 // 独自のビルダソースからフィードを読み込みます
-$atomFeedFromArray = 
+$atomFeedFromArray =
     Zend_Feed::importBuilder(new Zend_Feed_Builder($array));
 
 // この行は、上と同じ意味です。
@@ -264,8 +264,7 @@ $rssFeedFromArray =
                 <code>send()</code> メソッドあるいは <code>saveXml()</code> メソッドを使用します。
             </para>
 
-            <programlisting role="php">
-<![CDATA[
+            <programlisting role="php"><![CDATA[
 assert($feed instanceof Zend_Feed_Abstract);
 
 // フィードを標準出力に出力します

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>ClientLogin による認証</title>
 
@@ -36,7 +36,7 @@
             ClientLogin を使用した認証済みの Http クライアントを作成するには、
             静的関数 <code>Zend_Gdata_ClientLogin::getHttpClient()</code>
             をコールし、Google アカウントの認証情報をプレーンテキストで渡します。
-            この関数の返り値は、Zend_Http_Client クラスのオブジェクトとなります。
+            この関数の返り値は、<code>Zend_Http_Client</code> クラスのオブジェクトとなります。
         </para>
 
         <para>
@@ -47,11 +47,11 @@
         </para>
 
         <para>
-            オプションの四番目のパラメータには Zend_Http_Client
+            オプションの四番目のパラメータには <code>Zend_Http_Client</code>
             のインスタンスを指定できます。これによって、
             たとえばプロキシサーバなどのクライアント設定を行うことができます。
             このパラメータに <code>null</code> を渡すと、
-            汎用的な Zend_Http_Client オブジェクトが作成されます。
+            汎用的な <code>Zend_Http_Client</code> オブジェクトが作成されます。
         </para>
 
         <para>
@@ -78,7 +78,7 @@
         <para>
             以下の例は、PHP のウェブアプリケーションのコードです。
             Google Calendar サービスに対する認証を行い、
-            認証済みの Zend_Http_Client を使用して Zend_Gdata
+            認証済みの <code>Zend_Http_Client</code> を使用して <code>Zend_Gdata</code>
             クライアントオブジェクトを作成します。
         </para>
 
@@ -90,7 +90,7 @@ try {
    $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
 } catch (Zend_Gdata_App_CaptchaRequiredException $cre) {
     echo 'CAPTCHA 画像の URL: ' . $cre->getCaptchaUrl() . "\n";
-    echo 'トークン ID: ' . $cre->getCaptchaToken() . "\n"; 
+    echo 'トークン ID: ' . $cre->getCaptchaToken() . "\n";
 } catch (Zend_Gdata_App_AuthException $ae) {
    echo '認証に失敗: ' . $ae->exception() . "\n";
 }

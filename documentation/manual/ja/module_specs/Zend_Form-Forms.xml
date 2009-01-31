@@ -1,6 +1,6 @@
-<!-- EN-Revision: 13569 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.forms">
-    <title>Zend_Form によるフォームの作成</title>
+    <title><code>Zend_Form</code> によるフォームの作成</title>
 
     <para>
         <code>Zend_Form</code> クラスは、フォームの要素や
@@ -49,7 +49,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        Zend_Config のインスタンスあるいは配列で設定を渡すことができます。
+        <code>Zend_Config</code> のインスタンスあるいは配列で設定を渡すことができます。
         これを使用すると、オブジェクトの状態を設定したり新しい要素を作成したりすることができます。
     </para>
 
@@ -209,8 +209,8 @@ $form->addElement('text', 'foo', array('label' => 'Foo:'));
                 を実装しています。つまり、このメソッドは要素ではなく
                 <code>Zend_Form</code> オブジェクトを返すということです。
                 これによって、複数の addElement() メソッドやその他のフォームメソッド
-                (Zend_Form のすべてのセッターは流れるようなインターフェイスを実装しています)
-                を連結させることができます。)
+                (<code>Zend_Form</code> のすべてのセッターは流れるようなインターフェイスを実装しています)
+                を連結させることができます。
             </para>
 
             <para>
@@ -1069,7 +1069,7 @@ $form->setAction('/user/login')
         <para>
             フォームのエンコード形式を設定するには
             enctype アクセサを使用します。
-            Zend_Form では 2 つの定数
+            <code>Zend_Form</code> では 2 つの定数
             <code>Zend_Form::ENCTYPE_URLENCODED</code> と
             <code>Zend_Form::ENCTYPE_MULTIPART</code> を定義しており、
             これらはそれぞれ 'application/x-www-form-urlencoded' と

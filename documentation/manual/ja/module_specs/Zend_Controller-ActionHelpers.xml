@@ -1,11 +1,11 @@
-<!-- EN-Revision: 12111 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.actionhelpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>アクションヘルパー</title>
 
     <sect2 id="zend.controller.actionhelper.introduction">
         <title>導入</title>
         <para>
-            アクションヘルパーを使用すると、Zend_Controller_Action
+            アクションヘルパーを使用すると、<code>Zend_Controller_Action</code>
             を継承した任意のアクションコントローラに対して
             実行時やその他必要に応じて機能追加をすることができます。
             アクションヘルパーの狙いは、

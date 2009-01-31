@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13849 -->
 <sect1 id="zend.config.writer.introduction">
     <title>Zend_Config_Writer</title>
     <para>
@@ -54,7 +54,7 @@
     </para>
 
     <example id="zend.config.writer.example.using">
-        <title>Zend_Config_Writer の使用法</title>
+        <title><code>Zend_Config_Writer</code> の使用法</title>
         <para>
             この例では、<code>Zend_Config_Writer_Xml</code>
             で新しい設定ファイルを作成する方法を説明します。

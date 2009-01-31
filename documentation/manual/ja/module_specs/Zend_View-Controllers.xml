@@ -1,9 +1,9 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 13826 -->
 <sect1 id="zend.view.controllers">
     <title>コントローラスクリプト</title>
 
     <para>
-        Zend_View のインスタンスを作成して設定を行うのがコントローラの役目です。
+        <code>Zend_View</code> のインスタンスを作成して設定を行うのがコントローラの役目です。
         その後でビューに変数を代入し、
         適切なスクリプトを使用して出力をレンダリングするように指示します。
     </para>
@@ -22,7 +22,8 @@
 $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
-$view->c = "Sea";]]>
+$view->c = "Sea";
+]]>
         </programlisting>
 
         <para>
@@ -54,7 +55,8 @@ $obj = new StdClass;
 $obj->a = "Hay";
 $obj->b = "Bee";
 $obj->c = "Sea";
-$view->assign((array) $obj);]]>
+$view->assign((array) $obj);
+]]>
         </programlisting>
 
         <para>
@@ -66,7 +68,8 @@ $view->assign((array) $obj);]]>
 $view = new Zend_View();
 $view->assign('a', "Hay");
 $view->assign('b', "Bee");
-$view->assign('c', "Sea");]]>
+$view->assign('c', "Sea");
+]]>
         </programlisting>
 
     </sect2>
@@ -76,7 +79,7 @@ $view->assign('c', "Sea");]]>
         <title>ビュースクリプトのレンダリング</title>
 
         <para>
-            必要な変数にすべて値を代入したら、コントローラは Zend_View に、
+            必要な変数にすべて値を代入したら、コントローラは <code>Zend_View</code> に、
             適切なビュースクリプトをレンダリングするよう指示しなければなりません。
             そのためには render() メソッドをコールします。
             このメソッドは、ビューを表示するのではなく、
@@ -90,7 +93,8 @@ $view = new Zend_View();
 $view->a = "Hay";
 $view->b = "Bee";
 $view->c = "Sea";
-echo $view->render('someView.php');]]>
+echo $view->render('someView.php');
+]]>
         </programlisting>
 
     </sect2>
@@ -100,23 +104,24 @@ echo $view->render('someView.php');]]>
         <title>ビュースクリプトのパス</title>
 
         <para>
-            デフォルトでは、Zend_View は、
+            デフォルトでは、<code>Zend_View</code> は、
             ビュースクリプトが呼び出し元スクリプトからの相対パス上にあることを想定しています。
             例えばコントローラスクリプトが "/path/to/app/controllers"
             にあった場合に、そこで $view->render('someView.php')
-            をコールすると、Zend_View は
+            をコールすると、<code>Zend_View</code> は
             "/path/to/app/controllers/someView.php" を探します。
         </para>
 
         <para>
             たいていの場合、ビュースクリプトはどこかほかの場所にあることは明らかでしょう。
-            Zend_View にビュースクリプトの場所を教えるには、
+            <code>Zend_View</code> にビュースクリプトの場所を教えるには、
             setScriptPath() メソッドを使用します。
         </para>
 
         <programlisting role="php"><![CDATA[
 $view = new Zend_View();
-$view->setScriptPath('/path/to/app/views');]]>
+$view->setScriptPath('/path/to/app/views');
+]]>
         </programlisting>
 
         <para>
@@ -126,7 +131,7 @@ $view->setScriptPath('/path/to/app/views');]]>
 
         <para>
             実は、addScriptPath() メソッドを使用すると、検索パスを
-            「積み重ねる」ことができます。これを使用すると、Zend_View
+            「積み重ねる」ことができます。これを使用すると、<code>Zend_View</code>
             は一番最後に追加されたパスからビュースクリプトを探し始めます。
             この仕組みを利用すると、デフォルトのビューを独自のビューで上書きできるようになります。
             いくつかのビューに対して独自の「テーマ」あるいは「スキン」
@@ -141,7 +146,8 @@ $view->addScriptPath('/path/to/custom/');
 // $view->render('booklist.php') をコールすると、Zend_View は
 // まず最初に "/path/to/custom/booklist.php" を探し、
 // 次に "/path/to/app/views/booklist.php"、そして最後に
-// カレントディレクトリから "booklist.php" を探します。]]>
+// カレントディレクトリから "booklist.php" を探します。
+]]>
         </programlisting>
 
     </sect2>

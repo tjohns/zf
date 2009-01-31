@@ -1,11 +1,11 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.exception">
     <title>Gdata の例外処理</title>
 
     <para>
         <code>Zend_Gdata_App_Exception</code> は、
-        Zend_Gdata がスローする例外の基底クラスです。
-        Zedn_Gdata がスローする例外は、すべて Zend_Gdata_App_Exception でキャッチできます。
+        <code>Zend_Gdata</code> がスローする例外の基底クラスです。
+        <code>Zedn_Gdata</code> がスローする例外は、すべて <code>Zend_Gdata_App_Exception</code> でキャッチできます。
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -20,7 +20,7 @@ try {
     </programlisting>
 
     <para>
-        Zend_Gdata では、以下のような例外サブクラスを使用しています。
+        <code>Zend_Gdata</code> では、以下のような例外サブクラスを使用しています。
 
         <itemizedlist>
             <listitem>
@@ -41,7 +41,7 @@ try {
                 <para>
                     <code>Zend_Gdata_App_HttpException</code>
                     は、HTTP リクエストが失敗したことを表します。
-                    Zend_Http_Response オブジェクトの中身を調べることで、
+                    <code>Zend_Http_Response</code> オブジェクトの中身を調べることで、
                     実際の原因がわかります。この場合は
                     <code>$e->getMessage()</code> の情報だけでは不十分です。
                 </para>
@@ -77,7 +77,7 @@ try {
 
     <para>
         これらの例外サブクラスを使用すると、より細やかな例外処理をすることができます。
-        どの Zend_Gdata のメソッドがどんな例外サブクラスをスローするのかについては、
+        どの <code>Zend_Gdata</code> のメソッドがどんな例外サブクラスをスローするのかについては、
         API ドキュメントを参照ください。
     </para>
 

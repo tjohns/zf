@@ -1,14 +1,14 @@
-<!-- EN-Revision: 13432 -->
+<!-- EN-Revision: 13826 -->
 <sect1 id="zend.view.scripts">
 
     <title>ビュースクリプト</title>
 
     <para>
-        コントローラが変数を代入して render() をコールすると、
-        指定されたビュースクリプトを Zend_View が読み込み、Zend_View
+        コントローラが変数を代入して <code>render()</code> をコールすると、
+        指定されたビュースクリプトを <code>Zend_View</code> が読み込み、<code>Zend_View</code>
         インスタンスのスコープでそれを実行します。したがって、
         ビュースクリプトの中で $this を参照すると、
-        実際には Zend_View のインスタンスを指すことになります。
+        実際には <code>Zend_View</code> のインスタンスを指すことになります。
     </para>
 
     <para>
@@ -21,7 +21,7 @@
     </para>
 
     <para>
-        Zend_View の導入の部分で示したビュースクリプトの例を思い出してみましょう。
+        <code>Zend_View</code> の導入の部分で示したビュースクリプトの例を思い出してみましょう。
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -64,7 +64,7 @@
         </para>
 
         <para>
-            Zend_View の escape() というメソッドが、このエスケープを行います。
+            <code>Zend_View</code> の escape() というメソッドが、このエスケープを行います。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -80,7 +80,7 @@ echo $this->escape($this->variable);]]>
             関数でエスケープを行います。しかし環境によっては、
             別の方法でエスケープしたくなることもあるでしょう。
             コントローラから setEscape() メソッドを実行することで、
-            エスケープに使用するコールバックを Zend_View に通知することができます。
+            エスケープに使用するコールバックを <code>Zend_View</code> に通知することができます。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -116,9 +116,9 @@ echo $view->render(...);]]>
             PHP 自身も強力なテンプレートシステムではありますが、
             開発者の多くは、デザイナにとっては高機能すぎる/複雑すぎる
             と感じており、別のテンプレートエンジンをほしがっているようです。
-            Zend_View では、そのような目的のために二種類の仕組みを提供します。
+            <code>Zend_View</code> では、そのような目的のために二種類の仕組みを提供します。
             ビュースクリプトを使用することによるものと、
-            Zend_View_Interface 実装することによるものです。
+            <code>Zend_View_Interface</code> 実装することによるものです。
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
@@ -184,7 +184,7 @@ if ($this->books) {
             <title>Zend_View_Interface を使用したテンプレート</title>
 
             <para>
-                Zend_View 互換のテンプレートエンジンを使用するほうが簡単だという人もいるでしょう。
+                <code>Zend_View</code> 互換のテンプレートエンジンを使用するほうが簡単だという人もいるでしょう。
                 <code>Zend_View_Interface</code> では、
                 互換性を保つために最低限必要なインターフェイスを定義しています。
             </para>
@@ -242,7 +242,7 @@ public function render($name);]]>
             <para>
                 このインターフェイスを使用すると、
                 サードパーティのテンプレートエンジンをラップして
-                Zend_View 互換のクラスを作成することが簡単になります。
+                <code>Zend_View</code> 互換のクラスを作成することが簡単になります。
                 例として、Smarty 用のラッパーはこのようになります。
             </para>
 

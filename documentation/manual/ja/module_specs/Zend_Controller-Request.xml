@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13563 -->
+<!-- EN-Revision: 13847 -->
 <sect1 id="zend.controller.request">
     <title>リクエストオブジェクト</title>
     <sect2 id="zend.controller.request.introduction">
@@ -203,8 +203,8 @@ $front->setRequest($request);
 
             <para>
                 <code>Zend_Controller_Request_Http</code> は、
-                サブディレクトリで Zend_Controller_Router_Rewrite を使用することができます。
-                Zend_Controller_Request_Http は自動的にベース URL を検出し、
+                サブディレクトリで <code>Zend_Controller_Router_Rewrite</code> を使用することができます。
+                <code>Zend_Controller_Request_Http</code> は自動的にベース URL を検出し、
                 それを適切に設定します。
             </para>
 

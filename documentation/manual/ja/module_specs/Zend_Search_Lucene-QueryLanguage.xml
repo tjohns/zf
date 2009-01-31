@@ -1,9 +1,9 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.query-language">
     <title>クエリ言語</title>
 
     <para>
-        Java Lucene および Zend_Search_Lucene では、非常に強力なクエリ言語を使用できます。
+        Java Lucene および <code>Zend_Search_Lucene</code> では、非常に強力なクエリ言語を使用できます。
     </para>
 
     <para>
@@ -55,7 +55,7 @@
             <emphasis>すべてのフィールド</emphasis> が検索の対象になるということです。
         </para>
         <para>
-            Zend_Search_Lucene クラスにはふたつの静的メソッドがあり、
+            <code>Zend_Search_Lucene</code> クラスにはふたつの静的メソッドがあり、
             この設定を操作することができます。
         </para>
         <programlisting role="php"><![CDATA[
@@ -194,7 +194,7 @@ title:{Aida TO Carmen}
             でクエリを指定します。
         </para>
         <para>
-            フィールドを指定しなかった場合は、Zend_Search_Lucene
+            フィールドを指定しなかった場合は、<code>Zend_Search_Lucene</code>
             はすべてのフィールドに対して範囲検索を行います。
             <programlisting role="querystring"><![CDATA[
 {Aida TO Carmen}
@@ -206,7 +206,7 @@ title:{Aida TO Carmen}
     <sect2 id="zend.search.lucene.query-language.fuzzy">
         <title>あいまい検索</title>
         <para>
-            Zend_Search_Lucene は、Java Lucene と同様にあいまい検索をサポートします。
+            <code>Zend_Search_Lucene</code> は、Java Lucene と同様にあいまい検索をサポートします。
             これは、レーベンシュタイン距離のアルゴリズムにもとづくものです。
             あいまい検索を行うには、チルダ記号 "~" を単語の最後に指定します。
             たとえば、"roam" と似たスペルの単語を探すには、次のようなあいまい検索を使用します。
@@ -252,7 +252,7 @@ roam~0.8
         <title>単語の強調</title>
 
         <para>
-            Java Lucene および Zend_Search_Lucene は、
+            Java Lucene および <code>Zend_Search_Lucene</code> は、
             見つかった単語にもとづいてドキュメントの関連度を提供します。
             ある単語の関連性を高くするには、キャレット記号 "^" に強調度 (数値)
             をあわせたものを、検索する単語の最後につなげます。
@@ -289,12 +289,12 @@ PHP^4 framework
             論理演算子によって、複数の単語を組み合わせることができます。
             Lucene では、論理演算子として AND、"+"、OR、NOT および "-"
             をサポートしています。Java Lucene では論理演算子をすべて大文字にする必要がありますが、
-            Zend_Search_Lucene ではその必要はありません。
+            <code>Zend_Search_Lucene</code> ではその必要はありません。
         </para>
 
         <para>
             論理クエリを作成するための方式は、大きく AND、OR および NOT の組と "+"、"-"
-            の組に分けられます。Java Lucene とは異なり、Zend_Search_Lucene
+            の組に分けられます。Java Lucene とは異なり、<code>Zend_Search_Lucene</code>
             ではこれらの二つの組を混ぜて使うことはできません。
         </para>
         <para>
@@ -430,14 +430,14 @@ PHP^4 framework
         <title>グループ化</title>
 
         <para>
-            Java Lucene および Zend_Search_Lucene では、
+            Java Lucene および <code>Zend_Search_Lucene</code> では、
             括弧を使用して条件をグループ化することによるサブクエリの作成をサポートしています。
             これは、クエリのロジックを制御したい場合や異なるスタイルの論理クエリを共用したい場合などに便利です。
             <programlisting role="querystring"><![CDATA[
 +(framework OR library) +php
 ]]>
 </programlisting>
-            Zend_Search_Lucene は、あらゆるレベルのサブクエリをサポートしています。
+            <code>Zend_Search_Lucene</code> は、あらゆるレベルのサブクエリをサポートしています。
         </para>
     </sect2>
 

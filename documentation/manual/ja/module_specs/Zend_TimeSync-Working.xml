@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12814 -->
+<!-- EN-Revision: 13828 -->
 <sect1 id="zend.timesync.working">
 
     <title>Zend_TimeSync の動作</title>
@@ -48,7 +48,7 @@ print $server->getDate()->getIso();
 
         <para>
             <code>Zend_Date</code> やそのメソッドについての詳細は
-            <link linkend="zend.date.introduction">Zend_Date</link>
+            <link linkend="zend.date.introduction"><code>Zend_Date</code></link>
             を参照ください。
         </para>
 

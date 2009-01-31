@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11146 -->
+<!-- EN-Revision: 13831 -->
 <sect1 id="zend.search.lucene.searching">
     <title>インデックスの検索</title>
 
@@ -8,7 +8,7 @@
         <para>
             インデックスを検索するには二通りの方法があります。
             クエリパーサを使用して文字列からクエリを作成する方法と、
-            Zend_search_Lucene API を使用して独自のクエリを作成する方法です。
+            <code>Zend_search_Lucene</code> API を使用して独自のクエリを作成する方法です。
         </para>
 
         <para>
@@ -69,7 +69,7 @@ $index->find($query);
         <para>
             <code>Zend_Search_Lucene::find()</code> メソッドは、
             入力の型を自動的に判別し、クエリパーサを使用して文字列から
-            Zend_Search_Lucene_Search_Query オブジェクトを作成します。
+            <code>Zend_Search_Lucene_Search_Query</code> オブジェクトを作成します。
         </para>
 
         <para>
@@ -157,7 +157,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
     <sect2 id="zend.search.lucene.searching.results">
         <title>検索結果</title>
         <para>
-            検索結果は Zend_Search_Lucene_Search_QueryHit オブジェクトの配列となります。
+            検索結果は <code>Zend_Search_Lucene_Search_QueryHit</code> オブジェクトの配列となります。
             各オブジェクトは、2 つのプロパティを保持しています。
             <code>$hit->document</code> がインデックス内のドキュメント番号、
             <code>$hit->score</code> が検索結果のスコアを表します。
@@ -165,8 +165,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
         </para>
 
         <para>
-            Zend_Search_Lucene_Search_QueryHit オブジェクトでは、
-            検索結果としてヒットした Zend_Search_Lucene_Document
+            <code>Zend_Search_Lucene_Search_QueryHit</code> オブジェクトでは、
+            検索結果としてヒットした <code>Zend_Search_Lucene_Document</code>
             の各フィールドも公開しています。
             この例で、ヒットしたドキュメントには
             title と author の 2 つのフィールドが含まれています。
@@ -190,7 +190,7 @@ foreach ($hits as $hit) {
 
         <para>
             オプションで、
-            Zend_Search_Lucene_Search_QueryHit から元の Zend_Search_Lucene_Document
+            <code>Zend_Search_Lucene_Search_QueryHit</code> から元の <code>Zend_Search_Lucene_Document</code>
             を取得することができます。
 
             保存されたドキュメントを取得するには、
@@ -219,7 +219,7 @@ foreach ($hits as $hit) {
 ]]>
         </programlisting>
         <para>
-        Zend_Search_Lucene_Document オブジェクトで使用可能なフィールドは、
+        <code>Zend_Search_Lucene_Document</code> オブジェクトで使用可能なフィールドは、
         インデックス化の際に決まります。ドキュメントのフィールドは、
         インデックス化用アプリケーション (例えば LuceneIndexCreation.jar)
         によってインデックス化、あるいはインデックス化して保存されます。
@@ -240,7 +240,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Zend_Search_Lucene では、結果セットの件数を制限するためのメソッドとして
+            <code>Zend_Search_Lucene</code> では、結果セットの件数を制限するためのメソッドとして
             <code>getResultSetLimit()</code> と
             <code>setResultSetLimit()</code> を用意しています。
             <programlisting role="php"><![CDATA[
@@ -266,7 +266,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);
     <sect2 id="zend.search.lucene.searching.results-scoring">
         <title>結果の重み付け</title>
         <para>
-            Zend_Search_Lucene は、Java Lucene と同じ重み付けアルゴリズムを使用します。
+            <code>Zend_Search_Lucene</code> は、Java Lucene と同じ重み付けアルゴリズムを使用します。
             検索結果に一致したものが、デフォルトで重み順に並べ替えられます。スコアの高いものが先頭となり、
             スコアの高いもののほうが低いものよりクエリにマッチするようになります。
         </para>
@@ -290,7 +290,7 @@ foreach ($hits as $hit) {
 
         <para>
             重みを計算するために使用されるのが
-            Zend_Search_Lucene_Search_Similarity クラスです。詳細は
+            <code>Zend_Search_Lucene_Search_Similarity</code> クラスです。詳細は
             <link linkend="zend.search.lucene.extending.scoring">拡張性
             - 重み付けのアルゴリズム</link> を参照ください。
         </para>
@@ -308,7 +308,7 @@ foreach ($hits as $hit) {
         <para>
             <code>$index->find()</code> のコール時に、オプションのパラメータを指定することができます。
             <programlisting role="php"><![CDATA[
-$index->find($query [, $sortField [, $sortType [, $sortOrder]]] 
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]]
                     [, $sortField2 [, $sortType [, $sortOrder]]]
              ...);
 ]]>
