@@ -20,12 +20,6 @@
  * @version    $Id$
  */
 
-
-/**
- * @see Zend_Loader
- */
-require_once 'Zend/Loader.php';
-
 /**
  * @see Zend_Feed_Builder_Header_Itunes
  */
@@ -175,7 +169,10 @@ class Zend_Feed_Builder_Header extends ArrayObject
      */
     public function setEmail($email)
     {
-        Zend_Loader::loadClass('Zend_Validate_EmailAddress');
+        /**
+         * @see Zend_Validate_EmailAddress
+         */
+        require_once 'Zend/Validate/EmailAddress.php';
         $validate = new Zend_Validate_EmailAddress();
         if (!$validate->isValid($email)) {
             /**
@@ -246,7 +243,10 @@ class Zend_Feed_Builder_Header extends ArrayObject
      */
     public function setWebmaster($webmaster)
     {
-        Zend_Loader::loadClass('Zend_Validate_EmailAddress');
+        /**
+         * @see Zend_Validate_EmailAddress
+         */
+        require_once 'Zend/Validate/EmailAddress.php';
         $validate = new Zend_Validate_EmailAddress();
         if (!$validate->isValid($webmaster)) {
             /**
@@ -269,7 +269,10 @@ class Zend_Feed_Builder_Header extends ArrayObject
      */
     public function setTtl($ttl)
     {
-        Zend_Loader::loadClass('Zend_Validate_Int');
+        /**
+         * @see Zend_Validate_Int
+         */
+        require_once 'Zend/Validate/Int.php';
         $validate = new Zend_Validate_Int();
         if (!$validate->isValid($ttl)) {
             /**
