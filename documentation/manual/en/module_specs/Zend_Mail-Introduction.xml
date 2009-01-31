@@ -14,7 +14,7 @@
 
         <example id="zend.mail.introduction.example-1">
 
-            <title>Simple E-Mail with Zend_Mail</title>
+            <title>Simple E-Mail with <code>Zend_Mail</code></title>
 
             <para>
                 A simple e-mail consists of some recipients, a subject, a body and a sender. To send such a mail using
@@ -50,12 +50,12 @@ $mail->send();
         <para>
             For security reasons, <code>Zend_Mail</code> filters all header fields to prevent header injection with
             newline (<code>\n</code>) characters.
+            Double quotation is changed to single quotation and angle brackets to square brackets in the name of
+            sender and recipients. If the marks are in email address, the marks will be removed. 
         </para>
 
         <para>
-            You also can use most methods of the <code>Zend_Mail</code> object with a convenient fluent interface. A fluent
-            interface means that each method returns a reference to the object on which it was called, so you can
-            immediately call another method.
+            You also can use most methods of the <code>Zend_Mail</code> object with a convenient fluent interface.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -85,7 +85,7 @@ $mail->setBodyText('This is the text of the mail.')
 
         <example id="zend.mail.introduction.sendmail.example-1">
 
-            <title>Passing additional parameters to the Zend_Mail_Transport_Sendmail transport</title>
+            <title>Passing additional parameters to the <code>Zend_Mail_Transport_Sendmail</code> transport</title>
 
             <para>
                 This example shows how to change the Return-Path of the <ulink url="http://php.net/mail"><code>mail()</code></ulink>
