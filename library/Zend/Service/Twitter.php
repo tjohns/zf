@@ -261,20 +261,21 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         $this->_init();
         $path = '/statuses/friends_timeline';
+        $_params = array();
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
                 case 'since':
                     $this->_setDate($value);
                     break;
                 case 'page':
-                    $this->page = (int) $value;
+                    $_params['page'] = (int) $value;
                     break;
                 default:
                     break;
             }
         }
         $path    .= '.xml';
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
@@ -516,22 +517,23 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         $this->_init();
         $path = '/direct_messages.xml';
+        $_params = array();
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
                 case 'since':
                     $this->_setDate($value);
                     break;
                 case 'since_id':
-                    $this->since_id = (int) $value;
+                    $_params['since_id'] = (int) $value;
                     break;
                 case 'page':
-                    $this->page = (int) $value;
+                    $_params['page'] = (int) $value;
                     break;
                 default:
                     break;
             }
         }
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
@@ -550,22 +552,23 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         $this->_init();
         $path = '/direct_messages/sent.xml';
+        $_params = array();
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
                 case 'since':
                     $this->_setDate($value);
                     break;
                 case 'since_id':
-                    $this->since_id = (int) $value;
+                    $_params['since_id'] = (int) $value;
                     break;
                 case 'page':
-                    $this->page = (int) $value;
+                    $_params['page'] = (int) $value;
                     break;
                 default:
                     break;
             }
         }
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
@@ -713,20 +716,21 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         $this->_init();
         $path = '/favorites';
+        $_params = array();
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
                 case 'id':
                     $path .= '/' . $value;
                     break;
                 case 'page':
-                    $this->page = (int) $value;
+                    $_params['page'] = (int) $value;
                     break;
                 default:
                     break;
             }
         }
         $path .= '.xml';
-        $response = $this->restGet($path);
+        $response = $this->restGet($path, $_params);
         return new Zend_Rest_Client_Result($response->getBody());
     }
 
