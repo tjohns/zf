@@ -86,7 +86,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
             $this->_element = $this->_element->getElementsByTagName('channel')->item(0);
         }
         if (!$this->_element) {
-            /** 
+            /**
              * @see Zend_Feed_Exception
              */
             require_once 'Zend/Feed/Exception.php';
@@ -151,6 +151,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
 
         if (isset($array->published)) {
             $lastBuildDate = $this->_element->createElement('lastBuildDate', gmdate('r', $array->published));
+            $channel->appendChild($lastBuildDate);
         }
 
         $editor = '';
@@ -493,7 +494,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
     public function send()
     {
         if (headers_sent()) {
-            /** 
+            /**
              * @see Zend_Feed_Exception
              */
             require_once 'Zend/Feed/Exception.php';
