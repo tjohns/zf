@@ -22,9 +22,6 @@
 /** Zend_View_Helper_Placeholder_Container_Standalone */
 require_once 'Zend/View/Helper/Placeholder/Container/Standalone.php';
 
-/** Zend_View_Exception */
-require_once 'Zend/View/Exception.php';
-
 /**
  * Zend_Layout_View_Helper_HeadMeta
  *
