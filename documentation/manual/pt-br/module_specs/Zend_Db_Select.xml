@@ -8,11 +8,11 @@
 
         <para>
             O objeto Zend_Db_Select representa um comando de consulta SQL <code>SELECT</code>.
-			A classe possui métodos para a adição de partes individuais em uma query. Você
-			pode especificar algumas partes da consulta usando métodos PHP e estruturas de
-			dados, e a classe se encarrega de formar a sintaxe SQL correta para você. Depois
-			da construção de uma consulta, você pode executá-la como se você houvesse a escrito
-			em uma string.
+            A classe possui métodos para a adição de partes individuais em uma query. Você
+            pode especificar algumas partes da consulta usando métodos PHP e estruturas de
+            dados, e a classe se encarrega de formar a sintaxe SQL correta para você. Depois
+            da construção de uma consulta, você pode executá-la como se você houvesse a escrito
+            em uma string.
         </para>
 
         <para>
@@ -22,27 +22,27 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    Métodos orientados a objetos para especificação de consultas SQL 
-					de maneira "piece-by-piece" (aos pedaços ou em partes);
+                    Métodos orientados a objetos para especificação de consultas SQL
+                    de maneira "piece-by-piece" (aos pedaços ou em partes);
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Abstração de independência de base de dados de algumas partes
-					da consulta SQL;
+                    da consulta SQL;
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Colocação automática de aspas nos identificadores de metadados na maioria
-					dos casos, para dar suporte aos identificadores que contém palavras SQL reservadas
-					e caracteres especiais;
+                    dos casos, para dar suporte aos identificadores que contém palavras SQL reservadas
+                    e caracteres especiais;
                 </para>
             </listitem>
             <listitem>
                 <para>
                     Colocação automática de aspas nos identificadores e valores, para ajudar
-					na redução de ataques por "SQL injection".
+                    na redução de ataques por "SQL injection".
                 </para>
             </listitem>
         </itemizedlist>
@@ -50,11 +50,11 @@
         <para>
             A utilização de Zend_Db_Select não é obrigatória. Para consultas SELECT
             muito simples, normalmente é mais fácil escrever toda a consulta SQL
-			em uma string e executá-la usando métodos da classe Adapter, como o 
-			<code>query()</code> ou <code>fetchAll()</code>. O uso de Zend_Db_Select
-			é muito útil quando você precisa montar uma consulta SELECT usando "procedures"
-			(através de procedimentos), ou quando você precisa montar a consulta baseando-se
-			na lógica condicional da sua aplicação.
+            em uma string e executá-la usando métodos da classe Adapter, como o
+            <code>query()</code> ou <code>fetchAll()</code>. O uso de Zend_Db_Select
+            é muito útil quando você precisa montar uma consulta SELECT usando "procedures"
+            (através de procedimentos), ou quando você precisa montar a consulta baseando-se
+            na lógica condicional da sua aplicação.
         </para>
 
     </sect2>
@@ -64,8 +64,8 @@
         <title>Criando um Objeto Select</title>
 
         <para>
-            Você pode criar uma instância de um objeto Zend_Db_Select 
-			usando o método <code>select()</code> de um objeto Zend_Db_Adapter_Abstract.
+            Você pode criar uma instância de um objeto Zend_Db_Select
+            usando o método <code>select()</code> de um objeto Zend_Db_Adapter_Abstract.
         </para>
 
         <example id="zend.db.select.creating.example-db">
@@ -77,8 +77,8 @@ $select = $db->select();]]></programlisting>
         </example>
 
         <para>
-            Outra forma de criar um objeto Zend_Db_Select é com o 
-			construtor dele, especificando o adaptador como parâmetro.
+            Outra forma de criar um objeto Zend_Db_Select é com o
+            construtor dele, especificando o adaptador como parâmetro.
         </para>
 
         <example id="zend.db.select.creating.example-new">
@@ -97,7 +97,7 @@ $select = new Zend_Db_Select($db);]]></programlisting>
 
         <para>
             Ao contruir um consulta, você pode adicionar cláusulas uma por uma.
-			Existe um método diferente para cada cláusula no objeto.
+            Existe um método diferente para cada cláusula no objeto.
         </para>
 
         <example id="zend.db.select.building.example">
@@ -119,9 +119,9 @@ $select->order( ...specify sorting criteria... );]]></programlisting>
 
         <para>
             Você também pode usar a maior parte dos métodos do objeto Zend_Db_Select
-			com uma interface "fluent" conveniente.  Uma interface "fluent" significa que cada
-			método retorna uma referência para o objeto no qual foi chamado, então você pode
-			imediatamente chamar outro método.
+            com uma interface "fluent" conveniente.  Uma interface "fluent" significa que cada
+            método retorna uma referência para o objeto no qual foi chamado, então você pode
+            imediatamente chamar outro método.
         </para>
 
         <example id="zend.db.select.building.example-fluent">
@@ -138,8 +138,8 @@ $select = $db->select()
             Os exemplos nesta seção mostram o uso da  interface "fluent",
             mas você pode usar a interface "non-fluent" em todos os casos.
             É freqüentemente necessário usar a interface "non-fluent" quando, por exemplo,
-            sua aplicação precisa executar alguma lógica antes de adicionar uma cláusula 
-			a uma consulta.
+            sua aplicação precisa executar alguma lógica antes de adicionar uma cláusula
+            a uma consulta.
         </para>
 
         <sect3 id="zend.db.select.building.from">
@@ -148,9 +148,9 @@ $select = $db->select()
 
             <para>
                 Especifique a tabela para esta consulta usando o método <code>from()</code>.
-				Você pode especificar o nome da tabela como uma simples string.
-				Zend_Db_Select coloca o entre aspas o nome da tabela, então, você pode 
-				usar caracteres especiais.
+                Você pode especificar o nome da tabela como uma simples string.
+                Zend_Db_Select coloca o entre aspas o nome da tabela, então, você pode
+                usar caracteres especiais.
             </para>
 
             <example id="zend.db.select.building.from.example">
@@ -166,7 +166,7 @@ $select = $db->select()
             </example>
 
             <para>
-				You can also specify the correlation name (sometimes called the
+                You can also specify the correlation name (sometimes called the
                 "table alias") for a table.  Instead of a simple string, use an
                 associative array mapping the correlation name to the table
                 name.  In other clauses of the SQL query, use this correlation
@@ -188,13 +188,13 @@ $select = $db->select()
             </example>
 
             <para>
-                Algumas marcas de RDBMS dão suporte a um especificador de schema 
-				para uma tabela. Você pode especificar o nome a tabela como 
-				"<code>schemaName.tableName</code>", onde Zend_Db_Select coloca entre aspas
-				cada uma das partes individualmente, ou então você deve especificar o nome 
-				do schema separadamente. Um nome de schema especificado no nome da tabela
-				precede um schema fornecido separadamente se eventualmente ambos forem 
-				informados.
+                Algumas marcas de RDBMS dão suporte a um especificador de schema
+                para uma tabela. Você pode especificar o nome a tabela como
+                "<code>schemaName.tableName</code>", onde Zend_Db_Select coloca entre aspas
+                cada uma das partes individualmente, ou então você deve especificar o nome
+                do schema separadamente. Um nome de schema especificado no nome da tabela
+                precede um schema fornecido separadamente se eventualmente ambos forem
+                informados.
             </para>
 
             <example id="zend.db.select.building.from.example-schema">
@@ -222,21 +222,21 @@ $select = $db->select()
 
             <para>
                 No segundo argumento do método <code>from()</code> ,
-                você pode especificaras colunas a serem selecionadas da 
-				respectiva tabela. Se você não especificar nenhuma coluna,
-				o valor padrão é "<code>*</code>", o caracter curinga para "todas as colunas".
+                você pode especificaras colunas a serem selecionadas da
+                respectiva tabela. Se você não especificar nenhuma coluna,
+                o valor padrão é "<code>*</code>", o caracter curinga para "todas as colunas".
             </para>
 
             <para>
                 Você pode listar as colunas em um simples array de strings, ou como
-				um mapeamento associativo do alias da coluna para nome da coluna.
-				Se você só tiver uma coluna para consultar, e não precisar indicar um 
-				alias, você pode listá-la em uma string simples ao invés de um array.
+                um mapeamento associativo do alias da coluna para nome da coluna.
+                Se você só tiver uma coluna para consultar, e não precisar indicar um
+                alias, você pode listá-la em uma string simples ao invés de um array.
             </para>
 
             <para>
-                Se você passar um array vazio como o argumento de colunas, nenhuma 
-				coluna da respectiva tabela será incluída no result set.
+                Se você passar um array vazio como o argumento de colunas, nenhuma
+                coluna da respectiva tabela será incluída no result set.
                 Veja um exemplo de <link linkend="zend.db.select.building.join.example-no-columns">código</link> sob a seção do método <code>join()</code>.
             </para>
 
@@ -245,7 +245,7 @@ $select = $db->select()
                 "<code>correlationName.columnName</code>".
                 Zend_Db_Select os coloca entre aspas individualmente.
                 Caso você não especifique o nome da correlação para uma coluna,
-				é usado o nome da correlação da tabela indicada no método<code>from()</code>.
+                é usado o nome da correlação da tabela indicada no método<code>from()</code>.
             </para>
 
             <example id="zend.db.select.building.columns.example">
@@ -285,26 +285,26 @@ $select = $db->select()
 
             <para>
                Algumas vezes as colunas de uma consulta SQL são expressões, e não
-			   simplesmente o nome de uma couna da tabela. Expressões não devem usar 
-			   nomes de correlação ou aspas. Se a string da coluna possuir parênteses,
-			   Zend_Db_Select a reconhecerá como uma expressão.
+               simplesmente o nome de uma couna da tabela. Expressões não devem usar
+               nomes de correlação ou aspas. Se a string da coluna possuir parênteses,
+               Zend_Db_Select a reconhecerá como uma expressão.
             </para>
 
             <para>
                 Você também pode criar um objeto do tipo Zend_Db_Expr explicitamente,
                 para prevenir que uma string seja tratada como um nome de coluna.
-				Zend_Db_Expr é uma classe diminuta que contém uma única string.
-				Zend_Db_Select reconhece obtejos do tipo Zend_Db_Expr e os converte 
-				novamente para strings, mas não efetua qualquer alteração como a 
-				colocação de aspas ou nomes de correlação.
+                Zend_Db_Expr é uma classe diminuta que contém uma única string.
+                Zend_Db_Select reconhece obtejos do tipo Zend_Db_Expr e os converte
+                novamente para strings, mas não efetua qualquer alteração como a
+                colocação de aspas ou nomes de correlação.
             </para>
 
             <note>
                 <para>
                     O uso de Zend_Db_Expr para nomes de colunas não é necessário se as
-					expressões contiverem parênteses; Zend_Db_Select reconhece os parênteses
-					e trata a string como uma expresão, ignorando a colocação de aspas e de
-					nomes de correlação.
+                    expressões contiverem parênteses; Zend_Db_Select reconhece os parênteses
+                    e trata a string como uma expresão, ignorando a colocação de aspas e de
+                    nomes de correlação.
                 </para>
             </note>
 
@@ -341,29 +341,29 @@ $select = $db->select()
 
             <para>
                 Nos casos acima, Zend_Db_Select não altera a string
-				para colocar os nomes de correlação ou aspas. Se as 
-				mudanças forem necessárias para evitar alguma ambiguidade,
-				você deve fazê-las manualmente na string.
+                para colocar os nomes de correlação ou aspas. Se as
+                mudanças forem necessárias para evitar alguma ambiguidade,
+                você deve fazê-las manualmente na string.
             </para>
 
             <para>
-                Se os nomes das colunas são palavras-chave SQL ou possuem 
-				caracteres especiais, você deve usar o método <code>quoteIdentifier()</code>
-				da classe Adapter, e interpolar o resultado na string. O método
-				<code>quoteIdentifier()</code> usa aspas no SQL para delimitar o identificador,
-				o que deixa claro que ele é um identificador de uma tabela ou coluna e não
-				parte da síntaxe SQL.
+                Se os nomes das colunas são palavras-chave SQL ou possuem
+                caracteres especiais, você deve usar o método <code>quoteIdentifier()</code>
+                da classe Adapter, e interpolar o resultado na string. O método
+                <code>quoteIdentifier()</code> usa aspas no SQL para delimitar o identificador,
+                o que deixa claro que ele é um identificador de uma tabela ou coluna e não
+                parte da síntaxe SQL.
             </para>
 
             <para>
                 Seu código fica mais independente de base de dados se você
-				usar o método <code>quoteIdentifier()</code> ao invés de digitar
-				as aspas nas strings porque algumas marcas de SGBD Relacionais usam
-				símbolos fora do padrão para referenciar identificadores.
-				O método <code>quoteIdentifier()</code> é projetado para usar
-				os símbolos de referência apropriados de acordo com o tipo de adaptador.
-				O método  <code>quoteIdentifier()</code> também ignora qualquer
-				caracter de referência que aparecer no nome de um identificador.
+                usar o método <code>quoteIdentifier()</code> ao invés de digitar
+                as aspas nas strings porque algumas marcas de SGBD Relacionais usam
+                símbolos fora do padrão para referenciar identificadores.
+                O método <code>quoteIdentifier()</code> é projetado para usar
+                os símbolos de referência apropriados de acordo com o tipo de adaptador.
+                O método  <code>quoteIdentifier()</code> também ignora qualquer
+                caracter de referência que aparecer no nome de um identificador.
             </para>
 
             <example id="zend.db.select.building.columns-quoteid.example">
