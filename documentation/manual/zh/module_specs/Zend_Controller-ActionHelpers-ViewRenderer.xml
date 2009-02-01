@@ -11,60 +11,60 @@
         <itemizedlist>
             <listitem>
                 <para>
-	           不需要在控制器内创建视图对象实例；视图对象将在控制器内自动注册。
+               不需要在控制器内创建视图对象实例；视图对象将在控制器内自动注册。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-		    根据当前的模块自动地设置视图脚本、助手、过滤器路径。指派当前的模块名为助手和过滤器类的类名前缀。
+            根据当前的模块自动地设置视图脚本、助手、过滤器路径。指派当前的模块名为助手和过滤器类的类名前缀。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-		    为所有分发的控制器和动作创建全局有效的视图对象。
+            为所有分发的控制器和动作创建全局有效的视图对象。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-		   允许开发人员为所有控制器设置默认的视图解析选项。
+           允许开发人员为所有控制器设置默认的视图解析选项。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-		    加入无需干预自动解析试图脚本的功能。
+            加入无需干预自动解析试图脚本的功能。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-		   允许开发人员为视图基路径和视图脚本路径创建自己的规范。
+           允许开发人员为视图基路径和视图脚本路径创建自己的规范。
                 </para>
             </listitem>
         </itemizedlist>
 
         <note>
             <para>
-		如果手动执行<code>_forward()</code>、<code>redirect</code>、或者<code>render</code>时，不会发生自动解析。因为执行这些动作时，等于告诉<code>ViewRenderer</code>，你要自己确定输出结果。
+        如果手动执行<code>_forward()</code>、<code>redirect</code>、或者<code>render</code>时，不会发生自动解析。因为执行这些动作时，等于告诉<code>ViewRenderer</code>，你要自己确定输出结果。
             </para>
         </note>
 
         <note>
             <para>
-		<code>ViewRenderer</code>助手默认启用。你可以通过前端控制器的<code>noViewRenderer</code>方法、设定参数(<code>$front->setParam('noViewRenderer', true)</code>)或者从助手经纪人栈(helper broker stack)中移除助手(<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>)等方式禁用该助手。
+        <code>ViewRenderer</code>助手默认启用。你可以通过前端控制器的<code>noViewRenderer</code>方法、设定参数(<code>$front->setParam('noViewRenderer', true)</code>)或者从助手经纪人栈(helper broker stack)中移除助手(<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>)等方式禁用该助手。
             </para>
 
             <para>
-		如希望在分发前端控制器前修改<code>ViewRenderer</code>设定，可采用下面的两种方法：
+        如希望在分发前端控制器前修改<code>ViewRenderer</code>设定，可采用下面的两种方法：
             </para>
 
             <itemizedlist>
                 <listitem>
                     <para>
-		       创建实例并注册自己的<code>ViewRenderer</code>对象，然后传入到助手经纪人。
+               创建实例并注册自己的<code>ViewRenderer</code>对象，然后传入到助手经纪人。
                     </para>
 
                     <programlisting role="php"><![CDATA[
@@ -78,7 +78,7 @@ Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
                 <listitem>
                     <para>
-		        通过助手经纪人即时的初始化并/或获取<code>ViewRenderer</code>对象。
+                通过助手经纪人即时的初始化并/或获取<code>ViewRenderer</code>对象。
                     </para>
 
                     <programlisting role="php"><![CDATA[
@@ -189,7 +189,7 @@ $this->foo(); // call Foo_View_Helper_Foo::foo()
 
             <listitem>
                 <para>
-                    <code>initView($path, $prefix, $options)</code>可以指定视图的基路径，为助手和过滤器脚本设置类前缀，设定<code>ViewRenderer</code>选项。可以传入以下任意的标志：<code>neverRender</code>，<code>noRender</code>，<code>noController</code>， <code>scriptAction</code>，和<code>responseSegment</code>。	
+                    <code>initView($path, $prefix, $options)</code>可以指定视图的基路径，为助手和过滤器脚本设置类前缀，设定<code>ViewRenderer</code>选项。可以传入以下任意的标志：<code>neverRender</code>，<code>noRender</code>，<code>noController</code>， <code>scriptAction</code>，和<code>responseSegment</code>。
                 </para>
             </listitem>
 
@@ -221,7 +221,7 @@ $this->_helper->viewRenderer('form', 'html', true);
         <programlisting role="php"><![CDATA[
 $view    = new Zend_View(array('encoding' => 'UTF-8'));
 $options = array('noController' => true, 'neverRender' => true);
-$viewRenderer = 
+$viewRenderer =
     new Zend_Controller_Action_Helper_ViewRenderer($view, $options);
 ]]>
         </programlisting>
@@ -623,7 +623,7 @@ class SearchController extends Zend_Controller_Action
     public function resultsAction()
     {
         // Assume $this->model is the current model
-        $this->view->results = 
+        $this->view->results =
             $this->model->find($this->_getParam('query', '');
 
         // render() by default proxies to the ViewRenderer

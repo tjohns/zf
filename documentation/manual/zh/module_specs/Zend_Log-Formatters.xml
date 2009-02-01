@@ -22,7 +22,7 @@ $formatter = new Zend_Log_Formatter_Simple($format);]]>
     </para>
 
     <para>
-	使用Writer的<code>steFormatter()</code>方法在个别的Writer上设置Formatter:
+    使用Writer的<code>steFormatter()</code>方法在个别的Writer上设置Formatter:
       <programlisting role="php"><![CDATA[<?php
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Simple('hello %message%' . PHP_EOL);
@@ -46,8 +46,8 @@ $logger->info('there');
   <sect2 id="zend.log.formatters.xml">
     <title>格式化到XML</title>
     <para>
-	<code>Zend_Log_Formatter_Xml</code>格式化日志数据到XML字符串中.
-	默认,它自动地纪录在事件数据数组中的所有项.
+    <code>Zend_Log_Formatter_Xml</code>格式化日志数据到XML字符串中.
+    默认,它自动地纪录在事件数据数组中的所有项.
       <programlisting role="php"><![CDATA[<?php
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Xml();
@@ -74,9 +74,9 @@ $logger->info('informational message');]]>
     </para>
 
     <para>
-		可以定制根元素并指定一个到事件数据数组的XML元素映射.
-		<code>Zend_Log_Formatter_Xml</code>的构造函数接受一个根元素名字
-		的字符串作为第一个参数和一个元素映射的关联数组作为第二个参数:
+        可以定制根元素并指定一个到事件数据数组的XML元素映射.
+        <code>Zend_Log_Formatter_Xml</code>的构造函数接受一个根元素名字
+        的字符串作为第一个参数和一个元素映射的关联数组作为第二个参数:
       <programlisting role="php"><![CDATA[<?php
 $writer = new Zend_Log_Writer_Stream('php://output');
 $formatter = new Zend_Log_Formatter_Xml('log', array('msg' => 'message', 'level' => 'priorityName'));

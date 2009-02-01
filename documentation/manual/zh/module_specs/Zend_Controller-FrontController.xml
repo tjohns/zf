@@ -105,7 +105,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
                 可以通过<code>getControllerDirectory()</code>获取控制器目录的当前设置；它将返回一个模块/目录对关联数组。
             </para>
         </sect3>
-        
+
         <sect3 id="zend.controller.front.methods.primary.addmoduledirectory">
             <title>addModuleDirectory() and getModuleDirectory()</title>
 
@@ -113,7 +113,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
                 前端控制器的一个功能是你可以
                 <link
                     linkend="zend.controller.modular">定义一个模块目录结构
-                </link> 
+                </link>
                 来创建独立的组件，被叫做“模块”。
             </para>
 
@@ -141,15 +141,15 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             </para>
 
             <para>
-				        如果没有请求或者响应对象传入，<code>dispatch()</code>将检查先前注册的对象并使用，如果没有发现则创建默认的对象版本（它们两个都默认使用HTTP对象）。
+                        如果没有请求或者响应对象传入，<code>dispatch()</code>将检查先前注册的对象并使用，如果没有发现则创建默认的对象版本（它们两个都默认使用HTTP对象）。
             </para>
 
             <para>
-				        类似的，<code>dispatch()</code>先检查已注册的<link linkend="zend.controller.router">路由器（router）</link>和<link linkend="zend.controller.dispatcher">分发器（dispatcher）</link>对象，如果没有发现则实例化它们的默认版本。
+                        类似的，<code>dispatch()</code>先检查已注册的<link linkend="zend.controller.router">路由器（router）</link>和<link linkend="zend.controller.dispatcher">分发器（dispatcher）</link>对象，如果没有发现则实例化它们的默认版本。
             </para>
 
             <para>
-				        分发过程有三个不同的事件：
+                        分发过程有三个不同的事件：
             </para>
 
             <itemizedlist>
@@ -159,7 +159,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             </itemizedlist>
 
             <para>
-				        路由只发生一次，当调用<code>dispatch()</code>时利用请求对象中的值。分发发生在一个循环中;请求可能指示	分发多个动作，或者控制器或插件可能重置请求对象，强制分发附加的动作。所有都完成后，前端控制器返回响应对象。
+                        路由只发生一次，当调用<code>dispatch()</code>时利用请求对象中的值。分发发生在一个循环中;请求可能指示	分发多个动作，或者控制器或插件可能重置请求对象，强制分发附加的动作。所有都完成后，前端控制器返回响应对象。
             </para>
         </sect3>
 
@@ -171,7 +171,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             </para>
 
             <para>
-				        基本上，如果不要求定制前端控制器环境，<code>run()</code>是一个很方便的建立前端控制器环境的方法。
+                        基本上，如果不要求定制前端控制器环境，<code>run()</code>是一个很方便的建立前端控制器环境的方法。
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -187,7 +187,7 @@ Zend_Controller_Front::run('../application/controllers');
         <title>环境访问器方法</title>
 
         <para>
-			      除了上面所列的方法以外，还有很多访问器方法可以影响前端控制器环境 —— 因而也影响前端控制器代理（delegate）的类的环境。
+                  除了上面所列的方法以外，还有很多访问器方法可以影响前端控制器环境 —— 因而也影响前端控制器代理（delegate）的类的环境。
         </para>
 
         <itemizedlist>
@@ -221,14 +221,14 @@ Zend_Controller_Front::run('../application/controllers');
                 </para>
 
                 <para>
-					         获取路由器对象的时候，首先检查是否已有一个，如果没有，创建默认的路由器实例（rewrite路由器）。
+                             获取路由器对象的时候，首先检查是否已有一个，如果没有，创建默认的路由器实例（rewrite路由器）。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
                     <code>(set|get)BaseUrl()</code>方法指定路由请求时剥离（strip）的<link linkend="zend.controller.request.http.baseurl">基地址（base URL）</link>，以及获取当前值。这个值将在路由前提供给路由器。
-				        </para>
+                        </para>
             </listitem>
 
             <listitem>
@@ -237,7 +237,7 @@ Zend_Controller_Front::run('../application/controllers');
                 </para>
 
                 <para>
-					          获取分发器对象时，首先检查是否已有一个存在，如果没有，将创建一个默认的分发器实例。
+                              获取分发器对象时，首先检查是否已有一个存在，如果没有，将创建一个默认的分发器实例。
                 </para>
             </listitem>
 
@@ -265,7 +265,7 @@ Zend_Controller_Front::run('../application/controllers');
                 </para>
 
                 <para>
-					          想知道更多信息的话，请阅读<xref linkend="zend.controller.exceptions" />。
+                              想知道更多信息的话，请阅读<xref linkend="zend.controller.exceptions" />。
                 </para>
             </listitem>
 
@@ -275,7 +275,7 @@ Zend_Controller_Front::run('../application/controllers');
                 </para>
 
                 <para>
-					          返回响应对象的原因包括希望在发送响应前检查异常，记录响应的各种属性（例如消息头）等等。
+                              返回响应对象的原因包括希望在发送响应前检查异常，记录响应的各种属性（例如消息头）等等。
                 </para>
             </listitem>
         </itemizedlist>
@@ -285,7 +285,7 @@ Zend_Controller_Front::run('../application/controllers');
         <title>前端控制器参数</title>
 
         <para>
-			      介绍里曾提到前端控制器可以用作各种控制器组件的注册表。它通过一个"param"家族的方法来做到这些。这些方法允许通过前端控制器注册任意类型的数据 —— 对象和变量，可以在分发链中的任何时候获取。这些变量被传递到路由器，分发器，以及动作控制器。这些方法包括：
+                  介绍里曾提到前端控制器可以用作各种控制器组件的注册表。它通过一个"param"家族的方法来做到这些。这些方法允许通过前端控制器注册任意类型的数据 —— 对象和变量，可以在分发链中的任何时候获取。这些变量被传递到路由器，分发器，以及动作控制器。这些方法包括：
         </para>
 
         <itemizedlist>
@@ -321,7 +321,7 @@ Zend_Controller_Front::run('../application/controllers');
         </itemizedlist>
 
         <para>
-			      有几个预定义的参数可供设定，它们在分发链中有特别的用途：
+                  有几个预定义的参数可供设定，它们在分发链中有特别的用途：
         </para>
 
         <itemizedlist>
@@ -359,7 +359,7 @@ Zend_Controller_Front::run('../application/controllers');
         <title>继承前端控制器</title>
 
         <para>
-			      要继承前端控制器，至少需要覆盖<code>getInstance()</code>方法：
+                  要继承前端控制器，至少需要覆盖<code>getInstance()</code>方法：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -378,11 +378,11 @@ class My_Controller_Front extends Zend_Controller_Front
         </programlisting>
 
         <para>
-			      覆盖<code>getInstance()</code>保证后面调用<code>Zend_Controller_Front::getInstance()</code>会返回子类的实例，而不是<code>Zend_Controller_Front</code>实例 —— 这对于一些可替换的路由器和视图助手非常有用。
+                  覆盖<code>getInstance()</code>保证后面调用<code>Zend_Controller_Front::getInstance()</code>会返回子类的实例，而不是<code>Zend_Controller_Front</code>实例 —— 这对于一些可替换的路由器和视图助手非常有用。
         </para>
 
         <para>
-			      通常不需要继承前端控制器，除非你需要增加新的功能（比如，一个插件自动加载器，或者一个方法来指定动作助手路径）。你想要改动的地方可能包括修改控制器目录的存储方式，使用的默认路由器以及分发器。
+                  通常不需要继承前端控制器，除非你需要增加新的功能（比如，一个插件自动加载器，或者一个方法来指定动作助手路径）。你想要改动的地方可能包括修改控制器目录的存储方式，使用的默认路由器以及分发器。
         </para>
     </sect2>
 </sect1>

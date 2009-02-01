@@ -12,7 +12,7 @@
             </para></listitem>
 
             <listitem><para>
-			                    控制器名可通过<code>getControllerName()</code>和<code>setControllerName()</code>访问。
+                                控制器名可通过<code>getControllerName()</code>和<code>setControllerName()</code>访问。
             </para></listitem>
 
             <listitem><para>
@@ -55,7 +55,7 @@
             </note>
 
             <para>
-               特定的超全局变量也可以选择特定的方法来访问，如<code>$_POST['user']</code>可以调用请求对象的<code>getPost('user')</code>访问，<code>getQuery()</code>可以获取<code>$_GET</code>元素，<code>getHeader()</code>可以获取请求消息头。               
+               特定的超全局变量也可以选择特定的方法来访问，如<code>$_POST['user']</code>可以调用请求对象的<code>getPost('user')</code>访问，<code>getQuery()</code>可以获取<code>$_GET</code>元素，<code>getHeader()</code>可以获取请求消息头。
             </para>
 
             <note>
@@ -63,8 +63,8 @@
                 <para>
                     需要注意：在请求对象中访问数据是没有经过任何过滤的，路由器和分发器根据任务来验证过滤数据，但在请求对象中没有任何处理。
                 </para>
-            </note> 
-             
+            </note>
+
               <note>
                 <title> 也获取原始 （Raw） POST 数据！</title>
 
@@ -92,15 +92,15 @@
             <para>
                 如果你希望从你通过 <code>setParam()</code> 设置的参数中获取（参数），使用 <code>getUserParam()</code>。
             </para>
-             
+
             <para>
-                 另外，从 1.5.0 开始，可以锁定搜索哪个参数源，<code>setParamSources()</code> 允许指定一个空数组或者一个带有一个或多个指示哪个参数源被允许（缺省两者都被允许）的值 '_GET'或'_POST'的数组；如果想限制只访问 '_GET'，那么指定 <code>setParamSources(array('_GET'))</code> 。                  
+                 另外，从 1.5.0 开始，可以锁定搜索哪个参数源，<code>setParamSources()</code> 允许指定一个空数组或者一个带有一个或多个指示哪个参数源被允许（缺省两者都被允许）的值 '_GET'或'_POST'的数组；如果想限制只访问 '_GET'，那么指定 <code>setParamSources(array('_GET'))</code> 。
             </para>
 
             <note>
                 <title>Apache相关</title>
                 <para>
-		                如果使用apache的404处理器来传递请求到前端控制器，或者使用重写规则(rewrite rules)的PT标志，URI包含在<code>$_SERVER['REDIRECT_URL']</code>，而不是<code>$_SERVER['REQUEST_URI']</code>。如果使用这样的设定并获取无效的路由，应该使用<code>Zend_Controller_Request_Apache404</code>类代替默认的HTTP类：
+                        如果使用apache的404处理器来传递请求到前端控制器，或者使用重写规则(rewrite rules)的PT标志，URI包含在<code>$_SERVER['REDIRECT_URL']</code>，而不是<code>$_SERVER['REQUEST_URI']</code>。如果使用这样的设定并获取无效的路由，应该使用<code>Zend_Controller_Request_Apache404</code>类代替默认的HTTP类：
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -129,12 +129,12 @@ $front->setRequest($request);
             <note>
                 <title>URL检测区分大小写</title>
                 <para>
-		    基地址的自动检测是区分大小写的，因此需要确保URL与文件系统中的子目录匹配。否则将会引发异常。
+            基地址的自动检测是区分大小写的，因此需要确保URL与文件系统中的子目录匹配。否则将会引发异常。
                 </para>
             </note>
 
             <para>
-		如果基地址经检测不正确，可以利用<code>Zend_Controller_Request_Http</code>或者<code>Zend_Controller_Front</code>类的<code>setBaseUrl()</code>方法设置自己的基路径。<code>Zend_Controller_Front</code>设置最容易，它将导入基地址到请求对象。定制基地址的用法举例：
+        如果基地址经检测不正确，可以利用<code>Zend_Controller_Request_Http</code>或者<code>Zend_Controller_Front</code>类的<code>setBaseUrl()</code>方法设置自己的基路径。<code>Zend_Controller_Front</code>设置最容易，它将导入基地址到请求对象。定制基地址的用法举例：
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -151,7 +151,7 @@ $response   = $controller->dispatch();
             </programlisting>
 
         </sect3>
-        
+
         <sect3 id="zend.controller.request.http.method">
             <title> 决定请求方式 </title>
 
@@ -172,12 +172,12 @@ $response   = $controller->dispatch();
                 这些基本用例是来创建 RESTful MVC 架构的。
             </para>
         </sect3>
-            
+
         <sect3 id="zend.controller.request.http.ajax">
             <title>删除 AJAX 请求</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> 有一个初步的方法用来检测AJAX请求：<code>isXmlHttpRequest()</code>。这个方法寻找一个带有'XMLHttpRequest' 值的HTTP请求头<code>X-Requested-With</code>；如果发现，就返回true。 
+                <code>Zend_Controller_Request_Http</code> 有一个初步的方法用来检测AJAX请求：<code>isXmlHttpRequest()</code>。这个方法寻找一个带有'XMLHttpRequest' 值的HTTP请求头<code>X-Requested-With</code>；如果发现，就返回true。
             </para>
 
             <para>
@@ -202,7 +202,7 @@ $response   = $controller->dispatch();
         <title>子类化请求对象</title>
 
         <para>
-	    所有请求对象的基请求类是抽象类<code>Zend_Controller_Request_Abstract</code>。定义了一些最基本的方法：
+        所有请求对象的基请求类是抽象类<code>Zend_Controller_Request_Abstract</code>。定义了一些最基本的方法：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -291,11 +291,11 @@ abstract class Zend_Controller_Request_Abstract
         </programlisting>
 
         <para>
-	    请求对象是请求环境的容器。控制器链实际上只需要知道如何设置和获取控制器、动作，可选的参数以及分发的状态。默认的，请求将使用controller和action键查询自己的参数来确定控制器和动作。
+        请求对象是请求环境的容器。控制器链实际上只需要知道如何设置和获取控制器、动作，可选的参数以及分发的状态。默认的，请求将使用controller和action键查询自己的参数来确定控制器和动作。
         </para>
 
         <para>
-	    需要一个请求类来与特定的环境交互以获得需要的数据时，可以扩展该基类或它的衍生类。例如<link linkend="zend.controller.request.http">HTTP环境</link>，CLI环境，或者PHP-GTK环境。 
+        需要一个请求类来与特定的环境交互以获得需要的数据时，可以扩展该基类或它的衍生类。例如<link linkend="zend.controller.request.http">HTTP环境</link>，CLI环境，或者PHP-GTK环境。
         </para>
     </sect2>
 </sect1>

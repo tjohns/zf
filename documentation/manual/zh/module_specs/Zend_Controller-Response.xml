@@ -24,7 +24,7 @@ $response->sendResponse();
 
         <note>
             <para>
-				        默认地，前端控制器完成分发请求后调用<code>sendResponse()</code>；一般地，你不需要调用它。但是，如果你想处理响应或者用它来测试你可以使用<code>Zend_Controller_Front::returnResponse(true)</code>设置<code>returnResponse</code> 标志覆盖默认行为：
+                        默认地，前端控制器完成分发请求后调用<code>sendResponse()</code>；一般地，你不需要调用它。但是，如果你想处理响应或者用它来测试你可以使用<code>Zend_Controller_Front::returnResponse(true)</code>设置<code>returnResponse</code> 标志覆盖默认行为：
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -39,7 +39,7 @@ $response->sendResponse();
         </note>
 
         <para>
-			      开发人员可以在动作控制器中使用响应对象。把结果写进响应对象，而不是直接渲染输出和发送消息头：
+                  开发人员可以在动作控制器中使用响应对象。把结果写进响应对象，而不是直接渲染输出和发送消息头：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -52,7 +52,7 @@ $this->getResponse()
         </programlisting>
 
         <para>
-            这样做，可以在显示内容之前，将所有消息头一次发送。		
+            这样做，可以在显示内容之前，将所有消息头一次发送。
         </para>
 
         <note>
@@ -62,11 +62,11 @@ $this->getResponse()
         </note>
 
         <para>
-			      如果程序中发生了异常，检查响应对象的<code>isException()</code> 标志，使用<code>getException()</code>获取异常。此外，可以创建定制的响应对象重定向到错误页面，记录异常消息，漂亮的格式化异常消息等。			          
+                  如果程序中发生了异常，检查响应对象的<code>isException()</code> 标志，使用<code>getException()</code>获取异常。此外，可以创建定制的响应对象重定向到错误页面，记录异常消息，漂亮的格式化异常消息等。
         </para>
 
         <para>
-			      在前端控制器执行dispatch()后可以获得响应对象，或者请求前端控制器返回响应对象代替渲染输出。
+                  在前端控制器执行dispatch()后可以获得响应对象，或者请求前端控制器返回响应对象代替渲染输出。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -89,7 +89,7 @@ $response->sendResponse();
         </programlisting>
 
         <para>
-			      默认地，异常消息是不显示的。可以通过调用<code>renderExceptions()</code>覆盖默认设置。或者启用前端控制器的throwExceptions():
+                  默认地，异常消息是不显示的。可以通过调用<code>renderExceptions()</code>覆盖默认设置。或者启用前端控制器的throwExceptions():
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -113,7 +113,7 @@ $front->dispatch();
         <title>处理消息头</title>
 
         <para>
-			      如上文所述，响应对象的一项重要职责是收集和发出HTTP响应消息头，相应地存在大量的方法:
+                  如上文所述，响应对象的一项重要职责是收集和发出HTTP响应消息头，相应地存在大量的方法:
         </para>
 
         <itemizedlist>
@@ -129,7 +129,7 @@ $front->dispatch();
                 </para>
 
                 <para>
-					          设置消息头前，该方法先检查<code>canSendHeaders()</code>看操作是否允许，并请求抛出异常。
+                              设置消息头前，该方法先检查<code>canSendHeaders()</code>看操作是否允许，并请求抛出异常。
                 </para>
             </listitem>
 
@@ -139,7 +139,7 @@ $front->dispatch();
                 </para>
 
                 <para>
-					          其内部调用<code>setHeader()</code>并使<code>$replace</code> 标志呈打开状态确保只发送一次定位消息头。
+                              其内部调用<code>setHeader()</code>并使<code>$replace</code> 标志呈打开状态确保只发送一次定位消息头。
                 </para>
             </listitem>
 
@@ -164,7 +164,7 @@ $front->dispatch();
             <listitem>
                 <para>
                     <code>getRawHeaders()</code> 返回所有注册的原始消息头。
-			         </para>
+                     </para>
             </listitem>
 
             <listitem>
@@ -181,7 +181,7 @@ $front->dispatch();
         </itemizedlist>
 
         <para>
-			      除了上述方法，还有获取和设置当前请求HTTP响应码的访问器，            <code>setHttpResponseCode()</code> 和            <code>getHttpResponseCode()</code>.
+                  除了上述方法，还有获取和设置当前请求HTTP响应码的访问器，            <code>setHttpResponseCode()</code> 和            <code>getHttpResponseCode()</code>.
         </para>
     </sect2>
 
@@ -189,11 +189,11 @@ $front->dispatch();
         <title>命名片段</title>
 
         <para>
-			      相应对象支持“命名片段”。允许你将消息体分割成不同的片段，并呈一定顺序排列。因此输出的是以特定次序返回的。在其内部，主体内容被存储为一个数组，大量的访问器方法可以用来指示数组内位置和名称。
+                  相应对象支持“命名片段”。允许你将消息体分割成不同的片段，并呈一定顺序排列。因此输出的是以特定次序返回的。在其内部，主体内容被存储为一个数组，大量的访问器方法可以用来指示数组内位置和名称。
         </para>
 
         <para>
-			      举例来说，你可以使用<code>preDispatch()</code> 钩子来向响应对象中加入页头，然后在动作控制器中加入主体内容，最后在<code>postDispatch()</code>钩子中加入页脚。
+                  举例来说，你可以使用<code>preDispatch()</code> 钩子来向响应对象中加入页头，然后在动作控制器中加入主体内容，最后在<code>postDispatch()</code>钩子中加入页脚。
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -231,7 +231,7 @@ class MyController extends Zend_Controller_Action
         </programlisting>
 
         <para>
-			      上面的例子中，调用<code>/my/foo</code>会使得最终响应对象中的内容呈现下面的结构：           
+                  上面的例子中，调用<code>/my/foo</code>会使得最终响应对象中的内容呈现下面的结构：
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -294,13 +294,13 @@ array(
         <title>在响应对象中测试异常</title>
 
         <para>
-			      如上文所述，默认的，分发过程中的异常发生会在响应对象中注册。异常会注册在一个堆中，允许你抛出所有异常--程序异常，分发异常，插件异常等。如果你要检查或者记录特定的异常，你可能想要使用响应对象的异常API：
+                  如上文所述，默认的，分发过程中的异常发生会在响应对象中注册。异常会注册在一个堆中，允许你抛出所有异常--程序异常，分发异常，插件异常等。如果你要检查或者记录特定的异常，你可能想要使用响应对象的异常API：
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setException(Exception $e)</code> 注册一个异常。	
+                    <code>setException(Exception $e)</code> 注册一个异常。
                 </para>
             </listitem>
 
@@ -364,15 +364,15 @@ array(
         <title>子类化响应对象</title>
 
         <para>
-			      响应对象的目的首先在于从大量的动作和插件中收集消息头和内容，然后返回到客户端；其次，响应对象也收集发生的任何异常，以处理或者返回这些异常，再或者对终端用户隐藏它们。
+                  响应对象的目的首先在于从大量的动作和插件中收集消息头和内容，然后返回到客户端；其次，响应对象也收集发生的任何异常，以处理或者返回这些异常，再或者对终端用户隐藏它们。
         </para>
 
         <para>
-			      响应的基类是<code>Zend_Controller_Response_Abstract</code>，创建的任何子类必须继承这个类或它的衍生类。前面的章节中已经列出了大量可用的方法。
+                  响应的基类是<code>Zend_Controller_Response_Abstract</code>，创建的任何子类必须继承这个类或它的衍生类。前面的章节中已经列出了大量可用的方法。
         </para>
 
         <para>
-			      子类化响应对象的原因包括基于请求环境修改返回的内容的输出方式（例如：在CLI和PHP-GTK请求中不发送消息头）增加返回存储在命名片段中内容的最终视图的功能等等。
+                  子类化响应对象的原因包括基于请求环境修改返回的内容的输出方式（例如：在CLI和PHP-GTK请求中不发送消息头）增加返回存储在命名片段中内容的最终视图的功能等等。
         </para>
     </sect2>
 </sect1>

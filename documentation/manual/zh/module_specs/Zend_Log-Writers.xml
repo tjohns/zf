@@ -63,9 +63,9 @@ $logger->info('Informational message');
   <sect2 id="zend.log.writers.database">
     <title>写入到数据库</title>
     <para>
-		<code>Zend_Log_Writer_Db</code>使用<code>Zend_Db</code>写入日志信息到数据库表中.
-		<code>Zend_Log_Writer_Db</code>的构造函数接受一个<code>Zend_Db_Adapter</code>
-		实例,一个表名,和一个数据库字段到事件数据项的映射:
+        <code>Zend_Log_Writer_Db</code>使用<code>Zend_Db</code>写入日志信息到数据库表中.
+        <code>Zend_Log_Writer_Db</code>的构造函数接受一个<code>Zend_Db_Adapter</code>
+        实例,一个表名,和一个数据库字段到事件数据项的映射:
       <programlisting role="php"><![CDATA[
 $params = array ('host'     => '127.0.0.1',
                  'username' => 'malory',
@@ -87,7 +87,7 @@ $logger->info('Informational message');
     </para>
 
   </sect2>
-  
+
 <xi:include href="Zend_Log-Writers-Firebug.xml">
     <xi:fallback href="../en/module_specs/Zend_Log-Writers-Firebug.xml"/>
 </xi:include>
