@@ -159,7 +159,7 @@
 ]]></programlisting>
             Chaque ligne se décompose en 3 champs - <code>username</code>, <code>realm</code>, et
             <code>credentials</code> - séparés par des deux-points. Le résolveur ne fait que retourner la valeur de
-            "<code>credentials</code>". Ainsi, avec Basic cette valeur devra être le mot de passe en clair 
+            "<code>credentials</code>". Ainsi, avec Basic cette valeur devra être le mot de passe en clair
             de l'utilisateur identifié par <code>username</code>. En mode Digest, la valeur MD5 de toute la
             chaîne <code>username:realm:password</code> (avec les deux-points).</para>
 

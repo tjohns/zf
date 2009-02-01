@@ -420,7 +420,7 @@ $index->addDocument($doc);
             also have second optional argument. If it's set to true, then body content is also stored within index and can
             be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
         </para>
-    
+
         <para>
             Parsed documents may be augmented by the programmer with any other field:
             <programlisting role="php"><![CDATA[
