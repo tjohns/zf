@@ -16,7 +16,7 @@
         </itemizedlist>
     </para>
     <para>
-        <code>getRecipients()</code>によりあて先一覧を取得します。 
+        <code>getRecipients()</code>によりあて先一覧を取得します。
         <code>clearRecipients()</code>によりあて先一覧を消去します。
     </para>
     <note>

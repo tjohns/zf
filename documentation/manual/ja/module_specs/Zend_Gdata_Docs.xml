@@ -115,7 +115,7 @@ function uploadDocument($docs, $html, $originalFileName,
             カテゴリを使用して、ドキュメントの種類 (ワープロ文書、
             スプレッドシート) を絞り込みます。
             フルテキストのクエリ文字列を使用して、ドキュメントの全文検索を行います。
-            ドキュメントの一覧に固有のパラメータについての詳細な情報は、 <ulink 
+            ドキュメントの一覧に固有のパラメータについての詳細な情報は、 <ulink
             url="http://code.google.com/apis/documents/reference.html#Parameters">
             Documents List Data API リファレンスガイド</ulink>
             を参照ください。

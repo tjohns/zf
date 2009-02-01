@@ -71,7 +71,7 @@ $log->error('unable to connect to database');
             <code>Zend_Layout</code> がレンダリングした値をメッセージの本文
             HTML として設定します。
         </para>
-  
+
         <para>
             <code>Zend_Log_Writer_Mail</code> で
             <code>Zend_Layout</code> のインスタンスを使う場合には、
@@ -80,7 +80,7 @@ $log->error('unable to connect to database');
             現在使用中のものをそのまま使います。
             <code>Zend_Layout</code> で独自のフォーマッタを使用する方法を以下に示します。
         </para>
-  
+
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setFrom('errors@example.org')

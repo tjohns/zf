@@ -199,7 +199,7 @@ function getAuthSubUrl()
     $scope = 'http://picasaweb.google.com/data';
     $secure = false;
     $session = true;
-    return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure, 
+    return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure,
         $session);
 }
 
@@ -219,7 +219,7 @@ function getAuthSubHttpClient()
     if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
         $_SESSION['sessionToken'] =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
-    } 
+    }
     $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
     return $client;
 }

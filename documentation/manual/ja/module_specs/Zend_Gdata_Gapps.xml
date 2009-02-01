@@ -559,7 +559,7 @@ foreach ($feed as $nickname) {
 $feed = $gdata->retrieveAllNicknames();
 
 foreach ($feed as $nickname) {
-    echo '  * ' . $nickname->nickname->name . ' => ' . 
+    echo '  * ' . $nickname->nickname->name . ' => ' .
         $nickname->login->username . "\n";
 }
 ]]>
@@ -579,7 +579,7 @@ foreach ($feed as $nickname) {
 $feed = $gdata->getNicknameFeed();
 
 foreach ($feed as $nickname) {
-    echo '  * ' . $nickname->nickname->name . ' => ' . 
+    echo '  * ' . $nickname->nickname->name . ' => ' .
         $nickname->login->username . "\n";
 }
 ]]>

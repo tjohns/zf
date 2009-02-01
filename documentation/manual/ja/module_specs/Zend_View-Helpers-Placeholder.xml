@@ -92,7 +92,7 @@
 <!-- 後で使用するビュースクリプト -->
 <?php
 $this->placeholder('foo')->setPrefix("<ul>\n    <li>")
-                         ->setSeparator("</li><li>\n") 
+                         ->setSeparator("</li><li>\n")
                          ->setIndent(4)
                          ->setPostfix("</li></ul>\n");
 ?>

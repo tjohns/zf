@@ -324,8 +324,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     private $_discovery_table;
     private $_nonce_table;
 
-	// Zend_Db_Adapter オブジェクトと
-	// テーブル名を渡します
+    // Zend_Db_Adapter オブジェクトと
+    // テーブル名を渡します
     public function __construct($db,
                                 $association_table = "association",
                                 $discovery_table = "discovery",
@@ -348,7 +348,7 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " expires timestamp" .
                 ")");
         }
-        
+
         // ディスカバリーテーブルが存在しない場合は作成します
         if (!in_array($discovery_table, $tables)) {
             $this->_db->getConnection()->exec(
@@ -360,7 +360,7 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
                 " expires timestamp" .
                 ")");
         }
-        
+
         // ノンステーブルが存在しない場合は作成します
         if (!in_array($nonce_table, $tables)) {
             $this->_db->getConnection()->exec(
