@@ -67,7 +67,7 @@ $log->error('unable to connect to database');
             being used to render HTML and sets the body HTML for the message as
             the <code>Zend_Layout</code>-rendered value.
         </para>
-  
+
         <para>
             When using <code>Zend_Log_Writer_Mail</code> with a
             <code>Zend_Layout</code> instance, you have the option to set a
@@ -77,7 +77,7 @@ $log->error('unable to connect to database');
             of <code>Zend_Layout</code> with a custom formatter is outlined
             below.
         </para>
-  
+
         <programlisting role="php"><![CDATA[
 $mail = new Zend_Mail();
 $mail->setFrom('errors@example.org')

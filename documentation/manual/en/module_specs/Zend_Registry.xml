@@ -266,7 +266,7 @@ if (isset($registry->index)) {
             Use the static method <code>setClassName()</code> to specify
             the class.
             <note>
-            	The class must be a subclass of <code>Zend_Registry</code>.
+                The class must be a subclass of <code>Zend_Registry</code>.
             </note>
         </para>
 
