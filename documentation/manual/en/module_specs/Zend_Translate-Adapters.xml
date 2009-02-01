@@ -358,7 +358,7 @@ try {
         </para>
 
         <programlisting role="php"><![CDATA[
-$cache = Zend_Cache::factory('Page',
+$cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
