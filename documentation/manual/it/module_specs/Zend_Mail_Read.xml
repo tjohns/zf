@@ -294,6 +294,7 @@ echo '</pre>';]]>
         <para>
             La verifica di un messaggio multipart avviene con il metodo <code>isMultipart()</code>.
             In caso positivo, è possibile ottenere un'istanza di <code>Zend_Mail_Part</code> con il metodo <code>getPart()</code>. <code>Zend_Mail_Part</code> è la classe alla base di <code>Zend_Mail_Message</code>, quindi si ha accesso agli stessi metodi: <code>getHeader()</code>, <code>getHeaders()</code>, <code>getContent()</code>, <code>getPart()</code>, <code>isMultipart</code> e le proprietà per le intestazioni.
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 // recupera la prima parte non multipart
