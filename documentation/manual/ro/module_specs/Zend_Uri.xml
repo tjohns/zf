@@ -44,7 +44,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http');
 
 // $uri instanceof Zend_Uri_Http?>]]>
-		</programlisting>
+        </programlisting>
     </example>
 
     <para>
@@ -109,7 +109,7 @@ require_once 'Zend/Uri.php';
 $valid = Zend_Uri::check('http://uri.de.validat');
 
 // $valid este TRUE pentru un URI valid sau FALSE în caz contrar.?>]]>
-		</programlisting>
+        </programlisting>
     </example>
 
     <para>
@@ -145,7 +145,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $scheme = $uri->getScheme();  // "http"]]>
-		</programlisting>
+        </programlisting>
     </example>
 
       <para>
@@ -167,7 +167,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 echo $uri->getUri();  // "http://www.zend.com"]]>
-		</programlisting>
+        </programlisting>
       </example>
 
       <para>
@@ -197,7 +197,7 @@ require_once 'Zend/Uri.php';
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 $isValid = $uri->valid();  // TRUE]]>
-		</programlisting>
+        </programlisting>
       </example>
 
       <para>

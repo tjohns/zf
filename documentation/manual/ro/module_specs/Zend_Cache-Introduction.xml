@@ -36,16 +36,16 @@ $backendOptions = array(
 
 // getting a Zend_Cache_Core object
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);?>]]>
-			</programlisting>
+            </programlisting>
     </example>
 
     <note>
         <title>Frontend şi backend construit din mai multe cuvinte</title>
         <para>
-			Numele unor interfeţe şi backend-uri este construit din mai multe
-			cuvinte, cum ar fi „ZendPlatform”. Când le specificaţi fabricii,
-			separaţi-le cu un separator cum ar fi spaţiu („ ”), liniuţă („-”)
-			sau punct („.”).
+            Numele unor interfeţe şi backend-uri este construit din mai multe
+            cuvinte, cum ar fi „ZendPlatform”. Când le specificaţi fabricii,
+            separaţi-le cu un separator cum ar fi spaţiu („ ”), liniuţă („-”)
+            sau punct („.”).
         </para>
     </note>
 
@@ -80,17 +80,17 @@ if(!$result = $cache->load('myresult')) {
 }
 
 print_r($result);?>]]>
-		</programlisting>
+        </programlisting>
     </example>
 
     <example id="zend.cache.introduction.example-3">
         <title>Punerea în cache a textelor afişate cu interfaţa de ieşire din <code>Zend_Cache</code></title>
         <para>
-			Marcăm secţiuni în care dorim să punem în cache textele care vor fi afişate adăugând nişte condiţii,
-			mai exact încapsulăm fiecare secţiune între metodele <code>start()</code> şi <code>end()</code> 
+            Marcăm secţiuni în care dorim să punem în cache textele care vor fi afişate adăugând nişte condiţii,
+            mai exact încapsulăm fiecare secţiune între metodele <code>start()</code> şi <code>end()</code>
         </para><para>
-			În secţiune, afişaţi datele în mod normal - tot ceea ce este afişat va fi pus în cache în loc să fie afişat
-			până când este executată metoda <code>end()</code> (este poate cel mai util exemplu de a folosi această clasă).
+            În secţiune, afişaţi datele în mod normal - tot ceea ce este afişat va fi pus în cache în loc să fie afişat
+            până când este executată metoda <code>end()</code> (este poate cel mai util exemplu de a folosi această clasă).
             La următoarea rulare, codul din secţiune nu va mai fi executat, rezultatul aflându-se deja în cache
             (cu condiţia ca înregistrarea din cache să fie validă).
         </para>
@@ -114,16 +114,16 @@ if(!$cache->start('mypage')) {
     $cache->end(); // ieşirea este salvată şi trimisă navigatorului
 }
 
-echo 'Acest text nu este păstrat în cache niciodată ('.time().').';?>]]>       
-		</programlisting>
-		<para>
-		   Notaţi că afişăm rezultatul funcţiei <code>time()</code> de două ori; o facem în scop 
-		   demonstrativ. Încercaţi să reîmprospătaţi pagina de mai multe ori; veţi vedea că primul 
-		   număr nu se schimbă în timp ce al doilea se schimbă pe măsură ce trece timpul. Acest 
-		   lucru se întâmplă pentru că primul număr a fost salvat în cache şi este citit de acolo la a doua 
-		   accesare. După jumătate de minut (am setat timpul de expirare la 30 de secunde) numerele
-		   ar trebui să se potrivească din nou pentru că înregistrarea din cache a expirat -- doar pentru ca 
-		   rezultatul să fie din nou pus în cache. Ar trebui să încercaţi codul acesta în navigator sau în consolă.
+echo 'Acest text nu este păstrat în cache niciodată ('.time().').';?>]]>
+        </programlisting>
+        <para>
+           Notaţi că afişăm rezultatul funcţiei <code>time()</code> de două ori; o facem în scop
+           demonstrativ. Încercaţi să reîmprospătaţi pagina de mai multe ori; veţi vedea că primul
+           număr nu se schimbă în timp ce al doilea se schimbă pe măsură ce trece timpul. Acest
+           lucru se întâmplă pentru că primul număr a fost salvat în cache şi este citit de acolo la a doua
+           accesare. După jumătate de minut (am setat timpul de expirare la 30 de secunde) numerele
+           ar trebui să se potrivească din nou pentru că înregistrarea din cache a expirat -- doar pentru ca
+           rezultatul să fie din nou pus în cache. Ar trebui să încercaţi codul acesta în navigator sau în consolă.
        </para>
     </example>
     <note><para>
