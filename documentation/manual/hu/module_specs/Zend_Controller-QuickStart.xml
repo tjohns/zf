@@ -129,13 +129,13 @@ Zend_Controller_Front::run('/eléresi/út/a/vezérlőkhöz');]]>
                 műveletből
                 <code>componentsAction</code>
                 lesz, és végül a tagfüggvény neve
-                <code>RoadmapController::componentsAction()<code>.
+                <code>RoadmapController::componentsAction()</code>.
             </para>
             <para>
                 Továbblépve tehát, csináljunk egy alapértelmezett műveletvezérlőt és művelet tagfüggvényt. Ahogy azt korábban megjegyeztük, az alapértelmezett vezérlő és művelet neve is
                 <code>index</code>.
                 Nyisd meg az
-                <code>application/controllers/IndexController.php<code>
+                <code>application/controllers/IndexController.php</code>
                 állományt, és írd a következőt:
             </para>
             <programlisting role="php">
@@ -214,7 +214,7 @@ class IndexController extends Zend_Controller_Action
                 be van jegyezve. Ez az bővítmény azt várja, hogy létezik egy vezérlő, ami kezeli a hibákat. Feltételez egy
                 <code>ErrorControllert</code>
                 az alapértelmezett modulban, egy
-                <code>errorAction()<code>
+                <code>errorAction()</code>
                 tagfüggvénnyel:
             </para>
             <programlisting role="php">

@@ -152,7 +152,7 @@
         fogadja a kérést, majd meghívja a
         <code>Zend_Controller_Router_Rewrite</code>-ot,
         hogy megállapítsa, melyik vezérlőnek (és műveletnek abban a vezérlőben) kézbesítsen. A
-        <code>Zend_Controller_Router_Rewrite<code>
+        <code>Zend_Controller_Router_Rewrite</code>
         felbontja az URI-t, hogy beállítsa a vezérlő és művelet neveket a kérésben. Ezután a
         <code>Zend_Controller_Front</code>
         belép a kézbesítési ciklusba. Meghívja a
