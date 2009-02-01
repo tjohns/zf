@@ -1,6 +1,6 @@
 <sect1 id="zend.acl.advanced">
 
-    <title>Penggunaan Tingkat Lanjut/title>
+    <title>Penggunaan Tingkat Lanjut</title>
 
     <sect2 id="zend.acl.advanced.storing">
 
@@ -87,7 +87,7 @@ $acl->allow(null, null, null, new CleanIPAssertion());
         (ingat kembali sifat Zend_Acl di <link linkend="zend.acl.introduction">sub bab sebelumnya</link>
         yang default-nya menolak semua role untuk mengakses semua resource).
         Namun jika anda menetapkan aturan tertentu pada role, resource dan/atau hak akses tertentu, maka class assert yang
-        bernilai <code>false</false> hanya akan membuat aturan itu saja yang tidak berlaku, sementara aturan lain
+        bernilai <code>false</code> hanya akan membuat aturan itu saja yang tidak berlaku, sementara aturan lain
         yang mungkin ada tetap berlaku.
         </para>
 
