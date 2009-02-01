@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13463 -->
+<!-- EN-Revision: 13850 -->
 <sect1 id="zend.cache.introduction">
     <title>Einführung</title>
     <para>
@@ -139,7 +139,7 @@ echo 'Das wird nie gecached ('.time().').';
         </para>
     </example>
     <note><para>
-        Wenn Zend_Cache benutzt wird, muß auf die wichtigen Cache Identifizierungen geachtet werden (welche an
+        Wenn <code>Zend_Cache</code> benutzt wird, muß auf die wichtigen Cache Identifizierungen geachtet werden (welche an
         <code>save()</code> und <code>start()</code> übergeben werden). Diese müssen für jede Ressource
         einzigartig sein, die gecached werden soll. Andernfalls würden sich unverknüpfte Cache Datensätze gegenseitig
         entfernen oder, noch schlimmer, anstatt des anderen dargestellt werden.
