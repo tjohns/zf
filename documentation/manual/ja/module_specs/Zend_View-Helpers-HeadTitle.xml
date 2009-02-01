@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12116 -->
 <sect3 id="zend.view.helpers.initial.headtitle">
     <title>HeadTitle ヘルパー</title>
 
@@ -34,7 +34,7 @@
             つまりサイト、コントローラ、アクションその他のリソースについての情報を示すことがあります。
         </para>
 
-        <programlisting role="php"><![CDATA[ 
+        <programlisting role="php"><![CDATA[
 // コントローラとアクションの名前を title 部に設定します
 $request = Zend_Controller_Front::getInstance()->getRequest();
 $this->headTitle($request->getActionName())
@@ -45,8 +45,8 @@ $this->headTitle('Zend Framework');
 
 // 各部分を区切る文字列を設定します
 $this->headTitle()->setSeparator(' / ');
-?>
-]]></programlisting>
+]]>
+        </programlisting>
 
         <para>
             最後に、レイアウトスクリプト内でタイトルをレンダリングする際にそれを出力するだけです。
@@ -55,7 +55,8 @@ $this->headTitle()->setSeparator(' / ');
         <programlisting role="php"><![CDATA[
 <!-- <アクション名> / <コントローラ名> / Zend Framework と出力されます -->
 <?= $this->headTitle() ?>
-]]></programlisting>
+]]>
+        </programlisting>
     </example>
 </sect3>
 <!--

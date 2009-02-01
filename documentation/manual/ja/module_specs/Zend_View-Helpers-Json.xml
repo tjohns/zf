@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 11090 -->
 <sect3 id="zend.view.helpers.initial.json">
     <title>JSON ヘルパー</title>
 
@@ -16,7 +16,8 @@
 
     <programlisting role="text"><![CDATA[
 Content-Type: application/json
-]]></programlisting>
+]]>
+</programlisting>
 
     <para>
         たいていの AJAX ライブラリは、
@@ -29,7 +30,8 @@ Content-Type: application/json
 
     <programlisting role="php"><![CDATA[
 <?= $this->json($this->data) ?>
-?>]]></programlisting>
+]]>
+    </programlisting>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:
