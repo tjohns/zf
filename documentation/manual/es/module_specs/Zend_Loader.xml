@@ -11,12 +11,12 @@
     <tip>
         <title>Zend_Loader vs. require_once()</title>
         <para>
-            Los métodos de <code>Zend_Loader</code> son mejor usados si el 
-            nombreare de archivo que necesita cargar es variable. Por ejemplo, 
-            si esta se basa en un parametro de entrada del usuario o argumento 
+            Los métodos de <code>Zend_Loader</code> son mejor usados si el
+            nombreare de archivo que necesita cargar es variable. Por ejemplo,
+            si esta se basa en un parametro de entrada del usuario o argumento
             de un método. Si carga un archivo o clase cuyo nombres constante, no
-            hay ningún beneficio al usar <code>Zend_Loader</code> sobre el uso 
-            de funciones tradicionales de PHP como es 
+            hay ningún beneficio al usar <code>Zend_Loader</code> sobre el uso
+            de funciones tradicionales de PHP como es
             <ulink url="http://php.net/require_once"><code>require_once()</code></ulink>.
         </para>
     </tip>

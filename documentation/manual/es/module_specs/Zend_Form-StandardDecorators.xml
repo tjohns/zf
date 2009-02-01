@@ -12,12 +12,12 @@
 
         <para>
             El decorador de Callback (llamada de retorno) permite ejecutar una llamada de retorno al
-			contenido que se va a mostrar. Las llamadas de retorno deben especificarse a través
-			de la opción 'callback' pasada en la configuración del decorador, y pueden
-			ser de cualquier valor de llamada de retorno PHP. Los Callbacks deben
-			aceptar tres argumentos: <code>$content</code> (el contenido original
-			enviado al decorador), <code>$element</code> (el objeto que se está decorando),
-			y un array de <code>$options</code>. Un callback de ejemplo sería:
+            contenido que se va a mostrar. Las llamadas de retorno deben especificarse a través
+            de la opción 'callback' pasada en la configuración del decorador, y pueden
+            ser de cualquier valor de llamada de retorno PHP. Los Callbacks deben
+            aceptar tres argumentos: <code>$content</code> (el contenido original
+            enviado al decorador), <code>$element</code> (el objeto que se está decorando),
+            y un array de <code>$options</code>. Un callback de ejemplo sería:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -58,10 +58,10 @@ class Util
 
         <para>
             Una variante del decorador Captcha, 'Captcha_Word', es usada frecuentemente,
-			y crea dos elementos, un id y una entrada (input). El id indica
-			el identificador de sesión que hay que comparar, y la entrada es para
-			la verificación de usuario del captcha. Éstos elementos son validados
-			como un sólo elemento.
+            y crea dos elementos, un id y una entrada (input). El id indica
+            el identificador de sesión que hay que comparar, y la entrada es para
+            la verificación de usuario del captcha. Éstos elementos son validados
+            como un sólo elemento.
         </para>
     </sect2>
 
@@ -78,12 +78,12 @@ class Util
 
         <para>
             Por defecto, si no se encuentra la descripción, no se genera ninguna salida.
-			Si la descripción está presente, entonces se envolverá en una etiqueta 
+            Si la descripción está presente, entonces se envolverá en una etiqueta
             <code>p</code> HTML por defecto, aunque tiene la posibilidad de especificar
-			una etiqueta pasando una opción <code>tag</code> al crear el decorador, o 
-			llamando a <code>setTag()</code>. También puede especificar una clase
-			para el ta usando la opción <code>class</code> o llamando a 
-			<code>setClass()</code>; por defecto, se usa la clase 'hint'.
+            una etiqueta pasando una opción <code>tag</code> al crear el decorador, o
+            llamando a <code>setTag()</code>. También puede especificar una clase
+            para el ta usando la opción <code>class</code> o llamando a
+            <code>setClass()</code>; por defecto, se usa la clase 'hint'.
         </para>
 
         <para>
@@ -136,7 +136,7 @@ class Util
 
         <para>
             El decorador de Errores puede anteponerse o postponerse al contenido
-			que se le provee.
+            que se le provee.
         </para>
     </sect2>
 
@@ -196,10 +196,10 @@ class Util
 
         <para>
             Algunos desarrolladores y diseñadores prefieren agrupar todos los
-			mensajes de error en la parte superior del formulario. El decorador
-			FormErrors le permite hacer esto.
+            mensajes de error en la parte superior del formulario. El decorador
+            FormErrors le permite hacer esto.
         </para>
-        
+
         <para>
             Por defecto, la lista de errores generada tiene el siguiente marcado:
         </para>
@@ -263,8 +263,8 @@ class Util
         </itemizedlist>
 
         <para>
-			El decorador FormErrors puede anteponerse o postponerse al contenido
-			que se le provee.
+            El decorador FormErrors puede anteponerse o postponerse al contenido
+            que se le provee.
         </para>
     </sect2>
 
