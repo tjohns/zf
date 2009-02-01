@@ -111,7 +111,8 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     protected $_options = array(
         'ignoreNoFile'  => false,
-        'useByteString' => true
+        'useByteString' => true,
+        'magicFile'     => null
     );
 
     /**
@@ -1116,6 +1117,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * Returns the real filesize of the file
      *
      * @param string|array $files Files to get the filesize from
+     * @throws Zend_File_Transfer_Exception When the file does not exist
      * @return string|array Filesize
      */
     public function getFileSize($files = null)
@@ -1136,6 +1138,56 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 $result[$key] = $this->_toByteString($size);
             } else {
                 $result[$key] = $size;
+            }
+        }
+
+        if (count($result) == 1) {
+            return current($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the real mimetype of the file
+     * Uses fileinfo, when not available mime_magic and as last fallback a manual given mimetype
+     *
+     * @param string|array $files Files to get the mimetype from
+     * @throws Zend_File_Transfer_Exception When the file does not exist
+     * @return string|array Filesize
+     */
+    public function getMimeType($files = null)
+    {
+        $files  = $this->_getFiles($files);
+        $result = array();
+        foreach($files as $key => $value) {
+            if (file_exists($value['name'])) {
+                $file = $value['name'];
+            } else if (file_exists($value['tmp_name'])) {
+                $file = $value['tmp_name'];
+            } else {
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception("File '{$value['name']}' does not exist");
+            }
+
+            if (class_exists('finfo', false) && ((!empty($value['options']['magicFile'])) or (defined('MAGIC')))) {
+                if (!empty($value['options']['magicFile'])) {
+                    $mime = new finfo(FILEINFO_MIME, $value['options']['magicFile']);
+                } else {
+                    $mime = new finfo(FILEINFO_MIME);
+                }
+
+                $result[$key] = $mime->file($file);
+                unset($mime);
+            } elseif (function_exists('mime_content_type') && ini_get('mime_magic.magicfile')) {
+                $result[$key] = mime_content_type($file);
+            } else {
+                $result[$key] = $value['type'];
+            }
+
+            if (empty($result[$key])) {
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception("The mimetype of file '{$value['name']}' could not been detected");
             }
         }
 

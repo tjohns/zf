@@ -221,6 +221,13 @@ $upload->receive();
                     returns a hash of the content of a given transferred file.
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getMimeType($files = null)</emphasis>: This method returns the
+                    mimetype of a given transferred file.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -312,6 +319,35 @@ $names = $upload->getHash('crc32', 'foo');
             <para>
                 Note that if the given file or form name contains more than one file, the returned
                 value will be an array.
+            </para>
+        </note>
+
+        <para>
+            <code>getMimeType()</code> returns the mimetype of a file. If more than one file was uploaded
+            it returns an array, otherwise a string.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.getmimetype">
+            <title>Getting the mimetype of a file</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+$mime = $upload->getMimeType();
+
+// Returns the mimetype for the 'foo' form element
+$names = $upload->getMimeType('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Note that this method uses the fileinfo extension if it is available. If this extension can
+                not be found, it uses the mimemagic extension. When no extension was found it uses the
+                mimetype given by the fileserver when the file was uploaded.
             </para>
         </note>
     </sect2>

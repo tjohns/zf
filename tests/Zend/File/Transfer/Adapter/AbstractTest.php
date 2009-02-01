@@ -694,6 +694,21 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($options['baz']['useByteString']);
         $this->assertEquals(8, $this->adapter->getFileSize('baz.text'));
     }
+
+    public function testMimeTypeButNoFileFound()
+    {
+        try {
+            $this->assertEquals('image/jpeg', $this->adapter->getMimeType());
+            $this->fail();
+        } catch (Zend_File_Transfer_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+    }
+
+    public function testMimeTypeByTmpName()
+    {
+        $this->assertEquals('text/plain', $this->adapter->getMimeType('baz.text'));
+    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract

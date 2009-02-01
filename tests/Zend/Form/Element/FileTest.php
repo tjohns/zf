@@ -364,6 +364,15 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(8, $element->getFileSize('baz.text'));
     }
 
+    public function testMimeType()
+    {
+        $element = new Zend_Form_Element_File('baz');
+        $adapter = new Zend_Form_Element_FileTest_MockAdapter();
+        $element->setTransferAdapter($adapter);
+
+        $this->assertEquals('text/plain', $element->getMimeType('baz.text'));
+    }
+
     private function _convertIniToInteger($setting)
     {
         if (!is_numeric($setting)) {

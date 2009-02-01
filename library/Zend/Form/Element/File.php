@@ -803,6 +803,17 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Returns the mimetype for this file element
+     *
+     * @return string|array Mimetype
+     */
+    public function getMimeType()
+    {
+        $adapter = $this->getTransferAdapter();
+        return $adapter->getMimeType($this->getName());
+    }
+
+    /**
      * Render form element
      * Checks for decorator interface to prevent errors
      *
