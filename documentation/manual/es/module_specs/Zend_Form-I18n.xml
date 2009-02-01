@@ -4,7 +4,7 @@
     <para>
         Cada vez más, desarrolladores necesitan adaptar su contenido para multiples
         idiomas y regiones. Zend_Form intenta hacer de ésta una tarea trivial, y
-        provee funcionalidad en ambas
+        provee funcionalidad en ambas <link
             linkend="zend.translate">Zend_Translate</link> y <link
             linkend="zend.validate">Zend_Validate</link> para realizar esa funcionalidad.
     </para>
