@@ -11,19 +11,19 @@
         <title>Gerekli PHP versiyonu</title>
 
         <para>
-		Zend Framework PHP 5.1.4 veya yenisini gerektiriyor. Bazı SPL arayüzleri <code>Countable</code> 
-		gibi , PHP'nin önceki sürümlerinde kararlı değildi.
+        Zend Framework PHP 5.1.4 veya yenisini gerektiriyor. Bazı SPL arayüzleri <code>Countable</code>
+        gibi , PHP'nin önceki sürümlerinde kararlı değildi.
         </para>
 
         <para>
-	    Zend Framework PHPUnit 3.0 veya yenisiyle çalıştırabileceğiniz geniş kapsamlı 
-	    otomatikleşmiş testler içermektedir.PHPUnit'in bu versiyonu da ayrıca PHP 5.1.4
-	    veya yenisini gerektirmektedir.
+        Zend Framework PHPUnit 3.0 veya yenisiyle çalıştırabileceğiniz geniş kapsamlı
+        otomatikleşmiş testler içermektedir.PHPUnit'in bu versiyonu da ayrıca PHP 5.1.4
+        veya yenisini gerektirmektedir.
         </para>
         <para>
-            Yukarıda bahsedilen PHP versiyonunda Zend Framework doğru olarak çalışaktır ama 
-	    buna rağmen PHP 5.2.3 veya yenisini kullanmanızı şiddetle tavsiye ediyoruz.
-	    PHP'nin yeni versiyonunda  önemli güvenlik ve performans geliştirmeleri  var.	    
+            Yukarıda bahsedilen PHP versiyonunda Zend Framework doğru olarak çalışaktır ama
+        buna rağmen PHP 5.2.3 veya yenisini kullanmanızı şiddetle tavsiye ediyoruz.
+        PHP'nin yeni versiyonunda  önemli güvenlik ve performans geliştirmeleri  var.
         </para>
 
     </sect1>
@@ -33,12 +33,12 @@
         <title>PHP Eklentileri</title>
 
         <para>
-            Aşağıdaki tablo PHP'de tipik olarak bulunan eklentileri listelemektedir , 
-	    ve Zend Framework'de nasıl kullanıldıklarını göstermektedir.	    
-	    Bu size hangi eklentilerin uygulamanız için gerekli olabileceği konusunda 
-	    yol gösterebilir.
-	    Zend Framework tarafından kullanılan tüm eklentiler her uygulama tarafından
-	    ihtiyaç duyulmayacaktır.
+            Aşağıdaki tablo PHP'de tipik olarak bulunan eklentileri listelemektedir ,
+        ve Zend Framework'de nasıl kullanıldıklarını göstermektedir.
+        Bu size hangi eklentilerin uygulamanız için gerekli olabileceği konusunda
+        yol gösterebilir.
+        Zend Framework tarafından kullanılan tüm eklentiler her uygulama tarafından
+        ihtiyaç duyulmayacaktır.
         </para>
 
         <table frame='all' id="requirements.extensions.table-1">
@@ -114,18 +114,18 @@
                         <entry>dom</entry>
                         <entry>Bağımlı</entry>
                         <entry>
-				<ulink url="http://framework.zend.com/manual/tr/zend.feed.html"><code>Zend_Feed</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.gdata.html"><code>Zend_Gdata</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.log.formatters.html"><code>Zend_Log_Formatter_Xml</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.service.amazon.html"><code>Zend_Service_Amazon</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.service.delicious.html"><code>Zend_Service_Delicious</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.service.flickr.html"><code>Zend_Service_Flickr</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.service.simpy.html"><code>Zend_Service_Simpy</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.service.yahoo.html"><code>Zend_Service_Yahoo</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.xmlrpc.html"><code>Zend_XmlRpc</code></ulink>		
-			</entry>
+                <ulink url="http://framework.zend.com/manual/tr/zend.feed.html"><code>Zend_Feed</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.gdata.html"><code>Zend_Gdata</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.log.formatters.html"><code>Zend_Log_Formatter_Xml</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.search.lucene.html"><code>Zend_Search_Lucene</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.service.amazon.html"><code>Zend_Service_Amazon</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.service.delicious.html"><code>Zend_Service_Delicious</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.service.flickr.html"><code>Zend_Service_Flickr</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.service.simpy.html"><code>Zend_Service_Simpy</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.service.yahoo.html"><code>Zend_Service_Yahoo</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.xmlrpc.html"><code>Zend_XmlRpc</code></ulink>
+            </entry>
                     </row>
                     <row>
                         <entry>exif</entry>
@@ -361,17 +361,17 @@
                         <entry>Reflection</entry>
                         <entry>Bağımlı</entry>
                         <entry>
-				<ulink url="http://framework.zend.com/manual/tr/zend.controller.html"><code>Zend_Controller</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.filter.html"><code>Zend_Filter</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.filter.input.html"><code>Zend_Filter_Input</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.json.html"><code>Zend_Json</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.log.html"><code>Zend_Log</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.server.reflection.html"><code>Zend_Server_Reflection</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.validate.html"><code>Zend_Validate</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.view.html"><code>Zend_View</code></ulink>,
-				<ulink url="http://framework.zend.com/manual/tr/zend.xmlrpc.server.html"><code>Zend_XmlRpc_Server</code></ulink>	
-			</entry>
+                <ulink url="http://framework.zend.com/manual/tr/zend.controller.html"><code>Zend_Controller</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.filter.html"><code>Zend_Filter</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.filter.input.html"><code>Zend_Filter_Input</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.json.html"><code>Zend_Json</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.log.html"><code>Zend_Log</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.rest.server.html"><code>Zend_Rest_Server</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.server.reflection.html"><code>Zend_Server_Reflection</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.validate.html"><code>Zend_Validate</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.view.html"><code>Zend_View</code></ulink>,
+                <ulink url="http://framework.zend.com/manual/tr/zend.xmlrpc.server.html"><code>Zend_XmlRpc_Server</code></ulink>
+            </entry>
                     </row>
                     <row>
                         <entry>session</entry>
