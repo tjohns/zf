@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.json.xml2json">
     <title>XML から JSON への変換</title>
     <para>
@@ -72,7 +72,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
         <author><first>Jack</first><last>Herrington</last></author>
         <publisher>O'Reilly</publisher>
     </book>
-</books> 
+</books>
 ]]>
     </programlisting>
 
@@ -110,7 +110,7 @@ $jsonContents = Zend_Json::fromXml($xmlStringContents, true);
          "publisher" : "O'Reilly"
       }
    ]}
-}  
+}
 ]]>
     </programlisting>
 

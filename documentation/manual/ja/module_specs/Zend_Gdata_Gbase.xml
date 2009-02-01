@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.gdata.gbase">
     <title>Google Base の使用法</title>
     <para>
@@ -333,8 +333,8 @@ foreach ($feed->entries as $entry) {
             に設定します。期待通りの結果が得られることを確認したら、このフラグを
             <code>false</code> にして実際の操作を行います。
         </para>
-		<sect3 id="zend.gdata.gbase.crud.insert">
-			<title>アイテムの追加</title>
+        <sect3 id="zend.gdata.gbase.crud.insert">
+            <title>アイテムの追加</title>
             <para>
                 アイテムを追加するには、Base サービスの
                 <code>insertGbaseItem()</code> メソッドを使用します。
@@ -431,8 +431,8 @@ $entry->save($dryRun);
                 メソッドをコールしてその内容を保存する必要があります。
             </para>
         </sect3>
-		<sect3 id="zend.gdata.gbase.crud.delete">
-			<title>アイテムの削除</title>
+        <sect3 id="zend.gdata.gbase.crud.delete">
+            <title>アイテムの削除</title>
             <para>
                 アイテムを削除するには、<code>deleteGbaseItem()</code>
                 メソッドをコールします。

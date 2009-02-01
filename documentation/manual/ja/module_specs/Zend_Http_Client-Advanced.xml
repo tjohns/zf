@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11477 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.http.client.advanced">
     <title>Zend_Http_Client - 高度な使用法</title>
 
@@ -110,7 +110,8 @@ $client->setHeaders('Host', 'www.example.com');
 // 上とまったく同じことを別の方法で行います。
 $client->setHeaders('Host: www.example.com');
 
-// 同一のヘッダに対して複数の値を設定します (Cookie ヘッダなどに有用です)。
+// 同一のヘッダに対して複数の値を設定します
+// (Cookie ヘッダなどに有用です)。
 $client->setHeaders('Cookie', array(
     'PHPSESSID=1234567890abcdef1234567890abcdef',
     'language=he'
