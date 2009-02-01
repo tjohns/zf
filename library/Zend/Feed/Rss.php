@@ -183,7 +183,8 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
             $image = $this->_element->createElement('image');
             $url = $this->_element->createElement('url', $array->image);
             $image->appendChild($url);
-            $imagetitle = $this->_element->createElement('title', $array->title);
+            $imagetitle = $this->_element->createElement('title');
+            $imagetitle->appendChild($this->_element->createCDATASection($array->title));
             $image->appendChild($imagetitle);
             $imagelink = $this->_element->createElement('link', $array->link);
             $image->appendChild($imagelink);
