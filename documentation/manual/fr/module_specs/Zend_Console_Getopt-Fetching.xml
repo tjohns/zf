@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13468 -->
+<!-- EN-Revision: 13848 -->
 <sect1 id="zend.console.getopt.fetching">
     <title>Extraire les options et les arguments</title>
 
@@ -13,7 +13,7 @@
     configuration, avant que l'analyse ne soit lancée.</para>
 
     <sect2 id="zend.console.getopt.fetching.exceptions">
-        <title>Manipuler les exceptions Getopt</title>
+        <title>Manipuler les exceptions <code>Getopt</code></title>
 
         <para>Si l'utilisateur a donné des options invalides sur la ligne de commande, la fonction d'analyse syntaxique
         lève une <code>Zend_Console_Getopt_Exception</code>. Vous devrez récupérer cette exception dans votre code
@@ -24,7 +24,7 @@
         l'ensemble formaté des messages d'utilisation pour toutes les options déclarées.</para>
 
         <example id="zend.console.getopt.fetching.exceptions.example">
-            <title>Récupérer une exception Getopt</title>
+            <title>Récupérer une exception <code>Getopt</code></title>
 
             <programlisting role="php"><![CDATA[
 try {
@@ -64,7 +64,7 @@ try {
         Sinon la méthode retournerait <code>null</code>.</para>
 
         <example id="zend.console.getopt.fetching.byname.example.setoption">
-            <title>Utiliser getOption()</title>
+            <title>Utiliser <code>getOption()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -78,7 +78,7 @@ $p_parameter = $opts->getOption('p');
         est également implémentée.</para>
 
         <example id="zend.console.getopt.fetching.byname.example.magic">
-            <title>Utiliser les méthodes magiques __get() and __isset()</title>
+            <title>Utiliser les méthodes magiques <code>__get()</code> and <code>__isset()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -137,7 +137,7 @@ $p_parameter = $opts->p; // null si non fourni
         option.</para>
 
         <example id="zend.console.getopt.fetching.remainingargs.example">
-            <title>Utiliser getRemainingArgs()</title>
+            <title>Utiliser <code>getRemainingArgs()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');

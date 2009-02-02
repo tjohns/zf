@@ -1,6 +1,6 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13848 -->
 <sect1 id="zend.console.getopt.rules">
-    <title>Déclarer les règles Getopt</title>
+    <title>Déclarer les règles <code>Getopt</code></title>
 
     <para>Le constructeur de la classe <code>Zend_Console_Getopt</code> prend un à trois arguments. Le premier argument
     déclare quelles options sont supportées par votre application. Cette classe supporte des formes de syntaxe

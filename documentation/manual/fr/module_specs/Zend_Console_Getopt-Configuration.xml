@@ -1,6 +1,6 @@
-<!-- EN-Revision: 13468 -->
+<!-- EN-Revision: 13941 -->
 <sect1 id="zend.console.getopt.configuration">
-    <title>Configurer Zend_Console_Getopt</title>
+    <title>Configurer <code>Zend_Console_Getopt</code></title>
 
     <sect2 id="zend.console.getopt.configuration.addrules">
         <title>Ajouter des règles d'options</title>
@@ -13,7 +13,7 @@
         la syntaxe de déclaration des options.</para>
 
         <example>
-            <title>Utilisation d'addRules()</title>
+            <title>Utilisation d'<code>addRules()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -40,7 +40,7 @@ $opts->addRules(
         est le message d'aide correspondant.</para>
 
         <example>
-            <title>Utiliser setHelp()</title>
+            <title>Utiliser <code>setHelp()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -73,7 +73,7 @@ $opts->setHelp(
         <code>Zend_Console_Getopt_Exception</code> est levée.</para>
 
         <example>
-            <title>Utiliser setAliases()</title>
+            <title>Utiliser <code>setAliases()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -107,7 +107,7 @@ $opts->setAliases(
         méthode substitue le tableau aux arguments courants.</para>
 
         <example>
-            <title>Utilisation de addArguments() et setArguments()</title>
+            <title>Utilisation de <code>addArguments()</code> et <code>setArguments()</code></title>
 
             <programlisting role="php"><![CDATA[
 // Par défaut, le constructeur utilise $_SERVER['argv']
@@ -177,7 +177,7 @@ $opts->setArguments(array('-a', '-p', 'p_parameter', 'non_option_arg'));
         valeur d'option.</para>
 
         <example>
-            <title>Utilisation de setOption()</title>
+            <title>Utilisation de <code>setOption()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
@@ -191,7 +191,7 @@ $opts->setOption('ignoreCase', true);
         avec la configuration courante ; vous n'avez pas à énumérer toutes les options.</para>
 
         <example>
-            <title>Utilisation de setOptions()</title>
+            <title>Utilisation de <code>setOptions()</code></title>
 
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt('abp:');
