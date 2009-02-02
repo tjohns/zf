@@ -185,7 +185,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 <title>Using the Adapter Factory Method for a Custom Adapter Class</title>
                 <programlisting role="php"><![CDATA[
 // We don't need to load the adapter class file
-// because it will be loaded for us by the <code>Zend_Db</code> factory method.
+// because it will be loaded for us by the Zend_Db factory method.
 
 // Automatically load class MyProject_Db_Adapter_Pdo_Mysql and create
 // an instance of it.
