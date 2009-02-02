@@ -4,7 +4,7 @@
     <sect2 id="zend.controller.action.introduction">
         <title>Introduction</title>
         <para>
-            <code><code>Zend_Controller</code>_Action</code> is an abstract class you may use
+            <code>Zend_Controller_Action</code> is an abstract class you may use
             for implementing Action Controllers for use with the Front
             Controller when building a website based on the
             Model-View-Controller (MVC) pattern.
