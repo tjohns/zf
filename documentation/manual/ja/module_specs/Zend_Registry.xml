@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 13945 -->
 <sect1 id="zend.registry.using">
 
     <title>レジストリの使用法</title>
@@ -176,7 +176,11 @@ var_dump( $registry['index'] );
             そうするには、オプション <code>ArrayObject::ARRAY_AS_PROPS</code>
             を指定してレジストリオブジェクトを明示的に作成し、
             静的インスタンスを初期化しなければなりません。
-            これは、静的レジストリへの最初のアクセスが発生する前に行う必要があります。
+            <note>
+                <para><code>ArrayObject::ARRAY_AS_PROPS</code> オプションの設定は、
+                静的レジストリへの最初のアクセスの<emphasis>前に</emphasis>
+                行う必要があります。</para>
+            </note>
         </para>
             <warning>
                 <title><code>ArrayObject::ARRAY_AS_PROPS</code> オプションの既知の問題</title>
@@ -270,7 +274,7 @@ if (isset($registry->index)) {
             クラスを指定するには、静的メソッド
             <code>setClassName()</code> を使用します。
             <note>
-                このクラスは <code>Zend_Registry</code> のサブクラスでなければなりません。
+                <para>このクラスは <code>Zend_Registry</code> のサブクラスでなければなりません。</para>
             </note>
         </para>
 

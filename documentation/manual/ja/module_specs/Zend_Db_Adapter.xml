@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 13946 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -187,7 +187,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 // アダプタのクラスファイルの読み込みは不要です
 // Zend_Db の factory メソッドが読み込みます
 
-// 自動的に <code>MyProject_Db_Adapter_Pdo_Mysql</code> クラスを読み込み、
+// 自動的に MyProject_Db_Adapter_Pdo_Mysql クラスを読み込み、
 // インスタンスを作成します
 $db = Zend_Db::factory('Pdo_Mysql', array(
     'host'             => '127.0.0.1',
