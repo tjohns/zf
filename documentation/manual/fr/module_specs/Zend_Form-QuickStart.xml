@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form démarrage rapide</title>
 
@@ -435,7 +435,7 @@ class UserController extends Zend_Controller_Action
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Utiliser un objet Zend_Config</title>
+        <title>Utiliser un objet <code>Zend_Config</code></title>
 
         <para>Toutes les classes du composant <code>Zend_Form</code> sont configurables au moyen d'un objet
         <code>Zend_Config</code> ; vous pouvez passer un objet <code>Zend_Config</code> au constructeur ou via la

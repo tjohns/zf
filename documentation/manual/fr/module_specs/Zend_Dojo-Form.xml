@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13845 -->
 <sect1 id="zend.dojo.form" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Les éléments de formulaire et les décorateurs Dojo</title>
 
@@ -35,7 +35,7 @@
     <example id="zend.dojo.form.enable">
         <title>Activation de Dojo dans vos formulaires existants</title>
 
-        <para>"Mais attendez," vous allez me dire ; "j'étends déjà Zend_Form avec ma propre classe de formulaire
+        <para>"Mais attendez," vous allez me dire ; "j'étends déjà <code>Zend_Form</code> avec ma propre classe de formulaire
         personnalisé ! Comment puis-je activer Dojo ?'"</para>
 
         <para>Premièrement, et sans doute le plus simple, étendez <code>Zend_Dojo_Form</code> au lieu de

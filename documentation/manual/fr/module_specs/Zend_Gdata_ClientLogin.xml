@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.clientlogin">
     <title>Authentification avec ClientLogin</title>
 
@@ -69,7 +69,7 @@ $cal = new Zend_Gdata_Calendar($client);
         <title>Fermer un client HTTP authentifié par ClientLogin</title>
 
         <para>Il n'y a pas de méthode pour supprimer l'authentification effectuée via un ClientLogin, comme c'est le cas
-        avec le système de jeton du procédé AuthSub. Les identifiants dans le ClientLogin étant un login et un mot de
-        passe de compte Google, ils ne peuvent être invalidés et sont utilisables de manière continue.</para>
+        avec le système de jeton du procédé AuthSub. Les identifiants dans le ClientLogin étant un identifiant et un mot
+        de passe de compte Google, ils ne peuvent être invalidés et sont utilisables de manière continue.</para>
     </sect2>
 </sect1>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13842 -->
 <sect1 id="zend.gdata.photos">
     <title>Utilisation des albums Web Picasa</title>
 
@@ -226,7 +226,7 @@ $query->setUser("sample.user");
 ]]></programlisting>
 
         <para>Pour chaque requête, des paramètres de limitations de la recherche peuvent être passés grâce aux méthodes
-        get(Parametre) and set(Parametre) :</para>
+        get(Paramètre) and set(Paramètre) :</para>
 
         <itemizedlist>
             <listitem>
