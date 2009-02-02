@@ -171,9 +171,11 @@ var_dump( $registry['index'] );
             You must specifically construct the registry
             object using the <code>ArrayObject::ARRAY_AS_PROPS</code> option
             and initialize the static instance to enable this functionality.
-            <note>You must set the <code>ArrayObject::ARRAY_AS_PROPS</code> option
-            <emphasis>before</emphasis>
-            the static registry has been accessed for the first time.</note>
+            <note>
+                <para>You must set the <code>ArrayObject::ARRAY_AS_PROPS</code> option
+                <emphasis>before</emphasis> the static registry has been accessed for
+                the first time.</para>
+            </note>
         </para>
             <warning>
                 <title>Known Issues with the <code>ArrayObject::ARRAY_AS_PROPS</code> Option</title>
@@ -266,7 +268,7 @@ if (isset($registry->index)) {
             Use the static method <code>setClassName()</code> to specify
             the class.
             <note>
-                The class must be a subclass of <code>Zend_Registry</code>.
+                <para>The class must be a subclass of <code>Zend_Registry</code>.</para>
             </note>
         </para>
 
