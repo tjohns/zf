@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.session.global_session_management">
 
     <title>グローバルセッションの管理</title>
@@ -50,7 +50,8 @@
                 で設定するには、まず設定オプションを INI ファイルに追加します。
             </para>
 
-            <programlisting role="ini"><![CDATA[; 本番サーバのデフォルト設定
+            <programlisting role="ini"><![CDATA[
+; 本番サーバのデフォルト設定
 [production]
 ; bug_compat_42
 ; bug_compat_warn
@@ -89,8 +90,9 @@ name = UNIQUE_NAME
 save_path = /home/myaccount/zend_sessions/myapp
 use_only_cookies = on
 ; セッション ID クッキーを持続させる場合は、その有効期限を 10 日にします
-remember_me_seconds = 864000]]>
-            </programlisting>
+remember_me_seconds = 864000
+]]>
+</programlisting>
 
             <para>
                 次に、この設定ファイルを読み込んで、その内容を配列として
@@ -100,7 +102,8 @@ remember_me_seconds = 864000]]>
             <programlisting role="php"><![CDATA[
 $config = new Zend_Config_Ini('myapp.ini', 'development');
 
-Zend_Session::setOptions($config->toArray());]]>
+Zend_Session::setOptions($config->toArray());
+]]>
             </programlisting>
 
         </example>
@@ -415,13 +418,13 @@ Zend_Session::setOptions($config->toArray());]]>
                 <itemizedlist mark='opencircle'>
                     <listitem>
                         <para>
-                            - 攻撃者が、まずあなたのウェブサイトにアクセスし、
+                            攻撃者が、まずあなたのウェブサイトにアクセスし、
                             有効なセッション ID を取得する
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            - あなたのウェブサイトの XSS 脆弱性を使用して、
+                            あなたのウェブサイトの XSS 脆弱性を使用して、
                             取得したものと同じセッション ID
                             のクッキーを犠牲者のブラウザに送信する
                             (セッションの固定化)
@@ -429,7 +432,7 @@ Zend_Session::setOptions($config->toArray());]]>
                     </listitem>
                     <listitem>
                         <para>
-                            - 犠牲者と攻撃者が、同じプロキシ群からアクセスしている
+                            犠牲者と攻撃者が、同じプロキシ群からアクセスしている
                             (両方ともが AOL のような大企業のファイアウォール内にいる場合など)
                         </para>
                     </listitem>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12150 -->
 <sect2 id="zend.validate.set.email_address">
 
     <title>メールアドレス</title>
@@ -72,7 +72,9 @@ if ($validator->isValid($email)) {
         たとえば DNS ホスト名およびローカルホスト名のどちらも許可するには、次のようにします。
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS | Zend_Validate_Hostname::ALLOW_LOCAL);
+$validator = new Zend_Validate_EmailAddress(
+                    Zend_Validate_Hostname::ALLOW_DNS |
+                    Zend_Validate_Hostname::ALLOW_LOCAL);
 if ($validator->isValid($email)) {
     // メールアドレスは正しい形式のようです
 } else {
@@ -104,10 +106,11 @@ if ($validator->isValid($email)) {
         現時点では UNIX プラットフォームでのみサポートしています。
         MX のチェックを有効にするには、<code>Zend_Validate_EmailAddress</code>
         コンストラクタの 2 番目のパラメータを渡します。
-        constructor.
 
         <programlisting role="php"><![CDATA[
-$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, true);]]>
+$validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS,
+                                            true);
+]]>
         </programlisting>
 
         あるいは、<code>true</code> または <code>false</code> を
@@ -133,7 +136,8 @@ $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_DNS, t
         <code>Zend_Validate_Hostname</code> オブジェクトの設定を変更します。
 
         <programlisting role="php"><![CDATA[
-$validator->hostnameValidator->setValidateIdn(false);]]>
+$validator->hostnameValidator->setValidateIdn(false);
+]]>
         </programlisting>
 
         <code>setValidateIdn()</code> の詳細な使用法は、
@@ -155,7 +159,8 @@ $validator->hostnameValidator->setValidateIdn(false);]]>
         <code>Zend_Validate_Hostname</code> オブジェクトの設定を変更します。
 
         <programlisting role="php"><![CDATA[
-$validator->hostnameValidator->setValidateTld(false);]]>
+$validator->hostnameValidator->setValidateTld(false);
+]]>
         </programlisting>
 
         <code>setValidateTld()</code> の詳細な使用法は、

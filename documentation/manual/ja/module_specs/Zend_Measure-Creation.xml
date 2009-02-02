@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11228 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.measure.creation">
 
     <title>計測値の作成</title>
@@ -36,7 +36,8 @@
             <title>整数および浮動小数点数を使用しての作成</title>
             <programlisting role="php"><![CDATA[
 $measurement = 1234.7;
-$unit = new Zend_Measure_Length((integer)$measurement, Zend_Measure_Length::STANDARD);
+$unit = new Zend_Measure_Length((integer)$measurement,
+                                Zend_Measure_Length::STANDARD);
 echo $unit;
 // 出力は '1234 m' (メートル) となります
 
@@ -125,12 +126,16 @@ echo $unit; // 出力は "125 m² in size" となります
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $mystring = "The boat is 1,234.50 long.";
-$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, $locale);
+$unit = new Zend_Measure_Length($mystring,
+                                Zend_Measure_Length::STANDARD,
+                                $locale);
 echo $unit; // 出力は "1.234 m" となります
 
 
 $mystring = "The boat is 1,234.50 long.";
-$unit = new Zend_Measure_Length($mystring, Zend_Measure_Length::STANDARD, 'en_US');
+$unit = new Zend_Measure_Length($mystring,
+                                Zend_Measure_Length::STANDARD,
+                                'en_US');
 echo $unit; // 出力は "1234.50 m" となります
 ]]>
             </programlisting>

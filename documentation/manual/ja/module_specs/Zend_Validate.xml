@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12116 -->
 <sect1 id="zend.validate.introduction">
 
     <title>導入</title>
@@ -130,7 +130,7 @@ if (!$validator->isValid('word')) {
     $messages = $validator->getMessages();
     echo current($messages);
 
-    // 出力は "文字列 'word' は短すぎます。最低 8 文字以上必要です" となります
+    // "文字列 'word' は短すぎます。最低 8 文字以上必要です"
 }
 ]]>
             </programlisting>

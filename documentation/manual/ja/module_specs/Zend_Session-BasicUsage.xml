@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10934 -->
+<!-- EN-Revision: 12759 -->
 <sect1 id="zend.session.basic_usage">
 
     <title>基本的な使用法</title>
@@ -25,7 +25,8 @@
         <programlisting role="php"><![CDATA[
 $myNamespace = new Zend_Session_Namespace('myNamespace');
 
-// $myNamespace は $_SESSION['myNamespace' に対応します]]]>
+// $myNamespace は $_SESSION['myNamespace'] に対応します
+]]>
         </programlisting>
 
         Zend_Session は、<code>$_SESSION</code> を直接使用するその他のコードと組み合わせて使用することもできます。
@@ -56,12 +57,15 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 $defaultNamespace = new Zend_Session_Namespace('Default');
 
 if (isset($defaultNamespace->numberOfPageRequests)) {
-    $defaultNamespace->numberOfPageRequests++; // これが、ページが読み込まれるたびに加算されます
+    // これが、ページが読み込まれるたびに加算されます
+    $defaultNamespace->numberOfPageRequests++;
 } else {
     $defaultNamespace->numberOfPageRequests = 1; // 一回目
 }
 
-echo "このセッションでページがリクエストされた回数: ", $defaultNamespace->numberOfPageRequests;]]>
+echo "このセッションでページがリクエストされた回数: ",
+    $defaultNamespace->numberOfPageRequests;
+]]>
             </programlisting>
 
         </example>
@@ -111,7 +115,8 @@ $webServiceNamespace->user = "mywebusername";
 
             <programlisting role="php"><![CDATA[
 $_SESSION['Zend_Auth']['user'] = "myusername";
-$_SESSION['Some_Web_Service']['user'] = "mywebusername";]]>
+$_SESSION['Some_Web_Service']['user'] = "mywebusername";
+]]>
             </programlisting>
 
         </example>
@@ -133,7 +138,8 @@ $_SESSION['Some_Web_Service']['user'] = "mywebusername";]]>
             <title>セッションの順次処理</title>
 
             <programlisting role="php"><![CDATA[
-$aNamespace = new Zend_Session_Namespace('some_namespace_with_data_present');
+$aNamespace =
+    new Zend_Session_Namespace('some_namespace_with_data_present');
 
 foreach ($aNamespace as $index => $value) {
     echo "aNamespace->$index = '$value';\n";

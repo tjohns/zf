@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11495 -->
+<!-- EN-Revision: 12150 -->
 <sect1 id="zend.measure.output">
 
     <title>計測値の出力</title>
@@ -38,7 +38,9 @@
                 <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
+$unit = new Zend_Measure_Length($mystring,
+                                Zend_Measure_Length::STANDARD,
+                                $locale);
 
 echo $unit;
 ]]>
@@ -72,7 +74,9 @@ echo $unit;
                 <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure_Length($mystring,Zend_Measure_Length::STANDARD, $locale);
+$unit = new Zend_Measure_Length($mystring,
+                                Zend_Measure_Length::STANDARD,
+                                $locale);
 
 echo $unit->getValue();
 ]]>
@@ -99,7 +103,9 @@ echo $unit->getValue();
                 <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de');
 $mystring = "1.234.567,89";
-$unit = new Zend_Measure_Weight($mystring,Zend_Measure_Weight::POUND, $locale);
+$unit = new Zend_Measure_Weight($mystring,
+                                Zend_Measure_Weight::POUND,
+                                $locale);
 
 echo $unit->getType();
 ]]>

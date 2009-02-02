@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13170 -->
 <sect1 id="zend.service.yahoo">
     <title>Zend_Service_Yahoo</title>
     <sect2 id="zend.service.yahoo.introduction">
@@ -462,7 +462,7 @@ foreach ($results as $result) {
                             <row>
                                 <entry>MimeType</entry>
                                 <entry>string</entry>
-                                <entry>結果の mimetype</entry>
+                                <entry>結果の MIME 型</entry>
                             </row>
                             <row>
                                 <entry>ModificationDate</entry>

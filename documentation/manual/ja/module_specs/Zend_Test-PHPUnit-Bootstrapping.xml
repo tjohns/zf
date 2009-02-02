@@ -1,4 +1,4 @@
-<!-- EN-Revision: 10125 -->
+<!-- EN-Revision: 11497 -->
 <sect2 id="zend.test.phpunit.bootstrapping">
     <title>テストケースの起動</title>
 
@@ -35,7 +35,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         2 番目の方法として、アプリケーションを起動するための
@@ -53,7 +54,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     // ...
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         オブジェクトのインスタンスが必要な場合は、
@@ -71,7 +73,8 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         parent::setUp();
     }
 }
-]]></programlisting>
+]]>
+    </programlisting>
 
     <para>
         <code>parent::setUp()</code>; に注目しましょう。
