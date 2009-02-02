@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12754 -->
+<!-- EN-Revision: 13910 -->
 <sect1 id="zend.mail.introduction">
     <title>Introduction</title>
 
@@ -10,7 +10,7 @@
         <code>Zend_Mail_Transport_Sendmail</code> ou via <code>Zend_Mail_Transport_Smtp</code>.</para>
 
         <example id="zend.mail.introduction.example-1">
-            <title>Émail simple avec Zend_Mail</title>
+            <title>Émail simple avec <code>Zend_Mail</code></title>
 
             <para>Un émail simple est composé d'un destinataire, d'un sujet, d'un message et d'un expéditeur. Pour
             envoyer ce genre de messages en utilisant <code>Zend_Mail_Transport_Sendmail</code>, vous pouvez faire comme
@@ -39,7 +39,9 @@ $mail->send();
         ont été ajoutés avant l'appel de cette méthode.</para>
 
         <para>Pour des raisons de sécurité, <code>Zend_Mail</code> filtre tous les champs d'en-tête pour éviter tout
-        problème d'injection d'en-têtes avec des caractères de nouvelles lignes (<code>\n</code>).</para>
+        problème d'injection d'en-têtes avec des caractères de nouvelles lignes (<code>\n</code>). Les guillemets
+        doubles sont changés en guillemets simples et les crochets en parenthèses dans le nom des émetteurs et des
+        destinataires. Si ces caractères sont dans l'adresse émail, ils sont enlevés.</para>
 
         <para>Vous pouvez aussi utiliser la plupart des méthodes de l'objet <code>Zend_Mail</code> via une interface
         fluide.</para>
@@ -66,7 +68,8 @@ $mail->setBodyText('Ceci est le texte du message.')
         <code>send()</code> de <code>Zend_Mail</code>.</para>
 
         <example id="zend.mail.introduction.sendmail.example-1">
-            <title>Fournir des paramètres additionnels au transporteur Zend_Mail_Transport_Sendmail</title>
+            <title>Fournir des paramètres additionnels au transporteur
+            <classname>Zend_Mail_Transport_Sendmail</classname></title>
 
             <para>Cet exemple montre comment changer le Return-Path de la fonction <ulink
             url="http://php.net/mail"><code>mail()</code></ulink>.</para>

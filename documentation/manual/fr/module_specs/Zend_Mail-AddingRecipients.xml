@@ -1,4 +1,4 @@
-<!-- EN-Revision: 1723 -->
+<!-- EN-Revision: 13740 -->
 <sect1 id="zend.mail.adding-recipients">
     <title>Ajouter des destinataires</title>
 
@@ -16,10 +16,14 @@
             </listitem>
         </itemizedlist></para>
 
+    <para><code>getRecipients()</code> récupère la liste des destinataires. <code>clearRecipients()</code> efface la
+    liste.</para>
+
     <note>
         <title>Paramètres additionnels</title>
 
         <para><code>addTo()</code> et <code>addCc()</code> acceptent un second paramètre optionnel, qui est utilisé
-        comme un nom de destinataire humainement lisible.</para>
+        comme un nom de destinataire humainement lisible. Le guillemet double est changé en simple guillemet et les
+        crochets en parenthèses dans le paramètre.</para>
     </note>
 </sect1>

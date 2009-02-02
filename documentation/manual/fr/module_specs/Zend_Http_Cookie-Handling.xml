@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13571 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie and Zend_Http_CookieJar</title>
@@ -66,7 +67,7 @@
                     représentant un cookie tel que défini dans les en-têtes HTTP "Set-Cookie" (réponse) ou "Cookie"
                     (requête). Dans ce cas la valeur du cookie doit être encodée. Lorsque la chaîne de caractères
                     représentant un cookie ne comporte pas de partie "domain", vous devez fournir alors un URI selon
-                    lequel le cookie cherchera son domain et son path.</para>
+                    lequel le cookie cherchera son domaine et son chemin.</para>
                 </listitem>
             </itemizedlist> <example id="zend.http.cookies.cookie.instantiating.example-1">
                 <title>Créer un objet Zend_Http_Cookie</title>
@@ -321,7 +322,8 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
         <para>Comme pour l'ajout de cookies, en théorie, vous n'aurez pas besoin de récupérer des cookies du conteneur,
         car l'objet <code>Zend_Http_Client</code> se chargera de les gérer lui-même et de les envoyer dans les bonnes
         requêtes. Cependant, il existe des méthodes pour récupérer des cookies depuis un conteneur (Jar) :
-        <code>getCookie()</code>, <code>getAllCookies()</code>, et <code>getMatchingCookies()</code>.</para>
+        <code>getCookie()</code>, <code>getAllCookies()</code>, et <code>getMatchingCookies()</code>. De plus, itérer
+        sur le CookieJar vous permettra d'en extraire tous les objets <code>Zend_Http_Cookie</code>.</para>
 
         <para>Il est important de noter que chacune de ces trois méthodes, prend un paramètre spécial destiné à
         déterminer le type que chaque méthode retournera. Ce paramètre peut avoir 3 valeurs: <itemizedlist>
