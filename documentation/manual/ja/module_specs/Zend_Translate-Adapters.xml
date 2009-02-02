@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13827 -->
+<!-- EN-Revision: 13904 -->
 <sect1 id="zend.translate.adapter">
 
     <title>Zend_Translate のアダプタ</title>
@@ -357,7 +357,7 @@ try {
         </para>
 
         <programlisting role="php"><![CDATA[
-$cache = Zend_Cache::factory('Page',
+$cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
