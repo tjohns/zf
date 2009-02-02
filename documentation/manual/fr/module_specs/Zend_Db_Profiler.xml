@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.profiler" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Db_Profiler</title>
 
@@ -73,13 +73,13 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 [main]
 db.profiler.class   = "Mon_Db_Profiler"
 db.profiler.enabled = true
-]]></programlisting> Cette configuration peut être appliquée par le code PHP suivant :
-        <programlisting role="php"><![CDATA[
+]]></programlisting> Cette configuration peut être appliquée par le code PHP suivant : <programlisting
+        role="php"><![CDATA[
 $config = new Zend_Config_Ini('config.ini', 'main');
 $params['profiler'] = $config->db->profiler;
 $db = Zend_Db::factory('PDO_MYSQL', $params);
-]]></programlisting> La propriété "<code>instance</code>" peut être
-        utilisée comme ceci : <programlisting role="php"><![CDATA[
+]]></programlisting> La propriété "<code>instance</code>" peut être utilisée comme ceci : <programlisting
+        role="php"><![CDATA[
 $profiler = new Mon_Db_Profiler();
 $profiler->setEnabled(true);
 $configData = array(
@@ -313,7 +313,7 @@ $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
         <title>Profileurs spécialisés</title>
 
         <para>Un profileur spécialisé est un objet qui hérite de <code>Zend_Db_Profiler</code>. Les profileurs
-        spécialisés traitent les informations de profiling de manière spécifique.</para>
+        spécialisés traitent les informations de profilage de manière spécifique.</para>
 
         <xi:include href="Zend_Db_Profiler-Firebug.xml" />
     </sect2>

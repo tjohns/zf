@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13564 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.table">
     <title>Zend_Db_Table</title>
 
@@ -156,12 +156,12 @@ class Bugs extends Zend_Db_Table_Abstract
             <title>Redéfinir les méthodes de configuration de la classe de Table</title>
 
             <para>Lorsque vous créez votre instance de classe <code>Zend_Db_Table</code>, le constructeur décompose le
-            processus via plusieurs méthodes permettant l'initialisation des meta-données de la table. Chacune de ces
-            étapes est matérialisée par une méthode de la classe, redéfinissable. N'oubliez cependant pas d'appeler la
+            processus via plusieurs méthodes permettant l'initialisation des métadonnées de la table. Chacune de ces
+            étapes est matérialisée par une méthode de la classe, surchargeable. N'oubliez cependant pas d'appeler la
             méthode parente respective à la fin de votre traitement.</para>
 
             <example id="zend.db.table.defining.setup.example">
-                <title>Exemple de redéfinition de la méthode _setupTableName()</title>
+                <title>Exemple de redéfinition de la méthode <code>_setupTableName()</code></title>
 
                 <programlisting role="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
@@ -214,7 +214,7 @@ class Bugs extends Zend_Db_Table_Abstract
             logique spécifique, vous devriez utiliser la méthode <code>init()</code>, qui est appelée juste après le
             constructeur, donc une fois la table correctement créée. <example
                     id="zend.db.table.defining.init.usage.example">
-                    <title>Exemple d'utilisation de la méthode init()</title>
+                    <title>Exemple d'utilisation de la méthode <code>init()</code></title>
 
                     <programlisting role="php"><![CDATA[
 class Bugs extends Zend_Db_Table_Abstract
@@ -277,7 +277,7 @@ $table = new Bugs();
             </example>
 
             <para>Il peut être intéressant de créer son objet adaptateur de base de données en un lieu approprié, comme
-            le fichier d'amorçage (bootstrap), et ensuite de le spécifier comme adaptateur par défaut pour toutes les
+            le fichier d'amorçage ("bootstrap"), et ensuite de le spécifier comme adaptateur par défaut pour toutes les
             tables, à travers toute l'application. Attention toutefois, ce procédé fixe un et un seul adaptateur, pour
             toutes les classes de table (héritant de <code>Zend_Db_Table_Abstract</code>).</para>
         </sect3>
@@ -742,9 +742,9 @@ $rows = $table->fetchAll($select);
                 </example></para>
 
             <para><important>
-                    <para>Le rowset retourné est tout de même valide. Il ne possède en revanche que certaines colonnes
-                    de la table. La méthode <code>save()</code> est appelable, mais elle ne mettre à jour que ces
-                    colonnes.</para>
+                    <para>Le jeu de résultats retourné est tout de même valide. Il ne possède en revanche que certaines
+                    colonnes de la table. La méthode <code>save()</code> est appelable, mais elle ne mettre à jour que
+                    ces colonnes.</para>
                 </important> Il est aussi possible de spécifier des expressions dans une clause FROM, et donc récupérer
             un objet row/rowset en lecture seule. Dans l'exemple ci-après, nous retournons un enregistrement de la table
             "bugs" qui représente un agrégat du nombre de nouveaux bugs reportés. Regardez la clause GROUP. L'alias SQL
@@ -770,7 +770,7 @@ $rows = $table->fetchAll($select);
             reportés par "Bob".</para>
 
             <para><example id="zend.db.table.qry.rows.set.refine.example">
-                    <title>Utiliser une table intermédiaire par jointure avec fetchAll()</title>
+                    <title>Utiliser une table intermédiaire par jointure avec <code>fetchAll()</code></title>
 
                     <programlisting role="php"><![CDATA[
 $table = new Bugs();
@@ -987,7 +987,7 @@ $bugs = new Bugs();
         </example>
 
         <example id="zend.db.table.metadata.caching-instance">
-            <title>Utiliser un objet de cache de méta données pour une instance précise</title>
+            <title>Utiliser un objet de cache de métadonnées pour une instance précise</title>
 
             <para>L'exemple qui suit illustre la manière de passer un objet de cache de méta données spécifique, pour
             une instance précise :</para>

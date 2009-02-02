@@ -1,10 +1,10 @@
-<!-- EN-Revision: 13469 -->
+<!-- EN-Revision: 13946 -->
 <sect1 id="zend.db.adapter">
     <title>Zend_Db_Adapter</title>
 
     <para><code>Zend_Db</code> et ses autres sous classes proposent une interface de connexion aux bases de données avec
-    Zend Framework. <code>Zend_Db_Adapter</code> est la classe de base que vous utilisez pour vous connecter aux
-    bases de données (SGBDs). Il y a différentes classes d'adaptateur par SGBD.</para>
+    Zend Framework. <code>Zend_Db_Adapter</code> est la classe de base que vous utilisez pour vous connecter aux bases
+    de données (SGBDs). Il y a différentes classes d'adaptateur par SGBD.</para>
 
     <para>Les classes <code>Adapters</code> de <code>Zend_Db</code> créent un pont entre les extensions PHP et une
     interface commune. Ceci vous aide à écrire des applications déployables avec de multiples SGBDs, demandant peu
@@ -75,7 +75,8 @@
     <sect2 id="zend.db.adapter.connecting">
         <title>Se connecter à un SGBD en utilisant un adaptateur</title>
 
-        <para>Cette section décrit comment créer une instance d'un adaptateur Zend_Db de base de données.</para>
+        <para>Cette section décrit comment créer une instance d'un adaptateur <code>Zend_Db</code> de base de
+        données.</para>
 
         <sect3 id="zend.db.adapter.connecting.constructor">
             <title>Utilisation du constructeur du Zend_Db Adapter</title>
@@ -98,7 +99,7 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.factory">
-            <title>Utiliser la fabrique (Factory) de Zend_Db</title>
+            <title>Utiliser la fabrique (Factory) de <code>Zend_Db</code></title>
 
             <para>Alternativement, il est possible d'utiliser la méthode statique <code>Zend_Db::factory()</code>.
             Celle-ci charge dynamiquement la classe d'adaptateur correspondant en utilisant <link
@@ -110,7 +111,7 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
             classe directement.</para>
 
             <example id="zend.db.adapter.connecting.factory.example">
-                <title>Utilisation de la méthode statique de fabrique de Zend_Db</title>
+                <title>Utilisation de la méthode statique de fabrique de <code>Zend_Db</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Nous n'avons pas besoin de la ligne suivante car Zend_Db_Adapter_Pdo_Mysql
@@ -152,7 +153,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.factory-config">
-            <title>Utiliser Zend_Config avec la fabrique Zend_Db</title>
+            <title>Utiliser <classname>Zend_Config</classname> avec la fabrique <code>Zend_Db</code></title>
 
             <para>Optionnellement, vous pouvez passer un objet de type <link linkend="zend.config">Zend_Config</link> en
             tant qu'argument de la méthode <code>factory()</code>, concernant la configuration.</para>
@@ -163,7 +164,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             l'adaptateur.</para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>Utilisation de la fabrique avec un objet de type Zend_Config</title>
+                <title>Utilisation de la fabrique avec un objet de type <code>Zend_Config</code></title>
 
                 <para>Dans l'exemple qui va suivre, l'objet <code>Zend_Config</code> est crée à partir d'un tableau. Il
                 eut été possible de le créer à partir de fichiers externes, grâce à <link
@@ -199,7 +200,7 @@ $db = Zend_Db::factory($config->database);
             <title>Paramètres de l'adaptateur (Adapter)</title>
 
             <para>La liste ci dessous explique les différents paramètres acceptés par les classes d'adaptateur
-            Zend_Db.</para>
+            <code>Zend_Db</code>.</para>
 
             <itemizedlist>
                 <listitem>
@@ -324,6 +325,7 @@ echo $db->getConnection()
 
             <example id="zend.db.adapter.connecting.parameters.example4">
                 <title>Passer des options de sérialisation à la fabrique</title>
+
                 <programlisting role="php"><![CDATA[
 $options = array(
     Zend_Db::ALLOW_SERIALIZATION => false
@@ -338,15 +340,15 @@ $params = array(
 );
 
 $db = Zend_Db::factory('Pdo_Mysql', $params);
-]]>
-                </programlisting>
+
+                ]]></programlisting>
             </example>
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.getconnection">
             <title>Gestion des connexions dites paresseuses</title>
 
-            <para>La création d'une instance d'une classe d'Adaptateur ne crée pas physiquement une connexion au SGBD.
+            <para>La création d'une instance d'une classe d'adaptateur ne crée pas physiquement une connexion au SGBD.
             L'adaptateur sauvegarde les paramètres et se connectera physiquement à la demande, la première fois que vous
             aurez besoin d'exécuter une requête. Ceci permet d'assurer que la création de l'instance elle-même est
             rapide, et ne coûte rien en performances. Vous pouvez donc créer une instance de l'adaptateur, même si vous
@@ -362,13 +364,14 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
             <para>Afin de vérifier si les paramètres de connexion au SGBD sont corrects, surveillez les exceptions
             envoyées par la méthode <code>getConnection()</code>.</para>
 
-            <para>De plus, un adaptateur peut être sérialisé pour être stocké, par exemple, dans une variable de session.
-            Ceci peut être utile non seulement pour l'adaptateur lui-même, mais aussi pouir les autres objets qui
-            l'aggrègent, comme un objet <code>Zend_Db_Select</code>. Par défaut, les adaptateurs sont autorisés à être
-            sérialisés, si vous ne le voulez pas, vous devez passer l'option <code>Zend_Db::ALLOW_SERIALIZATION=false</code>,
-            regardez l'exemple ci-dessus. Afin de respecter le principe de connexions paresseuses, l'adaptateur ne se
-            reconectera pas après la désérialisation. Vous devez appeler vous-même <code>getConnection()</code>. Vous
-            pouvez permettre à l'adaptateur de se reconnecter automatiquement en utilisant l'option d'adaptateur
+            <para>De plus, un adaptateur peut être sérialisé pour être stocké, par exemple, dans une variable de
+            session. Ceci peut être utile non seulement pour l'adaptateur lui-même, mais aussi pour les autres objets
+            qui l'agrègent, comme un objet <code>Zend_Db_Select</code>. Par défaut, les adaptateurs sont autorisés à
+            être sérialisés, si vous ne le voulez pas, vous devez passer l'option
+            <code>Zend_Db::ALLOW_SERIALIZATION=false</code>, regardez l'exemple ci-dessus. Afin de respecter le principe
+            de connexions paresseuses, l'adaptateur ne se reconnectera pas après la désérialisation. Vous devez appeler
+            vous-même <code>getConnection()</code>. Vous pouvez permettre à l'adaptateur de se reconnecter
+            automatiquement en utilisant l'option d'adaptateur
             <code>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</code>.</para>
 
             <example id="zend.db.adapter.connecting.getconnection.example">
@@ -480,7 +483,7 @@ CREATE TABLE bugs_products (
             présents dans la syntaxe SQL.</para>
 
             <example id="zend.db.adapter.select.fetchall.example">
-                <title>Utiliser fetchAll()</title>
+                <title>Utiliser <code>fetchAll()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $sql = 'SELECT * FROM bugs WHERE bug_id = ?';
@@ -544,7 +547,7 @@ $result = $db->fetchAll($sql, 2);
             </itemizedlist>
 
             <example id="zend.db.adapter.select.fetch-mode.example">
-                <title>Utiliser setFetchMode()</title>
+                <title>Utiliser <code>setFetchMode()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -561,10 +564,10 @@ echo $result[0]->bug_description;
             <title>Récupérer un enregistrement comme tableau associatif</title>
 
             <para>La méthode <code>fetchAssoc()</code> retourne des enregistrements sous forme de tableau de tableaux
-            associatifs, quelque soit la valeur du fetch mode.</para>
+            associatifs, quelque soit la valeur de "fetch mode".</para>
 
             <example id="zend.db.adapter.select.fetchassoc.example">
-                <title>Utiliser fetchAssoc()</title>
+                <title>Utiliser f<code>etchAssoc()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -583,11 +586,11 @@ echo $result[0]['bug_description'];
             <para>La méthode <code>fetchCol()</code> retourne les enregistrements dans un tableau de valeurs. Les
             valeurs correspondent à une des colonnes utilisées dans la requête SQL SELECT, par défaut : la première.
             Toute autre colonne sera ignorée. Si vous avez besoin de retourner une autre colonne, voyez <xref
-            linkend="zend.db.statement.fetching.fetchcolumn" />. Cette méthode est indépendante de la valeur du fetch
-            mode.</para>
+            linkend="zend.db.statement.fetching.fetchcolumn" />. Cette méthode est indépendante de la valeur de "fetch
+            mode".</para>
 
             <example id="zend.db.adapter.select.fetchcol.example">
-                <title>Utiliser fetchCol()</title>
+                <title>Utiliser <code>fetchCol()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -612,10 +615,10 @@ echo $result[0];
 
             <para>Vous devriez réfléchir votre requête SELECT de manière à ce que la première colonne sélectionnée,
             correspondant à la clé du tableau de résultat, soit unique (une clé primaire par exemple). Cette méthode est
-            indépendante du fetch mode éventuellement précédemment défini.</para>
+            indépendante de "fetch mode" éventuellement précédemment défini.</para>
 
             <example id="zend.db.adapter.select.fetchpairs.example">
-                <title>Utilisation de fetchPairs()</title>
+                <title>Utilisation de <code>fetchPairs()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -631,12 +634,12 @@ echo $result[2]; // le bug_status correspondant au bug_id numéro 2
             <title>Récupérer un seul enregistrement complet</title>
 
             <para>La méthode <code>fetchRow()</code> retourne un et un seul enregistrement (le premier si plusieurs
-            correspondent), en fonction du fetch mode que vous aurez précédemment défini. Cette méthode ressemble donc à
-            <code>fetchAll()</code> si ce n'est qu'elle ne retournera jamais plus d'un seul enregistrement. Arrangez
+            correspondent), en fonction de "fetch mode" que vous aurez précédemment défini. Cette méthode ressemble donc
+            à <code>fetchAll()</code> si ce n'est qu'elle ne retournera jamais plus d'un seul enregistrement. Arrangez
             vous donc pour que votre SELECT possède une clause WHERE sur une clé primaire.</para>
 
             <example id="zend.db.adapter.select.fetchrow.example">
-                <title>Utiliser fetchRow()</title>
+                <title>Utiliser <code>fetchRow()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $db->setFetchMode(Zend_Db::FETCH_OBJ);
@@ -658,7 +661,7 @@ echo $result->bug_description;
             plusieurs résultats est donc inutile avec cette méthode.</para>
 
             <example id="zend.db.adapter.select.fetchone.example">
-                <title>Utiliser fetchOne()</title>
+                <title>Utiliser <code>fetchOne()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $result = $db->fetchOne('SELECT bug_status FROM bugs WHERE bug_id = 2');
@@ -740,7 +743,7 @@ $db->insert('bugs', $data);
             auto-incrémentée, générée dans le cadre de la connexion au SGBD.</para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-1">
-                <title>Utiliser lastInsertId() pour les clés auto-incrémentées</title>
+                <title>Utiliser l<code>astInsertId()</code> pour les clés auto-incrémentées</title>
 
                 <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
@@ -759,7 +762,7 @@ $id = $db->lastInsertId();
             nommée "bugs_bug_id_seq".</para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-2">
-                <title>Utiliser lastInsertId() avec une séquence</title>
+                <title>Utiliser <code>lastInsertId()</code> avec une séquence</title>
 
                 <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
@@ -776,7 +779,7 @@ $id = $db->lastInsertId('bugs');
             <code>lastSequenceId()</code>. Cette méthode prend un paramètre qui nomme la séquence explicitement.</para>
 
             <example id="zend.db.adapter.write.lastinsertid.example-3">
-                <title>Utilisation de lastSequenceId()</title>
+                <title>Utilisation de <code>lastSequenceId()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
@@ -787,9 +790,10 @@ $id = $db->lastSequenceId('bugs_id_gen');
             </example>
 
             <para>Pour les SGBDs ne supportant pas les séquences, comme MySQL, Microsoft SQL Server, et SQLite, les
-            arguments passés à la méthode lastInsertId() sont ignorés. La valeur retournée est la dernière valeur
-            générée pour la dernière requête INSERT, quelque soit la table concernée (pour cette connexion). Aussi, pour
-            ces SGBDs, la méthode lastSequenceId() retournera toujours <code>null</code>.</para>
+            arguments passés à la méthode <code>lastInsertId()</code> sont ignorés. La valeur retournée est la dernière
+            valeur générée pour la dernière requête INSERT, quelque soit la table concernée (pour cette connexion).
+            Aussi, pour ces SGBDs, la méthode <code>lastSequenceId()</code> retournera toujours
+            <code>null</code>.</para>
 
             <note>
                 <title>Pourquoi ne pas utiliser "SELECT MAX(id) FROM table"?</title>
@@ -903,7 +907,7 @@ $n = $db->delete('bugs', 'bug_id = 3');
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
-        <title>Échapper des valeurs ou des identifiant</title>
+        <title>Échapper des valeurs ou des identifiants</title>
 
         <para>Lorsque vous envoyez des requêtes SQL au SGBD, il est souvent nécessaire d'y inclure des paramètres
         dynamiques, PHP. Ceci est risqué car si un des paramètres contient certains caractères, comme l'apostrophe ('),
@@ -924,8 +928,8 @@ echo $sql;
         url="http://en.wikipedia.org/wiki/SQL_Injection">http://en.wikipedia.org/wiki/SQL_Injection</ulink>).</para>
 
         <para>La classe Zend_Db Adapter possède des méthodes adaptées pour vous aider à faire face à de telles
-        vulnérabilités. La solution proposée est l'échappement de tels caractères (comme la quote ') dans les valeurs
-        PHP avant leur passage dans la chaîne de requête. Ceci vous protège de l'insertion malveillante ou
+        vulnérabilités. La solution proposée est l'échappement de tels caractères (comme la "quote" = ') dans les
+        valeurs PHP avant leur passage dans la chaîne de requête. Ceci vous protège de l'insertion malveillante ou
         involontaires, de caractères spéciaux dans les variables PHP faisant partie d'une requête SQL.</para>
 
         <sect3 id="zend.db.adapter.quoting.quote">
@@ -933,11 +937,11 @@ echo $sql;
 
             <para>La méthode <code>quote()</code> accepte un seul paramètre, une chaîne de caractère. Elle retourne une
             chaîne dont les caractères spéciaux ont été échappés d'une manière convenable en fonction du SGBD
-            sous-jacent. De plus, la chaîne échappée est entourée d'apostrophes (quotes) ((<code>'</code>)).C'est la
-            valeur standard de délimitations des chaînes en SQL.</para>
+            sous-jacent. De plus, la chaîne échappée est entourée d'apostrophes ("<code>'</code>").C'est la valeur
+            standard de délimitations des chaînes en SQL.</para>
 
             <example id="zend.db.adapter.quoting.quote.example">
-                <title>Utiliser quote()</title>
+                <title>Utiliser <code>quote()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $name = $db->quote("O'Reilly");
@@ -965,7 +969,7 @@ SELECT * FROM atable WHERE intColumn = '123'
             <para>Le second paramètre optionnel de <code>quote()</code> permet de spécifier un type SQL.</para>
 
             <example id="zend.db.adapter.quoting.quote.example-2">
-                <title>Utiliser quote() avec un type SQL</title>
+                <title>Utiliser <code>quote()</code> avec un type SQL</title>
 
                 <programlisting role="php"><![CDATA[
 $value = '1234';
@@ -997,7 +1001,7 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             paramètres de requêtes préparées conservent une réelle isolation entre la requête et ses paramètres.</para>
 
             <example id="zend.db.adapter.quoting.quote-into.example">
-                <title>Utiliser quoteInto()</title>
+                <title>Utiliser <code>quoteInto()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE reported_by = ?",
@@ -1012,7 +1016,7 @@ echo $sql;
             spécifier un type SQL, les types numériques ne sont pas délimités.</para>
 
             <example id="zend.db.adapter.quoting.quote-into.example-2">
-                <title>Utiliser quoteInto() avec un type SQL</title>
+                <title>Utiliser <code>quoteInto()</code> avec un type SQL</title>
 
                 <programlisting role="php"><![CDATA[
 $sql = $db->quoteInto("SELECT * FROM bugs WHERE bug_id = ?",
@@ -1064,8 +1068,8 @@ echo $sql
             <para>Les identifiant SQL délimités sont sensibles à la casse. Vous devriez toujours utiliser la casse telle
             qu'elle est utilisée dans votre base de données (nom des tables, des colonnes ...).</para>
 
-            <para>Dans les cas où le SQL est généré à l'intérieur des classes Zend_Db, alors les identifiant SQL seront
-            automatiquement échappés. Vous pouvez changer ce comportement avec l'option
+            <para>Dans les cas où le SQL est généré à l'intérieur des classes <code>Zend_Db</code>, alors les
+            identifiant SQL seront automatiquement échappés. Vous pouvez changer ce comportement avec l'option
             <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code>.Spécifiez la lors de l'instanciation de l'adaptateur. Voyez
             <xref linkend="zend.db.adapter.connecting.parameters.example2" />.</para>
         </sect3>
@@ -1075,12 +1079,11 @@ echo $sql
         <title>Gérer les transactions dans une base de données</title>
 
         <para>Les bases de données définissent les transactions comme étant des unités logiques de travail qui peuvent
-        êtres validées (commited) ou annulées (rolled back) en tant qu'une seule opération, même sur de multiples
-        tables. Toutes les requêtes aux bases de données sont considérées comme faisant partie d'une transaction, même
-        si le driver de base de données fait ceci implicitement. Ceci s'appelle le mode
-        <emphasis>auto-commit</emphasis>, dans lequel le driver de base de données créer une transaction pour chaque
-        requête exécutée et la valide. Par défaut toutes les classes Zend_Db_Adapter fonctionnent en mode
-        auto-commit.</para>
+        êtres validées ("commit") ou annulées ("rollback") en tant qu'une seule opération, même sur de multiples tables.
+        Toutes les requêtes aux bases de données sont considérées comme faisant partie d'une transaction, même si le
+        driver de base de données fait ceci implicitement. Ceci s'appelle le mode <emphasis>auto-commit</emphasis>, dans
+        lequel le driver de base de données créer une transaction pour chaque requête exécutée et la valide. Par défaut
+        toutes les classes <code>Zend_Db_Adapter</code> fonctionnent en mode auto-commit.</para>
 
         <para>Vous pouvez manuellement spécifier lorsque vous voulez démarrer une transaction. Vous contrôler ainsi
         combien de requêtes doivent y être exécutées, et valider ou annuler ce groupe de requêtes. Utilisez
@@ -1127,7 +1130,7 @@ try {
     </sect2>
 
     <sect2 id="zend.db.adapter.list-describe">
-        <title>Lister et Décrire les tables</title>
+        <title>Lister et décrire les tables</title>
 
         <para>La méthode <code>listTables()</code> retourne un tableau de chaînes décrivant les tables de la base de
         données courante.</para>
@@ -1140,7 +1143,7 @@ try {
         suivantes :</para>
 
         <table cellpadding="5" frame="all" id="zend.db.adapter.list-describe.metadata">
-            <title>Champs de métadonnées retournés par describeTable()</title>
+            <title>Champs de métadonnées retournés par <code>describeTable()</code></title>
 
             <tgroup align="left" cols="3" colsep="1" rowsep="1">
                 <thead>
@@ -1205,9 +1208,10 @@ try {
                     <row>
                         <entry>NULLABLE</entry>
 
-                        <entry>(bool)</entry>
+                        <entry>(booléen)</entry>
 
-                        <entry>True si la colonne accepte la valeur SQL 'NULL', false sinon.</entry>
+                        <entry><code>true</code> si la colonne accepte la valeur SQL '<code>NULL</code>',
+                        <code>false</code> sinon.</entry>
                     </row>
 
                     <row>
@@ -1215,7 +1219,7 @@ try {
 
                         <entry>(entier)</entry>
 
-                        <entry>Longeur ou taille de la colonne telle que reportée par le SGBD.</entry>
+                        <entry>Longueur ou taille de la colonne telle que reportée par le SGBD.</entry>
                     </row>
 
                     <row>
@@ -1223,7 +1227,7 @@ try {
 
                         <entry>(entier)</entry>
 
-                        <entry>Echelle du type SQL NUMERIC ou DECIMAL.</entry>
+                        <entry>Échelle du type SQL NUMERIC ou DECIMAL.</entry>
                     </row>
 
                     <row>
@@ -1237,17 +1241,17 @@ try {
                     <row>
                         <entry>UNSIGNED</entry>
 
-                        <entry>(bool)</entry>
+                        <entry>(booléen)</entry>
 
-                        <entry>True si le type est un entier non signé, défini par UNSIGNED.</entry>
+                        <entry><code>true</code> si le type est un entier non signé, défini par UNSIGNED.</entry>
                     </row>
 
                     <row>
                         <entry>PRIMARY</entry>
 
-                        <entry>(bool)</entry>
+                        <entry>(booléen)</entry>
 
-                        <entry>True si la colonne fait partie d'une clé primaire.</entry>
+                        <entry><code>true</code> si la colonne fait partie d'une clé primaire.</entry>
                     </row>
 
                     <row>
@@ -1261,9 +1265,9 @@ try {
                     <row>
                         <entry>IDENTITY</entry>
 
-                        <entry>(bool)</entry>
+                        <entry>(booléen)</entry>
 
-                        <entry>True si la colonne utilise une valeur auto-générée.</entry>
+                        <entry><code>true</code> si la colonne utilise une valeur auto-générée.</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -1309,11 +1313,11 @@ try {
         utiliser la méthode de l'adaptateur <code>closeConnection()</code> afin de fermer explicitement la connexion
         vers le SGBD.</para>
 
-        <para>A partir de la version 1.7.2, vous pouvez vérifier si vous êtes actuellement connecté au serveur SGBD grâce
-        à la méthode <code>isConnected()</code>. Ceci correspond à une ressource de connexion qui a été initiée et qui
-        n'est pas close. Cette fonction ne permet pas actuellement de tester la fermeture de la connexion au niveau du
-        SGBD par exemple. Cette fonction est utilisée en interne pour fermer la connexion. Elle vous permet entre autres
-        de fermer plusieurs fois une connexion sans erreurs. C'était déja le cas avant la version 1.7.2 pour les
+        <para>A partir de la version 1.7.2, vous pouvez vérifier si vous êtes actuellement connecté au serveur SGBD
+        grâce à la méthode <code>isConnected()</code>. Ceci correspond à une ressource de connexion qui a été initiée et
+        qui n'est pas close. Cette fonction ne permet pas actuellement de tester la fermeture de la connexion au niveau
+        du SGBD par exemple. Cette fonction est utilisée en interne pour fermer la connexion. Elle vous permet entre
+        autres de fermer plusieurs fois une connexion sans erreurs. C'était déjà le cas avant la version 1.7.2 pour les
         adaptateurs de type PDO mais pas pour les autres.</para>
 
         <example id="zend.db.adapter.closing.example">
@@ -1355,7 +1359,8 @@ $db->closeConnection();
 
         <para>La plupart des extensions PHP pour les bases de données proposent une méthode permettant d'envoyer une
         requête directe, sans préparation. Par exemple, PDO propose pour ceci la méthode <code>exec()</code>. Vous
-        pouvez récupérer l'objet de connexion "bas niveau" grâce à la méthode de l'adaptateur getConnection().</para>
+        pouvez récupérer l'objet de connexion "bas niveau" grâce à la méthode de l'adaptateur
+        <code>getConnection()</code>.</para>
 
         <example id="zend.db.adapter.other-statements.example">
             <title>Envoyer une requête directe dans un adaptateur PDO</title>
@@ -1377,14 +1382,13 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
     <sect2 id="zend.db.adapter.server-version">
         <title>Récupérer la version du serveur SGBD</title>
 
-        <para>
-            A partir de la version 1.7.2, vous pouvez récupérer la version du serveur avec le style de syntaxe PHP
-            ce qui permet d'utiliser <code>version_compare()</code>. Si cette information n'est pas disponible, vous
-            recevrez un <code>null</code>.
-        </para>
+        <para>A partir de la version 1.7.2, vous pouvez récupérer la version du serveur avec le style de syntaxe PHP ce
+        qui permet d'utiliser <code>version_compare()</code>. Si cette information n'est pas disponible, vous recevrez
+        un <code>null</code>.</para>
 
         <example id="zend.db.adapter.server-version.example">
             <title>Vérifier la version du serveur avant de lancer une requête</title>
+
             <programlisting role="php"><![CDATA[
 $version = $db->getServerVersion();
 if (!is_null($version)) {
@@ -1475,10 +1479,10 @@ if (!is_null($version)) {
                 </listitem>
 
                 <listitem>
-                    <para>Par défaut les champs LOB ("Large Objet Binaire") sont retournés sous la forme d'objets OCI-Lob.
-                    Vous pouvez les récupérer sous forme de chaînes pour toutes les requêtes en utilisant l'option de
-                    driver <code>'lob_as_string'</code> ou pour une requête en particulier en utilisant la méthode
-                    <code>setLobAsString(boolean)</code> de l'adaptateur ou de l'objet statement.</para>
+                    <para>Par défaut les champs LOB ("Large Objet Binaire") sont retournés sous la forme d'objets
+                    OCI-Lob. Vous pouvez les récupérer sous forme de chaînes pour toutes les requêtes en utilisant
+                    l'option de driver <code>'lob_as_string'</code> ou pour une requête en particulier en utilisant la
+                    méthode <code>setLobAsString(boolean)</code> de l'adaptateur ou de l'objet statement.</para>
                 </listitem>
             </itemizedlist>
         </sect3>
@@ -1522,14 +1526,14 @@ if (!is_null($version)) {
 
                 <listitem>
                     <para>Si vous travaillez avec des chaînes Unicode avec un encodage autre que UCS-2 (comme UTF-8),
-                    vous devrez peut-être réaliser une convertion dans votre code d'application ou stocker les données
-                    dans un champs binaire. Reportez vous à la <ulink url="http://support.microsoft.com/kb/232580">
-                    base de connaissance Microsoft</ulink> pour plus d'informations.</para>
+                    vous devrez peut-être réaliser une conversion dans votre code d'application ou stocker les données
+                    dans un champs binaire. Reportez vous à la <ulink url="http://support.microsoft.com/kb/232580"> base
+                    de connaissance Microsoft</ulink> pour plus d'informations.</para>
                 </listitem>
 
                 <listitem>
                     <para>Zend_Db_Adapter_Pdo_Mssql met <code>QUOTED_IDENTIFIER</code> à ON dès que la connexion a été
-                    effectuée. Le driver utilise donc le délimiteur d'identifiants SQL <code>"</code> au lieu de son
+                    effectuée. Le driver utilise donc le délimiteur d'identifiant SQL <code>"</code> au lieu de son
                     délimiteur habituel.</para>
                 </listitem>
 
@@ -1598,7 +1602,7 @@ if (!is_null($version)) {
                 </listitem>
 
                 <listitem>
-                    <para>PostgreSql supporte les séquences et les clés auto-incrémentées. Les arguments de
+                    <para>PostgreSQL supporte les séquences et les clés auto-incrémentées. Les arguments de
                     <code>lastInsertId()</code> sont donc optionnels. Si vous ne passez pas de paramètres, alors
                     l'adaptateur retourne la dernière valeur de clé auto- incrémentée. Sinon, il retourne la dernière
                     valeur de la séquence passée en paramètre, en se référant à la convention
@@ -1627,8 +1631,8 @@ if (!is_null($version)) {
 
                 <listitem>
                     <para>Pour vous connecter à une base de données SQLite2, spécifiez le paramètre
-                    <code>'sqlite2'=&gt;true</code> dans le tableau d'options passé à l'adaptateur, lors de la
-                    création de l'instance de Pdo_Sqlite Adapter.</para>
+                    <code>'sqlite2'=&gt;true</code> dans le tableau d'options passé à l'adaptateur, lors de la création
+                    de l'instance de Pdo_Sqlite Adapter.</para>
                 </listitem>
 
                 <listitem>

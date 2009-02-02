@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12702 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.statement">
     <title>Zend_Db_Statement</title>
 
@@ -15,10 +15,10 @@
 
         <para>Cet objet est typiquement retourné par la méthode <code>query()</code> de votre objet adaptateur de base
         de données. Cette méthode prépare un statement SQL : le premier argument est une chaîne représentant la requête
-        préparée, le second, un tableau de paramètres "bindés".</para>
+        préparée, le second, un tableau de paramètres liés.</para>
 
         <example id="zend.db.statement.creating.example1">
-            <title>Création d'un objet statement avec query()</title>
+            <title>Création d'un objet statement avec <code>query()</code></title>
 
             <programlisting role="php"><![CDATA[
 $sql = 'SELECT * FROM bugs WHERE reported_by = ? AND bug_status = ?';
@@ -52,7 +52,7 @@ $stmt = new Zend_Db_Statement_Mysqli($db, $sql);
         Utilisez sa méthode <code>execute()</code> pour ceci. Le seul argument que cette méthode accepte est le tableau
         de "binds" (paramètres préparés).</para>
 
-        <para>Si vous utilisez les <emphasis>paramètres positionnels</emphasis>, ceux utilisés avec le point
+        <para>Si vous utilisez les <emphasis>paramètres positionnés</emphasis>, ceux utilisés avec le point
         d'interrogation (<code>?</code>), passez simplement les valeurs dans le tableau.</para>
 
         <example id="zend.db.statement.executing.example1">
@@ -129,7 +129,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
             statement.</para>
 
             <example id="zend.db.statement.fetching.fetch.example">
-                <title>Utiliser fetch() dans une boucle</title>
+                <title>Utiliser <code>fetch()</code> dans une boucle</title>
 
                 <programlisting role="php"><![CDATA[
 $stmt = $db->query('SELECT * FROM bugs');
@@ -152,7 +152,7 @@ while ($row = $stmt->fetch()) {
             deuxième est le numéro de la colonne à retourner, si Zend_Db::FETCH_COLUMN est utilisé.</para>
 
             <example id="zend.db.statement.fetching.fetchall.example">
-                <title>Utilisation de fetchAll()</title>
+                <title>Utilisation de <code>fetchAll()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $stmt = $db->query('SELECT * FROM bugs');
@@ -171,12 +171,12 @@ echo $rows[0]['bug_description'];
             <title>Changer le mode de capture (Fetch Mode)</title>
 
             <para>Par défaut l'objet statement retourne les colonnes du jeu de résultat en tant que tableau associatif,
-            en mappant les noms des colonne sur leur valeur. Vous pouvez cependant spécifier un format différent, comme
-            il est possible de faire avec la classe de l'adaptateur. La méthode <code>setFetchMode()</code> permet ceci.
-            Indiquez un mode de capture en utilisant les constantes de la classe Zend_Db : FETCH_ASSOC, FETCH_NUM,
-            FETCH_BOTH, FETCH_COLUMN, et FETCH_OBJ. Voyez <xref linkend="zend.db.adapter.select.fetch-mode" /> pour plus
-            d'informations sur ces modes de capture. Les appels suivants à <code>fetch()</code> ou
-            <code>fetchAll()</code> utiliseront le mode spécifié auparavant.</para>
+            en faisant correspondre les noms des colonne et leur valeur. Vous pouvez cependant spécifier un format
+            différent, comme il est possible de faire avec la classe de l'adaptateur. La méthode
+            <code>setFetchMode()</code> permet ceci. Indiquez un mode de capture en utilisant les constantes de la
+            classe Zend_Db : FETCH_ASSOC, FETCH_NUM, FETCH_BOTH, FETCH_COLUMN, et FETCH_OBJ. Voyez <xref
+            linkend="zend.db.adapter.select.fetch-mode" /> pour plus d'informations sur ces modes de capture. Les appels
+            suivants à <code>fetch()</code> ou <code>fetchAll()</code> utiliseront le mode spécifié auparavant.</para>
 
             <example id="zend.db.statement.fetching.fetch-mode.example">
                 <title>Paramétrer le mode de capture (fetch mode)</title>
@@ -210,7 +210,7 @@ echo $rows[0][0];
             résultat.</para>
 
             <example id="zend.db.statement.fetching.fetchcolumn.example">
-                <title>Utiliser fetchColumn()</title>
+                <title>Utiliser <code>fetchColumn()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $sql = 'SELECT bug_id, bug_description, bug_status FROM bugs';
@@ -235,7 +235,7 @@ $bug_status = $stmt->fetchColumn(2);
             de cette classe.</para>
 
             <example id="zend.db.statement.fetching.fetchobject.example">
-                <title>Utiliser fetchObject()</title>
+                <title>Utiliser <code>fetchObject()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $sql = 'SELECT bug_id, bug_description, bug_status FROM bugs';

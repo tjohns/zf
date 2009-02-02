@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13564 -->
+<!-- EN-Revision: 13846 -->
 <sect1 id="zend.db.select">
     <title>Zend_Db_Select</title>
 
@@ -120,7 +120,7 @@ $select = $db->select()
             identificateurs autour du nom de table, ainsi vous pouvez employer les caractères spéciaux.</para>
 
             <example id="zend.db.select.building.from.example">
-                <title>Exemple d'utilisation de la méthode from()</title>
+                <title>Exemple d'utilisation de la méthode <code>from()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -507,7 +507,7 @@ $select = $db->select()
             complète la condition pour vous.</para>
 
             <example id="zend.db.select.building.joinusing.example">
-                <title>Exemple avec la méthode joinUsing()</title>
+                <title>Exemple avec la méthode <code>joinUsing()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -555,7 +555,7 @@ $select = $db->select()
             expression est utilisée dans une clause <code>WHERE</code> dans la requête.</para>
 
             <example id="zend.db.select.building.where.example">
-                <title>Exemple d'utilisation de la méthode where()</title>
+                <title>Exemple d'utilisation de la méthode <code>where()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -585,7 +585,7 @@ $select = $db->select()
             en les échappant vous-même.</para>
 
             <example id="zend.db.select.building.where.example-param">
-                <title>Exemple d'un paramètre dans la méthode where()</title>
+                <title>Exemple d'un paramètre dans la méthode <code>where()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -607,7 +607,7 @@ $select = $db->select()
             <code>AND</code> entre eux.</para>
 
             <example id="zend.db.select.building.where.example-and">
-                <title>Exemple avec plusieurs appels de where()</title>
+                <title>Exemple avec plusieurs appels de <code>where()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -632,7 +632,7 @@ $select = $db->select()
             excepté que le terme spécifié est précédé par <code>OR</code>, au lieu de <code>AND</code>.</para>
 
             <example id="zend.db.select.building.where.example-or">
-                <title>Exemple d'utilisation de la méthode orWhere()</title>
+                <title>Exemple d'utilisation de la méthode <code>orWhere()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -696,7 +696,7 @@ $select = $db->select()
             ou un tableau de colonnes à utiliser dans la clause <code>GROUP BY</code>.</para>
 
             <example id="zend.db.select.building.group.example">
-                <title>Exemple d'utilisation de la méthode group()</title>
+                <title>Exemple d'utilisation de la méthode <code>group()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -738,7 +738,7 @@ $select = $db->select()
             la méthode <code>orHaving()</code>.</para>
 
             <example id="zend.db.select.building.having.example">
-                <title>Exemple d'utilisation de la méthode having()</title>
+                <title>Exemple d'utilisation de la méthode <code>having()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -786,7 +786,7 @@ $select = $db->select()
             de type <code>Zend_Db_Expr</code>.</para>
 
             <example id="zend.db.select.building.order.example">
-                <title>Exemple d'utilisation de la méthode order()</title>
+                <title>Exemple d'utilisation de la méthode <code>order()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -823,7 +823,7 @@ $select = $db->select()
             nombre de lignes désirées. Le second argument est le nombre de lignes à omettre.</para>
 
             <example id="zend.db.select.building.limit.example">
-                <title>Exemple d'utilisation de la méthode limit()</title>
+                <title>Exemple d'utilisation de la méthode <code>limit()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -854,7 +854,7 @@ $select = $db->select()
             par défaut.</para>
 
             <example id="zend.db.select.building.limit.example2">
-                <title>Exemple d'utilisation de la méthode limitPage()</title>
+                <title>Exemple d'utilisation de la méthode <code>limitPage()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -877,7 +877,7 @@ $select = $db->select()
             requête SQL.</para>
 
             <example id="zend.db.select.building.distinct.example">
-                <title>Exemple d'utilisation de la méthode distinct()</title>
+                <title>Exemple d'utilisation de la méthode <code>distinct()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -898,7 +898,7 @@ $select = $db->select()
             votre requête SQL.</para>
 
             <example id="zend.db.select.building.for-update.example">
-                <title>Exemple d'utilisation de la méthode forUpdate()</title>
+                <title>Exemple d'utilisation de la méthode <code>forUpdate()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
@@ -930,7 +930,7 @@ $select = $db->select()
             <code>PDOStatement</code>, dépendant du type d'adaptateur.</para>
 
             <example id="zend.db.select.execute.query-adapter.example">
-                <title>Exemple d'utilisation de la méthode query() de l'adaptateur Db</title>
+                <title>Exemple d'utilisation de la méthode <code>query()</code> de l'adaptateur Db</title>
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
@@ -951,7 +951,7 @@ $result = $stmt->fetchAll();
             d'adaptateur.</para>
 
             <example id="zend.db.select.execute.query-select.example">
-                <title>Exemple d'utilisation de la méthode query de l'objet Select</title>
+                <title>Exemple d'utilisation de la méthode query() de l'objet Select</title>
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
@@ -970,7 +970,7 @@ $result = $stmt->fetchAll();
             <code>Zend_Db_Select</code>, utilisez la méthode <code>__toString()</code>.</para>
 
             <example id="zend.db.select.execute.tostring.example">
-                <title>Exemple d'utilisation de la méthode __toString()</title>
+                <title>Exemple d'utilisation de la méthode <code>__toString()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
@@ -1013,7 +1013,7 @@ echo "$sql\n";
             requête SQL. Vous pouvez utiliser ces constantes ou des chaînes de caractères littérales.</para>
 
             <table id="zend.db.select.other.get-part.table">
-                <title>Constantes utilisées par getPart() et reset()</title>
+                <title>Constantes utilisées par <code>getPart()</code> et <code>reset()</code></title>
 
                 <tgroup cols="2">
                     <thead>
@@ -1089,7 +1089,7 @@ echo "$sql\n";
             </table>
 
             <example id="zend.db.select.other.get-part.example">
-                <title>Exemple d'utilisation de la méthode getPart()</title>
+                <title>Exemple d'utilisation de la méthode <code>getPart()</code></title>
 
                 <programlisting role="php"><![CDATA[
 $select = $db->select()
@@ -1117,14 +1117,14 @@ print_r( $orderData );
 
             <para>L'argument unique est facultatif. Vous pouvez spécifier la partie de la requête à effacer, en
             utilisant les mêmes chaînes que vous utilisez en tant qu'argument de la méthode <code>getPart()</code>. La
-            partie de la requête que vous spécifiez est réinitialisée à l'état par défaut.</para>
+            partie de la requête que vous spécifiez est initialisée à l'état par défaut.</para>
 
-            <para>Si vous omettez le paramètre, <code>reset()</code> réinitialise toutes les parties de la requête à
-            leurs valeurs par défaut. Ceci rend l'objet Zend_Db_Select équivalent à un nouvel objet, comme si vous
-            l'aviez tout juste instancié.</para>
+            <para>Si vous omettez le paramètre, <code>reset()</code> initialise toutes les parties de la requête à leurs
+            valeurs par défaut. Ceci rend l'objet Zend_Db_Select équivalent à un nouvel objet, comme si vous l'aviez
+            tout juste instancié.</para>
 
             <example id="zend.db.select.other.reset.example">
-                <title>Exemple d'utilisation de la méthode reset()</title>
+                <title>Exemple d'utilisation de la méthode <code>reset()</code></title>
 
                 <programlisting role="php"><![CDATA[
 // Construire cette requête :
