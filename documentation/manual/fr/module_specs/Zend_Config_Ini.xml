@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13849 -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
 
@@ -34,7 +34,7 @@ $options = new Zend_Config_Ini('/chemin/vers/config.ini',
     </note>
 
     <example id="zend.config.adapters.ini.example.using">
-        <title>Utiliser Zend_Config_Ini</title>
+        <title>Utiliser <code>Zend_Config_Ini</code></title>
 
         <para>Cet exemple illustre une utilisation de base de <code>Zend_Config_Ini</code> pour le chargement des
         données de configuration à partir d'un fichier INI. Dans cet exemple il y a des données de configuration pour un

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13910 -->
 <sect1 id="zend.config.writer.introduction">
     <title>Zend_Config_Writer</title>
 
@@ -37,7 +37,7 @@
     <code>Zend_Config</code> racine.</para>
 
     <example id="zend.config.writer.example.using">
-        <title>Utilisation de Zend_Config_Writer</title>
+        <title>Utilisation de <code>Zend_Config_Writer</code></title>
 
         <para>Cet exemple illustre une utilisation basique <code>Zend_Config_Writer_Xml</code> pour créer un nouveau
         fichier de configuration :</para>

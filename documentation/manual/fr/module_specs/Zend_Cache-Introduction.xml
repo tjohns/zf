@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13463 -->
+<!-- EN-Revision: 13850 -->
 <sect1 id="zend.cache.introduction">
     <title>Introduction</title>
 
@@ -126,7 +126,7 @@ echo "Ceci n' jamais mis en cache (" . time() . ").";
     </example>
 
     <note>
-        <para>Lorsque vous utilisez Zend_Cache, faîtes attention à l'identifiant du cache (passé à <code>save()</code>
+        <para>Lorsque vous utilisez <code>Zend_Cache</code>, faîtes attention à l'identifiant du cache (passé à <code>save()</code>
         et <code>start()</code>). Il doit être unique pour chaque ressource que vous mettez en cache, sinon il est
         possible que des caches en efface d'autres, ou encore pire, s'affiche en lieu et place d'autres.</para>
     </note>

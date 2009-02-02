@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13464 -->
+<!-- EN-Revision: 13849 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
 
@@ -20,7 +20,7 @@
     </note>
 
     <example id="zend.config.adapters.xml.example.using">
-        <title>Utiliser Zend_Config_Xml</title>
+        <title>Utiliser <code>Zend_Config_Xml</code></title>
 
         <para>Cet exemple illustre une utilisation de base de <code>Zend_Config_Xml</code> pour le chargement des
         données de configuration à partir d'un fichier XML. Dans cet exemple il y a des données de configuration pour un
@@ -70,7 +70,7 @@ echo $config->database->params->dbname; // affiche "dbname"
     </example>
 
     <example id="zend.config.adapters.xml.example.attributes">
-        <title>Utilisation des attributs de balise avec Zend_Config_Xml</title>
+        <title>Utilisation des attributs de balise avec <code>Zend_Config_Xml</code></title>
 
         <para><code>Zend_Config_Xml</code> supporte aussi 2 autres manières de définir des noeuds dans la configuration.
         Celles-ci utilisent les attributs de balises. Puisque les attributs <code>extends</code> et <code>value</code>

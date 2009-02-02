@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13463 -->
+<!-- EN-Revision: 13910 -->
 <sect1 id="zend.cache.backends">
     <title>Les backends Zend_Cache</title>
 
@@ -6,7 +6,7 @@
     fonctionnalités supplémentaires.</para>
 
     <sect2 id="zend.cache.backends.file">
-        <title>Zend_Cache_Backend_File</title>
+        <title><code>Zend_Cache_Backend_File</code></title>
 
         <para>Ces backends (étendus) stockent les enregistrements de cache dans des fichiers (dans un dossier
         choisi).</para>
@@ -138,7 +138,7 @@
     </sect2>
 
     <sect2 id="zend.cache.backends.sqlite">
-        <title>Zend_Cache_Backend_Sqlite</title>
+        <title><code>Zend_Cache_Backend_Sqlite</code></title>
 
         <para>Ce backend (étendu) stocke les enregistrements de cache dans une base de donnée SQLite.</para>
 
@@ -190,7 +190,7 @@
     </sect2>
 
     <sect2 id="zend.cache.backends.memcached">
-        <title>Zend_Cache_Backend_Memcached</title>
+        <title><code>Zend_Cache_Backend_Memcached</code></title>
 
         <para>Ce backend (étendu) stocke les enregistrements de cache dans un serveur memcached. <ulink
         url="http://www.danga.com/memcached/">Memcached</ulink> est un système de cache en mémoire distribuée, de haute
@@ -252,7 +252,7 @@
     </sect2>
 
     <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_Apc</title>
+        <title><code>Zend_Cache_Backend_Apc</code></title>
 
         <para>Ce backend (étendu) stocke les enregistrements de cache en mémoire partagée grâce à l'extension <ulink
         url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) qui est requise pour utiliser ce
@@ -265,7 +265,7 @@
     </sect2>
 
     <sect2 id="zend.cache.backends.xcache">
-        <title>Zend_Cache_Backend_Xcache</title>
+        <title><code>Zend_Cache_Backend_Xcache</code></title>
 
         <para>Ce backend stocke ces enregistrements de cache dans la mémoire partagée à travers l'extension <ulink
         url="http://xcache.lighttpd.net/">XCache</ulink> (qui est bien sûr nécessaire pour utiliser ce backend).</para>
@@ -318,7 +318,7 @@
     </sect2>
 
     <sect2 id="zend.cache.backends.platform">
-        <title>Zend_Cache_Backend_ZendPlatform</title>
+        <title><code>Zend_Cache_Backend_ZendPlatform</code></title>
 
         <para>Ce backend utilise l'API de cache de contenu de la <ulink url="http://www.zend.com/products/platform">Zend
         Platform</ulink>. Naturellement, pour utiliser ce backend, vous devez avoir installé une Zend Platorm.</para>
@@ -337,7 +337,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
     </sect2>
 
     <sect2 id="zend.cache.backends.twolevels">
-        <title>Zend_Cache_Backend_TwoLevels</title>
+        <title><code>Zend_Cache_Backend_TwoLevels</code></title>
 
         <para>Ce backend (étendu) est un hybride. Il stocke les enregistrements de cache dans deux autres backends : un
         rapide (mais limité) comme Apc, Memcache... et un plus "lent" comme File, Sqlite...</para>
