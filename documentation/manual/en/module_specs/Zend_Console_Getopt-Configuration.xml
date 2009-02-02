@@ -17,7 +17,7 @@
         <example id="zend.console.getopt.configuration.addrules.example">
             <title>Using addRules()</title>
             <programlisting role="php"><![CDATA[
-$opts = new <code>Zend_Console_Getopt('abp:');
+$opts = new Zend_Console_Getopt('abp:');
 $opts->addRules(
   array(
     'verbose|v' => 'Print verbose output'
