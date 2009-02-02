@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13822 -->
+<!-- EN-Revision: 13935 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -251,6 +251,13 @@ $upload->receive();
                     このメソッドは、転送されたファイルの内容のハッシュを返します。
                 </para>
             </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getMimeType($files = null)</emphasis>:
+                    このメソッドは、転送されたファイルの mimetype を返します。
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -346,6 +353,36 @@ $names = $upload->getHash('crc32', 'foo');
         <note>
             <para>
                 複数のファイルを指定した場合は、返される結果が配列となることに注意しましょう。
+            </para>
+        </note>
+
+        <para>
+            <code>getMimeType()</code> はファイルの mimetype を返します。
+            複数のファイルがアップロードされた場合は配列、そうでない場合は文字列を返します。
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.getmimetype">
+            <title>ファイルの mimetype の取得</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+$mime = $upload->getMimeType();
+
+// フォーム要素 'foo' の mimetype を返します
+$names = $upload->getMimeType('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                このメソッドは、fileinfo 拡張モジュールが使用可能な場合はそれを使用することに注意しましょう。
+                この拡張モジュールがみつからなかった場合は、mimemagic 拡張モジュールを使用します。
+                それもみつからなかった場合は、ファイルがアップロードされた際にファイルサーバから渡された
+                mimetype を使用します。
             </para>
         </note>
     </sect2>
