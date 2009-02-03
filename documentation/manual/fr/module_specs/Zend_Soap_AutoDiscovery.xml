@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13327 -->
+<!-- EN-Revision: 13910 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>Auto découverte</title>
 
@@ -55,7 +55,8 @@
         <para>Zend_Soap_AutoDiscovery supporte aussi la correspondance des types PHP vers <ulink
         url="http://www.w3.org/TR/xmlschema-2/">les types XSD</ulink>.</para>
 
-        <para>Voici un exemple d'utilisation de l'auto découverte : <programlisting role="php"><![CDATA[
+        <para>Voici un exemple d'utilisation de l'auto découverte. La fonction <code>handle()</code> génère le fichier
+        WSDL et l'envoie au navigateur : <programlisting role="php"><![CDATA[
 class My_SoapServer_Class {
 ...
 }
@@ -64,6 +65,10 @@ $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
 $autodiscover->handle();
 ]]></programlisting></para>
+
+        <para>Si vous avez besoin d'accéder au fichier WSDL généré soit pour le sauvegarder dans un fichier ou en tant
+        que chaîne de caractères, vous pouvez utiliser les méthodes <code>dump($filename)</code> ou <code>toXml()</code>
+        que la classe AutoDiscover fournit.</para>
 
         <note id="zend.soap.autodiscovery.introduction.noserver">
             <title>Zend_Soap_Autodiscover n'est pas un serveur SOAP</title>
@@ -113,7 +118,8 @@ $autodiscover->handle();
 
                 <listitem>
                     <para><code>'http://' .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code> est utilisé comme URI
-                    pour rechercher le fichier WSDL.</para>
+                    où le fichier WSDL est disponible par défaut mais ceci peut être surchargé avec la méthode
+                    <code>setUri()</code>.</para>
 
                     <para>Cet URI est aussi utilisé comme un espace de nom cible pour tous les noms du service (incluant
                     les types complexes décrits éventuellement).</para>
