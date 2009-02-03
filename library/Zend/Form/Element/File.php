@@ -61,7 +61,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     /**
      * @var integer Maximum file size for MAX_FILE_SIZE attribut of form
      */
-    protected static $_maxFileSize = 0;
+    protected static $_maxFileSize = -1;
 
     /**
      * Load default decorators
@@ -578,6 +578,36 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     /**
      * Sets the maximum file size of the form
      *
+     * @return integer
+     */
+    public function getMaxFileSize()
+    {
+        if (self::$_maxFileSize < 0) {
+            $ini = $this->_convertIniToInteger(trim(ini_get('post_max_size')));
+            $mem = $this->_convertIniToInteger(trim(ini_get('memory_limit')));
+            $max = $this->_convertIniToInteger(trim(ini_get('upload_max_filesize')));
+            $min = max($ini, $mem, $max);
+            if ($ini > 0) {
+                $min = min($min, $ini);
+            }
+
+            if ($mem > 0) {
+                $min = min($min, $mem);
+            }
+
+            if ($max > 0) {
+                $min = min($min, $max);
+            }
+
+            self::$_maxFileSize = $min;
+        }
+
+        return self::$_maxFileSize;
+    }
+
+    /**
+     * Sets the maximum file size of the form
+     *
      * @param  integer $size
      * @return integer
      */
@@ -618,6 +648,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             switch ($type) {
                 case 'K' :
                     $setting *= 1024;
+                    break;
+
                 case 'M' :
                     $setting *= 1024 * 1024;
                     break;
@@ -632,16 +664,6 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         }
 
         return (integer) $setting;
-    }
-
-    /**
-     * Sets the maximum file size of the form
-     *
-     * @return integer
-     */
-    public function getMaxFileSize()
-    {
-        return self::$_maxFileSize;
     }
 
     /**

@@ -269,6 +269,12 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         restore_error_handler();
     }
 
+    public function testAutoGetPostMaxSize()
+    {
+        $this->element->setMaxFileSize(-1);
+        $this->assertNotEquals(-1, $this->element->getMaxFileSize());
+    }
+
     public function testTranslatingValidatorErrors()
     {
         require_once 'Zend/Translate.php';
