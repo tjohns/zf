@@ -1,14 +1,14 @@
-<!-- EN-Revision: 11497 -->
+<!-- EN-Revision: 13945 -->
 <sect1 id="zend.registry.using">
     <title>Utiliser le registre</title>
 
-    <para>Le registre est un conteneur pour stocker des objets et des valeurs dans l'espace d'application. En stockant
+    <para>Un registre est un conteneur pour stocker des objets et des valeurs dans l'espace d'application. En stockant
     la valeur dans le registre, le même objet est toujours disponible partout dans votre application. Ce mécanisme est
     une alternative à l'utilisation du stockage global.</para>
 
-    <para>L'utilisation typique du registre est par des méthodes statiques dans la classe <code>Zend_Registry</code>.
-    Alternativement, la classe est un tableau, donc vous pouvez avoir accès aux éléments stockés avec une interface
-    semblable au tableau.</para>
+    <para>L'utilisation typique des registres dans Zend Framework est par des méthodes statiques dans la classe
+    <code>Zend_Registry</code>. Alternativement, la classe est un tableau, donc vous pouvez avoir accès aux éléments
+    stockés avec une interface semblable au tableau.</para>
 
     <sect2 id="zend.registry.using.storing">
         <title>Mettre des valeurs dans le registre</title>
@@ -17,7 +17,7 @@
         <code>set()</code>.</para>
 
         <example id="zend.registry.using.storing.example">
-            <title>Exemple avec la méthode set()</title>
+            <title>Exemple avec la méthode <code>set()</code></title>
 
             <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
@@ -27,7 +27,7 @@ Zend_Registry::set('index', $value);
         <para>La valeur peut être un objet, un tableau, ou un scalaire. Vous pouvez changer la valeur stockée dans une
         entrée spécifique du registre en utilisant <code>set()</code> pour enregistrer une nouvelle valeur.</para>
 
-        <para>L'index peut être un scalaire, une chaîne ou un entier, comme un tableau ordinaire.</para>
+        <para>L'index peut être un scalaire (<code>null</code>, chaîne, ou nombre), comme un tableau ordinaire.</para>
     </sect2>
 
     <sect2 id="zend.registry.using.retrieving">
@@ -36,16 +36,15 @@ Zend_Registry::set('index', $value);
         <para>Pour récupérer une entrée dans le registre,il faut utiliser la méthode statique <code>get()</code>.</para>
 
         <example id="zend.registry.using.retrieving.example">
-            <title>Exemple avec la méthode get()</title>
+            <title>Exemple avec la méthode <code>get()</code></title>
 
             <programlisting role="php"><![CDATA[
 $value = Zend_Registry::get('index');
 ]]></programlisting>
         </example>
 
-        <para>La méthode <code>getInstance()</code> retourne l'objet registre en entier.</para>
-
-        <para>Un objet registre est itératif.</para>
+        <para>La méthode <code>getInstance()</code> retourne l'objet registre en entier. Un objet registre est itératif,
+        rendant les valeurs stockées facilement accessibles.</para>
 
         <example id="zend.registry.using.retrieving.example-iterating">
             <title>Exemple d'itération du registre</title>
@@ -127,6 +126,13 @@ var_dump( $registry['index'] );
         d'accéder au registre statique. <emphasis role="strong">Attention</emphasis> en utilisant cette option, puisque
         certaines versions de PHP ont des bugs quand il utilise le registre avec cette option.</para>
 
+        <warning>
+            <title>Problèmes connus avec l'option <code>ArrayObject::ARRAY_AS_PROPS</code></title>
+
+            <para>Certaines versions de PHP sont réputées buggués lors de l'utilisation de l'option de registre
+            <code>ArrayObject::ARRAY_AS_PROPS</code>.</para>
+        </warning>
+
         <example id="zend.registry.using.array-object.example">
             <title>Exemple d'accès de type objet</title>
 
@@ -154,7 +160,7 @@ var_dump($registry->index);
         <code>isRegistered()</code>.</para>
 
         <example id="zend.registry.using.isset.example-isregistered">
-            <title>Exemple avec la méthode isRegistered()</title>
+            <title>Exemple avec la méthode i<code>sRegistered()</code></title>
 
             <programlisting role="php"><![CDATA[
 if (Zend_Registry::isRegistered($index)) {
@@ -167,7 +173,7 @@ if (Zend_Registry::isRegistered($index)) {
         <code>isset()</code> comme vous le feriez avec un tableau ordinaire.</para>
 
         <example id="zend.registry.using.isset.example-isset">
-            <title>Exemple avec la méthode isset()</title>
+            <title>Exemple avec la méthode <code>isset()</code></title>
 
             <programlisting role="php"><![CDATA[
 $registry = Zend_Registry::getInstance();
@@ -191,7 +197,11 @@ if (isset($registry->index)) {
         <para>Le registre statique est une instance de la classe <code>Zend_Registry</code>. Si vous voulez ajouter une
         fonctionnalité au registre, vous pouvez créer une classe qui étend <code>Zend_Registry</code> et ensuite vous
         pouvez spécifier cette classe comme la classe à utiliser pour le registre statique. Utilisez la méthode statique
-        <code>setClassName()</code> pour spécifier la classe. La classe doit étendre <code>Zend_Registry</code>.</para>
+        <code>setClassName()</code> pour spécifier la classe.</para>
+
+        <note>
+            <para>La classe doit étendre <code>Zend_Registry</code>.</para>
+        </note>
 
         <example id="zend.registry.using.subclassing.example">
             <title>Exemple d'affectation d'un nom de classe au registre</title>
@@ -221,12 +231,13 @@ Zend_Registry::set('index', $value);
             statique sont perdues et ne peuvent pas être récupérées.</para>
         </note>
 
-        <para>Vous pourriez utiliser cette méthode, par exemple, si vous voulez utiliser <code>setInstance()</code> or
+        <para>Vous pourriez utiliser cette méthode, par exemple, si vous voulez utiliser <code>setInstance()</code> ou
         <code>setClassName()</code> après que l'objet de registre statique a été initialisé. Décharger l'instance
-        statique vous permet d'utiliser ces méthodes.</para>
+        statique vous permet d'utiliser ces méthodes même après instanciation de l'objet registre. Utiliser
+        <code>Zend_Registry</code> de cette manière n'est pas recommandé dans les applications.</para>
 
         <example id="zend.registry.using.unsetting.example">
-            <title>Exemple avec la méthode _unsetInstance()</title>
+            <title>Exemple avec la méthode <code>_unsetInstance()</code></title>
 
             <programlisting role="php"><![CDATA[
 Zend_Registry::set('index', $value);
