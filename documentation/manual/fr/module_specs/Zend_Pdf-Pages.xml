@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 13863 -->
 <sect1 id="zend.pdf.pages">
     <title>Les pages d'un document</title>
 
@@ -14,7 +14,7 @@
         la méthode <code>Zend_Pdf::newPage()</code> crée une page directement attachée au document. A la différence des
         pages non attachées à un document, elle ne peut-être utilisée dans plusieurs documents PDF, mais est un peu plus
         performante. <footnote>
-                <para>C'est une limitation de la version 1.0 du module Zend_Pdf. Ce sera corrigé dans une future
+                <para>C'est une limitation de la version courante du module <code>Zend_Pdf</code>. Ce sera corrigé dans une future
                 version. Mais les pages non attachées à un document donneront toujours de meilleurs résultats pour
                 partager une page entre plusieurs documents.</para>
             </footnote>. C'est à vous de choisir quel approche doit-être utilisée.</para>
