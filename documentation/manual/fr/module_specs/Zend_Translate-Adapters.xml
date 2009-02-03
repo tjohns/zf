@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13165 -->
+<!-- EN-Revision: 13904 -->
 <sect1 id="zend.translate.adapter">
     <title>Adaptateurs pour Zend_Translate</title>
 
@@ -292,7 +292,7 @@ try {
         <code>hasCache()</code>, <code>clearCache()</code> et <code>removeCache()</code>.</para>
 
         <programlisting role="php"><![CDATA[
-$cache = Zend_Cache::factory('Page',
+$cache = Zend_Cache::factory('Core',
                              'File',
                              $frontendOptions,
                              $backendOptions);
