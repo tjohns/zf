@@ -143,55 +143,74 @@ $index->optimize();
         vers des segments encore plus gros et ainsi de suite.</para>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.maxbuffereddocs">
-            <title><emphasis>MaxBufferedDocs</emphasis> auto-optimization option</title>
+            <title>Option d'optimisation automatique <emphasis>MaxBufferedDocs</emphasis></title>
 
-            <para><emphasis>MaxBufferedDocs</emphasis> is a minimal number of documents required before the buffered
-            in-memory documents are written into a new segment.</para>
+            <para>
+                <emphasis>MaxBufferedDocs</emphasis> correspond au nombre minimum de documents requis avant que
+                les documents présents en mémoire dans le buffer soit écris dans un nouveau segment.
+            </para>
 
-            <para><emphasis>MaxBufferedDocs</emphasis> can be retrieved or set by
-            <code>$index-&gt;getMaxBufferedDocs()</code> or <code>$index-&gt;setMaxBufferedDocs($maxBufferedDocs)</code>
-            calls.</para>
+            <para>
+                <emphasis>MaxBufferedDocs</emphasis> peut être récupéré ou défini en
+                appelant <code>$index-&gt;getMaxBufferedDocs()</code> ou <code>$index-&gt;setMaxBufferedDocs($maxBufferedDocs)</code>.
+            </para>
 
-            <para>Default value is 10.</para>
+            <para>Sa valeur par défaut est 10.</para>
         </sect3>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.maxmergedocs">
-            <title><emphasis>MaxMergeDocs</emphasis> auto-optimization option</title>
+            <title>Option d'optimisation automatique <emphasis>MaxMergeDocs</emphasis></title>
 
-            <para><emphasis>MaxMergeDocs</emphasis> is a largest number of documents ever merged by addDocument(). Small
-            values (e.g., less than 10.000) are best for interactive indexing, as this limits the length of pauses while
-            indexing to a few seconds. Larger values are best for batched indexing and speedier searches.</para>
+            <para>
+                <emphasis>MaxMergeDocs</emphasis> correspond à un nombre maximal de documents fusionnés via addDocument().
+                Des petites valeurs (p. ex., moins de 10'000) sont préférables pour de l'indexation interactive, du fait
+                que cela limite les pauses durant l'indexation à quelques secondes. Des valeurs plus grandes sont meilleures
+                pour les indexations en tâches planifiées (batch) et des recherches plus rapides.
+            </para>
 
-            <para><emphasis>MaxMergeDocs</emphasis> can be retrieved or set by <code>$index-&gt;getMaxMergeDocs()</code>
-            or <code>$index-&gt;setMaxMergeDocs($maxMergeDocs)</code> calls.</para>
+            <para>
+                <emphasis>MaxMergeDocs</emphasis> peut être récupéré ou défini en
+                appelant <code>$index-&gt;getMaxMergeDocs()</code> ou <code>$index-&gt;setMaxMergeDocs($maxMergeDocs)</code>.
+            </para>
 
-            <para>Default value is PHP_INT_MAX.</para>
+            <para>Sa valeur par défaut est PHP_INT_MAX.</para>
         </sect3>
 
         <sect3 id="zend.search.lucene.index-creation.optimization.mergefactor">
-            <title><emphasis>MergeFactor</emphasis> auto-optimization option</title>
+            <title>Option d'optimisation automatique <emphasis>MergeFactor</emphasis></title>
 
-            <para><emphasis>MergeFactor</emphasis> determines how often segment indices are merged by addDocument().
-            With smaller values, less RAM is used while indexing, and searches on unoptimized indices are faster, but
-            indexing speed is slower. With larger values, more RAM is used during indexing, and while searches on
-            unoptimized indices are slower, indexing is faster. Thus larger values (&gt; 10) are best for batch index
-            creation, and smaller values (&lt; 10) for indices that are interactively maintained.</para>
+            <para>
+                <emphasis>MergeFactor</emphasis> détermine à quelle fréquence les segments d'index sont fusionnés
+                par addDocument(). Avec des petites valeurs, on utilise moins de RAM durant l'indexation et les
+                recherche sur des index non optimisés sont plus rapides, mais la vitesse d'indexation
+                est plus lente. Avec des valeurs plus grandes, on utilise plus de RAM durant l'indexation, et tandis
+                que les recherches sur les index non optimisés sont plus lentes, l'indexation est plus rapide. Au
+                final, les grandes valeurs (&gt; 10) sont préférables pour les indexations planifiées (batch), et les
+                valeurs plus petites (&lt; 10) pour les index qui sont maintenus de manière interactives.
+            </para>
 
-            <para><emphasis>MergeFactor</emphasis> is a good estimation for average number of segments merged by one
-            auto-optimization pass. Too large values produce large number of segments while they are not merged into new
-            one. It may be a cause of "failed to open stream: Too many open files" error message. This limitation is
-            system dependent.</para>
+            <para>
+                L'option <emphasis>MergeFactor</emphasis> constitue une bonne estimation pour le nombre moyen de
+                segments fusionnés par une passe d'auto-optimisation. Des valeurs trop grandes produisent un nombre
+                trop important de segments car ils ne sont pas fusionnés. Cela peut causer l'erreur "failed to open stream:
+                Too many open files". Cette limitation est dépendante du système.
+            </para>
 
-            <para><emphasis>MergeFactor</emphasis> can be retrieved or set by <code>$index-&gt;getMergeFactor()</code>
-            or <code>$index-&gt;setMergeFactor($mergeFactor)</code> calls.</para>
+            <para>
+                <emphasis>MergeFactor</emphasis> peut être récupéré ou défini par les méthodes <code>$index-&gt;getMergeFactor()</code>
+                ou <code>$index-&gt;setMergeFactor($mergeFactor)</code>.
+            </para>
 
-            <para>Default value is 10.</para>
+            <para>Sa valeur par défaut est 10.</para>
 
-            <para>Lucene Java and Luke (Lucene Index Toolbox - <ulink
-            url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>) can also be used to optimize an
-            index. Latest Luke release (v0.8) is based on Lucene v2.3 and compatible with current implementation of
-            <code>Zend_Search_Lucene</code> component (ZF 1.6). Earlier versions of <code>Zend_Search_Lucene</code>
-            implementations need another versions of Java Lucene tools to be compatible: <itemizedlist>
+            <para>
+                Lucene Java et Luke (Lucene Index Toolbox - <ulink
+                url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>) peuvent aussi être utilisés
+                pour optimiser un index. La dernière version de Luke (v0.8) est basée sur Lucene v2.3 et est
+                compatible avec l'implémentation courante du composant <code>Zend_Search_Lucene</code> (ZF 1.6). Les
+                versions précédentes de <code>Zend_Search_Lucene</code> nécessitent d'autres versions des outils
+                de Java Lucene :
+                <itemizedlist>
                     <listitem>
                         <para>ZF 1.5 - Java Lucene 2.1 (Luke tool v0.7.1 - <ulink
                         url="http://www.getopt.org/luke/luke-0.7.1/"></ulink>)</para>
@@ -201,24 +220,29 @@ $index->optimize();
                         <para>ZF 1.0 - Java Lucene 1.4 - 2.1 (Luke tool v0.6 - <ulink
                         url="http://www.getopt.org/luke/luke-0.6/"></ulink>)</para>
                     </listitem>
-                </itemizedlist></para>
+                </itemizedlist>
+            </para>
         </sect3>
     </sect2>
 
     <sect2 id="zend.search.lucene.index-creation.permissions">
         <title>Permissions</title>
 
-        <para>By default, index files are available for reading and writing by everyone.</para>
+        <para>
+            Par défaut, les fichiers d'index sont disponibles en lecture et écriture par tout le monde.
+        </para>
 
-        <para>It's possible to override this with the
-        <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> method:</para>
+        <para>
+            Il est possible de surcharger ce comportement grâce à la méthode
+            <code>Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions()</code> :
+        </para>
 
         <programlisting role="php"><![CDATA[
-// Get current default file permissions
+// Récupération des permissions par défaut
 $currentPermissions =
     Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 
-// Give read-writing permissions only for current user and group
+// Donne la permission lecture-écriture uniquement à l'utilisateur et au groupe courant.
 Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
 ]]></programlisting>
     </sect2>
@@ -227,24 +251,31 @@ Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660)
         <title>Limitations</title>
 
         <sect3 id="zend.search.lucene.index-creation.limitations.index-size">
-            <title>Index size</title>
+            <title>Taille de l'index</title>
 
-            <para>Index size is limited by 2GB for 32-bit platforms.</para>
+            <para>La taille de l'index est limité à 2GB sur les plateformes 32 bits.</para>
 
-            <para>Use 64-bit platforms for larger indices.</para>
+            <para>Utilisez des plateformes 64 bits pour des index plus gros.</para>
         </sect3>
 
         <sect3 id="zend.search.lucene.index-creation.limitations.filesystems">
-            <title>Supported Filesystems</title>
+            <title>Systèmes de fichiers supportés</title>
 
-            <para><code>Zend_Search_Lucene</code> uses <code>flock()</code> to provide concurrent searching, index
-            updating and optimization.</para>
+            <para>
+                <code>Zend_Search_Lucene</code> utilise <code>flock()</code> pour
+                fournir des recherches concurrentes, la mise à jour des index et l'optimisation.
+            </para>
 
-            <para>According to the PHP <ulink
-            url="http://www.php.net/manual/en/function.flock.php">documentation</ulink>, "<code>flock()</code> will not
-            work on NFS and many other networked file systems".</para>
+            <para>
+                Selon la <ulink
+                url="http://www.php.net/manual/en/function.flock.php">documentation</ulink> PHP,
+                "<code>flock()</code> ne fonctionnera pas sur NFS et plusieurs autres systèmes de
+                fichiers en réseaux".
+            </para>
 
-            <para>Do not use networked file systems with <code>Zend_Search_Lucene</code>.</para>
+            <para>
+                N'utilisez pas de systèmes de fichiers en réseaux avec <code>Zend_Search_Lucene</code>.
+            </para>
         </sect3>
     </sect2>
 </sect1>
