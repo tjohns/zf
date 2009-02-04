@@ -1,9 +1,10 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 13947 -->
 <sect1 id="zend.version.reading">
     <title>Lire la version du Zend Framework</title>
 
-    <para>La constante de classe <code>Zend_Version::VERSION</code> contient une chaîne qui identifie la version
-    courante de Zend Framework. Par exemple, "0.9.0beta".</para>
+    <para><code>Zend_Version</code> fournit la constante de classe <code>Zend_Version::VERSION</code> qui contient une
+    chaîne identifiant la version courante de Zend Framework. <code>Zend_Version::VERSION</code> contient "1.7.2", par
+    exemple.</para>
 
     <para>La méthode statique <code>Zend_Version::compareVersion($version)</code> est basée sur la fonction PHP <ulink
     url="http://www.php.net/manual/fr/ref.version_compare.php"><code>version_compare()</code></ulink>. La méthode
@@ -12,11 +13,11 @@
     que la version courante de Zend Framework.</para>
 
     <example id="zend.version.reading.example">
-        <title>Exemple avec la méthode compareVersion()</title>
+        <title>Exemple avec la méthode <code>compareVersion()</code></title>
 
         <programlisting role="php"><![CDATA[
 // retourne -1, 0 or 1
-$cmp = Zend_Version::compareVersion('1.0.0');
+$cmp = Zend_Version::compareVersion('2.0.0');
 ]]></programlisting>
     </example>
 </sect1>
