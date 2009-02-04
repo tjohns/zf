@@ -5,7 +5,7 @@
     <para>
         <code>Zend_File_Transfer</code> provides extensive support for file uploads and downloads.
         It comes with built-in validators for files plus functionality to
-        change files with filters. Protocal adapters allow <code>Zend_File_Transfer</code> to expose the
+        change files with filters. Protocol adapters allow <code>Zend_File_Transfer</code> to expose the
         same API for transport protocols like HTTP, FTP, WEBDAV and more.
     </para>
 
@@ -263,7 +263,7 @@ $names = $upload->getFileName('foo');
             <para>
                 Note that the file name can change after you receive the file, because
                 all filters will be applied once the file is received. So you should always call <code>getFileName()</code>
-                after the files have been recieved.
+                after the files have been received.
             </para>
         </note>
 

@@ -20,7 +20,7 @@
         </listitem>
         <listitem>
             <para>
-                <code>Encrypt</code>: This filter can encrpyt a file.
+                <code>Encrypt</code>: This filter can encrypt a file.
             </para>
         </listitem>
         <listitem>
@@ -252,7 +252,7 @@ $upload->addFilter('Decrypt',
         <para>
             This filter makes use of <code>Zend_Filter_Encrypt</code>. It supports the <code>Mcrypt</code>
             and <code>OpenSSL</code> extensions from PHP. Please read the related section for
-            details about how to set the options for encrption and which options are supported.
+            details about how to set the options for encryption and which options are supported.
         </para>
 
         <para>
