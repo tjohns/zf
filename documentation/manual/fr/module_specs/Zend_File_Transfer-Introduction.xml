@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13413 -->
+<!-- EN-Revision: 13935 -->
 <sect1 id="zend.file.transfer.introduction">
     <title>Zend_File_Transfer</title>
 
@@ -86,7 +86,7 @@ if (!$adapter->receive()) {
         <para><code>Zend_File_Transfer</code> est construit pur supporter différents adaptateurs et différentes
         directions. Il est conçu pour permettre l'upload, le téléchargement et même l'envoi bidirectionnel (upload avec
         un adaptateur et télécharge avec un autre adaptateur en même temps) de fichiers. Cependant avec la version 1.6
-        de Zend Framework, il n'y a qu'un seul adaptateur disponible, l'adaptateur Http.</para>
+        de Zend Framework, il n'y a qu'un seul adaptateur disponible, l'adaptateur HTTP.</para>
 
         <para>Puisqu'il n'y a qu'un seul adaptateur disponible pour le moment, la classe principale n'est pas prête à
         l'utilisation. Si vous souhaitez utiliser <code>Zend_File_Transfer</code>, vous devez utiliser l'adaptateur
@@ -183,8 +183,18 @@ $upload->receive();
             </listitem>
 
             <listitem>
+                <para><code>getFileSize($file = null) </code>: cette méthode retourne la taille réelle d'un fichier
+                transféré donné.</para>
+            </listitem>
+
+            <listitem>
                 <para><code>getHash($hash = 'crc32', $files = null) </code>: cette méthode retourne la valeur de hachage
                 du contenu d'un fichier transféré donné.</para>
+            </listitem>
+
+            <listitem>
+                <para><code>getMimeType($files = null)</code> : cette méthode retourne le type MIME d'un fichier
+                transféré donné.</para>
             </listitem>
         </itemizedlist>
 
@@ -218,6 +228,27 @@ $names = $upload->getFileName('foo');
             qu'après avoir reçu les fichiers.</para>
         </note>
 
+        <para><code>getFileSize()</code> retourne par défaut la taille réelle d'un fichier en notation SI ce qui
+        signifie que vous récupérerez <code>2kB</code> au lieu de <code>2048</code>. Si vous voulez la taille brute,
+        utilisez l'option <code>useByteString</code> à <code>false</code>.</para>
+
+        <example id="zend.file.transfer.introduction.informations.example.getfilesize">
+            <title>Récupération de la taille de fichier</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+// Retourne les tailles de tous les fichiers sous la forme
+// d'un tableau si plus d'un fichier a été uploadé
+$size = $upload->getFileSize();
+
+// Bascule de la notation SI vers une taille brute
+$upload->setOption(array('useByteString' => false));
+$size = $upload->getFileSize();
+]]></programlisting>
+        </example>
+
         <para><code>getHash()</code> accepte le nom de l'algorithme de hachage en tant que premier paramètre. Pour avoir
         une liste des algorithmes connus, regardez <ulink url="http://php.net/manual/fr/function.hash-algos.php">la
         méthode hash_algos de PHP</ulink>. Si vous ne fournissez aucun algorithme, celui par défaut sera
@@ -242,6 +273,29 @@ $names = $upload->getHash('crc32', 'foo');
         <note>
             <para>Notez que si un fichier ou un élément de formulaire donné contient plus d'un fichier, la valeur
             retournée sera un tableau.</para>
+        </note>
+
+        <para><code>getMimeType()</code> retourne le type MIME d'un fichier. Si plus d'un fichier a été uploadé, elle
+        retourne un tableau, sinon c'est une chaîne.</para>
+
+        <example id="zend.file.transfer.introduction.informations.getmimetype">
+            <title>Récupération du type MIME de fichier</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+$mime = $upload->getMimeType();
+
+// Retourne le type MIME pour l'élément de formulaire "foo"
+$names = $upload->getMimeType('foo');
+]]></programlisting>
+        </example>
+
+        <note>
+            <para>Notez que cette méthode utilise l'extension fileinfo si elle est disponible. Si elle n'est pas trouvé,
+            elle utilise l'extension mimemagic. Quand aucune extension n'est fournie, elle utilise le type MIME donné
+            par le serveur quand le fichier a été uploadé.</para>
         </note>
     </sect2>
 </sect1>
