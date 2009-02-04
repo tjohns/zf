@@ -2000,4 +2000,256 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Data::getContent('de_AT', 'phonetoterritory', 'AT');
         $this->assertEquals("43", $value);
     }
+
+    /**
+     * test for reading territorytonumeric from locale
+     * expected array
+     */
+    public function testTerritoryToNumeric()
+    {
+        $value = Zend_Locale_Data::getList('de_AT', 'territorytonumeric');
+        $result = array('958' => 'AA', '020' => 'AD', '784' => 'AE', '004' => 'AF', '028' => 'AG',
+            '660' => 'AI', '008' => 'AL', '051' => 'AM', '530' => 'AN', '024' => 'AO', '010' => 'AQ',
+            '032' => 'AR', '016' => 'AS', '040' => 'AT', '036' => 'AU', '533' => 'AW', '248' => 'AX',
+            '031' => 'AZ', '070' => 'BA', '052' => 'BB', '050' => 'BD', '056' => 'BE', '854' => 'BF',
+            '100' => 'BG', '048' => 'BH', '108' => 'BI', '204' => 'BJ', '652' => 'BL', '060' => 'BM',
+            '096' => 'BN', '068' => 'BO', '076' => 'BR', '044' => 'BS', '064' => 'BT', '104' => 'BU',
+            '074' => 'BV', '072' => 'BW', '112' => 'BY', '084' => 'BZ', '124' => 'CA', '166' => 'CC',
+            '180' => 'CD', '140' => 'CF', '178' => 'CG', '756' => 'CH', '384' => 'CI', '184' => 'CK',
+            '152' => 'CL', '120' => 'CM', '156' => 'CN', '170' => 'CO', '188' => 'CR', '891' => 'CS',
+            '192' => 'CU', '132' => 'CV', '162' => 'CX', '196' => 'CY', '203' => 'CZ', '278' => 'DD',
+            '276' => 'DE', '262' => 'DJ', '208' => 'DK', '212' => 'DM', '214' => 'DO', '012' => 'DZ',
+            '218' => 'EC', '233' => 'EE', '818' => 'EG', '732' => 'EH', '232' => 'ER', '724' => 'ES',
+            '231' => 'ET', '246' => 'FI', '242' => 'FJ', '238' => 'FK', '583' => 'FM', '234' => 'FO',
+            '250' => 'FR', '249' => 'FX', '266' => 'GA', '826' => 'GB', '308' => 'GD', '268' => 'GE',
+            '254' => 'GF', '831' => 'GG', '288' => 'GH', '292' => 'GI', '304' => 'GL', '270' => 'GM',
+            '324' => 'GN', '312' => 'GP', '226' => 'GQ', '300' => 'GR', '239' => 'GS', '320' => 'GT',
+            '316' => 'GU', '624' => 'GW', '328' => 'GY', '344' => 'HK', '334' => 'HM', '340' => 'HN',
+            '191' => 'HR', '332' => 'HT', '348' => 'HU', '360' => 'ID', '372' => 'IE', '376' => 'IL',
+            '833' => 'IM', '356' => 'IN', '086' => 'IO', '368' => 'IQ', '364' => 'IR', '352' => 'IS',
+            '380' => 'IT', '832' => 'JE', '388' => 'JM', '400' => 'JO', '392' => 'JP', '404' => 'KE',
+            '417' => 'KG', '116' => 'KH', '296' => 'KI', '174' => 'KM', '659' => 'KN', '408' => 'KP',
+            '410' => 'KR', '414' => 'KW', '136' => 'KY', '398' => 'KZ', '418' => 'LA', '422' => 'LB',
+            '662' => 'LC', '438' => 'LI', '144' => 'LK', '430' => 'LR', '426' => 'LS', '440' => 'LT',
+            '442' => 'LU', '428' => 'LV', '434' => 'LY', '504' => 'MA', '492' => 'MC', '498' => 'MD',
+            '499' => 'ME', '450' => 'MG', '663' => 'MF', '584' => 'MH', '807' => 'MK', '466' => 'ML',
+            '496' => 'MN', '446' => 'MO', '580' => 'MP', '474' => 'MQ', '478' => 'MR', '500' => 'MS',
+            '470' => 'MT', '480' => 'MU', '462' => 'MV', '454' => 'MW', '484' => 'MX', '458' => 'MY',
+            '508' => 'MZ', '516' => 'NA', '540' => 'NC', '562' => 'NE', '574' => 'NF', '566' => 'NG',
+            '558' => 'NI', '528' => 'NL', '578' => 'NO', '524' => 'NP', '520' => 'NR', '536' => 'NT',
+            '570' => 'NU', '554' => 'NZ', '512' => 'OM', '591' => 'PA', '604' => 'PE', '258' => 'PF',
+            '598' => 'PG', '608' => 'PH', '586' => 'PK', '616' => 'PL', '666' => 'PM', '612' => 'PN',
+            '630' => 'PR', '275' => 'PS', '620' => 'PT', '585' => 'PW', '600' => 'PY', '634' => 'QA',
+            '959' => 'QM', '960' => 'QN', '961' => 'QO', '962' => 'QP', '963' => 'QQ', '964' => 'QR',
+            '965' => 'QS', '966' => 'QT', '967' => 'QU', '968' => 'QV', '969' => 'QW', '970' => 'QX',
+            '971' => 'QY', '972' => 'QZ', '638' => 'RE', '642' => 'RO', '688' => 'RS', '643' => 'RU',
+            '646' => 'RW', '682' => 'SA', '090' => 'SB', '690' => 'SC', '736' => 'SD', '752' => 'SE',
+            '702' => 'SG', '654' => 'SH', '705' => 'SI', '744' => 'SJ', '703' => 'SK', '694' => 'SL',
+            '674' => 'SM', '686' => 'SN', '706' => 'SO', '740' => 'SR', '678' => 'ST', '810' => 'SU',
+            '222' => 'SV', '760' => 'SY', '748' => 'SZ', '796' => 'TC', '148' => 'TD', '260' => 'TF',
+            '768' => 'TG', '764' => 'TH', '762' => 'TJ', '772' => 'TK', '626' => 'TL', '795' => 'TM',
+            '788' => 'TN', '776' => 'TO', '792' => 'TR', '780' => 'TT', '798' => 'TV', '158' => 'TW',
+            '834' => 'TZ', '804' => 'UA', '800' => 'UG', '581' => 'UM', '840' => 'US', '858' => 'UY',
+            '860' => 'UZ', '336' => 'VA', '670' => 'VC', '862' => 'VE', '092' => 'VG', '850' => 'VI',
+            '704' => 'VN', '548' => 'VU', '876' => 'WF', '882' => 'WS', '973' => 'XA', '974' => 'XB',
+            '975' => 'XC', '976' => 'XD', '977' => 'XE', '978' => 'XF', '979' => 'XG', '980' => 'XH',
+            '981' => 'XI', '982' => 'XJ', '983' => 'XK', '984' => 'XL', '985' => 'XM', '986' => 'XN',
+            '987' => 'XO', '988' => 'XP', '989' => 'XQ', '990' => 'XR', '991' => 'XS', '992' => 'XT',
+            '993' => 'XU', '994' => 'XV', '995' => 'XW', '996' => 'XX', '997' => 'XY', '998' => 'XZ',
+            '720' => 'YD', '887' => 'YE', '175' => 'YT', '710' => 'ZA', '894' => 'ZM', '716' => 'ZW',
+            '999' => 'ZZ');
+        $this->assertEquals($result, $value);
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'territorytonumeric', '040');
+        $this->assertEquals("AT", $value);
+    }
+
+    /**
+     * test for reading phonetoterritory from locale
+     * expected array
+     */
+    public function testNumericToTerritory()
+    {
+        $value = Zend_Locale_Data::getList('de_AT', 'numerictoterritory');
+        $result = array( 'AA' => '958', 'AD' => '020', 'AE' => '784', 'AF' => '004', 'AG' => '028',
+            'AI' => '660', 'AL' => '008', 'AM' => '051', 'AN' => '530', 'AO' => '024', 'AQ' => '010',
+            'AR' => '032', 'AS' => '016', 'AT' => '040', 'AU' => '036', 'AW' => '533', 'AX' => '248',
+            'AZ' => '031', 'BA' => '070', 'BB' => '052', 'BD' => '050', 'BE' => '056', 'BF' => '854',
+            'BG' => '100', 'BH' => '048', 'BI' => '108', 'BJ' => '204', 'BL' => '652', 'BM' => '060',
+            'BN' => '096', 'BO' => '068', 'BR' => '076', 'BS' => '044', 'BT' => '064', 'BU' => '104',
+            'BV' => '074', 'BW' => '072', 'BY' => '112', 'BZ' => '084', 'CA' => '124', 'CC' => '166',
+            'CD' => '180', 'CF' => '140', 'CG' => '178', 'CH' => '756', 'CI' => '384', 'CK' => '184',
+            'CL' => '152', 'CM' => '120', 'CN' => '156', 'CO' => '170', 'CR' => '188', 'CS' => '891',
+            'CU' => '192', 'CV' => '132', 'CX' => '162', 'CY' => '196', 'CZ' => '203', 'DD' => '278',
+            'DE' => '276', 'DJ' => '262', 'DK' => '208', 'DM' => '212', 'DO' => '214', 'DZ' => '012',
+            'EC' => '218', 'EE' => '233', 'EG' => '818', 'EH' => '732', 'ER' => '232', 'ES' => '724',
+            'ET' => '231', 'FI' => '246', 'FJ' => '242', 'FK' => '238', 'FM' => '583', 'FO' => '234',
+            'FR' => '250', 'FX' => '249', 'GA' => '266', 'GB' => '826', 'GD' => '308', 'GE' => '268',
+            'GF' => '254', 'GG' => '831', 'GH' => '288', 'GI' => '292', 'GL' => '304', 'GM' => '270',
+            'GN' => '324', 'GP' => '312', 'GQ' => '226', 'GR' => '300', 'GS' => '239', 'GT' => '320',
+            'GU' => '316', 'GW' => '624', 'GY' => '328', 'HK' => '344', 'HM' => '334', 'HN' => '340',
+            'HR' => '191', 'HT' => '332', 'HU' => '348', 'ID' => '360', 'IE' => '372', 'IL' => '376',
+            'IM' => '833', 'IN' => '356', 'IO' => '086', 'IQ' => '368', 'IR' => '364', 'IS' => '352',
+            'IT' => '380', 'JE' => '832', 'JM' => '388', 'JO' => '400', 'JP' => '392', 'KE' => '404',
+            'KG' => '417', 'KH' => '116', 'KI' => '296', 'KM' => '174', 'KN' => '659', 'KP' => '408',
+            'KR' => '410', 'KW' => '414', 'KY' => '136', 'KZ' => '398', 'LA' => '418', 'LB' => '422',
+            'LC' => '662', 'LI' => '438', 'LK' => '144', 'LR' => '430', 'LS' => '426', 'LT' => '440',
+            'LU' => '442', 'LV' => '428', 'LY' => '434', 'MA' => '504', 'MC' => '492', 'MD' => '498',
+            'ME' => '499', 'MG' => '450', 'MF' => '663', 'MH' => '584', 'MK' => '807', 'ML' => '466',
+            'MM' => '104', 'MN' => '496', 'MO' => '446', 'MP' => '580', 'MQ' => '474', 'MR' => '478',
+            'MS' => '500', 'MT' => '470', 'MU' => '480', 'MV' => '462', 'MW' => '454', 'MX' => '484',
+            'MY' => '458', 'MZ' => '508', 'NA' => '516', 'NC' => '540', 'NE' => '562', 'NF' => '574',
+            'NG' => '566', 'NI' => '558', 'NL' => '528', 'NO' => '578', 'NP' => '524', 'NR' => '520',
+            'NT' => '536', 'NU' => '570', 'NZ' => '554', 'OM' => '512', 'PA' => '591', 'PE' => '604',
+            'PF' => '258', 'PG' => '598', 'PH' => '608', 'PK' => '586', 'PL' => '616', 'PM' => '666',
+            'PN' => '612', 'PR' => '630', 'PS' => '275', 'PT' => '620', 'PW' => '585', 'PY' => '600',
+            'QA' => '634', 'QM' => '959', 'QN' => '960', 'QO' => '961', 'QP' => '962', 'QQ' => '963',
+            'QR' => '964', 'QS' => '965', 'QT' => '966', 'QU' => '967', 'QV' => '968', 'QW' => '969',
+            'QX' => '970', 'QY' => '971', 'QZ' => '972', 'RE' => '638', 'RO' => '642', 'RS' => '688',
+            'RU' => '643', 'RW' => '646', 'SA' => '682', 'SB' => '090', 'SC' => '690', 'SD' => '736',
+            'SE' => '752', 'SG' => '702', 'SH' => '654', 'SI' => '705', 'SJ' => '744', 'SK' => '703',
+            'SL' => '694', 'SM' => '674', 'SN' => '686', 'SO' => '706', 'SR' => '740', 'ST' => '678',
+            'SU' => '810', 'SV' => '222', 'SY' => '760', 'SZ' => '748', 'TC' => '796', 'TD' => '148',
+            'TF' => '260', 'TG' => '768', 'TH' => '764', 'TJ' => '762', 'TK' => '772', 'TL' => '626',
+            'TM' => '795', 'TN' => '788', 'TO' => '776', 'TP' => '626', 'TR' => '792', 'TT' => '780',
+            'TV' => '798', 'TW' => '158', 'TZ' => '834', 'UA' => '804', 'UG' => '800', 'UM' => '581',
+            'US' => '840', 'UY' => '858', 'UZ' => '860', 'VA' => '336', 'VC' => '670', 'VE' => '862',
+            'VG' => '092', 'VI' => '850', 'VN' => '704', 'VU' => '548', 'WF' => '876', 'WS' => '882',
+            'XA' => '973', 'XB' => '974', 'XC' => '975', 'XD' => '976', 'XE' => '977', 'XF' => '978',
+            'XG' => '979', 'XH' => '980', 'XI' => '981', 'XJ' => '982', 'XK' => '983', 'XL' => '984',
+            'XM' => '985', 'XN' => '986', 'XO' => '987', 'XP' => '988', 'XQ' => '989', 'XR' => '990',
+            'XS' => '991', 'XT' => '992', 'XU' => '993', 'XV' => '994', 'XW' => '995', 'XX' => '996',
+            'XY' => '997', 'XZ' => '998', 'YD' => '720', 'YE' => '887', 'YT' => '175', 'YU' => '891',
+            'ZA' => '710', 'ZM' => '894', 'ZR' => '180', 'ZW' => '716', 'ZZ' => '999');
+        $this->assertEquals($result, $value);
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'numerictoterritory', 'AT');
+        $this->assertEquals("040", $value);
+    }
+
+    /**
+     * test for reading territorytonumeric from locale
+     * expected array
+     */
+    public function testTerritoryToAlpha3()
+    {
+        $value = Zend_Locale_Data::getList('de_AT', 'territorytoalpha3');
+        $result = array('AAA' => 'AA', 'AND' => 'AD', 'ARE' => 'AE', 'AFG' => 'AF', 'ATG' => 'AG',
+            'AIA' => 'AI', 'ALB' => 'AL', 'ARM' => 'AM', 'ANT' => 'AN', 'AGO' => 'AO', 'ATA' => 'AQ',
+            'ARG' => 'AR', 'ASM' => 'AS', 'AUT' => 'AT', 'AUS' => 'AU', 'ABW' => 'AW', 'ALA' => 'AX',
+            'AZE' => 'AZ', 'BIH' => 'BA', 'BRB' => 'BB', 'BGD' => 'BD', 'BEL' => 'BE', 'BFA' => 'BF',
+            'BGR' => 'BG', 'BHR' => 'BH', 'BDI' => 'BI', 'BEN' => 'BJ', 'BLM' => 'BL', 'BMU' => 'BM',
+            'BRN' => 'BN', 'BOL' => 'BO', 'BRA' => 'BR', 'BHS' => 'BS', 'BTN' => 'BT', 'BUR' => 'BU',
+            'BVT' => 'BV', 'BWA' => 'BW', 'BLR' => 'BY', 'BLZ' => 'BZ', 'CAN' => 'CA', 'CCK' => 'CC',
+            'COD' => 'CD', 'CAF' => 'CF', 'COG' => 'CG', 'CHE' => 'CH', 'CIV' => 'CI', 'COK' => 'CK',
+            'CHL' => 'CL', 'CMR' => 'CM', 'CHN' => 'CN', 'COL' => 'CO', 'CRI' => 'CR', 'SCG' => 'CS',
+            'CUB' => 'CU', 'CPV' => 'CV', 'CXR' => 'CX', 'CYP' => 'CY', 'CZE' => 'CZ', 'DDR' => 'DD',
+            'DEU' => 'DE', 'DJI' => 'DJ', 'DNK' => 'DK', 'DMA' => 'DM', 'DOM' => 'DO', 'DZA' => 'DZ',
+            'ECU' => 'EC', 'EST' => 'EE', 'EGY' => 'EG', 'ESH' => 'EH', 'ERI' => 'ER', 'ESP' => 'ES',
+            'ETH' => 'ET', 'FIN' => 'FI', 'FJI' => 'FJ', 'FLK' => 'FK', 'FSM' => 'FM', 'FRO' => 'FO',
+            'FRA' => 'FR', 'FXX' => 'FX', 'GAB' => 'GA', 'GBR' => 'GB', 'GRD' => 'GD', 'GEO' => 'GE',
+            'GUF' => 'GF', 'GGY' => 'GG', 'GHA' => 'GH', 'GIB' => 'GI', 'GRL' => 'GL', 'GMB' => 'GM',
+            'GIN' => 'GN', 'GLP' => 'GP', 'GNQ' => 'GQ', 'GRC' => 'GR', 'SGS' => 'GS', 'GTM' => 'GT',
+            'GUM' => 'GU', 'GNB' => 'GW', 'GUY' => 'GY', 'HKG' => 'HK', 'HMD' => 'HM', 'HND' => 'HN',
+            'HRV' => 'HR', 'HTI' => 'HT', 'HUN' => 'HU', 'IDN' => 'ID', 'IRL' => 'IE', 'ISR' => 'IL',
+            'IMN' => 'IM', 'IND' => 'IN', 'IOT' => 'IO', 'IRQ' => 'IQ', 'IRN' => 'IR', 'ISL' => 'IS',
+            'ITA' => 'IT', 'JEY' => 'JE', 'JAM' => 'JM', 'JOR' => 'JO', 'JPN' => 'JP', 'KEN' => 'KE',
+            'KGZ' => 'KG', 'KHM' => 'KH', 'KIR' => 'KI', 'COM' => 'KM', 'KNA' => 'KN', 'PRK' => 'KP',
+            'KOR' => 'KR', 'KWT' => 'KW', 'CYM' => 'KY', 'KAZ' => 'KZ', 'LAO' => 'LA', 'LBN' => 'LB',
+            'LCA' => 'LC', 'LIE' => 'LI', 'LKA' => 'LK', 'LBR' => 'LR', 'LSO' => 'LS', 'LTU' => 'LT',
+            'LUX' => 'LU', 'LVA' => 'LV', 'LBY' => 'LY', 'MAR' => 'MA', 'MCO' => 'MC', 'MDA' => 'MD',
+            'MNE' => 'ME', 'MDG' => 'MG', 'MAF' => 'MF', 'MHL' => 'MH', 'MKD' => 'MK', 'MLI' => 'ML',
+            'MMR' => 'MM', 'MNG' => 'MN', 'MAC' => 'MO', 'MNP' => 'MP', 'MTQ' => 'MQ', 'MRT' => 'MR',
+            'MSR' => 'MS', 'MLT' => 'MT', 'MUS' => 'MU', 'MDV' => 'MV', 'MWI' => 'MW', 'MEX' => 'MX',
+            'MYS' => 'MY', 'MOZ' => 'MZ', 'NAM' => 'NA', 'NCL' => 'NC', 'NER' => 'NE', 'NFK' => 'NF',
+            'NGA' => 'NG', 'NIC' => 'NI', 'NLD' => 'NL', 'NOR' => 'NO', 'NPL' => 'NP', 'NRU' => 'NR',
+            'NTZ' => 'NT', 'NIU' => 'NU', 'NZL' => 'NZ', 'OMN' => 'OM', 'PAN' => 'PA', 'PER' => 'PE',
+            'PYF' => 'PF', 'PNG' => 'PG', 'PHL' => 'PH', 'PAK' => 'PK', 'POL' => 'PL', 'SPM' => 'PM',
+            'PCN' => 'PN', 'PRI' => 'PR', 'PSE' => 'PS', 'PRT' => 'PT', 'PLW' => 'PW', 'PRY' => 'PY',
+            'QAT' => 'QA', 'QMM' => 'QM', 'QNN' => 'QN', 'QOO' => 'QO', 'QPP' => 'QP', 'QQQ' => 'QQ',
+            'QRR' => 'QR', 'QSS' => 'QS', 'QTT' => 'QT', 'QUU' => 'QU', 'QVV' => 'QV', 'QWW' => 'QW',
+            'QXX' => 'QX', 'QYY' => 'QY', 'QZZ' => 'QZ', 'REU' => 'RE', 'ROU' => 'RO', 'SRB' => 'RS',
+            'RUS' => 'RU', 'RWA' => 'RW', 'SAU' => 'SA', 'SLB' => 'SB', 'SYC' => 'SC', 'SDN' => 'SD',
+            'SWE' => 'SE', 'SGP' => 'SG', 'SHN' => 'SH', 'SVN' => 'SI', 'SJM' => 'SJ', 'SVK' => 'SK',
+            'SLE' => 'SL', 'SMR' => 'SM', 'SEN' => 'SN', 'SOM' => 'SO', 'SUR' => 'SR', 'STP' => 'ST',
+            'SUN' => 'SU', 'SLV' => 'SV', 'SYR' => 'SY', 'SWZ' => 'SZ', 'TCA' => 'TC', 'TCD' => 'TD',
+            'ATF' => 'TF', 'TGO' => 'TG', 'THA' => 'TH', 'TJK' => 'TJ', 'TKL' => 'TK', 'TLS' => 'TL',
+            'TKM' => 'TM', 'TUN' => 'TN', 'TON' => 'TO', 'TMP' => 'TP', 'TUR' => 'TR', 'TTO' => 'TT',
+            'TUV' => 'TV', 'TWN' => 'TW', 'TZA' => 'TZ', 'UKR' => 'UA', 'UGA' => 'UG', 'UMI' => 'UM',
+            'USA' => 'US', 'URY' => 'UY', 'UZB' => 'UZ', 'VAT' => 'VA', 'VCT' => 'VC', 'VEN' => 'VE',
+            'VGB' => 'VG', 'VIR' => 'VI', 'VNM' => 'VN', 'VUT' => 'VU', 'WLF' => 'WF', 'WSM' => 'WS',
+            'XAA' => 'XA', 'XBB' => 'XB', 'XCC' => 'XC', 'XDD' => 'XD', 'XEE' => 'XE', 'XFF' => 'XF',
+            'XGG' => 'XG', 'XHH' => 'XH', 'XII' => 'XI', 'XJJ' => 'XJ', 'XKK' => 'XK', 'XLL' => 'XL',
+            'XMM' => 'XM', 'XNN' => 'XN', 'XOO' => 'XO', 'XPP' => 'XP', 'XQQ' => 'XQ', 'XRR' => 'XR',
+            'XSS' => 'XS', 'XTT' => 'XT', 'XUU' => 'XU', 'XVV' => 'XV', 'XWW' => 'XW', 'XXX' => 'XX',
+            'XYY' => 'XY', 'XZZ' => 'XZ', 'YMD' => 'YD', 'YEM' => 'YE', 'MYT' => 'YT', 'YUG' => 'YU',
+            'ZAF' => 'ZA', 'ZMB' => 'ZM', 'ZAR' => 'ZR', 'ZWE' => 'ZW', 'ZZZ' => 'ZZ');
+        $this->assertEquals($result, $value);
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'territorytoalpha3', 'AUT');
+        $this->assertEquals("AT", $value);
+    }
+
+    /**
+     * test for reading phonetoterritory from locale
+     * expected array
+     */
+    public function testAlpha3ToTerritory()
+    {
+        $value = Zend_Locale_Data::getList('de_AT', 'alpha3toterritory');
+        $result = array('AA' => 'AAA', 'AD' => 'AND', 'AE' => 'ARE', 'AF' => 'AFG', 'AG' => 'ATG',
+            'AI' => 'AIA', 'AL' => 'ALB', 'AM' => 'ARM', 'AN' => 'ANT', 'AO' => 'AGO', 'AQ' => 'ATA',
+            'AR' => 'ARG', 'AS' => 'ASM', 'AT' => 'AUT', 'AU' => 'AUS', 'AW' => 'ABW', 'AX' => 'ALA',
+            'AZ' => 'AZE', 'BA' => 'BIH', 'BB' => 'BRB', 'BD' => 'BGD', 'BE' => 'BEL', 'BF' => 'BFA',
+            'BG' => 'BGR', 'BH' => 'BHR', 'BI' => 'BDI', 'BJ' => 'BEN', 'BL' => 'BLM', 'BM' => 'BMU',
+            'BN' => 'BRN', 'BO' => 'BOL', 'BR' => 'BRA', 'BS' => 'BHS', 'BT' => 'BTN', 'BU' => 'BUR',
+            'BV' => 'BVT', 'BW' => 'BWA', 'BY' => 'BLR', 'BZ' => 'BLZ', 'CA' => 'CAN', 'CC' => 'CCK',
+            'CD' => 'COD', 'CF' => 'CAF', 'CG' => 'COG', 'CH' => 'CHE', 'CI' => 'CIV', 'CK' => 'COK',
+            'CL' => 'CHL', 'CM' => 'CMR', 'CN' => 'CHN', 'CO' => 'COL', 'CR' => 'CRI', 'CS' => 'SCG',
+            'CU' => 'CUB', 'CV' => 'CPV', 'CX' => 'CXR', 'CY' => 'CYP', 'CZ' => 'CZE', 'DD' => 'DDR',
+            'DE' => 'DEU', 'DJ' => 'DJI', 'DK' => 'DNK', 'DM' => 'DMA', 'DO' => 'DOM', 'DZ' => 'DZA',
+            'EC' => 'ECU', 'EE' => 'EST', 'EG' => 'EGY', 'EH' => 'ESH', 'ER' => 'ERI', 'ES' => 'ESP',
+            'ET' => 'ETH', 'FI' => 'FIN', 'FJ' => 'FJI', 'FK' => 'FLK', 'FM' => 'FSM', 'FO' => 'FRO',
+            'FR' => 'FRA', 'FX' => 'FXX', 'GA' => 'GAB', 'GB' => 'GBR', 'GD' => 'GRD', 'GE' => 'GEO',
+            'GF' => 'GUF', 'GG' => 'GGY', 'GH' => 'GHA', 'GI' => 'GIB', 'GL' => 'GRL', 'GM' => 'GMB',
+            'GN' => 'GIN', 'GP' => 'GLP', 'GQ' => 'GNQ', 'GR' => 'GRC', 'GS' => 'SGS', 'GT' => 'GTM',
+            'GU' => 'GUM', 'GW' => 'GNB', 'GY' => 'GUY', 'HK' => 'HKG', 'HM' => 'HMD', 'HN' => 'HND',
+            'HR' => 'HRV', 'HT' => 'HTI', 'HU' => 'HUN', 'ID' => 'IDN', 'IE' => 'IRL', 'IL' => 'ISR',
+            'IM' => 'IMN', 'IN' => 'IND', 'IO' => 'IOT', 'IQ' => 'IRQ', 'IR' => 'IRN', 'IS' => 'ISL',
+            'IT' => 'ITA', 'JE' => 'JEY', 'JM' => 'JAM', 'JO' => 'JOR', 'JP' => 'JPN', 'KE' => 'KEN',
+            'KG' => 'KGZ', 'KH' => 'KHM', 'KI' => 'KIR', 'KM' => 'COM', 'KN' => 'KNA', 'KP' => 'PRK',
+            'KR' => 'KOR', 'KW' => 'KWT', 'KY' => 'CYM', 'KZ' => 'KAZ', 'LA' => 'LAO', 'LB' => 'LBN',
+            'LC' => 'LCA', 'LI' => 'LIE', 'LK' => 'LKA', 'LR' => 'LBR', 'LS' => 'LSO', 'LT' => 'LTU',
+            'LU' => 'LUX', 'LV' => 'LVA', 'LY' => 'LBY', 'MA' => 'MAR', 'MC' => 'MCO', 'MD' => 'MDA',
+            'ME' => 'MNE', 'MG' => 'MDG', 'MF' => 'MAF', 'MH' => 'MHL', 'MK' => 'MKD', 'ML' => 'MLI',
+            'MM' => 'MMR', 'MN' => 'MNG', 'MO' => 'MAC', 'MP' => 'MNP', 'MQ' => 'MTQ', 'MR' => 'MRT',
+            'MS' => 'MSR', 'MT' => 'MLT', 'MU' => 'MUS', 'MV' => 'MDV', 'MW' => 'MWI', 'MX' => 'MEX',
+            'MY' => 'MYS', 'MZ' => 'MOZ', 'NA' => 'NAM', 'NC' => 'NCL', 'NE' => 'NER', 'NF' => 'NFK',
+            'NG' => 'NGA', 'NI' => 'NIC', 'NL' => 'NLD', 'NO' => 'NOR', 'NP' => 'NPL', 'NR' => 'NRU',
+            'NT' => 'NTZ', 'NU' => 'NIU', 'NZ' => 'NZL', 'OM' => 'OMN', 'PA' => 'PAN', 'PE' => 'PER',
+            'PF' => 'PYF', 'PG' => 'PNG', 'PH' => 'PHL', 'PK' => 'PAK', 'PL' => 'POL', 'PM' => 'SPM',
+            'PN' => 'PCN', 'PR' => 'PRI', 'PS' => 'PSE', 'PT' => 'PRT', 'PW' => 'PLW', 'PY' => 'PRY',
+            'QA' => 'QAT', 'QM' => 'QMM', 'QN' => 'QNN', 'QO' => 'QOO', 'QP' => 'QPP', 'QQ' => 'QQQ',
+            'QR' => 'QRR', 'QS' => 'QSS', 'QT' => 'QTT', 'QU' => 'QUU', 'QV' => 'QVV', 'QW' => 'QWW',
+            'QX' => 'QXX', 'QY' => 'QYY', 'QZ' => 'QZZ', 'RE' => 'REU', 'RO' => 'ROU', 'RS' => 'SRB',
+            'RU' => 'RUS', 'RW' => 'RWA', 'SA' => 'SAU', 'SB' => 'SLB', 'SC' => 'SYC', 'SD' => 'SDN',
+            'SE' => 'SWE', 'SG' => 'SGP', 'SH' => 'SHN', 'SI' => 'SVN', 'SJ' => 'SJM', 'SK' => 'SVK',
+            'SL' => 'SLE', 'SM' => 'SMR', 'SN' => 'SEN', 'SO' => 'SOM', 'SR' => 'SUR', 'ST' => 'STP',
+            'SU' => 'SUN', 'SV' => 'SLV', 'SY' => 'SYR', 'SZ' => 'SWZ', 'TC' => 'TCA', 'TD' => 'TCD',
+            'TF' => 'ATF', 'TG' => 'TGO', 'TH' => 'THA', 'TJ' => 'TJK', 'TK' => 'TKL', 'TL' => 'TLS',
+            'TM' => 'TKM', 'TN' => 'TUN', 'TO' => 'TON', 'TP' => 'TMP', 'TR' => 'TUR', 'TT' => 'TTO',
+            'TV' => 'TUV', 'TW' => 'TWN', 'TZ' => 'TZA', 'UA' => 'UKR', 'UG' => 'UGA', 'UM' => 'UMI',
+            'US' => 'USA', 'UY' => 'URY', 'UZ' => 'UZB', 'VA' => 'VAT', 'VC' => 'VCT', 'VE' => 'VEN',
+            'VG' => 'VGB', 'VI' => 'VIR', 'VN' => 'VNM', 'VU' => 'VUT', 'WF' => 'WLF', 'WS' => 'WSM',
+            'XA' => 'XAA', 'XB' => 'XBB', 'XC' => 'XCC', 'XD' => 'XDD', 'XE' => 'XEE', 'XF' => 'XFF',
+            'XG' => 'XGG', 'XH' => 'XHH', 'XI' => 'XII', 'XJ' => 'XJJ', 'XK' => 'XKK', 'XL' => 'XLL',
+            'XM' => 'XMM', 'XN' => 'XNN', 'XO' => 'XOO', 'XP' => 'XPP', 'XQ' => 'XQQ', 'XR' => 'XRR',
+            'XS' => 'XSS', 'XT' => 'XTT', 'XU' => 'XUU', 'XV' => 'XVV', 'XW' => 'XWW', 'XX' => 'XXX',
+            'XY' => 'XYY', 'XZ' => 'XZZ', 'YD' => 'YMD', 'YE' => 'YEM', 'YT' => 'MYT', 'YU' => 'YUG',
+            'ZA' => 'ZAF', 'ZM' => 'ZMB', 'ZR' => 'ZAR', 'ZW' => 'ZWE', 'ZZ' => 'ZZZ');
+        $this->assertEquals($result, $value);
+
+        $value = Zend_Locale_Data::getContent('de_AT', 'alpha3toterritory', 'AT');
+        $this->assertEquals("AUT", $value);
+    }
 }

@@ -127,7 +127,7 @@ class Zend_Locale
      *
      * @var boolean
      */
-    public static $compatibilityMode = true;
+    public static $compatibilityMode = false;
 
     /**
      * Internal variable

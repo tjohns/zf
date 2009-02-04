@@ -764,6 +764,34 @@ class Zend_Locale_Data
                 }
                 break;
 
+            case 'numerictoterritory':
+                $_temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes', 'type');
+                foreach ($_temp as $key => $keyvalue) {
+                    $temp += self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@type=\'' . $key . '\']', 'numeric', $key);
+                }
+                break;
+
+            case 'territorytonumeric':
+                $_temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes', 'numeric');
+                foreach ($_temp as $key => $keyvalue) {
+                    $temp += self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@numeric=\'' . $key . '\']', 'type', $key);
+                }
+                break;
+
+            case 'alpha3toterritory':
+                $_temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes', 'type');
+                foreach ($_temp as $key => $keyvalue) {
+                    $temp += self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@type=\'' . $key . '\']', 'alpha3', $key);
+                }
+                break;
+
+            case 'territorytoalpha3':
+                $_temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes', 'alpha3');
+                foreach ($_temp as $key => $keyvalue) {
+                    $temp += self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@alpha3=\'' . $key . '\']', 'type', $key);
+                }
+                break;
+
             default :
                 require_once 'Zend/Locale/Exception.php';
                 throw new Zend_Locale_Exception("Unknown list ($path) for parsing locale data.");
@@ -1180,6 +1208,22 @@ class Zend_Locale_Data
                         }
                     }
                 }
+                break;
+
+            case 'numerictoterritory':
+                $temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@type=\''.$value.'\']', 'numeric', $value);
+                break;
+
+            case 'territorytonumeric':
+                $temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@numeric=\''.$value.'\']', 'type', $value);
+                break;
+
+            case 'alpha3toterritory':
+                $temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@type=\''.$value.'\']', 'alpha3', $value);
+                break;
+
+            case 'territorytoalpha3':
+                $temp = self::_getFile('supplementalData', '/supplementalData/codeMappings/territoryCodes[@alpha3=\''.$value.'\']', 'type', $value);
                 break;
 
             default :

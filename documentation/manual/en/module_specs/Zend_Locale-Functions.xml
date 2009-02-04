@@ -549,6 +549,30 @@ print $locale->getTranslation('de', 'language', 'zh');
                             phone code is used in several territories these territories are separated with a
                             whitespace</entry>
                     </row>
+                    <row>
+                        <entry><emphasis role="strong">NumericToTerritory</emphasis></entry>
+                        <entry>Returns a list of 3 digit number codes for territories.
+                            The territory (region) is used as array key and the 3 digit number code
+                            as array value</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToNumeric</emphasis></entry>
+                        <entry>Returns a list of territories with their 3 digit number code. The 3 digit
+                            number code is used as array key and the territory (region) as array value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">Alpha3ToTerritory</emphasis></entry>
+                        <entry>Returns a list of 3 sign character codes for territories.
+                            The territory (region) is used as array key and the 3 sign character code
+                            as array value</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToAlpha3</emphasis></entry>
+                        <entry>Returns a list of territories with their 3 sign character code. The 3 sign
+                            character code is used as array key and the territory (region) as array value
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -906,6 +930,26 @@ print $locale->getTranslation('de', 'language', 'zh');
                             code has to be given as plain integer code for example '43' for +43. When a
                             telephone code is used in multiple territories (regions), these territories are
                             separated with a whitespace character</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">NumericToTerritory</emphasis></entry>
+                        <entry>Returns the 3 digit number code for a given territory (region). The territory
+                            code has to be given as ISO3166 string for example 'AT' for austria</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToNumeric</emphasis></entry>
+                        <entry>Returns the territory (region) for a 3 digit number code. The 3 digit number
+                            code has to be given as plain integer code for example '43'
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">Alpha3ToTerritory</emphasis></entry>
+                        <entry>Returns the 3 sign character code for a given territory (region). The territory
+                            code has to be given as ISO3166 string for example 'AT' for austria</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToAlpha3</emphasis></entry>
+                        <entry>Returns the territory (region) for a 3 sign character code</entry>
                     </row>
                 </tbody>
             </tgroup>
