@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13841 -->
+<!-- EN-Revision: 13971 -->
 <sect1 id="zend.locale.functions">
 
     <title><code>Zend_Locale</code> の使用法</title>
@@ -691,6 +691,38 @@ print $locale->getTranslation('de', 'language', 'zh');
                             空白で区切った形式になります。
                         </entry>
                     </row>
+                    <row>
+                        <entry><emphasis role="strong">NumericToTerritory</emphasis></entry>
+                        <entry>
+                            領域内で使用されている 3 桁の数値コードの一覧を返します。
+                            領域 (地域) が配列のキー、
+                            そして 3 桁の数値コードが配列の値となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToNumeric</emphasis></entry>
+                        <entry>
+                            3 桁の数値コードに対応する領域の一覧を返します。
+                            3 桁の数値コードが配列のキー、
+                            そして領域 (地域) が配列の値となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">Alpha3ToTerritory</emphasis></entry>
+                        <entry>
+                            領域内で使用されている 3 桁の文字コードの一覧を返します。
+                            領域 (地域) が配列のキー、
+                            そして 3 桁の文字コードが配列の値となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToAlpha3</emphasis></entry>
+                        <entry>
+                            3 桁の文字コードに対応する領域の一覧を返します。
+                            3 桁の文字コードが配列のキー、
+                            そして領域 (地域) が配列の値となります。
+                        </entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -1226,6 +1258,34 @@ print $locale->getTranslation('de', 'language', 'zh');
                             ひとつの電話コードが複数の領域 (地域) で使われている場合は、
                             空白で区切った形式になります。
                         </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">NumericToTerritory</emphasis></entry>
+                        <entry>
+                            指定した領域 (地域) に対応する 3 桁の数値コードを返します。
+                            領域コードは ISO3166 形式の文字列で指定する必要があります。
+                            たとえばオーストリアは 'AT' となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToNumeric</emphasis></entry>
+                        <entry>
+                            3 桁の数値コードに対応する領域 (地域) を返します。
+                            3 桁の数値コードは整数値で指定する必要があります。
+                            たとえば '43' のようになります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">Alpha3ToTerritory</emphasis></entry>
+                        <entry>
+                            指定した領域 (地域) に対応する 3 桁の文字コードを返します。
+                            領域コードは ISO3166 形式の文字列で指定する必要があります。
+                            たとえばオーストリアは 'AT' となります。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToAlpha3</emphasis></entry>
+                        <entry>3 桁の文字コードに対応する領域 (地域) を返します。</entry>
                     </row>
                 </tbody>
             </tgroup>
