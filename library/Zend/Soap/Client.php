@@ -103,22 +103,22 @@ class Zend_Soap_Client
     protected $_lastMethod = '';
 
     /**
-     * Input SOAP headers.
+     * SOAP request headers.
      *
      * Array of SoapHeader objects
      *
      * @var array
      */
-    protected $_inputHeaders = array();
+    protected $_requestHeaders = array();
 
     /**
-     * Permanent input SOAP headers (shared between requests).
+     * Permanent SOAP request headers (shared between requests).
      *
      * Array of SoapHeader objects
      *
      * @var array
      */
-    protected $_permanentInputHeaders = array();
+    protected $_permanentRequestHeaders = array();
 
     /**
      * Output SOAP headers.
@@ -127,7 +127,7 @@ class Zend_Soap_Client
      *
      * @var array
      */
-    protected $_outputHeaders = array();
+    protected $_responseHeaders = array();
 
     /**
      * Constructor
@@ -888,7 +888,7 @@ class Zend_Soap_Client
     }
 
     /**
-     * Retrieve response headers
+     * Retrieve response headers (as string)
      *
      * @return string
      */
@@ -1003,40 +1003,38 @@ class Zend_Soap_Client
      * @param boolean $permanent
      * @return Zend_Soap_Client
      */
-    public function addInputHeader(SoapHeader $header, $permanent = true)
+    public function addRequestHeader(SoapHeader $header, $permanent = false)
     {
     	if ($permanent) {
-    		$this->_permanentInputHeaders[] = $header;
+    		$this->_permanentRequestHeaders[] = $header;
     	} else {
-    		$this->_inputHeaders[] = $header;
+    		$this->_requestHeaders[] = $header;
     	}
 
     	return $this;
     }
 
     /**
-     * Reset input SOAP headers
+     * Reset request SOAP headers
      *
      * @return Zend_Soap_Client
      */
-    public function resetInputHeaders()
+    public function resetRequestHeaders()
     {
-        $this->_permanentInputHeaders[] = array();
-        $this->_inputHeaders[] = array();
+        $this->_permanentRequestHeaders = array();
+        $this->_requestHeaders = array();
 
         return $this;
     }
 
     /**
-     * Get output SOAP headers from latest request
-     *
-     * Returns array of SoapHeader objects
+     * Get SOAP respose headers as an array of SoapHeader objects
      *
      * @return array
      */
-    public function getLastOutputHeaders()
+    public function getLastResponseHeaderObjects()
     {
-    	return $this->_outputHeaders;
+    	return $this->_responseHeaders;
     }
 
     /**
@@ -1054,15 +1052,15 @@ class Zend_Soap_Client
 
         $this->_lastMethod = $name;
 
-        $inputHeaders = array_merge($this->_permanentInputHeaders, $this->_inputHeaders);
+        $requestHeaders = array_merge($this->_permanentRequestHeaders, $this->_requestHeaders);
         $result = $this->_soapClient->__soapCall($name,
                                                  $this->_preProcessArguments($arguments),
                                                  null, /* Options are already set to the SOAP client object */
-                                                 (count($inputHeaders) > 0)? $inputHeaders : null,
-                                                 $this->_outputHeaders);
+                                                 (count($requestHeaders) > 0)? $requestHeaders : null,
+                                                 $this->_responseHeaders);
 
         // Reset non-permanent input headers
-        $this->_inputHeaders = array();
+        $this->_requestHeaders = array();
 
         return $this->_preProcessResult($result);
     }

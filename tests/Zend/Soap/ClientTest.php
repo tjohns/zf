@@ -274,6 +274,94 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($nonWsdlOptions, $client->getOptions());
     }
+
+    public function testSetInputHeaders()
+    {
+        $server = new Zend_Soap_Server(dirname(__FILE__) . '/_files/wsdl_example.wsdl');
+        $server->setClass('Zend_Soap_Client_TestClass');
+
+        $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
+
+        // Add request header
+        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader1', 'SOAP header content 1'));
+        // Add permanent request header
+        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader2', 'SOAP header content 2'), true);
+
+        // Perform request
+        $client->testFunc2('World');
+
+        $expectedRequest = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
+                         . '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" '
+                         .               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+                         .               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                         .               'xmlns:ns1="http://www.example.com/namespace" '
+                         .               'xmlns:enc="http://www.w3.org/2003/05/soap-encoding">'
+                         .     '<env:Header>'
+                         .         '<ns1:MyHeader2>SOAP header content 2</ns1:MyHeader2>'
+                         .         '<ns1:MyHeader1>SOAP header content 1</ns1:MyHeader1>'
+                         .     '</env:Header>'
+                         .     '<env:Body>'
+                         .         '<env:testFunc2 env:encodingStyle="http://www.w3.org/2003/05/soap-encoding">'
+                         .             '<who xsi:type="xsd:string">World</who>'
+                         .         '</env:testFunc2>'
+                         .     '</env:Body>'
+                         . '</env:Envelope>' . "\n";
+
+        $this->assertEquals($client->getLastRequest(), $expectedRequest);
+
+
+        // Add request header
+        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader3', 'SOAP header content 3'));
+
+        // Perform request
+        $client->testFunc2('World');
+
+        $expectedRequest = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
+                         . '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" '
+                         .               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+                         .               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                         .               'xmlns:ns1="http://www.example.com/namespace" '
+                         .               'xmlns:enc="http://www.w3.org/2003/05/soap-encoding">'
+                         .     '<env:Header>'
+                         .         '<ns1:MyHeader2>SOAP header content 2</ns1:MyHeader2>'
+                         .         '<ns1:MyHeader3>SOAP header content 3</ns1:MyHeader3>'
+                         .     '</env:Header>'
+                         .     '<env:Body>'
+                         .         '<env:testFunc2 env:encodingStyle="http://www.w3.org/2003/05/soap-encoding">'
+                         .             '<who xsi:type="xsd:string">World</who>'
+                         .         '</env:testFunc2>'
+                         .     '</env:Body>'
+                         . '</env:Envelope>' . "\n";
+
+        $this->assertEquals($client->getLastRequest(), $expectedRequest);
+
+
+        $client->resetRequestHeaders();
+
+        // Add request header
+        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader4', 'SOAP header content 4'));
+
+        // Perform request
+        $client->testFunc2('World');
+
+        $expectedRequest = '<?xml version="1.0" encoding="UTF-8"?>' . "\n"
+                         . '<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" '
+                         .               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+                         .               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                         .               'xmlns:ns1="http://www.example.com/namespace" '
+                         .               'xmlns:enc="http://www.w3.org/2003/05/soap-encoding">'
+                         .     '<env:Header>'
+                         .         '<ns1:MyHeader4>SOAP header content 4</ns1:MyHeader4>'
+                         .     '</env:Header>'
+                         .     '<env:Body>'
+                         .         '<env:testFunc2 env:encodingStyle="http://www.w3.org/2003/05/soap-encoding">'
+                         .             '<who xsi:type="xsd:string">World</who>'
+                         .         '</env:testFunc2>'
+                         .     '</env:Body>'
+                         . '</env:Envelope>' . "\n";
+
+        $this->assertEquals($client->getLastRequest(), $expectedRequest);
+    }
 }
 
 
