@@ -34,6 +34,11 @@ require_once 'Zend/Captcha/Adapter.php';
  * 
  * @see http://en.wikipedia.org/wiki/Captcha
  *
+ * @category   Zend
+ * @package    Zend_Form
+ * @subpackage Element
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml 
 {
