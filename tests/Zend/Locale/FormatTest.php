@@ -922,4 +922,21 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("1,234.50", $test2);
         // placing tearDown here (i.e. restoring locale) won't work, if test already failed/aborted above.
     }
+
+    /**
+     * ZF-3473
+     */
+    public function testRoundingOfNear10Values()
+    {
+        $this->assertEquals(9.72, Zend_Locale_Format::getNumber(9.72));
+        $this->assertEquals(-9.72, Zend_Locale_Format::getNumber(-9.72));
+        $this->assertEquals(9.72, Zend_Locale_Format::getNumber(9.72, array('locale' => 'de')));
+        $this->assertEquals(-9.72, Zend_Locale_Format::getNumber('-9,72', array('locale' => 'de')));
+        $this->assertEquals('9,72',   Zend_Locale_Format::toNumber(9.72, array('locale' => 'de')));
+        $this->assertEquals('-9,72',   Zend_Locale_Format::toNumber(-9.72, array('locale' => 'de')));
+        $this->assertTrue(Zend_Locale_Format::isNumber('9,72', array('locale' => 'de')));
+        $this->assertTrue(Zend_Locale_Format::isNumber('-9,72', array('locale' => 'de')));
+        $this->assertEquals(9.72,   Zend_Locale_Format::getFloat(9.72));
+
+    }
 }

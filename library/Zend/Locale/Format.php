@@ -384,11 +384,12 @@ class Zend_Locale_Format
         }
 
         // get number parts
-        if (strlen($value) != strlen(Zend_Locale_Math::round($value, 0))) {
+        $pos = iconv_strpos($value, '.');
+        if ($pos !== false) {
             if ($options['precision'] === null) {
-                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1);
+                $precstr = iconv_substr($value, $pos + 1);
             } else {
-                $precstr = iconv_substr($value, strlen(Zend_Locale_Math::round($value, 0)) + 1, $options['precision']);
+                $precstr = iconv_substr($value, $pos + 1, $options['precision']);
                 if (iconv_strlen($precstr) < $options['precision']) {
                     $precstr = $precstr . str_pad("0", ($options['precision'] - iconv_strlen($precstr)), "0");
                 }
