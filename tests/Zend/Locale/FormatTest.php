@@ -937,6 +937,6 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Zend_Locale_Format::isNumber('9,72', array('locale' => 'de')));
         $this->assertTrue(Zend_Locale_Format::isNumber('-9,72', array('locale' => 'de')));
         $this->assertEquals(9.72,   Zend_Locale_Format::getFloat(9.72));
-
+        $this->assertEquals('14,23',   Zend_Locale_Format::toNumber(14.2278, array('precision' => 2, 'locale' => 'pt_PT')));
     }
 }
