@@ -15,6 +15,7 @@ require_once 'Zend/Form/Decorator/Form.php';
 require_once 'Zend/Form/DisplayGroup.php';
 require_once 'Zend/Form/Element.php';
 require_once 'Zend/Form/Element/Text.php';
+require_once 'Zend/Form/Element/File.php';
 require_once 'Zend/Form/SubForm.php';
 require_once 'Zend/Loader/PluginLoader.php';
 require_once 'Zend/Registry.php';
@@ -3620,6 +3621,50 @@ class Zend_Form_FormTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('<dt id="testform-label">&nbsp;</dt>', $html);
         $this->assertContains('<dd id="testform-element">', $html);
+    }
+
+    /**
+     * @group ZF-5370
+     */
+    public function testEnctypeDefaultsToMultipartWhenFileElementIsAttachedToForm()
+    {
+        $file = new Zend_Form_Element_File('txt');
+        $this->form->addElement($file);
+
+        $html = $this->form->render($this->getView());
+        $this->assertFalse(empty($html));
+        $this->assertRegexp('#<form[^>]+enctype="multipart/form-data"#', $html);
+    }
+
+    /**
+     * @group ZF-5370
+     */
+    public function testEnctypeDefaultsToMultipartWhenFileElementIsAttachedToSubForm()
+    {
+        $subForm = new Zend_Form_SubForm();
+        $subForm->addElement('file', 'txt');
+        $this->form->addSubForm($subForm, 'page1')
+                   ->setView(new Zend_View);
+        $html = $this->form->render();
+
+        $this->assertContains('id="txt"', $html);
+        $this->assertContains('name="txt"', $html);
+        $this->assertRegexp('#<form[^>]+enctype="multipart/form-data"#', $html, $html);
+    }
+
+    /**
+     * @group ZF-5370
+     */
+    public function testEnctypeDefaultsToMultipartWhenFileElementIsAttachedToDisplayGroup()
+    {
+        $this->form->addElement('file', 'txt')
+                   ->addDisplayGroup(array('txt'), 'txtdisplay')
+                   ->setView(new Zend_View);
+        $html = $this->form->render();
+
+        $this->assertContains('id="txt"', $html);
+        $this->assertContains('name="txt"', $html);
+        $this->assertRegexp('#<form[^>]+enctype="multipart/form-data"#', $html, $html);
     }
 
     /**
