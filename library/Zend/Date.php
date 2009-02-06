@@ -4637,6 +4637,12 @@ class Zend_Date extends Zend_Date_DateObject
             $parsed['year'] = 1970;
         }
 
+        if (self::isYearLeapYear($parsed['year'])) {
+            $parsed['year'] = 1972;
+        } else {
+            $parsed['year'] = 1971;
+        }
+
         $date      = new self($parsed, null, $locale);
         $timestamp = $date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                    $parsed['month'], $parsed['day'], $parsed['year']);
