@@ -431,6 +431,15 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
         }
     }
+	
+	public function testPostStatusUpdateUTF8ShouldNotThrowException()
+	{
+		try {
+			$response = $this->twitter->status->update( str_repeat('M�r', 46) . 'M�' );
+		} catch (Exception $e) {
+			$this->fail('Trying to post a utf8 string of 140 chars should not throw exception');
+		}
+	}
 
     /**
      * $return void
