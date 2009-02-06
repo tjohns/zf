@@ -418,6 +418,26 @@ class Zend_View_Helper_HeadLinkTest extends PHPUnit_Framework_TestCase
         $test = $this->helper->toString();
         $this->assertContains(' media="screen,print"', $test);
     }
+
+    /**
+     * @issue ZF-5435
+     */
+    public function testContainerMaintainsCorrectOrderOfItems()
+    {
+        $this->helper->headLink()->offsetSetStylesheet(1,'/test1.css');
+        $this->helper->headLink()->offsetSetStylesheet(10,'/test2.css');
+        $this->helper->headLink()->offsetSetStylesheet(20,'/test3.css');
+        $this->helper->headLink()->offsetSetStylesheet(5,'/test4.css');
+
+        $test = $this->helper->toString();
+
+        $expected = '<link href="/test1.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/test4.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/test2.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/test3.css" media="screen" rel="stylesheet" type="text/css" >';
+
+        $this->assertEquals($expected, $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadLinkTest::main() if this source file is executed directly.

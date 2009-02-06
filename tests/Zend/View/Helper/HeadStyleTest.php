@@ -385,6 +385,44 @@ a {
         $test = $this->helper->toString();
         $this->assertContains('<!--[if lt IE 7]>', $test);
     }
+
+    /**
+     * @issue ZF-5435
+     */
+    public function testContainerMaintainsCorrectOrderOfItems()
+    {
+
+        $this->helper->offsetSetStyle(10, '
+a {
+    display: none;
+}');
+        $this->helper->offsetSetStyle(5, '
+h1 {
+    font-weight: bold
+}');
+
+
+        $test = $this->helper->toString();
+
+        $expected = '<style type="text/css" media="screen">
+<!--
+
+h1 {
+    font-weight: bold
+}
+-->
+</style>
+<style type="text/css" media="screen">
+<!--
+
+a {
+    display: none;
+}
+-->
+</style>';
+
+        $this->assertEquals($expected, $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadStyleTest::main() if this source file is executed directly.
