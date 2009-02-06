@@ -566,7 +566,12 @@ class Zend_Captcha_Image extends Zend_Captcha_Word
     protected function _gc()
     {
         $expire = time() - $this->getExpiration();
-        foreach (new DirectoryIterator($this->getImgDir()) as $file) {
+        $imgdir = $this->getImgDir();
+        if(!$imgdir || strlen($imgdir) < 2) {
+            // safety guard
+            return;
+        }
+        foreach (new DirectoryIterator($imgdir) as $file) {
             if (!$file->isDot() && !$file->isDir()) {
                 if ($file->getMTime() < $expire) {
                     unlink($file->getPathname());
