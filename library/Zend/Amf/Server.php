@@ -155,7 +155,9 @@ class Zend_Amf_Server implements Zend_Server_Interface
      */
     protected function _dispatch($method, $params = null, $source = null)
     {
-        if (!isset($this->_table[$method])) {
+        $qualifiedName = empty($source) ? $method : $source.".".$method;
+        
+        if (!isset($this->_table[$qualifiedName])) {
             // if source is null a method that was not defined was called.
             if ($source) {
                 $classPath    = array();
@@ -176,15 +178,16 @@ class Zend_Amf_Server implements Zend_Server_Interface
                     throw new Zend_Amf_Server_Exception('Class "' . $className . '" does not exist');
                 }
                 // Add the new loaded class to the server.
-                $this->setClass($className);
+                $this->setClass($className, $source);
             } else {
                 require_once 'Zend/Amf/Server/Exception.php';
                 throw new Zend_Amf_Server_Exception('Method "' . $method . '" does not exist');
             }
         }
 
-        $info = $this->_table[$method];
+        $info = $this->_table[$qualifiedName];
         $argv = $info->getInvokeArguments();
+        
         if (0 < count($argv)) {
             $params = array_merge($params, $argv);
         }
@@ -303,7 +306,7 @@ class Zend_Amf_Server implements Zend_Server_Interface
                         if ($source) {
                             // Break off method name from namespace into source
                             $method = substr(strrchr($targetURI, '.'), 1);
-                            $return = $this->_dispatch($method, array($body->getData()), $source);
+                            $return = $this->_dispatch($method, $body->getData(), $source);
                         } else {
                             // Just have a method name.
                             $return = $this->_dispatch($targetURI, $body->getData());
@@ -497,11 +500,11 @@ class Zend_Amf_Server implements Zend_Server_Interface
         }
 
         // Use the class name as the name space by default.
+        
         if ($namespace == '') {
-            $className = is_object($class) ? get_class($class) : $class;
-
-            $namespace = substr($className, 0, strrpos($className, '.'));
+            $namespace = is_object($class) ? get_class($class) : $class;
         }
+        
 
         $this->_methods[] = Zend_Server_Reflection::reflectClass($class, $argv, $namespace);
         $this->_buildDispatchTable();
