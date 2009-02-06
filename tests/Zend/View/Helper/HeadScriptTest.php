@@ -398,6 +398,28 @@ document.write(bar.strlen());');
         $test = $this->helper->headScript()->toString();
         $this->assertContains('<!--[if lt IE 7]>', $test);
     }
+
+    /**
+     * @issue ZF-5435
+     */
+    public function testContainerMaintainsCorrectOrderOfItems()
+    {
+
+        $this->helper->offsetSetFile(1, 'test1.js');
+        $this->helper->offsetSetFile(20, 'test2.js');
+        $this->helper->offsetSetFile(10, 'test3.js');
+        $this->helper->offsetSetFile(5, 'test4.js');
+
+
+        $test = $this->helper->toString();
+
+        $expected = '<script type="text/javascript" src="test1.js"></script>
+<script type="text/javascript" src="test4.js"></script>
+<script type="text/javascript" src="test3.js"></script>
+<script type="text/javascript" src="test2.js"></script>';
+
+        $this->assertEquals($expected, $test);
+    }
 }
 
 // Call Zend_View_Helper_HeadScriptTest::main() if this source file is executed directly.

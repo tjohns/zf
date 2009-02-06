@@ -372,6 +372,27 @@ class Zend_View_Helper_HeadMetaTest extends PHPUnit_Framework_TestCase
             );
     }
 
+    /**
+     * @issue ZF-5435
+     */
+    public function testContainerMaintainsCorrectOrderOfItems()
+    {
+
+        $this->helper->offsetSetName(1, 'keywords', 'foo');
+        $this->helper->offsetSetName(10, 'description', 'foo');
+        $this->helper->offsetSetHttpEquiv(20, 'pragma', 'baz');
+        $this->helper->offsetSetHttpEquiv(5, 'Cache-control', 'baz');
+
+        $test = $this->helper->toString();
+
+        $expected = '<meta name="keywords" content="foo" />
+<meta http-equiv="Cache-control" content="baz" />
+<meta name="description" content="foo" />
+<meta http-equiv="pragma" content="baz" />';
+
+        $this->assertEquals($expected, $test);
+    }
+
 }
 
 // Call Zend_View_Helper_HeadMetaTest::main() if this source file is executed directly.
