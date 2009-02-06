@@ -283,9 +283,9 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         $client = new Zend_Soap_Client_Local($server, dirname(__FILE__) . '/_files/wsdl_example.wsdl');
 
         // Add request header
-        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader1', 'SOAP header content 1'));
+        $client->addSoapInputHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader1', 'SOAP header content 1'));
         // Add permanent request header
-        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader2', 'SOAP header content 2'), true);
+        $client->addSoapInputHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader2', 'SOAP header content 2'), true);
 
         // Perform request
         $client->testFunc2('World');
@@ -311,7 +311,7 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
 
 
         // Add request header
-        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader3', 'SOAP header content 3'));
+        $client->addSoapInputHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader3', 'SOAP header content 3'));
 
         // Perform request
         $client->testFunc2('World');
@@ -336,10 +336,10 @@ class Zend_Soap_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($client->getLastRequest(), $expectedRequest);
 
 
-        $client->resetRequestHeaders();
+        $client->resetSoapInputHeaders();
 
         // Add request header
-        $client->addRequestHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader4', 'SOAP header content 4'));
+        $client->addSoapInputHeader(new SoapHeader('http://www.example.com/namespace', 'MyHeader4', 'SOAP header content 4'));
 
         // Perform request
         $client->testFunc2('World');
