@@ -350,7 +350,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         $this->_init();
         $path = '/statuses/update.xml';
-        $len  = strlen($status);
+        $len  = iconv_strlen($status, 'UTF-8');
         if ($len > 140) {
             include_once 'Zend/Service/Twitter/Exception.php';
             throw new Zend_Service_Twitter_Exception('Status must be no more than 140 characters in length');
@@ -585,7 +585,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         $this->_init();
         $path = '/direct_messages/new.xml';
 
-        $len = strlen($text);
+        $len = iconv_strlen($text, 'UTF-8');
         if (0 == $len) {
             throw new Zend_Service_Twitter_Exception('Direct message must contain at least one character');
         } elseif (140 < $len) {
