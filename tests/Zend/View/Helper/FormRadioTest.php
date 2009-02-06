@@ -10,13 +10,13 @@ require_once 'Zend/View/Helper/FormRadio.php';
 require_once 'Zend/View.php';
 
 /**
- * Zend_View_Helper_FormRadioTest 
+ * Zend_View_Helper_FormRadioTest
  *
  * Tests formRadio helper
- * 
+ *
  * @uses PHPUnit_Framework_TestCase
  */
-class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase 
+class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Runs the test methods of this class.
@@ -338,6 +338,45 @@ class Zend_View_Helper_FormRadioTest extends PHPUnit_Framework_TestCase
         foreach ($options as $key => $value) {
             $id = 'foo-bar-' . $filter->filter($key);
             $this->assertRegexp('/<input([^>]*)(id="' . $id . '")/', $html);
+        }
+    }
+
+    /**
+     * @issue ZF-5681
+     */
+    public function testRadioLabelDoesNotContainHardCodedStyle()
+    {
+        $options = array(
+            'foo' => 'Foo',
+            'bar' => 'Bar',
+            'baz' => 'Baz'
+        );
+        $html = $this->helper->formRadio(array(
+            'name'    => 'foo',
+            'value'   => 'bar',
+            'options' => $options,
+        ));
+        $this->assertNotContains('style="white-space: nowrap;"', $html);
+    }
+
+    public function testRadioLabelContainsForAttributeTag()
+    {
+        $options = array(
+            'foo bar' => 'Foo',
+            'bar baz' => 'Bar',
+            'baz' => 'Baz'
+        );
+        $html = $this->helper->formRadio(array(
+            'name'    => 'foo[bar]',
+            'value'   => 'bar',
+            'options' => $options,
+        ));
+
+        require_once 'Zend/Filter/Alnum.php';
+        $filter = new Zend_Filter_Alnum();
+        foreach ($options as $key => $value) {
+            $id = 'foo-bar-' . $filter->filter($key);
+            $this->assertRegexp('/<label([^>]*)(for="' . $id . '")/', $html);
         }
     }
 }
