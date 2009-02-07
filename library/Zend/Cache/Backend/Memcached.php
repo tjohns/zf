@@ -190,10 +190,8 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
         } else {
             $flag = 0;
         }
-        if ($this->test($id)) {
-            // because set and replace seems to have different behaviour
-            $result = $this->_memcache->replace($id, array($data, time(), $lifetime), $flag, $lifetime);
-        } else {
+        // #ZF-5702 : we try add() first becase set() seems to be slower
+        if (!($result = $this->_memcache->add($id, array($data, time(), $lifetime), $flag, $lifetime))) {
             $result = $this->_memcache->set($id, array($data, time(), $lifetime), $flag, $lifetime);
         }
         if (count($tags) > 0) {
@@ -437,13 +435,11 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             if ($newLifetime <=0) {
                 return false;
             }
-            if ($this->test($id)) {
-                // because set and replace seems to have different behaviour
-                $result = $this->_memcache->replace($id, array($data, time(), $newLifetime), $flag, $newLifetime);
-            } else {
-                $result = $this->_memcache->set($id, array($data, time(), $newLifetime), $flag, $newLifetime);
+            // #ZF-5702 : we try replace() first becase set() seems to be slower
+            if (!($result = $this->_memcache->replace($id, array($data, time(), $newLifetime), $flag, $newLifetime))) {
+            	$result = $this->_memcache->set($id, array($data, time(), $lifetime), $flag, $lifetime);
             }
-            return true;
+            return $result;
         }
         return false;
     }
