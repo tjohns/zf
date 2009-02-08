@@ -2,7 +2,7 @@
     <title>Фронтэнды Zend_Cache</title>
 
     <sect2 id="zend.cache.frontends.core">
-        <title>Zend_Cache_Core</title>
+        <title><code>Zend_Cache_Core</code></title>
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>Введение</title>
             <para>
@@ -26,7 +26,7 @@
                 предыдущих примерах.
             </para>
             <table id="zend.cache.frontends.core.options.table">
-                <title>Опции базового фронтэнда</title>
+                <title>Опции <code>Zend_Cache_Core</code></title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -260,7 +260,7 @@ if (!($cache->test($id))) {
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title>Zend_Cache_Frontend_Output</title>
+        <title><code>Zend_Cache_Frontend_Output</code></title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>Введение</title>
             <para>
@@ -309,7 +309,7 @@ echo 'This is never cached ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title>Zend_Cache_Frontend_Function</title>
+        <title><code>Zend_Cache_Frontend_Function</code></title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>Введение</title>
             <para>
@@ -322,7 +322,7 @@ echo 'This is never cached ('.time().').';
         <sect3 id="zend.cache.frontends.function.options">
             <title>Доступные опции</title>
             <table id="zend.cache.frontends.function.options.table">
-                <title>Опции Zend_Cache_Frontend_Function</title>
+                <title>Опции <code>Zend_Cache_Frontend_Function</code></title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -400,7 +400,7 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title>Zend_Cache_Frontend_Class</title>
+        <title><code>Zend_Cache_Frontend_Class</code></title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>Введение</title>
             <para>
@@ -412,7 +412,7 @@ $cache->call('veryExpensiveFunc', $params);
         <sect3 id="zend.cache.frontends.class.options">
             <title>Доступные опции</title>
             <table id="zend.cache.frontends.class.options.table">
-                <title>Опции Zend_Cache_Frontend_Class</title>
+                <title>Опции <code>Zend_Cache_Frontend_Class</code></title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -523,29 +523,30 @@ $result = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title>Zend_Cache_Frontend_File</title>
+        <title><code>Zend_Cache_Frontend_File</code></title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Введение</title>
             <para>
                 <code>Zend_Cache_Frontend_File</code> является фронтэндом,
-                который управляется временем изменения "главного файла".
+                который управляется временем изменения "ведущего файла".
                 Он очень полезен для кэширования конфигураций или шаблонов.
+                Можно использовать несколько ведущих файлов.
             </para>
             <para>
-                Например, у вас есть конфигурационный файл XML, он парсится
+                Например, у вас есть конфигурационный файл XML. Он парсится
                 функцией, которая возвращает объект конфигурации
                 (наподобие <code>Zend_Config</code>). С помощью
                 <code>Zend_Cache_Frontend_File</code> вы можете сохранять объект
-                конфигурации в кэш (чтобы избежать повторного парсинга
-                конфигурационного файла XML), но с сильной зависимостью
-                от "главного файла". Если конфигурационный файл XML изменяется,
-                то кэш сразу становится недействительным.
+                конфигурации в кэш, чтобы избежать повторного парсинга
+                конфигурационного файла XML. Время жизни кэша будет зависеть
+                от ведущего файла - если конфигурационный
+                файл XML изменится, то кэш сразу становится недействительным.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
             <title>Доступные опции</title>
             <table id="zend.cache.frontends.file.options.table">
-                <title>Опции Zend_Cache_Frontend_File</title>
+                <title>Опции <code>Zend_Cache_Frontend_File</code></title>
                 <tgroup cols="4">
                      <thead>
                           <row>
@@ -557,11 +558,39 @@ $result = $cache->foobar2('1', '2');
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>master_file (обязательный)</code></entry>
+                              <entry><code>master_file</code> (не рекомендуется к использованию)</entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
-                                  Полные путь и имя главного файла
+                                  Полные путь и имя ведущего файла
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>master_files</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code></code></entry>
+                              <entry>
+                                  Массив полных путей к ведущим файлам
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>master_files_mode</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry>
+                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> или <code>Zend_Cache_Frontend_File::MODE_OR</code>;
+                                  если <code>MODE_AND</code>, то все ведущие файлы должны быть изменены для того, чтобы кэш стал недействительным
+                                  если <code>MODE_OR</code>, то достаточно изменения одного ведущего файла, чтобы кэш стал недействительным
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>ignore_missing_master_files</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                  если равен <code>true</code>, то отсутствующие
+                                  ведущие файлы игнорируются, иначе бросается
+                                  исключение
                               </entry>
                          </row>
                       </tbody>
@@ -573,14 +602,14 @@ $result = $cache->foobar2('1', '2');
             <para>
                 Этот фронтэнд используется так же, как и
                 <code>Zend_Cache_Core</code>. Специальные примеры не нужны,
-                единственное, что надо сделать — это определить
+                единственное, что надо сделать — это указать
                 <code>masterFile</code> при использовании фабрики.
             </para>
         </sect3>
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title>Zend_Cache_Frontend_Page</title>
+        <title><code>Zend_Cache_Frontend_Page</code></title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>Введение</title>
             <para>
@@ -610,7 +639,7 @@ $result = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.options">
             <title>Доступные опции</title>
             <table id="zend.cache.frontends.page.options.table">
-                <title>Опции Zend_Cache_Frontend_Page</title>
+                <title>Опции <code>Zend_Cache_Frontend_Page</code></title>
                 <tgroup cols="4">
                      <thead>
                           <row>

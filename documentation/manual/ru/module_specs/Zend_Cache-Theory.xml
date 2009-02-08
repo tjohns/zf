@@ -1,7 +1,7 @@
 <sect1 id="zend.cache.theory">
     <title>Теория кэширования</title>
     <para>
-        Есть три ключевых понятия в Zend_Cache. Первое — уникальный
+        Есть три ключевых понятия в <code>Zend_Cache</code>. Первое — уникальный
         идентификатор (строка), который служит для идентификации записей кэша.
         Второе — это директива <code>'lifetime'</code>, которую вы могли видеть
         в предыдущих примерах; она определяет, в течение какого времени
@@ -13,9 +13,9 @@
         если это имеет смысл для данного фронэнда. Это дает конечным
         пользователям возможность включать части кода, которые нужно
         кэшировать (и затем пропускать) в операторы <code>if(){ ... }</code>,
-        где условием является сам метод Zend_Cache. Но в конце этих блоков
-        вы должны сохранять то, что было сгенерировано (например, методом
-        <code>Zend_Cache_Core::save()</code>).
+        где условием является сам метод <code>Zend_Cache</code>. Но в конце
+        этих блоков вы должны сохранять то, что было сгенерировано (например,
+        методом <code>Zend_Cache_Core::save()</code>).
     </para>
     <note><para>
         Для некоторых фронтэндов включение условного исполнения в
@@ -118,6 +118,21 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
         </para>
         <programlisting role="php"><![CDATA[
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
+        </programlisting>
+        <para>
+            Если вы хотите удалить записи кэша, <emphasis>не</emphasis> помеченные тегами 'tagA' и 'tagC':
+            If you want to remove cache entries not matching the tags 'tagA' or 'tagC':
+        </para>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG, array('tagA', 'tagC'));
+]]>
+        </programlisting>
+        <para>
+            Если вы хотите удалить записи кэша, помеченные тегами 'tagA' <emphasis>или</emphasis> 'tagC':
+        </para>
+        <programlisting role="php"><![CDATA[
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, array('tagA', 'tagC'));
 ]]>
         </programlisting>
         <para>

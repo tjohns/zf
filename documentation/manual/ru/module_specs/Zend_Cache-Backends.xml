@@ -5,7 +5,7 @@
         предоставляют больше функциональных возможностей.
     </para>
     <sect2 id="zend.cache.backends.file">
-        <title>Zend_Cache_Backend_File</title>
+        <title><code>Zend_Cache_Backend_File</code></title>
         <para>
             Этот расширенный бэкэнд хранит записи кэша в файлах (в выбранной
             директории).
@@ -14,7 +14,7 @@
             Доступные опции:
         </para>
         <table id="zend.cache.backends.file.table">
-            <title>Опции Zend_Cache_Backend_File</title>
+            <title>Опции <code>Zend_Cache_Backend_File</code></title>
             <tgroup cols="4">
                  <thead>
                      <row>
@@ -113,7 +113,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.sqlite">
-        <title>Zend_Cache_Backend_Sqlite</title>
+        <title><code>Zend_Cache_Backend_Sqlite</code></title>
         <para>
             Этот расширенный бэкэнд хранит записи кэша в базе данных SQLite.
         </para>
@@ -121,7 +121,7 @@
             Доступные опции:
         </para>
         <table id="zend.cache.backends.sqlite.table">
-            <title>Опции Zend_Cache_Backend_Sqlite</title>
+            <title>Опции <code>Zend_Cache_Backend_Sqlite</code></title>
             <tgroup cols="4">
                  <thead>
                      <row>
@@ -162,7 +162,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.memcached">
-        <title>Zend_Cache_Backend_Memcached</title>
+        <title><code>Zend_Cache_Backend_Memcached</code></title>
         <para>
             Этот расширенный бэкэнд хранит записи кэша в сервере memcached.
             <ulink url="http://www.danga.com/memcached/">memcached</ulink> —
@@ -179,7 +179,7 @@
             Доступные опции:
         </para>
         <table id="zend.cache.backends.memcached.table">
-            <title>Опции Zend_Cache_Backend_Memcached</title>
+            <title>Опции <code>Zend_Cache_Backend_Memcached</code></title>
             <tgroup cols="4">
                  <thead>
                      <row>
@@ -194,7 +194,10 @@
                           <entry><code>servers</code></entry>
                           <entry><code>array</code></entry>
                           <entry>
-                             <code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code>
+                            <code>
+                              array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1,
+                              'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                            </code>
                           </entry>
                           <entry>
                               Массив серверов memcached; каждый сервер описан
@@ -202,7 +205,11 @@
                               'host' => (string) : имя сервера memcached,
                               'port' => (int) : порт сервера memcached,
                               'persistent' => (bool) : использовать или нет
-                              постоянное соединение с этим сервером
+                              постоянное соединение с сервером,
+                              'weight' => (int) : вес сервера memcached,
+                              'timeout' => (int) : таймаут сервера memcached,
+                              'retry_interval' => (int) : интервал между повторными попытками,
+                              'status' => (bool) : статус сервера memcached
                           </entry>
                       </row>
                       <row>
@@ -219,7 +226,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.apc">
-        <title>Zend_Cache_Backend_Apc</title>
+        <title><code>Zend_Cache_Backend_Apc</code></title>
         <para>
             Этот расширенный бэкэнд хранит записи кэша в совместно используемой
             памяти через расширение
@@ -237,7 +244,7 @@
         </para>
     </sect2>
     <sect2 id="zend.cache.backends.xcache">
-        <title>Zend_Cache_Backend_Xcache</title>
+        <title><code>Zend_Cache_Backend_Xcache</code></title>
         <para>
             Этот бэкэнд хранит записи кэша в совместно используемой
             памяти через расширение
@@ -253,7 +260,7 @@
             Доступные опции:
         </para>
         <table id="zend.cache.backends.xcache.table">
-            <title>Опции Zend_Cache_Backend_Xcache</title>
+            <title>Опции <code>Zend_Cache_Backend_Xcache</code></title>
             <tgroup cols="4">
                  <thead>
                      <row>
@@ -286,7 +293,7 @@
           </table>
     </sect2>
     <sect2 id="zend.cache.backends.platform">
-        <title>Zend_Cache_Backend_ZendPlatform</title>
+        <title><code>Zend_Cache_Backend_ZendPlatform</code></title>
         <para>
             Этот бэкэнд использует API
             <ulink url="http://www.zend.com/products/platform">Zend
@@ -312,7 +319,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
         </para>
     </sect2>
     <sect2 id="zend.cache.backends.twolevels">
-        <title>Zend_Cache_Backend_TwoLevels</title>
+        <title><code>Zend_Cache_Backend_TwoLevels</code></title>
         <para>
             Этот расширенный бэкэнд является гибридным. Он сохраняет записи кэша
             через два других бэкэнда: быстрый, но ограниченный в функциональных
@@ -328,7 +335,7 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
             Доступные опции:
         </para>
         <table id="zend.cache.backends.twolevels.table">
-            <title>Опции Zend_Cache_Backend_TwoLevels</title>
+            <title>Опции <code>Zend_Cache_Backend_TwoLevels</code></title>
             <tgroup cols="4">
                  <thead>
                       <row>

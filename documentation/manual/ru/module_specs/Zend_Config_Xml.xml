@@ -22,7 +22,7 @@
         </para>
     </note>
     <example id="zend.config.adapters.xml.example.using">
-        <title>Использование Zend_Config_Xml</title>
+        <title>Использование <code>Zend_Config_Xml</code></title>
         <para>
             Данный пример демонстрирует основы использования <code>Zend_Config_Xml</code>
             для загрузки конфигурационных данных из файла XML. В этом примере
@@ -76,7 +76,7 @@ echo $config->database->params->dbname; // выведет "dbname"
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
-        <title>Использование тегов в Zend_Config_Xml</title>
+        <title>Использование тегов в <code>Zend_Config_Xml</code></title>
         <para>
             Zend_Config_Xml также поддерживает два дополнительных способа
             определения узлов в конфигурации. В обоих способах используются
