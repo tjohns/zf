@@ -437,7 +437,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             }
             // #ZF-5702 : we try replace() first becase set() seems to be slower
             if (!($result = $this->_memcache->replace($id, array($data, time(), $newLifetime), $flag, $newLifetime))) {
-            	$result = $this->_memcache->set($id, array($data, time(), $lifetime), $flag, $lifetime);
+            	$result = $this->_memcache->set($id, array($data, time(), $newLifetime), $flag, $newLifetime);
             }
             return $result;
         }
