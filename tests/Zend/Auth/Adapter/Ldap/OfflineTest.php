@@ -32,6 +32,11 @@ require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 require_once 'Zend/Auth/Adapter/Ldap.php';
 
 /**
+ * @see Zend_Ldap
+ */
+require_once 'Zend/Ldap.php';
+
+/**
  * @category   Zend
  * @package    Zend_Auth
  * @subpackage UnitTests
@@ -57,6 +62,12 @@ class Zend_Auth_Adapter_Ldap_OfflineTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_adapter = new Zend_Auth_Adapter_Ldap();
+    }
+
+    public function testGetSetLdap()
+    {
+        $this->_adapter->setLdap(new Zend_Ldap());
+        $this->assertType('Zend_Ldap', $this->_adapter->getLdap());
     }
 
     public function testUsernameIsNullIfNotSet()
