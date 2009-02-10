@@ -342,16 +342,18 @@ class Zend_Amf_Server implements Zend_Server_Interface
         // Add a session header to the body if session is requested.
         if($this->isSession()) {
            $currentID = session_id();
-           if(!strpos($_SERVER['QUERY_STRING'], $currentID) !== FALSE) {
-               if(strrpos($_SERVER['QUERY_STRING'], "?") !== FALSE) {
-                    $joint = "&";
-                } else {
-                    $joint = "?";
-                }
-                // create a new AMF message header with the session id as a variable.
-                $sessionValue = $joint . $this->_sessionName . "=" . $currentID;
-                $sessionHeader = new Zend_Amf_Value_MessageHeader("AppendToGatewayUrl", false, $sessionValue);
-            }
+           $joint = "?";
+           if(isset($_SERVER['QUERY_STRING'])) {
+               if(!strpos($_SERVER['QUERY_STRING'], $currentID) !== FALSE) {
+                   if(strrpos($_SERVER['QUERY_STRING'], "?") !== FALSE) {
+                       $joint = "&";
+                   } 
+               }    
+           }
+           
+            // create a new AMF message header with the session id as a variable.
+            $sessionValue = $joint . $this->_sessionName . "=" . $currentID;
+            $sessionHeader = new Zend_Amf_Value_MessageHeader("AppendToGatewayUrl", false, $sessionValue);
             $response->addAmfHeader($sessionHeader);
         }
 
@@ -375,9 +377,9 @@ class Zend_Amf_Server implements Zend_Server_Interface
         }
         if ($this->isSession()) {
              // Check if a session is being sent from the amf call
-             if($_COOKIE[$this->_sessionName]) {
+             if (isset($_COOKIE[$this->_sessionName])) {
                  session_id($_COOKIE[$this->_sessionName]);
-            }
+             }
         }
 
         // Check for errors that may have happend in deserialization of Request.

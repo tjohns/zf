@@ -14,6 +14,7 @@ require_once 'Zend/Amf/Parse/TypeLoader.php';
 require_once 'Zend/Amf/Value/Messaging/RemotingMessage.php';
 require_once 'ServiceA.php';
 require_once 'ServiceB.php';
+require_once 'Zend/Session.php';
 
 class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
 {
@@ -937,6 +938,45 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         
     }
     
+    
+    
+	/**
+	 * Check that when using server->setSession you get an amf header that has an append to gateway sessionID
+     * @group ZF-5381
+     */
+    public function testSessionAmf3()
+    {
+        Zend_Session::start(); 
+        $this->_server->setClass('Zend_Amf_testSession');
+        $this->_server->setSession();
+        
+        // create a mock remoting message
+        $message = new Zend_Amf_Value_Messaging_RemotingMessage();
+        $message->operation = 'getCount';
+        $message->source = 'Zend_Amf_testSession';
+        $message->body = array();
+        // create a mock message body to place th remoting message inside
+        $newBody = new Zend_Amf_Value_MessageBody(null,"/1", $message);
+        $request = new Zend_Amf_Request();
+        // at the requested service to a request
+        $request->addAmfBody($newBody);
+        $request->setObjectEncoding(0x03);
+        // let the server handle mock request
+        $result = $this->_server->handle($request);
+        $response = $this->_server->getResponse();
+        $responseBody = $response->getAmfBodies();
+        // Now check if the return data was properly set.
+        $acknowledgeMessage = $responseBody[0]->getData();
+        // check that we have a message beening returned
+        $this->assertEquals(1, $acknowledgeMessage->body);  
+        // check that a header is being returned for the session id 
+        $headerBody = $response->getAmfHeaders();
+        $this->assertEquals('AppendToGatewayUrl',$headerBody[0]->name);
+        
+        // stop the session
+        Zend_Session::stop();
+        }
+    
 }
 
 if (PHPUnit_MAIN_METHOD == "Zend_Amf_ServerTest::main") {
@@ -1101,3 +1141,22 @@ class Zend_Amf_testclassPrivate
     }
 }
 
+/**
+ * Example class for sending a session back to ActionScript. 
+ */
+class Zend_Amf_testSession
+{
+    /** Check if the session is available or create it. */
+    public function __construct() {
+        if (!isset($_SESSION['count'])) { 
+			$_SESSION['count'] = 0;
+		}
+	}
+	
+	/** increment the current count session variable and return it's value */
+    public function getCount()
+    {
+    	$_SESSION['count']++;
+    	return $_SESSION['count']; 
+    }
+}
