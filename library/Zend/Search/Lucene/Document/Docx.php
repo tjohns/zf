@@ -128,9 +128,15 @@ class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenX
      * @param string  $fileName
      * @param boolean $storeContent
      * @return Zend_Search_Lucene_Document_Docx
+     * @throws Zend_Search_Lucene_Document_Exception
      */
     public static function loadDocxFile($fileName, $storeContent = false) {
-        return new Zend_Search_Lucene_Document_Docx($fileName, $storeContent);
+        if (!is_readable($fileName)) {
+        	require_once 'Zend/Search/Lucene/Document/Exception.php';
+        	throw new Zend_Search_Lucene_Document_Exception('Provided file \'' . $fileName . '\' is not readable.');
+        }
+
+    	return new Zend_Search_Lucene_Document_Docx($fileName, $storeContent);
     }
 }
 
