@@ -536,4 +536,17 @@ class Zend_Gdata_AppTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testMagicConstructorsPropogateMajorVersion() {
+        $v = 42;
+        $this->service->setMajorProtocolVersion($v);
+        $feed = $this->service->newFeed();
+        $this->assertEquals($v, $feed->getMajorProtocolVersion());
+    }
+
+    public function testMagicConstructorsPropogateMinorVersion() {
+        $v = 84;
+        $this->service->setMinorProtocolVersion($v);
+        $feed = $this->service->newFeed();
+        $this->assertEquals($v, $feed->getMinorProtocolVersion());
+    }
 }
