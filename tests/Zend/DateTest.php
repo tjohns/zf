@@ -5133,6 +5133,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date = new Zend_Date(array('year' => 2006, 'month' => 4, 'day' => 18,
                                     'hour' => 12, 'minute' => 3, 'second' => 10, 'de_AT'));
         $this->assertSame('2006-04-18T12:03:10+02:00', $date->getIso());
+
+        $date = new Zend_Date(array('year' => 2009, 'month' => 1, 'day' => 28,
+                                    'hour' => 23, 'minute' => 30, 'second' => 00, 'de'));
+        $this->assertSame('2009-01-28T23:30:00+01:00', $date->getIso());
     }
 
     public function testExtendedDst()
