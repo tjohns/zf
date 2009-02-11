@@ -856,6 +856,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      */
     protected function _script($name)
     {
+        if (preg_match('#\.\.[\\\/]#', $name)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Requested scripts may not include parent directory traversal ("../", "..\\" notation)');
+        }
+
         if (0 == count($this->_path['script'])) {
             require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('no view script directory set; unable to determine location for view script',

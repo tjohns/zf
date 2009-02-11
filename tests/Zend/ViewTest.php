@@ -970,6 +970,34 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->view->setUseStreamWrapper(false);
         $this->assertFalse($this->view->useStreamWrapper());
     }
+
+    /**
+     * @group ZF-5748
+     */
+    public function testRenderShouldNotAllowScriptPathsContainingParentDirectoryTraversal()
+    {
+        $view = new Zend_View();
+        try {
+            $view->render('../foobar.html');
+            $this->fail('Should not allow parent directory traversal');
+        } catch (Zend_View_Exception $e) {
+            $this->assertContains('parent directory traversal', $e->getMessage());
+        }
+
+        try {
+            $view->render('foo/../foobar.html');
+            $this->fail('Should not allow parent directory traversal');
+        } catch (Zend_View_Exception $e) {
+            $this->assertContains('parent directory traversal', $e->getMessage());
+        }
+
+        try {
+            $view->render('foo/..\foobar.html');
+            $this->fail('Should not allow parent directory traversal');
+        } catch (Zend_View_Exception $e) {
+            $this->assertContains('parent directory traversal', $e->getMessage());
+        }
+    }
 }
 
 /**
