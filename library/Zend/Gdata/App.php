@@ -979,6 +979,12 @@ class Zend_Gdata_App
                 $instance = $reflectionObj->newInstanceArgs($args);
                 if ($instance instanceof Zend_Gdata_App_FeedEntryParent) {
                     $instance->setHttpClient($this->_httpClient);
+
+                    // Propogate version data
+                    $instance->setMajorProtocolVersion(
+                            $this->_majorProtocolVersion);
+                    $instance->setMinorProtocolVersion(
+                            $this->_minorProtocolVersion);
                 }
                 return $instance;
             } else {
