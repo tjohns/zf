@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13847 -->
+<!-- EN-Revision: 14052 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>プラグイン</title>
 
@@ -120,32 +120,38 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 {
     public function routeStartup(Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>routeStartup() がコールされました</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>routeStartup() がコールされました</p>\n");
     }
 
     public function routeShutdown(Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>routeShutdown() がコールされました</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>routeShutdown() がコールされました</p>\n");
     }
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>dispatchLoopStartup() がコールされました</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>dispatchLoopStartup() がコールされました</p>\n");
     }
 
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>preDispatch() がコールされました</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>preDispatch() がコールされました</p>\n");
     }
 
     public function postDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $this->getResponse()->appendBody("<p>postDispatch() がコールされました</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>postDispatch() がコールされました</p>\n");
     }
 
     public function dispatchLoopShutdown()
     {
-        $this->getResponse()->appendBody("<p>dispatchLoopShutdown() がコールされました</p>\n");
+        $this->getResponse()
+             ->appendBody("<p>dispatchLoopShutdown() がコールされました</p>\n");
     }
 }
 
