@@ -25,6 +25,9 @@ require_once 'Zend/Form/Decorator/Abstract.php';
 /** Zend_Form_Decorator_Marker_File_Interface */
 require_once 'Zend/Form/Decorator/Marker/File/Interface.php';
 
+/** Zend_File_Transfer_Adapter_Http */
+require_once 'Zend/File/Transfer/Adapter/Http.php';
+
 /**
  * Zend_Form_Decorator_File
  *
@@ -38,8 +41,8 @@ require_once 'Zend/Form/Decorator/Marker/File/Interface.php';
  * @version    $Id: $
  */
 class Zend_Form_Decorator_File
-extends Zend_Form_Decorator_Abstract
-implements Zend_Form_Decorator_Marker_File_Interface
+    extends Zend_Form_Decorator_Abstract
+    implements Zend_Form_Decorator_Marker_File_Interface
 {
     /**
      * Attributes that should not be passed to helper
@@ -106,6 +109,12 @@ implements Zend_Form_Decorator_Marker_File_Interface
         if ($size > 0) {
             $element->setMaxFileSize(0);
             $markup[] = $view->formHidden('MAX_FILE_SIZE', $size);
+        }
+
+        if (is_callable(Zend_File_Transfer_Adapter_Http::$_callbackApc) && Zend_File_Transfer_Adapter_Http::isApcAvailable()) {
+            $markup[] = $view->formHidden('APC_UPLOAD_PROGRESS', uniqid(), array('id' => 'progress_key'));
+        } else if (is_callable(Zend_File_Transfer_Adapter_Http::$_callbackApc)) {
+            $markup[] = $view->formHidden('UPLOAD_PROGRESS', uniqid(), array('id' => 'progress_key'));
         }
 
         if ($element->isArray()) {

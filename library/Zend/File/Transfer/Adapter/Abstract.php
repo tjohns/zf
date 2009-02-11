@@ -168,7 +168,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      *
      * @return float
      */
-    abstract public function getProgress();
+    public static function getProgress()
+    {
+        require_once 'Zend/File/Transfer/Exception.php';
+        throw new Zend_File_Transfer_Exception('Method must be implemented within the adapter');
+    }
 
     /**
      * Set plugin loader to use for validator or filter chain
@@ -572,7 +576,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function isValid($files = null)
     {
-        $check           = $this->_getFiles($files);
+        $check = $this->_getFiles($files, false, true);
+        if (empty($check)) {
+            return false;
+        }
+
         $translator      = $this->getTranslator();
         $this->_messages = array();
         $break           = false;

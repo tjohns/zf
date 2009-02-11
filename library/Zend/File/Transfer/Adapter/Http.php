@@ -31,6 +31,9 @@ require_once 'Zend/File/Transfer/Adapter/Abstract.php';
  */
 class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstract
 {
+    protected static $_callbackApc            = 'apc_fetch';
+    protected static $_callbackUploadProgress = 'uploadprogress_get_info';
+
     /**
      * Constructor for Http File Transfers
      *
@@ -156,7 +159,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function isReceived($files = null)
     {
-        $files = $this->_getFiles($files);
+        $files = $this->_getFiles($files, false, true);
+        if (empty($files)) {
+            return false;
+        }
+
         foreach ($files as $content) {
             if ($content['received'] !== true) {
                 return false;
@@ -174,7 +181,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function isFiltered($files = null)
     {
-        $files = $this->_getFiles($files);
+        $files = $this->_getFiles($files, false, true);
+        if (empty($files)) {
+            return false;
+        }
+
         foreach ($files as $content) {
             if ($content['filtered'] !== true) {
                 return false;
@@ -192,7 +203,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
      */
     public function isUploaded($files = null)
     {
-        $files = $this->_getFiles($files);
+        $files = $this->_getFiles($files, false, true);
+        if (empty($files)) {
+            return false;
+        }
+
         foreach ($files as $file) {
             if (empty($file['name'])) {
                 return false;
@@ -205,14 +220,68 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     /**
      * Returns the actual progress of file up-/downloads
      *
-     * @return string Returns the state
-     * @return int
-     * @throws Zend_File_Transfer_Exception Not implemented
+     * @param  string $id The upload to get the progress for
+     * @return array|null
      */
-    public function getProgress()
+    public static function getProgress($id = null)
     {
-        require_once 'Zend/File/Transfer/Exception.php';
-        throw new Zend_File_Transfer_Exception('Method not implemented');
+        if (!function_exists('apc_fetch') and !function_exists('uploadprogress_get_info')) {
+            require_once 'Zend/File/Transfer/Exception.php';
+            throw new Zend_File_Transfer_Exception('Wether APC nor uploadprogress extension installed');
+        }
+
+        $status = array(
+            'total'    => 0,
+            'current'  => 0,
+            'rate'     => 0,
+        );
+
+        if (is_array($id)) {
+            if (isset($id['id'])) {
+                $id = $id['id'];
+            } else {
+                unset($id);
+            }
+        }
+
+        if ($id === null) {
+            if (!isset($_GET['progress_key'])) {
+                $status = array('message' => 'No upload in progress');
+            } else {
+                $id = $_GET['progress_key'];
+            }
+        }
+
+        if ($id !== null) {
+            if (is_callable(self::$_callbackApc) && self::isApcAvailable()) {
+                $status = call_user_func(self::$_callbackApc, 'upload_' . $id);
+            } else if (is_callable(self::$_callbackUploadProgress)) {
+                $status = call_user_func(self::$_callbackUploadProgress, $id);
+                $status['total']   = $status['bytes_total'];
+                $status['current'] = $status['bytes_uploaded'];
+                $status['rate']    = $status['speed_average'];
+            }
+
+            if (!$status) {
+                $status = array('message' => 'Failure while retrieving the upload progress');
+            } else if (!empty($status['cancel_upload'])) {
+                $status['message'] = 'The upload has been canceled';
+            }
+
+            $status['id'] = $id;
+        }
+
+        return $status;
+    }
+
+    /**
+     * Checks the APC ini settings
+     *
+     * @return boolean
+     */
+    public static function isApcAvailable()
+    {
+        return (bool) ini_get('apc.enabled') && (bool) ini_get('apc.rfc1867');
     }
 
     /**

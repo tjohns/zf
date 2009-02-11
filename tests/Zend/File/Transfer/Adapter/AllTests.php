@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/File/Transfer/Adapter/AbstractTest.php';
+require_once 'Zend/File/Transfer/Adapter/HttpTest.php';
 
 /**
  * @category   Zend
@@ -50,6 +51,7 @@ class Zend_File_Transfer_Adapter_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_File_Transfer_Adapter');
 
         $suite->addTestSuite('Zend_File_Transfer_Adapter_AbstractTest');
+        $suite->addTestSuite('Zend_File_Transfer_Adapter_HttpTest');
 
         return $suite;
     }
