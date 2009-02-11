@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13826 -->
+<!-- EN-Revision: 14050 -->
 <sect1 id="zend.view.controllers">
     <title>コントローラスクリプト</title>
 
@@ -150,8 +150,36 @@ $view->addScriptPath('/path/to/custom/');
 ]]>
         </programlisting>
 
-    </sect2>
+        <note>
+            <title>ユーザの入力内容をスクリプトパスに設定してはいけません</title>
 
+            <para>
+                <code>Zend_View</code> は、
+                スクリプトパスを見てビュースクリプトを探したりレンダリングしたりします。
+                そのため、ここに何が設定されているのかを事前にきちんと把握し、
+                自分の管理下においておく必要があります。
+                <emphasis>決して</emphasis>
+                ユーザの入力した内容をもとにスクリプトパスを設定などしてはいけません。
+                もしそこに親ディレクトリをたどる指定などが含まれていたら、
+                ローカルファイル読み込みの脆弱性の被害を受ける可能性があります。
+                たとえば、次のようなスクリプトが問題を引き起こします。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// $_GET['foo'] == '../../../etc'
+$view->addScriptPath($_GET['foo']);
+$view->render('passwd');
+]]></programlisting>
+
+            <para>
+                あまりにもできすぎた例に見えるかもしれませんが、
+                単に起こりうる問題をわかりやすく示しただけのことです。
+                <emphasis>どうしても</emphasis>ユーザの入力を使わざるを得ないのなら、
+                入力をきちんとフィルタリングしてチェックし、
+                アプリケーションできちんと管理できるパスが指定されていることを確認するようにしましょう。
+            </para>
+        </note>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
