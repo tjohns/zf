@@ -251,7 +251,20 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
+     * Return encoding of mail headers
+     *
+     * @deprecated use {@link getHeaderEncoding()} instead
+     * @return <type>
+     */
+    public function getEncodingOfHeaders()
+    {
+        return $this->getHeaderEncoding();
+    }
+
+    /**
      * Return the encoding of mail headers
+     *
+     * Either Zend_Mime::ENCODING_QUOTEDPRINTABLE or Zend_Mime::ENCODING_BASE64
      *
      * @return string
      */
@@ -263,9 +276,20 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Set the encoding of mail headers
      *
-     * @param string $encoding
-     * @return Zend_Mail Provides fluent interface
+     * @deprecated Use {@link setHeaderEncoding()} instead.
+     * @param  string $encoding
+     * @return Zend_Mail
+     */
+    public function setEncodingOfHeaders($encoding)
+    {
+        return $this->setHeaderEncoding($encoding);
+    }
+
+    /**
+     * Set the encoding of mail headers
      *
+     * @param  string $encoding Zend_Mime::ENCODING_QUOTEDPRINTABLE or Zend_Mime::ENCODING_BASE64
+     * @return Zend_Mail Provides fluent interface
      */
     public function setHeaderEncoding($encoding)
     {
