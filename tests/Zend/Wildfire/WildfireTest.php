@@ -31,6 +31,9 @@ require_once 'Zend/Wildfire/Plugin/FirePhp.php';
 /** Zend_Wildfire_Plugin_FirePhp_Message */
 require_once 'Zend/Wildfire/Plugin/FirePhp/Message.php';
 
+/** Zend_Wildfire_Plugin_FirePhp_TableMessage */
+require_once 'Zend/Wildfire/Plugin/FirePhp/TableMessage.php';
+
 /** Zend_Controller_Request_Http */
 require_once 'Zend/Controller/Request/Http.php';
 
@@ -441,6 +444,91 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
                                             [Zend_Wildfire_Plugin_FirePhp::PLUGIN_URI][0],
                             '[{"Type":"INFO","Label":"Label 1"},"Message 2"]');
     }
+    
+
+    /**
+     * @group ZF-5742
+     */
+    public function testTableMessage()
+    {
+        $table = new Zend_Wildfire_Plugin_FirePhp_TableMessage('TestMessage');
+        
+        $this->assertEquals($table->getLabel(), 'TestMessage');
+
+        try {
+            $table->getLastRow();
+            $this->fail('Should throw exception when no rows exist');
+        } catch (Exception $e) {
+            // success
+        }
+        
+        $row = array('col1','col2');
+
+        $this->assertEquals($table->getRowCount(), 0);
+        
+        try {
+            $table->getRowAt(1);
+            $this->fail('Should throw exception as no rows present');
+        } catch (Exception $e) {
+            // success
+        }
+
+        try {
+            $table->setRowAt(1,array());
+            $this->fail('Should throw exception as no rows present');
+        } catch (Exception $e) {
+            // success
+        }
+        
+        $table->addRow($row);
+
+        $this->assertEquals($table->getMessage(), array($row));
+        $this->assertEquals($table->getLastRow(), $row);
+        
+        $this->assertEquals($table->getRowCount(), 1);
+        
+        $table->addRow($row);
+
+        $this->assertEquals($table->getMessage(), array($row,
+                                                        $row));
+        
+        $this->assertEquals($table->getRowCount(), 2);
+        $this->assertEquals($table->getLastRow(), $row);
+        
+        try {
+            $table->getRowAt(2);
+            $this->fail('Should throw exception as index is out of bounds');
+        } catch (Exception $e) {
+            // success
+        }
+
+        try {
+            $table->setRowAt(2,array());
+            $this->fail('Should throw exception as index is out of bounds');
+        } catch (Exception $e) {
+            // success
+        }
+       
+        $rowOld = $table->getRowAt(1);
+        $this->assertEquals($rowOld, $row);
+
+        $rowOld[1] = 'Column2';
+        $table->setRowAt(1, $rowOld);
+        
+        $this->assertEquals($table->getRowAt(1), $rowOld);
+        $this->assertEquals($table->getLastRow(), $rowOld);
+
+        $this->assertEquals($table->getMessage(), array($row,
+                                                        $rowOld));
+
+        $header = array('hc1', 'hc2');
+        $table->setHeader($header);
+        
+        $this->assertEquals($table->getMessage(), array($header,
+                                                        $row,
+                                                        $rowOld));
+    }
+    
 
     public function testMessageGroups()
     {
@@ -832,7 +920,7 @@ class Zend_Wildfire_WildfireTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($message,
                             '[{"Type":"TABLE","Label":"Label"},[["Col1","Col2"],[{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}},{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":{"__className":"Zend_Wildfire_WildfireTest_TestObject3","public:name":"Name","public:value":"Value","undeclared:testArray":["val1","** Max Array Depth (1) **"],"undeclared:child":"** Max Object Depth (2) **"}}]]]');
     }
-        
+    
 }
 
 class Zend_Wildfire_WildfireTest_TestObject1
