@@ -208,4 +208,17 @@ class Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest extends PHPUnit_Framework_Te
             'No usage of Complex Type B array found.'
         );
     }
+
+    /**
+     * @group ZF-5754
+     */
+    public function testNestingOfSameTypesDoesNotLeadToInfiniteRecursionButWillThrowException()
+    {
+        try {
+            $return = $this->wsdl->addComplexType("Zend_Soap_AutoDiscover_Recursion");
+        } catch(Exception $e) {
+            $this->assertTrue($e instanceof Zend_Soap_Wsdl_Exception);
+            $this->assertEquals("Infinite recursion, cannot nest 'Zend_Soap_AutoDiscover_Recursion' into itsself.", $e->getMessage());
+        }
+    }
 }
