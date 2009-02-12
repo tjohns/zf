@@ -120,3 +120,11 @@ class Zend_Soap_AutoDiscover_MyResponse
      */
     public $p1;
 }
+
+class Zend_Soap_AutoDiscover_Recursion
+{
+    /**
+     * @var Zend_Soap_AutoDiscover_Recursion
+     */
+    public $recursion;
+}
