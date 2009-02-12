@@ -337,14 +337,14 @@ class Zend_Mail_Part implements RecursiveIterator, Zend_Mail_Part_Interface
 
         $lowerName = strtolower($name);
 
-        if ($this->headerExists($name) == false) {
+        if (!isset($this->_headers[$lowerName])) {
             $lowerName = strtolower(preg_replace('%([a-z])([A-Z])%', '\1-\2', $name));
-            if($this->headerExists($lowerName) == false) {
+            if (!isset($this->_headers[$lowerName])) {
                 /**
                  * @see Zend_Mail_Exception
                  */
                 require_once 'Zend/Mail/Exception.php';
-                throw new Zend_Mail_Exception("no Header with Name $name or $lowerName found");
+                throw new Zend_Mail_Exception("no Header with Name $name found");
             }
         }
         $name = $lowerName;
@@ -364,22 +364,6 @@ class Zend_Mail_Part implements RecursiveIterator, Zend_Mail_Part_Interface
         }
 
         return $header;
-    }
-
-    /**
-     * Check wheater the Mail part has a specific header.
-     *
-     * @param  string $name
-     * @return boolean
-     */
-    public function headerExists($name)
-    {
-        $name = strtolower($name);
-        if(isset($this->_headers[$name])) {
-            return true;
-        } else {
-            return false;
-        }
     }
     
     /**
@@ -416,21 +400,6 @@ class Zend_Mail_Part implements RecursiveIterator, Zend_Mail_Part_Interface
     public function __get($name)
     {
         return $this->getHeader($name, 'string');
-    }
-
-    /**
-     * Isset magic method proxy to hasHeader
-     *
-     * This method is short syntax for Zend_Mail_Part::hasHeader($name);
-     *
-     * @see Zend_Mail_Part::hasHeader
-     *
-     * @param  string
-     * @return boolean
-     */
-    public function __isset($name)
-    {
-        return $this->headerExists($name);
     }
 
     /**
