@@ -254,7 +254,7 @@ class Zend_Mail extends Zend_Mime_Message
      * Return encoding of mail headers
      *
      * @deprecated use {@link getHeaderEncoding()} instead
-     * @return <type>
+     * @return string
      */
     public function getEncodingOfHeaders()
     {
