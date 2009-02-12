@@ -547,7 +547,8 @@ class Zend_Date extends Zend_Date_DateObject
                     break;
 
                 case 'w' :
-                    $output[$i] = $this->get(self::WEEK, $locale);
+                    $week       = $this->get(self::WEEK, $locale);
+                    $output[$i] = ($week[0] == '0') ? $week[1] : $week;
                     break;
 
                 // monthday

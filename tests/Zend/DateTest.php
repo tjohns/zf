@@ -418,7 +418,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame(             '02', $date->toString(   "MM"));
         $this->assertSame(              '2', $date->toString(    "M"));
         $this->assertSame(             '07', $date->toString(   "ww"));
-        $this->assertSame(             '07', $date->toString(    "w"));
+        $this->assertSame(              '7', $date->toString(    "w"));
         $this->assertSame(             '14', $date->toString(   "dd"));
         $this->assertSame(             '14', $date->toString(    "d"));
         $this->assertSame(            '044', $date->toString(  "DDD"));
@@ -4841,7 +4841,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame(gmdate('N',$date->getTimestamp()), $date->toString(                      'e'));
         $this->assertSame(gmdate('S',$date->getTimestamp()), $date->toString(                     'SS'));
         $this->assertSame(gmdate('z',$date->getTimestamp()), $date->toString(                      'D'));
-        $this->assertSame(gmdate('W',$date->getTimestamp()), $date->toString(                      'w'));
+        $this->assertSame(gmdate('W',$date->getTimestamp()), $date->toString(                     'ww'));
         $this->assertSame(gmdate('F',$date->getTimestamp()), $date->toString(             'MMMM', 'en'));
         $this->assertSame(gmdate('m',$date->getTimestamp()), $date->toString(                     'MM'));
         $this->assertSame(gmdate('M',$date->getTimestamp()), $date->toString(              'MMM', 'en'));
@@ -5140,7 +5140,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date = new Zend_Date(array('year' => 2009, 'month' => 8, 'day' => 28,
                                       'hour' => 22, 'minute' => 00, 'second' => 00, 'de'));
-        $this->assertSame('2009-08-28T22:00:00+02:00', $date->getIso());    }
+        $this->assertSame('2009-08-28T22:00:00+02:00', $date->getIso());
+    }
 
     public function testExtendedDst()
     {

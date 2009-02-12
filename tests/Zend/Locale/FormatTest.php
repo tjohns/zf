@@ -869,7 +869,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertSame('SS',   Zend_Locale_Format::convertPhpToIsoFormat('S'));
         $this->assertSame('eee',  Zend_Locale_Format::convertPhpToIsoFormat('w'));
         $this->assertSame('D',    Zend_Locale_Format::convertPhpToIsoFormat('z'));
-        $this->assertSame('w',    Zend_Locale_Format::convertPhpToIsoFormat('W'));
+        $this->assertSame('ww',   Zend_Locale_Format::convertPhpToIsoFormat('W'));
         $this->assertSame('MMMM', Zend_Locale_Format::convertPhpToIsoFormat('F'));
         $this->assertSame('MM',   Zend_Locale_Format::convertPhpToIsoFormat('m'));
         $this->assertSame('MMM',  Zend_Locale_Format::convertPhpToIsoFormat('M'));
