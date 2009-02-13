@@ -1,12 +1,12 @@
-Welcome to Zend Framework 1.7.4! This is a bug fix/maintenance release in the 
+Welcome to Zend Framework 1.7.5! This is a bug fix/maintenance release in the 
 Zend Framework 1.7 series. This release maintains backwards compatibility
 with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.7.4 ([INSERT REV NUM HERE]).
-Released on 2009-02-02.
+Zend Framework 1.7.5 ([INSERT REV NUM HERE]).
+Released on 2009-02-16.
 
 SPECIAL NOTICE
 --------------
@@ -61,7 +61,7 @@ NEW FEATURES
 
 A detailed list of all features and bug fixes in this release may be found at:
 
-http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10944
+http://framework.zend.com/issues/secure/IssueNavigator.jspa?requestId=10951
 
 SYSTEM REQUIREMENTS
 -------------------
