@@ -259,6 +259,16 @@ define('TESTS_ZEND_GDATA_BOOKS_ONLINE_ENABLED', false);
 define('TESTS_ZEND_GDATA_YOUTUBE_ACCOUNT', 'zfgdata');
 
 /*
+ * This is the developer key to access the YouTube API
+ */
+define('TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY', 'your_developer_key_here');
+
+/*
+ * This is the client ID to access the YouTube API
+ */
+define('TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID', 'ZF_UnitTests_unknown');
+
+/*
  * This indicates that online tests for the Google Documents API should
  * be performed.
  */
