@@ -169,7 +169,6 @@ require_once 'Zend/Gdata/YouTube/ContactEntryTest.php';
 require_once 'Zend/Gdata/YouTube/VideoQueryTest.php';
 require_once 'Zend/Gdata/YouTube/ActivityFeedTest.php';
 require_once 'Zend/Gdata/YouTube/ActivityEntryTest.php';
-require_once 'Zend/Gdata/YouTube/ActivityFeedOnlineTest.php';
 
 require_once 'Zend/Gdata/Books/CollectionFeedTest.php';
 require_once 'Zend/Gdata/Books/CollectionEntryTest.php';
@@ -345,7 +344,6 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_YouTube_ContactEntryTest');
         $suite->addTestSuite('Zend_Gdata_YouTube_ActivityEntryTest');
         $suite->addTestSuite('Zend_Gdata_YouTube_ActivityFeedTest');
-        $suite->addTestSuite('Zend_Gdata_YouTube_ActivityFeedOnlineTest');
 
         $suite->addTestSuite('Zend_Gdata_Books_CollectionEntryTest');
         $suite->addTestSuite('Zend_Gdata_Books_CollectionFeedTest');

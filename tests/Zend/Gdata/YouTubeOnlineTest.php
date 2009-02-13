@@ -637,7 +637,113 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         return $outputString;
     }
 
+    public function testRetrieveActivityFeed()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
 
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(2);
+
+        $feed = $youtube->getActivityForUser($this->ytAccount);
+        $this->assertTrue($feed instanceof Zend_Gdata_YouTube_ActivityFeed);
+        $this->assertTrue((count($feed->entries) > 0));
+        $this->assertEquals('Activity of ' . $this->ytAccount,
+            $feed->title->text);
+    }
+
+    public function testExceptionIfNotUsingDeveloperKey()
+    {
+        $exceptionThrown = false;
+        $youtube = new Zend_Gdata_YouTube();
+        $youtube->setMajorProtocolVersion(2);
+        try {
+            $youtube->getActivityForUser($this->ytAccount);
+        } catch (Zend_Gdata_App_HttpException $e) {
+            $exceptionThrown = true;
+        }
+        $this->assertTrue($exceptionThrown, 'Was expecting an exception when ' .
+            'making a request to the YouTube Activity feed without a ' . 
+            'developer key.');
+    }
+    
+    public function testRetrieveActivityFeedForMultipleUsers()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(2);
+
+        $feed = $youtube->getActivityForUser($this->ytAccount . ',zfgdata');
+        $this->assertTrue($feed instanceof Zend_Gdata_YouTube_ActivityFeed);
+        $this->assertTrue((count($feed->entries) > 0));
+        $this->assertEquals('Activity of ' . $this->ytAccount . ',zfgdata',
+            $feed->title->text);
+    }
+    
+    public function testRetrieveFriendFeed()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(2);
+
+        $feed = $youtube->getFriendActivityForCurrentUser();
+        $this->assertTrue($feed instanceof Zend_Gdata_YouTube_ActivityFeed);
+        $this->assertTrue((count($feed->entries) > 0));
+        $this->assertEquals('Activity of ' . $this->ytAccount . "'s friends",
+            $feed->title->text);
+    }
+
+   public function testThrowExceptionOnActivityFeedRequestForMoreThan20Users()
+   {
+        $exceptionThrown = false;
+        $listOfMoreThan20Users = null;
+        $youtube = new Zend_Gdata_YouTube();
+        $youtube->setMajorProtocolVersion(2);
+
+        for ($x = 0;  $x < 30; $x++) {
+            $listOfMoreThan20Users .= "user$x";
+            if ($x != 29) {
+                $listOfMoreThan20Users .= ",";
+            }
+        }
+
+        try {
+            $youtube->getActivityForUser($listOfMoreThan20Users);
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
+            $exceptionThrown = true;
+        }
+        $this->assertTrue($exceptionThrown, 'Was expecting an exception on ' .
+            'a request to ->getActivityForUser when more than 20 users were ' .
+            'specified in YouTube.php');
+    }
 
 
 
