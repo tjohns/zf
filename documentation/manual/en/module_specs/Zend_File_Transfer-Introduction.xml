@@ -359,8 +359,8 @@ $names = $upload->getMimeType('foo');
         <para>
             <code>Zend_File_Transfer</code> can give you the actual state of a fileupload in progress. To use
             this feature you need either the <code>APC</code> extension which is provided with most default
-            php installations, or the <code>uploadprogress</code> extension. Both extensions are detected
-            and used automatically. To be able to get the progress you need to meet some prerequisits.
+            PHP installations, or the <code>uploadprogress</code> extension. Both extensions are detected
+            and used automatically. To be able to get the progress you need to meet some prerequisites.
         </para>
 
         <para>
@@ -430,16 +430,16 @@ while (empty($upload['message'])) {
             <listitem>
                 <para>
                     <emphasis role="strong">id</emphasis>: The id is the reference to the upload itself. When
-                    multiple users upload a file, each upload get's it's own id. The actual id of this request
+                    multiple users upload a file, each upload gets it's own id. The actual id of this request
                     will be returned when you call <code>getProgress()</code> the first time.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <emphasis role="strong">message</emphasis>: A helpfull message in the case of a problem.
+                    <emphasis role="strong">message</emphasis>: A helpful message in the case of a problem.
                     Problems could be, that there is no upload in progress, that there was a failure while
-                    retrieving the data for the progrss, or that the upload has been canceled.
+                    retrieving the data for the progress, or that the upload has been canceled.
                 </para>
             </listitem>
         </itemizedlist>
