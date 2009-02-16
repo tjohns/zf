@@ -179,6 +179,8 @@ class Zend_Auth_Adapter_Ldap implements Zend_Auth_Adapter_Interface
     {
         $this->_ldap = $ldap;
 
+        $this->setOptions(array($ldap->getOptions()));
+
         return $this;
     }
 
