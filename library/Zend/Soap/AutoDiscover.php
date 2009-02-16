@@ -74,13 +74,6 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     protected $_bindingStyle = array('style' => 'rpc', 'transport' => 'http://schemas.xmlsoap.org/soap/http');
 
     /**
-     * To enable compability with class generators for Java and DotNet framework SOAP Clients.
-     *
-     * @var boolean
-     */
-    protected $_responseMessageReturnNameCompability = false;
-
-    /**
      * Constructor
      *
      * @param boolean|string|Zend_Soap_Wsdl_Strategy_Interface $strategy
@@ -177,21 +170,6 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
         if(isset($bindingStyle['transport'])) {
             $this->_bindingStyle['transport'] = $bindingStyle['transport'];
         }
-        return $this;
-    }
-
-    /**
-     * Enable/Disable naming of "return" only for response message parts.
-     *
-     * Some Clients only work when the response message part is explicilty called "return".
-     * This affects .NET and Java clients.
-     *
-     * @param  boolean $flag
-     * @return Zend_Soap_AutoDiscover
-     */
-    public function setResponseMessageReturnNameCompability($flag)
-    {
-        $this->_responseMessageReturnNameCompability = $flag;
         return $this;
     }
 
@@ -314,11 +292,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
                     //$wsdl->addDocumentation($message, $desc);
                 }
                 if ($prototype->getReturnType() != "void") {
-                    if($this->_responseMessageReturnNameCompability === true) {
-                        $returnName = 'return';
-                    } else {
-                        $returnName = $method->getName() . 'Return';
-                    }
+                    $returnName = 'return';
                     $message = $wsdl->addMessage($method->getName() . 'Response', array($returnName => $wsdl->getType($prototype->getReturnType())));
                 }
 
@@ -375,13 +349,8 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
                 if (strlen($desc) > 0) {
                     //$wsdl->addDocumentation($message, $desc);
                 }
-                if ($prototype->getReturnType() != "void") {
-                    if($this->_responseMessageReturnNameCompability === true) {
-                        $returnName = "return";
-                    } else {
-                        $returnName = $method->getName() . 'Return';
-                    }
-
+                if($prototype->getReturnType() != "void") {
+                    $returnName = "return";
                     $message = $wsdl->addMessage($method->getName() . 'Response', array($returnName => $wsdl->getType($prototype->getReturnType())));
                 }
                  /* <wsdl:portType>'s */

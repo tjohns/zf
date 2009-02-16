@@ -350,15 +350,4 @@ $autodiscover->handle();
             </programlisting>
         </para>
     </sect2>
-
-    <sect2 id="zend.soap.autodiscovery.compability">
-        <title>Compatibility with WSDL Client Generators</title>
-
-        <para>
-            Up to version 1.7 the WSDL files were generated with a response message
-            part that could not be detected correctly by Java or .NET clients for example.
-            From version 1.8 the function <code>setResponseMessageReturnNameCompability()</code>
-            was included to enable compability for this cases.
-        </para>
-    </sect2>
 </sect1>

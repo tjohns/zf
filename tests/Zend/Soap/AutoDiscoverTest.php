@@ -15,6 +15,12 @@ require_once 'Zend/Soap/AutoDiscover.php';
 /** Zend_Soap_Wsdl_Strategy_ArrayOfTypeComplex */
 require_once "Zend/Soap/Wsdl/Strategy/ArrayOfTypeComplex.php";
 
+/** Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence */
+require_once "Zend/Soap/Wsdl/Strategy/ArrayOfTypeSequence.php";
+
+/** Include Common TestTypes */
+require_once "_files/commontypes.php";
+
 /**
  * Test cases for Zend_Soap_AutoDiscover
  *
@@ -109,13 +115,13 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
               .         '</port>'
               .     '</service>'
               .     '<message name="testFunc1Request"/>'
-              .     '<message name="testFunc1Response"><part name="testFunc1Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc1Response"><part name="return" type="xsd:string"/></message>'
               .     '<message name="testFunc2Request"><part name="who" type="xsd:string"/></message>'
-              .     '<message name="testFunc2Response"><part name="testFunc2Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc2Response"><part name="return" type="xsd:string"/></message>'
               .     '<message name="testFunc3Request"><part name="who" type="xsd:string"/><part name="when" type="xsd:int"/></message>'
-              .     '<message name="testFunc3Response"><part name="testFunc3Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc3Response"><part name="return" type="xsd:string"/></message>'
               .     '<message name="testFunc4Request"/>'
-              .     '<message name="testFunc4Response"><part name="testFunc4Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc4Response"><part name="return" type="xsd:string"/></message>'
               . '</definitions>';
 
         $dom->save(dirname(__FILE__).'/_files/setclass.wsdl');
@@ -193,13 +199,13 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
               .         '</port>'
               .     '</service>'
               .     '<message name="testFunc1Request"/>'
-              .     '<message name="testFunc1Response"><part name="testFunc1Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc1Response"><part name="return" type="xsd:string"/></message>'
               .     '<message name="testFunc2Request"><part name="who" type="xsd:string"/></message>'
-              .     '<message name="testFunc2Response"><part name="testFunc2Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc2Response"><part name="return" type="xsd:string"/></message>'
               .     '<message name="testFunc3Request"><part name="who" type="xsd:string"/><part name="when" type="xsd:int"/></message>'
-              .     '<message name="testFunc3Response"><part name="testFunc3Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc3Response"><part name="return" type="xsd:string"/></message>'
               .     '<message name="testFunc4Request"/>'
-              .     '<message name="testFunc4Response"><part name="testFunc4Return" type="xsd:string"/></message>'
+              .     '<message name="testFunc4Response"><part name="return" type="xsd:string"/></message>'
               . '</definitions>';
 
         $dom->save(dirname(__FILE__).'/_files/setclass.wsdl');
@@ -217,7 +223,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $scriptUri = 'http://localhost/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover();
-        $server->setResponseMessageReturnNameCompability(true);
         $server->setClass('Zend_Soap_AutoDiscover_Test');
         $dom = new DOMDocument();
         ob_start();
@@ -269,7 +274,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
                 '</port>'.
                 '</service>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFuncRequest"><part name="who" type="xsd:string"/></message>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="Zend_Soap_AutoDiscover_TestFuncReturn" type="xsd:string"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="return" type="xsd:string"/></message>'.
                 '</definitions>';
         $this->assertEquals($wsdl, $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()), "Bad WSDL generated");
         $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
@@ -314,7 +319,7 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
                 '</port>'.
                 '</service>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFuncRequest"><part name="who" type="xsd:string"/></message>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="Zend_Soap_AutoDiscover_TestFuncReturn" type="xsd:string"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="return" type="xsd:string"/></message>'.
                 '</definitions>';
         $this->assertEquals($wsdl, $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()), "Bad WSDL generated");
         $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
@@ -330,7 +335,6 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $scriptUri = 'http://localhost/my_script.php';
 
         $server = new Zend_Soap_AutoDiscover();
-        $server->setResponseMessageReturnNameCompability(true);
         $server->addFunction('Zend_Soap_AutoDiscover_TestFunc');
         $dom = new DOMDocument();
         ob_start();
@@ -436,20 +440,20 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
                 '</port>'.
                 '</service>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFuncRequest"><part name="who" type="xsd:string"/></message>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="Zend_Soap_AutoDiscover_TestFuncReturn" type="xsd:string"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFuncResponse"><part name="return" type="xsd:string"/></message>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc2Request"/>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc3Request"/>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFunc3Response"><part name="Zend_Soap_AutoDiscover_TestFunc3Return" type="xsd:boolean"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFunc3Response"><part name="return" type="xsd:boolean"/></message>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc4Request"/>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFunc4Response"><part name="Zend_Soap_AutoDiscover_TestFunc4Return" type="xsd:boolean"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFunc4Response"><part name="return" type="xsd:boolean"/></message>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc5Request"/>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFunc5Response"><part name="Zend_Soap_AutoDiscover_TestFunc5Return" type="xsd:int"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFunc5Response"><part name="return" type="xsd:int"/></message>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc6Request"/>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFunc6Response"><part name="Zend_Soap_AutoDiscover_TestFunc6Return" type="xsd:string"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFunc6Response"><part name="return" type="xsd:string"/></message>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc7Request"/>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFunc7Response"><part name="Zend_Soap_AutoDiscover_TestFunc7Return" type="soap-enc:Array"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFunc7Response"><part name="return" type="soap-enc:Array"/></message>'.
                 '<message name="Zend_Soap_AutoDiscover_TestFunc9Request"><part name="foo" type="xsd:string"/><part name="bar" type="xsd:string"/></message>'.
-                '<message name="Zend_Soap_AutoDiscover_TestFunc9Response"><part name="Zend_Soap_AutoDiscover_TestFunc9Return" type="xsd:string"/></message>'.
+                '<message name="Zend_Soap_AutoDiscover_TestFunc9Response"><part name="return" type="xsd:string"/></message>'.
                 '</definitions>';
         $this->assertEquals($wsdl, $this->sanatizeWsdlXmlOutputForOsCompability($dom->saveXML()), "Bad WSDL generated");
         $this->assertTrue($dom->schemaValidate(dirname(__FILE__) .'/schemas/wsdl.xsd'), "WSDL Did not validate");
@@ -759,208 +763,5 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, substr_count($wsdl, '<xsd:complexType name="ArrayOfArrayOfArrayOfString">'));
 
         $this->assertEquals(0, substr_count($wsdl, 'tns:string[]'));
-    }
-}
-
-/* Test Functions */
-
-/**
- * Test Function
- *
- * @param string $arg
- * @return string
- */
-function Zend_Soap_AutoDiscover_TestFunc($who)
-{
-    return "Hello $who";
-}
-
-/**
- * Test Function 2
- */
-function Zend_Soap_AutoDiscover_TestFunc2()
-{
-    return "Hello World";
-}
-
-/**
- * Return false
- *
- * @return bool
- */
-function Zend_Soap_AutoDiscover_TestFunc3()
-{
-    return false;
-}
-
-/**
- * Return true
- *
- * @return bool
- */
-function Zend_Soap_AutoDiscover_TestFunc4()
-{
-    return true;
-}
-
-/**
- * Return integer
- *
- * @return int
- */
-function Zend_Soap_AutoDiscover_TestFunc5()
-{
-    return 123;
-}
-
-/**
- * Return string
- *
- * @return string
- */
-function Zend_Soap_AutoDiscover_TestFunc6()
-{
-    return "string";
-}
-
-/**
- * Return array
- *
- * @return array
- */
-function Zend_Soap_AutoDiscover_TestFunc7()
-{
-    return array('foo' => 'bar', 'baz' => true, 1 => false, 'bat' => 123);
-}
-
-/**
- * Return Object
- *
- * @return StdClass
- */
-function Zend_Soap_AutoDiscover_TestFunc8()
-{
-    $return = (object) array('foo' => 'bar', 'baz' => true, 'bat' => 123, 'qux' => false);
-    return $return;
-}
-
-/**
- * Multiple Args
- *
- * @param string $foo
- * @param string $bar
- * @return string
- */
-function Zend_Soap_AutoDiscover_TestFunc9($foo, $bar)
-{
-    return "$foo $bar";
-}
-
-class Zend_Soap_AutoDiscover_TestFixingMultiplePrototypes
-{
-    /**
-     * Test function
-     *
-     * @param integer $a
-     * @param integer $b
-     * @param integer $d
-     * @return integer
-     */
-    function testFunc($a=100, $b=200, $d=300)
-    {
-
-    }
-}
-
-/**
- * Test Class
- */
-class Zend_Soap_AutoDiscover_Test {
-    /**
-     * Test Function 1
-     *
-     * @return string
-     */
-    function testFunc1()
-    {
-        return "Hello World";
-    }
-
-    /**
-     * Test Function 2
-     *
-     * @param string $who Some Arg
-     * @return string
-     */
-    function testFunc2($who)
-    {
-        return "Hello $who!";
-    }
-
-    /**
-     * Test Function 3
-     *
-     * @param string $who Some Arg
-     * @param int $when Some
-     * @return string
-     */
-    function testFunc3($who, $when)
-    {
-        return "Hello $who, How are you $when";
-    }
-
-    /**
-     * Test Function 4
-     *
-     * @return string
-     */
-    static function testFunc4()
-    {
-        return "I'm Static!";
-    }
-}
-
-class Zend_Soap_AutoDiscoverTestClass1
-{
-    /**
-     * @var integer $var
-     */
-    public $var = 1;
-
-    /**
-     * @var string $param
-     */
-    public $param = "hello";
-}
-
-class Zend_Soap_AutoDiscoverTestClass2
-{
-    /**
-     *
-     * @param Zend_Soap_AutoDiscoverTestClass1 $test
-     * @return boolean
-     */
-    public function add(Zend_Soap_AutoDiscoverTestClass1 $test)
-    {
-        return true;
-    }
-
-    /**
-     * @return Zend_Soap_AutoDiscoverTestClass1[]
-     */
-    public function fetchAll()
-    {
-        return array(
-            new Zend_Soap_AutoDiscoverTestClass1(),
-            new Zend_Soap_AutoDiscoverTestClass1(),
-        );
-    }
-
-    /**
-     * @param Zend_Soap_AutoDiscoverTestClass1[]
-     */
-    public function addMultiple($test)
-    {
-        
     }
 }
