@@ -766,8 +766,8 @@ public function __call($method, $args)
                 <code>Zend_Controller_RewriteRouter::setRewriteBase()</code>.
                 Вместо него используйте
                 <code>Zend_Controller_Front::setBaseUrl()</code> (или
-                Zend_Controller_Request_Http::setBaseUrl(), если используется
-                класс запроса).
+                <code>Zend_Controller_Request_Http::setBaseUrl()</code>,
+                если используется класс запроса).
             </para></listitem>
 
             <listitem><para>

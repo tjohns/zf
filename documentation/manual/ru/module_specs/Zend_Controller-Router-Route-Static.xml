@@ -24,6 +24,43 @@ $router->addRoute('login', $route);
         <code>AuthController::loginAction()</code>.
     </para>
 
+    <note id="zend.controller.router.routes.static.warning">
+        <title>Предупреждение: статические маршруты должны содержать все необходимые значения по умолчанию</title>
+
+        <para>
+            Поскольку статический маршрут не передает части URL в качестве
+            параметров объекту запроса, то вы <emphasis>должны</emphasis>
+            передавать все параметры, необходимые для адресации запроса,
+            в качестве значений по умолчанию. Пропуск значений "controller" или
+            "action" приведет к неожиданным результатам,
+            и, скорее всего, сделает невозможой адресацию запроса.
+        </para>
+
+        <para>
+            Правило большого пальца: всегда предоставляйте следующие значения
+            по умолчанию:
+        </para>
+
+        <itemizedlist>
+            <listitem><para>controller</para></listitem>
+            <listitem><para>action</para></listitem>
+            <listitem><para>module (если нет модуля, используемого по умолчанию)</para></listitem>
+        </itemizedlist>
+
+        <para>
+            Вы можете также передавать параметр "useDefaultControllerAlways"
+            фронт-контроллеру в процессе загрузки:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front->setParam('useDefaultControllerAlways', true);
+]]></programlisting>
+
+        <para>
+            Однако это всего лишь обходной прием, всегда лучше явным
+            образом указывать для маршрута значения по умолчанию.
+        </para>
+    </note>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:

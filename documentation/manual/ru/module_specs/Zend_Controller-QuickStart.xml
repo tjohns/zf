@@ -36,7 +36,7 @@
         </para>
 
         <sect3 id="zend.controller.quickstart.go.directory">
-            <title>Создайте свою файловую структуру</title>
+            <title>Создайте файловую структуру</title>
 
             <para>
                 Первый шаг состоит в том, чтобы создать файловую
@@ -89,9 +89,42 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 ]]>
             </programlisting>
+            
+            <para>
+                Если у вас IIS 7.0, то используйте следующую
+                конфигурацию перезаписи:
+            </para>
+
+            <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}"
+                             matchType="IsFile" pattern=""
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}"
+                             matchType="IsDirectory"
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
 
             <para>
-                Этим правила перезаписи соотвественно направляют запросы к
+                Эти правила перезаписи пропускают запросы к
                 существующим ресурсам (существующие символьные
                 ссылки, непустые файлы и директории), все остальные запросы
                 перенаправляются к фронт-контроллеру.
@@ -108,7 +141,7 @@ RewriteRule ^.*$ index.php [NC,L]
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.bootstrap">
-            <title>Создайте свой файл загрузки</title>
+            <title>Создайте файл загрузки</title>
 
             <para>
                 Файл загрузки - это страница, на которую направляются все
@@ -209,7 +242,7 @@ class IndexController extends Zend_Controller_Action
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.view">
-            <title>Создайте свой скрипт вида</title>
+            <title>Создайте скрипт вида</title>
 
             <para>
                 Как было упомянуто в <link linkend="zend.controller.quickstart.go.controller">предыдущем
@@ -238,7 +271,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
         </sect3>
 
         <sect3 id="zend.controller.quickstart.go.errorhandler">
-            <title>Создайте свой контроллер ошибок<!--Create your error controller--></title>
+            <title>Создайте контроллер ошибок</title>
 
             <para>
                 По умолчанию зарегистрирован <link
@@ -303,8 +336,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
             </itemizedlist>
 
             <para>
-                Теперь вы можете начать создавать другие контроллеры и методы
-                действий. Поздравляем!
+                Теперь вы можете приступить к созданию других контроллеров и
+                методы действий. Поздравляем!
             </para>
         </sect3>
     </sect2>

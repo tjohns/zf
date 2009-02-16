@@ -20,7 +20,7 @@
         <para>
             <code>Zend_Controller_Router_Rewrite</code> спроектирован для
             того, чтобы обеспечить функциональность, подобную mod_rewrite,
-            с использованием чистого php. Он отчасти основан на маршрутизации,
+            с использованием чистого PHP. Он отчасти основан на маршрутизации,
             используемой в Ruby on Rails и не требует каких-либо предварительных
             знаний о перезаписи URL веб-сервером. Он спроектирован для работы с
             единственным правилом mod_rewrite, пример которого приведен
@@ -48,7 +48,8 @@ RewriteRule ^.*$ index.php [NC,L]
         </programlisting>
 
         <para>
-            Rewrite Router может также использоваться с веб-сервером IIS, если
+            Rewrite Router может также использоваться с веб-сервером IIS версии
+            7.0 и ниже, если
             <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
             был установлен как расширение Isapi со следующими правилами
             перезаписи:
@@ -70,6 +71,39 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css|html)$)[\w\%]*$)? /index.
                 значение которого устанавливается расширением Isapi_Rewrite.
             </para>
         </note>
+
+        <para>
+            IIS 7.0 имеет свой собственный модуль перезаписи URL,
+            и он может быть сконфигурирован следующим образом:
+        </para>
+
+        <programlisting role="xml"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+     <system.webServer>
+         <rewrite>
+             <rules>
+                 <rule name="Imported Rule 1" stopProcessing="true">
+                     <match url="^.*$" />
+                     <conditions logicalGrouping="MatchAny">
+                         <add input="{REQUEST_FILENAME}"
+                             matchType="IsFile" pattern=""
+                             ignoreCase="false" />
+                         <add input="{REQUEST_FILENAME}"
+                             matchType="IsDirectory"
+                             pattern="" ignoreCase="false" />
+                     </conditions>
+                     <action type="None" />
+                 </rule>
+                 <rule name="Imported Rule 2" stopProcessing="true">
+                     <match url="^.*$" />
+                     <action type="Rewrite" url="index.php" />
+                 </rule>
+             </rules>
+         </rewrite>
+     </system.webServer>
+</configuration>
+]]></programlisting>
 
         <para>
             Если используется Lighttpd, то корректным будет следующее
@@ -169,7 +203,7 @@ $router->addRoute('user',
         <note>
             <para>
                 Наиболее часто имя маршрута используется через хелпер
-                Zend_View для URL:
+                <code>Zend_View</code> для URL:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -192,6 +226,14 @@ $router->addRoute('user',
             <code>Zend_Controller_Request</code> для дальнейшего использования в
             диспетчере и пользовательских контроллерах. Если соответствие не
             найдено, то проверяется следующий маршрут в цепочке.
+        </para>
+
+        <para>
+            Если нужно определить выбранный маршрут,
+            то можно использовать метод <code>getCurrentRouteName()</code>,
+            он возвращает идентификатор, который использовался при регистрации
+            маршрута в маршрутизаторе. Если требуется получить объект,
+            то используйте <code>getCurrentRoute()</code>.
         </para>
 
         <note>
@@ -217,8 +259,9 @@ $router->addRoute('user',
         <para>
             Есть три специальные переменные, которые могут использоваться в
             маршрутах: 'module', 'controller' и 'action'. Эти
-            переменные используются диспетчером Zend_Controller_Dispatcher для
-            нахождения контроллера и действия, которым передается управление.
+            переменные используются диспетчером <code>Zend_Controller_Dispatcher</code>
+            для нахождения контроллера и действия, которым передается
+            управление.
         </para>
 
         <note>
@@ -382,13 +425,13 @@ $router->setGlobalParam('lang', 'en');
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">
-        <title>Использование Zend_Config вместе с RewriteRouter</title>
+        <title>Использование <code>Zend_Config</code> вместе с RewriteRouter</title>
 
         <para>
             Иногда может быть более удобным обновлять конфигурационный файл
             с новыми маршрутами, чем изменять код. Это возможно благодаря методу
             <code>addConfig()</code>. В сущности, вы создаете конфигурацию,
-            совместимую с Zend_Config, считываете ее в своем коде и
+            совместимую с <code>Zend_Config</code>, считываете ее в своем коде и
             передаете RewriteRouter.
         </para>
 

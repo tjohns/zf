@@ -23,7 +23,7 @@
     </sect2>
 
     <sect2 id="zend.controller.exceptions.handling">
-        <title>Как можно обрабатывать исключения?</title>
+        <title>Обработка исключений</title>
 
         <para>
             В компоненты MVC уже встроено несколько механизмов, дающих
