@@ -515,7 +515,7 @@ class Zend_Form_Element_FileTest_MockAdapter extends Zend_File_Transfer_Adapter_
         return true;
     }
 
-    public function getProgress()
+    public static function getProgress()
     {
         return;
     }

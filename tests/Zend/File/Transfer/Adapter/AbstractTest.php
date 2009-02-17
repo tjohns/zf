@@ -293,12 +293,9 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->adapter->isValid('foo'));
     }
 
-    /**
-     * @expectedException Zend_File_Transfer_Exception
-     */
     public function testValidationShouldThrowExceptionForNonexistentFile()
     {
-        $this->adapter->isValid('bogus');
+        $this->assertFalse($this->adapter->isValid('bogus'));
     }
 
     public function testErrorMessagesShouldBeEmptyByDefault()
@@ -785,7 +782,7 @@ class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Tran
         return true;
     }
 
-    public function getProgress()
+    public static function getProgress()
     {
         return;
     }

@@ -111,9 +111,9 @@ class Zend_Form_Decorator_File
             $markup[] = $view->formHidden('MAX_FILE_SIZE', $size);
         }
 
-        if (is_callable(Zend_File_Transfer_Adapter_Http::$_callbackApc) && Zend_File_Transfer_Adapter_Http::isApcAvailable()) {
+        if (Zend_File_Transfer_Adapter_Http::isApcAvailable()) {
             $markup[] = $view->formHidden('APC_UPLOAD_PROGRESS', uniqid(), array('id' => 'progress_key'));
-        } else if (is_callable(Zend_File_Transfer_Adapter_Http::$_callbackApc)) {
+        } else if (Zend_File_Transfer_Adapter_Http::isUploadProgressAvailable()) {
             $markup[] = $view->formHidden('UPLOAD_PROGRESS', uniqid(), array('id' => 'progress_key'));
         }
 

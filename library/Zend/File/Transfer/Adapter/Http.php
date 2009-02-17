@@ -253,9 +253,9 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
         }
 
         if ($id !== null) {
-            if (is_callable(self::$_callbackApc) && self::isApcAvailable()) {
+            if (self::isApcAvailable()) {
                 $status = call_user_func(self::$_callbackApc, 'upload_' . $id);
-            } else if (is_callable(self::$_callbackUploadProgress)) {
+            } else if (self::isUploadProgressAvailable()) {
                 $status = call_user_func(self::$_callbackUploadProgress, $id);
                 $status['total']   = $status['bytes_total'];
                 $status['current'] = $status['bytes_uploaded'];
@@ -275,13 +275,23 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     }
 
     /**
-     * Checks the APC ini settings
+     * Checks the APC extension for progress information
      *
      * @return boolean
      */
     public static function isApcAvailable()
     {
-        return (bool) ini_get('apc.enabled') && (bool) ini_get('apc.rfc1867');
+        return (bool) ini_get('apc.enabled') && (bool) ini_get('apc.rfc1867') && is_callable(self::$_callbackApc);
+    }
+
+    /**
+     * Checks the UploadProgress extension for progress information
+     *
+     * @return boolean
+     */
+    public static function isUploadProgressAvailable()
+    {
+        return is_callable(self::$_callbackUploadProgress);
     }
 
     /**
