@@ -108,7 +108,7 @@ unset($pdf->pages[$templatePageIndex]);
 
         <caution>
             <para>
-                Important! Cloned page shares some PDF resources with a template page, so it can be used only withing the same document
+                Important! Cloned page shares some PDF resources with a template page, so it can be used only within the same document
                 as a template page. Modified document can be saved as new one.
             </para>
         </caution>
