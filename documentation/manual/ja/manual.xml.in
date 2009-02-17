@@ -499,6 +499,7 @@
         <xi:include href="module_specs/Zend_View-Scripts.xml" />
         <xi:include href="module_specs/Zend_View-Helpers.xml" parse="xml" />
         <xi:include href="module_specs/Zend_View-Abstract.xml" />
+        <xi:include href="module_specs/Zend_View-Migration.xml" />
     </chapter>
     <chapter id="zend.wildfire">
         <title>Zend_Wildfire</title>
