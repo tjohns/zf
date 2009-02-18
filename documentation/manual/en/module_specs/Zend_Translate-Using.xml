@@ -622,7 +622,7 @@ $translate->addTranslation('path/to/other.ini', 'it');
             <title>Using translation options</title>
             <programlisting role="php"><![CDATA[
 // define ':' as separator for the translation source files
-$options = array('separator' => ':');
+$options = array('delimiter' => ':');
 $translate = new Zend_Translate('csv',
                                 'path/to/mytranslation.csv',
                                 'de',
