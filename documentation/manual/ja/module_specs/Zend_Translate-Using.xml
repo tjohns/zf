@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13827 -->
+<!-- EN-Revision: 14104 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -636,7 +636,7 @@ $translate->addTranslation('path/to/other.ini', 'it');
             <title>翻訳オプションの使用</title>
             <programlisting role="php"><![CDATA[
 // ':' を、翻訳ソースファイルの区切り文字として指定します
-$options = array('separator' => ':');
+$options = array('delimiter' => ':');
 $translate = new Zend_Translate('csv',
                                 'path/to/mytranslation.csv',
                                 'de',
