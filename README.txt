@@ -1,12 +1,25 @@
-Welcome to Zend Framework 1.7.2! This is the second maintenance release in the 
+Welcome to Zend Framework 1.7.5! This is the fifth maintenance release in the 
 Zend Framework 1.7 series. This release maintains backwards compatibility
 with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.7.2 ([INSERT REV NUM HERE]).
-Released on 2008-12-23.
+Zend Framework 1.7.5
+Released on 2009-02-16.
+
+SECURITY ADVISORY
+-----------------
+
+The Zend Framework team has been notified of a potential Local File
+Inclusion (LFI) attack vector in Zend_View's render() method. To 
+address the issue, render() now no longer accepts paths that include 
+parent directory traversal (e.g., "../" and "..\") anywhere in the 
+passed path. This introduces a regression in behavior which can be
+addressed by turning of the lfiProtectionOn flag. For more
+information, see:
+
+http://framework.zend.com/manual/en/zend.view.migration.html
 
 SPECIAL NOTICE
 --------------
