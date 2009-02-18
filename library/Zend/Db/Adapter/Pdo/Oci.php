@@ -83,20 +83,22 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         // baseline of DSN parts
         $dsn = $this->_config;
 
-        $tns = 'dbname=(DESCRIPTION=';
         if (isset($dsn['host'])) {
-            $tns .= '(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=' . $dsn['host'] . ')';
+            $tns = 'dbname=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)' .
+                   '(HOST=' . $dsn['host'] . ')';
+
             if (isset($dsn['port'])) {
                 $tns .= '(PORT=' . $dsn['port'] . ')';
             } else {
                 $tns .= '(PORT=1521)';
             }
-            $tns .= '))';
-        }
-        $tns .= '(CONNECT_DATA=(SID=' . $dsn['dbname'] . ')))';
 
-        if (isset($dsn['charset']))
-        {
+            $tns .= '))(CONNECT_DATA=(SID=' . $dsn['dbname'] . ')))';
+        } else {
+            $tns = 'dbname=' . $dsn['dbname'];
+        }
+
+        if (isset($dsn['charset'])) {
             $tns .= ';charset=' . $dsn['charset'];
         }
 
