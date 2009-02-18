@@ -50,97 +50,70 @@ class Zend_Date extends Zend_Date_DateObject
     );
 
     // Class wide Date Constants
-    // day formats
-    const DAY            = 'dd';            // d - 2 digit day of month, 01-31
-    const DAY_SHORT      = 'd';      // j - 1,2 digit day of month, 1-31
-
-    const DAY_SUFFIX     = 'SS';     // S - english suffix day of month, st-th
-    const DAY_OF_YEAR    = 'D';    // z - Number of day of year
-
-    const WEEKDAY        = 'EEEE';        // l - full day name - locale aware, Monday - Sunday
-    const WEEKDAY_SHORT  = 'EEE';  // --- 3 letter day of week - locale aware, Mon-Sun
-    const WEEKDAY_NARROW = 'E'; // --- 1 letter day name - locale aware, M-S
-    const WEEKDAY_NAME   = 'EE';   // D - abbreviated day name, 1-3 letters - locale aware, Mon-Sun
-
-    const WEEKDAY_8601   = 'eee';   // N - digit weekday ISO 8601, 1-7 1 = monday, 7=sunday
-    const WEEKDAY_DIGIT  = 'e';  // w - weekday, 0-6 0=sunday, 6=saturday
-
-    // week formats
-    const WEEK           = 'ww';           // W - number of week ISO8601, 1-53
-
-    // month formats
-    const MONTH          = 'MM';          // m - 2 digit month, 01-12
-    const MONTH_SHORT    = 'M';    // n - 1 digit month, no leading zeros, 1-12
-
-    const MONTH_DAYS     = 'ddd';     // t - Number of days this month
-
-    const MONTH_NAME        = 'MMMM';         // F - full month name - locale aware, January-December
-    const MONTH_NAME_SHORT  = 'MMM';  // M - 3 letter monthname - locale aware, Jan-Dec
-    const MONTH_NAME_NARROW = 'MMMMM'; // --- 1 letter month name - locale aware, J-D
-
-    // year formats
-    const YEAR           = 'y';           // Y - 4 digit year
-    const YEAR_SHORT     = 'yy';     // y - 2 digit year, leading zeros 00-99
-
-    const YEAR_8601      = 'Y';      // o - number of year ISO8601
-    const YEAR_SHORT_8601= 'YY';// --- 2 digit number of year ISO8601
-
-    const LEAPYEAR       = 'l';       // L - is leapyear ?, 0-1
-
-    // time formats
-    const MERIDIEM       = 'a';       // A,a - AM/PM - locale aware, AM/PM
-    const SWATCH         = 'B';         // B - Swatch Internet Time
-
-    const HOUR           = 'HH';           // H - 2 digit hour, leading zeros, 00-23
-    const HOUR_SHORT     = 'H';     // G - 1 digit hour, no leading zero, 0-23
-
-    const HOUR_AM        = 'hh';        // h - 2 digit hour, leading zeros, 01-12 am/pm
-    const HOUR_SHORT_AM  = 'h';  // g - 1 digit hour, no leading zero, 1-12 am/pm
-
-    const MINUTE         = 'mm';         // i - 2 digit minute, leading zeros, 00-59
-    const MINUTE_SHORT   = 'm';   // --- 1 digit minute, no leading zero, 0-59
-
-    const SECOND         = 'ss';         // s - 2 digit second, leading zeros, 00-59
-    const SECOND_SHORT   = 's';   // --- 1 digit second, no leading zero, 0-59
-
-    const MILLISECOND    = 'S';    // --- milliseconds
-
-    // timezone formats
-    const TIMEZONE_NAME  = 'zzzz';  // e - timezone string
-    const DAYLIGHT       = 'I';       // I - is Daylight saving time ?, 0-1
-    const GMT_DIFF       = 'Z';       // O - GMT difference, -1200 +1200
-    const GMT_DIFF_SEP   = 'ZZZZ';   // P - seperated GMT diff, -12:00 +12:00
-    const TIMEZONE       = 'z';       // T - timezone, EST, GMT, MDT
-    const TIMEZONE_SECS  = 'X';  // Z - timezone offset in seconds, -43200 +43200
-
-    // date strings
-    const ISO_8601       = 'c';       // c - ISO 8601 date string
-    const RFC_2822       = 'r';       // r - RFC 2822 date string
-    const TIMESTAMP      = 'U';      // U - unix timestamp
-
-    // additional formats
-    const ERA            = 'G';            // --- short name of era, locale aware,
-    const ERA_NAME       = 'GGGG';       // --- full name of era, locale aware,
-    const ERA_NARROW     = 'GGGGG';      // --- 1 letter name of era, locale aware
-    const DATES          = 'F';          // --- standard date, locale aware
-    const DATE_FULL      = 'FFFFF';      // --- full date, locale aware
-    const DATE_LONG      = 'FFFF';      // --- long date, locale aware
-    const DATE_MEDIUM    = 'FFF';    // --- medium date, locale aware
-    const DATE_SHORT     = 'FF';     // --- short date, locale aware
-    const TIMES          = 'WW';          // --- standard time, locale aware
-    const TIME_FULL      = 'TTTTT';      // --- full time, locale aware
-    const TIME_LONG      = 'TTTT';      // --- long time, locale aware
-    const TIME_MEDIUM    = 'TTT';    // --- medium time, locale aware
-    const TIME_SHORT     = 'TT';     // --- short time, locale aware
-    const ATOM           = 'OOO';           // --- DATE_ATOM
-    const COOKIE         = 'CCC';         // --- DATE_COOKIE
-    const RFC_822        = 'R';        // --- DATE_RFC822
-    const RFC_850        = 'RR';        // --- DATE_RFC850
-    const RFC_1036       = 'RRR';       // --- DATE_RFC1036
-    const RFC_1123       = 'RRRR';       // --- DATE_RFC1123
-    const RFC_3339       = 'RRRRR';       // --- DATE_RFC3339
-    const RSS            = 'SSS';            // --- DATE_RSS
-    const W3C            = 'WWW';            // --- DATE_W3C
+    const DAY               = 'dd';
+    const DAY_SHORT         = 'd';
+    const DAY_SUFFIX        = 'SS';
+    const DAY_OF_YEAR       = 'D';
+    const WEEKDAY           = 'EEEE';
+    const WEEKDAY_SHORT     = 'EEE';
+    const WEEKDAY_NARROW    = 'E';
+    const WEEKDAY_NAME      = 'EE';
+    const WEEKDAY_8601      = 'eee';
+    const WEEKDAY_DIGIT     = 'e';
+    const WEEK              = 'ww';
+    const MONTH             = 'MM';
+    const MONTH_SHORT       = 'M';
+    const MONTH_DAYS        = 'ddd';
+    const MONTH_NAME        = 'MMMM';
+    const MONTH_NAME_SHORT  = 'MMM';
+    const MONTH_NAME_NARROW = 'MMMMM';
+    const YEAR              = 'y';
+    const YEAR_SHORT        = 'yy';
+    const YEAR_8601         = 'Y';
+    const YEAR_SHORT_8601   = 'YY';
+    const LEAPYEAR          = 'l';
+    const MERIDIEM          = 'a';
+    const SWATCH            = 'B';
+    const HOUR              = 'HH';
+    const HOUR_SHORT        = 'H';
+    const HOUR_AM           = 'hh';
+    const HOUR_SHORT_AM     = 'h';
+    const MINUTE            = 'mm';
+    const MINUTE_SHORT      = 'm';
+    const SECOND            = 'ss';
+    const SECOND_SHORT      = 's';
+    const MILLISECOND       = 'S';
+    const TIMEZONE_NAME     = 'zzzz';
+    const DAYLIGHT          = 'I';
+    const GMT_DIFF          = 'Z';
+    const GMT_DIFF_SEP      = 'ZZZZ';
+    const TIMEZONE          = 'z';
+    const TIMEZONE_SECS     = 'X';
+    const ISO_8601          = 'c';
+    const RFC_2822          = 'r';
+    const TIMESTAMP         = 'U';
+    const ERA               = 'G';
+    const ERA_NAME          = 'GGGG';
+    const ERA_NARROW        = 'GGGGG';
+    const DATES             = 'F';
+    const DATE_FULL         = 'FFFFF';
+    const DATE_LONG         = 'FFFF';
+    const DATE_MEDIUM       = 'FFF';
+    const DATE_SHORT        = 'FF';
+    const TIMES             = 'WW';
+    const TIME_FULL         = 'TTTTT';
+    const TIME_LONG         = 'TTTT';
+    const TIME_MEDIUM       = 'TTT';
+    const TIME_SHORT        = 'TT';
+    const ATOM              = 'OOO';
+    const COOKIE            = 'CCC';
+    const RFC_822           = 'R';
+    const RFC_850           = 'RR';
+    const RFC_1036          = 'RRR';
+    const RFC_1123          = 'RRRR';
+    const RFC_3339          = 'RRRRR';
+    const RSS               = 'SSS';
+    const W3C               = 'WWW';
 
     /**
      * Generates the standard date object, could be a unix timestamp, localized date,
