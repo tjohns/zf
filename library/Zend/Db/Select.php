@@ -1233,7 +1233,7 @@ class Zend_Db_Select
             trigger_error($e->getMessage(), E_USER_WARNING);
             $sql = '';
         }
-        return $sql;
+        return (string)$sql;
     }
 
 }
