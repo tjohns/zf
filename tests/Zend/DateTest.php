@@ -5217,6 +5217,53 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(10, $date->toString('d'));
         $this->assertEquals( 2, $date->toString('M'));
     }
+
+    /**
+     * Test for False Month Addition
+     */
+    public function testGmtOffsetValues()
+    {
+        date_default_timezone_set('Pacific/Auckland');
+        $time  = time();
+        $date  = new Zend_Date($time);
+        $stamp = $date->getGmtOffset();
+
+        $localtime = localtime($time, true);
+        $offset = mktime($localtime['tm_hour'],
+                         $localtime['tm_min'],
+                         $localtime['tm_sec'],
+                         $localtime['tm_mon'] + 1,
+                         $localtime['tm_mday'],
+                         $localtime['tm_year'] + 1900)
+              - gmmktime($localtime['tm_hour'],
+                         $localtime['tm_min'],
+                         $localtime['tm_sec'],
+                         $localtime['tm_mon'] + 1,
+                         $localtime['tm_mday'],
+                         $localtime['tm_year'] + 1900);
+
+        $this->assertEquals($stamp, $offset);
+
+        $date->addMonth(6);
+        $stamp = $date->getGmtOffset();
+
+
+        $localtime = localtime($time, true);
+        $offset = mktime($localtime['tm_hour'],
+                         $localtime['tm_min'],
+                         $localtime['tm_sec'],
+                         $localtime['tm_mon'] + 7,
+                         $localtime['tm_mday'],
+                         $localtime['tm_year'] + 1900)
+              - gmmktime($localtime['tm_hour'],
+                         $localtime['tm_min'],
+                         $localtime['tm_sec'],
+                         $localtime['tm_mon'] + 7,
+                         $localtime['tm_mday'],
+                         $localtime['tm_year'] + 1900);
+
+        $this->assertEquals($stamp, $offset);
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date
