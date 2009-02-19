@@ -175,18 +175,34 @@ class Zend_Date extends Zend_Date_DateObject
 
         // set datepart
         if (($part !== null && $part !== self::TIMESTAMP) or (!is_numeric($date))) {
+print "\n1:".$this->getIso();
             // switch off dst handling for value setting
             $this->setUnixTimestamp($this->getGmtOffset());
+print "\n2:".$this->getIso();
             $this->set($date, $part, $this->_locale);
+print "\n3:".$this->getIso();
 
             // DST fix
             if ((is_array($date) === true) and (isset($date['hour']) === true)) {
                 $hour = $this->toString('H');
                 $hour = $date['hour'] - $hour;
-                if (($hour == 1) ||($hour == -23)) {
-                    $this->addTimestamp(3600);
-                } else if (($hour == 23) ||($hour == -1)) {
-                    $this->subTimestamp(3600);
+                switch ($hour) {
+                    case 1 :
+                    case -23 :
+                        $this->addTimestamp(3600);
+                        break;
+                    case -1 :
+                    case 23 :
+                        $this->subTimestamp(3600);
+                        break;
+                    case 2 :
+                    case -22 :
+                        $this->addTimestamp(7200);
+                        break;
+                    case -2 :
+                    case 22 :
+                        $this->subTimestamp(7200);
+                        break;
                 }
             }
         } else {
