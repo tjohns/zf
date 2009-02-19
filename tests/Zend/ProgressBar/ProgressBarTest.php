@@ -74,12 +74,12 @@ class Zend_ProgressBar_ProgressBarTest extends PHPUnit_Framework_TestCase
     {
         $progressBar = $this->_getProgressBar(0, 100, 'foobar');
         $progressBar->update(25);
-        
+
         $progressBar = $this->_getProgressBar(0, 100, 'foobar');
         $progressBar->update();
         $this->assertEquals(25, $progressBar->getCurrent());
     }
-    
+
     public function testDefaultPercentage()
     {
         $progressBar = $this->_getProgressBar(0, 100);
@@ -132,6 +132,23 @@ class Zend_ProgressBar_ProgressBarTest extends PHPUnit_Framework_TestCase
         $progressBar->update(0);
 
         $this->assertEquals(null, $progressBar->getTimeRemaining());
+    }
+
+    public function testCurrentArrayHandling()
+    {
+        $progressBar = $this->_getProgressBar(0, 100);
+        $progressBar->update(array('current' => 20));
+
+        $this->assertEquals(.20, $progressBar->getCurrent());
+    }
+
+    public function testCompleteArrayHandling()
+    {
+        $progressBar = $this->_getProgressBar();
+        $progressBar->update(array('current' => 250, 'total' => 1400, 'rate' => 12500, 'cancel_upload' => 0, 'done' => 0, 'message' => 'Uploaded 250 of 1400 bytes'));
+
+        $this->assertEquals(1400, $progressBar->getMax());
+        $this->assertEquals('Uploaded 250 of 1400 bytes', $progressBar->getText());
     }
 
     protected function _getProgressBar($min, $max, $persistenceNamespace = null)
