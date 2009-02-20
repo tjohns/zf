@@ -55,7 +55,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
      * Date format for 'since' strings
      * @var string
      */
-    protected $_dateFormat = 'D, d M Y H:i:s e';
+    protected $_dateFormat = 'D, d M Y H:i:s T';
 
     /**
      * Username
