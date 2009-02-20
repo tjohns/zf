@@ -175,12 +175,9 @@ class Zend_Date extends Zend_Date_DateObject
 
         // set datepart
         if (($part !== null && $part !== self::TIMESTAMP) or (!is_numeric($date))) {
-print "\n1:".$this->getIso();
             // switch off dst handling for value setting
             $this->setUnixTimestamp($this->getGmtOffset());
-print "\n2:".$this->getIso();
             $this->set($date, $part, $this->_locale);
-print "\n3:".$this->getIso();
 
             // DST fix
             if ((is_array($date) === true) and (isset($date['hour']) === true)) {
@@ -4377,6 +4374,7 @@ print "\n3:".$this->getIso();
             $format = Zend_Locale_Format::convertPhpToIsoFormat($format);
         }
 
+        $format = self::_getLocalizedToken($format, $locale);
         try {
             $parsed = Zend_Locale_Format::getDate($date, array('locale' => $locale,
                                                   'date_format' => $format, 'format_type' => 'iso',
@@ -4485,4 +4483,69 @@ print "\n3:".$this->getIso();
         return true;
     }
 
+    /**
+     * Returns the ISO Token for all localized constants
+     *
+     * @param string $token Token to normalize
+     * @param string $locale Locale to search
+     * @return string
+     */
+    protected static function _getLocalizedToken($token, $locale)
+    {
+        switch($token) {
+            case self::ISO_8601 :
+                return "dd mm yy";
+                break;
+            case self::RFC_2822 :
+                return "EEE, dd MMM yyyy HH:mm:ss";
+                break;
+            case self::DATES :
+                return Zend_Locale_Data::getContent($locale, 'date');
+                break;
+            case self::DATE_FULL :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'full'));
+                break;
+            case self::DATE_LONG :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'long'));
+                break;
+            case self::DATE_MEDIUM :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'medium'));
+                break;
+            case self::DATE_SHORT :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'short'));
+                break;
+            case self::TIMES :
+                return Zend_Locale_Data::getContent($locale, 'date');
+                break;
+            case self::TIME_FULL :
+                return Zend_Locale_Data::getContent($locale, 'time', array('gregorian', 'full'));
+                break;
+            case self::TIME_LONG :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'long'));
+                break;
+            case self::TIME_MEDIUM :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'medium'));
+                break;
+            case self::TIME_SHORT :
+                return Zend_Locale_Data::getContent($locale, 'date', array('gregorian', 'short'));
+                break;
+            case self::ATOM :
+            case self::RFC_3339 :
+            case self::W3C :
+                return "yyyy-MM-DD HH:mm:ss";
+                break;
+            case self::COOKIE :
+            case self::RFC_850 :
+                return "EEEE, dd-MM-yyyy HH:mm:ss";
+                break;
+            case self::RFC_822 :
+            case self::RFC_1036 :
+            case self::RFC_1123 :
+            case self::RSS :
+                return "EEE, dd MM yyyy HH:mm:ss";
+                break;
+        }
+
+        return $token;
+    }
 }

@@ -5265,6 +5265,15 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($stamp, $offset);
     }
+
+    public function testIsDateWithConstants()
+    {
+        $this->assertTrue(Zend_Date::isDate('2009-02-13T23:31:30+00:00', Zend_Date::W3C, 'de_AT'));
+
+        $date = new Zend_Date();
+        $string = $date->toString(Zend_Date::DATES);
+        $this->assertTrue(Zend_Date::isDate($string, Zend_Date::DATES));
+    }
 }
 
 class Zend_Date_TestHelper extends Zend_Date
