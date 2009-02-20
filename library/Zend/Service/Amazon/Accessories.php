@@ -32,6 +32,16 @@
 class Zend_Service_Amazon_Accessories
 {
     /**
+     * @var string
+     */
+    public $ASIN;
+
+    /**
+     * @var string
+     */
+    public $Title;
+
+    /**
      * Assigns values to properties relevant to Accessories
      *
      * @param  DOMElement $dom

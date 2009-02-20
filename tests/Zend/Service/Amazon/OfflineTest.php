@@ -31,6 +31,10 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
  * @see Zend_Service_Amazon
  */
 require_once 'Zend/Service/Amazon.php';
+/**
+ * @see Zend_Service_Amazon_ResultSet
+ */
+require_once 'Zend/Service/Amazon/ResultSet.php';
 
 /**
  * @see Zend_Http_Client_Adapter_Socket
@@ -90,6 +94,36 @@ class Zend_Service_Amazon_OfflineTest extends PHPUnit_Framework_TestCase
             $this->fail('Expected Zend_Service_Exception not thrown');
         } catch (Zend_Service_Exception $e) {
             $this->assertContains('Unknown country code', $e->getMessage());
+        }
+    }
+
+    /**
+     * @group ZF-2056
+     */
+    public function testMozardSearchFromFile()
+    {
+        $xml = file_get_contents(dirname(__FILE__)."/_files/mozart_result.xml");
+        $dom = new DOMDocument();
+        $dom->loadXML($xml);
+
+        $mozartTracks = array(
+            'B00005A8JZ' => '29',
+            'B0000058HV' => '25',
+            'B000BLI3K2' => '500',
+            'B00004X0QF' => '9',
+            'B000004194' => '19',
+            'B00000I9M0' => '9',
+            'B000004166' => '20',
+            'B00002DEH1' => '58',
+            'B0000041EV' => '12',
+            'B00004SA87' => '42',
+        );
+
+        $result = new Zend_Service_Amazon_ResultSet($dom);
+
+        foreach($result AS $item) {
+            $trackCount = $mozartTracks[$item->ASIN];
+            $this->assertEquals($trackCount, count($item->Tracks));
         }
     }
 }

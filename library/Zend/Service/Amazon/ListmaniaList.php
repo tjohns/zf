@@ -32,6 +32,16 @@
 class Zend_Service_Amazon_ListmaniaList
 {
     /**
+     * @var string
+     */
+    public $ListId;
+
+    /**
+     * @var string
+     */
+    public $ListName;
+
+    /**
      * Assigns values to properties relevant to ListmaniaList
      *
      * @param  DOMElement $dom

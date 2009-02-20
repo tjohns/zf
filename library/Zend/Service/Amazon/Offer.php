@@ -32,6 +32,46 @@
 class Zend_Service_Amazon_Offer
 {
     /**
+     * @var string
+     */
+    public $MerchantId;
+
+    /**
+     * @var string
+     */
+    public $GlancePage;
+
+    /**
+     * @var string
+     */
+    public $Condition;
+
+    /**
+     * @var string
+     */
+    public $OfferListingId;
+
+    /**
+     * @var string
+     */
+    public $Price;
+
+    /**
+     * @var string
+     */
+    public $CurrentyCode;
+
+    /**
+     * @var string
+     */
+    public $Availability;
+
+    /**
+     * @var boolean
+     */
+    public $IsEligibleForSuperSaverShipping = false;
+
+    /**
      * Parse the given Offer element
      *
      * @param  DOMElement $dom
@@ -47,7 +87,10 @@ class Zend_Service_Amazon_Offer
         $this->OfferListingId = (string) $xpath->query('./az:OfferListing/az:OfferListingId/text()', $dom)->item(0)->data;
         $this->Price = (int) $xpath->query('./az:OfferListing/az:Price/az:Amount/text()', $dom)->item(0)->data;
         $this->CurrencyCode = (string) $xpath->query('./az:OfferListing/az:Price/az:CurrencyCode/text()', $dom)->item(0)->data;
-        $this->Availability = (string) $xpath->query('./az:OfferListing/az:Availability/text()', $dom)->item(0)->data;
+        $availability = $xpath->query('./az:OfferListing/az:Availability/text()', $dom)->item(0);
+        if($availability instanceof DOMText) {
+            $this->Availability = (string) $availability->data;
+        }
         $result = $xpath->query('./az:OfferListing/az:IsEligibleForSuperSaverShipping/text()', $dom);
         if ($result->length >= 1) {
             $this->IsEligibleForSuperSaverShipping = (bool) $result->item(0)->data;
