@@ -63,8 +63,8 @@ $translate = new Zend_Translate('gettext',
 print $translate->_("Exemple")."\n";
 print "=======\n";
 print $translate->_("Ceci la ligne une")."\n";
-]]></programlisting>Certaines chaînes ne sont pas nécessairement traduites. La ligne séparatrice est toujours la même
-    ligne séparatrice, même dans d'autres langues.</para>
+]]></programlisting>Certaines chaînes ne sont pas nécessairement traduites. La ligne séparatrice est toujours la même,
+ même dans d'autres langues.</para>
 
     <para>Avoir des valeurs de données intégrées dans une chaîne de traduction est également supporté par l'utilisation
     des paramètres inclus. <programlisting role="php"><![CDATA[
@@ -84,13 +84,13 @@ print "=======\n";
 print $translate->_(2)."\n";
 ]]></programlisting>Mais faire ceci a plusieurs inconvénients :</para>
 
-    <para>Vous ne pouvez pas voir ce que votre code devrait afficher juste en regardant votre code.</para>
+    <para>Vous ne pouvez pas voir ce que votre code devrait afficher juste en lisant celui-ci.</para>
 
     <para>En outre vous obtiendrez des problèmes si certaines chaînes ne sont pas traduites. Vous devez toujours
     imaginer comment la traduction fonctionne. Premièrement <code>Zend_Translate</code> vérifie si la langue choisie a
     une traduction pour l'identificateur de message ou la chaîne fournie. Si aucune chaîne de traduction n'a été
     trouvée, elle se reporte sur la langue suivante comme définie dans <code>Zend_Locale</code>. Ainsi le "<emphasis
-    role="strong">de_AT</emphasis>" devient seulement "<emphasis role="strong">de</emphasis>". S'il n'y a aucune
+    role="strong">de_AT</emphasis>" devient seulement "<emphasis role="strong">de</emphasis>". Si aucune
     traduction n'est trouvée pour le "<emphasis role="strong">de</emphasis>", alors le message original est retourné. De
     cette façon vous avez toujours un affichage, au cas où la traduction de message n'existerait pas dans votre stockage
     des messages. <code>Zend_Translate</code> ne lève jamais d'erreur ou d'exception en traduisant les chaînes.</para>
@@ -103,7 +103,7 @@ print $translate->_(2)."\n";
         généraux qui sont valables pour tous les adaptateurs.</para>
 
         <para>Vous devrez savoir où stocker vos fichiers sources de traduction. Avec <code>Zend_Translate</code> vous
-        n'êtes lié par aucune restriction. Les structures suivantes sont préférables :</para>
+        n'avez aucune restriction. Les structures suivantes sont préférables :</para>
 
         <itemizedlist>
             <listitem>
@@ -174,7 +174,7 @@ print $translate->_(2)."\n";
       other.mo
 ]]></programlisting>
 
-                <para>Positif : de vieilles sources de gettext peuvent être utiliser sans changer la structure.</para>
+                <para>Positif : de vieilles sources de gettext peuvent être utilisées sans changer la structure.</para>
 
                 <para>Négatif : avoir des dossiers de dossiers peut être embrouillant pour les personnes qui n'ont pas
                 utilisé gettext avant.</para>
@@ -204,7 +204,7 @@ print $translate->_(2)."\n";
 
                 <para>Positif : chaque fichier est lié à sa propre source de traduction.</para>
 
-                <para>Négatif : de multiples petits fichiers source de traduction rendent plus dur la traduction. En
+                <para>Négatif : de multiples petits fichiers sources de traduction rendent plus difficile la traduction. En
                 outre chaque fichier doit être ajouté comme source de traduction.</para>
             </listitem>
         </itemizedlist>
@@ -219,9 +219,9 @@ print $translate->_(2)."\n";
     <sect2 id="zend.translate.using.source.array">
         <title>Créer des fichiers sources de type tableau</title>
 
-        <para>Les fichiers source de type tableau sont simplement des tableaux. Mais vous devez les définir manuellement
-        parce qu'il n'y a aucun outil pour cela. Mais parce qu'ils sont si simples, c'est la manière la plus rapide de
-        rechercher des messages si votre code fonctionne comme prévu. C'est généralement le meilleur adaptateur pour
+        <para>Les fichiers sources de type tableau sont simplement des tableaux. Mais vous devez les définir manuellement
+        parce qu'il n'y a aucun outil pour automatiser cela. Mais parce qu'ils sont très simples, ils représentent la manière
+        la plus rapide de rechercher des messages si votre code fonctionne comme prévu. C'est généralement le meilleur adaptateur pour
         démarrer avec des systèmes multilingues.</para>
 
         <programlisting role="php"><![CDATA[
@@ -254,17 +254,17 @@ $translate = new Zend_Translate('array',
 ]]></programlisting>
 
         <note>
-            <para>Les fichiers qui ne renvoient pas un tableau ne seront pas inclus. N'importe quel rendu issu ce
+            <para>Les fichiers qui ne renvoient pas un tableau ne seront pas inclus. N'importe quel rendu issu de ce
             fichier sera ignoré et également supprimé.</para>
         </note>
     </sect2>
 
     <sect2 id="zend.translate.using.source.gettext">
-        <title>Créer des fichiers source Gettext</title>
+        <title>Créer des fichiers sources Gettext</title>
 
         <para>Des fichiers source Gettext sont créés par la bibliothèque GNU gettext. Il y a plusieurs outils libres
-        disponibles qui peuvent analyser vos fichiers de code et créer les fichiers source nécessaires de gettext. Ces
-        fichiers se termine par <emphasis role="strong">*.mo</emphasis> et ce sont des fichiers binaires. Un gratuiciel
+        disponibles qui peuvent analyser vos fichiers de code et créer les fichiers sources nécessaires à gettext. Ces
+        fichiers se terminent par <emphasis role="strong">*.mo</emphasis> et ce sont des fichiers binaires. Un gratuiciel
         pour créer ces fichiers est <ulink url="http://sourceforge.net/projects/poedit/">poEdit</ulink>. Cet outil vous
         aide également pour le processus de traduction lui-même.</para>
 
@@ -292,13 +292,13 @@ $translate->addTranslation('chemin/vers/german.mo', 'de');
             toutes les langues, vous éliminez le problème des encodages incompatibles.</para>
         </note>
 
-        <para>Many gettext editors add adapter informations as empty translation string. This is the reason why empty
-        string are not translated when using the gettext adapter. Instead they are erased from the translation table and
-        provided by the <code>getAdapterInfo()</code> method. It will return the adapter informations for all added
-        gettext files as array where the filename is used as key.</para>
+        <para>La plupart des éditeur gettext ajoutent les informations de l'adaptateur comme chaines de traduction vides.
+        C'est pour cela que traduire des chaines vides ne fonctionne pas avec l'adaptateur gettext. A la place, elles sont
+        effacées de la table de traduction. <code>getAdapterInfo()</code> retourne les informations de l'adaptateur gettext,
+        notamment les informations des fichiers gettext ajoutés.</para>
 
         <programlisting role="php"><![CDATA[
-// How to get the adapter informations
+// Informations sur l'adaptateur
 $translate = new Zend_Translate('gettext',
                                 'path/to/english.mo',
                                 'en');
@@ -309,7 +309,7 @@ print_r $translate->getAdapterInfo();
     <sect2 id="zend.translate.using.source.tmx">
         <title>Créer des fichiers source TMX</title>
 
-        <para>Les fichiers sources TMX sont les nouveaux standard industriels. Ils ont l'avantage d'être des fichiers
+        <para>Les fichiers sources TMX sont les nouveaux standards industriels. Ils ont l'avantage d'être des fichiers
         XML et ainsi ils sont lisibles par tout éditeur de fichier et naturellement ils sont lisibles pour l'homme. Vous
         pouvez soit créer des fichiers TMX manuellement avec un éditeur de texte, soit utiliser un outil. Mais la
         plupart des programmes actuellement disponibles pour développer des fichiers source TMX ne sont pas des
@@ -345,8 +345,8 @@ $translate = new Zend_Translate('tmx',
 ]]></programlisting>
         </example>
 
-        <para>Les fichiers TMX peuvent avoir plusieurs langues dans le même fichier. Toutes autres langues incluses sont
-        ajoutées automatiquement, ainsi vous n'avez pas à appeler <code>addLanguage()</code>.</para>
+        <para>Les fichiers TMX peuvent avoir plusieurs langues dans le même fichier. Toute autre langue incluse est
+        ajoutée automatiquement, ainsi vous n'avez pas à appeler <code>addLanguage()</code>.</para>
 
         <para>Si vous voulez avoir seulement les langues spécifiées de la source traduite, vous pouvez régler l'option
         <code>defined_language</code> à <code>true</code>. Avec cette option vous pouvez ajouter les langues souhaitées
@@ -357,7 +357,7 @@ $translate = new Zend_Translate('tmx',
     <sect2 id="zend.translate.using.source.csv">
         <title>Créer des fichiers source CSV</title>
 
-        <para>Les fichiers source CSV sont petits et lisibles pour l'homme. Si vos clients veulent eux-mêmes traduire,
+        <para>Les fichiers sources CSV sont petits et lisibles pour l'homme. Si vos clients veulent eux-mêmes traduire,
         vous utiliserez probablement l'adaptateur CSV.</para>
 
         <example id="zend.translate.using.source.csv.example">
@@ -418,9 +418,9 @@ $translate->addTranslation('chemin/vers/autretraduction.csv',
     </sect2>
 
     <sect2 id="zend.translate.using.source.ini">
-        <title>Créer des fichiers source INI</title>
+        <title>Créer des fichiers sources INI</title>
 
-        <para>Les fichiers source INI sont lisibles par l'homme mais habituellement pas très petits puisqu'ils incluent
+        <para>Les fichiers sources INI sont lisibles par l'homme mais habituellement pas très petits puisqu'ils incluent
         également d'autres données à côté des traductions. Si vous avez des données qui seront éditables par vos
         clients, vous pouvez aussi utiliser l'adaptateur INI dans ce cas.</para>
 
@@ -446,7 +446,7 @@ $translate->addTranslation('path/to/other.ini',
 
         <para>Les fichiers INI ont de multiples restrictions. Si une valeur dans le fichier INI contient un caractère
         non-alphanumérique, il doit être entouré avec des guillemets doubles ("). Il y a aussi des mots réservés qui ne
-        doivent pas être utilisés en tant que clés des fichiers INI. Ceci inclue : <code>null</code>, <code>yes</code>,
+        doivent pas être utilisés en tant que clés des fichiers INI. Ceci inclut : <code>null</code>, <code>yes</code>,
         <code>no</code>, <code>true</code> et <code>false</code>. Les valeurs <code>null</code>, <code>no</code> et
         <code>false</code> sont retournées sous la forme "". <code>yes</code> et <code>true</code> sont retournés en
         "1". Les caractères {}|&amp;~![()" ne doivent pas être utilisés dans la clé et ont une signification
@@ -456,8 +456,8 @@ $translate->addTranslation('path/to/other.ini',
     <sect2 id="zend.translate.using.options">
         <title>Options pour les adaptateurs</title>
 
-        <para>Les options peuvent être utilisées avec tous les adaptateurs. Bien sûr les options sont différentes pour
-        chaque adaptateur. Vous pouvez mettre des options quand vous créez l'adaptateur. Pour l'instant il y a qu'une
+        <para>Les options peuvent être utilisées avec tous les adaptateurs. Bien sûr chacun d'eux accepte des options
+        différentes. Vous pouvez passer des options quand vous créez l'adaptateur. Pour l'instant il y a qu'une
         option qui est valable pour tous les adaptateurs. '<code>clear</code>' décide si des données de traduction
         peuvent être ajoutées à l'existant ou non. Le comportement standard est d'ajouter des nouvelles données de
         traduction à l'existant. Les données de traduction sont seulement effacées pour la langue choisie. Donc on ne
@@ -472,7 +472,7 @@ $translate->addTranslation('path/to/other.ini',
 
             <programlisting role="php"><![CDATA[
 // définir ':' comme séparateur pour les fichiers sources de traduction
-$options = array('separator' => ':');
+$options = array('delimiter' => ':');
 $translate = new Zend_Translate('csv',
                                 'chemin/vers/matraduction.csv',
                                 'fr',
@@ -515,35 +515,35 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
 
                         <entry><code>false</code></entry>
 
-                        <entry>Si régler à <code>true</code>, les traductions déjà lues seront effacées. Ceci peut être
+                        <entry>Si réglé à <code>true</code>, les traductions déjà lues seront effacées. Ceci peut être
                         utilisé au lieu de créer une nouvelle instance quand on lit de nouvelles données de
                         traduction.</entry>
                     </row>
 
                     <row>
-                        <entry>all</entry>
+                        <entry>Tous</entry>
 
                         <entry><code>disableNotices</code></entry>
 
                         <entry><code>false</code></entry>
 
-                        <entry>Si régler à <code>true</code>, toutes les notices concernant la non-disponibilité des
+                        <entry>Si réglé à <code>true</code>, toutes les notices concernant la non-disponibilité des
                         traductions seront désactivées. Vous devriez mettre cette option à <code>true</code> dans votre
                         environnement de production.</entry>
                     </row>
 
                     <row>
-                        <entry>all</entry>
+                        <entry>Tous</entry>
 
                         <entry><code>ignore</code></entry>
 
                         <entry><emphasis role="strong">.</emphasis></entry>
 
-                        <entry>All directories and files beginning with this prefix will be ignored when searching for
-                        files. This value defaults to <emphasis role="strong">'.'</emphasis> which leads to the behavior
-                        that all hidden files will be ignored. Setting this value to 'tmp' would mean that directories
-                        and files like 'tmpImages' and 'tmpFiles' would be ignored and also all subsequent
-                        directories</entry>
+                        <entry>Tous les dossiers et les fichiers commençant par ce caractère seront ignorés dans la recherche
+                        automatique de traductions. La valeur par défaut est <emphasis role="strong">'.'</emphasis>, ce qui signifie
+                        que tous les fichiers cachés (Unix) seront ignorés. Mettre une valeur par exemple à 'tmp' aura pour effet
+                        d'ignorer les dossiers ou fichiers 'tmpImages' ou encore 'tmpFiles' (par exemple), ainsi que tous les
+                        sous-dossiers</entry>
                     </row>
 
                     <row>
@@ -553,10 +553,10 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
 
                         <entry><code>null</code></entry>
 
-                        <entry>Si régler à <code>null</code>, aucun scan de la structure de répertoire ne sera effectué.
-                        Si régler à <code>Zend_Translate::LOCALE_DIRECTORY</code>, la localisation sera détecté dans le
-                        répertoire. Si régler à <code>Zend_Translate::LOCALE_FILENAME</code>, la localisation sera
-                        détecté dans le nom de fichier. Voir <xref linkend="zend.translate.using.detection" /> pour de
+                        <entry>Si réglé à <code>null</code>, aucun scan de la structure de répertoire ne sera effectué.
+                        Si réglé à <code>Zend_Translate::LOCALE_DIRECTORY</code>, la localisation sera détectée dans le
+                        répertoire. Si réglé à <code>Zend_Translate::LOCALE_FILENAME</code>, la localisation sera
+                        détectée dans le nom de fichier. Voir <xref linkend="zend.translate.using.detection" /> pour de
                         plus amples détails.</entry>
                     </row>
 
@@ -578,7 +578,7 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
 
                         <entry><code>0</code></entry>
 
-                        <entry>Définit la longueur maximum d'une ligne de fichier. Régler à 0, la recherche sera
+                        <entry>Définit la longueur maximum d'une ligne de fichier. Réglé à 0, la recherche sera
                         automatique.</entry>
                     </row>
 
@@ -599,7 +599,7 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
         adaptateurs. La méthode <code>setOptions()</code> peut être utilisée pour définir vos options. La méthode
         <code>setOptions()</code> nécessite un tableau avec les options que vous voulez paramétrer. Si une option
         fournie existe déjà, elle sera alors ré-assignée. Vous pouvez définir autant d'options que nécessaire car elles
-        ne seront pas vérifiées par l'adaptateur. Vérifiez simplement que vous ne créer pas une option qui existe déjà
+        ne seront pas vérifiées par l'adaptateur. Vérifiez simplement que vous ne créez pas une option qui existe déjà
         dans l'adaptateur, vous affecteriez alors une nouvelle valeur.</para>
 
         <para>Pour récupérer l'ensemble des options, vous pouvez utiliser la méthode <code>getOptions()</code>. Quand
@@ -618,7 +618,7 @@ $translate->addTranslation('chemin/vers/nouveau.csv',
         <para>La méthode <code>setLocale()</code> règle une nouvelle langue standard pour la traduction. Ceci évite de
         placer le paramètre facultatif de langue plus d'une fois lors de l'appel de la méthode <code>translate()</code>.
         Si la langue donnée n'existe pas, ou si aucune donnée de traduction n'est disponible pour la langue,
-        <code>setLocale()</code> essaye de remonter à la langue sans région si elle est indiqué. Une langue
+        <code>setLocale()</code> essaye de remonter à la langue sans région si elle est indiquée. Une langue
         <code>fr_FR</code> serait remontée à <code>fr</code>. Si la remontée n'est pas possible, une exception sera
         levée.</para>
 
@@ -666,7 +666,7 @@ if ($translate->isAvailable("fr")) {
             environnement. Voyez l'exemple suivant pour les détails :</para>
 
             <example id="zend.translate.using.languages.automatic.example">
-                <title>Comment la détection automatique de la langue fonctionne ?</title>
+                <title>Comment la détection automatique de la langue fonctionne-t-elle ?</title>
 
                 <programlisting role="php"><![CDATA[
 // Assumons que le navigateur retourne ces valeurs
@@ -704,24 +704,22 @@ $translate->setLocale('it_IT');
 ]]></programlisting>
             </example>
 
-            <para>After setting a language manually with the <code>setLocale()</code> method the automatically detection
-            will be switched off and overridden.</para>
+            <para>Si vous utilisez <code>setLocale()</code>, la detection automatique de la langue sera alors annulée, et la
+            langue à utiliser sera celle spécifiée par l'appel de la méthode.</para>
 
-            <para>If you want to use the automatic again, you can set the language <emphasis
-            role="strong">auto</emphasis> with <code>setLocale()</code> which will reactivate the automatically
-            detection for <code>Zend_Translate</code>.</para>
+            <para>Si vous voulez réactiver la détection automatique, réappelez <code>setLocale()</code> et passez lui la valeur
+            <emphasis role="strong">auto</emphasis>.</para>
 
-            <para>Since Zend Framework 1.7.0 <code>Zend_Translate</code> recognises also an application wide locale. You
-            can simply set a <code>Zend_Locale</code> instance to the registry like shown below. With this notation you
-            can forget about setting the locale manually with each instance when you want to use the same locale
-            multiple times.</para>
+            <para>Depuis Zend Framework 1.7.0 <code>Zend_Translate</code> reconnait une locale globale pour l'application.
+            Vous pouvez ainsi simplement mettre un objet <code>Zend_Locale</code> dans le registre, comme montré ci-après.
+            Avec cette fonctionnalité, vous pouvez oublier le passage de la locale à votre objet de traduction.</para>
 
             <programlisting role="php"><![CDATA[
-// in your bootstrap file
+// En fichier d'amorçage (bootstrap)
 $locale = new Zend_Locale('de_AT');
 Zend_Registry::set('Zend_Locale', $locale);
 
-// somewhere in your application
+// ailleurs dans votre application
 $translate = new Zend_Translate('gettext', '\my_de.mo');
 $translate->getLocale();
 ]]></programlisting>
@@ -729,24 +727,24 @@ $translate->getLocale();
     </sect2>
 
     <sect2 id="zend.translate.using.detection">
-        <title>Automatic source detection</title>
+        <title>Détéction automatique de la source</title>
 
-        <para>Zend_Translate can detect translation sources automatically. So you don't have to declare each source file
-        manually. You can let Zend_Translate do this job and scan the complete directory structure for source
-        files.</para>
+        <para>Zend_Translate peut détecter les sources de traduction de manière automatique. Ainsi vous n'avez pas à déclarer
+        toutes les sources manuellement. Vous laissez Zend_Translate faire ce travail et scanner complètement tout un répertoire
+        à la recherche de fichiers de langue de traduction.</para>
 
         <note>
-            <para>Automatic source detection is available since Zend Framework version 1.5.</para>
+            <para>La détection automatique des sources de traduction est disponible depuis Zend Framework version 1.5.</para>
         </note>
 
-        <para>The usage is quite the same as initiating a single translation source with one difference. You must give a
-        directory which has to be scanned instead a file.</para>
+        <para>L'utilisation est assez semblable à celle qui permet de spécifier une source de langue. Vous devez simplement
+        donner un dossier, et non plus un fichier, à l'adaptateur. Ce dossier sera alors scanné</para>
 
         <example id="zend.translate.using.languages.directory.example">
-            <title>Scanning a director y structure for sources</title>
+            <title>Scanner un dossier à la recherche de sources de traduction</title>
 
             <programlisting role="php"><![CDATA[
-// expect we have the following structure
+// Soit la structure suivante :
 //  /language
 //  /language/login/login.tmx
 //  /language/logout/logout.tmx
@@ -757,23 +755,23 @@ $translate = new Zend_Translate('tmx', '/language');
 ]]></programlisting>
         </example>
 
-        <para>So Zend_Translate does not only search the given directory, but also all subdirectories for translation
-        source files. This makes the usage quite simple. But Zend_Translate will ignore all files which are not sources
-        or which produce failures while reading the translation data. So you have to make sure that all of your
-        translation sources are correct and readable because you will not get any failure if a file is bogus or can not
-        be read.</para>
+        <para>Notez que Zend_Translate cherche dans tous les sous-repertoires. L'utilisation devient alors relativement
+        simple. Aussi, Zend_Translate ignorera tout fichier qui ne l'interresse pas : des fichiers non représentatifs de
+        traductions ou encore des fichiers illisibles. Vérifiez donc que le dossier principal ne contienne que des fichiers
+        de traductions, car Zend_Translate ne renverra aucune erreur dans le cas contraire, il ignorera simplement de tels
+        fichiers.</para>
 
         <note>
-            <para>Depending on how deep your directory structure is and how much files are within this structure it can
-            take a long time for Zend_Translate to complete.</para>
+            <para>Selon la compléxité de la récursivité, la traversée du répertoire principal peut devenir longue et couteuse.
+            </para>
         </note>
 
-        <para>In our example we have used the TMX format which includes the language to be used within the source. But
-        many of the other source formats are not able to include the language within the file. Even this sources can be
-        used with automatic scanning if you do some pre-requisits as described below: scanned.</para>
+        <para>Dans notre exemple, nous utilisons l'adaptateur TMX qui inclut la langue à utiliser dans le fichier en question.
+        D'autres adaptateurs n'agissent pas comme cela, ainsi les noms de fichiers devront comporter les noms des langues à
+        considérer pour de tels adaptateurs.</para>
 
         <sect3 id="zend.translate.using.detection.directory">
-            <title>Language through naming directories</title>
+            <title>La langue se trouve dans le nom des dossiers</title>
 
             <para>One way to include automatic language detection is to name the directories related to the language
             which is used for the sources within this directory. This is the easiest way and is used for example within
