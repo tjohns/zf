@@ -375,6 +375,23 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
     /**
      * @return void
      */
+    public function testFriendsTimelineWithCountReturnsResults()
+    {
+        /* @var $response Zend_Rest_Client_Result */
+        $response = $this->twitter->status->friendsTimeline( array('id' => 'zftestuser1', 'count' => '2') );
+        $this->assertTrue($response instanceof Zend_Rest_Client_Result);
+        $httpClient    = Zend_Service_Twitter::getHttpClient();
+        $httpRequest   = $httpClient->getLastRequest();
+        $httpResponse  = $httpClient->getLastResponse();
+        $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+
+        $this->assertTrue(isset($response->status));
+        $this->assertEquals(2, count($response->status), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
+    }
+
+    /**
+     * @return void
+     */
     public function testUserTimelineStatusWithPageAndTwoTweetsReturnsResults()
     {
         /* @var $response Zend_Rest_Client_Result */
@@ -390,7 +407,7 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($response->status), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
     }
 
-    public function testUserTimelineStatusShouldReturnTwentyResults()
+    public function testUserTimelineStatusShouldReturnFortyResults()
     {
         /* @var $response Zend_Rest_Client_Result */
         $response = $this->twitter->status->userTimeline( array('id' => 'zftestuser1', 'count' => 40) );
@@ -401,7 +418,7 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($httpResponse->isSuccessful(), $httpResponse->getStatus() . ': ' . var_export($httpRequest, 1) . '\n' . $httpResponse->getHeadersAsString());
 
         $this->assertTrue(isset($response->status));
-        $this->assertEquals(20, count($response->status));
+        $this->assertEquals(40, count($response->status));
     }
 
     /**
@@ -431,7 +448,7 @@ class Zend_Service_TwitterTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
         }
     }
-	
+
 	public function testPostStatusUpdateUTF8ShouldNotThrowException()
 	{
 		try {
