@@ -251,7 +251,9 @@ class Zend_Service_Twitter extends Zend_Rest_Client
      *
      * $params may include one or more of the following keys
      * - id: ID of a friend whose timeline you wish to receive
+     * - count: how many statuses to return
      * - since: return results only after the date specified
+     * - since_id: return results only after the specific tweet
      * - page: return page X of results
      *
      * @param  array $params
@@ -264,6 +266,18 @@ class Zend_Service_Twitter extends Zend_Rest_Client
         $_params = array();
         foreach ($params as $key => $value) {
             switch (strtolower($key)) {
+                case 'count':
+                    $count = (int) $value;
+                    if (0 >= $count) {
+                        $count = 1;
+                    } elseif (200 < $count) {
+                        $count = 200;
+                    }
+                    $_params['count'] = (int) $count;
+                    break;
+                case 'since_id':
+                    $_params['since_id'] = (int) $value;
+                    break;
                 case 'since':
                     $this->_setDate($value);
                     break;
