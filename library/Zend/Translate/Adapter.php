@@ -67,11 +67,13 @@ abstract class Zend_Translate_Adapter {
      * @var array
      */
     protected $_options = array(
-        'clear'          => false,
-        'scan'           => null,
-        'locale'         => 'auto',
-        'ignore'         => '.',
-        'disableNotices' => false,
+        'clear'           => false,
+        'scan'            => null,
+        'locale'          => 'auto',
+        'ignore'          => '.',
+        'disableNotices'  => false,
+        'logUntranslated' => false,
+        'log'             => null
     );
 
     /**
@@ -224,10 +226,15 @@ abstract class Zend_Translate_Adapter {
         $change = false;
         $locale = null;
         foreach ($options as $key => $option) {
-            if ($key == "locale") {
+            if ($key == 'locale') {
                 $locale = $option;
             } else if ((isset($this->_options[$key]) and ($this->_options[$key] != $option)) or
                     !isset($this->_options[$key])) {
+                if (($key == 'log') && !($option instanceof Zend_Log)) {
+                    require_once 'Zend/Translate/Exception.php';
+                    throw new Zend_Translate_Exception('Instance of Zend_Log expected for option log');
+                }
+
                 $this->_options[$key] = $option;
                 $change = true;
             }
@@ -300,10 +307,12 @@ abstract class Zend_Translate_Adapter {
         if (!isset($this->_translate[$locale])) {
             $temp = explode('_', $locale);
             if (!isset($this->_translate[$temp[0]]) and !isset($this->_translate[$locale])) {
-                // Should we suppress notices ?
-                if ($this->_options['disableNotices'] === false) {
-                    // throwing a notice due to possible problems on locale setting
-                    trigger_error("The language '{$locale}' has to be added before it can be used.", E_USER_NOTICE);
+                if (!$this->_options['disableNotices']) {
+                    if ($this->_options['log']) {
+                        $this->_options['log']->notice("The language '{$locale}' has to be added before it can be used.");
+                    } else {
+                        trigger_error("The language '{$locale}' has to be added before it can be used.", E_USER_NOTICE);
+                    }
                 }
             }
 
@@ -311,10 +320,12 @@ abstract class Zend_Translate_Adapter {
         }
 
         if (empty($this->_translate[$locale])) {
-            // Should we suppress notices ?
-            if ($this->_options['disableNotices'] === false) {
-                // throwing a notice due to possible problems on locale setting
-                trigger_error("No translation for the language '{$locale}' available.", E_USER_NOTICE);
+            if (!$this->_options['disableNotices']) {
+                if ($this->_options['log']) {
+                    $this->_options['log']->notice("No translation for the language '{$locale}' available.");
+                } else {
+                    trigger_error("No translation for the language '{$locale}' available.", E_USER_NOTICE);
+                }
             }
         }
 
@@ -508,6 +519,14 @@ abstract class Zend_Translate_Adapter {
         }
 
         // no translation found, return original
+        if ($this->_options['logUntranslated']) {
+            if ($this->_options['log']) {
+                $this->_options['log']->notice('Untranslated message: ' . $messageId);
+            } else {
+                trigger_error('Untranslated message: ' . $messageId, E_USER_NOTICE);
+            }
+        }
+
         return $messageId;
     }
 

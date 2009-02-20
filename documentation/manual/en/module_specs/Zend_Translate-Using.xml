@@ -679,6 +679,20 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                     </row>
                     <row>
                         <entry>all</entry>
+                        <entry>log</entry>
+                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>An instance of Zend_Log where untranslated messages and notices will be
+                        written to</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
+                        <entry>logUntranslated</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>When this option is set to true, all message id's which can not be
+                        translated will be written into a also attached log</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
                         <entry>scan</entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
                         <entry>If set to null, no scanning of the directory structure will be done.
@@ -1158,6 +1172,62 @@ if ($translate->isTranslated('message1', false, 'de')) {
 ]]>
             </programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.logging">
+
+        <title>How to log not found translations</title>
+
+        <para>
+            When you have a bigger site or you are creating the translation files manually, you often have
+            the problem that some messages are not translated. But there is a easy solution for you when you
+            are using <code>Zend_Translate</code>.
+        </para>
+
+        <para>
+            You have to follow two or three simple steps. First, you have to create a instance of
+            <code>Zend_Log</code>. And then you have to attach this instance to <code>Zend_Translate</code>.
+            See the following example:
+        </para>
+
+        <example id="zend.translate.using.logging.example">
+            <title>Log translations</title>
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('gettext', $path, 'de');
+
+// Create a log instance
+$writer = new Zend_Log_Writer_Stream('/path/file.log');
+$log = new Zend_Log($writer);
+
+// Attach it to the translation instance
+$translate->setOptions(array(
+    'log' => $log,
+    'logUntranslated' => true));
+
+$translate->tranlate('unknown string');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Now you will have in the log a new notice: <code>Untranslated message: unknown string</code>.
+        </para>
+
+        <note>
+            <para>
+                You should note that any translation which can not be found will be logged. This means
+                all translations when a user requests a not supported language. But also every request
+                to a message which can not be translated will be logged. Be aware that when 100 people
+                request the same translation you will have 100 notices logged.
+            </para>
+        </note>
+
+        <para>
+            This feature can not only be used to log messages but also to attach this not translated messages
+            into a empty translation file. To archive this you will have to write your own log writer which
+            writes the format you want to have and strips the prepending "Untranslated message: " for you.
+        </para>
 
     </sect2>
 

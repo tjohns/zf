@@ -280,7 +280,7 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
      */
     public function testCamelCasedOptions()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/Adapter/_files/translation_otherdelimiter.csv', 'en', array('delimiter' => ','));
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files/translation_otherdelimiter.csv', 'en', array('delimiter' => ','));
         $lang->setOptions(array('myOption' => true));
         $this->assertTrue($lang->getOptions('myOption'));
     }
@@ -290,8 +290,94 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
      */
     public function testPathNameWithColonResolution()
     {
-        $lang = new Zend_Translate(Zend_Translate::AN_CSV , dirname(__FILE__) . '/Translate/Adapter/../Adapter/_files', 'en', array('delimiter' => ','));
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/../Adapter/_files', 'en', array('delimiter' => ','));
         $this->assertEquals('en', $lang->getLocale());
+    }
+
+    public function testUntranslatedMessageWithTriggeredError()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files', 'en', array('delimiter' => ','));
+        $this->assertEquals('ignored', $lang->translate('ignored'));
+
+        $this->_errorOccured = false;
+        $lang->setOptions(array('logUntranslated' => true));
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $this->assertEquals('ignored', $lang->translate('ignored'));
+        $this->assertTrue($this->_errorOccured);
+        restore_error_handler();
+    }
+
+    public function testLogUntranslatedMessage()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files', 'en', array('delimiter' => ','));
+        $this->assertEquals('ignored', $lang->translate('ignored'));
+
+        $stream = fopen('php://memory', 'w+');
+        require_once 'Zend/Log/Writer/Stream.php';
+        $writer = new Zend_Log_Writer_Stream($stream);
+        require_once 'Zend/Log.php';
+        $log    = new Zend_Log($writer);
+
+        $lang->setOptions(array('logUntranslated' => true, 'log' => $log));
+        $this->assertEquals('ignored', $lang->translate('ignored'));
+
+        rewind($stream);
+        $this->assertContains('ignored', stream_get_contents($stream));
+    }
+
+    public function testSettingUnknownLocaleWithTriggeredError()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files', 'en', array('delimiter' => ','));
+        $this->_errorOccured = false;
+        set_error_handler(array($this, 'errorHandlerIgnore'));
+        $lang->setLocale('ru');
+        $this->assertEquals('ru', $lang->getLocale('ru'));
+        $this->assertTrue($this->_errorOccured);
+        restore_error_handler();
+    }
+
+    public function testSettingUnknownLocaleWritingToLog()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files', 'en', array('delimiter' => ','));
+
+        $stream = fopen('php://memory', 'w+');
+        require_once 'Zend/Log/Writer/Stream.php';
+        $writer = new Zend_Log_Writer_Stream($stream);
+        require_once 'Zend/Log.php';
+        $log    = new Zend_Log($writer);
+
+        $lang->setOptions(array('log' => $log));
+        $lang->setLocale('ru');
+
+        rewind($stream);
+        $this->assertContains('has to be added', stream_get_contents($stream));
+    }
+
+    public function testSettingNoLogAsLog()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files', 'en', array('delimiter' => ','));
+
+        try {
+            $lang->setOptions(array('log' => 'nolog'));
+            $this->fail();
+        } catch (Zend_Translate_Exception $e) {
+            $this->assertContains('Instance of Zend_Log expected', $e->getMessage());
+        }
+    }
+
+    /**
+     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
+     *
+     * @param  integer $errno
+     * @param  string  $errstr
+     * @param  string  $errfile
+     * @param  integer $errline
+     * @param  array   $errcontext
+     * @return void
+     */
+    public function errorHandlerIgnore($errno, $errstr, $errfile, $errline, array $errcontext)
+    {
+        $this->_errorOccured = true;
     }
 }
 
