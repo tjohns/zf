@@ -90,8 +90,8 @@ class Zend_Http_Cookie
      *
      * @param string $name
      * @param string $value
-     * @param int $expires
      * @param string $domain
+     * @param int $expires
      * @param string $path
      * @param bool $secure
      */
@@ -222,7 +222,7 @@ class Zend_Http_Cookie
 
         // Make sure we have a valid Zend_Uri_Http object
         if (! ($uri->valid() && ($uri->getScheme() == 'http' || $uri->getScheme() =='https'))) {
-            require_once 'Zend/Http/Exception.php';    
+            require_once 'Zend/Http/Exception.php';
             throw new Zend_Http_Exception('Passed URI is not a valid HTTP or HTTPS URI');
         }
 
