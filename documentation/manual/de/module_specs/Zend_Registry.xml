@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13853 -->
+<!-- EN-Revision: 13945 -->
 <sect1 id="zend.registry.using">
 
     <title>Die Registry verwenden</title>
@@ -174,9 +174,11 @@ var_dump( $registry['index'] );
             Option erstellen und die statische Instanz initialisieren um diese Funktionalität
             einzuschalten.
             <note>
-                Man muß die <code>ArrayObject::ARRAY_AS_PROPS</code> Option setzen
-                <emphasis>bevor</emphasis> auf die statische Registry das erste Mal
-                zugegriffen wird.
+                <para>
+                    Man muß die <code>ArrayObject::ARRAY_AS_PROPS</code> Option setzen
+                    <emphasis>bevor</emphasis> auf die statische Registry das erste Mal
+                    zugegriffen wird.
+                </para>
             </note>
         </para>
 
@@ -272,7 +274,9 @@ if (isset($registry->index)) {
             Die statische Methode <code>setClassName()</code> kann verwendet
             werden um die Klasse zu definieren.
             <note>
-                Diese Klasse muß eine Unterklasse von <code>Zend_Registry</code> sein.
+                <para>
+                    Diese Klasse muß eine Unterklasse von <code>Zend_Registry</code> sein.
+                </para>
             </note>
         </para>
 

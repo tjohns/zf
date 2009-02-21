@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13846 -->
+<!-- EN-Revision: 13946 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -178,7 +178,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
                 <title>Die factory Methode für eine eigene Adapter Klasse verwenden</title>
                 <programlisting role="php"><![CDATA[
 // Wir müssen die Datei der Adapter Klasse nicht laden
-// weil Sie für uns durch die Factory Methode von <code>Zend_Db</code> geladen wird
+// weil Sie für uns durch die Factory Methode von Zend_Db geladen wird
 
 // Die MyProject_Db_Adapter_Pdo_Mysql Klasse automatisch laden
 // und eine Instanz von Ihr erstellen.

@@ -1,11 +1,11 @@
-<!-- EN-Revision: 13847 -->
+<!-- EN-Revision: 13942 -->
 <sect1 id="zend.controller.action">
     <title>Action Kontroller</title>
 
     <sect2 id="zend.controller.action.introduction">
         <title>Einführung</title>
         <para>
-            <code><code>Zend_Controller</code>_Action</code> ist eine abstrakte Klasse die verwendet werden kann um Aktion
+            <code>Zend_Controller_Action</code> ist eine abstrakte Klasse die verwendet werden kann um Aktion
             Kontroller zu implementieren die mit dem Front Kontroller verwendet werden können um eine WebSeite
             zu erstellen die auf dem Model-View-Controller (MVC) Pattern basiert.
         </para>

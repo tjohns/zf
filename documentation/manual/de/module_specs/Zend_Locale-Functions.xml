@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13841 -->
+<!-- EN-Revision: 13971 -->
 <sect1 id="zend.locale.functions">
 
     <title><code>Zend_Locale</code> verwenden</title>
@@ -599,6 +599,30 @@ print $locale->getTranslation('de', 'language', 'zh');
                             Arraywert verwendet. Wenn ein Telefoncode in verschiedenen Territorien verwendet
                             wird, sind diese mit einem Leerzeichen getrennt</entry>
                     </row>
+                    <row>
+                        <entry><emphasis role="strong">NumericToTerritory</emphasis></entry>
+                        <entry>Gibt eine Liste von 3 stelligen Numerncodes für Territorien zurück. Das
+                        Territorium (Region) wird als Arrayschlüssel und der 3 stellige Nummerncode als
+                        Arraywert verwendet</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToNumeric</emphasis></entry>
+                        <entry>Gibt eine Liste von Territorien mit Ihrem 3 stellige Nummerncode zurück. Das
+                        3 stellige Nummerncode wird als Arrayschlüssel und das Territorium (Region) als
+                        Arraywert verwendet</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">Alpha3ToTerritory</emphasis></entry>
+                        <entry>Gibt eine Liste von 3 stelligen Zeichencodes für Territorien zurück. Das
+                        Territorium (Region) wird als Arrayschlüssel und der 3 stellige Zeichencode
+                        als Arraywert verwendet</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToAlpha3</emphasis></entry>
+                        <entry>Gibt eine Liste von Territorien mit Ihrem 3 stelligen Zeichencode zurück.
+                        Der 3 stellige Zeichencode wird als Arrayschlüssel und das Territorium (Region) als
+                        Arraywert verwendet</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -993,6 +1017,28 @@ print $locale->getTranslation('de', 'language', 'zh');
                             Der Telefoncode muß als reiner Integerwert angegeben werden, z.B. '43' für
                             +43. Wenn ein Telefoncode verwendet wird der in mehreren Territorien (Regionen)
                             verwendet wird, werden diese Territorien mit einem Leerzeichen getrennt</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">NumericToTerritory</emphasis></entry>
+                        <entry>Gibt den 3 stelligen Nummerncode für ein angegebenes Territorium (Region)
+                        zurück. Der Code des Territoriums muß als ISO3166 String angegeben werden, z.B.
+                        'AR' für Österreich</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToNumeric</emphasis></entry>
+                        <entry>Gibt as Territorium (Region) für einen 3 stelligen Nummerncode zurück. Der 3
+                        stellige Nummerncode muß als reine Integerzahl angegeben werden, zum Beispiel '43'
+                        </entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">Alpha3ToTerritory</emphasis></entry>
+                        <entry>Gibt den 3 stelligen Zeichencode für ein angegebenes Territorium (Region)
+                        zurück. Der Code des Territoriums (Region) muß als ISO3166 String angegeben werden,
+                        zum Beispiel 'AT' für Österreich</entry>
+                    </row>
+                    <row>
+                        <entry><emphasis role="strong">TerritoryToAlpha3</emphasis></entry>
+                        <entry>´Gibt das Territorium (Region) für einen 3 stelligen Zeichencode zurück</entry>
                     </row>
                 </tbody>
             </tgroup>

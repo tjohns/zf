@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13822 -->
+<!-- EN-Revision: 13977 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -229,7 +229,7 @@ $upload->receive();
             <listitem>
                 <para>
                     <emphasis role="strong">getFileSize($file = null)</emphasis>: Diese Methode gibt die
-                    echte dateigröße für die angegebene Datei zurück.
+                    echte Dateigröße für die angegebene Datei zurück.
                 </para>
             </listitem>
 
@@ -237,6 +237,13 @@ $upload->receive();
                 <para>
                     <emphasis role="strong">getHash($hash = 'crc32', $files = null)</emphasis>: Diese Methode
                     gibt einen Hash des Inhalts einer angegebenen übertragenen Datei zurück.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">getMimeType($files = null)</emphasis>: Diese Methode gibt den
+                    Mimetyp der angegebenen übertragenen Datei zurück.
                 </para>
             </listitem>
         </itemizedlist>
@@ -332,6 +339,36 @@ $names = $upload->getHash('crc32', 'foo');
             <para>
                 Es ist zu beachten das der zurückgegebene Wert ein Array ist, wenn die Datei oder der
                 Formularname mehr als eine Datei enthält.
+            </para>
+        </note>
+
+        <para>
+            <code>getMimeType()</code> gibt den Mimetyp einer Datei zurück. Wenn mehr als eine Datei hochgeladen
+            wurde wird ein Array zurückgegeben, andernfalls ein String.
+        </para>
+
+        <example id="zend.file.transfer.introduction.informations.getmimetype">
+            <title>Den Mimetyp einer Datei bekommen</title>
+
+            <programlisting role="php"><![CDATA[
+$upload = new Zend_File_Transfer();
+$upload->receive();
+
+$mime = $upload->getMimeType();
+
+// Gibt den Mimetyp des 'foo' Form Elements zurück
+$names = $upload->getMimeType('foo');
+]]>
+            </programlisting>
+
+        </example>
+
+        <note>
+            <para>
+                Beachte das diese Methode die fileinfo Erweiterung verwendet wenn Sie vorhanden ist. Wenn diese
+                Erweiterung nicht gefunden werden kann wird die mimemagic Erweiterung verwendet. Wenn keine
+                Erweiterung gefunden wird, dann wird der Mimetyp verwendet der vom Dateiserver wärend des
+                Hochladens der Datei angegeben wurde.
             </para>
         </note>
     </sect2>
