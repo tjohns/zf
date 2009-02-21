@@ -149,6 +149,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
     {
         if ($this->_rowCount === null) {
             $rowCount = clone $this->_select;
+            $db = $rowCount->getAdapter();
 
             /**
              * The DISTINCT and GROUP BY queries only work when selecting one column.
@@ -163,7 +164,13 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                     if ($part[1] == '*' || $part[1] instanceof Zend_Db_Expr) {
                         $columns[] = $part[1];
                     } else {
-                        $columns[] = $rowCount->getAdapter()->quoteIdentifier($part[1], true);
+                        $column = $db->quoteIdentifier($part[1], true);
+
+                        if (!empty($part[0])) {
+                            $column = $db->quoteIdentifier($part[0], true) . '.' . $column;
+                        }
+
+                        $columns[] = $column;
                     }
                 }
 
@@ -177,7 +184,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
 
                 foreach ($groupParts as &$part) {
                     if (!($part == '*' || $part instanceof Zend_Db_Expr)) {
-                        $part = $rowCount->getAdapter()->quoteIdentifier($part, true);
+                        $part = $db->quoteIdentifier($part, true);
                     }
                 }
 
@@ -185,7 +192,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
             }
 
             $countPart  = empty($groupPart) ? 'COUNT(*)' : 'COUNT(DISTINCT ' . $groupPart . ')';
-            $expression = new Zend_Db_Expr($countPart . ' AS ' . $rowCount->getAdapter()->quoteIdentifier(self::ROW_COUNT_COLUMN));
+            $expression = new Zend_Db_Expr($countPart . ' AS ' . $db->quoteIdentifier(self::ROW_COUNT_COLUMN));
 
             $rowCount->__toString(); // Workaround for ZF-3719 and related
             $rowCount->reset(Zend_Db_Select::COLUMNS)

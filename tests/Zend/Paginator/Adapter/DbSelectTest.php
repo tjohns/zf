@@ -274,4 +274,70 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(500, $adapter->count());
     }
+
+    /**
+     * @group ZF-5233
+     */
+    public function testSelectHasAliasedColumns()
+    {
+        $db = $this->_db;
+
+        $db->query('DROP TABLE IF EXISTS `sandboxTransaction`');
+        $db->query('DROP TABLE IF EXISTS `sandboxForeign`');
+
+        // A transaction table
+        $db->query(
+            'CREATE TABLE `sandboxTransaction` (
+                `id` INTEGER PRIMARY KEY,
+                `foreign_id` INT( 1 ) NOT NULL ,
+                `name` TEXT NOT NULL
+            ) '
+        );
+
+        // A foreign table
+        $db->query(
+            'CREATE TABLE `sandboxForeign` (
+                `id` INTEGER PRIMARY KEY,
+                `name` TEXT NOT NULL
+            ) '
+        );
+
+        // Insert some data
+        $db->insert('sandboxTransaction',
+            array(
+                'foreign_id' => 1,
+                'name' => 'transaction 1 with foreign_id 1',
+            )
+        );
+
+        $db->insert('sandboxTransaction',
+            array(
+                'foreign_id' => 1,
+                'name' => 'transaction 2 with foreign_id 1',
+            )
+        );
+
+        $db->insert('sandboxForeign',
+            array(
+                'name' => 'John Doe',
+            )
+        );
+
+        $db->insert('sandboxForeign',
+            array(
+                'name' => 'Jane Smith',
+            )
+        );
+
+        $query = $db->select()->from(array('a'=>'sandboxTransaction'), array())
+                              ->join(array('b'=>'sandboxForeign'), 'a.foreign_id = b.id', array('name'))
+                              ->distinct(true);
+
+        try {
+            $adapter = new Zend_Paginator_Adapter_DbSelect($query);
+            $adapter->count();
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+    }
 }
