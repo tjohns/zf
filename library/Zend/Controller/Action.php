@@ -18,10 +18,19 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Controller_Action_HelperBroker */
+/**
+ * @see Zend_Controller_Action_HelperBroker
+ */
 require_once 'Zend/Controller/Action/HelperBroker.php';
 
-/** Zend_Controller_Front */
+/**
+ * @see Zend_Controller_Action_Interface
+ */
+require_once 'Zend/Controller/Action/Interface.php';
+
+/**
+ * @see Zend_Controller_Front
+ */
 require_once 'Zend/Controller/Front.php';
 
 /**
@@ -30,7 +39,7 @@ require_once 'Zend/Controller/Front.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Controller_Action
+abstract class Zend_Controller_Action implements Zend_Controller_Action_Interface
 {
     /**
      * @var array of existing class methods
