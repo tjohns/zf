@@ -161,7 +161,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 $columns = array();
 
                 foreach ($columnParts as $part) {
-                    if ($part[1] == '*' || $part[1] instanceof Zend_Db_Expr) {
+                    if ($part[1] == Zend_Db_Select::SQL_WILDCARD || $part[1] instanceof Zend_Db_Expr) {
                         $columns[] = $part[1];
                     } else {
                         $column = $db->quoteIdentifier($part[1], true);
@@ -174,7 +174,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                     }
                 }
 
-                if (count($columns) == 1 && $columns[0] == '*') {
+                if (count($columns) == 1 && $columns[0] == Zend_Db_Select::SQL_WILDCARD) {
                     $groupPart = null;
                 } else {
                     $groupPart = implode(',', $columns);
@@ -183,7 +183,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 $groupParts = $rowCount->getPart(Zend_Db_Select::GROUP);
 
                 foreach ($groupParts as &$part) {
-                    if (!($part == '*' || $part instanceof Zend_Db_Expr)) {
+                    if (!($part == Zend_Db_Select::SQL_WILDCARD || $part instanceof Zend_Db_Expr)) {
                         $part = $db->quoteIdentifier($part, true);
                     }
                 }
