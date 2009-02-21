@@ -12,11 +12,12 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_Application
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
@@ -27,13 +28,14 @@ require_once 'Zend/Application/Bootstrap/Resource/Base.php';
 /**
  * Resource for creating database adapter
  *
- * @category  Zend
- * @package   Zend_Application
- * @uses      Zend_Application_Bootstrap_Resource_Base
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @uses       Zend_Application_Resource_Base
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Bootstrap_Resource_Db extends Zend_Application_Bootstrap_Resource_Base
+class Zend_Application_Resource_Db extends Zend_Application_Resource_Base
 {
     /**
      * Adapter to use
@@ -60,7 +62,7 @@ class Zend_Application_Bootstrap_Resource_Db extends Zend_Application_Bootstrap_
      * Set the adapter
      * 
      * @param  $adapter string
-     * @return Zend_Application_Plugin_Db
+     * @return Zend_Application_Resource_Db
      */
     public function setAdapter($adapter)
     {
@@ -72,7 +74,7 @@ class Zend_Application_Bootstrap_Resource_Db extends Zend_Application_Bootstrap_
      * Set the adapter params
      * 
      * @param  $adapter string
-     * @return Zend_Application_Plugin_Db
+     * @return Zend_Application_Resource_Db
      */
     public function setParams(array $params)
     {
@@ -84,7 +86,7 @@ class Zend_Application_Bootstrap_Resource_Db extends Zend_Application_Bootstrap_
      * Set wether to use this as default table adapter
      *
      * @param  boolean $defaultTableAdapter
-     * @return Zend_Application_Plugin_Db
+     * @return Zend_Application_Resource_Db
      */
     public function setIsDefaultTableAdapter($isDefaultTableAdapter)
     {
@@ -93,18 +95,16 @@ class Zend_Application_Bootstrap_Resource_Db extends Zend_Application_Bootstrap_
     }
     
     /**
-     * Defined by Zend_Application_Plugin
+     * Defined by Zend_Application_Resource_IResource
      *
      * @return void
      */
     public function init()
     {
         if ($this->_adapter !== null) {
-            require_once 'Zend/Db.php';
             $db = Zend_Db::factory($this->_adapter, $this->_params);
             
             if ($this->_isDefaultTableAdapter) {
-                require_once 'Zend/Db/Table.php';
                 Zend_Db_Table::setDefaultAdapter($db);
             }
         }

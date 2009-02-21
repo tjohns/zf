@@ -12,28 +12,30 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_Application
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @see Zend_Application_Bootstrap_Resource_Base
+ * @see Zend_Application_Resource_Base
  */
-require_once 'Zend/Application/Bootstrap/Resource/Base.php';
+require_once 'Zend/Application/Resource/Base.php';
 
 /**
  * Resource for setting session options
  *
- * @category  Zend
- * @package   Zend_Application
- * @uses      Zend_Application_Bootstrap_Resource_Base
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @uses       Zend_Application_Resource_Base
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Bootstrap_Resource_Session extends Zend_Application_Bootstrap_Resource_Base
+class Zend_Application_Resource_Session extends Zend_Application_Resource_Base
 {
     /**
      * Options for sessions
@@ -53,7 +55,7 @@ class Zend_Application_Bootstrap_Resource_Session extends Zend_Application_Boots
      * Set options from array
      *
      * @param  array $options Configuration for Zend_Session
-     * @return Zend_Application_Plugin_Session
+     * @return Zend_Application_Resource_Session
      */
     public function setOptions(array $options)
     {
@@ -66,23 +68,19 @@ class Zend_Application_Bootstrap_Resource_Session extends Zend_Application_Boots
      * Set session save handler
      *
      * @param  mixed $saveHandler
-     * @throws Zend_Application_Plugin_Exception When $saveHandler is no valid save handler
-     * @return Zend_Application_Plugin_Session
+     * @return Zend_Application_Resource_Session
+     * @throws Zend_Application_Resource_Exception When $saveHandler is no valid save handler
      */
     public function setSaveHandler($saveHandler)
     {
         if (is_string($saveHandler)) {
-            require_once 'Zend/Loader.php';
-            Zend_Loader::loadClass($saveHandler);
-            
             $this->_saveHandler = new $saveHandler();
         }
         
         if ($saveHandler instanceof Zend_Session_SaveHandler_Interface) {
             $this->_saveHandler = $saveHandler;
         } else {
-            require_once 'Zend/Application/Plugin/Exception.php';
-            throw new Zend_application_Plugin_Exception('$saveHandler is no valid save handler');
+            throw new Zend_application_Resource_Exception('Invalid session save handler');
         }
     }
     
@@ -93,8 +91,6 @@ class Zend_Application_Bootstrap_Resource_Session extends Zend_Application_Boots
      */
     public function init()
     {
-        require_once 'Zend/Session.php';
-        
         if (count($this->_options) > 0) {
             Zend_Session::setOptions($this->_options);
         }

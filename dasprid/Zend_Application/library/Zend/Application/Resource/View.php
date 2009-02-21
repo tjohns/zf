@@ -12,28 +12,30 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_Application
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 /**
- * @see Zend_Application_Bootstrap_Resource_Base
+ * @see Zend_Application_Resource_Base
  */
 require_once 'Zend/Application/Bootstrap/Resource/Base.php';
 
 /**
  * Resource for settings view options
  *
- * @category  Zend
- * @package   Zend_Application
- * @uses      Zend_Application_Bootstrap_Resource_Base
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @uses       Zend_Application_Resource_Base
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Bootstrap_Resource_View extends Zend_Application_Bootstrap_Resource_Base
+class Zend_Application_Resource_View extends Zend_Application_Resource_Base
 {
     /**
      * Options for the view
@@ -45,8 +47,8 @@ class Zend_Application_Bootstrap_Resource_View extends Zend_Application_Bootstra
     /**
      * Set options from array
      *
-     * @param  array $options Configuration for Zend_Session
-     * @return Zend_Application_Plugin_Session
+     * @param  array $options Configuration for Zend_View
+     * @return Zend_Application_Resource_View
      */
     public function setOptions(array $options)
     {
@@ -56,20 +58,17 @@ class Zend_Application_Bootstrap_Resource_View extends Zend_Application_Bootstra
     }
     
     /**
-     * Defined by Zend_Application_Plugin
+     * Defined by Zend_Application_Resource_IResource
      *
      * @return void
      */
     public function init()
     {
-        require_once 'Zend/View.php';
         $view = new Zend_View($this->_options);
 
-        require_once 'Zend/Controller/Action/Helper/ViewRenderer.php';
         $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
         $viewRenderer->setView($view);
         
-        require_once 'Zend/Controller/Action/HelperBroker.php';
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
     }
 }

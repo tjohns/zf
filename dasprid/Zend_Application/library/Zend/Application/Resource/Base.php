@@ -12,23 +12,34 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
- * @category  Zend
- * @package   Zend_Application
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id$
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+/** Zend_Application_Resource_IResource */
+require_once 'Zend/Application/Resource/IResource.php';
 
 /**
  * Abstract class for bootstrap resources
  *
- * @category  Zend
- * @package   Zend_Application
- * @copyright Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd     New BSD License
+ * @uses       Zend_Application_Resource_IResource
+ * @category   Zend
+ * @package    Zend_Application
+ * @subpackage Resource
+ * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Application_Bootstrap_Resource_Base
+abstract class Zend_Application_Resource_Base implements Zend_Application_Resource_IResource
 {
+    /**
+     * @var Zend_Application_Bootstrap_IBootstrap
+     */
+    protected $_bootstrap;
+
     /**
      * Option keys to skip when calling setOptions()
      *
@@ -85,11 +96,26 @@ abstract class Zend_Application_Bootstrap_Resource_Base
     {
         return $this->setOptions($config->toArray());
     }
-    
+
     /**
-     * Initiate the plugin
-     *
-     * @return void
+     * Set the bootstrap to which the resource is attached
+     * 
+     * @param  Zend_Application_Bootstrap_IBootstrap $bootstrap 
+     * @return Zend_Application_Resource_IResource
      */
-    abstract public function init();
+    public function setBootstrap(Zend_Application_Bootstrap_IBootstrap $bootstrap)
+    {
+        $this->_bootstrap = $bootstrap;
+        return $this;
+    }
+
+    /**
+     * Retrieve the bootstrap to which the resource is attached
+     * 
+     * @return null|Zend_Application_Bootstrap_IBootstrap
+     */
+    public function getBootstrap()
+    {
+        return $this->_bootstrap;
+    }
 }
