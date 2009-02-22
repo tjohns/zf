@@ -57,22 +57,24 @@ class Zend_Application
      * @param  string|array|Zend_Config $options String path to configuration file, or array/Zend_Config of configuration options
      * @return void
      */
-    public function __construct($environment, $options)
+    public function __construct($environment, $options = null)
     {
         $this->_environment = (string) $environment;
 
         require_once 'Zend/Loader/Autoloader.php';
         $this->_autoloader = Zend_Loader_Autoloader::getInstance();
 
-        if (is_string($options)) {
-            $options = $this->_loadConfig($options);
-        } elseif ($options instanceof Zend_Config) {
-            $options = $options->toArray();
-        } elseif (!is_array($options)) {
-            throw new Zend_Application_Exception('Invalid options provided; must be location of config file, a config object, or an array');
-        }
+        if (null !== $options) {
+            if (is_string($options)) {
+                $options = $this->_loadConfig($options);
+            } elseif ($options instanceof Zend_Config) {
+                $options = $options->toArray();
+            } elseif (!is_array($options)) {
+                throw new Zend_Application_Exception('Invalid options provided; must be location of config file, a config object, or an array');
+            }
 
-        $this->setOptions($options);
+            $this->setOptions($options);
+        }
     }
 
     /**
