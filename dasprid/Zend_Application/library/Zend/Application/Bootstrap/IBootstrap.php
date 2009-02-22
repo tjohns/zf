@@ -84,4 +84,11 @@ interface Zend_Application_Bootstrap_IBootstrap
      * @return mixed
      */
     public function bootstrap($resource = null);
+
+    /**
+     * Run the application
+     * 
+     * @return void
+     */
+    public function run();
 }

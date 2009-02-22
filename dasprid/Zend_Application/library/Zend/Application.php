@@ -226,6 +226,16 @@ class Zend_Application
     }
 
     /**
+     * Run the application
+     * 
+     * @return void
+     */
+    public function run()
+    {
+        $this->getBootstrap()->run();
+    }
+
+    /**
      * Load configuration file of options
      * 
      * @param  string $file 
