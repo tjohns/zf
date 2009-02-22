@@ -57,6 +57,21 @@ interface Zend_Application_Resource_IResource
     public function getBootstrap();
 
     /**
+     * Set resource options
+     * 
+     * @param  array $options 
+     * @return Zend_Application_Resource_IResource
+     */
+    public function setOptions(array $options);
+
+    /**
+     * Retrieve resource options
+     * 
+     * @return array
+     */
+    public function getOptions();
+
+    /**
      * Strategy pattern: initialize resource
      *
      * @return mixed

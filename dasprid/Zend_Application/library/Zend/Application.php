@@ -104,6 +104,8 @@ class Zend_Application
     public function setOptions(array $options)
     {
         $options = array_change_key_case($options, CASE_LOWER);
+        $this->_options = $options;
+
         if (!empty($options['phpsettings'])) {
             $this->setPhpSettings($options['phpsettings']);
         }
@@ -131,7 +133,6 @@ class Zend_Application
                 throw new Zend_Application_Exception('Invalid bootstrap information provided');
             }
         }
-        $this->_options = $options;
 
         return $this;
     }
@@ -247,10 +248,10 @@ class Zend_Application
         $suffix      = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         switch ($suffix) {
             case 'ini':
-                $config = new Zend_Config_Ini($file, $env);
+                $config = new Zend_Config_Ini($file, $environment);
                 break;
             case 'xml':
-                $config = new Zend_Config_Xml($file, $env);
+                $config = new Zend_Config_Xml($file, $environment);
                 break;
             case 'php':
             case 'inc':

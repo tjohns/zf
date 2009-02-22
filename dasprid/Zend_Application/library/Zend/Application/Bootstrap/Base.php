@@ -54,6 +54,11 @@ abstract class Zend_Application_Bootstrap_Base
     protected $_options = array();
 
     /**
+     * @var Zend_Loader_PluginLoader_Interface
+     */
+    protected $_pluginLoader;
+
+    /**
      * @var array Class-based resource plugins
      */
     protected $_pluginResources = array();
@@ -115,7 +120,7 @@ abstract class Zend_Application_Bootstrap_Base
             if (in_array($method, $methods)) {
                 $this->$method($value);
             } elseif ('Resources' == ucfirst($key)) {
-                foreach ($resources as $resource => $options) {
+                foreach ($value as $resource => $options) {
                     $this->registerPluginResource($resource, $options);
                 }
             }
@@ -187,7 +192,7 @@ abstract class Zend_Application_Bootstrap_Base
      * @return Zend_Application_Bootstrap_Base
      * @throws Zend_Application_Bootstrap_Exception for invalid $resource
      */
-    public function unregisterResource($resource)
+    public function unregisterPluginResource($resource)
     {
         if ($resource instanceof Zend_Application_Resource_IResource) {
             if ($index = array_search($resource, $this->_resources, true)) {
@@ -387,8 +392,8 @@ abstract class Zend_Application_Bootstrap_Base
             return;
         }
 
-        if (array_key_exists($resource, $this->_initMethods)) {
-            $method = $this->_initMethods[$resource];
+        if (array_key_exists($resource, $this->_classResources)) {
+            $method = $this->_classResources[$resource];
             $this->$method();
             $this->_markRun($resource);
             return;

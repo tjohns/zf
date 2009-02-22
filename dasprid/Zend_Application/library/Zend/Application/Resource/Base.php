@@ -41,6 +41,11 @@ abstract class Zend_Application_Resource_Base implements Zend_Application_Resour
     protected $_bootstrap;
 
     /**
+     * @var array
+     */
+    protected $_options = array();
+
+    /**
      * Option keys to skip when calling setOptions()
      *
      * @var array
@@ -82,8 +87,19 @@ abstract class Zend_Application_Resource_Base implements Zend_Application_Resour
                 $this->$method($value);
             }
         }
+        $this->_options = $options;
 
         return $this;
+    }
+
+    /**
+     * Retrieve resource options
+     * 
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->_options;
     }
 
     /**
