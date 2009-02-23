@@ -133,4 +133,9 @@ class Zend_Gdata_WhenTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("2005-06-06T17:00:00-08:00", $this->when->startTime);
     }
 
+    public function testToStringCanReturnValueString() {
+        $this->when->transferFromXML($this->whenText);
+        $this->assertEquals('Tomorrow @ 5 PM', $this->when->__toString());
+    }
+
 }
