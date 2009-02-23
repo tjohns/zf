@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13826 -->
+<!-- EN-Revision: 14050 -->
 <sect1 id="zend.view.controllers">
     <title>Controller Skripte</title>
 
@@ -145,6 +145,32 @@ $view->addScriptPath('/path/to/custom/');
 // im aktuellen Pfad nach der Datei "booklist.php" schauen
 ]]>
         </programlisting>
+
+        <note>
+            <title>Benutze nie Eingaben des Benutzers um den Skriptpfad zu setzen</title>
+
+            <para>
+                <code>Zend_View</code> verwendet Skriptpfade um Viewskripte zu eruieren und Sie darzustellen.
+                Deshalb sollten diese Verzeichnisse im Vorhinein bekannt sein, und unter der eigenen Kontrolle.
+                <emphasis>Niemals</emphasis> sollten Pfade von Viewskripten basierend auf Benutzereingaben
+                gesetzt werden, da diese dazu führen können das man sich potentiell gegen Local File Inclusion
+                Angriffe öffnet wenn der spezifizierte Pfad den Übergang in das Elternverzeichnis enthält.
+                Die folgende Eingabe könnte zu Beispiel so einen Fall verursachen:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// $_GET['foo'] == '../../../etc'
+$view->addScriptPath($_GET['foo']);
+$view->render('passwd');
+]]></programlisting>
+
+            <para>
+                Obwohl dieses Beispiel erfunden ist, zeigt es doch sehr klar das potentielle Problem. Wenn man
+                Benutzereingaben vertrauen <emphasis>muß</emphasis> um den eigenen Skriptpfad zu setzen, muß
+                man die Eingabe entsprechend Filtern und prüfen um sicherzustellen das Sie in dem Pfaden
+                existiert die von der eigenen Anwendung kontrolliert werden.
+            </para>
+        </note>
 
     </sect2>
 

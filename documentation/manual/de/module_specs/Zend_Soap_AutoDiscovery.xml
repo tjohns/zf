@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14094 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>AutoDiscovery</title>
 
@@ -364,17 +364,6 @@ $autodiscover->addFunction('myfunc1');
 $autodiscover->handle();
 ]]>
             </programlisting>
-        </para>
-    </sect2>
-
-    <sect2 id="zend.soap.autodiscovery.compability">
-        <title>Kompatibilität mit WSDL Client Generatoren</title>
-
-        <para>
-            Bis zur Version 1.7 wurden die WSDL Dateien mit einem Antwort Nachrichtteil erzeugt der von
-            Java oder .NET Clients zum Beispiel nicht richtig erkannt wurde. Ab der Version 1.8 wurde die
-            Funktion <code>setResponseMessageReturnNameCompability()</code> inkludiert um die Kompatibilität
-            für diese Fälle zu gestatten.
         </para>
     </sect2>
 </sect1>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13827 -->
+<!-- EN-Revision: 14128 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -622,7 +622,7 @@ $translate->addTranslation('path/to/other.ini', 'it');
             <title>Benutzen von Übersetzungsoptionen</title>
             <programlisting role="php"><![CDATA[
 // Definiere ':' als Trenner für die Quelldatei der Übersetzung
-$options = array('separator' => ':');
+$options = array('delimiter' => ':');
 $translate = new Zend_Translate('csv',
                                 'path/to/mytranslation.csv',
                                 'de',
@@ -680,6 +680,20 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                         versteckten Dateien ignoriert werden. Wenn dieser Wert auf 'tmp' gesetzt wird, bedeutet
                         das, das Verzeichnisse und Dateien wie z.B. 'tmpImages' und 'tmpFiles', sowie alle
                         darunter liegenden Verzeichnisse, ignoriert werden.</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
+                        <entry>log</entry>
+                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>Eine Instanz von Zend_Log wohin nicht übersetzbare Meldungen und Notizen
+                        geschrieben werden</entry>
+                    </row>
+                    <row>
+                        <entry>all</entry>
+                        <entry>logUntranslated</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>Wenn diese Option auf true gesetzt wird, werden alle Nachrichten Id's die nicht
+                        übersetzt werden können in das angehängte Log geschrieben</entry>
                     </row>
                     <row>
                         <entry>all</entry>
@@ -1170,6 +1184,64 @@ if ($translate->isTranslated('message1', false, 'de')) {
 ]]>
             </programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.logging">
+
+        <title>Wie können nicht gefundene Übersetzungen geloggt werden</title>
+
+        <para>
+            Wenn man eine größere Site hat, oder man die Übersetzungsdateien manuell erstellt hat man oft
+            das Problem das einige Meldungen nicht übersetzt werden. Aber es gibt eine einfache Lösung wenn
+            man <code>Zend_Translate</code> verwendet.
+        </para>
+
+        <para>
+            Man muß den folgenden zwei oder drei einfachen Schritten folgen. Erstens, muß man eine Instanz von
+            <code>Zend_Log</code> erstellen. Und dann muß man diese Instanz an <code>Zend_Translate</code>
+            übergeben. Siehe das folgende Beispiel:
+        </para>
+
+        <example id="zend.translate.using.logging.example">
+            <title>Übersetzungen loggen</title>
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('gettext', $path, 'de');
+
+// Eine Log Instanz erstellen
+$writer = new Zend_Log_Writer_Stream('/path/file.log');
+$log = new Zend_Log($writer);
+
+// Diese der Übersetzungs-Instanz hinzufügen
+$translate->setOptions(array(
+    'log' => $log,
+    'logUntranslated' => true));
+
+$translate->tranlate('unbekannter String');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Jetzt steht im Log eine neue Notiz: <code>Untranslated message: unbekannter String</code>.
+        </para>
+
+        <note>
+            <para>
+                Man sollte beachten das jede Übersetzung die nicht gefunden wird mitgeloggt wird. Das
+                bedeutet das alle Übersetzungen wenn ein Benutzer eine nicht unterstützte Sprache anfragt.
+                Aber auch jede Anfrage für eine Nachricht die nicht übersetzt werden kann wird mitgeloggt.
+                Es ist zu beachten das, wenn 100 Personen die gleiche Übersetzung anfragen, auch 100
+                Notizen geloggt werden.
+            </para>
+        </note>
+
+        <para>
+            Dieses Feature kann nicht nur verwendet werden um Nachrichten zu Loggen sondern auch um diese
+            nicht übersetzen Nachrichten in eine leere Übersetzungsdatei zu schreiben. Um das zu ermöglichen
+            muß man seinen eigenen Log Writer erstellen der das Format schreibt das man haben will und das
+            führende "Untranslated message: " herausschneidet.
+        </para>
 
     </sect2>
 

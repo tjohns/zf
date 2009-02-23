@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13977 -->
+<!-- EN-Revision: 14091 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -13,7 +13,7 @@
     <note>
         <title>Einschränkungen</title>
         <para>
-            Die aktuelle Implementation von <code>Zend_File_Transfer</code> die in 1.6.0 ausgeliefert wird,
+            Die aktuelle Implementation von <code>Zend_File_Transfer</code>
             ist auf HTTP Post Uploads limitiert. Andere Adapter die Downloads und andere Protokolle
             unterstützen werden in zukünftigen Releases hinzugefügt. Aktuell sollte
             <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet werden. Sobald andere Adapter
@@ -371,6 +371,107 @@ $names = $upload->getMimeType('foo');
                 Hochladens der Datei angegeben wurde.
             </para>
         </note>
+    </sect2>
+
+    <sect2 id="zend.file.transfer.introduction.uploadprogress">
+
+        <title>Fortschritt für Datei Uploads</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> kann den aktuellen Status eines gerade stattfindenden Datei Uploads
+            erheben. Um dieses Feature zu verwenden muß man entweder die <code>APC</code> Erweiterung
+            verwenden, die mit den meisten standardmäßigen PHP Installationen vorhanden ist, oder die
+            <code>uploadprogress</code> Erweiterung. Beide Erweiterungen werden erkannt und automatisch
+            verwendet. Um den Fortschritt zu erhalten muß man einige Voraussetzungen erfüllen.
+        </para>
+
+        <para>
+            Erstens, muß man entweder <code>APC</code> oder <code>uploadprogress</code> aktiviert haben.
+            Es ist zu beachten das dieses Feature von <code>APC</code> in der eigenen php.ini ausgeschaltet
+            werden kann.
+        </para>
+
+        <para>
+            Zweitens, muß man die richtigen unsichtbaren Felder im Formular hinzugefügt haben das die Dateien
+            sendet. Wenn man <code>Zend_Form_Element_File</code> verwendet werden diese unsichtbaren Felder
+            automatisch von <code>Zend_Form</code> hinzugefügt.
+        </para>
+
+        <para>
+            Wenn die oberen zwei Punkte vorhanden sind dann ist man in der Lage den aktuellen Fortschritt des
+            Datei uploads zu erhalten indem man die <code>getProgress</code> Methode verwendet.
+        </para>
+
+        <example id="zend.file.transfer.introduction.uploadprogress.fetching">
+            <title>Den aktuellen Fortschritt des Datei Uploads erhalten</title>
+
+            <para>
+                Nehmen wir an, das wir bereits ein Formular erstellt und übertragen haben, und das der
+                Datei Upload aktuell durchgeführt wird.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = Zend_File_Transfer_Adapter_Http::getProgress();
+
+$upload = null;
+while (empty($upload['message'])) {
+    $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
+    // mach was mit den zurückgegebenen Daten
+}
+]]>
+            </programlisting>
+
+        </example>
+
+        <para>
+            Basierend auf der verwendeten Erweiterung unterscheiden sich die Daten im Detail. Aber beide
+            Erweiterungen geben Ihre Informationen in einem Array zurück das die folgenden Schlüssel besitzt:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">total</emphasis>: Die komplette Größe der hochzuladenden Datei in
+                    Bytes als Integer.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">current</emphasis>: Die aktuelle Größe der hochzuladenden Datei in
+                    Bytes als Integer.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">rate</emphasis>: Die durchschnittliche Upload Geschwindigkeit in
+                    Bytes pro Sekunde als Integer.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">id</emphasis>: Die Id ist die Referenz zum upload selbst. Wenn
+                    mehrere Benutzer eine Datei hochladen, erhält jeder Upload seine eigene Id. Die aktuelle
+                    Id dieser Anfrage wird zurückgegeben wenn man <code>getProgress()</code> das erste Mal
+                    aufruft.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">message</emphasis>: Eine hilfreiche Nachricht im Fall eines
+                    Problems. Probleme könnten sein, das kein Upload durchgeführt wird, das ein Fehler wärend
+                    des Empfangens der Daten für den Fortschritt auftrat, oder das der Upload abgebrochen wurde.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Alle anderen zurückgegebenen Schlüssel werden direkt von der Erweiterung angeboten und nicht
+            geprüft.
+        </para>
     </sect2>
 </sect1>
 <!--
