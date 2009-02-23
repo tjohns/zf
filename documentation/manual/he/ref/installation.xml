@@ -7,25 +7,20 @@
     </para>
 
     <para>
-        Installing Zend Framework is extremely simple. Once you have downloaded and extracted the framework, you should add the
-        /library folder in the distribution to the beginning of your include path. You may also want to move the library folder
-        to another- possibly shared- location on your file system.
-
+        התקנת המערכת של Zend Framework הינה קלה ומהירה. לאחר שהורדתם וחלצתם את הקבצים של ה framework , כדי לכם להוסיף את תיקית הספריה של Zend
+        /library לתיקיה הראשית של האפליקציה שהנכם מתכנתים. כמו כן רצוי להעתיק את כל התוכן של הספריה אל מקום נוסף במחשב/תיקית שיתוף שיהיה ניתן לגשת אליה בקלות יותר.
         <itemizedlist>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/latest">Download the latest stable release.</ulink>
-                    This version, available in both <code>.zip</code> and <code>.tar.gz</code> formats, is a good
-                    choice for those who are new to Zend Framework.
+                    <ulink url="http://framework.zend.com/download/latest">הורידו את הגרסא היציבה האחרונה של המערכת.</ulink>
+                    הגרסא זמינה בשני סוגי פורמטים <code>.zip</code> ו <code>.tar.gz</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <ulink url="http://framework.zend.com/download/snapshot">Download the latest nightly
-                    snapshot.</ulink> For those who would brave the cutting edge, the nightly snapshots represent the
-                    latest progress of Zend Framework development. Snapshots are bundled with documentation either in
-                    English only or in all available languages. If you anticipate working with the latest Zend
-                    Framework developments, consider using a Subversion (SVN) client.
+                    <ulink url="http://framework.zend.com/download/snapshot">הורד את הגרסא 'הלילית' האחרונה</ulink> 
+                    לאלו מכם שרוצים לנסות ולהשתתך בתהליך הבדיקות של המערכת, ניתן להוריד את גרסאת הפיתוח האחרונה ישירות מה SVN של המערכת.
+                     גרסאות הפיתוח מגיעות עם הדוקומנטציה של המערכת באנגלית בלבד או בכל השפות. אם גם אתה רוצה להשתתף בפיתוח המערכת, תצטרך לשקלו שימוש ב subversion (SVN) לניהול קבצים.
                 </para>
             </listitem>
             <listitem>
