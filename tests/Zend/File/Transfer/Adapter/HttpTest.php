@@ -201,6 +201,16 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
             'id'      => 'mykey'), $status);
 
     }
+
+    public function testValidationOfPhpExtendsFormError()
+    {
+        $_SERVER['CONTENT_LENGTH'] = 10;
+
+        $_FILES = array();
+        $adapter = new Zend_File_Transfer_Adapter_HttpTest_MockAdapter();
+        $this->assertFalse($adapter->isValidParent());
+        $this->assertContains('exceeds the defined ini size', current($adapter->getMessages()));
+    }
 }
 
 class Zend_File_Transfer_Adapter_HttpTest_MockAdapter extends Zend_File_Transfer_Adapter_Http
@@ -214,6 +224,11 @@ class Zend_File_Transfer_Adapter_HttpTest_MockAdapter extends Zend_File_Transfer
     public function isValid($files = null)
     {
         return true;
+    }
+
+    public function isValidParent($files = null)
+    {
+        return parent::isValid($files);
     }
 
     public static function isApcAvailable()

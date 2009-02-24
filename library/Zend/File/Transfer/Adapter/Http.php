@@ -82,6 +82,33 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
     }
 
     /**
+     * Checks if the files are valid
+     *
+     * @param  string|array $files (Optional) Files to check
+     * @return boolean True if all checks are valid
+     */
+    public function isValid($files = null)
+    {
+        // Workaround for a PHP error returning empty $_FILES when form data exceeds php settings
+        if (empty($this->_files) && ($_SERVER['CONTENT_LENGTH'] > 0)) {
+            if (is_array($files)) {
+                $files = current($files);
+            }
+
+            $temp = array($files => array(
+                'name'  => $files,
+                'error' => 1));
+            $validator = $this->_validators['Zend_Validate_File_Upload'];
+            $validator->setFiles($temp)
+                      ->isValid($files, null);
+            $this->_messages += $validator->getMessages();
+            return false;
+        }
+
+        return parent::isValid($files);
+    }
+
+    /**
      * Receive the file from the client (Upload)
      *
      * @param  string|array $files (Optional) Files to receive
