@@ -230,6 +230,25 @@ abstract class Zend_Db_Table_Row_TestCommon extends Zend_Db_Table_TestSetup
             $this->fail('Column "id" is set but isset() returns false');
         }
     }
+    
+    public function testTableRowMagicUnset()
+    {
+        $table = $this->_table['bugs'];
+        $row   = $table->find(1)->current();
+        
+        unset($row->assigned_to);
+        $this->assertFalse(isset($row->assigned_to));
+        $diff = array_diff_key(array('assigned_to'=>''), $row->toArray());
+        $this->assertEquals(array('assigned_to'),array_keys($diff));
+    }
+    
+    public function testTableRowMagicUnsetWhenUnsettingPkValueThrowsException()
+    {
+        $table = $this->_table['bugs'];
+        $row   = $table->find(1)->current();
+        $this->setExpectedException('Zend_Db_Table_Row_Exception');
+        unset($row->bug_id);
+    }
 
     public function testTableRowMagicSet()
     {
