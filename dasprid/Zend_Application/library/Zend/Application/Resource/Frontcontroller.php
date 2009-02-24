@@ -21,6 +21,11 @@
  */
 
 /**
+ * @see Zend_Application_Bootstrap_Resource_Base
+ */
+require_once 'Zend/Application/Bootstrap/Resource/Base.php';
+
+/**
  * Front Controller resource
  *
  * @category   Zend
@@ -39,6 +44,7 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
     public function init()
     {
         $this->_front = Zend_Controller_Front::getInstance();
+        
         foreach ($this->getOptions() as $key => $value) {
             switch (strtolower($key)) {
                 case 'controllerdirectory':
@@ -50,27 +56,35 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
                         }
                     }
                     break;
+                    
                 case 'modulecontrollerdirectoryname':
                     $this->_front->setModuleControllerDirectoryName($value);
                     break;
+                    
                 case 'moduledirectory':
                     $this->_front->addModuleDirectory($value);
                     break;
+                    
                 case 'defaultcontrollername':
                     $this->_front->setDefaultControllerName($value);
                     break;
+                    
                 case 'defaultaction':
                     $this->_front->setDefaultAction($value);
                     break;
+                    
                 case 'defaultmodule':
                     $this->_front->setDefaultModule($value);
                     break;
+                    
                 case 'baseurl':
                     $this->_front->setBaseUrl($value);
                     break;
+                    
                 case 'params':
                     $this->_front->setParams($value);
                     break;
+                    
                 case 'plugins':
                     foreach ((array) $value as $pluginClass) {
                         $plugin = new $pluginClass();
@@ -79,6 +93,7 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
                     break;
             }
         }
+        
         $this->getBootstrap()->frontController = $this->_front;
     }
 }

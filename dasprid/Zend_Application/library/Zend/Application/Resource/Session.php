@@ -38,32 +38,12 @@ require_once 'Zend/Application/Resource/Base.php';
 class Zend_Application_Resource_Session extends Zend_Application_Resource_Base
 {
     /**
-     * Options for sessions
-     *
-     * @var array
-     */
-    protected $_options = array();
-    
-    /**
      * Save handler to use
      *
      * @var Zend_Session_SaveHandler_Interface
      */
     protected $_saveHandler = null;
-    
-    /**
-     * Set options from array
-     *
-     * @param  array $options Configuration for Zend_Session
-     * @return Zend_Application_Resource_Session
-     */
-    public function setOptions(array $options)
-    {
-        $this->_options = $options;
-
-        return parent::setOptions($options);
-    }
-    
+        
     /**
      * Set session save handler
      *

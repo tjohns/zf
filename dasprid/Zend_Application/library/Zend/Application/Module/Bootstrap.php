@@ -20,7 +20,9 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/** Zend_Application_Bootstrap_Base */
+/**
+ * @see Zend_Application_Bootstrap_Base
+ */
 require_once 'Zend/Application/Bootstrap/Base.php';
 
 /**
@@ -30,10 +32,15 @@ require_once 'Zend/Application/Bootstrap/Base.php';
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    New BSD {@link http://framework.zend.com/license/new-bsd}
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootstrap_Base
 {
+    /**
+     * Used auto loader
+     *
+     * @var Zend_Loader_Autoloader_Resource
+     */
     protected $_resourceLoader;
 
     /**
@@ -67,6 +74,7 @@ abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootst
                 )));
             }
         }
+        
         return $this->_resourceLoader;
     }
 }

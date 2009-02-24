@@ -21,6 +21,11 @@
  */
 
 /**
+ * @see Zend_Application_Bootstrap_Resource_Base
+ */
+require_once 'Zend/Application/Bootstrap/Resource/Base.php';
+
+/**
  * Module bootstrapping resource
  *
  * @category   Zend
@@ -33,7 +38,8 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Base
 {
     /**
      * Initialize modules
-     * 
+     *
+     * @throws Zend_Application_Resource_Exception When bootstrap class was not found
      * @return void
      */
     public function init()
@@ -45,18 +51,21 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Base
         $modules = $front->getControllerDirectory();
         $default = $front->getDefaultModule();
         foreach (array_keys($modules) as $module) {
-            if ($module == $default) {
+            if ($module === $default) {
                 continue;
             }
 
             $path = $front->getModuleDirectory($module);
             $bootstrapPath  = $path . '/Bootstrap.php';
             $bootstrapClass = ucfirst($module) . '_Bootstrap';
+            
             if (file_exists($bootstrapPath)) {
                 include_once $bootstrapPath;
+                
                 if (!class_exists($bootstrapClass, false)) {
                     throw new Zend_Application_Resource_Exception('Bootstrap file found for module "' . $module . '" but bootstrap class "' . $bootstrapClass . '" not found');
                 }
+                
                 $moduleBootstrap = new $bootstrapClass($this);
                 $moduleBootstrap->bootstrap();
             }

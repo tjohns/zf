@@ -20,7 +20,9 @@
  * @version    $Id$
  */
 
-/** Zend_Application_Resource_IResource */
+/**
+ * @see Zend_Application_Resource_IResource
+ */
 require_once 'Zend/Application/Resource/IResource.php';
 
 /**
@@ -36,11 +38,15 @@ require_once 'Zend/Application/Resource/IResource.php';
 abstract class Zend_Application_Resource_Base implements Zend_Application_Resource_IResource
 {
     /**
+     * Parent bootstrap
+     * 
      * @var Zend_Application_Bootstrap_IBootstrap
      */
     protected $_bootstrap;
 
     /**
+     * Options for the resource
+     * 
      * @var array
      */
     protected $_options = array();
@@ -87,6 +93,7 @@ abstract class Zend_Application_Resource_Base implements Zend_Application_Resour
                 $this->$method($value);
             }
         }
+        
         $this->_options = $options;
 
         return $this;

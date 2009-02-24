@@ -28,21 +28,29 @@
 class Zend_Application
 {
     /**
+     * Autoloader to use
+     * 
      * @var Zend_Loader_Autoloader
      */
     protected $_autoloader;
 
     /**
+     * Bootstrap
+     * 
      * @var Zend_Application_Bootstrap_Base
      */
     protected $_bootstrap;
 
     /**
+     * Application environment
+     * 
      * @var string
      */
     protected $_environment;
 
     /**
+     * Options for Zend_Application
+     * 
      * @var array
      */
     protected $_options = array();
@@ -53,8 +61,9 @@ class Zend_Application
      * Initialize application. Potentially initializes include_paths, PHP 
      * settings, and bootstrap class.
      * 
-     * @param  string $environment 
+     * @param  string                   $environment 
      * @param  string|array|Zend_Config $options String path to configuration file, or array/Zend_Config of configuration options
+     * @throws Zend_Application_Exception When invalid options are provided
      * @return void
      */
     public function __construct($environment, $options = null)
@@ -101,35 +110,44 @@ class Zend_Application
      * Set application options
      * 
      * @param  array $options 
+     * @throws Zend_Application_Exception When no bootstrap path is provided
+     * @throws Zend_Application_Exception When invalid bootstrap information are provided
      * @return Zend_Application
      */
     public function setOptions(array $options)
     {
-        $options = array_change_key_case($options, CASE_LOWER);
+        $options        = array_change_key_case($options, CASE_LOWER);
         $this->_options = $options;
 
         if (!empty($options['phpsettings'])) {
             $this->setPhpSettings($options['phpsettings']);
         }
+        
         if (!empty($options['includepaths'])) {
             $this->setIncludePaths($options['includepaths']);
         }
+        
         if (!empty($options['autoloadernamespaces'])) {
             $this->setAutoloaderNamespaces($options['autoloadernamespaces']);
         }
+        
         if (!empty($options['bootstrap'])) {
             $bootstrap = $options['bootstrap'];
+            
             if (is_string($bootstrap)) {
                 $this->setBootstrap($bootstrap);
             } elseif (is_array($bootstrap)) {
                 if (empty($bootstrap['path'])) {
                     throw new Zend_Application_Exception('No bootstrap path provided');
                 }
+                
                 $path  = $bootstrap['path'];
                 $class = null;
+                
                 if (!empty($bootstrap['class'])) {
                     $class = $bootstrap['class'];
                 }
+                
                 $this->setBootstrap($path, $class);
             } else {
                 throw new Zend_Application_Exception('Invalid bootstrap information provided');
@@ -160,6 +178,7 @@ class Zend_Application
         foreach ($settings as $key => $value) {
             ini_set($key, $value);
         }
+        
         return $this;
     }
 
@@ -185,9 +204,11 @@ class Zend_Application
     public function setAutoloaderNamespaces(array $namespaces)
     {
         $autoloader = $this->getAutoloader();
+        
         foreach ($namespaces as $namespace) {
             $autoloader->registerNamespace($namespace);
         }
+        
         return $this;
     }
 
@@ -203,8 +224,10 @@ class Zend_Application
         if (empty($class)) {
             $class = 'Bootstrap';
         }
+        
         require_once $path;
         $this->_bootstrap = new $class($this);
+        
         return $this;
     }
 
@@ -241,28 +264,34 @@ class Zend_Application
     /**
      * Load configuration file of options
      * 
-     * @param  string $file 
+     * @param  string $file
+     * @throws Zend_Application_Exception When invalid configuration file is provided 
      * @return array
      */
     protected function _loadConfig($file)
     {
         $environment = $this->getEnvironment();
         $suffix      = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        
         switch ($suffix) {
             case 'ini':
                 $config = new Zend_Config_Ini($file, $environment);
                 break;
+                
             case 'xml':
                 $config = new Zend_Config_Xml($file, $environment);
                 break;
+                
             case 'php':
             case 'inc':
-                $array = include $file;
+                $array  = include $file;
                 $config = new Zend_Config($array);
                 break;
+                
             default:
                 throw new Zend_Application_Exception('Invalid configuration file provided; unknown config type');
         }
+        
         return $config->toArray();
     }
 }

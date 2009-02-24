@@ -74,7 +74,8 @@ abstract class Zend_Application_Bootstrap_Base
      * Sets application object, initializes options, and prepares list of 
      * initializer methods.
      * 
-     * @param  Zend_Application|Zend_Application_Bootstrap_IBootstrap $application 
+     * @param  Zend_Application|Zend_Application_Bootstrap_IBootstrap $application
+     * @throws Zend_Application_Bootstrap_Exception When invalid applicaiton is provided 
      * @return void
      */
     public function __construct($application)
@@ -91,7 +92,7 @@ abstract class Zend_Application_Bootstrap_Base
         $this->setOptions($options);
 
         foreach (get_class_methods($this) as $method) {
-            if (5 < strlen($method) && ('_init' == substr($method, 0, 5))) {
+            if (5 < strlen($method) && '_init' === substr($method, 0, 5)) {
                 $this->_classResources[strtolower(substr($method, 5))] = $method;
             }
         }
@@ -109,17 +110,20 @@ abstract class Zend_Application_Bootstrap_Base
 
         if (array_key_exists('pluginPaths', $options)) {
             $pluginLoader = $this->getPluginLoader();
+            
             foreach ($options['pluginPaths'] as $prefix => $path) {
                 $pluginLoader->addPrefixPath($prefix, $path);
             }
+            
             unset($options['pluginPaths']);
         }
 
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
+            
             if (in_array($method, $methods)) {
                 $this->$method($value);
-            } elseif ('Resources' == ucfirst($key)) {
+            } elseif ('Resources' === ucfirst($key)) {
                 foreach ($value as $resource => $options) {
                     $this->registerPluginResource($resource, $options);
                 }
@@ -164,8 +168,8 @@ abstract class Zend_Application_Bootstrap_Base
      * 
      * @param  string|Zend_Application_Resource_IResource $resource
      * @param  mixed  $options
+     * @throws Zend_Application_Bootstrap_Exception When invalid resource is provided
      * @return Zend_Application_Bootstrap_Base
-     * @throws Zend_Application_Bootstrap_Exception for invalid $resource
      */
     public function registerPluginResource($resource, $options = null)
     {
@@ -189,8 +193,8 @@ abstract class Zend_Application_Bootstrap_Base
      * Unregister a resource from the bootstrap
      * 
      * @param  string|Zend_Application_Resource_IResource $resource 
+     * @throws Zend_Application_Bootstrap_Exception When unknown resource type is provided
      * @return Zend_Application_Bootstrap_Base
-     * @throws Zend_Application_Bootstrap_Exception for invalid $resource
      */
     public function unregisterPluginResource($resource)
     {
@@ -234,6 +238,7 @@ abstract class Zend_Application_Bootstrap_Base
     public function getPluginResource($resource)
     {
         $resource = strtolower($resource);
+        
         if (!array_key_exists($resource, $this->_pluginResources)) {
             return null;            
         }
@@ -246,6 +251,7 @@ abstract class Zend_Application_Bootstrap_Base
 
         $plugin = $this->_pluginResources[$resource];
         $plugin->setBootstrap($this);
+        
         return $plugin;
     }
 
@@ -257,9 +263,11 @@ abstract class Zend_Application_Bootstrap_Base
     public function getPluginResources()
     {
         $resources = array();
+        
         foreach (array_keys($this->_pluginResources) as $resource) {
             $resources[$resource] = $this->getPluginResource($resource);
         }
+        
         return $resources;
     }
 
@@ -329,7 +337,8 @@ abstract class Zend_Application_Bootstrap_Base
     /**
      * Bootstrap individual, all, or multiple resources
      * 
-     * @param  null|string|array $resource 
+     * @param  null|string|array $resource
+     * @throws Zend_Application_Bootstrap_Exception When invalid argument was passed 
      * @return void
      */
     public function bootstrap($resource = null)
@@ -338,6 +347,7 @@ abstract class Zend_Application_Bootstrap_Base
             foreach ($this->getClassResourceNames() as $resource) {
                 $this->_executeResource($resource);
             }
+            
             foreach ($this->getPluginResourceNames() as $resource) {
                 $this->_executeResource($resource);
             }
@@ -356,13 +366,13 @@ abstract class Zend_Application_Bootstrap_Base
      * Overloading: intercept calls to bootstrap<resourcename>() methods
      * 
      * @param  string $method 
-     * @param  array $args 
+     * @param  array  $args
+     * @throws Zend_Application_Bootstrap_Exception On invalid method name 
      * @return void
-     * @throws Zend_Application_Bootstrap_Exception on invalid method name
      */
     public function __call($method, $args)
     {
-        if ((9 < strlen($method)) && ('bootstrap' == substr($method, 0, 9))) {
+        if (9 < strlen($method) && 'bootstrap' === substr($method, 0, 9)) {
             $resource = substr($method, 9);
             return $this->bootstrap($resource);
         }
@@ -381,8 +391,8 @@ abstract class Zend_Application_Bootstrap_Base
      * Finally, if not found, it throws an exception.
      * 
      * @param  string $resource 
+     * @throws Zend_Application_Bootstrap_Exception When resource not found
      * @return void
-     * @throws Zend_Application_Bootstrap_Exception when resource not found
      */
     protected function _executeResource($resource)
     {

@@ -38,26 +38,6 @@ require_once 'Zend/Application/Bootstrap/Resource/Base.php';
 class Zend_Application_Resource_View extends Zend_Application_Resource_Base
 {
     /**
-     * Options for the view
-     *
-     * @var array
-     */
-    protected $_options = array();
-
-    /**
-     * Set options from array
-     *
-     * @param  array $options Configuration for Zend_View
-     * @return Zend_Application_Resource_View
-     */
-    public function setOptions(array $options)
-    {
-        $this->_options = $options;
-
-        return parent::setOptions($options);
-    }
-    
-    /**
      * Defined by Zend_Application_Resource_IResource
      *
      * @return void

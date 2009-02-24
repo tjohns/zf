@@ -35,7 +35,7 @@ interface Zend_Application_Bootstrap_IResourceBootstrap
      * Register a resource with the bootstrap
      * 
      * @param  string|Zend_Application_Resource_IResource $resource 
-     * @param  null|array|Zend_Config $options 
+     * @param  null|array|Zend_Config                     $options 
      * @return Zend_Application_Bootstrap_IResourceBootstrap
      */
     public function registerPluginResource($resource, $options = null);
