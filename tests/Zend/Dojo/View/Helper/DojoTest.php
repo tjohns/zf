@@ -835,6 +835,18 @@ function() {
         $this->assertNull($test);
     }
 
+    /**
+     * @group ZF-4587
+     * @group ZF-5808
+     */
+    public function testZendDijitOnLoadMarkupShouldPrecedeAllOtherOnLoadEvents()
+    {
+        $this->helper->addOnLoad('zend.custom');
+        $this->view->textBox('foo', 'bar');
+        $test = $this->helper->__toString();
+        $this->assertRegexp('/zendDijits.*?(zend\.custom)/s', $test, 'Generated markup: ' . $test);
+    }
+
     public function setupDojo()
     {
         $this->helper->requireModule('dijit.layout.ContentPane')
