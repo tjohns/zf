@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 14165 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() ビューヘルパー</title>
 
@@ -371,6 +371,9 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     最初の引数がオブジェクトのインスタンスを表す変数名、
                     二番目の引数がそのオブジェクトのメソッド名あるいは
                     そのオブジェクトで使用するクロージャと見なされます。</para></listitem>
+            <listitem><para><code>prependOnLoad($spec, $function = null)</code>:
+                    <code>addOnLoad()</code> と同じですが、onLoad
+                    スタックの先頭に追加するという点だけが異なります。</para></listitem>
             <listitem><para><code>getOnLoadActions()</code>:
                     コンテナに登録されているすべての dojo.onLoad
                     アクションを取得します。
