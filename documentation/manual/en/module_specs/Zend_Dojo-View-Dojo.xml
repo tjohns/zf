@@ -368,6 +368,9 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     to be the name of an object instance variable and the second
                     either a method name in that object or a closure to utilize
                     with that object.</para></listitem>
+            <listitem><para><code>prependOnLoad($spec, $function = null)</code>:
+                    exactly like <code>addOnLoad()</code>, excepts prepends to
+                    beginning of onLoad stack.</para></listitem>
             <listitem><para><code>getOnLoadActions()</code>: retrieve all
                     dojo.onLoad actions registered with the container. This will
                     be an array of arrays.</para></listitem>

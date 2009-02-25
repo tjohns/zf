@@ -577,6 +577,20 @@ class Zend_Dojo_View_Helper_Dojo_Container
     }
 
     /**
+     * Prepend an onLoad event to the list of onLoad actions
+     * 
+     * @param  string $callback Lambda
+     * @return Zend_Dojo_View_Helper_Dojo_Container
+     */
+    public function prependOnLoad($callback)
+    {
+        if (!in_array($callback, $this->_onLoadActions, true)) {
+            array_unshift($this->_onLoadActions, $callback);
+        }
+        return $this;
+    }
+
+    /**
      * Retrieve all registered onLoad actions
      * 
      * @return array
@@ -776,7 +790,7 @@ function() {
 }
 EOJ;
             $this->requireModule('dojo.parser');
-            $this->addOnLoad($js);
+            $this->prependOnLoad($js);
             $this->addJavascript('var zendDijits = ' . $this->dijitsToJson() . ';');
             $this->_dijitLoaderRegistered = true;
         }
