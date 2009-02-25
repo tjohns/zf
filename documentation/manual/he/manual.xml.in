@@ -7,9 +7,9 @@
 ]>
 <book id="manual" lang="he">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>מדריך מלא למתכנת</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>מדריך מלא למתכנת במערכת Zend Framework</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -28,7 +28,7 @@
         -->
     </bookinfo>
     <chapter id="introduction">
-        <title>Introduction to Zend Framework</title>
+        <title>הקדמה</title>
         <xi:include href="ref/overview.xml">
             <xi:fallback><xi:include href="../en/ref/overview.xml" /></xi:fallback>
         </xi:include>

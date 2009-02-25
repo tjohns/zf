@@ -7,7 +7,7 @@
 
     <para>
         כל הזכויות שמורות &#169; 2005-<?dbtimestamp format="Y"?> Zend Technologies Inc.
-        <span dir="ltr">(<ulink url="http://www.zend.com" />)</span>
+       (<ulink url="http://www.zend.com" />)
     </para>
 
 </appendix>
