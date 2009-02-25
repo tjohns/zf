@@ -694,18 +694,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             return null;
         }
 
-        $filenames = $this->getFileName();
-        if (count($filenames) == 1) {
-            $this->_value = basename($filenames);
-            return $this->_value;
-        }
-
-        $this->_value = array();
-        foreach($filenames as $filename) {
-            $this->_value[] = basename($filename);
-        }
-
-        return $this->_value;
+        return $this->getFileName(null, false);
     }
 
     /**

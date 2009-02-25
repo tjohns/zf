@@ -168,6 +168,10 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
         $adapter = new Zend_File_Transfer_Adapter_HttpTest_MockAdapter();
         $adapter->setOptions(array('ignoreNoFile' => true));
         $this->assertTrue($adapter->receive('exe'));
+        $this->assertEquals(
+            array('exe_0_' => 'file1.txt',
+                  'exe_1_' => 'file2.txt'),
+            $adapter->getFileName('exe', false));
     }
 
     public function testNoUploadInProgress()

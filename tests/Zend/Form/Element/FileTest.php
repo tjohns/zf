@@ -175,6 +175,9 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
 
     public function testDestinationMutatorsShouldProxyToTransferAdapter()
     {
+        $adapter = new Zend_Form_Element_FileTest_MockAdapter();
+        $this->element->setTransferAdapter($adapter);
+
         $this->element->setDestination(dirname(__FILE__));
         $this->assertEquals(dirname(__FILE__), $this->element->getDestination());
         $this->assertEquals(dirname(__FILE__), $this->element->getTransferAdapter()->getDestination('foo'));

@@ -1354,7 +1354,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             foreach ($files as $find) {
                 $found = array();
                 foreach ($this->_files as $file => $content) {
-                    if (isset($content['multifiles'])) {
+                    if (!isset($content['name'])) {
+                        continue;
+                    }
+
+                    if (($content['name'] === $find) && isset($content['multifiles'])) {
                         foreach ($content['multifiles'] as $multifile) {
                             $found[] = $multifile;
                         }
@@ -1368,10 +1372,6 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
                     if (strpos($file, ($find . '_')) !== false) {
                         $found[] = $file;
-                    }
-
-                    if (!isset($content['name'])) {
-                        continue;
                     }
 
                     if ($content['name'] === $find) {
