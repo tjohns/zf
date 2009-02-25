@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14104 -->
+<!-- EN-Revision: 14127 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -703,6 +703,21 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                     </row>
                     <row>
                         <entry>すべて</entry>
+                        <entry>log</entry>
+                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>未翻訳のメッセージや注意が書き込まれる Zend_Log のインスタンス</entry>
+                    </row>
+                    <row>
+                        <entry>すべて</entry>
+                        <entry>logUntranslated</entry>
+                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>
+                            このオプションを true に設定すると、翻訳できなかったすべてのメッセージ ID
+                            が添付のログに書き込まれます。
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>すべて</entry>
                         <entry>scan</entry>
                         <entry><emphasis role="strong">null</emphasis></entry>
                         <entry>
@@ -1210,6 +1225,67 @@ if ($translate->isTranslated('message1', false, 'de')) {
 ]]>
             </programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.translate.using.logging">
+
+        <title>見つからなかった翻訳をログに記録する方法</title>
+
+        <para>
+            大規模なサイトを管理していたり翻訳ファイルを手作業で作ったりしている場合に、
+            うまく翻訳ができないメッセージに悩まされることがよくあるでしょう。
+            <code>Zend_Translate</code> を使っていれば、こんなときにも簡単な解決方法があります。
+        </para>
+
+        <para>
+            そのためには、次の 2、3 のステップに従う必要があります。
+            まず <code>Zend_Log</code> のインスタンスを作成します。
+            そして、そのインスタンスを <code>Zend_Translate</code> にアタッチします。
+            次の例を参照ください。
+        </para>
+
+        <example id="zend.translate.using.logging.example">
+            <title>翻訳のログ出力</title>
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('gettext', $path, 'de');
+
+// log のインスタンスを作成します
+$writer = new Zend_Log_Writer_Stream('/path/file.log');
+$log = new Zend_Log($writer);
+
+// それを translation インスタンスにアタッチします
+$translate->setOptions(array(
+    'log' => $log,
+    'logUntranslated' => true));
+
+$translate->tranlate('unknown string');
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            これで、<code>Untranslated message: unknown string</code>
+            のような注意メッセージがログに記録されるようになるでしょう。
+        </para>
+
+        <note>
+            <para>
+                翻訳が見つからなかったものがすべてログに記録されることに注意しましょう。
+                つまり、サポートしていない言語でのリクエストがユーザからあった場合は、
+                すべての翻訳がログに記録されるということです。また、
+                翻訳不能なメッセージへのリクエストは毎回ログに記録されます。
+                つまり、100 人の人が同じ翻訳をリクエストしたら、
+                100 件のログが記録されるというわけです。
+            </para>
+        </note>
+
+        <para>
+            この機能はメッセージのログ出力だけに使うことはできず、
+            同時にこの「未翻訳」メッセージを空の翻訳ファイルにアタッチします。
+            これを記録するには、好みの書式で書き出して先頭の "Untranslated message: "
+            を除去するログライターを自作しなければなりません。
+        </para>
 
     </sect2>
 
