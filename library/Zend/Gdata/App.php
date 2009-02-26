@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -48,7 +48,7 @@ require_once 'Zend/Gdata/App/MediaSource.php';
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_App
@@ -502,8 +502,7 @@ class Zend_Gdata_App
         } elseif ($data instanceof Zend_Gdata_App_MediaEntry) {
             $rawData = $data->encode();
             if ($data->getMediaSource() !== null) {
-                $finalContentType = 'multipart/related; boundary="' .
-                    $data->getBoundary() . '"';
+                $finalContentType = $rawData->getContentType();
                 $headers['MIME-version'] = '1.0';
                 $headers['Slug'] = $data->getMediaSource()->getSlug();
             } else {
@@ -635,10 +634,39 @@ class Zend_Gdata_App
         $this->_httpClient->setHeaders($headers);
         $this->_httpClient->setUri($url);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
-        $this->_httpClient->setRawData($body, $contentType);
+
+        // Set the proper adapter if we are handling a streaming upload
+        $usingMimeStream = false;
+        $oldHttpAdapter = null;
+
+        if ($body instanceof Zend_Gdata_MediaMimeStream) {
+            $usingMimeStream = true;
+            $this->_httpClient->setRawDataStream($body, $contentType);
+            $oldHttpAdapter = $this->_httpClient->getAdapter();
+
+            if ($oldHttpAdapter instanceof Zend_Http_Client_Adapter_Proxy) {
+                require_once 'Zend/Gdata/HttpAdapterStreamingProxy.php';
+                $newAdapter = new Zend_Gdata_HttpAdapterStreamingProxy();
+            } else {
+                require_once 'Zend/Gdata/HttpAdapterStreamingSocket.php';
+                $newAdapter = new Zend_Gdata_HttpAdapterStreamingSocket();
+            }
+            $this->_httpClient->setAdapter($newAdapter);
+        } else {
+            $this->_httpClient->setRawData($body, $contentType);
+        }
+
         try {
             $response = $this->_httpClient->request($method);
+            // reset adapter
+            if ($usingMimeStream) {
+                $this->_httpClient->setAdapter($oldHttpAdapter);
+            }
         } catch (Zend_Http_Client_Exception $e) {
+            // reset adapter
+            if ($usingMimeStream) {
+                $this->_httpClient->setAdapter($oldHttpAdapter);
+            }
             require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
         }
