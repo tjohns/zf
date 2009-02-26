@@ -109,6 +109,19 @@ class Zend_Config_Writer_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $config->default->test);
     }
     
+    public function testNoSection()
+    {
+        $config = new Zend_Config(array('test' => 'foo', 'test2' => array('test3' => 'bar')));
+
+        $writer = new Zend_Config_Writer_Xml(array('config' => $config, 'filename' => $this->_tempName));
+        $writer->write();
+                
+        $config = new Zend_Config_Xml($this->_tempName, null);
+        
+        $this->assertEquals('foo', $config->test);
+        $this->assertEquals('bar', $config->test2->test3);
+    }
+    
     public function testWriteAndReadSingleSection()
     {
         $config = new Zend_Config_Xml(dirname(__FILE__) . '/files/allsections.xml', 'staging', array('skipExtends' => true));
