@@ -229,6 +229,15 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('My New Test Photo',
                 $createdPhotoMultipart->title->text);
 
+        // cleanup and remove the album 
+        // first we wait 5 seconds
+        sleep(5);
+        try {
+            $albumEntry->delete();
+        } catch (Zend_Gdata_App_Exception $e) {
+            $this->fail('Tried to delete the test album, got exception: ' .
+                $e->getMessage());
+        }
     }
 
     function testIsAuthenticated()
