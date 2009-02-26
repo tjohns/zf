@@ -134,15 +134,22 @@ class Zend_Config_Writer_Ini extends Zend_Config_Writer
             $iniString .= '[' . $sectionName . ']' . "\n"
                        .  $this->_addBranch($this->_config)
                        .  "\n";
-        } else {       
+        } else {
             foreach ($this->_config as $sectionName => $data) {
-                if (isset($extends[$sectionName])) {
-                    $sectionName .= ' : ' . $extends[$sectionName];
+                if (!($data instanceof Zend_Config)) {
+                    $iniString .= $sectionName
+                               .  ' = '
+                               .  $this->_prepareValue($data)
+                               .  "\n";
+                } else {
+                    if (isset($extends[$sectionName])) {
+                        $sectionName .= ' : ' . $extends[$sectionName];
+                    }
+                    
+                    $iniString .= '[' . $sectionName . ']' . "\n"
+                               .  $this->_addBranch($data)
+                               .  "\n";
                 }
-                
-                $iniString .= '[' . $sectionName . ']' . "\n"
-                           .  $this->_addBranch($data)
-                           .  "\n";
             }
         }
        

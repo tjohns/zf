@@ -117,16 +117,16 @@ class Zend_Config_Writer_Xml extends Zend_Config_Writer
         } else {
             foreach ($this->_config as $sectionName => $data) {
                 if (!($data instanceof Zend_Config)) {
-                    continue;
+                    $xml->addChild($sectionName, (string) $data);
+                } else {
+                    $child = $xml->addChild($sectionName);
+                    
+                    if (isset($extends[$sectionName])) {
+                        $child->addAttribute('extends', $extends[$sectionName]);
+                    }
+        
+                    $this->_addBranch($data, $child);
                 }
-            
-                $child = $xml->addChild($sectionName);
-                
-                if (isset($extends[$sectionName])) {
-                    $child->addAttribute('extends', $extends[$sectionName]);
-                }
-    
-                $this->_addBranch($data, $child);
             }
         }
                 
