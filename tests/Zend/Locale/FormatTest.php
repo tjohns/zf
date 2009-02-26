@@ -123,6 +123,19 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Locale_Format::isNumber('textwithoutnumber', array('locale' => 'de_AT')));
     }
 
+    /**
+     * test isNumber
+     * expected boolean
+     *
+     * @group ZF-5879
+     */
+    public function testIsNumberENotation()
+    {
+        $this->assertTrue( Zend_Locale_Format::isNumber('5,0004E+5',  array('locale' => 'de_AT')));
+        $this->assertTrue( Zend_Locale_Format::isNumber('2.34E-7',    array('locale' => 'de_AT')));
+        $this->assertFalse(Zend_Locale_Format::isNumber('2.34E-7E-7', array('locale' => 'de_AT')));
+    }
+
 
     /**
      * test getFloat
