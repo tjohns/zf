@@ -342,7 +342,7 @@ class Zend_Locale_Format
         if ($format === null) {
             $format  = Zend_Locale_Data::getContent($options['locale'], 'decimalnumber');
             if (iconv_strpos($format, ';') !== false) {
-                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                if (call_user_func(Zend_Locale_Math::$comp, $value, 0, $options['precision']) < 0) {
                     $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
                 } else {
                     $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
@@ -351,7 +351,7 @@ class Zend_Locale_Format
         } else {
             // seperate negative format pattern when available
             if (iconv_strpos($format, ';') !== false) {
-                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                if (call_user_func(Zend_Locale_Math::$comp, $value, 0, $options['precision']) < 0) {
                     $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
                 } else {
                     $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
@@ -487,7 +487,7 @@ class Zend_Locale_Format
             $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
         }
         // set negative sign
-        if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+        if (call_user_func(Zend_Locale_Math::$comp, $value, 0, $options['precision']) < 0) {
             if (iconv_strpos($format, '-') === false) {
                 $format = $symbols['minus'] . $format;
             } else {
