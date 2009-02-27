@@ -132,6 +132,8 @@ class Zend_Gdata_GdataOnlineTest extends PHPUnit_Framework_TestCase
         $blogsUrl = 'http://www.blogger.com/feeds/default/blogs';
         $blogsQuery = $this->gdata->newQuery($blogsUrl);
         $retrievedFeed = $this->gdata->getFeed($blogsQuery);
+        // rewind the retrieved feed first
+        $retrievedFeed->rewind();
 
         // Make sure the iterator and array impls match
         $entry1 = $retrievedFeed->current();
