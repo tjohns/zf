@@ -32,7 +32,7 @@ final class Zend_Version
     /**
      * Zend Framework version identification - see compareVersion()
      */
-    const VERSION = '1.7.5';
+    const VERSION = '1.7.6';
 
     /**
      * Compare the specified Zend Framework version string $version
@@ -49,3 +49,4 @@ final class Zend_Version
         return version_compare($version, self::VERSION);
     }
 }
+
