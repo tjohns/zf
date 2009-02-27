@@ -953,7 +953,7 @@
         <xi:include href="module_specs/Zend_View-Abstract.xml" parse="xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_View-Abstract.xml" /></xi:fallback>
         </xi:include>
-        <xi:include href="module_specs/Zend_View-Migration.xml" />
+        <xi:include href="module_specs/Zend_View-Migration.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_View-Migration.xml" /></xi:fallback>
         </xi:include>
     </chapter>
