@@ -1143,7 +1143,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
             }
 
             if ($value['options']['useByteString']) {
-                $result[$key] = $this->_toByteString($size);
+                $result[$key] = self::_toByteString($size);
             } else {
                 $result[$key] = $size;
             }
@@ -1212,7 +1212,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      * @param  integer $size
      * @return string
      */
-    protected function _toByteString($size)
+    protected static function _toByteString($size)
     {
         $sizes = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
         for ($i=0; $size >= 1024 && $i < 9; $i++) {

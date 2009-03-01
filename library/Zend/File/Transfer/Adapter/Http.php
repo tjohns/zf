@@ -264,6 +264,15 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
         );
 
         if (is_array($id)) {
+            if (isset($id['progress'])) {
+                $adapter = $id['progress'];
+            }
+
+            $session = null;
+            if (isset($id['session'])) {
+                $session = $id['session'];
+            }
+
             if (isset($id['id'])) {
                 $id = $id['id'];
             } else {
@@ -271,7 +280,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             }
         }
 
-        if ($id === null) {
+        if (empty($id)) {
             if (!isset($_GET['progress_key'])) {
                 $status = array('message' => 'No upload in progress');
             } else {
@@ -279,7 +288,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             }
         }
 
-        if ($id !== null) {
+        if (!empty($id)) {
+            $status['total']   = 0;
+            $status['current'] = 0;
+            $status['message'] = "";
+
             if (self::isApcAvailable()) {
                 $status = call_user_func(self::$_callbackApc, 'upload_' . $id);
             } else if (self::isUploadProgressAvailable()) {
@@ -293,9 +306,26 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 $status = array('message' => 'Failure while retrieving the upload progress');
             } else if (!empty($status['cancel_upload'])) {
                 $status['message'] = 'The upload has been canceled';
+            } else {
+                $status['message'] = self::_toByteString($status['current']) . " / " . self::_toByteString($status['total']);
             }
 
             $status['id'] = $id;
+        }
+
+        if (isset($adapter)) {
+            if ($adapter instanceof Zend_ProgressBar_Adapter) {
+                require_once 'Zend/ProgressBar.php';
+                $adapter = new Zend_ProgressBar($adapter, 0, $status['total'], $session);
+            }
+
+            if (!($adapter instanceof Zend_ProgressBar)) {
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception('Unknown Adapter given');
+            }
+
+            $adapter->update($status['current'], $status['message']);
+            $status['progress'] = $adapter;
         }
 
         return $status;

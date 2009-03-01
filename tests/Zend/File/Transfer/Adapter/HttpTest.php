@@ -189,7 +189,8 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
             'total'   => 100,
             'current' => 100,
             'rate'    => 10,
-            'id'      => 'mykey'), $status);
+            'id'      => 'mykey',
+            'message' => '100B / 100B'), $status);
 
         $this->adapter->switchApcToUP();
         $status = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress($status);
@@ -204,6 +205,32 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
             'message'        => 'The upload has been canceled',
             'id'      => 'mykey'), $status);
 
+    }
+
+    public function testUploadProgressAdapter()
+    {
+        $_GET['progress_key'] = 'mykey';
+        require_once 'Zend/ProgressBar/Adapter/Console.php';
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $status = array('progress' => $adapter, 'session' => 'upload');
+        $status = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress($status);
+        $this->assertTrue(array_key_exists('total', $status));
+        $this->assertTrue(array_key_exists('current', $status));
+        $this->assertTrue(array_key_exists('rate', $status));
+        $this->assertTrue(array_key_exists('id', $status));
+        $this->assertTrue(array_key_exists('message', $status));
+        $this->assertTrue(array_key_exists('progress', $status));
+        $this->assertTrue($status['progress'] instanceof Zend_ProgressBar);
+
+        $this->adapter->switchApcToUP();
+        $status = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress($status);
+        $this->assertTrue(array_key_exists('total', $status));
+        $this->assertTrue(array_key_exists('current', $status));
+        $this->assertTrue(array_key_exists('rate', $status));
+        $this->assertTrue(array_key_exists('id', $status));
+        $this->assertTrue(array_key_exists('message', $status));
+        $this->assertTrue(array_key_exists('progress', $status));
+        $this->assertTrue($status['progress'] instanceof Zend_ProgressBar);
     }
 
     public function testValidationOfPhpExtendsFormError()
