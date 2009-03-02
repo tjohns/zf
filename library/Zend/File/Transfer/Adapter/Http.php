@@ -268,7 +268,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 $adapter = $id['progress'];
             }
 
-            $session = null;
+            $session = 'Zend_File_Transfer_Adapter_Http_ProgressBar';
             if (isset($id['session'])) {
                 $session = $id['session'];
             }
@@ -278,6 +278,11 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             } else {
                 unset($id);
             }
+        }
+
+        if (($id instanceof Zend_ProgressBar_Adapter) || ($id instanceof Zend_ProgressBar)) {
+            $adapter = $id;
+            unset($id);
         }
 
         if (empty($id)) {
@@ -292,6 +297,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             $status['total']   = 0;
             $status['current'] = 0;
             $status['message'] = "";
+            $status['done']    = false;
 
             if (self::isApcAvailable()) {
                 $status = call_user_func(self::$_callbackApc, 'upload_' . $id);
@@ -300,11 +306,15 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 $status['total']   = $status['bytes_total'];
                 $status['current'] = $status['bytes_uploaded'];
                 $status['rate']    = $status['speed_average'];
+                if ($status['total'] == $status['current']) {
+                    $status['done'] = true;
+                }
             }
 
             if (!$status) {
                 $status = array('message' => 'Failure while retrieving the upload progress');
             } else if (!empty($status['cancel_upload'])) {
+                $status['done']    = true;
                 $status['message'] = 'The upload has been canceled';
             } else {
                 $status['message'] = self::_toByteString($status['current']) . " / " . self::_toByteString($status['total']);
@@ -325,6 +335,10 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             }
 
             $adapter->update($status['current'], $status['message']);
+            if ($status['done']) {
+                $adapter->finish();
+            }
+
             $status['progress'] = $adapter;
         }
 

@@ -376,78 +376,157 @@ $names = $upload->getMimeType('foo');
 
         <para>
             When the above two points are provided then you are able to get the actual progress of the
-            file upload by using the <code>getProgress</code> method.
+            file upload by using the <code>getProgress</code> method. Actually there are 2 official ways to
+            handle this.
         </para>
 
-        <example id="zend.file.transfer.introduction.uploadprogress.fetching">
-            <title>Retrieve the actual progress of the file upload</title>
+        <sect3 id="zend.file.transfer.introduction.uploadprogress.progressadapter">
+
+            <title>Using a progressbar adapter</title>
 
             <para>
-                Let's expect that you have already created and submitted your form, and the file upload
-                is actually in progress.
+                You can use the convinient <emphasis>Zend_ProgressBar</emphasis> to get the actual progress
+                and can display it in a simple manner to your user.
             </para>
 
-            <programlisting role="php"><![CDATA[
-$upload = Zend_File_Transfer_Adapter_Http::getProgress();
+            <para>
+                To archive this, you have to add the wished <emphasis>Zend_ProgressBar_Adapter</emphasis> to
+                <code>getProgress()</code> when you are calling it the first time. For details about the right
+                adapter to use, look into the chapter
+                <link linkend="zend.progressbar.adapters">Zend_ProgressBar Standard Adapters</link>.
+            </para>
+
+            <example id="zend.file.transfer.introduction.uploadprogress.progressadapter.example1">
+
+                <title>Using the progressbar adapter to retrieve the actual state</title>
+
+                <programlisting role="php"><![CDATA[
+$adapter = new Zend_ProgressBar_Adapter_Console();
+$upload  = Zend_File_Transfer_Adapter_Http::getProgress($adapter);
 
 $upload = null;
-while (empty($upload['message'])) {
+while (!$upload['done']) {
     $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
-    // do something with the returned data
 }
 ]]>
-            </programlisting>
+                </programlisting>
 
-        </example>
+            </example>
 
-        <para>
-            Based on the used extension the returned data differs in detail. But both extensions return their
-            informations within an array which provides the following keys:
-        </para>
+            <para>
+                The complete handling is done by <code>getProgress()</code> for you in the background.
+            </para>
 
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis role="strong">total</emphasis>: The total filesize of the uploaded files in bytes
-                    as integer.
-                </para>
-            </listitem>
+        </sect3>
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">current</emphasis>: The current uploaded filesize in bytes
-                    as integer.
-                </para>
-            </listitem>
+        <sect3 id="zend.file.transfer.introduction.uploadprogress.manually">
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">rate</emphasis>: The average upload speed in bytes per second
-                    as integer.
-                </para>
-            </listitem>
+            <title>Using getProgress() manually</title>
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">id</emphasis>: The id is the reference to the upload itself. When
-                    multiple users upload a file, each upload gets it's own id. The actual id of this request
-                    will be returned when you call <code>getProgress()</code> the first time.
-                </para>
-            </listitem>
+            <para>
+                You can also work manually with <code>getProgress()</code> without the usage of
+                <code>Zend_ProgressBar</code>.
+            </para>
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">message</emphasis>: A helpful message in the case of a problem.
-                    Problems could be, that there is no upload in progress, that there was a failure while
-                    retrieving the data for the progress, or that the upload has been canceled.
-                </para>
-            </listitem>
-        </itemizedlist>
+            <para>
+                Call <code>getProgress()</code> without settings. It will return you an array with several keys.
+                They differ according to the used PHP extension. But the following keys are given independently
+                of the extension:
+            </para>
 
-        <para>
-            All other returned keys are provided directly from the extensions and not checked.
-        </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">id</emphasis>: The ID of this upload. This ID identifies the
+                        upload within the extension. It is filled automatically. You should never change or
+                        give this value yourself.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">total</emphasis>: The total filesize of the uploaded files in bytes
+                        as integer.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">current</emphasis>: The current uploaded filesize in bytes
+                        as integer.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">rate</emphasis>: The average upload speed in bytes per second
+                        as integer.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">done</emphasis>: Returns true when the upload is finished and false
+                        otherwise.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">message</emphasis>: The actual message. Eighter the progress as
+                        text in the form <emphasis role="strong">10kB / 200kB</emphasis>, or a helpful message
+                        in the case of a problem. Problems could be, that there is no upload in progress, that
+                        there was a failure while retrieving the data for the progress, or that the upload has
+                        been canceled.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">progress</emphasis>: This optional key takes a instance of
+                        Zend_ProgressBar_Adapter or Zend_ProgressBar and allows to get the actual upload state
+                        within a progressbar.
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">session</emphasis>: This optional key takes the name of a session
+                        namespace which will be used within Zend_ProgressBar. When this key is not given it
+                        defaults to <code>Zend_File_Transfer_Adapter_Http_ProgressBar</code>.
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                All other returned keys are provided directly from the extensions and will not be checked.
+            </para>
+
+            <para>
+                The following example shows a possible manual usage:
+            </para>
+
+            <example id="zend.file.transfer.introduction.uploadprogress.manually.example1">
+
+                <title>Manual usage of the file progress</title>
+
+                <programlisting role="php"><![CDATA[
+$upload  = Zend_File_Transfer_Adapter_Http::getProgress();
+
+while (!$upload['done']) {
+    $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
+    print "\nActual progress:".$upload['message'];
+    // do whatever you need
+}
+]]>
+                </programlisting>
+
+            </example>
+
+        </sect3>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:
