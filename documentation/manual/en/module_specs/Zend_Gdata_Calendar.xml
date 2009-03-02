@@ -557,12 +557,11 @@ $newEvent = $service->insertEvent($event);
         <sect3 id="zend.gdata.calendar.creating_events.schedulers_reminders">
             <title>Event Schedules and Reminders</title>
             <para>
-                An event's starting time and duration are determined by the value of its when property, which
-                contains the properties <code>startTime</code>, <code>endTime</code>, and <code>valueString</code>.
-                <code>StartTime</code> and <code>EndTime</code> control the duration of the event, while
-                <code>valueString</code> provides a way to store a friendly, human readable version of the
-                duration such as "This Afternoon". Note that even when using <code>valueString</code>,
-                <code>startTime</code> and <code>endTime</code> still must be be set to valid values.
+                An event's starting time and duration are determined by the value of its
+                <code>when</code> property, which contains the properties
+                <code>startTime</code>, <code>endTime</code>, and <code>valueString</code>.
+                <code>StartTime</code> and <code>EndTime</code> control the duration of the
+                event, while the <code>valueString</code> property is currently unused.
             </para>
             <para>
                 All-day events can be scheduled by specifying only the date omitting the time when setting
@@ -581,9 +580,6 @@ $newEvent = $service->insertEvent($event);
 $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
-
-// Specify a optional human readable value for the above date
-$when->valueString = "This Afternoon";
 
 // Apply the when property to an event
 $event->when = $when;
