@@ -634,25 +634,24 @@ foreach ($feed as $entry) {
         <title>Posting entries to Google servers</title>
 
         <para>
-            The Zend_Gdata object has a function <code>post()</code>
-            with which you can upload data to save new entries
-            to Google Data services.
+            The Zend_Gdata object has a function <code>insertEntry()</code>
+            with which you can upload data to save new entries to Google Data
+            services.
         </para>
 
         <para>
-            You can use the data model classes for each service to
-            construct the appropriate entry to post to Google's
-            services.  The <code>post()</code> function will
-            accept a child of Zend_Gdata_App_Entry as data to
-            post to the service.  The method returns a child
-            of Zend_Gdata_App_Entry which represents the state
+            You can use the data model classes for each service to construct
+            the appropriate entry to post to Google's services. The
+            <code>insertEntry()</code> function will accept a child of
+            Zend_Gdata_App_Entry as data to post to the service. The method
+            returns a child of Zend_Gdata_App_Entry which represents the state
             of the entry as it was returned from the server.
         </para>
 
         <para>
-            Alternatively, you could construct the XML structure
-            for an entry as a string and pass the string to the
-            <code>post()</code> function.
+            Alternatively, you could construct the XML structure for an entry
+            as a string and pass the string to the <code>insertEntry()</code>
+            function.
         </para>
 
         <programlisting role="php"><![CDATA[
