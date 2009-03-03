@@ -16,7 +16,7 @@
  * @category     Zend
  * @package      Zend_Gdata_YouTube
  * @subpackage   UnitTests
- * @copyright    Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com);
+ * @copyright    Copyright (c) 2009 Zend Technologies USA Inc. (http://www.zend.com);
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -230,6 +230,24 @@ class Zend_Gdata_YouTube_UserProfileEntryTest extends PHPUnit_Framework_TestCase
         $this->verifyAllSamplePropertiesAreCorrectV2($newUserProfileEntry);
         $newUserProfileEntryXml = $newUserProfileEntry->saveXML();
         $this->assertEquals($entryXml, $newUserProfileEntryXml);
+    }
+
+    public function testYTStatisticsInUserProfileEntryV2() {
+        $this->entry->transferFromXML($this->V2entryText);
+        $this->entry->setMajorProtocolVersion(2);
+        $statistics = $this->entry->getStatistics();
+        $this->assertEquals(14, $statistics->getVideoWatchCount());
+        $this->assertEquals(88, $statistics->getViewCount());
+        $this->assertEquals(12, $statistics->getSubscriberCount());
+        $this->assertEquals('2008-12-15T14:56:57.000-08:00',
+            $statistics->getLastWebAccess());
+
+        // test __toString()
+        $this->assertEquals('View Count=88 VideoWatchCount=14 ' .
+            'SubscriberCount=12 LastWebAccess=2008-12-15T14:56:57.000-08:00 ' .
+            'FavoriteCount=',
+            sprintf("%s", $statistics));
+
     }
 
 }
