@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14091 -->
+<!-- EN-Revision: 14200 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -416,80 +416,163 @@ $names = $upload->getMimeType('foo');
         <para>
             これらふたつの条件さえ満たせば、ファイルアップロードの進捗状況を
             <code>getProgress</code> メソッドで取得することができます。
+            実際には、これを処理する公式な方法は 2 通りあります。
         </para>
 
-        <example id="zend.file.transfer.introduction.uploadprogress.fetching">
-            <title>ファイルアップロードの実際の進捗の取得</title>
+        <sect3 id="zend.file.transfer.introduction.uploadprogress.progressadapter">
+
+            <title>progressbar アダプタを使用する</title>
 
             <para>
-                フォームの作成を終えてデータを投稿し、
-                まさに今ファイルのアップロードが進行中であるとしましょう。
+                <emphasis>Zend_ProgressBar</emphasis> を使用して、
+                実際の進捗状況を取得した上でそれをシンプルにユーザに見せることができます。
             </para>
 
-            <programlisting role="php"><![CDATA[
-$upload = Zend_File_Transfer_Adapter_Http::getProgress();
+            <para>
+                そのためには、<code>getProgress()</code> を最初にコールするときにお望みの
+                <emphasis>Zend_ProgressBar_Adapter</emphasis> を追加しなければなりません。
+                どのアダプタを使用すればいいのかについては
+                <link linkend="zend.progressbar.adapters">Zend_ProgressBar の標準のアダプタ</link>
+                の章を参照ください。
+            </para>
+
+            <example id="zend.file.transfer.introduction.uploadprogress.progressadapter.example1">
+
+                <title>progressbar アダプタを使用した実際の状態の取得</title>
+
+                <programlisting role="php"><![CDATA[
+$adapter = new Zend_ProgressBar_Adapter_Console();
+$upload  = Zend_File_Transfer_Adapter_Http::getProgress($adapter);
 
 $upload = null;
-while (empty($upload['message'])) {
+while (!$upload['done']) {
     $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
-    // 返されたデータを使って何らかの処理をします
 }
 ]]>
-            </programlisting>
+                </programlisting>
 
-        </example>
+            </example>
 
-        <para>
-            使用している拡張モジュールによって、返されるデータの詳細は異なります。
-            しかし、どちらの拡張モジュールも、以下のキーを持つ配列形式で情報を返します。
-        </para>
+            <para>
+                完全な処理は、バックグラウンドで <code>getProgress()</code> によって行われます。
+            </para>
 
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis role="strong">total</emphasis>:
-                    アップロードされたファイル全体のサイズをバイト単位で表した整数値。
-                </para>
-            </listitem>
+        </sect3>
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">current</emphasis>:
-                    現在までにアップロードされたファイルサイズをバイト単位で表した整数値。
-                </para>
-            </listitem>
+        <sect3 id="zend.file.transfer.introduction.uploadprogress.manually">
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">rate</emphasis>:
-                    アップロードの平均速度を「バイト/秒」単位で表した整数値。
-                </para>
-            </listitem>
+            <title>getProgress() を手動で使用する</title>
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">id</emphasis>:
-                    そのアップロード自体への参照。複数のユーザがファイルをアップロードした場合、
-                    それぞれのアップロードごとに個別の ID が設定されます。リクエストごとの
-                    ID は、<code>getProgress()</code> を最初にコールしたときに返されます。
-                </para>
-            </listitem>
+            <para>
+                <code>Zend_ProgressBar</code> を使わずに手動で
+                <code>getProgress()</code> を動作させることもできます。
+            </para>
 
-            <listitem>
-                <para>
-                    <emphasis role="strong">message</emphasis>:
-                    何か問題が発生したときに有用なメッセージ。
-                    「問題」とは、何もアップロード中でない場合や
-                    進捗状況の取得に失敗した場合、あるいはアップロードがキャンセルされた場合を意味します。
-                </para>
-            </listitem>
-        </itemizedlist>
+            <para>
+                <code>getProgress()</code> を何も設定なしでコールします。
+                すると、いくつかのキーを含む配列が返されます。
+                使用している PHP 拡張モジュールによってその内容は異なります。
+                しかし、次のキーは拡張モジュールにかかわらず返されます。
+            </para>
 
-        <para>
-            それ以外に返されるキーについては各拡張モジュールが直接返すものであり、
-            チェックしていません。
-        </para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <emphasis role="strong">id</emphasis>:
+                        このアップロードの ID。その拡張モジュール内でのアップロードを一意に識別します。
+                        自動的に設定され、この値は決して変更することができません。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">total</emphasis>:
+                        アップロードされたファイル全体のサイズをバイト単位で表した整数値。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">current</emphasis>:
+                        現在までにアップロードされたファイルサイズをバイト単位で表した整数値。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">rate</emphasis>:
+                        アップロードの平均速度を「バイト/秒」単位で表した整数値。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">done</emphasis>:
+                        アップロードがいつ終了したのかを返します。
+                        終了していない場合は false を返します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">message</emphasis>:
+                        実際のメッセージ。進捗を <emphasis role="strong">10kB / 200kB</emphasis>
+                        形式で表したテキストか、何か問題が起こった場合には有用なメッセージとなります。
+                        「問題」とは、何もアップロード中でない場合や
+                        進捗状況の取得に失敗した場合、あるいはアップロードがキャンセルされた場合を意味します。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">progress</emphasis>:
+                        このオプションキーには Zend_ProgressBar_Adapter あるいは
+                        Zend_ProgressBar のインスタンスが含まれ、
+                        プログレスバー内から実際のアップロード状況を取得できるようになります。
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <emphasis role="strong">session</emphasis>:
+                        このオプションキーには Zend_ProgressBar
+                        内で使用するセッション名前空間の名前が含まれます。
+                        このキーが与えられなかったときのデフォルトは
+                        <code>Zend_File_Transfer_Adapter_Http_ProgressBar</code> です。
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                それ以外に返されるキーについては各拡張モジュールが直接返すものであり、
+                チェックしていません。
+            </para>
+
+            <para>
+                次の例は、手動で使用する方法を示すものです。
+            </para>
+
+            <example id="zend.file.transfer.introduction.uploadprogress.manually.example1">
+
+                <title>手動での進捗状況表示の使用法</title>
+
+                <programlisting role="php"><![CDATA[
+$upload  = Zend_File_Transfer_Adapter_Http::getProgress();
+
+while (!$upload['done']) {
+    $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
+    print "\nActual progress:".$upload['message'];
+    // 何か必要な処理をします
+}
+]]>
+                </programlisting>
+
+            </example>
+
+        </sect3>
+
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 tw=80 et:
