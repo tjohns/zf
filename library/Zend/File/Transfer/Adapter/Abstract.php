@@ -334,6 +334,15 @@ abstract class Zend_File_Transfer_Adapter_Abstract
         } elseif (is_string($validator)) {
             $name      = $this->getPluginLoader(self::VALIDATE)->load($validator);
             $validator = new $name($options);
+            if (is_array($options) && isset($options['messages'])) {
+                if (is_array($options['messages'])) {
+                    $validator->setMessages($options['messages']);
+                } elseif (is_string($options['messages'])) {
+                    $validator->setMessage($options['messages']);
+                }
+
+                unset($options['messages']);
+            }
         } else {
             require_once 'Zend/File/Transfer/Exception.php';
             throw new Zend_File_Transfer_Exception('Invalid validator provided to addValidator; must be string or Zend_Validate_Interface');

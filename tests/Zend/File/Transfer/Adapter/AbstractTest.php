@@ -706,6 +706,21 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('text/plain', $this->adapter->getMimeType('baz.text'));
     }
+
+    public function testSetOwnErrorMessage()
+    {
+        $this->adapter->addValidator('Count', false, array('min' => 5, 'max' => 5, 'messages' => array(Zend_Validate_File_Count::TOO_LESS => 'Zu wenige')));
+        $this->assertFalse($this->adapter->isValid('foo'));
+        $message = $this->adapter->getMessages();
+        $this->assertContains('Zu wenige', $message);
+
+        try {
+            $this->assertEquals('image/jpeg', $this->adapter->getMimeType());
+            $this->fail();
+        } catch (Zend_File_Transfer_Exception $e) {
+            $this->assertContains('does not exist', $e->getMessage());
+        }
+    }
 }
 
 class Zend_File_Transfer_Adapter_AbstractTest_MockAdapter extends Zend_File_Transfer_Adapter_Abstract
