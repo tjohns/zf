@@ -46,7 +46,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     const DEFAULT_PORT =  11211;
     const DEFAULT_PERSISTENT = true;
     const DEFAULT_WEIGHT  = 1;
-    const DEFAULT_TIMEOUT = 5;//Hypothesis
+    const DEFAULT_TIMEOUT = 1;
     const DEFAULT_RETRY_INTERVAL = 15;
     const DEFAULT_STATUS = true;
 
@@ -64,9 +64,21 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      * 'host' => (string) : the name of the memcached server
      * 'port' => (int) : the port of the memcached server
      * 'persistent' => (bool) : use or not persistent connections to this memcached server
+     * 'weight' => (int) : number of buckets to create for this server which in turn control its 
+     *                     probability of it being selected. The probability is relative to the total 
+     *                     weight of all servers.
+     * 'timeout' => (int) : value in seconds which will be used for connecting to the daemon. Think twice 
+     *                      before changing the default value of 1 second - you can lose all the 
+     *                      advantages of caching if your connection is too slow. 
+     * 'retry_interval' => (int) : controls how often a failed server will be retried, the default value 
+     *                             is 15 seconds. Setting this parameter to -1 disables automatic retry. 
+     * 'status' => (bool) : controls if the server should be flagged as online.
      *
      * =====> (boolean) compression :
      * true if you want to use on-the-fly compression
+     * 
+     * =====> (boolean) compatibility :
+     * true if you use old memcache server or extension
      *
      * @var array available options
      */
@@ -80,7 +92,8 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             'retry_interval' => self::DEFAULT_RETRY_INTERVAL,
             'status' => self::DEFAULT_STATUS
         )),
-        'compression' => false
+        'compression' => false,
+        'compatibility' => false,
     );
 
     /**
@@ -131,11 +144,16 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             if (!array_key_exists('status', $server)) {
                 $server['status'] = self::DEFAULT_STATUS;
             }
-
-            $this->_memcache->addServer($server['host'], $server['port'], $server['persistent'],
+			if ($this->_options['compatibility']) {
+				// No status for compatibility mode (#ZF-5887)
+            	$this->_memcache->addServer($server['host'], $server['port'], $server['persistent'],
                                         $server['weight'], $server['timeout'],
-                                        $server['retry_interval'], $server['status']
-                                        );
+                                        $server['retry_interval']);
+			} else {
+				$this->_memcache->addServer($server['host'], $server['port'], $server['persistent'],
+                                        $server['weight'], $server['timeout'],
+                                        $server['retry_interval'], $server['status']);
+			}
         }
     }
 
