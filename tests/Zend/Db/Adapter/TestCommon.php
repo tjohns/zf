@@ -1920,4 +1920,59 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $db = unserialize(serialize($db));
         $this->assertTrue($db->isConnected());
     }
+    
+    /**
+     * Group ZF-1541
+     */
+    public function testCharacterSetUtf8()
+    {
+        // Create a new adapter
+        $params = $this->_util->getParams();
+        $params['options'] = array(
+            'charset' => 'utf8'
+        );
+        
+        $db = Zend_Db::factory($this->getDriver(), $params);
+
+        /**
+         * This makes the test working for mysql, don't know about other adapters.
+         * Surely, this is not the solution. Instead, imeplement the charset-
+         * parameter for the adapter (see above).
+         *
+         * $db->query('SET NAMES utf8');
+         */
+    
+         // create a new util object, with the new db adapter
+        $driver = $this->getDriver();
+        $utilClass = "Zend_Db_TestUtil_{$driver}";
+        $util = new $utilClass();
+        $util->setAdapter($db);
+
+        // create test table using no identifier quoting
+        $util->createTable('charsetutf8', array(
+            'id'    => 'INT UNSIGNED NOT NULL PRIMARY KEY',
+            'stuff' => 'VARCHAR(6) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL'
+        ));
+        $tableName = $this->_util->getTableName('charsetutf8');
+
+        // insert into the table
+        $numRows = $db->insert($tableName, array(
+            'id'    => 1,
+            'stuff' => 'äöüß'
+        ));
+
+        // check if the row was inserted as expected
+        $sql = "SELECT id, stuff FROM $tableName ORDER BY id";
+        $stmt = $db->query($sql);
+        $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
+        $a = array(
+            0 => array(0 => 1, 1 => 'äöüß')
+        );
+        $this->assertEquals($a, $fetched,
+            'result of query not as expected');
+
+        // clean up
+        unset($stmt);
+        $util->dropTable($tableName);
+    }
 }
