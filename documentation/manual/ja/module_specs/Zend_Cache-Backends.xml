@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13850 -->
+<!-- EN-Revision: 14218 -->
 <sect1 id="zend.cache.backends">
     <title><code>Zend_Cache</code> のバックエンド</title>
     <para>
@@ -227,6 +227,15 @@
                           <entry><code>false</code></entry>
                           <entry>
                              その場での圧縮処理を行いたい場合に true を指定します。
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>compatibility</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                             古い memcache サーバ/拡張モジュールとの互換性モードを使用したい場合に
+                             true を指定します。
                           </entry>
                       </row>
                   </tbody>
