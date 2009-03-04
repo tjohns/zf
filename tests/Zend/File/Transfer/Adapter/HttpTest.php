@@ -177,8 +177,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
     public function testNoUploadInProgress()
     {
         $status = Zend_File_Transfer_Adapter_HttpTest_MockAdapter::getProgress();
-        $this->assertEquals(array(
-            'message' => 'No upload in progress'), $status);
+        $this->assertContains('No upload in progress', $status);
     }
 
     public function testUploadProgressFailure()
@@ -190,6 +189,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
             'current' => 100,
             'rate'    => 10,
             'id'      => 'mykey',
+            'done'    => false,
             'message' => '100B / 100B'), $status);
 
         $this->adapter->switchApcToUP();
@@ -203,6 +203,7 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
             'speed_average'  => 10,
             'cancel_upload'  => true,
             'message'        => 'The upload has been canceled',
+            'done'           => true,
             'id'      => 'mykey'), $status);
 
     }

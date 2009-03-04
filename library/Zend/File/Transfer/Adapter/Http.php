@@ -261,6 +261,8 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             'total'    => 0,
             'current'  => 0,
             'rate'     => 0,
+            'message'  => '',
+            'done'     => false
         );
 
         if (is_array($id)) {
@@ -280,29 +282,25 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             }
         }
 
-        if (($id instanceof Zend_ProgressBar_Adapter) || ($id instanceof Zend_ProgressBar)) {
+        if (!empty($id) && (($id instanceof Zend_ProgressBar_Adapter) || ($id instanceof Zend_ProgressBar))) {
             $adapter = $id;
             unset($id);
         }
 
         if (empty($id)) {
             if (!isset($_GET['progress_key'])) {
-                $status = array('message' => 'No upload in progress');
+                $status['message'] = 'No upload in progress';
+                $status['done']    = true;
             } else {
                 $id = $_GET['progress_key'];
             }
         }
 
         if (!empty($id)) {
-            $status['total']   = 0;
-            $status['current'] = 0;
-            $status['message'] = "";
-            $status['done']    = false;
-
             if (self::isApcAvailable()) {
-                $status = call_user_func(self::$_callbackApc, 'upload_' . $id);
+                $status = call_user_func(self::$_callbackApc, 'upload_' . $id) + $status;
             } else if (self::isUploadProgressAvailable()) {
-                $status = call_user_func(self::$_callbackUploadProgress, $id);
+                $status = call_user_func(self::$_callbackUploadProgress, $id) + $status;
                 $status['total']   = $status['bytes_total'];
                 $status['current'] = $status['bytes_uploaded'];
                 $status['rate']    = $status['speed_average'];
@@ -323,7 +321,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             $status['id'] = $id;
         }
 
-        if (isset($adapter)) {
+        if (isset($adapter) && isset($status['id'])) {
             if ($adapter instanceof Zend_ProgressBar_Adapter) {
                 require_once 'Zend/ProgressBar.php';
                 $adapter = new Zend_ProgressBar($adapter, 0, $status['total'], $session);
