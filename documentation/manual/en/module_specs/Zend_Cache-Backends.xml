@@ -213,6 +213,14 @@
                              true if you want to use on-the-fly compression
                           </entry>
                       </row>
+                      <row>
+                          <entry><code>compatibility</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                             true if you want to use this compatibility mode with old memcache servers/extensions
+                          </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>
