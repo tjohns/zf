@@ -1113,7 +1113,7 @@ print $date->toString("'Era:GGGG='GGGG, ' Date:yy.MMMM.dd'yy.MMMM.dd");
 
         <para>
             If you are more comfortable with PHP's date format specifier than with ISO format specifiers, then you can
-            use the <code>Zend_Date::setOptions(array('format' => 'php'))</code> method to switch Zend_Date methods from
+            use the <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> method to switch Zend_Date methods from
             supporting ISO format specifiers to PHP date() type specifiers. Afterwards, all format parameters must be
             given with
             <ulink url="http://php.net/date">PHP's <code>date()</code> format specifiers</ulink>
