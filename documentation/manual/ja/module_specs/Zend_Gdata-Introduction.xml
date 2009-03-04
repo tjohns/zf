@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13842 -->
+<!-- EN-Revision: 14212 -->
 <sect1 id="zend.gdata.introduction">
     <title>導入</title>
     <para>
@@ -626,7 +626,7 @@ foreach ($feed as $entry) {
         <title>Google サーバへのエントリの送信</title>
 
         <para>
-            <code>Zend_Gdata</code> オブジェクトの関数 <code>post()</code>
+            <code>Zend_Gdata</code> オブジェクトの関数 <code>insertEntry()</code>
             にアップロードしたいデータを指定し、
             新しいエントリを Google Data サービスに保存します。
         </para>
@@ -634,7 +634,7 @@ foreach ($feed as $entry) {
         <para>
             各サービス用のデータモデルクラスを使用して適切なエントリを作成し、
             Google のサービスに投稿することができます。
-            <code>post()</code> 関数には、
+            <code>insertEntry()</code> 関数には、
             <code>Zend_Gdata_App_Entry</code> の子クラスに投稿内容を格納して渡します。
             このメソッドは <code>Zend_Gdata_App_Entry</code> の子クラスを返します。
             これは、サーバから返されたエントリの状態を表します。
@@ -643,7 +643,7 @@ foreach ($feed as $entry) {
         <para>
             もうひとつの方法として、そのエントリの内容を
             XML 構造の文字列として作成して
-            <code>post()</code> 関数に渡すこともできます。
+            <code>insertEntry()</code> 関数に渡すこともできます。
         </para>
 
         <programlisting role="php"><![CDATA[
