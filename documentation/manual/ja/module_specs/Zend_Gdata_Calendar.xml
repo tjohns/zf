@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14201 -->
+<!-- EN-Revision: 14225 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Calendar の使用法</title>
     <para>
@@ -634,7 +634,7 @@ $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
 
 // when プロパティをイベントに追加します
-$event->when = $when;
+$event->when = array($when);
 ]]>
             </programlisting>
             <para>
