@@ -582,7 +582,7 @@ $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
 
 // Apply the when property to an event
-$event->when = $when;
+$event->when = array($when);
 ]]>
             </programlisting>
             <para>
