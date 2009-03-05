@@ -264,9 +264,9 @@ class Zend_Locale_Format
      * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
      * '١١٠ Tests' = 110  call: getNumber($string, 'Arab');
      *
-     * @param  string         $input    Input string to parse for numbers
-     * @param  array          $options  Options: locale, precision. See {@link setOptions()} for details.
-     * @return integer|string Returns the extracted number
+     * @param  string $input    Input string to parse for numbers
+     * @param  array  $options  Options: locale, precision. See {@link setOptions()} for details.
+     * @return string Returns the extracted number
      * @throws Zend_Locale_Exception
      */
     public static function getNumber($input, array $options = array())
