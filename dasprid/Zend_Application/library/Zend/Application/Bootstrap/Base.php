@@ -31,7 +31,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Application_Bootstrap_Base 
-    implements Zend_Application_Bootstrap_IBootstrap, Zend_Application_Bootstrap_IResourceBootstrap
+    implements Zend_Application_Bootstrap_IBootstrap, 
+               Zend_Application_Bootstrap_IResourceBootstrap
 {
     /**
      * @var Zend_Application|Zend_Application_Bootstrap_IBootstrap
@@ -75,8 +76,8 @@ abstract class Zend_Application_Bootstrap_Base
      * initializer methods.
      * 
      * @param  Zend_Application|Zend_Application_Bootstrap_IBootstrap $application
-     * @throws Zend_Application_Bootstrap_Exception When invalid applicaiton is provided 
      * @return void
+     * @throws Zend_Application_Bootstrap_Exception When invalid applicaiton is provided 
      */
     public function __construct($application)
     {
@@ -123,9 +124,9 @@ abstract class Zend_Application_Bootstrap_Base
             
             if (in_array($method, $methods)) {
                 $this->$method($value);
-            } elseif ('Resources' === ucfirst($key)) {
-                foreach ($value as $resource => $options) {
-                    $this->registerPluginResource($resource, $options);
+            } elseif ('Resources' == ucfirst($key)) {
+                foreach ($value as $resource => $resourceOptions) {
+                    $this->registerPluginResource($resource, $resourceOptions);
                 }
             }
         }
@@ -141,6 +142,31 @@ abstract class Zend_Application_Bootstrap_Base
     public function getOptions()
     {
         return $this->_options;
+    }
+
+    /**
+     * Is an option present?
+     * 
+     * @param  string $key 
+     * @return bool
+     */
+    public function hasOption($key)
+    {
+        return array_key_exists($key, $this->_options);
+    }
+
+    /**
+     * Retrieve a single option
+     * 
+     * @param  string $key 
+     * @return mixed
+     */
+    public function getOption($key)
+    {
+        if ($this->hasOption($key)) {
+            return $this->_options[$key];
+        }
+        return null;
     }
 
     /**
@@ -168,8 +194,8 @@ abstract class Zend_Application_Bootstrap_Base
      * 
      * @param  string|Zend_Application_Resource_IResource $resource
      * @param  mixed  $options
-     * @throws Zend_Application_Bootstrap_Exception When invalid resource is provided
      * @return Zend_Application_Bootstrap_Base
+     * @throws Zend_Application_Bootstrap_Exception When invalid resource is provided
      */
     public function registerPluginResource($resource, $options = null)
     {
@@ -193,8 +219,8 @@ abstract class Zend_Application_Bootstrap_Base
      * Unregister a resource from the bootstrap
      * 
      * @param  string|Zend_Application_Resource_IResource $resource 
-     * @throws Zend_Application_Bootstrap_Exception When unknown resource type is provided
      * @return Zend_Application_Bootstrap_Base
+     * @throws Zend_Application_Bootstrap_Exception When unknown resource type is provided
      */
     public function unregisterPluginResource($resource)
     {
@@ -338,8 +364,8 @@ abstract class Zend_Application_Bootstrap_Base
      * Bootstrap individual, all, or multiple resources
      * 
      * @param  null|string|array $resource
-     * @throws Zend_Application_Bootstrap_Exception When invalid argument was passed 
      * @return void
+     * @throws Zend_Application_Bootstrap_Exception When invalid argument was passed 
      */
     public function bootstrap($resource = null)
     {
@@ -367,8 +393,8 @@ abstract class Zend_Application_Bootstrap_Base
      * 
      * @param  string $method 
      * @param  array  $args
-     * @throws Zend_Application_Bootstrap_Exception On invalid method name 
      * @return void
+     * @throws Zend_Application_Bootstrap_Exception On invalid method name 
      */
     public function __call($method, $args)
     {
@@ -391,8 +417,8 @@ abstract class Zend_Application_Bootstrap_Base
      * Finally, if not found, it throws an exception.
      * 
      * @param  string $resource 
-     * @throws Zend_Application_Bootstrap_Exception When resource not found
      * @return void
+     * @throws Zend_Application_Bootstrap_Exception When resource not found
      */
     protected function _executeResource($resource)
     {

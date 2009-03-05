@@ -168,6 +168,31 @@ class Zend_Application
     }
 
     /**
+     * Is an option present?
+     * 
+     * @param  string $key 
+     * @return bool
+     */
+    public function hasOption($key)
+    {
+        return array_key_exists($key, $this->_options);
+    }
+
+    /**
+     * Retrieve a single option
+     * 
+     * @param  string $key 
+     * @return mixed
+     */
+    public function getOption($key)
+    {
+        if ($this->hasOption($key)) {
+            return $this->_options[$key];
+        }
+        return null;
+    }
+
+    /**
      * Set PHP configuration settings
      * 
      * @param  array $settings 

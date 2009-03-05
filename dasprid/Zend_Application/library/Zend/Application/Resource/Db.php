@@ -21,11 +21,6 @@
  */
 
 /**
- * @see Zend_Application_Bootstrap_Resource_Base
- */
-require_once 'Zend/Application/Bootstrap/Resource/Base.php';
-
-/**
  * Resource for creating database adapter
  *
  * @uses       Zend_Application_Resource_Base

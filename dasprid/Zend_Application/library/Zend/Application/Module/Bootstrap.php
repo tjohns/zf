@@ -37,11 +37,22 @@ require_once 'Zend/Application/Bootstrap/Base.php';
 abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootstrap_Base
 {
     /**
-     * Used auto loader
-     *
      * @var Zend_Loader_Autoloader_Resource
      */
     protected $_resourceLoader;
+
+    /**
+     * Constructor
+     * 
+     * @param  Zend_Application|Zend_Application_Bootstrap_IBootstrap $application 
+     * @return void
+     */
+    public function __construct($application)
+    {
+        parent::__construct($application);
+        $this->initResourceLoader();
+        $this->initOptions();
+    }
 
     /**
      * Set module resource loader
@@ -63,18 +74,59 @@ abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootst
     public function getResourceLoader()
     {
         if (null === $this->_resourceLoader) {
-            $class = get_class($this);
-            if (preg_match('/^([a-z][a-z0-9]*)_Bootstrap$/i', $class, $matches)) {
-                $prefix = $matches[1];
-                $r = new ReflectionClass($this);
-                $path = $r->getFileName();
-                $this->setResourceLoader(new Zend_Application_Module_Autoloader(array(
-                    'prefix' => $prefix,
-                    'path'   => dirname($path),
-                )));
-            }
+            $r    = new ReflectionClass($this);
+            $path = $r->getFileName();
+            $this->setResourceLoader(new Zend_Application_Module_Autoloader(array(
+                'prefix' => $this->getModuleName(),
+                'path'   => dirname($path),
+            )));
         }
-        
         return $this->_resourceLoader;
+    }
+
+    /**
+     * Ensure resource loader is loaded
+     * 
+     * @return void
+     */
+    public function initResourceLoader()
+    {
+        $this->getResourceLoader();
+    }
+
+    /**
+     * Initialize options
+     *
+     * If options include a key corresponding to the module, then set the 
+     * options based on that key.
+     * 
+     * @return void
+     */
+    public function initOptions()
+    {
+        $key = strtolower($this->getModuleName());
+        if ($this->hasOption($key)) {
+            // Don't run via setOptions() to prevent duplicate initialization
+            $this->_options = $this->_options[$key];
+        }
+    }
+
+    /**
+     * Retrieve module name
+     * 
+     * @return string
+     */
+    public function getModuleName()
+    {
+        if (empty($this->_moduleName)) {
+            $class = get_class($this);
+            if (preg_match('/^([a-z][a-z0-9]*)_$/i', $class, $matches)) {
+                $prefix = $matches[1];
+            } else {
+                $prefix = $class;
+            }
+            $this->_moduleName = $prefix;
+        }
+        return $this->_moduleName;
     }
 }

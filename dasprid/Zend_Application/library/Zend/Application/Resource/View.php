@@ -21,11 +21,6 @@
  */
 
 /**
- * @see Zend_Application_Resource_Base
- */
-require_once 'Zend/Application/Bootstrap/Resource/Base.php';
-
-/**
  * Resource for settings view options
  *
  * @uses       Zend_Application_Resource_Base

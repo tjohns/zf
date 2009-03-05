@@ -39,8 +39,8 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Base
     /**
      * Initialize modules
      *
-     * @throws Zend_Application_Resource_Exception When bootstrap class was not found
      * @return void
+     * @throws Zend_Application_Resource_Exception When bootstrap class was not found
      */
     public function init()
     {
@@ -55,20 +55,21 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Base
                 continue;
             }
 
-            $path = $front->getModuleDirectory($module);
-            $bootstrapPath  = $path . '/Bootstrap.php';
             $bootstrapClass = ucfirst($module) . '_Bootstrap';
-            
-            if (file_exists($bootstrapPath)) {
-                include_once $bootstrapPath;
-                
-                if (!class_exists($bootstrapClass, false)) {
-                    throw new Zend_Application_Resource_Exception('Bootstrap file found for module "' . $module . '" but bootstrap class "' . $bootstrapClass . '" not found');
+            if (!class_exists($bootstrapClass)) {
+                $bootstrapPath  = $front->getModuleDirectory($module) . '/Bootstrap.php';
+                if (file_exists($bootstrapPath)) {
+                    include_once $bootstrapPath;
+                    if (!class_exists($bootstrapClass, false)) {
+                        throw new Zend_Application_Resource_Exception('Bootstrap file found for module "' . $module . '" but bootstrap class "' . $bootstrapClass . '" not found');
+                    }
+                } else {
+                    continue;
                 }
-                
-                $moduleBootstrap = new $bootstrapClass($this);
-                $moduleBootstrap->bootstrap();
             }
+
+            $moduleBootstrap = new $bootstrapClass($this);
+            $moduleBootstrap->bootstrap();
         }
     }
 }

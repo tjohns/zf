@@ -21,11 +21,6 @@
  */
 
 /**
- * @see Zend_Application_Resource_Base
- */
-require_once 'Zend/Application/Resource/Base.php';
-
-/**
  * Resource for setting session options
  *
  * @uses       Zend_Application_Resource_Base
