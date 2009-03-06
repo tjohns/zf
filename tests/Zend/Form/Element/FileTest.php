@@ -395,6 +395,13 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertContains('TestError3', $messages);
     }
 
+    public function testDefaultDecoratorsContainDescription()
+    {
+        $element    = new Zend_Form_Element_File('baz');
+        $decorators = $element->getDecorator('Description');
+        $this->assertTrue($decorators instanceof Zend_Form_Decorator_Description);
+    }
+
     private function _convertIniToInteger($setting)
     {
         if (!is_numeric($setting)) {
