@@ -567,7 +567,7 @@ $translate->addTranslation('/path/to/other.ini', 'it');]]>
             値に <code>null</code>, <code>no</code> および <code>false</code> を指定するとそれは
             <code>""</code> と同じ扱いとなり、<code>yes</code> と <code>true</code>
             を指定するとそれは <code>1</code> と同じ扱いとなります。
-            <code>{}|&amp;~![()<code> といった文字はキーの中では使えず、
+            <code>{}|&amp;~![()</code> といった文字はキーの中では使えず、
             また値の中で使用すると特別な意味を持つことになります。
             予期せぬ挙動を起こすようなら、このアダプタを使わないようにしましょう。
         </para>
