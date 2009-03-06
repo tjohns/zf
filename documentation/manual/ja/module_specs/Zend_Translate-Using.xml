@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14196 -->
+<!-- EN-Revision: 14236 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -9,14 +9,13 @@
 
     <example id="zend.translate.using.example1">
         <title>単一言語の PHP コードの例</title>
-        <programlisting role="php"><![CDATA[
-print "Example\n";
+        <programlisting role="php">
+<![CDATA[print "Example\n";
 print "=======\n";
 print "Here is line one\n";
 print "Today is the " . date("d.m.Y") . "\n";
 print "\n";
-print "Fix language here is line two\n";
-]]>
+print "Here is line two\n";]]>
         </programlisting>
     </example>
 
@@ -35,19 +34,18 @@ print "Fix language here is line two\n";
 
     <example id="zend.translate.using.example2">
         <title>多言語対応の PHP コードの例</title>
-        <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
-$translate->addTranslation('//my/path/fr-source.mo', 'fr');
+        <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
+$translate->addTranslation('/path/to/translation/fr-source.mo', 'fr');
 
-print $translate->_("Example")."\n";
+print $translate->_('Example') . "\n";
 print "=======\n";
-print $translate->_("Here is line one")."\n";
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
+print $translate->_('Here is line one') . "\n";
+printf($translate->_('Today is the %1\$s') . "\n", date('d.m.Y'));
 print "\n";
 
 $translate->setLocale('fr');
-print $translate->_("Fix language here is line two") . "\n";
-]]>
+print $translate->_('Here is line two') . "\n";]]>
         </programlisting>
     </example>
 
@@ -59,17 +57,13 @@ print $translate->_("Fix language here is line two") . "\n";
 
     <para>
         新しい Translation オブジェクトを作成し、もととなるアダプタを定義します。
-
-        <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
-]]>
+        <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate('gettext', '/path/to/translation/source-de.mo', 'de');]]>
         </programlisting>
-
         この例では、
-        <emphasis role="strong">Gettext アダプタ</emphasis>
-        を使うことにしました。
-        <emphasis role="strong">source-de.mo</emphasis> というファイルを
-        <emphasis role="strong">/my/path</emphasis> に置いています。
+        Gettext アダプタを使うことにしました。
+        <code>source-de.mo</code> というファイルを
+        <code>/path/to/translation/</code> に置いています。
         この gettext ファイルにはドイツ語の翻訳が含まれています。
         また、その後で別途フランス語のファイルも追加しています。
     </para>
@@ -77,14 +71,11 @@ $translate = new Zend_Translate('gettext', '/my/path/source-de.mo', 'de');
     <para>
         次に行うのは、翻訳対象の文字列をすべてラップすることです。
         一番シンプルな手法は、このように文字列や文章を囲むことです。
-
-        <programlisting role="php"><![CDATA[
-print $translate->_("Example")."\n";
+        <programlisting role="php">
+<![CDATA[print $translate->_('Example') . "\n";
 print "=======\n";
-print $translate->_("Here is line one")."\n";
-]]>
+print $translate->_('Here is line one') . "\n";]]>
         </programlisting>
-
         中には翻訳する必要のない文字列もあるでしょう。
         区切り線などは、たとえ言語が何であっても同じです。
     </para>
@@ -92,12 +83,9 @@ print $translate->_("Here is line one")."\n";
     <para>
         データの値を翻訳文字列に組み込むこともできます。
         この場合は埋め込みパラメータを使用します。
-
-        <programlisting role="php"><![CDATA[
-printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
-]]>
+        <programlisting role="php">
+<![CDATA[printf($translate->_('Today is the %1\$s') . "\n", date('d.m.Y'));]]>
         </programlisting>
-
         <code>print()</code> の代わりに <code>printf()</code> 関数を使用し、
         すべてのパラメータを <code>%1\$s</code> のように置き換えます。
         最初のパラメータが <code>%1\$s</code>、その次が <code>%2\$s</code>、
@@ -111,14 +99,11 @@ printf($translate->_("Today is the %1\$s") . "\n", date("d.m.Y"));
         各文字列は、メッセージ ID によって識別します。
         文字列の代わりに、コード内でメッセージ ID を指定することもできます。
         その場合は、このようになります。
-
-        <programlisting role="php"><![CDATA[
-print $translate->_(1)."\n";
+        <programlisting role="php">
+<![CDATA[print $translate->_(1) . "\n";
 print "=======\n";
-print $translate->_(2)."\n";
-]]>
+print $translate->_(2) . "\n";]]>
         </programlisting>
-
         しかし、この方法にはいくつか欠点があります。
     </para>
 
@@ -133,9 +118,9 @@ print $translate->_(2)."\n";
         その言語に存在するかどうかを探します。
         翻訳文字列が見つからない場合は、<code>Zend_Locale</code>
         で定義されているその次の言語の翻訳を探します。
-        つまり "<emphasis role="strong">de_AT</emphasis>" の場合は
-        "<emphasis role="strong">de</emphasis>" のみで探します。
-        "<emphasis role="strong">de</emphasis>" の翻訳も見つからない場合は、
+        つまり 'de_AT' の場合は
+        'de' のみで探します。
+        'de' の翻訳も見つからない場合は、
         もとのメッセージをそのまま返します。
         このようにして、たとえ翻訳文字列がなくても何らかの出力を得ることになっています。
         <code>Zend_Translate</code> は、文字列の翻訳の際に
@@ -163,16 +148,13 @@ print $translate->_(2)."\n";
                 <para>
                     単一構造のソース
                 </para>
-
-                <programlisting><![CDATA[
-/application
-/languages
-  lang.en
-  lang.de
-/library
-]]>
+                <programlisting>
+<![CDATA[/application/
+/languages/
+/languages/en.lang
+/languages/de.lang
+/library/]]>
 </programlisting>
-
                 <para>
                     利点: すべての言語のソースファイルを同じディレクトリに配置できます。
                     関連するファイルを分割する必要がありません。
@@ -182,20 +164,17 @@ print $translate->_(2)."\n";
                 <para>
                     言語ごとに分けた構造
                 </para>
-
-                <programlisting><![CDATA[
-/application
-/languages
-  /en
-    lang.en
-    other.en
-  /de
-    lang.de
-    other.de
-/library
-]]>
-</programlisting>
-
+                <programlisting>
+<![CDATA[/application/
+/languages/
+/languages/en/
+/languages/en/first.lang
+/languages/en/second.lang
+/languages/de/
+/languages/de/first.lang
+/languages/de/second.de
+/library/]]>
+                </programlisting>
                 <para>
                     利点: すべての言語がひとつのディレクトリにまとめられます。
                     各言語のチームは、ひとつのディレクトリを翻訳するだけですみます。
@@ -206,17 +185,15 @@ print $translate->_(2)."\n";
                 <para>
                     アプリケーションごとに分けた構造
                 </para>
-
-                <programlisting><![CDATA[
-/application
-  /languages
-    lang.en
-    lang.de
-    other.en
-    other.de
-]]>
-</programlisting>
-
+                <programlisting>
+<![CDATA[/application/
+/application/languages/
+/application/languages/first.en
+/application/languages/first.de
+/application/languages/second.en
+/application/languages/second.de
+/library/]]>
+                </programlisting>
                 <para>
                     利点: すべての言語のソースファイルを同じディレクトリに配置できます。
                     関連するファイルを分割する必要がありません。
@@ -230,20 +207,19 @@ print $translate->_(2)."\n";
                 <para>
                     Gettext 形式の構造
                 </para>
-
-                <programlisting><![CDATA[
-/languages
-  /de
-    /LC_MESSAGES
-      lang.mo
-      other.mo
-  /en
-    /LC_MESSAGES
-      lang.mo
-      other.mo
-]]>
-</programlisting>
-
+                <programlisting>
+<![CDATA[/application/
+/languages/
+/languages/en/
+/languages/en/LC_MESSAGES/
+/languages/en/LC_MESSAGES/first.mo
+/languages/en/LC_MESSAGES/second.mo
+/languages/de/
+/languages/de/LC_MESSAGES/
+/languages/de/LC_MESSAGES/first.mo
+/languages/de/LC_MESSAGES/second.mo
+/library/]]>
+                </programlisting>
                 <para>
                     利点: 以前から使っている gettext 形式のソースを、
                     そのままの形式で使用できます。
@@ -258,25 +234,21 @@ print $translate->_(2)."\n";
                 <para>
                    ファイル構造のソース
                 </para>
-
-                <programlisting><![CDATA[
-/application
-  /models
-    mymodel.php
-    mymodel.de
-    mymodel.en
-  /views
-  /controllers
-    mycontroller.de
-/document_root
-  /images
-  /styles
-  .htaccess
-  index.php
-  index.de
-/library
-  /Zend
-]]>
+                <programlisting>
+<![CDATA[/application/
+/application/models/
+/application/models/My.php
+/application/models/My.en
+/application/models/My.de
+/application/views/
+/application/views/my.phtml
+/application/views/my.en
+/application/views/my.de
+/application/controllers/
+/application/controllers/MyController.php
+/application/controllers/MyController.en
+/application/controllers/MyController.de
+/library/]]>
 </programlisting>
                 <para>
                     利点: すべてのファイルについて、翻訳ソースを関連付けられます。
@@ -312,39 +284,39 @@ print $translate->_(2)."\n";
             コードが期待通りに動作しているかを確認するのにも最も手っ取り早いでしょう。
             翻訳作業を始めるにあたっては、一般的に最適なアダプタであるといえます。
         </para>
+        <programlisting role="php">
+<![CDATA[$english = array(
+    'message1' => 'message1',
+    'message2' => 'message2',
+    'message3' => 'message3',
+);
 
-        <programlisting role="php"><![CDATA[
-$english = array('message1' => 'message1',
-                 'message2' => 'message2',
-                 'message3' => 'message3');
-$german = array('message1' => 'Nachricht1',
-                'message2' => 'Nachricht2',
-                'message3' => 'Nachricht3');
+$german = array(
+    'message1' => 'Nachricht1',
+    'message2' => 'Nachricht2',
+    'message3' => 'Nachricht3',
+);
 
 $translate = new Zend_Translate('array', $english, 'en');
-$translate->addTranslation($deutsch, 'de');
-]]>
+$translate->addTranslation($deutsch, 'de');]]>
         </programlisting>
-
         <para>
             リリース 1.5 以降では、配列を外部のファイルに含めることもサポートしています。
             ファイル名を指定すると、<code>Zend_Translate</code>
             が自動的にそれをインクルードして配列を探します。
             詳細は、次の例を参照ください。
         </para>
-
-        <programlisting role="php"><![CDATA[
-// myarray.php
+        <programlisting role="php">
+<![CDATA[// myarray.php
 return array(
     'message1' => 'Nachricht1',
     'message2' => 'Nachricht2',
-    'message3' => 'Nachricht3');
+    'message3' => 'Nachricht3',
+);
 
 // コントローラ
-$translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');
-]]>
+$translate = new Zend_Translate('array', '/path/to/myarray.php', 'de');]]>
         </programlisting>
-
         <note>
             <para>
                 配列を返さないファイルはインクルードできません。
@@ -363,24 +335,21 @@ $translate = new Zend_Translate('array', 'path/to/myarray.php', 'de');
             Gettext ソースファイルは、GNU の gettext ライブラリで作成します。
             あなたのコードをパースして gettext ソースファイルを作成してくれるツールが、
             フリーで公開されています。このファイルは、
-            <emphasis role="strong">*.mo</emphasis>
+            <code>.mo</code>
             のような名前のバイナリファイルとなります。
             ファイルを作成するためのフリーソフトウェアのひとつに
             <ulink url="http://sourceforge.net/projects/poedit/">poEdit</ulink>
             があります。これは、ファイルの作成だけでなく翻訳作業自体もサポートしています。
         </para>
-
-        <programlisting role="php"><![CDATA[
-// mo ファイルを作成し、翻訳を済ませているものとします
+        <programlisting role="php">
+<![CDATA[// mo ファイルを作成し、翻訳を済ませているものとします
 $translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
-$translate->addTranslation('path/to/german.mo', 'de');
-]]>
+$translate->addTranslation('path/to/german.mo', 'de');]]>
         </programlisting>
-
         <para>
             ご覧の通り、アダプタの使用法はまったく同じです。
             違っているのはたったの一点だけ。
-            'array' が 'gettext' になっているということです。
+            <code>array</code> が <code>gettext</code> になっているということです。
             その他の部分は、どのアダプタを使用してもまったく同じになります。
             gettext アダプタを使用する際には、
             gettext の標準的なディレクトリ構造や bindtextdomain、
@@ -415,14 +384,11 @@ $translate->addTranslation('path/to/german.mo', 'de');
             ファイルすべてから取得した情報を配列で返します。
             ファイル名を配列のキーとして使用します。
         </para>
-
-        <programlisting role="php"><![CDATA[
-// アダプタの情報を取得する方法
+        <programlisting role="php">
+<![CDATA[// アダプタの情報を取得する方法
 $translate = new Zend_Translate('gettext', 'path/to/english.mo', 'en');
-print_r $translate->getAdapterInfo();
-]]>
+print_r($translate->getAdapterInfo());]]>
         </programlisting>
-
     </sect2>
 
     <sect2 id="zend.translate.using.source.tmx">
@@ -441,29 +407,34 @@ print_r $translate->getAdapterInfo();
 
         <example id="zend.translate.using.source.tmx.example">
             <title>TMX ファイルの例</title>
-            <programlisting role="xml"><![CDATA[
-<?xml version="1.0" ?>
+            <programlisting role="xml">
+<![CDATA[<?xml version="1.0" ?>
 <!DOCTYPE tmx SYSTEM "tmx14.dtd">
 <tmx version="1.4">
- <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
-         adminlang="en-us" srclang="de-at" o-tmf="abc"
-         creationtool="XYZTool" >
- </header>
- <body>
-  <tu tuid='message1'>
-   <tuv xml:lang="de"><seg>Nachricht1</seg></tuv>
-   <tuv xml:lang="en"><seg>message1</seg></tuv>
-  </tu>
-  <tu tuid='message2'>
-   <tuv xml:lang="en"><seg>message2</seg></tuv>
-   <tuv xml:lang="de"><seg>Nachricht2</seg></tuv>
-  </tu>
-]]>
-</programlisting>
-
-            <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
-// TMX では、複数の言語をひとつの TMX ファイルに含めることができます]]>
+    <header
+        creationtoolversion="1.0.0"
+        datatype="winres"
+        segtype="sentence"
+        adminlang="en-US"
+        srclang="de-AT"
+        o-tmf="abc"
+        creationtool="XYZTool"
+    >
+    </header>
+    <body>
+        <tu tuid="message1">
+            <tuv xml:lang="en"><seg>message1</seg></tuv>
+            <tuv xml:lang="de"><seg>Nachricht1</seg></tuv>
+        </tu>
+        <tu tuid="message2">
+            <tuv xml:lang="en"><seg>message2</seg></tuv>
+            <tuv xml:lang="de"><seg>Nachricht2</seg></tuv>
+        </tu>
+    </body>
+</tmx>]]>
+            </programlisting>
+            <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');]]>
             </programlisting>
         </example>
 
@@ -495,28 +466,25 @@ $translate = new Zend_Translate('tmx', 'path/to/mytranslation.tmx', 'en');
 
         <example id="zend.translate.using.source.csv.example">
             <title>CSV ファイルの例</title>
-            <programlisting><![CDATA[
-# csv ファイルの例
+            <programlisting>
+<![CDATA[# csv ファイルの例
 message1;Nachricht1
-message2;Nachricht2
-]]>
-</programlisting>
-
-            <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
-$translate->addTranslation('path/to/other.csv', 'fr');
-]]>
+message2;Nachricht2]]>
+            </programlisting>
+            <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate('csv', 'path/to/mytranslation.csv', 'de');
+$translate->addTranslation('path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
 
         <para>
             CSV アダプタで使用できるオプションは、
-            <code>'delimiter'</code> と <code>'limit'</code> そして
-            <code>'enclosure'</code> の 3 つです。
+            <code>delimiter</code> と <code>limit</code> そして
+            <code>enclosure</code> の 3 つです。
         </para>
 
         <para>
-            CSV 文字列の標準の区切り文字は '<code>;</code>' 記号です
+            CSV 文字列の標準の区切り文字は <code>;</code> 記号です
             <footnote>
                 <para>
                     訳注: カンマ以外で区切ったら、もはや CSV でも何でもないのですが、
@@ -524,43 +492,39 @@ $translate->addTranslation('path/to/other.csv', 'fr');
                 </para>
             </footnote>。
             しかし、必ずこれでなければならないというわけではありません。
-            オプション '<code>delimiter</code>' を使用すると、
+            オプション <code>delimiter</code> を使用すると、
             別の区切り文字を使用することができます。
         </para>
 
         <para>
-            CSV ファイルのデフォルトの行長制限は '<code>0</code>' です。
+            CSV ファイルのデフォルトの行長制限は <code>0</code> です。
             この場合は、CSV ファイルの行末を自動的に検出します。
-            '<code>limit</code>' オプションに何らかの値を設定すると
+            <code>limit</code> オプションに何らかの値を設定すると
             CSV ファイルの読み込みが高速になりますが、
             その長さを超えた部分は切り捨てられます。
         </para>
 
         <para>
-            CSV ファイルの値を囲む文字のデフォルトは '<code>"</code>' です。
-            別の文字を使用する場合は '<code>enclosure</code>' オプションを設定します。
+            CSV ファイルの値を囲む文字のデフォルトは <code>"</code> です。
+            別の文字を使用する場合は <code>enclosure</code> オプションを設定します。
         </para>
 
         <example id="zend.translate.using.source.csv.example2">
             <title>CSV ファイルの例 その 2</title>
-            <programlisting><![CDATA[
-# csv ファイルの例
-# 元メッセージは 'message,1'
-"message,1",Nachricht1
-# 翻訳は 'Nachricht,2'
-message2,"Nachricht,2"
-# 元メッセージは 'message3,'
-"message3,",Nachricht3
-]]>
-</programlisting>
+            <programlisting>
+<![CDATA[# csv ファイルの例
+message1,Nachricht1
+message2,Nachricht2]]>
+            </programlisting>
+            <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate(
+    'csv',
+    '/path/to/mytranslation.csv',
+    'de',
+    array('delimiter' => ',')
+);
 
-            <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('csv',
-                                'path/to/mytranslation.csv',
-                                'de',
-                                array('delimiter' => ','));
-$translate->addTranslation('path/to/other.csv', 'fr');
-]]>
+$translate->addTranslation('/path/to/other.csv', 'fr');]]>
             </programlisting>
         </example>
 
@@ -579,30 +543,31 @@ $translate->addTranslation('path/to/other.csv', 'fr');
 
         <example id="zend.translate.using.source.ini.example">
             <title>INI ファイルの例</title>
-            <programlisting><![CDATA[
-[Test]
-;TestPage Comment
-Message_1="Nachricht 1 (de)"
-Message_2="Nachricht 2 (de)"
-Message_3="Nachricht :3 (de)"
-]]>
-</programlisting>
+            <programlisting>
+<![CDATA[[Test]
 
-            <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('ini', 'path/to/mytranslation.ini', 'de');
-$translate->addTranslation('path/to/other.ini', 'it');
-]]>
+; Some comment
+
+message1 = "Nachricht1"
+message2 = "Nachricht2"
+message3 = "Nachricht3"]]>
+            </programlisting>
+            <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate('ini', '/path/to/mytranslation.ini', 'de');
+$translate->addTranslation('/path/to/other.ini', 'it');]]>
             </programlisting>
         </example>
 
         <para>
             INI にはいくつかの制約があります。
-            INI ファイルの値に非英数字が含まれる場合は、値をダブルクォート (")
+            INI ファイルの値に非英数字が含まれる場合は、値をダブルクォート (<code>"</code>)
             で囲まなければなりません。また、ini ファイルのキーとしては使えない予約語があります。
-            予約語には null, yes, no, true, そして false があります。
-            値に null, no および false を指定するとそれは ""
-            と同じ扱いとなり、yes と true を指定するとそれは "1" と同じ扱いとなります。
-            {}|&amp;~![()" といった文字はキーの中では使えず、
+            予約語には <code>null</code>, <code>yes</code>, <code>no</code>,
+            <code>true</code> そして <code>false</code> があります。
+            値に <code>null</code>, <code>no</code> および <code>false</code> を指定するとそれは
+            <code>""</code> と同じ扱いとなり、<code>yes</code> と <code>true</code>
+            を指定するとそれは <code>1</code> と同じ扱いとなります。
+            <code>{}|&amp;~![()<code> といった文字はキーの中では使えず、
             また値の中で使用すると特別な意味を持つことになります。
             予期せぬ挙動を起こすようなら、このアダプタを使わないようにしましょう。
         </para>
@@ -617,7 +582,7 @@ $translate->addTranslation('path/to/other.ini', 'it');
             すべてのアダプタで、オプションを使用することができます。
             もちろん、アダプタによってオプションは異なります。
             アダプタを作成する際に、オプションを設定することができます。
-            すべてのアダプタで共通のオプションは '<code>clear</code>'
+            すべてのアダプタで共通のオプションは <code>clear</code>
             で、これは、翻訳データを既存のものに追記するのかしないのかを指定します。
             標準の動作は、新しい翻訳を既存の翻訳に追記します。
             しかし、これを指定すると、既存の翻訳データをいったん消去して
@@ -634,20 +599,23 @@ $translate->addTranslation('path/to/other.ini', 'it');
 
         <example id="zend.translate.using.options.example">
             <title>翻訳オプションの使用</title>
-            <programlisting role="php"><![CDATA[
-// ':' を、翻訳ソースファイルの区切り文字として指定します
+            <programlisting role="php">
+<![CDATA[// ':' を、翻訳ソースファイルの区切り文字として指定します
 $options = array('delimiter' => ':');
-$translate = new Zend_Translate('csv',
-                                'path/to/mytranslation.csv',
-                                'de',
-                                $options);
 
-...
+$translate = new Zend_Translate(
+    'csv',
+    '/path/to/mytranslation.csv',
+    'de',
+    $options
+);
+
+…
 
 // 定義されている言語を消去し、新しい翻訳データを使用します
 $options = array('clear' => true);
-$translate->addTranslation('path/to/new.csv', 'fr', $options);
-]]>
+
+$translate->addTranslation('/path/to/new.csv', 'fr', $options);]]>
             </programlisting>
         </example>
 
@@ -661,65 +629,67 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
             <tgroup cols="4">
                 <thead>
                     <row>
-                        <entry>アダプタ</entry>
                         <entry>オプション</entry>
-                        <entry>標準の値</entry>
+                        <entry>アダプタ</entry>
                         <entry>説明</entry>
+                        <entry>デフォルト値</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry>すべて</entry>
                         <entry>clear</entry>
-                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>すべて</entry>
                         <entry>
                             true にすると、既に読み込んでいる翻訳を消去します。
                             新しい翻訳データを読み込む際に、
                             新しいインスタンスを作成する代わりに使用します。
                         </entry>
+                        <entry>false</entry>
                     </row>
                     <row>
-                        <entry>すべて</entry>
                         <entry>disableNotices</entry>
-                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>すべて</entry>
                         <entry>
                             true に設定すると、翻訳が存在しないことについての注意メッセージを無効にします。
                             実運用環境ではこのオプションを true に設定しなければなりません。
                         </entry>
+                        <entry>false</entry>
                     </row>
                     <row>
-                        <entry>すべて</entry>
                         <entry>ignore</entry>
-                        <entry><emphasis role="strong">.</emphasis></entry>
+                        <entry>すべて</entry>
                         <entry>
                            このプレフィックスで始まるすべてのディレクトリとファイルが、
                            ファイルを探す際に無視されます。この値のデフォルトは
-                           <emphasis role="strong">'.'</emphasis>
-                           で、すべての隠しファイルを無視するようになります。
-                           この値を 'tmp' に設定すると、たとえば 'tmpImages' や 'tmpFiles'
+                           <code>'.'</code> で、すべての隠しファイルを無視するようになります。
+                           この値を <code>'tmp'</code> に設定すると、たとえば
+                           <code>tmpImages</code> や <code>tmpFiles</code>
                            といった名前のファイルやディレクトリ
                            (とその配下のすべてのディレクトリ) を無視します。
                         </entry>
+                        <entry>.</entry>
                     </row>
                     <row>
-                        <entry>すべて</entry>
                         <entry>log</entry>
-                        <entry><emphasis role="strong">null</emphasis></entry>
-                        <entry>未翻訳のメッセージや注意が書き込まれる Zend_Log のインスタンス</entry>
+                        <entry>すべて</entry>
+                        <entry>
+                            未翻訳のメッセージや注意が書き込まれる
+                            <code>Zend_Log</code> のインスタンス
+                        </entry>
+                        <entry>null</entry>
                     </row>
                     <row>
-                        <entry>すべて</entry>
                         <entry>logUntranslated</entry>
-                        <entry><emphasis role="strong">false</emphasis></entry>
+                        <entry>すべて</entry>
                         <entry>
                             このオプションを true に設定すると、翻訳できなかったすべてのメッセージ ID
                             が添付のログに書き込まれます。
                         </entry>
+                        <entry>false</entry>
                     </row>
                     <row>
-                        <entry>すべて</entry>
                         <entry>scan</entry>
-                        <entry><emphasis role="strong">null</emphasis></entry>
+                        <entry>すべて</entry>
                         <entry>
                             null にすると、ディレクトリ構造のスキャンを行いません。
                             <code>Zend_Translate::LOCALE_DIRECTORY</code> にすると、
@@ -729,26 +699,27 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
                             詳細は <xref linkend="zend.translate.using.detection" />
                             を参照ください。
                         </entry>
+                        <entry>all</entry>
                     </row>
                     <row>
-                        <entry>Csv</entry>
                         <entry>delimiter</entry>
-                        <entry><emphasis role="strong">;</emphasis></entry>
+                        <entry>Csv</entry>
                         <entry>
                             ソースと翻訳を区切る際に使用する記号を指定します。
                         </entry>
+                        <entry>;</entry>
                     </row>
                     <row>
-                        <entry>Csv</entry>
                         <entry>length</entry>
-                        <entry><emphasis role="strong">0</emphasis></entry>
+                        <entry>Csv</entry>
                         <entry>CSV の行の長さの最大値を定義します。0 にすると、自動的に検出します。</entry>
+                        <entry>0</entry>
                     </row>
                     <row>
-                        <entry>Csv</entry>
                         <entry>enclosure</entry>
-                        <entry><emphasis role="strong">"</emphasis></entry>
+                        <entry>Csv</entry>
                         <entry>値を囲むための文字を定義します。デフォルトはダブルクォートです。</entry>
+                        <entry>"</entry>
                     </row>
                 </tbody>
             </tgroup>
@@ -817,24 +788,30 @@ $translate->addTranslation('path/to/new.csv', 'fr', $options);
 
         <example id="zend.translate.using.languages.example">
             <title>アダプタの言語の処理</title>
-            <programlisting role="php"><![CDATA[
-...
+            <programlisting role="php">
+<![CDATA[…
 // 実際に設定されている言語を返します
 $actual = $translate->getLocale();
 
-...
-// 翻訳時にオプションのパラメータで言語を指定することができます
-echo $translate->_("my_text", "fr");
-// あるいは標準の言語を設定することもできます
-$translate->setLocale("fr");
-echo $translate->_("my_text");
+…
 
-...
+// 翻訳時にオプションのパラメータで言語を指定することができます
+print $translate->_('my_text', 'fr');
+
+// あるいは標準の言語を設定することもできます
+$translate->setLocale('fr');
+print $translate->_('my_text');
+
+// 基底言語を参照し、'fr_CH' は 'fr' となります
+$translate->setLocale('fr_CH');
+print $translate->_('my_text');
+
+…
+
 // この言語が存在するかどうかを調べます
-if ($translate->isAvailable("fr")) {
+if ($translate->isAvailable('fr')) {
     // 存在します
-}
-]]>
+}]]>
             </programlisting>
         </example>
 
@@ -858,40 +835,48 @@ if ($translate->isAvailable("fr")) {
 
             <example id="zend.translate.using.languages.automatic.example">
                 <title>言語の自動検出の動作例</title>
-                <programlisting role="php"><![CDATA[
-// ブラウザから返される言語設定は次のようなものであると仮定します
+                <programlisting role="php">
+<![CDATA[// ブラウザから返される言語設定は次のようなものであると仮定します
 // HTTP_ACCEPT_LANGUAGE = "de_AT=1;fr=1;en_US=0.8";
 
 // 例 1:
-$translate = new Zend_Translate('gettext',
-                                '\my_it.mo',
-                                'auto',
-                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+$translate = new Zend_Translate(
+    'gettext',
+    'my_it.mo',
+    'auto',
+    array('scan' => Zend_Translate::LOCALE_FILENAME)
+);                           
 // 適切な言語がみつからないので、メッセージ ID を返します
 
 // 例 2:
-$translate = new Zend_Translate('gettext',
-                                '\my_fr.mo',
-                                'auto',
-                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+$translate = new Zend_Translate(
+    'gettext',
+    'my_fr.mo',
+    'auto',
+    array('scan' => Zend_Translate::LOCALE_FILENAME)
+);
 // 適切な言語は 'fr' となります
 
 // 例 3:
-$translate = new Zend_Translate('gettext',
-                                '\my_de.mo',
-                                'auto',
-                                array('scan' => Zend_Translate::LOCALE_FILENAME);
+$translate = new Zend_Translate(
+    'gettext',
+    'my_de.mo',
+    'auto',
+    array('scan' => Zend_Translate::LOCALE_FILENAME)
+);
 // 適切な言語は 'de' となります。'de_AT' の代替言語は 'de' だからです
 
 // 例 4:
-$translate = new Zend_Translate('gettext',
-                                '\my_it.mo',
-                                'auto',
-                                array('scan' => Zend_Translate::LOCALE_FILENAME);
-$translate->addTranslation('\my_ru.mo', 'ru');
+$translate = new Zend_Translate(
+    'gettext',
+    'my_it.mo',
+    'auto',
+    array('scan' => Zend_Translate::LOCALE_FILENAME)
+);
+
+$translate->addTranslation('my_ru.mo', 'ru');
 $translate->setLocale('it_IT');
-// 翻訳ソースとして 'it' を返し、自動設定を上書きします
-]]>
+// 翻訳ソースとして 'it' を返し、自動設定を上書きします]]>
                 </programlisting>
             </example>
 
@@ -902,7 +887,7 @@ $translate->setLocale('it_IT');
 
             <para>
                 自動検出を再度有効にしたい場合は、<code>setLocale()</code>
-                で言語として <emphasis role="strong">auto</emphasis>
+                で言語として <code>auto</code>
                 を指定します。これにより、<code>Zend_Translate</code>
                 の自動検出機能が再度有効になります。
             </para>
@@ -915,9 +900,8 @@ $translate->setLocale('it_IT');
                 このようにすれば、同じロケールを何度も使用したいときに
                 各インスタンスで毎回ロケールを設定する手間を省けます。
             </para>
-
-            <programlisting role="php"><![CDATA[
-// 起動ファイルで
+            <programlisting role="php">
+<![CDATA[// 起動ファイルで
 $locale = new Zend_Locale();
 Zend_Registry::set('Zend_Locale', $locale);
 
@@ -925,7 +909,8 @@ Zend_Registry::set('Zend_Locale', $locale);
 $defaultlanguage = 'en';
 
 // アプリケーションのどこかで
-$translate = new Zend_Translate('gettext', '\my_de.mo');
+$translate = new Zend_Translate('gettext', 'my_de.mo');
+
 if (!$translate->isAvailable($locale->getLanguage())) {
     // 存在しない言語をリクエストされた場合はデフォルト設定を使用します
     $translate->setLocale($defaultlanguage);
@@ -934,7 +919,6 @@ if (!$translate->isAvailable($locale->getLanguage())) {
 $translate->getLocale();
 ]]>
             </programlisting>
-
         </sect3>
 
     </sect2>
@@ -952,7 +936,7 @@ $translate->getLocale();
 
         <note>
             <para>
-                自動的なソース検出機能は、Zend Framework バージョン 1.5
+                自動的なソース検出機能は、バージョン 1.5
                 以降で使用可能です。
             </para>
         </note>
@@ -965,16 +949,15 @@ $translate->getLocale();
 
         <example id="zend.translate.using.languages.directory.example">
             <title>ディレクトリを指定してソースを探す</title>
-            <programlisting role="php"><![CDATA[
-// 以下のようなディレクトリ構造があることを想定しています
-//  /language
-//  /language/de/login/login.mo
-//  /language/de/error/loginerror.mo
-//  /language/en/login/login.mo
-//  /language/en/error/loginerror.mo
+            <programlisting role="php">
+<![CDATA[// 以下のようなディレクトリ構造があることを想定しています
+//  /language/
+//  /language/login/login.tmx
+//  /language/logout/logout.tmx
+//  /language/error/loginerror.tmx
+//  /language/error/logouterror.tmx
 
-$translate = new Zend_Translate('tmx', '/language');
-]]>
+$translate = new Zend_Translate('tmx', '/language');]]>
             </programlisting>
         </example>
 
@@ -1023,19 +1006,20 @@ $translate = new Zend_Translate('tmx', '/language');
 
             <example id="zend.translate.using.detection.directory.example">
                 <title>ディレクトリ名による言語の検出</title>
-                <programlisting role="php"><![CDATA[
-// 以下のようなディレクトリ構造があることを想定しています
-//  /language
-//  /language/login/login_en.mo
-//  /language/login/login_de.mo
-//  /language/error/loginerror_en.mo
-//  /language/error/loginerror_de.mo
+                <programlisting role="php">
+<![CDATA[// 以下のようなディレクトリ構造があることを想定しています
+//  /language/
+//  /language/de/login/login.mo
+//  /language/de/error/loginerror.mo
+//  /language/en/login/login.mo
+//  /language/en/error/loginerror.mo
 
-$translate = new Zend_Translate('gettext',
-                                '/language',
-                                null,
-                                array('scan' =>
-                                      Zend_Translate::LOCALE_DIRECTORY));
+$translate = new Zend_Translate(
+    'gettext',
+    '/language',
+    null,
+    array('scan' => Zend_Translate::LOCALE_DIRECTORY)
+);
 ]]>
                 </programlisting>
             </example>
@@ -1070,22 +1054,28 @@ $translate = new Zend_Translate('gettext',
             <para>
                 言語を自動検出するもうひとつの方法は、特別なファイル名を使用することです。
                 ファイル名を言語名そのものにするか、あるいはその一部に言語名を含めます。
-                この方式を使用する場合は、初期化時に 'scan'
+                この方式を使用する場合は、初期化時に <code>scan</code>
                 オプションを設定する必要があります。
                 ファイル名のつけかたには、以下に示すようにいくつかの方法があります。
             </para>
 
             <example id="zend.translate.using.detection.filename.example">
                 <title>ファイル名からの言語の取得</title>
-                <programlisting role="php"><![CDATA[
-// 以下のようなディレクトリ構造があることを想定しています
-//  /language
-//  /language/login/login_en.tmx
-//  /language/login/login_de.tmx
-//  /language/error/loginerror_en.tmx
-//  /language/error/loginerror_de.tmx
+                <programlisting role="php">
+<![CDATA[// 以下のようなディレクトリ構造があることを想定しています
+//  /language/
+//  /language/login/login_en.mo
+//  /language/login/login_de.mo
+//  /language/error/loginerror_en.mo
+//  /language/error/loginerror_de.mo
 
-$translate = new Zend_Translate('gettext', '/language', null, array('scan' => Zend_Translate::LOCALE_FILENAME));]]>
+$translate = new Zend_Translate(
+    'gettext',
+    '/language',
+    null,
+    array('scan' => Zend_Translate::LOCALE_FILENAME)
+);
+]]>
                 </programlisting>
             </example>
 
@@ -1097,15 +1087,12 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                     言語名そのものをファイル名にしてしまうのは一番シンプルな方法ですが、
                     同一ディレクトリにソースファイルがひとつだけの場合にしか使用できません。
                 </para>
-
-                <programlisting><![CDATA[
-/languages
-  en.mo
-  de.mo
-  es.mo
-]]>
-</programlisting>
-
+                <programlisting>
+<![CDATA[/languages/
+/languages/en.mo
+/languages/de.mo
+/languages/es.mo]]>
+                </programlisting>
             </sect4>
 
             <sect4 id="zend.translate.using.detection.filename.extension">
@@ -1117,15 +1104,12 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                     ファイル名の拡張子を用いて言語を検出させるというものがあります。
                     しかしこの方法にも問題があり、本来の拡張子が何であったのかがわからなくなります。
                 </para>
-
-                <programlisting><![CDATA[
-/languages
-  view.en
-  view.de
-  view.es
-]]>
-</programlisting>
-
+                <programlisting>
+<![CDATA[languages/
+languages/view.en
+languages/view.de
+languages/view.es]]>
+                </programlisting>
             </sect4>
 
             <sect4 id="zend.translate.using.detection.filename.token">
@@ -1139,28 +1123,22 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                     トークンとしてサポートされているのは、小数点 '.' かアンダーライン '_'、
                     あるいはハイフン '=' のいずれかです。
                 </para>
-
-                <programlisting><![CDATA[
-/languages
+                <programlisting>
+<![CDATA[/languages/
   view_en.mo  -> 英語となります。
   view_de.mo  -> ドイツ語となります。
-  view_it.mo  -> イタリア語となります。
-]]>
-</programlisting>
-
+  view_it.mo  -> イタリア語となります。]]>
+                </programlisting>
                 <para>
                     ロケールとして判断できる部分が複数あった場合は、
                     最初に見つかったものを使用します。詳細は次の例でご確認ください。
                 </para>
-
-                <programlisting><![CDATA[
-/languages
+                <programlisting>
+<![CDATA[/languages/
   view_en_de.mo  -> 英語となります。
   view_en_es.mo  -> 英語となり、最初のファイルを上書きします。
-  view_it_it.mo  -> イタリア語となります。
-]]>
-</programlisting>
-
+  view_it_it.mo  -> イタリア語となります。]]>
+                </programlisting>
                 <para>
                     3 種類のトークンのどれを用いても言語を検出することができます。
                     まず最初に使用するのが小数点 '.'、次に使用するのがアンダーライン
@@ -1169,15 +1147,12 @@ $translate = new Zend_Translate('gettext', '/language', null, array('scan' => Ze
                     トークンの優先順位の順に調べて最初に見つかったものを使用します。
                     詳細は次の例でご確認ください。
                 </para>
-
-                <programlisting><![CDATA[
-/languages
+                <programlisting>
+<![CDATA[/languages/
   view_en-it.mo  -> 英語となります。'_' のほうが '-' より優先されるからです。
   view-en_it.mo  -> イタリア語となります。'_' のほうが '-' より優先されるからです。
-  view_en.it.mo  -> イタリア語となります。'.' のほうが '_' より優先されるからです。
-]]>
-</programlisting>
-
+  view_en.it.mo  -> イタリア語となります。'.' のほうが '_' より優先されるからです。]]>
+                </programlisting>
             </sect4>
 
         </sect3>
@@ -1247,17 +1222,18 @@ if ($translate->isTranslated('message1', false, 'de')) {
 
         <example id="zend.translate.using.logging.example">
             <title>翻訳のログ出力</title>
-            <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', $path, 'de');
+            <programlisting role="php">
+<![CDATA[$translate = new Zend_Translate('gettext', $path, 'de');
 
 // log のインスタンスを作成します
-$writer = new Zend_Log_Writer_Stream('/path/file.log');
-$log = new Zend_Log($writer);
+$writer = new Zend_Log_Writer_Stream('/path/to/file.log');
+$log    = new Zend_Log($writer);
 
 // それを translation インスタンスにアタッチします
 $translate->setOptions(array(
-    'log' => $log,
-    'logUntranslated' => true));
+    'log'             => $log,
+    'logUntranslated' => true)
+);
 
 $translate->tranlate('unknown string');
 ]]>
@@ -1334,27 +1310,21 @@ $translate->tranlate('unknown string');
 
         <example id="zend.translate.using.sourcedata.example">
             <title>アダプタでの言語の処理</title>
-            <programlisting role="php"><![CDATA[
-...
-// すべてのメッセージ ID を返します
-$messageids = $translate->getMessageIds();
-print_r($messageids);
+            <programlisting role="php">
+<![CDATA[// すべてのメッセージ ID を返します
+$messageIds = $translate->getMessageIds();
+print_r($messageIds);
 
-...
 // あるいは指定した言語の ID を返します
-$messageids = $translate->getMessageIds('en_US');
-print_r($messageids);
+$messageIds = $translate->getMessageIds('en_US');
+print_r($messageIds);
 
-...
 // すべての翻訳データを返します
 $source = $translate->getMessages();
-print_r($source);
-]]>
+print_r($source);]]>
             </programlisting>
         </example>
-
     </sect2>
-
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
