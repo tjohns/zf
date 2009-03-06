@@ -23,6 +23,13 @@
     <itemizedlist>
         <listitem>
             <para>
+                <code>outputStream</code>: A different output-stream, if you don't
+                want to stream to STDOUT. Can be any other stream like
+                <code>php://stderr</code> or a path to a file.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 <code>width</code>: Either an integer or the <code>AUTO</code>
                 constant of <code>Zend_Console_ProgressBar</code>.
             </para>
