@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13834 -->
+<!-- EN-Revision: 14235 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
@@ -25,6 +25,14 @@
         使用できるオプションは次のとおりです。
     </para>
     <itemizedlist>
+        <listitem>
+            <para>
+                <code>outputStream</code>: さまざまな出力ストリーム。
+                STDOUT 意外に出力したい場合に使用します。
+                <code>php://stderr</code> のようなストリーム、
+                あるいはファイルへのパスを指定できます。
+            </para>
+        </listitem>
         <listitem>
             <para>
                 <code>width</code>: 整数値、あるいは
