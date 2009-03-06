@@ -470,7 +470,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getErrors()
     {
-        return $this->getTransferAdapter()->getErrors();
+        return parent::getErrors() + $this->getTransferAdapter()->getErrors();
     }
 
     /**
@@ -480,7 +480,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function hasErrors()
     {
-        return $this->getTransferAdapter()->hasErrors();
+        return (parent::hasErrors() || $this->getTransferAdapter()->hasErrors());
     }
 
     /**
@@ -490,7 +490,8 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getMessages()
     {
-        return $this->getTransferAdapter()->getMessages();
+        return parent::getMessages();
+//        return parent::getMessages() + $this->getTransferAdapter()->getMessages();
     }
 
     /**
@@ -865,16 +866,21 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             if (null !== $translator) {
                 $message = $translator->translate($message);
             }
+
             if ($this->isArray() || is_array($value)) {
                 $aggregateMessages = array();
                 foreach ($value as $val) {
                     $aggregateMessages[] = str_replace('%value%', $val, $message);
                 }
-                $messages[$key] = $aggregateMessages;
+
+                if (!empty($aggregateMessages)) {
+                    $messages[$key] = $aggregateMessages;
+                }
             } else {
                 $messages[$key] = str_replace('%value%', $value, $message);
             }
         }
+
         return $messages;
     }
 }

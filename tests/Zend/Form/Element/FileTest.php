@@ -382,6 +382,19 @@ class Zend_Form_Element_FileTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('text/plain', $element->getMimeType('baz.text'));
     }
 
+    public function testAddedErrorsAreDisplayed()
+    {
+        Zend_Form::setDefaultTranslator(null);
+        $element = new Zend_Form_Element_File('baz');
+        $element->addError('TestError3');
+        $adapter = new Zend_Form_Element_FileTest_MockAdapter();
+        $element->setTransferAdapter($adapter);
+
+        $this->assertTrue($element->hasErrors());
+        $messages = $element->getMessages();
+        $this->assertContains('TestError3', $messages);
+    }
+
     private function _convertIniToInteger($setting)
     {
         if (!is_numeric($setting)) {
