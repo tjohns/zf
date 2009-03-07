@@ -68,12 +68,13 @@ abstract class Zend_Translate_Adapter {
      */
     protected $_options = array(
         'clear'           => false,
-        'scan'            => null,
-        'locale'          => 'auto',
-        'ignore'          => '.',
         'disableNotices'  => false,
+        'ignore'          => '.',
+        'locale'          => 'auto',
+        'log'             => null,
+        'logMessage'      => "Untranslated message within '%locale%': %message%",
         'logUntranslated' => false,
-        'log'             => null
+        'scan'            => null
     );
 
     /**
@@ -496,38 +497,51 @@ abstract class Zend_Translate_Adapter {
         if ($locale === null) {
             $locale = $this->_options['locale'];
         }
+
         if (!Zend_Locale::isLocale($locale, true, false)) {
             if (!Zend_Locale::isLocale($locale, false, false)) {
                 // language does not exist, return original string
+                $this->_log($messageId, $locale);
                 return $messageId;
             }
+
             $locale = new Zend_Locale($locale);
         }
 
         $locale = (string) $locale;
-        if (isset($this->_translate[$locale][$messageId]) === true) {
+        if (isset($this->_translate[$locale][$messageId])) {
             // return original translation
             return $this->_translate[$locale][$messageId];
         } else if (strlen($locale) != 2) {
             // faster than creating a new locale and separate the leading part
             $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
 
-            if (isset($this->_translate[$locale][$messageId]) === true) {
+            if (isset($this->_translate[$locale][$messageId])) {
                 // return regionless translation (en_US -> en)
                 return $this->_translate[$locale][$messageId];
             }
         }
 
-        // no translation found, return original
+        $this->_log($messageId, $locale);
+        return $messageId;
+    }
+
+    /**
+     * Logs a message when the log option is set
+     *
+     * @param string $message Message to log
+     * @param String $locale  Locale to log
+     */
+    protected function _log($message, $locale) {
         if ($this->_options['logUntranslated']) {
+            $message = str_replace('%message%', $message, $this->_options['logMessage']);
+            $message = str_replace('%locale%', $locale, $message);
             if ($this->_options['log']) {
-                $this->_options['log']->notice('Untranslated message: ' . $messageId);
+                $this->_options['log']->notice($message);
             } else {
-                trigger_error('Untranslated message: ' . $messageId, E_USER_NOTICE);
+                trigger_error($message, E_USER_NOTICE);
             }
         }
-
-        return $messageId;
     }
 
     /**

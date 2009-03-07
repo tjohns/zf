@@ -365,6 +365,24 @@ class Zend_TranslateTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSettingUnknownLocaleWritingToSelfDefinedLog()
+    {
+        $lang = new Zend_Translate(Zend_Translate::AN_CSV, dirname(__FILE__) . '/Translate/Adapter/_files', 'en', array('delimiter' => ','));
+        $this->assertEquals('ignored', $lang->translate('ignored'));
+
+        $stream = fopen('php://memory', 'w+');
+        require_once 'Zend/Log/Writer/Stream.php';
+        $writer = new Zend_Log_Writer_Stream($stream);
+        require_once 'Zend/Log.php';
+        $log    = new Zend_Log($writer);
+
+        $lang->setOptions(array('logUntranslated' => true, 'log' => $log, 'logMessage' => 'Self defined log message'));
+        $this->assertEquals('ignored', $lang->translate('ignored'));
+
+        rewind($stream);
+        $this->assertContains('Self defined log message', stream_get_contents($stream));
+    }
+
     /**
      * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
      *

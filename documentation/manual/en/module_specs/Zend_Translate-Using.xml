@@ -692,6 +692,14 @@ $translate->addTranslation('/path/to/new.csv', 'fr', $options);
                         <entry><emphasis role="strong">null</emphasis></entry>
                     </row>
                     <row>
+                        <entry>logMessage</entry>
+                        <entry>all</entry>
+                        <entry>
+                            The message which will be written into the log
+                        </entry>
+                        <entry><emphasis role="strong">Untranslated message within '%locale%': %message%</emphasis></entry>
+                    </row>
+                    <row>
                         <entry>logUntranslated</entry>
                         <entry>all</entry>
                         <entry>
@@ -1219,13 +1227,13 @@ $translate->setOptions(array(
     'log'             => $log,
     'logUntranslated' => true));
 
-$translate->tranlate('unknown string');
+$translate->translate('unknown string');
 ]]>
             </programlisting>
         </example>
 
         <para>
-            Now you will have a new notice in the log: <code>Untranslated message: unknown string</code>.
+            Now you will have a new notice in the log: <code>Untranslated message within 'de': unknown string</code>.
         </para>
 
         <note>
@@ -1240,8 +1248,35 @@ $translate->tranlate('unknown string');
         <para>
             This feature can not only be used to log messages but also to attach this untranslated messages
             into an empty translation file. To do so you will have to write your own log writer which
-            writes the format you want to have and strips the prepending "Untranslated message: ".
+            writes the format you want to have and strips the prepending "Untranslated message".
         </para>
+
+        <para>
+            You can also set the '<code>logMessage</code>' option when you want to have your own log message.
+            Use the '<code>%message%</code>' token for placing the messageId within your log message, and the
+            '<code>%locale%</code>' token for the requested locale. See the following example for a self
+            defined log message:
+        </para>
+
+        <example id="zend.translate.using.logging.example2">
+            <title>Self defined log messages</title>
+            <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('gettext', $path, 'de');
+
+// Create a log instance
+$writer = new Zend_Log_Writer_Stream('/path/to/file.log');
+$log    = new Zend_Log($writer);
+
+// Attach it to the translation instance
+$translate->setOptions(array(
+    'log'             => $log,
+    'logMessage'      => "Missing '%message%' within locale '%locale%'",
+    'logUntranslated' => true));
+
+$translate->translate('unknown string');
+]]>
+            </programlisting>
+        </example>
 
     </sect2>
 
