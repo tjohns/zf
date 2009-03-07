@@ -313,19 +313,19 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement
 
         switch ($style) {
             case Zend_Db::FETCH_NUM:
-                $row = oci_fetch_array($this->_stmt, OCI_NUM | $lob_as_string);
+                $row = oci_fetch_array($this->_stmt, OCI_NUM | OCI_RETURN_NULLS | $lob_as_string);
                 break;
             case Zend_Db::FETCH_ASSOC:
-                $row = oci_fetch_array($this->_stmt, OCI_ASSOC | $lob_as_string);
+                $row = oci_fetch_array($this->_stmt, OCI_ASSOC | OCI_RETURN_NULLS | $lob_as_string);
                 break;
             case Zend_Db::FETCH_BOTH:
-                $row = oci_fetch_array($this->_stmt, OCI_BOTH | $lob_as_string);
+                $row = oci_fetch_array($this->_stmt, OCI_BOTH | OCI_RETURN_NULLS | $lob_as_string);
                 break;
             case Zend_Db::FETCH_OBJ:
                 $row = oci_fetch_object($this->_stmt);
                 break;
             case Zend_Db::FETCH_BOUND:
-                $row = oci_fetch_array($this->_stmt, OCI_BOTH | $lob_as_string);
+                $row = oci_fetch_array($this->_stmt, OCI_BOTH | OCI_RETURN_NULLS | $lob_as_string);
                 if ($row !== false) {
                     return $this->_fetchBound($row);
                 }
