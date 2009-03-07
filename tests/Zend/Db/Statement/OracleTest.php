@@ -90,6 +90,28 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
         $stmt->closeCursor();
     }
 
+    /**
+     * @group ZF-5927
+     */
+    public function testStatementReturnNullWithEmptyField()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $stmt = $this->_db->prepare("INSERT INTO $products ($product_id, $product_name) VALUES (:product_id, :product_name)");
+        $stmt->execute(array('product_id' => 4, 'product_name' => null));
+
+        $select = $this->_db->select()
+                       ->from('zfproducts')
+                       ->where("$product_id = 4");
+
+        $result = $this->_db->fetchAll($select);
+        $this->assertTrue(array_key_exists('product_name', $result[0]), 'fetchAll must return null for empty fields with Oracle');
+        $result = $this->_db->fetchRow($select);
+        $this->assertTrue(array_key_exists('product_name', $result), 'fetchRow must return null for empty fields with Oracle');
+    }
+
     public function testStatementSetFetchModeBoth()
     {
         $this->markTestIncomplete($this->getDriver() . ' does not implement FETCH_BOTH correctly.');
@@ -99,5 +121,4 @@ class Zend_Db_Statement_OracleTest extends Zend_Db_Statement_TestCommon
     {
         return 'Oracle';
     }
-
 }
