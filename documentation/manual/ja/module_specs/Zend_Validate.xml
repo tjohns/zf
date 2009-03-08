@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14249 -->
 <sect1 id="zend.validate.introduction">
 
     <title>導入</title>
@@ -239,6 +239,67 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     </sect2>
 
 
+    <sect2 id="zend.validate.introduction.translation">
+
+        <title>メッセージの翻訳</title>
+
+        <para>
+            Validate クラスには <code>setTranslator()</code> メソッドがあり、
+            <code>Zend_Translate</code> のインスタンスを指定することができます。
+            これが、検証に失敗したときのメッセージを翻訳します。
+            <code>getTranslator()</code> メソッドは、設定されているインスタンスを返します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_StringLength(8, 12);
+$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''), 'en');
+
+$validator->setTranslator($translate);
+]]>
+        </programlisting>
+
+        <para>
+            静的メソッド <code>setDefaultTranslator()</code> で
+            <code>Zend_Translate</code> のインスタンスを設定すると、
+            それをすべての検証クラスで使用することができます。この設定内容を取得するのが
+            <code>getDefaultTranslator()</code> です。これを使用すると、
+            個々のバリデータクラスで手動で翻訳器を設定せずに済むのでコードがシンプルになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''), 'en');
+Zend_Validate::setDefaultTranslator($translate);
+]]>
+        </programlisting>
+
+        <note>
+            <para>
+                アプリケーション単位のロケールをレジストリで設定している場合は、
+                このロケールがデフォルトの翻訳器に適用されます。
+            </para>
+        </note>
+
+        <para>
+            時には、検証時に翻訳器を無効にしなければならないこともあるでしょう。
+            そんな場合は <code>setDisableTranslator()</code> メソッドを使用します。
+            このメソッドには boolean パラメータを指定します。また <code>translatorIsDisabled()</code>
+            で現在の値を取得することができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_StringLength(8, 12);
+if (!$validator->isTranslatorDisabled()) {
+    $validator->setDisableTranslator();
+}
+]]>
+        </programlisting>
+
+        <para>
+            <code>setMessage()</code> で独自のメッセージを設定するかわりに翻訳器を使うこともできますが、
+            その場合は独自に設定したメッセージについても翻訳器が動作することに注意しましょう。
+        </para>
+
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
