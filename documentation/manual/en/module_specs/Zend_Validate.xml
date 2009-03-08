@@ -249,6 +249,68 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
     </sect2>
 
 
+    <sect2 id="zend.validate.introduction.translation">
+
+        <title>Translating messages</title>
+
+        <para>
+            Validate classes provide a <code>setTranslator()</code> method with
+            which you can specify a instance of <code>Zend_Translate</code> which
+            will translate the messages in case of a validation failure. The
+            <code>getTranslator()</code> method returns the set translator instance.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_StringLength(8, 12);
+$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''), 'en');
+
+$validator->setTranslator($translate);
+]]>
+        </programlisting>
+
+        <para>
+            With the static <code>setDefaultTranslator()</code> method you can set
+            a instance of <code>Zend_Translate</code> which will be used for all
+            validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
+            This prevents you from setting a translator manually for all validator classes,
+            and simplifies your code.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''), 'en');
+Zend_Validate::setDefaultTranslator($translate);
+]]>
+        </programlisting>
+
+        <note>
+            <para>
+                When you have set an application wide locale within your registry, then this
+                locale will be used as default translator.
+            </para>
+        </note>
+
+        <para>
+            Sometimes it is necessary to disable the translator within a validator.
+            To archive this you can use the <code>setDisableTranslator()</code> method,
+            which accepts a boolean parameter, and <code>translatorIsDisabled()</code>
+            to get the set value.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_StringLength(8, 12);
+if (!$validator->isTranslatorDisabled()) {
+    $validator->setDisableTranslator();
+}
+]]>
+        </programlisting>
+
+        <para>
+            It is also possible to use a translator instead of setting own messages with
+            <code>setMessage()</code>. But doing so, you should keep in mind, that the
+            translator works also on messages you set your own.
+        </para>
+
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
