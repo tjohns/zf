@@ -37,6 +37,13 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
 abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_Router_Route_Interface
 {
     /**
+     * Wether this route is abstract or not
+     *
+     * @var boolean
+     */
+    protected $_isAbstract = false;
+    
+    /**
      * Wether this is a partial route or not
      * 
      * @var boolean
@@ -79,6 +86,21 @@ abstract class Zend_Controller_Router_Route_Abstract implements Zend_Controller_
     public function getMatchedPath()
     {
         return $this->_matchedPath;
+    }
+    
+    /**
+     * Check or set wether this is an abstract route or not
+     * 
+     * @param  boolean $flag
+     * @return boolean
+     */
+    public function isAbstract($flag = null)
+    {
+        if ($flag !== null) {
+            $this->_isAbstract = $flag;
+        }
+    
+        return $this->_isAbstract;
     }
     
     /**

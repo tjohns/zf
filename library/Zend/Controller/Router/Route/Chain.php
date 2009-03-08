@@ -41,7 +41,10 @@ class Zend_Controller_Router_Route_Chain extends Zend_Controller_Router_Route_Ab
      * @param Zend_Config $config Configuration object
      */
     public static function getInstance(Zend_Config $config)
-    {}
+    {
+        $defs = ($config->defaults instanceof Zend_Config) ? $config->defaults->toArray() : array();
+        return new self($config->route, $defs);
+    }
     
     /**
      * Add a route to this chain

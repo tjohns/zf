@@ -270,8 +270,6 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
     public function testConfigChaining()
     {
-        $this->markTestSkipped('Route features not ready');
-
         $routes = array(
             
             /** Abstract routes */
@@ -358,7 +356,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $front->setRequest(new Zend_Controller_Router_RewriteTest_Request());
         $router->setFrontController($front);
         
-        $router->addRoutes($routes);
+        $router->addConfig(new Zend_Config($routes));
         
         $request = new Zend_Controller_Router_ChainTest_Request('http://user.example.com/profile');
         $token   = $router->route($request);
@@ -366,6 +364,13 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('user',    $token->getModuleName());
         $this->assertEquals('profile', $token->getControllerName());
         $this->assertEquals('index',   $token->getActionName());
+        
+        $request = new Zend_Controller_Router_ChainTest_Request('http://foo.example.com/imprint');
+        $token   = $router->route($request);
+        
+        $this->assertEquals('default', $token->getModuleName());
+        $this->assertEquals('imprint', $token->getControllerName());
+        $this->assertEquals('defact',  $token->getActionName());
     }
 
     public function testConfigChainingAlternative()
@@ -461,9 +466,7 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
 
     public function testConfigChainingMixed()
-    {
-        $this->markTestSkipped('Route features not ready');
-        
+    {  
         $routes = array(
             'index' => array(
                 'type'  => 'Zend_Controller_Router_Route_Static',
@@ -521,11 +524,11 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
         
         $router->addConfig(new Zend_Config($routes));
         
-        $request = new Zend_Controller_Router_ChainTest_Request('http://user.example.com/profile');
+        $request = new Zend_Controller_Router_ChainTest_Request('http://user.example.com');
         $token   = $router->route($request);
         
-        $this->assertEquals('user',    $token->getModuleName());
-        $this->assertEquals('profile', $token->getControllerName());
+        $this->assertEquals('default',    $token->getModuleName());
+        $this->assertEquals('index', $token->getControllerName());
         $this->assertEquals('index',   $token->getActionName());
         
         $this->assertType('Zend_Controller_Router_Route_Chain', $router->getRoute('user-profile'));
