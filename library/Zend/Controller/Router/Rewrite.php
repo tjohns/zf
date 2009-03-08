@@ -178,9 +178,6 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
     /**
      * Add chain routes from a config route
      *
-     * @todo   Add recursive chaining (not required yet, but later when path
-     *         route chaining is done) 
-     * 
      * @param  string                                 $name
      * @param  Zend_Controller_Router_Route_Interface $route
      * @param  Zend_Config                            $childRoutesInfo
@@ -193,10 +190,20 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
         foreach ($childRoutesInfo as $childRouteName => $childRouteInfo) {
             $childRoute = $this->_getRouteFromConfig($childRouteInfo);
             
-            $chainRoute = $route->chain($childRoute);
+            if ($route instanceof Zend_Controller_Router_Route_Chain) {
+                $chainRoute = clone $route;
+                $chainRoute->chain($childRoute);
+            } else {
+                $chainRoute = $route->chain($childRoute);
+            }
+            
             $chainName  = $name . '-' . $childRouteName;
             
-            $this->addRoute($chainName, $chainRoute);
+            if (isset($childRouteInfo->chains)) {
+                $this->_addChainRoutesFromConfig($chainName, $chainRoute, $childRouteInfo->chains);
+            } else {
+                $this->addRoute($chainName, $chainRoute);
+            }
         }
     }
 
@@ -311,9 +318,8 @@ class Zend_Controller_Router_Rewrite extends Zend_Controller_Router_Abstract
             $this->addDefaultRoutes();
         }
 
-        /** Find the matching route */
+        // Find the matching route
         foreach (array_reverse($this->_routes) as $name => $route) {
-            
             // TODO: Should be an interface method. Hack for 1.0 BC  
             if (!method_exists($route, 'getVersion') || $route->getVersion() == 1) {
                 $match = $request->getPathInfo();

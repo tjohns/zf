@@ -147,22 +147,28 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      */
     public function match($path)
     {
-
         $pathStaticCount = 0;
-        $values = array();
-
-        $path = trim($path, $this->_urlDelimiter);
+        $values          = array();
+        $matchedPath     = '';
+        
+        if (!$this->isPartial()) {
+            $path = trim($path, $this->_urlDelimiter);
+        }
         
         if ($path != '') {
-
             $path = explode($this->_urlDelimiter, $path);
 
             foreach ($path as $pos => $pathPart) {
-
                 // Path is longer than a route, it's not a match
                 if (!array_key_exists($pos, $this->_parts)) {
-                    return false;
+                    if ($this->isPartial()) {
+                        break;
+                    } else {
+                        return false;
+                    }
                 }
+                
+                $matchedPath .= $pathPart . $this->_urlDelimiter;
                 
                 // If it's a wildcard, get the rest of URL as wildcard data and stop matching
                 if ($this->_parts[$pos] == '*') {
@@ -194,10 +200,8 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                     $values[$name] = $pathPart;
                 } else {
                     $pathStaticCount++;
-                }
-                
+                }   
             }
-
         }
 
         // Check if all static mappings have been matched
@@ -213,6 +217,8 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                 return false;
             }
         }
+        
+        $this->setMatchedPath(rtrim($matchedPath, $this->_urlDelimiter));
 
         $this->_values = $values;
         

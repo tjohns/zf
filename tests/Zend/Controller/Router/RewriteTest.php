@@ -485,16 +485,13 @@ class Zend_Controller_Router_RewriteTest extends PHPUnit_Framework_TestCase
         
     public function testRoutingChainedRoutes()
     {
-        $this->markTestSkipped('Router features not ready');
-        
         $request = new Zend_Controller_Router_RewriteTest_Request('http://localhost/foo/bar');
 
         $foo = new Zend_Controller_Router_Route('foo', array('foo' => true));
         $bar = new Zend_Controller_Router_Route('bar', array('bar' => true, 'controller' => 'foo', 'action' => 'bar'));
 
         $chain = new Zend_Controller_Router_Route_Chain();
-        $chain->chain($foo);
-        $foo->chain($bar);
+        $chain->chain($foo)->chain($bar);
 
         $this->_router->addRoute('foo-bar', $chain);
 
@@ -718,9 +715,8 @@ class Zend_Controller_Router_RewriteTest_Request_Incorrect extends Zend_Controll
  *
  * @uses Zend_Controller_Request_Abstract
  */
-class Zend_Controller_RouterTest_RouteV2_Stub implements Zend_Controller_Router_Route_Interface
+class Zend_Controller_RouterTest_RouteV2_Stub extends Zend_Controller_Router_Route_Abstract
 {
-    public function getVersion() { return 2; }
     public function match($request) {
         return array('path', $request->getParam('path'));
     }

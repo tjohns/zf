@@ -74,9 +74,17 @@ class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_A
      */
     public function match($path)
     {
-        if (trim($path, '/') == $this->_route) {
-            return $this->_defaults;
+        if ($this->isPartial()) {
+            if (substr($path, 0, strlen($this->_route)) === $this->_route) {
+                $this->setMatchedPath($this->_route);
+                return $this->_defaults;
+            }
+        } else {
+            if (trim($path, '/') == $this->_route) {
+                return $this->_defaults;
+            }
         }
+        
         return false;
     }
 
