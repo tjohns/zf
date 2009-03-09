@@ -460,6 +460,7 @@
         <xi:include href="module_specs/Zend_Validate-Set.xml" />
         <xi:include href="module_specs/Zend_Validate-ValidatorChains.xml" />
         <xi:include href="module_specs/Zend_Validate-WritingValidators.xml" />
+        <xi:include href="module_specs/Zend_Validate-Messages.xml" />
     </chapter>
     <chapter id="zend.version">
         <title>Zend_Version</title>
