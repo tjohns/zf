@@ -92,8 +92,7 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // Insert the data
-$dbAdapter->query($sqlInsert);
-]]>
+$dbAdapter->query($sqlInsert);]]>
             </programlisting>
             <para>
                 With the database connection and table data available, an
@@ -118,8 +117,7 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;
-]]>
+;]]>
             </programlisting>
             <para>
                 At this point, the authentication adapter instance is ready to
@@ -136,8 +134,7 @@ $authAdapter
 ;
 
 // Perform the authentication query, saving the result
-$result = $authAdapter->authenticate();
-]]>
+$result = $authAdapter->authenticate();]]>
             </programlisting>
             <para>
                 In addition to the availability of the
@@ -162,8 +159,7 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/
-]]>
+*/]]>
             </programlisting>
             <para>
                 Since the table row contains the credential value, it is
@@ -209,8 +205,7 @@ if ($result->isValid()) {
 
     /* ... */
 
-}
-]]>
+}]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
@@ -248,8 +243,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);
-]]>
+);]]>
         </programlisting>
         <para>
             Another scenario can be the implementation of a salting mechanism.
@@ -267,19 +261,16 @@ $sqlAlter = "ALTER TABLE [users] "
           . "ADD COLUMN [password_salt] "
           . "AFTER [password]";
 
-$dbAdapter->query($sqlAlter);
-]]>
+$dbAdapter->query($sqlAlter);]]>
         </programlisting>
         <para>
             Here’s a simple way to generate a salt string for every user at
             registration:
         </para>
         <programlisting role="php"><![CDATA[
-for ($i = 0; $i < 50; $i++)
-{
+for ($i = 0; $i < 50; $i++) {
     $dynamicSalt .= chr(rand(33, 126));
-}
-]]>
+}]]>
         </programlisting>
         <para>
             And now let’s build the adapter:
@@ -293,8 +284,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     "MD5(CONCAT('"
     . Zend_Registry::get('staticSalt')
     . "', ?, password_salt))"
-);
-]]>
+);]]>
         </programlisting>
         <note>
             <para>
