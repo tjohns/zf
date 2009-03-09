@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13467 -->
+<!-- EN-Revision: 14251 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>データベースのテーブルでの認証</title>
     <sect2 id="zend.auth.adapter.dbtable.introduction">
@@ -86,8 +86,7 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
 // データを挿入します
-$dbAdapter->query($sqlInsert);
-]]>
+$dbAdapter->query($sqlInsert);]]>
             </programlisting>
             <para>
                 データベース接続およびテーブルが使用可能となったので
@@ -111,8 +110,7 @@ $authAdapter
     ->setTableName('users')
     ->setIdentityColumn('username')
     ->setCredentialColumn('password')
-;
-]]>
+;]]>
             </programlisting>
             <para>
                 この時点で、認証アダプタのインスタンスは認証クエリを受け付ける準備ができました。
@@ -127,8 +125,7 @@ $authAdapter
 ;
 
 // 認証クエリを実行し、結果を保存します
-$result = $authAdapter->authenticate();
-]]>
+$result = $authAdapter->authenticate();]]>
             </programlisting>
             <para>
                 認証結果オブジェクトでの <code>getIdentity()</code>
@@ -152,8 +149,7 @@ Array
     [password] => my_password
     [real_name] => My Real Name
 )
-*/
-]]>
+*/]]>
             </programlisting>
             <para>
                 テーブルの行には証明情報が含まれているので、
@@ -196,8 +192,7 @@ if ($result->isValid()) {
 
     /* ... */
 
-}
-]]>
+}]]>
         </programlisting>
     </sect2>
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
@@ -231,8 +226,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     'username',
     'password',
     'MD5(?) AND active = "TRUE"'
-);
-]]>
+);]]>
         </programlisting>
         <para>
             もうひとつの例として、salt メカニズムの実装を見てみましょう。
@@ -248,18 +242,15 @@ $sqlAlter = "ALTER TABLE [users] "
           . "ADD COLUMN [password_salt] "
           . "AFTER [password]";
 
-$dbAdapter->query($sqlAlter);
-]]>
+$dbAdapter->query($sqlAlter);]]>
         </programlisting>
         <para>
             すべてのユーザに対して登録時に salt 文字列を生成するシンプルな方法を示します。
         </para>
         <programlisting role="php"><![CDATA[
-for ($i = 0; $i < 50; $i++)
-{
+for ($i = 0; $i < 50; $i++) {
     $dynamicSalt .= chr(rand(33, 126));
-}
-]]>
+}]]>
         </programlisting>
         <para>
             それではアダプタを作成してみましょう。
@@ -273,8 +264,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
     "MD5(CONCAT('"
     . Zend_Registry::get('staticSalt')
     . "', ?, password_salt))"
-);
-]]>
+);]]>
         </programlisting>
         <note>
             <para>
