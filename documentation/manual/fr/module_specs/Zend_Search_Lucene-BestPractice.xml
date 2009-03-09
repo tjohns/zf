@@ -68,17 +68,19 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Each index segment is entirely independent portion of data. So indexes containing more segments need
-            more memory and time for searching.
+            Chaque segment d'index et un portion de données entièrement indépendante. Ainsi
+            plus un index contient de segments, plus il sera gourmand en mémoire et en temps
+            de calcul lors de la recherche.
         </para>
 
         <para>
-            Index optimization is a process of merging several segments into a new one. A fully optimized index contains
-            only one segment.
+            L'optimisation d'index est un processus consistant à fusionner plusieurs
+            segments en un seul nouveau segment. Un index totalement optimisé ne
+            contient qu'un seul segment.
         </para>
 
         <para>
-            Full index optimization may be performed with the <code>optimize()</code> method:
+            L'optimisation complète de l'index peut être effectuée avec la méthode <code>optimize()</code> :
             <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
@@ -88,26 +90,29 @@ $index->optimize();
         </para>
 
         <para>
-            Index optimization works with data streams and doesn't take a lot of memory but does require processor resources and time.
+            L'optimisation d'index fonctionne avec des "data streams" et ne consomme pas pas une grande quantité de mémoire,
+            mais nécessite des ressources de processeur et du temps.
         </para>
 
         <para>
-            Lucene index segments are not updatable by their nature (the update operation requires the segment file
-            to be completely rewritten). So adding new document(s) to an index always generates a new segment.
-            This, in turn, decreases index quality.
+            Par nature, les segments d'index de Lucene ne peuvent pas être mis à jour (l'opération
+            de mise à jour nécessite une réécriture complète du segment). Ainsi, l'ajout de nouveau(x)
+            document(s) à un index implique toujours la génération d'un nouveau segment.
+            De fait, cela dégrade la qualité de l'index.
         </para>
 
         <para>
-            An index auto-optimization process is performed after each segment generation and consists of merging partial segments.
+            Une optimisation automatique d'un index est effectuée après chaque génération de segment
+            et consiste en la fusion des segments partiels.
         </para>
 
         <para>
-            There are three options to control the behavior of auto-optimization
-            (see <link linkend="zend.search.lucene.index-creation.optimization">Index optimization</link> section):
+            Il y a trois options pour contrôler le comportement de l'auto-optimisation
+            (voir la section <link linkend="zend.search.lucene.index-creation.optimization">Optimisation d'index</link>) :
             <itemizedlist>
                 <listitem>
-                    <para><emphasis>MaxBufferedDocs</emphasis> is the number of documents that can be buffered in memory before a new segment is generated
-                          and written to the hard drive.</para>
+                    <para><emphasis>MaxBufferedDocs</emphasis> représente le nombre de documents qui peuvent être mis en mémoire tampon
+                    avant qu'un nouveau segment soit généré et écrit sur le disque dur.</para>
                 </listitem>
                 <listitem>
                     <para><emphasis>MaxMergeDocs</emphasis> is the maximum number of documents merged by auto-optimization process
