@@ -131,8 +131,8 @@ class Zend_Cache_Backend
      * Return true if the automatic cleaning is available for the backend
      *
      * DEPRECATED : use getCapabilities() instead
-     * 
-     * @deprecated 
+     *
+     * @deprecated
      * @return boolean
      */
     public function isAutomaticCleaningAvailable()
@@ -190,8 +190,12 @@ class Zend_Cache_Backend
         } catch (Zend_Exception $e) {
             Zend_Cache::throwException('Logging feature is enabled but the Zend_Log class is not available');
         }
-        if (isset($this->_directives['logger']) && $this->_directives['logger'] instanceof Zend_Log) {
-            return;
+        if (isset($this->_directives['logger'])) {
+            if ($this->_directives['logger'] instanceof Zend_Log) {
+                return;
+            } else {
+                Zend_Cache::throwException('Logger object is not an instance of Zend_Log class.');
+            }
         }
         // Create a default logger to the standard output stream
         require_once 'Zend/Log/Writer/Stream.php';
@@ -211,11 +215,14 @@ class Zend_Cache_Backend
         if (!$this->_directives['logging']) {
             return;
         }
-        if (!(isset($this->_directives['logger']) || $this->_directives['logger'] instanceof Zend_Log)) {
-            Zend_Cache::throwException('Logging is enabled but logger is not set');
+
+        if (!isset($this->_directives['logger'])) {
+        	Zend_Cache::throwException('Logging is enabled but logger is not set.');
         }
         $logger = $this->_directives['logger'];
+        if (!$logger instanceof Zend_Log) {
+            Zend_Cache::throwException('Logger object is not an instance of Zend_Log class.');
+        }
         $logger->log($message, $priority);
     }
-
 }
