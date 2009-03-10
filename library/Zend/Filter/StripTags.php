@@ -238,32 +238,40 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
         // 3. a string of attributes (if available)
         // 4. an ending delimiter (if available)
         $isMatch = preg_match('~(</?)(\w*)((/(?!>)|[^/>])*)(/?>)~', $tag, $matches);
+
         // If the tag does not match, then strip the tag entirely
         if (!$isMatch) {
             return '';
         }
+
         // Save the matches to more meaningfully named variables
-        $tagStart = $matches[1];
-        $tagName = strtolower($matches[2]);
+        $tagStart      = $matches[1];
+        $tagName       = strtolower($matches[2]);
         $tagAttributes = $matches[3];
-        $tagEnd = $matches[5];
+        $tagEnd        = $matches[5];
+
         // If the tag is not an allowed tag, then remove the tag entirely
         if (!isset($this->_tagsAllowed[$tagName])) {
             return '';
         }
+
         // Trim the attribute string of whitespace at the ends
         $tagAttributes = trim($tagAttributes);
+
         // If there are non-whitespace characters in the attribute string
         if (strlen($tagAttributes)) {
             // Parse iteratively for well-formed attributes
-            preg_match_all('/(\w+)=([\'"])((.(?!=\2))+)\2/s', $tagAttributes, $matches);
+            preg_match_all('/(\w+)\s*=\s*(?:(")(.*?)"|(\')(.*?)\')/s', $tagAttributes, $matches);
+
             // Initialize valid attribute accumulator
             $tagAttributes = '';
+
             // Iterate over each matched attribute
             foreach ($matches[1] as $index => $attributeName) {
-                $attributeName = strtolower($attributeName);
+                $attributeName      = strtolower($attributeName);
                 $attributeDelimiter = $matches[2][$index];
-                $attributeValue = $matches[3][$index];
+                $attributeValue     = $matches[3][$index];
+
                 // If the attribute is not allowed, then remove it entirely
                 if (!array_key_exists($attributeName, $this->_tagsAllowed[$tagName])
                     && !array_key_exists($attributeName, $this->_attributesAllowed)) {
@@ -274,10 +282,12 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
                                 . $attributeValue . $attributeDelimiter;
             }
         }
+
         // Reconstruct tags ending with "/>" as backwards-compatible XHTML tag
         if (strpos($tagEnd, '/') !== false) {
             $tagEnd = " $tagEnd";
         }
+
         // Return the filtered tag
         return $tagStart . $tagName . $tagAttributes . $tagEnd;
     }
