@@ -136,6 +136,33 @@ class Zend_Config_Writer_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, @$config->production);
     }
     
+    public function testNumericArray()
+    {
+        $config = new Zend_Config(array('foo' => array('bar' => array(1 => 'a', 2 => 'b', 5 => 'c'))));
+
+        $writer = new Zend_Config_Writer_Xml(array('config' => $config, 'filename' => $this->_tempName));
+        $writer->write();
+                
+        $config = new Zend_Config_Xml($this->_tempName, null);
+        
+        $this->assertEquals('a', $config->foo->bar->{0});
+        $this->assertEquals('b', $config->foo->bar->{1});
+        $this->assertEquals('c', $config->foo->bar->{2});
+    }
+    
+    public function testMixedArrayFailure()
+    {
+        $config = new Zend_Config(array('foo' => array('bar' => array('a', 'b', 'c' => 'd'))));
+
+        try {
+            $writer = new Zend_Config_Writer_Xml(array('config' => $config, 'filename' => $this->_tempName));
+            $writer->write();
+            $this->fail('Expected Zend_Config_Exception not raised');
+        } catch (Zend_Config_Exception $e) {
+            $this->assertEquals('Mixing of string and numeric keys is not allowed', $e->getMessage());
+        }
+    }
+    
     public function testArgumentOverride()
     {
         $config = new Zend_Config(array('default' => array('test' => 'foo')));
