@@ -111,45 +111,50 @@ $index->optimize();
             (voir la section <link linkend="zend.search.lucene.index-creation.optimization">Optimisation d'index</link>) :
             <itemizedlist>
                 <listitem>
-                    <para><emphasis>MaxBufferedDocs</emphasis> représente le nombre de documents qui peuvent être mis en mémoire tampon
-                    avant qu'un nouveau segment soit généré et écrit sur le disque dur.</para>
+                    <para><emphasis>MaxBufferedDocs</emphasis> représente le nombre maximum de documents qui peuvent
+                    être mis en mémoire tampon avant qu'un nouveau segment soit généré et écrit sur le disque dur.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis>MaxMergeDocs</emphasis> is the maximum number of documents merged by auto-optimization process
-                          into a new segment.</para>
+                    <para><emphasis>MaxMergeDocs</emphasis> représente le nombre maximum de documents qui seront fusionnés
+                    dans un nouveau segment lors du processus d'auto-optimisation.</para>
                 </listitem>
                 <listitem>
-                    <para><emphasis>MergeFactor</emphasis> determines how often auto-optimization is performed.</para>
+                    <para><emphasis>MergeFactor</emphasis> détermine à quelle fréquence l'auto-optimisation est effectuée.</para>
                 </listitem>
             </itemizedlist>
             <note>
                 <para>
-                    All these options are <code>Zend_Search_Lucene</code> object properties- not index properties. They affect only current
-                    <code>Zend_Search_Lucene</code> object behavior and may vary for different scripts.
+                    Toutes ces options sont des propriétés de la classe <code>Zend_Search_Lucene</code>, pas des propriétés
+                    d'index. Elles n'affectent que les instances de <code>Zend_Search_Lucene</code> et peuvent varier selon
+                    les scripts.
                 </para>
             </note>
         </para>
 
         <para>
-            <emphasis>MaxBufferedDocs</emphasis> doesn't have any effect if you index only one document per script execution. On the other hand, it's very important
-            for batch indexing. Greater values increase indexing performance, but also require more memory.
+            <emphasis>MaxBufferedDocs</emphasis> n'a aucun effet si vous n'indexez qu'un seul document par exécution
+            de script. En revenche, il est très important pour les indexations massives (batch indexing). Plus sa valeur
+            est élevée, meilleures seront les performances d'indexation, mais plus la consommation de mémoire sera importante.
         </para>
 
         <para>
-            There is simply no way to calculate the best value for the <emphasis>MaxBufferedDocs</emphasis> parameter because it depends on average document size, the
-            analyzer in use and allowed memory.
+            Il n'existe pas de manière simple de calculer la meilleure valeur pour le paramètre <emphasis>MaxBufferedDocs</emphasis>
+            car cela dépend de la taille moyenne des documents, de l'analyseur utilisé et de la mémoire disponible.
         </para>
 
         <para>
-            A good way to find the right value is to perform several tests with the largest document you expect to be added to the index
-            <footnote><para><code>memory_get_usage()</code> and <code>memory_get_peak_usage()</code> may be used to control
-            memory usage.</para></footnote>. It's a best practice not to use more than a half of the allowed memory.
+            Une bonne méthode pour trouver une valeur correcte consiste à effectuer plusieurs tests avec les
+            documents les plus volumineux que vous vous attendez à voir figurer dans l'index.
+            <footnote><para><code>memory_get_usage()</code> et <code>memory_get_peak_usage()</code> peuvent être utilisées
+            pour contrôler l'utilisation de la mémoire.</para></footnote>. Une bonne pratique consiste à ne pas utiliser
+            plus de la moitié de la mémoire allouée.
         </para>
 
 
         <para>
-            <emphasis>MaxMergeDocs</emphasis> limits the segment size (in terms of documents). It therefore also limits auto-optimization time by guaranteeing
-            that the <code>addDocument()</code> method is not executed more than a certain number of times. This is very important for interactive applications.
+            <emphasis>MaxMergeDocs</emphasis> limite la taille d'un segment (en termes de nombre de documents). De ce fait,
+            il limite également la durée de l'auto-optimisation en garantissant que la méthode <code>addDocument()</code>
+            ne sera pas exécutée plus d'un certain nombre de fois. C'est très important dans le cadre d'applications interactives.
         </para>
 
         <para>
