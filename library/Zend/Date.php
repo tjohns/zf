@@ -2615,7 +2615,7 @@ class Zend_Date extends Zend_Date_DateObject
      */
     public function getDate($locale = null)
     {
-        $date = $this->copyPart(self::DATE_FULL, $locale);
+        $date = $this->copyPart(self::DATE_MEDIUM, $locale);
         $date->addTimestamp($this->getGmtOffset());
         return $date;
     }
@@ -2670,7 +2670,7 @@ class Zend_Date extends Zend_Date_DateObject
             $date  = $parsed['day'] . "." . $parsed['month'] . "." . $parsed['year'];
         }
 
-        $return = $this->_calcdetail($calc, $date, self::DATE_FULL, 'de');
+        $return = $this->_calcdetail($calc, $date, self::DATE_MEDIUM, 'de');
         if ($calc != 'cmp') {
             return $this;
         }

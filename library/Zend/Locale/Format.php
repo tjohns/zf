@@ -56,16 +56,16 @@ class Zend_Locale_Format
         'Telu' => array( '౦', '౧', '౨', '౩', '౪', '౫', '౬', '౭', '౮', '౯'), // 0C66 - 0C6F telugu
         'Knda' => array( '೦', '೧', '೨', '೩', '೪', '೫', '೬', '೭', '೮', '೯'), // 0CE6 - 0CEF kannada
         'Mlym' => array( '൦', '൧', '൨', '൩', '൪', '൫', '൬', '൭', '൮', '൯ '), // 0D66 - 0D6F malayalam
-        'Tale' => array( '๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙ '), // 0E50 - 0E59 thai
-        'Laoo' => array( '໐', '໑', '໒', '໓', '໔', '໕', '໖', '໗', '໘', '໙'), // 0ED0 - 0ED9 lao
+        'Tale' => array( '�?', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙ '), // 0E50 - 0E59 thai
+        'Laoo' => array( '�?', '໑', '໒', '໓', '໔', '໕', '໖', '໗', '໘', '໙'), // 0ED0 - 0ED9 lao
         'Tibt' => array( '༠', '༡', '༢', '༣', '༤', '༥', '༦', '༧', '༨', '༩ '), // 0F20 - 0F29 tibetan
-        'Mymr' => array( '၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'), // 1040 - 1049 myanmar
+        'Mymr' => array( '�?�', '�??', '�?�', '�?�', '�?�', '�?�', '�?�', '�?�', '�?�', '�?�'), // 1040 - 1049 myanmar
         'Khmr' => array( '០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'), // 17E0 - 17E9 khmer
-        'Mong' => array( '᠐', '᠑', '᠒', '᠓', '᠔', '᠕', '᠖', '᠗', '᠘', '᠙'), // 1810 - 1819 mongolian
-        'Limb' => array( '᥆', '᥇', '᥈', '᥉', '᥊', '᥋', '᥌', '᥍', '᥎', '᥏'), // 1946 - 194F limbu
-        'Talu' => array( '᧐', '᧑', '᧒', '᧓', '᧔', '᧕', '᧖', '᧗', '᧘', '᧙'), // 19D0 - 19D9 tailue
-        'Bali' => array( '᭐', '᭑', '᭒', '᭓', '᭔', '᭕', '᭖', '᭗', '᭘', '᭙'), // 1B50 - 1B59 balinese
-        'Nkoo' => array( '߀', '߁', '߂', '߃', '߄', '߅', '߆', '߇', '߈', '߉')  // 07C0 - 07C9 nko
+        'Mong' => array( '�?', '᠑', '᠒', '᠓', '᠔', '᠕', '᠖', '᠗', '᠘', '᠙'), // 1810 - 1819 mongolian
+        'Limb' => array( '᥆', '᥇', '᥈', '᥉', '᥊', '᥋', '᥌', '�?', '᥎', '�?'), // 1946 - 194F limbu
+        'Talu' => array( '�?', '᧑', '᧒', '᧓', '᧔', '᧕', '᧖', '᧗', '᧘', '᧙'), // 19D0 - 19D9 tailue
+        'Bali' => array( '�?', '᭑', '᭒', '᭓', '᭔', '᭕', '᭖', '᭗', '᭘', '᭙'), // 1B50 - 1B59 balinese
+        'Nkoo' => array( '߀', '�?', '߂', '߃', '߄', '߅', '߆', '߇', '߈', '߉')  // 07C0 - 07C9 nko
     );
 
     /**
@@ -671,13 +671,6 @@ class Zend_Locale_Format
                        'X', 'r', 'U', 'G', 'w', 'e', 'a', 'A', 'Z', 'z', 'v');
 
         $format = $options['date_format'];
-        foreach (str_split($format) as $splitted) {
-            if ((!in_array($splitted, $test)) and (ctype_alpha($splitted))) {
-                require_once 'Zend/Locale/Exception.php';
-                throw new Zend_Locale_Exception("Unable to parse the date format string '" . $format
-                                              . "' at letter '$splitted'");
-            }
-        }
         $number = $date; // working copy
         $result['date_format'] = $format; // save the format used to normalize $number (convenience)
         $result['locale'] = $options['locale']; // save the locale used to normalize $number (convenience)
@@ -747,7 +740,7 @@ class Zend_Locale_Format
 
         if (empty($parse)) {
             require_once 'Zend/Locale/Exception.php';
-            throw new Zend_Locale_Exception("unknown date format, neither date nor time in '" . $format . "' found");
+            throw new Zend_Locale_Exception("Unknown date format, neither date nor time in '" . $format . "' found");
         }
         ksort($parse);
 
@@ -871,7 +864,7 @@ class Zend_Locale_Format
                                                (isset($result['year']) and (iconv_strpos($date, $result['year']) === false)))) {
                     if ($options['fix_date'] !== true) {
                         require_once 'Zend/Locale/Exception.php';
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '" . $format
+                        throw new Zend_Locale_Exception("Unable to parse date '$date' using '" . $format
                             . "' (false month, $position, $month)");
                     }
                     $temp = $result['day'];
@@ -886,7 +879,7 @@ class Zend_Locale_Format
                 if ($result['day'] > 31) {
                     if ($options['fix_date'] !== true) {
                         require_once 'Zend/Locale/Exception.php';
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '"
+                        throw new Zend_Locale_Exception("Unable to parse date '$date' using '"
                                                       . $format . "' (d <> y)");
                     }
                     $temp = $result['year'];
@@ -901,7 +894,7 @@ class Zend_Locale_Format
                 if ($result['month'] > 31) {
                     if ($options['fix_date'] !== true) {
                         require_once 'Zend/Locale/Exception.php';
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '"
+                        throw new Zend_Locale_Exception("Unable to parse date '$date' using '"
                                                       . $format . "' (M <> y)");
                     }
                     $temp = $result['year'];
@@ -916,7 +909,7 @@ class Zend_Locale_Format
                 if ($result['month'] > 12) {
                     if ($options['fix_date'] !== true || $result['month'] > 31) {
                         require_once 'Zend/Locale/Exception.php';
-                        throw new Zend_Locale_Exception("unable to parse date '$date' using '"
+                        throw new Zend_Locale_Exception("Unable to parse date '$date' using '"
                                                       . $format . "' (M <> d)");
                     }
                     $temp = $result['day'];

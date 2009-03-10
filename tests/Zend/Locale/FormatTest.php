@@ -607,12 +607,10 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
 
-        try {
-            $value = Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss.x'));
-            $this->fail("exception expected");
-        } catch (Zend_Locale_Exception $e) {
-            // success
-        }
+        $value = Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss.x'));
+        $this->assertEquals(13, $value['hour']  );
+        $this->assertEquals(14, $value['minute']);
+        $this->assertEquals(55, $value['second']);
 
         $this->assertEquals(5, count(Zend_Locale_Format::getTime('13:14:55', array('date_format' => 'HH:mm:ss'))));
 
