@@ -506,9 +506,11 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         unset($this->_validators[$key]);
         foreach (array_keys($this->_files) as $file) {
-            if (!$index = array_search($key, $this->_files[$file]['validators'])) {
+            $index = array_search($key, $this->_files[$file]['validators']);
+            if ($index === false) {
                 continue;
             }
+
             unset($this->_files[$file]['validators'][$index]);
             $this->_files[$file]['validated'] = false;
         }
