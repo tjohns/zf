@@ -37,11 +37,20 @@
 session_start();
 
 /**
+ * Set your developer key here. 
+ *
+ * NOTE: In a production application you may want to store this information in 
+ * an external file.
+ */
+$_SESSION['developerKey'] = '<YOUR DEVELOPER KEY>';
+
+/**
  * Convert HTTP status into normal text.
  *
  * @param number $status HTTP status received after posting syndicated upload
  * @param string $code Alphanumeric description of error
- * @param string $videoId (optional) Video id received back to which the status code refers to
+ * @param string $videoId (optional) Video id received back to which the status
+ *        code refers to
  */
 function uploadStatus($status, $code = null, $videoId = null)
 {
@@ -68,32 +77,6 @@ function authenticated()
     if (isset($_SESSION['sessionToken'])) {
         return true;
     }
-}
-
-/**
- * Helper function to check whether a developer key has been set
- *
- * @return boolean Returns true if a developer key has been set
- */
-function developerKeySet()
-{
-    if (isset($_SESSION['developerKey'])) {
-        return true;
-    }
-}
-
-/**
- * Helper function to print a form for user to enter the developer key.
- */
-function printDeveloperKeyForm()
-{
-    print <<<END
-        <div id="developerKeyDiv">
-        <a href="#" onclick="ytVideoApp.createDeveloperKeyForm(); return false;">
-        You must set your developer key first</a><br />
-        <a href="http://code.google.com/apis/youtube/dashboard/" target="_blank">
-        Sign-up for a Developer Key</a></div>
-END;
 }
 
 /**
@@ -156,23 +139,18 @@ END;
     <!-- Authentication status -->
     <div id="authStatus">Authentication status:
     <?php
-        if (developerKeySet()) {
-            if (authenticated()) {
-                print <<<END
-                    authenticated <br />
+      if (authenticated()) {
+          print <<<END
+              authenticated <br />
 END;
-            } else {
-                print <<<END
-                    developer key set, but no authentication detected.<br />
+      } else {
+          print <<<END
                     <div id="generateAuthSubLink"><a href="#"
                     onclick="ytVideoApp.presentAuthLink();
                     return false;">Click here to generate authentication link</a>
                     </div>
 END;
-            }
-        } else {
-            printDeveloperKeyForm();
-        }
+    }
     ?>
     </div>
     <!-- end Authentication status -->
@@ -190,10 +168,8 @@ END;
     ?>
     <!-- General status -->
     <?php
-        if (developerKeySet()) {
-            if (authenticated()) {
-                printAuthenticatedActions();
-            }
+        if (authenticated()) {
+            printAuthenticatedActions();
         }
     ?>
     <!-- end General status -->

@@ -100,10 +100,6 @@ switch ($operation) {
         clearSessionVar($_POST['name']);
         break;
 
-    case 'set_developer_key':
-        setDeveloperKey($_POST['developerKey']);
-        break;
-
     case 'retrieve_playlists':
         retrievePlaylists();
         break;
@@ -596,24 +592,6 @@ function generateAuthSubRequestLink($nextUrl = null)
     $url = Zend_Gdata_AuthSub::getAuthSubTokenUri($nextUrl, $scope, $secure, $session);
     echo '<a href="' . $url
         . '"><strong>Click here to authenticate with YouTube</strong></a>';
-}
-
-/**
- * Store the developer key provided in the session variables.
- *
- * @param string $developerKey A valid YouTube developer key.
- * @return void
- */
-function setDeveloperKey($developerKey)
-{
-    $_SESSION['developerKey'] = $developerKey;
-
-    if (!isset($_SESSION['sessionToken'])) {
-        echo generateAuthSubRequestLink()
-            . ' (Developer Key set.)<br />';
-    } else {
-        print 'Developer Key has been set.<br /><a href="">(reload the page)</a>';
-    }
 }
 
 /**
