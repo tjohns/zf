@@ -158,67 +158,76 @@ $index->optimize();
         </para>
 
         <para>
-            Lowering the <emphasis>MaxMergeDocs</emphasis> parameter also may improve batch indexing performance. Index auto-optimization is an iterative process
-            and is performed from bottom up. Small segments are merged into larger segment, which are in turn merged into even larger segments and
-            so on. Full index optimization is achieved when only one large segment file remains.
+            Diminuer la valeur du paramètre <emphasis>MaxMergeDocs</emphasis> peut aussi améliorer les performances lors
+            de l'indexation en masse (batch indexing). L'auto-optimisation est un processus itératif et utilise une technique
+            ascendante. Les petits segments sont fusionnés vers de plus gros segments qui sont eux-mêmes fusionnés vers des
+            segments encore plus gros, etc. L'optimisation complète est achevée lorsqu'il ne reste qu'un seul gros segment.
         </para>
 
         <para>
-            Small segments generally decrease index quality. Many small segments may also trigger
-            the "Too many open files" error determined by OS limitations <footnote><para><code>Zend_Search_Lucene</code> keeps each segment file opened
-            to improve search performance.</para></footnote>.
+            De petits segments détériore généralement la qualité de l'index. Un grand nombre de petits segments peut
+            aussi déclencher l'erreur "Too many open files" déterminée par les limitations de l'OS
+            <footnote><para><code>Zend_Search_Lucene</code> maintient chaque segment ouvert pour améliorer les performances
+            de recherche.</para></footnote>.
         </para>
 
         <para>
-            in general, background index optimization should be performed for interactive indexing mode and <emphasis>MaxMergeDocs</emphasis> shouldn't be
-            too low for batch indexing.
+            En général, l'optimisation d'index en arrière-plan devrait être effectuée pour les modes d'indexation interfactifs
+            et la valeur de <emphasis>MaxMergeDocs</emphasis> ne devrait pas être trop faible pour les indexations de masse
+            (batch indexing).
         </para>
 
 
         <para>
-            <emphasis>MergeFactor</emphasis> affects auto-optimization frequency. Lower values increase the quality of unoptimized indexes. Larger values increase
-            indexing performance, but also increase the number of merged segments. This again may trigger the "Too many open files" error.
+            <emphasis>MergeFactor</emphasis> affecte la fréquence d'auto-optimisation. De faibles valeurs augmenteront la qualité
+            des index non-optimisés. Des valeurs plus importantes amélioreront les performances de l'indexation, mais également
+            le nombre de segments fusionnés. Ce qui peut également déclencher l'erreur "Too many open files".
         </para>
 
         <para>
-            <emphasis>MergeFactor</emphasis> groups index segments by their size:
+            <emphasis>MergeFactor</emphasis> groupe les segments d'index par leur taille :
             <orderedlist>
-                <listitem><para>Not greater than <emphasis>MaxBufferedDocs</emphasis>.</para></listitem>
-                <listitem><para>Greater than <emphasis>MaxBufferedDocs</emphasis>, but not greater than
+                <listitem><para>Pas plus grand que <emphasis>MaxBufferedDocs</emphasis>.</para></listitem>
+                <listitem><para>Plus grand que <emphasis>MaxBufferedDocs</emphasis>, mais pas plus grand que
                                 <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>.</para></listitem>
-                <listitem><para>Greater than <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>, but not greater than
+                <listitem><para>Plus grand que <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>, mais pas plus grand que
                 <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis>*<emphasis>MergeFactor</emphasis>.</para></listitem>
                 <listitem><para>...</para></listitem>
             </orderedlist>
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> checks during each <code>addDocument()</code> call to see if merging any segments may move the newly created segment
-            into the next group. If yes, then merging is performed.
+            <code>Zend_Search_Lucene</code> vérifie à chaque appel de <code>addDocument()</code> si la
+            fusion de n'importe quel segment pour déplacer le segment nouvellement créé dans le groupe
+            suivant. Si c'est le cas, la fusion est effectuée.
         </para>
 
         <para>
-            So an index with N groups may contain <emphasis>MaxBufferedDocs</emphasis> + (N-1)*<emphasis>MergeFactor</emphasis> segments and contains at least
-            <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis><superscript>(N-1)</superscript> documents.
+            Ainsi, un index avec N groupes peut contenir <emphasis>MaxBufferedDocs</emphasis> + (N-1)*<emphasis>MergeFactor</emphasis>
+            segments et contient au moins <emphasis>MaxBufferedDocs</emphasis>*<emphasis>MergeFactor</emphasis><superscript>(N-1)</superscript>
+            documents.
         </para>
 
         <para>
-            This gives good approximation for the number of segments in the index:
+            La formule ci-dessous donne une bonne approximation du nombre de segments dans un index :
         </para>
         <para>
-            <emphasis>NumberOfSegments</emphasis>  &lt;= <emphasis>MaxBufferedDocs</emphasis> + <emphasis>MergeFactor</emphasis>*log
-            <subscript><emphasis>MergeFactor</emphasis></subscript> (<emphasis>NumberOfDocuments</emphasis>/<emphasis>MaxBufferedDocs</emphasis>)
+            <emphasis>Nombre de segments</emphasis>  &lt;= <emphasis>MaxBufferedDocs</emphasis> + <emphasis>MergeFactor</emphasis>*log
+            <subscript><emphasis>MergeFactor</emphasis></subscript> (<emphasis>Nombre de documents</emphasis>/<emphasis>MaxBufferedDocs</emphasis>)
         </para>
 
         <para>
-            <emphasis>MaxBufferedDocs</emphasis> is determined by allowed memory. This allows for the appropriate merge factor to get a reasonable
-            number of segments.
+            <emphasis>MaxBufferedDocs</emphasis> est déterminé par la mémoire allouée. Cela permet
+            pour le facteur de fusion (MergeFactor) approprié d'avoir un nombre raisonnable de segments.
         </para>
 
 
         <para>
-            Tuning the <emphasis>MergeFactor</emphasis> parameter is more effective for batch indexing performance than <emphasis>MaxMergeDocs</emphasis>. But it's also more course-grained.
-            So use the estimation above for tuning <emphasis>MergeFactor</emphasis>, then play with <emphasis>MaxMergeDocs</emphasis> to get best batch indexing performance.
+            L'optimisation du paramètre <emphasis>MergeFactor</emphasis> est plus efficace pour
+            les performances de l'indexation de masse (batch indexing). Mais cette méthode manque
+            un peu de finesse. Le mieux est d'utiliser l'estimation ci-dessus pour optimiser
+            <emphasis>MergeFactor</emphasis>, puis de jouer avec <emphasis>MaxMergeDocs</emphasis>
+            pour obtenir les meilleures performances d'indexation de masse (batch indexing).
         </para>
     </sect2>
 
