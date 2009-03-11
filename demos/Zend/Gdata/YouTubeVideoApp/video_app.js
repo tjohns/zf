@@ -111,12 +111,6 @@ ytVideoApp.AUTHSUB_REQUEST_DIV = 'generateAuthSubLink';
 ytVideoApp.VIDEO_META_DATA_EDIT_DIV = 'editVideoMetaDataDiv';
 
 /** 
- * container div to hold the form for entering a developer key
- * @type String
- */
-ytVideoApp.DEVELOPERKEY_FORM_DIV = 'developerKeyDiv';
-
-/** 
  * container div to hold the form for adding a new playlist
  * @type String
  */
@@ -249,41 +243,6 @@ ytVideoApp.prepareUploadForm = function() {
     '</form>'].join('');
 
   document.getElementById(ytVideoApp.SYNDICATED_UPLOAD_DIV).innerHTML = metaDataForm;
-}
-
-/**
- * Creates a form to enter the developer key.
- */
-ytVideoApp.createDeveloperKeyForm = function() {
-  var developerKeyForm =  ['<form id="developerKeyForm" ',
-      'onsubmit="ytVideoApp.setDeveloperKey(this.developerKey.value);',
-      ' return false;">',
-      '<input id="developerKeyFormInput" ',
-      'onfocus="ytVideoApp.clearDeveloperKeyForm();" ',
-      'name="developerKey" type="text" ',
-      'value="Paste your developer key here">',
-      '<input type="submit" value="go">',
-      '</form>'].join('');
-
-  document.getElementById(ytVideoApp.DEVELOPERKEY_FORM_DIV).innerHTML = developerKeyForm;
-}
-
-/** 
- * Clear prepopulated input from the developer key form
- */
-ytVideoApp.clearDeveloperKeyForm = function() {
-  var developerKeyFormInput = document.getElementById('developerKeyFormInput');
-  developerKeyFormInput.value = '';
-}
-/** 
- * Store developer key into $_SESSION variable
- * @param {String} developerKey The users Developer Key
- */
-ytVideoApp.setDeveloperKey = function(developerKey) {
-  var filePath = 'operations.php';
-  var params = 'operation=set_developer_key' +
-               '&developerKey=' + developerKey;
-  ytVideoApp.sendRequest(filePath, params, ytVideoApp.DEVELOPERKEY_FORM_DIV);
 }
 
 /** 

@@ -60,8 +60,7 @@ foreach($session_copy as $key => $value) {
         '<input type="hidden" name="name" value="'. $key .'"/>'. 
         '<input type="submit" value="click to delete"/></form><hr />';
 }
-    /** TODO: perhaps use an iframe to show this form? */
 ?>
-<br clear="all" />
+<br clear="both" />
 <a href="index.php">back</a>
     </div></body></html>
