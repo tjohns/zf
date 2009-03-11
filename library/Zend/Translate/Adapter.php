@@ -444,22 +444,31 @@ abstract class Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("The given Language '{$locale}' does not exist");
         }
 
-        if (isset($this->_translate[$locale]) === false) {
+        if ($options['clear'] || !isset($this->_translate[$locale])) {
             $this->_translate[$locale] = array();
         }
 
         $read = true;
         if (isset(self::$_cache)) {
-            $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $locale . '_' . $this->toString();
+            $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $this->toString();
             $result = self::$_cache->load($id);
             if ($result) {
-                $this->_translate[$locale] = unserialize($result);
+                $temp = unserialize($result);
                 $read = false;
             }
         }
 
         if ($read) {
-            $this->_loadTranslationData($data, $locale, $options);
+            $temp = $this->_loadTranslationData($data, $locale, $options);
+        }
+
+        $keys = array_keys($temp);
+        foreach($keys as $key) {
+            if (!isset($this->_translate[$key])) {
+                $this->_translate[$key] = array();
+            }
+
+            $this->_translate[$key] = $this->_translate[$key] + $temp[$key];
         }
 
         if ($this->_automatic === true) {
@@ -467,7 +476,7 @@ abstract class Zend_Translate_Adapter {
             $browser = $find->getEnvironment() + $find->getBrowser();
             arsort($browser);
             foreach($browser as $language => $quality) {
-                if (isset($this->_translate[$language]) === true) {
+                if (isset($this->_translate[$language])) {
                     $this->_options['locale'] = $language;
                     break;
                 }
@@ -475,8 +484,8 @@ abstract class Zend_Translate_Adapter {
         }
 
         if (($read) and (isset(self::$_cache))) {
-            $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $locale . '_' . $this->toString();
-            self::$_cache->save( serialize($this->_translate[$locale]), $id);
+            $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $this->toString();
+            self::$_cache->save( serialize($temp), $id);
         }
 
         return $this;

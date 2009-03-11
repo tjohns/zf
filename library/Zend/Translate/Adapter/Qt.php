@@ -44,6 +44,7 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
     private $_tcontent    = null;
     private $_stag        = false;
     private $_ttag        = true;
+    private $_data        = array();
 
     /**
      * Generates the Qt adapter
@@ -71,12 +72,7 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {
-        $options = $options + $this->_options;
-
-        if ($options['clear'] || !isset($this->_translate[$locale])) {
-            $this->_translate[$locale] = array();
-        }
-
+        $this->_data = array();
         if (!is_readable($filename)) {
             require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('Translation file \'' . $filename . '\' is not readable.');
@@ -99,6 +95,8 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
             require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception($ex);
         }
+
+        return $this->_data;
     }
 
     private function _startElement($file, $name, $attrib)
@@ -131,8 +129,8 @@ class Zend_Translate_Adapter_Qt extends Zend_Translate_Adapter {
 
             case 'translation':
                 if (!empty($this->_scontent) and !empty($this->_tcontent) or
-                    (isset($this->_translate[$this->_target][$this->_scontent]) === false)) {
-                    $this->_translate[$this->_target][$this->_scontent] = $this->_tcontent;
+                    (isset($this->_data[$this->_target][$this->_scontent]) === false)) {
+                    $this->_data[$this->_target][$this->_scontent] = $this->_tcontent;
                 }
                 $this->_ttag = false;
                 break;

@@ -104,7 +104,18 @@ class Zend_Translate_Adapter_TbxTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en.tbx', 'en');
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals(array('testoption' => 'testkey', 'clear' => false, 'scan' => null, 'locale' => 'en', 'ignore' => '.', 'disableNotices' => false), $adapter->getOptions());
+        $this->assertEquals(
+            array(
+                'testoption' => 'testkey',
+                'clear' => false,
+                'scan' => null,
+                'locale' => 'en',
+                'ignore' => '.',
+                'disableNotices' => false,
+                'log'             => false,
+                'logMessage'      => 'Untranslated message within \'%locale%\': %message%',
+                'logUntranslated' => false),
+            $adapter->getOptions());
         $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }
@@ -172,12 +183,12 @@ class Zend_Translate_Adapter_TbxTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Tbx(dirname(__FILE__) . '/_files/translation_en3.tbx', 'fr');
         $this->assertEquals('Message 1 (fr)', $adapter->translate('Message 1'));
-        
+
         if (PHP_OS == 'AIX') {
             return;
             // 'Charsets below are not supported on AIX';
         }
-        
+
         $this->assertEquals(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel (en)'), $adapter->translate('Cooking furniture'));
         $this->assertEquals('Cooking furniture (en)', $adapter->translate(iconv('UTF-8', 'ISO-8859-1', 'Küchen Möbel')));
     }

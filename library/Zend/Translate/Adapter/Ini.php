@@ -33,6 +33,8 @@ require_once 'Zend/Translate/Adapter.php';
  */
 class Zend_Translate_Adapter_Ini extends Zend_Translate_Adapter
 {
+    private $_data = array();
+
     /**
      * Generates the adapter
      *
@@ -56,17 +58,19 @@ class Zend_Translate_Adapter_Ini extends Zend_Translate_Adapter
      */
     protected function _loadTranslationData($data, $locale, array $options = array())
     {
+        $this->_data = array();
         if (!file_exists($data)) {
             require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("Ini file '".$data."' not found");
         }
-        $inidata = parse_ini_file($data, false);
 
-        $options = array_merge($this->_options, $options);
-        if (($options['clear'] == true) ||  !isset($this->_translate[$locale])) {
-            $this->_translate[$locale] = array();
+        $inidata                   = parse_ini_file($data, false);
+        if (!isset($this->_data[$locale])) {
+            $this->_data[$locale] = array();
         }
-        $this->_translate[$locale] = array_merge($this->_translate[$locale], $inidata);
+
+        $this->_data[$locale] = array_merge($this->_data[$locale], $inidata);
+        return $this->_data;
     }
 
     /**

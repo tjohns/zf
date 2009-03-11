@@ -108,7 +108,21 @@ class Zend_Translate_Adapter_CsvTest extends PHPUnit_Framework_TestCase
     {
         $adapter = new Zend_Translate_Adapter_Csv(dirname(__FILE__) . '/_files/translation_en.csv', 'en');
         $adapter->setOptions(array('testoption' => 'testkey'));
-        $this->assertEquals(array('delimiter' => ';', 'testoption' => 'testkey', 'clear' => false, 'scan' => null, 'locale' => 'en', 'length' => 0, 'enclosure' => '"', 'ignore' => '.', 'disableNotices' => false), $adapter->getOptions());
+        $this->assertEquals(
+            array(
+                'delimiter' => ';',
+                'testoption' => 'testkey',
+                'clear' => false,
+                'scan' => null,
+                'locale' => 'en',
+                'length' => 0,
+                'enclosure' => '"',
+                'ignore' => '.',
+                'disableNotices' => false,
+                'log'             => false,
+                'logMessage'      => 'Untranslated message within \'%locale%\': %message%',
+                'logUntranslated' => false),
+            $adapter->getOptions());
         $this->assertEquals('testkey', $adapter->getOptions('testoption'));
         $this->assertTrue(is_null($adapter->getOptions('nooption')));
     }

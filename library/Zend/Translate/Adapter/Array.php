@@ -33,7 +33,10 @@ require_once 'Zend/Translate/Adapter.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
+class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter
+{
+    private $_data = array();
+
     /**
      * Generates the adapter
      *
@@ -57,6 +60,7 @@ class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
      */
     protected function _loadTranslationData($data, $locale, array $options = array())
     {
+        $this->_data = array();
         if (!is_array($data)) {
             if (file_exists($data)) {
                 ob_start();
@@ -69,12 +73,12 @@ class Zend_Translate_Adapter_Array extends Zend_Translate_Adapter {
             throw new Zend_Translate_Exception("Error including array or file '".$data."'");
         }
 
-        $options = $options + $this->_options;
-        if (($options['clear'] == true) ||  !isset($this->_translate[$locale])) {
-            $this->_translate[$locale] = array();
+        if (!isset($this->_data[$locale])) {
+            $this->_data[$locale] = array();
         }
 
-        $this->_translate[$locale] = $data + $this->_translate[$locale];
+        $this->_data[$locale] = $data + $this->_data[$locale];
+        return $this->_data;
     }
 
     /**
