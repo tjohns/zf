@@ -896,8 +896,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getFileName($file = null, $path = true)
     {
-        $files = $this->_getFiles($file, true, true);
-
+        $files     = $this->_getFiles($file, true, true);
         $result    = array();
         $directory = "";
         foreach($files as $file) {
@@ -1021,7 +1020,7 @@ abstract class Zend_File_Transfer_Adapter_Abstract
      */
     public function getDestination($files = null)
     {
-        $files = $this->_getFiles($files, false);
+        $files        = $this->_getFiles($files, false);
         $destinations = array();
         foreach ($files as $key => $content) {
             if (isset($this->_files[$key]['destination'])) {
@@ -1379,10 +1378,6 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                     if ($file === $find) {
                         $found[] = $file;
                         break;
-                    }
-
-                    if (strpos($file, ($find . '_')) !== false) {
-                        $found[] = $file;
                     }
 
                     if ($content['name'] === $find) {
