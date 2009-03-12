@@ -31,6 +31,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Zend/Text/FigletTest.php';
 require_once 'Zend/Text/TableTest.php';
+require_once 'Zend/Text/MultiByteTest.php';
 
 /**
  * @category   Zend
@@ -52,6 +53,7 @@ class Zend_Text_AllTests
 
         $suite->addTestSuite('Zend_Text_FigletTest');
         $suite->addTestSuite('Zend_Text_TableTest');
+        $suite->addTestSuite('Zend_Text_MultiByteTest');
 
         return $suite;
     }
