@@ -52,6 +52,12 @@ class Zend_Text_MultiByte
                 $nextChar = iconv_substr($string, $width, 1, $charset);
                 
                 if ($nextChar === ' ' || $nextChar === $break) {
+                    $afterNextChar = iconv_substr($string, $width + 1, 1, $charset);
+                    
+                    if ($afterNextChar === false) {
+                        $subString .= $nextChar; 
+                    }
+                    
                     $cutLength = iconv_strlen($subString, $charset) + 1;
                 } else {
                     $spacePos = iconv_strrpos($subString, ' ', $charset);

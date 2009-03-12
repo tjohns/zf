@@ -79,6 +79,36 @@ class Zend_Text_MultiByteTest extends PHPUnit_Framework_TestCase
     /**
      * Alternative cut tests
      */
+    public function testWordWrapCutBeginningSingleSpace()
+    {       
+        $line = Zend_Text_MultiByte::wordWrap(' äüöäöü', 3, ' ', true);
+        $this->assertEquals(' äüö äöü', $line);
+    }
+    
+    public function testWordWrapCutEndingSingleSpace()
+    {
+        $line = Zend_Text_MultiByte::wordWrap('äüöäöü ', 3, ' ', true);
+        $this->assertEquals('äüö äöü ', $line);
+    }
+    
+    public function testWordWrapCutEndingTwoSpaces()
+    {
+        $line = Zend_Text_MultiByte::wordWrap('äüöäöü  ', 3, ' ', true);
+        $this->assertEquals('äüö äöü  ', $line);
+    }
+    
+    public function testWordWrapCutEndingThreeSpaces()
+    {
+        $line = Zend_Text_MultiByte::wordWrap('äüöäöü  ', 3, ' ', true);
+        $this->assertEquals('äüö äöü  ', $line);
+    }
+    
+    public function testWordWrapCutEndingTwoBreaks()
+    {
+        $line = Zend_Text_MultiByte::wordWrap('äüöäöü--', 3, '-', true);
+        $this->assertEquals('äüö-äöü--', $line);
+    }
+    
     public function testWordWrapCutTab()
     {
         $line = Zend_Text_MultiByte::wordWrap("äbü\töcß", 3, ' ', true);
