@@ -215,8 +215,8 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
 
         // Dot-atom characters are: 1*atext *("." 1*atext)
         // atext: ALPHA / DIGIT / and "!", "#", "$", "%", "&", "'", "*",
-        //        "-", "/", "=", "?", "^", "_", "`", "{", "|", "}", "~"
-        $atext = 'a-zA-Z0-9\x21\x23\x24\x25\x26\x27\x2a\x2b\x2d\x2f\x3d\x3f\x5e\x5f\x60\x7b\x7c\x7d';
+        //        "+", "-", "/", "=", "?", "^", "_", "`", "{", "|", "}", "~"
+        $atext = 'a-zA-Z0-9\x21\x23\x24\x25\x26\x27\x2a\x2b\x2d\x2f\x3d\x3f\x5e\x5f\x60\x7b\x7c\x7d\x7e';
         if (preg_match('/^[' . $atext . ']+(\x2e+[' . $atext . ']+)*$/', $this->_localPart)) {
             $localResult = true;
         } else {
