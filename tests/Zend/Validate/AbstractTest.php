@@ -247,6 +247,17 @@ class Zend_Validate_AbstractTest extends PHPUnit_Framework_TestCase
         $this->assertContains('bar was passed', $messages['fooMessage']);
     }
 
+    public function testGetMessageTemplates()
+    {
+        $messages = $this->validator->getMessageTemplates();
+        $this->assertEquals(
+            array('fooMessage' => '%value% was passed'), $messages);
+
+        $this->assertEquals(
+            array(
+                Zend_Validate_AbstractTest_Concrete::FOO_MESSAGE => '%value% was passed'), $messages);
+    }
+
     /**
      * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
      *

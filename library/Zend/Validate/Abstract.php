@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -20,12 +19,10 @@
  * @version    $Id$
  */
 
-
 /**
  * @see Zend_Validate_Interface
  */
 require_once 'Zend/Validate/Interface.php';
-
 
 /**
  * @category   Zend
@@ -114,6 +111,16 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     public function getMessageVariables()
     {
         return array_keys($this->_messageVariables);
+    }
+
+    /**
+     * Returns the message templates from the validator
+     *
+     * @return array
+     */
+    public function getMessageTemplates()
+    {
+        return $this->_messageTemplates;
     }
 
     /**

@@ -494,6 +494,18 @@
         </tgroup>
     </table>
 
+    <para>
+        Additionally you can retrieve all message templates of a validator with
+        the method <code>getMessageTemplates()</code>. It returns you an array
+        with the messages a validator could return in the case of a failed validation.
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_Alnum();
+$messages  = $validator->getMessageTemplates();
+]]>
+    </programlisting>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
