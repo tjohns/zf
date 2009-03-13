@@ -17,6 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id: Image.php 14290 2009-03-13 12:40:14Z alexander $
  */
 
 /** Zend_Captcha_Word */
@@ -32,7 +33,6 @@ require_once 'Zend/Captcha/Word.php';
  * @subpackage Adapter
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
  */
 class Zend_Captcha_Image extends Zend_Captcha_Word
 {
