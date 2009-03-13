@@ -11,6 +11,19 @@ require_once 'Zend/Controller/Plugin/ErrorHandler.php';
 
 class Zend_Layout_FunctionalTest extends Zend_Test_PHPUnit_ControllerTestCase
 {
+    /**
+     * Runs the test methods of this class.
+     *
+     * @return void
+     */
+    public static function main()
+    {
+        require_once "PHPUnit/TextUI/TestRunner.php";
+
+        $suite  = new PHPUnit_Framework_TestSuite(__CLASS__);
+        $result = PHPUnit_TextUI_TestRunner::run($suite);
+    }
+
     public function setUp()
     {
         $this->bootstrap = array($this, 'appBootstrap');
@@ -34,7 +47,7 @@ class Zend_Layout_FunctionalTest extends Zend_Test_PHPUnit_ControllerTestCase
     {
         // go to the test controller for this funcitonal test
         $this->dispatch('/zend-layout-functional-test-test/missing-view-script');
-        $this->assertEquals($this->response->getBody(), "[DEFAULT_LAYOUT_START]\n(ErrorController::errorAction output)[DEFAULT_LAYOUT_END]");
+        $this->assertEquals(trim($this->response->getBody()), "[DEFAULT_LAYOUT_START]\n(ErrorController::errorAction output)[DEFAULT_LAYOUT_END]");
     }
     
     public function testMissingViewScriptDoesDoubleRender()
@@ -42,7 +55,12 @@ class Zend_Layout_FunctionalTest extends Zend_Test_PHPUnit_ControllerTestCase
         Zend_Controller_Action_HelperBroker::getStack()->offsetSet(-91, new Zend_Controller_Action_Helper_ViewRenderer());
         // go to the test controller for this funcitonal test
         $this->dispatch('/zend-layout-functional-test-test/missing-view-script');
-        $this->assertEquals($this->response->getBody(), "[DEFAULT_LAYOUT_START]\n[DEFAULT_LAYOUT_START]\n[DEFAULT_LAYOUT_END](ErrorController::errorAction output)[DEFAULT_LAYOUT_END]");
+        $this->assertEquals(trim($this->response->getBody()), "[DEFAULT_LAYOUT_START]\n[DEFAULT_LAYOUT_START]\n[DEFAULT_LAYOUT_END]\n(ErrorController::errorAction output)[DEFAULT_LAYOUT_END]");
     }
     
+}
+
+// Call Zend_Layout_FunctionalTest::main() if this source file is executed directly.
+if (PHPUnit_MAIN_METHOD == "Zend_Layout_FunctionalTest::main") {
+    Zend_Layout_FunctionalTest::main();
 }
