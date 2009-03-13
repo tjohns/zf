@@ -105,6 +105,15 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     private static $_resultSetLimit = 0;
 
     /**
+     * Terms per query limit
+     *
+     * 0 means no limit
+     *
+     * @var integer
+     */
+    private static $_termsPerQueryLimit = 1024;
+
+    /**
      * File system adapter.
      *
      * @var Zend_Search_Lucene_Storage_Directory
@@ -171,6 +180,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     const FORMAT_PRE_2_1 = 0;
     const FORMAT_2_1     = 1;
     const FORMAT_2_3     = 2;
+
 
     /**
      * Index format version
@@ -728,7 +738,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     }
 
     /**
-     * Set result set limit.
+     * Get result set limit.
      *
      * 0 means no limit
      *
@@ -737,6 +747,30 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     public static function getResultSetLimit()
     {
         return self::$_resultSetLimit;
+    }
+
+    /**
+     * Set terms per query limit.
+     *
+     * 0 means no limit
+     *
+     * @param integer $limit
+     */
+    public static function setTermsPerQueryLimit($limit)
+    {
+        self::$_termsPerQueryLimit = $limit;
+    }
+
+    /**
+     * Get result set limit.
+     *
+     * 0 (default) means no limit
+     *
+     * @return integer
+     */
+    public static function getTermsPerQueryLimit()
+    {
+        return self::$_termsPerQueryLimit;
     }
 
     /**

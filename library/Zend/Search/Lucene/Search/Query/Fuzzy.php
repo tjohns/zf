@@ -107,12 +107,19 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
     private $_termKeys = null;
 
     /**
+     * Default non-fuzzy prefix length
+     *
+     * @var integer
+     */
+    private static $_defaultPrefixLength = 3;
+
+    /**
      * Zend_Search_Lucene_Search_Query_Wildcard constructor.
      *
      * @param Zend_Search_Lucene_Index_Term $pattern
      * @throws Zend_Search_Lucene_Exception
      */
-    public function __construct(Zend_Search_Lucene_Index_Term $term, $minimumSimilarity = self::DEFAULT_MIN_SIMILARITY, $prefixLength = 0)
+    public function __construct(Zend_Search_Lucene_Index_Term $term, $minimumSimilarity = self::DEFAULT_MIN_SIMILARITY, $prefixLength = null)
     {
         if ($minimumSimilarity < 0) {
             throw new Zend_Search_Lucene_Exception('minimumSimilarity cannot be less than 0');
@@ -126,7 +133,27 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
 
         $this->_term              = $term;
         $this->_minimumSimilarity = $minimumSimilarity;
-        $this->_prefixLength      = $prefixLength;
+        $this->_prefixLength      = ($prefixLength !== null)? $prefixLength : self::$_defaultPrefixLength;
+    }
+
+    /**
+     * Get default non-fuzzy prefix length
+     *
+     * @return integer
+     */
+    public static function getDefaultPrefixLength()
+    {
+        return self::$_defaultPrefixLength;
+    }
+
+    /**
+     * Set default non-fuzzy prefix length
+     *
+     * @param integer $defaultPrefixLength
+     */
+    public static function setDefaultPrefixLength($defaultPrefixLength)
+    {
+        self::$_defaultPrefixLength = $defaultPrefixLength;
     }
 
     /**
@@ -148,6 +175,7 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
      *
      * @param Zend_Search_Lucene_Interface $index
      * @return Zend_Search_Lucene_Search_Query
+     * @throws Zend_Search_Lucene_Exception
      */
     public function rewrite(Zend_Search_Lucene_Interface $index)
     {
@@ -174,6 +202,7 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
 
         $scaleFactor = 1/(1 - $this->_minimumSimilarity);
 
+        $maxTerms = Zend_search_lucene::getTermsPerQueryLimit();
         foreach ($fields as $field) {
             $index->resetTermsStream();
 
@@ -212,6 +241,10 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                         $this->_matches[]  = $index->currentTerm();
                         $this->_termKeys[] = $index->currentTerm()->key();
                         $this->_scores[]   = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
+
+                        if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
+                            throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
+                        }
                     }
 
                     $index->nextTerm();
@@ -243,6 +276,10 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
                         $this->_matches[]  = $index->currentTerm();
                         $this->_termKeys[] = $index->currentTerm()->key();
                         $this->_scores[]   = ($similarity - $this->_minimumSimilarity)*$scaleFactor;
+
+                        if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
+                            throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
+                        }
                     }
 
                     $index->nextTerm();
