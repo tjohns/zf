@@ -165,22 +165,12 @@ class Zend_Dojo_View_Helper_ComboBoxTest extends PHPUnit_Framework_TestCase
         $found = false;
         $scripts = $this->view->dojo()->getJavascript();
         foreach ($scripts as $js) {
-            if (strstr($js, 'var stateStore;')) {
+            if (strstr($js, 'var stateStore = new ')) {
                 $found = true;
                 break;
             }
         }
         $this->assertTrue($found, 'No store declaration found: ' . var_export($scripts, 1));
-
-        $found = false;
-        $actions = $this->view->dojo()->getOnloadActions();
-        foreach ($actions as $action) {
-            if (strstr($action, 'stateStore = ')) {
-                $found = true;
-                break;
-            }
-        }
-        $this->assertTrue($found, 'No store onLoad action found: ' . var_export($actions, 1));
     }
 
     public function testShouldAllowAlternateNotationToSpecifyRemoter()
@@ -203,6 +193,24 @@ class Zend_Dojo_View_Helper_ComboBoxTest extends PHPUnit_Framework_TestCase
             $this->fail('Did not create data store: ' . $html);
         }
         $this->assertContains('url="states.txt"', $m[1]);
+    }
+
+    /**
+     * @group ZF-5987
+     */
+    public function testStoreCreationWhenUsingProgrammaticCreationShouldRegisterAsDojoJavascript()
+    {
+        Zend_Dojo_View_Helper_Dojo::setUseProgrammatic(true);
+        $html = $this->getElementAsRemoter();
+        $js   = $this->view->dojo()->getJavascript();
+        $storeDeclarationFound = false;
+        foreach ($js as $statement) {
+            if (strstr($statement, 'var stateStore = new ')) {
+                $storeDeclarationFound = true;
+                break;
+            }
+        }
+        $this->assertTrue($storeDeclarationFound, 'Store declaration not found');
     }
 }
 
