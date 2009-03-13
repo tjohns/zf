@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14255 -->
+<!-- EN-Revision: 14317 -->
 <sect1 id="zend.validate.messages">
 
     <title>検証メッセージ</title>
@@ -494,6 +494,18 @@
             </tbody>
         </tgroup>
     </table>
+
+    <para>
+        さらに、<code>getMessageTemplates()</code>
+        メソッドを使うとバリデータの全メッセージテンプレートを取得することができます。
+        これは、検証に失敗したときにバリデータが返す可能性のあるメッセージを配列で返します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_Alnum();
+$messages  = $validator->getMessageTemplates();
+]]>
+    </programlisting>
 
 </sect1>
 <!--
