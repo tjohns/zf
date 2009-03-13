@@ -26,7 +26,13 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 {
     public function testQueryParser()
     {
-        $queries = array('title:"The Right Way" AND text:go',
+        $wildcardMinPrefix = Zend_Search_Lucene_Search_Query_Wildcard::getMinPrefixLength();
+        Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength(0);
+
+        $defaultPrefixLength = Zend_Search_Lucene_Search_Query_Fuzzy::getDefaultPrefixLength();
+        Zend_Search_Lucene_Search_Query_Fuzzy::setDefaultPrefixLength(0);
+
+    	$queries = array('title:"The Right Way" AND text:go',
                          'title:"Do it right" AND right',
                          'title:Do it right',
                          'te?t',
@@ -111,6 +117,9 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
             $this->assertEquals($query->rewrite($index)->__toString(), $rewritedQueries[$id]);
         }
+
+        Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength($wildcardMinPrefix);
+        Zend_Search_Lucene_Search_Query_Fuzzy::setDefaultPrefixLength($defaultPrefixLength);
     }
 
     public function testQueryParserExceptionsHandling()
@@ -268,6 +277,9 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
 
+        $wildcardMinPrefix = Zend_Search_Lucene_Search_Query_Wildcard::getMinPrefixLength();
+        Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength(0);
+
         $hits = $index->find('*cont*');
 
         $this->assertEquals(count($hits), 9);
@@ -286,11 +298,16 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
             $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
+
+        Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength($wildcardMinPrefix);
     }
 
     public function testFuzzyQuery()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
+
+        $defaultPrefixLength = Zend_Search_Lucene_Search_Query_Fuzzy::getDefaultPrefixLength();
+        Zend_Search_Lucene_Search_Query_Fuzzy::setDefaultPrefixLength(0);
 
         $hits = $index->find('tesd~0.4');
 
@@ -310,6 +327,8 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
             $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
             $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
         }
+
+        Zend_Search_Lucene_Search_Query_Fuzzy::setDefaultPrefixLength($defaultPrefixLength);
     }
 
     public function testInclusiveRangeQuery()

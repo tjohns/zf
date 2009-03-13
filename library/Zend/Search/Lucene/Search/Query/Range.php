@@ -159,6 +159,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
             $fields = array($this->_field);
         }
 
+        $maxTerms = Zend_search_lucene::getTermsPerQueryLimit();
         foreach ($fields as $field) {
             $index->resetTermsStream();
 
@@ -185,6 +186,11 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
                        $index->currentTerm()->field == $field  &&
                        $index->currentTerm()->text  <  $upperTerm->text) {
                     $this->_matches[] = $index->currentTerm();
+
+                    if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
+                        throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
+                    }
+
                     $index->nextTerm();
                 }
 
@@ -196,6 +202,11 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
                 // Walk up to the end of field data
                 while ($index->currentTerm() !== null  &&  $index->currentTerm()->field == $field) {
                     $this->_matches[] = $index->currentTerm();
+
+                    if ($maxTerms != 0  &&  count($this->_matches) > $maxTerms) {
+                        throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
+                    }
+
                     $index->nextTerm();
                 }
             }
