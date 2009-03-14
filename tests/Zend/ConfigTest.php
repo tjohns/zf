@@ -437,5 +437,83 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('no', $config2->key->nested);
         
     }
+
+    /**
+     * @group ZF-5771a
+     *
+     */
+    public function testUnsettingFirstElementDuringForeachDoesNotSkipAnElement()
+    {
+        $config = new Zend_Config(array(
+            'first'  => array(1),
+            'second' => array(2),
+            'third'  => array(3)
+        ), true);
+
+        $keyList = array();
+        foreach ($config as $key => $value)
+        {
+            $keyList[] = $key;
+            if ($key == 'first') {
+                unset($config->$key); // uses magic Zend_Config::__unset() method
+            }
+        }
+
+        $this->assertEquals('first', $keyList[0]);
+        $this->assertEquals('second', $keyList[1]);
+        $this->assertEquals('third', $keyList[2]);
+    }
+
+    /**
+     * @group ZF-5771
+     *
+     */
+    public function testUnsettingAMiddleElementDuringForeachDoesNotSkipAnElement()
+    {
+        $config = new Zend_Config(array(
+            'first'  => array(1),
+            'second' => array(2),
+            'third'  => array(3)
+        ), true);
+
+        $keyList = array();
+        foreach ($config as $key => $value)
+        {
+            $keyList[] = $key;
+            if ($key == 'second') {
+                unset($config->$key); // uses magic Zend_Config::__unset() method
+            }
+        }
+
+        $this->assertEquals('first', $keyList[0]);
+        $this->assertEquals('second', $keyList[1]);
+        $this->assertEquals('third', $keyList[2]);
+    }
+
+    /**
+     * @group ZF-5771
+     *
+     */
+    public function testUnsettingLastElementDuringForeachDoesNotSkipAnElement()
+    {
+        $config = new Zend_Config(array(
+            'first'  => array(1),
+            'second' => array(2),
+            'third'  => array(3)
+        ), true);
+
+        $keyList = array();
+        foreach ($config as $key => $value)
+        {
+            $keyList[] = $key;
+            if ($key == 'third') {
+                unset($config->$key); // uses magic Zend_Config::__unset() method
+            }
+        }
+
+        $this->assertEquals('first', $keyList[0]);
+        $this->assertEquals('second', $keyList[1]);
+        $this->assertEquals('third', $keyList[2]);
+    }
 }
 

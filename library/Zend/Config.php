@@ -56,6 +56,13 @@ class Zend_Config implements Countable, Iterator
      */
     protected $_data;
 
+    /**
+     * Used when unsetting values during iteration to ensure we do not skip
+     * the next element
+     *
+     * @var boolean
+     */
+    protected $_skipNextIteration;
 
     /**
      * Contains which config file sections were loaded. This is null
@@ -223,6 +230,7 @@ class Zend_Config implements Countable, Iterator
         if ($this->_allowModifications) {
             unset($this->_data[$name]);
             $this->_count = count($this->_data);
+            $this->_skipNextIteration = true;
         } else {
             /** @see Zend_Config_Exception */
             require_once 'Zend/Config/Exception.php';
@@ -248,6 +256,7 @@ class Zend_Config implements Countable, Iterator
      */
     public function current()
     {
+        $this->_skipNextIteration = false;
         return current($this->_data);
     }
 
@@ -267,6 +276,10 @@ class Zend_Config implements Countable, Iterator
      */
     public function next()
     {
+        if ($this->_skipNextIteration) {
+            $this->_skipNextIteration = false;
+            return;
+        }
         next($this->_data);
         $this->_index++;
     }
@@ -277,6 +290,7 @@ class Zend_Config implements Countable, Iterator
      */
     public function rewind()
     {
+        $this->_skipNextIteration = false;
         reset($this->_data);
         $this->_index = 0;
     }
