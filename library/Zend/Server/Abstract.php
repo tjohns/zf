@@ -174,7 +174,7 @@ abstract class Zend_Server_Abstract implements Zend_Server_Interface
 
         foreach ($reflection->getPrototypes() as $proto) {
             $prototype = new Zend_Server_Method_Prototype();
-            $prototype->setReturnType($this->_fixType($prototype->getReturnType()));
+            $prototype->setReturnType($this->_fixType($proto->getReturnType()));
             foreach ($proto->getParameters() as $parameter) {
                 $param = new Zend_Server_Method_Parameter(array(
                     'type'     => $this->_fixType($parameter->getType()),

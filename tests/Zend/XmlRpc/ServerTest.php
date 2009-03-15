@@ -510,6 +510,20 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($response instanceof Zend_XmlRpc_Fault);
         $this->assertEquals($data, $response->getReturnValue());
     }
+
+    /**
+     * @group ZF-6034
+     */
+    public function testPrototypeReturnValueMustReflectDocBlock()
+    {
+        $server = new Zend_XmlRpc_Server();
+        $server->setClass('Zend_XmlRpc_Server_testClass');
+        $table = $server->getDispatchTable();
+        $method = $table->getMethod('test1');
+        foreach ($method->getPrototypes() as $prototype) {
+            $this->assertNotEquals('void', $prototype->getReturnType(), var_export($prototype, 1));
+        }
+    }
 }
 
 /**
