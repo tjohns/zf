@@ -326,19 +326,25 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         if (!empty($id)) {
             if (self::isApcAvailable()) {
-                $status = call_user_func(self::$_callbackApc, 'upload_' . $id) + $status;
+                $call = call_user_func(self::$_callbackApc, 'upload_' . $id);
+                if (is_array($call)) {
+                    $status = $call + $status;
+                }
             } else if (self::isUploadProgressAvailable()) {
-                $status = call_user_func(self::$_callbackUploadProgress, $id) + $status;
-                $status['total']   = $status['bytes_total'];
-                $status['current'] = $status['bytes_uploaded'];
-                $status['rate']    = $status['speed_average'];
-                if ($status['total'] == $status['current']) {
-                    $status['done'] = true;
+                $call = call_user_func(self::$_callbackUploadProgress, $id);
+                if (is_array($call)) {
+                    $status = $call + $status;
+                    $status['total']   = $status['bytes_total'];
+                    $status['current'] = $status['bytes_uploaded'];
+                    $status['rate']    = $status['speed_average'];
+                    if ($status['total'] == $status['current']) {
+                        $status['done'] = true;
+                    }
                 }
             }
 
-            if (!$status) {
-                $status = array('message' => 'Failure while retrieving the upload progress');
+            if (!is_array($call)) {
+                $status['message'] = 'Failure while retrieving the upload progress';
             } else if (!empty($status['cancel_upload'])) {
                 $status['done']    = true;
                 $status['message'] = 'The upload has been canceled';
