@@ -95,7 +95,7 @@ class Zend_Log_Writer_Db extends Zend_Log_Writer_Abstract
     {
         if ($this->_db === null) {
             require_once 'Zend/Log/Exception.php';
-            throw new Zend_Log_Exception('Database adapter instance has been removed by shutdown');
+            throw new Zend_Log_Exception('Database adapter is null');
         }
 
         if ($this->_columnMap === null) {
