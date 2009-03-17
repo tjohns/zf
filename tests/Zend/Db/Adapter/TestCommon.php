@@ -280,6 +280,25 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
         $this->assertEquals(array(2, 3), $ids);
     }
+    
+    public function testAdapterDeleteWhereArrayWithVariable()
+    {
+        $products = $this->_db->quoteIdentifier('zfproducts');
+        $product_id = $this->_db->quoteIdentifier('product_id');
+        $product_name = $this->_db->quoteIdentifier('product_name');
+
+        $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
+        $this->assertEquals(array(1, 2, 3), $ids);
+
+        $rowsAffected = $this->_db->delete(
+            'zfproducts',
+            array('product_id = ?' => 1, 'product_name = ?' => 'Windows')
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $ids = $this->_db->fetchCol("SELECT $product_id FROM $products ORDER BY $product_id");
+        $this->assertEquals(array(2, 3), $ids);
+    }
 
     public function testAdapterDeleteWhereDbExpr()
     {
@@ -1701,6 +1720,23 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
             'zfbugs',
             array('bug_status' => 'ARRAY'),
             array("$bug_id = 1", "$bug_status = 'NEW'")
+        );
+        $this->assertEquals(1, $rowsAffected);
+
+        $value = $this->_db->fetchOne("SELECT $bug_status FROM $bugs WHERE $bug_id = 1");
+        $this->assertEquals('ARRAY', $value);
+    }
+    
+    public function testAdapterUpdateWhereArrayWithVariable()
+    {
+        $bugs = $this->_db->quoteIdentifier('zfbugs');
+        $bug_id = $this->_db->quoteIdentifier('bug_id');
+        $bug_status = $this->_db->quoteIdentifier('bug_status');
+
+        $rowsAffected = $this->_db->update(
+            'zfbugs',
+            array('bug_status' => 'ARRAY'),
+            array('bug_id = ?' => 1, 'bug_status = ?' => 'NEW')
         );
         $this->assertEquals(1, $rowsAffected);
 
