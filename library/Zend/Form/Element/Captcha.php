@@ -236,12 +236,11 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
     {
         $this->getCaptcha()->setName($this->getName());
         $belongsTo = $this->getBelongsTo();
-var_dump($belongsTo);
+
         if (empty($belongsTo) || !is_array($context)) {
             return parent::isValid($value, $context);
         }
-var_dump($value);
-var_dump($context);
+
         $name     = $this->getFullyQualifiedName();
         $root     = substr($name, 0, strpos($name, '['));
         $segments = substr($name, strpos($name, '['));
@@ -251,8 +250,7 @@ var_dump($context);
         array_unshift($segments, $root);
         array_pop($segments);
         $newContext = $context;
-var_dump($segments);
-var_dump($newContext);
+
         foreach ($segments as $segment) {
             if (array_key_exists($segment, $newContext)) {
                 $newContext = $newContext[$segment];
