@@ -236,7 +236,6 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
     {
         $this->getCaptcha()->setName($this->getName());
         $belongsTo = $this->getBelongsTo();
-
         if (empty($belongsTo) || !is_array($context)) {
             return parent::isValid($value, $context);
         }
@@ -250,7 +249,6 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
         array_unshift($segments, $root);
         array_pop($segments);
         $newContext = $context;
-
         foreach ($segments as $segment) {
             if (array_key_exists($segment, $newContext)) {
                 $newContext = $newContext[$segment];
