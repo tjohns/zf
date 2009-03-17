@@ -236,6 +236,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
     {
         $this->getCaptcha()->setName($this->getName());
         $belongsTo = $this->getBelongsTo();
+var_dump($belongsTo);
         if (empty($belongsTo) || !is_array($context)) {
             return parent::isValid($value, $context);
         }
