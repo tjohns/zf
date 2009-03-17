@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14200 -->
+<!-- EN-Revision: 14351 -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -242,6 +242,7 @@ $upload->receive();
                 <para>
                     <emphasis role="strong">getFileSize($file = null)</emphasis>:
                     このメソッドは、指定したaifるの実際のファイルサイズを返します。
+                    リリース 1.8 以降で使用可能です。
                 </para>
             </listitem>
 
@@ -256,6 +257,7 @@ $upload->receive();
                 <para>
                     <emphasis role="strong">getMimeType($files = null)</emphasis>:
                     このメソッドは、転送されたファイルの mimetype を返します。
+                    リリース 1.8 以降で使用可能です。
                 </para>
             </listitem>
         </itemizedlist>
@@ -393,6 +395,7 @@ $names = $upload->getMimeType('foo');
 
         <para>
             <code>Zend_File_Transfer</code> では、ファイルアップロードの進捗状況を知ることができます。
+            リリース 1.8 以降で使用可能です。
             この機能を使用するには、<code>APC</code> 拡張モジュール
             (ほとんどの PHP 環境においてデフォルトで提供されています)
             あるいは <code>uploadprogress</code> 拡張モジュールが必要です。
