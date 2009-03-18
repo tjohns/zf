@@ -281,6 +281,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals(array(2, 3), $ids);
     }
     
+    /**
+     * @group ZF-1726
+     */
     public function testAdapterDeleteWhereArrayWithVariable()
     {
         $products = $this->_db->quoteIdentifier('zfproducts');
@@ -292,7 +295,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         $rowsAffected = $this->_db->delete(
             'zfproducts',
-            array('product_id = ?' => 1, 'product_name = ?' => 'Windows')
+            array("$product_id = ?" => 1, "$product_name = ?" => 'Windows')
         );
         $this->assertEquals(1, $rowsAffected);
 
@@ -1727,6 +1730,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $this->assertEquals('ARRAY', $value);
     }
     
+    /**
+     * @group ZF-1726
+     */
     public function testAdapterUpdateWhereArrayWithVariable()
     {
         $bugs = $this->_db->quoteIdentifier('zfbugs');
@@ -1736,7 +1742,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         $rowsAffected = $this->_db->update(
             'zfbugs',
             array('bug_status' => 'ARRAY'),
-            array('bug_id = ?' => 1, 'bug_status = ?' => 'NEW')
+            array("$bug_id = ?" => 1, "$bug_status = ?" => 'NEW')
         );
         $this->assertEquals(1, $rowsAffected);
 
@@ -1958,7 +1964,7 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
     }
     
     /**
-     * Group ZF-1541
+     * @group ZF-1541
      */
     public function testCharacterSetUtf8()
     {
