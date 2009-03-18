@@ -278,9 +278,11 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
 
         $objects = array();
         if (isset($xml->Contents)) {
-            foreach ($xml->Contents->Key as $object) {
-                $objects[] = (string)$object;
-            }
+	    foreach ($xml->Contents as $contents) {
+                foreach ($contents->Key as $object) {
+                    $objects[] = (string)$object;
+                }
+	    }
         }
 
         return $objects;
