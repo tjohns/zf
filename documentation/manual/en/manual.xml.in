@@ -393,6 +393,7 @@
         <xi:include href="module_specs/Zend_Service.xml" />
         <xi:include href="module_specs/Zend_Service_Akismet.xml" />
         <xi:include href="module_specs/Zend_Service_Amazon.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_S3.xml" />
         <xi:include href="module_specs/Zend_Service_Audioscrobbler.xml" />
         <xi:include href="module_specs/Zend_Service_Delicious.xml" />
         <xi:include href="module_specs/Zend_Service_Flickr.xml" />

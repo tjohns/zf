@@ -14,22 +14,22 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Service_Amazon
+ * @package    Zend_Service_Amazon_S3
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id$
+ * @version    $Id: AllTests.php 11973 2008-10-15 16:00:56Z matthew $
  */
 
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Service_Amazon_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Service_Amazon_S3_AllTests::main');
 }
 
 /**
  * Test helper
  */
-require_once dirname(__FILE__) . '/../../../TestHelper.php';
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /**
  * Exclude from code coverage report
@@ -39,27 +39,22 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 /**
  * @see Zend_Service_Amazon_OfflineTest
  */
-require_once 'Zend/Service/Amazon/OfflineTest.php';
+require_once 'Zend/Service/Amazon/S3/OfflineTest.php';
 
 /**
  * @see Zend_Service_Amazon_OnlineTest
  */
-require_once 'Zend/Service/Amazon/OnlineTest.php';
-
-/**
- * @see Zend_Service_Amazon_S3_AllTests
- */
-require_once 'Zend/Service/Amazon/S3/AllTests.php';
+require_once 'Zend/Service/Amazon/S3/OnlineTest.php';
 
 
 /**
  * @category   Zend
- * @package    Zend_Service_Amazon
+ * @package    Zend_Service_Amazon_S3
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Amazon_AllTests
+class Zend_Service_Amazon_S3_AllTests
 {
     /**
      * Runs this test suite
@@ -78,22 +73,24 @@ class Zend_Service_Amazon_AllTests
      */
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Amazon');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Amazon_S3');
 
         $suite->addTestSuite('Zend_Service_Amazon_OfflineTest');
         if (defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') &&
-            defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID')) {
-            $suite->addTestSuite('Zend_Service_Amazon_OnlineTest');
+            defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID') &&
+            defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_SECRETKEY')) {
+            $suite->addTestSuite('Zend_Service_Amazon_S3_OnlineTest');
+            $suite->addTestSuite('Zend_Service_Amazon_S3_StreamTest');
         } else {
-            $suite->addTestSuite('Zend_Service_Amazon_OnlineTest_Skip');
+            $suite->addTestSuite('Zend_Service_Amazon_S3_StreamTest_Skip');
+            $suite->addTestSuite('Zend_Service_Amazon_S3_OnlineTest_Skip');
         }
-        $suite->addTest(Zend_Service_Amazon_S3_AllTests::suite());
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Service_Amazon_AllTests::main') {
-    Zend_Service_Amazon_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Service_Amazon_S3_AllTests::main') {
+    Zend_Service_Amazon_S3_AllTests::main();
 }
