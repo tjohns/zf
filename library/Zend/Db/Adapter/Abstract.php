@@ -552,12 +552,26 @@ abstract class Zend_Db_Adapter_Abstract
          * except for Zend_Db_Expr which is treated literally.
          */
         $set = array();
+        $i = 0;
         foreach ($bind as $col => $val) {
             if ($val instanceof Zend_Db_Expr) {
                 $val = $val->__toString();
                 unset($bind[$col]);
             } else {
-                $val = '?';
+                if ($this->supportsParameters('positional')) {
+                    $val = '?';
+                } else {
+                    if ($this->supportsParameters('named')) {
+                        unset($bind[$col]);
+                        $bind[':'.$col.$i] = $val;
+                        $val = ':'.$col.$i;
+                        $i++;
+                    } else {
+                        /** @see Zend_Db_Adapter_Exception */
+                        require_once 'Zend/Db/Adapter/Exception.php';
+                        throw new Zend_Db_Adapter_Exception(get_class($this) ." doesn't support positional or named binding");
+                    }
+                }
             }
             $set[] = $this->quoteIdentifier($col, true) . ' = ' . $val;
         }
@@ -575,7 +589,11 @@ abstract class Zend_Db_Adapter_Abstract
         /**
          * Execute the statement and return the number of affected rows
          */
-        $stmt = $this->query($sql, array_values($bind));
+        if ($this->supportsParameters('positional')) {
+            $stmt = $this->query($sql, array_values($bind));
+        } else {
+            $stmt = $this->query($sql, $bind);
+        }
         $result = $stmt->rowCount();
         return $result;
     }
@@ -606,7 +624,7 @@ abstract class Zend_Db_Adapter_Abstract
         return $result;
     }
 
-	/**
+    /**
      * Convert an array, string, or Zend_Db_Expr object
      * into a string to put in a WHERE clause.
      *
@@ -625,18 +643,18 @@ abstract class Zend_Db_Adapter_Abstract
             // is $cond an int? (i.e. Not a condition)
             if (is_int($cond)) {
                 // $term is the full condition
-	            if ($term instanceof Zend_Db_Expr) {
-	                $term = $term->__toString();
-	            }
+                if ($term instanceof Zend_Db_Expr) {
+                    $term = $term->__toString();
+                }
             } else {
                 // $cond is the condition with placeholder,
                 // and $term is quoted into the condition
-				$term = $this->quoteInto($cond, $term);
+                $term = $this->quoteInto($cond, $term);
             }
-	        $term = '(' . $term . ')';
-		}
+            $term = '(' . $term . ')';
+        }
 
-		$where = implode(' AND ', $where);
+        $where = implode(' AND ', $where);
         return $where;
     }
 

@@ -638,48 +638,6 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
     }
 
     /**
-     * Updates table rows with specified data based on a WHERE clause.
-     *
-     * @param  mixed        $table The table to update.
-     * @param  array        $bind  Column-value pairs.
-     * @param  array|string $where UPDATE WHERE clause(s).
-     * @return int          The number of affected rows.
-     */
-    public function update($table, array $bind, $where = '')
-    {
-        $i = 0;
-        // build "col = ?" pairs for the statement
-        $set = array();
-        foreach ($bind as $col => $val) {
-            if ($val instanceof Zend_Db_Expr) {
-                $val = $val->__toString();
-                unset($bind[$col]);
-            } else {
-                unset($bind[$col]);
-                $bind[':'.$col.$i] = $val;
-                $val = ':'.$col.$i;
-            }
-            $set[] = $this->quoteIdentifier($col, true) . ' = ' . $val;
-            $i++;
-        }
-
-        if (is_array($where)) {
-            $where = implode(' AND ', $where);
-        }
-
-        // build the statement
-        $sql = "UPDATE "
-             . $this->quoteIdentifier($table, true)
-             . ' SET ' . implode(', ', $set)
-             . (($where) ? " WHERE $where" : '');
-
-        // execute the statement and return the number of affected rows
-        $stmt = $this->query($sql, $bind);
-        $result = $stmt->rowCount();
-        return $result;
-    }
-
-    /**
      * Check if the adapter supports real SQL parameters.
      *
      * @param string $type 'positional' or 'named'
