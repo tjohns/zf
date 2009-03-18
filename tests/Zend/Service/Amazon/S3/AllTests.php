@@ -46,6 +46,12 @@ require_once 'Zend/Service/Amazon/S3/OfflineTest.php';
  */
 require_once 'Zend/Service/Amazon/S3/OnlineTest.php';
 
+/**
+ * @see Zend_Service_Amazon_StreamTest
+ */
+require_once 'Zend/Service/Amazon/S3/StreamTest.php';
+
+
 
 /**
  * @category   Zend
@@ -75,7 +81,7 @@ class Zend_Service_Amazon_S3_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Amazon_S3');
 
-        $suite->addTestSuite('Zend_Service_Amazon_OfflineTest');
+        $suite->addTestSuite('Zend_Service_Amazon_S3_OfflineTest');
         if (defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') &&
             constant('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED') &&
             defined('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID') &&

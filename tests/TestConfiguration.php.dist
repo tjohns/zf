@@ -450,7 +450,8 @@ define('TESTS_ZEND_MAIL_SMTP_AUTH', false);
  */
 define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ENABLED', false);
 define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_ACCESSKEYID', 'Enter AWSAccessKeyId here');
-define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_SECRETKEYID', 'Enter AWSSecretKeyId here');
+define('TESTS_ZEND_SERVICE_AMAZON_ONLINE_SECRETKEY', 'Enter AWSSecretKey here');
+define('TESTS_ZEND_SERVICE_AMAZON_S3_BUCKET', 'zftestamazons3bucket');
 
 /**
  * Zend_Service_Delicious tests

@@ -67,6 +67,8 @@ class Zend_Service_Amazon_S3_StreamTest extends PHPUnit_Framework_TestCase
         $this->_amazon->getHttpClient()
                       ->setAdapter($this->_httpClientAdapterSocket);
         $this->_amazon->registerStreamWrapper();
+        $this->_amazon->cleanBucket($this->_bucket);
+        $this->_amazon->removeBucket($this->_bucket);
         // terms of use compliance: no more than one query per second
         sleep(1);
     }
@@ -93,7 +95,6 @@ class Zend_Service_Amazon_S3_StreamTest extends PHPUnit_Framework_TestCase
         // Create the bucket
         $result = mkdir($this->_bucketName);
         $this->assertTrue($result);
-
         // Remove the bucket
         $result = rmdir($this->_bucketName);
         $this->assertTrue($result);
