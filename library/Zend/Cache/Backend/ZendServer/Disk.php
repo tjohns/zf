@@ -40,7 +40,6 @@ class Zend_Cache_Backend_ZendServer_Disk extends Zend_Cache_Backend_ZendServer i
      *
      * @param  array $options associative array of options
      * @throws Zend_Cache_Exception
-     * @return void
      */
     public function __construct(array $options = array())
     {
@@ -56,15 +55,17 @@ class Zend_Cache_Backend_ZendServer_Disk extends Zend_Cache_Backend_ZendServer i
      * @var mixed  $data        Object to store
      * @var string $id          Cache id
      * @var int    $timeToLive  Time to live in seconds
-     * @throws Zend_Cache_Exception
+     * @return boolean true if no problem
      */
     protected function _store($data, $id, $timeToLive)
     {
     	if (zend_disk_cache_store($this->_options['namespace'] . '::' . $id,
     	                          $data,
     	                          $timeToLive) === false) {
-    	   Zend_Cache::throwException('Store operation failed.');
+            $this->_log('Store operation failed.');
+            return false;
     	}
+    	return true;
     }
 
     /**
@@ -83,10 +84,11 @@ class Zend_Cache_Backend_ZendServer_Disk extends Zend_Cache_Backend_ZendServer i
      * Unset data
      *
      * @var string $id          Cache id
+     * @return boolean true if no problem
      */
     protected function _unset($id)
     {
-    	zend_disk_cache_delete($this->_options['namespace'] . '::' . $id);
+    	return zend_disk_cache_delete($this->_options['namespace'] . '::' . $id);
     }
 
     /**

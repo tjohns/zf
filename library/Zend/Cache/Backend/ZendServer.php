@@ -142,20 +142,17 @@ abstract class Zend_Cache_Backend_ZendServer extends Zend_Cache_Backend implemen
     public function save($data, $id, $tags = array(), $specificLifetime = false)
     {
         $lifetime = $this->getLifetime($specificLifetime);
-
-        $timeToLive = $this->getLifetime($specificLifetime);
         $metadatas = array(
             'mtime' => time(),
-            'expire' => $this->_expireTime($timeToLive),
+            'expire' => $this->_expireTime($lifetime),
         );
-
-        $this->_store($data, $id, $timeToLive);
-        $this->_store($metadatas, 'internal-metadatas---' . $id, $timeToLive);
 
         if (count($tags) > 0) {
             $this->_log('Zend_Cache_Backend_ZendServer::save() : tags are unsupported by the ZendServer backends');
         }
-        return $result;
+
+        return  $this->_store($data, $id, $lifetime) &&
+                $this->_store($metadatas, 'internal-metadatas---' . $id, $lifetime);
     }
 
     /**
@@ -166,10 +163,10 @@ abstract class Zend_Cache_Backend_ZendServer extends Zend_Cache_Backend implemen
      */
     public function remove($id)
     {
-    	$this->_unset($id);
-    	$this->_unset('internal-metadatas---' . $id);
+    	$result1 = $this->_unset($id);
+    	$result2 = $this->_unset('internal-metadatas---' . $id);
 
-        return true;
+        return $result1 && $result2;
     }
 
     /**

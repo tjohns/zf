@@ -43,6 +43,8 @@ require_once 'Zend/Cache/PageFrontendTest.php';
 require_once 'Zend/Cache/ZendPlatformBackendTest.php';
 require_once 'Zend/Cache/SkipTests.php';
 require_once 'Zend/Cache/TwoLevelsBackendTest.php';
+require_once 'Zend/Cache/ZendServerDiskTest.php';
+require_once 'Zend/Cache/ZendServerShMemTest.php';
 
 /**
  * @category   Zend
@@ -159,7 +161,7 @@ class Zend_Cache_AllTests
         } else {
             $suite->addTestSuite('Zend_Cache_ZendPlatformBackendTest');
         }
-        
+
         /*
          * Check if APC tests are enabled, and if extension is available.
          */
@@ -174,6 +176,23 @@ class Zend_Cache_AllTests
             $suite->addTest($skipTest);
         } else {
             $suite->addTestSuite('Zend_Cache_TwoLevelsBackendTest');
+        }
+
+        /*
+         * Check if Zend Server tests are enabled, and appropriate functions are available.
+         */
+        if (!defined('TESTS_ZEND_CACHE_ZENDSERVER_ENABLED') ||
+            constant('TESTS_ZEND_CACHE_ZENDSERVER_ENABLED') === false) {
+            $skipTest = new Zend_Cache_ZendServerTest_SkipTests();
+            $skipTest->message = 'Tests are not enabled in TestConfiguration.php';
+            $suite->addTest($skipTest);
+        } else if (!function_exists('zend_shm_cache_store')) {
+            $skipTest = new Zend_Cache_ZendServerTest_SkipTests();
+            $skipTest->message = "Zend Server caching environment is not available";
+            $suite->addTest($skipTest);
+        } else {
+            $suite->addTestSuite('Zend_Cache_ZendServerDiskTest');
+            $suite->addTestSuite('Zend_Cache_ZendServerShMemTest');
         }
 
         return $suite;

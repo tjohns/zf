@@ -79,3 +79,7 @@ class Zend_Cache_ZendPlatformBackendTest_SkipTests extends Zend_Cache_BackendTes
 class Zend_Cache_TwoLevelsBackendTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
 {
 }
+
+class Zend_Cache_ZendServerTest_SkipTests extends Zend_Cache_BackendTest_SkipTests
+{
+}
