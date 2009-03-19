@@ -114,6 +114,12 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     private $_encoding = 'ISO-8859-1';
 
     /**
+     * Flag indicating whether or not LFI protection for rendering view scripts is enabled
+     * @var bool
+     */
+    private $_lfiProtectionOn = true;
+
+    /**
      * Plugin loaders
      * @var array
      */
@@ -197,6 +203,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         // strict vars
         if (array_key_exists('strictVars', $config)) {
             $this->strictVars($config['strictVars']);
+        }
+
+        // LFI protection flag
+        if (array_key_exists('lfiProtectionOn', $config)) {
+            $this->setLfiProtection($config['lfiProtectionOn']);
         }
 
         $this->init();
@@ -685,6 +696,28 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     }
 
     /**
+     * Set LFI protection flag
+     * 
+     * @param  bool $flag 
+     * @return Zend_View_Abstract
+     */
+    public function setLfiProtection($flag)
+    {
+        $this->_lfiProtectionOn = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Return status of LFI protection flag
+     * 
+     * @return bool
+     */
+    public function isLfiProtectionOn()
+    {
+        return $this->_lfiProtectionOn;
+    }
+
+    /**
      * Assigns variables to the view script via differing strategies.
      *
      * Zend_View::assign('name', $value) assigns a variable called 'name'
@@ -856,6 +889,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      */
     protected function _script($name)
     {
+        if ($this->isLfiProtectionOn() && preg_match('#\.\.[\\\/]#', $name)) {
+            require_once 'Zend/View/Exception.php';
+            throw new Zend_View_Exception('Requested scripts may not include parent directory traversal ("../", "..\\" notation)');
+        }
+
         if (0 == count($this->_path['script'])) {
             require_once 'Zend/View/Exception.php';
             throw new Zend_View_Exception('no view script directory set; unable to determine location for view script',
