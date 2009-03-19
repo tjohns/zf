@@ -67,18 +67,18 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <?= $this->headTitle() ?>
-    <?= $this->headScript() ?>
-    <?= $this->headStyle() ?>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headScript() ?>
+    <?php echo $this->headStyle() ?>
 </head>
 <body>
-    <?= $this->render('header.phtml') ?>
+    <?php echo $this->render('header.phtml') ?>
 
-    <div id="nav"><?= $this->placeholder('nav') ?></div>
+    <div id="nav"><?php echo $this->placeholder('nav') ?></div>
 
-    <div id="content"><?= $this->layout()->content ?></div>
+    <div id="content"><?php echo $this->layout()->content ?></div>
 
-    <?= $this->render('footer.phtml') ?>
+    <?php echo $this->render('footer.phtml') ?>
 </body>
 </html>
 ]]>
@@ -199,10 +199,10 @@ $layout = Zend_Layout::getMvcInstance();
         <programlisting role="php"><![CDATA[
 <body>
     <!-- renders /nav/menu -->
-    <div id="nav"><?= $this->layout()->nav ?></div>
+    <div id="nav"><?php echo $this->layout()->nav ?></div>
 
     <!-- renders /foo/index + /comment/fetch -->
-    <div id="content"><?= $this->layout()->content ?></div>
+    <div id="content"><?php echo $this->layout()->content ?></div>
 </body>
 ]]>
         </programlisting>

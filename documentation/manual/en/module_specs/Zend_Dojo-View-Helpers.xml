@@ -178,7 +178,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->accordionContainer(
+<?php echo $view->accordionContainer(
     'foo',
     $content,
     array(
@@ -199,7 +199,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->accordionPane(
+<?php echo $view->accordionPane(
     'foo',
     $content,
     array(
@@ -222,7 +222,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->borderContainer(
+<?php echo $view->borderContainer(
     'foo',
     $content,
     array(
@@ -243,7 +243,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->contentPane(
+<?php echo $view->contentPane(
     'foo',
     $content,
     array(
@@ -266,7 +266,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->splitContainer(
+<?php echo $view->splitContainer(
     'foo',
     $content,
     array(
@@ -291,7 +291,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->stackContainer(
+<?php echo $view->stackContainer(
     'foo',
     $content,
     array(),
@@ -312,7 +312,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper', 'Zend_Dojo_View_Helper');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->tabContainer(
+<?php echo $view->tabContainer(
     'foo',
     $content,
     array(),
@@ -431,7 +431,7 @@ echo $view->borderContainer()->captureEnd('masterLayout');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->button(
+<?php echo $view->button(
     'foo',
     'Show Me!',
     array('iconClass' => 'myButtons'),
@@ -466,7 +466,7 @@ echo $view->borderContainer()->captureEnd('masterLayout');
                 </para>
 
                 <programlisting role="php"><![CDATA[
-<?= $view->checkBox(
+<?php echo $view->checkBox(
     'foo',
     'bar',
     array(),

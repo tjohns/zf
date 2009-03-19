@@ -566,7 +566,7 @@ class UserController extends Zend_Controller_Action
 
 <programlisting role="php"><![CDATA[
 <h2>Please login:</h2>
-<?= $this->form ?>
+<?php echo $this->form ?>
 ]]>
  </programlisting>
 

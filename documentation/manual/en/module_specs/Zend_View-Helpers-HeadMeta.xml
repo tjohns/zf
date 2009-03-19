@@ -132,7 +132,7 @@ $this->headMeta()->appendHttpEquiv('Refresh',
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headMeta() ?>
+<?php echo $this->headMeta() ?>
 ]]>
         </programlisting>
     </example>

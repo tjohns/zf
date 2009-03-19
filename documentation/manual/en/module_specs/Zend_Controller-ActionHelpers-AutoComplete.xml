@@ -288,23 +288,23 @@ class TestController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[
-<? // setup our data store: ?>
+<?php // setup our data store: ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    url="<?php echo $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
     requestMethod="get"></div>
 
-<? // render our form: ?>
-<?= $this->form ?>
+<?php // render our form: ?>
+<?php echo $this->form ?>
 
-<? // setup Dojo-related CSS to load in HTML head: ?>
-<? $this->headStyle()->captureStart() ?>
-@import "<?= $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
-@import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
-<? $this->headStyle()->captureEnd() ?>
+<?php // setup Dojo-related CSS to load in HTML head: ?>
+<?php $this->headStyle()->captureStart() ?>
+@import "<?php echo $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
+<?php $this->headStyle()->captureEnd() ?>
 
-<? // setup javascript to load in HTML head, including all required
+<?php // setup javascript to load in HTML head, including all required
    // Dojo libraries: ?>
-<? $this->headScript()
+<?php $this->headScript()
         ->setAllowArbitraryAttributes(true)
         ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
             'text/javascript',
@@ -316,7 +316,7 @@ dojo.require("dojo.parser");
 dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
-<? $this->headScript()->captureEnd() ?>
+<?php $this->headScript()->captureEnd() ?>
 ]]>
             </programlisting>
 

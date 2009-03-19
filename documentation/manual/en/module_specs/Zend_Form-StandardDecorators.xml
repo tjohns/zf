@@ -486,16 +486,16 @@ $element->setDecorators(array(array('ViewScript',
         </para>
 
         <programlisting role="php"><![CDATA[
-<div class="<?= $this->class ?>">
-    <?= $this->formLabel($this->element->getName(),
+<div class="<?php echo $this->class ?>">
+    <?php echo $this->formLabel($this->element->getName(),
                          $this->element->getLabel()) ?>
-    <?= $this->{$this->element->helper}(
+    <?php echo $this->{$this->element->helper}(
         $this->element->getName(),
         $this->element->getValue(),
         $this->element->getAttribs()
     ) ?>
-    <?= $this->formErrors($this->element->getMessages()) ?>
-    <div class="hint"><?= $this->element->getDescription() ?></div>
+    <?php echo $this->formErrors($this->element->getMessages()) ?>
+    <div class="hint"><?php echo $this->element->getDescription() ?></div>
 </div>
 ]]>
         </programlisting>

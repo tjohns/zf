@@ -168,7 +168,7 @@ $this->headScript()->prependFile('/js/prototype.js');
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headScript() ?>
+<?php echo $this->headScript() ?>
 ]]>
         </programlisting>
     </example>
@@ -186,7 +186,7 @@ $this->headScript()->prependFile('/js/prototype.js');
 
         <programlisting role="php"><![CDATA[
 <?php $this->headScript()->captureStart() ?>
-var action = '<?= $this->baseUrl ?>';
+var action = '<?php echo $this->baseUrl ?>';
 $('foo_form').action = action;
 <?php $this->headScript()->captureEnd() ?>
 ]]>

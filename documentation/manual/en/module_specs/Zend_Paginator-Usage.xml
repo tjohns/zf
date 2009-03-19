@@ -203,12 +203,12 @@ $this->view->paginator = $paginator;
 <?php if (count($this->paginator)): ?>
 <ul>
 <?php foreach ($this->paginator as $item): ?>
-  <li><?= $item; ?></li>
+  <li><?php echo $item; ?></li>
 <?php endforeach; ?>
 </ul>
 <?php endif; ?>
 
-<?= $this->paginationControl($this->paginator,
+<?php echo $this->paginationControl($this->paginator,
                              'Sliding',
                              'my_pagination_control.phtml'); ?>
 </body>
@@ -331,7 +331,7 @@ $paginator->setView($view);
 
         <para>
             <programlisting role="php"><![CDATA[
-<?= $this->paginator; ?>
+<?php echo $this->paginator; ?>
 ]]>
             </programlisting>
         </para>
@@ -382,7 +382,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <div class="paginationControl">
 <!-- Previous page link -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
     &lt; Previous
   </a> |
 <?php else: ?>
@@ -392,17 +392,17 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
 <!-- Numbered page links -->
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
-    <a href="<?= $this->url(array('page' => $page)); ?>">
-        <?= $page; ?>
+    <a href="<?php echo $this->url(array('page' => $page)); ?>">
+        <?php echo $page; ?>
     </a> |
   <?php else: ?>
-    <?= $page; ?> |
+    <?php echo $page; ?> |
   <?php endif; ?>
 <?php endforeach; ?>
 
 <!-- Next page link -->
 <?php if (isset($this->next)): ?>
-  <a href="<?= $this->url(array('page' => $this->next)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->next)); ?>">
     Next &gt;
   </a>
 <?php else: ?>
@@ -424,12 +424,12 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
 
 <?php if ($this->pageCount): ?>
 <div class="paginationControl">
-<?= $this->firstItemNumber; ?> - <?= $this->lastItemNumber; ?>
-of <?= $this->totalItemCount; ?>
+<?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?>
+of <?php echo $this->totalItemCount; ?>
 
 <!-- First page link -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?= $this->url(array('page' => $this->first)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->first)); ?>">
     First
   </a> |
 <?php else: ?>
@@ -438,7 +438,7 @@ of <?= $this->totalItemCount; ?>
 
 <!-- Previous page link -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?= $this->url(array('page' => $this->previous)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
     &lt; Previous
   </a> |
 <?php else: ?>
@@ -447,7 +447,7 @@ of <?= $this->totalItemCount; ?>
 
 <!-- Next page link -->
 <?php if (isset($this->next)): ?>
-  <a href="<?= $this->url(array('page' => $this->next)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->next)); ?>">
     Next &gt;
   </a> |
 <?php else: ?>
@@ -456,7 +456,7 @@ of <?= $this->totalItemCount; ?>
 
 <!-- Last page link -->
 <?php if (isset($this->next)): ?>
-  <a href="<?= $this->url(array('page' => $this->last)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->last)); ?>">
     Last
   </a>
 <?php else: ?>
@@ -477,8 +477,8 @@ of <?= $this->totalItemCount; ?>
 <select id="paginationControl" size="1">
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>
-  <option value="<?= $this->url(array('page' => $page)); ?>"<?= $selected ?>>
-    <?= $page; ?>
+  <option value="<?php echo $this->url(array('page' => $page)); ?>"<?php echo $selected ?>>
+    <?php echo $page; ?>
   </option>
 <?php endforeach; ?>
 </select>

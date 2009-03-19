@@ -27,7 +27,7 @@ Content-Type: application/json
     </para>
 
     <programlisting role="php"><![CDATA[
-<?= $this->json($this->data) ?>
+<?php echo $this->json($this->data) ?>
 ]]>
     </programlisting>
 </sect3>

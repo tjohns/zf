@@ -86,7 +86,7 @@ $this->headLink()->appendStylesheet('/styles/basic.css')
                                      array('id' => 'my_stylesheet'));
 ?>
 <?php // rendering the links: ?>
-<?= $this->headLink() ?>
+<?php echo $this->headLink() ?>
 ]]>
         </programlisting>
     </example>
