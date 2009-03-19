@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -22,6 +23,8 @@
 
 require_once 'Zend/Uri/Http.php';
 
+require_once 'Zend/Date.php';
+
 /**
  * Zend_Http_Cookie is a class describing an HTTP cookie and all it's parameters.
  *
@@ -34,8 +37,8 @@ require_once 'Zend/Uri/Http.php';
  *
  * See http://wp.netscape.com/newsref/std/cookie_spec.html for some specs.
  *
- * @category    Zend
- * @package     Zend_Http
+ * @category   Zend
+ * @package    Zend_Http
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com/)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -304,14 +307,18 @@ class Zend_Http_Cookie
                 list($k, $v) = $keyValue;
                 switch (strtolower($k))    {
                     case 'expires':
-                        $expires = strtotime($v);
+                        $expireDate = new Zend_Date($v);
+                        $expires = $expireDate->get(Zend_Date::TIMESTAMP);
                         break;
+                        
                     case 'path':
                         $path = $v;
                         break;
+                        
                     case 'domain':
                         $domain = $v;
                         break;
+                        
                     default:
                         break;
                 }

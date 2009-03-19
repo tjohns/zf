@@ -110,6 +110,9 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
         ));
 
         $res = $this->client->request(Zend_Http_Client::TRACE);
+        if ($res->getStatus() == 405) {
+            $this->markTestSkipped("Server does not allow the TRACE method");
+        }
 
         $this->assertEquals($this->client->getLastRequest(), $res->getBody(), 'Response body should be exactly like the last request');
     }
@@ -316,6 +319,10 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
         $this->client->setHeaders($acceptHeader);
 
         $res = $this->client->request('TRACE');
+        if ($res->getStatus() == 405) {
+            $this->markTestSkipped("Server does not allow the TRACE method");
+        }
+        
         $body = strtolower($res->getBody());
 
         foreach ($headers as $key => $val)
@@ -342,6 +349,10 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
         $this->client->setHeaders($headers);
 
         $res = $this->client->request('TRACE');
+        if ($res->getStatus() == 405) {
+            $this->markTestSkipped("Server does not allow the TRACE method");
+        }
+        
         $body = strtolower($res->getBody());
 
         foreach ($headers as $key => $val) {
@@ -376,6 +387,9 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 
         $this->client->setHeaders($headers);
         $res = $this->client->request('TRACE');
+        if ($res->getStatus() == 405) {
+            $this->markTestSkipped("Server does not allow the TRACE method");
+        }
         $body = strtolower($res->getBody());
 
         foreach ($headers as $key => $val) {

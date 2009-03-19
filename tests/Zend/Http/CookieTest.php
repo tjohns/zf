@@ -403,4 +403,17 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
         $cookie = Zend_Http_Cookie::fromString('fo;o=bar; secure; domain=foo.nl');
         $this->assertEquals(false, $cookie, 'fromString was expected to fail and return false');
     }
+    
+    /**
+     * Test that cookies with far future expiry date (beyond the 32 bit unsigned int range) are
+     * not mistakenly marked as 'expired' 
+     *
+     * @link http://framework.zend.com/issues/browse/ZF-5690
+     */
+    public function testZF5690OverflowingExpiryDate()
+    {
+        $expTime = "Sat, 29-Jan-2039 00:54:42 GMT";
+        $cookie = Zend_Http_Cookie::fromString("foo=bar; domain=.example.com; expires=$expTime");
+        $this->assertFalse($cookie->isExpired()); 
+    }
 }
