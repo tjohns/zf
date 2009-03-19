@@ -278,11 +278,11 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
 
         $objects = array();
         if (isset($xml->Contents)) {
-	    foreach ($xml->Contents as $contents) {
+            foreach ($xml->Contents as $contents) {
                 foreach ($contents->Key as $object) {
                     $objects[] = (string)$object;
                 }
-	    }
+            }
         }
 
         return $objects;
@@ -412,7 +412,10 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
         $client->resetParameters();
         // Work around buglet in HTTP client - it doesn't clean headers
         // Remove when ZHC is fixed
-        $client->setHeaders(array('Content-MD5' => null, 'Expect' => null, 'Range' => null, "x-amz-acl" => null));
+        $client->setHeaders(array('Content-MD5' => null,
+                                  'Expect'      => null,
+                                  'Range'       => null,
+                                  'x-amz-acl'   => null));
         $client->setUri(self::S3_ENDPOINT.'/'.$path);
         $client->setHeaders($headers);
 
