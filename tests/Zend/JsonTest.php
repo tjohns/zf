@@ -704,7 +704,6 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
      */
     public function testKommaDecimalIsConvertedToCorrectJsonWithDot()
     {
-        setlocale(LC_NUMERIC, "de.UTF-8");
         $localeInfo = localeconv();
         if($localeInfo['decimal_point'] != ",") {
             $this->markTestSkipped("This test only works for platforms where , is the decimal point separator.");

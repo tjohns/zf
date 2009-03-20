@@ -230,6 +230,7 @@ class Zend_Json_Encoder
 
         if (is_int($value) || is_float($value)) {
             $result = (string) $value;
+            $result = str_replace(",", ".", $result);
         } elseif (is_string($value)) {
             $result = $this->_encodeString($value);
         } elseif (is_bool($value)) {
