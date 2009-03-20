@@ -211,7 +211,7 @@ $upload->receive();
             <listitem>
                 <para>
                     <emphasis role="strong">getFileSize($file = null)</emphasis>: This method will return the
-                    real filesize for the given file. It is available since release 1.8.
+                    real filesize for the given file.
                 </para>
             </listitem>
 
@@ -225,7 +225,7 @@ $upload->receive();
             <listitem>
                 <para>
                     <emphasis role="strong">getMimeType($files = null)</emphasis>: This method returns the
-                    mimetype of a given transferred file. It is available since release 1.8.
+                    mimetype of a given transferred file.
                 </para>
             </listitem>
         </itemizedlist>
@@ -357,11 +357,10 @@ $names = $upload->getMimeType('foo');
         <title>Progress for file uploads</title>
 
         <para>
-            <code>Zend_File_Transfer</code> can give you the actual state of a fileupload in progress.
-            It is available since release 1.8. To use this feature you need either the <code>APC</code>
-            extension which is provided with most default PHP installations, or the <code>uploadprogress</code>
-            extension. Both extensions are detected and used automatically. To be able to get the progress
-            you need to meet some prerequisites.
+            <code>Zend_File_Transfer</code> can give you the actual state of a fileupload in progress. To use
+            this feature you need either the <code>APC</code> extension which is provided with most default
+            PHP installations, or the <code>uploadprogress</code> extension. Both extensions are detected
+            and used automatically. To be able to get the progress you need to meet some prerequisites.
         </para>
 
         <para>
