@@ -98,16 +98,25 @@ class Zend_Db_TestUtil_Pdo_Mssql extends Zend_Db_TestUtil_Pdo_Common
         return 'CREATE TABLE ' . $this->_db->quoteIdentifier($tableName);
     }
 
-    protected function _getSqlDropTable($tableName)
+    private function _getSqlDropElement($elementName, $typeElement = 'TABLE')
     {
-        $sql = "exec sp_tables @table_name = " . $this->_db->quoteIdentifier($tableName, true);
+        $sql = "exec sp_tables @table_name = " . $this->_db->quoteIdentifier($elementName, true);
         $stmt = $this->_db->query($sql);
-        $tableList = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
+        $elementList = $stmt->fetchAll(Zend_Db::FETCH_ASSOC);
 
-        if (count($tableList) > 0 && $tableName == $tableList[0]['TABLE_NAME']) {
-            return 'DROP TABLE ' . $this->_db->quoteIdentifier($tableName);
+        if (count($elementList) > 0 && $elementName == $elementList[0]['TABLE_NAME']) {
+            return "DROP $typeElement " . $this->_db->quoteIdentifier($elementName);
         }
         return null;
     }
 
+    protected function _getSqlDropTable($tableName)
+    {
+        return $this->_getSqlDropElement($tableName);
+    }
+
+    protected function _getSqlDropView($viewName)
+    {
+        return $this->_getSqlDropElement($tableName, 'VIEW');
+    }
 }

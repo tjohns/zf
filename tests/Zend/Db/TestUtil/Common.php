@@ -450,6 +450,7 @@ abstract class Zend_Db_TestUtil_Common
 
     public function createView()
     {
+        $this->dropView('temp_view');
         $sql = $this->_getSqlCreateView('temp_view')
              . ' AS SELECT * FROM '
              . $this->_db->quoteIdentifier('zfbugs', true);
@@ -462,6 +463,9 @@ abstract class Zend_Db_TestUtil_Common
     public function dropView()
     {
         $sql = $this->_getSqlDropView('temp_view');
+        if (!$sql) {
+            return;
+        }
         $result = $this->_rawQuery($sql);
         if ($result === false) {
             throw new Zend_Db_Exception("Statement failed:\n$sql\nError: " . $this->_db->getConnection()->error);

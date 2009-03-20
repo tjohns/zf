@@ -69,7 +69,7 @@ class Zend_Db_TestUtil_Pdo_Sqlite extends Zend_Db_TestUtil_Pdo_Common
 
     protected function _getSqlCreateView($viewName)
     {
-        return 'CREATE VIEW IF NOT EXISTS' . $this->_db->quoteIdentifier($viewName, true);
+        return 'CREATE VIEW IF NOT EXISTS ' . $this->_db->quoteIdentifier($viewName, true);
     }
 
     protected function _getSqlDropView($viewName)

@@ -144,4 +144,14 @@ class Zend_Db_TestUtil_Mysqli extends Zend_Db_TestUtil_Common
     {
         $this->_rawQuery('DROP PROCEDURE IF EXISTS zf_test_procedure');
     }
+
+    protected function _getSqlCreateView($viewName)
+    {
+        return 'CREATE OR REPLACE VIEW ' . $this->_db->quoteIdentifier($viewName, true);
+    }
+
+    protected function _getSqlDropView($viewName)
+    {
+        return 'DROP VIEW IF EXISTS ' . $this->_db->quoteIdentifier($viewName, true);
+    }
 }
