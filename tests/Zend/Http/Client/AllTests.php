@@ -22,7 +22,7 @@ require_once 'Zend/Http/Client/SocketPersistentTest.php';
 require_once 'Zend/Http/Client/TestAdapterTest.php';
 require_once 'Zend/Http/Client/ProxyAdapterTest.php';
 require_once 'Zend/Http/Client/SkipTests.php';
-//require_once 'Zend/Http/Client/CurlTest.php';
+require_once 'Zend/Http/Client/CurlTest.php';
 
 class Zend_Http_Client_AllTests
 {
@@ -49,7 +49,7 @@ class Zend_Http_Client_AllTests
         } else {
             $suite->addTestSuite('Zend_Http_Client_Skip_ProxyAdapterTest');
         }
-        //$suite->addTestSuite('Zend_Http_Client_CurlTest');
+        $suite->addTestSuite('Zend_Http_Client_CurlTest');
 
         return $suite;
     }
