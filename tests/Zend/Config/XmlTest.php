@@ -237,4 +237,38 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('live', $config->db->name);
         $this->assertEquals('multi', $config->one->two->three);
     }
+
+    /*
+     * @group 3702
+     * 
+     */
+    public function testLoadAnXMLString()
+    {
+        $string = <<<EOT
+<?xml version="1.0"?>
+<config>
+    <all>
+        <hostname>all</hostname>
+        <db>
+            <host>127.0.0.1</host>
+            <name>live</name>
+        </db>
+    </all>
+
+    <staging extends="all">
+        <hostname>staging</hostname>
+        <db>
+            <name>dbstaging</name>
+        </db>
+        <debug>false</debug>
+    </staging>
+
+
+</config>
+EOT;
+
+        $config = new Zend_Config_Xml($string, 'staging');
+        $this->assertEquals('staging', $config->hostname);
+
+    }
 }

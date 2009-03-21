@@ -2,7 +2,7 @@
     <title>Zend_Config_Xml</title>
     <para>
         <code>Zend_Config_Xml</code> enables developers to store configuration data in a simple XML format and read them
-        via nested object property syntax. The root element of the XML file is irrelevant and may be named arbitrarily.
+        via nested object property syntax. The root element of the XML file or string is irrelevant and may be named arbitrarily.
         The first level of XML elements correspond with configuration data sections. The XML format supports
         hierarchical organization through nesting of XML elements below the section-level elements. The content of a
         leaf-level XML element corresponds to the value of a configuration datum. Section inheritance is supported by a
@@ -124,6 +124,40 @@ echo $config->database->params->dbname; // prints "dbname"
 ]]>
 </programlisting>
     </example>
+<note>
+        <title>XML strings</title>
+        <para>
+            <code>Zend_Config_Xml</code> is able to load an XML string directly,
+            such as that retrieved from a database. The string is passed
+            as the first parameter to the constructor and must start with the
+            characters <code>'&lt;?xml':</code>
+        </para>
+        <programlisting role="xml"><![CDATA[
+$string = <<<EOT
+<?xml version="1.0"?>
+<config>
+    <production>
+        <db>
+            <adapter value="pdo_mysql"/>
+            <params>
+                <host value="db.example.com"/>
+            </params>
+        </db>
+    </production>
+    <staging extends="production">
+        <db>
+            <params>
+                <host value="dev.example.com"/>
+            </params>
+        </db>
+    </staging>
+</config>
+EOT;
+
+$config = new Zend_Config_Xml($string, 'staging');
+]]>
+        </programlisting>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

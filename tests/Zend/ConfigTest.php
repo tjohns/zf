@@ -529,5 +529,17 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($config->one->readOnly(), 'First level children are writable');
         $this->assertTrue($config->one->two->readOnly(), 'Second level children are writable');
     }
+
+    /**
+     * @group ZF-4782
+     *
+     */
+    public function testRetreivingAValueOfANonExistantKeyDoesntCauseAnException()
+    {
+        $config = new Zend_Config($this->_all);
+LDBG($config->toArray());
+
+        $var = $config->one->five->six;
+    }
 }
 

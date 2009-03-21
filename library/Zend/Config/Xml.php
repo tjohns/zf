@@ -35,7 +35,7 @@ require_once 'Zend/Config.php';
 class Zend_Config_Xml extends Zend_Config
 {
     /**
-     * Loads the section $section from the config file $filename for
+     * Loads the section $section from the config file (or string $xml for
      * access facilitated by nested object properties.
      *
      * Sections are defined in the XML as children of the root element.
@@ -47,21 +47,25 @@ class Zend_Config_Xml extends Zend_Config
      * Note that the keys in $section will override any keys of the same
      * name in the sections that have been included via "extends".
      *
-     * @param  string  $filename           File to process
+     * @param  string  $xml                XML file or string to process
      * @param  mixed   $section            Section to process
      * @param  boolean $allowModifications Wether modifiacations are allowed at runtime
-     * @throws Zend_Config_Exception When filename is not set
-     * @throws Zend_Config_Exception When section $sectionName cannot be found in $filename
+     * @throws Zend_Config_Exception When xml is not set or cannot be loaded
+     * @throws Zend_Config_Exception When section $sectionName cannot be found in $xml
      */
-    public function __construct($filename, $section = null, $allowModifications = false)
+    public function __construct($xml, $section = null, $allowModifications = false)
     {
-        if (empty($filename)) {
+        if (empty($xml)) {
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Filename is not set');
         }
 
-        set_error_handler(array($this, '_loadFileErrorHandler'));
-        $config = simplexml_load_file($filename); // Warnings and errors are suppressed
+        set_error_handler(array($this, '_loadFileErrorHandler')); // Warnings and errors are suppressed
+        if (strstr($xml, '<?xml')) {
+            $config = simplexml_load_string($xml);
+        } else {
+            $config = simplexml_load_file($xml);
+        }
         restore_error_handler();
         // Check if there was a error while loading file
         if ($this->_loadFileErrorStr !== null) {
@@ -81,7 +85,7 @@ class Zend_Config_Xml extends Zend_Config
             foreach ($section as $sectionName) {
                 if (!isset($config->$sectionName)) {
                     require_once 'Zend/Config/Exception.php';
-                    throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
+                    throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $xml");
                 }
 
                 $dataArray = array_merge($this->_processExtends($config, $sectionName), $dataArray);
@@ -91,7 +95,7 @@ class Zend_Config_Xml extends Zend_Config
         } else {
             if (!isset($config->$section)) {
                 require_once 'Zend/Config/Exception.php';
-                throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+                throw new Zend_Config_Exception("Section '$section' cannot be found in $xml");
             }
 
             $dataArray = $this->_processExtends($config, $section);
