@@ -312,6 +312,9 @@ class Zend_Config implements Countable, Iterator
      */
     public function getSectionName()
     {
+        if(is_array($this->_loadedSection) && count($this->_loadedSection) == 1) {
+            $this->_loadedSection = $this->_loadedSection[0];
+        }
         return $this->_loadedSection;
     }
 
