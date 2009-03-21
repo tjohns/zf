@@ -35,6 +35,13 @@ require_once 'Zend/Config.php';
 class Zend_Config_Xml extends Zend_Config
 {
     /**
+     * Wether to skip extends or not
+     *
+     * @var boolean
+     */
+    protected $_skipExtends = false;
+    
+    /**
      * Loads the section $section from the config file (or string $xml for
      * access facilitated by nested object properties.
      *
@@ -53,19 +60,32 @@ class Zend_Config_Xml extends Zend_Config
      * @throws Zend_Config_Exception When xml is not set or cannot be loaded
      * @throws Zend_Config_Exception When section $sectionName cannot be found in $xml
      */
-    public function __construct($xml, $section = null, $allowModifications = false)
+    public function __construct($xml, $section = null, $options = false)
     {
         if (empty($xml)) {
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Filename is not set');
         }
 
+        $allowModifications = false;
+        if (is_bool($options)) {
+            $allowModifications = $options;
+        } elseif (is_array($options)) {
+            if (isset($options['allowModifications'])) {
+                $allowModifications = (bool) $options['allowModifications'];
+            }
+            if (isset($options['skipExtends'])) {
+                $this->_skipExtends = (bool) $options['skipExtends'];
+            }
+        }
+        
         set_error_handler(array($this, '_loadFileErrorHandler')); // Warnings and errors are suppressed
         if (strstr($xml, '<?xml')) {
             $config = simplexml_load_string($xml);
         } else {
             $config = simplexml_load_file($xml);
         }
+
         restore_error_handler();
         // Check if there was a error while loading file
         if ($this->_loadFileErrorStr !== null) {
@@ -132,7 +152,10 @@ class Zend_Config_Xml extends Zend_Config
         if (isset($thisSection['extends'])) {
             $extendedSection = (string) $thisSection['extends'];
             $this->_assertValidExtend($section, $extendedSection);
-            $config = $this->_processExtends($element, $extendedSection, $config);
+            
+            if (!$this->_skipExtends) {
+                $config = $this->_processExtends($element, $extendedSection, $config);
+            }
         }
 
         $config = $this->_arrayMergeRecursive($config, $this->_toArray($thisSection));
