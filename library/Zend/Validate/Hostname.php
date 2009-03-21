@@ -195,8 +195,10 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
      * (.SE) Sweden http://www.iis.se/english/IDN_campaignsite.shtml?lang=en
      * (.SH) Saint Helena http://www.nic.sh/SH-IDN-Policy.pdf
      * (.SJ) Svalbard and Jan Mayen http://www.norid.no/domeneregistrering/idn/idn_nyetegn.en.html
+     * (.TH) Thailand http://www.iana.org/domains/idn-tables/tables/th_th-th_1.0.html
      * (.TM) Turkmenistan http://www.nic.tm/TM-IDN-Policy.pdf
      * (.TR) Turkey https://www.nic.tr/index.php
+     * (.VE) Venice http://www.iana.org/domains/idn-tables/tables/ve_es_1.0.html
      *
      * @var array
      */
@@ -281,8 +283,10 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         'SE'  => array(1 => '/^[\x{002d}0-9a-zäåéöü]{1,63}$/iu'),
         'SH'  => array(1 => '/^[\x{002d}0-9a-zà-öø-ÿăąāćĉčċďđĕěėęēğĝġģĥħĭĩįīıĵķĺľļłńňņŋŏőōœĸŕřŗśŝšşťţŧŭůűũųūŵŷźžż]{1,63}$/iu'),
         'SJ'  => array(1 => '/^[\x{002d}0-9a-zàáä-éêñ-ôöøüčđńŋšŧž]{1,63}$/iu'),
+        'TH'  => array(1 => '/^[\x{002d}0-9a-z\x{0E01}-\x{0E3A}\x{0E40}-\x{0E4D}\x{0E50}-\x{0E59}]{1,63}$/iu'),
         'TM'  => array(1 => '/^[\x{002d}0-9a-zà-öø-ÿāăąćĉċčďđēėęěĝġģĥħīįĵķĺļľŀłńņňŋőœŕŗřśŝşšţťŧūŭůűųŵŷźżž]{1,63}$/iu'),
         'TR'  => array(1 => '/^[\x{002d}0-9a-zğıüşöç]{1,63}$/iu'),
+        'VE'  => array(1 => '/^[\x{002d}0-9a-záéíóúüñ]{1,63}$/iu'),
     );
 
     protected $_idnLength = array(
