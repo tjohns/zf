@@ -515,5 +515,19 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('second', $keyList[1]);
         $this->assertEquals('third', $keyList[2]);
     }
+
+    /**
+     * @group ZF-4728
+     *
+     */
+    public function testSetReadOnlyAppliesToChildren()
+    {
+        $config = new Zend_Config($this->_all, true);
+
+        $config->setReadOnly();
+        $this->assertTrue($config->readOnly());
+        $this->assertTrue($config->one->readOnly(), 'First level children are writable');
+        $this->assertTrue($config->one->two->readOnly(), 'Second level children are writable');
+    }
 }
 

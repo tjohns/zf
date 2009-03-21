@@ -364,6 +364,11 @@ class Zend_Config implements Countable, Iterator
     public function setReadOnly()
     {
         $this->_allowModifications = false;
+        foreach ($this->_data as $key => $value) {
+            if ($value instanceof Zend_Config) {
+                $value->setReadOnly();
+            }
+        }
     }
     
     /**
