@@ -122,6 +122,21 @@ class Zend_Config_Writer_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $config->test2->test3);
     }
     
+    public function testWriteAndReadOriginalFile()
+    {
+        $config = new Zend_Config_Ini(dirname(__FILE__) . '/files/allsections.ini', null, array('skipExtends' => true));
+
+        $writer = new Zend_Config_Writer_Ini(array('config' => $config, 'filename' => $this->_tempName));
+        $writer->write();
+           
+        $config = new Zend_Config_Ini($this->_tempName, null);       
+        $this->assertEquals('multi', $config->staging->one->two->three);
+
+        $config = new Zend_Config_Ini($this->_tempName, null, array('skipExtends' => true));
+        $this->assertFalse(isset($config->staging->one));
+    }
+    
+    
     public function testWriteAndReadSingleSection()
     {
         $config = new Zend_Config_Ini(dirname(__FILE__) . '/files/allsections.ini', 'staging', array('skipExtends' => true));
