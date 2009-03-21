@@ -154,6 +154,11 @@ class Zend_Db_TestUtil_Pdo_Oci extends Zend_Db_TestUtil_Pdo_Common
         return $data;
     }
 
+    protected function _getSqlCreateView($viewName)
+    {
+        return 'CREATE OR REPLACE VIEW ' . $this->_db->quoteIdentifier($viewName, true);
+    }
+
     /**
      * ZF-4330: schemas on Oracle are specifics:
      * "A schema is owned by a database user and has the same name as that user."

@@ -450,7 +450,6 @@ abstract class Zend_Db_TestUtil_Common
 
     public function createView()
     {
-        $this->dropView('temp_view');
         $sql = $this->_getSqlCreateView('temp_view')
              . ' AS SELECT * FROM '
              . $this->_db->quoteIdentifier('zfbugs', true);
