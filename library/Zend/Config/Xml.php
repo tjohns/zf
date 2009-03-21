@@ -60,9 +60,9 @@ class Zend_Config_Xml extends Zend_Config
      * @throws Zend_Config_Exception When filename is not set
      * @throws Zend_Config_Exception When section $sectionName cannot be found in $filename
      */
-    public function __construct($xml, $section = null, $options = false)
+    public function __construct($filename, $section = null, $options = false)
     {
-        if (empty($xml)) {
+        if (empty($filename)) {
             require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Filename is not set');
         }
@@ -79,13 +79,8 @@ class Zend_Config_Xml extends Zend_Config
             }
         }
         
-        set_error_handler(array($this, '_loadFileErrorHandler')); // Warnings and errors are suppressed
-        if (strstr($xml, '<?xml')) {
-            $config = simplexml_load_string($xml);
-        } else {
-            $config = simplexml_load_file($xml);
-        }
-
+        set_error_handler(array($this, '_loadFileErrorHandler'));
+        $config = simplexml_load_file($filename); // Warnings and errors are suppressed
         restore_error_handler();
         // Check if there was a error while loading file
         if ($this->_loadFileErrorStr !== null) {
