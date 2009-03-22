@@ -39,22 +39,17 @@ http://www.sagehill.net/docbookxsl/index.html
 http://docbook.org/tdg/en/html/part2.html DocBook tag reference
 
 
-Es wird auch ein CHM Projekt vorbereitet um CHM Hilfe Dateien on the fly zu erstellen.
-Hierfür muß der MsHtmlHelpWorkshop installiert sein.
+Um eine CHM Projekt Datei zu erstellen muß man MsHtmlHelpWorkshop installiert haben.
 
-Um die CHM Datei von der Kommandozeile aus zu erstellen gehe in das Verzeichnis
-in dem die HTML Dateien sind die vorher mit Hilfe von make erstellt wurden, wie vorher beschrieben.
+Um die CHM Datei auf der Kommandozeile zu erstellen gehe in das Verzeichnis in dem
+die HTML Dateien des Manuals, wie vorher beschrieben, erstellt wurden
 
 Dann wird folgendes ausgerufen:
+
  "C:/path/to/workshop/hhc htmlhelp.hhp"
 
+wobei "C:/path/to/workshop/" der Pfad zu MsHtmlHelpWorkshop ist.
 
+Das Erstellt eine "Zend_Framework_LANGUAGE.chm" Datei.
 
-To build the CHM file from within the commandshell go to the directory
-where your html files are build by using make as described before.
-Then call:
- "C:/path/to/workshop/hhc htmlhelp.hhp"
-wobei "C:/path/to/workshop/" der Pfad zum MsHtmlHelpWorkshop ist
- 
-Das erstellt eine "Zend_Framework_LANGUAGE.chm" Datei.
-In dieser Datei ist ein Index und in Zukunft auch ein Inhaltsverzeichnis zu finden.
+In der Datei sollte jetzt ein Index zu finden sein.

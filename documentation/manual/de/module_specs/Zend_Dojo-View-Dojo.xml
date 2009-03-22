@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 14165 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -335,6 +335,9 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     Funktionsname oder als Javascriptabschluss angenommen. Wenn zwei Argumente übergeben werden,
                     wird das erste als Name der Variablen der Objektinstanz angenommen und der zweite entweder
                     als Methodenname in diesem Objekt oder ein Abschluß um dieses Objekt zu verwenden.</para></listitem>
+            <listitem><para><code>prependOnLoad($spec, $function = null)</code>:
+                    genau wie <code>addOnLoad()</code>, außer das vor den Anfang des onLoad Stacks
+                    angefügt wird.</para></listitem>
             <listitem><para><code>getOnLoadActions()</code>: Gibt alle im Container registrierten
                     dojo.onLoad Aktionen zurück. Das ist ein Array von Arrays.</para></listitem>
             <listitem><para><code>onLoadCaptureStart($obj = null)</code>: Empfange Daten die als Lambda für

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13842 -->
+<!-- EN-Revision: 14212 -->
 <sect1 id="zend.gdata.introduction">
     <title>Einführung</title>
     <para>
@@ -560,22 +560,23 @@ foreach ($feed as $entry) {
         <title>Einträge an Google Server schicken</title>
 
         <para>
-            The <code>Zend_Gdata</code> object has a function <code>post()</code>
+            The <code>Zend_Gdata</code> object has a function <code>insertEntry()</code>
             with which you can upload data to save new entries
             to Google Data services.
         </para>
 
         <para>
-            Die Daten Modell Klassen jedes Services kann verwendet werden um einen entsprechenden Eintrag zu
-            erstellen und an Google's Services zu schicken. Die <code>post()</code> Funktion akzeptiert ein
-            Kind von <code>Zend_Gdata_App_Entry</code> als Daten die an den Service geschickt werden. Die Methode gibt ein
-            Kind von <code>Zend_Gdata_App_Entry</code> zurück welches den Status des Eintrages repräsentiert der vom
-            Server zurückgegeben wurde.
+            Die Daten Modell Klassen jedes Services kann verwendet werden um einen entsprechenden
+            Eintrag zu erstellen und an Google's Services zu schicken. Die
+            <code>insertEntry()</code> Funktion akzeptiert ein Kind von
+            <code>Zend_Gdata_App_Entry</code> als Daten die an den Service geschickt werden. Die
+            Methode gibt ein Kind von <code>Zend_Gdata_App_Entry</code> zurück welches den Status
+            des Eintrages repräsentiert der vom Server zurückgegeben wurde.
         </para>
 
         <para>
             Alternativ, kann die XML Struktur eines Eintrages als String konstruiert und dieser String an die
-            <code>post()</code> Funktion übergeben werden.
+            <code>insertEntry()</code> Funktion übergeben werden.
         </para>
 
         <programlisting role="php"><![CDATA[

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13570 -->
+<!-- EN-Revision: 14225 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Kalender verwenden</title>
     <para>
@@ -540,13 +540,10 @@ $newEvent = $service->insertEvent($event);
         <sect3 id="zend.gdata.calendar.creating_events.schedulers_reminders">
             <title>Event Planungen und Erinnerungen</title>
             <para>
-                Die Startzeit und Dauer eines Events werden durch die Werte seiner Eigenschaften,
+                Die Startzeit und Dauer eines Events werden durch die Werte seiner <code>when</code> Eigenschaften,
                 <code>startTime</code>, <code>endTime</code>, und <code>valueString</code> ermittelt.
-                <code>StartTime</code> und <code>EndTime</code> kontrollieren die Dauer des Events, wärend
-                <code>valueString</code> einen Weg bietet um eine lesbare Version der Dauer wie zum
-                Beispiel "Heute Abend" zu speichern. Es ist zu beachten das, selbst wenn <code>valueString</code>
-                verwendet wird, <code>startTime</code> und <code>endTime</code> auf gültige Werte gesetzt
-                werden müssen.
+                <code>startTime</code> und <code>endTime</code> kontrollieren die Dauer des Events, wärend die
+                <code>valueString</code> Eigenschaft aktuell nicht verwendet wird.
             </para>
             <para>
                 Jeden Tag wiederkehrende Events können geplant werden indem nur das Datum spezifiziert und
@@ -562,11 +559,8 @@ $when = $service->newWhen();
 $when->startTime = "2007-12-05T14:00:00-08:00";
 $when->endTime="2007-12-05T15:00:00:00-08:00";
 
-// Spezifiziere einen optionalen lesbaren Wert für das angegebene Datum
-$when->valueString = "Heute Nachmittag";
-
 // Die "when" Eigenschaft an das Event binden
-$event->when = $when;
+$event->when = array($when);
 ]]>
             </programlisting>
             <para>

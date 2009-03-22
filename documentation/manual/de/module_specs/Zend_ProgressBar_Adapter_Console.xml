@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13834 -->
+<!-- EN-Revision: 14235 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
@@ -21,6 +21,12 @@
         ersten Parameter. Die möglichen Optionen sind:
     </para>
     <itemizedlist>
+        <listitem>
+            <para>
+                <code>outputStream</code>: Ein anderer Ausgabe-Stream wenn man nicht auf STDOUT streamen will.
+                Kann jeder andere Stream wie <code>php://stderr</code> oder ein Pfad zu einer Datei sein.
+            </para>
+        </listitem>
         <listitem>
             <para>
                 <code>width</code>: Entweder ein Integer oder die Konstante <code>AUTO</code> von

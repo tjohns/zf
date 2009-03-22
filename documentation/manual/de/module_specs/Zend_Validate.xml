@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14249 -->
 <sect1 id="zend.validate.introduction">
 
     <title>Einführung</title>
@@ -235,6 +235,68 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
             Die <code>Zend_Filter_Input</code> Klasse erlaubt es auch mehrfache Filter und Prüfklassen
             zu instanzieren und bei Bedarf aufzurufen um Sets von Eingabedaten zu bearbeiten. Siehe
             <xref linkend="zend.filter.input" />.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.validate.introduction.translation">
+
+        <title>Meldungen übersetzen</title>
+
+        <para>
+            Prüfungsklassen bieten eine <code>setTranslator()</code> Methode mit der man eine
+            Instanz von <code>Zend_Translate</code> definieren kann die Nachrichten im Falle eines
+            Prüfungsfehlers übersetzt. Die <code>getTranslator()</code> Methode gibt die gesetzte
+            Übersetzungsinstanz zurück.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_StringLength(8, 12);
+$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Übersetzt \'%value%\''), 'en');
+
+$validator->setTranslator($translate);
+]]>
+        </programlisting>
+
+        <para>
+            Mit der statischen Methode <code>setDefaultTranslator()</code> kann eine Instanz von
+            <code>Zend_Translate</code> gesetzt werden, und mit <code>getDefaultTranslator()</code>
+            empfangen. Das verhindert das man den Übersetzer manuell für alle Prüfungsklassen
+            setzen muß und vereinfacht den Code.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Übersetzt \'%value%\''), 'en');
+Zend_Validate::setDefaultTranslator($translate);
+]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Wenn man ein Anwendungsweites Gebietsschema in der Registry gesetzt hat, wird
+                dieses Gebietsschema als standardmäßiger Übersetzer verwendet.
+            </para>
+        </note>
+
+        <para>
+            Machmal ist es notwendig den Übersetzer in einer Prüfklasse auszuschalten. Um das zu
+            tun kann die <code>setDisableTranslator()</code> Methode verwendet werden, welche einen
+            boolschen Wert akzeptiert und <code>translatorIsDisabled()</code> um den gesetzten
+            Wert zu erhalten.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$validator = new Zend_Validate_StringLength(8, 12);
+if (!$validator->isTranslatorDisabled()) {
+    $validator->setDisableTranslator();
+}
+]]>
+        </programlisting>
+
+        <para>
+            Es ist auch möglich einen Übersetzer zu verwenden statt eigene Meldungen mit
+            <code>setMessage()</code> zu setzen. Aber wenn man das tut, sollte man im Kopf behalten
+            das der Übersetzer auch mit den Meldungen arbeitet die man selbst gesetzt hat.
         </para>
 
     </sect2>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14218 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
     <para>
@@ -216,6 +216,15 @@
                           <entry><code>false</code></entry>
                           <entry>
                              true wenn on-the-fly Kompression verwendet werden soll
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>compatibility</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>false</code></entry>
+                          <entry>
+                             true wenn man den Compatibility Modus mit alten Memcache Servern/Erweiterungen
+                             verwenden will
                           </entry>
                       </row>
                   </tbody>
