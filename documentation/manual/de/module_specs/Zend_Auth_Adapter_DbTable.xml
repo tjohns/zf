@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13467 -->
+<!-- EN-Revision: 14251 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -285,8 +285,7 @@ $dbAdapter->query($sqlAlter);]]>
         </para>
 
         <programlisting role="php"><![CDATA[
-for ($i = 0; $i < 50; $i++)
-{
+for ($i = 0; $i < 50; $i++) {
     $dynamicSalt .= chr(rand(33, 126));
 }
 ]]>
