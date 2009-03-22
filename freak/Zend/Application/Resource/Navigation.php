@@ -17,7 +17,7 @@
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Layout.php 14329 2009-03-16 16:20:26Z dolf $
+ * @version    $Id$
  */
 
 /**
@@ -50,7 +50,7 @@ class Zend_Application_Resource_Navigation extends Zend_Application_Resource_Bas
         if (!$this->_container) {
             $options = $this->getOptions();
             $pages = isset($options['pages']) ? $options['pages'] : array();
-            $this->_container = new Zym_Navigation($pages);
+            $this->_container = new Zend_Navigation($pages);
         }
 
         $this->store();
