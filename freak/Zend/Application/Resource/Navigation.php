@@ -94,7 +94,7 @@ class Zend_Application_Resource_Navigation extends Zend_Application_Resource_Bas
     protected function _storeHelper()
     {
         $this->getBootstrap()->bootstrap('view');
-        $view = Zend_Controller_Action_HelperBroker::getExistingHelper('ViewRenderer')->view;
+        $view = $this->getBootstrap()->getPluginResource('view')->getView();
         $view->getHelper('navigation')->navigation($this->getContainer());
     }
 
