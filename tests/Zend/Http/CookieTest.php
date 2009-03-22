@@ -9,7 +9,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once "PHPUnit/Framework/TestCase.php";
+require_once dirname(__FILE__) . '/../../TestHelper.php';
 require_once 'Zend/Http/Cookie.php';
 
 /**
@@ -414,6 +414,6 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     {
         $expTime = "Sat, 29-Jan-2039 00:54:42 GMT";
         $cookie = Zend_Http_Cookie::fromString("foo=bar; domain=.example.com; expires=$expTime");
-        $this->assertFalse($cookie->isExpired()); 
+        $this->assertFalse($cookie->isExpired(), 'Expiry: ' . $cookie->getExpiryTime()); 
     }
 }
