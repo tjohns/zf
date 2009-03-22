@@ -45,7 +45,7 @@ class Zend_Application_Resource_Layout extends Zend_Application_Resource_Base
     public function init()
     {
         $this->getBootstrap()->bootstrap('Frontcontroller');
-        $this->_layout = Zend_Layout::startMvc(new Zend_Config($this->getOptions()));
+        $this->_layout = Zend_Layout::startMvc($this->getOptions());
         return $this->_layout;
     }
 
