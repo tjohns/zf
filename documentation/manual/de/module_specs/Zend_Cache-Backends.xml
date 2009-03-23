@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14218 -->
+<!-- EN-Revision: 14397 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
     <para>
@@ -438,6 +438,25 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                   </tbody>
               </tgroup>
           </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.zendserver">
+        <title><code>Zend_Cache_Backend_ZendServer_Disk</code> und <code>Zend_Cache_Backend_ZendServer_ShMem</code></title>
+        <para>
+            Diese Backends speichern Cacheeinträge indem Sie die Caching Funktionalitäten von
+            <ulink url="http://www.zend.com/en/products/server/downloads-all?zfs=zf_download">Zend Server</ulink>
+            verwenden.
+        </para>
+        <para>
+            Achtung: mit diesen Backends werden für den Moment "Tags" nicht unterstützt, wegen dem
+            "doNotTestCacheValidity=true" Argument.
+        </para>
+        <para>
+            Diese Backends arbeiten nur nur in einer Zend Server Umgebung für Seiten die über
+            HTTP(S) angefragt wurden und nicht für Kommandozeilen Ausführung.
+        </para>
+        <para>
+            Es gibt keine Optionen für diese Backends.
+        </para>
     </sect2>
 </sect1>
 <!--

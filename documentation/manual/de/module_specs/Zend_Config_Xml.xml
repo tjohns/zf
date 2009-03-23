@@ -1,17 +1,17 @@
-<!-- EN-Revision: 13849 -->
+<!-- EN-Revision: 14409 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
         <code>Zend_Config_Xml</code> ermöglicht es Entwicklern, Konfigurations-Daten in einfachen
         XML-Dateien zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf die
         Eigenschaften verschachtelter Objekte entspricht. Der Name des Root-Elementes der XML-Datei
-        ist unwichtig und kann beliebig gewählt werden. Die erste Ebene der XML-Struktur stellt
-        die Konfigurationsdaten-Sektionen dar. Hirarchische Strukturen können im XLM-Format durch
-        Verschachteln von XML-Elementen unterhalb der Sektions-Ebene umgesetzt werden. Der Inhalt
-        eines XML-Blatt-Elementes (Leaf) ist der Wert eines Konfigurations-Eintrages. Die
-        Sektions-Vererbung wird durch ein spezielles Attribut namens <code>extends</code>
-        unterstützt, der Wert des Attributs entspricht dabei dem Namen der Sektion, von der Daten
-        geerbt werden sollen.
+        oder des Strings ist unwichtig und kann beliebig gewählt werden. Die erste Ebene der
+        XML-Struktur stellt die Konfigurationsdaten-Sektionen dar. Hirarchische Strukturen können
+        im XLM-Format durch Verschachteln von XML-Elementen unterhalb der Sektions-Ebene umgesetzt
+        werden. Der Inhalt eines XML-Blatt-Elementes (Leaf) ist der Wert eines
+        Konfigurations-Eintrages. Die Sektions-Vererbung wird durch ein spezielles Attribut namens
+        <code>extends</code> unterstützt, der Wert des Attributs entspricht dabei dem Namen der
+        Sektion, von der Daten geerbt werden sollen.
     </para>
     <note>
         <title>Rückgabe Typen</title>
@@ -133,6 +133,39 @@ echo $config->database->params->dbname; // ausgabe "dbname"
 ]]>
 </programlisting>
     </example>
+    <note>
+        <title>XML Strings</title>
+        <para>
+            <code>Zend_Config_Xml</code> ist dazu in der Lage XML Strings direkt zu laden, wie z.B.
+            deren Empfang von einer Datenbank. Der String wird als erster Parameter an den
+            Konstruktor übergeben und muß mit den Zeichen <code>'&lt;?xml':</code> beginnen
+        </para>
+        <programlisting role="xml"><![CDATA[
+$string = <<<EOT
+<?xml version="1.0"?>
+<config>
+    <production>
+        <db>
+            <adapter value="pdo_mysql"/>
+            <params>
+                <host value="db.example.com"/>
+            </params>
+        </db>
+    </production>
+    <staging extends="production">
+        <db>
+            <params>
+                <host value="dev.example.com"/>
+            </params>
+        </db>
+    </staging>
+</config>
+EOT;
+
+$config = new Zend_Config_Xml($string, 'staging');
+]]>
+        </programlisting>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

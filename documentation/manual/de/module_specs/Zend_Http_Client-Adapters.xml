@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12739 -->
+<!-- EN-Revision: 14396 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
 
@@ -29,6 +29,11 @@
                 <listitem>
                     <para>
                         <code>Zend_Http_Client_Adapter_Test</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Http_Client_Adapter_Curl</code>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -362,16 +367,72 @@ $adapter->addResponse(
         </example>
 
         <para>
-                Die HTTP-Antworten werden in der Reihenfolge zurückgegeben,
-                in der sie angelegt worden sind. Gibt es mehr Anfragen als
-                Antworten, so wird wieder bei der ersten Antwort angefangen.
+            Die HTTP-Antworten werden in der Reihenfolge zurückgegeben,
+            in der sie angelegt worden sind. Gibt es mehr Anfragen als
+            Antworten, so wird wieder bei der ersten Antwort angefangen.
         </para>
         <para>
-                        Das oben angeführte Beispiel kann dazu benutzt werden, um die Reaktion
-                        der eigenen Anwendung auf einen 302 Redirect (Weiterleitung) zu testen.
-                        Abhängig  von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
-                        dass dem Redirect gefolgt wird.
+            Das oben angeführte Beispiel kann dazu benutzt werden, um die Reaktion
+            der eigenen Anwendung auf einen 302 Redirect (Weiterleitung) zu testen.
+            Abhängig  von Ihrer Anwendung, kann es gewollt oder nicht gewollt sein,
+            dass dem Redirect gefolgt wird.
         </para>
+    </sect2>
+
+    <sect2 id="zend.http.client.adapters.curl">
+        <title>Der cURL Adapter</title>
+        <para>
+            cURL ist eine Standard HTTP Client Bibliothek die mit vielen Betriebssystemen
+            ausgeliefert wird, und kann in PHP über die cURL Erweiterung verwendet werden.
+            Sie bietet Funktionalitäten für viele spezielle Fälle die für einen HTTP Client
+            auftreten können und machen sie zu einer perfekten Wahl für einen HTTP Adapter.
+            Sie unterstützt sichere Verbindungen, Proxies, alle Arten von Authentifizierungs-
+            mechanismen und glänzt in Anwendungen die große Dateien zwischen Servern bewegen
+            müssen.
+        </para>
+
+        <example id="zend.http.client.adapters.curl.example-1">
+            <title>Setzen von cURL Optionen</title>
+            <programlisting role="php"><![CDATA[
+$config = array(
+    'adapter'   => 'Zend_Http_Client_Adapter_Curl',
+    'curloptions' => array(CURLOPT_FOLLOWLOCATION => true),
+);
+$client = new Zend_Http_Client($uri, $config);
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            Standardmäßig ist der cURL Adapter so konfiguriert das er sich genauso wie der
+            Socket Adapter verhält. Man kann die cURL Optionen entweder durch den
+            'curloptions' Schlüssel im Konstruktor des Adapters, oder durch den Aufruf von
+            <code>setCurlOption($name, $value)</code>, verändern. Der <code>$name</code>
+            Schlüssel entspricht den CURL_* Konstanten der cURL Erweiterung.
+        </para>
+
+        <example id="zend.http.client.adapters.curl.example-2">
+            <title>Dateien von Hand übertragen</title>
+
+            <para>
+                Man kan cURL verwenden um große Dateien über HTTP durch einen Dateihandle zu
+                übertragen.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$putFileSize   = filesize("filepath");
+$putFileHandle = fopen("filepath", "r");
+
+$adapter = new Zend_Http_Client_Adapter_Curl();
+$client = new Zend_Http_Client();
+$client->setAdapter($adapter);
+$adapter->setConfig(array(
+    'curloptions' => array(CURLOPT_INFILE => $putFileHandle, CURLOPT_INFILESIZE => $putFileSize)
+));
+$client->request("PUT");
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.http.client.adapters.extending">
