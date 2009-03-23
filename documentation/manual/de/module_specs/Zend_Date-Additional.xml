@@ -198,7 +198,8 @@ $mylocation = array('latitude' => 41.5, 'longitude' => 13.2446);
 // Die Ortsangabe einer bestimmten Stadt auslesen
 $city = Zend_Date_Cities::City('Vienna');
 
-// Ein Datumsobjekt erstellen für den Tag für den die Sonne berechnet werden soll
+// Ein Datumsobjekt erstellen für den Tag
+// für den die Sonne berechnet werden soll
 $date = new Zend_Date('10.03.2007', Zend_Date::ISO_8601, 'de');
 
 // Sonnenuntergang berechnen

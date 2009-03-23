@@ -16,8 +16,8 @@
         </para>
         <programlisting role="php"><![CDATA[
 try {
-    // Der Aufruf von Zend_Loader::loadClass() mit eine nicht-existierenden Klasse
-    // wird eine Ausnahme in Zend_Loader werfen
+    // Der Aufruf von Zend_Loader::loadClass() mit einer nicht-existierenden
+    // Klasse wird eine Ausnahme in Zend_Loader werfen
     Zend_Loader::loadClass('nonexistantclass');
 } catch (Zend_Exception $e) {
     echo "Gefangene Ausnahme: " . get_class($e) . "\n";

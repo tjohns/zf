@@ -125,7 +125,8 @@ $date->add('12:00:00', Zend_Date::TIMES);
 
 echo "Datum über get() = ", $date->get(Zend_Date::W3C), "\n";
 
-// benutze die magische __toString() Methode um Zend_Date's toString() aufzurufen
+// benutze die magische __toString() Methode um
+// Zend_Date's toString() aufzurufen
 echo "Datum über toString() = ", $date, "\n";
 ]]>
                 </programlisting>

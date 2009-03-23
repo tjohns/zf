@@ -102,11 +102,11 @@ $opts = new Zend_Console_Getopt('abp:');
             <title>Verwendung der langen Syntax</title>
             <programlisting role="php"><![CDATA[
 $opts = new Zend_Console_Getopt(
-  array(
-    'apfel|a'    => 'Apfel Option, ohne Parameter',
-    'banane|b=i' => 'Bananen Option, mit benötigtem Integer Parameter',
-    'pfirsich|p-s'   => 'Pfirsich Option, mit optionalem Zeichenketten Parameter'
-  )
+    array(
+        'apfel|a'    => 'Apfel Option, ohne Parameter',
+        'banane|b=i' => 'Bananen Option, mit benötigtem Integer Parameter',
+        'pfirsich|p-s' => 'Pfirsich Option, mit optionalem String Parameter'
+    )
 );
 ]]>
             </programlisting>

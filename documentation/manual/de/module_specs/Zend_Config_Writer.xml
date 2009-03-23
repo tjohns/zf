@@ -97,7 +97,8 @@ $writer->write('config.xml', $config);
             Dieses Beispiel zeigt wie eine bestehende Config Datei bearbeitet werden kann.
         </para>
         <programlisting role="php"><![CDATA[
-// Lade alle Sektionen einer bestehenden Config Datei, und überspringt alle Erweiterungen.
+// Lädt alle Sektionen einer bestehenden Config Datei, und überspringt
+// alle Erweiterungen
 $config = new Zend_Config_Ini('config.ini',
                               null,
                               array('skipExtends'        => true,

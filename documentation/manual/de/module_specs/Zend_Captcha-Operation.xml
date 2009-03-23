@@ -60,7 +60,8 @@ $id = $captcha->generate();
 echo $captcha->render($view);
 
 // Eine nachfolgende Anfrage:
-// Annahme das das Captcha vorher eingestellt wurde, und $value der übertragene Wert ist:
+// Annahme das das Captcha vorher eingestellt wurde, und $value der
+// übertragene Wert ist:
 if ($captcha->isValid($_POST['foo'], $_POST)) {
     // Validated!
 }
