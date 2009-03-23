@@ -191,7 +191,7 @@ $upload->addFilter('Rename', 'C:\picture\newjpg', 'file1')
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.decrypt">
-        <title><emphasis role="strong">Decrypt</emphasis> filter</title>
+        <title>Decrypt filter</title>
 
         <para>
             The <code>Decrypt</code> filter allows to decrypt a encrypted file.
@@ -243,7 +243,7 @@ $upload->addFilter('Decrypt',
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.encrypt">
-        <title><emphasis role="strong">Encrypt</emphasis> filter</title>
+        <title>Encrypt filter</title>
 
         <para>
             The <code>Encrypt</code> filter allows to encrypt a file.
@@ -294,7 +294,7 @@ $upload->addFilter('Encrypt',
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.lowercase">
-        <title><emphasis role="strong">LowerCase</emphasis> filter</title>
+        <title>LowerCase filter</title>
 
         <para>
             The <code>LowerCase</code> filter allows to change the content of a file to lowercase.
@@ -336,7 +336,7 @@ $upload->addFilter('LowerCase', 'ISO-8859-1');
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.rename">
-        <title><emphasis role="strong">Rename</emphasis> filter</title>
+        <title>Rename filter</title>
 
         <para>
             The <code>Rename</code> filter allows to change the destination of the upload, the filename
@@ -467,7 +467,7 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
     </sect2>
 
     <sect2 id="zend.file.transfer.filters.uppercase">
-        <title><emphasis role="strong">UpperCase</emphasis> filter</title>
+        <title>UpperCase filter</title>
 
         <para>
             The <code>UpperCase</code> filter allows to change the content of a file to uppercase.

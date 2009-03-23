@@ -353,7 +353,7 @@ if ($upload->isValid()) {
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
-        <title><emphasis role="strong">Count</emphasis> Validator</title>
+        <title>Count Validator</title>
 
         <para>
             The <code>Count</code> validator checks for the number of files which are provided. It
@@ -421,7 +421,7 @@ $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.crc32">
-        <title><emphasis role="strong">Crc32</emphasis> Validator</title>
+        <title>Crc32 Validator</title>
 
         <para>
             The <code>Crc32</code> validator checks the content of a transferred file by hashing it.
@@ -460,7 +460,7 @@ $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
-        <title><emphasis role="strong">ExcludeExtension</emphasis> Validator</title>
+        <title>ExcludeExtension Validator</title>
 
         <para>
             The <code>ExcludeExtension</code> validator checks the file extension of the specified files. It
@@ -525,7 +525,7 @@ $upload->addValidator('ExcludeExtension',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludemimetype">
-        <title><emphasis role="strong">ExcludeMimeType</emphasis> Validator</title>
+        <title>ExcludeMimeType Validator</title>
 
         <para>
             The <code>ExcludeMimeType</code> validator checks the MIME type of transferred files.
@@ -587,7 +587,7 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.exists">
-        <title><emphasis role="strong">Exists</emphasis> Validator</title>
+        <title>Exists Validator</title>
 
         <para>
             The <code>Exists</code> validator checks for the existence of specified files. It
@@ -635,7 +635,7 @@ $upload->addValidator('Exists',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
-        <title><emphasis role="strong">Extension</emphasis> Validator</title>
+        <title>Extension Validator</title>
 
         <para>
             The <code>Extension</code> validator checks the file extension of the specified files. It
@@ -698,7 +698,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
-        <title><emphasis role="strong">FilesSize</emphasis> Validator</title>
+        <title>FilesSize Validator</title>
 
         <para>
             The <code>FilesSize</code> validator checks for the aggregate size of all transferred files.
@@ -784,7 +784,7 @@ $upload->addValidator('FilesSize',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.imagesize">
-        <title><emphasis role="strong">ImageSize</emphasis> Validator</title>
+        <title>ImageSize Validator</title>
 
         <para>
             The <code>ImageSize</code> validator checks the size of image files.
@@ -856,7 +856,7 @@ $upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.iscompressed">
-        <title><emphasis role="strong">IsCompressed</emphasis> Validator</title>
+        <title>IsCompressed Validator</title>
 
         <para>
             The <code>IsCompressed</code> validator checks if a transferred file is a compressed archive,
@@ -893,7 +893,7 @@ $upload->addValidator('IsCompressed', false, 'zip');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.isimage">
-        <title><emphasis role="strong">IsImage</emphasis> Validator</title>
+        <title>IsImage Validator</title>
 
         <para>
             The <code>IsImage</code> validator checks if a transferred file is a image file, such as gif or
@@ -930,7 +930,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.hash">
-        <title><emphasis role="strong">Hash</emphasis> Validator</title>
+        <title>Hash Validator</title>
 
         <para>
             The <code>Hash</code> validator checks the content of a transferred file by hashing it.
@@ -990,7 +990,7 @@ $upload->addValidator('Hash',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.md5">
-        <title><emphasis role="strong">Md5</emphasis> Validator</title>
+        <title>Md5 Validator</title>
 
         <para>
             The <code>Md5</code> validator checks the content of a transferred file by hashing it.
@@ -1030,7 +1030,7 @@ $upload->addValidator('Md5',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.mimetype">
-        <title><emphasis role="strong">MimeType</emphasis> Validator</title>
+        <title>MimeType Validator</title>
 
         <para>
             The <code>MimeType</code> validator checks the MIME type of transferred files.
@@ -1129,7 +1129,7 @@ $upload->addValidator('MimeType',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.notexists">
-        <title><emphasis role="strong">NotExists</emphasis> Validator</title>
+        <title>NotExists Validator</title>
 
         <para>
             The <code>NotExists</code> validator checks for the existence of the provided files. It
@@ -1177,7 +1177,7 @@ $upload->addValidator('NotExists', false,
     </sect2>
 
 <sect2 id="zend.file.transfer.validators.sha1">
-        <title><emphasis role="strong">Sha1</emphasis> Validator</title>
+        <title>Sha1 Validator</title>
 
         <para>
             The <code>Sha1</code> validator checks the content of a transferred file by hashing it.
@@ -1216,7 +1216,7 @@ $upload->addValidator('Sha1',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">
-        <title><emphasis role="strong">Size</emphasis> Validator</title>
+        <title>Size Validator</title>
 
         <para>
             The <code>Size</code> validator checks for the size of a single file. It
@@ -1286,7 +1286,7 @@ $upload->addValidator('Size',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.wordcount">
-        <title><emphasis role="strong">WordCount</emphasis> Validator</title>
+        <title>WordCount Validator</title>
 
         <para>
             The <code>WordCount</code> validator checks for the number of words within provided files. It
