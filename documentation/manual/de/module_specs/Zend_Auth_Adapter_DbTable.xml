@@ -88,7 +88,8 @@ $sqlCreate = 'CREATE TABLE [users] ('
 // Erstellt die Tabelle für die Authentifizierungs Zeugnisse
 $dbAdapter->query($sqlCreate);
 
-// Erstellt eine Abfrage um eine Zeile einzufügen für die eine Authentifizierung erfolgreich sein kann
+// Erstellt eine Abfrage um eine Zeile einzufügen für die eine
+// Authentifizierung erfolgreich sein kann
 $sqlInsert = "INSERT INTO users (username, password, real_name) "
            . "VALUES ('my_username', 'my_password', 'My Real Name')";
 
@@ -195,14 +196,16 @@ $result = $this->_auth->authenticate($adapter);
 
 if ($result->isValid()) {
 
-    // Die Identität als Objekt speichern wobei nur der Benutzername und der echte Name zurückgegeben werden
+    // Die Identität als Objekt speichern wobei nur der Benutzername und
+    // der echte Name zurückgegeben werden
     $storage = $this->_auth->getStorage();
     $storage->write($adapter->getResultRowObject(array(
         'username',
         'real_name'
     )));
 
-    // Die Identität als Objekt speichern wobei die Passwort Spalte unterdrückt wird
+    // Die Identität als Objekt speichern, wobei die
+    // Passwort Spalte unterdrückt wird
     $storage->write($adapter->getResultRowObject(
         null,
         'password'

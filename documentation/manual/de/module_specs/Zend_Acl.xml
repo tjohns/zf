@@ -311,8 +311,8 @@ $acl->allow('guest', null, 'view');
 // Mitarbeiter erbt 'ansehen' Rechte von Gast, benötigt aber zusätzliche Rechte
 $acl->allow('staff', null, array('edit', 'submit', 'revise'));
 
-// Redakteuer erbt 'ansehen', 'bearbeiten', 'absenden' und 'revidieren' Rechte von Mitarbeiter,
-// benötigt aber zusätzliche Rechte
+// Redakteuer erbt 'ansehen', 'bearbeiten', 'absenden' und die 'revidieren'
+// Rechte vom Mitarbeiter, benötigt aber zusätzliche Rechte
 $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator erbt gar nichts, aber erhält alle Rechte

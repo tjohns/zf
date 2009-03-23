@@ -3,9 +3,9 @@
     <title>Einleitung</title>
     <para>
         <code>Zend_Config</code> wurde entworfen um den Zugriff auf und die Verwendung von
-        Konfigurations-Daten zu vereinfachen. <code>Zend_Config</code> stellt diese
-        Konfigurations-Daten innerhalb der Applikation über eine verschachtelte Objekt-Struktur zur
-        Verfügung. Die Konfigurations-Daten können aus verschiedenen Datenquellen gelesen werden,
+        Konfigurations-Daten zu vereinfachen. Es stellt diese Konfigurations-Daten innerhalb
+        der Applikation über eine verschachtelte Objekt-Struktur zur Verfügung. Die
+        Konfigurations-Daten können aus verschiedenen Datenquellen gelesen werden,
         die hierarchische Datenspeicherung unterstützen. Derzeit stellt <code>Zend_Config</code>
         mit <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> und
         <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link> Adapter für

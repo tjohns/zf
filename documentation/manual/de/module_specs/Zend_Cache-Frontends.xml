@@ -349,8 +349,9 @@ echo 'Hier wird nie gecached ('.time().').';
 $cache->call('veryExpensiveFunc', $params);
 
 // $params ist ein Array
-// Zum Beispiel fürs Aufrufen von veryExpensiveFunc(1, 'foo', 'bar') mit Caching,
-// kann $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) benutzt werden
+// Für das Aufrufen von veryExpensiveFunc(1, 'foo', 'bar') mit Caching kann,
+// z.B. $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) benutzt
+// werden
 ]]>
             </programlisting>
             <para>
@@ -773,8 +774,8 @@ $cache->start();
             <programlisting role="php"><![CDATA[
 /*
  * Es sollte vermieden werden, zu viele Zeilen vor dem Cache Bereich zu setzen
- * zum Beispiel sollten für optimale Performanz "require_once" oder "Zend_Loader::loadClass"
- * nach dem Cache Bereich stehen
+ * zum Beispiel sollten für optimale Performanz "require_once" oder
+ * "Zend_Loader::loadClass" nach dem Cache Bereich stehen
  */
 
 $frontendOptions = array(
