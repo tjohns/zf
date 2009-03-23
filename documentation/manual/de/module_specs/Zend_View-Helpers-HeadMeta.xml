@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.view.helpers.initial.headmeta">
     <title>HeadMeta Helfer</title>
 
@@ -127,7 +127,7 @@ $this->headMeta()->appendHttpEquiv('Refresh',
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headMeta() ?>
+<?php echo $this->headMeta() ?>
 ]]>
         </programlisting>
     </example>

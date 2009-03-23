@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12600 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.view.helpers.initial.partial">
     <title>Partielle Helfer</title>
 
@@ -36,8 +36,8 @@
         <programlisting role="php"><![CDATA[
 <?php // partial.phtml ?>
 <ul>
-    <li>Von: <?= $this->escape($this->from) ?></li>
-    <li>Subjekt: <?= $this->escape($this->subject) ?></li>
+    <li>Von: <?php echo $this->escape($this->from) ?></li>
+    <li>Subjekt: <?php echo $this->escape($this->subject) ?></li>
 </ul>
 ]]>
         </programlisting>
@@ -47,7 +47,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->partial('partial.phtml', array(
+<?php echo $this->partial('partial.phtml', array(
     'from' => 'Team Framework',
     'subject' => 'Teil der View')); ?>
 ]]>
@@ -148,9 +148,9 @@ $view->partialLoop()->setObjectKey('model');
         </para>
 
         <programlisting role="php"><![CDATA[
-<? // partialLoop.phtml ?>
-    <dt><?= $this->key ?></dt>
-    <dd><?= $this->value ?></dd>
+<?php // partialLoop.phtml ?>
+    <dt><?php echo $this->key ?></dt>
+    <dd><?php echo $this->value ?></dd>
 ]]>
         </programlisting>
 
@@ -174,7 +174,7 @@ $model = array(
 
         <programlisting role="php"><![CDATA[
 <dl>
-<?= $this->partialLoop('partialLoop.phtml', $model) ?>
+<?php echo $this->partialLoop('partialLoop.phtml', $model) ?>
 </dl>
 ]]>
         </programlisting>
@@ -212,7 +212,7 @@ $model = array(
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->partial('pager.phtml', 'list', $pagerData) ?>
+<?php echo $this->partial('pager.phtml', 'list', $pagerData) ?>
 ]]>
         </programlisting>
 

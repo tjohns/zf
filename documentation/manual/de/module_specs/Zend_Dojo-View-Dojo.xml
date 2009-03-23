@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14165 -->
+<!-- EN-Revision: 14385 -->
 <sect2 id="zend.dojo.view.dojo">
     <title>dojo() View Helfer</title>
 
@@ -53,16 +53,16 @@ $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
         </para>
 
         <programlisting role="php"><![CDATA[
-<? // Datenspeicher für FilteringSelect einstellen ?>
+<?php // Datenspeicher für FilteringSelect einstellen ?>
 <div dojoType="custom.PairedStore" jsId="stateStore"
     url="/data/autocomplete/type/state/format/ajax"
     requestMethod="get"></div>
 
-<? // Eingabeelement: ?>
+<?php // Eingabeelement: ?>
 State: <input id="state" dojoType="dijit.form.FilteringSelect"
     store="stateStore" pageSize="5" />
 
-<? // Notwendige Dojo Elemente einstellen:
+<?php // Notwendige Dojo Elemente einstellen:
 $this->dojo()->enable()
              ->setDjConfigOption('parseOnLoad', true)
              ->registerModulePath('custom', '../custom/')
@@ -77,24 +77,24 @@ $this->dojo()->enable()
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->doctype() ?>
+<?php echo $this->doctype() ?>
 <html>
 <head>
-    <?= $this->headTitle() ?>
-    <?= $this->headMeta() ?>
-    <?= $this->headLink() ?>
-    <?= $this->headStyle() ?>
-<? if ($this->dojo()->isEnabled()){
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headMeta() ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+<?php if ($this->dojo()->isEnabled()){
     $this->dojo()->setLocalPath('/js/dojo/dojo.js')
                  ->addStyleSheetModule('dijit.themes.tundra');
     echo $this->dojo();
    }
 ?>
-    <?= $this->headScript() ?>
+    <?php echo $this->headScript() ?>
 </head>
 <body class="tundra">
-    <?= $this->layout()->content ?>
-    <?= $this->inlineScript() ?>
+    <?php echo $this->layout()->content ?>
+    <?php echo $this->inlineScript() ?>
 </body>
 </html>
 ]]>

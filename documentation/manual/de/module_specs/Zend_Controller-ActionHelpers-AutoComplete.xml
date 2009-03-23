@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13847 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -284,23 +284,23 @@ class TestController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[
-<? // Den Datenspeicher einstellen: ?>
+<?php // Den Datenspeicher einstellen: ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    url="<?php echo $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
     requestMethod="get"></div>
 
-<? // Die Form darstellen: ?>
-<?= $this->form ?>
+<?php // Die Form darstellen: ?>
+<?php echo $this->form ?>
 
-<? // Das Dojo-betreffende CSS einstellen das im HTML Head geladen werden soll: ?>
-<? $this->headStyle()->captureStart() ?>
-@import "<?= $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
-@import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
-<? $this->headStyle()->captureEnd() ?>
+<?php // Das Dojo-betreffende CSS einstellen das im HTML Head geladen werden soll: ?>
+<?php $this->headStyle()->captureStart() ?>
+@import "<?php echo $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
+<?php $this->headStyle()->captureEnd() ?>
 
-<? // Javascript einstellen das im HTML Head geladen werden soll, inklusive aller
+<?php // Javascript einstellen das im HTML Head geladen werden soll, inklusive aller
    // benötigten Dojo Bibliotheken: ?>
-<? $this->headScript()
+<?php $this->headScript()
         ->setAllowArbitraryAttributes(true)
         ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
             'text/javascript',
@@ -312,7 +312,7 @@ dojo.require("dojo.parser");
 dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
-<? $this->headScript()->captureEnd() ?>
+<?php $this->headScript()->captureEnd() ?>
 ]]>
             </programlisting>
 
