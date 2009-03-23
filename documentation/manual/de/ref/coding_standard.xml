@@ -336,7 +336,8 @@ $a = 'Beispiel String';
                     SQL Anweisungen nützlich:
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";
+$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' "
+     . "OR `name`='Susan'";
 ]]>
                     </programlisting>
 

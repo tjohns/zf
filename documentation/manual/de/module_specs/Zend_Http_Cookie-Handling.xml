@@ -211,11 +211,12 @@ echo $cookie;
                 <title>Nutzen der getter-Methoden von Zend_Http_Cookie</title>
                 <programlisting role="php"><![CDATA[
 // Zuerst wird der Cookie erstellt
-$cookie = Zend_Http_Cookie::fromString('foo=two+words; ' +
-                                       'domain=.example.com; ' +
-                                       'path=/somedir; ' +
-                                       'secure; ' +
-                                       'expires=Wednesday, 28-Feb-05 20:41:22 UTC');
+$cookie = Zend_Http_Cookie::fromString(
+    'foo=two+words; ' +
+    'domain=.example.com; ' +
+    'path=/somedir; ' +
+    'secure; ' +
+    'expires=Wednesday, 28-Feb-05 20:41:22 UTC');
 
 echo $cookie->getName();   // Gibt 'foo' aus
 echo $cookie->getValue();  // Gibt 'two words' aus

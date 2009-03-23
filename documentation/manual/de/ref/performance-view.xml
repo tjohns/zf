@@ -73,9 +73,12 @@ class My_View extends Zend_View
     /**
      * Proxy zum URL View Helfer
      *
-     * @param  array $url  Options Optionen die an die Assemble Methode des Route Objekts übergeben werden
-     * @param  mixed $name Der Name der zu verwendenden Route. Wenn null wir die aktuelle Route verwendet
-     * @param  bool $reset Ob die Routenstandard mit den angegebenen resetiert werden sollen oder nicht
+     * @param  array $url  Options Optionen die an die Assemble Methode des
+     *                     Route Objekts übergeben werden
+     * @param  mixed $name Der Name der zu verwendenden Route. Wenn null wir
+     *                     die aktuelle Route verwendet
+     * @param  bool $reset Ob die Routenstandard mit den angegebenen resetiert
+     *                     werden sollen oder nicht
      * @return string Url für das Link Href Attribut.
      */
     public function url(array $urlOptions = array(), $name = null,
@@ -273,7 +276,9 @@ class BugController extends Zend_Controller_Action
 // bug/list.phtml:
 echo "<ul>\n";
 foreach ($this->bugs as $bug) {
-    printf("<li><b>%s</b>: %s</li>\n", $this->escape($bug->id), $this->escape($bug->summary));
+    printf("<li><b>%s</b>: %s</li>\n",
+           $this->escape($bug->id),
+           $this->escape($bug->summary));
 }
 echo "</ul>\n";
 ]]></programlisting>

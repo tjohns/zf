@@ -3598,13 +3598,4 @@
 </appendix>
 <!--
 vim:se ts=4 sw=4 et:
-
-Note:
-Tables related to Release 1.7.2
-
-1Zend_Db
-1Zend_Dojo
-1Zend_Form
-1Zend_Layout
-1Zend_Session
 -->

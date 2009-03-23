@@ -427,7 +427,9 @@ $adapter = new Zend_Http_Client_Adapter_Curl();
 $client = new Zend_Http_Client();
 $client->setAdapter($adapter);
 $adapter->setConfig(array(
-    'curloptions' => array(CURLOPT_INFILE => $putFileHandle, CURLOPT_INFILESIZE => $putFileSize)
+    'curloptions' => array(
+        CURLOPT_INFILE => $putFileHandle,
+        CURLOPT_INFILESIZE => $putFileSize)
 ));
 $client->request("PUT");
 ]]>

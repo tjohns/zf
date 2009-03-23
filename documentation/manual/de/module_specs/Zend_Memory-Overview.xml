@@ -37,8 +37,9 @@
                 Objekt mit den definierten Backend Optionen.
             </para>
             <programlisting role="php"><![CDATA[
+// Verzeichnis in welches die getauschten Speicherblöcke geschrieben werden
 $backendOptions = array(
-    'cache_dir' => './tmp/' // Verzeichnis in welches die getauschten Speicherblöcke geschrieben werden
+    'cache_dir' => './tmp/'
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
