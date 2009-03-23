@@ -428,18 +428,18 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
     <sect2 id="zend.cache.backends.zendserver">
         <title><code>Zend_Cache_Backend_ZendServer_Disk</code> and <code>Zend_Cache_Backend_ZendServer_ShMem</code></title>
         <para>
-            These backends store cache records using 
+            These backends store cache records using
             <ulink url="http://www.zend.com/en/products/server/downloads-all?zfs=zf_download">Zend Server</ulink> caching functionality.
         </para>
         <para>
              Be careful: with these backends, "tags" are not supported for the moment as the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
-             These backend work only withing Zend Server environment for pages requested through HTTP(S) and 
+             These backend work only withing Zend Server environment for pages requested through HTTP(S) and
              don't work for command line script execution
         </para>
         <para>
-            There is no option for this backend. 
+            There is no option for this backend.
         </para>
     </sect2>
 </sect1>

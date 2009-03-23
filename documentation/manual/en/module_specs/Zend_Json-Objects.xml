@@ -1,6 +1,6 @@
 <sect1 id="zend.json.advanced">
     <title>Advanced Usage of Zend_Json</title>
-    
+
     <sect2 id="zend.json.advanced.objects1">
         <title>JSON Objects</title>
         <para>
