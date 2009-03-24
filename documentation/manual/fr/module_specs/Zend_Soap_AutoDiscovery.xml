@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14094 -->
 <sect1 id="zend.soap.autodiscovery">
     <title>Auto découverte</title>
 
@@ -307,17 +307,6 @@ $autodiscover->addFunction('myfunc1');
 $autodiscover->handle();
 ]]>
             </programlisting>
-        </para>
-    </sect2>
-
-    <sect2 id="zend.soap.autodiscovery.compability">
-        <title>Compatibilité avec les clients WDSL</title>
-
-        <para>
-            Jusqu'à la version 1.7, les fichiers WSQL étaient générés avec une partie de la réponse qui ne pouvait
-            pas être détecter correctement par les clients Java ou .Net par exemple. A partir de la version 1.8, la
-            fonction <code>setResponseMessageReturnNameCompability()</code> a été ajoutée pour activer la
-            compatibilité dans ces cas.
         </para>
     </sect2>
 </sect1>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13826 -->
+<!-- EN-Revision: 14463 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>L'aide de vue HeadScript</title>
 
@@ -61,7 +61,9 @@
 
             <programlisting role="php"><![CDATA[
 // adding scripts
-$this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
+$this->headScript()->appendFile('/js/prototype.js',
+                                'text/javascript',
+                                array('conditional' => 'lt IE 7');
 ]]></programlisting>
         </example>
     </note>
@@ -145,7 +147,7 @@ $this->headScript()->prependFile('/js/prototype.js');
         <code>echo</code> de l'aide :</para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headScript() ?>
+<?php echo $this->headScript() ?>
 ]]></programlisting>
     </example>
 
@@ -159,7 +161,7 @@ $this->headScript()->prependFile('/js/prototype.js');
 
         <programlisting role="php"><![CDATA[
 <?php $this->headScript()->captureStart() ?>
-var action = '<?= $this->baseUrl ?>';
+var action = '<?php echo $this->baseUrl ?>';
 $('foo_form').action = action;
 <?php $this->headScript()->captureEnd() ?>
 ]]></programlisting>

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.view.helpers.initial.action">
     <title>L'aide de vue Action</title>
 
@@ -24,7 +24,7 @@
         <programlisting role="php"><![CDATA[
 <div id="sidebar right">
     <div class="item">
-        <?= $this->action('list', 'comment', null, array('count' => 10)); ?>
+        <?php echo $this->action('list', 'comment', null, array('count' => 10)); ?>
     </div>
 </div>
 ]]></programlisting>

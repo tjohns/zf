@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.view.helpers.initial.headtitle">
     <title>L'aide de vue HeadTitle</title>
 
@@ -41,7 +41,7 @@ $this->headTitle()->setSeparator(' / ');
 
         <programlisting role="php"><![CDATA[
 <!-- Affiche <action> / <controller> / Zend Framework -->
-<?= $this->headTitle() ?>
+<?php echo $this->headTitle() ?>
 ]]></programlisting>
     </example>
 </sect3>

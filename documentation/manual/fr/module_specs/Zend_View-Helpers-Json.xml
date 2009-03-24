@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11090 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.view.helpers.initial.json">
     <title>L'aide de vue JSON</title>
 
@@ -18,6 +18,6 @@ Content-Type: application/json
     <para>L'utilisation de l'aide de vue JSON est très simple :</para>
 
     <programlisting role="php"><![CDATA[
-<?= $this->json($this->data) ?>
+<?php echo $this->json($this->data) ?>
 ]]></programlisting>
 </sect3>
