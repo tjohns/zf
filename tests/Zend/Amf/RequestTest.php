@@ -66,7 +66,7 @@ class Zend_Amf_RequestTest extends PHPUnit_Framework_TestCase
         $this->_request->initialize($myRequest);
         // Make sure the encoding type is properly set.
         $this->assertEquals(0x03, $this->_request->getObjectEncoding());
-        // Make sure that no headers where recieved
+        // Make sure that no headers where recievedpbs
         $this->assertEquals(0 , sizeof($this->_request->getAmfHeaders()));
         // Make sure that the message body was set after deserialization
         $this->assertEquals(1, sizeof($this->_request->getAmfBodies()));
@@ -368,6 +368,29 @@ class Zend_Amf_RequestTest extends PHPUnit_Framework_TestCase
         // Make sure that the string was deserialized properly and check its value
         $this->assertEquals('foo', $data[0]->a);
         $this->assertEquals('bar', $data[0]->b);
+    }
+    
+    /**
+     * Test to make sure that a generic object as the first paramater does not crash 
+     * @group ZF-5346
+     */
+    public function testAmf0ObjectFirstParameter()
+    {
+    	$myRequest = file_get_contents(dirname(__FILE__) .'/Request/mock/objectFirstParamRequest.bin');
+        // send the mock object request to be deserialized
+        $this->_request->initialize($myRequest);
+        // Make sure that no headers where recieved
+        $this->assertEquals(0 , sizeof($this->_request->getAmfHeaders()));
+        // Make sure that the message body was set after deserialization
+        $this->assertEquals(1, sizeof($this->_request->getAmfBodies()));
+        $bodies = $this->_request->getAmfBodies();
+        $this->assertTrue($bodies[0] instanceof Zend_Amf_Value_MessageBody);
+        $data = $bodies[0]->getData();
+        // Make sure that we are dealing with a PHP string
+        // Make sure that the string was deserialized properly and check its value
+        $this->assertEquals('foo', $data[0]->a);
+        $this->assertEquals('bar', $data[0]->b);
+        $this->assertEquals(1234, $data[1]);
     }
 
     /**
