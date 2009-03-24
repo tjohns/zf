@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14448 -->
 <sect1 id="zend.cache.backends">
     <title>Les backends Zend_Cache</title>
 
@@ -246,6 +246,17 @@
 
                         <entry><code>true</code>, si vous voulez utiliser la compression à la volée</entry>
                     </row>
+
+                    <row>
+                        <entry><code>compatibility</code></entry>
+
+                        <entry><code>boolean</code></entry>
+
+                        <entry><code>false</code></entry>
+
+                        <entry><code>true</code>, si vous voulez utiliser le mode de compatibilité avec les anciens
+                        serveurs/extensions memcache</entry>
+                    </row>
                 </tbody>
             </tgroup>
         </table>
@@ -475,5 +486,22 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
                 </tbody>
             </tgroup>
         </table>
+    </sect2>
+
+    <sect2 id="zend.cache.backends.zendserver">
+        <title><code>Zend_Cache_Backend_ZendServer_Disk</code> et
+        <code>Zend_Cache_Backend_ZendServer_ShMem</code></title>
+
+        <para>Ces backends utilisent les fonctionnalités de mise en cache de <ulink
+        url="http://www.zend.com/en/products/server/downloads-all?zfs=zf_download">Zend Server</ulink> pour stocker les
+        données.</para>
+
+        <para>ATTENTION : avec ces backends ne supportent pas les balises ("tags") pour le moment de même que l'argument
+        "doNotTestCacheValidity=true".</para>
+
+        <para>Ces backends fonctionnent seulement dans l'environnement de Zend Server pour les pages requêtées à travers
+        HTTP(S) et ne fonctionnent pas pour les scripts exécutés en ligne de commande.</para>
+
+        <para>Il n'y a pas d'options pour ce backend.</para>
     </sect2>
 </sect1>

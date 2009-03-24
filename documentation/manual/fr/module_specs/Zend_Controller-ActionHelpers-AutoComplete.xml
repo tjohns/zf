@@ -224,34 +224,34 @@ class TestController extends Zend_Controller_Action
             entrepôt). Voici le script de vue :</para>
 
             <programlisting role="php"><![CDATA[
-<? // configuration de l'entrepôt de données : ?>
+<?php // configuration de l'entrepôt de données : ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    url="<?php echo $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
     requestMethod="get"></div>
 
-<? // rendu du formulaire : ?>
-<?= $this->form ?>
+<?php // rendu du formulaire : ?>
+<?php echo $this->form ?>
 
-<? // configuration des CSS de Dojo dans le head HTML : ?>
-<? $this->headStyle()->captureStart() ?>
-@import "<?= $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
-@import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
+<?php // configuration des CSS de Dojo dans le head HTML : ?>
+<?php $this->headStyle()->captureStart() ?>
+@import "<?php echo $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
 <? $this->headStyle()->captureEnd() ?>
 
-<? // configuration de javascript pour charger les librairies Dojo dans le head HTML : ?>
-<? $this->headScript()
-        ->setAllowArbitraryAttributes(true)
-        ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
-            'text/javascript',
-            array('djConfig' => 'parseOnLoad: true'))
-        ->captureStart() ?>
+<?php // configuration de javascript pour charger les librairies Dojo dans le head HTML : ?>
+<?php $this->headScript()
+           ->setAllowArbitraryAttributes(true)
+           ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
+                        'text/javascript',
+                        array('djConfig' => 'parseOnLoad: true'))
+           ->captureStart() ?>
 djConfig.usePlainJson=true;
 dojo.registerModulePath("custom","../custom");
 dojo.require("dojo.parser");
 dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
-<? $this->headScript()->captureEnd() ?>
+<?php $this->headScript()->captureEnd() ?>
 ]]></programlisting>
 
             <para>Notez les appels aux aides de vue comme <code>headStyle</code> et <code>headScript</code>.</para>
