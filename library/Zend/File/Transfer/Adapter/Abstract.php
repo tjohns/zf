@@ -1403,6 +1403,12 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         if ($files === null) {
             $check = $this->_files;
+            $keys  = array_keys($check);
+            foreach ($keys as $key) {
+                if (isset($check[$key]['multifiles'])) {
+                    unset($check[$key]);
+                }
+            }
         }
 
         if ($names) {
