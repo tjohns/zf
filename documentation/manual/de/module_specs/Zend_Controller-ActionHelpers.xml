@@ -190,7 +190,8 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
 }
 
-// Oder, Ihn einfach empfangen, ohne darüber nachzudenken ob er bereits registriert wurde oder nicht:
+// Oder, Ihn einfach empfangen, ohne darüber nachzudenken ob er bereits
+// registriert wurde oder nicht:
 $redirector =
     Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
 }

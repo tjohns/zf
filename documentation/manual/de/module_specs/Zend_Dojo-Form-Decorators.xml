@@ -116,8 +116,8 @@ $form->setDecorators(array(
     'DijitForm',
 ));
 
-// Ein ContentPane im eigenen Unterformular verwenden (welches mit allen ausser AccordionContainer
-// verwendet werden kann):
+// Ein ContentPane im eigenen Unterformular verwenden (welches mit allen
+// ausser AccordionContainer verwendet werden kann):
 $subForm->setDecorators(array(
     'FormElements',
     array('HtmlTag', array('tag' => 'dl')),

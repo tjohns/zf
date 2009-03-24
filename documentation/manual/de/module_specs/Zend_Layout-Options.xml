@@ -106,7 +106,7 @@
 $options = array(
     'layout'     => 'foo',
     'layoutPath' => '/path/to/layouts',
-    'contentKey' => 'CONTENT',           // Ignoriert wenn MVC nicht verwendet wird
+    'contentKey' => 'CONTENT', // Ignoriert wenn MVC nicht verwendet wird
 );
 ]]>
         </programlisting>

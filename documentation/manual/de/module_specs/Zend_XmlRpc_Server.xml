@@ -377,10 +377,13 @@ require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
 $server = new Zend_XmlRpc_Server();
+
 // Methoden werden als comb.* aufgerufen
 $server->setClass('Services_Comb', 'comb');
+
 // Methoden werden als brush.* aufgerufen
 $server->setClass('Services_Brush', 'brush');
+
 // Methoden werden als pick.* aufgerufen
 $server->setClass('Services_Pick', 'pick');
 echo $server->handle();
@@ -407,9 +410,15 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
-$server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
-$server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
+
+// Methoden werden als comb.* aufgerufen
+$server->setClass('Services_Comb', 'comb');
+
+// Methoden werden als brush.* aufgerufen
+$server->setClass('Services_Brush', 'brush');
+
+// Methoden werden als pick.* aufgerufen
+$server->setClass('Services_Pick', 'pick');
 echo $server->handle();
 ]]>
             </programlisting>
@@ -434,9 +443,15 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
-$server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
-$server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
+
+// Methoden werden als comb.* aufgerufen
+$server->setClass('Services_Comb', 'comb');
+
+// Methoden werden als brush.* aufgerufen
+$server->setClass('Services_Brush', 'brush');
+
+// Methoden werden als pick.* aufgerufen
+$server->setClass('Services_Pick', 'pick');
 
 // Ein neues Anfrage-Objekt wird erstellt
 $request = new Services_Request();
@@ -466,9 +481,15 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
-$server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
-$server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
+
+// Methoden werden als comb.* aufgerufen
+$server->setClass('Services_Comb', 'comb');
+
+// Methoden werden als brush.* aufgerufen
+$server->setClass('Services_Brush', 'brush');
+
+// Methoden werden als pick.* aufgerufen
+$server->setClass('Services_Pick', 'pick');
 
 // Ein neues Anfrage-Objekt wird erstellt
 $request = new Services_Request();
@@ -500,9 +521,15 @@ $server = new Zend_XmlRpc_Server();
 
 // Versucht die Serverdefinition aus dem Cache zu laden
 if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
-    $server->setClass('Services_Comb', 'comb');   // Methoden werden als comb.* aufgerufen
-    $server->setClass('Services_Brush', 'brush'); // Methoden werden als brush.* aufgerufen
-    $server->setClass('Services_Pick', 'pick');   // Methoden werden als pick.* aufgerufen
+
+    // Methoden werden als comb.* aufgerufen
+    $server->setClass('Services_Comb', 'comb');
+
+    // Methoden werden als brush.* aufgerufen
+    $server->setClass('Services_Brush', 'brush');
+
+    // Methoden werden als pick.* aufgerufen
+    $server->setClass('Services_Pick', 'pick');
 
     // Speichern des Caches
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);

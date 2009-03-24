@@ -257,7 +257,8 @@ $this->translate("Today is %1\$s in %2\$s. Actual time: %3\$s", $date);
 // innerhalb der View
 $date = array("Monday", "April", "11:20:55");
 
-// gibt 'de' als standardmäßig gesetztes Gebietsschema vom obigen Beispiel zurück
+// gibt 'de' als standardmäßig gesetztes Gebietsschema
+// vom obigen Beispiel zurück
 $this->translate()->getLocale();
 
 $this->translate()->setLocale('it');

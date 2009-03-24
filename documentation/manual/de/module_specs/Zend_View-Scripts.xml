@@ -380,8 +380,8 @@ class Zend_View_Smarty implements Zend_View_Interface
      * @see __set()
      * @param string|array $spec Die zu verwendene Zuweisungsstrategie
      * (Schlüssel oder Array mit Schlüssel => Wert paaren)
-     * @param mixed $value (Optional) Wenn ein Variablenname verwendet wurde, verwende dies als den
-     * Wert.
+     * @param mixed $value (Optional) Wenn ein Variablenname verwendet wurde,
+     *                                verwende diesen als Wert
      * @return void
      */
     public function assign($spec, $value = null)

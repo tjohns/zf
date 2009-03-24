@@ -67,13 +67,15 @@ class FooController extends Zend_Controller_Action
 {
     public function init()
     {
-        // Lokal nur bei diesem Kontroller; beeinflußt alle Aktionen die mit init geladen wurden:
+        // Lokal nur bei diesem Kontroller; beeinflußt alle Aktionen die mit
+        // init geladen wurden:
         $this->_helper->viewRenderer->setNoRender(true);
 
         // Global:
         $this->_helper->removeHelper('viewRenderer');
 
-        // Auch global, muß aber in Verbindung mit der Lokalen Version sein um für diesen Kontroller zu gelten:
+        // Auch global, muß aber in Verbindung mit der Lokalen Version sein um
+        // für diesen Kontroller zu gelten:
         Zend_Controller_Front::getInstance()
             ->setParam('noViewRenderer', true);
     }
@@ -486,7 +488,8 @@ class MyController extends Zend_Controller_Action
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // Wenn die Aktionsmethode nicht gefunden wurde, rendere das error Template
+            // Wenn die Aktionsmethode nicht gefunden wurde,
+            // das error Template darstellen
             return $this->render('error');
         }
 
@@ -515,7 +518,8 @@ class MyController extends Zend_Controller_Action
     public function __call($method, $args)
     {
         if ('Action' == substr($method, -6)) {
-            // Wenn die Aktionsmethode nicht gefunden wurde, leite zur Index Aktion weiter
+            // Wenn die Aktionsmethode nicht gefunden wurde,
+            // leite zur Index Aktion weiter
             return $this->_forward('index');
         }
 

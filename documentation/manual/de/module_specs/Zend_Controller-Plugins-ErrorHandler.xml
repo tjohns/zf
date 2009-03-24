@@ -294,7 +294,8 @@ EOH;
                 // Anwendungsfehler
                 $content =<<<EOH
 <h1>Fehler!</h1>
-<p>Ein unerwarteter Fehler trat auf. Bitte versuchen Sie es etwas später nocheinmal.</p>
+<p>Ein unerwarteter Fehler trat auf.
+Bitte versuchen Sie es etwas später nocheinmal.</p>
 EOH;
                 break;
         }

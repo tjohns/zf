@@ -316,13 +316,16 @@ $upload->addFilter('Encrypt',
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('MimeType', 'text');
 
-// Fügt einen Filter hinzu der hochgeladene Textdateien auf Kleinschreibung ändert
+// Fügt einen Filter hinzu der hochgeladene Textdateien
+// auf Kleinschreibung ändert
 $upload->addFilter('LowerCase');
 
-// Fügt einen Filter hinzu um die hochgeladene Datei auf Kleinschreibung zu ändern aber nur für uploadfile1
+// Fügt einen Filter hinzu um die hochgeladene Datei auf Kleinschreibung
+// zu ändern aber nur für uploadfile1
 $upload->addFilter('LowerCase', null, 'uploadfile1');
 
-// Fügt einen Filter für die Kleinschreibung hinzu wobei die Kodierung auf ISO-8859-1 gesetzt wird
+// Fügt einen Filter für die Kleinschreibung hinzu wobei die Kodierung
+// auf ISO-8859-1 gesetzt wird
 $upload->addFilter('LowerCase', 'ISO-8859-1');
 ]]>
             </programlisting>
@@ -496,13 +499,16 @@ $upload->addFilter('Rename', 'C:\mypics\newgifs', 'uploadfile1');
 $upload = new Zend_File_Transfer_Adapter_Http();
 $upload->addValidator('MimeType', 'text');
 
-// Fügt einen Filter hinzu um die hochgeladene Textdatei auf Großschreibung zu ändern
+// Fügt einen Filter hinzu um die hochgeladene Textdatei auf
+// Großschreibung zu ändern
 $upload->addFilter('UpperCase');
 
-// Fügt einen Filter hinzu um die hochgeladene Datei auf Großschreibung zu ändern aber nur für uploadfile1
+// Fügt einen Filter hinzu um die hochgeladene Datei auf Großschreibung
+// zu ändern aber nur für uploadfile1
 $upload->addFilter('UpperCase', null, 'uploadfile1');
 
-// Fügt einen Filter für die Großschreibung hinzu wobei die Kodierung auf ISO-8859-1 gesetzt wird
+// Fügt einen Filter für die Großschreibung hinzu wobei die Kodierung
+// auf ISO-8859-1 gesetzt wird
 $upload->addFilter('UpperCase', 'ISO-8859-1');
 ]]>
             </programlisting>

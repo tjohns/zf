@@ -1374,7 +1374,8 @@ if ($locale === null) {
 
 if (!Zend_Locale::isLocale($locale, true, false)) {
     if (!Zend_Locale::isLocale($locale, false, false)) {
-        throw new Zend_Locale_Exception("Das Gebietsschema '$locale' ist kein bekanntes Gebietsschema");
+        throw new Zend_Locale_Exception("Das Gebietsschema '$locale' "
+                                      . "ist kein bekanntes Gebietsschema");
     }
 
     $locale = new Zend_Locale($locale);

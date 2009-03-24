@@ -285,7 +285,8 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 </head>
 <body>
     <h1>Ein Fehler ist aufgetreten</h1>
-    <p>Ein Fehler ist aufgetreten; bitte versuchen Sie es später noch einmal.</p>
+    <p>Ein Fehler ist aufgetreten;
+       bitte versuchen Sie es später noch einmal.</p>
 </body>
 </html>
 ]]>

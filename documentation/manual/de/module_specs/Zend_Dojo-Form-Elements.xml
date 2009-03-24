@@ -917,7 +917,8 @@ $form->addElement(
         'trim'           => true,
         'lowercase'      => true,
         'regExp'         => '^[a-z0-9]{6,}$',
-        'invalidMessage' => 'Ungültiges Passwort; muß mindestens 6 alphanummerische Zeichen sein',
+        'invalidMessage' => 'Ungültiges Passwort; muß mindestens 6 '
+                          . 'alphanummerische Zeichen lang sein',
     )
 );
 ]]>
