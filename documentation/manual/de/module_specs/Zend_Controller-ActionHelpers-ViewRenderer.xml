@@ -148,7 +148,8 @@ class Foo_BarController extends Zend_Controller_Action
     }
 
     // Rendert bar/populate.phtml mit der Variable 'foo' gesetzt auf 'bar'.
-    // Da View Objekte beim preDispatch() definiert werden, sind diese bereits vorhanden.
+    // Da View Objekte beim preDispatch() definiert werden, sind diese
+    // bereits vorhanden.
     public function populateAction()
     {
         $this->view->foo = 'bar';
@@ -571,15 +572,16 @@ class Foo_BarController extends Zend_Controller_Action
     {
     }
 
-    // Rendert bar/populate.phtml wobei die Variable 'foo' auf 'bar' gesetzt wird.
-    // Da das View Objekt beim preDispatch() definiert wird, ist es bereits vorhanden.
+    // Rendert bar/populate.phtml wobei die Variable 'foo' auf 'bar'
+    // gesetzt wird. Da das View Objekt beim preDispatch() definiert,
+    // ist es bereits vorhanden.
     public function populateAction()
     {
         $this->view->foo = 'bar';
     }
 
-    // Rendert nichts da zu einer anderen Aktion weitergeleitet wird; die neue Akion
-    // wird jegliches rendern durchführen
+    // Rendert nichts da zu einer anderen Aktion weitergeleitet wird;
+    // die neue Aktion wird jegliches rendern durchführen
     public function bazAction()
     {
         $this->_forward('index');
@@ -728,7 +730,8 @@ class Foo_BarController extends Zend_Controller_Action
 
     public function bazAction()
     {
-        // Das View Objekt erhalten, und den Kommentar Callback auf 'htmlspecialchars' setzen
+        // Das View Objekt erhalten, und den Kommentar Callback
+        // auf 'htmlspecialchars' setzen
         $view = $this->_helper->viewRenderer->view;
         $view->setEscape('htmlspecialchars');
     }

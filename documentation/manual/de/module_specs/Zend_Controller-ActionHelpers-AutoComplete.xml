@@ -36,7 +36,8 @@ class FooController extends Zend_Controller_Action
         $response = $this->_helper->autoCompleteDojo
                                   ->sendAutoCompletion($data);
 
-        // oder einfach die Antwort der automatischen Vervollständigung vorbereiten;
+        // oder einfach die Antwort der automatischen
+        // Vervollständigung vorbereiten;
         $response = $this->_helper->autoCompleteDojo
                                   ->prepareAutoCompletion($data);
     }
@@ -292,14 +293,15 @@ class TestController extends Zend_Controller_Action
 <?php // Die Form darstellen: ?>
 <?php echo $this->form ?>
 
-<?php // Das Dojo-betreffende CSS einstellen das im HTML Head geladen werden soll: ?>
+<?php // Das Dojo-betreffende CSS einstellen das im
+      // HTML Head geladen werden soll: ?>
 <?php $this->headStyle()->captureStart() ?>
 @import "<?php echo $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
 @import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
 <?php $this->headStyle()->captureEnd() ?>
 
-<?php // Javascript einstellen das im HTML Head geladen werden soll, inklusive aller
-   // benötigten Dojo Bibliotheken: ?>
+<?php // Javascript einstellen das im HTML Head geladen werden soll,
+      // inklusive aller benötigten Dojo Bibliotheken: ?>
 <?php $this->headScript()
         ->setAllowArbitraryAttributes(true)
         ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',

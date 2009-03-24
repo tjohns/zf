@@ -72,106 +72,140 @@ $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
 
             <programlisting role="php"><![CDATA[
 array(
-      'title'       => 'Titel des Feeds', // benötigt
-      'link'        => 'Kanonische URL zu dem Feed', // benötigt
-      'lastUpdate'  => 'Zeitstempel des Update Datums', // optional
-      'published'   => 'Zeitstempel des Veröffentlichungs Datums', //optional
-      'charset'     => 'Zeichensatz der textuellen Daten', // benötigt
-      'description' => 'Kurzbeschreibung des Feeds', //optional
-      'author'      => 'Author, Veröffentlicher des Feeds', //optional
-      'email'       => 'Email des Authors', //optional
-      'webmaster'   =>     // optional, ignoriert wenn Atom verwendet wird
-                       'Email Adresse der Person die für technische ' .
-                       'Belange verantwortlich ist'
-      'copyright'   => 'Copyright Notiz', //optional
-      'image'       => 'URL zu Bildern', //optional
-      'generator'   => 'Ersteller', // optional
-      'language'    => 'Sprache in der der Feed geschrieben ist', // optional
-      'ttl'         =>     // optional, ignoriert wenn Atom verwendet wird
-                       'Wie lange ein Feed gecached werden kann ' .
-                       'bevor er erneut werden muß',
-      'rating'      =>     // optional, ignoriert wenn Atom verwendet wird
-                       'Die PICS Rate dieses Kanals',
-      'cloud'       => array(
-                             'domain'            => 'Domain der Wolke, e.g. rpc.sys.com' // benötigt
-                             'port'              => 'Port zu dem verbunden wird' // optional, standard ist 80
-                             'path'              => 'Pfad der Wolke, e.g. /RPC2' // benötigt
-                             'registerProcedure' => 'Prozedur die aufgerufen wird, z.B. myCloud.rssPleaseNotify' // benötigt
-                             'protocol'          => 'Protokoll das verwendet wird, z.B. soap oder xml-rpc' // benötigt
-                             ), // eine Wolke die über Updates benachrichtigt wird // optional, ignoriert wenn Atom verwendet wird
-      'textInput'   => array(
-                             'title'       => 'Die Überschrift des Senden Buttons im Texteingabefeld' // benötigt,
-                             'description' => 'Beschreibt das Texteingabefeld' // benötigt
-                             'name'        => 'Der Name des Text Objekts im Texteingabefeld' // benötigt
-                             'link'        => 'Die URL des CGI Skripts das Texteingabe Anfragen bearbeitet' // benötigt
-                             ) // Eine Texteingabebox die im Feed angezeigt werden kann // optional, ignoriert wenn Atom verwendet wird
-      'skipHours'   => array(
-                             'hour in 24 format', // z.B. 13 (1pm)
-                             // bis zu 24 Zeilen dessen Werte eine Nummer zwichen 0 und 23 sein müssen
-                             ) // Hinweise geben welche Stunden übersprungen werden können // optional, ignoriert wenn Atom verwendet wird
-      'skipDays '   => array(
-                             'a day to skip', // z.B. Montag
-                             // bus zu 7 Zeilen dessen Werte Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag oder Sonntag sind
-                             ) // Hinweise geben welche Tage übersprungen werden können // optional, ignoriert wenn Atom verwendet wird
-      'itunes'      => array(
-                             'author'       => 'Musiker Spalte' // optional, Standard der Wert der author Spalte
-                             'owner'        => array(
-                                                     'name' => 'Name des Eigentümers' // optional, Standard ist der Wert der author Spalte
-                                                     'email' => 'Email des Eigentümers' // optional, Standard ist der Haupt email Wert
-                                                     ) // Eigentümer des Podcasts // optional
-                             'image'        => 'Album/Podcast Bild' // optional, Standard ist der image Wert
-                             'subtitle'     => 'Kurzbeschreibung' // optional, Standard ist der description Wert
-                             'summary'      => 'Langbeschreibung' // optional, Standard ist der description Wert
-                             'block'        => 'Verhindern das eine Episode erscheint (ja|nein)' // optional
-                             'category'     => array(
-                                                     array('main' => 'Hauptkategorie', // benötigt
-                                                           'sub'  => 'Unterkategorie' // optional
-                                                           ),
-                                                     // bis zu 3 Zeilen
-                                                     ) // 'Kategoriespalte und iTunes Music Store Browse' // benötigt
-                             'explicit'     => 'Elterliche Anweisungsspalte (ja|nein|löschen)' // optional
-                             'keywords'     => 'Eine kommagetrennte Liste von maximal 12 Schlüsselwörtern' // optional
-                             'new-feed-url' => 'Verwendet um iTunes über eine neue URL Lokation zu informieren' // optional
-                             ) // Itunes Erweiterungsdaten // optional, ignoriert wenn Atom verwendet wird
-      'entries'     => array(
-                             array(
-                                   'title'        => 'Titel des Feedeintrags', // benötigt
-                                   'link'         => 'URL zum Feedeintrag', // benötigt
-                                   'description'  => 'Kurzversion des Feedeintrags', // nur Text, kein HTML, benötigt
-                                   'guid'         => 'Id des Artikels, wenn nicht angegeben wird der link Wert verwendet', //optional
-                                   'content'      => 'Langversion', // kann HTML enthalten, optional
-                                   'lastUpdate'   => 'Zeitstempel des Veröffnetlichungsdatums', // optional
-                                   'comments'     => 'Kommentarseite des Feedeintrags', // optional
-                                   'commentRss'   => 'Die FeedURL der zugehörenden Kommentare', // optional
-                                   'source'       => array(
-                                                           'title' => 'Titel der Originalen Quelle' // benötigt
-                                                           'url' => 'URL der originalen Quelle' // benötigt
-                                                           ) // Originale Quelle des Feedeintrags // optional
-                                   'category'     => array(
-                                                           array(
-                                                                 'term' => 'Überschrift der ersten Kategorie' // benötigt
-                                                                 'scheme' => 'URL die das Kategorisierungsschema identifiziert' // optional
-                                                                 ),
-                                                           array(
-                                                                 //Daten der zweiten Kategorie und so weiter
-                                                                 )
-                                                           ) // Liste der zugeordneten Kategorien // optional
-                                   'enclosure'    => array(
-                                                           array(
-                                                                 'url' => 'URL des verlinkten Anhangs' // benötigt
-                                                                 'type' => 'Mime Typ des Anhangs' // optional
-                                                                 'length' => 'Länge des verlinkten Inhalts oktal' // optional
-                                                                 ),
-                                                           array(
-                                                                 // Daten für den zweiten Anhang und so weiter
-                                                                 )
-                                                           ) // Liste der Anhänge des Feedeintrags // optional
-                                   ),
-                             array(
-                                   // Daten für den zweiten Eintrag und so weiter
-                                   )
-                             )
-       );
+    'title'       => 'Titel des Feeds', // benötigt
+    'link'        => 'Kanonische URL zu dem Feed', // benötigt
+    'lastUpdate'  => 'Zeitstempel des Update Datums', // optional
+    'published'   => 'Zeitstempel des Veröffentlichungs Datums', //optional
+    'charset'     => 'Zeichensatz der textuellen Daten', // benötigt
+    'description' => 'Kurzbeschreibung des Feeds', //optional
+    'author'      => 'Author, Veröffentlicher des Feeds', //optional
+    'email'       => 'Email des Authors', //optional
+    'webmaster'   => // optional, ignoriert wenn Atom verwendet wird
+                     'Email Adresse der Person die für technische ' .
+                     'Belange verantwortlich ist'
+    'copyright'   => 'Copyright Notiz', //optional
+    'image'       => 'URL zu Bildern', //optional
+    'generator'   => 'Ersteller', // optional
+    'language'    => 'Sprache in der der Feed geschrieben ist', // optional
+    'ttl'         => // optional, ignoriert wenn Atom verwendet wird
+                     'Wie lange ein Feed gecached werden kann ' .
+                     'bevor er erneut werden muß',
+    'rating'      => // optional, ignoriert wenn Atom verwendet wird
+                     'Die PICS Rate dieses Kanals',
+    // eine Wolke die über Updates benachrichtigt wird
+    // optional, ignoriert wenn Atom verwendet wird
+    'cloud'       => array(
+        'domain'            => 'Domain der Wolke, e.g. rpc.sys.com' // benötigt
+        // optional, standard ist 80
+        'port'              => 'Port zu dem verbunden wird'
+        'path'              => 'Pfad der Wolke, e.g. /RPC2' // benötigt
+        'registerProcedure' => 'Prozedur die aufgerufen wird, ' .
+                               'z.B. myCloud.rssPleaseNotify' // benötigt
+        'protocol'          => 'Protokoll das verwendet wird, z.B. ' .
+                               'soap oder xml-rpc' // benötigt
+    ),
+    // Eine Texteingabebox die im Feed angezeigt werden kann
+    // optional, ignoriert wenn Atom verwendet wird
+    'textInput'   => array(
+        'title'       => 'Die Überschrift des Senden Buttons im ' .
+                         'Texteingabefeld' // benötigt,
+        'description' => 'Beschreibt das Texteingabefeld' // benötigt
+        'name'        => 'Der Name des Text Objekts im ' .
+                         'Texteingabefeld' // benötigt
+        'link'        => 'Die URL des CGI Skripts das Texteingabe ' .
+                         'Anfragen bearbeitet' // benötigt
+    ),
+    // Hinweise geben welche Stunden übersprungen werden können
+    // optional, ignoriert wenn Atom verwendet wird
+    'skipHours'   => array(
+        'hour in 24 format', // z.B. 13 (1pm)
+        // bis zu 24 Zeilen dessen Werte eine Nummer
+        // zwischen 0 und 23 sein müssen
+    ),
+    // Hinweise geben welche Tage übersprungen werden können
+    // optional, ignoriert wenn Atom verwendet wird
+    'skipDays '   => array(
+        'a day to skip', // z.B. Montag
+        // bis zu 7 Zeilen dessen Werte Montag, Dienstag, Mittwoch,
+        // Donnerstag, Freitag, Samstag oder Sonntag sind
+    ),
+    'itunes'      => array(
+        'author'       => 'Musiker Spalte' // optional, Standard der
+                                           // Wert der author Spalte
+        'owner'        => array(
+            'name' => 'Name des Eigentümers' // optional, Standard ist der
+                                             // Wert der author Spalte
+            'email' => 'Email des Eigentümers' // optional, Standard ist der
+                                               // Haupt email Wert
+        ), // Eigentümer des Podcasts // optional
+        'image'        => 'Album/Podcast Bild' // optional, Standard ist der
+                                               // image Wert
+        'subtitle'     => 'Kurzbeschreibung' // optional, Standard ist der
+                                             // description Wert
+        'summary'      => 'Langbeschreibung' // optional, Standard ist der
+                                             // description Wert
+        'block'        => 'Verhindern das eine Episode ' .
+                          'erscheint (ja|nein)' // optional
+        'category'     => array(
+            array('main' => 'Hauptkategorie', // benötigt
+                  'sub'  => 'Unterkategorie' // optional
+            ),
+            // bis zu 3 Zeilen
+        ), // 'Kategoriespalte und iTunes Music Store Browse'
+           // benötigt
+        'explicit'     => 'Elterliche Anweisungsspalte ' .
+                          '(ja|nein|löschen)' // optional
+        'keywords'     => 'Eine kommagetrennte Liste von maximal ' .
+                          '12 Schlüsselwörtern' // optional
+        'new-feed-url' => 'Verwendet um iTunes über eine neue URL ' .
+                          'Lokation zu informieren' // optional
+    ), // Itunes Erweiterungsdaten
+       // optional, ignoriert wenn Atom verwendet wird
+    'entries'     => array(
+        array(
+            'title'        => 'Titel des Feedeintrags', // benötigt
+            'link'         => 'URL zum Feedeintrag', // benötigt
+            'description'  => 'Kurzversion des Feedeintrags', // nur Text, kein
+                                                              // HTML, benötigt
+            'guid'         => 'Id des Artikels, wenn nicht angegeben ' .
+                              'wird der link Wert verwendet', //optional
+            'content'      => 'Langversion', // kann HTML enthalten, optional
+            'lastUpdate'   => 'Zeitstempel des ' .
+                              'Veröffnetlichungsdatums', // optional
+            'comments'     => 'Kommentarseite des Feedeintrags', // optional
+            'commentRss'   => 'Die FeedURL der zugehörenden ' .
+                              'Kommentare', // optional
+            'source'       => array(
+                'title' => 'Titel der Originalen Quelle' // benötigt
+                'url' => 'URL der originalen Quelle' // benötigt
+            ), // Originale Quelle des Feedeintrags // optional
+            'category'     => array(
+                array(
+                    'term' => 'Überschrift der ersten Kategorie' // benötigt
+                    'scheme' => 'URL die das Kategorisierungsschema ' .
+                                'identifiziert' // optional
+                ),
+                array(
+                    //Daten der zweiten Kategorie und so weiter
+                )
+            ), // Liste der zugeordneten Kategorien // optional
+            'enclosure'    => array(
+                array(
+                    'url' => 'URL des verlinkten Anhangs' // benötigt
+                    'type' => 'Mime Typ des Anhangs' // optional
+                    'length' => 'Länge des verlinkten ' .
+                                'Inhalts oktal' // optional
+                ),
+                array(
+                    // Daten für den zweiten Anhang und so weiter
+                )
+            ) // Liste der Anhänge des Feedeintrags // optional
+        ),
+        array(
+            // Daten für den zweiten Eintrag und so weiter
+        )
+    )
+);
 ]]>
             </programlisting>
 

@@ -83,7 +83,8 @@ public function barAction()
 
 public function bazAction()
 {
-    // weiterleiten zu einer Aktion in einem anderen Controller in einem anderen Modul Foo_BarController::bazAction():
+    // weiterleiten zu einer Aktion in einem anderen Controller in einem
+    // anderen Modul Foo_BarController::bazAction():
     $this->_forward('baz', 'bar', 'foo', array('baz' => 'bogus'));
 }
 ]]>
