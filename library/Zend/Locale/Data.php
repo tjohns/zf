@@ -289,17 +289,25 @@ class Zend_Locale_Data
     public static function getList($locale, $path, $value = false)
     {
         $locale = self::_checkLocale($locale);
-        if (isset(self::$_cache)) {
-            $val = $value;
-            if (is_array($value)) {
-                $val = implode('_' , $value);
-            }
 
-            $val = urlencode($val);
-            $id = strtr('Zend_LocaleL_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
-            if ($result = self::$_cache->load($id)) {
-                return unserialize($result);
-            }
+        if (!isset(self::$_cache)) {
+            require_once 'Zend/Cache.php';
+            self::$_cache = Zend_Cache::factory(
+                'Core',
+                'File',
+                array('automatic_serialization' => true),
+                array());
+        }
+
+        $val = $value;
+        if (is_array($value)) {
+            $val = implode('_' , $value);
+        }
+
+        $val = urlencode($val);
+        $id = strtr('Zend_LocaleL_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
+        if ($result = self::$_cache->load($id)) {
+            return unserialize($result);
         }
 
         $temp = array();
@@ -818,16 +826,23 @@ class Zend_Locale_Data
     {
         $locale = self::_checkLocale($locale);
 
-        if (isset(self::$_cache)) {
-            $val = $value;
-            if (is_array($value)) {
-                $val = implode('_' , $value);
-            }
-            $val = urlencode($val);
-            $id = strtr('Zend_LocaleC_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
-            if ($result = self::$_cache->load($id)) {
-                return unserialize($result);
-            }
+        if (!isset(self::$_cache)) {
+            require_once 'Zend/Cache.php';
+            self::$_cache = Zend_Cache::factory(
+                'Core',
+                'File',
+                array('automatic_serialization' => true),
+                array());
+        }
+
+        $val = $value;
+        if (is_array($value)) {
+            $val = implode('_' , $value);
+        }
+        $val = urlencode($val);
+        $id = strtr('Zend_LocaleC_' . $locale . '_' . $path . '_' . $val, array('-' => '_', '%' => '_', '+' => '_'));
+        if ($result = self::$_cache->load($id)) {
+            return unserialize($result);
         }
 
         switch(strtolower($path)) {
