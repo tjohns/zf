@@ -215,8 +215,10 @@ class MyValid_PasswordStrength extends Zend_Validate_Abstract
 
     protected $_messageTemplates = array(
         self::LENGTH => "'%value%' muß mindestens 8 Zeichen lang sein",
-        self::UPPER  => "'%value%' muß mindestens ein großgeschriebenes Zeichen enthalten",
-        self::LOWER  => "'%value%' muß mindestens ein kleingeschriebenes Zeichen enthalten",
+        self::UPPER  => "'%value%' muß mindestens ein großgeschriebenes "
+                      . "Zeichen enthalten",
+        self::LOWER  => "'%value%' muß mindestens ein kleingeschriebenes "
+                      . "Zeichen enthalten",
         self::DIGIT  => "'%value%' muß mindestens eine Ziffer enthalten"
     );
 

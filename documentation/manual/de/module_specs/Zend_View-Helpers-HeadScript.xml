@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14385 -->
+<!-- EN-Revision: 14463 -->
 <sect3 id="zend.view.helpers.initial.headscript">
     <title>HeadScript Helfer</title>
 
@@ -52,7 +52,10 @@
             <title>Headscript mit abhängigen Kommentaren</title>
             <programlisting role="php"><![CDATA[
 // Scripte hinzufügen
-$this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
+$this->headScript()->appendFile(
+    '/js/prototype.js',
+    'text/javascript',
+    array('conditional' => 'lt IE 7'));
 ]]>
         </programlisting>
 
@@ -142,7 +145,8 @@ $this->headScript()->appendFile('/js/prototype.js')
         <programlisting role="php"><![CDATA[
 // Skripte in eine Reihenfolge bringen
 
-// An einem bestimmten Offset Platzieren um sicherzustellen das es als letztes geladen wird
+// An einem bestimmten Offset Platzieren um Sicherzustellen
+// das es als letztes geladen wird
 $this->headScript()->offsetSetFile(100, '/js/myfuncs.js');
 
 // Scriptige Effekte verwenden (append verwendet den nächsten Index, 101)

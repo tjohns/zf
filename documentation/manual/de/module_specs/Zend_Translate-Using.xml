@@ -35,7 +35,11 @@ print "Hier ist Zeile zwei\n";
     <example id="zend.translate.using.example2">
         <title>Beispiel für mehrsprachigen PHP Code</title>
         <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', '/path/to/translation/source-de.mo', 'de');
+$translate = new Zend_Translate(
+    'gettext',
+    '/path/to/translation/source-de.mo',
+    'de'
+);
 $translate->addTranslation('//my/path/fr-source.mo', 'fr');
 
 print $translate->_("Beispiel") . "\n";
@@ -59,7 +63,11 @@ print $translate->_("Hier ist Zeile zwei") . "\n";
         Erstelle ein neues <code>Zend_Translate</code> Objekt und definiere den Basis Adapter:
 
         <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', '/path/to/translation/source-de.mo', 'de');
+$translate = new Zend_Translate(
+    'gettext',
+    '/path/to/translation/source-de.mo',
+    'de'
+);
 ]]>
         </programlisting>
 
@@ -871,12 +879,14 @@ $translate = new Zend_Translate(
     array('scan' => Zend_Translate::LOCALE_FILENAME));
 
 // Beispiel 4:
-// Gibt 'it' als Übersetzungsquelle zurück und überschreibt die automatischen Eigenschaften
+// Gibt 'it' als Übersetzungsquelle zurück und überschreibt
+// die automatischen Eigenschaften
 $translate = new Zend_Translate(
     'gettext',
     '\my_it.mo',
     'auto',
-    array('scan' => Zend_Translate::LOCALE_FILENAME));
+    array('scan' => Zend_Translate::LOCALE_FILENAME)
+);
 $translate->addTranslation('\my_ru.mo', 'ru');
 $translate->setLocale('it_IT');
 ]]>
@@ -1217,7 +1227,8 @@ if (!($translate->isTranslated('message1', true, 'de'))) {
 }
 
 if ($translate->isTranslated('message1', false, 'de')) {
-    print "'message1' kann in 'de_AT' übersetzt werden da es zu 'de' zurückfällt";
+    print "'message1' kann in 'de_AT' übersetzt werden " .
+    "da es zu 'de' zurückfällt";
 }
 ]]>
             </programlisting>
