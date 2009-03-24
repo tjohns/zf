@@ -89,7 +89,7 @@ class Zend_Amf_Request
     public function initialize($request)
     {
         $this->_inputStream  = new Zend_Amf_Parse_InputStream($request);
-        $this->_deserializer = new Zend_Amf_Parse_AMF0_Deserializer($this->_inputStream);
+        $this->_deserializer = new Zend_Amf_Parse_Amf0_Deserializer($this->_inputStream);
         $this->readMessage($this->_inputStream);
         return $this;
     }
