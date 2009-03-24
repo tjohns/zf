@@ -221,7 +221,7 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
     public function testHandleLoadedClassAmf3NetConnection()
     {
         // serialize the data to an AMF output stream
-        $data = "12345";
+        $data[] = "12345";
         $this->_server->setClass('Zend_Amf_testclass');
         $newBody = new Zend_Amf_Value_MessageBody("Zend_Amf_testclass.test1","/1",$data);
         $request = new Zend_Amf_Request();
