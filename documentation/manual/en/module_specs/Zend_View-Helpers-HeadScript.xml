@@ -54,7 +54,11 @@
             <title>Headscript With Conditional Comments</title>
             <programlisting role="php"><![CDATA[
 // adding scripts
-$this->headScript()->appendFile('/js/prototype.js', 'text/javascript', array('conditional' => 'lt IE 7');
+$this->headScript()->appendFile(
+    '/js/prototype.js',
+    'text/javascript',
+    array('conditional' => 'lt IE 7')
+);
 ]]>
             </programlisting>
         </example>
