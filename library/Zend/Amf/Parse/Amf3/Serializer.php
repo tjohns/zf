@@ -78,6 +78,9 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
                     $this->writeObject($data);
                     break;
                 case Zend_Amf_Constants::AMF3_BYTEARRAY:
+                    $this->writeString($data instanceof Zend_Amf_Value_ByteArray ? $data->getData() : $data);
+                    break;
+                case Zend_Amf_Constants::AMF3_XMLSTRING;
                     $this->writeString($data);
                     break;
                 default:
@@ -119,6 +122,14 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
                         $markerType = Zend_Amf_Constants::AMF3_DATE;
                     } else if ($data instanceof Zend_Amf_Value_ByteArray) {
                         $markerType = Zend_Amf_Constants::AMF3_BYTEARRAY;
+                    } else if ($data instanceof DOMDocument) {
+                        // convert object to string
+                        $data = $data->saveXml();
+                        $markerType = Zend_Amf_Constants::AMF3_XMLSTRING;
+                    } else if ($data instanceof SimpleXMLElement) {
+                        // convert object to string;
+                        $data = $data->asXML();
+                        $markerType = Zend_Amf_Constants::AMF3_XMLSTRING;
                     } else {
                         $markerType = Zend_Amf_Constants::AMF3_OBJECT;
                     }
@@ -259,7 +270,6 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
             // Check to see if the user has defined an explicit Action Script type.
             case isset($object->_explicitType):
                 $className = $object->_explicitType;
-                unset($object->_explicitType);
                 break;
 
             // Check if user has defined a method for accessing the Action Script type
@@ -279,7 +289,9 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
                 case Zend_Amf_Constants::ET_PROPLIST:
                     $count = 0;
                     foreach($object as $key => $value) {
-                        $count++;
+                        if( $key[0] != "_") {
+                            $count++;
+                        }
                     }
                     $traitsInfo |= ($count << 4);
 
@@ -291,12 +303,16 @@ class Zend_Amf_Parse_Amf3_Serializer extends Zend_Amf_Parse_Serializer
 
                     // Write the object Key's to the output stream
                     foreach ($object as $key => $value) {
-                        $this->writeString($key);
+                        if( $key[0] != "_") {
+                            $this->writeString($key);
+                        }
                     }
 
                     //Write the object values to the output stream.
                     foreach ($object as $key => $value) {
-                        $this->writeTypeMarker($value);
+                        if( $key[0] != "_") {
+                            $this->writeTypeMarker($value);
+                        }
                     }
                     break;
                 case Zend_Amf_Constants::ET_EXTERNAL:
