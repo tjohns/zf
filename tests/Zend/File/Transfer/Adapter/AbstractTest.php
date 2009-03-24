@@ -512,6 +512,8 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
                 'bar' => array('ignoreNoFile' => false, 'useByteString' => true),
                 'baz' => array('ignoreNoFile' => false, 'useByteString' => true),
                 'foo' => array('ignoreNoFile' => false, 'useByteString' => true),
+                'file_0_' => array('ignoreNoFile' => false, 'useByteString' => true),
+                'file_1_' => array('ignoreNoFile' => false, 'useByteString' => true),
             ), $this->adapter->getOptions());
 
         $this->adapter->setOptions(array('ignoreNoFile' => true));
@@ -520,6 +522,8 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
                 'bar' => array('ignoreNoFile' => true, 'useByteString' => true),
                 'baz' => array('ignoreNoFile' => true, 'useByteString' => true),
                 'foo' => array('ignoreNoFile' => true, 'useByteString' => true),
+                'file_0_' => array('ignoreNoFile' => true, 'useByteString' => true),
+                'file_1_' => array('ignoreNoFile' => true, 'useByteString' => true),
             ), $this->adapter->getOptions());
 
         $this->adapter->setOptions(array('ignoreNoFile' => false), 'foo');
@@ -528,13 +532,15 @@ class Zend_File_Transfer_Adapter_AbstractTest extends PHPUnit_Framework_TestCase
                 'bar' => array('ignoreNoFile' => true, 'useByteString' => true),
                 'baz' => array('ignoreNoFile' => true, 'useByteString' => true),
                 'foo' => array('ignoreNoFile' => false, 'useByteString' => true),
+                'file_0_' => array('ignoreNoFile' => true, 'useByteString' => true),
+                'file_1_' => array('ignoreNoFile' => true, 'useByteString' => true),
             ), $this->adapter->getOptions());
     }
 
     public function testGetAllAdditionalFileInfos()
     {
         $files = $this->adapter->getFileInfo();
-        $this->assertEquals(3, count($files));
+        $this->assertEquals(5, count($files));
         $this->assertEquals('baz.text', $files['baz']['name']);
     }
 

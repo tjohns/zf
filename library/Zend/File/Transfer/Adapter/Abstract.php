@@ -506,6 +506,10 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         unset($this->_validators[$key]);
         foreach (array_keys($this->_files) as $file) {
+            if (empty($this->_files[$file]['validators'])) {
+                continue;
+            }
+
             $index = array_search($key, $this->_files[$file]['validators']);
             if ($index === false) {
                 continue;
@@ -853,9 +857,15 @@ abstract class Zend_File_Transfer_Adapter_Abstract
 
         unset($this->_filters[$key]);
         foreach (array_keys($this->_files) as $file) {
-            if (!$index = array_search($key, $this->_files[$file]['filters'])) {
+            if (empty($this->_files[$file]['filters'])) {
                 continue;
             }
+
+            $index = array_search($key, $this->_files[$file]['filters']);
+            if ($index === false) {
+                continue;
+            }
+
             unset($this->_files[$file]['filters'][$index]);
         }
         return $this;
@@ -1121,6 +1131,9 @@ abstract class Zend_File_Transfer_Adapter_Abstract
                 $result[$key] = hash_file($hash, $value['name']);
             } else if (file_exists($value['tmp_name'])) {
                 $result[$key] = hash_file($hash, $value['tmp_name']);
+            } else {
+                require_once 'Zend/File/Transfer/Exception.php';
+                throw new Zend_File_Transfer_Exception("File '{$value['name']}' does not exist");
             }
         }
 

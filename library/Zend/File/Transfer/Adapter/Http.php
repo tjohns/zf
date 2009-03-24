@@ -177,6 +177,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                     return false;
                 }
 
+                $this->_files[$file]['tmp_name'] = $filename;
                 $this->_files[$file]['received'] = true;
             }
 
