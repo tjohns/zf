@@ -259,7 +259,8 @@ class Foo
     }
 
     /**
-     * Suffix setzen; aktualisiert die statische Suffix Regel im Beugungsmechanismus
+     * Suffix setzen
+     * aktualisiert die statische Suffix Regel im Beugungsmechanismus
      *
      * @param  string $suffix
      * @return Foo

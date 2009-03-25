@@ -23,7 +23,8 @@ class MyFilter implements Zend_Filter_Interface
 {
     public function filter($value)
     {
-        // einige Transformationen über $value durchführen um $valueFiltered zu erhalten
+        // einige Transformationen über $value durchführen
+        // um $valueFiltered zu erhalten
 
         return $valueFiltered;
     }

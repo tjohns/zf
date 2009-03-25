@@ -108,8 +108,8 @@ $service = new Zend_Gdata_Calendar($client);
             </para>
             <programlisting role="php"><![CDATA[
 /*
- * Empfängt die aktuelle URL so das der AuthSub Server weiß wohin er den Benutzer
- * umleiten soll nachdem die Authentifizierung komplett ist.
+ * Empfängt die aktuelle URL so das der AuthSub Server weiß wohin er den
+ * Benutzer umleiten soll nachdem die Authentifizierung komplett ist.
  */
 function getCurrentUrl()
 {
@@ -147,8 +147,8 @@ function getAuthSubHttpClient()
 {
     global $_SESSION, $_GET;
 
-    // Wenn es keine AuthSub Session oder einmal-benutzbares Token gibt der auf uns wartet,
-    // den Benutzer zum AuthSub Server umleiten um einen zu erhalten.
+    // Wenn es keine AuthSub Session oder einmal-benutzbares Token gibt die auf
+    // uns warten, den Benutzer zum AuthSub Server umleiten um Ihn zu erhalten
     if (!isset($_SESSION['sessionToken']) && !isset($_GET['token'])) {
         // Parameter für den AuthSub Server
         $next = getCurrentUrl();
@@ -169,14 +169,15 @@ function getAuthSubHttpClient()
          exit();
     }
 
-    // Konvertiert ein AuthSub einmal-benutzbares Token in ein Session Token wenn das notwendig ist
+    // Konvertiert ein AuthSub einmal-benutzbares Token in ein Session
+    // Token wenn das notwendig ist
     if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
         $_SESSION['sessionToken'] =
             Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
     }
 
-    // An diesem Punkt sind wir authentifiziert über AuthSub und können eine authentifizierte
-    // HTTP Client Instanz holen
+    // An diesem Punkt sind wir authentifiziert über AuthSub und können
+    // eine authentifizierte HTTP Client Instanz holen
 
     // Erstellt einen authentifizierte HTTP Client
     $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['sessionToken']);
@@ -186,7 +187,7 @@ function getAuthSubHttpClient()
 // -> Skript Bearbeitung beginnt hier <-
 
 // Sicher stellen das der Benutzer eine gültige Session hat, sodas der
-// AuthSub Session Token gespeichert werden kann sobald er vorhanden ist.
+// AuthSub Session Token gespeichert werden kann sobald er vorhanden ist
 session_start();
 
 // Erstellt eine Instanz des Kalender Services, und leitet den Benutzer
@@ -409,7 +410,8 @@ try {
             </para>
             <programlisting role="php"><![CDATA[
 $eventURL =
-    "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
+    "http://www.google.com/calendar/feeds/default/private/full/" .
+    "g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);
@@ -509,7 +511,8 @@ try {
                 seine Übergabe als Argument zur <code>insertEvent()</code> Funktion des Kalender Services.
             </para>
             <programlisting role="php"><![CDATA[
-// Erstellt einen neuen Eintrag und verwendet die magische Factory Methode vom Kalender Service
+// Erstellt einen neuen Eintrag und verwendet die magische Factory
+// Methode vom Kalender Service
 $event= $service->newEventEntry();
 
 // Gibt das Event bekannt mit den gewünschten Informationen
@@ -585,7 +588,7 @@ $reminder = $service->newReminder();
 $reminder->method = "email";
 $reminder->minutes = "10";
 
-// Die Erinnerung einem existierenden Event als "when" Eigenschaft hinzugüfen
+// Die Erinnerung einem existierenden Event als "when" Eigenschaft hinzufügen
 $when = $event->when[0];
 $when->reminders = array($reminder);
 ]]>
@@ -614,11 +617,13 @@ $when->reminders = array($reminder);
                 RFC 2445.
             </para>
             <programlisting role="php"><![CDATA[
- // Erstelle einen neuen Eintrag und verwendet die magische Factory Methode des Kalender Services
+// Erstelle einen neuen Eintrag und verwendet die magische
+// Factory Methode des Kalender Services
 $event= $service->newEventEntry();
 
 // Gibt das Event mit den gewünschten Informationen bekannt
-// Es ist zu beachten das jedes Attribut als Instanz der betreffenden Klasse erstellt wird
+// Es ist zu beachten das jedes Attribut als Instanz
+// der betreffenden Klasse erstellt wird
 $event->title = $service->newTitle("Mein wiederkehrendes Event");
 $event->where = array($service->newWhere("Palo Alto, Kalifornien"));
 $event->content =
@@ -626,7 +631,7 @@ $event->content =
                          'das jeden Dienstag von 01.05.2007 bis ' .
                          '04.09.2007 stattfinden. Kein RSVP benötigt.");
 
-// Setze die Dauer und Frequenz durch Spezifizierung des Wiederholungs Patterns.
+// Setzt Dauer und Frequenz durch Spezifizierung des Wiederholungs Patterns
 
 $recurrence = "DTSTART;VALUE=DATE:20070501\r\n" .
         "DTEND;VALUE=DATE:20070502\r\n" .
@@ -635,7 +640,8 @@ $recurrence = "DTSTART;VALUE=DATE:20070501\r\n" .
 $event->recurrence = $service->newRecurrence($recurrence);
 
 // Das Event zum Kalender Server hochladen
-// Eine Kopie des Events wird zurückgegeben, wenn es auf dem Server gespeichert wird
+// Eine Kopie des Events wird zurückgegeben,
+// wenn es auf dem Server gespeichert wird
 $newEvent = $service->insertEvent($event);
 ]]>
             </programlisting>
@@ -651,7 +657,8 @@ $newEvent = $service->insertEvent($event);
                 gespeichert werden.
             </para>
             <programlisting role="php"><![CDATA[
- // Erstelle einen neuen Eintrag und verwendet die magische Factory Methode des Kalender Services
+ // Erstelle einen neuen Eintrag und verwendet die magische
+ // Factory Methode des Kalender Services
 $event= $service->newEventEntry();
 
 // Gibt das Event mit den gewünschten Informationen bekannt
@@ -659,7 +666,8 @@ $event->content= $service->newContent("Dinner at Joe's Diner on Thursday");
 $event->quickAdd = $service->newQuickAdd("true");
 
 // Das Event zum Kalender Server hochladen
-// Eine Kopie des Events wird zurückgegeben, wenn es auf dem Server gespeichert wird
+// Eine Kopie des Events wird zurückgegeben,
+// wenn es auf dem Server gespeichert wird
 $newEvent = $service->insertEvent($event);
 ]]>
             </programlisting>

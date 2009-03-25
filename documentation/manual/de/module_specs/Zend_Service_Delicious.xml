@@ -216,7 +216,8 @@ $delicious->deletePost($posts[0]->getUrl());
             <programlisting role="php"><![CDATA[
 $delicious = new Zend_Service_Delicious('username', 'password');
 
-// Neuen Beitrag erstellen, ändern und abspeichern (Verkettung der Methodenaufrufe)
+// Neuen Beitrag erstellen, ändern und abspeichern
+// (Verkettung der Methodenaufrufe)
 $delicious->createNewPost('Zend Framework', 'http://framework.zend.com')
           ->setNotes('Zend Framework Homepage')
           ->save();

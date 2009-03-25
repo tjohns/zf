@@ -72,7 +72,8 @@ $resultSet = $technorati->search('PHP');
 // ein neues Zend_Service_Technorati mit einem gültigen API_KEY erstellen
 $technorati = new Zend_Service_Technorati('VALID_API_KEY');
 
-// Die Abfrage nach Ergebnissen mit etwas Authority filtern (Ergebnisse von Blogs mit einer Handvoll Links)
+// Die Abfrage nach Ergebnissen mit etwas Authority filtern
+// (Ergebnisse von Blogs mit einer Handvoll Links)
 $options = array('authority' => 'a4');
 
 // Technorati nach dem Schlüsselwort PHP durchsuchen

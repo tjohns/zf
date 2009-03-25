@@ -216,7 +216,8 @@ $cell->setRow('1');
 $cell->setColumn('3');
 $entry->cell = $cell;
 
-// ... $entry kann dann verwendet werden um eine Aktualisierung an eine Google Tabellenkalkulation zu senden
+// ... $entry kann dann verwendet werden um eine Aktualisierung
+// an eine Google Tabellenkalkulation zu senden
 ]]>
         </programlisting>
 

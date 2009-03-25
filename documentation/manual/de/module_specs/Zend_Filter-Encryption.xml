@@ -186,10 +186,17 @@ print $encrypted;
 
         <programlisting role="php"><![CDATA[
 // Verwende openssl und gib einen privaten Schlüssel an
-$filter = new Zend_Filter_Encrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Encrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+);
 
-// natürlich kann man die öffentlichen Schlüssel auch bei der Instanziierung angeben
-$filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/second.pem');
+// natürlich kann man die öffentlichen Schlüssel auch
+// bei der Instanziierung angeben
+$filter->setPublicKey(array(
+    '/public/key/path/first.pem',
+    '/public/key/path/second.pem'
+);
 ]]>
         </programlisting>
 
@@ -209,10 +216,15 @@ $filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/seco
 
         <programlisting role="php"><![CDATA[
 // Verwende openssl und gib einen privaten Schlüssel an
-$filter = new Zend_Filter_Encrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Encrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+);
 
-// Natürlich kann man die öffentlichen Schlüssel auch bei der Instanziierung angeben
-$filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/second.pem')
+// Natürlich kann man die öffentlichen Schlüssel
+// auch bei der Instanziierung angeben
+$filter->setPublicKey(array('/public/key/path/first.pem',
+                            '/public/key/path/second.pem')
        ->setPassphrase('mypassphrase');
 ]]>
         </programlisting>
@@ -234,10 +246,15 @@ $filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/seco
 
         <programlisting role="php"><![CDATA[
 // Verwende openssl und gib einen privaten Schlüssel an
-$filter = new Zend_Filter_Encrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Encrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+);
 
-// natürlich kann man die öffentlichen Schlüssel auch bei der Instaiziierung angeben
-$filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/second.pem')
+// natürlich kann man die öffentlichen Schlüssel
+// auch bei der Instaiziierung angeben
+$filter->setPublicKey(array('/public/key/path/first.pem',
+                            '/public/key/path/second.pem')
        ->setPassphrase('mypassphrase');
 
 $encrypted = $filter->filter('text_to_be_encoded');

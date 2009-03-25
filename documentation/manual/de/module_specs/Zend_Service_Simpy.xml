@@ -128,16 +128,21 @@ $simpy->saveLink(
 $simpy->saveLink(
     'Zend Framework'
     'http://framework.zend.com',
-    Zend_Service_Simpy_Link::ACCESSTYPE_PRIVATE, // der Zugriffstyp wurde geändert
-    'php, zend, framework' // Die Reihenfolge der Tags hat sich geändert
-    'Zend Framework' // Alternativer Titel wurde geändert
-    'This site REALLY rocks!' // Notiz hat sich geändert
+    // der Zugriffstyp wurde geändert
+    Zend_Service_Simpy_Link::ACCESSTYPE_PRIVATE,
+    // Die Reihenfolge der Tags hat sich geändert
+    'php, zend, framework'
+    // Alternativer Titel wurde geändert
+    'Zend Framework'
+    // Notiz hat sich geändert
+    'This site REALLY rocks!'
 );
 
 /* Den Link löschen */
 $simpy->deleteLink('http://framework.zend.com');
 
-/* Ein wirklich einfacher Weg den Frühjahrsputz bei deinen Links zu machen ;-) */
+/* Ein wirklich einfacher Weg den Frühjahrsputz
+   bei deinen Links zu machen ;-) */
 $linkSet = $this->_simpy->getLinks();
 foreach ($linkSet as $link) {
     $this->_simpy->deleteLink($link->getUrl());

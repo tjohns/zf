@@ -90,10 +90,16 @@ print $decrypted;
 
         <programlisting role="php"><![CDATA[
 // Verwende openssl und gib einen privaten Schlüssel an
-$filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Decrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+);
 
 // natürlich kann man den Umschlagschlüssel auch bei der Instanziierung angeben
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/second.pem');
+$filter->setEnvelopeKey(array(
+    '/key/from/encoder/first.pem',
+    '/key/from/encoder/second.pem'
+);
 ]]>
         </programlisting>
 
@@ -111,10 +117,14 @@ $filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/
 
         <programlisting role="php"><![CDATA[
 // Verwende openssl und gib einen privaten Schlüssel an
-$filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Decrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+);
 
 // natürlich kann man den Umschlagschlüssel auch bei der Instanziierung angeben
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/second.pem');
+$filter->setEnvelopeKey(array('/key/from/encoder/first.pem',
+                              '/key/from/encoder/second.pem');
        ->setPassphrase('mypassphrase');
 ]]>
         </programlisting>
@@ -126,10 +136,14 @@ $filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/
 
         <programlisting role="php"><![CDATA[
 // Verwende openssl und gib einen privaten Schlüssel an
-$filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Decrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+);
 
 // natürlich kann man den Umschlagschlüssel auch bei der Instanziierung angeben
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/second.pem');
+$filter->setEnvelopeKey(array('/key/from/encoder/first.pem',
+                              '/key/from/encoder/second.pem');
        ->setPassphrase('mypassphrase');
 
 $decrypted = $filter->filter('encoded_text_normally_unreadable');

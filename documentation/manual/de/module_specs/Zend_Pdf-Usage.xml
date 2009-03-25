@@ -65,7 +65,8 @@ try {
 } catch (Zend_Pdf_Exception $e) {
     // Beispiel wie man mit Ladefehlern bei Grafiken umgeht.
     if ($e->getMessage() != 'Image Erweiterung nicht installiert.' &&
-        $e->getMessage() != 'JPG Unterstützung ist nicht richtig konfiguriert.') {
+        $e->getMessage() != 'JPG Unterstützung ist nicht richtig ' .
+                            'konfiguriert.') {
         throw $e;
     }
     $stampImage = null;

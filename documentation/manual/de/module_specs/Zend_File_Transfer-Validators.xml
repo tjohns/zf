@@ -511,7 +511,8 @@ $upload = new Zend_File_Transfer();
 // Dateien mit der Erweiterung php oder exe nicht erlauben
 $upload->addValidator('ExcludeExtension', false, 'php,exe');
 
-// Dateien mit der Erweiterung php oder exe nicht erlauben aber die Array Schreibweise verwenden
+// Dateien mit der Erweiterung php oder exe nicht erlauben
+// aber die Array Schreibweise verwenden
 $upload->addValidator('ExcludeExtension', false, array('php', 'exe'));
 
 // Prüft abhängig von der Groß-/Kleinschreibung
@@ -626,7 +627,7 @@ $upload = new Zend_File_Transfer();
 // Das temporäre Verzeichnis für die Prüfung hinzufügen
 $upload->addValidator('Exists', false, '\temp');
 
-// Zwei Verzeichnisse hinzufügen inden die Array Schreibweise verwendet wird
+// Zwei Verzeichnisse hinzufügen indem die Array Schreibweise verwendet wird
 $upload->addValidator('Exists',
                       false,
                       array('\home\images', '\home\uploads'));
@@ -689,7 +690,8 @@ $upload = new Zend_File_Transfer();
 // Limitiert die Erweiterungen auf jpg und png Dateien
 $upload->addValidator('Extension', false, 'jpg,png');
 
-// Limitiert die Erweiterungen auf jpg und png Dateien, verwendet aber die Array Schreibweise
+// Limitiert die Erweiterungen auf jpg und png Dateien,
+// verwendet aber die Array Schreibweise
 $upload->addValidator('Extension', false, array('jpg', 'png'));
 
 // Abhängig von der Klein/Großschreibung prüfen
@@ -775,12 +777,14 @@ $upload = new Zend_File_Transfer();
 // Limitiert die Größe aller Dateien die hochgeladen werden auf 40000 Bytes
 $upload->addValidator('FilesSize', false, 40000);
 
-// Limitiert die Größe aller Dateien die hochgeladen werden auf maximal 4MB und minimal 10kB
+// Limitiert die Größe aller Dateien die hochgeladen
+// werden auf maximal 4MB und minimal 10kB
 $upload->addValidator('FilesSize',
                       false,
                       array('min' => '10kB', 'max' => '4MB'));
 
-// Wie zuvor, gibt aber die reine Dateigröße statt einem benutzerfreundlichen String zurück
+// Wie zuvor, gibt aber die reine Dateigröße
+// statt einem benutzerfreundlichen String zurück
 $upload->addValidator('FilesSize',
                       false,
                       array('min' => '10kB',
@@ -895,7 +899,8 @@ $upload->addValidator('IsCompressed', false);
 // Limitiert diese Prüfung auf Zip Dateien
 $upload->addValidator('IsCompressed', false, array('application/zip'));
 
-// Limitiert diese Prüfung auf Zip Dateien, und verwendet eine einfachere Schreibweise
+// Limitiert diese Prüfung auf Zip Dateien,
+// und verwendet eine einfachere Schreibweise
 $upload->addValidator('IsCompressed', false, 'zip');
 ]]>
             </programlisting>
@@ -933,7 +938,8 @@ $upload->addValidator('IsImage', false);
 // Limitiert diese Prüfung auf Gif Dateien
 $upload->addValidator('IsImage', false, array('application/gif'));
 
-// Limitiert diese Prüfung auf Jpeg Dateien, verwendet eine einfachere Schreibweise
+// Limitiert diese Prüfung auf Jpeg Dateien,
+// verwendet eine einfachere Schreibweise
 $upload->addValidator('IsImage', false, 'jpeg');
 ]]>
             </programlisting>

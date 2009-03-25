@@ -510,7 +510,8 @@ foreach($result->ports AS $port) {
         }
     }
 }
-// Man kann auf Bindungen, Nachrichten und Operationen und andere Elemente direkt zugreifen
+// Man kann auf Bindungen, Nachrichten und Operationen und andere
+// Elemente direkt zugreifen
 foreach($result->operations AS $operation) {
     // mach was
 }

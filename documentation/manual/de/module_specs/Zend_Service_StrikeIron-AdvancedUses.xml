@@ -26,9 +26,9 @@ $strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
 
 // Erhalte einen generellen Client zum Reverse Phone Lookup Service
 $phone = $strikeIron->getService(
-                          array('wsdl' =>
-                                'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
-                      );
+    array('wsdl' =>
+        'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
+    );
 
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;

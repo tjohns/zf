@@ -489,7 +489,8 @@ $s->setExpirationSeconds(5);
 
 Zend_Session::regenerateId();
 $id = Zend_Session::getId();
-session_write_close(); // Session freigeben damit der untere Prozess Sie verwenden kann
+// Session freigeben damit der untere Prozess Sie verwenden kann
+session_write_close();
 sleep(4); // nicht lange genug damit die Dinge ablaufen
 exec($script . "expireAll $id expireAll", $result);
 $result = $this->sortResult($result);
@@ -516,13 +517,15 @@ $s->g = 'guava';
 $s->p = 'peach';
 $s->p = 'plum';
 
-session_write_close(); // Session auflösen damit der untere Prozess sie verwenden kann
+// Session auflösen damit der untere Prozess sie verwenden kann
+session_write_close();
 sleep(6); // Nicht lange genug damit die Dinge ablaufen können
 exec($script . "expireAll $id expireGuava", $result);
 $result = $this->sortResult($result);
 session_start(); // Die bestimmte Session wiederherstellen
 $this->assertTrue($result === ';p === plum',
-    "Iterierung durch benannte Zend_Session Namensräume fehlgeschlaten (result=$result)");
+    "Iterierung durch benannte Zend_Session Namensräume " .
+    "fehlgeschlaten (result=$result)");
 ]]>
             </programlisting>
         </example>
