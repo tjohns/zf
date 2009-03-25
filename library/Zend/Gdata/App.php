@@ -789,13 +789,9 @@ class Zend_Gdata_App
      * @param string $string
      * @param string $className The class which is used as the return type
      * @param integer $majorProcolVersion (optional) The major protocol version
-     *        of the data model object that is to be created. The value of the
-     *        DEFAULT_MAJOR_PROTOCOL_VERSION constant will be used if this
-     *        parameter is not set explicitly.
+     *        of the data model object that is to be created.
      * @param integer $minorProcolVersion (optional) The minor protocol version
-     *        of the data model object that is to be created. The value of the
-     *        DEFAULT_MINOR_PROTOCOL_VERSION constant will be used if this
-     *        parameter is not set explicitly.
+     *        of the data model object that is to be created.
      * @throws Zend_Gdata_App_Exception
      * @return Zend_Gdata_App_Feed
      */
@@ -816,13 +812,6 @@ class Zend_Gdata_App
         }
 
         $feed = new $className();
-        if ($majorProtocolVersion === null) {
-            $majorProtocolVersion = self::DEFAULT_MAJOR_PROTOCOL_VERSION;
-        }
-        if ($minorProtocolVersion === null) {
-            $minorProtocolVersion = self::DEFAULT_MINOR_PROTOCOL_VERSION;
-        }
-
         $feed->setMajorProtocolVersion($majorProtocolVersion);
         $feed->setMinorProtocolVersion($minorProtocolVersion);
         $feed->transferFromXML($string);
