@@ -219,7 +219,19 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     public function __toString()
     {
         // It's used only for query visualisation, so we don't care about characters escaping
-        return (($this->_term->field === null)? '':$this->_term->field . ':') . $this->_term->text;
+        if ($this->_term->field !== null) {
+        	$query = $this->_term->field . ':';
+        } else {
+        	$query = '';
+        }
+
+        $query .= $this->_term->text;
+
+        if ($this->getBoost() != 1) {
+            $query = $query . '^' . round($this->getBoost(), 4);
+        }
+
+        return $query;
     }
 }
 

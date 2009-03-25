@@ -652,7 +652,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         }
 
         if ($this->getBoost() != 1) {
-            $query = '(' . $query . ')^' . $this->getBoost();
+            $query = '(' . $query . ')^' . round($this->getBoost(), 4);
         }
 
         return $query;

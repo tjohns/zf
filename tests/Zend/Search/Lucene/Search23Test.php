@@ -24,7 +24,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  */
 class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 {
-    public function testQueryParser()
+	public function testQueryParser()
     {
         $wildcardMinPrefix = Zend_Search_Lucene_Search_Query_Wildcard::getMinPrefixLength();
         Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength(0);
@@ -67,45 +67,44 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
                          '+contents:apache +type:1 +id:5',
                          'contents:apache AND type:1 AND id:5',
                          'f1:word1 f1:word2 and f1:word3',
-                         'f1:word1 not f1:word2 and f1:word3'
-                         );
+                         'f1:word1 not f1:word2 and f1:word3');
 
-        $rewritedQueries = array('+(title:"the right way") +(text:go)',
-                                 '+(title:"do it right") +(path:right modified:right contents:right)',
-                                 '(title:do) (path:it modified:it contents:it) (path:right modified:right contents:right)',
-                                 '(contents:test contents:text)',
-                                 '(contents:test contents:tested)',
-                                 '(contents:test contents:text)',
-                                 '(contents:amazon contents:email)',
-                                 // ....
-                                 '((contents:test) (contents:text)^0.5)',
-                                 '((contents:test) (contents:text)^0.5833 (contents:latest)^0.1667 (contents:left)^0.1667 (contents:list)^0.1667 (contents:meet)^0.1667 (contents:must)^0.1667 (contents:next)^0.1667 (contents:post)^0.1667 (contents:sect)^0.1667 (contents:task)^0.1667 (contents:tested)^0.1667 (contents:that)^0.1667 (contents:tort)^0.1667)',
-                                 '((path:"jakarta apache"~10) (modified:"jakarta apache"~10) (contents:"jakarta apache"~10))',
-                                 '(contents:business contents:but contents:buy contents:buying contents:by)',
-                                 '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
-                                 '(path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)',
-                                 '((path:jakarta modified:jakarta contents:jakarta)^4)^4 (path:apache modified:apache contents:apache)',
-                                 '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache"))^4 ((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (path:jakarta modified:jakarta contents:jakarta)',
-                                 '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (path:jakarta modified:jakarta contents:jakarta)',
-                                 '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (path:jakarta modified:jakarta contents:jakarta)',
-                                 '+((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) +((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '+((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) +((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '+(path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)',
-                                 '+((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '+((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '(<InsignificantQuery>)',
-                                 '<InsignificantQuery>',
-                                 '<InsignificantQuery>',
-                                 '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
-                                 '+((path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)) +(path:website modified:website contents:website)',
-                                 '+((path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)) +(path:website modified:website contents:website)',
-                                 '(+(title:return) +(title:"pink panther"))',
-                                 '(+(+title:return +title:value) +(title:"pink panther") +(body:cool))',
-                                 '+(contents:apache) +(<InsignificantQuery>) +(<InsignificantQuery>)',
-                                 '+(contents:apache) +(<InsignificantQuery>) +(<InsignificantQuery>)',
-                                 '(f1:word) (+(f1:word) +(f1:word))',
-                                 '(f1:word) (-(f1:word) +(f1:word))');
+        $rewrittenQueries = array('+(title:"the right way") +(text:go)',
+                                  '+(title:"do it right") +(pathkeyword:right path:right modified:right contents:right)',
+                                  '(title:do) (pathkeyword:it path:it modified:it contents:it) (pathkeyword:right path:right modified:right contents:right)',
+                                  '(contents:test contents:text)',
+                                  '(contents:test contents:tested)',
+                                  '(contents:test contents:text)',
+                                  '(contents:amazon contents:email)',
+                                  // ....
+                                  '((contents:test) (contents:text^0.5))',
+                                  '((contents:test) (contents:text^0.5833) (contents:latest^0.1667) (contents:left^0.1667) (contents:list^0.1667) (contents:meet^0.1667) (contents:must^0.1667) (contents:next^0.1667) (contents:post^0.1667) (contents:sect^0.1667) (contents:task^0.1667) (contents:tested^0.1667) (contents:that^0.1667) (contents:tort^0.1667))',
+                                  '((pathkeyword:"jakarta apache"~10) (path:"jakarta apache"~10) (modified:"jakarta apache"~10) (contents:"jakarta apache"~10))',
+                                  '(contents:business contents:but contents:buy contents:buying contents:by)',
+                                  '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
+                                  '(pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta) (pathkeyword:apache path:apache modified:apache contents:apache)',
+                                  '((pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)^4) (pathkeyword:apache path:apache modified:apache contents:apache)',
+                                  '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")^4) ((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)',
+                                  '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)',
+                                  '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)',
+                                  '+((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) +((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '+((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) +((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '+(pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta) (pathkeyword:apache path:apache modified:apache contents:apache)',
+                                  '+((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '+((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '(<InsignificantQuery>)',
+                                  '<InsignificantQuery>',
+                                  '<InsignificantQuery>',
+                                  '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) -((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '+((pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta) (pathkeyword:apache path:apache modified:apache contents:apache)) +(pathkeyword:website path:website modified:website contents:website)',
+                                  '+((pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta) (pathkeyword:apache path:apache modified:apache contents:apache)) +(pathkeyword:website path:website modified:website contents:website)',
+                                  '(+(title:return) +(title:"pink panther"))',
+                                  '(+(+title:return +title:value) +(title:"pink panther") +(body:cool))',
+                                  '+(contents:apache) +(<InsignificantQuery>) +(<InsignificantQuery>)',
+                                  '+(contents:apache) +(<InsignificantQuery>) +(<InsignificantQuery>)',
+                                  '(f1:word) (+(f1:word) +(f1:word))',
+                                  '(f1:word) (-(f1:word) +(f1:word))');
 
 
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
@@ -114,8 +113,7 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
             $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
 
             $this->assertTrue($query instanceof Zend_Search_Lucene_Search_Query);
-
-            $this->assertEquals($query->rewrite($index)->__toString(), $rewritedQueries[$id]);
+            $this->assertEquals($query->rewrite($index)->__toString(), $rewrittenQueries[$id]);
         }
 
         Zend_Search_Lucene_Search_Query_Wildcard::setMinPrefixLength($wildcardMinPrefix);
@@ -209,6 +207,31 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testQueryParserKeywordsHandlingPhrase()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
+
+
+        $query = Zend_Search_Lucene_Search_QueryParser::parse('"IndexSource/contributing.wishlist.html" AND home');
+
+        $this->assertEquals($query->__toString(), '+("IndexSource/contributing.wishlist.html") +(home)');
+        $this->assertEquals($query->rewrite($index)->__toString(),
+                            '+((pathkeyword:IndexSource/contributing.wishlist.html) (path:"indexsource contributing wishlist html") (modified:"indexsource contributing wishlist html") (contents:"indexsource contributing wishlist html")) +(pathkeyword:home path:home modified:home contents:home)');
+        $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '+( (path:"indexsource contributing wishlist html") (pathkeyword:IndexSource/contributing.wishlist.html)) +(contents:home)');
+
+
+        $hits = $index->find('"IndexSource/contributing.bugs.html"');
+
+        $this->assertEquals(count($hits), 1);
+        $expectedResultset = array(array(7, 1, 'IndexSource/contributing.bugs.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
     public function testBooleanQuery()
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
@@ -246,11 +269,11 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
     {
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
 
-        $query = Zend_Search_Lucene_Search_QueryParser::parse('"non-existing phrase" AND Home');
+        $query = Zend_Search_Lucene_Search_QueryParser::parse('"Non-existing phrase" AND Home');
 
-        $this->assertEquals($query->__toString(), '+("non existing phrase") +(home)');
+        $this->assertEquals($query->__toString(), '+("Non-existing phrase") +(home)');
         $this->assertEquals($query->rewrite($index)->__toString(),
-                            '+((path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(path:home modified:home contents:home)');
+                            '+((pathkeyword:"non existing phrase") (path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(pathkeyword:home path:home modified:home contents:home)');
         $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '<EmptyQuery>');
     }
 
@@ -283,15 +306,15 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
         $hits = $index->find('*cont*');
 
         $this->assertEquals(count($hits), 9);
-        $expectedResultset = array(array(8, 0.125253, 'IndexSource/contributing.html'),
-                                   array(4, 0.112122, 'IndexSource/copyright.html'),
-                                   array(2, 0.108491, 'IndexSource/contributing.patches.html'),
-                                   array(7, 0.077716, 'IndexSource/contributing.bugs.html'),
-                                   array(0, 0.050760, 'IndexSource/contributing.documentation.html'),
-                                   array(1, 0.049163, 'IndexSource/contributing.wishlist.html'),
-                                   array(3, 0.036159, 'IndexSource/about-pear.html'),
-                                   array(5, 0.021500, 'IndexSource/authors.html'),
-                                   array(9, 0.007422, 'IndexSource/core.html'));
+        $expectedResultset = array(array(8, 0.328087, 'IndexSource/contributing.html'),
+                                   array(2, 0.318592, 'IndexSource/contributing.patches.html'),
+                                   array(7, 0.260137, 'IndexSource/contributing.bugs.html'),
+                                   array(0, 0.203372, 'IndexSource/contributing.documentation.html'),
+                                   array(1, 0.202366, 'IndexSource/contributing.wishlist.html'),
+                                   array(4, 0.052931, 'IndexSource/copyright.html'),
+                                   array(3, 0.017070, 'IndexSource/about-pear.html'),
+                                   array(5, 0.010150, 'IndexSource/authors.html'),
+                                   array(9, 0.003504, 'IndexSource/core.html'));
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);

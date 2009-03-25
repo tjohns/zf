@@ -332,7 +332,19 @@ class Zend_Search_Lucene_Search_Query_Wildcard extends Zend_Search_Lucene_Search
     public function __toString()
     {
         // It's used only for query visualisation, so we don't care about characters escaping
-        return (($this->_pattern->field === null)? '' : $this->_pattern->field . ':') . $this->_pattern->text;
+        if ($this->_pattern->field !== null) {
+            $query = $this->_pattern->field . ':';
+        } else {
+            $query = '';
+        }
+
+        $query .= $this->_pattern->text;
+
+        if ($this->getBoost() != 1) {
+            $query = $query . '^' . round($this->getBoost(), 4);
+        }
+
+        return $query;
     }
 }
 

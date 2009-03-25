@@ -26,7 +26,7 @@
 require_once 'Zend/Search/Lucene/Search/Query.php';
 
 /**
- * Zend_Search_Lucene_Search_Weight_MultiTerm
+ * Zend_Search_Lucene_Search_Weight_Phrase
  */
 require_once 'Zend/Search/Lucene/Search/Weight/Phrase.php';
 
@@ -560,6 +560,10 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
         if ($this->_slop != 0) {
             $query .= '~' . $this->_slop;
+        }
+
+        if ($this->getBoost() != 1) {
+            $query .= '^' . round($this->getBoost(), 4);
         }
 
         return $query;

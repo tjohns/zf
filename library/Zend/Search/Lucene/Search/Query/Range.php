@@ -337,7 +337,8 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
              . (($this->_lowerTerm !== null)?  $this->_lowerTerm->text : 'null')
              . ' TO '
              . (($this->_upperTerm !== null)?  $this->_upperTerm->text : 'null')
-             . (($this->_inclusive)? ']' : '}');
+             . (($this->_inclusive)? ']' : '}')
+             . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
     }
 }
 

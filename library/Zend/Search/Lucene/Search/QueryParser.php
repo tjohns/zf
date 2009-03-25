@@ -31,8 +31,8 @@ require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
 /** Zend_Search_Lucene_Search_Query_Boolean */
 require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
 
-/** Zend_Search_Lucene_Search_Query_Phrase */
-require_once 'Zend/Search/Lucene/Search/Query/Phrase.php';
+/** Zend_Search_Lucene_Search_Query_Preprocessing_Phrase */
+require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Phrase.php';
 
 /** Zend_Search_Lucene_Search_Query_Wildcard */
 require_once 'Zend/Search/Lucene/Search/Query/Wildcard.php';
