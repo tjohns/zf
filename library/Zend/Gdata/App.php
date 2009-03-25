@@ -783,6 +783,10 @@ class Zend_Gdata_App
      *
      * @param  string $string
      * @param  string $className The class which is used as the return type
+     * @param integer $majorProcolVersion (optional) The major protocol version
+     *        of the data model object that is to be created.
+     * @param integer $minorProcolVersion (optional) The minor protocol version
+     *        of the data model object that is to be created.
      * @throws Zend_Gdata_App_Exception
      * @return Zend_Gdata_App_Feed
      */
@@ -799,7 +803,11 @@ class Zend_Gdata_App
             require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception("DOMDocument cannot parse XML: $php_errormsg");
         }
-        $feed = new $className($string);
+
+        $feed = new $className();
+        $feed->setMajorProtocolVersion($majorProtocolVersion);
+        $feed->setMinorProtocolVersion($minorProtocolVersion);
+        $feed->transferFromXML($string);
         $feed->setHttpClient(self::getstaticHttpClient());
         return $feed;
     }
