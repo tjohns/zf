@@ -132,24 +132,8 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
     {
         if (!($element instanceof DOMElement)) {
             if ($element) {
-                // Load the feed as an XML DOMDocument object
-                @ini_set('track_errors', 1);
-                $doc = new DOMDocument();
-                $success = @$doc->loadXML($element);
-                @ini_restore('track_errors');
-                if (!$success) {
-                    require_once 'Zend/Gdata/App/Exception.php';
-                    throw new Zend_Gdata_App_Exception("DOMDocument cannot parse XML: $php_errormsg");
-                }
-                $element = $doc->getElementsByTagName($this->_rootElement)->item(0);
-                if (!$element) {
-                    require_once 'Zend/Gdata/App/Exception.php';
-                    throw new Zend_Gdata_App_Exception('No root <' . $this->_rootElement . '> element found, cannot parse feed.');
-                }
-                $this->transferFromDOM($element);
+                $this->transferFromXML($element);
             }
-        } else {
-            $this->transferFromDOM($element);
         }
     }
 
