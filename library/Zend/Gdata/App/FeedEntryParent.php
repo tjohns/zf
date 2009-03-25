@@ -134,7 +134,9 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
             if ($element) {
                 $this->transferFromXML($element);
             }
-        }
+        } else {
+            $this->transferFromDOM($element);
+        }  
     }
 
     /**
