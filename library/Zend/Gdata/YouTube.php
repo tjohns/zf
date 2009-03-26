@@ -66,6 +66,12 @@ require_once 'Zend/Gdata/YouTube/PlaylistVideoFeed.php';
 require_once 'Zend/Gdata/YouTube/ActivityFeed.php';
 
 /**
+ * @see Zend_Gdata_YouTube_InboxFeed
+ */
+require_once 'Zend/Gdata/YouTube/InboxFeed.php';
+
+
+/**
  * Service class for interacting with the YouTube Data API.
  * @link http://code.google.com/apis/youtube/
  *
@@ -111,6 +117,14 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         'http://gdata.youtube.com/feeds/api/users/default/friendsactivity';
 
     /**
+     * The URI of the inbox feed for the currently authenticated user.
+     *
+     * @var string
+     */
+    const INBOX_FEED_URI =
+        'http://gdata.youtube.com/feeds/api/users/default/inbox';
+
+    /**
      * The maximum number of users for which activity can be requested for,
      * as enforced by the API.
      *
@@ -118,10 +132,40 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      */
     const ACTIVITY_FEED_MAX_USERS = 20;
 
+    /**
+     * The suffix for a feed of favorites.
+     *
+     * @var string
+     */
     const FAVORITES_URI_SUFFIX = 'favorites';
+
+    /**
+     * The suffix for the user's upload feed.
+     *
+     * @var string
+     */
     const UPLOADS_URI_SUFFIX = 'uploads';
+
+    /**
+     * The suffix for a feed of video responses.
+     *
+     * @var string
+     */
     const RESPONSES_URI_SUFFIX = 'responses';
+
+    /**
+     * The suffix for a feed of related videos.
+     *
+     * @var string
+     */
     const RELATED_URI_SUFFIX = 'related';
+
+    /**
+     * The suffix for a feed of messages (inbox entries).
+     *
+     * @var string
+     */
+    const INBOX_URI_SUFFIX = 'inbox';
 
     /**
      * Namespaces used for Zend_Gdata_YouTube
@@ -140,17 +184,19 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      *
      * @param Zend_Http_Client $client (optional) The HTTP client to use when
      *          when communicating with the Google servers.
-     * @param string $applicationId The identity of the app in the form of Company-AppName-Version
+     * @param string $applicationId The identity of the app in the form of
+     *        Company-AppName-Version
      * @param string $clientId The clientId issued by the YouTube dashboard
      * @param string $developerKey The developerKey issued by the YouTube dashboard
      */
-    public function __construct($client = null, $applicationId = 'MyCompany-MyApp-1.0', $clientId = null, $developerKey = null)
+    public function __construct($client = null,
+        $applicationId = 'MyCompany-MyApp-1.0', $clientId = null,
+        $developerKey = null)
     {
         $this->registerPackage('Zend_Gdata_YouTube');
         $this->registerPackage('Zend_Gdata_YouTube_Extension');
         $this->registerPackage('Zend_Gdata_Media');
         $this->registerPackage('Zend_Gdata_Media_Extension');
-
 
         // NOTE This constructor no longer calls the parent constructor
         $this->setHttpClient($client, $applicationId, $clientId, $developerKey);
@@ -163,14 +209,17 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      * @throws Zend_Gdata_App_HttpException
      * @return Zend_Gdata_App Provides a fluent interface
      */
-    public function setHttpClient($client, $applicationId = 'MyCompany-MyApp-1.0', $clientId = null, $developerKey = null)
+    public function setHttpClient($client,
+        $applicationId = 'MyCompany-MyApp-1.0', $clientId = null,
+        $developerKey = null)
     {
         if ($client === null) {
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
             require_once 'Zend/Gdata/App/HttpException.php';
-            throw new Zend_Gdata_App_HttpException('Argument is not an instance of Zend_Http_Client.');
+            throw new Zend_Gdata_App_HttpException(
+                'Argument is not an instance of Zend_Http_Client.');
         }
 
         if ($clientId != null) {
@@ -262,7 +311,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getRelatedVideoFeed($videoId = null, $location = null)
     {
         if ($videoId !== null) {
-            $uri = self::VIDEO_URI . "/" . $videoId . "/" . self::RELATED_URI_SUFFIX;
+            $uri = self::VIDEO_URI . "/" . $videoId . "/" .
+                self::RELATED_URI_SUFFIX;
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -283,7 +333,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getVideoResponseFeed($videoId = null, $location = null)
     {
         if ($videoId !== null) {
-            $uri = self::VIDEO_URI . "/" . $videoId . "/" . self::RESPONSES_URI_SUFFIX;
+            $uri = self::VIDEO_URI . "/" . $videoId . "/" .
+                self::RESPONSES_URI_SUFFIX;
         } else if ($location instanceof Zend_Gdata_Query) {
             $uri = $location->getQueryUrl();
         } else {
@@ -605,8 +656,10 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         $urlText = null;
         $tokenText = null;
         if ($responseElement != null) {
-            $urlElement = $responseElement->getElementsByTagName('url')->item(0);
-            $tokenElement = $responseElement->getElementsByTagName('token')->item(0);
+            $urlElement =
+                $responseElement->getElementsByTagName('url')->item(0);
+            $tokenElement =
+                $responseElement->getElementsByTagName('token')->item(0);
 
             if ($urlElement && $urlElement->hasChildNodes() &&
                 $tokenElement && $tokenElement->hasChildNodes()) {
@@ -620,7 +673,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
             return array('token' => $tokenText, 'url' => $urlText);
         } else {
             require_once 'Zend/Gdata/App/Exception.php';
-            throw new Zend_Gdata_App_Exception("form upload token not found in response");
+            throw new Zend_Gdata_App_Exception(
+                'Form upload token not found in response');
         }
     }
 
@@ -632,7 +686,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      * @throws Zend_Gdata_App_Exception
      * @return array An array containing a token and URL
      */
-    public function getFormUploadToken($videoEntry, $url='http://gdata.youtube.com/action/GetUploadToken')
+    public function getFormUploadToken($videoEntry,
+        $url='http://gdata.youtube.com/action/GetUploadToken')
     {
         if ($url != null && is_string($url)) {
             // $response is a Zend_Http_response object
@@ -640,7 +695,8 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
             return self::parseFormUploadTokenResponse($response->getBody());
         } else {
             require_once 'Zend/Gdata/App/HttpException.php';
-            throw new Zend_Gdata_App_Exception('Url must be provided as a string URL');
+            throw new Zend_Gdata_App_Exception(
+                'Url must be provided as a string URL');
         }
     }
 
@@ -694,6 +750,85 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         }
         return parent::getFeed(self::FRIEND_ACTIVITY_FEED_URI,
             'Zend_Gdata_YouTube_ActivityFeed');
+    }
+
+    /**
+     * Retrieve a feed of messages in the currently authenticated user's inbox.
+     *
+     * @throws Zend_Gdata_App_Exception if not logged in.
+     * @return Zend_Gdata_YouTube_InboxFeed|null 
+     */
+    public function getInboxFeedForCurrentUser()
+    {
+        if (!$this->isAuthenticated()) {
+            require_once 'Zend/Gdata/YouTube/App/Exception.php';
+            throw new Zend_Gdata_App_Exception('You must be authenticated to ' .
+                'use the getInboxFeedForCurrentUser function in Zend_' .
+                'Gdata_YouTube.');
+        }
+
+        return parent::getFeed(self::INBOX_FEED_URI,
+            'Zend_Gdata_YouTube_InboxFeed');
+    }
+    
+    /**
+     * Send a video message.
+     *
+     * Note: Either a Zend_Gdata_YouTube_VideoEntry or a valid video ID must
+     * be provided.
+     * 
+     * @param string $body The body of the message
+     * @param Zend_Gdata_YouTube_VideoEntry (optional) The video entry to send
+     * @param string $videoId The id of the video to send
+     * @param string $recipientUserName The username of the recipient
+     * @throws Zend_Gdata_App_InvalidArgumentException if no valid
+     *         Zend_Gdata_YouTube_VideoEntry or videoId were provided
+     * @return Zend_Gdata_YouTube_InboxEntry|null The
+     *         Zend_Gdata_YouTube_Inbox_Entry representing the sent message.
+     *
+     */
+    public function sendVideoMessage($body, $videoEntry = null,
+        $videoId = null, $recipientUserName)
+    {
+        if (!$videoId && !$videoEntry) {
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            throw new Zend_Gdata_App_InvalidArgumentException(
+                'Expecting either a valid videoID or a videoEntry object in ' .
+                'Zend_Gdata_YouTube->sendVideoMessage().');
+        }
+
+        $messageEntry = new Zend_Gdata_YouTube_InboxEntry();
+        
+        if ($this->getMajorProtocolVersion() == null ||
+            $this->getMajorProtocolVersion() == 1) {
+
+            if (!$videoId) {
+                $videoId = $videoEntry->getVideoId();
+            } elseif (strlen($videoId) < 12) {
+                //Append the full URI
+                $videoId = self::VIDEO_URI . '/' . $videoId;
+            }
+
+            $messageEntry->setId($this->newId($videoId));
+            // TODO there seems to be a bug where v1 inbox entries dont
+            // retain their description...
+            $messageEntry->setDescription(
+                new Zend_Gdata_YouTube_Extension_Description($body));
+
+        } else {
+            if (!$videoId) {
+                $videoId = $videoEntry->getVideoId();
+                $videoId = substr($videoId, strrpos($videoId, ':'));
+            }
+            $messageEntry->setId($this->newId($videoId));
+            $messageEntry->setSummary($this->newSummary($body));
+        }
+
+        $insertUrl = 'http://gdata.youtube.com/feeds/api/users/' .
+            $recipientUserName . '/inbox';
+        $response = $this->insertEntry($messageEntry, $insertUrl,
+            'Zend_Gdata_YouTube_InboxEntry');
+        return $response;
     }
 
 }

@@ -49,7 +49,8 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $feed = $this->gdata->getSubscriptionFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('Subscriptions of zfgdata', $feed->title->text);
+        $this->assertEquals('Subscriptions of ' . $this->ytAccount,
+            $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');
@@ -60,7 +61,8 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $feed = $this->gdata->getContactFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('Contacts of zfgdata', $feed->title->text);
+        $this->assertEquals('Contacts of ' . $this->ytAccount,
+            $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         foreach ($feed->entry as $entry) {
             $this->assertTrue($entry->title->text != '');
@@ -71,7 +73,8 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     public function testRetrieveUserVideos()
     {
         $feed = $this->gdata->getUserUploads($this->ytAccount);
-        $this->assertEquals('Videos uploaded by zfgdata', $feed->title->text);
+        $this->assertEquals('Uploads by ' . $this->ytAccount,
+            $feed->title->text);
         $this->assertTrue(count($feed->entry) === 1);
     }
 
@@ -106,14 +109,14 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $feed = $this->gdata->getVideoResponseFeed('66wj2g5yz0M');
         $feed = $this->gdata->getVideoCommentFeed('66wj2g5yz0M');
         $feed = $this->gdata->getWatchOnMobileVideoFeed();
-        $feed = $this->gdata->getUserFavorites('zfgdata');
+        $feed = $this->gdata->getUserFavorites($this->ytAccount);
     }
 
     public function testRetrieveUserProfile()
     {
         $entry = $this->gdata->getUserProfile($this->ytAccount);
-        $this->assertEquals('zfgdata Channel', $entry->title->text);
-        $this->assertEquals('zfgdata', $entry->username->text);
+        $this->assertEquals($this->ytAccount . ' Channel', $entry->title->text);
+        $this->assertEquals($this->ytAccount, $entry->username->text);
         $this->assertEquals('I\'m a lonely test account, with little to do but sit around and wait for people to use me.  I get bored in between releases and often sleep to pass the time.  Please use me more often, as I love to show off my talent in breaking your code.',
                 $entry->description->text);
         $this->assertEquals(32, $entry->age->text);
@@ -147,11 +150,16 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
                                           $loginCaptcha = null,
                                           $authenticationURL);
 
-        $this->gdata = new Zend_Gdata_YouTube($httpClient, 'Google-UnitTests-1.0', 'ytapi-gdataops-12345-u78960r7-0', 'AI39si6c-ZMGFZ5fkDAEJoCNHP9LOM2LSO1XuycZF7Eyu1IuvkioESqzRcf3voDLymIUGIrxdMx2aTufdbf5D7E51NyLYyfeaw');
+        $this->gdata = new Zend_Gdata_YouTube($httpClient,
+            'Google-UnitTests-1.0', 'ytapi-gdataops-12345-u78960r7-0',
+            'AI39si6c-ZMGFZ5fkDAEJoCNHP9LOM2LSO1XuycZF7Eyu1IuvkioESq' .
+            'zRcf3voDLymIUGIrxdMx2aTufdbf5D7E51NyLYyfeaw');
 
+        $this->gdata->setMajorProtocolVersion(2);
         $feed = $this->gdata->getPlaylistListFeed($this->ytAccount);
         $this->assertTrue($feed->totalResults->text > 0);
-        $this->assertEquals('Playlists of zfgdata', $feed->title->text);
+        $this->assertEquals('Playlists of ' . $this->ytAccount,
+            $feed->title->text);
         $this->assertTrue(count($feed->entry) > 0);
         $i = 0;
         foreach ($feed->entry as $entry) {
@@ -674,6 +682,9 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
     {
         $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
         $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant('TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant('TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+
         $service = Zend_Gdata_YouTube::AUTH_SERVICE_NAME;
         $authenticationURL =
             'https://www.google.com/youtube/accounts/ClientLogin';
@@ -687,11 +698,7 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
                                           $loginCaptcha = null,
                                           $authenticationURL);
 
-        $yt = new Zend_Gdata_YouTube(
-            $httpClient, 'Google-UnitTests-1.0',
-            'ytapi-gdataops-12345-u78960r7-0',
-            'AI39si6c-ZMGFZ5fkDAEJoCNHP9LOM2LSO1XuycZF7E' . 
-            'yu1IuvkioESqzRcf3voDLymIUGIrxdMx2aTufdbf5D7E51NyLYyfeaw');
+        $yt = new Zend_Gdata_YouTube($httpClient, $clientId, $developerKey);
 
         $yt->setMajorProtocolVersion(2);
         $queryStringToSubscribeTo = 'zend';
@@ -882,6 +889,133 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($exceptionThrown, 'Was expecting an exception on ' .
             'a request to ->getActivityForUser when more than 20 users were ' .
             'specified in YouTube.php');
+    }
+
+    public function testGetInboxFeedForCurrentUserV1()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        
+        $inboxFeed = $youtube->getInboxFeedForCurrentUser();
+        $this->assertTrue($inboxFeed instanceof Zend_Gdata_YouTube_InboxFeed);
+        $this->assertTrue(count($inboxFeed->entries) > 0, 'Test account ' .
+            $this->ytAccount . ' had no messages in their inbox.');
+        
+        // get the first entry
+        $inboxFeed->rewind();
+        $inboxEntry = $inboxFeed->current();
+        $this->assertTrue(
+            $inboxEntry instanceof Zend_Gdata_YouTube_InboxEntry);
+        $this->assertTrue($inboxEntry->getTitle()->text != '');
+    }
+
+    public function testGetInboxFeedForCurrentUserV2()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(2);
+        
+        $inboxFeed = $youtube->getInboxFeedForCurrentUser();
+        $this->assertTrue($inboxFeed instanceof Zend_Gdata_YouTube_InboxFeed);
+        $this->assertTrue(count($inboxFeed->entries) > 0, 'Test account ' .
+            $this->ytAccount . ' had no messages in their inbox.');
+     
+        // get the first entry
+        $inboxFeed->rewind();
+        $inboxEntry = $inboxFeed->current();
+        $this->assertTrue(
+            $inboxEntry instanceof Zend_Gdata_YouTube_InboxEntry);
+        $this->assertTrue($inboxEntry->getTitle()->text != '');
+    }
+
+    
+    public function testSendAMessageV2()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant('TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant('TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(2);
+
+        // get a video from the recently featured video feed
+        $videoFeed = $youtube->getRecentlyFeaturedVideoFeed();
+        $videoEntry = $videoFeed->entry[0];
+        $this->assertTrue($videoEntry instanceof Zend_Gdata_YouTube_VideoEntry);
+
+        // sending message to gdpython (python client library unit test user)
+        $sentMessage = $youtube->sendVideoMessage(
+            'Sending a v2 test message from Zend_Gdata_YouTubeOnlineTest.',
+            $videoEntry, null, 'gdpython');
+        $this->assertTrue(
+            $sentMessage instanceof Zend_Gdata_YouTube_InboxEntry);
+    }
+
+    public function testSendAMessageV1()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant(
+            'TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(1);
+
+        // get a video from the recently featured video feed
+        $videoFeed = $youtube->getRecentlyFeaturedVideoFeed();
+        $videoEntry = $videoFeed->entry[0];
+        $this->assertTrue($videoEntry instanceof Zend_Gdata_YouTube_VideoEntry);
+
+        // sending message to gdpython (python client library unit test user)
+        $sentMessage = $youtube->sendVideoMessage(
+            'Sending a v1 test message from Zend_Gdata_YouTubeOnlineTest.',
+            $videoEntry, null, 'gdpython');
+        $this->assertTrue(
+            $sentMessage instanceof Zend_Gdata_YouTube_InboxEntry);
+    }
+
+    public function testThrowExceptionOnSendingMessageWithoutVideo()
+    {
+        $exceptionCaught = false;
+        $this->gdata = new Zend_Gdata_YouTube();
+        try {
+            $this->gdata->sendVideoMessage('Should fail', null, null, 'foo');
+        } catch (Zend_Gdata_App_InvalidArgumentException $e) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Was expecting an exception if ' .
+            'sending a message without a video');
     }
 
 }
