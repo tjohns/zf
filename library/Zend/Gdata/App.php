@@ -791,7 +791,8 @@ class Zend_Gdata_App
      * @return Zend_Gdata_App_Feed
      */
     public static function importString($string,
-        $className='Zend_Gdata_App_Feed')
+        $className='Zend_Gdata_App_Feed', $majorProtocolVersion=null,
+        $minorProtocolVersion=null)
     {
         // Load the feed as an XML DOMDocument object
         @ini_set('track_errors', 1);
