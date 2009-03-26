@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13617 -->
+<!-- EN-Revision: 14451 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Prüfungen für Zend_File_Transfer</title>
@@ -354,7 +354,7 @@ if ($upload->isValid()) {
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
-        <title><emphasis role="strong">Count</emphasis> Prüfung</title>
+        <title>Count Prüfung</title>
 
         <para>
             Die <code>Count</code> Prüfung checkt die Anzahl der Dateien die angegeben wurde. Sie unterstützt
@@ -425,7 +425,7 @@ $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.crc32">
-        <title><emphasis role="strong">Crc32</emphasis> Prüfung</title>
+        <title>Crc32 Prüfung</title>
 
         <para>
             Die <code>Crc32</code> Prüfung checkt den Inhalt einer übertragenen Datei durch hashen. Diese
@@ -465,7 +465,7 @@ $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
-        <title><emphasis role="strong">ExcludeExtension</emphasis> Prüfung</title>
+        <title>ExcludeExtension Prüfung</title>
 
         <para>
             Die <code>ExcludeExtension</code> Prüfung checkt die Dateierweiterung der angegebenen Dateien.
@@ -532,7 +532,7 @@ $upload->addValidator('ExcludeExtension',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludemimetype">
-        <title><emphasis role="strong">ExcludeMimeType</emphasis> Prüfung</title>
+        <title>ExcludeMimeType Prüfung</title>
 
         <para>
             Die <code>MimeType</code> Prüfung checkt den MIME Typ von übertragenen Dateien. Sie unterstützt
@@ -596,7 +596,7 @@ $upload->setValidator('ExcludeMimeType', 'image');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.exists">
-        <title><emphasis role="strong">Exists</emphasis> Prüfung</title>
+        <title>Exists Prüfung</title>
 
         <para>
             Die <code>Exists</code> Prüfung checkt ob Dateien die spezifiziert werden existieren. Sie unterstützt
@@ -645,7 +645,7 @@ $upload->addValidator('Exists',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
-        <title><emphasis role="strong">Extension</emphasis> Prüfung</title>
+        <title>Extension Prüfung</title>
 
         <para>
             Die <code>Extension</code> Prüfung checkt die Dateierweiterung der angegebenen Dateien.
@@ -713,7 +713,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
-        <title><emphasis role="strong">FilesSize</emphasis> Prüfung</title>
+        <title>FilesSize Prüfung</title>
 
         <para>
             Die <code>FilesSize</code> Prüfung checkt die komplette Größe aller übertragenen Dateien.
@@ -804,7 +804,7 @@ $upload->addValidator('FilesSize',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.imagesize">
-        <title><emphasis role="strong">ImageSize</emphasis> Prüfung</title>
+        <title>ImageSize Prüfung</title>
 
         <para>
             Die <code>ImageSize</code> Prüfung checkt die Größe von Bildern. Sie unterstützt die folgenden
@@ -878,7 +878,7 @@ $upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.iscompressed">
-        <title><emphasis role="strong">IsCompressed</emphasis> Prüfung</title>
+        <title>IsCompressed Prüfung</title>
 
         <para>
             Die <code>IsCompressed</code> Prüfung checkt ob eine übertragene Datei komprimiert ist wie zum
@@ -917,7 +917,7 @@ $upload->addValidator('IsCompressed', false, 'zip');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.isimage">
-        <title><emphasis role="strong">IsImage</emphasis> Prüfung</title>
+        <title>IsImage Prüfung</title>
 
         <para>
             Die <code>IsImage</code> Prüfung checkt ob eine übertragene Datei eine Bilddatei ist, wie zum
@@ -956,7 +956,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.hash">
-        <title><emphasis role="strong">Hash</emphasis> Prüfung</title>
+        <title>Hash Prüfung</title>
 
         <para>
             Die <code>Hash</code> Prüfung checkt den Inhalt einer übertragenen Datei indem Sie gehasht wird.
@@ -1022,7 +1022,7 @@ $upload->addValidator('Hash',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.md5">
-        <title><emphasis role="strong">Md5</emphasis> Prüfung</title>
+        <title>Md5 Prüfung</title>
 
         <para>
             Die <code>Md5</code> Prüfung checkt den Inhalt einer übertragenen Datei durch hashen. Diese
@@ -1063,7 +1063,7 @@ $upload->addValidator('Md5',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.mimetype">
-        <title><emphasis role="strong">MimeType</emphasis> Prüfung</title>
+        <title>MimeType Prüfung</title>
 
         <para>
             Die <code>MimeType</code> Prüfung checkt den Mimetyp von übertragenen Dateien. Sie unterstützt
@@ -1165,7 +1165,7 @@ $upload->addValidator('MimeType',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.notexists">
-        <title><emphasis role="strong">NotExists</emphasis> Prüfung</title>
+        <title>NotExists Prüfung</title>
 
         <para>
             Die <code>NotExists</code> Prüfung checkt ob Dateien die angegeben werden existieren. Sie unterstützt
@@ -1215,7 +1215,7 @@ $upload->addValidator('NotExists',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.sha1">
-        <title><emphasis role="strong">Sha1</emphasis> Prüfung</title>
+        <title>Sha1 Prüfung</title>
 
         <para>
             Die <code>Sha1</code> Prüfung checkt den Inhalt einer übertragenen Datei durch hashen. Diese
@@ -1255,7 +1255,7 @@ $upload->addValidator('Sha1',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">
-        <title><emphasis role="strong">Size</emphasis> Prüfung</title>
+        <title>Size Prüfung</title>
 
         <para>
             Die <code>Size</code> Prüfung checkt die Größe von einzelnen Dateien. Sie unterstützt die
@@ -1327,7 +1327,7 @@ $upload->addValidator('Size',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.wordcount">
-        <title><emphasis role="strong">WordCount</emphasis> Prüfung</title>
+        <title>WordCount Prüfung</title>
 
         <para>
             Die <code>WordCount</code> Prüfung checkt die Anzahl von Wörtern in angegebenen Dateien. Sie
