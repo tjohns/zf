@@ -183,7 +183,7 @@ function searchVideos($searchType, $searchTerm, $startIndex, $maxResults)
             $httpClient = getAuthSubHttpClient();
             $youTubeService = new Zend_Gdata_YouTube($httpClient);
             try {
-                $feed = $youTubeService->getVideoFeed('http://gdata.youtube.com/feeds/users/default/uploads');
+                $feed = $youTubeService->getUserUploads('default');
                 if (loggingEnabled()) {
                     logMessage($httpClient->getLastRequest(), 'request');
                     logMessage($httpClient->getLastResponse()->getBody(),
