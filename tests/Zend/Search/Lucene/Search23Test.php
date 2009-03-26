@@ -212,7 +212,7 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
         $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
 
 
-        $query = Zend_Search_Lucene_Search_QueryParser::parse('"IndexSource/contributing.wishlist.html" AND home');
+        $query = Zend_Search_Lucene_Search_QueryParser::parse('"IndexSource/contributing.wishlist.html" AND Home');
 
         $this->assertEquals($query->__toString(), '+("IndexSource/contributing.wishlist.html") +(home)');
         $this->assertEquals($query->rewrite($index)->__toString(),
@@ -221,6 +221,31 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
 
         $hits = $index->find('"IndexSource/contributing.bugs.html"');
+
+        $this->assertEquals(count($hits), 1);
+        $expectedResultset = array(array(7, 1, 'IndexSource/contributing.bugs.html'));
+
+        foreach ($hits as $resId => $hit) {
+            $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
+            $this->assertTrue( abs($hit->score - $expectedResultset[$resId][1]) < 0.000001 );
+            $this->assertEquals($hit->path, $expectedResultset[$resId][2]);
+        }
+    }
+
+    public function testQueryParserKeywordsHandlingTerm()
+    {
+        $index = Zend_Search_Lucene::open(dirname(__FILE__) . '/_index23Sample/_files');
+
+
+        $query = Zend_Search_Lucene_Search_QueryParser::parse('IndexSource\/contributing\.wishlist\.html AND Home');
+
+        $this->assertEquals($query->__toString(), '+(IndexSource/contributing.wishlist.html) +(home)');
+        $this->assertEquals($query->rewrite($index)->__toString(),
+                            '+((pathkeyword:IndexSource/contributing.wishlist.html) (path:"indexsource contributing wishlist html") (modified:"indexsource contributing wishlist html") (contents:"indexsource contributing wishlist html")) +(pathkeyword:home path:home modified:home contents:home)');
+        $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '+( (path:"indexsource contributing wishlist html") (pathkeyword:IndexSource/contributing.wishlist.html)) +(contents:home)');
+
+
+        $hits = $index->find('IndexSource\/contributing\.wishlist\.html AND Home');
 
         $this->assertEquals(count($hits), 1);
         $expectedResultset = array(array(7, 1, 'IndexSource/contributing.bugs.html'));
