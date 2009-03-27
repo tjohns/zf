@@ -940,8 +940,8 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
     
     
     
-	/**
-	 * Check that when using server->setSession you get an amf header that has an append to gateway sessionID
+    /**
+     * Check that when using server->setSession you get an amf header that has an append to gateway sessionID
      * @group ZF-5381
      */
     public function testSessionAmf3()
@@ -973,9 +973,9 @@ class Zend_Amf_ServerTest extends PHPUnit_Framework_TestCase
         $headerBody = $response->getAmfHeaders();
         $this->assertEquals('AppendToGatewayUrl',$headerBody[0]->name);
         
-        // stop the session
-        Zend_Session::stop();
-        }
+        // Do not stop session since it still can be used by other tests
+        // Zend_Session::stop();
+    }
     
 }
 
@@ -1160,3 +1160,4 @@ class Zend_Amf_testSession
     	return $_SESSION['count']; 
     }
 }
+
