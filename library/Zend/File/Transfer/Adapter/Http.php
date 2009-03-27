@@ -286,7 +286,8 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             throw new Zend_File_Transfer_Exception('Wether APC nor uploadprogress extension installed');
         }
 
-        $status = array(
+        $session = 'Zend_File_Transfer_Adapter_Http_ProgressBar';
+        $status  = array(
             'total'    => 0,
             'current'  => 0,
             'rate'     => 0,
@@ -299,7 +300,6 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 $adapter = $id['progress'];
             }
 
-            $session = 'Zend_File_Transfer_Adapter_Http_ProgressBar';
             if (isset($id['session'])) {
                 $session = $id['session'];
             }
@@ -327,6 +327,7 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
 
         if (!empty($id)) {
             if (self::isApcAvailable()) {
+
                 $call = call_user_func(self::$_callbackApc, 'upload_' . $id);
                 if (is_array($call)) {
                     $status = $call + $status;
@@ -345,12 +346,13 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
             }
 
             if (!is_array($call)) {
+                $status['done']    = true;
                 $status['message'] = 'Failure while retrieving the upload progress';
             } else if (!empty($status['cancel_upload'])) {
                 $status['done']    = true;
                 $status['message'] = 'The upload has been canceled';
             } else {
-                $status['message'] = self::_toByteString($status['current']) . " / " . self::_toByteString($status['total']);
+                $status['message'] = self::_toByteString($status['current']) . " - " . self::_toByteString($status['total']);
             }
 
             $status['id'] = $id;
@@ -367,9 +369,10 @@ class Zend_File_Transfer_Adapter_Http extends Zend_File_Transfer_Adapter_Abstrac
                 throw new Zend_File_Transfer_Exception('Unknown Adapter given');
             }
 
-            $adapter->update($status['current'], $status['message']);
             if ($status['done']) {
                 $adapter->finish();
+            } else {
+                $adapter->update($status['current'], $status['message']);
             }
 
             $status['progress'] = $adapter;
