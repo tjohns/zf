@@ -1,12 +1,12 @@
-Welcome to Zend Framework 1.7.7! This is a bug fix/maintenance release in the 
+Welcome to Zend Framework 1.7.8! This is a bug fix/maintenance release in the 
 Zend Framework 1.7 series. This release maintains backwards compatibility
 with all Zend Framework 1.x releases.
 
 RELEASE INFORMATION
 ---------------
 
-Zend Framework 1.7.7 ([INSERT REV NUM HERE]).
-Released on 2009-03-16.
+Zend Framework 1.7.8 ([INSERT REV NUM HERE]).
+Released on 2009-03-30.
 
 SPECIAL NOTICE
 --------------
