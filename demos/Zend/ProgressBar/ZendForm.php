@@ -32,10 +32,9 @@ if (isset($_GET['progress_key'])) {
     require_once 'Zend/ProgressBar.php'; 
     require_once 'Zend/ProgressBar/Adapter/JsPull.php';
 
-    $adapter     = new Zend_ProgressBar_Adapter_JsPull();
-    $progressBar = new Zend_ProgressBar($adapter, 0, $bytesTotal, 'uploadProgress');
+    $adapter = new Zend_ProgressBar_Adapter_JsPull();
     
-    Zend_File_Transfer_Adapter_Http::getProgress($progressBar);
+    Zend_File_Transfer_Adapter_Http::getProgress(array('progress' => $adapter, 'session' => 'demo-upload'));
     die;
 }
 ?>
