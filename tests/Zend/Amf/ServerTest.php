@@ -1160,3 +1160,4 @@ class Zend_Amf_testSession
     	return $_SESSION['count']; 
     }
 }
+
