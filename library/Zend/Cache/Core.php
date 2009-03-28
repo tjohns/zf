@@ -533,7 +533,7 @@ class Zend_Cache_Core
      * @throws Zend_Cache_Exception
      * @return void
      */
-    private static function _validateIdOrTag($string)
+    protected static function _validateIdOrTag($string)
     {
         if (!is_string($string)) {
             Zend_Cache::throwException('Invalid id or tag : must be a string');
@@ -555,7 +555,7 @@ class Zend_Cache_Core
      * @throws Zend_Cache_Exception
      * @return void
      */
-    private static function _validateTagsArray($tags)
+    protected static function _validateTagsArray($tags)
     {
         if (!is_array($tags)) {
             Zend_Cache::throwException('Invalid tags array : must be an array');
@@ -617,7 +617,7 @@ class Zend_Cache_Core
      * @param  string $id Cache id
      * @return string Cache id (with or without prefix)
      */
-    private function _id($id)
+    protected function _id($id)
     {
         if (($id !== null) && isset($this->_options['cache_id_prefix'])) {
             return $this->_options['cache_id_prefix'] . $id; // return with prefix
