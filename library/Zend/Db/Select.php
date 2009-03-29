@@ -82,6 +82,13 @@ class Zend_Db_Select
     const SQL_DESC       = 'DESC';
 
     /**
+     * Bind variables for query
+     *
+     * @var array
+     */
+    protected $_bind = array();
+
+    /**
      * Zend_Db_Adapter_Abstract object.
      *
      * @var Zend_Db_Adapter_Abstract
@@ -157,6 +164,29 @@ class Zend_Db_Select
     {
         $this->_adapter = $adapter;
         $this->_parts = self::$_partsInit;
+    }
+
+    /**
+     * Get bind variables
+     *
+     * @return array
+     */
+    public function getBind()
+    {
+    	return $this->_bind;
+    }
+
+    /**
+     * Set bind variables
+     *
+     * @param mixed $bind
+     * @return Zend_Db_Select
+     */
+    public function bind($bind)
+    {
+    	$this->_bind = $bind;
+
+    	return $this;
     }
 
     /**
@@ -632,10 +662,15 @@ class Zend_Db_Select
      * Executes the current select object and returns the result
      *
      * @param integer $fetchMode OPTIONAL
+     * @param  mixed  $bind An array of data to bind to the placeholders.
      * @return PDO_Statement|Zend_Db_Statement
      */
-    public function query($fetchMode = null)
+    public function query($fetchMode = null, $bind = array())
     {
+        if (!empty($bind)) {
+            $this->bind($bind);
+        }
+
         $stmt = $this->_adapter->query($this);
         if ($fetchMode == null) {
             $fetchMode = $this->_adapter->getFetchMode();

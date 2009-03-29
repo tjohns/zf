@@ -42,6 +42,8 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
 {
     /**
      * Test basic use of the Zend_Db_Select class.
+     *
+     * @return Zend_Db_Select
      */
     protected function _select()
     {
@@ -74,6 +76,23 @@ abstract class Zend_Db_Select_TestCommon extends Zend_Db_TestSetup
     public function testSelectQuery()
     {
         $select = $this->_select();
+        $this->assertType('Zend_Db_Select', $select,
+            'Expecting object of type Zend_Db_Select, got '.get_class($select));
+        $stmt = $select->query();
+        $row = $stmt->fetch();
+        $stmt->closeCursor();
+        $this->assertEquals(2, count($row)); // correct number of fields
+        $this->assertEquals(1, $row['product_id']); // correct data
+    }
+
+    /**
+     * ZF-2017: Test bind use of the Zend_Db_Select class.
+     */
+    public function testSelectQueryWithBinds()
+    {
+        $select = $this->_select()->where('product_id = :product_id')
+                                  ->bind(array(':product_id' => 1));
+
         $this->assertType('Zend_Db_Select', $select,
             'Expecting object of type Zend_Db_Select, got '.get_class($select));
         $stmt = $select->query();

@@ -68,6 +68,22 @@ class Zend_Db_Table_Select_StaticTest extends Zend_Db_Select_TestCommon
     }
 
     /**
+     * ZF-2017: Test bind use of the Zend_Db_Select class.
+     */
+    public function testSelectQueryWithBinds()
+    {
+        $select = $this->_select()->where('product_id = :product_id')
+                                  ->bind(array(':product_id' => 1));
+
+        $sql = preg_replace('/\\s+/', ' ', $select->__toString());
+        $this->assertEquals('SELECT "zfproducts".* FROM "zfproducts" WHERE (product_id = :product_id)', $sql);
+
+        $stmt = $select->query();
+        Zend_Loader::loadClass('Zend_Db_Statement_Static');
+        $this->assertType('Zend_Db_Statement_Static', $stmt);
+    }
+
+    /**
      * Test Zend_Db_Select specifying columns
      *
      * @return void

@@ -216,6 +216,10 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      */
     public function query($sql, $bind = array())
     {
+        if (empty($bind) && $sql instanceof Zend_Db_Select) {
+            $bind = $sql->getBind();
+        }
+
         if (is_array($bind)) {
             foreach ($bind as $name => $value) {
                 if (!is_int($name) && !preg_match('/^:/', $name)) {
