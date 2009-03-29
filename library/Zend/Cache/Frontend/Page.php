@@ -337,6 +337,8 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     protected function _makeId()
     {
         $tmp = $_SERVER['REQUEST_URI'];
+        $array = explode($tmp, '?', 2);
+      	$tmp = $array[0];
         foreach (array('Get', 'Post', 'Session', 'Files', 'Cookie') as $arrayName) {
             $tmp2 = $this->_makePartialId($arrayName, $this->_activeOptions['cache_with_' . strtolower($arrayName) . '_variables'], $this->_activeOptions['make_id_with_' . strtolower($arrayName) . '_variables']);
             if ($tmp2===false) {
