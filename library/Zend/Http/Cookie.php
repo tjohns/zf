@@ -23,7 +23,6 @@
 
 require_once 'Zend/Uri/Http.php';
 
-require_once 'Zend/Date.php';
 
 /**
  * Zend_Http_Cookie is a class describing an HTTP cookie and all it's parameters.
@@ -307,8 +306,19 @@ class Zend_Http_Cookie
                 list($k, $v) = $keyValue;
                 switch (strtolower($k))    {
                     case 'expires':
-                        $expireDate = new Zend_Date($v);
-                        $expires = $expireDate->get(Zend_Date::TIMESTAMP);
+                        if(($expires = strtotime($v)) === false) {
+                            /**
+                             * The expiration is past Tue, 19 Jan 2038 03:14:07 UTC
+                             * the maximum for 32-bit signed integer. Zend_Date
+                             * can get around that limit.
+                             * 
+                             * @see Zend_Date
+                             */
+                            require_once 'Zend/Date.php';
+    
+                            $expireDate = new Zend_Date($v);
+                            $expires = $expireDate->getTimestamp();
+                        }
                         break;
                         
                     case 'path':
