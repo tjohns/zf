@@ -267,15 +267,15 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
         if ($array !== false) {
             $data = $array['data'];
             $headers = $array['headers'];
-            if ($this->_specificOptions['debug_header']) {
-                echo 'DEBUG HEADER : This is a cached page !';
-            }
             if (!headers_sent()) {
                 foreach ($headers as $key=>$headerCouple) {
                     $name = $headerCouple[0];
                     $value = $headerCouple[1];
                     header("$name: $value");
                 }
+            }
+        	if ($this->_specificOptions['debug_header']) {
+                echo 'DEBUG HEADER : This is a cached page !';
             }
             echo $data;
             if ($doNotDie) {
