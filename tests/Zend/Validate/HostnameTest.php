@@ -78,7 +78,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
     }
@@ -94,7 +94,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         foreach ($valuesExpected as $element) {
             $validator = new Zend_Validate_Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
     }
@@ -139,11 +139,11 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         $valuesExpected = array(
             array(true, array('bürger.de', 'hãllo.de', 'hållo.se')),
             array(true, array('bÜrger.de', 'hÃllo.de', 'hÅllo.se')),
-            array(false, array('hãllo.se', 'bürger.com', 'hãllo.uk'))
+            array(false, array('hãllo.se', 'bürger.lt', 'hãllo.uk'))
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
 
@@ -154,7 +154,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
 
@@ -166,7 +166,51 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+            }
+        }
+    }
+
+    /**
+     * Ensure the IDN check works on ressource files as expected
+     *
+     */
+    public function testRessourceIDN()
+    {
+        $validator = new Zend_Validate_Hostname();
+
+        // Check IDN matching
+        $valuesExpected = array(
+            array(true, array('bürger.com', 'hãllo.com', 'hållo.com')),
+            array(true, array('bÜrger.com', 'hÃllo.com', 'hÅllo.com')),
+            array(false, array('hãllo.lt', 'bürger.lt', 'hãllo.lt'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+            }
+        }
+
+        // Check no IDN matching
+        $validator->setValidateIdn(false);
+        $valuesExpected = array(
+            array(false, array('bürger.com', 'hãllo.com', 'hållo.com'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+            }
+        }
+
+        // Check setting no IDN matching via constructor
+        unset($validator);
+        $validator = new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_DNS, false);
+        $valuesExpected = array(
+            array(false, array('bürger.com', 'hãllo.com', 'hållo.com'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
     }
@@ -186,7 +230,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
 
@@ -197,7 +241,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
 
@@ -209,7 +253,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
             }
         }
     }
