@@ -294,4 +294,23 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($found);
         $this->assertEquals($translations[$code], $message);
     }
+
+    /**
+     * ZF-6033
+     */
+    public function testNumberNames()
+    {
+        $validator = new Zend_Validate_Hostname();
+
+        // Check TLD matching
+        $valuesExpected = array(
+            array(true, array('www.danger1.com', 'danger.com', 'www.danger.com')),
+            array(false, array('www.danger1com', 'dangercom', 'www.dangercom'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+            }
+        }
+    }
 }

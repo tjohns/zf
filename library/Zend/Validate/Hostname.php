@@ -433,7 +433,9 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
 
             do {
                 // First check TLD
-                if (preg_match('/([a-z]{2,10})$/i', end($domainParts), $matches) || (end($domainParts) == 'ایران')) {
+                if (preg_match('/([^.]{2,10})$/i', end($domainParts), $matches) ||
+                    (end($domainParts) == 'ایران') || (end($domainParts) == '中国') ||
+                    (end($domainParts) == '公司') || (end($domainParts) == '网络')) {
 
                     reset($domainParts);
 
