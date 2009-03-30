@@ -1017,5 +1017,39 @@ class Zend_Gdata_YouTubeOnlineTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($exceptionCaught, 'Was expecting an exception if ' .
             'sending a message without a video');
     }
+    
+    public function testCommentOnAComment()
+    {
+        $user = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL');
+        $pass = constant('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD');
+        $developerKey = constant('TESTS_ZEND_GDATA_YOUTUBE_DEVELOPER_KEY');
+        $clientId = constant('TESTS_ZEND_GDATA_YOUTUBE_CLIENT_ID');
+        $client = Zend_Gdata_ClientLogin::getHttpClient(
+            $user, $pass, 'youtube' , null, 'ZF_UnitTest', null, null,
+            'https://www.google.com/youtube/accounts/ClientLogin');
+        $youtube = new Zend_Gdata_YouTube($client, 'ZF_UnitTest',
+            $clientId, $developerKey);
+        $youtube->setMajorProtocolVersion(2);
+        
+        $mostDiscussedFeed = $youtube->getVideoFeed(
+            'http://gdata.youtube.com/feeds/api/standardfeeds/most_discussed');
+        
+        // get first entry
+        $mostDiscussedFeed->rewind();
+        $firstEntry = $mostDiscussedFeed->current();
+        
+        $this->assertTrue($firstEntry instanceof Zend_Gdata_YouTube_VideoEntry);
+        
+        $commentFeed = $youtube->getVideoCommentFeed($firstEntry->getVideoId());
+
+        // get first comment
+        $commentFeed->rewind();
+        $firstCommentEntry = $commentFeed->current();
+        
+        $commentedComment = $youtube->replyToCommentEntry($firstCommentEntry,
+            'awesome ! (ZFUnitTest-test)');
+        $this->assertTrue(
+            $commentedComment instanceof Zend_Gdata_YouTube_CommentEntry);
+    }
 
 }

@@ -116,6 +116,15 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const FRIEND_ACTIVITY_FEED_URI =
         'http://gdata.youtube.com/feeds/api/users/default/friendsactivity';
 
+    /** 
+     * The URI of the in-reply-to schema for comments in reply to
+     * other comments.
+     *
+     * @var string
+     */
+     const IN_REPLY_TO_SCHEME =
+         'http://gdata.youtube.com/schemas/2007#in-reply-to';
+
     /**
      * The URI of the inbox feed for the currently authenticated user.
      *
@@ -829,6 +838,36 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         $response = $this->insertEntry($messageEntry, $insertUrl,
             'Zend_Gdata_YouTube_InboxEntry');
         return $response;
+    }
+
+    /**
+     * Post a comment in reply to an existing comment
+     *
+     * @param $commentEntry Zend_Gdata_YouTube_CommentEntry The comment entry
+     *        to reply to
+     * @param $commentText string The text of the comment to post
+     * @return A Zend_Gdata_YouTube_CommentEntry representing the posted
+     *         comment
+     */
+    public function replyToCommentEntry($commentEntry, $commentText)
+    {
+        $newComment = $this->newCommentEntry();
+        $newComment->content = $this->newContent()->setText($commentText);
+        $commentId = $commentEntry->getId();
+        $commentIdArray = explode(':', $commentId);
+
+        // create a new link element
+        $inReplyToLinkHref = self::VIDEO_URI . '/' . $commentIdArray[3] .
+            '/comments/' . $commentIdArray[5];
+        $inReplyToLink = $this->newLink($inReplyToLinkHref,
+            self::IN_REPLY_TO_SCHEME, $type="application/atom+xml");
+        $links = $newComment->getLink();
+        $links[] = $inReplyToLink;
+        $newComment->setLink($links);
+        $commentFeedPostUrl = self::VIDEO_URI . '/' . $commentIdArray[3] .
+            '/comments';
+        return $this->insertEntry($newComment,
+            $commentFeedPostUrl, 'Zend_Gdata_YouTube_CommentEntry');
     }
 
 }
