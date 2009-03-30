@@ -15,7 +15,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Demos
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -61,7 +61,8 @@ class SimpleDemo {
     }
 
     /**
-     * print the content of a feed
+     * Print the content of a feed
+     *
      * @param  Zend_Gdata_Gbase_Feed $feed
      * @return void
      */
@@ -85,32 +86,35 @@ class SimpleDemo {
     }
 
     /**
-     * list books in the My library feed
+     * List books in the My library feed
+     *
      * @return void
      */
     public function listLibrary()
     {
-        $feed = $this->gdClient->getUserFeed();
+        $feed = $this->gdClient->getUserLibraryFeed();
         print "== Books in my library ==\n";
         $this->printFeed($feed);
         print "\n";
     }
 
     /**
-     * list books in the annotation feed
+     * List books in the annotation feed.
+     *
      * @return void
      */
     public function listReviewed()
     {
-        $feed = $this->gdClient->getUserFeed(
-            Zend_Gdata_Books::MY_ANNOTATIONS_FEED_URI);
+        $feed = $this->gdClient->getUserLibraryFeed(
+            Zend_Gdata_Books::MY_ANNOTATION_FEED_URI);
         print "== Books I annotated ==\n";
         $this->printFeed($feed);
         print "\n";
     }
 
     /**
-     * Add an arbitrary book to the library feed
+     * Add an arbitrary book to the library feed.
+     *
      * @param string $volumeId Volume to the library
      * @return void
      */
@@ -124,7 +128,8 @@ class SimpleDemo {
     }
 
     /**
-     * Add an arbitrary book to the library feed
+     * Add an arbitrary book to the library feed.
+     *
      * @param string $volumeId Volume to add a rating to
      * @param float $rating Numeric rating from 0 to 5 
      * @return void
@@ -138,13 +143,14 @@ class SimpleDemo {
             new Zend_Gdata_Extension_Rating($rating, "0", 5, 1));
         print "Inserting a rating of ".$rating." for ".$volumeId."\n\n";
         return $this->gdClient->insertVolume($entry,
-            Zend_Gdata_Books::MY_ANNOTATIONS_FEED_URI);        
+            Zend_Gdata_Books::MY_ANNOTATION_FEED_URI);        
     }
 
     /**
      * Remove an an arbitrary book from a feed (either remove
      * from library feed or remove the annotations from annotation
-     * feed)
+     * feed).
+     *
      * @param Zend_Gdata_Books_VolumeEntry $entry
      * @return void
      */
@@ -155,7 +161,8 @@ class SimpleDemo {
     }
 
     /**
-     * Main logic for the demo
+     * Main logic for the demo.
+     *
      * @return void
      */
     public function run()
