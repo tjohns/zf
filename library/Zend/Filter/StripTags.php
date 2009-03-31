@@ -46,6 +46,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
      * If false (the default), then comments are removed from the input string.
      *
      * @var boolean
+     * @depreciated
      */
     public $commentsAllowed;
 
@@ -80,7 +81,27 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
     {
         $this->setTagsAllowed($tagsAllowed);
         $this->setAttributesAllowed($attributesAllowed);
-        $this->commentsAllowed = (boolean) $commentsAllowed;
+        $this->setCommentsAllowed($commentsAllowed);
+    }
+
+    /**
+     * Returns the commentsAllowed option
+     */
+    public function getCommentsAllowed()
+    {
+        return $this->commentsAllowed;
+    }
+
+    /**
+     * Sets the commentsAllowed option
+     *
+     * @param boolean $commentsAllowed
+     * @return Zend_Filter_StripTags Provides a fluent interface
+     */
+    public function setCommentsAllowed($commentsAllowed)
+    {
+       $this->commentsAllowed = (boolean) $commentsAllowed;
+       return $this;
     }
 
     /**
@@ -183,7 +204,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
         $valueCopy = (string) $value;
 
         // If comments are allowed, then replace them with unique identifiers
-        if ($this->commentsAllowed) {
+        if ($this->getCommentsAllowed()) {
             preg_match_all('/<\!--.*?--\s*>/s' , (string) $valueCopy, $matches);
             $comments = array_unique($matches[0]);
             foreach ($comments as $k => $v) {
@@ -214,7 +235,7 @@ class Zend_Filter_StripTags implements Zend_Filter_Interface
         }
 
         // If comments are allowed, then replace the unique identifiers with the corresponding comments
-        if ($this->commentsAllowed) {
+        if ($this->getCommentsAllowed()) {
             foreach ($comments as $k => $v) {
                 $dataFiltered = str_replace(self::UNIQUE_ID_PREFIX . $k, $v, $dataFiltered);
             }

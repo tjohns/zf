@@ -70,6 +70,7 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
      * Local object for validating the hostname part of an email address
      *
      * @var Zend_Validate_Hostname
+     * @depreciated
      */
     public $hostnameValidator;
 
@@ -106,6 +107,16 @@ class Zend_Validate_EmailAddress extends Zend_Validate_Abstract
     {
         $this->setValidateMx($validateMx);
         $this->setHostnameValidator($hostnameValidator, $allow);
+    }
+
+    /**
+     * Returns the set hostname validator
+     *
+     * @return Zend_Validate_Hostname
+     */
+    public function getHostnameValidator()
+    {
+        return $this->hostnameValidator;
     }
 
     /**

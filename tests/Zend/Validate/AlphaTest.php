@@ -99,7 +99,7 @@ class Zend_Validate_AlphaTest extends PHPUnit_Framework_TestCase
      */
     public function testAllowWhiteSpace()
     {
-        $this->_validator->allowWhiteSpace = true;
+        $this->_validator->setAllowWhiteSpace(true);
 
         $valuesExpected = array(
             'abc123'  => false,

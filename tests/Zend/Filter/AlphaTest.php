@@ -151,7 +151,7 @@ class Zend_Filter_AlphaTest extends PHPUnit_Framework_TestCase
      */
     public function testAllowWhiteSpace()
     {
-        $this->_filter->allowWhiteSpace = true;
+        $this->_filter->setAllowWhiteSpace(true);
         if (!self::$_unicodeEnabled) {
             // POSIX named classes are not supported, use alternative a-zA-Z match
             $valuesExpected = array(

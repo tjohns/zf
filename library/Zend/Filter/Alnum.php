@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -19,7 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
  */
-
 
 /**
  * @see Zend_Filter_Interface
@@ -42,6 +40,7 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
      * Whether to allow white space characters; off by default
      *
      * @var boolean
+     * @depreciated
      */
     public $allowWhiteSpace;
 
@@ -86,6 +85,28 @@ class Zend_Filter_Alnum implements Zend_Filter_Interface
                                                     );
         }
 
+    }
+
+    /**
+     * Returns the allowWhiteSpace option
+     *
+     * @return boolean
+     */
+    public function getAllowWhiteSpace()
+    {
+        return $this->allowWhiteSpace;
+    }
+
+    /**
+     * Sets the allowWhiteSpace option
+     *
+     * @param boolean $allowWhiteSpace
+     * @return Zend_Filter_Alnum Provides a fluent interface
+     */
+    public function setAllowWhiteSpace($allowWhiteSpace)
+    {
+        $this->allowWhiteSpace = (boolean) $allowWhiteSpace;
+        return $this;
     }
 
     /**

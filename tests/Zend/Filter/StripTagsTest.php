@@ -412,7 +412,7 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $input    = '<!-- a comment -->';
         $expected = '<!-- a comment -->';
-        $this->_filter->commentsAllowed = true;
+        $this->_filter->setCommentsAllowed(true);
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 
@@ -425,7 +425,7 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $input    = '<!-- a comment <br /> <h1>SuperLarge</h1> -->';
         $expected = '<!-- a comment <br /> <h1>SuperLarge</h1> -->';
-        $this->_filter->commentsAllowed = true;
+        $this->_filter->setCommentsAllowed(true);
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 
@@ -438,7 +438,7 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $input    = "<br> test <p> text </p> with <!-- comments --> and <!-- hidd\n\nen <br> -->";
         $expected = " test  text  with <!-- comments --> and <!-- hidd\n\nen <br> -->";
-        $this->_filter->commentsAllowed = true;
+        $this->_filter->setCommentsAllowed(true);
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 
@@ -451,7 +451,7 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $input    = '<a> <!-- <b> <!-- <c> --> <d> --> <e>';
         $expected = ' <!-- <b> <!-- <c> -->  -- ';
-        $this->_filter->commentsAllowed = true;
+        $this->_filter->setCommentsAllowed(true);
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 
@@ -465,7 +465,7 @@ class Zend_Filter_StripTagsTest extends PHPUnit_Framework_TestCase
     {
         $input    = '<a> <!-- <b> --  > <c>';
         $expected = ' <!-- <b> --  > ';
-        $this->_filter->commentsAllowed = true;
+        $this->_filter->setCommentsAllowed(true);
         $this->assertEquals($expected, $this->_filter->filter($input));
     }
 

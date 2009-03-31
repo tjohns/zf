@@ -99,7 +99,7 @@ class Zend_Validate_AlnumTest extends PHPUnit_Framework_TestCase
      */
     public function testOptionToAllowWhiteSpaceWithBasicInputValues()
     {
-        $this->_validator->allowWhiteSpace = true;
+        $this->_validator->setAllowWhiteSpace(true);
 
         $valuesExpected = array(
             'abc123'  => true,
