@@ -296,11 +296,9 @@ class Zend_Reflection_File implements Reflector
                     if ($functionTrapped) {
                         $this->_functions[] = new Zend_Reflection_Function($value);
                         $functionTrapped = false;
-                        echo "\nfunction: " . $value;
                     } else if ($classTrapped) {
                         $this->_classes[] = new Zend_Reflection_Class($value);
                         $classTrapped = false;
-                        echo "\nclass: " . $value ."\n";
                     }
                     
                     continue;
@@ -310,7 +308,6 @@ class Zend_Reflection_File implements Reflector
                     if ($requireTrapped) {
                         $this->_requiredFiles[] = $value ."\n";
                         $requireTrapped = false;
-                        echo "\nrequire: " . $value ."\n";
                     }
                     
                     continue;
@@ -352,12 +349,13 @@ class Zend_Reflection_File implements Reflector
             $type  =   $token[0];
             $value =   $token[1];
             $lineNum = $token[2];
-            if($type == T_WHITESPACE) {
+            if($type == T_OPEN_TAG || $type == T_WHITESPACE) {
                 continue;
             } else if ($type == T_DOC_COMMENT) {
-                $this->docComment = $value;
-                $this->_startLine = $lineNum;
+                $this->_docComment = $value;
+                $this->_startLine = $lineNum + substr_count($value, "\n") + 1;
                 $this->_docblock = new Zend_Reflection_Docblock($this);
+                return;
             } else {
                 // Only whitespace is allowed before file docblocks
                 return;
