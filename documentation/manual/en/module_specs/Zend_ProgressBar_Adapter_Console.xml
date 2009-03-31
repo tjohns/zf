@@ -77,6 +77,12 @@
         </listitem>
         <listitem>
             <para>
+                <code>charset</code>: Charset of the
+                <code>ELEMENT_TEXT</code> element. Default is utf-8.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 <code>barLeftChar</code>: A string which is used left-hand
                 of the indicator in the progressbar.
             </para>
