@@ -445,10 +445,9 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     /**
      * Receive the uploaded file
      *
-     * @param  string $value
      * @return boolean
      */
-    public function receive($value = null)
+    public function receive()
     {
         if (!$this->_validated) {
             if (!$this->isValid($this->getName())) {
@@ -491,8 +490,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getMessages()
     {
-        return parent::getMessages();
-//        return parent::getMessages() + $this->getTransferAdapter()->getMessages();
+        return parent::getMessages() + $this->getTransferAdapter()->getMessages();
     }
 
     /**
