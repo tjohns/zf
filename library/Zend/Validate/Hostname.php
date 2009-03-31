@@ -59,6 +59,7 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
     const INVALID_HOSTNAME        = 'hostnameInvalidHostname';
     const INVALID_LOCAL_NAME      = 'hostnameInvalidLocalName';
     const LOCAL_NAME_NOT_ALLOWED  = 'hostnameLocalNameNotAllowed';
+    const CANNOT_DECODE_PUNYCODE  = 'hostnameCannotDecodePunycode';
 
     /**
      * @var array
@@ -71,7 +72,8 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         self::UNDECIPHERABLE_TLD      => "'%value%' appears to be a DNS hostname but cannot extract TLD part",
         self::INVALID_HOSTNAME        => "'%value%' does not match the expected structure for a DNS hostname",
         self::INVALID_LOCAL_NAME      => "'%value%' does not appear to be a valid local network name",
-        self::LOCAL_NAME_NOT_ALLOWED  => "'%value%' appears to be a local network name but local network names are not allowed"
+        self::LOCAL_NAME_NOT_ALLOWED  => "'%value%' appears to be a local network name but local network names are not allowed",
+        self::CANNOT_DECODE_PUNYCODE  => "'%value%' appears to be a DNS hostname but the given punycode notation cannot be decoded"
     );
 
     /**
@@ -472,11 +474,18 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
                     $valid = true;
                     foreach ($domainParts as $domainPart) {
 
+                        // Decode Punycode domainnames to IDN
+                        if (strpos($domainPart, 'xn--') === 0) {
+                            $domainPart = $this->decodePunycode(substr($domainPart, 4));
+                            if ($domainPart === false) {
+                                return false;
+                            }
+                        }
+
                         // Check dash (-) does not start, end or appear in 3rd and 4th positions
-                        $pos = strpos($domainPart, '-');
-                        if (($pos === 0)
+                        if ((strpos($domainPart, '-') === 0)
                             || ((strlen($domainPart) > 2) && (strpos($domainPart, '-', 2) == 2) && (strpos($domainPart, '-', 3) == 3))
-                            || ($pos === (strlen($domainPart) - 1))) {
+                            || (strpos($domainPart, '-') === (strlen($domainPart) - 1))) {
                             $this->_error(self::INVALID_DASH);
                             $status = false;
                             break 2;
@@ -562,5 +571,103 @@ class Zend_Validate_Hostname extends Zend_Validate_Abstract
         }
 
         return false;
+    }
+
+    /**
+     * Decodes a punycode encoded string to it's original utf8 string
+     * In case of a decoding failure the original string is returned
+     *
+     * @param  string $encoded Punycode encoded string to decode
+     * @return string
+     */
+    protected function decodePunycode($encoded)
+    {
+        $matches = array();
+        $found   = preg_match('/([^a-z0-9\x2d]{1,10})$/i', $encoded);
+        if (empty($encoded) || (count($matches) > 0)) {
+            // no punycode encoded string, return as is
+            $this->_error(self::CANNOT_DECODE_PUNYCODE);
+            return false;
+        }
+
+        $separator = strrpos($encoded, '-');
+        if ($separator > 0) {
+            for ($x = 0; $x < $separator; ++$x) {
+                // prepare decoding matrix
+                $decoded[] = ord($encoded[$x]);
+            }
+        } else {
+            $this->_error(self::CANNOT_DECODE_PUNYCODE);
+            return false;
+        }
+
+        $lengthd = count($decoded);
+        $lengthe = strlen($encoded);
+
+        // decoding
+        $init  = true;
+        $base  = 72;
+        $index = 0;
+        $char  = 0x80;
+
+        for ($indexe = ($separator) ? ($separator + 1) : 0; $indexe < $lengthe; ++$lengthd) {
+            for ($old_index = $index, $pos = 1, $key = 36; 1 ; $key += 36) {
+                $hex   = ord($encoded[$indexe++]);
+                $digit = ($hex - 48 < 10) ? $hex - 22
+                       : (($hex - 65 < 26) ? $hex - 65
+                       : (($hex - 97 < 26) ? $hex - 97
+                       : 36));
+
+                $index += $digit * $pos;
+                $tag    = ($key <= $base) ? 1 : (($key >= $base + 26) ? 26 : ($key - $base));
+                if ($digit < $tag) {
+                    break;
+                }
+
+                $pos = (int) ($pos * (36 - $tag));
+            }
+
+            $delta   = intval($init ? (($index - $old_index) / 700) : (($index - $old_index) / 2));
+            $delta  += intval($delta / ($lengthd + 1));
+            for ($key = 0; $delta > 910 / 2; $key += 36) {
+                $delta = intval($delta / 35);
+            }
+
+            $base   = intval($key + 36 * $delta / ($delta + 38));
+            $init   = false;
+            $char  += (int) ($index / ($lengthd + 1));
+            $index %= ($lengthd + 1);
+            if ($lengthd > 0) {
+                for ($i = $lengthd; $i > $index; $i--) {
+                    $decoded[$i] = $decoded[($i - 1)];
+                }
+            }
+
+            $decoded[$index++] = $char;
+        }
+
+        // convert decoded ucs4 to utf8 string
+        foreach ($decoded as $key => $value) {
+            if ($value < 128) {
+                $decoded[$key] = chr($value);
+            } elseif ($value < (1 << 11)) {
+                $decoded[$key]  = chr(192 + ($value >> 6));
+                $decoded[$key] .= chr(128 + ($value & 63));
+            } elseif ($value < (1 << 16)) {
+                $decoded[$key]  = chr(224 + ($value >> 12));
+                $decoded[$key] .= chr(128 + (($value >> 6) & 63));
+                $decoded[$key] .= chr(128 + ($value & 63));
+            } elseif ($value < (1 << 21)) {
+                $decoded[$key]  = chr(240 + ($value >> 18));
+                $decoded[$key] .= chr(128 + (($value >> 12) & 63));
+                $decoded[$key] .= chr(128 + (($value >> 6) & 63));
+                $decoded[$key] .= chr(128 + ($value & 63));
+            } else {
+                $this->_error(self::CANNOT_DECODE_PUNYCODE);
+                return false;
+            }
+        }
+
+        return implode($decoded);
     }
 }

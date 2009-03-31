@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -296,7 +295,7 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * ZF-6033
+     * @see ZF-6033
      */
     public function testNumberNames()
     {
@@ -306,6 +305,25 @@ class Zend_Validate_HostnameTest extends PHPUnit_Framework_TestCase
         $valuesExpected = array(
             array(true, array('www.danger1.com', 'danger.com', 'www.danger.com')),
             array(false, array('www.danger1com', 'dangercom', 'www.dangercom'))
+            );
+        foreach ($valuesExpected as $element) {
+            foreach ($element[1] as $input) {
+                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()) . $input);
+            }
+        }
+    }
+
+    /**
+     * @see ZF-6133
+     */
+    public function testPunycodeDecoding()
+    {
+        $validator = new Zend_Validate_Hostname();
+
+        // Check TLD matching
+        $valuesExpected = array(
+            array(true, array('xn--brger-kva.com')),
+            array(false, array('xn--brger-x45d2va.com', 'xn--bürger.com', 'xn--'))
             );
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
