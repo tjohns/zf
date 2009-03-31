@@ -59,7 +59,7 @@ class Zend_Service_Amazon_Offer
     /**
      * @var string
      */
-    public $CurrentyCode;
+    public $CurrencyCode;
 
     /**
      * @var string
