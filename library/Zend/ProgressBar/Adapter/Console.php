@@ -23,6 +23,11 @@
 require_once 'Zend/ProgressBar/Adapter.php';
 
 /**
+ * @see Zend_Text_MultiByte
+ */
+require_once 'Zend/Text/MultiByte.php';
+
+/**
  * Zend_ProgressBar_Adapter_Console offers a text-based progressbar for console
  * applications
  *
@@ -140,6 +145,13 @@ class Zend_ProgressBar_Adapter_Console extends Zend_ProgressBar_Adapter
      * @var boolean
      */
     protected $_outputStarted = false;
+    
+    /**
+     * Charset of text element
+     *
+     * @var string
+     */
+    protected $_charset = 'utf-8';
 
     /**
      * Defined by Zend_ProgressBar_Adapter
@@ -335,6 +347,16 @@ class Zend_ProgressBar_Adapter_Console extends Zend_ProgressBar_Adapter
     }
 
     /**
+     * Set the charset of the text element
+     *
+     * @param string $charset
+     */
+    public function setCharset($charset)
+    {
+        $this->_charset = $charset;
+    }
+    
+    /**
      * Set the finish action
      *
      * @param  string $action
@@ -433,7 +455,7 @@ class Zend_ProgressBar_Adapter_Console extends Zend_ProgressBar_Adapter
                     break;
 
                 case self::ELEMENT_TEXT:
-                    $renderedElements[] = str_pad(substr($text, 0, $this->_textWidth), $this->_textWidth, ' ');
+                    $renderedElements[] = Zend_Text_MultiByte::strPad(substr($text, 0, $this->_textWidth), $this->_textWidth, ' ', STR_PAD_RIGHT, $this->_charset);
                     break;
             }
         }
