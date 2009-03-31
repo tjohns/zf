@@ -256,39 +256,112 @@ class Zend_Reflection_File implements Reflector
     protected function _reflect()
     {
         $contents = $this->_contents;
+        $tokens = token_get_all($contents);
         
-        $matches = array();
+        $functionTrapped = false;
+        $classTrapped    = false;
+        $requireTrapped  = false;
+        $openParens      = 0;
         
-        // find the page/file level docblock
-        if (preg_match('#^<\?php[ \t]*[\r?\n]{1,2}(\/\*(?:.*?)\*\/)#si', $contents, $matches)) {
-            $this->_docComment = $matches[1];
-            $this->_startLine = count(explode("\n", $matches[0])) + 1;
-            $this->_docblock = new Zend_Reflection_Docblock($this);
-        }
-        
-        if (preg_match_all('#require_once\s\'([A-Za-z0-9\.\/]*)\';#si', $contents, $matches)) {
-            foreach ($matches[1] as $requireMatch) {
-                $this->_requiredFiles[] = $requireMatch;
-            }
-        }
-        
-        // find the classes inside this file
-        if (preg_match_all('#class\s([A-Za-z0-9_]*)\s(?:[extends|implements]?[\s\w,\n]+)?{#Us', $contents, $matches)) {
-            foreach ($matches[1] as $classMatch) {
-                $this->_classes[] = new Zend_Reflection_Class($classMatch);
-            }
-        }
-        
-        // find the functions inside this file
-        if (preg_match_all('#(function|(public\s+function)|(protected\s+function))\s*\([\w-\$\s\,]*\)\s*{#Us', $contents, $matches)) {
-            foreach ($matches[1] as $functionMatch) {
-                $this->_functions[] = new Zend_Reflection_Function($functionMatch);
-            }
-        }
+        $this->_checkFileDocBlock($tokens);
+                        
+        foreach($tokens as $token) {
+            /*
+             * Tokens are characters representing symbols or arrays representing strings.
+             * The keys/values in the arrays are 0=>token id, 1=>string, 2=>line number.
+             * Token ID's are explained here: http://www.php.net/manual/en/tokens.php.
+             */
+            
+            if(is_array($token)) {
+                $type =    $token[0];
+                $value =   $token[1];
+                $lineNum = $token[2];
+            } else {
+                
+                // It's a symbol
 
-        $this->_endLine = count(explode("\n", $this->_contents));
+                // Maintain the count of open parens
+                if ($token == '{') {
+                    $openParens++;
+                } else if ($token == '}') {
+                    $openParens--;
+                }
+                
+                continue;
+            }
+            
+            switch($type) {
+                // Name of something
+                case T_STRING:
+                    if ($functionTrapped) {
+                        $this->_functions[] = new Zend_Reflection_Function($value);
+                        $functionTrapped = false;
+                        echo "\nfunction: " . $value;
+                    } else if ($classTrapped) {
+                        $this->_classes[] = new Zend_Reflection_Class($value);
+                        $classTrapped = false;
+                        echo "\nclass: " . $value ."\n";
+                    }
+                    
+                    continue;
+                    
+                // Required file names are T_CONSTANT_ENCAPSED_STRING
+                case T_CONSTANT_ENCAPSED_STRING:
+                    if ($requireTrapped) {
+                        $this->_requiredFiles[] = $value ."\n";
+                        $requireTrapped = false;
+                        echo "\nrequire: " . $value ."\n";
+                    }
+                    
+                    continue;
+                    
+                // Functions
+                case T_FUNCTION:
+                    
+                    if($openParens == 0) {
+                        $functionTrapped = true;
+                    }
+                    
+                    break;
+                    
+                // Classes
+                case T_CLASS:
+
+                    $classTrapped = true;
+                    
+                    break;
+                    
+                // All types of requires
+                case T_REQUIRE:
+                case T_REQUIRE_ONCE:
+                case T_INCLUDE:
+                case T_INCLUDE_ONCE:
+                    
+                    $requireTrapped = true;
+                    
+                    break;
+                    
+            }
+        }
         
-        return;
+        $this->_endLine = count(explode("\n", $this->_contents));
     }
     
+    protected function _checkFileDocBlock($tokens) {
+        foreach ($tokens as $token) {
+            $type  =   $token[0];
+            $value =   $token[1];
+            $lineNum = $token[2];
+            if($type == T_WHITESPACE) {
+                continue;
+            } else if ($type == T_DOC_COMMENT) {
+                $this->docComment = $value;
+                $this->_startLine = $lineNum;
+                $this->_docblock = new Zend_Reflection_Docblock($this);
+            } else {
+                // Only whitespace is allowed before file docblocks
+                return;
+            }
+        }
+    }
 }
