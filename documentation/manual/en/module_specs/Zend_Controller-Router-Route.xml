@@ -315,9 +315,6 @@ $route->assemble(array('mode' => 'month', 'value' => '5'));
 $route->assemble(array('mode' => 'month', 'value' => '5', '@locale' => 'de'));
 ]]>
         </programlisting>
-        
-        <para>
-        </para>
     </sect4>
 </sect3>
 <!--
