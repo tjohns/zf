@@ -230,6 +230,17 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     {
         $this->assertTrue( Zend_Locale_Format::isFloat('-1.234.567,12345',  array('locale' => 'de_AT')));
         $this->assertFalse(Zend_Locale_Format::isFloat('textwithoutnumber', array('locale' => 'de_AT')));
+        $this->assertFalse(Zend_Locale_Format::isFloat(''));
+        $this->assertFalse(Zend_Locale_Format::isFloat('', array('locale' => 'de_AT')));
+        $this->assertFalse(Zend_Locale_Format::isFloat(null));
+        $this->assertFalse(Zend_Locale_Format::isFloat(null, array('locale' => 'de_AT')));
+        $this->assertFalse(Zend_Locale_Format::isFloat(',', array('locale' => 'de_AT')));
+        $this->assertTrue(Zend_Locale_Format::isFloat('1e20', array('locale' => 'de_AT')));
+        $this->assertTrue(Zend_Locale_Format::isFloat('1e-20', array('locale' => 'de_AT')));
+        $this->assertFalse(Zend_Locale_Format::isFloat('1-e20', array('locale' => 'de_AT')));
+        $this->assertFalse(Zend_Locale_Format::isFloat('1-20', array('locale' => 'de_AT')));
+        $this->assertTrue(Zend_Locale_Format::isFloat('123.345'));
+        $this->assertTrue(Zend_Locale_Format::isFloat('+123.345'));
     }
 
 
