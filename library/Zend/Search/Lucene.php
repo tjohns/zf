@@ -1044,6 +1044,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
      *
      * @param integer|Zend_Search_Lucene_Search_QueryHit $id
      * @return Zend_Search_Lucene_Document
+     * @throws Zend_Search_Lucene_Exception    Exception is thrown if $id is out of the range
      */
     public function getDocument($id)
     {
