@@ -19,6 +19,8 @@
  * @version    $Id$
  */
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection
@@ -38,7 +40,8 @@ class Zend_Reflection_Property extends ReflectionProperty
     public function getDeclaringClass()
     {
         $phpReflection = parent::getDeclaringClass();
-        $zendReflection = new Zend_Reflection_Class($phpReflection->getName());
+        $factory = new Zend_Reflection_Factory();
+        $zendReflection = $factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }

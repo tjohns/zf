@@ -34,6 +34,8 @@ require_once 'Zend/Reflection/Method.php';
  */
 require_once 'Zend/Reflection/Docblock.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection
@@ -41,8 +43,7 @@ require_once 'Zend/Reflection/Docblock.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Reflection_Class extends ReflectionClass
-{
-
+{   
     /**
      * getDeclaringFile() - Return the reflection file of the declaring file.
      *
@@ -110,8 +111,9 @@ class Zend_Reflection_Class extends ReflectionClass
     {
         $phpReflections = parent::getInterfaces();
         $zendReflections = array();
+        $factory = new Zend_Reflection_Factory();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Class($phpReflection->getName());
+            $zendReflections[] = $factory->createClass($phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);
@@ -158,8 +160,9 @@ class Zend_Reflection_Class extends ReflectionClass
     public function getParentClass()
     {
         $phpReflection = parent::getParentClass();
+        $factory = new Zend_Reflection_Factory();
         if ($phpReflection) {
-            $zendReflection = new Zend_Reflection_Class($phpReflection->getName());
+            $zendReflection = $factory->createClass($phpReflection->getName());
             unset($phpReflection);
             return $zendReflection;
         } else {

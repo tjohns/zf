@@ -27,6 +27,8 @@ require_once dirname(__FILE__) . '/../../TestHelper.php';
 /** requires */
 require_once 'Zend/Reflection/File.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection
@@ -42,6 +44,7 @@ class Zend_Reflection_DocblockTest extends PHPUnit_Framework_TestCase
     
 
     static protected $_sampleClassFileRequired = false;
+    protected $_factory;
     
     public function setup()
     {
@@ -50,17 +53,18 @@ class Zend_Reflection_DocblockTest extends PHPUnit_Framework_TestCase
             require_once $fileToRequire;
             self::$_sampleClassFileRequired = true;
         }
+        $this->_factory = new Zend_Reflection_Factory();
     }
     
     public function testDocblockShortDescription()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
         $this->assertEquals($classReflection->getDocblock()->getShortDescription(), 'TestSampleClass5 Docblock Short Desc');
     }
     
     public function testDocblockLongDescription()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
         $expectedOutput =<<<EOS
 This is a long description for 
 the docblock of this class, it
@@ -75,7 +79,7 @@ EOS;
     
     public function testDocblockTags()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
         
         $this->assertEquals(count($classReflection->getDocblock()->getTags()), 1);
         $this->assertEquals(count($classReflection->getDocblock()->getTags('author')), 1);
@@ -91,7 +95,7 @@ EOS;
     
     public function testDocblockLines()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
         
         $classDocblock = $classReflection->getDocblock();
         
@@ -102,7 +106,7 @@ EOS;
     
     public function testDocblockContents()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
         
         $classDocblock = $classReflection->getDocblock();
         

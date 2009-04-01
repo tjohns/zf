@@ -24,6 +24,8 @@
  */
 require_once 'Zend/Exception.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection

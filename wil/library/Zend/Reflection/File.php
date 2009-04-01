@@ -29,6 +29,8 @@ require_once 'Zend/Reflection/Class.php';
  */
 require_once 'Zend/Reflection/Function.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection
@@ -297,7 +299,8 @@ class Zend_Reflection_File implements Reflector
                         $this->_functions[] = new Zend_Reflection_Function($value);
                         $functionTrapped = false;
                     } else if ($classTrapped) {
-                        $this->_classes[] = new Zend_Reflection_Class($value);
+                        $factory = new Zend_Reflection_Factory();
+                        $this->_classes[] = $factory->createClass($value);
                         $classTrapped = false;
                     }
                     

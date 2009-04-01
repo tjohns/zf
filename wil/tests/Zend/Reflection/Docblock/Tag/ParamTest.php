@@ -2,6 +2,8 @@
 
 require_once 'Zend/Reflection/File.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * 
  * @group Zend_Reflection
@@ -14,6 +16,7 @@ class Zend_Reflection_Docblock_Tag_ParamTest extends PHPUnit_Framework_TestCase
     
 
     static protected $_sampleClassFileRequired = false;
+    protected $_factory;
     
     public function setup()
     {
@@ -22,11 +25,13 @@ class Zend_Reflection_Docblock_Tag_ParamTest extends PHPUnit_Framework_TestCase
             require_once $fileToRequire;
             self::$_sampleClassFileRequired = true;
         }
+        $this->_factory = new Zend_Reflection_Factory();
     }
     
     public function testType()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        
+        $classReflection = new Zend_Reflection_Factory()->createClass('Zend_Reflection_TestSampleClass5');
 
         $paramTag = $classReflection->getMethod('doSomething')->getDocblock()->getTag('param');
         $this->assertEquals($paramTag->getType(), 'int');
@@ -34,7 +39,7 @@ class Zend_Reflection_Docblock_Tag_ParamTest extends PHPUnit_Framework_TestCase
     
     public function testVariableName()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = new Zend_Reflection_Factory()->createClass('Zend_Reflection_TestSampleClass5');
 
         $paramTag = $classReflection->getMethod('doSomething')->getDocblock()->getTag('param');
         $this->assertEquals($paramTag->getVariableName(), '$one');

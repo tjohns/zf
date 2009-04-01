@@ -41,7 +41,8 @@ class Zend_Reflection_Parameter extends ReflectionParameter
     public function getDeclaringClass()
     {
         $phpReflection = parent::getDeclaringClass();
-        $zendReflection = new Zend_Reflection_Class($phpReflection->getName());
+        $factory = new Zend_Reflection_Factory();
+        $zendReflection = $factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }
@@ -54,7 +55,8 @@ class Zend_Reflection_Parameter extends ReflectionParameter
     public function getClass()
     {
         $phpReflection = parent::getClass();
-        $zendReflection = new Zend_Reflection_Class($phpReflection->getName());
+        $factory = new Zend_Reflection_Factory();
+        $zendReflection = $factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }

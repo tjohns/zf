@@ -29,6 +29,8 @@ require_once 'Zend/Reflection/Class.php';
  */
 require_once 'Zend/Reflection/Function.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection
@@ -64,8 +66,9 @@ class Zend_Reflection_Extension extends ReflectionExtension
     {
         $phpReflections = parent::getClasses();
         $zendReflections = array();
+        $factory = new Zend_Reflection_Factory();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Class($phpReflection->getName());
+            $zendReflections[] = $factory->createClass($phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);

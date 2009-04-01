@@ -74,7 +74,8 @@ class Zend_Reflection_Method extends ReflectionMethod
     public function getDeclaringClass()
     {
         $phpReflection = parent::getDeclaringClass();
-        $zendReflection = new Zend_Reflection_Class($phpReflection->getName());
+        $factory = new Zend_Reflection_Factory();
+        $zendReflection = $factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }

@@ -2,6 +2,8 @@
 
 require_once 'Zend/Reflection/File.php';
 
+require_once 'Zend/Reflection/Factory.php';
+
 /**
  * 
  * @group Zend_Reflection
@@ -25,7 +27,7 @@ class Zend_Reflection_Docblock_Tag_ReturnTest extends PHPUnit_Framework_TestCase
     
     public function testType()
     {
-        $classReflection = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass5');
+        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
 
         $paramTag = $classReflection->getMethod('doSomething')->getDocblock()->getTag('return');
         $this->assertEquals($paramTag->getType(), 'mixed');
