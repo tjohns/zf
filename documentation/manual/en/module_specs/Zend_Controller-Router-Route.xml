@@ -194,11 +194,11 @@ $router->addRoute('archive', $route);
         </para>
     </sect4>
     
-    <sect4 id="zend.controller.router.routes.standard.translated-variables">
-        <title>Translated variables</title>
+    <sect4 id="zend.controller.router.routes.standard.translated-segments">
+        <title>Translated segments</title>
 
         <para>
-            The standard route supports translated variables. To use this
+            The standard route supports translated segments. To use this
             feature, you have to define at least a translator (an instance
             of <code>Zend_Translate</code>) via one of the following ways:
         </para>
@@ -255,10 +255,10 @@ $router->addRoute('archive', $route);
         </itemizedlist>
         
         <para>
-            Translated variables are separated into two parts. Fixed text
-            is prefixed by a single <code>@</code>-sign, and will be
+            Translated segments are separated into two parts. Fixed segments
+            are prefixed by a single <code>@</code>-sign, and will be
             translated to the current locale when assembling and reverted
-            to the message ID when matching again. Translated parameters
+            to the message ID when matching again. Dynamic segments
             are prefixed by <code>:@</code>. When assembling, the given
             parameter will be translated and inserted into the parameter
             position. When matching, the translated parameter from the
@@ -276,8 +276,8 @@ $router->addRoute('archive', $route);
         </note>
   
         <para>
-            The following route example with match demonstrates the usage
-            of translated fixed text and parameters:
+            The following is the simplest way to prepare the standard route for
+            translated segment usage: 
         </para>
               
         <programlisting role="php"><![CDATA[
@@ -285,7 +285,8 @@ $router->addRoute('archive', $route);
 $translator = new Zend_Translate('array', array(), 'en');
 $translator->addTranslation(array('archive' => 'archiv',
                                   'year'    => 'jahr',
-                                  'month'   => 'monat'),
+                                  'month'   => 'monat',
+                                  'index'   => 'uebersicht'),
                             'de');
                          
 // Set the current locale for the translator
@@ -293,7 +294,61 @@ $translator->setLocale('en');
 
 // Set it as default translator for routes
 Zend_Controller_Router_Route::setDefaultTranslator($translator);
+]]>
+        </programlisting>
+        
+        <para>
+            This example demonstrates the usage of static segments: 
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+// Create the route
+$route = new Zend_Controller_Router_Route(
+    '@archive',
+    array(
+        'controller' => 'archive',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
 
+// Assemble the URL in default locale: archive
+$route->assemble(array());
+
+// Assemble the URL in german: archiv
+$route->assemble(array());
+]]>
+        </programlisting>
+        
+        <para>
+            You can use the dynamic segments to create a module-route like
+            translated version:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+// Create the route
+$route = new Zend_Controller_Router_Route(
+    ':@controller/:@action/*',
+    array(
+        'controller' => 'index',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
+
+// Assemble the URL in default locale: archive/index/foo/bar
+$route->assemble(array('controller' => 'archive', 'foo' => 'bar'));
+
+// Assemble the URL in german: archiv/uebersicht/foo/bar
+$route->assemble(array('controller' => 'archive', 'foo' => 'bar'));
+]]>
+        </programlisting>
+        
+        <para>
+            You can also mix static and dynamic segments: 
+        </para>
+        
+        <programlisting role="php"><![CDATA[
 // Create the route
 $route = new Zend_Controller_Router_Route(
     '@archive/:@mode/:value',
