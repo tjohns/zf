@@ -193,6 +193,132 @@ $router->addRoute('archive', $route);
             control will be passed to the next route in the chain instead.
         </para>
     </sect4>
+    
+    <sect4 id="zend.controller.router.routes.standard.translated-variables">
+        <title>Translated variables</title>
+
+        <para>
+            The standard route supports translated variables. To use this
+            feature, you have to define at least a translator (an instance
+            of <code>Zend_Translate</code>) via one of the following ways:
+        </para>
+        
+	    <itemizedlist>
+	        <listitem>
+	            <para>
+	                Put it into the registry with the key <code>Zend_Translate</code>.
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                Set it via the static method
+	                <code>Zend_Controller_Router_Route::setDefaultTranslator()</code>. 
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                Pass it as fourth parameter to the constructor.
+	            </para>
+	        </listitem>
+	    </itemizedlist>
+        
+        <para>
+            By default, the locale specified in the <code>Zend_Translate</code>
+            instance will be used. To override it, you set it 
+            (an instance of <code>Zend_Locale</code> or a locale string) in one
+            of the following ways:
+        </para>
+        
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Put it into the registry with the key <code>Zend_Locale</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Set it via the static method
+                    <code>Zend_Controller_Router_Route::setDefaultLocale()</code>. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Pass it as fifth parameter to the constructor.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Pass it as <code>@locale</code> parameter to the assemble
+                    method.
+                </para>
+            </listitem>
+        </itemizedlist>
+        
+        <para>
+            Translated variables are separated into two parts. Fixed text
+            is prefixed by a single <code>@</code>-sign, and will be
+            translated to the current locale when assembling and reverted
+            to the message ID when matching again. Translated parameters
+            are prefixed by <code>:@</code>. When assembling, the given
+            parameter will be translated and inserted into the parameter
+            position. When matching, the translated parameter from the
+            URL will be reverted to the message ID again.
+        </para>
+        
+        <note>
+            <title>Message IDs and separate language file</title>
+            <para>
+                Occasionally a message ID which you want to use in one
+                of your routes is already used in a view script or somewhere
+                else. To have full control over safe URLs, you should use
+                a separate language file for the messages used in the route. 
+            </para>
+        </note>
+  
+        <para>
+            The following route example with match demonstrates the usage
+            of translated fixed text and parameters:
+        </para>
+              
+        <programlisting role="php"><![CDATA[
+// Prepate the translator
+$translator = new Zend_Translate('array', array(), 'en');
+$translator->addTranslation(array('archive' => 'archiv',
+                                  'year'    => 'jahr',
+                                  'month'   => 'monat'),
+                            'de');
+                         
+// Set the current locale for the translator
+$translator->setLocale('en');
+
+// Set it as default translator for routes
+Zend_Controller_Router_Route::setDefaultTranslator($translator);
+
+// Create the route
+$route = new Zend_Controller_Router_Route(
+    '@archive/:@mode/:value',
+    array(
+        'mode'       => 'year'
+        'value'      => 2005,
+        'controller' => 'archive',
+        'action'     => 'show'
+    ),
+    array('mode'  => '(month|year)'
+          'value' => '\d+')
+);
+$router->addRoute('archive', $route);
+
+// Assemble the URL in default locale: archive/month/5
+$route->assemble(array('mode' => 'month', 'value' => '5'));
+
+// Assemble the URL in german: archiv/monat/5
+$route->assemble(array('mode' => 'month', 'value' => '5', '@locale' => 'de'));
+]]>
+        </programlisting>
+        
+        <para>
+        </para>
+    </sect4>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:
