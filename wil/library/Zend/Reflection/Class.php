@@ -201,5 +201,4 @@ class Zend_Reflection_Class extends ReflectionClass
         unset($phpReflections);
         return $zendReflections;
     }
-
 }

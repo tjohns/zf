@@ -1,7 +1,7 @@
 <?php
-class Factory {
+class Zend_Reflection_Factory {
     function createClass($name) {
-        require('Zend_Reflection_Class.php');
+        require_once('Zend/Reflection/Class.php');
         return new Zend_Reflection_Class($name);
     }
     
