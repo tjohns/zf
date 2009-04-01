@@ -513,18 +513,10 @@ class Zend_Locale_Format
         $symbols = Zend_Locale_Data::getList($options['locale'],'symbols');
 
         // Parse input locale aware
-        $regex =
-              '/^'
-            . '([' . $symbols['minus'] . $symbols['plus'] . '-+])?'  // Optional plus/minus sign
-            . '(\d+(\\' . $symbols['group'] . ')?)*'                 // Optional integer part of number or mantissa
-                                                                     //   optionally grouped by language dependent group symbol
-            . '((\\' . $symbols['decimal'] . ')\d*)?'                // Optional fractional part of number or mantissa
-                                                                     // Optional exponent part for E notation:
-            . '(([' . $symbols['exponent'] . 'E])?'                        // E symbol
-            .    '([' . $symbols['minus'] . $symbols['plus'] . '+-])?'     // Optional plus/minus sign
-            .    '\d+)?'                                                   // Exponent
-            . '$/';
-
+        $regex = '/^[' . $symbols['minus'] . $symbols['plus'] . '-+]?'
+               . '\d(\d*(\\' . $symbols['group'] . ')?\d+)*'
+               . '((\\' . $symbols['decimal'] . ')\d*)?([' . $symbols['exponent'] . 'eE]'
+               . '([' . $symbols['minus'] . $symbols['plus'] . '+-])?\d+)?$/';
         preg_match($regex, $input, $found);
 
         if (!isset($found[0]))
