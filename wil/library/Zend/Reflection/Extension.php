@@ -39,6 +39,12 @@ require_once 'Zend/Reflection/Factory.php';
  */
 class Zend_Reflection_Extension extends ReflectionExtension
 {
+    protected $_factory;
+    
+    function __construct($name, $factory) {
+        $this->_factory = $factory;
+        parent::__construct($name);
+    }
     
     /**
      * getFunctions()
@@ -50,7 +56,7 @@ class Zend_Reflection_Extension extends ReflectionExtension
         $phpReflections = parent::getFunctions();
         $zendReflections = array();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Function($phpReflection->getName());
+            $zendReflections[] = $this->_factory->createFunction($phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);
@@ -66,9 +72,8 @@ class Zend_Reflection_Extension extends ReflectionExtension
     {
         $phpReflections = parent::getClasses();
         $zendReflections = array();
-        $factory = new Zend_Reflection_Factory();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = $factory->createClass($phpReflection->getName());
+            $zendReflections[] = $this->_factory->createClass($phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);

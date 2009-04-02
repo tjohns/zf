@@ -51,13 +51,12 @@ class Zend_Reflection_ClassTest extends PHPUnit_Framework_TestCase
             require_once $fileToRequire;
             self::$_sampleClassFileRequired = true;
         }
-        $_factory = new Zend_Reflection_Factory();
     }
     
     public function testMethodReturns()
     {
-        
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass2');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass2');
         
         $methodByName = $reflectionClass->getMethod('getProp1');
         $this->assertEquals(get_class($methodByName), 'Zend_Reflection_Method');
@@ -71,7 +70,8 @@ class Zend_Reflection_ClassTest extends PHPUnit_Framework_TestCase
     
     public function testPropertyReturns()
     {
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass2');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass2');
         
         $propertyByName = $reflectionClass->getProperty('_prop1');
         $this->assertEquals(get_class($propertyByName), 'Zend_Reflection_Property');
@@ -85,17 +85,18 @@ class Zend_Reflection_ClassTest extends PHPUnit_Framework_TestCase
     
     public function testParentReturn()
     {
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass');
         
         $parent = $reflectionClass->getParentClass();
         $this->assertEquals(get_class($parent), 'Zend_Reflection_Class');
         $this->assertEquals($parent->getName(), 'ArrayObject');
-        
     }
     
     public function testInterfaceReturn()
     {
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass4');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass4');
         
         $interfaces = $reflectionClass->getInterfaces();
         $this->assertEquals(count($interfaces), 1);
@@ -107,7 +108,8 @@ class Zend_Reflection_ClassTest extends PHPUnit_Framework_TestCase
     
     public function testGetContentsReturnsContents()
     {
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass2');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass2');
         $target = <<<EOS
 {
     
@@ -137,7 +139,8 @@ EOS;
     
     public function testStartLine()
     {
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass5');
         
         $this->assertEquals($reflectionClass->getStartLine(), 87);
         $this->assertEquals($reflectionClass->getStartLine(true), 76);
@@ -146,7 +149,8 @@ EOS;
 
     public function testGetDeclaringFileReturnsFilename()
     {
-        $reflectionClass = $this->_factory->createClass('Zend_Reflection_TestSampleClass2');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionClass = $factory->createClass('Zend_Reflection_TestSampleClass2');
         $this->assertContains('TestSampleClass.php', $reflectionClass->getDeclaringFile()->getFileName()); //ns(, $reflectionClass->getDeclaringFile());
     }
     

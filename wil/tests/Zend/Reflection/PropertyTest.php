@@ -55,7 +55,8 @@ class Zend_Reflection_PropertyTest extends PHPUnit_Framework_TestCase
     
     public function testDeclaringClassReturn()
     {
-        $property = new Zend_Reflection_Property('Zend_Reflection_TestSampleClass2', '_prop1');
+        $factory = new Zend_Reflection_Factory();
+        $property = $factory->createProperty('Zend_Reflection_TestSampleClass2', '_prop1');
         $this->assertEquals(get_class($property->getDeclaringClass()), 'Zend_Reflection_Class');
     }
     

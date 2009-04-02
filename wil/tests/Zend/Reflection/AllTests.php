@@ -33,6 +33,7 @@ require_once 'Zend/Reflection/ClassTest.php';
 require_once 'Zend/Reflection/Docblock/AllTests.php';
 require_once 'Zend/Reflection/DocblockTest.php';
 require_once 'Zend/Reflection/ExtensionTest.php';
+require_once 'Zend/Reflection/FactoryTest.php';
 require_once 'Zend/Reflection/FileTest.php';
 require_once 'Zend/Reflection/FunctionTest.php';
 require_once 'Zend/Reflection/MethodTest.php';
@@ -61,6 +62,7 @@ class Zend_Reflection_AllTests
         $suite->addTest(Zend_Reflection_Docblock_AllTests::suite());
         $suite->addTestSuite('Zend_Reflection_DocblockTest');
         $suite->addTestSuite('Zend_Reflection_ExtensionTest');
+        $suite->addTestSuite('Zend_Reflection_FactoryTest');
         $suite->addTestSuite('Zend_Reflection_FileTest');
         $suite->addTestSuite('Zend_Reflection_FunctionTest');
         $suite->addTestSuite('Zend_Reflection_MethodTest');

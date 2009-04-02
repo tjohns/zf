@@ -28,10 +28,17 @@
 class Zend_Reflection_Parameter extends ReflectionParameter 
 {
 
+    protected $_factory;
+
     /**
      * @var bool
      */
     protected $_isFromMethod = false;
+    
+    function __construct($function, $parameter, $factory) {
+        $this->_factory = $factory;
+        parent::__construct($function, $parameter);
+    }
     
     /**
      * getDeclaringClass()
@@ -41,8 +48,7 @@ class Zend_Reflection_Parameter extends ReflectionParameter
     public function getDeclaringClass()
     {
         $phpReflection = parent::getDeclaringClass();
-        $factory = new Zend_Reflection_Factory();
-        $zendReflection = $factory->createClass($phpReflection->getName());
+        $zendReflection = $this->_factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }
@@ -55,8 +61,7 @@ class Zend_Reflection_Parameter extends ReflectionParameter
     public function getClass()
     {
         $phpReflection = parent::getClass();
-        $factory = new Zend_Reflection_Factory();
-        $zendReflection = $factory->createClass($phpReflection->getName());
+        $zendReflection = $this->_factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }
@@ -70,9 +75,9 @@ class Zend_Reflection_Parameter extends ReflectionParameter
     {
         $phpReflection = parent::getDeclaringFunction();
         if ($phpReflection instanceof ReflectionMethod) {
-            $zendReflection = new Zend_Reflection_Method($this->getDeclaringClass()->getName(), $phpReflection->getName());
+            $zendReflection = $this->_factory->createMethod($this->getDeclaringClass()->getName(), $phpReflection->getName());
         } else {
-            $zendReflection = new Zend_Reflection_Function($phpReflection->getName());
+            $zendReflection = $this->_factory->createFunction($phpReflection->getName());
         }
         unset($phpReflection);
         return $zendReflection;

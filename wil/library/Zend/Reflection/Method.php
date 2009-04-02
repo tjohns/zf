@@ -33,6 +33,11 @@ require_once 'Zend/Reflection/Parameter.php';
 class Zend_Reflection_Method extends ReflectionMethod
 {
 
+    function __construct($class, $name, $factory) {
+        $this->_factory = $factory;
+        parent::__construct($class, $name);
+    }
+
     /**
      * getDocblock()
      *
@@ -42,7 +47,7 @@ class Zend_Reflection_Method extends ReflectionMethod
     public function getDocblock()
     {
         if ($this->getDocComment() != '') {
-            return new Zend_Reflection_Docblock($this);
+            return $this->_factory->createDocblock($this);
         }
         
         throw new Zend_Reflection_Exception($this->getName() . ' does not have a Docblock.');
@@ -74,8 +79,7 @@ class Zend_Reflection_Method extends ReflectionMethod
     public function getDeclaringClass()
     {
         $phpReflection = parent::getDeclaringClass();
-        $factory = new Zend_Reflection_Factory();
-        $zendReflection = $factory->createClass($phpReflection->getName());
+        $zendReflection = $this->_factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }
@@ -90,7 +94,7 @@ class Zend_Reflection_Method extends ReflectionMethod
         $phpReflections = parent::getParameters();
         $zendReflections = array();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Parameter(array($this->getDeclaringClass()->getName(), $this->getName()), $phpReflection->getName());
+            $zendReflections[] = $this->_factory->createParameter(array($this->getDeclaringClass()->getName(), $this->getName()), $phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);

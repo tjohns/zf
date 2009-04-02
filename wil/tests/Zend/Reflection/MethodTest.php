@@ -55,13 +55,15 @@ class Zend_Reflection_MethodTest extends PHPUnit_Framework_TestCase
     
     public function testDeclaringClassReturn()
     {
-        $method = new Zend_Reflection_Method('Zend_Reflection_TestSampleClass2', 'getProp1');
+        $factory = new Zend_Reflection_Factory();
+        $method = $factory->createMethod('Zend_Reflection_TestSampleClass2', 'getProp1');
         $this->assertEquals(get_class($method->getDeclaringClass()), 'Zend_Reflection_Class');
     }
     
     public function testParemeterReturn()
     {
-        $method = new Zend_Reflection_Method('Zend_Reflection_TestSampleClass2', 'getProp2');
+        $factory = new Zend_Reflection_Factory();
+        $method = $factory->createMethod('Zend_Reflection_TestSampleClass2', 'getProp2');
         $parameters = $method->getParameters();
         $this->assertEquals(count($parameters), 2);
         $this->assertEquals(get_class(array_shift($parameters)), 'Zend_Reflection_Parameter');
@@ -69,7 +71,8 @@ class Zend_Reflection_MethodTest extends PHPUnit_Framework_TestCase
     
     public function testStartLine()
     {
-        $reflectionMethod = new Zend_Reflection_Method('Zend_Reflection_TestSampleClass5', 'doSomething');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionMethod = $factory->createMethod('Zend_Reflection_TestSampleClass5', 'doSomething');
         
         $this->assertEquals($reflectionMethod->getStartLine(), 105);
         $this->assertEquals($reflectionMethod->getStartLine(true), 89);
@@ -77,15 +80,16 @@ class Zend_Reflection_MethodTest extends PHPUnit_Framework_TestCase
     
     public function testGetBodyReturnsCorrectBody()
     {
-        $reflectionMethod = new Zend_Reflection_Method('Zend_Reflection_TestSampleClass5', 'doSomething');
+        $factory = new Zend_Reflection_Factory;
+        $reflectionMethod = $factory->createMethod('Zend_Reflection_TestSampleClass5', 'doSomething');
         $this->assertEquals("        return 'mixedValue';\n", $reflectionMethod->getBody());
     }
     
     public function testGetContentsReturnsCorrectContent()
     {
-        $reflectionMethod = new Zend_Reflection_Method('Zend_Reflection_TestSampleClass5', 'doSomething');
+        $factory = new Zend_Reflection_Factory();
+        $reflectionMethod = $factory->createMethod('Zend_Reflection_TestSampleClass5', 'doSomething');
         $this->assertEquals("    {\n\n        return 'mixedValue';\n\n    }\n", $reflectionMethod->getContents(false));
     }
     
 }
-

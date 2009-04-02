@@ -32,6 +32,12 @@ require_once 'Zend/Reflection/Parameter.php';
  */
 class Zend_Reflection_Function extends ReflectionFunction
 {
+    protected $_factory;
+    
+    function __construct($name, $factory) {
+        $this->_factory = $factory;
+        parent::__construct($name); 
+    }
     
     /**
      * getDocblock()
@@ -41,7 +47,7 @@ class Zend_Reflection_Function extends ReflectionFunction
     public function getDocblock()
     {
         if (($comment = $this->getDocComment()) != '') {
-            return new Zend_Reflection_Docblock($comment);
+            return $this->_factory->createDocblock($comment);
         }
         
         throw new Zend_Reflection_Exception($this->getName() . ' does not have a Docblock.');
@@ -92,7 +98,7 @@ class Zend_Reflection_Function extends ReflectionFunction
         $phpReflections = parent::getParameters();
         $zendReflections = array();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Parameter($this->getName(), $phpReflection->getName());
+            $zendReflections[] = $this->_factory->createParameter($this->getName(), $phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);

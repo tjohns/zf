@@ -55,7 +55,8 @@ class Zend_Reflection_FunctionTest extends PHPUnit_Framework_TestCase
     
     public function testParemeterReturn()
     {
-        $function = new Zend_Reflection_Function('array_splice');
+        $factory = new Zend_Reflection_Factory();
+        $function = $factory->createFunction('array_splice');
         $parameters = $function->getParameters();
         $this->assertEquals(count($parameters), 4);
         $this->assertEquals(get_class(array_shift($parameters)), 'Zend_Reflection_Parameter');
@@ -63,7 +64,8 @@ class Zend_Reflection_FunctionTest extends PHPUnit_Framework_TestCase
     
     public function testFunctionDocblockReturn()
     {
-        $function = new Zend_Reflection_Function('zend_reflection_test_sample_function6');
+        $factory = new Zend_Reflection_Factory();
+        $function = $factory->createFunction('zend_reflection_test_sample_function6');
         $this->assertEquals(get_class($function->getDocblock()), 'Zend_Reflection_Docblock');
     }
     

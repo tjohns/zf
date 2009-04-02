@@ -43,7 +43,13 @@ require_once 'Zend/Reflection/Factory.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Reflection_Class extends ReflectionClass
-{   
+{
+    protected $_factory;
+    
+    function __construct($name, $factory) {
+        $this->_factory = $factory;
+        parent::__construct($name);    
+    }
     /**
      * getDeclaringFile() - Return the reflection file of the declaring file.
      *
@@ -51,7 +57,7 @@ class Zend_Reflection_Class extends ReflectionClass
      */
     public function getDeclaringFile()
     {
-        return new Zend_Reflection_File($this->getFileName());
+        return $this->_factory->createFile($this->getFileName());
     }
     
     /**
@@ -62,7 +68,7 @@ class Zend_Reflection_Class extends ReflectionClass
     public function getDocblock()
     {
         if (($comment = $this->getDocComment()) != '') {
-            return new Zend_Reflection_Docblock($this);
+            return $this->_factory->createDocblock($this);
         }
         
         throw new Zend_Reflection_Exception($this->getName() . ' does not have a Docblock.');
@@ -111,9 +117,8 @@ class Zend_Reflection_Class extends ReflectionClass
     {
         $phpReflections = parent::getInterfaces();
         $zendReflections = array();
-        $factory = new Zend_Reflection_Factory();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = $factory->createClass($phpReflection->getName());
+            $zendReflections[] = $this->_factory->createClass($phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);
@@ -129,7 +134,7 @@ class Zend_Reflection_Class extends ReflectionClass
     public function getMethod($name)
     {
         $phpReflection = parent::getMethod($name);
-        $zendReflection = new Zend_Reflection_Method($this->getName(), $phpReflection->getName());
+        $zendReflection = $this->_factory->createMethod($this->getName(), $phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }
@@ -145,7 +150,7 @@ class Zend_Reflection_Class extends ReflectionClass
         $phpReflections = parent::getMethods($filter);
         $zendReflections = array();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Method($this->getName(), $phpReflection->getName());
+            $zendReflections[] = $this->_factory->createMethod($this->getName(), $phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);
@@ -160,9 +165,8 @@ class Zend_Reflection_Class extends ReflectionClass
     public function getParentClass()
     {
         $phpReflection = parent::getParentClass();
-        $factory = new Zend_Reflection_Factory();
         if ($phpReflection) {
-            $zendReflection = $factory->createClass($phpReflection->getName());
+            $zendReflection = $this->_factory->createClass($phpReflection->getName());
             unset($phpReflection);
             return $zendReflection;
         } else {
@@ -179,7 +183,7 @@ class Zend_Reflection_Class extends ReflectionClass
     public function getProperty($name)
     {
         $phpReflection = parent::getProperty($name);
-        $zendReflection = new Zend_Reflection_Property($this->getName(), $phpReflection->getName());
+        $zendReflection = $this->_factory->createProperty($this->getName(), $phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }
@@ -195,7 +199,7 @@ class Zend_Reflection_Class extends ReflectionClass
         $phpReflections = parent::getProperties($filter);
         $zendReflections = array();
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
-            $zendReflections[] = new Zend_Reflection_Property($this->getName(), $phpReflection->getName());
+            $zendReflections[] = $this->_factory->createProperty($this->getName(), $phpReflection->getName());
             unset($phpReflection);
         }
         unset($phpReflections);

@@ -84,7 +84,33 @@ class Zend_Reflection_File implements Reflector
      * @var string
      */
     protected $_contents        = null;
+    
+    protected $_factory;
 
+    /**
+     * __construct()
+     *
+     * @param string $file
+     */
+    public function __construct($file, $factory)
+    {
+        $fileName = $file;
+        $this->_factory = $factory;
+        
+        if (($fileRealpath = realpath($fileName)) === false) {
+            $fileRealpath = self::findRealpathInIncludePath($file);
+        }
+        
+        if (!$fileRealpath || !in_array($fileRealpath, get_included_files())) {
+            require_once 'Zend/Reflection/Exception.php';
+            throw new Zend_Reflection_Exception('File ' . $file . ' must be required before it can be reflected.');
+        }
+
+        $this->_fileName = $fileRealpath;
+        $this->_contents = file_get_contents($this->_fileName);
+        $this->_reflect();
+    }
+    
     /**
      * findRealpathInIncludePath()
      *
@@ -113,29 +139,6 @@ class Zend_Reflection_File implements Reflector
     {
         // @todo what does this do?
         return null;
-    }
-    
-    /**
-     * __construct()
-     *
-     * @param string $file
-     */
-    public function __construct($file)
-    {
-        $fileName = $file;
-        
-        if (($fileRealpath = realpath($fileName)) === false) {
-            $fileRealpath = self::findRealpathInIncludePath($file);
-        }
-        
-        if (!$fileRealpath || !in_array($fileRealpath, get_included_files())) {
-            require_once 'Zend/Reflection/Exception.php';
-            throw new Zend_Reflection_Exception('File ' . $file . ' must be required before it can be reflected.');
-        }
-
-        $this->_fileName = $fileRealpath;
-        $this->_contents = file_get_contents($this->_fileName);
-        $this->_reflect();
     }
     
     /**
@@ -296,11 +299,10 @@ class Zend_Reflection_File implements Reflector
                 // Name of something
                 case T_STRING:
                     if ($functionTrapped) {
-                        $this->_functions[] = new Zend_Reflection_Function($value);
+                        $this->_functions[] = $this->_factory->createFunction($value);
                         $functionTrapped = false;
                     } else if ($classTrapped) {
-                        $factory = new Zend_Reflection_Factory();
-                        $this->_classes[] = $factory->createClass($value);
+                        $this->_classes[] = $this->_factory->createClass($value);
                         $classTrapped = false;
                     }
                     
@@ -357,7 +359,7 @@ class Zend_Reflection_File implements Reflector
             } else if ($type == T_DOC_COMMENT) {
                 $this->_docComment = $value;
                 $this->_startLine = $lineNum + substr_count($value, "\n") + 1;
-                $this->_docblock = new Zend_Reflection_Docblock($this);
+                $this->_docblock = $this->_factory->createDocblock($this);
                 return;
             } else {
                 // Only whitespace is allowed before file docblocks

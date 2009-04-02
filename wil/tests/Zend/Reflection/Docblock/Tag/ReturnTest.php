@@ -27,7 +27,8 @@ class Zend_Reflection_Docblock_Tag_ReturnTest extends PHPUnit_Framework_TestCase
     
     public function testType()
     {
-        $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
+        $factory = new Zend_Reflection_Factory();
+        $classReflection = $factory->createClass('Zend_Reflection_TestSampleClass5');
 
         $paramTag = $classReflection->getMethod('doSomething')->getDocblock()->getTag('return');
         $this->assertEquals($paramTag->getType(), 'mixed');

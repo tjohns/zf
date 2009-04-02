@@ -55,19 +55,22 @@ class Zend_Reflection_ParameterTest extends PHPUnit_Framework_TestCase
     
     public function testDeclaringClassReturn()
     {
-        $parameter = new Zend_Reflection_Parameter(array('Zend_Reflection_TestSampleClass2', 'getProp2'), 0);
+        $factory = new Zend_Reflection_Factory();
+        $parameter = $factory->createParameter(array('Zend_Reflection_TestSampleClass2', 'getProp2'), 0);
         $this->assertEquals(get_class($parameter->getDeclaringClass()), 'Zend_Reflection_Class');
     }
     
     public function testClassReturn()
     {
-        $parameter = new Zend_Reflection_Parameter(array('Zend_Reflection_TestSampleClass2', 'getProp2'), 'param2');
+        $factory = new Zend_Reflection_Factory();
+        $parameter = $factory->createParameter(array('Zend_Reflection_TestSampleClass2', 'getProp2'), 'param2');
         $this->assertEquals(get_class($parameter->getClass()), 'Zend_Reflection_Class');
     }
     
     public function testTypeReturn()
     {
-        $parameter = new Zend_Reflection_Parameter(array('Zend_Reflection_TestSampleClass5', 'doSomething'), 'two');
+        $factory = new Zend_Reflection_Factory();
+        $parameter = $factory->createParameter(array('Zend_Reflection_TestSampleClass5', 'doSomething'), 'two');
         $this->assertEquals($parameter->getType(), 'int');
     }
     

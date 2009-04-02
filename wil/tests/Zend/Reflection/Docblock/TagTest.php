@@ -13,7 +13,6 @@ class Zend_Reflection_Docblock_TagTest extends PHPUnit_Framework_TestCase
     
 
     static protected $_sampleClassFileRequired = false;
-    protected $_factory;
     
     public function setup()
     {
@@ -22,11 +21,11 @@ class Zend_Reflection_Docblock_TagTest extends PHPUnit_Framework_TestCase
             require_once $fileToRequire;
             self::$_sampleClassFileRequired = true;
         }
-        $this->_factory;
     }
     
     public function testTagDescription()
     {
+        $factory = new Zend_Reflection_Factory();
         $classReflection = $factory->createClass('Zend_Reflection_TestSampleClass5');
 
         $authorTag = $classReflection->getDocblock()->getTag('author');

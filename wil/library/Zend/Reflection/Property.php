@@ -30,6 +30,12 @@ require_once 'Zend/Reflection/Factory.php';
 class Zend_Reflection_Property extends ReflectionProperty
 {
     
+    protected $_factory;
+    
+    function __construct($class, $name, $factory) {
+        $this->_factory = $factory;
+        parent::__construct($class, $name);
+    }
     // @todo implement line numbers in here
     
     /**
@@ -40,8 +46,7 @@ class Zend_Reflection_Property extends ReflectionProperty
     public function getDeclaringClass()
     {
         $phpReflection = parent::getDeclaringClass();
-        $factory = new Zend_Reflection_Factory();
-        $zendReflection = $factory->createClass($phpReflection->getName());
+        $zendReflection = $this->_factory->createClass($phpReflection->getName());
         unset($phpReflection);
         return $zendReflection;
     }

@@ -33,6 +33,4 @@ require_once 'Zend/Reflection/Factory.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Reflection_Exception extends Zend_Exception
-{
-    
-}
+{}
