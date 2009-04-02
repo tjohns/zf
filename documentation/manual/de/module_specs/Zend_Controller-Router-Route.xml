@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13847 -->
+<!-- EN-Revision: 14586 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -179,6 +179,181 @@ $router->addRoute('archive', $route);
             stattdessen an die nächste Route in der Kette übertragen.
         </para>
     </sect4>
+
+    <sect4 id="zend.controller.router.routes.standard.translated-segments">
+        <title>Übersetzte Segmente</title>
+
+        <para>
+            Die Standardroute unterstützt übersetzte Segmente. Um dieses Feature zu verwenden muß zumindest
+            ein Übersetzer (eine Instanz von <code>Zend_Translate</code>) auf einem der folgenden Wege
+            definiert werden:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    In die Registry mit dem Schlüssel <code>Zend_Translate</code> geben.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Über die statische Methode
+                    <code>Zend_Controller_Router_Route::setDefaultTranslator()</code> setzen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Als vierten Parameter im Constructor übergeben.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Standardmäßig wird das Gebietsschema verwendet das in der Instanz von <code>Zend_Translate</code>
+            verwendet wird. Um es zu überschreiben, kann es (als Instanz von <code>Zend_Locale</code> oder
+            einem Gebietsschema-String) auf einem der folgenden Wege gesetzt werden:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    In die Registry mit dem Schlüssel <code>Zend_Locale</code> geben.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Über die statische Methode
+                    <code>Zend_Controller_Router_Route::setDefaultLocale()</code> setzen.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Als fünften Parameter im Constructor übergeben.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Als <code>@locale</code> Parameter der assemble Methode übergeben.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            Übersetzte Segmente werden in zwei Teile getrennt. Ein fixes Segment dem ein einzelnes
+            <code>@</code>-Zeichen vorangestellt wird, der anhand des aktuellen Gebietsschemas übersetzt wird
+            und auf der Position des Parameters eingefügt wird. Dynamischen Segmenten wird ein
+            <code>:@</code> vorangestellt. Beim Zusammenbauen, wird der gegebene Parameter übersetzt und an der
+            Position des Parameters eingefügt. Bei der Überprüfung, wird der übersetzte Parameter von der
+            URL wieder in die Nachrichten ID umgewandelt.
+        </para>
+
+        <note>
+            <title>Nachrichten IDs und eigene Sprachdateien</title>
+            <para>
+                Normalerweise werden Nachrichten IDs die man in einer seiner Routen verwenden will, bereits in
+                einem View Skript oder irgendwo anders verwendet. Um die komplette Kontrolle über sichere
+                URLs zu haben, sollte man eine eigene Sprachdatei für die Nachrichten haben die in einer
+                Route verwendet werden.
+            </para>
+        </note>
+
+        <para>
+            Nachfolgend ist die einfachste Verwendung gezeigt um eine Standardroute für übersetzte Segmente
+            zu Verwenden:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Den Übersetzer vorbereiten
+$translator = new Zend_Translate('array', array(), 'en');
+$translator->addTranslation(array('archive' => 'archiv',
+                                  'year'    => 'jahr',
+                                  'month'   => 'monat',
+                                  'index'   => 'uebersicht'),
+                            'de');
+
+// Das aktuelle Gebietsschema für den Übersetzer setzen
+$translator->setLocale('en');
+
+// Als Standard-Übersetzer für Routen setzen
+Zend_Controller_Router_Route::setDefaultTranslator($translator);
+]]>
+        </programlisting>
+
+        <para>
+            Dieses Beispiel zeigt die Verwendung von statischen Segmenten:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Die Route erstellen
+$route = new Zend_Controller_Router_Route(
+    '@archive',
+    array(
+        'controller' => 'archive',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
+
+// Die URL im Standard-Gebietsschema zusammenbauen: archive
+$route->assemble(array());
+
+// Die URL in Deutsch zusammenbauen: archiv
+$route->assemble(array());
+]]>
+        </programlisting>
+
+        <para>
+            Man kann dynamische Segmente verwenden um eine Modul-Route, so wie die übersetzte Version,
+            zu erstellen:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Die Route erstellen
+$route = new Zend_Controller_Router_Route(
+    ':@controller/:@action/*',
+    array(
+        'controller' => 'index',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
+
+// Die URL im Standard-Gebietsschema zusammenbauen: archive/index/foo/bar
+$route->assemble(array('controller' => 'archive', 'foo' => 'bar'));
+
+// Die URL in Deutsch zusammenbauen: archiv/uebersicht/foo/bar
+$route->assemble(array('controller' => 'archive', 'foo' => 'bar'));
+]]>
+        </programlisting>
+
+        <para>
+            Man kann auch statische und dynamische Segmente mischen:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Die Route erstellen
++$route = new Zend_Controller_Router_Route(
+    '@archive/:@mode/:value',
+    array(
+        'mode'       => 'year'
+        'value'      => 2005,
+        'controller' => 'archive',
+        'action'     => 'show'
+    ),
+    array('mode'  => '(month|year)'
+          'value' => '\d+')
+);
+$router->addRoute('archive', $route);
+
+// Die URL im Standard-Gebietsschema zusammenbauen: archive/month/5
+$route->assemble(array('mode' => 'month', 'value' => '5'));
+
+// Die URL in Deutsch zusammenbauen: archiv/monat/5
+$route->assemble(array('mode' => 'month', 'value' => '5', '@locale' => 'de'));
+]]>
+        </programlisting>
+    </sect4>
+
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:

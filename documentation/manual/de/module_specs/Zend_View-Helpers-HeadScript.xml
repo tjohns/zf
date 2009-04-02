@@ -55,7 +55,8 @@
 $this->headScript()->appendFile(
     '/js/prototype.js',
     'text/javascript',
-    array('conditional' => 'lt IE 7'));
+    array('conditional' => 'lt IE 7')
+);
 ]]>
         </programlisting>
 

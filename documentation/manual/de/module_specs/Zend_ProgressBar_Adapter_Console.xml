@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14235 -->
+<!-- EN-Revision: 14558 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
@@ -68,6 +68,12 @@
             <para>
                 <code>textWidth</code>: Breite in Zeichen des <code>ELEMENT_TEXT</code> Elements. Standard ist
                 20.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <code>charset</code>: Zeichensatz des
+                <code>ELEMENT_TEXT</code> Elements. Standardwert ist utf-8.
             </para>
         </listitem>
         <listitem>
