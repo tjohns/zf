@@ -473,7 +473,8 @@ foreach($result->ports AS $port) {
         }
     }
 }
-// You can access bindings, messages and operations and other elements directly too
+// You can access bindings, messages and operations
+// and other elements directly too
 foreach($result->operations AS $operation) {
     // do stuff
 }

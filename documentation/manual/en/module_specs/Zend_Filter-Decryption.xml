@@ -87,10 +87,16 @@ print $decrypted;
 
         <programlisting role="php"><![CDATA[
 // Use openssl and provide a private key
-$filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Decrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+));
 
 // of course you can also give the envelope keys at initiation
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/second.pem');
+$filter->setEnvelopeKey(array(
+    '/key/from/encoder/first.pem',
+    '/key/from/encoder/second.pem'
+));
 ]]>
         </programlisting>
 
@@ -107,11 +113,17 @@ $filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/
 
         <programlisting role="php"><![CDATA[
 // Use openssl and provide a private key
-$filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Decrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+));
 
 // of course you can also give the envelope keys at initiation
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/second.pem');
-       ->setPassphrase('mypassphrase');
+$filter->setEnvelopeKey(array(
+    '/key/from/encoder/first.pem',
+    '/key/from/encoder/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 ]]>
         </programlisting>
 
@@ -125,8 +137,11 @@ $filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/
 $filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
 
 // of course you can also give the envelope keys at initiation
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem', '/key/from/encoder/second.pem');
-       ->setPassphrase('mypassphrase');
+$filter->setEnvelopeKey(array(
+    '/key/from/encoder/first.pem',
+    '/key/from/encoder/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 
 $decrypted = $filter->filter('encoded_text_normally_unreadable');
 print $decrypted;

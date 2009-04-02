@@ -68,106 +68,106 @@ $rssFeedFromArray = Zend_Feed::importArray($array, 'rss');
 
             <programlisting role="php"><![CDATA[
 array(
-      'title'       => 'title of the feed', //required
-      'link'        => 'canonical url to the feed', //required
-      'lastUpdate'  => 'timestamp of the update date', // optional
-      'published'   => 'timestamp of the publication date', //optional
-      'charset'     => 'charset of the textual data', // required
-      'description' => 'short description of the feed', //optional
-      'author'      => 'author/publisher of the feed', //optional
-      'email'       => 'email of the author', //optional
-      'webmaster'   =>     // optional, ignored if atom is used
-                       'email address for person responsible ' .
-                       'for technical issues'
-      'copyright'   => 'copyright notice', //optional
-      'image'       => 'url to image', //optional
-      'generator'   => 'generator', // optional
-      'language'    => 'language the feed is written in', // optional
-      'ttl'         =>     // optional, ignored if atom is used
-                       'how long in minutes a feed can be cached ' .
-                       'before refreshing',
-      'rating'      =>     // optional, ignored if atom is used
-                       'The PICS rating for the channel.',
-      'cloud'       => array(
-                             'domain'            => 'domain of the cloud, e.g. rpc.sys.com' // required
-                             'port'              => 'port to connect to' // optional, default to 80
-                             'path'              => 'path of the cloud, e.g. /RPC2' //required
-                             'registerProcedure' => 'procedure to call, e.g. myCloud.rssPleaseNotify' // required
-                             'protocol'          => 'protocol to use, e.g. soap or xml-rpc' // required
-                             ), // a cloud to be notified of updates // optional, ignored if atom is used
-      'textInput'   => array(
-                             'title'       => 'the label of the Submit button in the text input area' // required,
-                             'description' => 'explains the text input area' // required
-                             'name'        => 'the name of the text object in the text input area' // required
-                             'link'        => 'the URL of the CGI script that processes text input requests' // required
-                             ) // a text input box that can be displayed with the feed // optional, ignored if atom is used
-      'skipHours'   => array(
-                             'hour in 24 format', // e.g 13 (1pm)
-                             // up to 24 rows whose value is a number between 0 and 23
-                             ) // Hint telling aggregators which hours they can skip // optional, ignored if atom is used
-      'skipDays '   => array(
-                             'a day to skip', // e.g Monday
-                             // up to 7 rows whose value is a Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday
-                             ) // Hint telling aggregators which days they can skip // optional, ignored if atom is used
-      'itunes'      => array(
-                             'author'       => 'Artist column' // optional, default to the main author value
-                             'owner'        => array(
-                                                     'name' => 'name of the owner' // optional, default to main author value
-                                                     'email' => 'email of the owner' // optional, default to main email value
-                                                     ) // Owner of the podcast // optional
-                             'image'        => 'album/podcast art' // optional, default to the main image value
-                             'subtitle'     => 'short description' // optional, default to the main description value
-                             'summary'      => 'longer description' // optional, default to the main description value
-                             'block'        => 'Prevent an episode from appearing (yes|no)' // optional
-                             'category'     => array(
-                                                     array('main' => 'main category', // required
-                                                           'sub'  => 'sub category' // optional
-                                                           ),
-                                                     // up to 3 rows
-                                                     ) // 'Category column and in iTunes Music Store Browse' // required
-                             'explicit'     => 'parental advisory graphic (yes|no|clean)' // optional
-                             'keywords'     => 'a comma separated list of 12 keywords maximum' // optional
-                             'new-feed-url' => 'used to inform iTunes of new feed URL location' // optional
-                             ) // Itunes extension data // optional, ignored if atom is used
-      'entries'     => array(
-                             array(
-                                   'title'        => 'title of the feed entry', //required
-                                   'link'         => 'url to a feed entry', //required
-                                   'description'  => 'short version of a feed entry', // only text, no html, required
-                                   'guid'         => 'id of the article, if not given link value will used', //optional
-                                   'content'      => 'long version', // can contain html, optional
-                                   'lastUpdate'   => 'timestamp of the publication date', // optional
-                                   'comments'     => 'comments page of the feed entry', // optional
-                                   'commentRss'   => 'the feed url of the associated comments', // optional
-                                   'source'       => array(
-                                                           'title' => 'title of the original source' // required,
-                                                           'url' => 'url of the original source' // required
-                                                           ) // original source of the feed entry // optional
-                                   'category'     => array(
-                                                           array(
-                                                                 'term' => 'first category label' // required,
-                                                                 'scheme' => 'url that identifies a categorization scheme' // optional
-                                                                 ),
-                                                           array(
-                                                                 //data for the second category and so on
-                                                                 )
-                                                           ) // list of the attached categories // optional
-                                   'enclosure'    => array(
-                                                           array(
-                                                                 'url' => 'url of the linked enclosure' // required
-                                                                 'type' => 'mime type of the enclosure' // optional
-                                                                 'length' => 'length of the linked content in octets' // optional
-                                                                 ),
-                                                           array(
-                                                                 //data for the second enclosure and so on
-                                                                 )
-                                                           ) // list of the enclosures of the feed entry // optional
-                                   ),
-                             array(
-                                   //data for the second entry and so on
-                                   )
-                             )
-       );
+    'title'       => 'title of the feed', //required
+    'link'        => 'canonical url to the feed', //required
+    'lastUpdate'  => 'timestamp of the update date', // optional
+    'published'   => 'timestamp of the publication date', //optional
+    'charset'     => 'charset of the textual data', // required
+    'description' => 'short description of the feed', //optional
+    'author'      => 'author/publisher of the feed', //optional
+    'email'       => 'email of the author', //optional
+    'webmaster'   =>     // optional, ignored if atom is used
+                     'email address for person responsible ' .
+                     'for technical issues'
+    'copyright'   => 'copyright notice', //optional
+    'image'       => 'url to image', //optional
+    'generator'   => 'generator', // optional
+    'language'    => 'language the feed is written in', // optional
+    'ttl'         =>     // optional, ignored if atom is used
+                     'how long in minutes a feed can be cached ' .
+                     'before refreshing',
+    'rating'      =>     // optional, ignored if atom is used
+                     'The PICS rating for the channel.',
+    'cloud'       => array(
+        'domain'            => 'domain of the cloud, e.g. rpc.sys.com' // required
+        'port'              => 'port to connect to' // optional, default to 80
+        'path'              => 'path of the cloud, e.g. /RPC2' //required
+        'registerProcedure' => 'procedure to call, e.g. myCloud.rssPleaseNotify' // required
+        'protocol'          => 'protocol to use, e.g. soap or xml-rpc' // required
+    ), // a cloud to be notified of updates // optional, ignored if atom is used
+    'textInput'   => array(
+        'title'       => 'the label of the Submit button in the text input area' // required,
+        'description' => 'explains the text input area' // required
+        'name'        => 'the name of the text object in the text input area' // required
+        'link'        => 'the URL of the CGI script that processes text input requests' // required
+    ) // a text input box that can be displayed with the feed // optional, ignored if atom is used
+    'skipHours'   => array(
+        'hour in 24 format', // e.g 13 (1pm)
+        // up to 24 rows whose value is a number between 0 and 23
+    ) // Hint telling aggregators which hours they can skip // optional, ignored if atom is used
+    'skipDays '   => array(
+        'a day to skip', // e.g Monday
+        // up to 7 rows whose value is a Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday
+    ) // Hint telling aggregators which days they can skip // optional, ignored if atom is used
+    'itunes'      => array(
+        'author'       => 'Artist column' // optional, default to the main author value
+        'owner'        => array(
+            'name' => 'name of the owner' // optional, default to main author value
+            'email' => 'email of the owner' // optional, default to main email value
+        ) // Owner of the podcast // optional
+        'image'        => 'album/podcast art' // optional, default to the main image value
+        'subtitle'     => 'short description' // optional, default to the main description value
+        'summary'      => 'longer description' // optional, default to the main description value
+        'block'        => 'Prevent an episode from appearing (yes|no)' // optional
+        'category'     => array(
+            array('main' => 'main category', // required
+                  'sub'  => 'sub category' // optional
+            ),
+            // up to 3 rows
+        ) // 'Category column and in iTunes Music Store Browse' // required
+        'explicit'     => 'parental advisory graphic (yes|no|clean)' // optional
+        'keywords'     => 'a comma separated list of 12 keywords maximum' // optional
+        'new-feed-url' => 'used to inform iTunes of new feed URL location' // optional
+    ) // Itunes extension data // optional, ignored if atom is used
+    'entries'     => array(
+        array(
+            'title'        => 'title of the feed entry', //required
+            'link'         => 'url to a feed entry', //required
+            'description'  => 'short version of a feed entry', // only text, no html, required
+            'guid'         => 'id of the article, if not given link value will used', //optional
+            'content'      => 'long version', // can contain html, optional
+            'lastUpdate'   => 'timestamp of the publication date', // optional
+            'comments'     => 'comments page of the feed entry', // optional
+            'commentRss'   => 'the feed url of the associated comments', // optional
+            'source'       => array(
+                'title' => 'title of the original source' // required,
+                'url' => 'url of the original source' // required
+            ) // original source of the feed entry // optional
+            'category'     => array(
+                array(
+                    'term' => 'first category label' // required,
+                    'scheme' => 'url that identifies a categorization scheme' // optional
+                ),
+                array(
+                    // data for the second category and so on
+                )
+            ) // list of the attached categories // optional
+            'enclosure'    => array(
+                array(
+                    'url' => 'url of the linked enclosure' // required
+                    'type' => 'mime type of the enclosure' // optional
+                    'length' => 'length of the linked content in octets' // optional
+                ),
+                array(
+                    //data for the second enclosure and so on
+                )
+            ) // list of the enclosures of the feed entry // optional
+        ),
+        array(
+            //data for the second entry and so on
+        )
+    )
+);
 ]]>
             </programlisting>
 

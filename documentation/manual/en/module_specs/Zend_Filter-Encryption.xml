@@ -185,10 +185,16 @@ print $encrypted;
 
         <programlisting role="php"><![CDATA[
 // Use openssl and provide a private key
-$filter = new Zend_Filter_Encrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Encrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+));
 
 // of course you can also give the public keys at initiation
-$filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/second.pem');
+$filter->setPublicKey(array(
+    '/public/key/path/first.pem',
+    '/public/key/path/second.pem'
+));
 ]]>
         </programlisting>
 
@@ -207,11 +213,17 @@ $filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/seco
 
         <programlisting role="php"><![CDATA[
 // Use openssl and provide a private key
-$filter = new Zend_Filter_Encrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Encrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+));
 
 // of course you can also give the public keys at initiation
-$filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/second.pem')
-       ->setPassphrase('mypassphrase');
+$filter->setPublicKey(array(
+    '/public/key/path/first.pem',
+    '/public/key/path/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 ]]>
         </programlisting>
 
@@ -231,11 +243,17 @@ $filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/seco
 
         <programlisting role="php"><![CDATA[
 // Use openssl and provide a private key
-$filter = new Zend_Filter_Encrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Encrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+));
 
 // of course you can also give the public keys at initiation
-$filter->setPublicKey(array('/public/key/path/first.pem', '/public/key/path/second.pem')
-       ->setPassphrase('mypassphrase');
+$filter->setPublicKey(array(
+    '/public/key/path/first.pem',
+    '/public/key/path/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 
 $encrypted = $filter->filter('text_to_be_encoded');
 $envelope  = $filter->getEnvelopeKey();

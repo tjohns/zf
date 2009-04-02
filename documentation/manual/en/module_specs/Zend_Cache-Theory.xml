@@ -101,21 +101,30 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             If you want to remove cache entries matching the tags 'tagA' and 'tagC':
         </para>
         <programlisting role="php"><![CDATA[
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+$cache->clean(
+    Zend_Cache::CLEANING_MODE_MATCHING_TAG,
+    array('tagA', 'tagC')
+);
 ]]>
         </programlisting>
         <para>
             If you want to remove cache entries not matching the tags 'tagA' or 'tagC':
         </para>
         <programlisting role="php"><![CDATA[
-$cache->clean(Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG, array('tagA', 'tagC'));
+$cache->clean(
+    Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG,
+    array('tagA', 'tagC')
+);
 ]]>
         </programlisting>
         <para>
             If you want to remove cache entries matching the tags 'tagA' or 'tagC':
         </para>
         <programlisting role="php"><![CDATA[
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG, array('tagA', 'tagC'));
+$cache->clean(
+    Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG,
+    array('tagA', 'tagC')
+);
 ]]>
         </programlisting>
         <para>

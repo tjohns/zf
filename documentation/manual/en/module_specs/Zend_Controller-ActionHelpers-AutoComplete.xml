@@ -298,7 +298,8 @@ class TestController extends Zend_Controller_Action
 
 <?php // setup Dojo-related CSS to load in HTML head: ?>
 <?php $this->headStyle()->captureStart() ?>
-@import "<?php echo $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?php echo $this->baseUrl()
+?>/javascript/dijit/themes/tundra/tundra.css";
 @import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
 <?php $this->headStyle()->captureEnd() ?>
 

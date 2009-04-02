@@ -1297,7 +1297,8 @@ if ($locale === null) {
 
 if (!Zend_Locale::isLocale($locale, true, false)) {
     if (!Zend_Locale::isLocale($locale, false, false)) {
-        throw new Zend_Locale_Exception("The locale '$locale' is no known locale");
+        throw new Zend_Locale_Exception(
+            "The locale '$locale' is no known locale");
     }
 
     $locale = new Zend_Locale($locale);

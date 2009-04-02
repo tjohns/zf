@@ -262,7 +262,11 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
 
         <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_StringLength(8, 12);
-$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''), 'en');
+$translate = new Zend_Translate(
+    'array',
+    array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''),
+    'en'
+);
 
 $validator->setTranslator($translate);
 ]]>
@@ -277,7 +281,11 @@ $validator->setTranslator($translate);
         </para>
 
         <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('array', array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''), 'en');
+$translate = new Zend_Translate(
+    'array',
+    array(Zend_Validate_StringLength::TOO_SHORT => 'Translated \'%value%\''),
+    'en'
+);
 Zend_Validate::setDefaultTranslator($translate);
 ]]>
         </programlisting>
