@@ -230,6 +230,15 @@ class Zend_Json_Server_RequestTest extends PHPUnit_Framework_TestCase
         $this->validateJson($json, $options);
     }
 
+    /**
+     * @group ZF-6187
+     */
+    public function testMethodNamesShouldAllowDotNamespacing()
+    {
+        $this->request->setMethod('foo.bar');
+        $this->assertEquals('foo.bar', $this->request->getMethod());
+    }
+
     public function getOptions()
     {
         return array(
