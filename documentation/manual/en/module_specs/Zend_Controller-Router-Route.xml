@@ -281,7 +281,7 @@ $router->addRoute('archive', $route);
         </para>
 
         <programlisting role="php"><![CDATA[
-// Prepate the translator
+// Prepare the translator
 $translator = new Zend_Translate('array', array(), 'en');
 $translator->addTranslation(array('archive' => 'archiv',
                                   'year'    => 'jahr',
