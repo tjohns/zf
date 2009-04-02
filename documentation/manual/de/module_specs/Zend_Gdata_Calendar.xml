@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14225 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Kalender verwenden</title>
     <para>
@@ -409,9 +409,8 @@ try {
                 das Event zu erhalten.
             </para>
             <programlisting role="php"><![CDATA[
-$eventURL =
-    "http://www.google.com/calendar/feeds/default/private/full/" .
-    "g829on5sq4ag12se91d10uumko";
+$eventURL = "http://www.google.com/calendar/feeds/default/private"
+          . "/full/g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);

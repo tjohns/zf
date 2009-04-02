@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12346 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.gdata.books">
     <title>Die Buchsuche Daten API verwenden</title>
 
@@ -467,7 +467,8 @@ $feed = $books->getUserLibraryFeed();
 
                 <programlisting role="php"><![CDATA[
 $query = $books->newVolumeQuery(
-    'http://www.google.com/books/feeds/users/USER_ID/collections/library/volumes');
+    'http://www.google.com/books/feeds/users/' .
+    'USER_ID/collections/library/volumes');
 $query->setQuery('Bär');
 $feed = $books->getVolumeFeed($query);
 ]]>
@@ -482,7 +483,8 @@ $feed = $books->getVolumeFeed($query);
 
                 <programlisting role="php"><![CDATA[
 $query = $books->newVolumeQuery(
-    'http://www.google.com/books/feeds/users/USER_ID/collections/library/volumes');
+    'http://www.google.com/books/feeds/users/' .
+    'USER_ID/collections/library/volumes');
 $query->setCategory(
 $query->setCategory('favorites');
 $feed = $books->getVolumeFeed($query);
