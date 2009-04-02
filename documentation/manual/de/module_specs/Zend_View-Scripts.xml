@@ -62,7 +62,7 @@
         </para>
 
         <para>
-            Zend_View stellt eine Methode escape() bereit, die das Maskieren für dich übernimmt.
+            <code>Zend_View</code> stellt eine Methode escape() bereit, die das Maskieren für dich übernimmt.
         </para>
 
         <programlisting role="php"><![CDATA[

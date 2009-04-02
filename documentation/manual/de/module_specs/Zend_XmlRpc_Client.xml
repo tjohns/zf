@@ -56,7 +56,8 @@ echo $client->call('test.sayHello');
             Der erste Parameter the Methode <code>call()</code> ist der Name der
             aufzurufenden Methode. Wenn die entfernte Methode weitere Parameter
             benötigt, können diese durch einen zweiten, optionalen Parameter des Typs
-            <code>array</code> angegeben werden, wie folgendes Beispiel zeigt:
+            <code>array</code> an <code>call()</code> angegeben werden, wie folgendes
+            Beispiel zeigt:
         </para>
 
         <example id="zend.xmlrpc.client.method-calls.example-2">
@@ -317,9 +318,10 @@ $result = $client->call('foo.bar', array(array()));
         <para>
             Um einen Server-Proxy zu instanzieren, muss die Methode
             <code>getProxy()</code> der Klasse <code>Zend_XmlRpc_Client</code>
-            aufgerufen werden. Jeder Methodenaufruf wird zur entsprechenden
-            entfernten Methode weitergeleitet. Die Parameter können übergeben
-            werden, wie bei jeder anderen PHP-Methode.
+            aufgerufen werden. Das retourniert eine Instanz von
+            <code>Zend_XmlRpc_Client_ServerProxy</code>. Jeder Methodenaufruf
+            wird zur entsprechenden entfernten Methode weitergeleitet. Die
+            Parameter können übergeben werden, wie bei jeder anderen PHP-Methode.
         </para>
 
         <example id="zend.xmlrpc.client.requests-and-responses.example-1">

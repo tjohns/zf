@@ -173,7 +173,7 @@ $router->addRoute('archive', $route);
         </programlisting>
 
         <para>
-            Mit einer Route die wie oben definiert ist, wird der Router nur dann stattfinden wenn die year
+            Mit einer Route die wie oben definiert ist, wird das Routing nur dann stattfinden wenn die year
             Variable nummerische Daten enthält, z.B. <code>http://domain.com/archive/2345</code>.
             Eine URL wie <code>http://example.com/archive/test</code> wird nicht zugeordnet und die Kontrolle wird
             stattdessen an die nächste Route in der Kette übertragen.

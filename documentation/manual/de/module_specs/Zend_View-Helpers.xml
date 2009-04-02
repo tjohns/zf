@@ -213,6 +213,14 @@ echo $this->formCheckbox('foo',
                 &lt;input type="hidden" /&gt; Element.
             </para></listitem>
 
+           <listitem><para>
+                <code>formLabel($name, $value, $attribs)</code>: Erstellt ein
+                &lt;label&gt; Element, setzt das <code>for</code> Attribut auf
+                <code>$name</code>, und den aktuellen Labeltext auf
+                <code>$value</code>. Wenn <code>disable</code> an
+                <code>attribs</code> übergeben wird, wird nichts zurückgegeben.
+            </para></listitem>
+
             <listitem><para>
                 <code>formMultiCheckbox($name, $value, $attribs, $options, $listsep):</code>
                 Erstellt eine Liste von Checkboxen. <code>$options</code> sollte ein assoziatives
