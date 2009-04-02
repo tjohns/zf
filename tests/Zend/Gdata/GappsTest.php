@@ -58,4 +58,17 @@ class Zend_Gdata_GappsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('blah', $login->username);
     }
 
+    public function testEmptyResponseExceptionRaisesException() {
+      require_once('Zend/Gdata/App/HttpException.php');
+      $e = new Zend_Gdata_App_HttpException();
+      $e->setResponse(null);
+      $success = false;
+      try {
+        $this->gdata->throwServiceExceptionIfDetected($e);
+      } catch (Zend_Gdata_App_IOException $f) {
+        $success = true;
+      }
+      $this->assertTrue($success, 'Zend_Gdata_App_IOException not thrown');
+    }
+
 }
