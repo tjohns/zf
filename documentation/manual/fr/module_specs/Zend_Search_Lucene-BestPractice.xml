@@ -232,40 +232,47 @@ $index->optimize();
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.shutting-down">
-        <title>Index during Shut Down</title>
+        <title>Indexation à l'arrêt du programme</title>
 
         <para>
-            The <code>Zend_Search_Lucene</code> instance performs some work at exit time if any documents were added to the index but not written to a new segment.
+            L'instance de <code>Zend_Search_Lucene</code> effectue quelques tâches à la
+            sortie du programme si des documents ont été ajoutés à l'index mais pas écrits
+            dans un nouveau segment.
         </para>
 
         <para>
-            It also may trigger an auto-optimization process.
+            Elle peut également déclencher le processus d'auto-optimisation.
         </para>
 
         <para>
-            The index object is automatically closed when it, and all returned QueryHit objects, go out of scope.
+            L'objet qui représente l'index est automatiquement fermé lorsque lui, ainsi que
+            tous les objets de résultats de requête qui lui sont associés, sont hors de portée
+            du script principal.
         </para>
 
         <para>
-            If index object is stored in global variable than it's closed only at the end of script execution<footnote><para>This also
-            may occur if the index or QueryHit instances are referred to in some cyclical data structures, because PHP garbage collects objects
-            with cyclic references only at the end of script execution.</para></footnote>.
+            Si l'objet d'index est stocké dans une variable globale, il ne sera fermé qu'à
+            la fin de l'exécution du script<footnote><para>Cela peut aussi se produire s'il
+            y a une référence à l'index ou à l'un de ses résultats de recherche dans une
+            structure de données cyclique, car le ramasse-miettes de PHP ne récupère les
+            objets avec des références cycliques qu'en fin d'exécution de script</para></footnote>.
         </para>
 
         <para>
-            PHP exception processing is also shut down at this moment.
+            Le processus d'exception de PHP est également fermé à ce moment.
         </para>
 
         <para>
-            It doesn't prevent normal index shutdown process, but may prevent accurate error diagnostic if any error occurs during shutdown.
+            Cela n'empêche pas la fermeture normale du processus de l'index, mais cela peut
+            empêcher un diagnostic d'erreur précis si une erreur survient durant la fermeture.
         </para>
 
         <para>
-            There are two ways with which you may avoid this problem.
+            Il y a deux moyens qui peuvent permettre d'éviter ce problème.
         </para>
 
         <para>
-            The first is to force going out of scope:
+            Le premier est de forcer l'index à sortir de la portée (du scope):
             <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
@@ -277,33 +284,34 @@ unset($index);
         </para>
 
         <para>
-            And the second is to perform a commit operation before the end of script execution:
+            Le second est d'effectuer une opération de commit avant la fin du script :xecution:
             <programlisting role="php"><![CDATA[
 $index = Zend_Search_Lucene::open($indexPath);
 
 $index->commit();
 ]]>
             </programlisting>
-            This possibility is also described in the "<link linkend="zend.search.lucene.advanced.static">Advanced. Using index as static property</link>"
-            section.
+            Cette possibilité est également décrite dans la section  "<link linkend="zend.search.lucene.advanced.static">Avancé - Utiliser les propriétés statiques de l'index</link>".
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.unique-id">
-        <title>Retrieving documents by unique id</title>
+        <title>Récupération de documents par leur id unique</title>
 
         <para>
-            It's a common practice to store some unique document id in the index. Examples include url, path, or database id.
+            C'est une pratique commune de stocker un identifiant unique de document dans l'index.
+            Par exemple, une url, un chemin ou un identifiant tiré d'une base de données.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> provides a <code>termDocs()</code> method for retrieving documents containing specified terms.
+            <code>Zend_Search_Lucene</code> fournit une méthode <code>termDocs()</code>
+            pour récupérer des documents contenant les termes spécifiés.
         </para>
 
         <para>
-            This is more efficient than using the <code>find()</code> method:
+            C'est plus efficace que d'utiliser la méthode <code>find()</code> :
             <programlisting role="php"><![CDATA[
-// Retrieving documents with find() method using a query string
+// Récupération de documents avec la méthode find() en utilisant une querystring.
 $query = $idFieldName . ':' . $docId;
 $hits  = $index->find($query);
 foreach ($hits as $hit) {
@@ -313,7 +321,7 @@ foreach ($hits as $hit) {
 }
 ...
 
-// Retrieving documents with find() method using the query API
+// Récupération de documents avec la méthode find() en utilisant l'API de requête.
 $term = new Zend_Search_Lucene_Index_Term($docId, idFieldName);
 $query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);
@@ -325,7 +333,7 @@ foreach ($hits as $hit) {
 
 ...
 
-// Retrieving documents with termDocs() method
+// Récupération de documents avec la méthode termDocs()
 $term = new Zend_Search_Lucene_Index_Term($docId, idFieldName);
 $docIds  = $index->termDocs($term);
 foreach ($docIds as $id) {
@@ -340,69 +348,81 @@ foreach ($docIds as $id) {
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.memory-usage">
-        <title>Memory Usage</title>
+        <title>Utilisation de la mémoire</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> is a relatively memory-intensive module.
+            <code>Zend_Search_Lucene</code> est un module relativement gourmand en mémoire.
         </para>
 
         <para>
-            It uses memory to cache some information and optimize searching and indexing performance.
+            Il utilise la mémoire pour mettre en cache certaines informations et optimiser
+            la recherche, ainsi que les performances de l'indexation.
         </para>
 
         <para>
-            The memory required differs for different modes.
+            La mémoire requise diffère selon les modes.
         </para>
 
         <para>
-            The terms dictionary index is loaded during the search. It's actually each 128<superscript>th</superscript>
-            <footnote><para>The Lucene file format allows you to configure this number, but <code>Zend_Search_Lucene</code> doesn't expose this
-            in its API. Nevertheless you still have the ability to configure this value if the index is prepared with another
-            Lucene implementation.</para></footnote> term of the full dictionary.
+            L'index du dictionnaire des termes est chargé durant la recherche. Il s'agit de
+            chaque 128<superscript>ème</superscript><footnote>Le format de fichier Lucene permet
+            de configurer ce nombre, mais <code>Zend_Search_Lucene</code> n'expose pas cette
+            possibilité dans l'API. Cependant vous pouvez toujours configurer ce nombre si l'index
+            est géré par une autre implémentation de Lucene.</footnote> terme du dictionnaire complet.
         </para>
 
         <para>
-            Thus memory usage is increased if you have a high number of unique terms. This may happen if you use untokenized phrases as a field values
-            or index a large volume of non-text information.
+            De fait, la consommation de mémoire augmente si vous avez un grand nombre de termes uniques.
+            Cela peut arriver si vous utilisez des phrases non "tokenizées" comme champ de recherche
+            ou que vous indexez un large volume d'informations non-textuelles.
         </para>
 
         <para>
-            An unoptimized index consists of several segments. It also increases memory usage. Segments are independent, so each segment contains
-            its own terms dictionary and terms dictionary index. If an index consists of <emphasis>N</emphasis> segments it may increase memory
-            usage by <emphasis>N</emphasis> times in worst case. Perform index optimization to merge all segments into one to avoid such memory consumption.
+            Un index non-optimisé consiste en plusieurs segments. Cela augmente également l'utilisation de mémoire.
+            Les segments étant indépendants, chacun possède son propre dictionnaire de termes et index de dictionaire de termes.
+            Si un index consiste en <emphasis>N</emphasis> segments, il risque, dans le pire des cas, de multiplier par <emphasis>N</emphasis>
+            la consommation de mémoire. Lancez l'optimisation de l'index en fusionnant tous les segments afin d'éviter de telles
+            consommations de mémoire.
         </para>
 
         <para>
-            Indexing uses the same memory as searching plus memory for buffering documents. The amount of memory used may be managed with
-            <emphasis>MaxBufferedDocs</emphasis> parameter.
+            L'indexation utilise la même quantité de mémoire que la recherche, plus de la mémoire pour mettre les documents
+            en tampon. La quantité de mémoire peut être gérée par le paramètre <emphasis>MaxBufferedDocs</emphasis>.
         </para>
 
         <para>
-            Index optimization (full or partial) uses stream-style data processing and doesn't require a lot of memory.
+            L'optimisation d'index (complète ou partielle) utilise un processus de type streaming et ne
+            requiert pas une grosse quantité de mémoire.
         </para>
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.encoding">
-        <title>Encoding</title>
+        <title>Encodage</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> works with UTF-8 strings internally. So all strings returned by <code>Zend_Search_Lucene</code> are UTF-8 encoded.
+            <code>Zend_Search_Lucene</code> travaille avec des chaînes en UTF-8 en interne. Ainsi
+            toutes les chaînes de caractères retournée par <code>Zend_Search_Lucene</code> sont
+            encodées en UTF-8.
         </para>
 
         <para>
-            You shouldn't be concerned with encoding if you work with pure ASCII data, but you should be careful if this is not the case.
+            Vous ne devriez pas être concernés par l'encodage si vous travaillez avec des chaîne
+            purement ASCII, mais vous devez être prudent si ce n'est pas le cas.
         </para>
 
         <para>
-            Wrong encoding may cause error notices at the encoding conversion time or loss of data.
+            Un mauvais encodage peut causer des notices (erreur) durant la conversation d'encodage,
+            voire la perte de données.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> offers a wide range of encoding possibilities for indexed documents and parsed queries.
+            <code>Zend_Search_Lucene</code> offre un large éventail de possibilités d'encodage pour les
+            documents indexés et les requêtes parsées.
         </para>
 
         <para>
-            Encoding may be explicitly specified as an optional parameter of field creation methods:
+            L'encodage peut être explictement spécifié en passant un paramètre optionnel à la méthode de
+            création d'un champ :
             <programlisting role="php"><![CDATA[
 $doc = new Zend_Search_Lucene_Document();
 $doc->addField(Zend_Search_Lucene_Field::Text('title',
@@ -413,12 +433,13 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   'utf-8'));
 ]]>
             </programlisting>
-            This is the best way to avoid ambiguity in the encoding used.
+            C'est le meilleur moyen d'éviter toute ambiguité dans les encodages utilisés.
         </para>
 
         <para>
-            If optional encoding parameter is omitted, then the current locale is used. The current locale may contain character encoding data
-            in addition to the language specification:
+            Si le paramètre optionnel de l'encodage est omis, la locale courante est utilisée.
+            La locale courante peut contenir des données d'encodage en plus des spécification
+            de langue :
             <programlisting role="php"><![CDATA[
 setlocale(LC_ALL, 'fr_FR');
 ...
@@ -433,15 +454,16 @@ setlocale(LC_ALL, 'ru_RU.UTF-8');
         </para>
 
         <para>
-            The same approach is used to set query string encoding.
+            La même approche est utilisée pour définir l'encodage des chaînes de requête.
         </para>
 
         <para>
-            If encoding is not specified, then the current locale is used to determine the encoding.
+            Si l'encodage n'est pas spécifié, la locale courante est utilisée pour le déterminer.
         </para>
 
         <para>
-            Encoding may be passed as an optional parameter, if the query is parsed explicitly before search:
+            L'encodage peut être passée comme paramètre optionnel si la requête est parsée
+            explicitement avant la recherche :
             <programlisting role="php"><![CDATA[
 $query =
     Zend_Search_Lucene_Search_QueryParser::parse($queryStr, 'iso-8859-5');
@@ -452,19 +474,20 @@ $hits = $index->find($query);
         </para>
 
         <para>
-            The default encoding may also be specified with <code>setDefaultEncoding()</code> method:
+            L'encodage par défaut peut également être spécifié avec la méthode <code>setDefaultEncoding()</code> :
             <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-1');
 $hits = $index->find($queryStr);
 ...
 ]]>
             </programlisting>
-            The empty string implies 'current locale'.
+            Une chaîne vide sous-entend 'locale courante'.
         </para>
 
         <para>
-            If the correct encoding is specified it can be correctly processed by analyzer. The actual behavior depends on which analyzer is used.
-            See the <link linkend="zend.search.lucene.charset">Character Set</link> documentation section for details.
+            Si l'encodage correct est spécifié, il pourra être correctement interprêté par l'analyseur. Le
+            comportement dépend de quel analyseur est utilisé. Consultez la section sur les
+            <link linkend="zend.search.lucene.charset">Jeu de caractères</link> pour plus de détails.
         </para>
     </sect2>
 
