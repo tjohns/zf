@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13628 -->
+<!-- EN-Revision: 14588 -->
 <sect2 id="zend.filter.set.decrypt">
     <title>Decrypt</title>
     <para>
@@ -93,13 +93,13 @@ print $decrypted;
 $filter = new Zend_Filter_Decrypt(array(
     'adapter' => 'openssl',
     'private' => '/path/to/mykey/private.pem'
-);
+));
 
 // natürlich kann man den Umschlagschlüssel auch bei der Instanziierung angeben
 $filter->setEnvelopeKey(array(
     '/key/from/encoder/first.pem',
     '/key/from/encoder/second.pem'
-);
+));
 ]]>
         </programlisting>
 
@@ -120,12 +120,14 @@ $filter->setEnvelopeKey(array(
 $filter = new Zend_Filter_Decrypt(array(
     'adapter' => 'openssl',
     'private' => '/path/to/mykey/private.pem'
-);
+));
 
 // natürlich kann man den Umschlagschlüssel auch bei der Instanziierung angeben
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem',
-                              '/key/from/encoder/second.pem');
-       ->setPassphrase('mypassphrase');
+$filter->setEnvelopeKey(array(
+    '/key/from/encoder/first.pem',
+    '/key/from/encoder/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 ]]>
         </programlisting>
 
@@ -139,12 +141,14 @@ $filter->setEnvelopeKey(array('/key/from/encoder/first.pem',
 $filter = new Zend_Filter_Decrypt(array(
     'adapter' => 'openssl',
     'private' => '/path/to/mykey/private.pem'
-);
+));
 
 // natürlich kann man den Umschlagschlüssel auch bei der Instanziierung angeben
-$filter->setEnvelopeKey(array('/key/from/encoder/first.pem',
-                              '/key/from/encoder/second.pem');
-       ->setPassphrase('mypassphrase');
+$filter->setEnvelopeKey(array(
+    '/key/from/encoder/first.pem',
+    '/key/from/encoder/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 
 $decrypted = $filter->filter('encoded_text_normally_unreadable');
 print $decrypted;

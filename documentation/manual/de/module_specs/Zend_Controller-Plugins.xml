@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14052 -->
+<!-- EN-Revision: 14588 -->
 <sect1 id="zend.controller.plugins" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Plugins</title>
 
@@ -133,7 +133,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
     }
 
     public function dispatchLoopStartup(
-                    Zend_Controller_Request_Abstract $request)
+        Zend_Controller_Request_Abstract $request)
     {
         $this->getResponse()
              ->appendBody("<p>dispatchLoopStartup() called</p>\n");

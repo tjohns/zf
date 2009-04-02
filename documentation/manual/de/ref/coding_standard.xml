@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13549 -->
+<!-- EN-Revision: 14589 -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
@@ -336,8 +336,8 @@ $a = 'Beispiel String';
                     SQL Anweisungen nützlich:
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' "
-     . "OR `name`='Susan'";
+$sql = "SELECT `id`, `name` from `people` "
+     . "WHERE `name`='Fred' OR `name`='Susan'";
 ]]>
                     </programlisting>
 

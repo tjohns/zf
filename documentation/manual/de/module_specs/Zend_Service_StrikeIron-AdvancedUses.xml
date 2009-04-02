@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13830 -->
+<!-- EN-Revision: 14589 -->
 <sect1 id="zend.service.strikeiron.advanced-uses">
     <title>Zend_Service_StrikeIron: Erweiterte Verwendung</title>
 
@@ -21,14 +21,14 @@
         Option statt der <code>class</code> Option an <code>getService()</code> übergeben werden:
 
         <programlisting role="php"><![CDATA[
-$strikeIron = new Zend_Service_StrikeIron(array('username' => 'your-username',
-                                                'password' => 'your-password'));
+$strikeIron = new Zend_Service_StrikeIron(
+    array('username' => 'your-username', 'password' => 'your-password')
+);
 
 // Erhalte einen generellen Client zum Reverse Phone Lookup Service
 $phone = $strikeIron->getService(
-    array('wsdl' =>
-        'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
-    );
+    array('wsdl' => 'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
+);
 
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;

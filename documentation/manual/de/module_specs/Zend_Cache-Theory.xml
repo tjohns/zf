@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13850 -->
+<!-- EN-Revision: 14588 -->
 <sect1 id="zend.cache.theory">
     <title>Die Theorie des Cachens</title>
     <para>
@@ -106,23 +106,30 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             Um Cache Einträge zu löschen, die zu den Tags 'tagA' und 'tagC' entsprechen :
         </para>
         <programlisting role="php"><![CDATA[
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+$cache->clean(
+    Zend_Cache::CLEANING_MODE_MATCHING_TAG,
+    array('tagA', 'tagC')
+);
 ]]>
         </programlisting>
         <para>
             Um Cache Einträge zu löschen die den Tags 'tagA' oder 'tagC' nicht entsprechen:
         </para>
         <programlisting role="php"><![CDATA[
-$cache->clean(Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG,
-              array('tagA', 'tagC'));
+$cache->clean(
+    Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG,
+    array('tagA', 'tagC')
+);
 ]]>
         </programlisting>
         <para>
             Um Cache Einträge zu löschen, die zu den Tags 'tagA' oder 'tagC' entsprechen :
         </para>
         <programlisting role="php"><![CDATA[
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG,
-              array('tagA', 'tagC'));
+$cache->clean(
+    Zend_Cache::CLEANING_MODE_MATCHING_ANY_TAG,
+    array('tagA', 'tagC')
+);
 ]]>
         </programlisting>
         <para>

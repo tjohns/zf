@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14385 -->
+<!-- EN-Revision: 14588 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -296,7 +296,8 @@ class TestController extends Zend_Controller_Action
 <?php // Das Dojo-betreffende CSS einstellen das im
       // HTML Head geladen werden soll: ?>
 <?php $this->headStyle()->captureStart() ?>
-@import "<?php echo $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?php echo $this->baseUrl()
+?>/javascript/dijit/themes/tundra/tundra.css";
 @import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
 <?php $this->headStyle()->captureEnd() ?>
 

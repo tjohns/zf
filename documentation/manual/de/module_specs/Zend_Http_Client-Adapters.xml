@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14396 -->
+<!-- EN-Revision: 14588 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - Verbindungsadapter</title>
 
@@ -429,7 +429,8 @@ $client->setAdapter($adapter);
 $adapter->setConfig(array(
     'curloptions' => array(
         CURLOPT_INFILE => $putFileHandle,
-        CURLOPT_INFILESIZE => $putFileSize)
+        CURLOPT_INFILESIZE => $putFileSize
+    )
 ));
 $client->request("PUT");
 ]]>

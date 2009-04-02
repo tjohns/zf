@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14589 -->
 <sect1 id="performance.view">
     <title>Darstellen der View</title>
 
@@ -236,7 +236,7 @@ class LoginPlugin extends Zend_Controller_Plugin_Abstract
             </para>
 
             <programlisting role="php"><![CDATA[
-<?= $this->layout()->login ?>
+<?php $this->layout()->login ?>
 ]]></programlisting>
 
             <para>
@@ -303,8 +303,7 @@ class My_View_Helper_BugList extends Zend_View_Helper_Abstract
         $model = new Bug();
         $html  = "<ul>\n";
         foreach ($model->fetchActive() as $bug) {
-            $html .= sprintf(
-                "<li><b>%s</b>: %s</li>\n",
+            $html .= sprintf("<li><b>%s</b>: %s</li>\n",
                 $this->view->escape($bug->id),
                 $this->view->escape($bug->summary)
             );

@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13170 -->
+<!-- EN-Revision: 14589 -->
 <sect1 id="zend.session.savehandler.dbtable">
 
     <title>Zend_Session_SaveHandler_DbTable</title>

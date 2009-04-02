@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13697 -->
+<!-- EN-Revision: 14588 -->
 <sect2 id="zend.filter.set.encrypt">
     <title>Encrypt</title>
     <para>
@@ -189,14 +189,14 @@ print $encrypted;
 $filter = new Zend_Filter_Encrypt(array(
     'adapter' => 'openssl',
     'private' => '/path/to/mykey/private.pem'
-);
+));
 
 // natürlich kann man die öffentlichen Schlüssel auch
 // bei der Instanziierung angeben
 $filter->setPublicKey(array(
     '/public/key/path/first.pem',
     '/public/key/path/second.pem'
-);
+));
 ]]>
         </programlisting>
 
@@ -219,13 +219,15 @@ $filter->setPublicKey(array(
 $filter = new Zend_Filter_Encrypt(array(
     'adapter' => 'openssl',
     'private' => '/path/to/mykey/private.pem'
-);
+));
 
 // Natürlich kann man die öffentlichen Schlüssel
 // auch bei der Instanziierung angeben
-$filter->setPublicKey(array('/public/key/path/first.pem',
-                            '/public/key/path/second.pem')
-       ->setPassphrase('mypassphrase');
+$filter->setPublicKey(array(
+    '/public/key/path/first.pem',
+    '/public/key/path/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 ]]>
         </programlisting>
 
@@ -249,13 +251,15 @@ $filter->setPublicKey(array('/public/key/path/first.pem',
 $filter = new Zend_Filter_Encrypt(array(
     'adapter' => 'openssl',
     'private' => '/path/to/mykey/private.pem'
-);
+));
 
 // natürlich kann man die öffentlichen Schlüssel
 // auch bei der Instaiziierung angeben
-$filter->setPublicKey(array('/public/key/path/first.pem',
-                            '/public/key/path/second.pem')
-       ->setPassphrase('mypassphrase');
+$filter->setPublicKey(array(
+    '/public/key/path/first.pem',
+    '/public/key/path/second.pem'
+));
+$filter->setPassphrase('mypassphrase');
 
 $encrypted = $filter->filter('text_to_be_encoded');
 $envelope  = $filter->getEnvelopeKey();

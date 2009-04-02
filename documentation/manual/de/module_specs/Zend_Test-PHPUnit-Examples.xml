@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14589 -->
 <sect2 id="zend.test.phpunit.examples">
     <title>Beispiele</title>
 
@@ -139,7 +139,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     public function appBootstrap()
     {
         $controller = $this->getFrontController();
-        $controller->registerPlugin(new Bugapp_Plugin_Initialize('development'));
+        $controller->registerPlugin(
+            new Bugapp_Plugin_Initialize('development')
+        );
     }
 
     public function setUp()
@@ -238,7 +240,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     }
 
     public function
-        testAuthenticatedUsersShouldBeRedirectedToProfilePageWhenVisitingLoginPage()
+        testAuthenticatedUsersShouldBeRedirectedToProfileWhenVisitingLogin()
     {
         $this->loginUser('foobar', 'foobar');
         $this->request->setMethod('GET');
