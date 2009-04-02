@@ -81,11 +81,12 @@ $config = array(
         'save_path',    //session.save_path
         'name',         //session name
     ),
-    'primaryAssignment' => array( //you must tell the save handler which columns you
-                                  //are using as the primary key. ORDER IS IMPORTANT
-        'sessionId',          //first column of the primary key is of the sessionID
-        'sessionSavePath',    //second column of the primary key is the save path
-        'sessionName',        //third column of the primary key is the session name
+    'primaryAssignment' => array(
+        //you must tell the save handler which columns you
+        //are using as the primary key. ORDER IS IMPORTANT
+        'sessionId', //first column of the primary key is of the sessionID
+        'sessionSavePath', //second column of the primary key is the save path
+        'sessionName', //third column of the primary key is the session name
     ),
     'modifiedColumn'    => 'modified',     //time the session should expire
     'dataColumn'        => 'session_data', //serialized data

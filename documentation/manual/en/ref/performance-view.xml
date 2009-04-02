@@ -81,9 +81,12 @@ class My_View extends Zend_View
     /**
      * Proxy to url view helper
      *
-     * @param  array $urlOptions Options passed to the assemble method of the Route object.
-     * @param  mixed $name The name of a Route to use. If null it will use the current Route
-     * @param  bool $reset Whether or not to reset the route defaults with those provided
+     * @param  array $urlOptions Options passed to the assemble method
+     *                           of the Route object.
+     * @param  mixed $name The name of a Route to use. If null it will
+     *                     use the current Route
+     * @param  bool $reset Whether or not to reset the route defaults
+     *                     with those provided
      * @return string Url for the link href attribute.
      */
     public function url(array $urlOptions = array(), $name = null,
@@ -254,7 +257,7 @@ class LoginPlugin extends Zend_Controller_Plugin_Abstract
             </para>
 
             <programlisting role="php"><![CDATA[
-<?= $this->layout()->login ?>
+<?php $this->layout()->login ?>
 ]]></programlisting>
 
             <para>
@@ -298,7 +301,10 @@ class BugController extends Zend_Controller_Action
 // bug/list.phtml:
 echo "<ul>\n";
 foreach ($this->bugs as $bug) {
-    printf("<li><b>%s</b>: %s</li>\n", $this->escape($bug->id), $this->escape($bug->summary));
+    printf("<li><b>%s</b>: %s</li>\n",
+        $this->escape($bug->id),
+        $this->escape($bug->summary)
+    );
 }
 echo "</ul>\n";
 ]]></programlisting>

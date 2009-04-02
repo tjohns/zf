@@ -131,12 +131,14 @@ $valid = Zend_Uri::check('http://uri.in.question');
         <example id="zend.uri.validation.allowunwise.example-1">
             <title>Allowing special characters in URIs</title>
             <programlisting role="php"><![CDATA[
+// Contains '|' symbol
 // Normally, this would return false:
-$valid = Zend_Uri::check('http://example.com/?q=this|that'); // Contains '|' symbol
+$valid = Zend_Uri::check('http://example.com/?q=this|that');
 
 // However, you can allow "unwise" characters
 Zend_Uri::setConfig(array('allow_unwise' => true));
-$valid = Zend_Uri::check('http://example.com/?q=this|that'); // will return 'true'
+// will return 'true'
+$valid = Zend_Uri::check('http://example.com/?q=this|that');
 
 // Reset the 'allow_unwise' value to the default FALSE
 Zend_Uri::setConfig(array('allow_unwise' => false));

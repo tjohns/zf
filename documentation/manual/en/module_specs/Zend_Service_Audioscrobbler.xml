@@ -178,7 +178,8 @@ $as->setUser('BigDaddy71');
 // Retrieve BigDaddy71's profile information
 $profileInfo = $as->userGetProfileInformation();
 // Display some of it
-print "Information for $profileInfo->realname can be found at $profileInfo->url";
+print "Information for $profileInfo->realname "
+    . "can be found at $profileInfo->url";
 ]]>
             </programlisting>
 
