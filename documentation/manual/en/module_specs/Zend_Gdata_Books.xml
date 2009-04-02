@@ -464,7 +464,8 @@ $feed = $books->getUserLibraryFeed();
 
                 <programlisting role="php"><![CDATA[
 $query = $books->newVolumeQuery(
-    'http://www.google.com/books/feeds/users/USER_ID/collections/library/volumes');
+    'http://www.google.com/books/feeds/users' .
+    '/USER_ID/collections/library/volumes');
 $query->setQuery('bear');
 $feed = $books->getVolumeFeed($query);
 ]]>
@@ -479,7 +480,8 @@ $feed = $books->getVolumeFeed($query);
 
                 <programlisting role="php"><![CDATA[
 $query = $books->newVolumeQuery(
-    'http://www.google.com/books/feeds/users/USER_ID/collections/library/volumes');
+    'http://www.google.com/books/feeds/users/' .
+    'USER_ID/collections/library/volumes');
 $query->setCategory(
 $query->setCategory('favorites');
 $feed = $books->getVolumeFeed($query);

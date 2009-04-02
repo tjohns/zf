@@ -412,8 +412,8 @@ try {
                 URL contains all the necessary information to retrieve the event.
             </para>
             <programlisting role="php"><![CDATA[
-$eventURL =
-    "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
+$eventURL = "http://www.google.com/calendar/feeds/default/private"
+          . "/full/g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);
