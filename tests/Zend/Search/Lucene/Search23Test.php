@@ -84,7 +84,7 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
                                   '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
                                   '(pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta) (pathkeyword:apache path:apache modified:apache contents:apache)',
                                   '((pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)^4) (pathkeyword:apache path:apache modified:apache contents:apache)',
-                                  '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")^4) ((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '(((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache"))^4) ((pathkeyword:"apache lucene") (path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
                                   '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)',
                                   '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)',
                                   '((pathkeyword:"jakarta apache") (path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (pathkeyword:jakarta path:jakarta modified:jakarta contents:jakarta)',
@@ -214,7 +214,7 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
         $query = Zend_Search_Lucene_Search_QueryParser::parse('"IndexSource/contributing.wishlist.html" AND Home');
 
-        $this->assertEquals($query->__toString(), '+("IndexSource/contributing.wishlist.html") +(home)');
+        $this->assertEquals($query->__toString(), '+("IndexSource/contributing.wishlist.html") +(Home)');
         $this->assertEquals($query->rewrite($index)->__toString(),
                             '+((pathkeyword:IndexSource/contributing.wishlist.html) (path:"indexsource contributing wishlist html") (modified:"indexsource contributing wishlist html") (contents:"indexsource contributing wishlist html")) +(pathkeyword:home path:home modified:home contents:home)');
         $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '+( (path:"indexsource contributing wishlist html") (pathkeyword:IndexSource/contributing.wishlist.html)) +(contents:home)');
@@ -239,16 +239,24 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
         $query = Zend_Search_Lucene_Search_QueryParser::parse('IndexSource\/contributing\.wishlist\.html AND Home');
 
-        $this->assertEquals($query->__toString(), '+(IndexSource/contributing.wishlist.html) +(home)');
+        $this->assertEquals($query->__toString(), '+(IndexSource/contributing.wishlist.html) +(Home)');
         $this->assertEquals($query->rewrite($index)->__toString(),
-                            '+((pathkeyword:IndexSource/contributing.wishlist.html) (path:"indexsource contributing wishlist html") (modified:"indexsource contributing wishlist html") (contents:"indexsource contributing wishlist html")) +(pathkeyword:home path:home modified:home contents:home)');
-        $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '+( (path:"indexsource contributing wishlist html") (pathkeyword:IndexSource/contributing.wishlist.html)) +(contents:home)');
+                            '+(pathkeyword:IndexSource/contributing.wishlist.html path:indexsource path:contributing path:wishlist path:html modified:indexsource modified:contributing modified:wishlist modified:html contents:indexsource contents:contributing contents:wishlist contents:html) +(pathkeyword:home path:home modified:home contents:home)');
+        $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '+(pathkeyword:IndexSource/contributing.wishlist.html path:indexsource path:contributing path:wishlist path:html contents:contributing contents:wishlist contents:html) +(contents:home)');
 
 
         $hits = $index->find('IndexSource\/contributing\.wishlist\.html AND Home');
 
-        $this->assertEquals(count($hits), 1);
-        $expectedResultset = array(array(7, 1, 'IndexSource/contributing.bugs.html'));
+        $this->assertEquals(count($hits), 9);
+        $expectedResultset = array(array(1, 1.000000, 'IndexSource/contributing.wishlist.html'),
+                                   array(8, 0.167593, 'IndexSource/contributing.html'),
+                                   array(0, 0.154047, 'IndexSource/contributing.documentation.html'),
+                                   array(7, 0.108574, 'IndexSource/contributing.bugs.html'),
+                                   array(2, 0.104248, 'IndexSource/contributing.patches.html'),
+                                   array(3, 0.048998, 'IndexSource/about-pear.html'),
+                                   array(9, 0.039942, 'IndexSource/core.html'),
+                                   array(5, 0.038530, 'IndexSource/authors.html'),
+                                   array(4, 0.036261, 'IndexSource/copyright.html'));
 
         foreach ($hits as $resId => $hit) {
             $this->assertEquals($hit->id, $expectedResultset[$resId][0]);
@@ -296,7 +304,7 @@ class Zend_Search_Lucene_Search23Test extends PHPUnit_Framework_TestCase
 
         $query = Zend_Search_Lucene_Search_QueryParser::parse('"Non-existing phrase" AND Home');
 
-        $this->assertEquals($query->__toString(), '+("Non-existing phrase") +(home)');
+        $this->assertEquals($query->__toString(), '+("Non-existing phrase") +(Home)');
         $this->assertEquals($query->rewrite($index)->__toString(),
                             '+((pathkeyword:"non existing phrase") (path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(pathkeyword:home path:home modified:home contents:home)');
         $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '<EmptyQuery>');

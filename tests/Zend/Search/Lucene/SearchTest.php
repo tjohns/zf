@@ -85,7 +85,7 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
                                   '(path:wishlist contents:wishlist contents:wishlists contents:with contents:without contents:won contents:work contents:would contents:write contents:writing contents:written contents:www contents:xml contents:xmlrpc contents:you contents:your)',
                                   '(path:jakarta modified:jakarta contents:jakarta) (path:apache modified:apache contents:apache)',
                                   '((path:jakarta modified:jakarta contents:jakarta)^4) (path:apache modified:apache contents:apache)',
-                                  '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")^4) ((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
+                                  '(((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache"))^4) ((path:"apache lucene") (modified:"apache lucene") (contents:"apache lucene"))',
                                   '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (path:jakarta modified:jakarta contents:jakarta)',
                                   '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (path:jakarta modified:jakarta contents:jakarta)',
                                   '((path:"jakarta apache") (modified:"jakarta apache") (contents:"jakarta apache")) (path:jakarta modified:jakarta contents:jakarta)',
@@ -247,7 +247,7 @@ class Zend_Search_Lucene_SearchTest extends PHPUnit_Framework_TestCase
 
         $query = Zend_Search_Lucene_Search_QueryParser::parse('"Non-existing phrase" AND Home');
 
-        $this->assertEquals($query->__toString(), '+("Non-existing phrase") +(home)');
+        $this->assertEquals($query->__toString(), '+("Non-existing phrase") +(Home)');
         $this->assertEquals($query->rewrite($index)->__toString(),
                             '+((path:"non existing phrase") (modified:"non existing phrase") (contents:"non existing phrase")) +(path:home modified:home contents:home)');
         $this->assertEquals($query->rewrite($index)->optimize($index)->__toString(), '<EmptyQuery>');

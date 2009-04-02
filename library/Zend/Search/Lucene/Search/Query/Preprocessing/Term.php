@@ -97,15 +97,37 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
     public function rewrite(Zend_Search_Lucene_Interface $index)
     {
         if ($this->_field === null) {
-            $query = new Zend_Search_Lucene_Search_Query_Boolean();
+            $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
             $query->setBoost($this->getBoost());
 
-            foreach ($index->getFieldNames(true) as $fieldName) {
-                $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Term($this->_word,
+            $hasInsignificantSubqueries = false;
+
+            if (Zend_Search_Lucene::getDefaultSearchField() === null) {
+            	$searchFields = $index->getFieldNames(true);
+            } else {
+            	$searchFields = array(Zend_Search_Lucene::getDefaultSearchField());
+            }
+
+            foreach ($searchFields as $fieldName) {
+            	$subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Term($this->_word,
                                                                                    $this->_encoding,
                                                                                    $fieldName);
+                $rewrittenSubquery = $subquery->rewrite($index);
+                foreach ($rewrittenSubquery->getQueryTerms() as $term) {
+                	$query->addTerm($term);
+                }
 
-                $query->addSubquery($subquery->rewrite($index));
+                if ($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant) {
+                	$hasInsignificantSubqueries = true;
+                }
+            }
+
+            if (count($query->getTerms()) == 0) {
+            	if ($hasInsignificantSubqueries) {
+            		return new Zend_Search_Lucene_Search_Query_Insignificant();
+            	} else {
+            		return new Zend_Search_Lucene_Search_Query_Empty();
+            	}
             }
 
             return $query;
@@ -145,9 +167,9 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
         	$pattern = '';
 
             foreach ($subPatterns as $id => $subPattern) {
+            	// Append corresponding wildcard character to the pattern before each sub-pattern (except first)
                 if ($id != 0) {
-                	// Append corresponding wildcard character to the pattern before each sub-pattern (except first)
-                	$pattern .= $word[ $subPattern[1] ];
+                	$pattern .= $word[ $subPattern[1] - 1 ];
                 }
 
                 // Check if each subputtern is a single word in terms of current analyzer
@@ -185,7 +207,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Term extends Zend_Search_Luc
             return $query;
         }
 
-        //It's not empty or one term query
+        //It's not insignificant or one term query
         $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
         /**

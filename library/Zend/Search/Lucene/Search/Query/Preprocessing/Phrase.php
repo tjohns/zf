@@ -149,7 +149,13 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
     		$query = new Zend_Search_Lucene_Search_Query_Boolean();
             $query->setBoost($this->getBoost());
 
-            foreach ($index->getFieldNames(true) as $fieldName) {
+            if (Zend_Search_Lucene::getDefaultSearchField() === null) {
+                $searchFields = $index->getFieldNames(true);
+            } else {
+                $searchFields = array(Zend_Search_Lucene::getDefaultSearchField());
+            }
+
+            foreach ($searchFields as $fieldName) {
                 $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Phrase($this->_phrase,
                                                                                      $this->_phraseEncoding,
                                                                                      $fieldName);

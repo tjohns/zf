@@ -797,7 +797,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         }
 
         if ($this->getBoost() != 1) {
-            $query .= '^' . round($this->getBoost(), 4);
+            $query = '(' . $query . ')^' . round($this->getBoost(), 4);
         }
 
         return $query;

@@ -95,7 +95,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
      */
     public function __construct($word, $encoding, $fieldName, $minimumSimilarity)
     {
-        $this->_word     = $phrase;
+        $this->_word     = $word;
         $this->_encoding = $encoding;
         $this->_field    = $fieldName;
         $this->_minimumSimilarity = $minimumSimilarity;
@@ -109,23 +109,53 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
      */
     public function rewrite(Zend_Search_Lucene_Interface $index)
     {
-
         if ($this->_field === null) {
             $query = new Zend_Search_Lucene_Search_Query_Boolean();
-            $query->setBoost($this->getBoost());
 
-            foreach ($index->getFieldNames(true) as $fieldName) {
+            $hasInsignificantSubqueries = false;
+
+            if (Zend_Search_Lucene::getDefaultSearchField() === null) {
+                $searchFields = $index->getFieldNames(true);
+            } else {
+                $searchFields = array(Zend_Search_Lucene::getDefaultSearchField());
+            }
+
+            foreach ($searchFields as $fieldName) {
                 $subquery = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy($this->_word,
                                                                                     $this->_encoding,
                                                                                     $fieldName,
                                                                                     $this->_minimumSimilarity);
 
-                $query->addSubquery($subquery->rewrite($index));
+                $rewrittenSubquery = $subquery->rewrite($index);
+
+                if ( !($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant  ||
+                       $rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Empty) ) {
+                    $query->addSubquery($rewrittenSubquery);
+                }
+
+                if ($rewrittenSubquery instanceof Zend_Search_Lucene_Search_Query_Insignificant) {
+                	$hasInsignificantSubqueries = true;
+                }
             }
+
+            $subqueries = $query->getSubqueries();
+
+            if (count($subqueries) == 0) {
+                if ($hasInsignificantSubqueries) {
+                    return new Zend_Search_Lucene_Search_Query_Insignificant();
+                } else {
+                    return new Zend_Search_Lucene_Search_Query_Empty();
+                }
+            }
+
+            if (count($subqueries) == 1) {
+            	$query = reset($subqueries);
+            }
+
+            $query->setBoost($this->getBoost());
 
             return $query;
         }
-
 
         // -------------------------------------
         // Recognize exact term matching (it corresponds to Keyword fields stored in the index)
