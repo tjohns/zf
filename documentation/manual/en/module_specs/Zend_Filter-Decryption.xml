@@ -134,7 +134,10 @@ $filter->setPassphrase('mypassphrase');
 
         <programlisting role="php"><![CDATA[
 // Use openssl and provide a private key
-$filter = new Zend_Filter_Decrypt(array('adapter' => 'openssl', 'private' => '/path/to/mykey/private.pem');
+$filter = new Zend_Filter_Decrypt(array(
+    'adapter' => 'openssl',
+    'private' => '/path/to/mykey/private.pem'
+));
 
 // of course you can also give the envelope keys at initiation
 $filter->setEnvelopeKey(array(

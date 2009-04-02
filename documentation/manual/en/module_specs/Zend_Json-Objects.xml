@@ -105,10 +105,16 @@ Zend_Json::$useBuiltinEncoderDecoder = true:
 
         <programlisting role="php"><![CDATA[
 $data = array(
-    'onClick' => new Zend_Json_Expr('function() { alert("I am a valid javascript callback created by Zend_Json"); }'),
+    'onClick' => new Zend_Json_Expr('function() {'
+              . 'alert("I am a valid javascript callback '
+              . 'created by Zend_Json"); }'),
     'other' => 'no expression',
 );
-$jsonObjectWithExpression = Zend_Json::encode($data, false, array('enableJsonExprFinder' => true));
+$jsonObjectWithExpression = Zend_Json::encode(
+    $data,
+    false,
+    array('enableJsonExprFinder' => true)
+);
 ]]>
         </programlisting>
     </sect2>

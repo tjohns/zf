@@ -477,7 +477,8 @@ of <?php echo $this->totalItemCount; ?>
 <select id="paginationControl" size="1">
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php $selected = ($page == $this->current) ? ' selected="selected"' : ''; ?>
-  <option value="<?php echo $this->url(array('page' => $page)); ?>"<?php echo $selected ?>>
+  <option value="<?php
+        echo $this->url(array('page' => $page));?>"<?php echo $selected ?>>
     <?php echo $page; ?>
   </option>
 <?php endforeach; ?>

@@ -165,8 +165,9 @@ function getCurrentUrl() {
 
 /*
  * Redirect a user to AuthSub if they do not have a valid session token.
- * If they're coming back from AuthSub with a single-use token, instantiate a
- * new HTTP client and exchange the token for a long-lived session token instead.
+ * If they're coming back from AuthSub with a single-use token, instantiate
+ * a new HTTP client and exchange the token for a long-lived session token
+ * instead.
  */
 function setupClient($singleUseToken = null) {
     $client = null;
@@ -188,7 +189,7 @@ function setupClient($singleUseToken = null) {
         $permission = 1;
         $authSubURL .= '&permission=' . $permission;
 
-        echo '<a href="' . $authSubURL . '">Link your Google Health Account</a>';
+        echo '<a href="' . $authSubURL . '">Your Google Health Account</a>';
     } else {
         $client = new Zend_Gdata_HttpClient();
 

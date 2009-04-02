@@ -315,7 +315,7 @@ echo "</ul>\n";
             </para>
 
             <programlisting role="php"><![CDATA[
-<?= $this->action('list', 'bug') ?>
+<?php $this->action('list', 'bug') ?>
 ]]></programlisting>
 
             <para>
@@ -348,7 +348,7 @@ class My_View_Helper_BugList extends Zend_View_Helper_Abstract
             </para>
 
             <programlisting role="php"><![CDATA[
-<?= $this->bugList() ?>
+<?php $this->bugList() ?>
 ]]></programlisting>
 
             <para>

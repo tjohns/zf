@@ -59,7 +59,11 @@ print $translate->_("Here is line two") . "\n";
         Create a new <code>Zend_Translate</code> object and define the base adapter:
 
         <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', '/path/to/translation/source-de.mo', 'de');
+$translate = new Zend_Translate
+    'gettext',
+    '/path/to/translation/source-de.mo',
+    'de'
+);
 ]]>
         </programlisting>
 
@@ -1185,7 +1189,8 @@ if ($translate->isTranslated('message1')) {
 }
 
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' can not be translated to 'de' as it's available only in 'de_AT'";
+    print "'message1' can not be translated to 'de'"
+        . " as it's available only in 'de_AT'";
 }
 
 if ($translate->isTranslated('message1', false, 'de')) {
