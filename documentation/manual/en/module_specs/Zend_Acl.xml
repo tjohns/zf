@@ -2,7 +2,7 @@
     <title>Introduction</title>
 
     <para>
-        Zend_Acl provides a lightweight and flexible access control list (ACL) implementation
+        <code>Zend_Acl</code> provides a lightweight and flexible access control list (ACL) implementation
         for privileges management. In general, an application may utilize such ACL's
         to control access to certain protected objects by other requesting objects.
     </para>
@@ -38,26 +38,26 @@
     <sect2 id="zend.acl.introduction.resources">
         <title>Resources</title>
         <para>
-            Creating a resource in Zend_Acl is very simple. Zend_Acl provides the resource,
+            Creating a resource in <code>Zend_Acl</code> is very simple. <code>Zend_Acl</code> provides the resource,
             <code>Zend_Acl_Resource_Interface</code>, to facilitate creating resources in an application. A class need only
             implement this interface, which consists of a single method, <code>getResourceId()</code>, so
-            Zend_Acl to recognize the object as a resource. Additionally, <code>Zend_Acl_Resource</code> is
-            provided by Zend_Acl as a basic resource implementation for developers to extend as needed.
+            <code>Zend_Acl</code> to recognize the object as a resource. Additionally, <code>Zend_Acl_Resource</code> is
+            provided by <code>Zend_Acl</code> as a basic resource implementation for developers to extend as needed.
         </para>
         <para>
-            Zend_Acl provides a tree structure to which multiple resources
+            <code>Zend_Acl</code> provides a tree structure to which multiple resources
             can be added. Since resources are stored in such a tree structure, they can be organized from the
             general (toward the tree root) to the specific (toward the tree leaves). Queries on
             a specific resource will automatically search the resource's hierarchy for rules assigned to ancestor
             resources, allowing for simple inheritance of rules. For example, if a default rule is to be
             applied to each building in a city, one would simply assign the rule to the city, instead of
             assigning the same rule to each building. Some buildings may require exceptions to such a
-            rule, however, and this can be achieved in Zend_Acl by assigning such exception rules to
+            rule, however, and this can be achieved in <code>Zend_Acl</code> by assigning such exception rules to
             each building that requires such an exception. A resource may inherit from only one
             parent resource, though this parent resource can have its own parent resource, etc.
         </para>
         <para>
-            Zend_Acl also supports privileges on resources (e.g., "create", "read", "update", "delete"), so
+            <code>Zend_Acl</code> also supports privileges on resources (e.g., "create", "read", "update", "delete"), so
             the developer can assign rules that affect all privileges or specific privileges on one or more resources.
         </para>
     </sect2>
@@ -68,10 +68,10 @@
             As with resources, creating a role is also very simple. All roles must implement
             <code>Zend_Acl_Role_Interface</code>. This interface consists of a single method, <code>getRoleId()</code>,
             Additionally, <code>Zend_Acl_Role</code> is
-            provided by Zend_Acl as a basic role implementation for developers to extend as needed.
+            provided by <code>Zend_Acl</code> as a basic role implementation for developers to extend as needed.
         </para>
         <para>
-            In Zend_Acl, a role may inherit from one or more roles. This is to support inheritance of rules
+            In <code>Zend_Acl</code>, a role may inherit from one or more roles. This is to support inheritance of rules
             among roles. For example, a user role, such as "sally", may belong to one or more parent roles,
             such as "editor" and "administrator". The developer can assign rules to "editor" and
             "administrator" separately, and "sally" would inherit such rules from both, without having to
@@ -80,16 +80,16 @@
         <para>
             Though the ability to inherit from multiple roles is very useful, multiple inheritance also
             introduces some degree of complexity. The following example illustrates the ambiguity condition and how
-            Zend_Acl solves it.
+            <code>Zend_Acl</code> solves it.
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
-            <title>Multiple Inheritance amoung Roles</title>
+            <title>Multiple Inheritance among Roles</title>
             <para>
                 The following code defines three base roles - "<code>guest</code>", "<code>member</code>", and
                 "<code>admin</code>" - from which other roles may inherit. Then, a role identified by
                 "<code>someUser</code>" is established and inherits from the three other roles. The order in
                 which these roles appear in the <code>$parents</code> array is important. When necessary,
-                Zend_Acl searches for access rules defined not only for the queried role (herein,
+                <code>Zend_Acl</code> searches for access rules defined not only for the queried role (herein,
                 "<code>someUser</code>"), but also upon the roles from which the queried role inherits
                 (herein, "<code>guest</code>", "<code>member</code>", and "<code>admin</code>"):
             </para>
@@ -112,24 +112,24 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
 ]]>
             </programlisting>
             <para>
-                Since there is no rule specifically defined for the "<code>someUser</code>" role and
-                "<code>someResource</code>", Zend_Acl must search for rules that may be defined for roles that
-                "<code>someUser</code>" inherits. First, the "<code>admin</code>" role is visited, and there
-                is no access rule defined for it. Next, the "<code>member</code>" role is visited, and
-                Zend_Acl finds that there is a rule specifying that "<code>member</code>" is allowed access to
-                "<code>someResource</code>".
+                Since there is no rule specifically defined for the "someUser" role and
+                "someResource", <code>Zend_Acl</code> must search for rules that may be defined for roles that
+                "someUser" inherits. First, the "admin" role is visited, and there
+                is no access rule defined for it. Next, the "member" role is visited, and
+                <code>Zend_Acl</code> finds that there is a rule specifying that "member" is allowed access to
+                "someResource".
             </para>
             <para>
-                If Zend_Acl were to continue examining the rules defined for other parent roles, however, it
-                would find that "<code>guest</code>" is denied access to "<code>someResource</code>". This
-                fact introduces an ambiguity because now "<code>someUser</code>" is both denied and allowed
-                access to "<code>someResource</code>", by reason of having inherited conflicting rules from
+                If <code>Zend_Acl</code> were to continue examining the rules defined for other parent roles, however, it
+                would find that "guest" is denied access to "<code>someResource</code>". This
+                fact introduces an ambiguity because now "someUser" is both denied and allowed
+                access to "someResource", by reason of having inherited conflicting rules from
                 different parent roles.
             </para>
             <para>
-                Zend_Acl resolves this ambiguity by completing a query when it finds the first rule that is
-                directly applicable to the query. In this case, since the "<code>member</code>" role is
-                examined before the "<code>guest</code>" role, the example code would print
+                <code>Zend_Acl</code> resolves this ambiguity by completing a query when it finds the first rule that is
+                directly applicable to the query. In this case, since the "member" role is
+                examined before the "guest" role, the example code would print
                 "<code>allowed</code>".
             </para>
         </example>
@@ -158,7 +158,7 @@ $acl = new Zend_Acl();
 
         <note>
             <para>
-                Until a developer specifies an "allow" rule, Zend_Acl denies access to every privilege upon every
+                Until a developer specifies an "allow" rule, <code>Zend_Acl</code> denies access to every privilege upon every
                 resource by every role.
             </para>
         </note>
@@ -254,14 +254,14 @@ $acl->addRole(new Zend_Acl_Role('administrator'));
             Now that the ACL contains the relevant roles, rules can be established that define how
             resources may be accessed by roles. You may have noticed that we have not defined any particular
             resources for this example, which is simplified to illustrate that the rules apply to all resources.
-            Zend_Acl provides an implementation whereby rules need only be assigned from general to specific,
+            <code>Zend_Acl</code> provides an implementation whereby rules need only be assigned from general to specific,
             minimizing the number of rules needed, because resources and roles inherit rules that are defined upon
             their ancestors.
         </para>
 
         <note>
             <para>
-                In general, Zend_Acl obeys a given rule if and only if a more specific rule does not apply.
+                In general, <code>Zend_Acl</code> obeys a given rule if and only if a more specific rule does not apply.
             </para>
         </note>
 

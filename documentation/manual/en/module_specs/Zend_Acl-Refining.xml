@@ -9,7 +9,7 @@
         <para>
         The basic ACL as defined in the <link linkend="zend.acl.introduction">previous section</link> shows
         how various privileges may be allowed upon the entire ACL (all resources). In practice, however, access
-        controls tend to have exceptions and varying degrees of complexity. Zend_Acl allows to you accomplish
+        controls tend to have exceptions and varying degrees of complexity. <code>Zend_Acl</code> allows to you accomplish
         these refinements in a straightforward and flexible manner.
         </para>
 
