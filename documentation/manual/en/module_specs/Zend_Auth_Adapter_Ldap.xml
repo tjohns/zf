@@ -133,7 +133,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
         <para>
             The <code>$options</code> parameter is required and must be an array containing one or more sets of
             options. Note that it is <emphasis>an array of arrays</emphasis> of
-            <link linkend="zend.ldap">Zend_Ldap</link> options. Even if you will be using only one LDAP server, the
+            <link linkend="zend.ldap"><code>Zend_Ldap</code></link> options. Even if you will be using only one LDAP server, the
             options must still be within another array.
         </para>
 
@@ -235,7 +235,7 @@ Array
         <title>Server Options</title>
 
         <para>
-            Each set of server options <emphasis>in the context of Zend_Auth_Adapter_Ldap</emphasis> consists of the
+            Each set of server options <emphasis>in the context of <code>Zend_Auth_Adapter_Ldap</code></emphasis> consists of the
             following options, which are passed, largely unmodified, to <code>Zend_Ldap::setOptions()</code>:
 
             <table id="zend.auth.adapter.ldap.server-options.table">

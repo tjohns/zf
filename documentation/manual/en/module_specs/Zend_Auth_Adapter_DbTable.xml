@@ -211,18 +211,18 @@ if ($result->isValid()) {
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
         <title>Advanced Usage By Example</title>
         <para>
-            While the primary purpose of Zend_Auth (and consequently
-            Zend_Auth_Adapter_DbTable) is primarily
+            While the primary purpose of <code>Zend_Auth</code> (and consequently
+            <code>Zend_Auth_Adapter_DbTable</code>) is primarily
             <emphasis role="strong">authentication</emphasis> and not
             <emphasis role="strong">authorization</emphasis>, there are a few
             instances and problems that toe the line between which domain they fit
-            within.  Depending on how you’ve decided to explain your problem, it
+            within. Depending on how you’ve decided to explain your problem, it
              sometimes makes sense to solve what could look like an
              authorization problem within the authentication adapter.
         </para>
         <para>
             With that disclaimer out of the way,
-            Zend_Auth_Adapter_DbTable has some built in mechanisms that can be
+            <code>Zend_Auth_Adapter_DbTable</code> has some built in mechanisms that can be
             leveraged for additional checks at authentication time to solve
             some common user problems.
         </para>

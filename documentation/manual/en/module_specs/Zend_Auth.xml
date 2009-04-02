@@ -3,18 +3,18 @@
     <title>Introduction</title>
 
     <para>
-        Zend_Auth provides an API for authentication and includes concrete authentication adapters for
+        <code>Zend_Auth</code> provides an API for authentication and includes concrete authentication adapters for
         common use case scenarios.
     </para>
 
     <para>
-        Zend_Auth is concerned only with <emphasis role="strong">authentication</emphasis> and not with
+        <code>Zend_Auth</code> is concerned only with <emphasis role="strong">authentication</emphasis> and not with
         <emphasis role="strong">authorization</emphasis>. Authentication is loosely defined as determining
         whether an entity actually is what it purports to be (i.e., identification), based on some set of
         credentials. Authorization, the process of deciding whether to allow an entity access to, or to
-        perform operations upon, other entities is outside the scope of Zend_Auth. For more information about
+        perform operations upon, other entities is outside the scope of <code>Zend_Auth</code>. For more information about
         authorization and access control with Zend Framework, please see
-        <link linkend="zend.acl">Zend_Acl</link>.
+        <link linkend="zend.acl"><code>Zend_Acl</code></link>.
     </para>
 
     <note>
@@ -31,15 +31,15 @@
         <title>Adapters</title>
 
         <para>
-            A Zend_Auth adapter is used to authenticate against a particular type of authentication service,
+            A <code>Zend_Auth</code> adapter is used to authenticate against a particular type of authentication service,
             such as LDAP, RDBMS, or file-based storage. Different adapters are likely to have vastly different
             options and behaviors, but some basic things are common among authentication adapters. For example,
             accepting authentication credentials (including a purported identity), performing queries against the
-            authentication service, and returning results are common to Zend_Auth adapters.
+            authentication service, and returning results are common to <code>Zend_Auth</code> adapters.
         </para>
 
         <para>
-            Each Zend_Auth adapter class implements <code>Zend_Auth_Adapter_Interface</code>. This interface defines one
+            Each <code>Zend_Auth</code> adapter class implements <code>Zend_Auth_Adapter_Interface</code>. This interface defines one
             method, <code>authenticate()</code>, that an adapter class must implement for performing an authentication
             query. Each adapter class must be prepared prior to calling <code>authenticate()</code>. Such adapter
             preparation includes setting up credentials (e.g., username and password) and defining values for adapter-
@@ -92,10 +92,10 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>Results</title>
 
         <para>
-            Zend_Auth adapters return an instance of <code>Zend_Auth_Result</code> with
+            <code>Zend_Auth</code> adapters return an instance of <code>Zend_Auth_Result</code> with
             <code>authenticate()</code> in order to represent the results of an authentication attempt. Adapters
             populate the <code>Zend_Auth_Result</code> object upon construction, so that the following four methods
-            provide a basic set of user-facing operations that are common to the results of Zend_Auth adapters:
+            provide a basic set of user-facing operations that are common to the results of <code>Zend_Auth</code> adapters:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -206,7 +206,7 @@ switch ($result->getCode()) {
                  <code>Zend_Auth::authenticate()</code> stores the identity from the authentication result into
                  persistent storage. Unless configured otherwise, <code>Zend_Auth</code> uses a storage class named
                  <code>Zend_Auth_Storage_Session</code>, which, in turn, uses
-                 <link linkend="zend.session">Zend_Session</link>. A custom class may instead be used by providing an
+                 <link linkend="zend.session"><code>Zend_Session</code></link>. A custom class may instead be used by providing an
                  object that implements <code>Zend_Auth_Storage_Interface</code> to
                  <code>Zend_Auth::setStorage()</code>.
             </para>
@@ -224,7 +224,7 @@ switch ($result->getCode()) {
                 <title>Modifying the Session Namespace</title>
 
                 <para>
-                    <code>Zend_Auth_Storage_Session</code> uses a session namespace of <code>'Zend_Auth'</code>. This
+                    <code>Zend_Auth_Storage_Session</code> uses a session namespace of 'Zend_Auth'. This
                     namespace may be overridden by passing a different value to the constructor of
                     <code>Zend_Auth_Storage_Session</code>, and this value is internally passed along to the constructor
                     of <code>Zend_Session_Namespace</code>. This should occur before authentication is attempted, since
@@ -369,10 +369,10 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
 
     <sect2 id="zend.auth.introduction.using">
 
-        <title>Using Zend_Auth</title>
+        <title>Usage</title>
 
         <para>
-            There are two provided ways to use Zend_Auth adapters:
+            There are two provided ways to use <code>Zend_Auth</code> adapters:
             <orderedlist>
             <listitem>
                 <para>
@@ -388,7 +388,7 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
         </para>
 
         <para>
-            The following example illustrates how to use a Zend_Auth adapter indirectly, through the use of
+            The following example illustrates how to use a <code>Zend_Auth</code> adapter indirectly, through the use of
             the <code>Zend_Auth</code> class:
 
             <programlisting role="php"><![CDATA[
