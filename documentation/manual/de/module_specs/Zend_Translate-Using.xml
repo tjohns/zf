@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14245 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.translate.using">
 
     <title>Benutzen von Übersetzungs Adaptoren</title>
@@ -1222,8 +1222,8 @@ if ($translate->isTranslated('message1')) {
 }
 
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' kann nicht in 'de' übersetzt werden da es " .
-    "nur in 'de_AT' vorhanden ist";
+    print "'message1' kann nicht in 'de' übersetzt werden da es "
+        . "nur in 'de_AT' vorhanden ist";
 }
 
 if ($translate->isTranslated('message1', false, 'de')) {

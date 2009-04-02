@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14448 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.json.advanced">
     <title>Fortgeschrittene Verwendung von Zend_Json</title>
 
@@ -112,10 +112,16 @@ Zend_Json::$useBuiltinEncoderDecoder = true:
 
         <programlisting role="php"><![CDATA[
 $data = array(
-    'onClick' => new Zend_Json_Expr('function() { alert("Ich bin ein gültiger Javascript Callback erstellt von Zend_Json"); }'),
+    'onClick' => new Zend_Json_Expr('function() { '
+              . 'alert("Ich bin ein gültiger Javascript Callback '
+              . 'erstellt von Zend_Json"); }'),
     'other' => 'no expression',
 );
-$jsonObjectWithExpression = Zend_Json::encode($data, false, array('enableJsonExprFinder' => true));
+$jsonObjectWithExpression = Zend_Json::encode(
+    $data,
+    false,
+    array('enableJsonExprFinder' => true)
+);
 ]]>
         </programlisting>
     </sect2>

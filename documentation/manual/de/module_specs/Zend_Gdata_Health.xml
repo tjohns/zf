@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.gdata.health">
     <title>Verwenden von Google Health</title>
     <para>
@@ -184,10 +184,10 @@ function getCurrentUrl() {
 }
 
 /*
- * Leitet einen Benutzer zu AuthSub um wenn er keinen gültigen Session Token hat.
- * Wenn er von AuthSub mit einem einmal-zu-verwendenden Token zurückkommt, wird ein
- * neuer HTTP Client initialisiert und der Token mit eine langlebigen Sessiontoken
- * getauscht.
+ * Leitet einen Benutzer zu AuthSub um wenn er keinen gültigen Session Token
+ * hat. Wenn er von AuthSub mit einem einmal-zu-verwendenden Token zurückkommt,
+ * wird ein neuer HTTP Client initialisiert und der Token mit eine langlebigen
+ * Sessiontoken getauscht.
  */
 function setupClient($singleUseToken = null) {
     $client = null;
@@ -209,7 +209,7 @@ function setupClient($singleUseToken = null) {
         $permission = 1;
         $authSubURL .= '&permission=' . $permission;
 
-        echo '<a href="' . $authSubURL . '">Verlinke deinen Google Health Account</a>';
+        echo '<a href="' . $authSubURL . '">Dein Google Health Account</a>';
     } else {
         $client = new Zend_Gdata_HttpClient();
 

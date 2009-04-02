@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.openid.consumer">
     <title>Zend_OpenId_Consumer Grundlagen</title>
     <para>
@@ -355,7 +355,8 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
         $this->_db
              ->query('insert into ' .
                      $table . " (url, handle, macFunc, secret, expires) " .
-                     "values ('$url', '$handle', '$macFunc', '$secret', $expires)");
+                     "values ('$url', '$handle', '$macFunc', " .
+                     "'$secret', $expires)");
         return true;
     }
 
@@ -415,8 +416,10 @@ class DbStorage extends Zend_OpenId_Consumer_Storage
     {
         $table = $this->_discovery_table;
         $this->_db
-             ->query("insert into $table (id, realId, server, version, expires) " .
-                     "values ('$id', '$realId', '$server', $version, $expires)");
+             ->query("insert into $table " .
+                     "(id, realId, server, version, expires) " .
+                     "values (" .
+                     "'$id', '$realId', '$server', $version, $expires)");
         return true;
     }
 

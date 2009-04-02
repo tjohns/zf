@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13910 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.pdf.drawing">
     <title>Zeichnen</title>
 
@@ -512,7 +512,8 @@ foreach ($fontList as $font) {
     $fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
                                    'en',
                                    'UTF-8');
-    $page->drawText($fontName . ':  Der schnelle braune Fuchs springt über den lahmen Hund',
+    $page->drawText($fontName . ': Der schnelle braune Fuchs springt '
+                              . 'über den lahmen Hund',
                     100,
                     $yPosition,
                     'UTF-8');
