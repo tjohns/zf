@@ -2,7 +2,7 @@
     <title>Captcha Operation</title>
 
     <para>
-        All concrete CAPTCHA objects implement
+        All CAPTCHA adapter implement
         <code>Zend_Captcha_Adapter</code>, which looks like the following:
     </para>
 
@@ -30,15 +30,15 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
     </programlisting>
 
     <para>
-        The name mutator and accessor are used to specify and retrieve the
-        captcha identifier. <code>getDecorator()</code> can be used to specify a
-        Zend_Form decorator either by name or returning an actual decorator
-        object. The true keys to usage, however, lie in <code>generate()</code>
+        The name setter and getter are used to specify and retrieve the
+        CAPTCHA identifier. <code>getDecorator()</code> can be used to specify a
+        <code>Zend_Form</code> decorator either by name or returning an actual decorator
+        object. The most interesting methods are <code>generate()</code>
         and <code>render()</code>. <code>generate()</code> is used to create the
-        captcha token. This process typically will store the token in the
+        CAPTCHA token. This process typically will store the token in the
         session so that you may compare against it in subsequent requests.
         <code>render()</code> is used to render the information that represents
-        the captcha -- be it in image, a figlet, a logic problem, etc.
+        the CAPTCHA- be it an image, a figlet, a logic problem, or some other CAPTCHA.
     </para>
 
     <para>
@@ -55,6 +55,7 @@ $captcha = new Zend_Captcha_Figlet(array(
     'wordLen' => 6,
     'timeout' => 300,
 ));
+
 $id = $captcha->generate();
 echo $captcha->render($view);
 
