@@ -7,7 +7,7 @@
     </para>
 
     <sect2 id="zend.cache.backends.file">
-        <title><code>Zend_Cache_Backend_File</code></title>
+        <title>Zend_Cache_Backend_File</title>
         <para>
             Dieses (erweiterte) Backend speichert Cache Datensätze in Dateien (in einem gewählten Verzeichnis).
         </para>

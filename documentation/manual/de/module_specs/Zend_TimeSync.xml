@@ -3,10 +3,6 @@
 
     <title>Einführung</title>
 
-    <indexterm><primary>Zend_TimeSync</primary></indexterm>
-    <indexterm><secondary>NTP</secondary></indexterm>
-    <indexterm><secondary>SNTP</secondary></indexterm>
-
     <para>
         <code>Zend_TimeSync</code> ist fähig die Internet- oder Netzwerkzeit von einem Zeitserver
         zu empfangen indem es das <emphasis role="strong">NTP</emphasis> oder

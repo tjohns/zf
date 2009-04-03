@@ -22,7 +22,8 @@ $index = Zend_Search_Lucene::create('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
 
-// Speichere die URL des Dokuments, um sie in Suchergebnissen ermitteln zu können
+// Speichere die URL des Dokuments,
+// um sie in Suchergebnissen ermitteln zu können
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
 // Inhalte des Dokumentenindex
@@ -274,7 +275,7 @@ $index->optimize();
 $currentPermissions =
     Zend_Search_Lucene_Storage_Directory_Filesystem::getDefaultFilePermissions();
 
-// Nur für den aktuellen Benutzer und die Gruppe Lese-Schreib Berechtigung setzen
+// Nur für aktuellen Benutzer und Gruppe die Lese-Schreib Berechtigung setzen
 Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
 ]]>
         </programlisting>

@@ -49,8 +49,8 @@ foreach ($prototypes as $prototype) {
 }
 
 // Erhalte Namensraum für eine Klasse, Funktion oder Methode.
-// Namensräume können zum Zeitpunkt der Instanzierung gesetzt werden (zweites Argument) oder durch
-// Verwendung von setNamespace()
+// Namensräume können zum Zeitpunkt der Instanzierung gesetzt werden
+// (zweites Argument) oder durch Verwendung von setNamespace()
 $reflection->getNamespace();
 ]]>
         </programlisting>

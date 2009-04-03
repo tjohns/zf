@@ -155,9 +155,8 @@ print $server->getDate()->getIso();
         <para>
             Wie bei jedes Protkoll im World Wide Web, verwenden das
             <emphasis role="strong">NTP</emphasis> und <emphasis role="strong">SNTP</emphasis>
-            Protokoll Standardports. <emphasis role="strong">NTP</emphasis> verwendet den Port
-            <emphasis role="strong">123</emphasis>, und <emphasis role="strong">SNTP</emphasis>
-            den Port <emphasis role="strong">37</emphasis>.
+            Protokoll Standardports. NTP verwendet den Port <emphasis role="strong">123</emphasis>,
+            und SNTP den Port <emphasis role="strong">37</emphasis>.
         </para>
 
         <para>

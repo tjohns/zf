@@ -9,7 +9,7 @@
         von Zend_Session statt, was auch die Konfiguration der
         <ulink url="http://www.php.net/session#session.configuration">üblichen Optionen, welche von ext/session unterstützt werden</ulink>,
         durch <code>Zend_Session::setOptions()</code> enthält. Zum Beispiel kann, das fehlerhafte Versichern das ein
-        sicherer save_path oder ein eindeutiger Cookiename von ext/session durch
+        sicherer <code>save_path</code> oder ein eindeutiger Cookiename von ext/session durch
         <code>Zend_Session::setOptions()</code> verwendet wird, zu einem Sicherheitsproblem werden.
     </para>
 
@@ -150,10 +150,10 @@ Zend_Session::setOptions($config->toArray());
                             den Cookie Pfad auf die Webseite des Opfers zurück ändern, und anschließend eine Anfrage
                             von der Webseite des Opfers, mithilfe der vergifteten Session, durchführen. Selbst wenn
                             zwei Anwendungen auf dem gleichen Server keinen Lese-/Schreibzugriff auf den jeweils
-                            anderen <code>save_path</code> der Anwendung haben. Wenn der <code>save_path</code>
+                            anderen <code>save_path</code> der Anwendung haben, wenn der <code>save_path</code>
                             erahnbar ist und der Angreifer die Kontrolle über eine der zwei Webseiten hat, kann
                             der Angreifer den <code>save_path</code> seiner Webseiten ändern um dem anderen
-                            <code>save_path</code> zu verwenden und somit die Vergiftung der Session durchführen,
+                            save_path zu verwenden und somit die Vergiftung der Session durchführen,
                             in den meisten üblichen PHP Konfigurationen. Deshalb sollte der Wert für
                             <code>save_path</code> nicht öffentlich bekanntgegeben werden, und er sollte geändert
                             werden um dem Pfad eindeutig für jede Anwendung zu sichern.
@@ -464,11 +464,12 @@ if (!isset($defaultNamespace->initialized)) {
         <para>
             Wenn die Fehlermeldung "Cannot modify header information - headers already sent" erscheint, sollte
             entweder die Verwendung von <code>true</code> als Wert für das erste Argument (die Entfernung des
-            Session Cookies anfragen) vermieden werden, oder unter <xref linkend="zend.session.global_session_management.headers_sent" />
-            nachgesehen werden. Deswegen muß "Zend_Session::destroy(true)" entweder aufgerufen werden bevor
-            PHP Header gesendet hat, oder die Pufferung der Ausgabe muß aktiviert sein. Auch die komplette Ausgabe
-            die gesendet werden soll, darf die gesetzte Puffergröße nicht überschreiten, um das Senden der Ausgabe
-            vor dem Aufruf von <code>destroy()</code> zu Verhindern.
+            Session Cookies anfragen) vermieden werden, oder unter
+            <xref linkend="zend.session.global_session_management.headers_sent" /> nachgesehen werden.
+            Deswegen muß entweder <code>Zend_Session::destroy(true)</code> aufgerufen werden bevor PHP Header
+            gesendet hat, oder die Pufferung der Ausgabe muß aktiviert sein. Auch die komplette Ausgabe
+            die gesendet werden soll, darf die gesetzte Puffergröße nicht überschreiten, um das Senden der
+            Ausgabe vor dem Aufruf von <code>destroy()</code> zu Verhindern.
         </para>
 
         <note>

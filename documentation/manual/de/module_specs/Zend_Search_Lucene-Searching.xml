@@ -206,7 +206,8 @@ foreach ($hits as $hit) {
     // Gibt Zend_Search_Lucene_Document Objekte für diesen Treffer zurück
     echo $document = $hit->getDocument();
 
-    // Gibt ein Zend_Search_Lucene_Field Objekt von Zend_Search_Lucene_Document zurück
+    // Gibt ein Zend_Search_Lucene_Field Objekt von
+    // Zend_Search_Lucene_Document zurück
     echo $document->getField('title');
 
     // Gibt den String Wert des Zend_Search_Lucene_Field Objektes zurück

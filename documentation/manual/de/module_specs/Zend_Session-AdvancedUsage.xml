@@ -312,7 +312,7 @@ try {
 
         <para>
             Der zweite Parameter oben im Konstruktor sagt <code>Zend_Session_Namespace</code> das alle zukünftigen
-            Instanzen  mit dem "Zend_Auth" Namensraum nicht erlaubt sind. Der Versuch solche Instanzen zu erstellen
+            Instanzen  mit dem <code>Zend_Auth</code> Namensraum nicht erlaubt sind. Der Versuch solche Instanzen zu erstellen
             verursacht eine Ausnahme die vom Konstruktor geworfen wird. Der Entwickler wird darauf aufmerksam gemacht
             eine Referenz zu einer Instanz des Objektes irgendwo zu speichern (<code>$authSpaceAccessor1</code>,
             <code>$authSpaceAccessor2</code>, oder <code>$authSpaceAccessor3</code> im obigen Beispiel), wenn

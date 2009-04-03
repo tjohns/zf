@@ -211,7 +211,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
 $stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
 $stopWordsFilter->loadFromFile($my_stopwords_file);
 
-$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer =
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
 $analyzer->addFilter($stopWordsFilter);
 
 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);

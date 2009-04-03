@@ -49,7 +49,7 @@ protected function _run()
         Glücklicherweise hat PHP5 eine Anwort auf das mit seiner Deklaration der Sichtbarkeit;
         Auf private Member kann nicht durch Objekte zugegriffen werden wenn eine bestehende Klasse
         erweitert wird. Das führt zum aktuellen Design: Da <code>Zend_View</code>
-        <code>Zend_View_Abstract</code> <emphasis>extends</emphasis> sind View Skripte limitiert
+        <code>Zend_View_Abstract</code> <emphasis>erweitert</emphasis> sind View Skripte limitiert
         auf protected und public Methoden und Member von <code>Zend_View_Abstract</code> --
         was effektiv die Aktionen beschränkt die durchgeführt werden können, und es erlaubt
         kritische Bereiche vor Missbrauch durch View Skripte zu schützen.

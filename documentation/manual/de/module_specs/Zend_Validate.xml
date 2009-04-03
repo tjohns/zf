@@ -111,12 +111,6 @@ if ($validator->isValid($email)) {
             verwendet werden soll das in der Prüfklasse definiert ist. Viele Prüfklassen haben nur ein
             Template für eine Fehlernachricht definiert, sodas es nicht notwendig ist anzugeben welches
             Template für Fehlernachrichten geändert werden soll.
-            Das zweite optionale Argument ist ein String der mit dem Fehler Identifizierer korrespondiert
-            der von der <code>getErrors()</code> Methode zurückgegeben wird. Wenn das zweite Argument
-            ausgelassen wird nimmt <code>setMessage()</code> an das die Nachricht die spezifiziert wurde
-            für die erste definierte Nachricht genommen werden soll die in der Prüfer-Klasse definiert ist.
-            Diese Prüfer-Klassen haben nur eine einzige Fehlernachricht, so das keine Notwendigkeit besteht
-            die definierten Nachricht speziell auszuwählen.
         </para>
 
         <para>
