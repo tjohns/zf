@@ -105,14 +105,14 @@
         <para>
             The <code>Zend_Captcha_Figlet</code> adapter utilizes <link
                 linkend="zend.text.figlet"><code>Zend_Text_Figlet</code></link> to present a
-            	figlet to the user.
+                figlet to the user.
         </para>
 
         <para>
             Options passed to the constructor will also be passed to the <link
                 linkend="zend.text.figlet">Zend_Text_Figlet</link> object. See
-                the <lin linkend="zend.text.figlet">Zend_Text_Figlet</link>documentation for details on what
-            	configuration options are available.
+                the <link linkend="zend.text.figlet">Zend_Text_Figlet</link>documentation for details on what
+                configuration options are available.
         </para>
     </sect2>
 
