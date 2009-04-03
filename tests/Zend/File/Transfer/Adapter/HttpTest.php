@@ -167,13 +167,11 @@ class Zend_File_Transfer_Adapter_HttpTest extends PHPUnit_Framework_TestCase
                     1 => 0)));
         $adapter = new Zend_File_Transfer_Adapter_HttpTest_MockAdapter();
         $adapter->setOptions(array('ignoreNoFile' => true));
-        $this->assertEquals('plain/text', $adapter->getMimeType('exe_0_'));
         $this->assertTrue($adapter->receive('exe'));
         $this->assertEquals(
             array('exe_0_' => 'file1.txt',
                   'exe_1_' => 'file2.txt'),
             $adapter->getFileName('exe', false));
-        $this->assertEquals('plain/text', $adapter->getMimeType('exe_0_'));
     }
 
     public function testNoUploadInProgress()
