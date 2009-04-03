@@ -365,10 +365,10 @@ foreach ($docIds as $id) {
 
         <para>
             L'index du dictionnaire des termes est chargé durant la recherche. Il s'agit de
-            chaque 128<superscript>ème</superscript><footnote>Le format de fichier Lucene permet
+            chaque 128<superscript>ème</superscript><footnote><para>Le format de fichier Lucene permet
             de configurer ce nombre, mais <code>Zend_Search_Lucene</code> n'expose pas cette
             possibilité dans l'API. Cependant vous pouvez toujours configurer ce nombre si l'index
-            est géré par une autre implémentation de Lucene.</footnote> terme du dictionnaire complet.
+            est géré par une autre implémentation de Lucene.</para></footnote> terme du dictionnaire complet.
         </para>
 
         <para>
