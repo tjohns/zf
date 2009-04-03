@@ -3805,6 +3805,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result instanceof Zend_Date);
         $result = $date->getTimezone();
         $this->assertSame('America/Chicago', $result);
+
+        $date = new Zend_Date('01.01.2000T00:00:00Z',Zend_Date::ISO_8601);
+        $result = $date->getTimezone();
+        $this->assertSame('Etc/UTC', $result);
     }
 
     /**

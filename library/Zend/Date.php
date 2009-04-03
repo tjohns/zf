@@ -1092,9 +1092,17 @@ class Zend_Date extends Zend_Date_DateObject
         if (is_array($zone)) {
             return $this->getTimezone();
         }
+
         if ($zone instanceof Zend_Date) {
             return $zone->getTimezone();
         }
+
+        $match = array();
+        preg_match('/\dZ$/', $zone, $match);
+        if (!empty($match)) {
+            return "Etc/UTC";
+        }
+
         preg_match('/([+-]\d{2}):{0,1}\d{2}/', $zone, $match);
         if (!empty($match) and ($match[count($match) - 1] <= 12) and ($match[count($match) - 1] >= -12)) {
             $zone = "Etc/GMT";
