@@ -1,9 +1,9 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14607 -->
 <sect1 id="zend.captcha.operation">
     <title>Captcha Anwendung</title>
 
     <para>
-        Alle konkreten CAPTCHA Objekte implementieren <code>Zend_Captcha_Adapter</code>, welches wie folgt
+        Alle CAPTCHA Adapter implementieren <code>Zend_Captcha_Adapter</code>, welches wie folgt
         aussieht:
     </para>
 
@@ -31,15 +31,15 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
     </programlisting>
 
     <para>
-        Die benannten Mutatoren und Zugriffsmethoden werden verwenden um den Captcha Identifikator zu
+        Die benannten Getter- und Settermethoden werden verwenden um den CAPTCHA Identifikator zu
         spezifizieren und zu empfangen. <code>getDecorator()</code> kann verwendet werden um einen
-        Zend_Form Dekorator entweder durch seinen Namen zu spezifizieren oder indem ein aktuelles
-        Dekoratorobjekt zurückgegeben wird. Der wirkliche Schlüssel seiner Verwendung liegt aber in
+        <code>Zend_Form</code> Dekorator entweder durch seinen Namen zu spezifizieren oder indem
+        ein aktuelles Dekoratorobjekt zurückgegeben wird. Der interessantesten Methoden sind aber
         <code>generate()</code> und <code>render()</code>. <code>generate()</code> wird verwendet
-        um das Captcha Token zu erstellen. Dieser Prozess speichert das Token typischerweise in der
+        um das CAPTCHA Token zu erstellen. Dieser Prozess speichert das Token typischerweise in der
         Session damit es in nachfolgenden Anfragen verglichen werden kann. <code>render()</code> wird
-        verwendet um die Informationen die das Captcha repräsentieren darzustellen -- ob es ein Bild ist,
-        ein Figlet, ein logisches Problem, usw.
+        verwendet um die Informationen die das CAPTCHA repräsentieren darzustellen - ob es ein Bild ist,
+        ein Figlet, ein logisches Problem, oder andere CAPTCHA.
     </para>
 
     <para>
@@ -56,6 +56,7 @@ $captcha = new Zend_Captcha_Figlet(array(
     'wordLen' => 6,
     'timeout' => 300,
 ));
+
 $id = $captcha->generate();
 echo $captcha->render($view);
 

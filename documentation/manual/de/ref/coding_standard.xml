@@ -305,7 +305,9 @@ widgetFactory()
             </para>
 
             <para>
-                Kurze Tags sind nie erlaubt.
+                Kurze Tags sind nie erlaubt. Für Dateien die nur PHP Code enthalten, darf
+                das schließende Tag nie angegeben werden (Siehe
+                <xref linkend="coding-standard.php-file-formatting.general"/>).
             </para>
         </sect2>
 

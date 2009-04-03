@@ -1,21 +1,22 @@
-<!-- EN-Revision: 12817 -->
+<!-- EN-Revision: 14610 -->
 <sect1 id="zend.auth.introduction">
 
     <title>Einführung</title>
 
     <para>
-        Zend_Auth bietet eine API für das Authentifizieren und enthält konkrete Authentifizierungs-Adapter
-        für übliche Use Case Szenarien.
+        <code>Zend_Auth</code> bietet eine API für das Authentifizieren und enthält konkrete
+        Authentifizierungs-Adapter für übliche Use Case Szenarien.
     </para>
 
     <para>
-        Zend_Auth behandelt nur die <emphasis role="strong">Authentifizierung</emphasis> und nicht die
-        <emphasis role="strong">Authorisierung</emphasis>. Authentifizierung ist lose definiert als das
-        Ermitteln ob eine Entität aktuell das ist was Sie vorgibt zu sein (z.B. Identifizierung), basierend
-        auf einem Set von Zeugnissen. Authorisierung, der Prozess des Entscheidens ob es einer Entität
-        erlaubt wird auf andere Entitäten Zugriff zu erhalten, oder um auf diesen Operationen durchzuführen,
-        ist ausserhalb der Möglichkeit von Zend_Auth. Für weitere Informationen über Authorisierung und
-        Zugriffskontrolle mit dem Zend Framework, sollte <link linkend="zend.acl">Zend_Acl</link>
+        <code>Zend_Auth</code> behandelt nur die <emphasis role="strong">Authentifizierung</emphasis>
+        und nicht die <emphasis role="strong">Authorisierung</emphasis>. Authentifizierung ist lose
+        definiert als das Ermitteln ob eine Entität aktuell das ist was Sie vorgibt zu sein (z.B.
+        Identifizierung), basierend auf einem Set von Zeugnissen. Authorisierung, der Prozess des
+        Entscheidens ob es einer Entität erlaubt wird auf andere Entitäten Zugriff zu erhalten,
+        oder um auf diesen Operationen durchzuführen, ist ausserhalb der Möglichkeit von
+        <code>Zend_Auth</code>. Für weitere Informationen über Authorisierung und Zugriffskontrolle
+        mit dem Zend Framework, sollte <link linkend="zend.acl"><code>Zend_Acl</code></link>
         angeschaut werden.
     </para>
 
@@ -34,17 +35,18 @@
         <title>Adapter</title>
 
         <para>
-            Ein Zend_Auth Adapter wird verwendet um sich gegenüber einem speziellen Typ von Authentifizierungs
-            Services zu authentifizieren, wie LDAP, RDBMS, oder Datei-basierenden Speichern. Verschiedene
-            Adapter besitzen leicht unterschiedliche Optionen und Verhaltensweisen, aber einige grundlegende
-            Dinge sind für Authentifizierungs Adapter üblich. Zum Beispiel das die Authentifizierung
-            Zeugnisse akzeptiert werden (enthält auch vorgegebene Identitäten), das Abfragen am
-            Authentifizierungsservice durchgeführt werden, und das Ergebnisse zurückgegeben werden, sind für
-            Zend_Auth Adapter üblich.
+            Ein <code>Zend_Auth</code> Adapter wird verwendet um sich gegenüber einem speziellen
+            Typ von Authentifizierungs Services zu authentifizieren, wie LDAP, RDBMS, oder
+            Datei-basierenden Speichern. Verschiedene Adapter besitzen leicht unterschiedliche
+            Optionen und Verhaltensweisen, aber einige grundlegende Dinge sind für
+            Authentifizierungs Adapter üblich. Zum Beispiel das die Authentifizierung Zeugnisse
+            akzeptiert werden (enthält auch vorgegebene Identitäten), das Abfragen am
+            Authentifizierungsservice durchgeführt werden, und das Ergebnisse zurückgegeben werden,
+            sind für <code>Zend_Auth</code> Adapter üblich.
         </para>
 
         <para>
-            Jede Zend_Auth Adapter Klasse implementiert <code>Zend_Auth_Adapter_Interface</code>. Dieses
+            Jede <code>Zend_Auth</code> Adapter Klasse implementiert <code>Zend_Auth_Adapter_Interface</code>. Dieses
             Interface definiert eine Methode, <code>authenticate()</code>, die eine Adapter Klasse implementieren
             muß um eine Authentifizierungsanfrage auszuführen. Jede Adapter Klasse muß vorher vorbereitet sein
             bevor <code>authenticate()</code> aufgerufen wird. Diese Vorbereitung des Adapters enthält das
@@ -100,11 +102,11 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>Ergebnisse</title>
 
         <para>
-            Zend_Auth Adapter geben eine Instanz von <code>Zend_Auth_Result</code> mit Hilfe von
+            <code>Zend_Auth</code> Adapter geben eine Instanz von <code>Zend_Auth_Result</code> mit Hilfe von
             <code>authenticate()</code> zurück um die Ergebnisse des Authentifizierungs-Versuches darzustellen.
             Adapter veröffentlichen das <code>Zend_Auth_Result</code> Objekt bei der Erstellung, so das die
             folgenden vier Methoden ein grundsätzliches Set von Benutzerbezogenen Operationen bieten die
-            für die Ergebnisse von Zend_Auth Adapter üblich sind:
+            für die Ergebnisse von <code>Zend_Auth</code> Adapter üblich sind:
             <itemizedlist>
                 <listitem>
                     <para>
@@ -220,9 +222,10 @@ switch ($result->getCode()) {
                  die Identität des Authentifizierungs Ergebnisses im persistenten Speicher. Solange die
                  Konfiguration nicht verändert wird, verwendet <code>Zend_Auth</code> eine Speicherklasse
                  die <code>Zend_Auth_Storage_Session</code> heißt und die im Gegenzug
-                 <link linkend="zend.session">Zend_Session</link> verwendet. Eine eigene Klasse kann stattdessen
-                 verwendet werden, indem ein Objekt an <code>Zend_Auth::setStorage()</code> übergeben wird
-                 welches <code>Zend_Auth_Storage_Interface</code> implementiert.
+                 <link linkend="zend.session"><code>Zend_Session</code></link> verwendet. Eine eigene
+                 Klasse kann stattdessen verwendet werden, indem ein Objekt an
+                 <code>Zend_Auth::setStorage()</code> übergeben wird welches
+                 <code>Zend_Auth_Storage_Interface</code> implementiert.
             </para>
 
             <note>
@@ -239,7 +242,7 @@ switch ($result->getCode()) {
 
                 <para>
                     <code>Zend_Auth_Storage_Session</code> verwendet einen Session Namensraum von
-                    <code>'Zend_Auth'</code>. Diese Namensraum kann überschrieben werden indem ein anderer
+                    'Zend_Auth'. Diese Namensraum kann überschrieben werden indem ein anderer
                     Wert an den Konstruktor von <code>Zend_Auth_Storage_Session</code> übergeben wird, und dieser
                     Wert wird intern an den Konstruktor von <code>Zend_Session_Namespace</code> weitergereicht.
                     Das sollte vor einem Versuch einer Authentifizierung stattfinden da
@@ -384,10 +387,10 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
 
     <sect2 id="zend.auth.introduction.using">
 
-        <title>Zend_Auth verwenden</title>
+        <title>Verwendung</title>
 
         <para>
-            Es gibt zwei vorhandene Wege um Zend_Auth Adapter zu verwenden:
+            Es gibt zwei vorhandene Wege um <code>Zend_Auth</code> Adapter zu verwenden:
             <orderedlist>
             <listitem>
                 <para>
@@ -403,8 +406,8 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
         </para>
 
         <para>
-            Das folgende Beispiel zeigt wie ein Zend_Auth Adapter indirekt verwendet werden kann, durch die
-            verwendung der <code>Zend_Auth</code> Klasse:
+            Das folgende Beispiel zeigt wie ein <code>Zend_Auth</code> Adapter indirekt verwendet
+            werden kann, durch die Verwendung der <code>Zend_Auth</code> Klasse:
 
             <programlisting role="php"><![CDATA[
 // Eine Referenz zur Singleton-Instanz von Zend_Auth erhalten

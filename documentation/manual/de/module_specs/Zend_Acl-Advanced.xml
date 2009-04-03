@@ -1,4 +1,4 @@
-<!-- EN-Revision: 11089 -->
+<!-- EN-Revision: 14609 -->
 <sect1 id="zend.acl.advanced">
 
     <title>Fortgeschrittene Verwendung</title>
@@ -8,18 +8,18 @@
         <title>Dauerhafte Speicherung von ACL Daten</title>
 
         <para>
-            Zend_Acl wurde so entwickelt, dass keine spezielle Backend Technologie benötigt wird,
-            wie z.B. eine Datenbank oder ein Cache Server, um die ACL Daten zu speichern. Die
+            <code>Zend_Acl</code> wurde so entwickelt, dass keine spezielle Backend Technologie benötigt
+            wird, wie z.B. eine Datenbank oder ein Cache Server, um die ACL Daten zu speichern. Die
             vollständige PHP Implementation ermöglicht angepasste Administrationstools, die relativ
-            einfach und flexibel auf Zend_Acl aufbauen. Viele Situationen erfordern eine interaktive
-            Wartung der ACL und Zend_Acl stellt Methoden für das Einrichten und Abfragen der
-            Zugriffskontrolle einer Anwendung.
+            einfach und flexibel auf <code>Zend_Acl</code> aufbauen. Viele Situationen erfordern eine
+            interaktive Wartung der ACL und <code>Zend_Acl</code> stellt Methoden für das Einrichten
+            und Abfragen der Zugriffskontrolle einer Anwendung.
         </para>
 
         <para>
             Die Speicherung der ACL Daten ist deshalb die Aufgabe des Entwicklers, da sich die
             Anwendungsfälle für verschiedene Situationen erwartungsgemäß stark unterscheiden. Da
-            Zend_Acl serialisierbar ist, können ACL Objekte mit der PHP Funktion
+            <code>Zend_Acl</code> serialisierbar ist, können ACL Objekte mit der PHP Funktion
             <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> serialisiert
             werden und das Ergebnis kann überall gespeichert werden, wo es der Entwickler möchte,
             wie z.B. eine Datei, eine Datenbank oder ein Cache Mechanismus.
@@ -37,12 +37,12 @@
             wir an, dass ein bestimmter Zugriff erlaubt sei, aber nur zwischen 08:00 und 17:00 Uhr.
             Ein anderes Beispiel könnte sein, dass der Zugriff verboten wird, weil eine Anfrage von
             einer bestimmten IP Addresse kommt, die als Missbrauchsquelle markiert worden ist.
-            Zend_Acl bietet eine eingebaute Unterstützung für die Implementierung von Regeln, die
-            auf Bedingungen basieren, die der Entwickler benötigt.
+            <code>Zend_Acl</code> bietet eine eingebaute Unterstützung für die Implementierung von
+            Regeln, die auf Bedingungen basieren, die der Entwickler benötigt.
         </para>
 
         <para>
-            Zend_Acl bietet Unterstützung für bedingte Regel mit dem
+            <code>Zend_Acl</code> bietet Unterstützung für bedingte Regel mit dem
             <code>Zend_Acl_Assert_Interface</code>. Um das Regelbehauptungsinterface benutzen
             zu können, schreibt der Entwickler eine Klasse, welche die <code>assert()</code>
             Methode des Interfaces implementiert:

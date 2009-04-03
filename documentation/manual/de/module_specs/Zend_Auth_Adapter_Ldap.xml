@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13467 -->
+<!-- EN-Revision: 14610 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP Authentifizierung</title>
@@ -143,7 +143,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
         <para>
             Der <code>$options</code> Parameter wird benötigt und muß ein Array sein das ein oder
             mehrere Sets von Optionen enthält. Es ist zu beachten das es sich um
-            <emphasis>Array von Arrays</emphasis> von <link linkend="zend.ldap">Zend_Ldap</link>
+            <emphasis>Array von Arrays</emphasis> von <link linkend="zend.ldap"><code>Zend_Ldap</code></link>
             Optionen handelt. Selbst wenn nur ein einzelner LDAP Server verwendet wird, müssen die
             Optionen trotzdem in einem anderen Array sein.
         </para>
@@ -261,7 +261,7 @@ Array
         <title>Server Optionen</title>
 
         <para>
-            Jedes Set von Serveroptionen <emphasis>im Kontext von Zend_Auth_Adapter_Ldap</emphasis>
+            Jedes Set von Serveroptionen <emphasis>im Kontext von <code>Zend_Auth_Adapter_Ldap</code></emphasis>
             besteht aus den folgenden Optionen welche, großteils ungeändert, an
             <code>Zend_Ldap::setOptions()</code> übergeben werden:
 

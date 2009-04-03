@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14251 -->
+<!-- EN-Revision: 14610 -->
 <sect1 id="zend.auth.adapter.dbtable">
 
     <title>Datenbanktabellen Authentifizierung</title>
@@ -227,18 +227,18 @@ if ($result->isValid()) {
         <title>Forgeschrittene Verwendung durch Beispiele</title>
 
         <para>
-            Wärend der primäre Zweck von Zend_Auth (und konsequenter Weise
-            Zend_Auth_Adapter_DbTable) die <emphasis role="strong">Authentifizierung</emphasis> und
-            nicht die <emphasis role="strong">Authorisierung</emphasis> ist, gibt es ein paar
+            Wärend der primäre Zweck von <code>Zend_Auth</code> (und konsequenter Weise
+            <code>Zend_Auth_Adapter_DbTable</code>) die <emphasis role="strong">Authentifizierung</emphasis>
+            und nicht die <emphasis role="strong">Authorisierung</emphasis> ist, gibt es ein paar
             Instanzen und Probleme auf dem Weg welche Art besser passt. Abhängig davon wie man sich
             entscheidet ein Problem zu beschreiben, macht es manchmal Sinn, das was wie ein
             Authorisierungsproblem aussieht im Authentifizierungs-Adapter zu lösen.
         </para>
 
         <para>
-            Mit dieser Definition, hat Zend_Auth_Adapter_DbTable einige eingebaute Mechanismen die für
-            zusätzliche Checks wärend der Authentifizierungszeit angepasst werden können, um einige
-            übliche Benutzerprobleme zu lösen.
+            Mit dieser Definition, hat <code>Zend_Auth_Adapter_DbTable</code> einige eingebaute
+            Mechanismen die für zusätzliche Checks wärend der Authentifizierungszeit angepasst
+            werden können, um einige übliche Benutzerprobleme zu lösen.
         </para>
 
         <programlisting role="php"><![CDATA[
