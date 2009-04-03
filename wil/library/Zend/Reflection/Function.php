@@ -34,8 +34,14 @@ class Zend_Reflection_Function extends ReflectionFunction
 {
     protected $_factory;
     
-    function __construct($name, $factory) {
+    function __construct($name, $factory = null) {
+        
+        if (!isset($factory)) {
+            $factory = new Zend_Reflection_Factory();
+        }
+        
         $this->_factory = $factory;
+        
         parent::__construct($name); 
     }
     

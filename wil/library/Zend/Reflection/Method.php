@@ -33,8 +33,14 @@ require_once 'Zend/Reflection/Parameter.php';
 class Zend_Reflection_Method extends ReflectionMethod
 {
 
-    function __construct($class, $name, $factory) {
+    function __construct($class, $name, $factory = null) {
+        
+        if (!isset($factory)) {
+            $factory = new Zend_Reflection_Factory();
+        }
+        
         $this->_factory = $factory;
+        
         parent::__construct($class, $name);
     }
 

@@ -35,8 +35,14 @@ class Zend_Reflection_Parameter extends ReflectionParameter
      */
     protected $_isFromMethod = false;
     
-    function __construct($function, $parameter, $factory) {
+    function __construct($function, $parameter, $factory = null) {
+        
+        if (!isset($factory)) {
+            $factory = new Zend_Reflection_Factory();
+        }
+        
         $this->_factory = $factory;
+        
         parent::__construct($function, $parameter);
     }
     

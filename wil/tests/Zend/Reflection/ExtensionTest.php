@@ -39,6 +39,17 @@ require_once 'Zend/Reflection/Extension.php';
  */
 class Zend_Reflection_ExtensionTest extends PHPUnit_Framework_TestCase
 {
+    public function testConstructor() {
+        $factory = new Zend_Reflection_Factory();
+        $reflection1 = $factory->createExtension('Reflection');
+        $this->assertType('Zend_Reflection_Extension', $reflection1);
+
+        $reflection2 = new Zend_Reflection_Extension('Reflection');
+        $this->assertType('Zend_Reflection_Extension', $reflection2);
+        
+        // Make sure both instantiation methods return the same thing
+        $this->assertEquals($reflection1, $reflection2);
+    }
     
     public function testClassReturn()
     {

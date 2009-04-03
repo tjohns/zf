@@ -32,8 +32,14 @@ class Zend_Reflection_Property extends ReflectionProperty
     
     protected $_factory;
     
-    function __construct($class, $name, $factory) {
+    function __construct($class, $name, $factory = null) {
+        
+        if (!isset($factory)) {
+            $factory = new Zend_Reflection_Factory();
+        }
+        
         $this->_factory = $factory;
+        
         parent::__construct($class, $name);
     }
     // @todo implement line numbers in here

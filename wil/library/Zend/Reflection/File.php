@@ -92,10 +92,15 @@ class Zend_Reflection_File implements Reflector
      *
      * @param string $file
      */
-    public function __construct($file, $factory)
-    {
-        $fileName = $file;
+    public function __construct($file, $factory = null) {
+        
+        if (!isset($factory)) {
+            $factory = new Zend_Reflection_Factory();
+        }
+        
         $this->_factory = $factory;
+        
+        $fileName = $file;
         
         if (($fileRealpath = realpath($fileName)) === false) {
             $fileRealpath = self::findRealpathInIncludePath($file);

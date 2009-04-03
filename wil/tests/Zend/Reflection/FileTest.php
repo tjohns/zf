@@ -47,8 +47,14 @@ class Zend_Reflection_FileTest extends PHPUnit_Framework_TestCase
     {
         require_once 'Zend/Version.php';
         $factory = new Zend_Reflection_Factory(); 
-        $reflectionFile = $factory->createFile('Zend/Version.php');
-        $this->assertEquals(get_class($reflectionFile), 'Zend_Reflection_File');
+        $reflection1 = $factory->createFile('Zend/Version.php');
+        $this->assertType('Zend_Reflection_File', $reflection1);
+        
+        $reflection2 = new Zend_Reflection_File('Zend/Version.php');
+        $this->assertType('Zend_Reflection_File', $reflection2);
+        
+        // Make sure both instantiation methods return the same thing
+        $this->assertEquals($reflection1, $reflection2);
     }
     
     /**

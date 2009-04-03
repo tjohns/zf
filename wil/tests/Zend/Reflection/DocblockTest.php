@@ -56,6 +56,18 @@ class Zend_Reflection_DocblockTest extends PHPUnit_Framework_TestCase
         $this->_factory = new Zend_Reflection_Factory();
     }
     
+    public function testConstructor() {
+        $clazz = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');
+        $reflection1 = $this->_factory->createDocblock($clazz);
+        $this->assertType('Zend_Reflection_Docblock', $reflection1);
+
+        $reflection2 = new Zend_Reflection_Docblock($clazz);
+        $this->assertType('Zend_Reflection_Docblock', $reflection2);
+        
+        // Make sure both instantiation methods return the same thing
+        $this->assertEquals($reflection1, $reflection2);
+    }
+    
     public function testDocblockShortDescription()
     {
         $classReflection = $this->_factory->createClass('Zend_Reflection_TestSampleClass5');

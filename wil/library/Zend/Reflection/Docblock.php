@@ -93,8 +93,14 @@ class Zend_Reflection_Docblock implements Reflector
      *
      * @param Reflector|string $commentOrReflector
      */
-    public function __construct($commentOrReflector, $factory)
-    {
+    public function __construct($commentOrReflector, $factory = null) {
+        
+        if (!isset($factory)) {
+            $factory = new Zend_Reflection_Factory();
+        }
+        
+        $this->_factory = $factory;
+        
         if ($commentOrReflector instanceof Reflector) {
             $this->_reflector = $commentOrReflector;
             if (!method_exists($commentOrReflector, 'getDocComment')) {
@@ -122,8 +128,6 @@ class Zend_Reflection_Docblock implements Reflector
         
         $this->_docComment = $docComment;
         $this->_parse();
-        
-        $this->_factory = $factory;
     }
     
     /**

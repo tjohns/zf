@@ -53,6 +53,18 @@ class Zend_Reflection_MethodTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    public function testConstructor() {
+        $factory = new Zend_Reflection_Factory();
+        $reflection1 = $factory->createMethod('Zend_Reflection_TestSampleClass2', 'getProp1');
+        $this->assertType('Zend_Reflection_Method', $reflection1);
+
+        $reflection2 = new Zend_Reflection_Method('Zend_Reflection_TestSampleClass2', 'getProp1');
+        $this->assertType('Zend_Reflection_Method', $reflection2);
+        
+        // Make sure both instantiation methods return the same thing
+        $this->assertEquals($reflection1, $reflection2);
+    }
+    
     public function testDeclaringClassReturn()
     {
         $factory = new Zend_Reflection_Factory();

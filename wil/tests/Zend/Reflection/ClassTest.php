@@ -53,6 +53,18 @@ class Zend_Reflection_ClassTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    public function testConstructor() {
+        $factory = new Zend_Reflection_Factory();
+        $reflection1 = $factory->createClass('Zend_Reflection_TestSampleClass2');
+        $this->assertType('Zend_Reflection_Class', $reflection1);
+
+        $reflection2 = new Zend_Reflection_Class('Zend_Reflection_TestSampleClass2');
+        $this->assertType('Zend_Reflection_Class', $reflection2);
+        
+        // Make sure both instantiation methods return the same thing
+        $this->assertEquals($reflection1, $reflection2);
+    }
+
     public function testMethodReturns()
     {
         $factory = new Zend_Reflection_Factory();
