@@ -335,10 +335,11 @@ $viewRenderer =
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>setViewBasePathSpec($spec)</code> erlaubt die Änderung der Pfad Spezifikation die
-                    verwendet wird um den Basispfad herauszufinden zu dem das View Objekt hinzugefügt werden soll.
-                    Die aktuelle Spezifikation kann jederzeit durch Verwenden von <code>getViewBasePathSpec()</code>
-                    erhalten werden.
+                    <code>setViewBasePathSpec($spec)</code> erlaubt die Änderung der Pfad
+                    Spezifikation die verwendet wird um den Basispfad herauszufinden zu dem das
+                    View Objekt hinzugefügt werden soll. Die Standardspezifikation ist
+                    <code>:moduleDir/views</code>. Die aktuelle Spezifikation kann jederzeit
+                    durch Verwenden von <code>getViewBasePathSpec()</code> erhalten werden.
                 </para>
             </listitem>
 

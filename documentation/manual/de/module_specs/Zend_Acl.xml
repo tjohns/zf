@@ -134,10 +134,10 @@ echo $acl->isAllowed('guest', 'someResource') ? 'allowed' : 'denied';
             <para>
                 Wenn <code>Zend_Acl</code> fortfahren würde, die für weitere übergeordnete Rollen
                 definierten Regeln zu untersuchen, würde heraus gefunden werden, dass "guest" der
-                Zugriff auf "someResource" verboten ist. Diese Tatsache führt eine Mehrdeutigkeit
-                ein, weil nun "someUser" der Zugriff auf "someResource" sowohl verboten als auch
-                erlaubt ist, aufgrund der vererbten Regeln von verschiedenen übergeordnete Rollen,
-                die miteinander im Konflikt stehen.
+                Zugriff auf "<code>someResource</code>" verboten ist. Diese Tatsache führt eine
+                Mehrdeutigkeit ein, weil nun "someUser" der Zugriff auf "someResource" sowohl
+                verboten als auch erlaubt ist, aufgrund der vererbten Regeln von verschiedenen
+                übergeordnete Rollen, die miteinander im Konflikt stehen.
             </para>
             <para>
                 <code>Zend_Acl</code> löst diese Mehrdeutigkeit dadurch auf, dass eine Abfrage

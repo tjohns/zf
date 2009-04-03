@@ -12,7 +12,8 @@
             dann den Controller zu instanzieren und die Aktion dieses Controllers aufzurufen.
             Wenn kein Modul, kein Controller oder keine Aktion gefunden wurde, werden dafür
             Standardwerte verwendet. <code>Zend_Controller_Dispatcher_Standard</code> legt
-            <code>index</code> für beide als Standardwert fest, aber erlaubt dem Entwickler auch,
+            <code>index</code> für jede der Controller und Action Standardwerte fest und
+            <code>default</code> für den Standardwert des Moduls, erlaubt dem Entwickler aber auch,
             diese durch Verwendung der <code>setDefaultController()</code>,
             <code>setDefaultAction()</code> und <code>setDefaultModule()</code> Methoden zu
             verändern.

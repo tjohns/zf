@@ -120,8 +120,9 @@ $opts->setAliases(
             <code>$_SERVER['argv']</code> für die Analyse des Arrays von
             Kommandozeilen Argumenten. Alternativ kann das Array mit Argumenten
             als zweites Argument dem Constructor angegeben werden. Letztendlich
-            können zusätzliche Argumente zu den bereits in verwendung befindlichen
-            hinzugefügt werden, oder es kann das aktuelle Array von Argumenten
+            können zusätzliche Argumente zu den bereits in Verwendung befindlichen
+            hinzugefügt werden, durch Verwendung der <code>addArguments()</code> Methode,
+            oder es kann das aktuelle Array von Argumenten
             ersetzt werden mit Hilfe der <code>setArguments()</code> Methode.
             In beiden Fällen ist der Parameter für diese Methoden ein einfaches
             Array von Zeichenketten, und die letztere Methode substituiert das Array für
