@@ -175,8 +175,8 @@ if (isset($_GET['progress_key'])) {
         {
             document.getElementById('pg-percent').style.width = data.percent + '%';
 
-            document.getElementById('pg-text-1').innerHTML = data.timeRemaining + ' seconds remaining';
-            document.getElementById('pg-text-2').innerHTML = data.timeRemaining + ' seconds remaining';
+            document.getElementById('pg-text-1').innerHTML = data.text;
+            document.getElementById('pg-text-2').innerHTML = data.text;
         }
 
         function finish()
