@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14218 -->
+<!-- EN-Revision: 14632 -->
 <sect1 id="zend.cache.backends">
     <title><code>Zend_Cache</code> のバックエンド</title>
     <para>
@@ -219,6 +219,7 @@
                               'timeout' => (int) : memcached サーバのタイムアウト
                               'retry_interval' => (int) : memcached サーバの再試行間隔
                               'status' => (bool) : memcached サーバのステータス
+                              'failure_callback' => (callback) : memcached サーバのコールバック関数
                           </entry>
                       </row>
                       <row>
