@@ -10,6 +10,7 @@ require_once "PHPUnit/Framework/TestSuite.php";
 
 require_once 'Zend/Form/Element/Submit.php';
 require_once 'Zend/Translate.php';
+require_once 'Zend/Translate/Adapter/Array.php';
 
 /**
  * Test class for Zend_Form_Element_Submit
@@ -149,7 +150,38 @@ class Zend_Form_Element_SubmitTest extends PHPUnit_Framework_TestCase
         $this->element->setValue('foo');
         $this->assertTrue($this->element->isChecked());
     }
-
+    
+    /*
+     * Tests if title attribute (tooltip) is translated if the default decorators are loaded.
+     * These decorators should load the Tooltip decorator as the first decorator.
+     * @group ZF-6151
+     */
+    public function testTitleAttributeGetsTranslated()
+    {
+        $this->element->setAttrib('title', 'bar');
+        $translator = new Zend_Translate_Adapter_Array(array("bar" => "baz"), 'de');
+        Zend_Locale::setLocale('de');
+        $this->element->setTranslator($translator);
+        $html = $this->element->render(new Zend_View());
+        $this->assertContains('title', $html);
+        $this->assertContains('baz', $html);
+        $this->assertNotContains('bar', $html);
+    }
+    
+    public function testTitleAttributeDoesNotGetTranslatedIfTranslatorIsDisabled()
+    {
+        $this->element->setAttrib('title', 'bar');
+        $translator = new Zend_Translate_Adapter_Array(array("bar" => "baz"), 'de');
+        Zend_Locale::setLocale('de');
+        $this->element->setTranslator($translator);
+        // now disable translator and see if that works
+        $this->element->setDisableTranslator(true);
+        $html = $this->element->render(new Zend_View());
+        $this->assertContains('title', $html);
+        $this->assertContains('bar', $html);
+        $this->assertNotContains('baz', $html);       	
+    }
+    
     /**
      * Used by test methods susceptible to ZF-2794, marks a test as incomplete
      *
