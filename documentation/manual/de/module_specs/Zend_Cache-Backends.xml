@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14448 -->
+<!-- EN-Revision: 14635 -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
     <para>
@@ -195,7 +195,7 @@
                           <entry>
                               <code>
                                   array(array('host' => 'localhost','port' => 11211, 'persistent' => true, 'weight' => 1,
-                                  'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                                  'timeout' => 5, 'retry_interval' => 15, 'status' => true, 'failure_callback' => '' ))
                               </code>
                           </entry>
                           <entry>
@@ -207,7 +207,8 @@
                               'weight' => (int) : Das Gewicht des Memcached Servers,
                               'timeout' => (int) : Das Timeout des Memcached Servers,
                               'retry_interval' => (int) : Das Wiederholungsintervall des Memcached Servers,
-                              'status' => (bool) : Der Status des Memcached Servers
+                              'status' => (bool) : Der Status des Memcached Servers,
+                              'failure_callback' => (callback) : Der failure_callback des Memcached Servers
                           </entry>
                       </row>
                       <row>
