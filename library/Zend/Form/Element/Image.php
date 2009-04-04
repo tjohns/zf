@@ -65,7 +65,8 @@ class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator('Image')
+            $this->addDecorator('Tooltip')
+                 ->addDecorator('Image')
                  ->addDecorator('Errors')
                  ->addDecorator('HtmlTag', array('tag' => 'dd'))
                  ->addDecorator('Label', array('tag' => 'dt'));
@@ -126,4 +127,5 @@ class Zend_Form_Element_Image extends Zend_Form_Element_Xhtml
         $imageValue = $this->getImageValue();
         return ((null !== $imageValue) && ($this->getValue() == $imageValue));
     }
+    
 }

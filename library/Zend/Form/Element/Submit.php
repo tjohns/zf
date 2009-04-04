@@ -114,7 +114,8 @@ class Zend_Form_Element_Submit extends Zend_Form_Element_Xhtml
 
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
-            $this->addDecorator('ViewHelper')
+            $this->addDecorator('Tooltip')
+                 ->addDecorator('ViewHelper')
                  ->addDecorator('DtDdWrapper');
         }
     }
