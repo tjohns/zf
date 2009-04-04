@@ -49,6 +49,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     const DEFAULT_TIMEOUT = 1;
     const DEFAULT_RETRY_INTERVAL = 15;
     const DEFAULT_STATUS = true;
+    const DEFAULT_FAILURE_CALLBACK = '';
 
     /**
      * Log message
@@ -64,19 +65,23 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      * 'host' => (string) : the name of the memcached server
      * 'port' => (int) : the port of the memcached server
      * 'persistent' => (bool) : use or not persistent connections to this memcached server
-     * 'weight' => (int) : number of buckets to create for this server which in turn control its 
-     *                     probability of it being selected. The probability is relative to the total 
+     * 'weight' => (int) : number of buckets to create for this server which in turn control its
+     *                     probability of it being selected. The probability is relative to the total
      *                     weight of all servers.
-     * 'timeout' => (int) : value in seconds which will be used for connecting to the daemon. Think twice 
-     *                      before changing the default value of 1 second - you can lose all the 
-     *                      advantages of caching if your connection is too slow. 
-     * 'retry_interval' => (int) : controls how often a failed server will be retried, the default value 
-     *                             is 15 seconds. Setting this parameter to -1 disables automatic retry. 
+     * 'timeout' => (int) : value in seconds which will be used for connecting to the daemon. Think twice
+     *                      before changing the default value of 1 second - you can lose all the
+     *                      advantages of caching if your connection is too slow.
+     * 'retry_interval' => (int) : controls how often a failed server will be retried, the default value
+     *                             is 15 seconds. Setting this parameter to -1 disables automatic retry.
      * 'status' => (bool) : controls if the server should be flagged as online.
+     * 'failure_callback' => (callback) : Allows the user to specify a callback function to run upon
+     *                                    encountering an error. The callback is run before failover
+     *                                    is attempted. The function takes two parameters, the hostname
+     *                                    and port of the failed server.
      *
      * =====> (boolean) compression :
      * true if you want to use on-the-fly compression
-     * 
+     *
      * =====> (boolean) compatibility :
      * true if you use old memcache server or extension
      *
@@ -90,7 +95,8 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             'weight'  => self::DEFAULT_WEIGHT,
             'timeout' => self::DEFAULT_TIMEOUT,
             'retry_interval' => self::DEFAULT_RETRY_INTERVAL,
-            'status' => self::DEFAULT_STATUS
+            'status' => self::DEFAULT_STATUS,
+            'failure_callback' => self::DEFAULT_FAILURE_CALLBACK
         )),
         'compression' => false,
         'compatibility' => false,
@@ -144,7 +150,10 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
             if (!array_key_exists('status', $server)) {
                 $server['status'] = self::DEFAULT_STATUS;
             }
-			if ($this->_options['compatibility']) {
+            if (!array_key_exists('failure_callback', $server)) {
+                $server['failure_callback'] = self::DEFAULT_FAILURE_CALLBACK;
+            }
+            if ($this->_options['compatibility']) {
 				// No status for compatibility mode (#ZF-5887)
             	$this->_memcache->addServer($server['host'], $server['port'], $server['persistent'],
                                         $server['weight'], $server['timeout'],
@@ -152,7 +161,8 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
 			} else {
 				$this->_memcache->addServer($server['host'], $server['port'], $server['persistent'],
                                         $server['weight'], $server['timeout'],
-                                        $server['retry_interval'], $server['status']);
+                                        $server['retry_interval'],
+                                        $server['status'], $server['failure_callback']);
 			}
         }
     }
