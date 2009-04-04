@@ -202,7 +202,8 @@
                               'weight' => (int) :the weight of the memcached server,
                               'timeout' => (int) :the time out of the memcached server,
                               'retry_interval' => (int) :the retry interval of the memcached server,
-                              'status' => (bool) :the status of the memcached server
+                              'status' => (bool) :the status of the memcached server,
+                              'failure_callback' => (callback) : the failure_callback of the memcached server
                           </entry>
                       </row>
                       <row>
