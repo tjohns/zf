@@ -145,10 +145,11 @@ class Zend_Currency
             $format = Zend_Locale_Data::getContent($format, 'currencynumber');
         }
 
-        $symbols = Zend_Locale_Data::getList($locale, 'symbols');
-        $value   = Zend_Locale_Format::toNumber($value, array('locale'        => $locale,
-                                                              'number_format' => $format,
-                                                              'precision'     => $options['precision']));
+        $symbols  = Zend_Locale_Data::getList($locale, 'symbols');
+        $original = $value;
+        $value    = Zend_Locale_Format::toNumber($value, array('locale'        => $locale,
+                                                               'number_format' => $format,
+                                                               'precision'     => $options['precision']));
 
         if ($options['position'] !== self::STANDARD) {
             $value = str_replace('¤', '', $value);
@@ -176,7 +177,7 @@ class Zend_Currency
         } else {
             switch($options['display']) {
                 case self::USE_SYMBOL:
-                    $sign = $options['symbol'];
+                    $sign = $this->_extractPattern($options['symbol'], $original);
                     break;
 
                 case self::USE_SHORTNAME:
@@ -196,6 +197,44 @@ class Zend_Currency
 
         $value = str_replace('¤', $sign, $value);
         return $value;
+    }
+
+    /**
+     * Internal method to extract the currency pattern
+     * when a choice is given based on the given value
+     *
+     * @param  string $pattern
+     * @param  float|integer $value
+     * @return string
+     */
+    private function _extractPattern($pattern, $value)
+    {
+        if (strpos($pattern, '|') === false) {
+            return $pattern;
+        }
+
+        $patterns = explode('|', $pattern);
+        $token    = $pattern;
+        $value    = trim(str_replace('¤', '', $value));
+        krsort($patterns);
+        foreach($patterns as $content) {
+            if (strpos($content, '<') !== false) {
+                $check = iconv_substr($content, 0, iconv_strpos($content, '<'));
+                $token = iconv_substr($content, iconv_strpos($content, '<') + 1);
+                if ($check < $value) {
+                    return $token;
+                }
+            } else {
+                $check = iconv_substr($content, 0, iconv_strpos($content, '≤'));
+                $token = iconv_substr($content, iconv_strpos($content, '≤') + 1);
+                if ($check <= $value) {
+                    return $token;
+                }
+            }
+
+        }
+
+        return $token;
     }
 
     /**

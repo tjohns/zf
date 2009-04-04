@@ -302,6 +302,12 @@ class Zend_CurrencyTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Currency_Exception $e) {
             $this->assertContains("has to be numeric", $e->getMessage());
         }
+
+        $INR = new Zend_Currency('INR', 'de_AT');
+        $this->assertSame('Rs. 1,20', $INR->toCurrency(1.2));
+        $this->assertSame('Re. 1,00', $INR->toCurrency(1));
+        $this->assertSame('Rs. 0,00', $INR->toCurrency(0));
+        $this->assertSame('-Rs. 3,00', $INR->toCurrency(-3));
     }
 
     /**
