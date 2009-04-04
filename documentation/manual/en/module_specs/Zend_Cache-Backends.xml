@@ -191,7 +191,7 @@
                           <entry>
                             <code>
                               array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1,
-                              'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                              'timeout' => 5, 'retry_interval' => 15, 'status' => true, 'failure_callback' => '' ))
                             </code>
                           </entry>
                           <entry>
