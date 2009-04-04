@@ -208,13 +208,13 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             </itemizedlist>
 
             <para>
-                Das Routing geschieht genau einmal: Wenn <code>dispatch()</code> aufgerufen wird.
-                Es werden die Werte aus dem Anfrage-Objekt benutzt, die zum Zeitpunkt des Aufrufes von
-                <code>dispatch()</code> vorhanden waren.
-                Das Dispatchen geschieht in einer Schleife; eine Anfrage kann entweder melden, dass es mehrere
-                Aktionen gibt, die ausgeführt werden sollen, oder der Controller oder ein Plugin können das
-                Anfrage-Objekt zurücksetzen, um zu erzwingen, dass noch zusätzliche Aktionen ausgeführt werdne sollen.
-                Wenn alles erledigt ist, gibt der Front-Controller eine Antwort zurück.
+                Das Routing geschieht genau einmal, indem die Werte aus dem Anfrage-Objekt benutzt,
+                die zum Zeitpunkt des Aufrufes von <code>dispatch()</code> vorhanden waren. Das
+                Dispatchen geschieht in einer Schleife; eine Anfrage kann entweder melden, dass es
+                mehrere Aktionen gibt, die ausgeführt werden sollen, oder der Controller oder ein
+                Plugin können das Anfrage-Objekt zurücksetzen, um zu erzwingen, dass noch
+                zusätzliche Aktionen ausgeführt werden sollen. Wenn alles erledigt ist, gibt der
+                Front-Controller eine Antwort zurück.
             </para>
         </sect3>
 
@@ -284,10 +284,12 @@ Zend_Controller_Front::run('../application/controllers');
 
             <listitem>
                 <para>
-                    Mit <code>setRequest()</code> kann der Klassenname bzw. gleich ein Objekt an den Front-
-                    Controller übergeben werden, das während des Dispatch-Prozesses als Anfrage-Objekt verwendet wird.
-                    Wenn nur ein Klassenname angegeben wird, wird die Klasse automatisch geladen und instanziert.
-                    <code>getRequest()</code> gibt das aktuelle Anfrage-Objekt zurück.
+                    Mit <code>(set|get)Request()</code> kann
+                    <link linkend="zend.controller.request">die Request</link> Klasse oder das
+                    Objekt, das während des Dispatch-Prozesses verwendet wird und um das aktuelle
+                    Objekt zu erhalten. Wenn das Requestobjekt gesetzt wird, kann ein
+                    Request-Klassenname übergeben werden, und in diesem Fall wird die Methode die
+                    Klassendatei laden und Sie initialisieren.
                 </para>
             </listitem>
 
