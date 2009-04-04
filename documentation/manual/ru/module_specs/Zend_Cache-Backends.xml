@@ -196,7 +196,7 @@
                           <entry>
                             <code>
                               array(array('host' => 'localhost', 'port' => 11211, 'persistent' => true, 'weight' => 1,
-                              'timeout' => 5, 'retry_interval' => 15, 'status' => true ))
+                              'timeout' => 5, 'retry_interval' => 15, 'status' => true , 'failure_callback' => '' ))
                             </code>
                           </entry>
                           <entry>
@@ -209,7 +209,8 @@
                               'weight' => (int) : вес сервера memcached,
                               'timeout' => (int) : таймаут сервера memcached,
                               'retry_interval' => (int) : интервал между повторными попытками,
-                              'status' => (bool) : статус сервера memcached
+                              'status' => (bool) : статус сервера memcached,
+                              'failure_callback' => (callback) : callback сервера memcached
                           </entry>
                       </row>
                       <row>
