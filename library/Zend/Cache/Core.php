@@ -477,7 +477,18 @@ class Zend_Cache_Core
         if (!$this->_extendedBackend) {
             Zend_Cache::throwException('Current backend doesn\'t implement the Zend_Cache_Backend_ExtendedInterface, so this method is not available');
         }
-        return $this->_backend->getIds();
+        $array = $this->_backend->getIds();
+        if ((!isset($this->_options['cache_id_prefix'])) || ($this->_options['cache_id_prefix'] == '')) return $array;
+        // we need to remove cache_id_prefix from ids (see #ZF-6178)
+        $res = array();
+        while (list(,$id) = each($array)) {
+        	if (strpos($id, $this->_options['cache_id_prefix']) === 0) {
+        		$res[] = preg_replace("~^{$this->_options['cache_id_prefix']}~", '', $id);
+        	} else {
+        		$res[] = $id;
+        	}
+        }
+        return $res;
     }
 
     /**
