@@ -35,6 +35,8 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
  */
 require_once 'Zend/ProgressBar/Adapter/Console.php';
 
+require_once 'MockupStream.php';
+
 /**
  * @category   Zend
  * @package    Zend_ProgressBar
@@ -44,6 +46,17 @@ require_once 'Zend/ProgressBar/Adapter/Console.php';
  */
 class Zend_ProgressBar_Adapter_ConsoleTest extends PHPUnit_Framework_TestCase
 {
+
+    protected function setUp()
+    {
+        stream_wrapper_register("zendprogressbaradapterconsole", "Zend_ProgressBar_Adapter_Console_MockupStream");
+    }
+
+    protected function tearDown()
+    {
+        stream_wrapper_unregister('zendprogressbaradapterconsole');
+    }
+
     /**
      * Runs the test methods of this class.
      *
@@ -65,33 +78,33 @@ class Zend_ProgressBar_Adapter_ConsoleTest extends PHPUnit_Framework_TestCase
             $this->markTestSkipped('Not testable on non-windows systems');
         }
     }
-    
+
     public function testStandardOutputStream()
     {
         $adapter = new Zend_ProgressBar_Adapter_Console_Stub();
 
         $this->assertTrue(is_resource($adapter->getOutputStream()));
-        
+
         $metaData = stream_get_meta_data($adapter->getOutputStream());
         $this->assertEquals('php://stdout', $metaData['uri']);
     }
-    
+
     public function testManualStandardOutputStream()
     {
         $adapter = new Zend_ProgressBar_Adapter_Console_Stub(array('outputStream' => 'php://stdout'));
 
         $this->assertTrue(is_resource($adapter->getOutputStream()));
-        
+
         $metaData = stream_get_meta_data($adapter->getOutputStream());
         $this->assertEquals('php://stdout', $metaData['uri']);
     }
-    
+
     public function testManualErrorOutputStream()
     {
         $adapter = new Zend_ProgressBar_Adapter_Console_Stub(array('outputStream' => 'php://stderr'));
 
         $this->assertTrue(is_resource($adapter->getOutputStream()));
-        
+
         $metaData = stream_get_meta_data($adapter->getOutputStream());
         $this->assertEquals('php://stderr', $metaData['uri']);
     }
@@ -244,6 +257,90 @@ class Zend_ProgressBar_Adapter_ConsoleTest extends PHPUnit_Framework_TestCase
 
         $this->assertContains('foobar     [', $adapter->getLastOutput());
     }
+
+    public function testSetOutputStreamOpen() {
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $adapter->setOutputStream('zendprogressbaradapterconsole://test1');
+        $this->assertArrayHasKey('test1', Zend_ProgressBar_Adapter_Console_MockupStream::$tests);
+    }
+
+    public function testSetOutputStreamOpenFail() {
+        try {
+            $adapter = new Zend_ProgressBar_Adapter_Console();
+            $adapter->setOutputStream(null);
+            $this->fail('Expected Zend_ProgressBar_Adapter_Exception');
+        } catch (Zend_ProgressBar_Adapter_Exception $e) {
+        }
+    }
+
+    public function testSetOutputStreamReplaceStream() {
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $adapter->setOutputStream('zendprogressbaradapterconsole://test2');
+        $this->assertArrayHasKey('test2', Zend_ProgressBar_Adapter_Console_MockupStream::$tests);
+        $adapter->setOutputStream('zendprogressbaradapterconsole://test3');
+        $this->assertArrayHasKey('test3', Zend_ProgressBar_Adapter_Console_MockupStream::$tests);
+        $this->assertArrayNotHasKey('test2', Zend_ProgressBar_Adapter_Console_MockupStream::$tests);
+    }
+
+    public function testgetOutputStream() {
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $adapter->setOutputStream('zendprogressbaradapterconsole://test4');
+        $resource = $adapter->getOutputStream();
+        fwrite($resource, 'Hello Word!');
+        $this->assertEquals('Hello Word!', Zend_ProgressBar_Adapter_Console_MockupStream::$tests['test4']);
+    }
+
+    public function testgetOutputStreamReturnigStdout() {
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $resource = $adapter->getOutputStream();
+        $this->assertTrue(is_resource($resource));
+    }
+
+    public function testFinishEol() {
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $adapter->setOutputStream('zendprogressbaradapterconsole://test5');
+        $adapter->finish();
+        $this->assertEquals(PHP_EOL, Zend_ProgressBar_Adapter_Console_MockupStream::$tests['test5']);
+    }
+
+    public function testFinishNone() {
+        $adapter = new Zend_ProgressBar_Adapter_Console();
+        $adapter->setOutputStream('zendprogressbaradapterconsole://test7');
+        $adapter->setFinishAction(Zend_ProgressBar_Adapter_Console::FINISH_ACTION_NONE);
+        $adapter->finish();
+        $this->assertEquals('', Zend_ProgressBar_Adapter_Console_MockupStream::$tests['test7']);
+    }
+
+    public function testSetBarLeftChar() {
+        try {
+            $adapter = new Zend_ProgressBar_Adapter_Console();
+            $adapter->setBarLeftChar(null);
+            $this->fail('Expected Zend_ProgressBar_Adapter_Exception');
+        } catch (Zend_ProgressBar_Adapter_Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Character may not be empty');
+        }
+    }
+
+    public function testSetBarRightChar() {
+        try {
+            $adapter = new Zend_ProgressBar_Adapter_Console();
+            $adapter->setBarRightChar(null);
+            $this->fail('Expected Zend_ProgressBar_Adapter_Exception');
+        } catch (Zend_ProgressBar_Adapter_Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Character may not be empty');
+        }
+    }
+
+    public function testSetInvalidFinishAction() {
+        try {
+            $adapter = new Zend_ProgressBar_Adapter_Console();
+            $adapter->setFinishAction('CUSTOM_FINISH_ACTION');
+            $this->fail('Expected Zend_ProgressBar_Adapter_Exception');
+        } catch (Zend_ProgressBar_Adapter_Exception $e) {
+            $this->assertEquals($e->getMessage(), 'Invalid finish action specified');
+        }
+    }
+
 }
 
 class Zend_ProgressBar_Adapter_Console_Stub extends Zend_ProgressBar_Adapter_Console
