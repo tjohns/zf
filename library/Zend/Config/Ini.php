@@ -264,7 +264,12 @@ class Zend_Config_Ini extends Zend_Config
             $pieces = explode($this->_nestSeparator, $key, 2);
             if (strlen($pieces[0]) && strlen($pieces[1])) {
                 if (!isset($config[$pieces[0]])) {
-                    $config[$pieces[0]] = array();
+                    if ($pieces[0] === '0' && !empty($config)) {
+                        // convert the current values in $config into an array
+                        $config = array($pieces[0] => $config);
+                    } else {
+                        $config[$pieces[0]] = array();
+                    }
                 } elseif (!is_array($config[$pieces[0]])) {
                     /**
                      * @see Zend_Config_Exception

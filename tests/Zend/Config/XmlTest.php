@@ -285,17 +285,19 @@ EOT;
         <receiver>
                 <mail>user1@company.com</mail>
                 <name>User Name</name>
+                <html>1</html>
         </receiver>
 </rec>
 <dev extends="rec">
         <receiver mail="nice.guy@company.com" name="Nice Guy" />
-        <receiver mail="fred@company.com"/>
+        <receiver mail="fred@company.com" html="2" />
 </dev>
 </config>
 EOT;
 
         $config = new Zend_Config_Xml($string, 'dev');
         $this->assertEquals('nice.guy@company.com', $config->receiver->{0}->mail);
+        $this->assertEquals('1', $config->receiver->{0}->html);
         $this->assertNull($config->receiver->mail);
     }
 }

@@ -248,7 +248,6 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $filename = dirname(__FILE__) . '/_files/zf2843.ini';
         $config = new Zend_Config_Ini($filename, null, array('nestSeparator' => '.'));
         
-        
         $this->assertEquals('123', $config->abc);
         $this->assertEquals('jkl', $config->ghi);
     }
@@ -262,5 +261,18 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             $this->assertContains('Error parsing', $expected->getMessage());
         }
         
+    }
+
+    /*
+     * @group ZF-5800
+     *
+     */
+    public function testArraysOfKeysCreatedUsingAttributesAndKeys()
+    {
+        $filename = dirname(__FILE__) . '/_files/zf5800.ini';
+        $config = new Zend_Config_Ini($filename, 'dev');
+        $this->assertEquals('nice.guy@company.com', $config->receiver->{0}->mail);
+        $this->assertEquals('1', $config->receiver->{0}->html);
+        $this->assertNull($config->receiver->mail);
     }
 }
