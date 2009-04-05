@@ -271,4 +271,31 @@ EOT;
         $this->assertEquals('staging', $config->hostname);
 
     }
+
+    /*
+     * @group ZF-5800
+     * 
+     */
+    public function testArraysOfKeysCreatedUsingAttributesAndKeys()
+    {
+        $string = <<<EOT
+<?xml version="1.0"?>
+<config>
+<rec>
+        <receiver>
+                <mail>user1@company.com</mail>
+                <name>User Name</name>
+        </receiver>
+</rec>
+<dev extends="rec">
+        <receiver mail="nice.guy@company.com" name="Nice Guy" />
+        <receiver mail="fred@company.com"/>
+</dev>
+</config>
+EOT;
+
+        $config = new Zend_Config_Xml($string, 'dev');
+        $this->assertEquals('nice.guy@company.com', $config->receiver->{0}->mail);
+        $this->assertNull($config->receiver->mail);
+    }
 }

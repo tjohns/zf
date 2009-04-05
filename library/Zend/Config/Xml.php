@@ -245,7 +245,11 @@ class Zend_Config_Xml extends Zend_Config
                 if (isset($firstArray[$key])) {
                     $firstArray[$key] = $this->_arrayMergeRecursive($firstArray[$key], $value);
                 } else {
-                    $firstArray[$key] = $value;
+                    if($key === 0) {
+                        $firstArray= array(0=>$this->_arrayMergeRecursive($firstArray, $value));
+                    } else {
+                        $firstArray[$key] = $value;
+                    }
                 }
             }
         } else {
