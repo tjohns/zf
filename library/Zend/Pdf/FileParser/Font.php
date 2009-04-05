@@ -203,7 +203,9 @@ abstract class Zend_Pdf_FileParser_Font extends Zend_Pdf_FileParser
             $message = array_shift($args);
             $message = vsprintf($message, $args);
         }
-        Zend_Log::log($message, Zend_Log::LEVEL_DEBUG, 'ZF');
+
+        $logger = new Zend_Log();
+        $logger->log($message, Zend_Log::DEBUG);
     }
 
 }
