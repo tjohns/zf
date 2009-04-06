@@ -1,0 +1,117 @@
+<sect1 id="performance.localization">
+    <title>国際化(i18n)と地域化(l10n)</title>
+
+    <para>
+        Internationalizing and localizing a site are fantastic ways to expand
+        your audience and ensure that all visitors can get to the information
+        they need. However, it often comes with a performance penalty. Below
+        are some strategies you can employ to reduce the overhead of i18n and
+        l10n.
+    </para>
+
+    <sect2 id="performance.localization.translationadapter">
+        <title>どの翻訳アダプタを使うべきですか？</title>
+
+        <para>
+            Not all translation adapters are made equal. Some have more
+            features than others, and some perform better than others.
+            Additionally, you may have business requirements that force you to
+            use a particular adapter. However, if you have a choice, which
+            adapters are fastest?
+        </para>
+
+        <sect3 id="performance.localization.translationadapter.fastest">
+            <title>最速にするためにXML以外の翻訳アダプタを使う</title>
+
+            <para>
+                Zend Framework ships with a variety of translation adapters.
+                Fully half of them utilize an XML format, incurring memory and
+                performance overhead. Fortunately, there are several adapters
+                that utilize other formats that can be parsed much more
+                quickly. In order of speed, from fastest to slowest, they are:
+            </para>
+
+            <itemizedlist>
+                <listitem><para>
+                    <emphasis>Array</emphasis>: this is the fastest, as it is,
+                    by definition, parsed into a native PHP format immediately
+                    on inclusion.
+                </para></listitem>
+
+                <listitem><para>
+                    <emphasis>CSV</emphasis>: uses <code>fgetcsv()</code> to
+                    parse a CSV file and transform it into a native PHP format.
+                </para></listitem>
+
+                <listitem><para>
+                    <emphasis>INI</emphasis>: uses
+                    <code>parse_ini_file()</code> to parse an INI file and
+                    transform it into a native PHP format. This and the CSV
+                    adapter are roughly equivalent performance-wise.
+                </para></listitem>
+
+                <listitem><para>
+                    <emphasis>Gettext</emphasis>: the Zend Framework gettext
+                    adapter does <emphasis>not</emphasis> use the gettext
+                    extension as it is not thread safe and does not allow
+                    specifying more than one locale per server. As a result, it
+                    is slower than using the gettext extension directly, but,
+                    because the gettext format is binary, it's faster to parse
+                    than XML.
+                </para></listitem>
+            </itemizedlist>
+
+            <para>
+                もしあなたの目的のひとつが高い性能なら、上記のアダプタのうちの
+                ひとつを利用することを提案します。
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2 id="performance.localization.cache">
+        <title>どのようにしたら翻訳や地域化をもっと速くできますか？</title>
+
+        <para>
+            Maybe, for business reasons, you're limited to an XML-based
+            translation adapter. Or perhaps you'd like to speed things up even
+            more. Or perhaps you want to make l10n operations faster. How can
+            you do this?
+        </para>
+
+        <sect3 id="performance.localization.cache.usage">
+            <title>翻訳および地域化のキャッシュを使う</title>
+
+            <para>
+                Both <code>Zend_Translate</code> and <code>Zend_Locale</code>
+                implement caching functionality that can greatly affect
+                performance. In the case of each, the major bottleneck is
+                typically reading the files, not the actual lookups; using a
+                cache eliminates the need to read the translation and/or
+                localization files.
+            </para>
+
+            <para>
+                文字列の翻訳および地域化のキャッシュについて下記を参考に出来ます。:
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <link linkend="zend.translate.adapter.caching"><code>Zend_Translate</code>
+                            アダプタキャッシング</link>
+                    </para>
+                </listitem>
+
+                <listitem>
+                    <para>
+                        <link linkend="zend.locale.cache"><code>Zend_Locale</code>
+                            キャッシング</link>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </sect3>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
