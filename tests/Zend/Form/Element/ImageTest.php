@@ -135,7 +135,7 @@ class Zend_Form_Element_ImageTest extends PHPUnit_Framework_TestCase
         $this->element->setValue('bar');
         $this->assertFalse($this->element->isChecked());
     }
-    
+
     /*
      * Tests if title attribute (tooltip) is translated if the default decorators are loaded.
      * These decorators should load the Tooltip decorator as the first decorator.
@@ -145,26 +145,24 @@ class Zend_Form_Element_ImageTest extends PHPUnit_Framework_TestCase
     {
         $this->element->setAttrib('title', 'bar');
         $translator = new Zend_Translate_Adapter_Array(array("bar" => "baz"), 'de');
-        Zend_Locale::setLocale('de');
         $this->element->setTranslator($translator);
         $html = $this->element->render(new Zend_View());
         $this->assertContains('title', $html);
         $this->assertContains('baz', $html);
         $this->assertNotContains('bar', $html);
     }
-    
+
     public function testTitleAttributeDoesNotGetTranslatedIfTranslatorIsDisabled()
     {
         $this->element->setAttrib('title', 'bar');
         $translator = new Zend_Translate_Adapter_Array(array("bar" => "baz"), 'de');
-        Zend_Locale::setLocale('de');
         $this->element->setTranslator($translator);
         // now disable translator and see if that works
         $this->element->setDisableTranslator(true);
         $html = $this->element->render(new Zend_View());
         $this->assertContains('title', $html);
         $this->assertContains('bar', $html);
-        $this->assertNotContains('baz', $html);         
+        $this->assertNotContains('baz', $html);
     }
 
     /**
