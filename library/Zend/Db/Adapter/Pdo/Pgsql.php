@@ -80,10 +80,14 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      */
     protected function _connect()
     {
+        if ($this->_connection) {
+            return;
+        }
+
     	parent::_connect();
 
         if (!empty($this->_config['charset'])) {
-            $sql = 'SET NAMES ' . $this->_quote($this->_config['charset']);
+            $sql = 'SET NAMES ' . $this->_config['charset'];
             $this->_connection->exec($sql);
         }
     }

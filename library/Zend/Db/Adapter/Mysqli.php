@@ -337,7 +337,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
         }
 
         if (!empty($this->_config['charset'])) {
-            mysqli_set_charset($this->_config['charset'], $this->_connection);
+            mysqli_set_charset($this->_connection, $this->_config['charset']);
         }
     }
 
