@@ -478,7 +478,9 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
         if (is_array($primaryKey)) {
             $newPrimaryKey = $primaryKey;
         } else {
-            $newPrimaryKey = array(current((array) $this->_primary) => $primaryKey);
+        	//ZF-6167 Use tempPrimaryKey temporary to avoid that zend encoding fails.
+            $tempPrimaryKey = (array) $this->_primary;
+        	$newPrimaryKey = array(current($tempPrimaryKey) => $primaryKey);
         }
 
         /**
