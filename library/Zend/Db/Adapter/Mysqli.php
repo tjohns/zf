@@ -335,6 +335,10 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             require_once 'Zend/Db/Adapter/Mysqli/Exception.php';
             throw new Zend_Db_Adapter_Mysqli_Exception(mysqli_connect_error());
         }
+
+        if (!empty($this->_config['charset'])) {
+            mysqli_set_charset($this->_config['charset'], $this->_connection);
+        }
     }
 
     /**

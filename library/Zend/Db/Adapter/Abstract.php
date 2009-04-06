@@ -131,19 +131,19 @@ abstract class Zend_Db_Adapter_Abstract
         Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE
     );
 
-     /** Weither or not that object can get serialized
-      *
-      * @var bool
-      */
-     protected $_allowSerialization = true;
+    /** Weither or not that object can get serialized
+     *
+     * @var bool
+     */
+    protected $_allowSerialization = true;
 
-     /**
-      * Weither or not the database should be reconnected
-      * to that adapter when waking up
-      *
-      * @var bool
-      */
-     protected $_autoReconnectOnUnserialize = false;
+    /**
+     * Weither or not the database should be reconnected
+     * to that adapter when waking up
+     *
+     * @var bool
+     */
+    protected $_autoReconnectOnUnserialize = false;
 
     /**
      * Constructor.
@@ -211,9 +211,15 @@ abstract class Zend_Db_Adapter_Abstract
                 }
             }
         }
-        $this->_config  = array_merge($this->_config, $config);
+        
+        if (!isset($config['charset'])) {
+            $config['charset'] = null;
+        }
+        
+        $this->_config = array_merge($this->_config, $config);
         $this->_config['options'] = $options;
         $this->_config['driver_options'] = $driverOptions;
+        
 
         // obtain the case setting, if there is one
         if (array_key_exists(Zend_Db::CASE_FOLDING, $options)) {

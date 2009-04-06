@@ -72,6 +72,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         unset($dsn['username']);
         unset($dsn['password']);
         unset($dsn['options']);
+        unset($dsn['charset']);
         unset($dsn['driver_options']);
 
         // use all remaining parts in the DSN

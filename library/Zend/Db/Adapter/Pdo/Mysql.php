@@ -77,6 +77,22 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
     );
 
     /**
+     * Creates a PDO object and connects to the database.
+     *
+     * @return void
+     * @throws Zend_Db_Adapter_Exception
+     */
+    protected function _connect()
+    {
+        if (!empty($this->_config['charset'])) {
+            $initCommand = 'SET NAMES ' . $this->_quote($this->_config['charset']);
+            $this->_config['driver_options'][PDO::MYSQL_ATTR_INIT_COMMAND] = $initCommand;
+        }
+
+        parent::_connect();
+    }
+
+    /**
      * @return string
      */
     public function getQuoteIdentifierSymbol()

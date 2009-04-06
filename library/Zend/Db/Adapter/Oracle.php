@@ -125,7 +125,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
         $this->_connection = @oci_connect(
                 $this->_config['username'],
                 $this->_config['password'],
-                $this->_config['dbname']);
+                $this->_config['dbname'],
+                $this->_config['charset']);
 
         // check the connection
         if (!$this->_connection) {
