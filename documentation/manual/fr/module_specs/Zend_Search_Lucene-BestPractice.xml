@@ -492,32 +492,37 @@ $hits = $index->find($queryStr);
     </sect2>
 
     <sect2 id="zend.search.lucene.best-practice.maintenance">
-        <title>Index maintenance</title>
+        <title>Maintenance de l'index</title>
 
         <para>
-            It should be clear that <code>Zend_Search_Lucene</code> as well as any other Lucene implementation does not comprise a "database".
+            Il devrait être clair que <code>Zend_Search_Lucene</code> comme toute autre implémentation de Lucene ne
+            comporte pas de "base de données".
         </para>
 
         <para>
-            Indexes should not be used for data storage. They do not provide partial backup/restore functionality, journaling, logging, transactions
-            and many other features associated with database management systems.
+            Les index ne devrait pas être utilisés pour du stockage de données. Ils ne fournissent pas de fonctionnalités
+            de backup/restauration partiel, journalisation, logs, transactions et beaucoup d'autres fonctionnalités
+            assimilées aux systèmes de gestion de bases de données.
         </para>
 
         <para>
-            Nevertheless, <code>Zend_Search_Lucene</code> attempts to keep indexes in a consistent state at all times.
+            Cependant, <code>Zend_Search_Lucene</code> tente de garder ses index dans un état constant en tout temps.
         </para>
 
         <para>
-            Index backup and restoration should be performed by copying the contents of the index folder.
+            Le backup et la restauration d'un index devrait être effectué en copiant le contenu du
+            répertoire de l'index.
         </para>
 
         <para>
-            If index corruption occurs for any reason, the corrupted index should be restored or completely rebuilt.
+            Si pour une raison quelconque, un index devait être corrompu, il devrait être restauré ou
+            complètement reconstruit.
         </para>
 
         <para>
-            So it's a good idea to backup large indexes and store changelogs to perform manual restoration and roll-forward operations
-            if necessary. This practice dramatically reduces index restoration time.
+            C'est donc une bonne idée de faire des backups des gros index et de stocker les logs de modifications
+            pour pouvoir effectuer des restaurations manuelles et des opérations de "roll-forward" si nécessaire.
+            Cette pratique réduit considérablement le temps de restauration.
         </para>
 
     </sect2>
