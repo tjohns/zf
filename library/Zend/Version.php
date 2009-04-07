@@ -32,7 +32,7 @@ final class Zend_Version
     /**
      * Zend Framework version identification - see compareVersion()
      */
-    const VERSION = '1.8.0PR';
+    const VERSION = '1.8.0alpha';
 
     /**
      * Compare the specified Zend Framework version string $version
