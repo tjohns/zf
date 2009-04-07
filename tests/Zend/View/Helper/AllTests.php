@@ -36,6 +36,7 @@ require_once 'Zend/View/Helper/HtmlQuicktimeTest.php';
 require_once 'Zend/View/Helper/InlineScriptTest.php';
 require_once 'Zend/View/Helper/JsonTest.php';
 require_once 'Zend/View/Helper/LayoutTest.php';
+require_once 'Zend/View/Helper/Navigation/AllTests.php';
 require_once 'Zend/View/Helper/PaginationControlTest.php';
 require_once 'Zend/View/Helper/PartialTest.php';
 require_once 'Zend/View/Helper/PartialLoopTest.php';
@@ -43,6 +44,7 @@ require_once 'Zend/View/Helper/PlaceholderTest.php';
 require_once 'Zend/View/Helper/Placeholder/ContainerTest.php';
 require_once 'Zend/View/Helper/Placeholder/RegistryTest.php';
 require_once 'Zend/View/Helper/Placeholder/StandaloneContainerTest.php';
+require_once 'Zend/View/Helper/ServerUrlTest.php';
 require_once 'Zend/View/Helper/TranslateTest.php';
 require_once 'Zend/View/Helper/UrlTest.php';
 
@@ -97,6 +99,7 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_InlineScriptTest');
         $suite->addTestSuite('Zend_View_Helper_JsonTest');
         $suite->addTestSuite('Zend_View_Helper_LayoutTest');
+        $suite->addTest(Zend_View_Helper_Navigation_AllTests::suite());
         $suite->addTestSuite('Zend_View_Helper_PaginationControlTest');
         $suite->addTestSuite('Zend_View_Helper_PartialTest');
         $suite->addTestSuite('Zend_View_Helper_PartialLoopTest');
@@ -104,6 +107,7 @@ class Zend_View_Helper_AllTests
         $suite->addTestSuite('Zend_View_Helper_Placeholder_ContainerTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_RegistryTest');
         $suite->addTestSuite('Zend_View_Helper_Placeholder_StandaloneContainerTest');
+        $suite->addTestSuite('Zend_View_Helper_ServerUrlTest');
         $suite->addTestSuite('Zend_View_Helper_TranslateTest');
         $suite->addTestSuite('Zend_View_Helper_UrlTest');
         

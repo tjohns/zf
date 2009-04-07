@@ -365,6 +365,7 @@ echo $this->formCheckbox('foo',
         <xi:include href="Zend_View-Helpers-HtmlObject.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
         <xi:include href="Zend_View-Helpers-Json.xml" />
+        <xi:include href="Zend_View-Helpers-Navigation.xml" />
         <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 

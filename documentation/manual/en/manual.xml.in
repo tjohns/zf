@@ -343,6 +343,13 @@
         <xi:include href="module_specs/Zend_Mime_Part.xml" />
     </chapter>
 
+    <chapter id="zend.navigation">
+        <title>Zend_Navigation</title>
+        <xi:include href="module_specs/Zend_Navigation-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Navigation-Pages.xml" />
+        <xi:include href="module_specs/Zend_Navigation-Containers.xml" />
+    </chapter>
+
     <chapter id="zend.openid">
         <title>Zend_OpenId</title>
         <xi:include href="module_specs/Zend_OpenId-Introduction.xml" />
