@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.available-resources.frontcontroller">
     <title>Zend_Application_Resource_Frontcontroller</title>
-    
+
     <para>
         Probably the most common resource you will load with
         <code>Zend_Application</code> will be the Front Controller resource,
@@ -68,7 +68,7 @@
 
         <listitem><para>
             <code>params</code>: array of key/value pairs to register with the
-            front controller. 
+            front controller.
         </para></listitem>
     </itemizedlist>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.core-functionality.bootstrap-base">
     <title>Zend_Application_Bootstrap_Base</title>
-    
+
     <para>
         <code>Zend_Application_Bootstrap_Base</code> is an abstract class which
         provides the base functionallity of a common bootstrap. It implements
@@ -45,7 +45,7 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
-                            Array of options to set. 
+                            Array of options to set.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.available-resources.db">
     <title>Zend_Application_Resource_Db</title>
-    
+
     <para>
         <code>Zend_Application_Resource_Db</code> will initialize a
         <code>Zend_Db</code> adapter based on the options passed to it. By

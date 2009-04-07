@@ -65,7 +65,7 @@
         </para>
 
         <para>
-            The<code>Zend_Soap_AutoDiscover</code> class also supports datatypes mapping from PHP to <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD types</ulink>. 
+            The<code>Zend_Soap_AutoDiscover</code> class also supports datatypes mapping from PHP to <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD types</ulink>.
         </para>
 
 

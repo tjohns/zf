@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.available-resources.modules">
     <title>Zend_Application_Resource_Modules</title>
-    
+
     <para>
         <code>Zend_Application_Resource_Modules</code> is used to initialize
         your application modules. If your module has a

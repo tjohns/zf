@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.core-functionality.resource-iresource">
     <title>Zend_Application_Resource_IResource</title>
-    
+
     <para>
         <code>Zend_Application_Resource_IResource</code> is an interface for
         plugin resources used with bootstrap classes implementing

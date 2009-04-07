@@ -90,7 +90,7 @@ abstract class Zend_CodeGenerator_Php_Abstract extends Zend_CodeGenerator_Abstra
             </para>
 
             <programlisting role="php"><![CDATA[
-abstract class Zend_CodeGenerator_Php_Member_Abstract 
+abstract class Zend_CodeGenerator_Php_Member_Abstract
     extends Zend_CodeGenerator_Php_Abstract
 {
     public function setAbstract($isAbstract)
@@ -250,7 +250,7 @@ class Zend_CodeGenerator_Php_Docblock extends Zend_CodeGenerator_Php_Abstract
             </para>
 
             <programlisting role="php"><![CDATA[
-class Zend_CodeGenerator_Php_Docblock_Tag 
+class Zend_CodeGenerator_Php_Docblock_Tag
     extends Zend_CodeGenerator_Php_Abstract
 {
     public static function fromReflection(Zend_Reflection_Docblock_Tag $reflectionTag)
@@ -350,20 +350,20 @@ class Zend_CodeGenerator_Php_Docblock_Tag_Param
 class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
 {
     public static function fromReflectedFilePath(
-        $filePath, 
-        $usePreviousCodeGeneratorIfItExists = true, 
+        $filePath,
+        $usePreviousCodeGeneratorIfItExists = true,
         $includeIfNotAlreadyIncluded = true)
     public static function fromReflection(Zend_Reflection_File $reflectionFile)
-    public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock) 
-    public function getDocblock() 
+    public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock)
+    public function getDocblock()
     public function setRequiredFiles($requiredFiles)
-    public function getRequiredFiles() 
-    public function setClasses(Array $classes) 
+    public function getRequiredFiles()
+    public function setClasses(Array $classes)
     public function getClass($name = null)
     public function setClass($class)
     public function setFilename($filename)
     public function getFilename()
-    public function getClasses() 
+    public function getClasses()
     public function setBody($body)
     public function getBody()
     public function isSourceDirty()
@@ -485,7 +485,7 @@ class Zend_CodeGenerator_Php_Parameter extends Zend_CodeGenerator_Php_Abstract
             </para>
 
             <programlisting role="php"><![CDATA[
-class Zend_CodeGenerator_Php_Property 
+class Zend_CodeGenerator_Php_Property
     extends Zend_CodeGenerator_Php_Member_Abstract
 {
     public static function fromReflection(Zend_Reflection_Property $reflectionProperty) {

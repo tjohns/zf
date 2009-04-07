@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.available-resources.view">
     <title>Zend_Application_Resource_View</title>
-    
+
     <para>
         <code>Zend_Application_Resource_View</code> can be used to configure
         a <code>Zend_View</code> instance. Configuration options are per <link
@@ -10,7 +10,7 @@
     </para>
 
     <para>
-        Once done configuring the view instance, it creates an instance of 
+        Once done configuring the view instance, it creates an instance of
         <code>Zend_Controller_Action_Helper_ViewRenderer</code> and registers
         the ViewRenderer with <code>Zend_Controller_Action_HelperBroker</code>
         -- from which you may retrieve it later.
@@ -21,7 +21,7 @@
 
         <para>
             Below is a sample INI snippet showing how to configure the view
-            resource. 
+            resource.
         </para>
 
         <programlisting role="ini"><![CDATA[

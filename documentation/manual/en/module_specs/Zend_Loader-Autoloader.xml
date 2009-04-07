@@ -142,7 +142,7 @@ interface Zend_Loader_Autoloader_Interface
     public function autoload($class);
 }
 ]]></programlisting>
-        
+
         <para>
             When using this interface, you can simply pass a class instance to
             <code>Zend_Loader_Autoloader</code>'s <code>pushAutoloader()</code>

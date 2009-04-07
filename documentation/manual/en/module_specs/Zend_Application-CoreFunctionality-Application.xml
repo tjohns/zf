@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.core-functionality.application">
     <title>Zend_Application</title>
-    
+
     <para>
         <code>Zend_Application</code> provides the base functionality of the
         component, and the entry point to your Zend Framework application. It's
@@ -63,7 +63,7 @@
                                 </para></listitem>
 
                                 <listitem><para>
-                                    <emphasis>Zend_Config</emphasis>: 
+                                    <emphasis>Zend_Config</emphasis>:
                                     configuration object instance.
                                 </para></listitem>
                             </itemizedlist>
@@ -104,7 +104,7 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
-                            An array of application options. 
+                            An array of application options.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
@@ -114,7 +114,7 @@
                         to those methods. As an example, the option
                         "phpSettings" will then be passed to
                         <code>setPhpSettings()</code>. (Option names are
-                        case insensitive.)                        
+                        case insensitive.)
                     </para></entry>
                 </row>
 
@@ -193,12 +193,12 @@
                         <listitem><para>
                             <code>$namespaces</code>: <emphasis>required</emphasis>.
                             Array of strings representing the namespaces to
-                            register with the <code>Zend_Loader_Autoloader</code> 
+                            register with the <code>Zend_Loader_Autoloader</code>
                             instance.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Register namespaces with the <code>Zend_Loader_Autoloader</code> 
+                        Register namespaces with the <code>Zend_Loader_Autoloader</code>
                         instance.
                     </para></entry>
                 </row>

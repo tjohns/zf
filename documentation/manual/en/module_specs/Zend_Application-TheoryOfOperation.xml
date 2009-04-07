@@ -2,7 +2,7 @@
 <sect1 id="zend.application.theory-of-operation">
     <title>Theory of Operation</title>
 
-    <para>        
+    <para>
         Getting an MVC application configured and ready to dispatch has
         required an increasing amount of code as more features become
         available: setting up the database, configuring your view and view
@@ -17,7 +17,7 @@
         are initializations that are environment specific – you may not need
         the MVC for a cronjob, or just the DB layer for a service script.
     </para>
-    
+
     <para>
         <code>Zend_Application</code> aims to make this easier and to
         promote reuse by encapsulating bootstrapping into OOP paradigms.
@@ -26,7 +26,7 @@
     <para>
         Zend_Application is broken into three realms:
     </para>
-    
+
     <itemizedlist>
         <listitem>
             <para>
@@ -37,7 +37,7 @@
         </listitem>
         <listitem>
             <para>
-                <code>Zend_Application_Bootstrap</code>: provides 
+                <code>Zend_Application_Bootstrap</code>: provides
                 interfaces for bootstrap classes.
                 <code>Zend_Application_Bootstrap_Base</code> provides common
                 functionality for most bootstrapping needs, including
@@ -80,7 +80,7 @@
         The bootstrap options include the path to the file containing the
         bootstrap class and optionally:
     </para>
-    
+
     <itemizedlist>
         <listitem>
             <para>

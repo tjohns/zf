@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.core-functionality.resource-base">
     <title>Zend_Application_Resource_Base</title>
-    
+
     <para>
         <code>Zend_Application_Resource_Base</code> is an abstract class
         implementing <link linkend="zend.application.core-functionality.resource-iresource">Zend_Application_Resource_IResource</link>,

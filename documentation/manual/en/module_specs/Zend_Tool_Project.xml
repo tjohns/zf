@@ -7,69 +7,69 @@
 
         <para>
             Zend_Tool_Project builds on and extends the capabilities of Zend_Tool_Framework to that
-            of managing a "project".  In general, a "project" is a planned endeavor or an initiative. 
-            In the computer world, projects generally are a collection of resources. These resources 
-            can be files, directories, databases, schemas, images, styles, and more. 
+            of managing a "project".  In general, a "project" is a planned endeavor or an initiative.
+            In the computer world, projects generally are a collection of resources. These resources
+            can be files, directories, databases, schemas, images, styles, and more.
         </para>
 
         <para>
-            This same concept applies to Zend Framework projects. In ZF projects, you have controllers, 
-            actions, views, models, databases and so on and so forth. In terms of Zend_Tool, we need a 
-            way to track these types of resources - thus Zend_Tool_Project. 
+            This same concept applies to Zend Framework projects. In ZF projects, you have controllers,
+            actions, views, models, databases and so on and so forth. In terms of Zend_Tool, we need a
+            way to track these types of resources - thus Zend_Tool_Project.
         </para>
 
         <para>
-            Zend_Tool_Project is capable of tracking project resources throughout the development 
-            of a project. So, for example, if in one command you created a controller, and in the next 
-            command you wish to create an action within that controller, Zend_Tool_Project is gonna have 
-            to <emphasis>know</emphasis> about the controller file you created so that you can (in the next action), 
-            be able to append that action to it. This is what keeps our projects up to date and 
-            <emphasis>stateful</emphasis>. 
+            Zend_Tool_Project is capable of tracking project resources throughout the development
+            of a project. So, for example, if in one command you created a controller, and in the next
+            command you wish to create an action within that controller, Zend_Tool_Project is gonna have
+            to <emphasis>know</emphasis> about the controller file you created so that you can (in the next action),
+            be able to append that action to it. This is what keeps our projects up to date and
+            <emphasis>stateful</emphasis>.
         </para>
 
         <para>
-            Another important point to understand about projects is that typically, resources are organized 
-            in a hierarchical fashion. With that in mind, Zend_Tool_Project is capable of serializing the 
-            current project into a internal representation that allows it to keep track of not only 
-            <emphasis>what</emphasis> resources are part of a project at any given time, but also 
-            <emphasis>where</emphasis> they are in relation to one another. 
+            Another important point to understand about projects is that typically, resources are organized
+            in a hierarchical fashion. With that in mind, Zend_Tool_Project is capable of serializing the
+            current project into a internal representation that allows it to keep track of not only
+            <emphasis>what</emphasis> resources are part of a project at any given time, but also
+            <emphasis>where</emphasis> they are in relation to one another.
         </para>
     </sect3>
 
     <sect3 id="zend.tool.project.create-a-project">
-    
+
         <title>Create A Project</title>
-    
+
         <para>
             Note: the following examples will assume you have the command line interface of
             Zend_Tool_Framework available to you.
         </para>
-            
+
         <para>
             Note: to issue any of the commands for Zend_Tool_Project with CLI, you must be in the directory
             where the project was initially created.
         </para>
-    
+
         <para>
             To get started with Zend_Tool_Project, you simply need to create a project.  Creating a project
             is simple: go to a place on your filesystem, create a directory, change to that directory, then
             issue the following command:
         </para>
-        
+
         <para>
             <code>/tmp/project$ zf create project</code>
         </para>
-        
+
         <para>
             Optionally, you can create a directory anywhere by the following:
         </para>
-        
+
         <para>
             <code>$ zf create project /path/to/non-existent-dir</code>
         </para>
-        
+
         <para>
-            The following table will describe the capabilities of providers that are available to 
+            The following table will describe the capabilities of providers that are available to
             you.  As you can see in this table, there is a "Project" provider.  The Project provider
             has a couple of actions associated to it, and with those actions a number of options that
             can be used to modify the behavior of the action and provider.
@@ -103,20 +103,20 @@
                         </row>
                     </tbody>
                 </tgroup>
-                
+
             </table>
-        
+
         </para>
-    
+
     </sect3>
-    
+
     <sect3 id="zend.tool.project.providers">
-    
+
         <title>Zend Tool Project Providers</title>
-        
+
         <para>
             Below is a table of all of the providers shipped with Zend Tool Project.
-            
+
             <table id="zend.tool.project.project-provider">
                 <title>Project Provider Options</title>
                 <tgroup cols="4">
@@ -154,7 +154,7 @@
                                 create - [name, controllerName=index, viewIncluded=true]
                             </entry>
                             <entry>
-                                zf create action bar foo 
+                                zf create action bar foo
                                 (OR zf create action --name bar --controlller-name=foo)
                             </entry>
                         </row>
@@ -221,34 +221,34 @@
                         </row>
                     </tbody>
                 </tgroup>
-                
+
             </table>
-            
+
         </para>
-    
+
     </sect3>
 
     <sect3 id="zend.tool.project.internals">
-    
+
         <sect4 id="zend.tool.project.internals.xml-structure">
-            
+
             @todo
-            
+
         </sect4>
-    
+
         <sect4 id="zend.tool.project.internals.extending">
-            
+
             @todo
-            
+
         </sect4>
-    
+
     </sect3>
 
     <sect3>
-    
+
     </sect3>
 
-    
+
 
 
 </sect2>

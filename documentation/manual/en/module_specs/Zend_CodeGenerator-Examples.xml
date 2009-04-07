@@ -106,12 +106,12 @@ echo $foo->generate();
         <programlisting role="php"><![CDATA[
 /**
  * Sample generated class
- * 
+ *
  * This is a class generated with Zend_CodeGenerator.
- * 
+ *
  * @version $Rev:$
  * @license New BSD
- * 
+ *
  */
 class Foo
 {
@@ -160,7 +160,7 @@ $foo->setName('Foo')
             'name'         => '_bar',
             'visibility'   => 'protected',
             'defaultValue' => 'baz',
-        ), 
+        ),
         array(
             'name'         => 'baz',
             'visibility'   => 'public',
@@ -168,7 +168,7 @@ $foo->setName('Foo')
         ),
         array(
             'name'         => 'bat',
-            'const'        => true, 
+            'const'        => true,
             'defaultValue' => 'foobarbazbat',
         ),
     ))
@@ -218,9 +218,9 @@ echo $foo->generate();
             <programlisting role="php"><![CDATA[
 /**
  * Sample generated class
- * 
+ *
  * This is a class generated with Zend_CodeGenerator.
- * 
+ *
  * @version $Rev:$
  * @license New BSD
  */
@@ -235,8 +235,8 @@ class Foo
 
     /**
      * Set the bar property
-     * 
-     * @param string bar 
+     *
+     * @param string bar
      * @return string
      */
     public function setBar($bar)
@@ -248,7 +248,7 @@ class Foo
 
     /**
      * Retrieve the bar property
-     * 
+     *
      * @return string|null
      */
     public function getBar()
@@ -314,16 +314,16 @@ file_put_contents('Foo.php', $code);
 <?php
 /**
  * Foo class file
- * 
+ *
  * @license New BSD
  */
 
 
 /**
  * Sample generated class
- * 
+ *
  * This is a class generated with Zend_CodeGenerator.
- * 
+ *
  * @version $Rev:$
  * @license New BSD
  */
@@ -338,8 +338,8 @@ class Foo
 
     /**
      * Set the bar property
-     * 
-     * @param string bar 
+     *
+     * @param string bar
      * @return string
      */
     public function setBar($bar)
@@ -351,7 +351,7 @@ class Foo
 
     /**
      * Retrieve the bar property
-     * 
+     *
      * @return string|null
      */
     public function getBar()

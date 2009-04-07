@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.available-resources.session">
     <title>Zend_Application_Resource_Session</title>
-    
+
     <para>
         <code>Zend_Application_Resource_Session</code> allows you to configure
         <code>Zend_Session</code> as well as optionally initialize a session

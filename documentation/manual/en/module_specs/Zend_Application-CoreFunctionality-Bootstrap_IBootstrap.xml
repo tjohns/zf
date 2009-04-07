@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.application.core-functionality.bootstrap-ibootstrap">
     <title>Zend_Application_Bootstrap_IBootstrap</title>
-    
+
     <para>
         <code>Zend_Application_Bootstrap_IBootstrap</code> is the base interface
         all bootstrap classes must implement. The base functionality is aimed at
@@ -49,7 +49,7 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
-                            Array of options to set. 
+                            Array of options to set.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
