@@ -32,6 +32,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 
 require_once 'Zend/AclTest.php';
 require_once 'Zend/Amf/AllTests.php';
+require_once 'Zend/Application/AllTests.php';
 require_once 'Zend/Auth/AllTests.php';
 require_once 'Zend/Cache/AllTests.php';
 require_once 'Zend/Captcha/AllTests.php';
@@ -58,6 +59,7 @@ require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/Layout/AllTests.php';
 require_once 'Zend/Ldap/AllTests.php';
 require_once 'Zend/LoaderTest.php';
+require_once 'Zend/Loader/AllTests.php';
 require_once 'Zend/LocaleTest.php';
 require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/Log/AllTests.php';
@@ -114,6 +116,7 @@ class Zend_AllTests
 
         $suite->addTestSuite('Zend_AclTest');
         $suite->addTest(Zend_Amf_AllTests::suite());
+        $suite->addTest(Zend_Application_AllTests::suite());
         $suite->addTest(Zend_Auth_AllTests::suite());
         $suite->addTest(Zend_Cache_AllTests::suite());
         $suite->addTest(Zend_Captcha_AllTests::suite());
@@ -140,6 +143,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Layout_AllTests::suite());
         $suite->addTest(Zend_Ldap_AllTests::suite());
         $suite->addTestSuite('Zend_LoaderTest');
+        $suite->addTest(Zend_Loader_AllTests::suite());
         $suite->addTestSuite('Zend_LocaleTest');
         $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Log_AllTests::suite());

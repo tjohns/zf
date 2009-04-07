@@ -47,6 +47,15 @@
         <xi:include href="module_specs/Zend_Amf-Server.xml" />
     </chapter>
 
+    <chapter id="zend.application">
+        <title>Zend_Application</title>
+        <xi:include href="module_specs/Zend_Application-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Application-TheoryOfOperation.xml" />
+        <xi:include href="module_specs/Zend_Application-Examples.xml" />
+        <xi:include href="module_specs/Zend_Application-CoreFunctionality.xml" />
+        <xi:include href="module_specs/Zend_Application-AvailableResources.xml" />
+    </chapter>
+
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
         <xi:include href="module_specs/Zend_Auth.xml" />
