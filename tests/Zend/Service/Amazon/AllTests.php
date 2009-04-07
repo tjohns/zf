@@ -47,6 +47,11 @@ require_once 'Zend/Service/Amazon/OfflineTest.php';
 require_once 'Zend/Service/Amazon/OnlineTest.php';
 
 /**
+ * @see Zend_Service_Amazon_Ec2_AllTests
+ */
+require_once 'Zend/Service/Amazon/Ec2/AllTests.php';
+
+/**
  * @see Zend_Service_Amazon_S3_AllTests
  */
 require_once 'Zend/Service/Amazon/S3/AllTests.php';
@@ -88,6 +93,8 @@ class Zend_Service_Amazon_AllTests
         } else {
             $suite->addTestSuite('Zend_Service_Amazon_OnlineTest_Skip');
         }
+
+        $suite->addTest(Zend_Service_Amazon_Ec2_AllTests::suite());
         $suite->addTest(Zend_Service_Amazon_S3_AllTests::suite());
 
         return $suite;

@@ -425,6 +425,14 @@
         <xi:include href="module_specs/Zend_Service.xml" />
         <xi:include href="module_specs/Zend_Service_Akismet.xml" />
         <xi:include href="module_specs/Zend_Service_Amazon.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-Instance.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-Image.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-Ebs.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-Elasticip.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-Keypair.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-RegionsAndAvalibilityZones.xml" />
+        <xi:include href="module_specs/Zend_Service_Amazon_Ec2-Securitygroups.xml" />
         <xi:include href="module_specs/Zend_Service_Amazon_S3.xml" />
         <xi:include href="module_specs/Zend_Service_Audioscrobbler.xml" />
         <xi:include href="module_specs/Zend_Service_Delicious.xml" />
