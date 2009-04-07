@@ -367,6 +367,13 @@
         <xi:include href="module_specs/Zend_ProgressBar.xml" />
     </chapter>
 
+    <chapter id="zend.reflection">
+        <title>Zend_Reflection</title>
+        <xi:include href="module_specs/Zend_Reflection-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Reflection-Examples.xml" />
+        <xi:include href="module_specs/Zend_Reflection-Reference.xml" />
+    </chapter>
+
     <chapter id="zend.registry">
         <title>Zend_Registry</title>
         <xi:include href="module_specs/Zend_Registry.xml" />
