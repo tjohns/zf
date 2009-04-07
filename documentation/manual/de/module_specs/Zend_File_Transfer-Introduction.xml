@@ -456,7 +456,7 @@ while (!$upload['done']) {
                 Array mit verschiedenen Schlüssel zurück. Sie unterscheiden sich, abhängig von der verwendeten
                 PHP Extension. Aber die folgenden Schlüssel werden unabhängig von der Extension zurück gegeben:
             </para>
-´
+
             <itemizedlist>
                 <listitem>
                     <para>
