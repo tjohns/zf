@@ -1,3 +1,4 @@
+<!-- EN-Revision: 13910 -->
 <sect1 id="performance.classloading">
     <title>クラスの読み込み</title>
 
@@ -16,13 +17,13 @@
         <title>どのようにしたらinclude_pathを最適化できますか？</title>
 
         <para>
-            One trivial optimization you can do to increase the speed of class
-            loading is to pay careful attention to your include_path. In
-            particular, you should do four things: use absolute paths (or paths
-            relative to absolute paths), reduce the number of includeパス you
-            define, have your Zend Framework include_path as early as possible,
-            and only include the current directory path at the end of your
-            include_path.
+            クラスの読み込み速度を向上させるためにあなたができるささやかな最適化の
+            ひとつはinclude_pathに注意をはらうことです。
+            特に４つのことをすべきでしょう:
+            絶対パスを使うこと（または相対パスを絶対パスに変えること）、
+            定義したincludeパスの数を減らすこと、
+            Zend Frameworkをinclude_pathにできる限り先に設定すること、
+            そして現行ディレクトリパスをinclude_pathの最後にだけincludeすることです。
         </para>
 
         <sect3 id="performance.classloading.includepath.abspath">
@@ -36,10 +37,11 @@
             </para>
 
             <para>
-                There are two easy ways to ensure this. First, you can hardcode
-                the paths in your php.ini, httpd.conf, or .htaccess. Second, you
-                can use PHP's <code>realpath()</code> function when setting your
-                include_path:
+                このことを確かめる易しい方法が２つあります。
+                ひとつはパスをphp.iniやhttpd.confもしくは.htaccessで
+                ハードコーディングすることです。
+                もうひとつはPHPの<code>realpath()</code>関数を使ってinclude_pathを
+                設定することです:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -51,7 +53,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
 ]]></programlisting>
 
             <para>
-                You <emphasis>can</emphasis> use relative paths -- so long as
+                You <emphasis>can</emphasis> use 相対パス -- so long as
                 they are relative to an absolute path:
             </para>
 
@@ -99,11 +101,11 @@ set_include_path(implode(PATH_SEPARATOR, $paths);
             <title>Zend Frameworkのinclude_pathを出来るだけ先に定義する</title>
 
             <para>
-                Continuing from the previous suggestion, another obvious
-                optimization is to define your Zend Framework include_path as
-                early as possible in your include_path. In most cases, it should
-                be the first path in the list. This ensures that files included
-                from Zend Framework are found on the first scan.
+                前述の提案に引き続き、Zend Frameworkのinclude_pathをinclude_pathの
+                中でできる限り先に定義することも別の明らかな最適化です。
+                多くの場合、そのリストの中の一番最初のパスになるでしょう。
+                このことによりZend Frameworkからincludeされるファイルが最初の
+                スキャンで見つかることを保証します。
             </para>
         </sect3>
 
@@ -201,7 +203,7 @@ set_include_path(implode(PATH_SEPARATOR, $paths));
         </para>
 
         <sect3 id="performance.classloading.striprequires.sed">
-            <title>Strip require_once calls with find and sed</title>
+            <title>findおよびsedコマンドを使ってrequire_onceの呼び出しを取り去る</title>
 
             <para>
                 An easy way to strip require_once calls is to use the UNIX
@@ -269,37 +271,37 @@ Zend_Loader::registerAutoload();
 
         <itemizedlist>
             <listitem><para>
-                <code>Zend_Controller_Action_HelperBroker</code>: helpers
+                <code>Zend_Controller_Action_HelperBroker</code>: ヘルパ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Dojo</code>: view helpers, form elements and decorators
+                <code>Zend_Dojo</code>: ビューヘルパ、フォーム要素およびデコレータ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_File_Transfer</code>: adapters
+                <code>Zend_File_Transfer</code>: アダプタ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Inflector</code>: filters (used by the
-                ViewRenderer action helper and Zend_Layout)
+                <code>Zend_Filter_Inflector</code>: フィルタ
+                (ViewRendererアクションヘルパおよびZend_Layoutに使用されます)
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Input</code>: filters and validators
+                <code>Zend_Filter_Input</code>: フィルタおよびバリデータ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Form</code>: elements, validators, filters,
-                decorators, captcha and file transfer adapters
+                <code>Zend_Form</code>: 要素、バリデータ、フィルタ、
+                デコレータ、キャプチャ、ファイル転送アダプタ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Paginator</code>: adapters
+                <code>Zend_Paginator</code>: アダプタ
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_View</code>: helpers, filters
+                <code>Zend_View</code>: ヘルパ、フィルタ
             </para></listitem>
         </itemizedlist>
 
@@ -312,8 +314,9 @@ Zend_Loader::registerAutoload();
             <title>ファイルキャッシュを含むPluginLoaderを使う</title>
 
             <para>
-                Zend Framework 1.7.0 adds an include file cache to the
-                PluginLoader. This functionality writes "include_once" calls to
+                Zend Frameworkの1.7.0でPluginLoaderにincludeファイルキャッシュが
+                追加されました。
+                This functionality writes "include_once" calls to
                 a file, which you can then include in your bootstrap. While this
                 introduces extra include_once calls to your code, it also
                 ensures that the PluginLoader returns as early as possible.

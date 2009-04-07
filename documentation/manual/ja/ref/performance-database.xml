@@ -1,3 +1,4 @@
+<!-- EN-Revision: 13910 -->
 <sect1 id="performance.database">
     <title>Zend_Dbパフォーマンス</title>
 
@@ -32,8 +33,9 @@
             <title>メタデータキャッシュの利用</title>
 
             <para>
-                <code>Zend_Db_Table</code> can optionally utilize
-                <code>Zend_Cache</code> to cache table metadata. This is
+                <code>Zend_Db_Table</code>ではテーブルのメタデータをキャッシュする
+                ために<code>Zend_Cache</code>を任意で利用できます。
+                This is
                 typically faster to access and less expensive than fetching the
                 metadata from the database itself.
             </para>
@@ -72,10 +74,10 @@
             <title>自分で最適化したSQLを書く</title>
 
             <para>
-                The only real answer is to write your own SQL;
-                <code>Zend_Db</code> does not require the usage of
-                <code>Zend_Db_Select</code>, so providing your own, tuned SQL
-                select statements is a perfectly legitimate approach,
+                現実的な唯一の答えは自分でSQLを書くことです;
+                自分で用意できるなら、<code>Zend_Db</code>で必ず
+                <code>Zend_Db_Select</code>を使わずに、調整されたselect文の
+                SQLが完璧で筋の通った道筋です。
             </para>
             <para>
                 Run <code>EXPLAIN</code> on your queries, and test a variety of
