@@ -263,6 +263,8 @@
     <chapter id="zend.loader">
         <title>Zend_Loader</title>
         <xi:include href="module_specs/Zend_Loader.xml" />
+        <xi:include href="module_specs/Zend_Loader-Autoloader.xml" />
+        <xi:include href="module_specs/Zend_Loader-Autoloader-Resource.xml" />
         <xi:include href="module_specs/Zend_Loader-PluginLoader.xml" />
     </chapter>
 

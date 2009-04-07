@@ -58,7 +58,6 @@ require_once 'Zend/Json/AllTests.php';
 require_once 'Zend/Layout/AllTests.php';
 require_once 'Zend/Ldap/AllTests.php';
 require_once 'Zend/LoaderTest.php';
-require_once 'Zend/Loader/PluginLoaderTest.php';
 require_once 'Zend/LocaleTest.php';
 require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/Log/AllTests.php';
@@ -141,7 +140,6 @@ class Zend_AllTests
         $suite->addTest(Zend_Layout_AllTests::suite());
         $suite->addTest(Zend_Ldap_AllTests::suite());
         $suite->addTestSuite('Zend_LoaderTest');
-        $suite->addTestSuite('Zend_Loader_PluginLoaderTest');
         $suite->addTestSuite('Zend_LocaleTest');
         $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Log_AllTests::suite());
