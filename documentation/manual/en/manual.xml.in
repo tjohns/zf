@@ -81,6 +81,13 @@
         <xi:include href="module_specs/Zend_Captcha-Adapters.xml" />
     </chapter>
 
+    <chapter id="zend.codegenerator">
+        <title>Zend_CodeGenerator</title>
+        <xi:include href="module_specs/Zend_CodeGenerator-Introduction.xml" />
+        <xi:include href="module_specs/Zend_CodeGenerator-Examples.xml" />
+        <xi:include href="module_specs/Zend_CodeGenerator-Reference.xml" />
+    </chapter>
+
     <chapter id="zend.config">
         <title>Zend_Config</title>
         <xi:include href="module_specs/Zend_Config-Introduction.xml" />

@@ -36,6 +36,7 @@ require_once 'Zend/Application/AllTests.php';
 require_once 'Zend/Auth/AllTests.php';
 require_once 'Zend/Cache/AllTests.php';
 require_once 'Zend/Captcha/AllTests.php';
+require_once 'Zend/CodeGenerator/Php/AllTests.php';
 require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/Dom/AllTests.php';
 require_once 'Zend/ConfigTest.php';
@@ -120,6 +121,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Auth_AllTests::suite());
         $suite->addTest(Zend_Cache_AllTests::suite());
         $suite->addTest(Zend_Captcha_AllTests::suite());
+        $suite->addTest(Zend_CodeGenerator_Php_AllTests::suite());
         $suite->addTestSuite('Zend_ConfigTest');
         $suite->addTest(Zend_Config_AllTests::suite());
         $suite->addTestSuite('Zend_Console_GetoptTest');
