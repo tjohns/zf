@@ -17,7 +17,22 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
 }
 ]]>
     </programlisting>
-    
+
+    <para>
+        With a corresponding configuration file:
+    </para>
+
+    <programlisting role="ini"><![CDATA[
+; APPLICATION_PATH/configs/application.ini
+[production]
+bootstrap.path = APPLICATION_PATH "/Bootstrap.php"
+bootstrap.class = "Bootstrap"
+resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
+
+[development : testing]
+[development : production]
+]]></programlisting>
+
     <para>
         However, should custom initialization be necessary, you have two
         choices. First, you can write methods prefixed with <code>_init</code>
@@ -35,7 +50,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
         // ensure front controller instance is present 
         $this->bootstrap('frontController'); 
         $this->request = new Zend_Controller_Request_Http(); 
-        $this->front->setRequest($this->request); 
+        $this->frontController->setRequest($this->request); 
     } 
 } 
 ]]>
@@ -121,6 +136,10 @@ $application = new Zend_Application(
         'resources' => array( 
             'My_Bootstrap_Resource_View', // full class name; OR 
             'view',                       // short name 
+
+            'FrontController' => array(
+                'controllerDirectory' => APPLICATION_PATH . '/controllers',
+            ),
         ), 
  
         // For short names, define resource paths: 
