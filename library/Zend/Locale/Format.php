@@ -163,14 +163,7 @@ class Zend_Locale_Format
                     break;
 
                 case 'locale' :
-                    if (gettype($value) === 'string' && strtolower($value) == 'standard') {
-                        $options['locale'] = new Zend_Locale();
-                    } else if (!empty($value) && (!Zend_Locale::isLocale($value, null, false))) {
-                        require_once 'Zend/Locale/Exception.php';
-                        throw new Zend_Locale_Exception("'" .
-                            (gettype($value) === 'object' ? get_class($value) : $value)
-                            . "' is not a known locale.");
-                    }
+                    Zend_Locale::findLocale($value);
                     break;
 
                 case 'cache' :
