@@ -18,6 +18,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Search_Lucene_TermStreamsPriorityQueue */
+require_once 'Zend/Search/Lucene/TermStreamsPriorityQueue.php';
+
+/** Zend_Search_Lucene_Interface */
+require_once 'Zend/Search/Lucene/Interface.php';
 
 /**
  * Multisearcher allows to search through several independent indexes.
@@ -29,10 +34,6 @@
  */
 class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_Interface
 {
-	const MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE =
-	         "Multisearcher is intended for searching only and doesn't update index or provide update related information.";
-
-
 	/**
 	 * List of indices for searching.
 	 * Array of Zend_Search_Lucene_Interface objects
@@ -84,7 +85,7 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
     public static function getActualGeneration(Zend_Search_Lucene_Storage_Directory $directory)
     {
         require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception(self::MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE);
+        throw new Zend_Search_Lucene_Exception("Generation number can't be retrieved for multi-searcher");
     }
 
     /**
@@ -92,12 +93,10 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      *
      * @param integer $generation
      * @return string
-     * @throws Zend_Search_Lucene_Exception
      */
     public static function getSegmentFileName($generation)
     {
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception(self::MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE);
+        return Zend_Search_Lucene::getSegmentFileName($generation);
     }
 
     /**
@@ -109,7 +108,7 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
     public function getFormatVersion()
     {
         require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception(self::MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE);
+        throw new Zend_Search_Lucene_Exception("Format version can't be retrieved for multi-searcher");
     }
 
     /**
@@ -117,12 +116,12 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      * Index is converted to this format at the nearest upfdate time
      *
      * @param int $formatVersion
-     * @throws Zend_Search_Lucene_Exception
      */
     public function setFormatVersion($formatVersion)
     {
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception(self::MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE);
+    	foreach ($this->_indices as $index) {
+    		$index->setFormatVersion($formatVersion);
+    	}
     }
 
     /**
@@ -133,7 +132,7 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
     public function getDirectory()
     {
         require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception(self::MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE);
+        throw new Zend_Search_Lucene_Exception("Index directory can't be retrieved for multi-searcher");
     }
 
     /**
@@ -775,6 +774,40 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
         throw new Zend_Search_Lucene_Exception('Document id is out of the range.');
     }
 
+
+    /**
+     * Callback used to choose target index for new documents
+     *
+     * Function/method signature:
+     *    Zend_Search_Lucene_Interface  callbackFunction(Zend_Search_Lucene_Document $document, array $indices);
+     *
+     * null means "default documents distributing algorithm"
+     *
+     * @var callback
+     */
+    protected $_documentDistributorCallBack = null;
+
+    /**
+     * Set callback for choosing target index.
+     *
+     * @param callback $callback
+     */
+    public function setDocumentDistributorCallback($callback)
+    {
+    	if ($callback !== null  &&  !is_callable($callback))
+    	$this->_documentDistributorCallBack = $callback;
+    }
+
+    /**
+     * Get callback for choosing target index.
+     *
+     * @return callback
+     */
+    public function getDocumentDistributorCallback()
+    {
+        return $this->_documentDistributorCallBack;
+    }
+
     /**
      * Adds a document to this index.
      *
@@ -783,8 +816,13 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      */
     public function addDocument(Zend_Search_Lucene_Document $document)
     {
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception(self::MULTISEARCHER_FUNCTIONALITY_LIMITATION_MESSAGE);
+    	if ($this->_documentDistributorCallBack !== null) {
+    		$index = call_user_func($this->_documentDistributorCallBack, $document, $this->_indices);
+    	} else {
+    		$index = $this->_indices[ array_rand($this->_indices) ];
+    	}
+
+    	$index->addDocument($document);
     }
 
     /**
@@ -827,12 +865,21 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
 
 
     /**
+     * Terms stream priority queue object
+     *
+     * @var Zend_Search_Lucene_termStreamsPriorityQueue
+     */
+    private $_termsStream = null;
+
+    /**
      * Reset terms stream.
      */
     public function resetTermsStream()
     {
-        foreach ($this->_indices as $index) {
-            $index->resetTermsStream();
+        if ($this->_termsStream === null) {
+            $this->_termsStream = new Zend_Search_Lucene_termStreamsPriorityQueue($this->_indices);
+        } else {
+            $this->_termsStream->resetTermsStream();
         }
     }
 
@@ -845,11 +892,8 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      */
     public function skipTo(Zend_Search_Lucene_Index_Term $prefix)
     {
-        foreach ($this->_indices as $index) {
-            $index->skipTo($prefix);
-        }
+        $this->_termsStream->skipTo($prefix);
     }
-
 
     /**
      * Scans terms dictionary and returns next term
@@ -858,10 +902,7 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      */
     public function nextTerm()
     {
-    	/** @todo Unify terms streaming queue */
-
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception('Stream terms processing is not supported for the multisearcher.');
+        return $this->_termsStream->nextTerm();
     }
 
     /**
@@ -871,8 +912,7 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      */
     public function currentTerm()
     {
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception('Stream terms processing is not supported for the multisearcher.');
+        return $this->_termsStream->currentTerm();
     }
 
     /**
@@ -882,8 +922,8 @@ class Zend_Search_Lucene_Interface_MultiSearcher implements Zend_Search_Lucene_I
      */
     public function closeTermsStream()
     {
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception('Stream terms processing is not supported for the multisearcher.');
+        $this->_termsStream->closeTermsStream();
+        $this->_termsStream = null;
     }
 
 

@@ -17,9 +17,9 @@ require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 
 /**
- * Zend_Search_Lucene_Index_SegmentInfoPriorityQueue
+ * Zend_Search_Lucene_Index_TermsPriorityQueue
  */
-require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueue.php';
+require_once 'Zend/Search/Lucene/Index/TermsPriorityQueue.php';
 
 /**
  * PHPUnit test case
@@ -32,18 +32,18 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * @package    Zend_Search_Lucene
  * @subpackage UnitTests
  */
-class Zend_Search_Lucene_Index_SegmentInfoPriorityQueueTest extends PHPUnit_Framework_TestCase
+class Zend_Search_Lucene_Index_TermsPriorityQueueTest extends PHPUnit_Framework_TestCase
 {
     public function testQueue()
     {
         $directory = new Zend_Search_Lucene_Storage_Directory_Filesystem(dirname(__FILE__) . '/_source/_files');
         $segmentsList = array('_0', '_1', '_2', '_3', '_4');
 
-        $segmentInfoQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
+        $segmentInfoQueue = new Zend_Search_Lucene_Index_TermsPriorityQueue();
 
         foreach ($segmentsList as $segmentName) {
             $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, $segmentName, 2);
-            $segmentInfo->reset();
+            $segmentInfo->resetTermsStream();
 
             // Skip "empty" segments
             if ($segmentInfo->currentTerm() !== null) {

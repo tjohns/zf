@@ -265,7 +265,7 @@ class Zend_Search_Lucene_Index_SegmentInfoTest extends PHPUnit_Framework_TestCas
 
         $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_3', 2);
 
-        $this->assertEquals($segmentInfo->reset(6, Zend_Search_Lucene_Index_SegmentInfo::SM_FULL_INFO), 8);
+        $this->assertEquals($segmentInfo->resetTermsStream(6, Zend_Search_Lucene_Index_SegmentInfo::SM_FULL_INFO), 8);
 
         $terms = array();
 
@@ -453,7 +453,7 @@ class Zend_Search_Lucene_Index_SegmentInfoTest extends PHPUnit_Framework_TestCas
 
 
         $segmentInfo1 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_3', 2);
-        $this->assertEquals($segmentInfo1->reset(6, Zend_Search_Lucene_Index_SegmentInfo::SM_MERGE_INFO), 7);
+        $this->assertEquals($segmentInfo1->resetTermsStream(6, Zend_Search_Lucene_Index_SegmentInfo::SM_MERGE_INFO), 7);
     }
 
     public function testTermStreamStyleReadingSkipTo()
@@ -462,7 +462,7 @@ class Zend_Search_Lucene_Index_SegmentInfoTest extends PHPUnit_Framework_TestCas
 
         $segmentInfo = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_3', 2);
 
-        $this->assertEquals($segmentInfo->reset(6, Zend_Search_Lucene_Index_SegmentInfo::SM_FULL_INFO), 8);
+        $this->assertEquals($segmentInfo->resetTermsStream(6, Zend_Search_Lucene_Index_SegmentInfo::SM_FULL_INFO), 8);
 
         $segmentInfo->skipTo(new Zend_Search_Lucene_Index_Term('prefetch', 'contents'));
 
@@ -545,7 +545,7 @@ class Zend_Search_Lucene_Index_SegmentInfoTest extends PHPUnit_Framework_TestCas
 
 
         $segmentInfo1 = new Zend_Search_Lucene_Index_SegmentInfo($directory, '_3', 2);
-        $this->assertEquals($segmentInfo1->reset(6, Zend_Search_Lucene_Index_SegmentInfo::SM_MERGE_INFO), 7);
+        $this->assertEquals($segmentInfo1->resetTermsStream(6, Zend_Search_Lucene_Index_SegmentInfo::SM_MERGE_INFO), 7);
     }
 }
 
