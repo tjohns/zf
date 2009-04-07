@@ -55,8 +55,6 @@ abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootst
         if ($application->hasOption($key)) {
             // Don't run via setOptions() to prevent duplicate initialization
             $this->setOptions($application->getOption($key));
-        } else {
-            $this->setOptions($application->getOptions());
         }
 
         $this->initResourceLoader();
