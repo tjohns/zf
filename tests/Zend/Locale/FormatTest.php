@@ -651,7 +651,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( Zend_Locale_Format::checkDateFormat('20.01.2006', array('date_format' => 'd-M-y')));
 
         $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.April',      array('date_format' => 'dd.MMMM.YYYY')));
-        $this->assertFalse(Zend_Locale_Format::checkDateFormat('20.April',      array('date_format' => 'MMMM.YYYY'   )));
+        $this->assertTrue(Zend_Locale_Format::checkDateFormat('20.April',      array('date_format' => 'MMMM.YYYY'   )));
         $this->assertFalse(Zend_Locale_Format::checkDateFormat('20',            array('date_format' => 'dd.MMMM.YYYY')));
         $this->assertTrue( Zend_Locale_Format::checkDateFormat('April.2007',    array('date_format' => 'MMMM.YYYY'   )));
         $this->assertTrue( Zend_Locale_Format::checkDateFormat('20.April.2007', array('date_format' => 'dd.YYYY'     )));
@@ -770,7 +770,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // success
         }
 
-        $format = Zend_Locale_Format::setOptions(array('locale' => 'de', 'number_format' => Zend_Locale_Format::STANDARD));
+        $format = Zend_Locale_Format::setOptions(array('locale' => 'de', 'number_format' => Zend_Locale_FORMAT::STANDARD));
         $test   = Zend_Locale_Data::getContent('de', 'decimalnumber');
         $this->assertEquals($test, $format['number_format']);
 
@@ -800,7 +800,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 
         $format = Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD));
         $locale = new Zend_Locale();
-        $this->assertEquals($locale, $format['locale']);
+        $this->assertEquals($locale->toString(), $format['locale']);
 
         try {
             $this->assertFalse(is_array(Zend_Locale_Format::setOptions(array('locale' => 'nolocale'))));
@@ -851,7 +851,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             $this->fail("exception expected");
         }
         try {
-            // the following should not be used... instead of null, Zend_Locale_Format::STANDARD should be used
+            // the following should not be used... instead of null, Zend_Locale::ZFDEFAULT should be used
             // uses given local with standard format from this locale
             $this->assertSame($result,
                 Zend_Locale_Format::getDate('July 4, 2007', array('locale' => 'en_US', 'date_format' => null)));
@@ -870,7 +870,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
             // uses standard locale with standard format from this locale
             $expect = Zend_Locale_Format::getDate('July 4, 2007', array('locale' => Zend_Locale_Format::STANDARD));
             $testlocale = new Zend_Locale();
-            $this->assertEquals($testlocale, $expect['locale']);
+            $this->assertEquals($testlocale->toString(), $expect['locale']);
         } catch (Zend_Locale_Exception $e) {
             $this->fail("exception expected");
         }

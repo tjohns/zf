@@ -34,7 +34,7 @@ require_once 'Zend/Locale/Data.php';
  */
 class Zend_Locale_Format
 {
-    const STANDARD   = 'STANDARD';
+    const STANDARD   = 'auto';
 
     private static $_options = array('date_format'   => null,
                                      'number_format' => null,
@@ -114,7 +114,7 @@ class Zend_Locale_Format
 
             switch($name) {
                 case 'number_format' :
-                    if ($value == 'standard') {
+                    if ($value == Zend_Locale_Format::STANDARD) {
                         $locale = self::$_options['locale'];
                         if (isset($options['locale'])) {
                             $locale = $options['locale'];
@@ -128,7 +128,7 @@ class Zend_Locale_Format
                     break;
 
                 case 'date_format' :
-                    if ($value == 'standard') {
+                    if ($value == Zend_Locale_Format::STANDARD) {
                         $locale = self::$_options['locale'];
                         if (isset($options['locale'])) {
                             $locale = $options['locale'];
@@ -163,7 +163,7 @@ class Zend_Locale_Format
                     break;
 
                 case 'locale' :
-                    Zend_Locale::findLocale($value);
+                    $options['locale'] = Zend_Locale::findLocale($value);
                     break;
 
                 case 'cache' :
@@ -176,6 +176,7 @@ class Zend_Locale_Format
                     if ($value === NULL) {
                         $value = -1;
                     }
+
                     if (($value < -1) || ($value > 30)) {
                         require_once 'Zend/Locale/Exception.php';
                         throw new Zend_Locale_Exception("'$value' precision is not a whole number less than 30.");
@@ -189,6 +190,7 @@ class Zend_Locale_Format
 
             }
         }
+
         return $options;
     }
 
@@ -281,7 +283,7 @@ class Zend_Locale_Format
             throw new Zend_Locale_Exception('No value in ' . $input . ' found');
         }
         $found = $found[0];
-        // Change locale input to be standard number
+        // Change locale input to be default number
         if ($symbols['minus'] != "-")
             $found = strtr($found,$symbols['minus'],'-');
         $found = str_replace($symbols['group'],'', $found);
@@ -539,7 +541,7 @@ class Zend_Locale_Format
      */
     public static function toFloat($value, array $options = array())
     {
-        $options['number_format'] = 'standard';
+        $options['number_format'] = Zend_Locale_Format::STANDARD;
         return self::toNumber($value, $options);
     }
 
@@ -588,7 +590,7 @@ class Zend_Locale_Format
     public static function toInteger($value, array $options = array())
     {
         $options['precision'] = 0;
-        $options['number_format'] = 'standard';
+        $options['number_format'] = Zend_Locale_Format::STANDARD;
         return self::toNumber($value, $options);
     }
 
@@ -990,7 +992,7 @@ class Zend_Locale_Format
 
     /**
      * Returns if the given datestring contains all date parts from the given format.
-     * If no format is given, the standard date format from the locale is used
+     * If no format is given, the default date format from the locale is used
      * If you want to check if the date is a proper date you should use Zend_Date::isDate()
      *
      * @param   string  $date     Date string
