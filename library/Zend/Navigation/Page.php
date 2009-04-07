@@ -622,7 +622,7 @@ abstract class Zend_Navigation_Page extends Zend_Navigation_Container
     public function setResource($resource = null)
     {
         if (null === $resource || is_string($resource) ||
-            $resource instanceof Zend_Acl_Role_Interface) {
+            $resource instanceof Zend_Acl_Resource_Interface) {
             $this->_resource = $resource;
         } else {
             require_once 'Zend/Navigation/Exception.php';
