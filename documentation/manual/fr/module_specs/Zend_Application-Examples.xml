@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.application.examples">
     <title>Examples</title>
 
     <para>
-        La classe de bootstrap elle-même sera typiquement minimaliste; Souvent, elle consistera simplement en:
+        La classe de bootstrap elle-mÃªme sera typiquement minimaliste; Souvent, elle consistera simplement en:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -33,10 +32,10 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 ]]></programlisting>
 
     <para>
-        Cependant, si de l'initialisation personnalisée est nécessaire, alors vous avez 2 choix.
-        D'abord vous pouvez écrire des méthodes préfixées par <code>_init</code> pour ajouter du code
-        au bootstrap. De telles méthodes seront appelées par bootstrap(), et peuvent être appelées comme
-        si elles étaient publiques, par: <code>bootstrap&lt;resource&gt;()</code>. Elles peuvent accepter
+        Cependant, si de l'initialisation personnalisÃ©e est nÃ©cessaire, alors vous avez 2 choix.
+        D'abord vous pouvez Ã©crire des mÃ©thodes prÃ©fixÃ©es par <code>_init</code> pour ajouter du code
+        au bootstrap. De telles mÃ©thodes seront appelÃ©es par bootstrap(), et peuvent Ãªtre appelÃ©es comme
+        si elles Ã©taient publiques, par: <code>bootstrap&lt;resource&gt;()</code>. Elles peuvent accepter
         un tableau d'options.
     </para>
 
@@ -45,7 +44,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
 {
     protected function _initRequest(array $options = array())
     {
-        // Vérifie que le contrôleur frontal est bien présent
+        // VÃ©rifie que le contrÃ´leur frontal est bien prÃ©sent
         $this->bootstrap('frontController');
         $this->request = new Zend_Controller_Request_Http();
         $this->frontController->setRequest($this->request);
@@ -55,13 +54,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </programlisting>
 
     <para>
-        Notez l'appel à <code>bootstrap()</code>; Ceci permet de s'assurer que le contrôleur
-        frontal a bien été initialisé avant d'appeler cette méthode.
+        Notez l'appel Ã  <code>bootstrap()</code>; Ceci permet de s'assurer que le contrÃ´leur
+        frontal a bien Ã©tÃ© initialisÃ© avant d'appeler cette mÃ©thode.
     </para>
 
     <para>
-        Une autre option consiste à utiliser des ressources de bootstrap. Ce sont des objets qui s'occupent
-        d'initialisations spéciales, elles peuvent être spécifiées:
+        Une autre option consiste Ã  utiliser des ressources de bootstrap. Ce sont des objets qui s'occupent
+        d'initialisations spÃ©ciales, elles peuvent Ãªtre spÃ©cifiÃ©es:
     </para>
 
     <itemizedlist>
@@ -77,15 +76,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
         </listitem>
         <listitem>
             <para>
-                En les activant spécifiquement via des appels de méthodes sur l'objet de bootstrap
+                En les activant spÃ©cifiquement via des appels de mÃ©thodes sur l'objet de bootstrap
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Les ressources implémentent <code>Zend_Application_Bootstrap_Resource</code>,
-        qui définie simplement qu'elles peuvent être injectées dans l'objet les appelant,
-        et qu'elles ont une méthode <code>init()</code>. Voici un exemple d'un bootstrap de vue:
+        Les ressources implÃ©mentent <code>Zend_Application_Bootstrap_Resource</code>,
+        qui dÃ©finie simplement qu'elles peuvent Ãªtre injectÃ©es dans l'objet les appelant,
+        et qu'elles ont une mÃ©thode <code>init()</code>. Voici un exemple d'un bootstrap de vue:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -134,7 +133,7 @@ $application = new Zend_Application(
             ),
         ),
 
-        // Pour les noms courts, définissez les chemins:
+        // Pour les noms courts, dÃ©finissez les chemins:
         'resourcePaths = array(
             'My_Bootstrap_Resource' => 'My/Bootstrap/Resource',
         )
@@ -152,7 +151,7 @@ class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
 {
     public function init(array $options = array())
     {
-        // Assurons nous que la vue est initialisée...
+        // Assurons nous que la vue est initialisÃ©e...
         $this->getBootstrap()->bootstrap('view');
 
         // ...
@@ -173,7 +172,7 @@ $application->run();
     </programlisting>
 
     <para>
-        Pour un script personnalisé, vous auriez peut être besoin de ne lancer que des ressources spécifiques:
+        Pour un script personnalisÃ©, vous auriez peut Ãªtre besoin de ne lancer que des ressources spÃ©cifiques:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -187,7 +186,7 @@ echo $service->handle();
     </programlisting>
 
     <para>
-        Plutôt que d'utiliser la méthode <code>bootstrap()</code> pour appeler les méthodes internes,
+        PlutÃ´t que d'utiliser la mÃ©thode <code>bootstrap()</code> pour appeler les mÃ©thodes internes,
         vous pouvez surcharger:
     </para>
 
