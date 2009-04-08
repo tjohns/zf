@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.service.amazon.ec2.images">
-    <title>Amazon Machine Images (AMI)</title>
+    <title>Zend_Service_Amazon_Ec2: Amazon Machine Images (AMI)</title>
     <para>
         Amazon Machine Images (AMIs) are preconfigured with an ever-growing list
         of operating systems. We work with our partners and community to provide

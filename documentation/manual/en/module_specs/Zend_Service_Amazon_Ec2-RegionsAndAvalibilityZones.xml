@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.service.amazon.ec2.zones">
-    <title>Regions and Availability Zones</title>
+    <title>Zend_Service_Amazon_Ec2: Regions and Availability Zones</title>
 
     <para>
         Amazon EC2 provides the ability to place instances in different regions
@@ -14,6 +14,7 @@
     </para>
 
     <sect2 id="zend.service.amazon.ec2.zones.regions">
+        <title>Amazon EC2 Regions</title>
         <para>
              Amazon EC2 provides multiple regions so you can launch Amazon EC2
              instances in locations that meet your requirements. For example,
@@ -50,6 +51,7 @@ foreach($regions as $region) {
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.zones.availability">
+        <title>Amazon EC2 Availability Zones</title>
         <para>
             When you launch an instance, you can optionally specify an Availability
             Zone. If you do not specify an Availability Zone, Amazon EC2 selects one

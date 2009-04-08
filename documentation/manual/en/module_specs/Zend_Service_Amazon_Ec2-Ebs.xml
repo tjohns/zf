@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.service.amazon.ec2.ebs">
-    <title>Amazon Elastic Block Stroage (EBS)</title>
+    <title>Zend_Service_Amazon_Ec2: Elastic Block Stroage (EBS)</title>
 
     <para>
         Amazon Elastic Block Store (Amazon EBS) is a new type of storage
@@ -25,7 +25,7 @@
     <sect2 id="zend.service.amazon.ec2.ebs.creating">
         <title>Create EBS Volues and Snapshots</title>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.creating.volume">
             <title>Create a new EBS Volume</title>
             <para>
                 Creating a brand new EBS Volume requires the size and which zone you
@@ -44,7 +44,7 @@ $return = $ec2_ebs->createNewVolume(40, 'us-east-1a');
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.creating.volumesnapshot">
             <title>Create an EBS Volume from a Snapshot</title>
             <para>
                 Creating an EBS Volume from a snapshot requires the snapshot_id and which zone you
@@ -62,7 +62,7 @@ $return = $ec2_ebs->createVolumeFromSnapshot('snap-78a54011', 'us-east-1a');
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.creating.snapshot">
             <title>Create a Snapshot of an EBS Volume</title>
             <para>
                 Creating a Snapshot of an EBS Volume requires the volumeId of the EBS Volume.
@@ -84,7 +84,7 @@ $return = $ec2_ebs->createSnapshot('volumeId');
     <sect2 id="zend.service.amazon.ec2.ebs.describing">
         <title>Describing EBS Volues and Snapshots</title>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.describing.volume">
             <title>Describing an EBS Volume</title>
             <para>
                 <code>describeVolume</code> allows you to get information on an EBS Volume or a set of EBS
@@ -107,7 +107,7 @@ $return = $ec2_ebs->describeVolume('volumeId');
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.describing.attachedvolumes">
             <title>Describe Attached Volumes</title>
             <para>
                 To return a list of EBS Volumes currently attached to a running instance you can call this method.
@@ -125,7 +125,7 @@ $return = $ec2_ebs->describeAttachedVolumes('instanceId');
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.describing.snapshot">
             <title>Describe an EBS Volume Snapshot</title>
             <para>
                 <code>describeSnapshot</code> allows you to get information on an EBS Volume Snapshot
@@ -150,7 +150,7 @@ $return = $ec2_ebs->describeSnapshot('volumeId');
     <sect2 id="zend.service.amazon.ec2.ebs.attachdetach">
         <title>Attach and Detaching Volumes from Instances</title>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.attachdetach.attach">
             <title>Attaching an EBS Volume</title>
             <para>
                 <code>attachVolume</code> will attach an EBS Volume to a running Instance.  To
@@ -170,7 +170,7 @@ $return = $ec2_ebs->attachVolume('volumeId', 'instanceid', '/dev/sdh');
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.attachdetach.detach">
             <title>Detaching an EBS Volume</title>
             <para>
                 <code>detachVolume</code> will detach an EBS Volume from a running Instance.
@@ -207,7 +207,7 @@ $return = $ec2_ebs->detachVolume('volumeId');
     <sect2 id="zend.service.amazon.ec2.ebs.deleting">
         <title>Deleting EBS Volumes and Snapshots</title>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.deleting.volume">
             <title>Deleting an EBS Volume</title>
             <para>
                 <code>deleteVolume</code> will delete an unattached EBS Volume.
@@ -223,7 +223,7 @@ $return = $ec2_ebs->deleteVolume('volumeId');
             </programlisting>
         </example>
 
-        <example>
+        <example id="zend.service.amazon.ec2.ebs.deleting.snapshot">
             <title>Deleting an EBS Volume Snapshot</title>
             <para>
                 <code>deleteSnapshot</code> will delete a EBS Volume Snapshot.

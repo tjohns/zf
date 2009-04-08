@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.service.amazon.ec2.keypairs">
-    <title>Amazon Ec2 Keypairs</title>
+    <title>Zend_Service_Amazon_Ec2: Keypairs</title>
     <para>
         Keypairs allow access to Unix Ec2 Instances via ssh.
     </para>
 
-    <example>
+    <example id="zend.service.amazon.ec2.keypairs.create">
         <title>Creating a new Amazon Keypair</title>
         <para>
             <code>create</code>, creates a new 2048 bit RSA key pair and
@@ -23,7 +23,7 @@ $return = $ec2_kp->create('my-new-key');
         </programlisting>
     </example>
 
-    <example>
+    <example id="zend.service.amazon.ec2.keypairs.delete">
         <title>Deleting an Amazon Keypair</title>
         <para>
             <code>delete</code>, will delete the key pair.  This will only
@@ -40,7 +40,7 @@ $return = $ec2_kp->delete('my-new-key');
         </programlisting>
     </example>
 
-    <example>
+    <example id="zend.service.amazon.ec2.describe">
         <title>Describe an Amazon Keypair</title>
         <para>
             <code>describe</code> returns information about key pairs available to you.

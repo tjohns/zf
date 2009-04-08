@@ -41,7 +41,8 @@ class Zend_Service_Amazon_Ec2_Securitygroups extends Zend_Service_Amazon_Ec2_Abs
      * within the same security group have unrestricted network access to each other.
      * Instances will reject network access attempts from other instances in a different
      * security group. As the owner of instances you can grant or revoke specific permissions
-     * using the AuthorizeSecurityGroupIngress and RevokeSecurityGroupIngress operations.
+     * using the {@link authorizeIp}, {@link authorizeGroup}, {@link revokeGroup} and
+     * {$link revokeIp} operations.
      *
      * @param string $name          Name of the new security group.
      * @param string $description   Description of the new security group.
@@ -186,11 +187,11 @@ class Zend_Service_Amazon_Ec2_Securitygroups extends Zend_Service_Amazon_Ec2_Abs
     /**
      * Adds permissions to a security group
      *
-     * Permission changes are propagated to instances within the security group as quickly as
-     * possible. However, depending on the number of instances, a small delay might occur.
-     *
      * When authorizing a user/group pair permission, GroupName, SourceSecurityGroupName and
      * SourceSecurityGroupOwnerId must be specified.
+     *
+     * Permission changes are propagated to instances within the security group as quickly as
+     * possible. However, depending on the number of instances, a small delay might occur.
      *
      * @param string $name                  Name of the group to modify.
      * @param string $groupName             Name of security group to authorize access to when operating on a user/group pair.
@@ -260,7 +261,7 @@ class Zend_Service_Amazon_Ec2_Securitygroups extends Zend_Service_Amazon_Ec2_Abs
      * Permission changes are propagated to instances within the security group as quickly as
      * possible. However, depending on the number of instances, a small delay might occur.
      *
-     * When authorizing a user/group pair permission, GroupName, SourceSecurityGroupName and
+     * When revoking a user/group pair permission, GroupName, SourceSecurityGroupName and
      * SourceSecurityGroupOwnerId must be specified.
      *
      * @param string $name                  Name of the group to modify.

@@ -380,7 +380,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
      * Returns true if the specified product code is attached to the specified instance.
      * The operation returns false if the product code is not attached to the instance.
      *
-     * The ConfirmProductInstance operation can only be executed by the owner of the AMI.
+     * The confirmProduct operation can only be executed by the owner of the AMI.
      * This feature is useful when an AMI owner is providing support and wants to
      * verify whether a user's instance is eligible.
      *
