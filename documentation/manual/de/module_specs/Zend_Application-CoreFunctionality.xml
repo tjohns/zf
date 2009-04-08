@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 14712 -->
+<sect1 id="zend.application.core-functionality" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Kern Funktionalität</title>
+
+    <para>
+        Hier findet man API-artige Dokumentation über alle Kern Komponenten von
+        <code>Zend_Application</code>.
+    </para>
+
+    <xi:include href="Zend_Application-CoreFunctionality-Application.xml" />
+    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_IBootstrap.xml" />
+    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_IResourceBootstrap.xml" />
+    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_Base.xml" />
+    <xi:include href="Zend_Application-CoreFunctionality-Resource_IResource.xml" />
+    <xi:include href="Zend_Application-CoreFunctionality-Resource_Base.xml" />
+</sect1>
