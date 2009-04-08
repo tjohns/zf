@@ -143,6 +143,11 @@ require_once 'Zend/Validate/NotEmptyTest.php';
 require_once 'Zend/Validate/RegexTest.php';
 
 /**
+ * @see Zend_Validate_Sitemap_AllTests
+ */
+require_once 'Zend/Validate/Sitemap/AllTests.php';
+
+/**
  * @see Zend_Validate_StringLengthTest
  */
 require_once 'Zend/Validate/StringLengthTest.php';
@@ -198,6 +203,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_MessageTest');
         $suite->addTestSuite('Zend_Validate_NotEmptyTest');
         $suite->addTestSuite('Zend_Validate_RegexTest');
+        $suite->addTest(Zend_Validate_Sitemap_AllTests::suite());
         $suite->addTestSuite('Zend_Validate_StringLengthTest');
 
         return $suite;
