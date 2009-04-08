@@ -4,86 +4,79 @@
     <title>Zend_Application_Resource_Frontcontroller</title>
 
     <para>
-        Probably the most common resource you will load with
-        <code>Zend_Application</code> will be the Front Controller resource,
-        which provides the ability to configure
-        <code>Zend_Controller_Front</code>. This resource provides the ability
-        to set arbitrary front controller parameters, specify plugins to
-        initialize, and much more.
+        Die warscheinlich am meisten verwendete Ressource die man mit <code>Zend_Application</code>
+        verwenden wird, ist die Front Controller Ressource, die eine Möglichkeit bietet den
+        <code>Zend_Controller_Front</code> zu konfigurieren. Diese Ressource bietet die Möglichkeit
+        verschiedenste Front Controller Parameter zu setzen, Plugins zu spezifizieren die
+        initialisiert werden sollen, und vieles mehr.
     </para>
 
     <para>
-        Once initialized, the resource assigns the <code>frontController</code>
-        property of the bootstrap to the <code>Zend_Controller_Front</code>
-        instance.
+        Sobald Sie initialisiert wurde, fügt die Ressource die <code>frontController</code>
+        Eigenschaft vom Bootstrap in die <code>Zend_Controller_Front</code> Instanz hinzu.
     </para>
 
     <para>
-        Available configuration keys include the following, and are case
-        insenstitive:
+        Die folgenden Konfigurationsschlüssel sind vorhanden, und sind abhängig von der
+        Groß-/Kleinschreibung:
     </para>
 
     <itemizedlist>
         <listitem><para>
-            <code>controllerDirectory</code>: either a string value
-            specifying a single controller directory, or an array of
-            module/controller directory pairs.
+            <code>controllerDirectory</code>: Entweder ein Stringwert der ein einzelnes Controller
+            Verzeichnis spezifiziert, oder ein Array von Modul/Controller Verzeichnis Paaren.
         </para></listitem>
 
         <listitem><para>
-            <code>moduleControllerDirectoryName</code>: a string value
-            indicating the subdirectory under a module that contains
-            controllers.
+            <code>moduleControllerDirectoryName</code>: Ein Stringwert der auf ein Unterverzeichnis
+            unter einem Modul zeigt, das Controller enthält.
         </para></listitem>
 
         <listitem><para>
-            <code>moduleDirectory</code>: directory under which modules may be
-            found.
+            <code>moduleDirectory</code>: Verzeichnis in dem Module gefunden werden können.
         </para></listitem>
 
         <listitem><para>
-            <code>defaultControllerName</code>: base name of the default
-            controller (normally "index").
+            <code>defaultControllerName</code>: Basisname des Standard Controllers (normalerweise
+            "index").
         </para></listitem>
 
         <listitem><para>
-            <code>defaultAction</code>: base name of the default action
-            (normally "index").
+            <code>defaultAction</code>: Basisname der Standard Aktion (normalerweise "index").
         </para></listitem>
 
         <listitem><para>
-            <code>defaultModule</code>: base name of the default module
-            (normally "default").
+            <code>defaultModule</code>: Basisname des Standard Moduls (normalerweise "default").
         </para></listitem>
 
         <listitem><para>
-            <code>baseUrl</code>: explicit base URL to the application (normally
-            auto-detected).
+            <code>baseUrl</code>: Explizite Basis URL zur Anwendung (normalerweise automatisch
+            erkannt).
         </para></listitem>
 
         <listitem><para>
-            <code>plugins</code>: array of front controller plugin class names.
-            The resource will instantiate each class (with no constructor
-            arguments) and then register the instance with the front controller.
+            <code>plugins</code>: Array von Front Controller Plugin Klassennamen. Die Ressource
+            wird jede Klasse instanziieren (ohne Contructor Argumente) und die Instanz dann mit dem
+            Front Controller registrieren.
         </para></listitem>
 
         <listitem><para>
-            <code>params</code>: array of key/value pairs to register with the
-            front controller.
+            <code>params</code>: Array von Schlüssel/Wert Paaren die mit dem Front Controller
+            registriert werden sollen.
         </para></listitem>
     </itemizedlist>
 
     <para>
-        If an unrecognized key is provided, it is registered as a front
-        controller parameter by passing it to <code>setParam()</code>.
+        Wenn ein Schlüssel übergeben wird der nicht erkannt wird, wird dieser als Parameter beim
+        Front Controller registriert, indem er an <code>setParam()</code> übergeben wird.
     </para>
 
     <example id="zend.application.available-resources.frontcontroller.configExample">
-        <title>Sample Front Controller resource configuration</title>
+        <title>Beispiel der Konfiguration einer Front Controller Ressource</title>
 
         <para>
-            Below is a sample INI snippet showing how to configure the front
-            controller resource.
+            Anbei ist ein Beispiel eines INI Abschnitts der zeigt wie die Front Controller
+            Ressource konfiguriert werden kann.
         </para>
 
         <programlisting role="ini"><![CDATA[
@@ -102,12 +95,11 @@ resources.frontController.env = APPLICATION_ENV
     </example>
 
     <example id="zend.application.available-resources.frontcontroller.frontControllerPropertyExample">
-        <title>Retrieving the Front Controller in your bootstrap</title>
+        <title>Empfangen des Front Controllers im eigenen Bootstrap</title>
 
         <para>
-            Once your Front Controller resource has been initialized, you can
-            fetch the Front Controller instance via the
-            <code>frontController</code> property of your bootstrap.
+            Sobald die Front Controller Ressource initialisiert wurde, kann die Front Controller
+            Instanz über die <code>frontController</code> Eigenschaft der Bootstraps geholt werden.
         </para>
 
         <programlisting role="php"><![CDATA[

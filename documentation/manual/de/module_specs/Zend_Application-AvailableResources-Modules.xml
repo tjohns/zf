@@ -20,27 +20,27 @@
         <title>Abhängigkeiten der Front Controller Ressource</title>
 
         <para>
-            The Modules resource has a dependency on the <link
-                linkend="zend.application.available-resources.frontcontroller">Front
-            Controller resource</link>. You can, of course, provide your own
-            replacement for that resource via a custom Front Controller resource
-            class or a class initializer method -- so long as the resource
-            plugin class ends in "Frontcontroller" or the initializer method is
-            named "_initFrontController" (case insensitive).
+            Die Module Ressource hat eine Abhängigkeit zur
+            <link linkend="zend.application.available-resources.frontcontroller">Front Controller
+            Ressource</link>. Man kann natürlich seine eigenen Ersatz für diese Ressource, über
+            eine eigene Front Controller Ressource Klasse, anbieten oder eine
+            Initialisierungsmethode für eine Klasse -- solange die Ressource Plugin Klasse mit
+            "Frontcontroller" endet, oder die Initialisierungsmethode "_initFrontController"
+            heißt (abhängig von der Groß-/Kleinschreibung).
         </para>
     </note>
 
     <example id="zend.application.available-resources.modules.configExample">
-        <title>Configuring Modules</title>
+        <title>Module konfigurieren</title>
         <para>
-            You can specify module-specific configuration using the module name
-            as a prefix/sub-section in your configuration file.
+            Man kann eine modul-spezifische Konfiguration spezifizieren indem der Modulname als
+            Präfix/Unter-Sektion in der Konfigurationsdatei verwendet wird.
         </para>
 
         <para>
-            For example, let's assume that your application has a "news" module.
-            The following are INI and XML examples showing configuration of
-            resources in that module.
+            Nehmen wir als Beispiel an, das die eigene Anwendung ein "news" Modul hat. Nachfolgend
+            sind die INI und XML Beispiele die eine Konfiguration von Ressourcen in diesem Modul
+            zeigen.
         </para>
 
         <programlisting role="ini"><![CDATA[
@@ -77,14 +77,13 @@ news.resources.layout.layout = "news.phtml"
     </example>
 
     <example id="zend.application.available-resources.modules.retrieveBootstrapExample">
-        <title>Retrieving a specific module bootstrap</title>
+        <title>Eine spezielle Modul Bootstrap erhalten</title>
 
         <para>
-            On occasion, you may need to retrieve the bootstrap object for a
-            specific module -- perhaps to run discrete bootstrap methods, or to
-            fetch the autoloader in order to configure it. This can be done
-            using the Modules resource's <code>getExecutedBootstraps()</code>
-            method.
+            Manchmal will man ein Bootstrap Objekt für ein spezifisches Modul erhalten --
+            möglicherweise um andere Bootstrap Methoden auszuführen, oder um den Autoloader zu
+            holen damit er konfiguriert werden kann. Das kann man erreichen indem die
+            <code>getExecutedBootstraps()</code> Methode der Modul Ressource verwendet wird.
         </para>
 
         <programlisting role="php"><![CDATA[
