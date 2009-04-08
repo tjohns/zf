@@ -4,10 +4,9 @@
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Application</code> provides a bootstrapping facility for
-        applications which provides reusable resources, common- and
-        module-based bootstrap classes and dependency checking. It also takes
-        care of setting up the PHP environment and introduces autoloading by
-        default.
+        <code>Zend_Application</code> bietet eine Möglichkeit des Bootstrappings für Anwendungen
+        für wiederverwendbare Ressourcen, Normal- und Modul-basierende Bootstrap Klassen und der
+        Prüfung deren Abhängigkeit. Es nimmt auch auf die Einstellungen im PHP Environment acht und
+        führt standardmäßig Autoloading durch.
     </para>
 </sect1>

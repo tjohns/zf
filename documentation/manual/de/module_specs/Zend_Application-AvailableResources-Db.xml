@@ -4,38 +4,37 @@
     <title>Zend_Application_Resource_Db</title>
 
     <para>
-        <code>Zend_Application_Resource_Db</code> will initialize a
-        <code>Zend_Db</code> adapter based on the options passed to it. By
-        default, it also sets the adapter as the default adapter for use with
-        <code>Zend_Db_Table</code>.
+        <code>Zend_Application_Resource_Db</code> initialisiert einen <code>Zend_Db</code> Adapter
+        basieren auf den Ihm übergebenen Optionen. Standardmäßig, setzt es den Adapter als
+        Default Adapter zur Verwendung mit <code>Zend_Db_Table</code>.
     </para>
 
     <para>
-        The following configuration keys are recognized:
+        Die folgenden Konfigurationsschlüssel werden erkannt:
     </para>
 
     <itemizedlist>
         <listitem><para>
-            <code>adapter</code>: <code>Zend_Db</code> adapter type.
+            <code>adapter</code>: <code>Zend_Db</code> Adaptertyp.
         </para></listitem>
 
         <listitem><para>
-            <code>params</code>: associative array of configuration
-            parameters to use when retrieving the adapter instance.
+            <code>params</code>: Assoziatives Array von Konfigurationsparametern das verwendet wird
+            wenn man die Instanz des Adapter empfängt.
         </para></listitem>
 
         <listitem><para>
-            <code>isDefaultTableAdapter</code>: whether or not to establish this
-            adapter as the default table adapter.
+            <code>isDefaultTableAdapter</code>: Ob dieser Adapter als Standard-Tabellen Adapter
+            verwendet werden soll oder nicht.
         </para></listitem>
     </itemizedlist>
 
     <example id="zend.application.available-resources.db.configExample">
-        <title>Sample DB adapter resource configuration</title>
+        <title>Beispiel der Konfiguration einer DB Adapter Ressource</title>
 
         <para>
-            Below is an example INI configuration that can be used to initialize
-            the DB resource.
+            Anbei ist das Beispiel einer INI Konfiguration die verwendet werden kann um die DB
+            Ressource zu initialisieren.
         </para>
 
         <programlisting role="ini"><![CDATA[
@@ -50,17 +49,16 @@ resources.db.isDefaultTableAdapter = true
     </example>
 
     <note>
-        <title>Retrieving the Adapter instance</title>
+        <title>Empfangen der Adapter Instanz</title>
 
         <para>
-            If you choose not to make the adapter instantiated with this
-            resource the default table adapter, how do you retrieve the adapter
-            instance?
+            Wenn man den, mit dieser Ressource initialisierten Adapter, nicht zum
+            Standard-Tabellen Adapter macht, wie erhält man dann die Adapter Instanz ?
         </para>
 
         <para>
-            As with any resource plugin, you can fetch the DB resource plugin
-            from your bootstrap:
+            Wie bei jedem Ressource Plugin, kann an das DB Ressource Plugin von der Bootstrap Datei
+            erhalten:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -68,8 +66,8 @@ $resource = $bootstrap->getPluginResource('db');
 ]]></programlisting>
 
         <para>
-            Once you have the resource object, you can fetch the DB adapter
-            using the <code>getDbAdapter()</code> method:
+            Sobald man das Ressource Objekt hat, kann man den DB Adapter erhalten indem die
+            <code>getDbAdapter()</code> Methode verwendet wird:
         </para>
 
         <programlisting role="php"><![CDATA[

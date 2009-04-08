@@ -4,21 +4,20 @@
     <title>Zend_Application_Resource_Modules</title>
 
     <para>
-        <code>Zend_Application_Resource_Modules</code> is used to initialize
-        your application modules. If your module has a
-        <code>Bootstrap.php</code> file in its root, and it contains a class
-        named <code>Module_Bootstrap</code> (where "Module" is the module name),
-        then it will use that class to bootstrap the module.
+        <code>Zend_Application_Resource_Modules</code> wird verwendet im eigene Anwendungsmodule zu
+        initialisieren. Wenn das Modul eine <code>Bootstrap.php</code> Datei in seinem Root hat,
+        und es eine Klasse die <code>Module_Bootstrap</code> heißt enthält (wobei "Module" der
+        Modulname ist), dann wird diese Klasse verwendet um das Modul zu bootstrappen.
     </para>
 
     <para>
-        By default, an instance of
-        <code>Zend_Application_Module_Autoloader</code> will be created for the
-        module, using the module name and directory to initialize it.
+        Standardmäßig wird eine Instanz vom <code>Zend_Application_Module_Autoloader</code> für das
+        Modul erstellt, indem der Modulname und das Verzeichnis dazu verwendet werden sie zu
+        initialisieren.
     </para>
 
     <note>
-        <title>Front Controller resource dependency</title>
+        <title>Abhängigkeiten der Front Controller Ressource</title>
 
         <para>
             The Modules resource has a dependency on the <link
