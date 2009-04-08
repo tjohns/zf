@@ -49,7 +49,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
     const DEFAULT_TIMEOUT = 1;
     const DEFAULT_RETRY_INTERVAL = 15;
     const DEFAULT_STATUS = true;
-    const DEFAULT_FAILURE_CALLBACK = '';
+    const DEFAULT_FAILURE_CALLBACK = null;
 
     /**
      * Log message
