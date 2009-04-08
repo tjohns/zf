@@ -262,8 +262,10 @@ class Zend_View_Helper_Navigation_Menu
             $options['ulClass'] = $this->getUlClass();
         }
 
-        if (isset($options['minDepth']) && $options['minDepth'] !== null) {
-            $options['minDepth'] = (int) $options['minDepth'];
+        if (array_key_exists('minDepth', $options)) {
+            if (null !== $options['minDepth']) {
+                $options['minDepth'] = (int) $options['minDepth'];
+            }
         } else {
             $options['minDepth'] = $this->getMinDepth();
         }
@@ -272,8 +274,10 @@ class Zend_View_Helper_Navigation_Menu
             $options['minDepth'] = 0;
         }
 
-        if (isset($options['maxDepth']) && $options['maxDepth'] !== null) {
-            $options['maxDepth'] = (int) $options['maxDepth'];
+        if (array_key_exists('maxDepth', $options)) {
+            if (null !== $options['maxDepth']) {
+                $options['maxDepth'] = (int) $options['maxDepth'];
+            }
         } else {
             $options['maxDepth'] = $this->getMaxDepth();
         }

@@ -32,6 +32,91 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         // setConfig, setOptions
     }
 
+    public function testSetShouldMapToNativeProperties()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'mvc'
+        ));
+
+        $page->set('action', 'foo');
+        $this->assertEquals('foo', $page->getAction());
+
+        $page->set('Action', 'bar');
+        $this->assertEquals('bar', $page->getAction());
+    }
+
+    public function testGetShouldMapToNativeProperties()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'mvc'
+        ));
+
+        $page->setAction('foo');
+        $this->assertEquals('foo', $page->get('action'));
+
+        $page->setAction('bar');
+        $this->assertEquals('bar', $page->get('Action'));
+    }
+
+    public function testSetShouldNormalizePropertyName()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'mvc'
+        ));
+
+        $page->setResetParams(false);
+        $page->set('reset_params', true);
+        $this->assertTrue($page->getResetParams());
+    }
+
+    public function testGetShouldNormalizePropertyName()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'mvc'
+        ));
+
+        $page->setResetParams(false);
+        $this->assertFalse($page->get('reset_params'));
+    }
+
+    public function testShouldSetAndGetShouldMapToProperties()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri'
+        ));
+
+        $page->set('action', 'Laughing Out Loud');
+        $this->assertEquals('Laughing Out Loud', $page->get('action'));
+    }
+
+    public function testSetShouldNotMapToSetOptionsToPreventRecursion()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'label' => 'foo'
+        ));
+
+        $options = array('label' => 'bar');
+        $page->set('options', $options);
+
+        $this->assertEquals('foo', $page->getLabel());
+        $this->assertEquals($options, $page->get('options'));
+    }
+
+    public function testSetShouldNotMapToSetConfigToPreventRecursion()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'label' => 'foo'
+        ));
+
+        $options = array('label' => 'bar');
+        $page->set('config', $options);
+
+        $this->assertEquals('foo', $page->getLabel());
+        $this->assertEquals($options, $page->get('config'));
+    }
+
     public function testSetAndGetLabel()
     {
         $page = Zend_Navigation_Page::factory(array(
@@ -47,11 +132,10 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         foreach ($invalids as $invalid) {
             try {
                 $page->setLabel($invalid);
-                $msg = $invalid . ' is invalid, but no ';
-                $msg .= 'Zend_Navigation_Exception was thrown';
-                $this->fail($msg);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
-
+                $this->assertContains('Invalid argument: $label', $e->getMessage());
             }
         }
     }
@@ -72,11 +156,10 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         foreach ($invalids as $invalid) {
             try {
                 $page->setId($invalid);
-                $msg = $invalid . ' is invalid, but no ';
-                $msg .= 'Zend_Navigation_Exception was thrown';
-                $this->fail($msg);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
-
+                $this->assertContains('Invalid argument: $id', $e->getMessage());
             }
         }
     }
@@ -107,11 +190,10 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         foreach ($invalids as $invalid) {
             try {
                 $page->setClass($invalid);
-                $msg = $invalid . ' is invalid, but no ';
-                $msg .= 'Zend_Navigation_Exception was thrown';
-                $this->fail($msg);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
-
+                $this->assertContains('Invalid argument: $class', $e->getMessage());
             }
         }
     }
@@ -131,11 +213,10 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         foreach ($invalids as $invalid) {
             try {
                 $page->setTitle($invalid);
-                $msg = $invalid . ' is invalid, but no ';
-                $msg .= 'Zend_Navigation_Exception was thrown';
-                $this->fail($msg);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
-
+                $this->assertContains('Invalid argument: $title', $e->getMessage());
             }
         }
     }
@@ -155,11 +236,10 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         foreach ($invalids as $invalid) {
             try {
                 $page->setTarget($invalid);
-                $msg = $invalid . ' is invalid, but no ';
-                $msg .= 'Zend_Navigation_Exception was thrown';
-                $this->fail($msg);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
-
+                $this->assertContains('Invalid argument: $target', $e->getMessage());
             }
         }
     }
@@ -262,10 +342,13 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         ));
 
         $this->assertEquals(null, $page->getOrder());
+
         $page->setOrder('1');
         $this->assertEquals(1, $page->getOrder());
+
         $page->setOrder(1337);
         $this->assertEquals(1337, $page->getOrder());
+
         $page->setOrder('-25');
         $this->assertEquals(-25, $page->getOrder());
 
@@ -273,53 +356,315 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         foreach ($invalids as $invalid) {
             try {
                 $page->setOrder($invalid);
-                $msg = $invalid . ' is invalid, but no ';
-                $msg .= 'Zend_Navigation_Exception was thrown';
-                $this->fail($msg);
+                $this->fail('An invalid value was set, but a ' .
+                            'Zend_Navigation_Exception was not thrown');
             } catch (Zend_Navigation_Exception $e) {
-
+                $this->assertContains('Invalid argument: $order', $e->getMessage());
             }
         }
     }
 
-    public function testSetAndGetActive()
+    public function testSetResourceString()
     {
         $page = Zend_Navigation_Page::factory(array(
-            'label' => 'foo',
-            'uri' => '#'
+            'type'  => 'uri',
+            'label' => 'hello'
         ));
 
-        $valids = array(true, 1, '1', 3.14, 'true', 'yes');
-        foreach ($valids as $valid) {
-            $page->setActive($valid);
-            $this->assertEquals(true, $page->isActive());
-        }
+        $page->setResource('foo');
+        $this->assertEquals('foo', $page->getResource());
+    }
 
-        $invalids = array(false, 0, '0', 0.0, array());
-        foreach ($invalids as $invalid) {
-            $page->setActive($invalid);
-            $this->assertEquals(false, $page->isActive());
+    public function testSetResourceNoParam()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello',
+            'resource' => 'foo'
+        ));
+
+        $page->setResource();
+        $this->assertEquals(null, $page->getResource());
+    }
+
+    public function testSetResourceNull()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello',
+            'resource' => 'foo'
+        ));
+
+        $page->setResource(null);
+        $this->assertEquals(null, $page->getResource());
+    }
+
+    public function testSetResourceInterface()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello'
+        ));
+
+        require_once 'Zend/Acl/Resource.php';
+        $resource = new Zend_Acl_Resource('bar');
+
+        $page->setResource($resource);
+        $this->assertEquals($resource, $page->getResource());
+    }
+
+    public function testSetResourceShouldThrowExceptionWhenGivenInteger()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello'
+        ));
+
+        try {
+            $page->setResource(0);
+            $this->fail('An invalid value was set, but a ' .
+                        'Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $resource', $e->getMessage());
         }
     }
 
-    public function testSetAndGetVisible()
+    public function testSetResourceShouldThrowExceptionWhenGivenObject()
     {
         $page = Zend_Navigation_Page::factory(array(
-            'label' => 'foo',
-            'uri' => '#'
+            'type'     => 'uri',
+            'label'    => 'hello'
         ));
 
-        $valids = array(true, 1, '1', 3.14, 'true', 'yes');
-        foreach ($valids as $valid) {
-            $page->setVisible($valid);
-            $this->assertEquals(true, $page->isVisible());
+        try {
+            $page->setResource(new stdClass());
+            $this->fail('An invalid value was set, but a ' .
+                        'Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $resource', $e->getMessage());
         }
+    }
 
-        $invalids = array(false, 0, '0', 0.0, array());
-        foreach ($invalids as $invalid) {
-            $page->setVisible($invalid);
-            $this->assertEquals(false, $page->isVisible());
-        }
+    public function testSetPrivilegeNoParams()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello',
+            'privilege' => 'foo'
+        ));
+
+        $page->setPrivilege();
+        $this->assertEquals(null, $page->getPrivilege());
+    }
+
+    public function testSetPrivilegeNull()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello',
+            'privilege' => 'foo'
+        ));
+
+        $page->setPrivilege(null);
+        $this->assertEquals(null, $page->getPrivilege());
+    }
+
+    public function testSetPrivilegeString()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type'     => 'uri',
+            'label'    => 'hello',
+            'privilege' => 'foo'
+        ));
+
+        $page->setPrivilege('bar');
+        $this->assertEquals('bar', $page->getPrivilege());
+    }
+
+    public function testGetActiveOnNewlyConstructedPageShouldReturnFalse()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+        $this->assertFalse($page->getActive());
+    }
+
+    public function testIsActiveOnNewlyConstructedPageShouldReturnFalse()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+        $this->assertFalse($page->isActive());
+    }
+
+    public function testGetActiveShouldReturnTrueIfPageIsActive()
+    {
+        $page = new Zend_Navigation_Page_Uri(array('active' => true));
+        $this->assertTrue($page->getActive());
+    }
+
+    public function testIsActiveShouldReturnTrueIfPageIsActive()
+    {
+        $page = new Zend_Navigation_Page_Uri(array('active' => true));
+        $this->assertTrue($page->isActive());
+    }
+
+    public function testIsActiveWithRecursiveTrueShouldReturnTrueIfChildActive()
+    {
+        $page = new Zend_Navigation_Page_Uri(array(
+            'label'  => 'Page 1',
+            'active' => false,
+            'pages'  => array(
+                new Zend_Navigation_Page_Uri(array(
+                    'label'  => 'Page 1.1',
+                    'active' => false,
+                    'pages'  => array(
+                        new Zend_Navigation_Page_Uri(array(
+                            'label'  => 'Page 1.1',
+                            'active' => true
+                        ))
+                    )
+                ))
+            )
+        ));
+
+        $this->assertFalse($page->isActive(false));
+        $this->assertTrue($page->isActive(true));
+    }
+
+    public function testGetActiveWithRecursiveTrueShouldReturnTrueIfChildActive()
+    {
+        $page = new Zend_Navigation_Page_Uri(array(
+            'label'  => 'Page 1',
+            'active' => false,
+            'pages'  => array(
+                new Zend_Navigation_Page_Uri(array(
+                    'label'  => 'Page 1.1',
+                    'active' => false,
+                    'pages'  => array(
+                        new Zend_Navigation_Page_Uri(array(
+                            'label'  => 'Page 1.1',
+                            'active' => true
+                        ))
+                    )
+                ))
+            )
+        ));
+
+        $this->assertFalse($page->getActive(false));
+        $this->assertTrue($page->getActive(true));
+    }
+
+    public function testSetActiveWithNoParamShouldSetFalse()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+        $page->setActive();
+        $this->assertTrue($page->getActive());
+    }
+
+    public function testSetActiveShouldJuggleValue()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+
+        $page->setActive(1);
+        $this->assertTrue($page->getActive());
+
+        $page->setActive('true');
+        $this->assertTrue($page->getActive());
+
+        $page->setActive(0);
+        $this->assertFalse($page->getActive());
+
+        $page->setActive(array());
+        $this->assertFalse($page->getActive());
+    }
+
+    public function testIsVisibleOnNewlyConstructedPageShouldReturnTrue()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+        $this->assertTrue($page->isVisible());
+    }
+
+    public function testGetVisibleOnNewlyConstructedPageShouldReturnTrue()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+        $this->assertTrue($page->getVisible());
+    }
+
+    public function testIsVisibleShouldReturnFalseIfPageIsNotVisible()
+    {
+        $page = new Zend_Navigation_Page_Uri(array('visible' => false));
+        $this->assertFalse($page->isVisible());
+    }
+
+    public function testGetVisibleShouldReturnFalseIfPageIsNotVisible()
+    {
+        $page = new Zend_Navigation_Page_Uri(array('visible' => false));
+        $this->assertFalse($page->getVisible());
+    }
+
+    public function testIsVisibleRecursiveTrueShouldReturnFalseIfParentInivisble()
+    {
+        $page = new Zend_Navigation_Page_Uri(array(
+            'label'  => 'Page 1',
+            'visible' => false,
+            'pages'  => array(
+                new Zend_Navigation_Page_Uri(array(
+                    'label'  => 'Page 1.1',
+                    'pages'  => array(
+                        new Zend_Navigation_Page_Uri(array(
+                            'label'  => 'Page 1.1'
+                        ))
+                    )
+                ))
+            )
+        ));
+
+        $childPage = $page->findOneByLabel('Page 1.1');
+        $this->assertTrue($childPage->isVisible(false));
+        $this->assertFalse($childPage->isVisible(true));
+    }
+
+    public function testGetVisibleRecursiveTrueShouldReturnFalseIfParentInivisble()
+    {
+        $page = new Zend_Navigation_Page_Uri(array(
+            'label'  => 'Page 1',
+            'visible' => false,
+            'pages'  => array(
+                new Zend_Navigation_Page_Uri(array(
+                    'label'  => 'Page 1.1',
+                    'pages'  => array(
+                        new Zend_Navigation_Page_Uri(array(
+                            'label'  => 'Page 1.1'
+                        ))
+                    )
+                ))
+            )
+        ));
+
+        $childPage = $page->findOneByLabel('Page 1.1');
+        $this->assertTrue($childPage->getVisible(false));
+        $this->assertFalse($childPage->getVisible(true));
+    }
+
+    public function testSetVisibleWithNoParamShouldSetVisble()
+    {
+        $page = new Zend_Navigation_Page_Uri(array('visible' => false));
+        $page->setVisible();
+        $this->assertTrue($page->isVisible());
+    }
+
+    public function testSetVisibleShouldJuggleValue()
+    {
+        $page = new Zend_Navigation_Page_Uri();
+
+        $page->setVisible(1);
+        $this->assertTrue($page->isVisible());
+
+        $page->setVisible('true');
+        $this->assertTrue($page->isVisible());
+
+        $page->setVisible(0);
+        $this->assertFalse($page->isVisible());
+
+        $page->setVisible(array());
+        $this->assertFalse($page->isVisible());
     }
 
     public function testMagicOverLoadsShouldSetAndGetNativeProperties()
@@ -350,7 +695,7 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
             unset($page->uri);
             $this->fail('Should not be possible to unset native properties');
         } catch (Zend_Navigation_Exception $e) {
-
+            $this->assertContains('Unsetting native property', $e->getMessage());
         }
     }
 
@@ -529,6 +874,174 @@ class Zend_Navigation_PageTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testSetRelShouldWorkWithArray()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rel'  => array(
+                'foo' => 'bar',
+                'baz' => 'bat'
+            )
+        ));
+
+        $value = array('alternate' => 'format/xml');
+        $page->setRel($value);
+        $this->assertEquals($value, $page->getRel());
+    }
+
+    public function testSetRelShouldWorkWithConfig()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rel'  => array(
+                'foo' => 'bar',
+                'baz' => 'bat'
+            )
+        ));
+
+        $value = array('alternate' => 'format/xml');
+        $page->setRel(new Zend_Config($value));
+        $this->assertEquals($value, $page->getRel());
+    }
+
+    public function testSetRelShouldWithNoParamsShouldResetRelations()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rel'  => array(
+                'foo' => 'bar',
+                'baz' => 'bat'
+            )
+        ));
+
+        $value = array();
+        $page->setRel();
+        $this->assertEquals($value, $page->getRel());
+    }
+
+    public function testSetRelShouldThrowExceptionWhenNotNullOrArrayOrConfig()
+    {
+        $page = Zend_Navigation_Page::factory(array('type' => 'uri'));
+
+        try {
+            $page->setRel('alternate');
+            $this->fail('An invalid value was set, but a ' .
+                        'Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $relations', $e->getMessage());
+        }
+    }
+
+    public function testSetRevShouldWorkWithArray()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rev'  => array(
+                'foo' => 'bar',
+                'baz' => 'bat'
+            )
+        ));
+
+        $value = array('alternate' => 'format/xml');
+        $page->setRev($value);
+        $this->assertEquals($value, $page->getRev());
+    }
+
+    public function testSetRevShouldWorkWithConfig()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rev'  => array(
+                'foo' => 'bar',
+                'baz' => 'bat'
+            )
+        ));
+
+        $value = array('alternate' => 'format/xml');
+        $page->setRev(new Zend_Config($value));
+        $this->assertEquals($value, $page->getRev());
+    }
+
+    public function testSetRevShouldWithNoParamsShouldResetRelations()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rev'  => array(
+                'foo' => 'bar',
+                'baz' => 'bat'
+            )
+        ));
+
+        $value = array();
+        $page->setRev();
+        $this->assertEquals($value, $page->getRev());
+    }
+
+    public function testSetRevShouldThrowExceptionWhenNotNullOrArrayOrConfig()
+    {
+        $page = Zend_Navigation_Page::factory(array('type' => 'uri'));
+
+        try {
+            $page->setRev('alternate');
+            $this->fail('An invalid value was set, but a ' .
+                        'Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $relations', $e->getMessage());
+        }
+    }
+
+    public function testGetRelWithArgumentShouldRetrieveSpecificRelation()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rel'  => array(
+                'foo' => 'bar'
+            )
+        ));
+
+        $this->assertEquals('bar', $page->getRel('foo'));
+    }
+
+    public function testGetRevWithArgumentShouldRetrieveSpecificRelation()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rev'  => array(
+                'foo' => 'bar'
+            )
+        ));
+
+        $this->assertEquals('bar', $page->getRev('foo'));
+    }
+
+    public function testGetDefinedRel()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rel'  => array(
+                'alternate' => 'foo',
+                'foo' => 'bar'
+            )
+        ));
+
+        $expected = array('alternate', 'foo');
+        $this->assertEquals($expected, $page->getDefinedRel());
+    }
+
+    public function testGetDefinedRev()
+    {
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri',
+            'rev'  => array(
+                'alternate' => 'foo',
+                'foo' => 'bar'
+            )
+        ));
+
+        $expected = array('alternate', 'foo');
+        $this->assertEquals($expected, $page->getDefinedRev());
     }
 
     public function testGetCustomProperties()

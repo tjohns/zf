@@ -77,6 +77,20 @@ class Zend_View_Helper_Navigation_SitemapTest
         }
     }
 
+    public function testHelperEntryPointWithoutAnyParams()
+    {
+        $returned = $this->_helper->sitemap();
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav1, $returned->getContainer());
+    }
+
+    public function testHelperEntryPointWithContainerParam()
+    {
+        $returned = $this->_helper->sitemap($this->_nav2);
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav2, $returned->getContainer());
+    }
+
     public function testNullingOutNavigation()
     {
         $this->_helper->setContainer();
@@ -166,13 +180,10 @@ class Zend_View_Helper_Navigation_SitemapTest
 
     public function testDropXmlDeclaration()
     {
-        $old = $this->_helper->getUseXmlDeclaration();
         $this->_helper->setUseXmlDeclaration(false);
 
         $expected = $this->_getExpected('sitemap/nodecl.xml');
         $this->assertEquals($expected, $this->_helper->render($this->_nav2));
-
-        $this->_helper->setUseXmlDeclaration($old);
     }
 
     public function testThrowExceptionOnInvalidLoc()
@@ -202,6 +213,41 @@ class Zend_View_Helper_Navigation_SitemapTest
 
         $expected = $this->_getExpected('sitemap/invalid.xml');
         $this->assertEquals($expected, $this->_helper->render($nav));
+    }
+
+    public function testSetServerUrlRequiresValidUri()
+    {
+        try {
+            $this->_helper->setServerUrl('site.example.org');
+            $this->fail('An invalid server URL was given, but a ' .
+                        'Zend_Uri_Exception was not thrown');
+        } catch (Zend_Uri_Exception $e) {
+            $this->assertContains('Illegal scheme', $e->getMessage());
+        }
+    }
+
+    public function testSetServerUrlWithSchemeAndHost()
+    {
+        $this->_helper->setServerUrl('http://sub.example.org');
+
+        $expected = $this->_getExpected('sitemap/serverurl1.xml');
+        $this->assertEquals($expected, $this->_helper->render());
+    }
+
+    public function testSetServerUrlWithSchemeAndPortAndHostAndPath()
+    {
+        $this->_helper->setServerUrl('http://sub.example.org:8080/foo/');
+
+        $expected = $this->_getExpected('sitemap/serverurl2.xml');
+        $this->assertEquals($expected, $this->_helper->render());
+    }
+
+    public function testGetUserSchemaValidation()
+    {
+        $this->_helper->setUseSchemaValidation(true);
+        $this->assertTrue($this->_helper->getUseSchemaValidation());
+        $this->_helper->setUseSchemaValidation(false);
+        $this->assertFalse($this->_helper->getUseSchemaValidation());
     }
 
     public function testUseSchemaValidation()

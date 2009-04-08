@@ -23,6 +23,20 @@ class Zend_View_Helper_Navigation_BreadcrumbsTest
      */
     protected $_helper;
 
+    public function testHelperEntryPointWithoutAnyParams()
+    {
+        $returned = $this->_helper->breadcrumbs();
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav1, $returned->getContainer());
+    }
+
+    public function testHelperEntryPointWithContainerParam()
+    {
+        $returned = $this->_helper->breadcrumbs($this->_nav2);
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav2, $returned->getContainer());
+    }
+
     public function testNullOutContainer()
     {
         $old = $this->_helper->getContainer();

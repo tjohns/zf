@@ -29,14 +29,42 @@ class Zend_View_Helper_Navigation_LinksTest
      */
     protected $_helper;
 
+    private $_doctypeHelper;
+    private $_oldDoctype;
+
     public function setUp()
     {
         parent::setUp();
+
+        // doctype fix (someone forgot to clean up after their unit tests)
+        $this->_doctypeHelper = $this->_helper->view->doctype();
+        $this->_oldDoctype = $this->_doctypeHelper->getDoctype();
+        $this->_doctypeHelper->setDoctype(
+                Zend_View_Helper_Doctype::HTML4_LOOSE);
 
         // disable all active pages
         foreach ($this->_helper->findAllByActive(true) as $page) {
             $page->active = false;
         }
+    }
+
+    public function tearDown()
+    {
+        $this->_doctypeHelper->setDoctype($this->_oldDoctype);
+    }
+
+    public function testHelperEntryPointWithoutAnyParams()
+    {
+        $returned = $this->_helper->links();
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav1, $returned->getContainer());
+    }
+
+    public function testHelperEntryPointWithContainerParam()
+    {
+        $returned = $this->_helper->links($this->_nav2);
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav2, $returned->getContainer());
     }
 
     public function testDoNotRenderIfNoPageIsActive()
@@ -470,6 +498,30 @@ class Zend_View_Helper_Navigation_LinksTest
         }
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testFindRelationMustSpecifyRelOrRev()
+    {
+        $active = $this->_helper->findOneByLabel('Home');
+        try {
+            $this->_helper->findRelation($active, 'foo', 'bar');
+            $this->fail('An invalid value was given, but a ' .
+                        'Zend_View_Exception was not thrown');
+        } catch (Zend_View_Exception $e) {
+            $this->assertContains('Invalid argument: $rel', $e->getMessage());
+        }
+    }
+
+    public function testRenderLinkMustSpecifyRelOrRev()
+    {
+        $active = $this->_helper->findOneByLabel('Home');
+        try {
+            $this->_helper->renderLink($active, 'foo', 'bar');
+            $this->fail('An invalid value was given, but a ' .
+                        'Zend_View_Exception was not thrown');
+        } catch (Zend_View_Exception $e) {
+            $this->assertContains('Invalid relation attribute', $e->getMessage());
+        }
     }
 
     public function testFindAllRelations()

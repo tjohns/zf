@@ -318,4 +318,23 @@ class Zend_Navigation_Page_MvcTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(),
             array_diff_assoc($options, $page->toArray()));
     }
+
+    public function testSpecifyingAnotherUrlHelperToGenerateHrefs()
+    {
+        $path = dirname(dirname(__FILE__)) . '/_files/My/UrlHelper.php';
+        require_once $path;
+
+        $newHelper = new My_UrlHelper();
+        Zend_Navigation_Page_Mvc::setUrlHelper($newHelper);
+
+        $page = new Zend_Navigation_Page_Mvc();
+
+        $expected = My_UrlHelper::RETURN_URL;
+        $actual = $page->getHref();
+
+        $old = Zend_Controller_Action_HelperBroker::getStaticHelper('Url');
+        Zend_Navigation_Page_Mvc::setUrlHelper($old);
+
+        $this->assertEquals($expected, $actual);
+    }
 }

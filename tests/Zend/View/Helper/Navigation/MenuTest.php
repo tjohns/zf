@@ -23,6 +23,20 @@ class Zend_View_Helper_Navigation_MenuTest
      */
     protected $_helper;
 
+    public function testHelperEntryPointWithoutAnyParams()
+    {
+        $returned = $this->_helper->menu();
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav1, $returned->getContainer());
+    }
+
+    public function testHelperEntryPointWithContainerParam()
+    {
+        $returned = $this->_helper->menu($this->_nav2);
+        $this->assertEquals($this->_helper, $returned);
+        $this->assertEquals($this->_nav2, $returned->getContainer());
+    }
+
     public function testNullingOutContainerInHelper()
     {
         $this->_helper->setContainer();
@@ -226,7 +240,138 @@ class Zend_View_Helper_Navigation_MenuTest
         }
     }
 
+
+
+
+
+
+
+
+
     public function testSetMaxDepth()
+    {
+        $this->_helper->setMaxDepth(1);
+
+        $expected = $this->_getExpected('menu/maxdepth.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testSetMinDepth()
+    {
+        $this->_helper->setMinDepth(1);
+
+        $expected = $this->_getExpected('menu/mindepth.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testSetBothDepts()
+    {
+        $this->_helper->setMinDepth(1)->setMaxDepth(2);
+
+        $expected = $this->_getExpected('menu/bothdepts.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testSetOnlyActiveBranch()
+    {
+        $this->_helper->setOnlyActiveBranch(true);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testSetRenderParents()
+    {
+        $this->_helper->setOnlyActiveBranch(true)->setRenderParents(false);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch_noparents.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testSetOnlyActiveBranchAndMinDepth()
+    {
+        $this->_helper->setOnlyActiveBranch()->setMinDepth(1);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch_mindepth.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testOnlyActiveBranchAndMaxDepth()
+    {
+        $this->_helper->setOnlyActiveBranch()->setMaxDepth(2);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch_maxdepth.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testOnlyActiveBranchAndBothDepthsSpecified()
+    {
+        $this->_helper->setOnlyActiveBranch()->setMinDepth(1)->setMaxDepth(2);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch_bothdepts.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testOnlyActiveBranchNoParentsAndBothDepthsSpecified()
+    {
+        $this->_helper->setOnlyActiveBranch()
+                      ->setMinDepth(1)
+                      ->setMaxDepth(2)
+                      ->setRenderParents(false);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch_np_bd.html');
+        $actual = $this->_helper->renderMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testRenderSubMenuShouldOverrideOptions()
+    {
+        $this->_helper->setOnlyActiveBranch(false)
+                      ->setMinDepth(1)
+                      ->setMaxDepth(2)
+                      ->setRenderParents(true);
+
+        $expected = $this->_getExpected('menu/onlyactivebranch_noparents.html');
+        $actual = $this->_helper->renderSubMenu();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function testOptionMaxDepth()
     {
         $options = array(
             'maxDepth' => 1
@@ -238,7 +383,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testSetMinDepth()
+    public function testOptionMinDepth()
     {
         $options = array(
             'minDepth' => 1
@@ -250,7 +395,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testSetBothDepts()
+    public function testOptionBothDepts()
     {
         $options = array(
             'minDepth' => 1,
@@ -263,7 +408,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testOnlyActiveBranch()
+    public function testOptionOnlyActiveBranch()
     {
         $options = array(
             'onlyActiveBranch' => true
@@ -275,7 +420,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testOnlyActiveBranchNoParents()
+    public function testOptionOnlyActiveBranchNoParents()
     {
         $options = array(
             'onlyActiveBranch' => true,
@@ -288,7 +433,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testOnlyActiveBranchAndMinDepth()
+    public function testOptionOnlyActiveBranchAndMinDepth()
     {
         $options = array(
             'minDepth' => 1,
@@ -301,7 +446,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testOnlyActiveBranchAndMaxDepth()
+    public function testOptionOnlyActiveBranchAndMaxDepth()
     {
         $options = array(
             'maxDepth' => 2,
@@ -314,7 +459,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testOnlyActiveBranchAndBothDepthsSpecified()
+    public function testOptionOnlyActiveBranchAndBothDepthsSpecified()
     {
         $options = array(
             'minDepth' => 1,
@@ -328,7 +473,7 @@ class Zend_View_Helper_Navigation_MenuTest
         $this->assertEquals($expected, $actual);
     }
 
-    public function testOnlyActiveBranchNoParentsAndBothDepthsSpecified()
+    public function testOptionOnlyActiveBranchNoParentsAndBothDepthsSpecified()
     {
         $options = array(
             'minDepth' => 2,

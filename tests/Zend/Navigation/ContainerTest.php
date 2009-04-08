@@ -27,7 +27,76 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testIteratorShouldBeOrderAware()
+    public function testConstructWithArray()
+    {
+        $argument = array(
+            array(
+                'label' => 'Page 1',
+                'uri'   => 'page1.html'
+            ),
+            array(
+                'label' => 'Page 2',
+                'uri'   => 'page2.html'
+            ),
+            array(
+                'label' => 'Page 3',
+                'uri'   => 'page3.html'
+            )
+        );
+
+        $container = new Zend_Navigation($argument);
+        $this->assertEquals(3, $container->count());
+    }
+
+    public function testConstructWithConfig()
+    {
+        $argument = new Zend_Config(array(
+            array(
+                'label' => 'Page 1',
+                'uri'   => 'page1.html'
+            ),
+            array(
+                'label' => 'Page 2',
+                'uri'   => 'page2.html'
+            ),
+            array(
+                'label' => 'Page 3',
+                'uri'   => 'page3.html'
+            )
+        ));
+
+        $container = new Zend_Navigation($argument);
+        $this->assertEquals(3, $container->count());
+    }
+
+    public function testConstructorShouldThrowExceptionOnInvalidArgument()
+    {
+        try {
+            $nav = new Zend_Navigation('ok');
+            $this->fail('An invalid argument was given to the constructor, ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $pages', $e->getMessage());
+        }
+
+        try {
+            $nav = new Zend_Navigation(1337);
+            $this->fail('An invalid argument was given to the constructor, ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $pages', $e->getMessage());
+        }
+
+        try {
+            $nav = new Zend_Navigation(new stdClass());
+            $this->fail('An invalid argument was given to the constructor, ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $pages', $e->getMessage());
+        }
+    }
+
+    public function testIterationShouldBeOrderAware()
     {
         $nav = new Zend_Navigation(array(
             array(
@@ -144,7 +213,6 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
         ));
 
         $nav->addPage($page3);
-
 
         $expected = array(
             'before' => array('Page 1', 'Page 2', 'Page 3'),
@@ -273,6 +341,32 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
                             'Expected 3 pages, found ' . count($nav));
     }
 
+    public function testAddPagesShouldThrowExceptionWhenGivenString()
+    {
+        $nav = new Zend_Navigation();
+
+        try {
+            $nav->addPages('this is a string');
+            $this->fail('An invalid argument was given to addPages(), ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $pages must be', $e->getMessage());
+        }
+    }
+
+    public function testAddPagesShouldThrowExceptionWhenGivenAnArbitraryObject()
+    {
+        $nav = new Zend_Navigation();
+
+        try {
+            $nav->addPages($pages = new stdClass());
+            $this->fail('An invalid argument was given to addPages(), ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Invalid argument: $pages must be', $e->getMessage());
+        }
+    }
+
     public function testRemovingAllPages()
     {
         $nav = new Zend_Navigation();
@@ -316,6 +410,68 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, count($nav),
                             'Expected 1 page, found ' . count($nav));
+    }
+
+    public function testGetPagesShouldReturnAnArrayOfPages()
+    {
+        $nav = new Zend_Navigation(array(
+            array(
+                'uri' => 'Page 1'
+            ),
+            array(
+                'uri' => 'Page 2'
+            )
+        ));
+
+        $pages = $nav->getPages();
+
+        $expected = array(
+            'type' => 'array',
+            'count' => 2
+        );
+
+        $actual = array(
+            'type' => gettype($pages),
+            'count' => count($pages)
+        );
+
+        $this->assertEquals($expected, $actual);
+        $this->assertContainsOnly('Zend_Navigation_Page_Uri', $pages, false);
+    }
+
+    public function testGetPagesShouldReturnUnorderedPages()
+    {
+        $nav = new Zend_Navigation(array(
+            array(
+                'label' => 'Page 2',
+                'uri' => '#',
+                'order' => -1
+            ),
+            array(
+                'label' => 'Page 4',
+                'uri' => '#',
+                'order' => 100
+            ),
+            array(
+                'label' => 'Page 1',
+                'uri' => '#'
+            ),
+            array(
+                'label' => 'Page 5',
+                'uri' => '#'
+            ),
+            array(
+                'label' => 'Page 3',
+                'uri' => '#'
+            )
+        ));
+
+        $expected = array('Page 2', 'Page 4', 'Page 1', 'Page 5', 'Page 3');
+        $actual = array();
+        foreach ($nav->getPages() as $page) {
+            $actual[] = $page->getLabel();
+        }
+        $this->assertEquals($expected, $actual);
     }
 
     public function testRemovingPageByOrder()
@@ -571,6 +727,7 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
         $nav = $this->_getFindByNavigation();
 
         $found = $nav->findOneBy('page2', 'page2');
+        $this->assertType('Zend_Navigation_Page', $found);
         $this->assertEquals('Page 2', $found->getLabel());
     }
 
@@ -580,6 +737,7 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
 
         $found = $nav->findOneBy('id', 'page_2_and_3');
         $this->assertType('Zend_Navigation_Page', $found);
+        $this->assertEquals('Page 2', $found->getLabel());
     }
 
     public function testFindOneByShouldReturnNullIfNotFound()
@@ -595,16 +753,14 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
         $nav = $this->_getFindByNavigation();
 
         $found = $nav->findAllBy('id', 'page_2_and_3');
+        $this->assertContainsOnly('Zend_Navigation_Page', $found, false);
 
-        $expected = array(
-            'type' => 'array',
-            'count' => 2
-        );
+        $expected = array('Page 2', 'Page 3');
+        $actual = array();
 
-        $actual = array(
-            'type' => gettype($found),
-            'count' => count($found)
-        );
+        foreach ($found as $page) {
+            $actual[] = $page->getLabel();
+        }
 
         $this->assertEquals($expected, $actual);
     }
@@ -625,6 +781,107 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
 
         $found = $nav->findBy('id', 'page_2_and_3');
         $this->assertType('Zend_Navigation_Page', $found);
+    }
+
+    public function testFindOneByMagicMethodNativeProperty()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        $found = $nav->findOneById('page_2_and_3');
+        $this->assertType('Zend_Navigation_Page', $found);
+        $this->assertEquals('Page 2', $found->getLabel());
+    }
+
+    public function testFindOneByMagicMethodCustomProperty()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        $found = $nav->findOneBypage2('page2');
+        $this->assertType('Zend_Navigation_Page', $found);
+        $this->assertEquals('Page 2', $found->getLabel());
+    }
+
+    public function testFindAllByWithMagicMethodNativeProperty()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        $found = $nav->findAllById('page_2_and_3');
+        $this->assertContainsOnly('Zend_Navigation_Page', $found, false);
+
+        $expected = array('Page 2', 'Page 3');
+        $actual = array();
+        foreach ($found as $page) {
+            $actual[] = $page->getLabel();
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFindAllByMagicUcfirstPropDoesNotFindCustomLowercaseProps()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        $found = $nav->findAllByAction('about');
+        $this->assertContainsOnly('Zend_Navigation_Page', $found, false);
+
+        $expected = array('Page 3');
+        $actual = array();
+        foreach ($found as $page) {
+            $actual[] = $page->getLabel();
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFindAllByMagicLowercaseFindsBothNativeAndCustomProps()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        $found = $nav->findAllByaction('about');
+        $this->assertContainsOnly('Zend_Navigation_Page', $found, false);
+
+        $expected = array('Page 1.3', 'Page 3');
+        $actual = array();
+        foreach ($found as $page) {
+            $actual[] = $page->getLabel();
+        }
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFindByMagicMethodIsEquivalentToFindOneBy()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        $found = $nav->findById('page_2_and_3');
+        $this->assertType('Zend_Navigation_Page', $found);
+        $this->assertEquals('Page 2', $found->getLabel());
+    }
+
+    public function testInvalidMagicFinderMethodShouldThrowException()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        try {
+            $found = $nav->findSomeById('page_2_and_3');
+            $this->fail('An invalid magic finder method was used, ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Bad method call', $e->getMessage());
+        }
+    }
+
+    public function testInvalidMagicMethodShouldThrowException()
+    {
+        $nav = $this->_getFindByNavigation();
+
+        try {
+            $found = $nav->getPagez();
+            $this->fail('An invalid magic finder method was used, ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Bad method call', $e->getMessage());
+        }
     }
 
     protected function _getFindByNavigation()
@@ -676,5 +933,82 @@ class Zend_Navigation_ContainerTest extends PHPUnit_Framework_TestCase
                 'action'     => 'about'
             )
         ));
+    }
+
+    public function testCurrent()
+    {
+        $container = new Zend_Navigation(array(
+            array(
+                'label' => 'Page 2',
+                'type'  => 'uri'
+            ),
+            array(
+                'label' => 'Page 1',
+                'type'  => 'uri',
+                'order' => -1
+            )
+        ));
+
+        $page = $container->current();
+        $this->assertEquals('Page 1', $page->getLabel());
+    }
+
+    public function testCurrentShouldThrowExceptionIfIndexIsInvalid()
+    {
+        require_once dirname(__FILE__) . '/_files/My/Container.php';
+        $container = new My_Container(array(
+            array(
+                'label' => 'Page 2',
+                'type'  => 'uri'
+            ),
+            array(
+                'label' => 'Page 1',
+                'type'  => 'uri',
+                'order' => -1
+            )
+        ));
+
+        try {
+            $page = $container->current();
+            $this->fail('Container index is invalid, ' .
+                        'but a Zend_Navigation_Exception was not thrown');
+        } catch (Zend_Navigation_Exception $e) {
+            $this->assertContains('Corruption detected', $e->getMessage());
+        }
+    }
+
+    public function testKeyWhenContainerIsEmpty()
+    {
+        $container = new Zend_Navigation();
+        $this->assertEquals(null, $container->key());
+    }
+
+    public function testKeyShouldReturnCurrentPageHash()
+    {
+        $container = new Zend_Navigation();
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri'
+        ));
+        $container->addPage($page);
+
+        $this->assertEquals($page->hashCode(), $container->key());
+    }
+
+    public function testGetChildrenShouldReturnTheCurrentPage()
+    {
+        $container = new Zend_Navigation();
+        $page = Zend_Navigation_Page::factory(array(
+            'type' => 'uri'
+        ));
+        $container->addPage($page);
+
+        $this->assertEquals($page, $container->getChildren());
+    }
+
+    public function testGetChildrenShouldReturnNullWhenContainerIsEmpty()
+    {
+        $container = new Zend_Navigation();
+
+        $this->assertEquals(null, $container->getChildren());
     }
 }
