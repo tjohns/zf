@@ -1,132 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect1 id="zend.application.theory-of-operation">
-    <title>Theory of Operation</title>
+    <title>Theorie der Funktionsweise</title>
 
     <para>
-        Getting an MVC application configured and ready to dispatch has
-        required an increasing amount of code as more features become
-        available: setting up the database, configuring your view and view
-        helpers, configuring your layouts, registering plugins, registering
-        action helpers, and more.
+        Um eine MVC Anwendung zu konfigurieren und bereit zur Auslieferung zu bekommen wird ein
+        immer größerer Anteil an Code benötigt sobald mehr Features verfügbar sind: Setzen der
+        Datenbank, Konfiguration der View und View Helfer, Konfiguration der Layouts, Registrierung
+        der Plugins, Registrierung der Aktion Helfer, und andere.
     </para>
 
     <para>
-        Additionally, you will often want to reuse the same code to
-        bootstrap your tests, a cronjob, or a service script. While it's
-        possible to simply include your bootstrap script, oftentimes there
-        are initializations that are environment specific – you may not need
-        the MVC for a cronjob, or just the DB layer for a service script.
+        Zusätzlich will man oft den gleichen Code wiederverwenden um Tests zu bootstrappen, einen
+        Cronjob, oder ein Service Skript zu haben. Wärend es sehr einfach ist sein Bootstrap Skript
+        einzubauen, gibt es oft Initialisierungen die abhängig sind von der Umgebung - man könnte
+        kein MVC für einen Cronjob benötigen, oder nur den DB Layer für ein Service Skript.
     </para>
 
     <para>
-        <code>Zend_Application</code> aims to make this easier and to
-        promote reuse by encapsulating bootstrapping into OOP paradigms.
+        <code>Zend_Application</code> zielt darauf ab das alles einfacher zu machen und bietet
+        Wiederwervendbarkeit durch die Kapselung vom Bootstrapping in OOP Paradigmen.
     </para>
 
     <para>
-        Zend_Application is broken into three realms:
-    </para>
-
-    <itemizedlist>
-        <listitem>
-            <para>
-                <code>Zend_Application</code>: loads the PHP environment,
-                including include_paths and autoloading, and instantiates
-                the requested bootstrap class.
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                <code>Zend_Application_Bootstrap</code>: provides
-                interfaces for bootstrap classes.
-                <code>Zend_Application_Bootstrap_Base</code> provides common
-                functionality for most bootstrapping needs, including
-                dependency checking algorithms and the ability to load
-                bootstrap resources on demand.
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                <code>Zend_Application_Resource</code> provides an
-                interface for standard bootstrapping resources that can be
-                loaded on demand by a bootstrap instance, as well as several
-                default resource implementations.
-            </para>
-        </listitem>
-    </itemizedlist>
-
-    <para>
-        Developers create a bootstrap class for their application, extending
-        <code>Zend_Application_Bootstrap_Base</code> or implementing (minimally)
-        <code>Zend_Application_Bootstrap_IBootstrap</code>. The entry point
-        (e.g., public/index.php) will load <code>Zend_Application</code>,
-        and instantiate it by passing:
+        Zend_Application ist in drei Bereiche geteilt:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                The current environment
+                <code>Zend_Application</code>: Lädt die PHP Umgebung, inklusive Inklude-Pfade und
+                Autoloading, und instanziiert die benötigte Bootstrap Klasse.
             </para>
         </listitem>
         <listitem>
             <para>
-                Options for bootstrapping
+                <code>Zend_Application_Bootstrap</code>: Bietet Interfaces für Bootstrap Klassen.
+                <code>Zend_Application_Bootstrap_Base</code> bietet übliche Funktionalitäten für
+                die meisten Notwendigkeiten des Bootstrappings, inklusive Angorithmen um
+                Abhängigkeiten zu prüfen und die Möglichkeit Bootstrap Ressourcen bei Bedarf zu
+                laden.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <code>Zend_Application_Resource</code> bietet ein Interface für Standard
+                Bootstrap Ressourcen die bei Bedarf von einer Bootstrap Instanz geladen werden
+                können, sowie verschiedene standardmäßige Ressource Implementationen.
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        The bootstrap options include the path to the file containing the
-        bootstrap class and optionally:
+        Entwickler erstellen eine Bootstrap Klasse für Ihre Anwendung und erweitern
+        <code>Zend_Application_Bootstrap_Base</code> oder implementieren (mindestens)
+        <code>Zend_Application_Bootstrap_IBootstrap</code>. Der Einstiegspunkt
+        (z.B. public/index.php) lädt <code>Zend_Application</code> und initialisiert Sie indem
+        folgendes übergeben wird:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                Any extra include_paths to set
+                Die aktuelle Umgebung
             </para>
         </listitem>
         <listitem>
             <para>
-                Any additional autoloader namespaces to register
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Any php.ini settings to initialize
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                The class name for the bootstrap class (if not "Bootstrap")
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Resource prefix/path pairs to use
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Any resources to use (by class name or short name)
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Additional path to a configuration file to load
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                Additional configuration options
+                Optionen für das Bootstrapping
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Options may be an array, a <code>Zend_Config</code> object, or the path
-        to a configuration file.
+        Die Bootstrap Optionen enthalten den Pfad zur Datei die die Bootstrap Klasse enthält und
+        optional:
+    </para>
+
+    <itemizedlist>
+        <listitem>
+            <para>
+                Jeden include_path der extra zu setzen ist
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Jeden Autoloader Namespace der zusätzlich zu registrieren ist
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Jede php.ini Einstellung die zu initialisieren ist
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Den Klassennamen für die Bootstrap Klasse (wenn diese nicht "Bootstrap" ist)
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Ressourcen Präfix/Pfad Paare die zu verwenden sind
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Jede Ressource die zu verwenden ist (durch Name der Klasse oder Kurzname)
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Zusätzliche Pfade zu einer Konfigurationsdatei die zu laden ist
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Zusätzliche Konfigurations Optionen
+            </para>
+        </listitem>
+    </itemizedlist>
+
+    <para>
+        Optionen können sein, ein Array, ein <code>Zend_Config</code> Objekt, oder der Pfad zu
+        einer Konfigurationsdatei.
     </para>
 </sect1>

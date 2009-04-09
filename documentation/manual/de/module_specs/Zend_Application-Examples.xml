@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect1 id="zend.application.examples">
-    <title>Examples</title>
+    <title>Beispiele</title>
 
     <para>
-        The Bootstrap class itself will typically be fairly minimal; often,
-        it could consist of solely the following:
+        Die Bootstrap Klasse selbst wird typischerweise sehr minimal sein; oft besteht Sie nur
+        aus dem folgenden:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -20,7 +20,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </programlisting>
 
     <para>
-        With a corresponding configuration file:
+        Mit einer entsprechenden Konfigurationsdatei:
     </para>
 
     <programlisting role="ini"><![CDATA[
@@ -35,12 +35,12 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 ]]></programlisting>
 
     <para>
-        However, should custom initialization be necessary, you have two
-        choices. First, you can write methods prefixed with <code>_init</code>
-        to specify discrete code to bootstrap. These methods will be called by
-        bootstrap(), and can also be called as if they were public methods:
-        <code>bootstrap&lt;resource&gt;()</code>. They should accept an optional
-        array of options.
+        Sollten trotzdem, eigene Initialisierungen notwendig sein, hat man zwei Möglichkeiten.
+        Erstens, kann man Methoden schreiben die mit <code>_init</code> anfangen um eigenen Code
+        zu spezifizieren der für das Bootstrapping verwendet werden soll. Diese Methoden werden
+        durch bootstrap( aufgerufen, und können genauso aufgerufen werden wie wenn Sie öffentliche
+        Methoden wären: <code>bootstrap&lt;resource&gt;()</code>. Sie sollten ein optionales
+        Array an Optionen akzeptieren.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -48,7 +48,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
 {
     protected function _initRequest(array $options = array())
     {
-        // ensure front controller instance is present
+        // sicherstellen das eine Front Controller Instanz vorhanden ist
         $this->bootstrap('frontController');
         $this->request = new Zend_Controller_Request_Http();
         $this->frontController->setRequest($this->request);
@@ -58,42 +58,40 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </programlisting>
 
     <para>
-        Note in this example the call to <code>bootstrap()</code>;
-        this ensures that the front controller has been initialized prior to
-        calling this method. That call may trigger either a resource or another
-        method in the class.
+        Beachte in diesem Beispiel den Aufruf von <code>bootstrap()</code>; dieser stellt sicher
+        das der Front Controlle initialisiert wurde before die Methode aufgerufen wird. Dieser
+        Aufruf kan entweder eine Ressource oder eine andere Methode in der Klasse auslösen.
     </para>
 
     <para>
-        The other option is to use bootstrap resources. Bootstrap resources are
-        objects that perform specific initializations, and may be specified:
+        Die andere Option ist die Verwendung einer Bootstrap Ressource. Bootstrap Ressourcen sind
+        Objekte die spezielle Initialisierungen ausführen, und die wie folgt spezifiziert werden
+        können:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                When instantiating the Zend_Application object
+                Wärend der Instanzierung des Zend_Application Objekts
             </para>
         </listitem>
         <listitem>
             <para>
-                During initialization of the bootstrap object
+                Wärend der Initialisierung des Bootstrap Objekts
             </para>
         </listitem>
         <listitem>
             <para>
-                By explicitly enabling them via method calls to the bootstrap
-                object
+                Durch explizites einschalten über Methodenaufrufe auf dem Bootstrap Objekt
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Resources implement <code>Zend_Application_Bootstrap_Resource</code>,
-        which defines simply that they allow injection of the caller and
-        options, and that they have an <code>init()</code> method. As an
-        example, a custom "View" bootstrap resource might look like the
-        following:
+        Ressourcen implementieren <code>Zend_Application_Bootstrap_Resource</code>, welche einfach
+        definieren das Sie Injektion des Aufrufers und von Optionen erlauben, und die eine
+        <code>init()</code> Methode haben. Als Beispiel, könnte eine eigene "View" Bootstrap
+        Ressource wie folgt aussehen:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -105,7 +103,7 @@ class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
         Zend_Dojo::enableView($view);
 
         $view->doctype('XHTML1_STRICT');
-        $view->headTitle()->setSeparator(' - ')->append('My Site');
+        $view->headTitle()->setSeparator(' - ')->append('Meine Site');
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
 
         $view->dojo()->setDjConfigOption('parseOnLoad', true)
@@ -125,9 +123,9 @@ class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
     </programlisting>
 
     <para>
-        To tell the bootstrap to use this, you would need to provide either the
-        class name of the resource, or a combination of a plugin loader prefix
-        path and the short name of the resource (e.g, "view"):
+        Um der Bootstrap zu sagen das sie das verwenden soll, würde man entweder den Klassennamen
+        der Ressource übergeben müssen, oder eine Kombination eines Plugin Loader Präfix Pfades
+        und den Kurznamen der Ressource (z.B. "view"):
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -135,15 +133,15 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     array(
         'resources' => array(
-            'My_Bootstrap_Resource_View', // full class name; OR
-            'view',                       // short name
+            'My_Bootstrap_Resource_View', // kompletter Klassenname; ODER
+            'view',                       // Kurzname
 
             'FrontController' => array(
                 'controllerDirectory' => APPLICATION_PATH . '/controllers',
             ),
         ),
 
-        // For short names, define resource paths:
+        // Für Kurznamen, definiere die Ressourcen Pfade:
         'resourcePaths = array(
             'My_Bootstrap_Resource' => 'My/Bootstrap/Resource',
         )
@@ -153,8 +151,8 @@ $application = new Zend_Application(
     </programlisting>
 
     <para>
-        Resources can call on other resources and initializers by accessing the
-        parent object:
+        Ressourcen können andere Ressourcen und Initialisierungen aufrufen indem Sie auf das
+        Eltern-Objekt zugreifen:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -162,7 +160,7 @@ class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
 {
     public function init(array $options = array())
     {
-        // ensure view is initialized...
+        // Sicherstellen das die View initialisiert ist...
         $this->getBootstrap()->bootstrap('view');
 
         // ...
@@ -172,8 +170,8 @@ class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
     </programlisting>
 
     <para>
-        In normal usage, you would instantiate the application, bootstrap it,
-        and run it:
+        Bei normaler Verwendung würde man die Anwendung instanziieren, sie bootstrappen, und
+        anschließend ausführen:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -184,8 +182,7 @@ $application->run();
     </programlisting>
 
     <para>
-        For a custom script, you might need to simply initialize specific
-        resources:
+        Für ein eigenes Skript müsste man einfach spezifische Ressourcen initialisieren:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -193,14 +190,14 @@ $application = new Zend_Application(...);
 $application->bootstrap('db');
 
 $service = new Zend_XmlRpc_Server();
-$service->setClass('Foo');  // uses database...
+$service->setClass('Foo');  // Verwende die Datenbank...
 echo $service->handle();
 ]]>
     </programlisting>
 
     <para>
-        Instead of using the <code>bootstrap()</code> method to call the
-        internal methods or resources, you may also use overloading:
+        Statt der Verwendung der <code>bootstrap()</code> Methode um interne Methode oder
+        Ressourcen aufzurufen, kann man auch Überladung verwenden:
     </para>
 
     <programlisting role="php"><![CDATA[

@@ -4,17 +4,18 @@
     <title>Zend_Application_Bootstrap_IResourceBootstrap</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_IResourceBootstrap</code> is an
-        interface to use when a bootstrap class will be loading external
-        resources -- i.e., one or more resources will not be defined directly in
-        the class, but rather via plugins. It should be used in conjunction with
+        <code>Zend_Application_Bootstrap_IResourceBootstrap</code> ist ein Interface das zu
+        Verwenden ist wenn externe Ressourcen geladen werden -- z.B. wenn ein oder mehrere
+        Ressourcen nicht direkt in der Klasse definiert werden, sonder über Plugins. Es sollte
+        in Verbindung mit
         <link linkend="zend.application.core-functionality.bootstrap-ibootstrap">Zend_Application_Bootstrap_IBootstrap</link>;
+        verwendet werden;
         <link linkend="zend.application.core-functionality.bootstrap-base">Zend_Application_Bootstrap_Base</link>
-        implements this functionality.
+        implementiert diese Funktionalität.
     </para>
 
     <para>
-        The following methods make up the definition of the interface.
+        Die folgenden Methoden machen zusammen die Definition des Interfaces.
     </para>
 
     <table id="zend.application.core-functionality.bootstrap-iresourcebootstrap.methods-table">
@@ -22,10 +23,10 @@
         <tgroup cols="4">
             <thead>
                 <row>
-                    <entry>Method</entry>
-                    <entry>Return Value</entry>
-                    <entry>Parameters</entry>
-                    <entry>Description</entry>
+                    <entry>Methode</entry>
+                    <entry>Rückgabewert</entry>
+                    <entry>Parameter</entry>
+                    <entry>Beschreibung</entry>
                 </row>
             </thead>
             <tbody>
@@ -35,21 +36,20 @@
                     <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
-                            <code>$resource</code>: <emphasis>required</emphasis>.
-                            A resource name or
-                            <code>Zend_Application_Resource_IResource</code>
-                            object.
+                            <code>$resource</code>: <emphasis>Benötigt</emphasis>.
+                            Ein Ressourcen Name oder ein
+                            <code>Zend_Application_Resource_IResource</code> Objekt.
                         </para></listitem>
 
                         <listitem><para>
-                            <code>$options</code>: <emphasis>optional</emphasis>.
-                            An array or <code>Zend_Config</code> object to pass
-                            to the resource on instantiation.
+                            <code>$options</code>: <emphasis>Optional</emphasis>.
+                            Ein Array oder <code>Zend_Config</code> Objekt das an die Ressource
+                            bei der Instanziierung zu übergeben ist.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Register a resource with the class, providing optional
-                        configuration to pass to the resource.
+                        Registriert eine Ressource mit der Klasse, und bietet die Übergaben einer
+                        optionalen Konfiguration an diese Ressource an.
                     </para></entry>
                 </row>
 
@@ -58,12 +58,12 @@
                     <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
-                            <code>$resource</code>: <emphasis>required</emphasis>.
-                            Name of a resource to unregister from the class.
+                            <code>$resource</code>: <emphasis>Benötigt</emphasis>.
+                            Name der Ressource die von der Klasse de-registriert werden soll.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Remove a plugin resource from the class.
+                        Entfernt eine Plugin Ressource von der Klasse.
                     </para></entry>
                 </row>
 
@@ -72,13 +72,12 @@
                     <entry><code>boolean</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
-                            <code>$resource</code>: <emphasis>required</emphasis>.
-                            Name of the resource.
+                            <code>$resource</code>: <emphasis>Benötigt</emphasis>.
+                            Name der Ressource.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Determine if a specific resource has been registered
-                        with the class.
+                        Erkennt ob eine spezifische Ressource in der Klasse registriert wurde.
                     </para></entry>
                 </row>
 
@@ -87,12 +86,12 @@
                     <entry><code>Zend_Application_Resource_IResource</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
-                            <code>$resource</code>: <emphasis>required</emphasis>.
-                            Name of a resource to retrieve (string).
+                            <code>$resource</code>: <emphasis>Benötigt</emphasis>.
+                            Name einer Ressource die empfangen werden soll (String).
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Retrieve a plugin resource instance by name.
+                        Empfängt die Instanz einer Plugin Ressource durch Ihren Namen.
                     </para></entry>
                 </row>
 
@@ -101,7 +100,7 @@
                     <entry><code>array</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
-                        Retrieve a list of all registered plugin resource names.
+                        Empfängt eine Liste aller registrierten Plugin Ressource Namen.
                     </para></entry>
                 </row>
 
@@ -111,14 +110,14 @@
                     <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
-                            <code>$loader</code>: <emphasis>required</emphasis>.
-                            Plugin loader instance to use when resolving plugin
-                            names to classes.
+                            <code>$loader</code>: <emphasis>Benötigt</emphasis>.
+                            Instanz des Plugin Loaders der verwendet werden soll wenn Plugin Namen
+                            auf Klassen umgewandelt werden.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Register a plugin loader instance to use when resolving
-                        plugin class names.
+                        Registriert eine Instanz eines Plugin Loaders die zu verwenden ist wenn die
+                        Klassennamen eines Plugins aufgelöst werden sollen.
                     </para></entry>
                 </row>
 
@@ -127,7 +126,7 @@
                     <entry><code>Zend_Loader_PluginLoader_Interface</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
-                        Retrieve the registered plugin loader.
+                        Empfängt den registrierten Plugin Loader.
                     </para></entry>
                 </row>
             </tbody>

@@ -4,16 +4,14 @@
     <title>Zend_Application_Resource_Base</title>
 
     <para>
-        <code>Zend_Application_Resource_Base</code> is an abstract class
-        implementing <link linkend="zend.application.core-functionality.resource-iresource">Zend_Application_Resource_IResource</link>,
-        and is a good starting point for creating your own custom plugin
-        resources.
+        <code>Zend_Application_Resource_Base</code> ist eine abstrakte Klasse die
+        <link linkend="zend.application.core-functionality.resource-iresource">Zend_Application_Resource_IResource</link>
+        implementiert, und ist ein guter Startpunkt für die Erstellung eigener Plugin Ressourcen.
     </para>
 
     <para>
-        Note: this abstract class does not implement the <code>init()</code>
-        method; this is left for definition in concrete extensions of the
-        class.
+        Beachte: Diese abstrakte Klasse implementiert die <code>init()</code> Methode nicht; das
+        wird der Definition in einer konkreten Erweiterung dieser Klasse vorbehalten.
     </para>
 
     <table id="zend.application.core-functionality.resource-base.api">
@@ -21,10 +19,10 @@
         <tgroup cols="4">
             <thead>
                 <row>
-                    <entry>Method</entry>
-                    <entry>Return Value</entry>
-                    <entry>Parameters</entry>
-                    <entry>Description</entry>
+                    <entry>Methode</entry>
+                    <entry>Rückgabewert</entry>
+                    <entry>Parameter</entry>
+                    <entry>Beschreibung</entry>
                 </row>
             </thead>
             <tbody>
@@ -34,12 +32,12 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>optional</emphasis>.
-                            Options with which to set resource state.
+                            Optionen mit denen der Ressource Status gesetzt wird.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        The constructor should allow passing options with
-                        which to initialize state.
+                        Der Konstruktor sollte die Übergabe von Optionen erlauben mit denen der
+                        Status initialisiert wird.
                     </para></entry>
                 </row>
 
@@ -49,11 +47,11 @@
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>required</emphasis>.
-                                Parent bootstrap initializing this resource.
+                                Parent Bootstrap der diese Ressource initialisiert.
                             </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Should allow registering the parent bootstrap object.
+                        Sollte es erlauben das Parent Bootstrap Objekt zu registrieren.
                     </para></entry>
                 </row>
 
@@ -62,7 +60,7 @@
                     <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
-                        Retrieve the registered bootstrap instance.
+                        Empfange die registrierte Bootstrap Instanz.
                     </para></entry>
                 </row>
 
@@ -72,7 +70,7 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
-                            Options with which to set state.
+                            Optionen mit denen der Status gesetzt werden soll.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
@@ -85,7 +83,7 @@
                     <entry><code>array</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
-                        Retrieve registered options.
+                        Empfangen der registrierten Optionen.
                     </para></entry>
                 </row>
             </tbody>
