@@ -505,16 +505,16 @@ if ($a != 2) {
 if ($a != 2) {
     $a = 2;
 } else {
-   $a = 7;
+    $a = 7;
 }
 
 
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
-   $a = 4;
+    $a = 4;
 } else {
-   $a = 7;
+    $a = 7;
 }
 ]]></programlisting> PHP permet que ces instructions soient écrites sans accolades dans certaines
                 circonstances. La convention de codage ne fait pas de différentiation et toutes les instructions "if",
