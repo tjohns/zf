@@ -5,6 +5,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/View/Helper/ActionTest.php';
+require_once 'Zend/View/Helper/CycleTest.php';
 require_once 'Zend/View/Helper/DeclareVarsTest.php';
 require_once 'Zend/View/Helper/DoctypeTest.php';
 require_once 'Zend/View/Helper/FieldsetTest.php';
@@ -68,6 +69,7 @@ class Zend_View_Helper_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_View_Helper');
 
         $suite->addTestSuite('Zend_View_Helper_ActionTest');
+        $suite->addTestSuite('Zend_View_Helper_CycleTest');
         $suite->addTestSuite('Zend_View_Helper_DeclareVarsTest');
         $suite->addTestSuite('Zend_View_Helper_DoctypeTest');
         $suite->addTestSuite('Zend_View_Helper_FieldsetTest');
