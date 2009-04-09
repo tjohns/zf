@@ -116,7 +116,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     const FRIEND_ACTIVITY_FEED_URI =
         'http://gdata.youtube.com/feeds/api/users/default/friendsactivity';
 
-    /** 
+    /**
      * The URI of the in-reply-to schema for comments in reply to
      * other comments.
      *
@@ -703,7 +703,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
             $response = $this->post($videoEntry, $url);
             return self::parseFormUploadTokenResponse($response->getBody());
         } else {
-            require_once 'Zend/Gdata/App/HttpException.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception(
                 'Url must be provided as a string URL');
         }
@@ -752,7 +752,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
     public function getFriendActivityForCurrentUser()
     {
         if (!$this->isAuthenticated()) {
-            require_once 'Zend/Gdata/YouTube/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('You must be authenticated to ' .
                 'use the getFriendActivityForCurrentUser function in Zend_' .
                 'Gdata_YouTube.');
@@ -765,12 +765,12 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
      * Retrieve a feed of messages in the currently authenticated user's inbox.
      *
      * @throws Zend_Gdata_App_Exception if not logged in.
-     * @return Zend_Gdata_YouTube_InboxFeed|null 
+     * @return Zend_Gdata_YouTube_InboxFeed|null
      */
     public function getInboxFeedForCurrentUser()
     {
         if (!$this->isAuthenticated()) {
-            require_once 'Zend/Gdata/YouTube/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('You must be authenticated to ' .
                 'use the getInboxFeedForCurrentUser function in Zend_' .
                 'Gdata_YouTube.');
@@ -779,13 +779,13 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         return parent::getFeed(self::INBOX_FEED_URI,
             'Zend_Gdata_YouTube_InboxFeed');
     }
-    
+
     /**
      * Send a video message.
      *
      * Note: Either a Zend_Gdata_YouTube_VideoEntry or a valid video ID must
      * be provided.
-     * 
+     *
      * @param string $body The body of the message
      * @param Zend_Gdata_YouTube_VideoEntry (optional) The video entry to send
      * @param string $videoId The id of the video to send
@@ -807,7 +807,7 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
         }
 
         $messageEntry = new Zend_Gdata_YouTube_InboxEntry();
-        
+
         if ($this->getMajorProtocolVersion() == null ||
             $this->getMajorProtocolVersion() == 1) {
 
