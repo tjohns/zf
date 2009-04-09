@@ -103,7 +103,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
             <profile type="Zend_Controller_Router_Route">
                 <route>:username</route>
                 <defaults module="users" controller="profile" action="index" />
-            </index>
+            </profile>
         </chains>
     </users>
     <misc type="Zend_Controller_Router_Route_Static">
