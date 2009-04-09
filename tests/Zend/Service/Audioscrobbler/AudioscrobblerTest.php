@@ -84,6 +84,28 @@ class Zend_Service_Audioscrobbler_AudioscrobblerTest extends PHPUnit_Framework_T
         $this->assertEquals("Baz",    $as->get("album"));
     }
 
+    /**
+     * @group ZF-6251
+     */
+    public function testUnknownMethodViaCallInterceptThrowsException()
+    {
+        $this->setExpectedException("Zend_Service_Exception");
+
+        $as = new Zend_Service_Audioscrobbler();
+        $as->someInvalidMethod();
+    }
+
+    /**
+     * @group ZF-6251
+     */
+    public function testCallInterceptMethodsRequireExactlyOneParameterAndThrowExceptionOtherwise()
+    {
+        $this->setExpectedException("Zend_Service_Exception");
+
+        $as = new Zend_Service_Audioscrobbler();
+        $as->setUser();
+    }
+
     public static function readTestResponse($file)
     {
         return file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . $file);
