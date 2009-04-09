@@ -620,16 +620,16 @@ if ($a != 2) {
 if ($a != 2) {
     $a = 2;
 } else {
-   $a = 7;
+    $a = 7;
 }
 
 
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
-   $a = 4;
+    $a = 4;
 } else {
-   $a = 7;
+    $a = 7;
 }]]></programlisting>
                     O PHP permite, em certas circunstâncias, que as instruções sejam escritas sem as chaves.
                     O padrão de código não as diferencia, pois todas instruções "if", "elseif" ou "else"
