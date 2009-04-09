@@ -505,16 +505,16 @@ if ($a != 2) {
 if ($a != 2) {
     $a = 2;
 } else {
-   $a = 7;
+    $a = 7;
 }
 
 
 if ($a != 2) {
     $a = 2;
 } else if ($a == 3) {
-   $a = 4;
+    $a = 4;
 } else {
-   $a = 7;
+    $a = 7;
 }</programlisting> PHP laat het toe om in bepaalde gevallen deze verklaringen zonder
         accolades te schrijven. De codestandaard maakt geen verschil en alle "if",
         "else if" of "else" verklaringen moeten accolades gebruiken.</para>
