@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14589 -->
+<!-- EN-Revision: 14789 -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">
@@ -695,15 +695,15 @@ if ($a != 2) {
 if ($a != 2) {
     $a = 2;
 } else {
-   $a = 7;
+    $a = 7;
 }
 
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
-   $a = 4;
+    $a = 4;
 } else {
-   $a = 7;
+    $a = 7;
 }
 ]]>
                     </programlisting>
