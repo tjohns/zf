@@ -596,16 +596,16 @@ if ($a != 2) {
 if ($a != 2) {
     $a = 2;
 } else {
-   $a = 7;
+    $a = 7;
 }
 
 
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
-   $a = 4;
+    $a = 4;
 } else {
-   $a = 7;
+    $a = 7;
 }]]>
                     </programlisting>
                     PHP allows for these statements to be written without braces in some circumstances.
