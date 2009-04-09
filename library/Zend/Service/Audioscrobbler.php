@@ -54,22 +54,6 @@ class Zend_Service_Audioscrobbler
     protected $_params;
 
     /**
-     * Flag if we're doing testing or not
-     *
-     * @var     boolean
-     * @access  protected
-     */
-    protected $_testing;
-
-    /**
-     * Http response used for testing purposes
-     *
-     * @var     string
-     * @access  protected
-     */
-    protected $_testingResponse;
-
-    /**
      * Holds error information (e.g., for handling simplexml_load_string() warnings)
      *
      * @var     array
@@ -79,27 +63,49 @@ class Zend_Service_Audioscrobbler
 
 
     /**
-     * Sets up character encoding, instantiates the HTTP client, and assigns the web service version
-     * and testing parameters (if provided).
-     *
-     * @param  boolean $testing
-     * @param  string  $testingResponse
-     * @return void
+     * Sets up character encoding, instantiates the HTTP client, and assigns the web service version.
      */
-    public function __construct($testing = false, $testingResponse = null)
+    public function __construct()
     {
         $this->set('version', '1.0');
 
         iconv_set_encoding('output_encoding', 'UTF-8');
         iconv_set_encoding('input_encoding', 'UTF-8');
         iconv_set_encoding('internal_encoding', 'UTF-8');
-
-        $this->_client = new Zend_Http_Client();
-
-        $this->_testing          = (boolean) $testing;
-        $this->_testingResponse  = (string) $testingResponse;
     }
 
+    /**
+     * Set Http Client
+     * 
+     * @param Zend_Http_Client $client
+     */
+    public function setHttpClient(Zend_Http_Client $client)
+    {
+        $this->_client = $client;
+    }
+
+    /**
+     * Get current http client.
+     * 
+     * @return Zend_Http_Client
+     */
+    public function getHttpClient()
+    {
+        if($this->_client == null) {
+            $this->lazyLoadHttpClient();
+        }
+        return $this->_client;
+    }
+
+    /**
+     * Lazy load Http Client if none is instantiated yet.
+     *
+     * @return void
+     */
+    protected function lazyLoadHttpClient()
+    {
+        $this->_client = new Zend_Http_Client();
+    }
 
     /**
      * Returns a field value, or false if the named field does not exist
@@ -146,24 +152,12 @@ class Zend_Service_Audioscrobbler
         $params  = (string) $params;
 
         if ($params === '') {
-            $this->_client->setUri("http://ws.audioscrobbler.com{$service}");
+            $this->getHttpClient()->setUri("http://ws.audioscrobbler.com{$service}");
         } else {
-            $this->_client->setUri("http://ws.audioscrobbler.com{$service}?{$params}");
+            $this->getHttpClient()->setUri("http://ws.audioscrobbler.com{$service}?{$params}");
         }
 
-        if ($this->_testing) {
-            /**
-             * @see Zend_Http_Client_Adapter_Test
-             */
-            require_once 'Zend/Http/Client/Adapter/Test.php';
-            $adapter = new Zend_Http_Client_Adapter_Test();
-
-            $this->_client->setConfig(array('adapter' => $adapter));
-
-            $adapter->setResponse($this->_testingResponse);
-        }
-
-        $response     = $this->_client->request();
+        $response     = $this->getHttpClient()->request();
         $responseBody = $response->getBody();
 
         if (preg_match('/No such path/', $responseBody)) {

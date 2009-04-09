@@ -32,6 +32,7 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
  */
 require_once 'Zend/Service/Audioscrobbler.php';
 
+require_once "AudioscrobblerTestCase.php";
 
 /**
  * @category   Zend
@@ -40,12 +41,14 @@ require_once 'Zend/Service/Audioscrobbler.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Audioscrobbler_TagDataTest extends Zend_Service_Audioscrobbler_AudioscrobblerTestCase
 {
     var $header = "HTTP/1.1 200 OK\r\nContent-type: text/xml\r\n\r\n";
 
     public function testGetTopTags()
     {
+        $this->markTestSkipped('Invalid test, communicating with real-world service.');
+
         try {
             $as = new Zend_Service_Audioscrobbler();
             $response = $as->tagGetTopTags();
@@ -57,8 +60,7 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
 
     public function testGetTopArtists()
     {
-         try {
-            $testing_response = $this->header .
+        $testing_response = $this->header .
 '<?xml version="1.0" encoding="UTF-8"?>
 <tag tag="rock" count="785147">
 <artist name="Red Hot Chili Peppers" count="5097" streamable="yes">
@@ -81,20 +83,18 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
 </artist>
 </tag>
 ';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
-            $as->set('tag', 'Rock');
-            $response = $as->tagGetTopArtists();
-            $this->assertNotNull($response->artist);
-            $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
-            } catch (Exception $e ) {
-                    $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-            }
+        $this->setAudioscrobblerResponse($testing_response);
+        $as = $this->getAudioscrobblerService();
+        
+        $as->set('tag', 'Rock');
+        $response = $as->tagGetTopArtists();
+        $this->assertNotNull($response->artist);
+        $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
     }
 
     public function testGetTopAlbums()
     {
-        try {
-            $testing_response = $this->header .
+        $testing_response = $this->header .
 '<?xml version="1.0" encoding="UTF-8"?>
 <tag tag="rock" count="786251">
 <album name="Fallen" count="79" streamable="yes">
@@ -123,19 +123,16 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
 </album>
 </tag>
 ';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
-            $as->set('tag', 'Rock');
-            $response = $as->tagGetTopAlbums();
-            $this->assertNotNull(count($response->album));
-            $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
-        } catch (Exception $e) {
-            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-        }
+        $this->setAudioscrobblerResponse($testing_response);
+        $as = $this->getAudioscrobblerService();
+        $as->set('tag', 'Rock');
+        $response = $as->tagGetTopAlbums();
+        $this->assertNotNull(count($response->album));
+        $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
     }
 
     public function testGetTopTracks()
     {
-        try {
             $testing_response = $this->header .
 '<?xml version="1.0" encoding="UTF-8"?>
 <tag tag="rock" count="785836">
@@ -162,16 +159,14 @@ class Zend_Service_Audioscrobbler_TagDataTest extends PHPUnit_Framework_TestCase
 </track>
 </tag>
 ';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $testing_response);
-            $as->set('tag', 'Rock');
-            $response = $as->tagGetTopTracks();
-            $artist = $response->track[0];
-            $this->assertNotNull(count($response->track));
-            $this->assertNotNull((string)$artist->name);
-            $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
-        } catch (Exception $e) {
-            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
-        }
+        $this->setAudioscrobblerResponse($testing_response);
+        $as = $this->getAudioscrobblerService();
+        $as->set('tag', 'Rock');
+        $response = $as->tagGetTopTracks();
+        $artist = $response->track[0];
+        $this->assertNotNull(count($response->track));
+        $this->assertNotNull((string)$artist->name);
+        $this->assertEquals((string)$response['tag'], strtolower($as->get('tag')));
     }
 
 }

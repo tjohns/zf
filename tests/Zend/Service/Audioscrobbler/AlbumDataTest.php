@@ -33,6 +33,8 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
 require_once 'Zend/Service/Audioscrobbler.php';
 
 
+require_once "AudioscrobblerTestCase.php";
+
 /**
  * @category   Zend
  * @package    Zend_Service_Audioscrobbler
@@ -40,14 +42,11 @@ require_once 'Zend/Service/Audioscrobbler.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Audioscrobbler_AlbumDataTest extends PHPUnit_Framework_TestCase
+class Zend_Service_Audioscrobbler_AlbumDataTest extends Zend_Service_Audioscrobbler_AudioscrobblerTestCase
 {
-    var $header = "HTTP/1.1 200 OK\r\nContent-type: text/xml\r\n\r\n";
-
     public function testGetAlbumInfo()
     {
-        try {
-            $test_response = $this->header .
+        $albumInfoResponse = "HTTP/1.1 200 OK\r\nContent-type: text/xml\r\n\r\n".
 '<?xml version="1.0" encoding="UTF-8"?>
 <album artist="Metallica" title="Metallica">
     <reach>85683</reach>
@@ -111,7 +110,11 @@ class Zend_Service_Audioscrobbler_AlbumDataTest extends PHPUnit_Framework_TestCa
             </tracks>
 </album>
 ';
-            $as = new Zend_Service_Audioscrobbler(TRUE, $test_response);
+
+        $this->setAudioscrobblerResponse($albumInfoResponse);
+
+        try {    
+            $as = $this->getAudioscrobblerService();
             $as->set('album', 'Metallica');
             $as->set('artist', 'Metallica');
             $response = $as->albumGetInfo();
@@ -121,7 +124,7 @@ class Zend_Service_Audioscrobbler_AlbumDataTest extends PHPUnit_Framework_TestCa
             $this->assertEquals((string)$track->url, 'http://www.last.fm/music/Metallica/_/Enter+Sandman+%28LP+Version%29');
             $this->assertEquals(count($response->tracks->track), 12);
         } catch (Exception $e ) {
-                $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
+            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
 }

@@ -32,6 +32,7 @@ require_once dirname(__FILE__) . '/../../../TestHelper.php';
  */
 require_once 'Zend/Service/Audioscrobbler.php';
 
+require_once 'AudioscrobblerTestCase.php';
 
 /**
  * @category   Zend
@@ -40,15 +41,12 @@ require_once 'Zend/Service/Audioscrobbler.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Service_Audioscrobbler_AudioscrobblerTest extends PHPUnit_Framework_TestCase
-{
-    public function setUp()
-    {
-    }
-    
+class Zend_Service_Audioscrobbler_AudioscrobblerTest extends Zend_Service_Audioscrobbler_AudioscrobblerTestCase
+{    
     public function testRequestThrowsHttpClientExceptionWithNoUserError()
     {
-        $as = new Zend_Service_Audioscrobbler(true, self::readTestResponse('errorNoUserExists'));
+        $this->setAudioscrobblerResponse(self::readTestResponse('errorNoUserExists'));
+        $as = $this->getAudioscrobblerService();
         $as->set('user', 'foobarfoo');
         
         try {
@@ -61,7 +59,8 @@ class Zend_Service_Audioscrobbler_AudioscrobblerTest extends PHPUnit_Framework_T
 
     public function testRequestThrowsHttpClientExceptionWithoutSuccessfulResponse()
     {
-        $as = new Zend_Service_Audioscrobbler(true, self::readTestResponse('errorResponseStatusError'));
+        $this->setAudioscrobblerResponse(self::readTestResponse('errorResponseStatusError'));
+        $as = $this->getAudioscrobblerService();
         $as->set('user', 'foobarfoo');
         
         try {
