@@ -647,16 +647,16 @@ if ($a != 2) {
 if ($a != 2) {
     $a = 2;
 } else {
-   $a = 7;
+    $a = 7;
 }
 
 
 if ($a != 2) {
     $a = 2;
 } elseif ($a == 3) {
-   $a = 4;
+    $a = 4;
 } else {
-   $a = 7;
+    $a = 7;
 }]]>
                     </programlisting>
                     PHP kimi durumlarda buradaki ifadelerin büyük parantez kullanmadan yazılmasına izin verir.
