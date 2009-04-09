@@ -78,11 +78,6 @@ class Zend_Service_Audioscrobbler
     protected $_error = null;
 
 
-    //////////////////////////////////////////////////////////
-    ///////////////////  CORE METHODS  ///////////////////////
-    //////////////////////////////////////////////////////////
-
-
     /**
      * Sets up character encoding, instantiates the HTTP client, and assigns the web service version
      * and testing parameters (if provided).
@@ -210,12 +205,9 @@ class Zend_Service_Audioscrobbler
         return $simpleXmlElementResponse;
     }
 
-    //////////////////////////////////////////////////////////
-    ///////////////////////  USER  ///////////////////////////
-    //////////////////////////////////////////////////////////
-
     /**
     * Utility function to get Audioscrobbler profile information (eg: Name, Gender)
+     * 
     * @return array containing information
     */
     public function userGetProfileInformation()
@@ -226,6 +218,7 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function get this user's 50 most played artists
+     * 
      * @return array containing info
     */
     public function userGetTopArtists()
@@ -236,7 +229,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function to get this user's 50 most played albums
-     * @return SimpleXML object containing result set
+     *
+     * @return SimpleXMLElement object containing result set
     */
     public function userGetTopAlbums()
     {
@@ -256,7 +250,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function to get this user's 50 most used tags
-     * @return SimpleXML object containing result set
+     * 
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetTopTags()
     {
@@ -266,8 +261,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns the user's top tags used most used on a specific artist
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetTopTagsForArtist()
     {
@@ -278,8 +273,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns this user's top tags for an album
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetTopTagsForAlbum()
     {
@@ -290,8 +285,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns this user's top tags for a track
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetTopTagsForTrack()
     {
@@ -302,7 +297,7 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that retrieves this user's list of friends
-     * @return SimpleXML object containing result set
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetFriends()
     {
@@ -312,8 +307,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of people with similar listening preferences to this user
-     * @return SimpleXML object containing result set
-     *
+     * 
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetNeighbours()
     {
@@ -323,8 +318,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of the 10 most recent tracks played by this user
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetRecentTracks()
     {
@@ -334,8 +329,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of the 10 tracks most recently banned by this user
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetRecentBannedTracks()
     {
@@ -345,8 +340,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of the 10 tracks most recently loved by this user
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetRecentLovedTracks()
     {
@@ -356,9 +351,10 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of dates of available weekly charts for a this user
-     * Should actually be named userGetWeeklyChartDateList() but we have to follow audioscrobbler's naming
-     * @return SimpleXML object containing result set
      *
+     * Should actually be named userGetWeeklyChartDateList() but we have to follow audioscrobbler's naming
+     *
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetWeeklyChartList()
     {
@@ -369,10 +365,10 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns weekly album chart data for this user
-     * @return SimpleXML object containing result set
      *
      * @param integer $from optional UNIX timestamp for start of date range
      * @param integer $to optional UNIX timestamp for end of date range
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetWeeklyAlbumChart($from = NULL, $to = NULL)
     {
@@ -390,10 +386,10 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns weekly artist chart data for this user
-     * @return SimpleXML object containing result set
      *
      * @param integer $from optional UNIX timestamp for start of date range
      * @param integer $to optional UNIX timestamp for end of date range
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetWeeklyArtistChart($from = NULL, $to = NULL)
     {
@@ -411,10 +407,10 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns weekly track chart data for this user
-     * @return SimpleXML object containing result set
      *
      * @param integer $from optional UNIX timestamp for start of date range
      * @param integer $to optional UNIX timestamp for end of date range
+     * @return SimpleXMLElement object containing result set
      */
     public function userGetWeeklyTrackChart($from = NULL, $to = NULL)
     {
@@ -431,20 +427,10 @@ class Zend_Service_Audioscrobbler
     }
 
 
-    //////////////////////////////////////////////////////////
-    ///////////////////////  ARTIST  /////////////////////////
-    //////////////////////////////////////////////////////////
-
-    /**
-     * Public functions for retrieveing artist-specific information
-     *
-     */
-
-
     /**
      * Utility function that returns a list of artists similiar to this artist
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function artistGetRelatedArtists()
     {
@@ -454,8 +440,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of this artist's top listeners
-     * @return SimpleXML object containing result set
      *
+     * @return SimpleXMLElement object containing result set
      */
     public function artistGetTopFans()
     {
@@ -465,8 +451,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of this artist's top-rated tracks
-     * @return SimpleXML object containing result set
-     *
+     * 
+     * @return SimpleXMLElement object containing result set
      */
     public function artistGetTopTracks()
     {
@@ -476,8 +462,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of this artist's top-rated albums
-     * @return SimpleXML object containing result set
-     *
+     * 
+     * @return SimpleXMLElement object containing result set
      */
     public function artistGetTopAlbums()
     {
@@ -487,8 +473,8 @@ class Zend_Service_Audioscrobbler
 
     /**
      * Utility function that returns a list of this artist's top-rated tags
-     * @return SimpleXML object containing result set
-     *
+     * 
+     * @return SimpleXMLElement object containing result set
      */
     public function artistGetTopTags()
     {
@@ -496,70 +482,103 @@ class Zend_Service_Audioscrobbler
         return $this->_getInfo($service);
     }
 
-    //////////////////////////////////////////////////////////
-    ///////////////////////  ALBUM  //////////////////////////
-    //////////////////////////////////////////////////////////
 
+    /**
+     * Get information about an album
+     *
+     * @return SimpleXMLElement
+     */
     public function albumGetInfo()
     {
         $service = "/{$this->get('version')}/album/{$this->get('artist')}/{$this->get('album')}/info.xml";
         return $this->_getInfo($service);
     }
 
-    //////////////////////////////////////////////////////////
-    ///////////////////////  TRACKS //////////////////////////
-    //////////////////////////////////////////////////////////
-
+    /**
+     * Get top fans of the current track.
+     * 
+     * @return SimpleXMLElement
+     */
     public function trackGetTopFans()
     {
         $service = "/{$this->get('version')}/track/{$this->get('artist')}/{$this->get('track')}/fans.xml";
         return $this->_getInfo($service);
     }
 
+    /**
+     * Get top tags of the current track.
+     *
+     * @return SimpleXMLElement
+     */
     public function trackGetTopTags()
     {
         $service = "/{$this->get('version')}/track/{$this->get('artist')}/{$this->get('track')}/toptags.xml";
         return $this->_getInfo($service);
     }
 
-    //////////////////////////////////////////////////////////
-    ///////////////////////  TAGS   //////////////////////////
-    //////////////////////////////////////////////////////////
-
+    /**
+     * Get Top Tags.
+     *
+     * @return SimpleXMLElement
+     */
     public function tagGetTopTags()
     {
         $service = "/{$this->get('version')}/tag/toptags.xml";
         return $this->_getInfo($service);
     }
 
+    /**
+     * Get top albums by current tag.
+     *
+     * @return SimpleXMLElement
+     */
     public function tagGetTopAlbums()
     {
         $service = "/{$this->get('version')}/tag/{$this->get('tag')}/topalbums.xml";
         return $this->_getInfo($service);
     }
 
+    /**
+     * Get top artists by current tag.
+     * 
+     * @return SimpleXMLElement
+     */
     public function tagGetTopArtists()
     {
         $service = "/{$this->get('version')}/tag/{$this->get('tag')}/topartists.xml";
         return $this->_getInfo($service);
     }
 
+    /**
+     * Get Top Tracks by currently set tag.
+     *
+     * @return SimpleXMLElement
+     */
     public function tagGetTopTracks()
     {
         $service = "/{$this->get('version')}/tag/{$this->get('tag')}/toptracks.xml";
         return $this->_getInfo($service);
     }
 
-    //////////////////////////////////////////////////////////
-    /////////////////////// GROUPS  //////////////////////////
-    //////////////////////////////////////////////////////////
-
+    /**
+     * Get weekly chart list by current set group.
+     *
+     * @see set()
+     * @return SimpleXMLElement
+     */
     public function groupGetWeeklyChartList()
     {
         $service = "/{$this->get('version')}/group/{$this->get('group')}/weeklychartlist.xml";
         return $this->_getInfo($service);
     }
 
+    /**
+     * Retrieve weekly Artist Charts
+     *
+     * @param  int $from
+     * @param  int $to
+     * @return SimpleXMLElement
+     */
     public function groupGetWeeklyArtistChartList($from = NULL, $to = NULL)
     {
 
@@ -575,6 +594,13 @@ class Zend_Service_Audioscrobbler
         return $this->_getInfo($service, $params);
     }
 
+    /**
+     * Retrieve Weekly Track Charts
+     *
+     * @param  int $from
+     * @param  int $to
+     * @return SimpleXMLElement
+     */
     public function groupGetWeeklyTrackChartList($from = NULL, $to = NULL)
     {
         if ($from != NULL && $to != NULL) {
@@ -589,6 +615,13 @@ class Zend_Service_Audioscrobbler
         return $this->_getInfo($service, $params);
     }
 
+    /**
+     * Retrieve Weekly album charts.
+     * 
+     * @param int $from
+     * @param int $to
+     * @return SimpleXMLElement
+     */
     public function groupGetWeeklyAlbumChartList($from = NULL, $to = NULL)
     {
         if ($from != NULL && $to != NULL) {
