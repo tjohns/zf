@@ -523,6 +523,12 @@ class Zend_Service_Amazon_S3 extends Zend_Service_Abstract
             $sig_str .= '?torrent';
         }
 
+        /**
+         * @see Zend_Crypt_Hmac
+         */
+        //require_once 'Zend/Crypt/Hmac.php';
+        //$signature = base64_encode(Zend_Crypt_Hmac::compute($this->_secretKey, 'sha1', utf8_encode($sig_str), Zend_Crypt_Hmac::BINARY));
+
         $signature = base64_encode(hash_hmac('sha1', utf8_encode($sig_str), $this->_secretKey, true));
         $headers['Authorization'] = 'AWS '.$this->_accessKey.':'.$signature;
 
