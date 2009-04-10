@@ -4,24 +4,23 @@
     <title>Zend_Navigation_Page_Mvc</title>
 
     <para>
-        MVC pages are defined using MVC parameters known from the
-        <code>Zend_Controller</code> component. An MVC page will use
-        <classname>Zend_Controller_Action_Helper_Url</classname> internally
-        in the <code>getHref()</code> method to generate hrefs, and
-        the <code>isActive()</code> method will intersect the
-        <classname>Zend_Controller_Request_Abstract</classname> params
-        with the page's params to determine if the page is active.
+        MVC Seiten werden definiert indem MVC Parameter verwendet werden wie von der
+        <code>Zend_Controller</code> Komponent bekannt. Eine MVC Seite wird intern in der
+        <code>getHref()</code> Methode <classname>Zend_Controller_Action_Helper_Url</classname>
+        verwenden um hrefs zu erstellen, und die <code>isActive()</code> Methode wird die
+        Parameter von <classname>Zend_Controller_Request_Abstract</classname> mit den Seiten
+        Parametern verknüpfen um zu erkennen ob die Seite aktiv ist.
     </para>
 
     <table id="zend.navigation.pages.mvc.options">
-        <title>MVC page options</title>
+        <title>MVC Seiten Optionen</title>
         <tgroup cols="4">
             <thead>
                 <row>
-                    <entry>Key</entry>
-                    <entry>Type</entry>
-                    <entry>Default</entry>
-                    <entry>Description</entry>
+                    <entry>Schlüssel</entry>
+                    <entry>Typ</entry>
+                    <entry>Standardwert</entry>
+                    <entry>Beschreibung</entry>
                 </row>
             </thead>
             <tbody>
@@ -30,8 +29,7 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        Action name to use when generating
-                        href to the page.
+                        Name der Aktion die verwendet wird wenn eine href zur Seite erstellt wird.
                     </entry>
                 </row>
                 <row>
@@ -39,8 +37,8 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        Controller name to use when generating
-                        href to the page.
+                        Name des Controllers der verwendet wird wenn eine href zur Seite erstellt
+                        wird.
                     </entry>
                 </row>
                 <row>
@@ -48,8 +46,7 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        Module name to use when generating
-                        href to the page.
+                        Name des Moduls das verwendet wird wenn eine href zur Seite erstellt wird.
                     </entry>
                 </row>
                 <row>
@@ -57,7 +54,8 @@
                     <entry><code>array</code></entry>
                     <entry><code>array()</code></entry>
                     <entry>
-                        User params to use when generating href to the page.
+                        Benutzer Parameter die verwendet werden wenn eine href zur Seite erstellt
+                        wird.
                     </entry>
                 </row>
                 <row>
@@ -65,8 +63,7 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        Route name to use when generating
-                        href to the page.
+                        Name der Route die verwendet wird wenn eine href zur Seite erstellt wird.
                     </entry>
                 </row>
                 <row>
@@ -74,8 +71,8 @@
                     <entry><code>bool</code></entry>
                     <entry><code>true</code></entry>
                     <entry>
-                        Whether user params should be reset
-                        when generating href to the page.
+                        Ob Benutzer Parameter resetiert werden sollen wenn eine href zur Seite
+                        erstellt wird.
                     </entry>
                 </row>
             </tbody>
@@ -84,41 +81,41 @@
 
     <note>
         <para>
-            The three examples below assume a default MVC setup with
-            the <code>default</code> route in place.
+            Die drei Beispiele anbei nehmen ein Standard MVC Setup an mit der <code>default</code>
+            Route an.
         </para>
 
         <para>
-            The URI returned is relative to the <code>baseUrl</code> in
-            <code>Zend_Controller_Front</code>. In the examples, the baseUrl
-            is '/' for simplicity.
+            Die zurückgegebene URI ist relativ zur <code>baseUrl</code> in
+            <code>Zend_Controller_Front</code>. Im Beispiel ist die baseUrl der Einfachheit halber
+            '/'.
         </para>
     </note>
 
     <example id="zend.navigation.pages.mvc.example.getHref">
-        <title><code>getHref() generates the page URI</code></title>
+        <title><code>getHref() erstellt die Seiten URI</code></title>
 
         <para>
-            This example show that MVC pages use
-            <classname>Zend_Controller_Action_Helper_Url</classname> internally
-            to generate URIs when calling <code>$page->getHref()</code>.
+            Dieses Beispiel zeigt das MVC Seiten intern
+            <classname>Zend_Controller_Action_Helper_Url</classname> verwenden um URIs zu
+            erstellen wenn <code>$page->getHref()</code> aufgerufen wird.
         </para>
 
         <programlisting role="php"><![CDATA[
-// getHref() returns /
+// getHref() gibt / zurück
 $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'index',
     'controller' => 'index'
 ));
 
-// getHref() returns /blog/post/view
+// getHref() gibt /blog/post/view zurück
 $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'view',
     'controller' => 'post',
     'module'     => 'blog'
 ));
 
-// getHref() returns /blog/post/view/id/1337
+// getHref() gibt /blog/post/view/id/1337 zurück
 $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'view',
     'controller' => 'post',
@@ -130,16 +127,16 @@ $page = new Zend_Navigation_Page_Mvc(array(
     </example>
 
     <example id="zend.navigation.pages.mvc.example.isActive">
-        <title><code>isActive()</code> determines if page is active</title>
+        <title><code>isActive()</code> erkennt ob eine Seite aktiv ist</title>
 
         <para>
-            This example show that MVC pages determine whether they are active
-            by using the params found in the request object.
+            Dieses Beispiel zeigt das MVC Seiten erkennen ob sie aktiv sind indem die Parameter
+            verwendet werden die im Anfrage Objekt gefunden werden.
         </para>
 
         <programlisting role="php"><![CDATA[
 /*
- * Dispatched request:
+ * Ausgeführte Anfrage:
  * - module:     default
  * - controller: index
  * - action:     index
@@ -158,7 +155,7 @@ $page1->isActive(); // returns true
 $page2->isActive(); // returns false
 
 /*
- * Dispatched request:
+ * Ausgeführte Anfrage:
  * - module:     blog
  * - controller: post
  * - action:     view
@@ -170,11 +167,12 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'module'     => 'blog'
 ));
 
-// returns true, because request has the same module, controller and action
+// Gibt true zurück, weil die Anfrage die gleichen Module, Controller
+// und Aktion hat
 $page->isActive();
 
 /*
- * Dispatched request:
+ * Ausgefürte Anfrage:
  * - module:     blog
  * - controller: post
  * - action:     view
@@ -186,39 +184,39 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'id'         => null
 ));
 
-// returns false, because page requires the id param to be set in the request
-$page->isActive(); // returns false
+// Gibt false zurück weil die Seite den id Parameter in der
+// Anfrage gesetzt haben muß
+$page->isActive(); // gibt false zurück
 ]]>
         </programlisting>
     </example>
 
     <example id="zend.navigation.pages.mvc.example.routes">
-        <title>Using routes</title>
+        <title>Routen verwenden</title>
 
         <para>
-            Routes can be used with MVC pages. If a page has a route, this
-            route will be used in <code>getHref()</code> to generate the URL
-            for the page.
+            Routen können mit MVC Seite verwendet werden. Wenn eine Seite eine Route hat, wird
+            diese Route in <code>getHref()</code> verwendet um die URL für die Seite zu erstellen.
         </para>
 
         <para>
             <note>
                 <para>
-                    Note that when using the <code>route</code> property in a
-                    page, you should also specify the default params that the
-                    route defines (module, controller, action, etc.), otherwise
-                    the <code>isActive()</code> method will not be able to
-                    determine if the page is active. The reason for this is that
-                    there is currently no way to get the default params from a
-                    <code>Zend_Controller_Router_Route_Interface</code> object,
-                    nor to retrieve the current route from a
-                    <code>Zend_Controller_Router_Interface</code> object.
+                    Beachte, das wenn die <code>route</code> Eigenschaft in einer Seite verwendet
+                    wird, man auch die Standard Parameter spezifizieren sollte die diese Route
+                    definieren (module, controller, action, usw.), andernfalls ist die
+                    <code>isActive()</code> Methode nicht dazu in der Lage zu erkennen ob die Seite
+                    aktiv ist oder nicht. Der Grund hierfür ist, das es aktuell keinen Weg gibt
+                    die Standardparameter von einem
+                    <code>Zend_Controller_Router_Route_Interface</code> Objekt zu erhalten, oder
+                    die aktuelle Route von einem <code>Zend_Controller_Router_Interface</code>
+                    Objekt.
                 </para>
             </note>
         </para>
 
         <programlisting role="php"><![CDATA[
-// the following route is added to the ZF router
+// Die folgende Route wird den ZF Router hinzugefügt
 Zend_Controller_Front::getInstance()->getRouter()->addRoute(
     'article_view', // route name
     new Zend_Controller_Router_Route(
@@ -232,7 +230,7 @@ Zend_Controller_Front::getInstance()->getRouter()->addRoute(
     )
 );
 
-// a page is created with a 'route' option
+// Eine Seite wird mit der 'route' Option erstellt
 $page = new Zend_Navigation_Page_Mvc(array(
     'label'  => 'A news article',
     'route'  => 'article_view',
@@ -241,7 +239,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     )
 ));
 
-// returns: /a/42
+// Gibt /a/42 zurück
 $page->getHref();
 ]]>
         </programlisting>
