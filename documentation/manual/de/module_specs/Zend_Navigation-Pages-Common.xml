@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect2 id="zend.navigation.pages.common">
-    <title>Common page features</title>
+    <title>Übliche Seiten Features</title>
 
     <para>
-        All page classes must extend <classname>Zend_Navigation_Page</classname>,
-        and will thus share a common set of features and properties. Most notably
-        they share the options in the table below and the same initialization
-        process.
+        Alle Seiten Klassen müssen <classname>Zend_Navigation_Page</classname> erweitern, und
+        teilen deshalb ein übliches Set von Features und Eigenschaften. Am ehesten zu beachten
+        ist, das Sie die Optionen in der anbei zu sehenden Tabelle und den gleichen
+        Initialisierungs Prozess teilen.
     </para>
 
     <para>
-        Option keys are mapped to <code>set</code> methods. This means that
-        the option <code>order</code> maps to the method <code>setOrder()</code>,
-        and <code>reset_params</code> maps to the method
-        <code>setResetParams()</code>. If there is no setter method for
-        the option, it will be set as a custom property of the page.
+        Options Schlüssel werden zu <code>set</code> Methoden gemappt. Das bedeutet das die Option
+        <code>order</code> auf die Methode <code>setOrder()</code> gemappt wird, und
+        <code>reset_params</code> auf die Methode <code>setResetParams()</code>. Wenn es keine
+        Setter Methode für die Option gibt, wird diese als eigene Eigenschaft der Seite gesetzt.
     </para>
 
     <para>
-        Read more on extending Zend_Navigation_Page in
-        <link linkend="zend.navigation.pages.custom">Creating custom page types</link>.
+        Lesen Sie mehr über das erweitern von Zend_Navigation_Page in
+        <link linkend="zend.navigation.pages.custom">Erstellung eigener Seiten Typen</link>.
     </para>
 
     <table id="zend.navigation.pages.common.options">
-        <title>Common page options</title>
+        <title>Übliche Seiten Optionen</title>
         <tgroup cols="4">
             <thead>
                 <row>
-                    <entry>Key</entry>
-                    <entry>Type</entry>
-                    <entry>Default</entry>
-                    <entry>Description</entry>
+                    <entry>Schlüssel</entry>
+                    <entry>Typ</entry>
+                    <entry>Standardwert</entry>
+                    <entry>Beschreibung</entry>
                 </row>
             </thead>
             <tbody>
@@ -40,7 +39,7 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        A page label, such as 'Home' or 'Blog'.
+                        Ein Seitenlabel, wie 'Home' oder 'Blog'.
                     </entry>
                 </row>
                 <row>
@@ -48,8 +47,8 @@
                     <entry><code>string</code> | <code>int</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        An id tag/attribute that may be used when rendering
-                        the page, typically in an anchor element.
+                        Ein Id Tag/Attribut das verwendet werden kann wenn die Seite dargestellt
+                        wird, typischerweise in einem Anker Element.
                     </entry>
                 </row>
                 <row>
@@ -57,8 +56,8 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        A CSS class that may be used when rendering the page,
-                        typically in an anchor element.
+                        Eine CSS Klasse die verwendet werden kann wenn die Seite dargestellt wird,
+                        typischerweise ein Anker Element.
                     </entry>
                 </row>
                 <row>
@@ -66,8 +65,8 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        A short page description, typically for using
-                        as the <code>title</code> attribute in an anchor.
+                        Eine kurze Seitenbeschreibung, typischerweise für die Verwendung als
+                        <code>title</code> Attribut in einem Anker.
                     </entry>
                 </row>
                 <row>
@@ -75,8 +74,8 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        Specifies a target that may be used for the page,
-                        typically in an anchor element.
+                        Spezifiziert ein Ziel das für die Seite verwendet werden kann,
+                        typischerweise ein Anker Element.
                     </entry>
                 </row>
                 <row>
@@ -84,16 +83,15 @@
                     <entry><code>array</code></entry>
                     <entry><code>array()</code></entry>
                     <entry>
-                        Specifies forward relations for the page.
-                        Each element in the array is a key-value pair, where the
-                        key designates the relation/link type, and the value is
-                        a pointer to the linked page. An example of a key-value
-                        pair is <code>'alternate' => 'format/plain.html'</code>.
-                        To allow full flexbility, there are no restrictions on
-                        relation values. The value does not have to be a string.
-                        Read more about <code>rel</code> and <code>rev</code> in
-                        <link linkend="zend.view.helpers.initial.navigation.links">the
-                        section on the Links helper.</link>.
+                        Spezifiziert die Weiterleitungs-Relation für die Seite. Jedes Element im
+                        Array ist ein Schlüssel-Wert Paar, wobei der Schlüssel den Relation/Link
+                        Typ bestimmt, und der Wert ist ein Pointer zu der verlinkten Seite. Ein
+                        Beispiel eines Schlüssel-Wert Paares ist
+                        <code>'alternate' => 'format/plain.html'</code>. Um die volle Flexibilität
+                        zu erlauben, gibt es keine Einschränkungen an den Relationswerten. Der Wert
+                        muß kein String sein. Lesen Sie über <code>rel</code> und <code>rev</code>
+                        im <link linkend="zend.view.helpers.initial.navigation.links">Kapitel der
+                        Link Helfer</link>.
                     </entry>
                 </row>
                 <row>
@@ -101,8 +99,8 @@
                     <entry><code>array</code></entry>
                     <entry><code>array()</code></entry>
                     <entry>
-                        Specifies reverse relations for the page. Works exactly
-                        like <code>rel</code>.
+                        Spezifiziert die Rückwärts Relation für die Seite. Arbeitet genauso wie
+                        <code>rel</code>.
                     </entry>
                 </row>
                 <row>
@@ -110,16 +108,18 @@
                     <entry><code>string</code> | <code>int</code> | <code>null</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
+                        Arbeitet die order für Elemente in
                         Works like order for elements in
                         <link linkend="zend.form.quickstart.render">
-                        <classname>Zend_Form</classname></link>. If specified,
-                        the page will be iterated in a specific order, meaning
-                        you can force a page to be iterated before others by
-                        setting the <code>order</code> attribute to a low number,
-                        e.g. -100. If a <code>string</code> is given, it must
-                        parse to a valid <code>int</code>. If <code>null</code>
-                        is given, it will be reset, meaning the order in which
-                        the page was added to the container will be used.
+                        <classname>Zend_Form</classname></link>. Wenn spezifiziert, dann wird die
+                        Seite in einer speziellen Reihenfolge durchlaufen, was bedeutet das man
+                        eine Seite dazu zwingen kann das eine Seite vor anderen durchlaufen wird
+                        indem das <code>order</code> Attribut auf eine kleinere Nummer gesetzt
+                        wird, z.B. -100. Wenn ein <code>string</code> angegeben wird, muß dieser
+                        in einen gültigen <code>int</code> aufgelöst werden können. Wenn
+                        <code>null</code> angegeben wird, wird er resetiert, was bedeutet das die
+                        Reihenfolge verwendet wird mit der die Seite in den Container hinzugefügt
+                        wurde.
                     </entry>
                 </row>
                 <row>
@@ -127,9 +127,9 @@
                     <entry><code>string</code> | <code>Zend_Acl_Resource_Interface</code> | <code>null</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        ACL resource to associate with the page. Read more in
-                        <link linkend="zend.view.helpers.initial.navigation.acl">the
-                        section on ACL integration in view helpers.</link>.
+                        ACL Ressource die mit der Seite verknüpft werden soll. Lesen Sie mehr im
+                        <link linkend="zend.view.helpers.initial.navigation.acl">Kapitel ACL
+                        Integration in View Helfern</link>.
                     </entry>
                 </row>
                 <row>
@@ -137,9 +137,9 @@
                     <entry><code>string</code> | <code>null</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        ACL privilege to associate with the page. Read more in
-                        <link linkend="zend.view.helpers.initial.navigation.acl">the
-                        section on ACL integration in view helpers.</link>.
+                        ACL Privileg das mit der Seite assoziiert werden soll. Lesen Sie mehr im
+                        <link linkend="zend.view.helpers.initial.navigation.acl">Kapitel über ACL
+                        Integration in View Helfern</link>.
                     </entry>
                 </row>
                 <row>
@@ -147,10 +147,10 @@
                     <entry><code>bool</code></entry>
                     <entry><code>false</code></entry>
                     <entry>
-                        Whether the page should be considered active for the
-                        current request. If active is <code>false</code> or not
-                        given, MVC pages will check its properties against the
-                        request object upon calling <code>$page->isActive()</code>.
+                        Ob die Seite für die aktuelle Anfrage als aktiv betrachtet werden soll.
+                        Wenn active <code>false</code> ist oder nicht angegeben wird, werden MVC
+                        Seiten Ihr Eigenschaften gegen das Anfrage Objekt prüfen wenn
+                        <code>$page->isActive()</code> aufgerufen wird.
                     </entry>
                 </row>
                 <row>
@@ -158,9 +158,8 @@
                     <entry><code>bool</code></entry>
                     <entry><code>true</code></entry>
                     <entry>
-                        Whether page should be visible for the user, or just
-                        be a part of the structure. Invisible pages are skipped
-                        by view helpers.
+                        Ob die Seite für den Benutzer sichtbar sein soll, oder nur ein Teil einer
+                        Struktur ist. Unsichtbare Seiten werden von View Helfern übersprungen.
                     </entry>
                 </row>
                 <row>
@@ -168,11 +167,11 @@
                     <entry><code>array</code> | <code>Zend_Config</code> | <code>null</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        Child pages of the page. This could be an <code>array</code>
-                        or <code>Zend_Config</code> object containing either page
-                        options that can be passed to the <code>factory()</code>
-                        method, or actual <classname>Zend_Navigation_Page</classname>
-                        instances, or a mixture of both.
+                        Kind Seiten der Seite. Das sollte ein <code>array</code> oder
+                        <code>Zend_Config</code> Objekt sein das entweder Seiten Optionen enthält
+                        die in die <code>factory()</code> Methode übergeben werden können, oder
+                        die aktuelle <classname>Zend_Navigation_Page</classname> Instanz, oder
+                        einen Mix von beiden.
                     </entry>
                 </row>
             </tbody>
@@ -180,29 +179,29 @@
     </table>
 
     <note>
-        <title>Custom properties</title>
+        <title>Eigene Eigenschaften</title>
         <para>
-            All pages support setting and getting of custom properties by
-            use of the magic methods <code>__set($name, $value)</code>,
-            <code>__get($name)</code>, <code>__isset($name)</code> and
-            <code>__unset($name)</code>. Custom properties may have any value,
-            and will be included in the array that is returned from
-            <code>$page->toArray()</code>, which means that pages
-            can be serialized/deserialized successfully even if the pages
-            contains properties that are not native in the page class.
+            Alle Seiten unterstützen das Setzen und Empfangen von eigenen Eigenschaften durch
+            Verwendung der magischen Methoden <code>__set($name, $value)</code>,
+            <code>__get($name)</code>, <code>__isset($name)</code> und
+            <code>__unset($name)</code>. Eigene Eigenschaften können jeden Wert haben, und sind
+            im Array enthalten das von <code>$page->toArray()</code> zurückgegeben wird, was
+            bedeutet das Seiten erfolgreich serialisiert/de-serialisiert werden können, selbst
+            wenn die Seiten Eigenschaften enthalten die nicht nativ in der Seitenklasse sind.
         </para>
         <para>
-            Both native and custom properties can be set using
-            <code>$page->set($name, $value)</code> and retrieved using
-            <code>$page->get($name)</code>, or by using magic methods.
+            Sowohl native als auch eigene Eigenschaften können gesetzt werden indem
+            <code>$page->set($name, $value)</code> verwendet und empfangen indem
+            <code>$page->get($name)</code> verwendet wird, oder durch die Verwendung der
+            magischen Methoden.
         </para>
     </note>
 
     <example id="zend.navigation.pages.common.example.customprops">
-        <title>Custom page properties</title>
+        <title>Eigene Seiten Eigenschaften</title>
 
         <para>
-            This example shows how custom properties can be used.
+            Dieses Beispiel zeigt wie eigene Eigenschaften verwendet werden können.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -213,7 +212,7 @@ $page->meaning = 42;
 echo $page->foo;
 
 if ($page->meaning != 42) {
-    // action should be taken
+    // Eine Aktion sollte durchgeführt werden
 }
 ]]>
         </programlisting>

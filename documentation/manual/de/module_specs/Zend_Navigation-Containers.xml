@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect1 id="zend.navigation.containers">
-    <title>Containers</title>
+    <title>Container</title>
 
     <para>
-        Containers have methods for adding, retrieving, deleting and
-        iterating pages. Containers implement the
-        <ulink url="http://php.net/spl">SPL</ulink> interaces
-        <classname>RecursiveIterator</classname> and
-        <classname>Countable</classname>, meaning that a container can
-        be iterated using the SPL
-        <classname>RecursiveIteratorIterator</classname> class.
+        Container haben Methoden für das Hinzufügen, Empfangen, Löschen und Durchlaufen von Seiten.
+        Container implementieren die <ulink url="http://php.net/spl">SPL</ulink> Interfaces
+        <classname>RecursiveIterator</classname> und <classname>Countable</classname>, was bedeutet
+        das ein Container durchlaufen werden kann indem die SPL Klasse
+        <classname>RecursiveIteratorIterator</classname> verwendet wird.
     </para>
 
     <sect2 id="zend.navigation.containers.creating">
-        <title>Creating containers</title>
+        <title>Erstellen von Containern</title>
 
         <para>
-            <classname>Zend_Navigation_Container</classname> is
-            abstract, and can not be instantiated directly. Use
-            <classname>Zend_Navigation</classname> if you want to
-            instantiate a container.
+            <classname>Zend_Navigation_Container</classname> ist abstrakt, und kann nicht direkt
+            instanziiert werden. Verwende <classname>Zend_Navigation</classname> wenn ein
+            Container instanziiert werden soll.
         </para>
 
         <para>
-            <classname>Zend_Navigation</classname> can be constructed
-            entirely empty, or take an array or a
-            <classname>Zend_Config</classname> object with pages to put in the
-            container. Each page in the given array/config will eventually be
-            passed to the <code>addPage()</code> method of the container class,
-            which means that each element in the array/config can be an array or
-            a config object, or a <classname>Zend_Navigation_Page</classname>
-            instance.
+            <classname>Zend_Navigation</classname> kann komplett leer erstellt werden, oder indem
+            ein Array genommen wird, oder ein <classname>Zend_Config</classname> Objekt mit Seiten
+            in den Container gegeben wird. Jede seite in dem gegebenen Array/Config wird
+            eventuell an die <code>addPage()</code> Methode der Container Klasse übergeben, was
+            bedeutet das jedes Element im Array/Config ein Array oder Config Objekt sein kann, oder
+            eine Instanz von <classname>Zend_Navigation_Page</classname>.
         </para>
 
         <example id="zend.navigation.containers.creating.example.array">
-            <title>Creating a container using an array</title>
+            <title>Erstellt einen Container indem ein Array verwendet wird</title>
 
             <programlisting role="php"><![CDATA[
 /*
- * Create a container from an array
+ * Erstellt einen Container von einem Array
  *
- * Each element in the array will be passed to
- * Zend_Navigation_Page::factory() when constructing.
+ * Jedes Element im Array wird an Zend_Navigation_Page::factory() übergeben
+ * wenn es erstellt wird.
  */
 $container = new Zend_Navigation(array(
     array(
-        'label' => 'Page 1',
+        'label' => 'Seite 1',
         'id' => 'home-link'
     ),
     array(
@@ -55,68 +50,68 @@ $container = new Zend_Navigation(array(
         'order' => 100
     ),
     array(
-        'label' => 'Page 2',
+        'label' => 'Seite 2',
         'controller' => 'page2',
         'pages' => array(
             array(
-                'label' => 'Page 2.1',
+                'label' => 'Seite 2.1',
                 'action' => 'page2_1',
                 'controller' => 'page2',
                 'class' => 'special-one',
-                'title' => 'This element has a special class',
+                'title' => 'Dieses Element hat eine spezielle Klasse',
                 'active' => true
             ),
             array(
-                'label' => 'Page 2.2',
+                'label' => 'Seite 2.2',
                 'action' => 'page2_2',
                 'controller' => 'page2',
                 'class' => 'special-two',
-                'title' => 'This element has a special class too'
+                'title' => 'Dieses Element hat auch eine spezielle Klasse'
             )
         )
     ),
     array(
-        'label' => 'Page 2 with params',
+        'label' => 'Seite 2 mit Parametern',
         'action' => 'index',
         'controller' => 'page2',
-        // specify a param or two
+        // Spezifiziert einen Parameter oder zwei
         'params' => array(
             'format' => 'json',
             'foo' => 'bar'
         )
     ),
     array(
-        'label' => 'Page 2 with params and a route',
+        'label' => 'Seite 2 mit Parametern und einer Route',
         'action' => 'index',
         'controller' => 'page2',
-        // specify a route name and a param for the route
+        // Spezifiziert einen Routen Namen und einen Parameter für die Route
         'route' => 'nav-route-example',
         'params' => array(
             'format' => 'json'
         )
     ),
     array(
-        'label' => 'Page 3',
+        'label' => 'Seite 3',
         'action' => 'index',
         'controller' => 'index',
         'module' => 'mymodule',
         'reset_params' => false
     ),
     array(
-        'label' => 'Page 4',
+        'label' => 'Seite 4',
         'uri' => '#',
         'pages' => array(
             array(
-                'label' => 'Page 4.1',
+                'label' => 'Seite 4.1',
                 'uri' => '/page4',
-                'title' => 'Page 4 using uri',
+                'title' => 'Seite 4 mit Verwendung von URI',
                 'pages' => array(
                     array(
-                        'label' => 'Page 4.1.1',
-                        'title' => 'Page 4 using mvc params',
+                        'label' => 'Seite 4.1.1',
+                        'title' => 'Seite 4 mit Verwendung von MVC Parametern',
                         'action' => 'index',
                         'controller' => 'page4',
-                        // let's say this page is active
+                        // Sagen wir das diese Seite aktiv ist
                         'active' => '1'
                     )
                 )
@@ -124,29 +119,29 @@ $container = new Zend_Navigation(array(
         )
     ),
     array(
-        'label' => 'Page 0?',
+        'label' => 'Seite 0?',
         'uri' => '/setting/the/order/option',
-        // setting order to -1 should make it appear first
+        // Setzt die Reihenfolge auf -1, damit Sie als erstes erscheint
         'order' => -1
     ),
     array(
-        'label' => 'Page 5',
+        'label' => 'Seite 5',
         'uri' => '/',
-        // this page should not be visible
+        // Diese Seite sollte nicht sichtbar sein
         'visible' => false,
         'pages' => array(
             array(
-                'label' => 'Page 5.1',
+                'label' => 'Seite 5.1',
                 'uri' => '#',
                 'pages' => array(
                     array(
-                        'label' => 'Page 5.1.1',
+                        'label' => 'Seite 5.1.1',
                         'uri' => '#',
                         'pages' => array(
                             array(
-                                'label' => 'Page 5.1.2',
+                                'label' => 'Seite 5.1.2',
                                 'uri' => '#',
-                                // let's say this page is active
+                                // Sagen wir das die Seite aktiv ist
                                 'active' => true
                             )
                         )
@@ -156,44 +151,44 @@ $container = new Zend_Navigation(array(
         )
     ),
     array(
-        'label' => 'ACL page 1 (guest)',
+        'label' => 'ACL Seite 1 (guest)',
         'uri' => '#acl-guest',
         'resource' => 'nav-guest',
         'pages' => array(
             array(
-                'label' => 'ACL page 1.1 (foo)',
+                'label' => 'ACL Seite 1.1 (foo)',
                 'uri' => '#acl-foo',
                 'resource' => 'nav-foo'
             ),
             array(
-                'label' => 'ACL page 1.2 (bar)',
+                'label' => 'ACL Seite 1.2 (bar)',
                 'uri' => '#acl-bar',
                 'resource' => 'nav-bar'
             ),
             array(
-                'label' => 'ACL page 1.3 (baz)',
+                'label' => 'ACL Seite 1.3 (baz)',
                 'uri' => '#acl-baz',
                 'resource' => 'nav-baz'
             ),
             array(
-                'label' => 'ACL page 1.4 (bat)',
+                'label' => 'ACL Seite 1.4 (bat)',
                 'uri' => '#acl-bat',
                 'resource' => 'nav-bat'
             )
         )
     ),
     array(
-        'label' => 'ACL page 2 (member)',
+        'label' => 'ACL Seite 2 (member)',
         'uri' => '#acl-member',
         'resource' => 'nav-member'
     ),
     array(
-        'label' => 'ACL page 3 (admin',
+        'label' => 'ACL Seite 3 (admin)',
         'uri' => '#acl-admin',
         'resource' => 'nav-admin',
         'pages' => array(
             array(
-                'label' => 'ACL page 3.1 (nothing)',
+                'label' => 'ACL Seite 3.1 (nothing)',
                 'uri' => '#acl-nada'
             )
         )
@@ -208,10 +203,10 @@ $container = new Zend_Navigation(array(
         </example>
 
         <example id="zend.navigation.containers.creating.example.config">
-            <title>Creating a container using a config object</title>
+            <title>Erstellung eines Containers indem ein Config Objekt erstellt wird</title>
 
             <programlisting role="php"><![CDATA[
-/* CONTENTS OF /path/to/navigation.xml:
+/* INHALT VON /path/to/navigation.xml:
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <nav>
@@ -223,12 +218,12 @@ $container = new Zend_Navigation(array(
         </zend>
 
         <page1>
-            <label>Page 1</label>
+            <label>Seite 1</label>
             <uri>page1</uri>
             <pages>
 
                 <page1_1>
-                    <label>Page 1.1</label>
+                    <label>Seite 1.1</label>
                     <uri>page1/page1_1</uri>
                 </page1_1>
 
@@ -236,27 +231,27 @@ $container = new Zend_Navigation(array(
         </page1>
 
         <page2>
-            <label>Page 2</label>
+            <label>Seite 2</label>
             <uri>page2</uri>
             <pages>
 
                 <page2_1>
-                    <label>Page 2.1</label>
+                    <label>Seite 2.1</label>
                     <uri>page2/page2_1</uri>
                 </page2_1>
 
                 <page2_2>
-                    <label>Page 2.2</label>
+                    <label>Seite 2.2</label>
                     <uri>page2/page2_2</uri>
                     <pages>
 
                         <page2_2_1>
-                            <label>Page 2.2.1</label>
+                            <label>Seite 2.2.1</label>
                             <uri>page2/page2_2/page2_2_1</uri>
                         </page2_2_1>
 
                         <page2_2_2>
-                            <label>Page 2.2.2</label>
+                            <label>Seite 2.2.2</label>
                             <uri>page2/page2_2/page2_2_2</uri>
                             <active>1</active>
                         </page2_2_2>
@@ -265,35 +260,35 @@ $container = new Zend_Navigation(array(
                 </page2_2>
 
                 <page2_3>
-                    <label>Page 2.3</label>
+                    <label>Seite 2.3</label>
                     <uri>page2/page2_3</uri>
                     <pages>
 
                         <page2_3_1>
-                            <label>Page 2.3.1</label>
+                            <label>Seite 2.3.1</label>
                             <uri>page2/page2_3/page2_3_1</uri>
                         </page2_3_1>
 
                         <page2_3_2>
-                            <label>Page 2.3.2</label>
+                            <label>Seite 2.3.2</label>
                             <uri>page2/page2_3/page2_3_2</uri>
                             <visible>0</visible>
                             <pages>
 
                                     <page2_3_2_1>
-                                        <label>Page 2.3.2.1</label>
+                                        <label>Seite 2.3.2.1</label>
                                         <uri>page2/page2_3/page2_3_2/1</uri>
                                         <active>1</active>
                                     </page2_3_2_1>
 
                                     <page2_3_2_2>
-                                        <label>Page 2.3.2.2</label>
+                                        <label>Seite 2.3.2.2</label>
                                         <uri>page2/page2_3/page2_3_2/2</uri>
                                         <active>1</active>
 
                                         <pages>
                                             <page_2_3_2_2_1>
-                                                <label>Ignore</label>
+                                                <label>Ignoriert</label>
                                                 <uri>#</uri>
                                                 <active>1</active>
                                             </page_2_3_2_2_1>
@@ -304,19 +299,19 @@ $container = new Zend_Navigation(array(
                         </page2_3_2>
 
                         <page2_3_3>
-                            <label>Page 2.3.3</label>
+                            <label>Seite 2.3.3</label>
                             <uri>page2/page2_3/page2_3_3</uri>
                             <resource>admin</resource>
                             <pages>
 
                                     <page2_3_3_1>
-                                        <label>Page 2.3.3.1</label>
+                                        <label>Seite 2.3.3.1</label>
                                         <uri>page2/page2_3/page2_3_3/1</uri>
                                         <active>1</active>
                                     </page2_3_3_1>
 
                                     <page2_3_3_2>
-                                        <label>Page 2.3.3.2</label>
+                                        <label>Seite 2.3.3.2</label>
                                         <uri>page2/page2_3/page2_3_3/2</uri>
                                         <resource>guest</resource>
                                         <active>1</active>
@@ -332,29 +327,29 @@ $container = new Zend_Navigation(array(
         </page2>
 
         <page3>
-            <label>Page 3</label>
+            <label>Seite 3</label>
             <uri>page3</uri>
             <pages>
 
                 <page3_1>
-                    <label>Page 3.1</label>
+                    <label>Seite 3.1</label>
                     <uri>page3/page3_1</uri>
                     <resource>guest</resource>
                 </page3_1>
 
                 <page3_2>
-                    <label>Page 3.2</label>
+                    <label>Seite 3.2</label>
                     <uri>page3/page3_2</uri>
                     <resource>member</resource>
                     <pages>
 
                         <page3_2_1>
-                            <label>Page 3.2.1</label>
+                            <label>Seite 3.2.1</label>
                             <uri>page3/page3_2/page3_2_1</uri>
                         </page3_2_1>
 
                         <page3_2_2>
-                            <label>Page 3.2.2</label>
+                            <label>Seite 3.2.2</label>
                             <uri>page3/page3_2/page3_2_2</uri>
                             <resource>admin</resource>
                         </page3_2_2>
@@ -363,19 +358,19 @@ $container = new Zend_Navigation(array(
                 </page3_2>
 
                 <page3_3>
-                    <label>Page 3.3</label>
+                    <label>Seite 3.3</label>
                     <uri>page3/page3_3</uri>
                     <resource>special</resource>
                     <pages>
 
                         <page3_3_1>
-                            <label>Page 3.3.1</label>
+                            <label>Seite 3.3.1</label>
                             <uri>page3/page3_3/page3_3_1</uri>
                             <visible>0</visible>
                         </page3_3_1>
 
                         <page3_3_2>
-                            <label>Page 3.3.2</label>
+                            <label>Seite 3.3.2</label>
                             <uri>page3/page3_3/page3_3_2</uri>
                             <resource>admin</resource>
                         </page3_3_2>
@@ -403,51 +398,51 @@ $container = new Zend_Navigation($config);
     </sect2>
 
     <sect2 id="zend.navigation.containers.adding">
-        <title>Adding pages</title>
+        <title>Hinzufügen von Seiten</title>
 
         <para>
-            Adding pages to a container can be done with the methods
-            <code>addPage()</code>, <code>addPages()</code>, or
-            <code>setPages()</code>. See examples below for explanation.
+            Das Hinzufügen von Seiten in einen Container kann mit den Methoden
+            <code>addPage()</code>, <code>addPages()</code> oder <code>setPages()</code>
+            durchgeführt werden. Das folgende Beispiel zeigt eine Erklärung des ganzen.
         </para>
 
         <example id="zend.navigation.containers.adding.example">
-            <title>Adding pages to a container</title>
+            <title>Hinzufügen von Seiten zu einem Container</title>
 
             <programlisting role="php"><![CDATA[
-// create container
+// Container erstellen
 $container = new Zend_Navigation();
 
-// add page by giving a page instance
+// Seite durch die Angabe eine Instanz einer Page hinzufügen
 $container->addPage(Zend_Navigation_Page::factory(array(
     'uri' => 'http://www.example.com/'
 )))
 
-// add page by giving an array
+// Seite durch die Angabe eines Arrays hinzufügen
 $container->addPage(array(
     'uri' => 'http://www.example.com/'
 )))
 
-// add page by giving a config object
+// Seite durch die Angabe eines Config Objekts hinzufügen
 $container->addPage(new Zend_Config(array(
     'uri' => 'http://www.example.com/'
 )))
 
 $pages = array(
     array(
-        'label'  => 'Save'
+        'label'  => 'Speichern'
         'action' => 'save',
     ),
     array(
-        'label' =>  'Delete',
+        'label' =>  'Löschen',
         'action' => 'delete'
     )
 );
 
-// add two pages
+// Zwei Seiten hinzufügen
 $container->addPages($pages);
 
-// remove existing pages and add the given pages
+// Bestehende Seite entfernen und die gegebenen Seiten hinzufügen
 $container->setPages($pages);
 ]]>
             </programlisting>
@@ -455,113 +450,110 @@ $container->setPages($pages);
     </sect2>
 
     <sect2 id="zend.navigation.containers.removing">
-        <title>Removing pages</title>
+        <title>Seiten löschen</title>
 
         <para>
-            Removing pages can be done with <code>removePage()</code> or
-            <code>removePages()</code>.  The first method accepts a an instance
-            of a page, or an integer. The integer corresponds to the
-            <code>order</code> a page has. The latter method will remove all
-            pages in the container.
+            Das Löschen von Seiten kann mit <code>removePage()</code> oder
+            <code>removePages()</code> durchgeführt werden. Die ersten Methode akzeptiert eine
+            Instanz einer Seite, oder ein Integer. Der Integer korrespondiert mit der
+            <code>order</code> die die Seite hat. Die letztere Methode entfernt alle Seiten
+            vom Container.
         </para>
 
         <example id="zend.navigation.containers.removing.example">
-            <title>Removing pages from a container</title>
+            <title>Seiten von einem Container entfernen</title>
 
             <programlisting role="php"><![CDATA[
 $container = new Zend_Navigation(array(
     array(
-        'label'  => 'Page 1',
+        'label'  => 'Seite 1',
         'action' => 'page1'
     ),
     array(
-        'label'  => 'Page 2',
+        'label'  => 'Seite 2',
         'action' => 'page2',
         'order'  => 200
     ),
     array(
-        'label'  => 'Page 3',
+        'label'  => 'Seite 3',
         'action' => 'page3'
     )
 ));
 
-// remove page by implicit page order
-$container->removePage(0);      // removes Page 1
+// Entfernt eine Seite implizit durch die Reihenfolge der Seite
+$container->removePage(0);      // Entfernt Seite 1
 
-// remove page by instance
-$page3 = $container->findOneByAction('Page 3');
-$container->removePage($page3); // removes Page 3
+// Entfernt eine Seite durch die Instanz
+$page3 = $container->findOneByAction('Seite 3');
+$container->removePage($page3); // Entfernt Seite 3
 
-// remove page by explicit page order
-$container->removePage(200);    // removes Page 2
+// Entfernt eine Seite durch explizite angabe der Reihenfolge der Seite
+$container->removePage(200);    // Entfernt Seite 2
 
-// remove all pages
-$container->removePages();      // removes all pages
+// Entfernt alle Seiten
+$container->removePages();      // Entfernt alle Seiten
 ]]>
             </programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.navigation.containers.finding">
-        <title>Finding pages</title>
+        <title>Seiten finden</title>
 
         <para>
-            Containers have finder methods for retrieving pages.
-            They are <code>findOneBy($property, $value)</code>,
-            <code>findAllBy($property, $value)</code>, and
-            <code>findBy($property, $value, $all = false)</code>.
-            Those methods will recursively search the container for
-            pages matching the given <code>$page->$property == $value</code>.
-            The first method, <code>findOneBy()</code>, will return a
-            single page matching the property with the given value, or
-            null if it cannot be found. The second method will return
-            all pages with a property matching the given value. The third
-            method will call one of the two former methods depending on the
-            <code>$all</code> flag.
+            Container haben Finder Methoden für das Empfangen von Seiten. Es gibt
+            <code>findOneBy($property, $value)</code>, <code>findAllBy($property, $value)</code>
+            und <code>findBy($property, $value, $all = false)</code>. Diese Methoden durchsuchen
+            rekursiv den Container nach Seiten die dem angegebenen
+            <code>$page->$property == $value</code> entsprechen. Die erste Methode,
+            <code>findOneBy()</code>, gibt eine einzelne Seite zurück die der angegebenen
+            Eigenschaft mit dem angegebenen Wert entspricht, oder null wenn Sie nicht
+            gefunden werden kann. Die zweite Methode wird alle Seiten mit einer Eigenschaft
+            zurückgeben die dem angegebenen Wert entspricht. Die dritte Methode wird eine
+            eine der zwei anderen Methoden aufrufen, abhängig vom <code>$all</code> Flag.
         </para>
 
         <para>
-            The finder methods can also be used magically by appending the
-            property name to <code>findBy</code>, <code>findOneBy</code>, or
-            <code>findAllBy</code>, e.g. <code>findOneByLabel('Home')</code> to
-            return the first matching page with label <code>Home</code>.
-            Other combinations are <code>findByLabel(...)</code>,
-            <code>findOnyByTitle(...)</code>,
-            <code>findAllByController(...)</code>, etc. Finder
-            methods also work on custom properties, such as
+            Die Finder Methoden können auch magisch verwendet werden indem der Name der
+            Eigenschaft an <code>findBy</code>, <code>findOneBy</code> oder
+            <code>findAllBy</code> angehängt wird, z.B. <code>findOneByLabel('Home')</code>
+            um die erste passende Seite mit dem Label <code>Home</code> zu finden.
+            Andere Kombinationen sind <code>findByLabel(...)</code>,
+            <code>findOnyByTitle(...)</code>, <code>findAllByController(...)</code>, usw.
+            Finder Methoden funktionieren auch mit eigenen Eigenschaften, so wie z.B.
             <code>findByFoo('bar')</code>.
         </para>
 
         <example id="zend.navigation.containers.finding.example">
-            <title>Finding pages in a container</title>
+            <title>Seiten in einem Container finden</title>
 
             <programlisting role="php"><![CDATA[
 $container = new Zend_Navigation(array(
     array(
-        'label' => 'Page 1',
+        'label' => 'Seite 1',
         'uri'   => 'page-1',
         'foo'   => 'bar',
         'pages' => array(
             array(
-                'label' => 'Page 1.1',
+                'label' => 'Seite 1.1',
                 'uri'   => 'page-1.1',
                 'foo'   => 'bar',
             ),
             array(
-                'label' => 'Page 1.2',
+                'label' => 'Seite 1.2',
                 'uri'   => 'page-1.2',
                 'class' => 'my-class',
             ),
             array(
                 'type'   => 'uri',
-                'label'  => 'Page 1.3',
+                'label'  => 'Seite 1.3',
                 'uri'    => 'page-1.3',
                 'action' => 'about'
             )
         )
     ),
     array(
-        'label'      => 'Page 2',
+        'label'      => 'Seite 2',
         'id'         => 'page_2_and_3',
         'class'      => 'my-class',
         'module'     => 'page2',
@@ -569,105 +561,105 @@ $container = new Zend_Navigation(array(
         'action'     => 'page1'
     ),
     array(
-        'label'      => 'Page 3',
+        'label'      => 'Seite 3',
         'id'         => 'page_2_and_3',
         'module'     => 'page3',
         'controller' => 'index'
     )
 ));
 
-// The 'id' is not required to be unique, but be aware that
-// having two pages with the same id will render the same id attribute
-// in menus and breadcrumbs.
-$found = $container->findBy('id', 'page_2_and_3');       // returns Page 2
-$found = $container->findOneBy('id', 'page_2_and_3');    // returns Page 2
-$found = $container->findBy('id', 'page_2_and_3', true); // returns Page 2 and Page 3
-$found = $container->findById('page_2_and_3');           // returns Page 2
-$found = $container->findOneById('page_2_and_3');        // returns Page 2
-$found = $container->findAllById('page_2_and_3');        // returns Page 2 and Page 3
+// Die 'id' muß nicht eindeutig sein, aber man sollte darauf achten das wenn
+// man zwei Seiten mit der gleichen Id hat, diese die gleichen Id Attribute in
+// Menüs und Breadcrumbs darstellen werden
+$found = $container->findBy('id', 'page_2_and_3');       // Gibt Seite 2 zurück
+$found = $container->findOneBy('id', 'page_2_and_3');    // Gibt Seite 2 zurück
+$found = $container->findBy('id', 'page_2_and_3', true); // Gibt Seite 2 und Seite 3 zurück
+$found = $container->findById('page_2_and_3');           // Gibt Seite 2 zurück
+$found = $container->findOneById('page_2_and_3');        // Gibt Seite 2 zurück
+$found = $container->findAllById('page_2_and_3');        // Gibt Seite 2 und Seite 3 zurück
 
-// Find all matching CSS class my-class
-$found = $container->findAllBy('class', 'my-class'); // returns Page 1.2 and Page 2
-$found = $container->findAllByClass('my-class');     // returns Page 1.2 and Page 2
+// Finde alle zu my-class passenden CSS Klassen
+$found = $container->findAllBy('class', 'my-class'); // Gibt Seite 1.2 und Seite 2 zurück
+$found = $container->findAllByClass('my-class');     // Gibt Seite 1.2 und Seite 2 zurück
 
-// Find first matching CSS class my-class
-$found = $container->findOneByClass('my-class');     // returns Page 1.2
+// Finde die erste zu my-class passende CSS Klasse
+$found = $container->findOneByClass('my-class');     // Gibt Seite 1.2 zurück
 
-// Find all matching CSS class non-existant
-$found = $container->findAllByClass('non-existant'); // returns array()
+// Findet alle zu non-existant passenden CSS Klassen
+$found = $container->findAllByClass('non-existant'); // Gibt array() zurück
 
-// Find first matching CSS class non-existant
-$found = $container->findOneByClass('non-existant'); // returns null
+// Findet die erste zu non-existant passende CSS Klasse
+$found = $container->findOneByClass('non-existant'); // Gibt null zurück
 
-// Find all pages with custom property 'foo' = 'bar'
-$found = $container->findAllBy('foo', 'bar'); // returns Page 1 and Page 1.1
+// Findet alle Seiten mit den eigenen Eigenschaften 'foo' = 'bar'
+$found = $container->findAllBy('foo', 'bar'); // Gibt Seite 1 und Seite 1.1 zurück
 
-// To achieve the same magically, 'foo' must be in lowercase.
-// This is because 'foo' is a custom property, and thus the
-// property name is not normalized to 'Foo'
+// Um das gleiche auf Magische Weise zu ermöglichen, muß 'foo' kleingeschrieben sein
+// weil 'foo' eine eigene Eigenschaft ist und deshalb der Name der Eigenschaft nicht
+// zu 'Foo' normalisiert wird
 $found = $container->findAllByfoo('bar');
 
-// Find all with controller = 'index'
-$found = $container->findAllByController('index'); // returns Page 2 and Page 3
+// Findet alle mit controller = 'index'
+$found = $container->findAllByController('index'); // Gibt Seite 2 und Seite 3 zurück
 ]]>
             </programlisting>
         </example>
     </sect2>
 
     <sect2 id="zend.navigation.containers.iterating">
-        <title>Iterating containers</title>
+        <title>Container durchsuchen</title>
 
         <para>
-            <classname>Zend_Navigation_Container</classname> implements
-            <classname>RecursiveIteratorIterator</classname>, and can be
-            iterated using any <classname>Iterator</classname> class. To iterate
-            a container recursively, use the
-            <classname>RecursiveIteratorIterator</classname> class.
+            <classname>Zend_Navigation_Container</classname> implementiert
+            <classname>RecursiveIteratorIterator</classname>, und kann mit jeder
+            <classname>Iterator</classname> Klasse durchsucht werden. Um einen Container
+            rekursiv zu durchsuchen, kann die <classname>RecursiveIteratorIterator</classname>
+            Klasse verwendet werden.
         </para>
 
         <example id="zend.navigation.containers.iterating.example">
-            <title>Iterating a container</title>
+            <title>Einen Container durchsuchen</title>
 
             <programlisting role="php"><![CDATA[
 /*
- * Create a container from an array
+ * Erstellt einen Container von einem Array
  */
 $container = new Zend_Navigation(array(
     array(
-        'label' => 'Page 1',
+        'label' => 'Seite 1',
         'uri'   => '#'
     ),
     array(
-        'label' => 'Page 2',
+        'label' => 'Seite 2',
         'uri'   => '#',
         'pages' => array(
             array(
-                'label' => 'Page 2.1',
+                'label' => 'Seite 2.1',
                 'uri'   => '#'
             ),
             array(
-                'label' => 'Page 2.2',
+                'label' => 'Seite 2.2',
                 'uri'   => '#'
             )
         )
     )
     array(
-        'label' => 'Page 3',
+        'label' => 'Seite 3',
         'uri'   => '#'
     )
 ));
 
-// Iterate flat using regular foreach:
-// Output: Page 1, Page 2, Page 3
+// Durchsucht flach indem ein normales foreach verwendet wird:
+// Ausgabe: Seite 1, Seite 2, Seite 3
 foreach ($container as $page) {
     echo $page->label;
 }
 
-// Iterate recursively using RecursiveIteratorIterator
+// Durchsucht rekursiv indem RecursiveIteratorIterator verwendet wird
 $it = new RecursiveIteratorIterator(
         $container, RecursiveIteratorIterator::SELF_FIRST);
 
-// Output: Page 1, Page 2, Page 2.1, Page 2.2, Page 3
+// Ausgabe: Seite 1, Seite 2, Seite 2.1, Seite 2.2, Seite 3
 foreach ($it as $page) {
     echo $page->label;
 }
@@ -677,40 +669,38 @@ foreach ($it as $page) {
     </sect2>
 
     <sect2 id="zend.navigation.containers.other">
-        <title>Other operations</title>
+        <title>Andere Operationen</title>
 
         <para>
-            The method <code>hasPage(Zend_Navigation_Page $page)</code> checks
-            if the container has the given page. The method <code>hasPages()</code>
-            checks if there are any pages in the container, and is equivalent
-            to <code>count($container) > 1</code>.
+            Die Methode <code>hasPage(Zend_Navigation_Page $page)</code> prüft ob der Container
+            die angegebene Seite besitzt. Die Methode <code>hasPages()</code> prüft ob irgendeine
+            Seite im Container existiert, und ist gleich mit <code>count($container) > 1</code>.
         </para>
 
         <para>
-            The <code>toArray()</code> method converts the container and the
-            pages in it to an array. This can be useful for serializing and
-            debugging.
+            Die <code>toArray()</code> Methode konvertiert den Container und die Seiten in Ihm zu
+            einem Array. Das kann für eine Serialisierung und das Debugging nützlich sein.
         </para>
 
         <example id="zend.navigation.containers.other.example.toarray">
-            <title>Converting a container to an array</title>
+            <title>Einen Container in ein Array konvertieren</title>
 
             <programlisting role="php"><![CDATA[
 $container = new Zend_Navigation(array(
     array(
-        'label' => 'Page 1',
+        'label' => 'Seite 1',
         'uri'   => '#'
     ),
     array(
-        'label' => 'Page 2',
+        'label' => 'Seite 2',
         'uri'   => '#',
         'pages' => array(
             array(
-                'label' => 'Page 2.1',
+                'label' => 'Seite 2.1',
                 'uri'   => '#'
             ),
             array(
-                'label' => 'Page 2.2',
+                'label' => 'Seite 2.2',
                'uri'   => '#'
             )
         )
@@ -719,10 +709,10 @@ $container = new Zend_Navigation(array(
 
 var_dump($container->toArray());
 
-/* Output:
+/* Ausgabe:
 array(2) {
   [0]=> array(15) {
-    ["label"]=> string(6) "Page 1"
+    ["label"]=> string(6) "Seite 1"
     ["id"]=> NULL
     ["class"]=> NULL
     ["title"]=> NULL
@@ -742,7 +732,7 @@ array(2) {
     ["uri"]=> string(1) "#"
   }
   [1]=> array(15) {
-    ["label"]=> string(6) "Page 2"
+    ["label"]=> string(6) "Seite 2"
     ["id"]=> NULL
     ["class"]=> NULL
     ["title"]=> NULL
@@ -759,7 +749,7 @@ array(2) {
     ["type"]=> string(23) "Zend_Navigation_Page_Uri"
     ["pages"]=> array(2) {
       [0]=> array(15) {
-        ["label"]=> string(8) "Page 2.1"
+        ["label"]=> string(8) "Seite 2.1"
         ["id"]=> NULL
         ["class"]=> NULL
         ["title"]=> NULL
@@ -780,7 +770,7 @@ array(2) {
       }
       [1]=>
       array(15) {
-        ["label"]=> string(8) "Page 2.2"
+        ["label"]=> string(8) "Seite 2.2"
         ["id"]=> NULL
         ["class"]=> NULL
         ["title"]=> NULL
