@@ -321,7 +321,6 @@ $this->navigation()->addPage(array(
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php
 /*
  * Navigation container (config/array)
 
@@ -501,7 +500,6 @@ Zend_Registry::set('Zend_Navigation', $container);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php
 // Setup router (default routes and 'archive' route):
 $front = Zend_Controller_Front::getInstance();
 $router = $front->getRouter();
@@ -654,7 +652,7 @@ Output:
 
             <programlisting role="php"><![CDATA[
 Rendering with 8 spaces indentation:
-<?= $this->navigation()->breadcrumbs()->setIndent(8); ?>
+<?php echo $this->navigation()->breadcrumbs()->setIndent(8);?>
 
 Output:
         <a href="/products">Products</a> &gt; <a href="/products/server">Foo Server</a> &gt; FAQ
@@ -719,7 +717,6 @@ Nothing, because the deepest active page is not at level 10 or deeper.
             </para>
 
             <programlisting role="php"><![CDATA[
-<?php
 $partial = ;
 echo $this->navigation()->breadcrumbs()
                         ->setPartial(array('breadcrumbs.phtml', 'default'));
@@ -732,7 +729,6 @@ echo $this->navigation()->breadcrumbs()
             </para>
 
             <programlisting role="php"><![CDATA[
-<?php
 echo implode(', ', array_map(
         create_function('$a', 'return $a->getLabel();'),
         $this->pages));
@@ -1068,7 +1064,7 @@ $container = new Zend_Navigation(array(
 
             <programlisting role="php"><![CDATA[
 In a view script or layout:
-<?= $this->view->navigation()->links(); ?>
+<?php echo $this->view->navigation()->links(); ?>
 
 Output:
 <link rel="alternate" href="/products/server/faq/format/xml">
@@ -1382,6 +1378,7 @@ Output:
             </para>
 
             <programlisting role="php"><![CDATA[
+<?php
 // render only the 'Community' menu
 $community = $this->navigation()->findOneByLabel('Community');
 $options = array(
@@ -1392,6 +1389,7 @@ echo $this->navigation()
           ->menu()
           ->renderMenu($community, $options);
 ?>
+Output:
                 <ul class="community">
                     <li>
                         <a href="/community/account">My Account</a>
@@ -1721,7 +1719,6 @@ echo $this->navigation()->menu()->render();
             <para>In application/modules/default/views/menu.phtml:</para>
 
             <programlisting role="php"><![CDATA[
-<?php
 foreach ($this->container as $page) {
     echo $this->menu()->htmlify($page), PHP_EOL;
 }
@@ -1935,7 +1932,8 @@ $this->navigation()
 
 // other possible methods:
 // ->setUseXmlDeclaration(false); // default is true
-// ->setServerUrl('http://my.otherhost.com'); // default is to detect automatically
+// ->setServerUrl('http://my.otherhost.com');
+// default is to detect automatically
 
 // print sitemap
 echo $this->navigation()->sitemap();

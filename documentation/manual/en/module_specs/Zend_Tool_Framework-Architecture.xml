@@ -25,11 +25,17 @@ interface Zend_Tool_Framework_Registry_Interface
     public function getClient();
     public function setLoader(Zend_Tool_Framework_Loader_Abstract $loader);
     public function getLoader();
-    public function setActionRepository(Zend_Tool_Framework_Action_Repository $actionRepository);
+    public function setActionRepository(
+        Zend_Tool_Framework_Action_Repository $actionRepository
+    );
     public function getActionRepository();
-    public function setProviderRepository(Zend_Tool_Framework_Provider_Repository $providerRepository);
+    public function setProviderRepository(
+        Zend_Tool_Framework_Provider_Repository $providerRepository
+    );
     public function getProviderRepository();
-    public function setManifestRepository(Zend_Tool_Framework_Manifest_Repository $manifestRepository);
+    public function setManifestRepository(
+        Zend_Tool_Framework_Manifest_Repository $manifestRepository
+    );
     public function getManifestRepository();
     public function setRequest(Zend_Tool_Framework_Client_Request $request);
     public function getRequest();
@@ -53,7 +59,9 @@ interface Zend_Tool_Framework_Registry_Interface
         <programlisting role="php"><![CDATA[
 interface Zend_Tool_Framework_Registry_EnabledInterface
 {
-    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry);
+    public function setRegistry(
+        Zend_Tool_Framework_Registry_Interface $registry
+    );
 }
 ]]></programlisting>
     </sect2>
@@ -80,8 +88,7 @@ interface Zend_Tool_Framework_Registry_EnabledInterface
 
         <programlisting role="php"><![CDATA[
 interface Zend_Tool_Framework_Provider_Interface
-{
-}
+{}
 ]]></programlisting>
 
         <para>
@@ -96,7 +103,9 @@ abstract class Zend_Tool_Framework_Provider_Abstract
                Zend_Tool_Registry_EnabledInterface
 {
     protected $_registry;
-    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry);
+    public function setRegistry(
+        Zend_Tool_Framework_Registry_Interface $registry
+    );
 }
 ]]></programlisting>
 
@@ -113,7 +122,8 @@ abstract class Zend_Tool_Framework_Provider_Abstract
         </para>
 
         <programlisting role="php"><![CDATA[
-class My_Component_HelloProvider implements Zend_Tool_Framework_Provider_Interface
+class My_Component_HelloProvider
+    implements Zend_Tool_Framework_Provider_Interface
 {
     public function say()
     {
@@ -181,7 +191,8 @@ abstract class Zend_Tool_Framework_Loader_Abstract
         </para>
 
         <programlisting role="php"><![CDATA[
-class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_Loader_Abstract
+class Zend_Tool_Framework_Loader_IncludePathLoader
+    extends Zend_Tool_Framework_Loader_Abstract
 {
 
     protected $_filterDenyDirectoryPattern = '.*(/|\\\\).svn';
@@ -268,7 +279,8 @@ class Zend_Tool_Framework_Manifest_Metadata
         </para>
 
         <programlisting role="php"><![CDATA[
-class Zend_Tool_Framework_Manifest_ActionMetadata extends Zend_Tool_Framework_Manifest_Metadata
+class Zend_Tool_Framework_Manifest_ActionMetadata
+    extends Zend_Tool_Framework_Manifest_Metadata
 {
 
     protected $_type = 'Action';
@@ -278,7 +290,8 @@ class Zend_Tool_Framework_Manifest_ActionMetadata extends Zend_Tool_Framework_Ma
     /** ... */
 }
 
-class Zend_Tool_Framework_Manifest_ProviderMetadata extends Zend_Tool_Framework_Manifest_Metadata
+class Zend_Tool_Framework_Manifest_ProviderMetadata
+    extends Zend_Tool_Framework_Manifest_Metadata
 {
 
     protected $_type = 'Provider';
@@ -337,16 +350,19 @@ class Zend_Tool_Framework_Manifest_Repository
      * search critera but do not appear in the object, pass a bool value to
      * $includeNonExistentProperties
      */
-    public function findMetadatas(Array $searchProperties = array(), $includeNonExistentProperties = true);
+    public function findMetadatas(Array $searchProperties = array(),
+                                  $includeNonExistentProperties = true);
 
     /**
      * The following will return exactly one of the matching search criteria,
      * regardless of how many have been returned.  First one in the manifest is
      * what will be returned.
      */
-    public function findMetadata(Array $searchProperties = array(), $includeNonExistentProperties = true)
+    public function findMetadata(Array $searchProperties = array(),
+                                 $includeNonExistentProperties = true)
     {
-        $metadatas = $this->getMetadatas($searchProperties, $includeNonExistentProperties);
+        $metadatas = $this->getMetadatas($searchProperties,
+                                         $includeNonExistentProperties);
         return array_shift($metadatas);
     }
 }
@@ -408,15 +424,8 @@ abstract class Zend_Tool_Framework_Client_Abstract
             As you can see, there are 3 methods needed to fulfill the needs of a
             client, the initialization, prehandling and post handling.  For a
             more in depth study of how the command line client works, please see
-
-            http://framework.zend.com/svn/framework/standard/incubator/library/Zend/Tool/Framework/Client/Console.php
-
+            <ulink url="http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Tool/Framework/Client/Console.php">source code</link>.
         </para>
 
-        <para>
-            Client Response System
-
-            ** notes from norm2772 here **
-        </para>
     </sect2>
 </sect1>
