@@ -424,7 +424,7 @@ abstract class Zend_Tool_Framework_Client_Abstract
             As you can see, there are 3 methods needed to fulfill the needs of a
             client, the initialization, prehandling and post handling.  For a
             more in depth study of how the command line client works, please see
-            <ulink url="http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Tool/Framework/Client/Console.php">source code</link>.
+            <ulink url="http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Tool/Framework/Client/Console.php">source code</ulink>.
         </para>
 
     </sect2>
