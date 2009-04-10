@@ -4,34 +4,33 @@
     <title>Zend_Navigation_Page_Uri</title>
 
     <para>
-        Pages of type <classname>Zend_Navigation_Page_Uri</classname> can be
-        used to link to pages on other domains or sites, or to implement
-        custom logic for the page. URI pages are simple; in addition
-        to the common page options, a URI page takes only one option —
-        <code>uri</code>. The <code>uri</code> will be returned when
-        calling <code>$page->getHref()</code>, and may be a
-        <code>string</code> or <code>null</code>.
+        Seiten des Typs <classname>Zend_Navigation_Page_Uri</classname> können verwendet werden
+        um auf Seiten von anderen Domains oder Sites zu verweisen, oder um eigene Logik für die
+        Seite zu implementieren. URI Seiten sind einfach; zusätzlich zu den normalen Seitenoptionen
+        nimmt eine URI Seite nur eine Option - <code>uri</code>. <code>uri</code> wird
+        zurückgegeben wenn <code>$page->getHref()</code> aufgerufen wird, und kann ein
+        <code>String</code> oder <code>Null</code> sein.
     </para>
 
     <note>
         <para>
-            <classname>Zend_Navigation_Page_Uri</classname> will not try to determine
-            whether it should be active when calling <code>$page->isActive()</code>.
-            It merely returns what currently is set, so to make a URI page active
-            you have to manually call <code>$page->setActive()</code> or
-            specifying <code>active</code> as a page option when constucting.
+            <classname>Zend_Navigation_Page_Uri</classname> versucht nicht zu erkennen ob es aktiv
+            ist wenn <code>$page->isActive()</code> aufgerufen wird. Es gibt zurück, was aktuell
+            gesetzt ist. Um also eine URI Seite aktiv zu machen muß man händisch
+            <code>$page->setActive()</code> aufrufen oder <code>active</code> als eine Option
+            der Seite bei der Erstellung spezifizieren.
         </para>
     </note>
 
     <table id="zend.navigation.pages.uri.options">
-        <title>URI page options</title>
+        <title>URI Seiten Optionen</title>
         <tgroup cols="4">
             <thead>
                 <row>
-                    <entry>Key</entry>
-                    <entry>Type</entry>
-                    <entry>Default</entry>
-                    <entry>Description</entry>
+                    <entry>Schlüssel</entry>
+                    <entry>Typ</entry>
+                    <entry>Standard</entry>
+                    <entry>Beschreibung</entry>
                 </row>
             </thead>
             <tbody>
@@ -40,7 +39,7 @@
                     <entry><code>string</code></entry>
                     <entry><code>null</code></entry>
                     <entry>
-                        URI to page. This can be any string or null.
+                        URI zur Seite. Das kann ein String oder Null sein.
                     </entry>
                 </row>
             </tbody>
