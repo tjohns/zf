@@ -578,19 +578,24 @@ $container = new Zend_Navigation(array(
 // The 'id' is not required to be unique, but be aware that
 // having two pages with the same id will render the same id attribute
 // in menus and breadcrumbs.
-$found = $container->findBy('id', 'page_2_and_3');       // returns Page 2
-$found = $container->findOneBy('id', 'page_2_and_3');    // returns Page 2
-$found = $container->findBy('id', 'page_2_and_3', true); // returns Page 2 and Page 3
-$found = $container->findById('page_2_and_3');           // returns Page 2
-$found = $container->findOneById('page_2_and_3');        // returns Page 2
-$found = $container->findAllById('page_2_and_3');        // returns Page 2 and Page 3
+$found = $container->findBy('id',
+                            'page_2_and_3');      // returns Page 2
+$found = $container->findOneBy('id',
+                               'page_2_and_3');   // returns Page 2
+$found = $container->findBy('id',
+                            'page_2_and_3',
+                            true);                // returns Page 2 and Page 3
+$found = $container->findById('page_2_and_3');    // returns Page 2
+$found = $container->findOneById('page_2_and_3'); // returns Page 2
+$found = $container->findAllById('page_2_and_3'); // returns Page 2 and Page 3
 
 // Find all matching CSS class my-class
-$found = $container->findAllBy('class', 'my-class'); // returns Page 1.2 and Page 2
-$found = $container->findAllByClass('my-class');     // returns Page 1.2 and Page 2
+$found = $container->findAllBy('class',
+                               'my-class');       // returns Page 1.2 and Page 2
+$found = $container->findAllByClass('my-class');  // returns Page 1.2 and Page 2
 
 // Find first matching CSS class my-class
-$found = $container->findOneByClass('my-class');     // returns Page 1.2
+$found = $container->findOneByClass('my-class');  // returns Page 1.2
 
 // Find all matching CSS class non-existant
 $found = $container->findAllByClass('non-existant'); // returns array()

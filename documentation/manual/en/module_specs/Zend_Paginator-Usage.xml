@@ -486,7 +486,7 @@ of <?php echo $this->totalItemCount; ?>
 <?php endif; ?>
 
 <script type="text/javascript"
-        src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js">
+     src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js">
 </script>
 <script type="text/javascript">
 $('paginationControl').observe('change', function() {

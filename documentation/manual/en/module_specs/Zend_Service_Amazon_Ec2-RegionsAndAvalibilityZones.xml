@@ -76,7 +76,8 @@ foreach($regions as $region) {
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_zones = new Zend_Service_Amazon_Ec2_Availabilityzones('aws_key','aws_secret_key');
+$ec2_zones = new Zend_Service_Amazon_Ec2_Availabilityzones('aws_key',
+                                                           'aws_secret_key');
 $zones = $ec2_zones->describe();
 
 foreach($zones as $zone) {

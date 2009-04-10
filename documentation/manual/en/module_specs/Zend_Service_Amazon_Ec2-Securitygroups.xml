@@ -36,7 +36,8 @@
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_sg->create('mygroup', 'my group description');
 ]]>
             </programlisting>
@@ -61,7 +62,8 @@ $return = $ec2_sg->create('mygroup', 'my group description');
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_ebs->describe('mygroup');
 ]]>
             </programlisting>
@@ -82,7 +84,8 @@ $return = $ec2_ebs->describe('mygroup');
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_sg->delete('mygroup');
 ]]>
             </programlisting>
@@ -115,8 +118,13 @@ $return = $ec2_sg->delete('mygroup');
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
-$return = $ec2_ebs->authorizeIp('mygroup', 'protocol', 'fromPort', 'toPort', 'ipRange');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
+$return = $ec2_ebs->authorizeIp('mygroup',
+                                'protocol',
+                                'fromPort',
+                                'toPort',
+                                'ipRange');
 ]]>
             </programlisting>
         </example>
@@ -136,7 +144,8 @@ $return = $ec2_ebs->authorizeIp('mygroup', 'protocol', 'fromPort', 'toPort', 'ip
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_sg->authorizeGroup('mygroup', 'securityGruopName', 'ownerId');
 ]]>
             </programlisting>
@@ -170,8 +179,13 @@ $return = $ec2_sg->authorizeGroup('mygroup', 'securityGruopName', 'ownerId');
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
-$return = $ec2_ebs->revokeIp('mygroup', 'protocol', 'fromPort', 'toPort', 'ipRange');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
+$return = $ec2_ebs->revokeIp('mygroup',
+                             'protocol',
+                             'fromPort',
+                             'toPort',
+                             'ipRange');
 ]]>
             </programlisting>
         </example>
@@ -193,7 +207,8 @@ $return = $ec2_ebs->revokeIp('mygroup', 'protocol', 'fromPort', 'toPort', 'ipRan
             </para>
 
             <programlisting role="php"><![CDATA[
-$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key','aws_secret_key');
+$ec2_sg = new Zend_Service_Amazon_Ec2_Securitygroups('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_sg->revokeGroup('mygroup', 'securityGruopName', 'ownerId');
 ]]>
             </programlisting>

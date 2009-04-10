@@ -168,10 +168,19 @@ $ip = $ec2_img->allocate();
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
 // modify the launchPermission of an AMI
-$return = $ec2_img->modifyAttribute('imageId', 'launchPermission', 'add', 'userId', 'userGruop');
+$return = $ec2_img->modifyAttribute('imageId',
+                                    'launchPermission',
+                                    'add',
+                                    'userId',
+                                    'userGroup');
 
 // set the product code of the AMI.
-$return = $ec2_img->modifyAttribute('imageId', 'productCodes', 'add', null, null, 'productCode');
+$return = $ec2_img->modifyAttribute('imageId',
+                                    'productCodes',
+                                    'add',
+                                    null,
+                                    null,
+                                    'productCode');
 ]]>
             </programlisting>
 

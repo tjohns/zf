@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.validate.sitemap">
     <title>Sitemap Validators</title>
-        
+
     <para>
         The following validators conform to the
         <ulink url="http://www.sitemaps.org/protocol.php">Sitemap XML protocol</ulink>.
@@ -9,10 +9,10 @@
 
     <sect3 id="zend.validate.sitemap.changefreq">
         <title>Sitemap_Changefreq</title>
-        
+
         <para>
             Validates whether a string is valid for using as a 'changefreq'
-            element in a Sitemap XML document. Valid values are: 'always', 
+            element in a Sitemap XML document. Valid values are: 'always',
             'hourly', 'daily', 'weekly', 'monthly', 'yearly', or 'never'.
         </para>
         <para>
@@ -23,7 +23,7 @@
 
     <sect3 id="zend.validate.sitemap.lastmod">
         <title>Sitemap_Lastmod</title>
-        
+
         <para>
             Validates whether a string is valid for using as a 'lastmod'
             element in a Sitemap XML document. The lastmod element should
@@ -34,10 +34,10 @@
             Returns <code>true</code> if and only if the given value is
             a string and is valid according to the protocol.
         </para>
-    
+
         <example id="zend.validate.sitemap.lastmod.example">
             <title>Sitemap Lastmod Validator</title>
-            
+
             <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Sitemap_Lastmod();
 
@@ -57,10 +57,10 @@ $validator->isValid('yesterday'); // false]]>
 
     <sect3 id="zend.validate.sitemap.loc">
         <title>Sitemap_Loc</title>
-        
+
         <para>
             Validates whether a string is valid for using as a 'loc'
-            element in a Sitemap XML document. This uses 
+            element in a Sitemap XML document. This uses
             <code>Zend_Form::check()</code> internally. Read more at
             <link linkend="zend.uri.validation">URI Validation</link>.
         </para>
@@ -78,7 +78,7 @@ $validator->isValid('yesterday'); // false]]>
 
         <example id="zend.validate.sitemap.priority.example">
             <title>Sitemap Priority Validator</title>
-            
+
             <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Sitemap_Priority();
 

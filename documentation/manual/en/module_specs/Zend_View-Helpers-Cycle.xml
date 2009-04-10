@@ -10,7 +10,7 @@
 
         <para>
             To add elements to cycle just specify them in constructor
-			or use <code>assign(array $data)</code> function
+            or use <code>assign(array $data)</code> function
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -47,7 +47,7 @@ $this->cycle()->prev();
 </example>
       <programlisting role="php"><![CDATA[
 <?php foreach ($this->books as $book):?>
-  <tr  style="background-color:<?=$this->cycle(array("#F0F0F0","#FFFFFF"))->next()?>">
+  <tr style="background-color:<?=$this->cycle(array("#F0F0F0","#FFFFFF"))->next()?>">
   <td><?=$this->cycle(array(1,2,3),'number')->next()?></td>
   <td><?=$this->escape($book['author']) ?></td>
 </tr>

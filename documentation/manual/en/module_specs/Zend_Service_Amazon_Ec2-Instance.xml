@@ -299,8 +299,12 @@
                 that is starting up.
             </para>
             <programlisting role="php"><![CDATA[
-$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key','aws_secret_key');
-$return = $ec2_instance->run(array('imageId' => 'ami-509320', 'keyName' => 'myKey', 'securityGroup' => array('web','default') ));
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
+$return = $ec2_instance->run(array('imageId' => 'ami-509320',
+                                   'keyName' => 'myKey',
+                                   'securityGroup' => array('web',
+                                                            'default')));
 ]]>
             </programlisting>
 
@@ -321,7 +325,8 @@ $return = $ec2_instance->run(array('imageId' => 'ami-509320', 'keyName' => 'myKe
                 <code>reboot</code> returns boolean true or false
             </para>
             <programlisting role="php"><![CDATA[
-$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key','aws_secret_key');
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_instance->reboot('instanceId');
 ]]>
             </programlisting>
@@ -343,7 +348,8 @@ $return = $ec2_instance->reboot('instanceId');
                 <code>terminate</code> returns boolean true or false
             </para>
             <programlisting role="php"><![CDATA[
-$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key','aws_secret_key');
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_instance->terminate('instanceId');
 ]]>
             </programlisting>
@@ -379,7 +385,8 @@ $return = $ec2_instance->terminate('instanceId');
                 instance.
             </para>
             <programlisting role="php"><![CDATA[
-$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key','aws_secret_key');
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_instance->describe('instanceId');
 ]]>
             </programlisting>
@@ -404,7 +411,8 @@ $return = $ec2_instance->describe('instanceId');
                 and the <code>output</code> from the console.
             </para>
             <programlisting role="php"><![CDATA[
-$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key','aws_secret_key');
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_instance->consoleOutput('instanceId');
 ]]>
             </programlisting>
@@ -424,7 +432,8 @@ $return = $ec2_instance->consoleOutput('instanceId');
                 support and wants to verify whether a user's instance is eligible.
             </para>
             <programlisting role="php"><![CDATA[
-$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key','aws_secret_key');
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
 $return = $ec2_instance->terminate('productCode', 'instanceId');
 ]]>
             </programlisting>

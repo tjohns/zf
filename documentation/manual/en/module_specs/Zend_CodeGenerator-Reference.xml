@@ -68,7 +68,8 @@ abstract class Zend_CodeGenerator_Abstract
             </para>
 
             <programlisting role="php"><![CDATA[
-abstract class Zend_CodeGenerator_Php_Abstract extends Zend_CodeGenerator_Abstract
+abstract class Zend_CodeGenerator_Php_Abstract
+    extends Zend_CodeGenerator_Abstract
 {
     public function setSourceDirty($isSourceDirty = true)
     public function isSourceDirty()
@@ -153,7 +154,9 @@ class Zend_CodeGenerator_Php_Body extends Zend_CodeGenerator_Php_Abstract
             <programlisting role="php"><![CDATA[
 class Zend_CodeGenerator_Php_Class extends Zend_CodeGenerator_Php_Abstract
 {
-    public static function fromReflection(Zend_Reflection_Class $reflectionClass)
+    public static function fromReflection(
+        Zend_Reflection_Class $reflectionClass
+    )
     public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock)
     public function getDocblock()
     public function setName($name)
@@ -221,7 +224,9 @@ class Zend_CodeGenerator_Php_Class extends Zend_CodeGenerator_Php_Abstract
             <programlisting role="php"><![CDATA[
 class Zend_CodeGenerator_Php_Docblock extends Zend_CodeGenerator_Php_Abstract
 {
-    public static function fromReflection(Zend_Reflection_Docblock $reflectionDocblock)
+    public static function fromReflection(
+        Zend_Reflection_Docblock $reflectionDocblock
+    )
     public function setShortDescription($shortDescription)
     public function getShortDescription()
     public function setLongDescription($longDescription)
@@ -253,7 +258,9 @@ class Zend_CodeGenerator_Php_Docblock extends Zend_CodeGenerator_Php_Abstract
 class Zend_CodeGenerator_Php_Docblock_Tag
     extends Zend_CodeGenerator_Php_Abstract
 {
-    public static function fromReflection(Zend_Reflection_Docblock_Tag $reflectionTag)
+    public static function fromReflection(
+        Zend_Reflection_Docblock_Tag $reflectionTag
+    )
     public function setName($name)
     public function getName()
     public function setDescription($description)
@@ -284,7 +291,9 @@ class Zend_CodeGenerator_Php_Docblock_Tag
 class Zend_CodeGenerator_Php_Docblock_Tag_Param
     extends Zend_CodeGenerator_Php_Docblock_Tag
 {
-    public static function fromReflection(Zend_Reflection_Docblock_Tag $reflectionTagParam)
+    public static function fromReflection(
+        Zend_Reflection_Docblock_Tag $reflectionTagParam
+    )
     public function setDatatype($datatype)
     public function getDatatype()
     public function setParamName($paramName)
@@ -313,7 +322,9 @@ class Zend_CodeGenerator_Php_Docblock_Tag_Param
 class Zend_CodeGenerator_Php_Docblock_Tag_Param
     extends Zend_CodeGenerator_Php_Docblock_Tag
 {
-    public static function fromReflection(Zend_Reflection_Docblock_Tag $reflectionTagReturn)
+    public static function fromReflection(
+        Zend_Reflection_Docblock_Tag $reflectionTagReturn
+    )
     public function setDatatype($datatype)
     public function getDatatype()
     public function generate()
@@ -420,9 +431,12 @@ class Zend_CodeGenerator_Php_Member_Container extends ArrayObject
             </para>
 
             <programlisting role="php"><![CDATA[
-class Zend_CodeGenerator_Php_Method extends Zend_CodeGenerator_Php_Member_Abstract
+class Zend_CodeGenerator_Php_Method
+    extends Zend_CodeGenerator_Php_Member_Abstract
 {
-    public static function fromReflection(Zend_Reflection_Method $reflectionMethod)
+    public static function fromReflection(
+        Zend_Reflection_Method $reflectionMethod
+    )
     public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock)
     public function getDocblock()
     public function setFinal($isFinal)
@@ -454,7 +468,9 @@ class Zend_CodeGenerator_Php_Method extends Zend_CodeGenerator_Php_Member_Abstra
             <programlisting role="php"><![CDATA[
 class Zend_CodeGenerator_Php_Parameter extends Zend_CodeGenerator_Php_Abstract
 {
-    public static function fromReflection(Zend_Reflection_Parameter $reflectionParameter)
+    public static function fromReflection(
+        Zend_Reflection_Parameter $reflectionParameter
+    )
     public function setType($type)
     public function getType()
     public function setName($name)
@@ -488,7 +504,9 @@ class Zend_CodeGenerator_Php_Parameter extends Zend_CodeGenerator_Php_Abstract
 class Zend_CodeGenerator_Php_Property
     extends Zend_CodeGenerator_Php_Member_Abstract
 {
-    public static function fromReflection(Zend_Reflection_Property $reflectionProperty) {
+    public static function fromReflection(
+        Zend_Reflection_Property $reflectionProperty
+    )
     public function setConst($const)
     public function isConst()
     public function setDefaultValue($defaultValue)
