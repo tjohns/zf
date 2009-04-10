@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect2 id="zend.navigation.pages.factory">
-    <title>Creating pages using the page factory</title>
+    <title>Erstellen von Seiten durch Verwendung der Page Factory</title>
 
     <para>
-        All pages (also custom classes), can be created using the page
-        factory, <code>Zend_Navigation_Page::factory()</code>. The factory
-        can take an array with options, or a
-        <classname>Zend_Config</classname> object. Each key in the
-        array/config corresponds to a page option, as seen in the
-        section on <link linkend="zend.navigation.pages">Pages</link>.
-        If the option <code>uri</code> is given and no MVC options are
-        given (<code>action, controller, module, route</code>), an URI
-        page will be created. If any of the MVC options are given, an
-        MVC page will be created.
+        Alle Seiten (also auch eigene Klassen), können durch Verwendung der Page Factory
+        <code>Zend_Navigation_Page::factory()</code> erstellt werden. Die Factory kann ein Array
+        mit Optionen oder ein <classname>Zend_Config</classname> Objekt annehmen. Jeder Schlüssel
+        im Array/Config entspricht einer Seiten Option, wie im Kapitel
+        <link linkend="zend.navigation.pages">Seiten</link> gezeigt. Wenn die Option
+        <code>uri</code> angegeben wird und keine MVC Optionen angegeben werden (<code>action,
+        controller, module, route</code>) wird eine URI Seite erstellt. Wenn eine der MVC Optionen
+        angegeben wird, dann wird eine MVC Seite erstellt.
     </para>
 
     <para>
-        If <code>type</code> is given, the factory will assume the value to
-        be the name of the class that should be created. If the value is
-        <code>mvc</code> or <code>uri</code> and MVC/URI page will be created.
+        Wenn <code>type</code> angegeben wird, nimmt die Factory an das der Wert der Name der
+        Klasse ist die erstellt werden soll. Wenn der Wert <code>mvc</code> oder <code>uri</code>
+        ist wird eine MVC/URI Seite erstellt.
     </para>
 
     <example id="zend.navigation.pages.factory.example.mvc">
-        <title>Creating an MVC page using the page factory</title>
+        <title>Erstellen einer MVC Seite durch Verwenden der Page Factory</title>
 
         <programlisting role="php"><![CDATA[
 $page = Zend_Navigation_Page::factory(array(
@@ -55,7 +53,7 @@ $page = Zend_Navigation_Page::factory(array(
     </example>
 
     <example id="zend.navigation.pages.factory.example.uri">
-        <title>Creating a URI page using the page factory</title>
+        <title>Erstellen einer URI Seite durch Verwendung der Page Factory</title>
 
         <programlisting role="php"><![CDATA[
 $page = Zend_Navigation_Page::factory(array(
@@ -83,11 +81,12 @@ $page = Zend_Navigation_Page::factory(array(
     </example>
 
     <example id="zend.navigation.pages.factory.example.custom">
-        <title>Creating a custom page type using the page factory</title>
+        <title>Erstellung eines eigenen Seiten Typs durch Verwendung der Page Factory</title>
 
      <para>
-         To create a custom page type using the factory, use the option
-         <code>type</code> to specify a class name to instantiate.
+         Um einen eigenen Seitentyp zu erstellen mit Hilfe der Verwendung der Factory, muß die
+         Option <code>type</code> verwendet werden um den Klassennamen zu spezifizieren der
+         instanziiert werden muß.
      </para>
 
         <programlisting role="php"><![CDATA[
