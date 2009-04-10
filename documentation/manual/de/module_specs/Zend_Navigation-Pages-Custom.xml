@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect2 id="zend.navigation.pages.custom">
-    <title>Creating custom page types</title>
+    <title>Erstellung eigener Seiten Typen</title>
 
     <para>
-        When extending <classname>Zend_Navigation_Page</classname>, there is
-        usually no need to override the constructor or the methods
-        <code>setOptions()</code> or <code>setConfig()</code>. The page
-        constructor takes a single parameter, an <code>array</code> or a
-        <classname>Zend_Config</classname> object, which is passed to
-        <code>setOptions()</code> or <code>setConfig()</code> respectively.
-        Those methods will in turn call <code>set()</code> method, which
-        will map options to native or custom properties. If the option
-        <code>internal_id</code> is given, the method will first look for a
-        method named <code>setInternalId()</code>, and pass the option to this
-        method if it exists. If the method does not exist, the option will be
-        set as a custom property of the page, and be accessible via
-        <code>$internalId = $page->internal_id;</code> or
-        <code>$internalId = $page->get('internal_id');</code>.
+        Wenn <classname>Zend_Navigation_Page</classname> erweiter wird, besteht normalerweise keine
+        Notwendigkeit den Constructor oder die Methoden <code>setOptions()</code> oder
+        <code>setConfig()</code> zu überladen. Der Constructor der Seite nimmt einen einzelnen
+        Parameter, ein <code>Array</code> oder ein <classname>Zend_Config</classname> Objekt,
+        welches an <code>setOptions()</code> oder an <code>setConfig()</code> übergeben wird.
+        Diese Methoden rufen dann die <code>set()</code> Methode auf, welche Optionen in
+        native oder eigene Eigenschaften mappt. Wenn die Option <code>internal_id</code> angegeben
+        wird, dann wird zuerst nach einer Methode geschaut die <code>setInternalId()</code> heißt
+        und die Option wird an diese Methode übergeben wenn Sie existiert. Wenn die Methode nicht
+        existiert, wird die Option als eigene Eigenschaft der Seite gesetzt, und ist über
+        <code>$internalId = $page->internal_id;</code> oder
+        <code>$internalId = $page->get('internal_id');</code> erreichbar.
     </para>
 
     <example id="zend.navigation.custom.example.simple">
-        <title>The most simple custom page</title>
+        <title>Die einfachste eigene Seite</title>
 
         <para>
-            The only thing a custom page class needs to implement is the
-            <code>getHref()</code> method.
+            Das einzige Ding das eine eigene Seite implementieren muß ist die
+            <code>getHref()</code> Methode.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -41,12 +39,12 @@ class My_Simple_Page extends Zend_Navigation_Page
     </example>
 
     <example id="zend.navigation.custom.example.properties">
-        <title>A custom page with properties</title>
+        <title>Eine eigene Seite mit Eigenschaften</title>
 
         <para>
-            When adding properties to an extended page, there is no need
-            to override/modify <code>setOptions()</code> or
-            <code>setConfig()</code>.
+            Wenn Eigenschaften an eine erweiterte Seite angefügt werden, gibt es keine
+            Notwendigkeit <code>setOptions()</code> oder <code>setConfig()</code> zu
+            Überladen/Modifizieren.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -81,17 +79,17 @@ class My_Navigation_Page extends Zend_Navigation_Page
     }
 }
 
-// can now construct using
+// Kann jetzt Erstellt werden mit
 $page = new My_Navigation_Page(array(
-    'label'   => 'Property names are mapped to setters',
+    'label'   => 'Namen von Eigenschaften werden auf Setter gemappt',
     'foo'     => 'bar',
     'foo_bar' => 'baz'
 ));
 
-// ...or
+// ...oder
 $page = Zend_Navigation_Page::factory(array(
     'type'    => 'My_Navigation_Page',
-    'label'   => 'Property names are mapped to setters',
+    'label'   => 'Namen von Eigenschaften werden auf Setter gemappt',
     'foo'     => 'bar',
     'foo_bar' => 'baz'
 ));

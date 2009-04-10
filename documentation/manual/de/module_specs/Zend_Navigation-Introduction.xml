@@ -1,89 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect1 id="zend.navigation.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        <classname>Zend_Navigation</classname> is a component for managing
-        trees of pointers to web pages.
-        Simply put: It can be used for creating menus, breadcrumbs, links, and
-        sitemaps, or serve as a model for other navigation related purposes.
+        <classname>Zend_Navigation</classname> ist eine Komponente für das Verwalten von Pointern
+        zu Webseiten. Einfach gesagt: Es kann für die Erstellung von Menüs, Breadcrumbs, Links und
+        Sitemaps verwendet werden, oder fungiert als Modell für andere Navigations-relevanten
+        Vorhaben.
     </para>
 
     <sect2 id="zend.navigation.introduction.concepts">
-        <title>Pages and Containers</title>
+        <title>Seiten und Container</title>
 
         <para>
-            There are two main concepts in <classname>Zend_Navigation</classname>:
+            Es gibt zwei grundsätzliche Konzepte in <classname>Zend_Navigation</classname>:
         </para>
 
         <sect3 id="zend.navigation.introduction.pages">
-            <title>Pages</title>
+            <title>Seiten</title>
             <para>
-                A page (<classname>Zend_Navigation_Page</classname>) in
-                <classname>Zend_Navigation</classname> –
-                in its most basic form – is an object that holds a pointer
-                to a web page. In addition to the pointer itself, the page
-                object contains a number of other properties that are
-                typically relevant for navigation, such as <code>label</code>,
-                <code>title</code>, etc.
+                Eine Seite (<classname>Zend_Navigation_Page</classname>) ist in
+                <classname>Zend_Navigation</classname> - in seiner einfachsten Form - ein Objekt
+                das einen Pointer zu einer Webseite enthält. Zusätzlich zum Pointer selbst, enthält
+                das Seitenobjekt eine Anzahl von anderen Eigenschaften die typischerweise für die
+                Navigation relevant sind, wie z.B. <code>label</code>, <code>title</code> usw.
             </para>
 
             <para>
-                Read more about pages in the
-                <link linkend="zend.navigation.pages">pages</link>
-                section.
+                Lesen Sie mehr darüber im Kapitel
+                <link linkend="zend.navigation.pages">Seiten</link>.
             </para>
         </sect3>
 
         <sect3 id="zend.navigation.introduction.containers">
-            <title>Containers</title>
+            <title>Container</title>
             <para>
-                A navigation container
-                (<classname>Zend_Navigation_Container</classname>) is a
-                container class for pages. It has methods for
-                adding, retrieving, deleting and iterating pages.
-                It implements the <ulink url="http://php.net/spl">SPL</ulink>
-                interaces <classname>RecursiveIterator</classname> and
-                <classname>Countable</classname>, and can thus be iterated
-                with SPL iterators such as
-                <classname>RecursiveIteratorIterator</classname>.
+                Ein Navigations Container (<classname>Zend_Navigation_Container</classname>) ist
+                eine Containerklasse für Seiten. Sie hat Methoden für das hinzufügen, empfangen,
+                löschen und durchlaufen von Seiten. Sie implementiert die
+                <ulink url="http://php.net/spl">SPL</ulink> Interfaces
+                <classname>RecursiveIterator</classname> und <classname>Countable</classname>,
+                und kann deshalb mit SPL Iteratoren wie
+                <classname>RecursiveIteratorIterator</classname> durchsucht werden.
             </para>
 
             <para>
-                Read more about containers in the
-                <link linkend="zend.navigation.containers">containers</link>
-                section.
+                Lesen Sie mehr über Container im Kapitel
+                <link linkend="zend.navigation.containers">Container</link>.
             </para>
 
             <note>
                 <para>
-                    <classname>Zend_Navigation_Page</classname> extends
-                    <classname>Zend_Navigation_Container</classname>, which
-                    means that a page can have sub pages.
+                    <classname>Zend_Navigation_Page</classname> erweitert
+                    <classname>Zend_Navigation_Container</classname>, was bedeutet das eine Seite
+                    Unterseiten haben kann.
                 </para>
             </note>
         </sect3>
     </sect2>
 
     <sect2 id="zend.navigation.introduction.separation">
-        <title>Separation of data (model) and rendering (view)</title>
+        <title>Trennung von Daten (Modell) und Darstellung (View)</title>
 
         <para>
-            Classes in the <classname>Zend_Navigation</classname>
-            namespace do not deal with rendering of navigational elements.
-            Rendering is done with navigational view helpers. However,
-            pages contain information that is used by view helpers
-            when rendering, such as; label, CSS class, title,
-            <code>lastmod</code> and <code>priority</code> properties for
-            sitemaps, etc.
+            Klassen im <classname>Zend_Navigation</classname> Namespace handhaben keine Darstellung
+            von Navigationselementen. Die Darstellung wird von den Navigations View Helfern
+            durchgeführt. Trotzdem enthalten Seiten Informationen die von den View Helfern bei der
+            Darstellung verwendet wird wie z.B.: Label, CSS Klasse, Titel, <code>lastmod</code> und
+            <code>priority</code> Eigenschaften für Sitemaps, usw.
         </para>
 
         <para>
-            Read more about rendering navigational elements in
-            the manual section on
-            <link linkend="zend.view.helpers.initial.navigation">navigation
-            helpers</link>.
+            Lesen Sie mehr über die Darstellung von Navigationselementen im Kapitel
+            <link linkend="zend.view.helpers.initial.navigation">Navigations Helfer</link> des
+            Handbuchs.
         </para>
     </sect2>
 </sect1>
