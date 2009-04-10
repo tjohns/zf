@@ -31,7 +31,7 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->_testText = 'safdsafsaölg öögdöö sdöjgösdjgöldögksdögjösdfgödsjögjsdögjödfsjgödsfjödjsög kjhdkj '
+        $this->_testText = 'safdsafsaï¿½lg ï¿½ï¿½gdï¿½ï¿½ sdï¿½jgï¿½sdjgï¿½ldï¿½gksdï¿½gjï¿½sdfgï¿½dsjï¿½gjsdï¿½gjï¿½dfsjgï¿½dsfjï¿½djsï¿½g kjhdkj '
                        . 'fgaskjfdh gksjhgjkdh gjhfsdghdhgksdjhg';
         $this->part = new Zend_Mime_Part($this->_testText);
         $this->part->encoding = Zend_Mime::ENCODING_BASE64;
@@ -48,7 +48,7 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
                                  'Content-Transfer-Encoding: ' . Zend_Mime::ENCODING_BASE64,
                                  'Content-Disposition: attachment',
                                  'filename="test.txt"',
-                                 'charset="iso8859-1"',
+                                 'charset=iso8859-1',
                                  'Content-ID: <4711>');
 
         $actual = $this->part->getHeaders();
@@ -72,7 +72,7 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
         $content = $this->part->getContent();
         $this->assertEquals($this->_testText, $content);
     }
-    
+
     public function testStreamEncoding()
     {
         $testfile = realpath(__FILE__);
@@ -88,7 +88,7 @@ class Zend_Mime_PartTest extends PHPUnit_Framework_TestCase
         $encoded = stream_get_contents($fp2);
         fclose($fp);
         $this->assertEquals(base64_decode($encoded),$original);
-        
+
         // test QuotedPrintable
         $fp = fopen($testfile,'rb');
         $this->assertTrue(is_resource($fp));
