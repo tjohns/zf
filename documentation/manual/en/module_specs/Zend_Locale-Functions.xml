@@ -200,8 +200,7 @@ print $locale->getRegion();
         <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('de_AT');
-$list = $locale->getTranslationList('language');
+$list = Zend_Locale::getTranslationList('language', 'de_AT');
 
 print_r ($list);
 // example key -> value pairs...
@@ -210,7 +209,7 @@ print_r ($list);
 
 // use one of the returned key as value for the getTranslation() method
 // of another language
-print $locale->getTranslation('de', 'language', 'zh');
+print Zend_Locale::getTranslation('de', 'language', 'zh');
 // returns the translation for the language 'de' in chinese
 ]]>
             </programlisting>
@@ -1044,9 +1043,8 @@ print $locale->getTranslation('de', 'language', 'zh');
         <example id="zend.locale.getdata.example-3">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('en_US');
 // prints the names of all countries in German language
-print_r($locale->getTranslationList('country', 'de'));
+print_r(Zend_Locale::getTranslationList('country', 'de'));
 ]]>
             </programlisting>
         </example>
@@ -1059,33 +1057,11 @@ print_r($locale->getTranslationList('country', 'de'));
         <example id="zend.locale.getdata.example-4">
             <title>Converting country name in one language to another</title>
             <programlisting role="php"><![CDATA[
-require 'Zend/Locale.php';
-$locale = new Zend_Locale('en_US');
-$code2name = $locale->getLanguageTranslationList();
+$code2name = Zend_Locale::getLanguageTranslationList('en_US');
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
-echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
+echo Zend_Locale::getLanguageTranslation($frenchCode, 'de_AT');
 // output is the German name of the French language
-]]>
-            </programlisting>
-        </example>
-
-        <para>
-            To gain some familiarity with what is available, try the example and examine the output.
-        </para>
-
-        <example id="zend.locale.getdata.example-5">
-            <title>All available translations</title>
-            <programlisting role="php"><![CDATA[
-// obtain a list of all the translation lists
-$lists = $locale->getTranslationList();
-
-// show all translation lists available
-// (lots of output, all in English language)
-foreach ($lists as $list) {
-    echo "List $list = ";
-    print_r($locale->getTranslationList($list));
-}
 ]]>
             </programlisting>
         </example>
@@ -1102,13 +1078,11 @@ foreach ($lists as $list) {
         <example id="zend.locale.getdata.example-6">
             <title>All Languages written in their native language</title>
             <programlisting role="php"><![CDATA[
-$sourceLanguage = null; // set to your native language code
-$locale = new Zend_Locale($sourceLanguage);
-$list = $locale->getLanguageTranslationList();
+$list = Zend_Locale::getLanguageTranslationList('auto');
 
 foreach($list as $language => $content) {
     try {
-        $output = $locale->getLanguageTranslation($language, $language);
+        $output = Zend_Locale::getLanguageTranslation($language, $language);
         if (is_string($output)) {
             print "\n<br>[".$language."] ".$output;
         }
