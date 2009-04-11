@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13826 -->
+<!-- EN-Revision: 14811 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>ビューヘルパー</title>
 
@@ -356,6 +356,9 @@ echo $this->formCheckbox('foo',
         </programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
+        <xi:include href="Zend_View-Helpers-Cycle.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Cycle.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_View-Helpers-Partial.xml" />
         <xi:include href="Zend_View-Helpers-Placeholder.xml" />
         <xi:include href="Zend_View-Helpers-Doctype.xml" />
@@ -367,6 +370,9 @@ echo $this->formCheckbox('foo',
         <xi:include href="Zend_View-Helpers-HtmlObject.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
         <xi:include href="Zend_View-Helpers-Json.xml" />
+        <xi:include href="Zend_View-Helpers-Navigation.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Navigation.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 
