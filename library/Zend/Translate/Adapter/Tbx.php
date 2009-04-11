@@ -65,6 +65,7 @@ class Zend_Translate_Adapter_Tbx extends Zend_Translate_Adapter {
      *                            the source file
      * @param  array   $option    OPTIONAL Options to use
      * @throws Zend_Translation_Exception
+     * @return array
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {

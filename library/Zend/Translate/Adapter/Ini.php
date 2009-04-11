@@ -55,6 +55,8 @@ class Zend_Translate_Adapter_Ini extends Zend_Translate_Adapter
      * @param  string        $locale  Locale/Language to add data for, identical with locale identifier,
      *                                see Zend_Locale for more information
      * @param  array         $options OPTIONAL Options to use
+     * @throws Zend_Translate_Exception Ini file not found
+     * @return array
      */
     protected function _loadTranslationData($data, $locale, array $options = array())
     {

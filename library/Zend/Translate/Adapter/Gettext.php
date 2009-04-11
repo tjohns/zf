@@ -73,6 +73,7 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
      *                            see Zend_Locale for more information
      * @param  array   $option    OPTIONAL Options to use
      * @throws Zend_Translation_Exception
+     * @return array
      */
     protected function _loadTranslationData($filename, $locale, array $options = array())
     {

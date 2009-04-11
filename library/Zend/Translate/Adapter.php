@@ -418,7 +418,7 @@ abstract class Zend_Translate_Adapter {
      * @param  mixed              $data
      * @param  string|Zend_Locale $locale
      * @param  array              $options (optional)
-     * @return void
+     * @return array
      */
     abstract protected function _loadTranslationData($data, $locale, array $options = array());
 
@@ -462,6 +462,10 @@ abstract class Zend_Translate_Adapter {
 
         if ($read) {
             $temp = $this->_loadTranslationData($data, $locale, $options);
+        }
+
+        if (empty($temp)) {
+            $temp = array();
         }
 
         $keys = array_keys($temp);
