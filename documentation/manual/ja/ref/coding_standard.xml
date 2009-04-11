@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13549 -->
+<!-- EN-Revision: 14789 -->
 <appendix id="coding-standard">
   <title>Zend Framework PHP 標準コーディング規約</title>
     <sect1 id="coding-standard.overview">
@@ -347,7 +347,8 @@ $a = '文字列の例';
                     特に SQL 文などでこのような場合がよくあるでしょう。
 
                     <programlisting role="php"><![CDATA[
-$sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";
+$sql = "SELECT `id`, `name` from `people` "
+     . "WHERE `name`='Fred' OR `name`='Susan'";
 ]]>
                     </programlisting>
 
