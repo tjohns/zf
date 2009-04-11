@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14734 -->
+<!-- EN-Revision: 14811 -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>View Helfer</title>
@@ -343,6 +343,7 @@ echo $this->formCheckbox('foo',
         </programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
+        <xi:include href="Zend_View-Helpers-Cycle.xml" />
         <xi:include href="Zend_View-Helpers-Partial.xml" />
         <xi:include href="Zend_View-Helpers-Placeholder.xml" />
         <xi:include href="Zend_View-Helpers-Doctype.xml" />
