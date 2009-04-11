@@ -7,10 +7,22 @@
         すべてについて、APIのようにドキュメントをご覧いただけます。
     </para>
 
-    <xi:include href="Zend_Application-CoreFunctionality-Application.xml" />
-    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_IBootstrap.xml" />
-    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_IResourceBootstrap.xml" />
-    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_Base.xml" />
-    <xi:include href="Zend_Application-CoreFunctionality-Resource_IResource.xml" />
-    <xi:include href="Zend_Application-CoreFunctionality-Resource_Base.xml" />
+    <xi:include href="Zend_Application-CoreFunctionality-Application.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Application-CoreFunctionality-Application.xml" /></xi:fallback>
+    </xi:include>
+    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_IBootstrap.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Application-CoreFunctionality-Bootstrap_IBootstrap.xml" /></xi:fallback>
+    </xi:include>
+    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_IResourceBootstrap.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Application-CoreFunctionality-Bootstrap_IResourceBootstrap.xml" /></xi:fallback>
+    </xi:include>
+    <xi:include href="Zend_Application-CoreFunctionality-Bootstrap_Base.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Application-CoreFunctionality-Bootstrap_Base.xml" /></xi:fallback>
+    </xi:include>
+    <xi:include href="Zend_Application-CoreFunctionality-Resource_IResource.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Application-CoreFunctionality-Resource_IResource.xml" /></xi:fallback>
+    </xi:include>
+    <xi:include href="Zend_Application-CoreFunctionality-Resource_Base.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Application-CoreFunctionality-Resource_Base.xml" /></xi:fallback>
+    </xi:include>
 </sect1>
