@@ -1,113 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14741 -->
 <sect1 id="zend.tool.framework.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
 
     <para>
-        <code>Zend_Tool_Framework</code> is a framework for exposing common
-        functionalities such as the creation of project scaffolds, code
-        generation, search index generation, and much more. Functionality may be
-        written and exposed via PHP classes dropped into the PHP
-        <code>include_path</code>, providing incredible flexibility of
-        implementation. The functionality may then be consumed by writing
-        implementation and/or protocol-specific clients -- such as console
-        clients, XML-RPC, SOAP, and much more.
+        <code>Zend_Tool_Framework</code> ist ein Framework für die Durchführung von üblichen
+        Funktionalitäten wie die Erstellung von Projekt Scaffolds, Code Erzeugung, Index Erzeugung
+        für die Suche, und vielem mehr. Funktionalität kann über PHP Klassen geschrieben und
+        ausgeführt werden die über den <code>include_path</code> von PHP eingeworfen werden, und
+        bieten daher eine aussergewöhnliche Flexibilität der Implementation. Die Funktionalität
+        kann durch das Schreiben einer Implementation und/oder einers protokoll-spezifischen
+        Clients aufgerufen werden -- wir einen Consolen Client, XML-RPC, SOAP und viele mehr.
     </para>
 
     <para>
-        <code>Zend_Tool_Framework</code> provides the following:
+        <code>Zend_Tool_Framework</code> bietet das folgende an:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <code>Common interfaces and abstracts</code> that allow
-                developers to create functionality and capabilities that are
-                dispatchable by tooling clients.
+                <code>Übliche Interfaces und Abstraktes</code> welche es Entwicklern erlauben
+                Funktionalitäten und Möglichkeiten zu erstellen die von Tool-Clients
+                ausgeführt werden können.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>Base client functionality</emphasis> and a concrete
-                console implementation that connect external tools and
-                interfaces to the <code>Zend_Tool_Framework</code>. The Console
-                client may be used in CLI environments such as unix shells and
-                the Windows console.
+                <emphasis>Basis Client Funktionalität</emphasis> und eine konkrete Consolen
+                Implementation die externe Tools und Interfaces zu <code>Zend_Tool_Framework</code>
+                verbindet. Der Consolen Client kann in CLI Umgebungen wie Unix Shells und der
+                Windows Console verwendet werden.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>"Provider" and "Manifest" interfaces</emphasis> that
-                can be utilized by the tooling system. "Providers" represent the
-                functional aspect of the framework, and define the actions that
-                tooling clients may call. "Manifests" act as metadata registries
-                that provide additional context for the various defined
-                providers.
+                <emphasis>"Provider" und "Manifest" Interfaces</emphasis> die vom Tooling System
+                verwendet werden können. "Provider" repräsentieren den funktionalen Aspekt des
+                Frameworks, und definieren die Aktionen die Tooling Clients aufrufen können.
+                "Manifeste" agieren als Registrierung für Metadaten die zusätzlichen Kontext für
+                die verschiedenen definierten Provider bieten.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>An introspective loading system</emphasis> that will
-                scan the environment for providers and determine what is
-                required to dispatch them.
+                <emphasis>Ein introspektives Ladesystem</emphasis> das die Umgebung nach Providern
+                scannt und erkennt was notwendig ist um Sie auszuführen.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>A standard set of system providers"</emphasis> that
-                allow the system to report what the full capabilities of the
-                system are as well as provide useful feedback.  This also
-                includes a comprehensive "Help System".
+                <emphasis>Ein Standardset von System Providern</emphasis> die es dem System
+                erlauben zu berichten, was die kompletten Möglichkeiten des Systems sind, sowie
+                dem Anbieten von nützlichem Feedback. Das enthält auch ein vollständiges
+                "Hilfe System".
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Definitions that you should be aware of through this manual with respect
-        to <code>Zend_Tool_Framework</code> include:
+        Nachfolgend sind Definitionen bei denen man sich in diesem Handbuch in Bezug auf
+        <code>Zend_Tool_Framework</code> vorsehen sollte:
     </para>
 
     <itemizedlist>
         <listitem><para>
-            <code>Zend_Tool_Framework</code> - The framework which exposes
-            tooling capabilities.
+            <code>Zend_Tool_Framework</code> - Der Framework der die Tooling Möglichkeiten
+            anbietet.
         </para></listitem>
 
         <listitem><para>
-            <emphasis>Tooling Client</emphasis> - A developer tool that connects
-            to and consumes <code>Zend_Tool_Framework</code>.
+            <emphasis>Tooling Client</emphasis> - Ein Entwickler Tool das sich zu
+            <code>Zend_Tool_Framework</code> verbindet und es verwendet.
         </para></listitem>
 
         <listitem><para>
-            <emphasis>Client</emphasis> - The subsystem of
-            <code>Zend_Tool_Framework</code> that exposes an interface such that
-            tooling clients can connect, query and execute commands.
+            <emphasis>Client</emphasis> - Das Untersystem vom <code>Zend_Tool_Framework</code>
+            das ein Interface anbietet auf welches sich Tooling Clients verbinden, und abfragen
+            , sowie Kommandos ausführen können.
         </para></listitem>
 
         <listitem><para>
-            <emphasis>Console Client / Command Line Interface /
-            zf.php</emphasis> - The tooling client for the command line.
+            <emphasis>Console Client / Command Line Interface / zf.php</emphasis> - Der Tooling
+            Client für die Komandozeile.
         </para></listitem>
 
         <listitem><para>
-            <emphasis>Provider</emphasis> - A subsystem and a collection of
-            built-in functionality that the framework exports.
+            <emphasis>Provider</emphasis> - Ein Subsystem und eine Kollektion von eingebauten
+            Funktionalitäten die der Framework exportiert.
         </para></listitem>
 
         <listitem><para>
-            <emphasis>Manifest</emphasis> - A subsystem for defining,
-            organizing, and disseminating provider requirement data.
+            <emphasis>Manifest</emphasis> - Ein Untersystem für das Definieren, die Organisation
+            und die Verbreitung von notwendigen Providerdaten.
         </para></listitem>
 
         <listitem><para>
-            <code>Zend_Tool_Project</code> Provider - A set of providers
-            specifically for creating and maintaining Zend Framework-based
-            projects.
+            <code>Zend_Tool_Project</code> Provider - Ein Set von Providern speziell für die
+            Erstellung und das Maintaining von Zend_Framework basierenden Projekten.
         </para></listitem>
     </itemizedlist>
 </sect1>
-
