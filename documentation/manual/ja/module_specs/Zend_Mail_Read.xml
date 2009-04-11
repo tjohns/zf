@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13593 -->
+<!-- EN-Revision: 14776 -->
 <sect1 id="zend.mail.read">
     <title>メールメッセージの読み込み</title>
 
@@ -138,16 +138,16 @@ $mail = new Zend_Mail_Storage_Maildir(array('dirname' =>
 
         <programlisting role="php"><![CDATA[
 // Pop3 での接続
-$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
+$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test'));
 
 // Imap での接続
-$mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com'
+$mail = new Zend_Mail_Storage_Imap(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test'));
 
-// example for a none standard port
+// 非標準のポートの例
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'port'     => 1120
                                          'user'     => 'test',
@@ -165,13 +165,13 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
 // Zend_Mail_Storage_Pop3 の例ですが、Zend_Mail_Storage_Imap でも同様です
 
 // SSL を使用する場合はポートが異なります (デフォルトは Pop3 なら 995、Imap なら 993)
-$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
+$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test',
                                          'ssl'      => 'SSL'));
 
-// use TLS
-$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com'
+// TLS を使用します
+$mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test',
                                          'ssl'      => 'TLS'));
