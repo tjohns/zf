@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14714 -->
 <sect1 id="zend.reflection.examples">
-    <title>Zend_Reflection Examples</title>
+    <title>Zend_Reflection Beispiele</title>
 
     <example id="zend.reflection.examples.file">
-        <title>Performing reflection on a file</title>
+        <title>Durchführen von Reflection an einer Datei</title>
 
     </example>
 
     <example id="zend.reflection.examples.class">
-        <title>Performing reflection on a class</title>
+        <title>Durchführen von Reflection an einer Klasse</title>
 
     </example>
 
     <example id="zend.reflection.examples.method">
-        <title>Performing reflection on a method</title>
+        <title>Durchführen von Reflection an einer Methode</title>
 
     </example>
 
     <example id="zend.reflection.examples.docblock">
-        <title>Performing reflection on a docblock</title>
+        <title>Durchführen von Reflection an einem Docblock</title>
 
     </example>
 
     <example id="zend.reflection.examples.factory">
-        <title>Using the factory to substitute custom reflection classes</title>
+        <title>Verwenden der Factory um eigene Reflection Klassen auszuführen</title>
 
     </example>
 </sect1>

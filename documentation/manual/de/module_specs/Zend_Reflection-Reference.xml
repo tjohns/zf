@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14714 -->
 <sect1 id="zend.reflection.reference">
-    <title>Zend_Reflection Reference</title>
+    <title>Zend_Reflection Referenz</title>
 
     <sect2 id="zend.reflection.reference.class">
         <title>Zend_Reflection_Class</title>
