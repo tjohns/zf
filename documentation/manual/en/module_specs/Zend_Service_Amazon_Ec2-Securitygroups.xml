@@ -15,7 +15,7 @@
     </para>
     <note>
         <title>Maximum Security Groups</title>
-        You can create up to 100 security groups.
+        <para>You can create up to 100 security groups.</para>
     </note>
 
     <sect2 id="zend.service.amazon.ec2.securitygroups.maintenance">

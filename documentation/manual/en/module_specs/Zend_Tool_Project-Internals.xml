@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.tool.project.internals">
-
+    <title>Zend_Tool_Project Internals</title>
     <sect2 id="zend.tool.project.internals.xml-structure">
-
-        @todo
-
+        <title>Zend_Tool_Project Internal Xml Structure</title>
+        <para></para>
+        <!-- @todo -->
     </sect2>
 
     <sect2 id="zend.tool.project.internals.extending">
-
-        @todo
-
+        <title>Zend_Tool_Project Internal Extending</title>
+        <para></para>
+        <!-- @todo -->
     </sect2>
-
 </sect1>

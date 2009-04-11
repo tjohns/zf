@@ -370,13 +370,19 @@ define('APPLICATION_ENV', 'testing');
 
     <example id="zend.codegenerator.examples.reflection-file">
         <title>Seeding PHP file code generation via reflection</title>
+        <para></para>
+        <!-- @todo -->
     </example>
 
     <example id="zend.codegenerator.examples.reflection-class">
         <title>Seeding PHP class generation via reflection</title>
+        <para></para>
+        <!-- @todo -->
     </example>
 
     <example id="zend.codegenerator.examples.reflection-method">
         <title>Seeding PHP method generation via reflection</title>
+        <para></para>
+        <!-- @todo -->
     </example>
 </sect1>

@@ -58,6 +58,7 @@ $ip = $ec2_img->deregister($imageId);
                 and private images owned by other users for which the user has
                 explicit launch permissions.
             </para>
+            <para>
             <table id="zend.service.amazon.ec2.images.describe-table">
                 <title>Launch permissions fall into three categories</title>
                 <tgroup cols="2">
@@ -90,6 +91,7 @@ $ip = $ec2_img->deregister($imageId);
                     </tbody>
                 </tgroup>
             </table>
+            </para>
             <para>
                 The list of AMIs returned can be modified by specifying AMI IDs, AMI owners,
                 or users with launch permissions. If no options are specified, Amazon EC2 returns
@@ -130,7 +132,7 @@ $ip = $ec2_img->allocate();
         <example id="zend.service.amazon.ec2.images.attribute.modify">
             <title>Modify Image Attributes</title>
             <para>Modifies an attribute of an AMI</para>
-
+            <para>
             <table id="zend.service.amazon.ec2.images.attribute.modify-table">
                 <title>Valid Attributes</title>
                 <tgroup cols="2">
@@ -162,6 +164,7 @@ $ip = $ec2_img->allocate();
                     </tbody>
                 </tgroup>
             </table>
+            </para>
             <para>
                 <code>modifyAttribute</code> returns boolean ture or false.
             </para>

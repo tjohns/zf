@@ -174,10 +174,14 @@ plugins/     => Plugin
 
     <sect2 id="zend.loader.autoloader-resource.factory">
         <title>Using Resource Autoloaders as Object Factories</title>
+        <para></para>
+        <!-- @todo -->
     </sect2>
 
     <sect2 id="zend.loader.autoloader-resource.reference">
         <title>Resource Autoloader Reference</title>
+        <para></para>
+        <!-- @todo -->
     </sect2>
 
     <!-- @todo
