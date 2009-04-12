@@ -927,6 +927,7 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
      *
      * @param string|Zend_Db_Table_Abstract $parentTable
      * @param string                        OPTIONAL $ruleKey
+     * @param Zend_Db_Table_Select          OPTIONAL $select
      * @return Zend_Db_Table_Row_Abstract   Query result from $parentTable
      * @throws Zend_Db_Table_Row_Exception If $parentTable is not a table or is not loadable.
      */
@@ -978,8 +979,9 @@ abstract class Zend_Db_Table_Row_Abstract implements ArrayAccess
     /**
      * @param  string|Zend_Db_Table_Abstract  $matchTable
      * @param  string|Zend_Db_Table_Abstract  $intersectionTable
-     * @param  string                         OPTIONAL $primaryRefRule
+     * @param  string                         OPTIONAL $callerRefRule
      * @param  string                         OPTIONAL $matchRefRule
+     * @param  Zend_Db_Table_Select           OPTIONAL $select
      * @return Zend_Db_Table_Rowset_Abstract Query result from $matchTable
      * @throws Zend_Db_Table_Row_Exception If $matchTable or $intersectionTable is not a table class or is not loadable.
      */
