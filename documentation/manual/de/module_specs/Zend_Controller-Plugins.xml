@@ -224,12 +224,8 @@ $front->dispatch();
             Zend Framework enthält ein Plugin für die Fehlerbehandlung in der Standard Distribution.
         </para>
 
-        <xi:include href="Zend_Controller-Plugins-ActionStack.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Plugins-ActionStack.xml" /></xi:fallback>
-        </xi:include>
-        <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml">
-            <xi:fallback><xi:include href="../../en/module_specs/Zend_Controller-Plugins-ErrorHandler.xml" /></xi:fallback>
-        </xi:include>
+        <xi:include href="Zend_Controller-Plugins-ActionStack.xml" />
+        <xi:include href="Zend_Controller-Plugins-ErrorHandler.xml" />
     </sect2>
 </sect1>
 <!--
