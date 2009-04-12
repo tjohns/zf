@@ -1,10 +1,10 @@
-<!-- EN-Revision: 13849 -->
+<!-- EN-Revision: 14409 -->
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
         <code>Zend_Config_Xml</code> を使用すると、シンプルな XML
         形式で保存した設定データを、オブジェクトのプロパティとして扱えるようになります。
-        XML のルート要素は設定には関係しないので、任意の名前がつけられます。
+        XML ファイルあるいは文字列のルート要素は設定には関係しないので、任意の名前がつけられます。
         その直下のレベルの XML 要素が設定データのセクションに対応します。
         セクションレベルの要素の下に XML 要素を配置することで、
         階層構造をサポートします。
@@ -134,6 +134,40 @@ echo $config->database->params->dbname; // "dbname" と出力します
 ]]>
 </programlisting>
     </example>
+<note>
+        <title>XML 文字列</title>
+        <para>
+            <code>Zend_Config_Xml</code> は、データベースなどから取得した
+            XML 文字列を直接読み込むこともできます。
+            文字列はコンストラクタの最初のパラメータとして渡し、最初は
+            <code>'&lt;?xml':</code> で始まらなければなりません。
+        </para>
+        <programlisting role="xml"><![CDATA[
+$string = <<<EOT
+<?xml version="1.0"?>
+<config>
+    <production>
+        <db>
+            <adapter value="pdo_mysql"/>
+            <params>
+                <host value="db.example.com"/>
+            </params>
+        </db>
+    </production>
+    <staging extends="production">
+        <db>
+            <params>
+                <host value="dev.example.com"/>
+            </params>
+        </db>
+    </staging>
+</config>
+EOT;
+
+$config = new Zend_Config_Xml($string, 'staging');
+]]>
+        </programlisting>
+    </note>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
