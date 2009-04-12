@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13467 -->
+<!-- EN-Revision: 14610 -->
 <sect1 id="zend.auth.adapter.ldap">
 
     <title>LDAP 認証</title>
@@ -145,7 +145,7 @@ ldap.server2.baseDn = "CN=Users,DC=w,DC=net"
         <para>
             <code>$options</code> パラメータは必須で、
             ひとつあるいは複数のオプションを含む配列でなければなりません。
-            これは、<link linkend="zend.ldap">Zend_Ldap</link> のオプションの
+            これは、<link linkend="zend.ldap"><code>Zend_Ldap</code></link> のオプションの
             <emphasis>配列の配列</emphasis> であることに注意しましょう。
             単一の LDAP サーバの設定のみを指定する場合でも、
             「設定オプションの配列を配列の中に格納する」形式でなければなりません。
@@ -266,7 +266,7 @@ Array
         <title>サーバのオプション</title>
 
         <para>
-            <emphasis>Zend_Auth_Adapter_Ldap のコンテキストにおける</emphasis>
+            <emphasis><code>Zend_Auth_Adapter_Ldap</code> のコンテキストにおける</emphasis>
             サーバのオプションは次のようなものです。これらは、ほとんどそのままの形で
             <code>Zend_Ldap::setOptions()</code> に渡されます。
 

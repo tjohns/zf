@@ -1,23 +1,23 @@
-<!-- EN-Revision: 12817 -->
+<!-- EN-Revision: 14610 -->
 <sect1 id="zend.auth.introduction">
 
     <title>導入</title>
 
     <para>
-        Zend_Auth は、認証のための API を提供します。
+        <code>Zend_Auth</code> は、認証のための API を提供します。
         また、一般的な使用例に対応する具象認証アダプタも用意しています。
     </para>
 
     <para>
-        Zend_Auth が扱うのはあくまでも <emphasis role="strong">認証 (authentication)</emphasis>
+        <code>Zend_Auth</code> が扱うのはあくまでも <emphasis role="strong">認証 (authentication)</emphasis>
         であり、<emphasis role="strong">承認 (authorization)</emphasis> ではありません。
         認証 (authentication) とはつまり、あるエンティティが何者であるのかを示す
         (識別する) ことです。これを、なんらかの条件にもとづいて行います。
         承認 (authorization) とは、あるエンティティが他のエンティティに対して
         アクセスしたり何らかの操作をしたりする権限があるかどうかを判定する処理です。
-        これは Zend_Auth の対象外となります。
+        これは <code>Zend_Auth</code> の対象外となります。
         Zend Framework における認証やアクセス制御の詳細については、
-        <link linkend="zend.acl">Zend_Acl</link> を参照ください。
+        <link linkend="zend.acl"><code>Zend_Acl</code></link> を参照ください。
     </para>
 
     <note>
@@ -37,18 +37,18 @@
         <title>アダプタ</title>
 
         <para>
-            Zend_Auth アダプタの使用目的は、
+            <code>Zend_Auth</code> アダプタの使用目的は、
             LDAP や RDBMS あるいはファイル
             のような特定の型の認証サービスに対する認証を行うことです。
             アダプタによってそのオプションや挙動は大きくことなるでしょうが、
             いくつかの基本処理は、あらゆる認証アダプタで共通となります。
             たとえば認証条件 (いわゆる ID) を受け取り、
             認証サービスに対する問い合わせを行い、
-            結果を返すという処理は、すべての Zend_Auth アダプタで共通です。
+            結果を返すという処理は、すべての <code>Zend_Auth</code> アダプタで共通です。
         </para>
 
         <para>
-            各 Zend_Auth アダプタクラスは、<code>Zend_Auth_Adapter_Interface</code>
+            各 <code>Zend_Auth</code> アダプタクラスは、<code>Zend_Auth_Adapter_Interface</code>
             を実装しています。このインターフェイスで定義されているメソッドが
             <code>authenticate()</code> で、アダプタクラスは
             認証クエリを実行するためにこれを実装する必要があります。
@@ -110,11 +110,11 @@ class MyAuthAdapter implements Zend_Auth_Adapter_Interface
         <title>結果</title>
 
         <para>
-            Zend_Auth アダプタは、<code>authenticate()</code> の結果として
+            <code>Zend_Auth</code> アダプタは、<code>authenticate()</code> の結果として
             <code>Zend_Auth_Result</code> のインスタンスを返します。
             これにより、認証を試みた結果を表します。アダプタのインスタンスを作成した際に
             <code>Zend_Auth_Result</code> オブジェクトが作成され、
-            以下の 4 つのメソッドで Zend_Auth アダプタの結果に対する共通の操作ができます。
+            以下の 4 つのメソッドで <code>Zend_Auth</code> アダプタの結果に対する共通の操作ができます。
             <itemizedlist>
                 <listitem>
                     <para>
@@ -227,7 +227,7 @@ switch ($result->getCode()) {
                  は認証結果を持続ストレージに保存します。何も指定しなければ、
                  <code>Zend_Auth</code> が使用するストレージクラスは
                  <code>Zend_Auth_Storage_Session</code> となります。これは
-                 <link linkend="zend.session">Zend_Session</link> を使用しています。
+                 <link linkend="zend.session"><code>Zend_Session</code></link> を使用しています。
                  独自のクラスを使用するには、<code>Zend_Auth_Storage_Interface</code>
                  を実装したクラスのオブジェクトを <code>Zend_Auth::setStorage()</code>
                  で設定します。
@@ -247,7 +247,7 @@ switch ($result->getCode()) {
 
                 <para>
                     <code>Zend_Auth_Storage_Session</code> は、セッション名前空間として
-                    <code>'Zend_Auth'</code> を使用します。これを変更するには、別の値を
+                    'Zend_Auth' を使用します。これを変更するには、別の値を
                     <code>Zend_Auth_Storage_Session</code> のコンストラクタで指定します。
                     この値が、内部で <code>Zend_Session_Namespace</code>
                     のコンストラクタに渡されます。これは認証を試みる前に行う必要があります。
@@ -386,10 +386,10 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
 
     <sect2 id="zend.auth.introduction.using">
 
-        <title>Zend_Auth の使用法</title>
+        <title>使用法</title>
 
         <para>
-            Zend_Auth の使用法には、次の二通りがあります。
+            <code>Zend_Auth</code> の使用法には、次の二通りがあります。
             <orderedlist>
             <listitem>
                 <para>
@@ -405,7 +405,7 @@ $result = Zend_Auth::getInstance()->authenticate($authAdapter);
         </para>
 
         <para>
-            次の例は、Zend_Auth アダプタを間接的に
+            次の例は、<code>Zend_Auth</code> アダプタを間接的に
             <code>Zend_Auth</code> クラスから使用するものです。
 
             <programlisting role="php"><![CDATA[
