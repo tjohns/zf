@@ -1,17 +1,17 @@
-<!-- EN-Revision: 14811 -->
+<!-- EN-Revision: 14824 -->
 <sect3 id="zend.view.helpers.initial.cycle">
-    <title>Cycle Helper</title>
+    <title>Cycle Helfer</title>
 
     <para>
-      The <code>Cycle</code> helper is used to alternate a set of values.
+      Der <code>Cycle</code> Helfer wird verwendet um ein Set von Werte zu ändern.
     </para>
 
     <example id="zend.view.helpers.initial.cycle.basicusage">
-        <title>Cycle Helper Basic Usage</title>
+        <title>Grundsätzliche Verwendung des Cycle Helfers</title>
 
         <para>
-            To add elements to cycle just specify them in constructor
-            or use <code>assign(array $data)</code> function
+            Um Elemente hinzuzufügen die man durchlaufen will müssen diese im Constructor
+            spezifiziert oder die <code>assign(array $data)</code> Funktion verwendet werden.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -21,29 +21,30 @@
 </tr>
 <?php endforeach;?>
 
-// Moving in backwards order and assign function
+// Rückwärts bewegen und die assign Funktion verwenden
 $this->cycle()->assign(array("#F0F0F0","#FFFFFF"));
 $this->cycle()->prev();
 ?>
 ]]></programlisting>
 
         <para>
-            The output
+            Die Ausgabe
         </para>
 
         <programlisting role="php"><![CDATA[
 <tr style="background-color:'#F0F0F0'">
-   <td>First</td>
+   <td>Erstes</td>
 </tr>
 <tr style="background-color:'#FFFFFF'">
-   <td>Second</td>
+   <td>Zweites</td>
 </tr>
 ]]></programlisting>
     </example>
 <example id="zend.view.helpers.initial.cycle.advanceusage">
-       <title>Working with two or more cycles</title>
-<para>To use two cycles you have to specify the names of cycles. Just set second parameter in cycle method.
-<code>$this->cycle(array("#F0F0F0","#FFFFFF"),'cycle2')</code>Yo can also use setName($name) function.
+       <title>Mit einem oder mehreren Zyklen arbeiten</title>
+<para>Um twei Zyklen zu verwenden muß man den Namen des Zyklus verwenden. Einfach zwei Parameter
+in der cycle Methode setzen. <code>$this->cycle(array("#F0F0F0","#FFFFFF"),'cycle2')</code>.
+Man kann auch die setName($name) Funktion verwenden.
 </para>
 </example>
       <programlisting role="php"><![CDATA[

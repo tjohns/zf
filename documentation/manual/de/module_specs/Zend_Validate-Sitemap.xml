@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14766 -->
+<!-- EN-Revision: 14823 -->
 <sect2 id="zend.validate.sitemap">
-    <title>Sitemap Validators</title>
+    <title>Sitemap Prüfungen</title>
 
     <para>
-        The following validators conform to the
-        <ulink url="http://www.sitemaps.org/protocol.php">Sitemap XML protocol</ulink>.
+        Die folgenden Prüfungen entsprechen dem
+        <ulink url="http://www.sitemaps.org/protocol.php">Sitemap XML Protokoll</ulink>.
     </para>
 
     <sect3 id="zend.validate.sitemap.changefreq">
         <title>Sitemap_Changefreq</title>
 
         <para>
-            Validates whether a string is valid for using as a 'changefreq'
-            element in a Sitemap XML document. Valid values are: 'always',
-            'hourly', 'daily', 'weekly', 'monthly', 'yearly', or 'never'.
+            Prüft ob ein String gültig ist um Ihn als 'changefreq' Element in einem Sitemap XML
+            Dokument zu verwenden. Gültige Elemente sind: 'always', 'hourly', 'daily', 'weekly',
+            'monthly', 'yearly', oder 'never'.
         </para>
         <para>
-            Returns <code>true</code> if and only if the value is a string
-            and is equal to one of the frequencies specified above.
+            Gibt <code>true</code> zurück wenn und nur wenn der Wert ein String ist und mit einer
+            der oben spezifizierten Frequenzen übereinstimmt.
         </para>
     </sect3>
 
@@ -26,18 +25,17 @@
         <title>Sitemap_Lastmod</title>
 
         <para>
-            Validates whether a string is valid for using as a 'lastmod'
-            element in a Sitemap XML document. The lastmod element should
-            contain a W3C date string, optionally discarding information
-            about time.
+            Prüft ob ein String gültig ist um Ihn als 'lastmod' Element in einem Sitemap XML
+            Dokument zu verwenden. Das lastmod Element sollte einen W3C Datumsstring enthalten,
+            und optional Informationen über die Zeit enthalten.
         </para>
         <para>
-            Returns <code>true</code> if and only if the given value is
-            a string and is valid according to the protocol.
+            Gibt <code>true</code> zurück wenn, und nur wenn, der angegebene Wert ein String und
+            in Bezug auf das Prokoll gültig ist.
         </para>
 
         <example id="zend.validate.sitemap.lastmod.example">
-            <title>Sitemap Lastmod Validator</title>
+            <title>Sitemap Lastmod Prüfung</title>
 
             <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Sitemap_Lastmod();
@@ -60,10 +58,9 @@ $validator->isValid('yesterday'); // false]]>
         <title>Sitemap_Loc</title>
 
         <para>
-            Validates whether a string is valid for using as a 'loc'
-            element in a Sitemap XML document. This uses
-            <code>Zend_Form::check()</code> internally. Read more at
-            <link linkend="zend.uri.validation">URI Validation</link>.
+            Prüft ob ein String für die Verwendung als 'loc' Element in einem Sitemap XML Dokument
+            gültig ist. Er verwendet intern <code>Zend_Form::check()</code>. Mehr darüber kann man
+            unter <link linkend="zend.uri.validation">URI Prüfung</link> lesen.
         </para>
     </sect3>
 
@@ -71,14 +68,13 @@ $validator->isValid('yesterday'); // false]]>
         <title>Sitemap_Priority</title>
 
         <para>
-            Validates whether a value is valid for using as a 'priority'
-            element in a Sitemap XML document. The value should be be a
-            decimal between 0.0 and 1.0. This validator accepts both numeric
-            values and string values.
+            Prüft ob ein Wert für die Verwendung als 'priority' Element in einem Sitemap XML
+            Dokument gültig ist. Der Wert sollte ein Dezimalwert zwischen 0.0 und 1.0 sein.
+            Diese Prüfung akzeptiert sowohl nummerische Werte als auch Stringwerte.
         </para>
 
         <example id="zend.validate.sitemap.priority.example">
-            <title>Sitemap Priority Validator</title>
+            <title>Sitemap Priority Prüfung</title>
 
             <programlisting role="php"><![CDATA[
 $validator = new Zend_Validate_Sitemap_Priority();

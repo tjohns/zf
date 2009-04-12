@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14758 -->
 <sect1 id="zend.service.amazon.ec2.elasticip">
     <title>Zend_Service_Amazon_Ec2: Elastic IP Addresses</title>

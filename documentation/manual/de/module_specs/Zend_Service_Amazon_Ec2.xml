@@ -1,22 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14758 -->
 <sect1 id="zend.service.amazon.ec2" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Zend_Service_Amazon_Ec2</title>
 
     <sect2 id="zend.service.amazon.ec2.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
         <para>
-            <code>Zend_Service_Amazon_Ec2</code> provides an interface to Amazon Elastic
-            Clound Computing (EC2).
+            <code>Zend_Service_Amazon_Ec2</code> bietet ein Interface zu Amazon's Elastic Clound
+            Computing (EC2).
         </para>
     </sect2>
     <sect2 id="zend.service.amazon.ec2.whatis">
-        <title>What is Amazon Ec2?</title>
+        <title>Was ist Amazon Ec2?</title>
         <para>
-            Amazon EC2 is a web service that enables you to launch and manage server instances
-            in Amazon's data centers using APIs or available tools and utilities. You can use
-            Amazon EC2 server instances at any time, for as long as you need, and for any legal
-            purpose.
+            Amazon EC2 ist ein Web Service der es erlaubt Server Instanzen in Amazon's Data Centern
+            zu starten und zu  managen indem APIs oder vorhandenen Tools und Utilities verwendet
+            werden. Man kann Amazon EC2 Server Instanzen jederzeit verwenden, solange man Sie
+            benötigt, und für jeden legalen Zweck.
         </para>
     </sect2>
 

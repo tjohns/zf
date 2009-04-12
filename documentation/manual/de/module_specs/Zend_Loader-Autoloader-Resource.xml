@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14710 -->
+<!-- EN-Revision: 14844 -->
 <sect1 id="zend.loader.autoloader-resource">
     <title>Ressource Autoloader</title>
 
@@ -168,10 +167,14 @@ plugins/     => Plugin
 
     <sect2 id="zend.loader.autoloader-resource.factory">
         <title>Verwendung von Ressource Autoloadern als Objekt Factories</title>
+        <para></para>
+        <!-- @todo -->
     </sect2>
 
     <sect2 id="zend.loader.autoloader-resource.reference">
         <title>Referenz zu den Ressource Autoloadern</title>
+        <para></para>
+        <!-- @todo -->
     </sect2>
 
     <!-- @todo

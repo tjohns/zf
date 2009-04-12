@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14844 -->
 <sect1 id="zend.codegenerator.examples">
     <title>Zend_CodeGenerator Beispiele</title>
 
@@ -368,13 +367,19 @@ define('APPLICATION_ENV', 'testing');
 
     <example id="zend.codegenerator.examples.reflection-file">
         <title>Sähen der Code Erzeugung einer PHP Datei über Reflection</title>
+        <para></para>
+        <!-- @todo -->
     </example>
 
     <example id="zend.codegenerator.examples.reflection-class">
         <title>Sähen der Erzeugung einer PHP Klasse über Reflection</title>
+        <para></para>
+        <!-- @todo -->
     </example>
 
     <example id="zend.codegenerator.examples.reflection-method">
         <title>Sähen der Erzeugung einer PHP Methode über Reflection</title>
+        <para></para>
+        <!-- @todo -->
     </example>
 </sect1>

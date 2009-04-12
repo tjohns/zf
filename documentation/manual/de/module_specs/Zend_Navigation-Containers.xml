@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14823 -->
 <sect1 id="zend.navigation.containers">
     <title>Container</title>
 
@@ -571,19 +570,24 @@ $container = new Zend_Navigation(array(
 // Die 'id' muß nicht eindeutig sein, aber man sollte darauf achten das wenn
 // man zwei Seiten mit der gleichen Id hat, diese die gleichen Id Attribute in
 // Menüs und Breadcrumbs darstellen werden
-$found = $container->findBy('id', 'page_2_and_3');       // Gibt Seite 2 zurück
-$found = $container->findOneBy('id', 'page_2_and_3');    // Gibt Seite 2 zurück
-$found = $container->findBy('id', 'page_2_and_3', true); // Gibt Seite 2 und Seite 3 zurück
-$found = $container->findById('page_2_and_3');           // Gibt Seite 2 zurück
-$found = $container->findOneById('page_2_and_3');        // Gibt Seite 2 zurück
-$found = $container->findAllById('page_2_and_3');        // Gibt Seite 2 und Seite 3 zurück
+$found = $container->findBy('id',
+                            'page_2_and_3');      // Gibt Seite 2 zurück
+$found = $container->findOneBy('id',
+                               'page_2_and_3');   // Gibt Seite 2 zurück
+$found = $container->findBy('id',
+                            'page_2_and_3',
+                            true);                // Gibt Seite 2 und 3 zurück
+$found = $container->findById('page_2_and_3');    // Gibt Seite 2 zurück
+$found = $container->findOneById('page_2_and_3'); // Gibt Seite 2 zurück
+$found = $container->findAllById('page_2_and_3'); // Gibt Seite 2 und 3 zurück
 
 // Finde alle zu my-class passenden CSS Klassen
-$found = $container->findAllBy('class', 'my-class'); // Gibt Seite 1.2 und Seite 2 zurück
-$found = $container->findAllByClass('my-class');     // Gibt Seite 1.2 und Seite 2 zurück
+$found = $container->findAllBy('class',
+                               'my-class');      // Gibt Seite 1.2 und 2 zurück
+$found = $container->findAllByClass('my-class'); // Gibt Seite 1.2 und 2 zurück
 
 // Finde die erste zu my-class passende CSS Klasse
-$found = $container->findOneByClass('my-class');     // Gibt Seite 1.2 zurück
+$found = $container->findOneByClass('my-class'); // Gibt Seite 1.2 zurück
 
 // Findet alle zu non-existant passenden CSS Klassen
 $found = $container->findAllByClass('non-existant'); // Gibt array() zurück
@@ -592,15 +596,15 @@ $found = $container->findAllByClass('non-existant'); // Gibt array() zurück
 $found = $container->findOneByClass('non-existant'); // Gibt null zurück
 
 // Findet alle Seiten mit den eigenen Eigenschaften 'foo' = 'bar'
-$found = $container->findAllBy('foo', 'bar'); // Gibt Seite 1 und Seite 1.1 zurück
+$found = $container->findAllBy('foo', 'bar'); // Gibt Seite 1 und 1.1 zurück
 
-// Um das gleiche auf Magische Weise zu ermöglichen, muß 'foo' kleingeschrieben sein
-// weil 'foo' eine eigene Eigenschaft ist und deshalb der Name der Eigenschaft nicht
-// zu 'Foo' normalisiert wird
+// Um das gleiche auf Magische Weise zu ermöglichen, muß 'foo' kleingeschrieben
+// sein weil 'foo' eine eigene Eigenschaft ist und deshalb der Name der
+// Eigenschaft nicht zu 'Foo' normalisiert wird
 $found = $container->findAllByfoo('bar');
 
 // Findet alle mit controller = 'index'
-$found = $container->findAllByController('index'); // Gibt Seite 2 und Seite 3 zurück
+$found = $container->findAllByController('index'); // Gibt Seite 2 und 3 zurück
 ]]>
             </programlisting>
         </example>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14823 -->
 <sect1 id="zend.application.examples">
     <title>Beispiele</title>
 
@@ -104,7 +103,8 @@ class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
 
         $view->doctype('XHTML1_STRICT');
         $view->headTitle()->setSeparator(' - ')->append('Meine Site');
-        $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8');
+        $view->headMeta()->appendHttpEquiv('Content-Type',
+                                           'text/html; charset=utf-8');
 
         $view->dojo()->setDjConfigOption('parseOnLoad', true)
                      ->setLocalPath('/js/dojo/dojo.js')
@@ -113,7 +113,9 @@ class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
                      ->requireModule('spindle.main')
                      ->disable();
 
-        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
+                            'ViewRenderer'
+                        );
         $viewRenderer->setView($view);
 
         Zend_Registry::set('view', $view);

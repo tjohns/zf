@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14588 -->
+<!-- EN-Revision: 14847 -->
 <sect1 id="zend.locale.functions">
 
     <title><code>Zend_Locale</code> verwenden</title>
@@ -203,8 +203,7 @@ print $locale->getRegion();
         <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('de_AT');
-$list = $locale->getTranslationList('language');
+$list = Zend_Locale::getTranslationList('language', 'de_AT');
 
 print_r ($list);
 // Beispiel Schlüssel -> Werte Paare...
@@ -213,7 +212,7 @@ print_r ($list);
 
 // Einen der zurückgegebenen Schlüssel als Wert für die
 // getTranslation() Methode einer anderen Sprache verwenden
-print $locale->getTranslation('de', 'language', 'zh');
+print Zend_Locale::getTranslation('de', 'language', 'zh');
 // Gibt die Übersetzung für die Sprache 'de' in chinesisch zurück
 ]]>
             </programlisting>
@@ -1135,7 +1134,7 @@ print $locale->getTranslation('de', 'language', 'zh');
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('en_US');
 // Gibt die Namen aller Länder in der Französischen Sprache aus
-print_r($locale->getTranslationList('country', 'fr'));
+print_r(Zend_Locale::getTranslationList('country', 'fr'));
 ]]>
             </programlisting>
         </example>
@@ -1159,27 +1158,6 @@ echo $locale->getLanguageTranslation($frenchCode, 'es');
         </example>
 
         <para>
-            Um etwas mehr Erfahrung damit zu bekommen was verfügbar ist, sollen die Beispiele
-            ausprobiert und die Ausgabe angesehen werden.
-        </para>
-
-        <example id="zend.locale.getdata.example-5">
-            <title>Alle möglichen Übersetzungen</title>
-            <programlisting role="php"><![CDATA[
-// Erhalte eine Liste aller Übersetzungslisten
-$lists = $locale->getTranslationList();
-
-// Zeige alle vorhandenen Übersetzungslisten
-// (viel Ausgabe, alles in der gewählten Sprache)
-foreach ($lists as $list) {
-    echo "List $list = ";
-    print_r($locale->getTranslationList($list));
-}
-]]>
-            </programlisting>
-        </example>
-
-        <para>
             Um von <code>Zend_Locale</code> eine Liste aller bekannten Sprachen zu bekommen wobei jede Sprache in Ihrer eigenen
             Sprache geschrieben wird, kann das untere Beispiel in einer Web Seite benutzt werden. Genauso können
             <code>getCountryTranslationList()</code> und <code>getCountryTranslation()</code> benutzt werden um eine
@@ -1193,13 +1171,11 @@ foreach ($lists as $list) {
         <example id="zend.locale.getdata.example-6">
             <title>Alle Sprachen geschrieben in Ihrer Muttersprache</title>
             <programlisting role="php"><![CDATA[
-$sourceLanguage = null; // Setze hier deine Muttersprache ein
-$locale = new Zend_Locale($sourceLanguage);
-$list = $locale->getLanguageTranslationList();
+$list = Zend_Locale::getLanguageTranslationList('auto');
 
 foreach($list as $language => $content) {
     try {
-        $output = $locale->getLanguageTranslation($language, $language);
+        $output = Zend_Locale::getLanguageTranslation($language, $language);
         if (is_string($output)) {
             print "\n<br>[".$language."] ".$output;
         }
