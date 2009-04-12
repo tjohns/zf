@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12116 -->
+<!-- EN-Revision: 14589 -->
 <sect1 id="zend.uri.chapter">
   <title>Zend_Uri</title>
 
@@ -137,12 +137,14 @@ $valid = Zend_Uri::check('http://uri.in.question');
         <example id="zend.uri.validation.allowunwise.example-1">
             <title>URI における特殊文字の許可</title>
             <programlisting role="php"><![CDATA[
+// '|' 記号を含んでいます
 // 通常は、これは false を返します
-$valid = Zend_Uri::check('http://example.com/?q=this|that'); // '|' を含んでいます
+$valid = Zend_Uri::check('http://example.com/?q=this|that');
 
 // しかし、"unwise" 文字を許可することもできます
 Zend_Uri::setConfig(array('allow_unwise' => true));
-$valid = Zend_Uri::check('http://example.com/?q=this|that'); // これは 'true' を返します
+// これは 'true' を返します
+$valid = Zend_Uri::check('http://example.com/?q=this|that');
 
 // 'allow_unwise' の値をデフォルトの FALSE に戻します
 Zend_Uri::setConfig(array('allow_unwise' => false));

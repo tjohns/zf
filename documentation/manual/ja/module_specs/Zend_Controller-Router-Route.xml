@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13847 -->
+<!-- EN-Revision: 14592 -->
 <sect3 id="zend.controller.router.routes.standard">
     <title>Zend_Controller_Router_Route</title>
 
@@ -190,6 +190,184 @@ $router->addRoute('archive', $route);
             <code>http://example.com/archive/test</code> はマッチしません。
             この場合はチェイン内の次のルートに処理を移します。
         </para>
+    </sect4>
+
+    <sect4 id="zend.controller.router.routes.standard.translated-segments">
+        <title>翻訳済みセグメント</title>
+
+        <para>
+            標準のルートは、翻訳済みセグメントをサポートします。この機能を使用するには、
+            次のいずれかの方法で翻訳器 (<code>Zend_Translate</code> のインスタンス)
+            を定義しなければなりません。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    レジストリに、キー <code>Zend_Translate</code> で格納する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    静的メソッド
+                    <code>Zend_Controller_Router_Route::setDefaultTranslator()</code> で設定する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    コンストラクタの 4 番目のパラメータとして渡す
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            デフォルトでは、<code>Zend_Translate</code>
+            のインスタンスで指定したロケールを使用します。これを上書きするには、
+            (<code>Zend_Locale</code> のインスタンスあるいはロケール文字列で)
+            次のいずれかの方法で設定します。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    レジストリに、キー <code>Zend_Locale</code> で格納する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    静的メソッド
+                    <code>Zend_Controller_Router_Route::setDefaultLocale()</code> で設定する
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    コンストラクタの 5 番目のパラメータとして渡す
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    アセンブルメソッドのパラメータ <code>@locale</code> として渡す
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            翻訳済みセグメントはふたつの部分に分かれます。
+            固定セグメントの前には <code>@</code> 記号がひとつつき、
+            アセンブル時に現在のロケールに翻訳され、
+            マッチングの際にはメッセージ ID に戻されます。
+            動的セグメントの前には <code>:@</code> がつきます。
+            アセンブルの際に、指定したパラメータが翻訳され、
+            パラメータの位置に挿入されます。
+            マッチングの際には、URL の翻訳済みパラメータが
+            メッセージ ID に戻されます。
+        </para>
+
+        <note>
+            <title>メッセージ ID と分割された言語ファイル</title>
+            <para>
+                ルートの中で使いたいメッセージ ID が、
+                ビュースクリプトやその他の部分ですでに使われていることもあるでしょう。
+                URL の安全性を確保するには、
+                ルートで使用するメッセージを別の言語ファイルに分割しなければなりません。
+            </para>
+        </note>
+
+        <para>
+            標準のルートで翻訳済みセグメントを使用するための準備として
+            もっともシンプルな方法は、次のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// 翻訳器を準備します
+$translator = new Zend_Translate('array', array(), 'en');
+$translator->addTranslation(array('archive' => 'archiv',
+                                  'year'    => 'jahr',
+                                  'month'   => 'monat',
+                                  'index'   => 'uebersicht'),
+                            'de');
+
+// 現在のロケールを翻訳器に設定します
+$translator->setLocale('en');
+
+// ルートのデフォルト翻訳器として設定します
+Zend_Controller_Router_Route::setDefaultTranslator($translator);
+]]>
+        </programlisting>
+
+        <para>
+            これは、静的セグメントを使用する例です。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// ルートを作成します
+$route = new Zend_Controller_Router_Route(
+    '@archive',
+    array(
+        'controller' => 'archive',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
+
+// URL をデフォルトのロケールでアセンブルします: archive
+$route->assemble(array());
+
+// URL をドイツ語でアセンブルします: archiv
+$route->assemble(array());
+]]>
+        </programlisting>
+
+        <para>
+            動的セグメントを使用すると、
+            モジュールルートの翻訳済みバージョンを作ることができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// ルートを作成します
+$route = new Zend_Controller_Router_Route(
+    ':@controller/:@action/*',
+    array(
+        'controller' => 'index',
+        'action'     => 'index'
+    )
+);
+$router->addRoute('archive', $route);
+
+// URL をデフォルトのロケールでアセンブルします: archive/index/foo/bar
+$route->assemble(array('controller' => 'archive', 'foo' => 'bar'));
+
+// URL をドイツ語でアセンブルします: archiv/uebersicht/foo/bar
+$route->assemble(array('controller' => 'archive', 'foo' => 'bar'));
+]]>
+        </programlisting>
+
+        <para>
+            静的セグメントと動的セグメントを同時に使用することもできます。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// ルートを作成します
+$route = new Zend_Controller_Router_Route(
+    '@archive/:@mode/:value',
+    array(
+        'mode'       => 'year'
+        'value'      => 2005,
+        'controller' => 'archive',
+        'action'     => 'show'
+    ),
+    array('mode'  => '(month|year)'
+          'value' => '\d+')
+);
+$router->addRoute('archive', $route);
+
+// URL をデフォルトのロケールでアセンブルします: archive/month/5
+$route->assemble(array('mode' => 'month', 'value' => '5'));
+
+// URL をドイツ語でアセンブルします: archiv/monat/5
+$route->assemble(array('mode' => 'month', 'value' => '5', '@locale' => 'de'));
+]]>
+        </programlisting>
     </sect4>
 </sect3>
 <!--

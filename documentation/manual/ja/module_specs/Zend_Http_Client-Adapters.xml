@@ -1,4 +1,4 @@
-<!-- EN-Revision: 12739 -->
+<!-- EN-Revision: 14588 -->
 <sect1 id="zend.http.client.adapters">
     <title>Zend_Http_Client - 接続アダプタ</title>
 
@@ -29,6 +29,11 @@
                 <listitem>
                     <para>
                         <code>Zend_Http_Client_Adapter_Test</code>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Http_Client_Adapter_Curl</code>
                     </para>
                 </listitem>
             </itemizedlist>
@@ -386,6 +391,66 @@ $adapter->addResponse(
             テストアダプタを設定し終えたら、そのアダプタを含む HTTP
             クライアントをテスト対象オブジェクトに注入し、その挙動をテストします。
         </para>
+    </sect2>
+
+<sect2 id="zend.http.client.adapters.curl">
+        <title>cURL アダプタ</title>
+        <para>
+            cURL は標準的な HTTP クライアントライブラリで、
+            多くの OS に含まれています。また PHP からは cURL
+            拡張モジュールで使用することができます。
+            HTTP クライアントで起こりうる多くの特別な例にも対応することができるので、
+            HTTP アダプタとしては完璧な選択肢といえるでしょう。
+            セキュアな接続やプロキシ、そしてあらゆる種類の認証にも対応しており、
+            大きなファイルをサーバ間で移動させるときなどにも使用できます。
+        </para>
+
+        <example id="zend.http.client.adapters.curl.example-1">
+            <title>cURL オプションの設定</title>
+            <programlisting role="php"><![CDATA[
+$config = array(
+    'adapter'   => 'Zend_Http_Client_Adapter_Curl',
+    'curloptions' => array(CURLOPT_FOLLOWLOCATION => true),
+);
+$client = new Zend_Http_Client($uri, $config);
+]]>
+            </programlisting>
+        </example>
+
+        <para>
+            デフォルトでは、cURL アダプタは
+            Socket アダプタとまったく同じ挙動となるように設定されています。
+            cURL のオプションを変更するには、アダプタのコンストラクタでキー
+            'curloptions' を指定するか、あるいは
+            <code>setCurlOption($name, $value)</code> をコールします。
+            <code>$name</code> は、cURL 拡張モジュールの
+            CURL_* 定数に対応します。
+        </para>
+
+        <example id="zend.http.client.adapters.curl.example-2">
+            <title>ハンドルによるファイル転送</title>
+
+            <para>
+                cURL を使用して、巨大なファイルを HTTP 越しに転送することができます。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$putFileSize   = filesize("filepath");
+$putFileHandle = fopen("filepath", "r");
+
+$adapter = new Zend_Http_Client_Adapter_Curl();
+$client = new Zend_Http_Client();
+$client->setAdapter($adapter);
+$adapter->setConfig(array(
+    'curloptions' => array(
+        CURLOPT_INFILE => $putFileHandle,
+        CURLOPT_INFILESIZE => $putFileSize
+    )
+));
+$client->request("PUT");
+]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.http.client.adapters.extending">

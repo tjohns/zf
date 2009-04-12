@@ -700,11 +700,11 @@ class RegistrationController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[
-<? // registration/index.phtml ?>
+<?php // registration/index.phtml ?>
 <h2>登録</h2>
-<?= $this->form ?>
+<?php echo $this->form ?>
 
-<? // registration/verification.phtml ?>
+<?php // registration/verification.phtml ?>
 <h2>登録ありがとうございます!</h2>
 <p>
     入力された情報は次のとおりです。
@@ -715,20 +715,20 @@ class RegistrationController extends Zend_Controller_Action
 // このようにしなければなりません
 foreach ($this->info as $info):
     foreach ($info as $form => $data): ?>
-<h4><?= ucfirst($form) ?>:</h4>
+<h4><?php echo ucfirst($form) ?>:</h4>
 <dl>
-    <? foreach ($data as $key => $value): ?>
-    <dt><?= ucfirst($key) ?></dt>
-    <? if (is_array($value)):
+    <?php foreach ($data as $key => $value): ?>
+    <dt><?php echo ucfirst($key) ?></dt>
+    <?php if (is_array($value)):
         foreach ($value as $label => $val): ?>
-    <dd><?= $val ?></dd>
-        <? endforeach;
+    <dd><?php echo $val ?></dd>
+        <?php endforeach;
        else: ?>
-    <dd><?= $this->escape($value) ?></dd>
-    <? endif;
+    <dd><?php echo $this->escape($value) ?></dd>
+    <?php endif;
     endforeach; ?>
 </dl>
-<? endforeach;
+<?php endforeach;
 endforeach ?>
 ]]>
             </programlisting>

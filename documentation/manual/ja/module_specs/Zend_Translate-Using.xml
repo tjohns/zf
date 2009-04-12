@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14245 -->
+<!-- EN-Revision: 14590 -->
 <sect1 id="zend.translate.using">
 
     <title>翻訳アダプタの使用法</title>
@@ -61,7 +61,11 @@ print $translate->_("Here is line two") . "\n";
         新しい <code>Zend_Translate</code> オブジェクトを作成し、もととなるアダプタを定義します。
 
         <programlisting role="php"><![CDATA[
-$translate = new Zend_Translate('gettext', '/path/to/translation/source-de.mo', 'de');
+$translate = new Zend_Translate
+    'gettext',
+    '/path/to/translation/source-de.mo',
+    'de'
+);
 ]]>
         </programlisting>
 
@@ -1245,7 +1249,8 @@ if ($translate->isTranslated('message1')) {
 }
 
 if (!($translate->isTranslated('message1', true, 'de'))) {
-    print "'message1' は 'de' に翻訳することはできません。'de_AT' 用の翻訳しかありません";
+    print "'message1' は 'de' に翻訳することはできません。"
+        . "'de_AT' 用の翻訳しかありません";
 }
 
 if ($translate->isTranslated('message1', false, 'de')) {

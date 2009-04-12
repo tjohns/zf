@@ -187,7 +187,7 @@ $router->addRoute('user',
 
             <programlisting role="php"><![CDATA[
 <a href=
-"<?= $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>
+"<?php echo $this->url(array('username' => 'martel'), 'user') ?>">Martel</a>
 ]]>
             </programlisting>
 

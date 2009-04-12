@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13826 -->
+<!-- EN-Revision: 14385 -->
 <sect3 id="zend.view.helpers.initial.headstyle">
     <title>HeadStyle ヘルパー</title>
 
@@ -132,7 +132,7 @@ $this->headStyle()->prependStyle($firstStyles);
         </para>
 
         <programlisting role="php"><![CDATA[
-<?= $this->headStyle() ?>
+<?php echo $this->headStyle() ?>
 ]]>
         </programlisting>
     </example>
@@ -150,7 +150,7 @@ $this->headStyle()->prependStyle($firstStyles);
         <programlisting role="php"><![CDATA[
 <?php $this->headStyle()->captureStart() ?>
 body {
-    background-color: <?= $this->bgColor ?>;
+    background-color: <?php echo $this->bgColor ?>;
 }
 <?php $this->headStyle()->captureEnd() ?>
 ]]>

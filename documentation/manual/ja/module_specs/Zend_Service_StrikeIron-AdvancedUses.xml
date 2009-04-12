@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13830 -->
+<!-- EN-Revision: 14589 -->
 <sect1 id="zend.service.strikeiron.advanced-uses">
     <title>Zend_Service_StrikeIron: 応用編</title>
 
@@ -30,9 +30,8 @@ $strikeIron = new Zend_Service_StrikeIron(array('username' => 'あなたのユ�
 
 // Reverse Phone Lookup サービス用の汎用クライアントを取得します
 $phone = $strikeIron->getService(
-                          array('wsdl' =>
-                                'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
-                      );
+    array('wsdl' => 'http://ws.strikeiron.com/ReversePhoneLookup?WSDL')
+);
 
 $result = $phone->lookup(array('Number' => '(408) 253-8800'));
 echo $result->listingName;

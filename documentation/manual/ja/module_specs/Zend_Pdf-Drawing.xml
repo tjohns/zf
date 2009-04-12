@@ -506,7 +506,7 @@ foreach ($fontList as $font) {
     $fontName = $font->getFontName(Zend_Pdf_Font::NAME_POSTSCRIPT,
                                    'en',
                                    'UTF-8');
-    $page->drawText($fontName . ':  The quick brown fox jumps over the lazy dog',
+    $page->drawText($fontName . ': The quick brown fox jumps over the lazy dog',
                     100,
                     $yPosition,
                     'UTF-8');

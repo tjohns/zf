@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13582 -->
+<!-- EN-Revision: 14589 -->
 <sect1 id="zend.service.audioscrobbler">
 
     <title>Zend_Service_Audioscrobbler</title>
@@ -194,7 +194,8 @@ $as->setUser('BigDaddy71');
 // BigDaddy71 のプロファイル情報を取得します
 $profileInfo = $as->userGetProfileInformation();
 // その一部を表示します
-print "$profileInfo->realname の情報は $profileInfo->url にあります";
+print "$profileInfo->realname の情報は "
+    . "$profileInfo->url にあります";
 ]]>
             </programlisting>
 

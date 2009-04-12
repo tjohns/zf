@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14632 -->
+<!-- EN-Revision: 14635 -->
 <sect1 id="zend.cache.backends">
     <title><code>Zend_Cache</code> のバックエンド</title>
     <para>

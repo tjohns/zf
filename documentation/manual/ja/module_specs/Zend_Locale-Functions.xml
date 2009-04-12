@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13971 -->
+<!-- EN-Revision: 14847 -->
 <sect1 id="zend.locale.functions">
 
     <title><code>Zend_Locale</code> の使用法</title>
@@ -208,8 +208,7 @@ print $locale->getRegion();
         <example id="zend.locale.getdata.example-1">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('de_AT');
-$list = $locale->getTranslationList('language');
+$list = Zend_Locale::getTranslationList('language', 'de_AT');
 
 print_r ($list);
 // キーと値の組み合わせの例...
@@ -217,7 +216,7 @@ print_r ($list);
 // [en] -> Englisch
 
 // これらのキーのいずれかを getTranslation() メソッドで使用します
-print $locale->getTranslation('de', 'language', 'zh');
+print Zend_Locale::getTranslation('de', 'language', 'zh');
 // これは、言語 'de' を中国語で表した文字列を返します
 ]]>
             </programlisting>
@@ -1381,9 +1380,8 @@ print $locale->getTranslation('de', 'language', 'zh');
         <example id="zend.locale.getdata.example-3">
             <title>getTranslationList</title>
             <programlisting role="php"><![CDATA[
-$locale = new Zend_Locale('en_US');
 // すべての国名をドイツ語で表示します
-print_r($locale->getTranslationList('country', 'de'));
+print_r(Zend_Locale::getTranslationList('country', 'de'));
 ]]>
             </programlisting>
         </example>
@@ -1396,33 +1394,11 @@ print_r($locale->getTranslationList('country', 'de'));
         <example id="zend.locale.getdata.example-4">
             <title>国の名前を、ある言語から別の言語に変換する</title>
             <programlisting role="php"><![CDATA[
-require 'Zend/Locale.php';
-$locale = new Zend_Locale('en_US');
-$code2name = $locale->getLanguageTranslationList();
+$code2name = Zend_Locale::getLanguageTranslationList('en_US');
 $name2code = array_flip($code2name);
 $frenchCode = $name2code['French'];
-echo $locale->getLanguageTranslation($frenchCode, 'de_AT');
+echo Zend_Locale::getLanguageTranslation($frenchCode, 'de_AT');
 // 出力は、「フランス語」を表すドイツ語の名前になります
-]]>
-            </programlisting>
-        </example>
-
-        <para>
-            何ができるのかをもう少し詳しく知るには、次の例の出力を確認してみましょう。
-        </para>
-
-        <example id="zend.locale.getdata.example-5">
-            <title>使用できるすべての翻訳</title>
-            <programlisting role="php"><![CDATA[
-// すべての翻訳の一覧を取得します
-$lists = $locale->getTranslationList();
-
-// 使用できるすべての翻訳を表示します
-// (大量に出力されます。すべて英語で表示されます)
-foreach ($lists as $list) {
-    echo "List $list = ";
-    print_r($locale->getTranslationList($list));
-}
 ]]>
             </programlisting>
         </example>
@@ -1443,13 +1419,11 @@ foreach ($lists as $list) {
         <example id="zend.locale.getdata.example-6">
             <title>すべての言語を、その国のネイティブ言語で書き出す</title>
             <programlisting role="php"><![CDATA[
-$sourceLanguage = null; // あなたのネイティブ言語のコードを設定します
-$locale = new Zend_Locale($sourceLanguage);
-$list = $locale->getLanguageTranslationList();
+$list = Zend_Locale::getLanguageTranslationList('auto');
 
 foreach($list as $language => $content) {
     try {
-        $output = $locale->getLanguageTranslation($language, $language);
+        $output = Zend_Locale::getLanguageTranslation($language, $language);
         if (is_string($output)) {
             print "\n<br>[".$language."] ".$output;
         }
@@ -1653,7 +1627,8 @@ if ($locale === null) {
 
 if (!Zend_Locale::isLocale($locale, true, false)) {
     if (!Zend_Locale::isLocale($locale, false, false)) {
-        throw new Zend_Locale_Exception("The locale '$locale' is no known locale");
+        throw new Zend_Locale_Exception(
+            "The locale '$locale' is no known locale");
     }
 
     $locale = new Zend_Locale($locale);

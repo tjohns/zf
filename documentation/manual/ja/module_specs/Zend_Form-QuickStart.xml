@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13843 -->
+<!-- EN-Revision: 14385 -->
 <sect1 id="zend.form.quickstart">
     <title>Zend_Form クイックスタート</title>
 
@@ -583,7 +583,7 @@ class UserController extends Zend_Controller_Action
 
 <programlisting role="php"><![CDATA[
 <h2>Please login:</h2>
-<?= $this->form ?>
+<?php echo $this->form ?>
 ]]>
  </programlisting>
 

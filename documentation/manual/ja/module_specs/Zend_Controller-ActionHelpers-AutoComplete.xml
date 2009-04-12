@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13847 -->
+<!-- EN-Revision: 14588 -->
 <sect3 id="zend.controller.actionhelpers.autocomplete">
     <title>AutoComplete</title>
 
@@ -295,23 +295,24 @@ class TestController extends Zend_Controller_Action
             </para>
 
             <programlisting role="php"><![CDATA[
-<? // データストアの準備 ?>
+<?php // データストアの準備 ?>
 <div dojoType="custom.TestNameReadStore" jsId="testStore"
-    url="<?= $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
+    url="<?php echo $this->baseUrl() ?>/unit-test/autocomplete/format/ajax"
     requestMethod="get"></div>
 
-<? // フォームのレンダリング ?>
-<?= $this->form ?>
+<?php // フォームのレンダリング ?>
+<?php echo $this->form ?>
 
-<? // Dojo 関連の CSS の、HTML head での読み込み ?>
-<? $this->headStyle()->captureStart() ?>
-@import "<?= $this->baseUrl() ?>/javascript/dijit/themes/tundra/tundra.css";
-@import "<?= $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
-<? $this->headStyle()->captureEnd() ?>
+<?php // Dojo 関連の CSS の、HTML head での読み込み ?>
+<?php $this->headStyle()->captureStart() ?>
+@import "<?php echo $this->baseUrl()
+?>/javascript/dijit/themes/tundra/tundra.css";
+@import "<?php echo $this->baseUrl() ?>/javascript/dojo/resources/dojo.css";
+<?php $this->headStyle()->captureEnd() ?>
 
-<? // 必要な Dojo ライブラリを含む javascript の、
+<?php // 必要な Dojo ライブラリを含む javascript の、
    // HTML head での読み込み ?>
-<? $this->headScript()
+<?php $this->headScript()
         ->setAllowArbitraryAttributes(true)
         ->appendFile($this->baseUrl() . '/javascript/dojo/dojo.js',
             'text/javascript',
@@ -323,7 +324,7 @@ dojo.require("dojo.parser");
 dojo.require("dojox.data.QueryReadStore");
 dojo.require("dijit.form.ComboBox");
 dojo.require("custom.TestNameReadStore");
-<? $this->headScript()->captureEnd() ?>
+<?php $this->headScript()->captureEnd() ?>
 ]]>
             </programlisting>
 
