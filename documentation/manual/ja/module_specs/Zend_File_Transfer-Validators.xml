@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13617 -->
+<!-- EN-Revision: 14451 -->
 <sect1 id="zend.file.transfer.validators">
 
     <title>Zend_File_Transfer 用のバリデータ</title>
@@ -369,7 +369,7 @@ if ($upload->isValid()) {
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.count">
-        <title><emphasis role="strong">Count</emphasis> バリデータ</title>
+        <title>Count バリデータ</title>
 
         <para>
             <code>Count</code> バリデータは、
@@ -440,7 +440,7 @@ $upload->addValidator('Count', false, array('min' =>1, 'max' => 5));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.crc32">
-        <title><emphasis role="strong">Crc32</emphasis> バリデータ</title>
+        <title>Crc32 バリデータ</title>
 
         <para>
             <code>Crc32</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
@@ -480,7 +480,7 @@ $upload->addValidator('Crc32', false, array('3b3652f', 'e612b69'));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludeextension">
-        <title><emphasis role="strong">ExcludeExtension</emphasis> バリデータ</title>
+        <title>ExcludeExtension バリデータ</title>
 
         <para>
             <code>ExcludeExtension</code> バリデータは、
@@ -551,7 +551,7 @@ $upload->addValidator('ExcludeExtension',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.excludemimetype">
-        <title><emphasis role="strong">ExcludeMimeType</emphasis> バリデータ</title>
+        <title>ExcludeMimeType バリデータ</title>
 
         <para>
             <code>ExcludeMimeType</code> バリデータは、
@@ -616,7 +616,7 @@ $upload->addValidator('ExcludeMimeType', false, 'image');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.exists">
-        <title><emphasis role="strong">Exists</emphasis> バリデータ</title>
+        <title>Exists バリデータ</title>
 
         <para>
             <code>Exists</code> バリデータは、
@@ -666,7 +666,7 @@ $upload->addValidator('Exists',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.extension">
-        <title><emphasis role="strong">Extension</emphasis> バリデータ</title>
+        <title>Extension バリデータ</title>
 
         <para>
             <code>Extension</code> バリデータは、
@@ -735,7 +735,7 @@ if (!$upload->isValid('C:\temp\myfile.MO')) {
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.filessize">
-        <title><emphasis role="strong">FilesSize</emphasis> バリデータ</title>
+        <title>FilesSize バリデータ</title>
 
         <para>
             <code>FilesSize</code> バリデータは、
@@ -829,7 +829,7 @@ $upload->addValidator('FilesSize',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.imagesize">
-        <title><emphasis role="strong">ImageSize</emphasis> バリデータ</title>
+        <title>ImageSize バリデータ</title>
 
         <para>
             <code>ImageSize</code> バリデータは、
@@ -903,7 +903,7 @@ $upload->setImageWidth(array('minwidth' => 20, 'maxwidth' => 200));
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.iscompressed">
-        <title><emphasis role="strong">IsCompressed</emphasis> バリデータ</title>
+        <title>IsCompressed バリデータ</title>
 
         <para>
             <code>IsCompressed</code> バリデータは、
@@ -944,7 +944,7 @@ $upload->addValidator('IsCompressed', false, 'zip');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.isimage">
-        <title><emphasis role="strong">IsImage</emphasis> バリデータ</title>
+        <title>IsImage バリデータ</title>
 
         <para>
             <code>IsImage</code> バリデータは、
@@ -985,7 +985,7 @@ $upload->addValidator('IsImage', false, 'jpeg');
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.hash">
-        <title><emphasis role="strong">Hash</emphasis> バリデータ</title>
+        <title>Hash バリデータ</title>
 
         <para>
             <code>Hash</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
@@ -1053,7 +1053,7 @@ $upload->addValidator('Hash',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.md5">
-        <title><emphasis role="strong">Md5</emphasis> バリデータ</title>
+        <title>Md5 バリデータ</title>
 
         <para>
             <code>Md5</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
@@ -1095,7 +1095,7 @@ $upload->addValidator('Md5',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.mimetype">
-        <title><emphasis role="strong">MimeType</emphasis> バリデータ</title>
+        <title>MimeType バリデータ</title>
 
         <para>
             <code>MimeType</code> バリデータは、
@@ -1202,7 +1202,7 @@ $upload->addValidator('MimeType',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.notexists">
-        <title><emphasis role="strong">NotExists</emphasis> バリデータ</title>
+        <title>NotExists バリデータ</title>
 
         <para>
             <code>NotExists</code> バリデータは、
@@ -1253,7 +1253,7 @@ $upload->addValidator('NotExists', false,
     </sect2>
 
 <sect2 id="zend.file.transfer.validators.sha1">
-        <title><emphasis role="strong">Sha1</emphasis> バリデータ</title>
+        <title>Sha1 バリデータ</title>
 
         <para>
             <code>Sha1</code> バリデータは、転送されたファイルの中身のハッシュをチェックします。
@@ -1294,7 +1294,7 @@ $upload->addValidator('Sha1',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.size">
-        <title><emphasis role="strong">Size</emphasis> バリデータ</title>
+        <title>Size バリデータ</title>
 
         <para>
             <code>Size</code> バリデータは、
@@ -1379,7 +1379,7 @@ $upload->addValidator('Size',
     </sect2>
 
     <sect2 id="zend.file.transfer.validators.wordcount">
-        <title><emphasis role="strong">WordCount</emphasis> バリデータ</title>
+        <title>WordCount バリデータ</title>
 
         <para>
             <code>WordCount</code> バリデータは、
