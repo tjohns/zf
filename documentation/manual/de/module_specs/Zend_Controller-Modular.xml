@@ -10,8 +10,7 @@
             Um so eine Verzeichnisstruktur zu zeigen:
         </para>
 
-        <programlisting role="php">
-<![CDATA[
+        <programlisting role="php"><![CDATA[
 docroot/
     index.php
 application/

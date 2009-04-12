@@ -1,82 +1,84 @@
 <!-- EN-Revision: 14758 -->
 <sect1 id="zend.service.amazon.ec2.elasticip">
-    <title>Zend_Service_Amazon_Ec2: Elastic IP Addresses</title>
+    <title>Zend_Service_Amazon_Ec2: Elastische IP Adressen</title>
 
     <para>
-        By default, all Amazon EC2 instances are assigned two IP addresses at
-        launch: a private (RFC 1918) address and a public address that is mapped
-        to the private IP address through Network Address Translation (NAT).
+        Standardmäßig werden allen Amazon EC2 Instanzen beim Starten zwei IP Adressen zugeordnet:
+        eine private (RFC 1918) Adresse und eine öffentliche Adresse die über Network Address
+        Translation (NAT) auf die private Adresse gemappt wird.
     </para>
 
     <para>
-        If you use dynamic DNS to map an existing DNS name to a new instance's
-        public IP address, it might take up to 24 hours for the IP address to propagate
-        through the Internet. As a result, new instances might not receive traffic while
-        terminated instances continue to receive requests.
+        Wenn man dynamische DNS verwendet um einen bestehenden DNS Namen zu einer öffentlichen IP
+        Adresse einer neuen Instanz zu verknüpfen, kann es für die IP Adresse bis zu 24 Stunden
+        dauern bis Sie über das Internet bekanntgegeben wurde. Als Ergebnis, können neue Instanzen
+        keinen Verkehr empfangen weil beendete Instanzen weiterhin Anfragen bekommen.
     </para>
 
     <para>
-        To solve this problem, Amazon EC2 provides elastic IP addresses. Elastic IP addresses
-        are static IP addresses designed for dynamic cloud computing. Elastic IP addresses
-        are associated with your account, not specific instances. Any elastic IP addresses
-        that you associate with your account remain associated with your account until you
-        explicitly release them. Unlike traditional static IP addresses, however, elastic IP
-        addresses allow you to mask instance or Availability Zone failures by rapidly remapping
-        your public IP addresses to any instance in your account.
+        Um dieses Problem zu lösen, bietet Amazon EC2 elastische IP Adressen. Elastische IP
+        Adressen sind statische IP Adressen die für Dynamisches Cloud Computing entwickelt wurden.
+        elastische IP Adressen werden mit dem eigenen Account verknüpft, und nicht spezifischen
+        Instanzen. Jede elastische IP Adresse die man mit dem eigenen Account assoziiert bleibt
+        mit dem eigenen Account verknüpft bis man diese explizit freigibt. Anders als traditionelle
+        IP Adressen erlauben es elastische IP Adressen Instanzen zu maskieren oder Zonen Fehler
+        sichtbar zu machen indem die eigene  öffentliche IP Adresse schnell auf jede Instanz im
+        eigenen Account verknüpft werden kann.
     </para>
 
     <example id="zend.service.amazon.ec2.elasticip.allocate">
-        <title>Allocating a new Elastic IP</title>
+        <title>Eine neue Elastische IP allokieren</title>
         <para>
-            <code>allocate</code> will assign your account a new Elastic IP Address.
+            <code>allocate</code> fügt dem eigenen Account eine neue Elastische IP Adresse hinzu.
         </para>
         <para>
-            <code>allocate</code> returns the newly allocated ip.
+            <code>allocate</code> gibt die neu verknüpfte IP zurück.
         </para>
 
         <programlisting role="php"><![CDATA[
 $ec2_eip = new Zend_Service_Amazon_Ec2_Elasticip('aws_key','aws_secret_key');
 $ip = $ec2_eip->allocate();
 
-// print out your newly allocated elastic ip address;
+// Gibt die neu verknüpfte elastische IP Adresse aus;
 print $ip;
 ]]>
         </programlisting>
     </example>
 
     <example id="zend.service.amazon.ec2.elasticip.describe">
-        <title>Describing Allocated Elastic IP Addresses</title>
+        <title>Beschreiben von Verknüpften elastischen IP Adressen</title>
         <para>
-            <code>describe</code> has an optional paramater to describe all
-            of your allocated Elastic IP addresses or just some of your
-            allocated addresses.
+            <code>describe</code> hat einen optionalen Parameter um alle eigenen verknüpften
+            elastischen IP Adressen zu beschreiben oder auch nur einige der eigenen verknüpften
+            Adressen.
         </para>
         <para>
-            <code>describe</code> returns an array that contains information on each Elastic IP
-            Address which contains the publicIp and the instaceId if it is assocated.
+            <code>describe</code> gibt ein Array zurück das Informationen über jede elastische IP
+            Adresse enthält welche wiederum publicIp und instanceId enthalten wenn diese
+            assoziiert sind.
         </para>
 
         <programlisting role="php"><![CDATA[
 $ec2_eip = new Zend_Service_Amazon_Ec2_Elasticip('aws_key','aws_secret_key');
-// describe all
+// Beschreibe alle
 $ips = $ec2_eip->describe();
 
-// describe a subset
+// Beschreibe ein Subset
 $ips = $ec2_eip->describe(array('ip1', 'ip2', 'ip3'));
 
-// describe a single ip address
+// Beschreibe eine einzelne IP Adresse
 $ip = $ec2_eip->describe('ip1');
 ]]>
         </programlisting>
     </example>
 
     <example id="zend.service.amazon.ec2.elasticip.release">
-        <title>Releasing Elastic IP</title>
+        <title>Freigeben einer elastischen IP</title>
         <para>
-            <code>release</code> will release an Elastic IP to Amazon.
+            <code>release</code> gibt eine elastische IP wieder für Amazon frei.
         </para>
         <para>
-            Returns a boolean true or false.
+            Gibt ein boolsches true oder false zurück.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -87,13 +89,13 @@ $ec2_eip->release('ipaddress);
     </example>
 
     <example id="zend.service.amazon.ec2.elasticip.associate">
-        <title>Associates an Elastic IP to an Instance</title>
+        <title>Verknüpft eine elastische IP zu einer Instanz</title>
         <para>
-            <code>associate</code> will assign an Elastic IP to an
-            already running instance.
+            <code>associate</code> verknüpft eine elastische IP mit einer bereits laufenden
+            Instanz.
         </para>
         <para>
-            Returns a boolean true or false.
+            Gibt ein boolsches true oder false zurück.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -105,14 +107,14 @@ $ec2_eip->associate('instance_id', 'ipaddress');
     </example>
 
     <example id="zend.service.amazon.ec2.elasticip.disassocate">
-        <title>Disassocate an Elastic IP from an instance</title>
+        <title>Entfernt die Verknüpfung einer elastischen IP von einer Instanz</title>
         <para>
-            <code>disassocate</code> will disassocate an Elastic IP from an instance.
-            If you terminate an Instance it will automaticly disassocate the Elastic
-            IP address for you.
+            <code>disassocate</code> entfernt die Verknüpfung einer elastischen IP von einer
+            Instanz. Wenn man eine Instanz beendet wird diese automatisch die elastischen IP
+            Adressen wieder freigeben.
         </para>
         <para>
-            Returns a boolean true or false.
+            Gibt ein boolsches true oder false zurück.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -121,6 +123,5 @@ $ec2_eip->disassocate('ipaddress');
 ]]>
         </programlisting>
     </example>
-
 
 </sect1>
