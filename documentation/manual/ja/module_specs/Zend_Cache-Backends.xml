@@ -453,6 +453,26 @@ $cache = Zend_Cache::factory('Core', 'Zend Platform');
               </tgroup>
           </table>
     </sect2>
+    <sect2 id="zend.cache.backends.zendserver">
+        <title><code>Zend_Cache_Backend_ZendServer_Disk</code> および <code>Zend_Cache_Backend_ZendServer_ShMem</code></title>
+        <para>
+            これらのバックエンドは、キャッシュレコードの保存に
+            <ulink url="http://www.zend.com/en/products/server/downloads-all?zfs=zf_download">Zend Server</ulink>
+            のキャッシュ機能を使用します。
+        </para>
+        <para>
+             注意: このバックエンドでは、今のところ "タグ" がサポートされていません。
+             また、引数 "doNotTestCacheValidity=true" もサポートされていません。
+        </para>
+        <para>
+             これらのバックエンドが動作するのは、Zend Server 環境で
+             HTTP(S) 越しにページをリクエストした場合のみです。
+             コマンドラインでスクリプトを実行した場合は動作しません。
+        </para>
+        <para>
+            このバックエンドにはオプションはありません。
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
