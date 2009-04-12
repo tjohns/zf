@@ -1,9 +1,9 @@
-<!-- EN-Revision: 13423 -->
+<!-- EN-Revision: 14609 -->
 <sect1 id="zend.acl.introduction">
     <title>導入</title>
 
     <para>
-        Zend_Acl は、軽量で柔軟なアクセス制御リスト (ACL)
+        <code>Zend_Acl</code> は、軽量で柔軟なアクセス制御リスト (ACL)
         機能と権限管理機能を提供します。アプリケーションでは一般に、
         保護されたオブジェクトへのアクセスを制御するためにこれらの機能を使用します。
     </para>
@@ -41,19 +41,19 @@
     <sect2 id="zend.acl.introduction.resources">
         <title>リソース</title>
         <para>
-            Zend_Acl では、リソースを作成するのは簡単です。Zend_Acl の
+            <code>Zend_Acl</code> では、リソースを作成するのは簡単です。<code>Zend_Acl</code> の
             <code>Zend_Acl_Resource_Interface</code> に、
             開発者がリソースを作成するの手助けする機能が含まれています。
             リソースクラスは、単にこのインターフェイスを実装するだけで作成できます。
             このインターフェイスに含まれるメソッドはひとつだけで、それは
             <code>getResourceId()</code> です。このメソッドにより、
-            Zend_Acl はそのオブジェクトがリソースであると判断します。さらに、
+            <code>Zend_Acl</code> はそのオブジェクトがリソースであると判断します。さらに、
             基本的なリソースの実装を含む <code>Zend_Acl_Resource</code>
-            が Zend_Acl にインクルードされています。
+            が <code>Zend_Acl</code> にインクルードされています。
             開発者は、必要な部分だけを拡張することでリソースを作成できます。
         </para>
         <para>
-            Zend_Acl は、ツリー構造を提供しています。これを用いて複数のリソース
+            <code>Zend_Acl</code> は、ツリー構造を提供しています。これを用いて複数のリソース
             ("アクセス制御されているエリア") を追加することができます。
             リソースはこのようにツリー構造で管理されるので、全般的なもの
             (ルートに近いほう) から特殊なもの (末端に近いほう) までを扱うことができます。
@@ -63,14 +63,14 @@
             たとえば、ある都市のすべての建物に適用されるデフォルトの規則がある場合に、
             それを各建物に適用する代わりに都市に対して適用することができるようになります。
             中にはこの規則の例外となる建物もあるかもしれません。
-            Zend_Acl では、このような状況も簡単に処理できます。
+            <code>Zend_Acl</code> では、このような状況も簡単に処理できます。
             例外的な規則を適用する建物については、建物に対して直接規則を定義すればいいのです。
             リソースは、単一のリソースしか継承することができません。
             そしてその継承元のリソースがまた別の親リソースを継承し……
             といった具合になります。
         </para>
         <para>
-            Zend_Acl は、リソースに対する権限 ("create"、"read"、"update"、"delete" など)
+            <code>Zend_Acl</code> は、リソースに対する権限 ("create"、"read"、"update"、"delete" など)
             もサポートしており、すべての権限あるいは一部の権限に影響を及ぼす規則を、
             リソースに対して割り当てることができます。
         </para>
@@ -87,11 +87,11 @@
             <code>getRoleId()</code> です。このメソッドにより、
             Zend_Acl はそのオブジェクトがロールであると判断します。さらに、
             基本的なロールの実装を含む <code>Zend_Acl_Role</code>
-            が Zend_Acl にインクルードされています。
+            が <code>Zend_Acl</code> にインクルードされています。
             開発者は、必要な部分だけを拡張することでリソースを作成できます。
         </para>
         <para>
-            Zend_Acl では、あるロールは他の複数のロールを継承することができます。
+            <code>Zend_Acl</code> では、あるロールは他の複数のロールを継承することができます。
             これは、それぞれのロールの規則を継承することをサポートするためのものです。
             たとえば、"sally" のようなユーザロールは、"editor" かつ "administrator"
             のように複数の親ロールに属することもありえるでしょう。
@@ -102,7 +102,8 @@
         <para>
             複数のロールからの継承は非常に便利ですが、
             多重継承は複雑な問題を引き起こすこともあります。
-            次の例は、あいまいな条件になったときに Zend_Acl がそれをどう解決するかを示すものです。
+            次の例は、あいまいな条件になったときに <code>Zend_Acl</code>
+            がそれをどう解決するかを示すものです。
         </para>
         <example id="zend.acl.introduction.roles.example.multiple_inheritance">
             <title>ロールの多重継承</title>
@@ -113,7 +114,7 @@
                 これらのロールが配列 <code>$parents</code> にあらわれる順序が重要となります。
                 問い合わせ先のロール (ここでは "<code>someUser</code>" にアクセス規則が定義されていないが
                 その継承元 (ここでは "<code>guest</code>"、"<code>member</code>" および "<code>admin</code>")
-                には定義されているという場合、Zend_Acl はそちらを検索します。
+                には定義されているという場合、<code>Zend_Acl</code> はそちらを検索します。
             </para>
             <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
@@ -134,26 +135,26 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
 ]]>
             </programlisting>
             <para>
-                "<code>someUser</code>" ロールおよび
-                "<code>someResource</code>" に対する規則は定義されていないので、
-                Zend_Acl は、その規則が "<code>someUser</code>"
+                "someUser" ロールおよび
+                "someResource" に対する規則は定義されていないので、
+                Zend_Acl は、その規則が "someUser"
                 の継承元ロールで定義されているものとして検索します。
-                まず "<code>admin</code>" ロールを探しますが、ここではアクセス規則が定義されていません。
-                次に "<code>member</code>" ロールを探し、ここで Zend_Acl が規則を発見します。つまり
-                "<code>member</code>" は "<code>someResource</code>" へのアクセスを許可されているということです。
+                まず "admin" ロールを探しますが、ここではアクセス規則が定義されていません。
+                次に "member" ロールを探し、ここで <code>Zend_Acl</code> が規則を発見します。つまり
+                "member" は "someResource" へのアクセスを許可されているということです。
             </para>
             <para>
-                しかし、仮に Zend_Acl がさらに別の親に対しても規則の検索を続けたとすると、
-                "<code>guest</code>" は "<code>someResource</code>" へのアクセスが拒否されていることに気づくことでしょう。
-                これは問題となります。というのも、"<code>someUser</code>" は
-                "<code>someResource</code>" へのアクセスが許可されていると同時に拒否されているわけで、
+                しかし、仮に <code>Zend_Acl</code> がさらに別の親に対しても規則の検索を続けたとすると、
+                "guest" は "<code>someResource</code>" へのアクセスが拒否されていることに気づくことでしょう。
+                これは問題となります。というのも、"someUser" は
+                "someResource" へのアクセスが許可されていると同時に拒否されているわけで、
                 それぞれ別の親ロールから取得した規則が衝突することになるからです。
             </para>
             <para>
-                Zend_Acl では、このような衝突の可能性を解決するために、
+                <code>Zend_Acl</code> では、このような衝突の可能性を解決するために、
                 直近に継承されたロールの優先度が高くなるようにしています。
-                今回の場合は、"<code>member</code>" のほうが
-                "<code>guest</code>" ロールより先に調べられ、例のコードの出力は
+                今回の場合は、"member" のほうが
+                "guest" ロールより先に調べられ、例のコードの出力は
                 "<code>allowed</code>" となります。
             </para>
         </example>
@@ -184,7 +185,7 @@ $acl = new Zend_Acl();
 
         <note>
             <para>
-                開発者が "allow" 規則を指定しない限り、Zend_Acl
+                開発者が "allow" 規則を指定しない限り、<code>Zend_Acl</code>
                 はあらゆるロールのすべてのリソース上の権限からのアクセスも拒否します。
             </para>
         </note>
@@ -282,14 +283,14 @@ $acl->addRole(new Zend_Acl_Role('administrator'));
             ロールがどのようにアクセスするのかという規則を定義できる状態になりました。
             この例では特定のリソースを定義していないことにお気づきかもしれません。
             この場合、規則はすべてのリソースに対して適用されます。
-            Zend_Acl を使用すると、全般的なものであろうが特殊なものであろうが
+            <code>Zend_Acl</code> を使用すると、全般的なものであろうが特殊なものであろうが
             規則を適用するだけで定義できるようになります。
             リソースやロールは、その継承元で定義されている規則を引き継ぐからです。
         </para>
 
         <note>
             <para>
-                一般に、Zend_Acl は指定された規則に従います。
+                一般に、<code>Zend_Acl</code> は指定された規則に従います。
                 ただし、より詳細な規則が別途適用されている場合は例外です。
             </para>
         </note>
