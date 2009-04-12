@@ -62,6 +62,9 @@
                         <code>pluginPaths</code> kann verwendet werden um einen Präfix Pfad zu
                         Plugin Ressourcen zu spezifizieren; er solte ein Array von
                         Klassenpräfix/Instanziierungs Options Paaren sein.
+                        <code>resources</code> kann verwendet werden um eine Plugin Ressource zu
+                        spezifizieren die verwendet werden soll, und sollte aus Paaren von
+                        Plugin Ressource/Instanziierungs Optionen bestehen.
                     </para>
                     </entry>
                 </row>

@@ -13,7 +13,8 @@
 $foo      = new Zend_CodeGenerator_Php_Class();
 $docblock = new Zend_CodeGenerator_Php_Docblock(array(
     'shortDescription' => 'Beispiel einer erzeugten Klasse',
-    'longDescription'  => 'Das ist eine mit Zend_CodeGenerator erzeugte Klasse.',
+    'longDescription'  => 'Das ist eine mit Zend_CodeGenerator '
+                        . 'erzeugte Klasse.',
     'tags'             => array(
         array(
             'name'        => 'version',
@@ -64,7 +65,8 @@ class Foo
 $foo      = new Zend_CodeGenerator_Php_Class();
 $docblock = new Zend_CodeGenerator_Php_Docblock(array(
     'shortDescription' => 'Beispiel einer erzeugten Klasse',
-    'longDescription'  => 'Das ist eine mit Zend_CodeGenerator erzeugte Klasse.',
+    'longDescription'  => 'Das ist eine mit Zend_CodeGenerator '
+                        . 'erzeugte Klasse.',
     'tags'             => array(
         array(
             'name'        => 'version',
@@ -139,7 +141,8 @@ class Foo
 $foo      = new Zend_CodeGenerator_Php_Class();
 $docblock = new Zend_CodeGenerator_Php_Docblock(array(
     'shortDescription' => 'Beispiel einer erzeugten Klasse',
-    'longDescription'  => 'Das ist eine mit Zend_CodeGenerator erzeugte Klasse.',
+    'longDescription'  => 'Das ist eine mit Zend_CodeGenerator '
+                        . 'erzeugte Klasse.',
     'tags'             => array(
         array(
             'name'        => 'version',

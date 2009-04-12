@@ -2,7 +2,6 @@
 <sect1 id="zend.service.amazon.ec2.elasticip">
     <title>Zend_Service_Amazon_Ec2: Elastic IP Addresses</title>
 
-
     <para>
         By default, all Amazon EC2 instances are assigned two IP addresses at
         launch: a private (RFC 1918) address and a public address that is mapped

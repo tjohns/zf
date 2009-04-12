@@ -122,7 +122,7 @@ echo $view->render(...);
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
-            <title>Template Systems Using View Scripts</title>
+            <title>Template Systeme die View Scripte verwenden</title>
 
             <para>
                 Ein Viewskript kann verwendet werden, um ein separats Templateobjekt zu instanzieren

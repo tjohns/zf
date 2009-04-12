@@ -122,7 +122,7 @@ echo $foo['bar'];
         </programlisting>
     </example>
 
-    <example id="zend.view.helpers.initial.capture.aggregation">
+    <example id="zend.view.helpers.initial.placeholder.capture">
         <title>Verwenden von Platzhaltern um Inhalt zu erfassen</title>
 
         <para>
