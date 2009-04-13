@@ -168,130 +168,124 @@
     <sect2 id="zend.service.amazon.ec2.instance.operations">
         <title>Ausführen von Amazon EC2 Instanzen</title>
         <para>
-            This section describes the operation methods maintaing Amazon EC2 Instances.
+            Dieses Kapitel beschreibt die Methoden für die Behandlung von Amazon EC2 Instanzen.
         </para>
 
         <example id="zend.service.amazon.ec2.instance.operations.run">
-            <title>Starting New Ec2 Instances</title>
+            <title>Starten neuer EC2 Instanzen</title>
             <para>
-                <code>run</code> will launch a specified number of EC2 Instances.
-                <code>run</code> takes an array of parameters to start, below is a table
-                containing the valid values.
+                <code>run</code> startetn eine spezifische Anzahl von EC2 Instanzen.
+                <code>run</code> nimmt für den Start ein Array von Parametern. Anbei ist eine
+                Tabelle welche die gültigen Werte enthält.
             </para>
             <para>
             <table id="zend.service.amazon.ec2.instance.operations.run-table">
-                <title>Valid Run Options</title>
+                <title>Gültige Optionen für das Starten</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
                             <entry>Name</entry>
-                            <entry>Description</entry>
-                            <entry>Required</entry>
+                            <entry>Beschreibung</entry>
+                            <entry>Benötigt</entry>
                         </row>
                     </thead>
                     <tbody>
                         <row>
                             <entry><code>imageId</code></entry>
                             <entry><para>
-                                ID of the AMI with which to launch instances.
+                                ID der AMI mit der Instanzen gestartet werden.
                             </para></entry>
-                            <entry><para>Yes</para></entry>
+                            <entry><para>Ja</para></entry>
                         </row>
                         <row>
                             <entry><code>minCount</code></entry>
                             <entry><para>
-                                Minimum number of instances to launch.  Default: 1
+                                Minimale Anzahl der zu startenden Instanzen. Standardwert: 1
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>maxCount</code></entry>
                             <entry><para>
-                                Maximum number of instances to launch.  Default: 1
+                                Maximale Anzahl der zu startenden Instanzen. Standardwert: 1
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>keyName</code></entry>
                             <entry><para>
-                                Name of the key pair with which to launch instances.
-                                If you do not provide a key, access to the instance will
-                                leave it inaccessible.
+                                Name des Schlüsselpaares mit dem Instanzen gestartet werden. Wenn
+                                man keinen Schlüssel angibt, wird der Zugriff auf die Instanzen
+                                nicht möglich sein.
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>securityGroup</code></entry>
                             <entry><para>
-                                Names of the security groups with which to associate
-                                the instances.
+                                Name der Sicherheitsgruppe mit der Instanzen zu assoziieren sind.
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>userData</code></entry>
                             <entry><para>
-                                The user data available to the launched instances.
-                                This should not be Base64 encoded.
+                                Die Benutzerdaten welche bei den zu startenden Instanzen vorhanden
+                                sind. Diese sollten nicht Base64 verschlüsselt sein.
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>instanceType</code></entry>
                             <entry><para>
-                                Specifies the instance type.  Default: m1.small
+                                Spezifiziert den Instanztyp. Standardwert: m1.small
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>placement</code></entry>
                             <entry><para>
-                                Specifies the availability zone in which to
-                                launch the instance(s). By default, Amazon
-                                EC2 selects an availability zone for you.
+                                Spezifiziert die Availability Zone in der Instanz(en) zu starten
+                                sind. Standardmäßig wählt Amazon EC2 eine Availability Zone aus.
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>kernelId</code></entry>
                             <entry><para>
-                                The ID of the kernel with which to launch
-                                the instance.
+                                Die ID des Kernels mit dem die Instanz gestartet werden soll.
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>ramdiskId</code></entry>
                             <entry><para>
-                                The ID of the RAM disk with which to launch
-                                the instance.
+                                Die ID der RAM Dist mit der die Instanz gestartet werden soll.
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>blockDeviceVirtualName</code></entry>
                             <entry><para>
-                                Specifies the virtual name to map to the
-                                corresponding device name. For example:
-                                instancestore0
+                                Spezifiziert den virtuellen Name der zu dem korrespondierenden
+                                Devicenamen gemappt werden soll. Zum Beispiel: instancestore0
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                         <row>
                             <entry><code>blockDeviceName</code></entry>
                             <entry><para>
-                                 Specifies the device to which you are
-                                 mapping a virtual name. For example: sdb
+                                Spezifiziert das Device zu dem der virtuelle Name gemappt werden
+                                soll. Zum Beispiel: sdb
                             </para></entry>
-                            <entry><para>No</para></entry>
+                            <entry><para>Nein</para></entry>
                         </row>
                     </tbody>
                 </tgroup>
             </table>
             </para>
             <para>
-                <code>run</code> will return information about each instance
-                that is starting up.
+                <code>run</code> gibt Informationen über jede Instanz zurück die gestartet wird.
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
@@ -306,18 +300,18 @@ $return = $ec2_instance->run(array('imageId' => 'ami-509320',
         </example>
 
         <example id="zend.service.amazon.ec2.instance.operations.reboot">
-            <title>Rebooting an Ec2 Instances</title>
+            <title>Neu booten von EC2 Instanzen</title>
             <para>
-                <code>reboot</code> will reboot one or more instances.
+                <code>reboot</code> bootet eine oder mehrere Instanzen.
             </para>
             <para>
-                This operation is asynchronous; it only queues a request to
-                reboot the specified instance(s). The operation will succeed
-                if the instances are valid and belong to the user. Requests
-                to reboot terminated instances are ignored.
+                Diese Operation ist asynchron; die queuet nur die Anfrage eine spezifizierte
+                Instanz(en) zu rebooten. Die Operation wird erfolgreich sein wenn die Instanzen
+                gültig sind und dem Benutzer gehören. Anfragen um beendete Instanzen zu rebooten
+                werden ignoriert.
             </para>
             <para>
-                <code>reboot</code> returns boolean true or false
+                <code>reboot</code> gibt ein boolsches true oder false zurück
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
@@ -329,14 +323,14 @@ $return = $ec2_instance->reboot('instanceId');
         </example>
 
         <example id="zend.service.amazon.ec2.instance.operations.terminate">
-            <title>Terminating an Ec2 Instances</title>
+            <title>Beenden von EC2 Instanzen</title>
             <para>
-                <code>terminate</code> shuts down one or more instances. This
-                operation is idempotent; if you terminate an instance more
-                than once, each call will succeed.
+                <code>terminate</code> führt eine oder mehrere Instanzen herunter. Diese Operation
+                ist idempotent; wenn eine Instanz mehr als einmal terminiert wird, wird jeder
+                Aufruf erfolgreich sein.
             </para>
             <para>
-                <code>terminate</code> returns boolean true or false
+                <code>terminate</code> gibt ein boolsches true oder false zurück
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
@@ -346,14 +340,14 @@ $return = $ec2_instance->terminate('instanceId');
             </programlisting>
         </example>
         <note>
-            <title>Terminated Instances</title>
-            <para>Terminated instances will remain visible after termination
-            (approximately one hour).</para>
+            <title>Terminierte Instanzen</title>
+            <para>Terminierte Instanzen bleiben nach der Terminierung sichtbar (voraussichtlich
+            eine Stunde).</para>
         </note>
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.instance.utility">
-        <title>Amazon Instance Utilities</title>
+        <title>Utilities für Amazon Instanzen</title>
         <para>
             In this section you will find out how to retreive information, the console
             output and see if an instance contains a product code.
