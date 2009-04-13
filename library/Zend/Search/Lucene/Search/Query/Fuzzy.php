@@ -207,7 +207,7 @@ class Zend_Search_Lucene_Search_Query_Fuzzy extends Zend_Search_Lucene_Search_Qu
 
         $scaleFactor = 1/(1 - $this->_minimumSimilarity);
 
-        $maxTerms = Zend_search_lucene::getTermsPerQueryLimit();
+        $maxTerms = Zend_Search_Lucene::getTermsPerQueryLimit();
         foreach ($fields as $field) {
             $index->resetTermsStream();
 

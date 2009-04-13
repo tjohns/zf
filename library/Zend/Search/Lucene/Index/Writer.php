@@ -435,9 +435,9 @@ class Zend_Search_Lucene_Index_Writer
 
         try {
             // Write format marker
-            if ($this->_targetFormatVersion == Zend_Search_lucene::FORMAT_2_1) {
+            if ($this->_targetFormatVersion == Zend_Search_Lucene::FORMAT_2_1) {
                 $newSegmentFile->writeInt((int)0xFFFFFFFD);
-            } else if ($this->_targetFormatVersion == Zend_Search_lucene::FORMAT_2_3) {
+            } else if ($this->_targetFormatVersion == Zend_Search_Lucene::FORMAT_2_3) {
                 $newSegmentFile->writeInt((int)0xFFFFFFFC);
             }
 
