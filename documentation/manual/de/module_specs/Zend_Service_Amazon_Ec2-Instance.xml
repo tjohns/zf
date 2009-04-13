@@ -349,25 +349,27 @@ $return = $ec2_instance->terminate('instanceId');
     <sect2 id="zend.service.amazon.ec2.instance.utility">
         <title>Utilities für Amazon Instanzen</title>
         <para>
-            In this section you will find out how to retreive information, the console
-            output and see if an instance contains a product code.
+            In diesem Kapitel erfährt man wie man Informationen über die Ausgabe der Console
+            erhält und sieht ob eine Instanz einen Produktcode enthält.
         </para>
 
         <example id="zend.service.amazon.ec2.instance.utility.describe">
-            <title>Describing an Instance</title>
+            <title>Eine Instanz beschreiben</title>
             <para>
-                <code>describe</code> returns information about instances that you own.
+                <code>describe</code> gibt Information über die Instanzen zurück die einem
+                gehören.
             </para>
             <para>
-                If you specify one or more instance IDs, Amazon EC2 returns information
-                for those instances. If you do not specify instance IDs, Amazon EC2
-                returns information for all relevant instances. If you specify an invalid
-                instance ID, a fault is returned. If you specify an instance that you do
-                not own, it will not be included in the returned results.
+                Wenn man eine oder mehrere Instanz IDs spezifiziert, gibt Amazon EC2 Informationen
+                über diese Instanzen zurück. Wenn man keine Instanz IDs spezifiziert, gibt Amazon
+                EC2 Informationen über alle relevanten Instanzen zurück. Wenn eine ungültige
+                Instanz ID spezifiziert wird, wird ein Fehler zurückgegeben. Wenn eine Instanz
+                spezifiziert wird die man nicht besitzt, wird diese in den zurückgegebenen
+                Ergebnissen nicht enthalten sein.
             </para>
             <para>
-                <code>describe</code> will return an array containing information on the
-                instance.
+                <code>describe</code> gibt ein Array zurück das Informationen über die Instanz
+                enthält.
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
@@ -378,27 +380,26 @@ $return = $ec2_instance->describe('instanceId');
 
         </example>
         <note>
-            <title>Terminated Instances</title>
-            <para>Recently terminated instances might appear in the returned results.
-            This interval is usually less than one hour.</para>
+            <title>Beendete Instanzen</title>
+            <para>Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen vorkommen.
+            Das Interval ist normalerweise weniger als eine Stunde.</para>
         </note>
 
         <example id="zend.service.amazon.ec2.instance.utility.consoleOutput">
-            <title>Retreiving Console Output</title>
+            <title>Empfangen von Konsolen-Ausgaben</title>
             <para>
-                <code>consoleOutput</code> retrieves console output for the specified
-                instance.
+                <code>consoleOutput</code> empfänge die Ausgabe der Konsole für eine spezifizierte
+                Instanz.
             </para>
             <para>
-                Instance console output is buffered and posted shortly after instance
-                boot, reboot, and termination. Amazon EC2 preserves the most recent
-                64 KB output which will be available for at least one hour after the
-                most recent post.
+                Die Ausgabe der Konsole einer Instanz wird gepuffert und kurz nach dem Booten, neu
+                Booten, und Beenden der Instanz gesendet. Amazon EC2 sichert die letzten 64 KB
+                Ausgabe, welche zumindest eine Stunde nach dem letzten Senden verfügbar sein ist.
             </para>
             <para>
-                <code>consoleOutput</code> returns an array containing the
-                <code>instanceId</code>, <code>timestamp</code> from the last output
-                and the <code>output</code> from the console.
+                <code>consoleOutput</code> gibt ein Array zurück das
+                <code>instanceId</code>, <code>timestamp</code> von der letzten Ausgabe enthält und
+                <code>output</code> von der Konsole.
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
@@ -410,16 +411,17 @@ $return = $ec2_instance->consoleOutput('instanceId');
         </example>
 
         <example id="zend.service.amazon.ec2.instance.utility.confirmproduct">
-            <title>Confirm Product Code on an Instance</title>
+            <title>Produktcode an einer Instanz bestätigen</title>
             <para>
-                <code>confirmProduct</code> returns true if the specified product code
-                is attached to the specified instance. The operation returns false if
-                the product code is not attached to the instance.
+                <code>confirmProduct</code> gibt true zurück wenn der spezifizierte Produktcode
+                der spezifizierten Instanz angehängt ist. Die Operation gibt false zurück wenn
+                der Produktcode der Instanz nicht angehängt ist.
             </para>
             <para>
-                The <code>confirmProduct</code> operation can only be executed by the
-                owner of the AMI. This feature is useful when an AMI owner is providing
-                support and wants to verify whether a user's instance is eligible.
+                Die <code>confirmProduct</code> Operation kann nur von dem Eigentümer der AMI
+                ausgeführt werden. Dieses Feature ist nützlich wenn ein AMI Eigentümer
+                Support anbietet und sicherstellen will ob die Instanz eines Benutzer
+                korrekt ist.
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',

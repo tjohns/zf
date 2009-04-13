@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.elements">
     <title>Erstellen von Form Elementen mit Hilfe von <code>Zend_Form_Element</code></title>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13843 -->
 <sect1 id="zend.form.decorators">
     <title>Erstellen von eigenem Form Markup durch <code>Zend_Form_Decorator</code></title>
