@@ -33,9 +33,8 @@
             <itemizedlist>
                 <listitem><para>
                     <emphasis>配列</emphasis>: これはもっとも高速です。
-                    //TODO
-                    by definition,
-                    on inclusion.
+                    <!-- TODO -->
+                    by definition, on inclusion 
                     ネィティブなPHP形式にすぐにパースされるためです。
                 </para></listitem>
 
