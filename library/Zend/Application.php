@@ -37,7 +37,7 @@ class Zend_Application
     /**
      * Bootstrap
      * 
-     * @var Zend_Application_Bootstrap_Base
+     * @var Zend_Application_Bootstrap_BootstrapAbstract
      */
     protected $_bootstrap;
 
@@ -272,7 +272,7 @@ class Zend_Application
     /**
      * Get bootstrap object
      * 
-     * @return Zend_Application_Bootstrap_Base
+     * @return Zend_Application_Bootstrap_BootstrapAbstract
      */
     public function getBootstrap()
     {

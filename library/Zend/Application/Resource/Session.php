@@ -23,14 +23,14 @@
 /**
  * Resource for setting session options
  *
- * @uses       Zend_Application_Resource_Base
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Resource_Session extends Zend_Application_Resource_Base
+class Zend_Application_Resource_Session extends Zend_Application_Resource_ResourceAbstract
 {
     /**
      * Save handler to use

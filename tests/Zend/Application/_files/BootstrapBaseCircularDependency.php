@@ -1,5 +1,5 @@
 <?php
-class BootstrapBaseCircularDependency extends Zend_Application_Bootstrap_Base
+class BootstrapBaseCircularDependency extends Zend_Application_Bootstrap_BootstrapAbstract
 {
     public $complete = false;
 

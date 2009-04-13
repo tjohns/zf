@@ -1,5 +1,5 @@
 <?php
-class ZfAppBootstrap extends Zend_Application_Bootstrap_Base
+class ZfAppBootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
 {
     public $barExecuted = 0;
     public $fooExecuted = 0;

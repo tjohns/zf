@@ -30,7 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 require_once 'Zend/Application/ApplicationTest.php';
-require_once 'Zend/Application/Bootstrap/BaseTest.php';
+require_once 'Zend/Application/Bootstrap/BootstrapAbstractTest.php';
 require_once 'Zend/Application/Module/AutoloaderTest.php';
 require_once 'Zend/Application/Module/BootstrapTest.php';
 require_once 'Zend/Application/Resource/AllTests.php';
@@ -54,7 +54,7 @@ class Zend_Application_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Application');
 
         $suite->addTestSuite('Zend_Application_ApplicationTest');
-        $suite->addTestSuite('Zend_Application_Bootstrap_BaseTest');
+        $suite->addTestSuite('Zend_Application_Bootstrap_BootstrapAbstractTest');
         $suite->addTestSuite('Zend_Application_Module_AutoloaderTest');
         $suite->addTestSuite('Zend_Application_Module_BootstrapTest');
         $suite->addTest(Zend_Application_Resource_AllTests::suite());

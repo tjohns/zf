@@ -29,7 +29,7 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Application_Resource_IResource
+interface Zend_Application_Resource_Resource
 {
     /**
      * Constructor
@@ -44,15 +44,15 @@ interface Zend_Application_Resource_IResource
     /**
      * Set the bootstrap to which the resource is attached
      * 
-     * @param  Zend_Application_Bootstrap_IBootstrap $bootstrap 
-     * @return Zend_Application_Resource_IResource
+     * @param  Zend_Application_Bootstrap_Bootstrapper $bootstrap 
+     * @return Zend_Application_Resource_Resource
      */
-    public function setBootstrap(Zend_Application_Bootstrap_IBootstrap $bootstrap);
+    public function setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap);
 
     /**
      * Retrieve the bootstrap to which the resource is attached
      * 
-     * @return Zend_Application_Bootstrap_IBootstrap
+     * @return Zend_Application_Bootstrap_Bootstrapper
      */
     public function getBootstrap();
 
@@ -60,7 +60,7 @@ interface Zend_Application_Resource_IResource
      * Set resource options
      * 
      * @param  array $options 
-     * @return Zend_Application_Resource_IResource
+     * @return Zend_Application_Resource_Resource
      */
     public function setOptions(array $options);
 

@@ -21,20 +21,21 @@
  */
 
 /**
- * @see Zend_Application_Bootstrap_Base
+ * @see Zend_Application_Bootstrap_BootstrapAbstract
  */
-require_once 'Zend/Application/Bootstrap/Base.php';
+require_once 'Zend/Application/Bootstrap/BootstrapAbstract.php';
 
 /**
  * Base bootstrap class for modules
  * 
  * @uses       Zend_Loader_Autoloader_Resource
+ * @uses       Zend_Application_Bootstrap_BootstrapAbstract
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootstrap_Base
+abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
 {
     /**
      * @var Zend_Loader_Autoloader_Resource
@@ -44,7 +45,7 @@ abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootst
     /**
      * Constructor
      * 
-     * @param  Zend_Application|Zend_Application_Bootstrap_IBootstrap $application 
+     * @param  Zend_Application|Zend_Application_Bootstrap_Bootstrapper $application 
      * @return void
      */
     public function __construct($application)
@@ -55,6 +56,12 @@ abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootst
         if ($application->hasOption($key)) {
             // Don't run via setOptions() to prevent duplicate initialization
             $this->setOptions($application->getOption($key));
+        }
+
+        if ($application->hasOption('resourceloader')) {
+            $this->setOptions(array(
+                'resourceloader' => $application->getOption('resourceloader')
+            ));
         }
 
         $this->initResourceLoader();

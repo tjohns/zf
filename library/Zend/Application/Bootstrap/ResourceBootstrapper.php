@@ -29,22 +29,22 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Application_Bootstrap_IResourceBootstrap
+interface Zend_Application_Bootstrap_ResourceBootstrapper
 {
     /**
      * Register a resource with the bootstrap
      * 
-     * @param  string|Zend_Application_Resource_IResource $resource 
+     * @param  string|Zend_Application_Resource_Resource $resource 
      * @param  null|array|Zend_Config                     $options 
-     * @return Zend_Application_Bootstrap_IResourceBootstrap
+     * @return Zend_Application_Bootstrap_ResourceBootstrapper
      */
     public function registerPluginResource($resource, $options = null);
 
     /**
      * Unregister a resource from the bootstrap
      * 
-     * @param  string|Zend_Application_Resource_IResource $resource 
-     * @return Zend_Application_Bootstrap_IResourceBootstrap
+     * @param  string|Zend_Application_Resource_Resource $resource 
+     * @return Zend_Application_Bootstrap_ResourceBootstrapper
      */
     public function unregisterPluginResource($resource);
 
@@ -60,7 +60,7 @@ interface Zend_Application_Bootstrap_IResourceBootstrap
      * Retrieve resource
      * 
      * @param  string $resource 
-     * @return Zend_Application_Resource_IResource
+     * @return Zend_Application_Resource_Resource
      */
     public function getPluginResource($resource);
 
@@ -82,7 +82,7 @@ interface Zend_Application_Bootstrap_IResourceBootstrap
      * Set plugin loader to use to fetch resources
      * 
      * @param  Zend_Loader_PluginLoader_Interface Zend_Loader_PluginLoader 
-     * @return Zend_Application_Bootstrap_IResourceBootstrap
+     * @return Zend_Application_Bootstrap_ResourceBootstrapper
      */
     public function setPluginLoader(Zend_Loader_PluginLoader_Interface $loader);
 

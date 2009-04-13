@@ -21,11 +21,6 @@
  */
 
 /**
- * @see Zend_Application_Resource_Base
- */
-require_once 'Zend/Application/Resource/Base.php';
-
-/**
  * Front Controller resource
  *
  * @category   Zend
@@ -34,7 +29,7 @@ require_once 'Zend/Application/Resource/Base.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resource_Base
+class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resource_ResourceAbstract
 {
     /**
      * @var Zend_Controller_Front

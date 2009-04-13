@@ -21,7 +21,7 @@
  */
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_Application_Bootstrap_BaseTest::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Application_Bootstrap_BootstrapAbstractTest::main');
 }
 
 /**
@@ -41,7 +41,7 @@ require_once 'Zend/Loader/Autoloader.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Bootstrap_BaseTest extends PHPUnit_Framework_TestCase
+class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework_TestCase
 {
     public static function main()
     {
@@ -286,7 +286,7 @@ class Zend_Application_Bootstrap_BaseTest extends PHPUnit_Framework_TestCase
         $bootstrap->registerPluginResource('view');
         $test = $bootstrap->getPluginResources();
         foreach ($test as $type => $resource) {
-            $this->assertTrue($resource instanceof Zend_Application_Resource_IResource);
+            $this->assertTrue($resource instanceof Zend_Application_Resource_Resource);
         }
     }
 
@@ -412,6 +412,6 @@ class Zend_Application_Bootstrap_BaseTest extends PHPUnit_Framework_TestCase
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Application_Bootstrap_BaseTest::main') {
-    Zend_Application_Bootstrap_BaseTest::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Application_Bootstrap_BootstrapAbstractTest::main') {
+    Zend_Application_Bootstrap_BootstrapAbstractTest::main();
 }

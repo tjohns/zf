@@ -1,5 +1,5 @@
 <?php
-class Zend_Application_BootstrapTest_Resource_Foo extends Zend_Application_Resource_Base
+class Zend_Application_BootstrapTest_Resource_Foo extends Zend_Application_Resource_ResourceAbstract
 {
     public $someArbitraryKey;
 

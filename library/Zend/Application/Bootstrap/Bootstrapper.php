@@ -29,7 +29,7 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Application_Bootstrap_IBootstrap
+interface Zend_Application_Bootstrap_Bootstrapper
 {
     /**
      * Constructor
@@ -43,14 +43,14 @@ interface Zend_Application_Bootstrap_IBootstrap
      * Set bootstrap options
      * 
      * @param  array $options 
-     * @return Zend_Application_Bootstrap_IBootstrap
+     * @return Zend_Application_Bootstrap_Bootstrapper
      */
     public function setOptions(array $options);
 
     /**
      * Retrieve application object
      * 
-     * @return Zend_Application|Zend_Application_Bootstrap_IBootstrap
+     * @return Zend_Application|Zend_Application_Bootstrap_Bootstrapper
      */
     public function getApplication();
 

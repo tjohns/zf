@@ -29,7 +29,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Application_Resource_AllTests::main');
 }
 
-require_once 'Zend/Application/Resource/BaseTest.php';
+require_once 'Zend/Application/Resource/ResourceAbstractTest.php';
 require_once 'Zend/Application/Resource/DbTest.php';
 require_once 'Zend/Application/Resource/FrontcontrollerTest.php';
 require_once 'Zend/Application/Resource/ModulesTest.php';
@@ -51,9 +51,9 @@ class Zend_Application_Resource_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Application');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Application - Resource');
 
-        $suite->addTestSuite('Zend_Application_Resource_BaseTest');
+        $suite->addTestSuite('Zend_Application_Resource_ResourceAbstractTest');
         $suite->addTestSuite('Zend_Application_Resource_DbTest');
         $suite->addTestSuite('Zend_Application_Resource_FrontcontrollerTest');
         $suite->addTestSuite('Zend_Application_Resource_ModulesTest');

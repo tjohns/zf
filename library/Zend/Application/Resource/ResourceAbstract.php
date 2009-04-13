@@ -21,26 +21,26 @@
  */
 
 /**
- * @see Zend_Application_Resource_IResource
+ * @see Zend_Application_Resource_Resource
  */
-require_once 'Zend/Application/Resource/IResource.php';
+require_once 'Zend/Application/Resource/Resource.php';
 
 /**
  * Abstract class for bootstrap resources
  *
- * @uses       Zend_Application_Resource_IResource
+ * @uses       Zend_Application_Resource_Resource
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Application_Resource_Base implements Zend_Application_Resource_IResource
+abstract class Zend_Application_Resource_ResourceAbstract implements Zend_Application_Resource_Resource
 {
     /**
      * Parent bootstrap
      * 
-     * @var Zend_Application_Bootstrap_IBootstrap
+     * @var Zend_Application_Bootstrap_Bootstrapper
      */
     protected $_bootstrap;
 
@@ -79,7 +79,7 @@ abstract class Zend_Application_Resource_Base implements Zend_Application_Resour
      * Set options from array
      *
      * @param  array $options Configuration for resource
-     * @return Zend_Application_Resource_Base
+     * @return Zend_Application_Resource_ResourceAbstract
      */
     public function setOptions(array $options)
     {
@@ -112,10 +112,10 @@ abstract class Zend_Application_Resource_Base implements Zend_Application_Resour
     /**
      * Set the bootstrap to which the resource is attached
      * 
-     * @param  Zend_Application_Bootstrap_IBootstrap $bootstrap 
-     * @return Zend_Application_Resource_IResource
+     * @param  Zend_Application_Bootstrap_Bootstrapper $bootstrap 
+     * @return Zend_Application_Resource_Resource
      */
-    public function setBootstrap(Zend_Application_Bootstrap_IBootstrap $bootstrap)
+    public function setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)
     {
         $this->_bootstrap = $bootstrap;
         return $this;
@@ -124,7 +124,7 @@ abstract class Zend_Application_Resource_Base implements Zend_Application_Resour
     /**
      * Retrieve the bootstrap to which the resource is attached
      * 
-     * @return null|Zend_Application_Bootstrap_IBootstrap
+     * @return null|Zend_Application_Bootstrap_Bootstrapper
      */
     public function getBootstrap()
     {
