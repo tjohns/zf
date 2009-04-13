@@ -1,12 +1,14 @@
 <!-- EN-Revision: 14844 -->
 <sect1 id="zend.service.amazon.ec2.instance">
-    <title>Zend_Service_Amazon_Ec2: Instances</title>
+    <title>Zend_Service_Amazon_Ec2: Instanzen</title>
 
     <sect2 id="zend.service.amazon.ec2.instance.types">
-        <title>Instance Types</title>
+        <title>Instanz Typen</title>
 
         <para>
-            Amazon EC2 instances are grouped into two families: standard and
+            Amazon EC2 Instanzen werden in zwei Familien gruppiert: Standard und High-CPU.
+
+            instances are grouped into two families: standard and
             High-CPU. Standard instances have memory to CPU ratios suitable
             for most general purpose applications; High-CPU instances have
             proportionally more CPU resources than memory (RAM) and are well
