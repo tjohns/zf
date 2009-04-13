@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13826 -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 14811 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.view.helpers" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Aides de vue</title>
 
@@ -285,6 +287,9 @@ array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagne').
 ]]></programlisting>
 
         <xi:include href="Zend_View-Helpers-Action.xml" />
+        <xi:include href="Zend_View-Helpers-Cycle.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Cycle.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_View-Helpers-Partial.xml" />
         <xi:include href="Zend_View-Helpers-Placeholder.xml" />
         <xi:include href="Zend_View-Helpers-Doctype.xml" />
@@ -296,6 +301,9 @@ array('us' => 'Etats-Unis', 'fr' => 'France', 'de' => 'Allemagne').
         <xi:include href="Zend_View-Helpers-HtmlObject.xml" />
         <xi:include href="Zend_View-Helpers-InlineScript.xml" />
         <xi:include href="Zend_View-Helpers-Json.xml" />
+        <xi:include href="Zend_View-Helpers-Navigation.xml">
+            <xi:fallback><xi:include href="../../en/module_specs/Zend_View-Helpers-Navigation.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="Zend_View-Helpers-Translate.xml" />
     </sect2>
 
