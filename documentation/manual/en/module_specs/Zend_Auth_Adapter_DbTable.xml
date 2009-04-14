@@ -294,5 +294,39 @@ $adapter = new Zend_Auth_Adapter_DbTable(
                 server is intact your data is still unusable for the attacker.
             </para>
         </note>
+        <para>
+            Another alternative is to use the <code>getDbSelect()</code> method
+            of the Zend_Auth_Adapter_DbTable after the adapter has been constructed.
+            This method will return the Zend_Db_Select object instance it will use
+            to complete the authenticate() routine.  It is important to note that
+            this method will always return the same object regardless if authenticate()
+            has been called or not.  This object <b>will not</b> have any of the
+            identity or credential information in it as those values are placed 
+            into the select object at authenticate() time.
+        </para>
+        <para>
+            An example of a situation where one might want to use the getDbSelect()
+            method would check the status of a user, in other words to see if that
+            user's account is enabled.
+        </para>
+        <programlisting role="php"><![CDATA[
+// Continuing with the example from above
+$adapter = new Zend_Auth_Adapter_DbTable(
+    $db,
+    'users',
+    'username',
+    'password',
+    'MD5(?)'
+);
+
+// get select object (by reference)
+$select = $adapter->getDbSelect();
+$select->where('active = "TRUE"');
+
+// authenticate, this ensures that users.active = TRUE
+$adapter->authenticate();
+
+]]>
+        </programlisting>
     </sect2>
 </sect1>

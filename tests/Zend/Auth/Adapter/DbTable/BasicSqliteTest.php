@@ -220,18 +220,18 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
     /**
      * @group ZF-5957
      */
-    public function testAdapterCanReturnPreauthenticationDbselectObject()
+    public function testAdapterCanReturnDbSelectObject()
     {
-        $this->assertTrue($this->_adapter->getPreauthenticationDbSelect() instanceof Zend_Db_Select);
+        $this->assertTrue($this->_adapter->getDbSelect() instanceof Zend_Db_Select);
     }
     
     /**
      * @group ZF-5957
      */
-    public function testAdapterCanUseModifiedPreauthenticationDbselectObject()
+    public function testAdapterCanUseModifiedDbSelectObject()
     {
         $this->_db->getProfiler()->setEnabled(true);
-        $select = $this->_adapter->getPreauthenticationDbSelect();
+        $select = $this->_adapter->getDbSelect();
         $select->where('1 = 1');
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
@@ -248,12 +248,12 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
      */
     public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth()
     {
-        $select = $this->_adapter->getPreauthenticationDbSelect();
+        $select = $this->_adapter->getDbSelect();
         $select->where('1 = 1');
         $this->_adapter->setIdentity('my_username');
         $this->_adapter->setCredential('my_password');
         $this->_adapter->authenticate();
-        $selectAfterAuth = $this->_adapter->getPreauthenticationDbSelect();
+        $selectAfterAuth = $this->_adapter->getDbSelect();
         $whereParts = $selectAfterAuth->getPart(Zend_Db_Select::WHERE);
         $this->assertEquals(1, count($whereParts));
         $this->assertEquals('(1 = 1)', array_pop($whereParts));

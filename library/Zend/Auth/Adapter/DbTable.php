@@ -46,6 +46,7 @@ require_once 'Zend/Auth/Result.php';
  */
 class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
 {
+
     /**
      * Database Connection
      *
@@ -56,7 +57,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
     /**
      * @var Zend_Db_Select
      */
-    protected $_preauthenticationDbSelect = null;
+    protected $_dbSelect = null;
     
     /**
      * $_tableName - the table name to check
@@ -231,17 +232,17 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
     }
 
     /**
-     * Return the preauthentication Db Select object for userland select query modification
+     * getDbSelect() - Return the preauthentication Db Select object for userland select query modification
      *
      * @return Zend_Db_Select
      */
-    public function getPreauthenticationDbSelect()
+    public function getDbSelect()
     {
-        if ($this->_preauthenticationDbSelect == null) {
-            $this->_preauthenticationDbSelect = $this->_zendDb->select();
+        if ($this->_dbSelect == null) {
+            $this->_dbSelect = $this->_zendDb->select();
         }
         
-        return $this->_preauthenticationDbSelect;
+        return $this->_dbSelect;
     }
     
     /**
@@ -376,7 +377,7 @@ class Zend_Auth_Adapter_DbTable implements Zend_Auth_Adapter_Interface
             );
 
         // get select
-        $dbSelect = clone $this->getPreauthenticationDbSelect();
+        $dbSelect = clone $this->getDbSelect();
         $dbSelect->from($this->_tableName, array('*', $credentialExpression))
                  ->where($this->_zendDb->quoteIdentifier($this->_identityColumn, true) . ' = ?', $this->_identity);
 
