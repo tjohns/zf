@@ -130,9 +130,10 @@ class Zend_Tool_Framework_Client_Console
             echo PHP_EOL 
                . 'An error has occured:' 
                . PHP_EOL
-               . $this->_registry->getResponse()->getException()->getMessage() 
-               . PHP_EOL;
+               . $this->_registry->getResponse()->getException()->getMessage();
         }
+        
+        echo PHP_EOL;
     }
 
     /**
@@ -159,9 +160,17 @@ class Zend_Tool_Framework_Client_Console
      */
     public function handleInteractiveOutput($output)
     {
-        echo $output . PHP_EOL;
+        echo $output;
     }
     
+    /**
+     * getMissingParameterPromptString() 
+     *
+     * @param Zend_Tool_Framework_Provider_Interface $provider
+     * @param Zend_Tool_Framework_Action_Interface $actionInterface
+     * @param string $missingParameterName
+     * @return string
+     */
     public function getMissingParameterPromptString(Zend_Tool_Framework_Provider_Interface $provider, Zend_Tool_Framework_Action_Interface $actionInterface, $missingParameterName)
     {
         return 'Please provide a value for $' . $missingParameterName;

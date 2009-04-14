@@ -74,38 +74,7 @@ abstract class Zend_Tool_Framework_Loader_Abstract implements Zend_Tool_Framewor
      */
     public function load()
     {
-        $this->loadFromFiles($this->_getFiles());
-    }
-    
-    /**
-     * getRetrievedFiles()
-     *
-     * @return array Array of Files Retrieved
-     */
-    public function getRetrievedFiles()
-    {
-        return $this->_retrievedFiles;
-    }
-    
-    /**
-     * getLoadedClasses()
-     *
-     * @return array Array of Loaded Classes
-     */
-    public function getLoadedClasses()
-    {
-        return $this->_loadedClasses;
-    }
-    
-    /**
-     * loadFromFiles()
-     *
-     * @param array $files
-     * @return array Array of loaded classes
-     */
-    public function loadFromFiles(Array $files)
-    {
-        $this->_retrievedFiles = $files;
+        $this->_retrievedFiles = $this->getRetrievedFiles();
         $this->_loadedClasses  = array();
         
         $manifestRegistry = $this->_registry->getManifestRepository();
@@ -114,7 +83,7 @@ abstract class Zend_Tool_Framework_Loader_Abstract implements Zend_Tool_Framewor
         $loadedClasses = array();
         
         // loop through files and find the classes declared by loading the file
-        foreach ($files as $file) {
+        foreach ($this->_retrievedFiles as $file) {
             $classesLoadedBefore = get_declared_classes();
             $oldLevel = error_reporting(E_ALL | ~E_STRICT); // remove strict so that other packages wont throw warnings
             // should we lint the files here? i think so
@@ -129,7 +98,9 @@ abstract class Zend_Tool_Framework_Loader_Abstract implements Zend_Tool_Framewor
             
             // reflect class to see if its something we want to load
             $reflectionClass = new ReflectionClass($loadedClass);
-            if ($reflectionClass->implementsInterface('Zend_Tool_Framework_Manifest_Interface') && !$reflectionClass->isAbstract()) {
+            if ($reflectionClass->implementsInterface('Zend_Tool_Framework_Manifest_Interface') 
+                && !$reflectionClass->isAbstract()) 
+            {
                 $manifestRegistry->addManifest($reflectionClass->newInstance());
                 $this->_loadedClasses[] = $loadedClass;
             }
@@ -146,5 +117,30 @@ abstract class Zend_Tool_Framework_Loader_Abstract implements Zend_Tool_Framewor
         
         return $this->_loadedClasses;
     }
+    
+    /**
+     * getRetrievedFiles()
+     *
+     * @return array Array of Files Retrieved
+     */
+    public function getRetrievedFiles()
+    {
+        if ($this->_retrievedFiles == null) {
+            $this->_retrievedFiles = $this->_getFiles();
+        }
+        
+        return $this->_retrievedFiles;
+    }
+    
+    /**
+     * getLoadedClasses()
+     *
+     * @return array Array of Loaded Classes
+     */
+    public function getLoadedClasses()
+    {
+        return $this->_loadedClasses;
+    }
+
     
 }

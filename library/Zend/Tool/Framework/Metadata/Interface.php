@@ -21,58 +21,32 @@
  */
 
 /**
- * @see Zend_Tool_Framework_Manifest_Metadata
- */
-require_once 'Zend/Tool/Framework/Manifest/Metadata.php';
-
-/**
  * @category   Zend
  * @package    Zend_Tool
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Tool_Framework_Manifest_ActionMetadata extends Zend_Tool_Framework_Manifest_Metadata
+interface Zend_Tool_Framework_Metadata_Interface
 {
     
-    /**#@+
-     * @param string
-     */
-    protected $_type = 'Action';
-    protected $_actionName = null;
-    /**#@-*/
-
     /**
-     * setActionName()
+     * getType()
+     * 
+     * The type of metadata this describes
      *
-     * @param string $actionName
-     * @return Zend_Tool_Framework_Manifest_ActionMetadata
      */
-    public function setActionName($actionName)
-    {
-        $this->_actionName = $actionName;
-        return $this;
-    }
-
-    /**
-     * getActionName()
-     *
-     * @return string
-     */
-    public function getActionName()
-    {
-        return $this->_actionName;
-    }
+    public function getType();
     
     /**
-     * __toString() cast to string
+     * getName()
      *
-     * @return string
      */
-    public function __toString()
-    {
-        $string = parent::__toString();
-        $string .= ' (ActionName: ' . $this->_actionName . ')';
-        return $string; 
-    }
+    public function getName();
+    
+    /**
+     * getValue()
+     *
+     */
+    public function getValue();
     
 }

@@ -60,12 +60,7 @@ class Zend_Tool_Framework_Action_Repository
      */
     public function addAction(Zend_Tool_Framework_Action_Interface $action, $overrideExistingAction = false)
     {
-        if (method_exists($action, 'getName') && $action->getName() != '') {
-            $actionName = $action->getName();
-        } else {
-            $actionName = $this->_parseName($action);
-            $action->setName($actionName);
-        }
+        $actionName = $action->getName();
 
         if ($actionName == '' || $actionName == 'Base') {
             require_once 'Zend/Tool/Framework/Action/Exception.php';
@@ -136,17 +131,5 @@ class Zend_Tool_Framework_Action_Repository
     {
         return new ArrayIterator($this->_actions);
     }
-    
-    /**
-     * _parseName - internal method to determine the name of an action when one is not explicity provided.
-     *
-     * @param Zend_Tool_Framework_Action_Interface $action
-     * @return string
-     */
-    protected function _parseName(Zend_Tool_Framework_Action_Interface $action)
-    {
-        $className = get_class($action);
-        $actionName = substr($className, strrpos($className, '_')+1);
-        return $actionName;
-    }
+
 }

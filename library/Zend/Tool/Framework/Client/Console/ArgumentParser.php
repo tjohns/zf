@@ -48,8 +48,7 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
      * Constructor, takes in an client request and response, as well as the arguments.
      *
      * @param array $arguments
-     * @param Zend_Tool_Framework_Client_Request $clientRequest
-     * @param Zend_Tool_Framework_Client_Response $clientResponse
+     * @param Zend_Tool_Framework_Registry_Interface $registry
      */
     public function __construct(Array $arguments, Zend_Tool_Framework_Registry_Interface $registry)
     {
@@ -177,27 +176,30 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
     protected function _parseActionPart()
     {
         // the next "word" should be the action name
-        $cliActionName = array_shift($this->_argumentsWorking);
+        $consoleActionName = array_shift($this->_argumentsWorking);
 
-        if ($cliActionName == '?') { // || strtolower($cliActionName) == 'help') {
+        if ($consoleActionName == '?') { // || strtolower($consoleActionName) == 'help') {
             $this->_help = true;
             return;
         }
 
         // is the action name valid?
-        $cliActionMetadata = $this->_manifestRepository->getMetadata(
-            array('type' => 'Action', 'name' => 'cliActionName', 'value' => $cliActionName)
-            );
+        $actionMetadata = $this->_manifestRepository->getMetadata(array(
+            'type'       => 'Tool',
+            'name'       => 'actionName',
+            'value'      => $consoleActionName,
+            'clientName' => 'console'
+            ));
 
         // if no action, handle error
-        if (!$cliActionMetadata) {
+        if (!$actionMetadata) {
             require_once 'Zend/Tool/Framework/Client/Exception.php';
-            throw new Zend_Tool_Framework_Client_Exception('Action \'' . $cliActionName . '\' is not a valid action.');
+            throw new Zend_Tool_Framework_Client_Exception('Action \'' . $consoleActionName . '\' is not a valid action.');
         }
 
         // prepare action request name
-        $this->_request->setActionName($cliActionMetadata->getActionName());
-        $this->_metadataAction = $cliActionMetadata;
+        $this->_request->setActionName($actionMetadata->getActionName());
+        $this->_metadataAction = $actionMetadata;
         return;
     }
 
@@ -209,54 +211,58 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
     protected function _parseProviderPart()
     {
         // get the cli "word" as the provider name from command line
-        $cliProviderFull = array_shift($this->_argumentsWorking);
-        $cliSpecialtyName = '_global';
+        $consoleProviderFull = array_shift($this->_argumentsWorking);
+        $consoleSpecialtyName = '_global';
 
         // if there is notation for specialties? If so, break them up
-        if (strstr($cliProviderFull, '.')) {
-            list($cliProviderName, $cliSpecialtyName) = explode('.', $cliProviderFull);
+        if (strstr($consoleProviderFull, '.')) {
+            list($consoleProviderName, $consoleSpecialtyName) = explode('.', $consoleProviderFull);
         } else {
-            $cliProviderName = $cliProviderFull;
+            $consoleProviderName = $consoleProviderFull;
         }
 
-        if ($cliProviderName == '?' || $cliSpecialtyName == '?') {
+        if ($consoleProviderName == '?' || $consoleSpecialtyName == '?') {
             $this->_help = true;
-            $this->_request->setProviderName($cliProviderName);
-            $this->_request->setSpecialtyName($cliSpecialtyName);
+            $this->_request->setProviderName($consoleProviderName);
+            $this->_request->setSpecialtyName($consoleSpecialtyName);
             return;
         }
         
         // get the cli provider names from the manifest
-        $cliProviderMetadata = $this->_manifestRepository->getMetadata(
-            array('type'=>'Provider', 'name' => 'cliProviderName', 'value' => $cliProviderName)
-            );
+        $providerMetadata = $this->_manifestRepository->getMetadata(array(
+            'type'       => 'Tool',
+            'name'       => 'providerName',
+            'value'      => $consoleProviderName,
+            'clientName' => 'console'
+            ));
 
-        if (!$cliProviderMetadata) {
+        if (!$providerMetadata) {
             require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception(
-                'Provider \'' . $cliProviderFull . '\' is not a valid provider.'
+                'Provider \'' . $consoleProviderFull . '\' is not a valid provider.'
                 );
         }
 
-        $cliSpecialtyMetadata = $this->_manifestRepository->getMetadata(array(
-            'type' => 'Provider', 
-            'name' => 'cliSpecialtyNames', 
-            'providerName' => $cliProviderMetadata->getProviderName(), 
-            'value' => $cliSpecialtyName)
-            );
+        $providerSpecialtyMetadata = $this->_manifestRepository->getMetadata(array(
+            'type'         => 'Tool', 
+            'name'         => 'providerSpecialtyNames', 
+            'value'        => $consoleSpecialtyName,
+            'providerName' => $providerMetadata->getProviderName(),
+            'clientName'   => 'console'
+            ));
 
-        if (!$cliSpecialtyMetadata) {
+        if (!$providerSpecialtyMetadata) {
             require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception(
-                'Provider \'' . $cliSpecialtyName . '\' is not a valid specialty.'
+                'Provider \'' . $consoleSpecialtyName . '\' is not a valid specialty.'
                 );
         }
 
         // prepare provider request name
-        $this->_request->setProviderName($cliProviderMetadata->getProviderName());
-        $this->_metadataProvider = $cliProviderMetadata;
-        $this->_request->setSpecialtyName($cliSpecialtyMetadata->getSpecialtyName());
-        $this->_metadataSpecialty = $cliSpecialtyMetadata;
+        $this->_request->setProviderName($providerMetadata->getProviderName());
+        $this->_metadataProvider = $providerMetadata;
+        $this->_request->setSpecialtyName($providerSpecialtyMetadata->getSpecialtyName());
+        $this->_metadataSpecialty = $providerSpecialtyMetadata;
         return;
     }
 
@@ -268,40 +274,41 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
     protected function _parseProviderOptionsPart()
     {
         $searchParams = array(
-            'type'          => 'Provider',
+            'type'          => 'Tool',
             'providerName'  => $this->_request->getProviderName(),
             'actionName'    => $this->_request->getActionName(),
             'specialtyName' => $this->_request->getSpecialtyName(),
+            'clientName'    => 'console'
             );
 
-        $cliActionableMethodLongParameterMetadata = $this->_manifestRepository->getMetadata(
-            array_merge($searchParams, array('name' => 'cliActionableMethodLongParameters'))
+        $actionableMethodLongParamsMetadata = $this->_manifestRepository->getMetadata(
+            array_merge($searchParams, array('name' => 'actionableMethodLongParams'))
             );
 
-        $cliActionableMethodShortParameterMetadata = $this->_manifestRepository->getMetadata(
-            array_merge($searchParams, array('name' => 'cliActionableMethodShortParameters'))
+        $actionableMethodShortParamsMetadata = $this->_manifestRepository->getMetadata(
+            array_merge($searchParams, array('name' => 'actionableMethodShortParams'))
             );
 
-        $cliParameterNameShortValues = $cliActionableMethodShortParameterMetadata->getValue();
+        $paramNameShortValues = $actionableMethodShortParamsMetadata->getValue();
 
         $getoptOptions = array();
         $wordArguments = array();
 
-        $cliActionableMethodLongParameterMetadataReference = $cliActionableMethodLongParameterMetadata->getReference();
-        foreach ($cliActionableMethodLongParameterMetadata->getValue() as $parameterNameLong => $cliParameterNameLong) {
-            $optionConfig = $cliParameterNameLong . '|';
+        $actionableMethodLongParamsMetadataReference = $actionableMethodLongParamsMetadata->getReference();
+        foreach ($actionableMethodLongParamsMetadata->getValue() as $parameterNameLong => $consoleParameterNameLong) {
+            $optionConfig = $consoleParameterNameLong . '|';
 
-            $parameterInfo = $cliActionableMethodLongParameterMetadataReference['parameterInfo'][$parameterNameLong];
+            $parameterInfo = $actionableMethodLongParamsMetadataReference['parameterInfo'][$parameterNameLong];
 
             // process ParameterInfo into array for command line option matching
             if ($parameterInfo['type'] == 'string' || $parameterInfo['type'] == 'bool') {
-                $optionConfig .= $cliParameterNameShortValues[$parameterNameLong] 
+                $optionConfig .= $paramNameShortValues[$parameterNameLong] 
                                . (($parameterInfo['optional']) ? '-' : '=') . 's';
             } elseif (in_array($parameterInfo['type'], array('int', 'integer', 'float'))) {
-                $optionConfig .= $cliParameterNameShortValues[$parameterNameLong] 
+                $optionConfig .= $paramNameShortValues[$parameterNameLong] 
                                . (($parameterInfo['optional']) ? '-' : '=') . 'i';
             } else {
-                $optionConfig .= $cliParameterNameShortValues[$parameterNameLong] . '-s';
+                $optionConfig .= $paramNameShortValues[$parameterNameLong] . '-s';
             }
 
             $getoptOptions[$optionConfig] = ($parameterInfo['description'] != '') ? $parameterInfo['description'] : 'No description available.';
@@ -357,8 +364,8 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
             $this->_request->setProviderParameter($option, $value);
         }
 
-        $this->_metadataProviderOptionsLong = $cliActionableMethodLongParameterMetadata;
-        $this->_metadataProviderOptionsShort = $cliActionableMethodShortParameterMetadata;
+        $this->_metadataProviderOptionsLong = $actionableMethodLongParamsMetadata;
+        $this->_metadataProviderOptionsShort = $actionableMethodShortParamsMetadata;
 
         return;
     }
@@ -391,8 +398,8 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
                 $optionsReference = $this->_metadataProviderOptionsLong->getReference();
                 $shortNameRef = $this->_metadataProviderOptionsShort->getValue();
 
-                foreach ($this->_metadataProviderOptionsLong->getValue() as $optionName => $cliOptionName) {
-                    $response .= '       --' . $cliOptionName . '|-' . $shortNameRef[$optionName];
+                foreach ($this->_metadataProviderOptionsLong->getValue() as $optionName => $consoleOptionName) {
+                    $response .= '       --' . $consoleOptionName . '|-' . $shortNameRef[$optionName];
                     if ($desc = $optionsReference['parameterInfo'][$optionName]['description']) {
                         $response .= ' (\033[32m' . $desc . '\033[37m)' . PHP_EOL;
                     }
@@ -406,9 +413,10 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
 
             // find all providers this action applies to
             $providersSupported = array();
-            $providerMetadatas = $this->_manifestRepository->getMetadatas(array(
-                'type' => 'Provider', 
-                'name' => 'cliProviderName'
+            $providerMetadatas = $this->_registry->getManifestRepository()->getMetadatas(array(
+                'type'       => 'Tool', 
+                'name'       => 'providerName',
+                'clientName' => 'console'
                 ));
 
             foreach ($providerMetadatas as $providerMetadata) {
@@ -434,33 +442,40 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
             //$actionsSupported = array();
             
             $validActions = $this->_metadataProvider->getReference()->getActions();
-            
+
             $response .= '    Supported actions:' . PHP_EOL;
-            
+
             foreach ($validActions as $validAction) {
-                $actionMetadata = $this->_manifestRepository->getMetadata(array(
-                    'type' => 'Action',
-                    'name' => 'cliActionName',
-                    'actionName' => $validAction->getName()
+                $actionMetadata = $this->_registry->getManifestRepository()->getMetadata(array(
+                    'type'       => 'Tool',
+                    'name'       => 'actionName',
+                    'actionName' => $validAction->getName(),
+                    'clientName' => 'console'
                     ));
-                
+
                 $response .= '    ' . $actionMetadata->getValue() . PHP_EOL;
-                
+
             }
-            
+
         } else {
 
-            $providerMetadatas = $this->_manifestRepository->getMetadatas(
-               array('type'=>'Provider', 'name' => 'cliProviderName')
-               );
+            $providerMetadatas = $this->_registry->getManifestRepository()->getMetadatas(array(
+                'type'       => 'Tool',
+                'name'       => 'providerName',
+                'clientName' => 'console'
+                ));
 
             foreach ($providerMetadatas as $providerMetadata) {
                 $responseProviderActions = array();
                 foreach ($providerMetadata->getReference()->getActionableMethods() as $actionableMethod) {
                     $actionName = $actionableMethod['action']->getName();
-                    $actionMetadata = $this->_manifestRepository->getMetadata(
-                        array('type'=>'Action', 'name'=>'cliActionName', 'actionName'=>$actionName)
-                        );
+                    $actionMetadata = $this->_registry->getManifestRepository()->getMetadata(array(
+                        'type'       => 'Tool',
+                        'name'       => 'actionName',
+                        'actionName' => $actionName,
+                        'clientName' => 'console'
+                        ));
+
                     $responseProviderActions[] = $actionMetadata->getValue();
                 }
                 $responseProviderActions = array_unique($responseProviderActions);

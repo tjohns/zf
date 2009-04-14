@@ -305,6 +305,16 @@ class Zend_Tool_Framework_Provider_Signature implements Zend_Tool_Framework_Regi
                 ) {
                 continue;
             }
+            
+            /**
+             * check to see if the method was a required method by a Zend_Tool_* interface
+             */
+            foreach ($method->getDeclaringClass()->getInterfaces() as $methodDeclaringClassInterface) {
+                if (strpos($methodDeclaringClassInterface->getName(), 'Zend_Tool_') === 0 
+                    && $methodDeclaringClassInterface->hasMethod($methodName)) {
+                    continue 2;
+                }
+            }
 
             $actionableName = ucfirst($methodName);
 

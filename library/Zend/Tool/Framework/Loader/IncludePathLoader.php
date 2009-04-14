@@ -38,9 +38,6 @@ require_once 'Zend/Tool/Framework/Loader/IncludePathLoader/RecursiveFilterIterat
  */
 class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_Loader_Abstract 
 {
-
-    protected $_filterDenyDirectoryPattern = '.*(/|\\\\).svn';
-    protected $_filterAcceptFilePattern    = '.*(?:Manifest|Provider)\.php$';
     
     /**
      * _getFiles()
@@ -52,10 +49,15 @@ class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_L
         $paths = explode(PATH_SEPARATOR, get_include_path());
 
         // used for checking similarly named files
-        $relativeItems = array();
-        $files = array();
-        
+        $relativeItems   = array();
+        $files           = array();
+        $isZendTraversed = false;
+                
         foreach ($paths as $path) {
+
+            // default patterns to use
+            $filterDenyDirectoryPattern = '.*(/|\\\\).svn';
+            $filterAcceptFilePattern    = '.*(?:Manifest|Provider)\.php$';
             
             if (!file_exists($path) || $path[0] == '.') {
                 continue;
@@ -63,37 +65,47 @@ class Zend_Tool_Framework_Loader_IncludePathLoader extends Zend_Tool_Framework_L
             
             $realIncludePath = realpath($path);
             
+            // ensure that we only traverse a single version of Zend Framework on all include paths
+            if (file_exists($realIncludePath . '/Zend/Tool/Framework/Loader/IncludePathLoader.php')) {
+                if ($isZendTraversed === false) {
+                    $isZendTraversed = true;
+                } else {
+                    // use the deny directory pattern that includes the path to 'Zend', it will not be accepted
+                    $filterDenyDirectoryPattern = '.*((/|\\\\).svn|' . preg_quote($realIncludePath . DIRECTORY_SEPARATOR) . 'Zend)';
+                }
+            }
+            
+            // create recursive directory iterator
             $rdi = new RecursiveDirectoryIterator($path);
             
-            // ideally, we can pass in the regexes via the constructor below.
+            // pass in the RecursiveDirectoryIterator & the patterns
             $filter = new Zend_Tool_Framework_Loader_IncludePathLoader_RecursiveFilterIterator(
-                $rdi);
-
-                /* @todo
-                 * This will not work right! For some reason, if we
-                 * try to pass these regex's into the filter, they are mangled
-                 * by the constructor and not applied correctly to the regex in
-                 * accet()
-                 * 
-                 *, 
-                $this->_filterDenyDirectoryPattern,
-                $this->_filterAcceptFilePattern
-                );*/
+                $rdi,
+                $filterDenyDirectoryPattern,
+                $filterAcceptFilePattern
+                );
 
             // build the rii with the filter
             $iterator = new RecursiveIteratorIterator($filter);
             
-            // iterate
+            // iterate over the accepted items
             foreach ($iterator as $item) {
                 
                 // ensure that the same named file from separate include_paths is not loaded
                 $relativeItem = preg_replace('#^' . preg_quote($realIncludePath . DIRECTORY_SEPARATOR, '#') . '#', '', $item->getRealPath());
                 
                 // no links allowed here for now
-                if (!$item->isLink() && !in_array($relativeItem, $relativeItems)) {
-                    $relativeItems[] = $relativeItem;
-                    $files[] = $item->getRealPath();
+                if ($item->isLink()) {
+                    continue;
                 }
+                
+                // no items that are relavitely the same are allowed
+                if (in_array($relativeItem, $relativeItems)) {
+                    continue;
+                }
+
+                $relativeItems[] = $relativeItem;
+                $files[] = $item->getRealPath();
             }
         }
 

@@ -46,7 +46,7 @@ class Zend_Tool_Framework_Manifest_Repository
     protected $_manifests = array();
 
     /**
-     * @var Zend_Tool_Framework_Manifest_Metadata[]
+     * @var array Array of Zend_Tool_Framework_Metadata_Interface
      */
     protected $_metadatas = array();
 
@@ -79,7 +79,7 @@ class Zend_Tool_Framework_Manifest_Repository
         }
         
         // if the manifest supplies a getIndex() method, use it
-        if (method_exists($manifest, 'getIndex')) {
+        if ($manifest instanceof Zend_Tool_Framework_Manifest_Indexable) {
             $index = $manifest->getIndex();
         }
 
@@ -88,7 +88,7 @@ class Zend_Tool_Framework_Manifest_Repository
         $providerRepository = $this->_registry->getProviderRepository();
         
         // load providers if interface supports that method
-        if (method_exists($manifest, 'getProviders')) {
+        if ($manifest instanceof Zend_Tool_Framework_Manifest_ProviderManifestable) {
             $providers = $manifest->getProviders();
             if (!is_array($providers)) {
                 $providers = array($providers);
@@ -110,7 +110,7 @@ class Zend_Tool_Framework_Manifest_Repository
         }
 
         // load actions if interface supports that method
-        if (method_exists($manifest, 'getActions')) {
+        if ($manifest instanceof Zend_Tool_Framework_Manifest_ActionManifestable) {
             $actions = $manifest->getActions();
             if (!is_array($actions)) {
                 $actions = array($actions);
@@ -147,7 +147,7 @@ class Zend_Tool_Framework_Manifest_Repository
      * @param Zend_Tool_Framework_Manifest_Metadata $metadata
      * @return Zend_Tool_Framework_Manifest_Repository
      */
-    public function addMetadata(Zend_Tool_Framework_Manifest_Metadata $metadata)
+    public function addMetadata(Zend_Tool_Framework_Metadata_Interface $metadata)
     {
         $this->_metadatas[] = $metadata;
         return $this;
@@ -164,17 +164,17 @@ class Zend_Tool_Framework_Manifest_Repository
     {
 
         foreach ($this->_manifests as $manifest) {
-            if (method_exists($manifest, 'getMetadata')) {
+            if ($manifest instanceof Zend_Tool_Framework_Manifest_MetadataManifestable) {
                 $metadatas = $manifest->getMetadata();
                 if (!is_array($metadatas)) {
                     $metadatas = array($metadatas);
                 }
 
                 foreach ($metadatas as $metadata) {
-                    if (!$metadata instanceof Zend_Tool_Framework_Manifest_Metadata) {
+                    if (!$metadata instanceof Zend_Tool_Framework_Metadata_Interface) {
                         require_once 'Zend/Tool/Framework/Manifest/Exception.php';
                         throw new Zend_Tool_Framework_Manifest_Exception(
-                            'A Zend_Tool_Framework_Manifest_Metadata object was not found in manifest ' . get_class($manifest)
+                            'A Zend_Tool_Framework_Metadata_Interface object was not found in manifest ' . get_class($manifest)
                             );
                     }
 
