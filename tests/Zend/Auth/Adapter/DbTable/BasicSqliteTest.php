@@ -21,6 +21,7 @@
  * @version    $Id$
  */
 
+require_once dirname(__FILE__) . '/../../../../TestHelper.php';
 
 /**
  * PHPUnit_Framework_TestCase
@@ -136,7 +137,7 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
 
         try {
             $result = $this->_adapter->authenticate();
-            $this->assertEquals($result->getCode(), Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND);
+            $this->assertEquals(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
         } catch (Zend_Auth_Exception $e) {
             $this->fail('Exception should have been thrown');
         }
@@ -157,7 +158,7 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
 
         try {
             $result = $this->_adapter->authenticate();
-            $this->assertEquals($result->getCode(), Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS);
+            $this->assertEquals(Zend_Auth_Result::FAILURE_IDENTITY_AMBIGUOUS, $result->getCode());
         } catch (Zend_Auth_Exception $e) {
             $this->fail('Exception should have been thrown');
         }
@@ -200,7 +201,7 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
         $this->_adapter->setCredential('my_password');
         $result = $this->_adapter->authenticate();
         $resultRow = $this->_adapter->getResultRowObject(array('username', 'real_name'));
-        $this->assertEquals(serialize($resultRow), 'O:8:"stdClass":2:{s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}');
+        $this->assertEquals('O:8:"stdClass":2:{s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}', serialize($resultRow));
     }
 
     /**
@@ -213,103 +214,122 @@ class Zend_Auth_Adapter_DbTable_BasicSqliteTest extends PHPUnit_Framework_TestCa
         $this->_adapter->setCredential('my_password');
         $result = $this->_adapter->authenticate();
         $resultRow = $this->_adapter->getResultRowObject(null, 'password');
-        $this->assertEquals(serialize($resultRow), 'O:8:"stdClass":3:{s:2:"id";s:1:"1";s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}');
+        $this->assertEquals('O:8:"stdClass":3:{s:2:"id";s:1:"1";s:8:"username";s:11:"my_username";s:9:"real_name";s:12:"My Real Name";}', serialize($resultRow));
+    }
+    
+    /**
+     * @group ZF-5957
+     */
+    public function testAdapterCanReturnPreauthenticationDbselectObject()
+    {
+        $this->assertTrue($this->_adapter->getPreauthenticationDbSelect() instanceof Zend_Db_Select);
+    }
+    
+    /**
+     * @group ZF-5957
+     */
+    public function testAdapterCanUseModifiedPreauthenticationDbselectObject()
+    {
+        $this->_db->getProfiler()->setEnabled(true);
+        $select = $this->_adapter->getPreauthenticationDbSelect();
+        $select->where('1 = 1');
+        $this->_adapter->setIdentity('my_username');
+        $this->_adapter->setCredential('my_password');
+        $this->_adapter->authenticate();
+        $profiler = $this->_db->getProfiler();
+        $this->assertEquals(
+            'SELECT "users".*, (CASE WHEN "password" = \'my_password\' THEN 1 ELSE 0 END) AS "zend_auth_credential_match" FROM "users" WHERE (1 = 1) AND ("username" = \'my_username\')',
+            $profiler->getLastQueryProfile()->getQuery()
+            );
+    }
+    
+    /**
+     * @group ZF-5957
+     */
+    public function testAdapterReturnsASelectObjectWithoutAuthTimeModificationsAfterAuth()
+    {
+        $select = $this->_adapter->getPreauthenticationDbSelect();
+        $select->where('1 = 1');
+        $this->_adapter->setIdentity('my_username');
+        $this->_adapter->setCredential('my_password');
+        $this->_adapter->authenticate();
+        $selectAfterAuth = $this->_adapter->getPreauthenticationDbSelect();
+        $whereParts = $selectAfterAuth->getPart(Zend_Db_Select::WHERE);
+        $this->assertEquals(1, count($whereParts));
+        $this->assertEquals('(1 = 1)', array_pop($whereParts));
     }
 
     /**
      * Ensure that exceptions are caught
      *
+     * @expectedException Zend_Auth_Exception
      */
     public function testCatchExceptionNoTable()
     {
         $adapter = new Zend_Auth_Adapter_DbTable($this->_db);
-
-        try {
-            $result = $adapter->authenticate();
-            $this->fail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals($e->getMessage(), 'A table must be supplied for the Zend_Auth_Adapter_DbTable authentication adapter.');
-        }
+        $result = $adapter->authenticate();
+        //  $this->assertEquals($e->getMessage(), 'A table must be supplied for the Zend_Auth_Adapter_DbTable authentication adapter.');
     }
 
     /**
      * Ensure that exceptions are caught
      *
+     * @expectedException Zend_Auth_Exception
      */
     public function testCatchExceptionNoIdentityColumn()
     {
         $adapter = new Zend_Auth_Adapter_DbTable($this->_db, 'users');
-
-        try {
-            $result = $adapter->authenticate();
-            $this->fail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals($e->getMessage(), 'An identity column must be supplied for the Zend_Auth_Adapter_DbTable authentication adapter.');
-        }
+        $result = $adapter->authenticate();
+        // $this->assertEquals($e->getMessage(), 'An identity column must be supplied for the Zend_Auth_Adapter_DbTable authentication adapter.');
     }
 
     /**
      * Ensure that exceptions are caught
      *
+     * @expectedException Zend_Auth_Exception
      */
     public function testCatchExceptionNoCredentialColumn()
     {
         $adapter = new Zend_Auth_Adapter_DbTable($this->_db, 'users', 'username');
-
-        try {
-            $result = $adapter->authenticate();
-            $this->fail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals($e->getMessage(), 'A credential column must be supplied for the Zend_Auth_Adapter_DbTable authentication adapter.');
-        }
+        $result = $adapter->authenticate();
+        // $this->assertEquals($e->getMessage(), 'A credential column must be supplied for the Zend_Auth_Adapter_DbTable authentication adapter.');
     }
 
     /**
      * Ensure that exceptions are caught
      *
+     * @expectedException Zend_Auth_Exception
      */
     public function testCatchExceptionNoIdentity()
     {
-        try {
-            $result = $this->_adapter->authenticate();
-            $this->fail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals($e->getMessage(), 'A value for the identity was not provided prior to authentication with Zend_Auth_Adapter_DbTable.');
-        }
+        $result = $this->_adapter->authenticate();
+        // $this->assertEquals($e->getMessage(), 'A value for the identity was not provided prior to authentication with Zend_Auth_Adapter_DbTable.');
     }
 
     /**
      * Ensure that exceptions are caught
      *
+     * @expectedException Zend_Auth_Exception
      */
     public function testCatchExceptionNoCredential()
     {
         $this->_adapter->setIdentity('my_username');
-
-        try {
-            $result = $this->_adapter->authenticate();
-            $this->fail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals($e->getMessage(), 'A credential value was not provided prior to authentication with Zend_Auth_Adapter_DbTable.');
-        }
+        $result = $this->_adapter->authenticate();
+        // $this->assertEquals($e->getMessage(), 'A credential value was not provided prior to authentication with Zend_Auth_Adapter_DbTable.');
     }
 
     /**
      * Ensure that exceptions are caught
      *
+     * @expectedException Zend_Auth_Exception
      */
     public function testCatchExceptionBadSql()
     {
         $this->_adapter->setTableName('bad_table_name');
         $this->_adapter->setIdentity('value');
         $this->_adapter->setCredential('value');
-
-        try {
-            $result = $this->_adapter->authenticate();
-            $this->fail('Exception should have been thrown');
-        } catch (Zend_Auth_Exception $e) {
-            $this->assertEquals($e->getMessage(), 'The supplied parameters to Zend_Auth_Adapter_DbTable failed to produce a valid sql statement, please check table and column names for validity.');
-        }
+        $result = $this->_adapter->authenticate();
+        // $this->assertEquals($e->getMessage(), 'The supplied parameters to Zend_Auth_Adapter_DbTable failed to produce a valid sql statement, please check table and column names for validity.');
     }
 
 
