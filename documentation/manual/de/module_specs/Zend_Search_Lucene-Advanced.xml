@@ -4,7 +4,7 @@
     <title>Erweitert</title>
 
     <sect2 id="zend.search.lucene.advanced.format_migration">
-        <title>Starting from 1.6, handling index format transformations.</title>
+        <title>Beginnend mit 1.6, Behandlung von Index Format Veränderungen.</title>
 
         <para>
             Die <code>Zend_Search_Lucene</code> Komponente arbeitet mit den Index Formaten der Java Lucene Version 1.4-1.9, 2.1

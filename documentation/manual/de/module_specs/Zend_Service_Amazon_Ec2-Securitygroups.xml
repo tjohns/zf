@@ -71,15 +71,16 @@ $return = $ec2_ebs->describe('mygroup');
         <example id="zend.service.amazon.ec2.securitygroups.maintenance.delete">
             <title>Eine Sicherheitsgruppe löschen</title>
             <para>
-                <code>delete</code> will remove the security group. If you attempt to
-                delete a security group that contains instances, a fault is returned.
-                If you attempt to delete a security group that is referenced by another
-                security group, a fault is returned. For example, if security group B
-                has a rule that allows access from security group A, security group A
-                cannot be deleted until the allow rule is removed.
+                <code>delete</code> entfernt die Sicherheitsgruppe. Wenn man versucht eine
+                Sicherheitsgruppe zu löschen die Instanzen enthält, wird ein Fehler zurückgegeben.
+                Wenn man versucht eine Sicherheitsgruppe zu löschen die von einer anderen
+                Sicherheitsgruppe referenziert ist, wird ein Fehler zurückgegeben. Wenn, zum
+                Beispiel, Sicherheitsgruppe B eine Regel hat die den Zugriff von Sicherheitsgruppe
+                A erlaubt, kann Sicherheitsgruppe A nicht gelöscht werden, bis die betreffende
+                Regel entfernt wurde.
             </para>
             <para>
-                <code>delete</code> returns boolean true or false.
+                <code>delete</code> gibt ein boolsches true oder false zurück.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -92,28 +93,28 @@ $return = $ec2_sg->delete('mygroup');
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.securitygroups.authorize">
-        <title>Authorizing Access</title>
+        <title>Zugriff authorisieren</title>
 
         <example id="zend.service.amazon.ec2.securitygroups.authorize.ip">
-            <title>Authorizing by IP</title>
+            <title>Authorisierung durch die IP</title>
             <para>
-                <code>authorizeIp</code> Adds permissions to a security group based on
-                an IP address, protocol type and port range.
+                <code>authorizeIp</code> fügt einer Sicherheitsgruppe eine Erlaubnis hinzu
+                basierend auf einer IP Adresse, dem Protokoll Typ und einem Port Bereich.
             </para>
             <para>
-                Permissions are specified by the IP protocol (TCP, UDP or ICMP), the
-                source of the request (by IP range or an Amazon EC2 user-group pair),
-                the source and destination port ranges (for TCP and UDP), and the
-                ICMP codes and types (for ICMP). When authorizing ICMP, -1 can be used
-                as a wildcard in the type and code fields.
+                Erlaubnisse werden spezifiziert durch das IP Protokoll (TCP, UDP oder ICMP), der
+                Quelle der Anfrage (durch IP Bereich oder einem Amazon EC2 Benutzer-Gruppe Paar),
+                den Quell- und Ziel-Port Bereichen (für TCP und UDP), und den ICMP Codes und Typen
+                (für ICMP). Wenn ICMP authorisiert wird kann -1 als Wildcard in den Typ- und
+                Codefeldern verwendet werden.
             </para>
             <para>
-                Permission changes are propagated to instances within the security group
-                as quickly as possible. However, depending on the number of instances, a
-                small delay might occur.
+                Änderungen einer Erlaubnis werden Instanzen über die Sicherheitsgruppe so schnell
+                wie möglich mitgeteilt. Abhängig von der Anzahl der Instanzen, kann es trotzdem zu
+                einer kleinen Verzögerung kommen.
             </para>
             <para>
-                <code>authorizeIp</code> returns boolean true or false
+                <code>authorizeIp</code> gibt ein boolsches true oder false zurück
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -129,17 +130,17 @@ $return = $ec2_ebs->authorizeIp('mygroup',
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.authorize.group">
-            <title>Authorize By Group</title>
+            <title>Authorisierung durch die Gruppe</title>
             <para>
-                <code>authorizeGroup</code> Adds permissions to a security group.
+                <code>authorizeGroup</code> fügt die Erlaubnis für eine Sicherheitsgruppe hinzu.
             </para>
             <para>
-                Permission changes are propagated to instances within the security group
-                as quickly as possible. However, depending on the number of instances, a
-                small delay might occur.
+                Änderungen einer Erlaubnis werden Instanzen über die Sicherheitsgruppe so schnell
+                wie möglich mitgeteilt. Abhängig von der Anzahl der Instanzen, kann es trotzdem zu
+                einer kleinen Verzögerung kommen.
             </para>
             <para>
-                <code>authorizeGroup</code> returns boolean true or false.
+                <code>authorizeGroup</code> gibt ein boolsches true oder false zurück.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -152,29 +153,30 @@ $return = $ec2_sg->authorizeGroup('mygroup', 'securityGruopName', 'ownerId');
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.securitygroups.revoke">
-        <title>Revoking Access</title>
+        <title>Zugriff entziehen</title>
 
         <example id="zend.service.amazon.ec2.securitygroups.revoke.ip">
-            <title>Revoke by IP</title>
+            <title>Entziehen durch die IP</title>
             <para>
-                <code>revokeIp</code> Revokes permissions to a security group based on
-                an IP address, protocol type and port range. The permissions used to revoke
-                must be specified using the same values used to grant the permissions.
+                <code>revokeIp</code> entzieht den Zugriff zu einer Sicherheitsgruppe basieren
+                auf einer IP Adresse, einem Protokoll Typ und einem Port Bereich. Der Zugriff
+                der entzogen werden soll muß mit den gleichen Werte spezifiziert werden mit
+                denen der Zugriff erlaubt wurde.
             </para>
             <para>
-                Permissions are specified by the IP protocol (TCP, UDP or ICMP), the
-                source of the request (by IP range or an Amazon EC2 user-group pair),
-                the source and destination port ranges (for TCP and UDP), and the
-                ICMP codes and types (for ICMP). When authorizing ICMP, -1 can be used
-                as a wildcard in the type and code fields.
+                Erlaubnisse werden spezifiziert durch das IP Protokoll (TCP, UDP oder ICMP), der
+                Quelle der Anfrage (durch IP Bereich oder einem Amazon EC2 Benutzer-Gruppe Paar),
+                den Quell- und Ziel-Port Bereichen (für TCP und UDP), und den ICMP Codes und Typen
+                (für ICMP). Wenn ICMP authorisiert wird kann -1 als Wildcard in den Typ- und
+                Codefeldern verwendet werden.
             </para>
             <para>
-                Permission changes are propagated to instances within the security group
-                as quickly as possible. However, depending on the number of instances, a
-                small delay might occur.
+                Änderungen einer Erlaubnis werden Instanzen über die Sicherheitsgruppe so schnell
+                wie möglich mitgeteilt. Abhängig von der Anzahl der Instanzen, kann es trotzdem zu
+                einer kleinen Verzögerung kommen.
             </para>
             <para>
-                <code>revokeIp</code> returns boolean true or false
+                <code>revokeIp</code> gibt ein boolsches true oder false zurück
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -190,19 +192,19 @@ $return = $ec2_ebs->revokeIp('mygroup',
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.revoke.group">
-            <title>Revoke By Group</title>
+            <title>Entziehen durch die Gruppe</title>
             <para>
-                <code>revokeGroup</code> Adds permissions to a security group. The permissions
-                used to revoke must be specified using the same values used to grant the
-                permissions.
+                <code>revokeGroup</code> fübt eine Erlaubnis zu einer Sicherheitsgruppe hinzu.
+                Die Erlaubnis die entzogen werden soll muß mit den gleichen Werten spezifiziert
+                werden mit denen die Erlaubnis erteilt wurde.
             </para>
             <para>
-                Permission changes are propagated to instances within the security group
-                as quickly as possible. However, depending on the number of instances, a
-                small delay might occur.
+                Änderungen einer Erlaubnis werden Instanzen über die Sicherheitsgruppe so schnell
+                wie möglich mitgeteilt. Abhängig von der Anzahl der Instanzen, kann es trotzdem zu
+                einer kleinen Verzögerung kommen.
             </para>
             <para>
-                <code>revokeGroup</code> returns boolean true or false.
+                <code>revokeGroup</code> gibt ein boolsches true oder false zurück.
             </para>
 
             <programlisting role="php"><![CDATA[
