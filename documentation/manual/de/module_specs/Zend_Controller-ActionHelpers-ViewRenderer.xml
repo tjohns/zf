@@ -264,20 +264,16 @@ $this->_helper->viewRenderer('form', 'html', true);
                 </programlisting>
 
                 <note><para>
-                        <code>setRender()</code> und <code>direct()</code>
-
-                        don't
-                        actually render the view script, but instead set hints
-                        that <code>postDispatch()</code> and
-                        <code>render()</code> will use to render the view.
+                        <code>setRender()</code> und <code>direct()</code> stellen das View Sktript
+                        nicht dar, sondern setzen Hinweise die <code>postDispatch()</code> und
+                        <code>render()</code> dann verwenden wenn die View dargestellt wird.
                 </para></note>
             </listitem>
         </itemizedlist>
 
         <para>
-            The constructor allows you to optionally pass the view object and
-            <code>ViewRenderer</code> options; it accepts the same flags as
-            <code>initView()</code>:
+            Der Constructor erlaubt es optional das View Objekt und <code>ViewRenderer</code>
+            Optionen zu übergeben; er akzeptiert die gleichen Flags wie <code>initView()</code>:
         </para>
 
         <programlisting role="php"><![CDATA[

@@ -280,7 +280,7 @@ print $date->getIso();
 
         <para>
             <code>Zend_Date</code> nimmt immer die aktuelle Zeitzone für das Erstellen eines Objektes wie in den
-            ersten Zeilen des Beispiels gezeigt. Das Ändern der Zeitzone für ein <code>Zend_Date</code> Objekt
+            ersten Zeilen des Beispiels gezeigt. Das Ändern der Zeitzone für ein erstelltes Objekt
             hat einen Effekt auf das Datum selbst. Daten sind immer relativ zu einer Zeitzone. Das Ändern der
             Zeitzone für ein <code>Zend_Date</code> Objekt ändert nicht die Zeit des <code>Zend_Date</code> Objektes
             selbst. Man muß sich in Erinnerung halten das Daten intern immer als Zeitpunkte und in der GMT

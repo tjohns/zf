@@ -146,8 +146,8 @@ Zend_Controller_Front::run('/path/to/app/controllers');
             </programlisting>
 
             <para>
-                Das instanziert den Front-Controller und führt seine <code>dispatch()</code>-Methode aus,
-                die die Anfragen an die Action-Controller weitergibt.
+                Das instanziert und führt den Front-Controller aus,
+                der Anfragen an den Action-Controller weitergibt.
             </para>
         </sect3>
 

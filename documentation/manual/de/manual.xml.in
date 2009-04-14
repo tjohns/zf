@@ -487,11 +487,11 @@
 
     <chapter id="zend.tool.framework">
         <title>Zend_Tool_Framework</title>
-        <xi::include href="module_specs/Zend_Tool_Framework-Introduction.xml" />
-        <xi::include href="module_specs/Zend_Tool_Framework-CliTool.xml" />
-        <xi::include href="module_specs/Zend_Tool_Framework-Architecture.xml" />
-        <xi::include href="module_specs/Zend_Tool_Framework-WritingProviders.xml" />
-        <xi::include href="module_specs/Zend_Tool_Framework-SystemProviders.xml" />
+        <xi:include href="module_specs/Zend_Tool_Framework-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Tool_Framework-CliTool.xml" />
+        <xi:include href="module_specs/Zend_Tool_Framework-Architecture.xml" />
+        <xi:include href="module_specs/Zend_Tool_Framework-WritingProviders.xml" />
+        <xi:include href="module_specs/Zend_Tool_Framework-SystemProviders.xml" />
     </chapter>
 
     <chapter id="zend.tool.project">

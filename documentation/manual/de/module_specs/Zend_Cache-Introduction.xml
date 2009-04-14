@@ -54,7 +54,7 @@ $cache = Zend_Cache::factory('Core',
     </note>
 
     <example id="zend.cache.introduction.example-2">
-        <title>Caching a database query result</title>
+        <title>Das Ergebnis einer Datenbankabfrage cachen</title>
 
         <para>
             Jetzt, da wir ein Frontend haben, kann jeder Typ von Daten gecached werden (Serialisierung ist

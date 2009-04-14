@@ -1,8 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14844 -->
 <sect1 id="zend.service.amazon.ec2.securitygroups">
-    <title>Zend_Service_Amazon_Ec2: Security Groups</title>
+    <title>Zend_Service_Amazon_Ec2: Sicherheitsgruppen</title>
 
     <para>
+        Eine Sicherheitsgruppe ist eine benante Sammlung von Zugriffsregeln. Diese Zugriffsregeln
+        spezifizieren welche
          A security group is a named collection of access rules. These access
          rules specify which ingress (i.e., incoming) network traffic should
          be delivered to your instance. All other ingress traffic will be

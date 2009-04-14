@@ -37,21 +37,21 @@ abstract class Zend_CodeGenerator_Abstract
             </para>
 
             <para>
-                Like most classes in Zend Framework, <code>setOptions()</code>
-                compares an option key to existing setters in the class, and
-                passes the value on to that method if found.
+                Wie die meisten Klassen im Zend Framework, vergleicht <code>setOptions()</code>
+                den Schlüssel einer Option mit den in der Klasse existierenden Settern, und
+                übergibt den Wert an die gefundene Methode.
             </para>
 
             <para>
-                <code>__toString()</code> is marked as final, and proxies to
-                <code>generate()</code>.
+                <code>__toString()</code> ist als final markiert, und leitet auf
+                <code>generate()</code> weiter.
             </para>
 
             <para>
-                <code>setSourceContent()</code> and
-                <code>getSourceContent()</code> are intended to either set the
-                default content for the code being generated, or to replace said
-                content once all generation tasks are complete.
+                <code>setSourceContent()</code> und <code>getSourceContent()</code> sind dazu
+                vergesehen entweder den Standardinhalt für den zu erzeugenden Code zu setzen,
+                oder um gesetzte Inhalte zu ersetzen sobald alle Arbeiten der Erzeugung
+                beendet wurden.
             </para>
         </sect3>
 

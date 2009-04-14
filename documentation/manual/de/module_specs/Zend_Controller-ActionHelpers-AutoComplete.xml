@@ -138,7 +138,7 @@ $this->_helper->autoCompleteDojo($data);
         </programlisting>
 
         <example id="zend.controller.actionhelpers.autocomplete.dojo.example1">
-            <title>AutoCompletion with Dojo Using Zend MVC</title>
+            <title>AutoCompletion mit Dojo und der Verwendung von Zend MVC</title>
 
             <para>
                 AutoCompletion mit Dojo, über Zend MVC, benötigt verschiedene Dinge: Erstellung
