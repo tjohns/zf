@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 11497 -->
 <sect2 id="zend.test.phpunit.bootstrapping">
     <title>Bootstrapping der eigenen TestCases</title>
