@@ -22,6 +22,13 @@ class ZfAppBootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
         $this->barExecuted++;
     }
 
+    protected function _initBarbaz()
+    {
+        $o = new stdClass();
+        $o->baz = 'Baz';
+        return $o;
+    }
+
     public function setArbitrary($value)
     {
         $this->_arbitraryValue = $value;

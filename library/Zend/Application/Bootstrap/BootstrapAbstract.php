@@ -45,6 +45,11 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
     protected $_classResources;
 
     /**
+     * @var object Resource container
+     */
+    protected $_container;
+
+    /**
      * @var string
      */
     protected $_environment;
@@ -400,6 +405,79 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
     }
 
     /**
+     * Set resource container
+     *
+     * By default, if a resource callback has a non-null return value, this 
+     * value will be stored in a container using the resource name as the 
+     * key.
+     *
+     * Containers must be objects, and must allow setting public properties.
+     * 
+     * @param  object $container 
+     * @return Zend_Application_Bootstrap_BootstrapAbstract
+     */
+    public function setContainer($container)
+    {
+        if (!is_object($container)) {
+            throw new Zend_Application_Bootstrap_Exception('Resource containers must be objects');
+        }
+        $this->_container = $container;
+        return $this;
+    }
+
+    /**
+     * Retrieve resource container
+     * 
+     * @return object
+     */
+    public function getContainer()
+    {
+        if (null === $this->_container) {
+            $this->setContainer(new Zend_Registry());
+        }
+        return $this->_container;
+    }
+
+    /**
+     * Determine if a resource has been stored in the container
+     *
+     * During bootstrap resource initialization, you may return a value. If 
+     * you do, it will be stored in the {@link setContainer() container}.
+     * You can use this method to determine if a value was stored.
+     * 
+     * @param  string $name 
+     * @return bool
+     */
+    public function hasResource($name)
+    {
+        $resource  = strtolower($name);
+        $container = $this->getContainer();
+        return isset($container->{$resource});
+    }
+
+    /**
+     * Retrieve a resource from the container
+     *
+     * During bootstrap resource initialization, you may return a value. If 
+     * you do, it will be stored in the {@link setContainer() container}.
+     * You can use this method to retrieve that value.
+     *
+     * If no value was returned, this will return a null value.
+     * 
+     * @param  string $name 
+     * @return null|mixed
+     */
+    public function getResource($name)
+    {
+        $resource  = strtolower($name);
+        $container = $this->getContainer();
+        if ($this->hasResource($resource)) {
+            return $container->{$resource};
+        }
+        return null;
+    }
+
+    /**
      * Bootstrap individual, all, or multiple resources
      *
      * Marked as final to prevent issues when subclassing and naming the
@@ -477,9 +555,6 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
      *
      * Finally, if not found, it throws an exception.
      *
-     * @todo   Circular dependency checking. Mark when starting, and when ending; if
-     *         an initialization has started and is called again, throw an exception.
-     * 
      * @param  string $resource 
      * @return void
      * @throws Zend_Application_Bootstrap_Exception When resource not found
@@ -500,18 +575,28 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
         if (array_key_exists($resource, $classResources)) {
             $this->_started[$resource] = true;
             $method = $classResources[$resource];
-            $this->$method();
+            $return = $this->$method();
             unset($this->_started[$resource]);
             $this->_markRun($resource);
+
+            if (null !== $return) {
+                $this->getContainer()->{$resource} = $return;
+            }
+
             return;
         }
 
         if ($this->hasPluginResource($resource)) {
             $this->_started[$resource] = true;
             $plugin = $this->getPluginResource($resource);
-            $plugin->init();
+            $return = $plugin->init();
             unset($this->_started[$resource]);
             $this->_markRun($resource);
+
+            if (null !== $return) {
+                $this->getContainer()->{$resource} = $return;
+            }
+
             return;
         }
 

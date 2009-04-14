@@ -188,7 +188,7 @@ class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework
         require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
         $bootstrap = new ZfAppBootstrap($this->application);
         $test      = $bootstrap->getClassResources();
-        $resources = array('foo' => '_initFoo', 'bar' => '_initBar');
+        $resources = array('foo' => '_initFoo', 'bar' => '_initBar', 'barbaz' => '_initBarbaz');
         $this->assertEquals($resources, $test);
     }
 
@@ -197,7 +197,7 @@ class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework
         require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
         $bootstrap = new ZfAppBootstrap($this->application);
         $test      = $bootstrap->getClassResourceNames();
-        $resources = array('foo', 'bar');
+        $resources = array('foo', 'bar', 'barbaz');
         $this->assertEquals($resources, $test);
     }
 
@@ -409,6 +409,58 @@ class Zend_Application_Bootstrap_BootstrapAbstractTest extends PHPUnit_Framework
         require_once dirname(__FILE__) . '/../_files/BootstrapBaseCircularDependency.php';
         $bootstrap = new BootstrapBaseCircularDependency($this->application);
         $bootstrap->bootstrap();
+    }
+
+    public function testContainerShouldBeRegistryInstanceByDefault()
+    {
+        require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
+        $bootstrap = new ZfAppBootstrap($this->application);
+        $container = $bootstrap->getContainer();
+        $this->assertTrue($container instanceof Zend_Registry);
+    }
+
+    public function testContainerShouldAggregateReturnValuesFromClassResources()
+    {
+        require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
+        $bootstrap = new ZfAppBootstrap($this->application);
+        $bootstrap->bootstrap('barbaz');
+        $container = $bootstrap->getContainer();
+        $this->assertEquals('Baz', $container->barbaz->baz);
+    }
+
+    public function testContainerShouldAggregateReturnValuesFromPluginResources()
+    {
+        require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
+        $bootstrap = new ZfAppBootstrap($this->application);
+        $bootstrap->getPluginLoader()->addPrefixPath('Zend_Application_BootstrapTest_Resource', dirname(__FILE__) . '/../_files/resources');
+        $bootstrap->registerPluginResource('baz');
+        $bootstrap->bootstrap('baz');
+        $container = $bootstrap->getContainer();
+        $this->assertEquals('Baz', $container->baz->baz);
+    }
+
+    public function testClassResourcesShouldBeAvailableFollowingBootstrapping()
+    {
+        require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
+        $bootstrap = new ZfAppBootstrap($this->application);
+        $bootstrap->bootstrap('barbaz');
+        $this->assertTrue($bootstrap->hasResource('barbaz'));
+
+        $resource = $bootstrap->getResource('barbaz');
+        $this->assertEquals('Baz', $resource->baz);
+    }
+
+    public function testPluginResourcesShouldBeAvailableFollowingBootstrapping()
+    {
+        require_once dirname(__FILE__) . '/../_files/ZfAppBootstrap.php';
+        $bootstrap = new ZfAppBootstrap($this->application);
+        $bootstrap->getPluginLoader()->addPrefixPath('Zend_Application_BootstrapTest_Resource', dirname(__FILE__) . '/../_files/resources');
+        $bootstrap->registerPluginResource('baz');
+        $bootstrap->bootstrap('baz');
+
+        $this->assertTrue($bootstrap->hasResource('baz'));
+        $resource = $bootstrap->getResource('baz');
+        $this->assertEquals('Baz', $resource->baz);
     }
 }
 
