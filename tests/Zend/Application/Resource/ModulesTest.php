@@ -135,8 +135,8 @@ class Zend_Application_Resource_ModulesTest extends PHPUnit_Framework_TestCase
         $resource->setBootstrap($this->bootstrap);
         $resource->init();
         $bootstraps = $resource->getExecutedBootstraps();
-        $expected = array('bar', 'foo');
-        $test     = array_keys($bootstraps);
+        $test       = array_keys((array) $bootstraps);
+        $expected   = array('bar', 'foo');
         $this->assertEquals($expected, $test);
     }
 }

@@ -32,6 +32,8 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'Zend/Application/Resource/ResourceAbstractTest.php';
 require_once 'Zend/Application/Resource/DbTest.php';
 require_once 'Zend/Application/Resource/FrontcontrollerTest.php';
+require_once 'Zend/Application/Resource/LayoutTest.php';
+require_once 'Zend/Application/Resource/LocaleTest.php';
 require_once 'Zend/Application/Resource/ModulesTest.php';
 require_once 'Zend/Application/Resource/ViewTest.php';
 
@@ -56,6 +58,8 @@ class Zend_Application_Resource_AllTests
         $suite->addTestSuite('Zend_Application_Resource_ResourceAbstractTest');
         $suite->addTestSuite('Zend_Application_Resource_DbTest');
         $suite->addTestSuite('Zend_Application_Resource_FrontcontrollerTest');
+        $suite->addTestSuite('Zend_Application_Resource_LayoutTest');
+        $suite->addTestSuite('Zend_Application_Resource_LocaleTest');
         $suite->addTestSuite('Zend_Application_Resource_ModulesTest');
         $suite->addTestSuite('Zend_Application_Resource_ViewTest');
 

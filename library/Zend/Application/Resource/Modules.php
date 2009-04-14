@@ -44,7 +44,7 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Resour
      */
     public function __construct($options = null)
     {
-        $this->_bootstraps = new ArrayObject(array(), ArrayObject:::ARRAY_AS_PROPS);
+        $this->_bootstraps = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
         parent::__construct($options);
     }
 
