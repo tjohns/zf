@@ -150,6 +150,7 @@ class Zend_Application_Resource_Db extends Zend_Application_Resource_ResourceAbs
             if ($this->isDefaultTableAdapter()) {
                 Zend_Db_Table::setDefaultAdapter($db);
             }
+            return $db;
         }
     }
 }

@@ -276,6 +276,9 @@ class Zend_Application
      */
     public function getBootstrap()
     {
+        if (null === $this->_bootstrap) {
+            $this->_bootstrap = new Zend_Application_Bootstrap_Bootstrap($this);
+        }
         return $this->_bootstrap;
     }
 

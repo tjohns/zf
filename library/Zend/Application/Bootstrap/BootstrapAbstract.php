@@ -24,6 +24,7 @@
  * Abstract base class for bootstrap classes
  *
  * @uses       Zend_Application_Bootstrap_Bootstrapper
+ * @uses       Zend_Application_Bootstrap_ResourceBootstrapper
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Bootstrap

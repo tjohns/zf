@@ -101,6 +101,8 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
         if (null !== ($bootstrap = $this->getBootstrap())) {
             $this->getBootstrap()->frontController = $front;
         }
+
+        return $front;
     }
 
     /**

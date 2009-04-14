@@ -191,6 +191,12 @@ class Zend_Application_ApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, ini_get('date.default_latitude'));
     }
 
+    public function testShouldUseBaseBootstrapClassByDefaultIfNoBootstrapRegistered()
+    {
+        $bootstrap = $this->application->getBootstrap();
+        $this->assertTrue($bootstrap instanceof Zend_Application_Bootstrap_Bootstrap);
+    }
+
     public function testPassingStringBootstrapPathOptionShouldRegisterBootstrap()
     {
         $this->application->setOptions(array(

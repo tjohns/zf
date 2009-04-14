@@ -32,9 +32,21 @@
 class Zend_Application_Resource_Modules extends Zend_Application_Resource_ResourceAbstract
 {
     /**
-     * @var array
+     * @var ArrayObject
      */
-    protected $_bootstraps = array();
+    protected $_bootstraps;
+
+    /**
+     * Constructor
+     * 
+     * @param  mixed $options 
+     * @return void
+     */
+    public function __construct($options = null)
+    {
+        $this->_bootstraps = new ArrayObject(array(), ArrayObject:::ARRAY_AS_PROPS);
+        parent::__construct($options);
+    }
 
     /**
      * Initialize modules
@@ -72,12 +84,14 @@ class Zend_Application_Resource_Modules extends Zend_Application_Resource_Resour
             $moduleBootstrap->bootstrap();
             $this->_bootstraps[$module] = $moduleBootstrap;
         }
+
+        return $this->_bootstraps;
     }
 
     /**
      * Get bootstraps that have been run
      * 
-     * @return void
+     * @return ArrayObject
      */
     public function getExecutedBootstraps()
     {

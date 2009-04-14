@@ -49,6 +49,7 @@ class Zend_Application_Resource_View extends Zend_Application_Resource_ResourceA
         $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
         $viewRenderer->setView($view);
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+        return $view;
     }
 
     /**
