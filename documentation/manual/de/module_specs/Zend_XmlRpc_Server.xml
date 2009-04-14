@@ -84,8 +84,8 @@ echo $server->handle();
         </para>
 
         <itemizedlist>
-            <listitem><para>dateTime.iso8601, ein String, formatiert als
-                    YYYYMMDDTHH:mm:ss</para></listitem>
+            <listitem><para>dateTime.iso8601, ein String, der das Format
+                    YYYYMMDDTHH:mm:ss besitzt</para></listitem>
             <listitem><para>base64, base64-kodierte Daten</para></listitem>
             <listitem><para>struct, jegliches assoziatives Array</para></listitem>
         </itemizedlist>

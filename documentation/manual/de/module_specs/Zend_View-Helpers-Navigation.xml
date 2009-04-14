@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14824 -->
 <sect3 id="zend.view.helpers.initial.navigation">
-    <title>Navigation Helpers</title>
+    <title>Navigations Helfer</title>
 
     <para>
-        The navigation helpers are used for rendering navigational elements
-        from <link linkend="zend.navigation.containers">Zend_Navigation_Container</link>
-        instances.
+        Die Navigations Helfer werden von
+        <link linkend="zend.navigation.containers">Zend_Navigation_Container</link> für die
+        Darstellung von Navigations Elementen verwendet.
     </para>
 
     <para>
-        There are 5 built-in helpers:
+        Es gibt 2 eingebaute Helfer:
 
         <itemizedlist>
             <listitem>
                 <para>
                     <link linkend="zend.view.helpers.initial.navigation.breadcrumbs">Breadcrumbs</link>,
-                    used for rendering the path to the currently active page.
+                    wird für die Darstellung des Pfades der aktuell aktiven Seite verwendet.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.view.helpers.initial.navigation.links">Links</link>,
-                    used for rendering navigational head links (e.g.
-                    <code>&lt;link rel="next" href="..." /&gt;</code>)
+                    wird für die Darstellung von Navigations Header Links (z.B.
+                    <code>&lt;link rel="next" href="..." /&gt;</code>) verwendet.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.view.helpers.initial.navigation.menu">Menu</link>,
-                    used for rendering menus.
+                    wird für die Darstellung von Menüs verwendet.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.view.helpers.initial.navigation.sitemap">Sitemap</link>,
-                    used for rendering sitemaps conforming to the
-                    <ulink url="http://www.sitemaps.org/protocol.php">Sitemaps XML format</ulink>.
+                    wird für die Darstellung von Sitemaps verwendet die dem
+                    <ulink url="http://www.sitemaps.org/protocol.php">Sitemaps XML Format</ulink>
+                    entsprechen.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.view.helpers.initial.navigation.navigation">Navigation</link>,
-                    used for proxying calls to other navigational helpers.
+                    wird für die Weiterleitung von Aufrufen zu anderen Navigations Helfern verwendet.
                 </para>
             </listitem>
         </itemizedlist>

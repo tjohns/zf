@@ -228,7 +228,7 @@ var_dump($registry->index);
         </para>
 
         <example id="zend.registry.using.isset.example-isregistered">
-            <title>Beispiel der Verwendung der <code>isRegistered()</code> Methode</title>
+            <title>Beispiel der Verwendung der isRegistered() Methode</title>
             <programlisting role="php"><![CDATA[
 if (Zend_Registry::isRegistered($index)) {
     $value = Zend_Registry::get($index);

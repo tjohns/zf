@@ -448,13 +448,14 @@ if (Zend_Locale_Format::isInteger('13.445', array('locale' => $locale)) {
         </para>
 
         <para>
-            Nehmen wir an eine Web Form erhält eine nummerische Eingabe welche Ost-Arabische Ziffern
-            enthält "١‎٠٠". Die meisten Programme und PHP Funktionen erwarten Eingaben aber als Lateinische Ziffern.
-            Glücklicherweise wird für die Konvertierung dieser Eingabe in gleichwertige Lateinische Ziffern "100"
-            sehr wenig Aufwand. Es muß nur
-            <code>convertNumerals($inputNumeralString, $sourceNumeralSystem, $destNumeralSystem)</code> benutzt werden
-            und hierbei die Ziffern der Schreibweise <code>$sourceNumeralSystem</code> in die Schreibweise
-            <code>$destNumeralSystem</code> konvertiert werden.
+            Nehmen wir an eine Web Form erhält eine nummerische Eingabe welche Ost-Arabische
+            Ziffern enthält "١‎٠٠". Die meisten Programme und PHP Funktionen erwarten Eingaben aber
+            als Lateinische Ziffern. Glücklicherweise wird für die Konvertierung dieser Eingabe in
+            gleichwertige Lateinische Ziffern "100" sehr wenig Aufwand. Es muß nur
+            <code>convertNumerals($inputNumeralString, $sourceNumeralSystem, $destNumeralSystem)</code>
+            benutzt werden werden welches <code>$input</code> zurückgibt und hierbei die Ziffern
+            der Schreibweise <code>$sourceNumeralSystem</code> in die Schreibweise
+            <code>$destNumeralSystem</code> konvertiert.
         </para>
 
         <example id="zend.locale.numbersystems.example-1">

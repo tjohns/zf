@@ -34,11 +34,12 @@
     <sect2 id="zend.soap.server.constructor">
         <title>Der <code>Zend_Soap_Server</code> Konstruktor.</title>
         <para>
-            <code>Zend_Soap_Server</code> constructor should be used a bit differently for WSDL and non-WSDL modes.
+            Der Contructor von <code>Zend_Soap_Server</code> sollte für WSDL und nicht-WSDL Modi
+            unterschiedlich verwendet werden.
         </para>
 
         <sect3 id="zend.soap.server.constructor.wsdl_mode">
-            <title>Der <code>Zend_Soap_Server</code> Konstruktor für des WSDL Modus.</title>
+            <title>Der <code>Zend_Soap_Server</code> Konstruktor für den WSDL Modus.</title>
             <para>
                 Der <code>Zend_Soap_Server</code> Konstruktor nimmt zwei optionale Parameter wenn er im
                 WSDL Modus arbeitet:

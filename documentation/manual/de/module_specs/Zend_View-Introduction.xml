@@ -169,7 +169,7 @@ base/path/
     </sect2>
 
     <sect2 id="zend.view.introduction.shortTags">
-        <title>Short Tags und View Skripte</title>
+        <title>Short Tags mit View Skripten</title>
 
         <para>
             In unseren Beispielen und der Dokumentation verwenden wir PHP Short Tags: <code>&lt;?</code> und

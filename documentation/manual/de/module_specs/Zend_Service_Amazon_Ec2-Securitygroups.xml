@@ -5,37 +5,33 @@
 
     <para>
         Eine Sicherheitsgruppe ist eine benante Sammlung von Zugriffsregeln. Diese Zugriffsregeln
-        spezifizieren welche
-         A security group is a named collection of access rules. These access
-         rules specify which ingress (i.e., incoming) network traffic should
-         be delivered to your instance. All other ingress traffic will be
-         discarded.
+        spezifizieren welcher zufließende (z.B. hereinkommende) Netzwerkverkehr an die Instanz
+        zugestellt werden soll. Jeder andere zufließende Verkehr wird weggeworfen.
     </para>
     <para>
-        You can modify rules for a group at any time. The new rules are
-        automatically enforced for all running instances and instances
-        launched in the future.
+        Man kann die Regeln für Gruppen jederzeit verändern. Die neuen Regeln werden automatisch
+        für alle laufenden Instanzen, und Instanzen die in Zukunft gestartet werden, erzwungen.
     </para>
     <note>
-        <title>Maximum Security Groups</title>
-        <para>You can create up to 100 security groups.</para>
+        <title>Maximale Sicherheitsgruppen</title>
+        <para>Man kann bis zu 100 Sicherheitsgruppen erstellen.</para>
     </note>
 
     <sect2 id="zend.service.amazon.ec2.securitygroups.maintenance">
-        <title>Security Group Maintenance</title>
+        <title>Wartung von Sicherheitsgruppen</title>
 
         <example id="zend.service.amazon.ec2.securitygroups.maintenance.create">
-            <title>Create a new Security Group</title>
+            <title>Eine neue Sicherheitsgruppe erstellen</title>
             <para>
-                <code>create</code> a new security group. Every instance is
-                launched in a security group. If no security group is specified
-                during launch, the instances are launched in the default security
-                group. Instances within the same security group have unrestricted
-                network access to each other. Instances will reject network access
-                attempts from other instances in a different security group.
+                <code>create</code> erstellt eine neue Sicherheitsgruppe. Jede Instanz wird in
+                einer Sicherheitsgruppe gestartet. Wenn wärend dem Start keine Sicherheitsgruppe
+                spezifiziert wurde, werden die Instanzen in der standardmäßigen sicherheitsgruppe
+                gestartet. Instanzen mit der gleichen Sicherheitsgruppe haben untereinander
+                unbegrenzten Netzwerkzugriff. Instanzen verhindern jeden Versuch eines
+                Netzwerkzugriffs von anderen Instanzen aus unterschiedlichen Sicherheitsgruppen.
             </para>
             <para>
-                <code>create</code> returns boolean true or false
+                <code>create</code> gibt ein boolsches true oder false zurück
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -47,21 +43,21 @@ $return = $ec2_sg->create('mygroup', 'my group description');
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.maintenance.describe">
-            <title>Describe a Security Group</title>
+            <title>Eine Sicherheitsgruppe beschreiben</title>
             <para>
-                <code>describe</code> returns information about security groups that
-                you own.
+                <code>describe</code> gibt Informationen über die Sicherheitsgruppen zurück welche
+                einem selbst gehören.
             </para>
             <para>
-                If you specify security group names, information about those security
-                group is returned. Otherwise, information for all security group is
-                returned. If you specify a group that does not exist, a fault is returned.
+                Wenn Namen von Sicherheitsgruppen spezifiziert werden, werden Informationen über
+                diese Sicherheitsgruppen zurückgegeben. Andernfalls, werden Informationen über
+                alle Sicherheitsgruppen zurückgegeben. Wenn eine Gruppe spezifiziert wird, die
+                nicht existiert wird ein Fehler zurückgegeben.
             </para>
             <para>
-                <code>describe</code> will return an array containg information
-                about security groups which includes the ownerId, gropuName,
-                groupDescription and an array containing all the rules for that security
-                group.
+                <code>describe</code> gibt ein Array zurück das Informationen über
+                Sicherheitsgruppen enthält welches ownerId, groupName, groupDescription und ein
+                Array enthält das alle Regeln dieser Sicherheitsgruppe enthält.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -73,7 +69,7 @@ $return = $ec2_ebs->describe('mygroup');
         </example>
 
         <example id="zend.service.amazon.ec2.securitygroups.maintenance.delete">
-            <title>Delete a Security Group</title>
+            <title>Eine Sicherheitsgruppe löschen</title>
             <para>
                 <code>delete</code> will remove the security group. If you attempt to
                 delete a security group that contains instances, a fault is returned.

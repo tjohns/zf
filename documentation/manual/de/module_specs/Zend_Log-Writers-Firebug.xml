@@ -52,7 +52,7 @@
         <title>Loggen mit <code>Zend_Controller_Front</code></title>
 
         <programlisting role="php"><![CDATA[
-// Platziere das in der Bootstrap Datei bevor der Frontcontroller ausgeführt wird
+// In der Bootstrap Datei platzieren bevor der Frontcontroller ausgeführt wird
 $writer = new Zend_Log_Writer_Firebug();
 $logger = new Zend_Log($writer);
 

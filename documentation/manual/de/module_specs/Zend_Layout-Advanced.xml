@@ -153,13 +153,13 @@ $layoutVars   = $placeholders->placeholder('Zend_Layout')->getArrayCopy();
         <itemizedlist>
             <listitem>
                 <para>
-                    'foo' wird transformiert zu 'foo.phtml'.
+                    'foo' wird zu 'foo.phtml' transformiert.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    'FooBarBaz' will be transformed to 'foo-bar-baz.phtml'.
+                    'FooBarBaz' wird zu 'foo-bar-baz.phtml' transformiert.
                 </para>
             </listitem>
         </itemizedlist>
