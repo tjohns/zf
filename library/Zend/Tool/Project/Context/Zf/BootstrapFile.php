@@ -65,16 +65,7 @@ class Zend_Tool_Project_Context_Zf_BootstrapFile extends Zend_Tool_Project_Conte
             'classes' => array(
                 new Zend_CodeGenerator_Php_Class(array(
                     'name' => 'Bootstrap',
-                    'extendedClass' => 'Zend_Application_Bootstrap_Base',
-                    'methods' => array(
-                        new Zend_CodeGenerator_Php_Method(array(
-                            'name' => 'run',
-                            'body' => <<<EOS
-\$this->bootstrap('frontController');
-\$this->frontController->dispatch();
-EOS
-                        ))
-                    ),
+                    'extendedClass' => 'Zend_Application_Bootstrap_Bootstrap',
                 )),
             )
         ));
