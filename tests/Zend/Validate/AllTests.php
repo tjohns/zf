@@ -68,6 +68,11 @@ require_once 'Zend/Validate/CcnumTest.php';
 require_once 'Zend/Validate/DateTest.php';
 
 /**
+ * @see Zend_Validate_Db_AllTests
+ */
+require_once 'Zend/Validate/Db/AllTests.php';
+
+/**
  * @see Zend_Validate_DigitsTest
  */
 require_once 'Zend/Validate/DigitsTest.php';
@@ -188,6 +193,7 @@ class Zend_Validate_AllTests
         $suite->addTestSuite('Zend_Validate_BetweenTest');
         $suite->addTestSuite('Zend_Validate_CcnumTest');
         $suite->addTestSuite('Zend_Validate_DateTest');
+        $suite->addTest(Zend_Validate_Db_AllTests::suite());
         $suite->addTestSuite('Zend_Validate_DigitsTest');
         $suite->addTestSuite('Zend_Validate_EmailAddressTest');
         $suite->addTest(Zend_Validate_File_AllTests::suite());
