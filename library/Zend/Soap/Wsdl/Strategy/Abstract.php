@@ -20,6 +20,8 @@
  * @version    $Id$
  */
 
+require_once "Interface.php";
+
 /**
  * Abstract class for Zend_Soap_Wsdl_Strategy.
  *

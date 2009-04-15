@@ -19,6 +19,8 @@
  * @version    $Id$
  */
 
+require_once "Abstract.php";
+
 class Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence extends Zend_Soap_Wsdl_Strategy_Abstract
 {
     /**
