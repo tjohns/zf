@@ -23,7 +23,7 @@
 /**
  * Resource for setting navigation structure
  *
- * @uses       Zend_Application_Resource_Base
+ * @uses       Zend_Application_Resource_ResourceAbstract
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
@@ -31,7 +31,8 @@
  * @author     Dolf Schimmel
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Resource_Navigation extends Zend_Application_Resource_Base
+class Zend_Application_Resource_Navigation 
+    extends Zend_Application_Resource_ResourceAbstract
 {
     const DEFAULT_REGISTRY_KEY = 'Zend_Navigation';
 
@@ -41,7 +42,7 @@ class Zend_Application_Resource_Navigation extends Zend_Application_Resource_Bas
     protected $_container;
 
     /**
-     * Defined by Zend_Application_Resource_IResource
+     * Defined by Zend_Application_Resource_Resource
      *
      * @return void
      */
@@ -54,6 +55,7 @@ class Zend_Application_Resource_Navigation extends Zend_Application_Resource_Bas
         }
 
         $this->store();
+        return $this->_container;
     }
 
     /**
