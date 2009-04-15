@@ -216,7 +216,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
      *
      * @param string|array $instaceId       Set of instances IDs of which to get the status.
      */
-    public function describe($instanceId)
+    public function describe($instanceId = null)
     {
         $params = array();
         $params['Action'] = 'DescribeInstances';
