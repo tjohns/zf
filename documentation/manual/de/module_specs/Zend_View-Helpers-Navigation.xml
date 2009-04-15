@@ -48,63 +48,58 @@
             </listitem>
         </itemizedlist>
 
-        All built-in helpers extend
-        <classname>Zend_View_Helper_Navigation_Abstract</classname>, which
-        adds integration with <link linkend="zend.acl">ACL</link> and
-        <link linkend="zend.translate">translation</link>. The abstract class
-        implements the interface
-        <classname>Zend_View_Helper_Navigation_Interface</classname>, which
-        defines the following methods:
+        Alle eingebauten Helfer erweitern
+        <classname>Zend_View_Helper_Navigation_Abstract</classname>, welches die Integration von
+        <link linkend="zend.acl">ACL</link> und <link linkend="zend.translate">Übersetzung</link>
+        hinzufügt. Die abstrakte Klasse implementiert das Interface
+        <classname>Zend_View_Helper_Navigation_Interface</classname> welches die folgenden
+        Methoden definiert:
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>{get|set}Container()</code> gets/sets the navigation
-                    container the helper should operate on by default, and
-                    <code>hasContainer()</code> checks if the helper
-                    has container registered.
+                    <code>{get|set}Container()</code> empfängt/setzt den Navigations Container
+                    mit dem der Helfer standardmäßig arbeiten soll, und <code>hasContainer()</code>
+                    prüft ob der Helfer Container registriert hat.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>{get|set}Translator()</code> gets/sets the
-                    translator used for translating labels and titles, and
-                    <code>{get|set}UseTranslator()</code> controls whether
-                    the translator should be enabled. The method
-                    <code>hasTranslator()</code> checks if the helper has
-                    a translator registered.
+                    <code>{get|set}Translator()</code> empfängt/setzt den Übersetzer der für die
+                    Übersetzung von Überschriften und Titelm verwendet wird, und
+                    <code>{get|set}UseTranslator()</code> kontrolliert ob der Übersetzer aktiviert
+                    werden soll. Die Methode <code>hasTranslator()</code> prüft ob der
+                    Helfer einen Übersetzer registriert hat.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <code>{get|set}Acl()</code>, <code>{get|set}Role()</code>,
-                    gets/sets ACL (<classname>Zend_Acl</classname>) instance and
-                    role (<code>string</code> or
-                    <classname>Zend_Acl_Role_Interface</classname>) used for
-                    filtering out pages when rendering, and
-                    <code>{get|set}UseAcl()</code> controls whether ACL should
-                    be enabled. The methods <code>hasAcl()</code> and
-                    <code>hasRole()</code> checks if the helper has an ACL
-                    instance or a role registered.
+                    empfängt/setzt ACL (<classname>Zend_Acl</classname>) Instanzen und Rollen
+                    (<code>string</code> oder <classname>Zend_Acl_Role_Interface</classname>)
+                    die bei der Darstellung für das Filtern von Seiten verwendet werden, und
+                    <code>{get|set}UseAcl()</code> kontrolliert ob ACL aktiviert werden soll.
+                    Die Methoden <code>hasAcl()</code> und <code>hasRole()</code> prüfen ob
+                    der Helfer eine ACL Instanz oder Rolle registriert hat.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>__toString()</code>, magic method to ensure that
-                    helpers can be rendered by <code>echo</code>ing the
-                    helper instance directly.
+                    <code>__toString()</code>, die magische Methode stellt sicher das der Helfer,
+                    durch den direkten Aufruf von <code>echo</code> an der Instanz des Helfers,
+                    dargestellt werden kann.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>render()</code>, must be implemented by concrete
-                    helpers to do the actual rendering.
+                    <code>render()</code>, muß von konkreten Helfern implementiert werden um die
+                    Darstellung durchzuführen.
                 </para>
             </listitem>
          </itemizedlist>
 
-         In addition to the method stubs from the interface, the abstract
-         class also implements the following methods:
+         Zusätzlich zu den Methoden die vom Interface kommen, implementiert die abstrakte Klasse
+         die folgenden Methoden:
 
          <itemizedlist>
             <listitem>

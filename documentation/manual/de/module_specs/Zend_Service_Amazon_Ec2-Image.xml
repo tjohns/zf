@@ -96,29 +96,36 @@ $ip = $ec2_img->deregister($imageId);
             </table>
             </para>
             <para>
-                The list of AMIs returned can be modified by specifying AMI IDs, AMI owners,
-                or users with launch permissions. If no options are specified, Amazon EC2 returns
-                all AMIs for which the user has launch permissions.
+                Die Liste der zurückgegebenen AMIs kann durch die Spezifikation von AMI IDs, AMI
+                Eigentümer oder Benutzern mit Starterechtigung, geändert werden. Wenn keine
+                Option spezifiziert wird, gibt Amazon EC2 alle AMIs zurück für die der Benutzer
+                eine Startberechtigung hat.
             </para>
             <para>
-                If you specify one or more AMI IDs, only AMIs that have the specified IDs are returned.
-                If you specify an invalid AMI ID, a fault is returned. If you specify an AMI ID for which
-                you do not have access, it will not be included in the returned results.
+                Wenn eine oder mehrere AMI IDs spezifiziert werden, werden nur die AMIs
+                zurückgegeben die die spezifizierten IDs besitzen. Wenn man eine ungültige AMI ID
+                spezifiziert, wird ein Fehler zurückgegeben. Wenn man eine AMI ID spezifiziert
+                für die man keinen Zugriff hat, wird diese nicht in den zurückgegebenen Ergebnissen
+                enthalten sein.
             </para>
             <para>
-                If you specify one or more AMI owners, only AMIs from the specified owners and for
-                which you have access are returned. The results can include the account IDs of the
-                specified owners, amazon for AMIs owned by Amazon or self for AMIs that you own.
+                Wenn ein oder mehrere AMI Eigentümer spezifiziert werden, werden nur die AMIs der
+                spezifizierten Eigentümer, für die man auch Zugriffsrechte hat, zurückgegeben.
+                Die Ergebnisse können account für die Account IDs des spezifizierten Eigentümers
+                enthalten, amazon für AMIs die Amazon selbst gehören oder self für AMIs die man
+                selbst besitzt.
             </para>
             <para>
-                If you specify a list of executable users, only users that have launch permissions
-                for the AMIs are returned. You can specify account IDs (if you own the AMI(s)), self
-                for AMIs for which you own or have explicit permissions, or all for public AMIs.
+                Wenn man eine Liste von ausführbaren Benutzern spezifiziert, werden nur die
+                Benutzer zurückgegeben die eine Startberechtigung für die AMIs haben. Man kann
+                mit account, Account IDs spezifizieren (wenn man die AMIs besitzt), self für AMIs
+                die man selbst besitzt oder explizite Zugriffsrechte hat, oder all für öffentliche
+                AMIs.
             </para>
             <para>
-                <code>describe</code> returns an array for all the images that match the critera that was
-                passed in.  The array contains the imageId, imageLocation, imageState, imageOwnerId, isPublic,
-                architecture, imageTYpe, kernelId, ramdiskId and platform.
+                <code>describe</code> gibt ein Array für alle Images zurück die den übergebenen
+                Kriterien entsprechen. Das Array enthält imageId, imageLocation, imageState,
+                imageOwnerId, isPublic, architecture, imageType, kernedId, ramdiskId und platform.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -130,38 +137,39 @@ $ip = $ec2_img->allocate();
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.images.attribute">
-        <title>AMI Attribute Utilities</title>
+        <title>Utilities für AMI Attribute</title>
 
         <example id="zend.service.amazon.ec2.images.attribute.modify">
-            <title>Modify Image Attributes</title>
-            <para>Modifies an attribute of an AMI</para>
+            <title>Image Attribute verändern</title>
+            <para>Ein Attribut eines AMI verändern</para>
             <para>
             <table id="zend.service.amazon.ec2.images.attribute.modify-table">
-                <title>Valid Attributes</title>
+                <title>Gültige Attribute</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
                             <entry>Name</entry>
-                            <entry>Description</entry>
+                            <entry>Beschreibung</entry>
                         </row>
                     </thead>
                     <tbody>
                         <row>
                             <entry><code>launchPermission</code></entry>
                             <entry><para>
-                                Controls who has permission to launch the AMI. Launch permissions
-                                can be granted to specific users by adding userIds.
-                            </para><para>To make the AMI public, add the all group.</para></entry>
+                                Kontrolliert wer die Berechtigung hat das AMI zu starten.
+                                Startberechtigung kann spezifischen Benutzern durch das
+                                hinzufügen von userIds gegeben werden.
+                            </para><para>Um das AMI öffentlich zu machen, sollte man die
+                                add Gruppe hinzufügen.</para></entry>
                         </row>
                         <row>
                             <entry><code>productCodes</code></entry>
                             <entry><para>
-                                Associates a product code with AMIs. This allows developers to
-                                charge users for using AMIs. The user must be signed up for the
-                                product before they can launch the AMI.
-                                <emphasis>This is a write once attribute;
-                                after it is set, it cannot be changed or
-                                removed.</emphasis>
+                                Assoziiert einen Produktcode mit AMIs. Das erlaubt es Entwicklern
+                                Benutzer für die Verwendung von AMIs zu benennen. Der Benutzer
+                                muß für das Produkt angemeldet sein bevor er das AMI starten kann.
+                                <emphasis>Das ist ein Write-Once Attribut; nachdem es gesetzt wurde
+                                kann es nicht mehr geändert oder gelöscht werden.</emphasis>
                             </para></entry>
                         </row>
                     </tbody>
@@ -169,18 +177,18 @@ $ip = $ec2_img->allocate();
             </table>
             </para>
             <para>
-                <code>modifyAttribute</code> returns boolean ture or false.
+                <code>modifyAttribute</code> gibt ein boolsches true oder false zurück.
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
-// modify the launchPermission of an AMI
+// Ändert die Startberechtigung (launchPermission) eines AMI
 $return = $ec2_img->modifyAttribute('imageId',
                                     'launchPermission',
                                     'add',
                                     'userId',
                                     'userGroup');
 
-// set the product code of the AMI.
+// Setzt den Produktcode des AMI.
 $return = $ec2_img->modifyAttribute('imageId',
                                     'productCodes',
                                     'add',
@@ -193,10 +201,11 @@ $return = $ec2_img->modifyAttribute('imageId',
         </example>
 
         <example id="zend.service.amazon.ec2.images.attribute.reset">
-            <title>Reset an AMI Attribute</title>
+            <title>Resetieren eines AMI Attributes</title>
             <para>
-                <code>resetAttribute</code> will reest the attirbute of an AMI to its default value.
-                <emphasis>The productCodes attribute cannot be reset.</emphasis>
+                <code>resetAttribute</code> resetiert die Attribute eines AMI zu dessen
+                Standardwerten.
+                <emphasis>Das productCodes Attribut kann nicht resetiert werden.</emphasis>
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');
@@ -206,15 +215,15 @@ $return = $ec2_img->resetAttribute('imageId', 'launchPermission');
         </example>
 
         <example id="zend.service.amazon.ec2.images.attribute.describe">
-            <title>Describe AMI Attribute</title>
+            <title>AMI Attribute beschreiben</title>
             <para>
-                <code>describeAttribute</code> returns information about an attribute of an AMI.
-                Only one attribute can be specified per call.  Currently only launchPermission and
-                productCodes are supported.
+                <code>describeAttribute</code> gibt Informationen über ein Attribut eines AMI
+                zurück. Pro Aufruf kann nur ein Attribut spezifiziert werden. Aktuell werden
+                nur launchPermission und productCodes unterstützt.
             </para>
             <para>
-                <code>describeAttribute</code> returns an array with the the value of the attirbute
-                that was requested.
+                <code>describeAttribute</code> gibt ein Array mit dem Wert des Attributes zurück
+                das angefragt wurde.
             </para>
             <programlisting role="php"><![CDATA[
 $ec2_img = new Zend_Service_Amazon_Ec2_Image('aws_key','aws_secret_key');

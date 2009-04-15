@@ -58,7 +58,7 @@ date_default_timezone_set('Europe/Berlin');
 ]]>
                 </programlisting>
             </example>
-            <emphasis role="strong">Wenn eine <code>Zend_Date</code> Instanz erzeugt wird, wird die
+            <emphasis role="strong">Wenn eine Zend_Date Instanz erzeugt wird, wird die
             Zeitzone des aktuellen Benutzers automatisch als aktuelle Standardzeitzone übernommen</emphasis>.
             Das erspart das explizite setzen der Sommer-/Winterzeitumstellung (DST).
         </para>
@@ -109,7 +109,7 @@ date_default_timezone_set('Europe/Berlin');
                     Obwohl die PHP 5.2 Dokumentation erklärt: "Die gültige Spanne eines Zeitpunktes geht von
                     Fr, 13. Dez 1901 20:45:54 GMT bis Di, 19. Jan 2038 03:14:07 GMT", ermöglicht
                     <code>Zend_Date</code> mit Unterstützung der BCMath Erweiterung eine fast unbegrenzte
-                    Zeitspanne. Wenn BCMath nicht verfügbar ist, bietet <code>Zend_Date</code> eine Spanne innerhalb
+                    Zeitspanne. Wenn BCMath nicht verfügbar ist, bietet Zend_Date eine Spanne innerhalb
                     des <code>float</code>-Datentyps des verwendeten Servers. "Die Größe von float ist
                     Plattformabhängig, allerdings ist das Maximum von ~1.8e308 mit einer Genauigkeit von
                     ca. 14 Dezimalstellen ein Standardwert. (das 64 bit IEEE Format)."
@@ -131,7 +131,7 @@ date_default_timezone_set('Europe/Berlin');
                     leicht unterschiedlich mit Datum und Zeit umgehen, werden beide von <code>Zend_Date</code>
                     unterstützt, wenn die <link linkend="zend.date.constants.list">Zend_Date::ISO_8601</link>
                     Format Konstante verwendet wird. Wenn Datumszeichen mit den PHP date() Formaten "Y/m/d" oder
-                    "Y-m-d H:i:s" übereinstimmen, sollte die in <code>Zend_Date</code> eingebaute
+                    "Y-m-d H:i:s" übereinstimmen, sollte die in Zend_Date eingebaute
                     Unterstützung für ISO 8601 formatierte Daten verwendet werden.
                 </para>
             </listitem>

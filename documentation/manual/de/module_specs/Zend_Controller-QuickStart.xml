@@ -211,7 +211,7 @@ class IndexController extends Zend_Controller_Action
                 Ohne dass man dies ändert, haben Templates die Dateiendung <code>.phtml</code>, das heißt also für
                 unser Beispiel, dasss das Template <code>index/index.phtml</code> gerendert wird.
                 Zusätzlich nimmt der <code>ViewRenderer</code> automatisch an, dass das Verzeichnis
-                <code>views</code> auf der selben Ebene wie das <code>controllers</code>-Verzeichnis
+                <code>views</code> auf der selben Ebene wie das Controller Verzeichnis
                 das View-Basisverzeichnis ist, und dass die eigentlichen View-Scripts in dessen Unterverzeichnis
                 <code>views/scripts/</code> liegen. Insgesamt hat also das Template, das gerendert wird,
                 den Pfad <code>application/views/scripts/index/index.phtml</code>.

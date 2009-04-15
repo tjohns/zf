@@ -109,14 +109,17 @@ $date = new Zend_Date($unixtimestamp, Zend_Date::TIMESTAMP);
             <title>Bequeme Erstellung eines Datums von Datumswerten einer Datenbank</title>
 
             <para>
-                Die Standardausgabe von allen Datenbanken ist leicht unterschiedlich selbst wenn diese auf den
-                ersten Blick gleich ausschauen. Aber alle sind Teil des <code>ISO</code> Standards und durch Ihn
-                beschrieben. Datenbanken von denen bekannt ist das Sie durch <code>Zend_Date::ISO_8601</code>
-                erkannt werden sind zum Beispiel <code>MySQL</code> und <code>MsSQL</code>. Aber alle Datenbanken
-                können eine <code>ISO 8601</code> Repräsentation von Datumsspalten ausgeben. <code>ISO 8601</code>
-                hat den großen Vorteil das es menschlich lesbar ist. Der Nachteil ist das <code>ISO 8601</code>
-                mehr Zeit zur Berechnung benötigt als ein einfacher Unix Timestamp. Es soll auch erwähnt werden das
-                Unix Timestamps nur für Datumswerte nach dem 1 Jänner 1970 unterstützt werden.
+                Die Standardausgabe von allen Datenbanken ist leicht unterschiedlich selbst wenn
+                diese auf den ersten Blick gleich ausschauen. Aber alle sind Teil des
+                <code>ISO</code> Standards und durch Ihn beschrieben. Deshalb liegt der einfachste
+                Weg ein Datum zu erstellen in der Verwendung von <code>Zend_Date::ISO_8601</code>.
+                Datenbanken von denen bekannt ist das Sie durch <code>Zend_Date::ISO_8601</code>
+                erkannt werden sind zum Beispiel <code>MySQL</code> und <code>MsSQL</code>. Aber
+                alle Datenbanken können eine <code>ISO 8601</code> Repräsentation von Datumsspalten
+                ausgeben. <code>ISO 8601</code> hat den großen Vorteil das es menschlich lesbar
+                ist. Der Nachteil ist das <code>ISO 8601</code> mehr Zeit zur Berechnung benötigt
+                als ein einfacher Unix Timestamp. Es soll auch erwähnt werden das Unix Timestamps
+                nur für Datumswerte nach dem 1 Jänner 1970 unterstützt werden.
             </para>
 
             <programlisting role="php"><![CDATA[

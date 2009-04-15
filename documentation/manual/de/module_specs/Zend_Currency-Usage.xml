@@ -17,14 +17,10 @@
 
         <para>
             Angenommen 'en_US' ist, durch die Umgebung des Benutzers, als aktuelles Gebietsschema gesetzt.
-            Durch das angeben keines einzigen Parameters wärend der Erstellung der Instanz kann
+            Durch das Angeben keines einzigen Parameters wärend der Erstellung der Instanz kann
             <code>Zend_Currency</code> gesagt werden das es die aktuelle Währung des Gebietsschemas 'en_US'
             verwenden soll. Das führt zu einer Instanz mit US Dollar als aktueller Währung mit den
             Formatregeln von 'en_US'.
-            Expect you have 'en_US' set as actual locale through the users or your environment. By using no
-            parameter while creating the instance you say <code>Zend_Currency</code> to use the actual currency
-            from the locale 'en_US'. This leads to an instance with US Dollar set as actual currency with the
-            formatting rules from 'en_US'.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -251,13 +247,9 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
         </itemizedlist>
 
         <para>
-            So if you are in need to change the format, you can use the
-            <emphasis role="strong">setFormat()</emphasis> method. It takes an array which includes all
-            options which you want to change. The <code>options</code> array supports the following
-
             Wenn man also das Format ändern muß, kann die <emphasis role="strong">setFormat()</emphasis>
             Methode verwendet werden. Diese akzeptiert ein Array welches alle Optionen enthält die geändert
-            werden sollen. Das <code>options</code> Array unterstützt folgendes
+            werden sollen. Das <code>options</code> Array unterstützt folgenden Einstellungen:
         </para>
 
         <itemizedlist mark='opencircle'>

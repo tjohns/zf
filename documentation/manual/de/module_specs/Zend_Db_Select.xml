@@ -397,8 +397,8 @@ $select = $db->select()
                 Methode anstelle von direkter Eingabe der Quotierungszeichen verwendet wird, da
                 einige RDBMS Marken nicht-Standard Symbole für die Quotierung von Bezeichnern
                 verwenden. Die <code>quoteIdentifier()</code> Methode wählt die passenden
-                Quotierungssymbole für den Adaptertyp aus, und ersetzt außerdem alle
-                Quotierungszeichen innerhalb des Bezeichners.
+                Quotierungssymbole für den Adaptertyp aus. Die <code>quoteIdentifier()</code>
+                Methode ersetzt außerdem alle Quotierungszeichen innerhalb des Bezeichners.
             </para>
 
             <example id="zend.db.select.building.columns-quoteid.example">
