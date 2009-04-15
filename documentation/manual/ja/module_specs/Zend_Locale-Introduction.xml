@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13841 -->
+<!-- EN-Revision: 14905 -->
 <sect1 id="zend.locale.introduction">
 
     <title>導入</title>
@@ -255,8 +255,8 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                         const <code>Zend_Locale::ENVIRONMENT</code> -
                         PHP は、ホストサーバのロケールを
                         <code>setlocale()</code> 関数で取得します。
-                        対応するロケールが見つからない場合は FRAMEWORK による検索を行い、
-                        それでもだめなら最後は BROWSER を使用します。
+                        対応するロケールが見つからない場合は <code>FRAMEWORK</code> による検索を行い、
+                        それでもだめなら最後は <code>BROWSER</code> を使用します。
                     </para>
                 </listitem>
                 <listitem>
