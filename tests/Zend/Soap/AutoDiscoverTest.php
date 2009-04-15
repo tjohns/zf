@@ -764,4 +764,18 @@ class Zend_Soap_AutoDiscoverTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(0, substr_count($wsdl, 'tns:string[]'));
     }
+
+    /**
+     * @group ZF-5736
+     */
+    public function testAmpersandInUrlIsCorrectlyEncoded()
+    {
+        $autodiscover = new Zend_Soap_AutoDiscover();
+        $autodiscover->setUri("http://example.com/?a=b&amp;b=c");
+
+        $autodiscover->setClass("Zend_Soap_AutoDiscover_Test");
+        $wsdl = $autodiscover->toXml();
+
+        $this->assertContains("http://example.com/?a=b&amp;b=c", $wsdl);
+    }
 }

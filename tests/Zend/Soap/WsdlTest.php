@@ -606,13 +606,16 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, substr_count($xml, "ArrayOfInt"),    "ArrayOfInt should appear only once.");
     }
 
+    const URI_WITH_EXPANDED_AMP = "http://localhost/MyService.php?a=b&amp;b=c";
+    const URI_WITHOUT_EXPANDED_AMP = "http://localhost/MyService.php?a=b&b=c";
+
     /**
      * @group ZF-5736
      */
     public function testHtmlAmpersandInUrlInConstructorIsEncodedCorrectly()
     {
-        $wsdl = new Zend_Soap_Wsdl("MyService", "http://localhost/MyService.php?a=b&amp;b=c");
-        $this->assertContains("http://localhost/MyService.php?a=b&amp;b=c", $wsdl->toXML());
+        $wsdl = new Zend_Soap_Wsdl("MyService", self::URI_WITH_EXPANDED_AMP);
+        $this->assertContains(self::URI_WITH_EXPANDED_AMP, $wsdl->toXML());
     }
 
     /**
@@ -620,28 +623,9 @@ class Zend_Soap_WsdlTest extends PHPUnit_Framework_TestCase
      */
     public function testHtmlAmpersandInUrlInSetUriIsEncodedCorrectly()
     {
-        $wsdl = new Zend_Soap_Wsdl("MyService", "http://localhost/MyService.php?a=b&amp;b=c");
-        $wsdl->setUri("http://localhost/MyService.php?a=b&amp;b=c");
-        $this->assertContains("http://localhost/MyService.php?a=b&amp;b=c", $wsdl->toXML());
-    }
-
-    /**
-     * @group ZF-5736
-     */
-    public function testNormalAmpersandInUrlInConstructorIsEncodedCorrectly()
-    {
-        $wsdl = new Zend_Soap_Wsdl("MyService", "http://localhost/MyService.php?a=b&amp;b=c");
-        $this->assertContains("http://localhost/MyService.php?a=b&amp;b=c", $wsdl->toXML());
-    }
-
-    /**
-     * @group ZF-5736
-     */
-    public function testNormalAmpersandInUrlInSetUriIsEncodedCorrectly()
-    {
-        $wsdl = new Zend_Soap_Wsdl("MyService", "http://localhost/MyService.php?a=b&amp;b=c");
-        $wsdl->setUri("http://localhost/MyService.php?a=b&amp;b=c");
-        $this->assertContains("http://localhost/MyService.php?a=b&amp;b=c", $wsdl->toXML());
+        $wsdl = new Zend_Soap_Wsdl("MyService", "http://example.com");
+        $wsdl->setUri(self::URI_WITH_EXPANDED_AMP);
+        $this->assertContains(self::URI_WITH_EXPANDED_AMP, $wsdl->toXML());
     }
 }
 

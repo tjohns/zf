@@ -99,9 +99,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
      */
     public function setUri($uri)
     {
-        if(is_string($uri)) {
-            $uri = Zend_Uri::factory($uri);
-        } else if(!($uri instanceof Zend_Uri)) {
+        if(!is_string($uri) && !($uri instanceof Zend_Uri)) {
             require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("No uri given to Zend_Soap_AutoDiscover::setUri as string or Zend_Uri instance.");
         }
@@ -122,7 +120,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
      */
     public function getUri()
     {
-        if($this->_uri instanceof Zend_Uri) {
+        if($this->_uri !== null) {
             $uri = $this->_uri;
         } else {
             $schema     = $this->getSchema();
@@ -298,7 +296,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
 
                 /* <wsdl:binding>'s */
                 $operation = $wsdl->addBindingOperation($binding, $method->getName(),  $this->_operationBodyStyle, $this->_operationBodyStyle);
-                $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
+                $wsdl->addSoapOperation($operation, $uri . '#' .$method->getName());
                 /* </wsdl:binding>'s */
             }
         }
@@ -362,7 +360,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
 
                 /* <wsdl:binding>'s */
                 $operation = $wsdl->addBindingOperation($binding, $method->getName(), $this->_operationBodyStyle, $this->_operationBodyStyle);
-                $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
+                $wsdl->addSoapOperation($operation, $uri . '#' .$method->getName());
                 /* </wsdl:binding>'s */
 
                 $this->_functions[] = $method->getName();
