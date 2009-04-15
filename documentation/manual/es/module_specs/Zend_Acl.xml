@@ -27,7 +27,7 @@
                 </para>
             </listitem>
         </itemizedlist>
-        En terminos generales,
+        En términos generales,
         <emphasis role="strong">
             Los roles solicitan acceso a los recursos
         </emphasis>
@@ -52,38 +52,38 @@
             <code>Zend_Acl_Resource_Interface</code>
             para facilitar a los desarrolladores la creacción de
             recursos. Una clase solo necesita implementar su interfaz,
-            la cual consiste en un método unico,
+            la cual consiste en un método único,
             <code>getResourceId()</code>
             , para que Zend_Acl considere el objeto como un recurso.
             Adicionalmente,
             <code>Zend_Acl_Resource</code>
-            se incluye con Zend_Acl como una implementacion principal de
+            se incluye con Zend_Acl como una implementación principal de
             recursos para los desarrolladores para extenderla hasta
             donde lo deseen.
         </para>
         <para>
             Zend_Acl provee un estructura de árbol a la cual pueden ser
-            agregados multiples recursos (o "Areas con Controles de
+            agregados múltiples recursos (o "Áreas con Controles de
             Acceso").Ya que los recursos son almacenados en esta
             estructura de árbol, estos pueden ser organizados desde lo
-            general (hacia la raiz del árbol) a lo específico (hacia las
+            general (hacia la raíz del árbol) a lo específico (hacia las
             ramas del árbol). Consultas sobre un recurso específico
-            buscarán automaticamente, en la jerarquía del
+            buscarán automáticamente, en la jerarquía del
             recurso, reglas asignadas a recursos anteriores a los que
             el recurso actual haga referencia, permitiendo la herencia
             simple de reglas. Por ejemplo, si una regla por defecto se
             aplica a cada edificio en una ciudad, uno simplemente
-            podria asignar la regla a la ciudad, en lugar de asignar la
+            podría asignar la regla a la ciudad, en lugar de asignar la
             misma regla a cada edificio. Algunos edificios pueden
             necesitar excepciones a la regla, sin embargo, y esto es
-            facil de hacer en Zend_Acl asignando esta excepción a
+            fácil de hacer en Zend_Acl asignando esta excepción a
             cada edificio que necesite una excepción a la regla. Un
             recurso sólo puede heredar de un recurso padre, aunque este
             recurso padre puede tener a la vez su propio recurso padre,
             y así; sucesivamente.
         </para>
         <para>
-            Zend_Acl tambien soporta privilegios sobre recursos (ej.
+            Zend_Acl también soporta privilegios sobre recursos (ej.
             "crear","leer","actualizar", "borrar"), y el desarrollador
             puede asignar reglas que afecten o a todos los privilegios o
             a privilegios específicos sobre un recurso.
@@ -98,12 +98,12 @@
             <code>Zend_Acl_Role_Interface</code>
             para facilitar a los desarrolladores la creación de
             roles. Una clase solo necesita la implementación de su
-            interfaz, la cual consiste en un método unico,
+            interfaz, la cual consiste en un método único,
             <code>getRoleId()</code>
             , para que Zend_Acl considere que el objeto es un Rol.
             Adicionalmente,
             <code>Zend_Acl_Role</code>
-            esta incluido con Zend_Acl como una implementación principal
+            está incluido con Zend_Acl como una implementación principal
             del rol para que los desarrolladores la extiendan hasta
             donde lo deseen.
         </para>
@@ -118,9 +118,9 @@
             "sally".
         </para>
         <para>
-            Dado que la habilidad de herencia desde multiples roles es
-            muy util, multiples herencias tambien introduce cierto grado
-            de complejidad. El siguiente ejemplo ilustra la condicion de
+            Dado que la habilidad de herencia desde múltiples roles es
+            muy util, múltiples herencias tambien introduce cierto grado
+            de complejidad. El siguiente ejemplo ilustra la condición de
             ambiguedad y como Zend_Acl soluciona esto.
         </para>
         <example
@@ -201,7 +201,7 @@ echo $acl->isAllowed('unUsuario', 'unRecurso') ? 'permitido' : 'denegado';]]>
                 ". Este hecho introduce una ambigüedad debido a que
                 ahora "
                 <code>unUsuario</code>
-                " esta tanto denegado como permitido para acceder a "
+                " está tanto denegado como permitido para acceder a "
                 <code>unRecurso</code>
                 ", por la razon de tener un conflicto de reglas
                 heredadas de diferentes roles padre.
@@ -222,7 +222,7 @@ echo $acl->isAllowed('unUsuario', 'unRecurso') ? 'permitido' : 'denegado';]]>
         <note>
             <para>
                 Cuando se especifican múltiples padres para un Rol, se
-                debe tener en cuenta que el ultimo padre listado es el
+                debe tener en cuenta que el último padre listado es el
                 primero en ser buscado por reglas aplicables para una
                 solicitud de autorización.
             </para>
@@ -233,10 +233,10 @@ echo $acl->isAllowed('unUsuario', 'unRecurso') ? 'permitido' : 'denegado';]]>
         <title>Creando las Listas de Control de Acceso (ACL)</title>
 
         <para>
-            Una ACL puede representar cualquier grupo de objetos fisicos
+            Una ACL puede representar cualquier grupo de objetos físicos
             o virtuales que desee. Para propósitos de demostración,
-            sin embargo, crearemos un ACL basico para un Sistema de
-            Administracion de Contenido que mantendrá varias escalas de
+            sin embargo, crearemos un ACL básico para un Sistema de
+            Administración de Contenido que mantendrá varias escalas de
             grupos sobre una amplia variedad de áreas. Para crear un
             nuevo objeto ACL, iniciamos la ACL sin parámetros:
         </para>
@@ -260,13 +260,13 @@ $acl = new Zend_Acl();]]>
         <title>Registrando Roles</title>
 
         <para>
-            El Sistema de Administracion de Contenido casi
-            siempre necesita una jerarquia de permisos para determinar
-            las capacidad de identificación de sus usuarios. Puede haber
+            El Sistema de Administración de Contenido casi
+            siempre necesita una jerarquía de permisos para determinar
+            la capacidad de identificación de sus usuarios. Puede haber
             un grupo de 'Invitados' para permitir acceso limitado para
-            demostraciones, un grupo de 'Personal' para la mayoria de
+            demostraciones, un grupo de 'Personal' para la mayoría de
             usuarios del CMS quienes realizan la mayor parte de
-            operaciones del dia a dia, un grupo 'Editores' para las
+            operaciones del día a día, un grupo 'Editores' para las
             responsabilidades de publicación, revisión, archivo y
             eliminación de contenido, y finalmente un grupo
             'Administradores' cuyas tareas pueden incluir todas las de los
@@ -276,7 +276,7 @@ $acl = new Zend_Acl();]]>
             pueden ser representados en un registro de roles,
             permitiendo a cada grupo heredar los privilegios de los
             grupos 'padre', al igual que proporcionando distintos
-            privilegios solo para su grupo individual. Los permisos puede
+            privilegios solo para su grupo individual. Los permisos pueden
             ser expresados como:
         </para>
 
@@ -364,15 +364,15 @@ $acl->addRole(new Zend_Acl_Role('administrador'));]]>
             simplificado para ilustrar que las reglas se aplican a todos
             los recursos. Zend_Acl proporciona una forma práctica por la
             cual las reglas solo necesitan ser asignadas de lo general a
-            lo especifico, minimizando el numero de reglas necesarias,
+            lo especifico, minimizando el número de reglas necesarias,
             porque los recursos y roles heredan reglas que están
             definidas en sus padres.
         </para>
 
         <para>
             Consecuentemente, podemos definir un grupo razonablemente
-            complejo de reglas con un mínimo de codigo. Para aplicar
-            estos permisos basicos como están definidos arriba:
+            complejo de reglas con un mínimo de código. Para aplicar
+            estos permisos básicos como están definidos arriba:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -395,7 +395,7 @@ $acl->allow($rolInvitado, null, 'ver');
 $acl->allow('invitado', null, 'ver');
 //*/
 
-// Personal hereda el privilegio de ver de invitado, pero tambien necesita privilegios adicionales
+// Personal hereda el privilegio de ver de invitado, pero también necesita privilegios adicionales
 $acl->allow('personal', null, array('editar', 'enviar', 'revisar'));
 
 // Editor hereda los privilegios de ver, editar, enviar, y revisar de personal,
@@ -424,7 +424,7 @@ $acl->allow('administrador');]]>
             Ahora tenemos una ACL flexible que puede ser usada para
             determinar qué solicitantes tienen permisos para realizar
             funciones a través de la aplicacion web. Ejecutar
-            consultas es la forma mas simple de usar el método
+            consultas es la forma más simple de usar el método
             <code>isAllowed()</code>
             :
         </para>
