@@ -31,7 +31,8 @@
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Application_Resource_Router extends Zend_Application_Resource_Base
+class Zend_Application_Resource_Router 
+    extends Zend_Application_Resource_ResourceAbstract
 {
     /**
      * @var Zend_Controller_Router_Rewrite
@@ -39,20 +40,13 @@ class Zend_Application_Resource_Router extends Zend_Application_Resource_Base
     protected $_router;
 
     /**
-     * Defined by Zend_Application_Resource_IResource
+     * Defined by Zend_Application_Resource_Resource
      *
-     * @return void
+     * @return Zend_Controller_Router_Rewrite
      */
     public function init()
     {
-        $options = $this->getOptions();
-        if(!isset($options['route'])) {
-            $options['route'] = array();
-        }
-
-        $this->getBootstrap()->bootstrap('Frontcontroller');
-        $this->_router = $this->getBootstrap()->frontController;
-        $this->_router->addConfig($options['routes']);
+        return $this->getRouter();
     }
 
     /**
@@ -62,6 +56,19 @@ class Zend_Application_Resource_Router extends Zend_Application_Resource_Base
      */
     public function getRouter()
     {
+        if (null === $this->_router) {
+            $bootstrap = $this->getBootstrap();
+            $bootstrap->bootstrap('FrontController');
+            $front = $bootstrap->getContainer()->frontcontroller;
+
+            $options = $this->getOptions();
+            if(!isset($options['routes'])) {
+                $options['routes'] = array();
+            }
+
+            $this->_router = $front->getRouter();
+            $this->_router->addConfig(new Zend_Config($options['routes']));
+        }
         return $this->_router;
     }
 }
