@@ -1121,6 +1121,112 @@ echo $view->validationTextBox(
             </listitem>
         </itemizedlist>
     </sect3>
+
+    <sect3 id="zend.dojo.view.dijit.custom">
+        <title>Custom Dijits</title>
+
+        <para>
+            If you delve into Dojo much at all, you'll find yourself writing
+            custom dijits, or using experimental dijits from Dojox. While Zend
+            Framework cannot support every dijit directly, it does provide some
+            rudimentary support for arbitrary dijit types via the
+            <code>CustomDijit</code> view helper.
+        </para>
+
+        <para>
+            The <code>CustomDijit</code> view helper's API is exactly that of
+            any other dijit, with one major difference: the third "params"
+            argument <emphasis>must</emphasis> contain the attribute "dojotype".
+            The value of this attribute should be the Dijit class you plan to
+            use.
+        </para>
+
+        <para>
+            <code>CustomDijit</code> extends the base
+            <code>DijitContainer</code> view helper, which also allows it to
+            capture content (using the
+            <code>captureStart()</code>/<code>captureEnd()</code> pair of
+            methods). <code>captureStart()</code> also expects that you pass the
+            "dojoType" attribute to its "params" argument.
+        </para>
+
+        <example id="zend.dojo.view.dijit.custom.example">
+            <title>Using CustomDijit to render a dojox.layout.ContentPane</title>
+
+            <para>
+                <code>dojox.layout.ContentPane</code> is a next-generation
+                iteration of <code>dijit.layout.ContentPane</code>, and provides
+                a superset of that class's capabilities. Until it's
+                functionality stabilizes, it will continue to live in Dojox.
+                However, if you want to use it in Zend Framework today, you can,
+                using the <code>CustomDijit</code> view helper.
+            </para>
+
+            <para>
+                At its most basic, you can do the following:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<?php echo $this->customDijit(
+    'foo', 
+    $content, 
+    array(
+        'dojoType' => 'dojox.layout.ContentPane',
+        'title'    => 'Custom pane',
+        'region'   => 'center'
+    )
+); ?>
+]]></programlisting>
+
+            <para>
+                If you wanted to capture content instead, simply use the
+                <code>captureStart()</code> method, and pass the "dojoType" to
+                the "params" argument:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<?php $this->customDijit()->captureStart(
+    'foo', 
+    array(
+        'dojoType' => 'dojox.layout.ContentPane',
+        'title'    => 'Custom pane',
+        'region'   => 'center'
+    )
+); ?>
+This is the content of the pane
+<?php echo $this->customDijit()->captureEnd('foo'); ?>
+]]></programlisting>
+
+            <para>
+                You can also extend <code>CustomDijit</code> easily to create
+                support for your own custom dijits. As an example, if you
+                extended <code>dijit.layout.ContentPane</code> to create your
+                own <code>foo.ContentPane</code> class, you could create the
+                following helper to support it:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+class My_View_Helper_FooContentPane
+    extends Zend_Dojo_View_Helper_CustomDijit
+{
+    protected $_defaultDojoType = 'foo.ContentPane';
+
+    public function fooContentPane(
+        $id = null, $value = null, 
+        array $params = array(), array $attribs = array()
+    ) {
+        return $this->customDijit($id, $value, $params, $attribs);
+    }
+}
+]]></programlisting>
+
+            <para>
+                As long as your custom dijit follows the same basic API as
+                official dijits, using or extending <code>CustomDijit</code>
+                should work correctly.
+            </para>
+        </example>
+    </sect3>
 </sect2>
 <!--
 vim:se ts=4 sw=4 et:

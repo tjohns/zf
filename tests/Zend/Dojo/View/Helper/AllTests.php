@@ -38,6 +38,7 @@ require_once 'Zend/Dojo/View/Helper/CheckBoxTest.php';
 require_once 'Zend/Dojo/View/Helper/ComboBoxTest.php';
 require_once 'Zend/Dojo/View/Helper/ContentPaneTest.php';
 require_once 'Zend/Dojo/View/Helper/CurrencyTextBoxTest.php';
+require_once 'Zend/Dojo/View/Helper/CustomDijitTest.php';
 require_once 'Zend/Dojo/View/Helper/DateTextBoxTest.php';
 require_once 'Zend/Dojo/View/Helper/FilteringSelectTest.php';
 require_once 'Zend/Dojo/View/Helper/FormTest.php';
@@ -84,6 +85,7 @@ class Zend_Dojo_View_Helper_AllTests
         $suite->addTestSuite('Zend_Dojo_View_Helper_ComboBoxTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_ContentPaneTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_CurrencyTextBoxTest');
+        $suite->addTestSuite('Zend_Dojo_View_Helper_CustomDijitTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_DateTextBoxTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_FilteringSelectTest');
         $suite->addTestSuite('Zend_Dojo_View_Helper_FormTest');
