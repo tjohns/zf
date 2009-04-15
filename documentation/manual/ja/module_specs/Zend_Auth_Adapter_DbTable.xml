@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14610 -->
+<!-- EN-Revision: 14899 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>データベースのテーブルでの認証</title>
     <sect2 id="zend.auth.adapter.dbtable.introduction">
@@ -274,5 +274,38 @@ $adapter = new Zend_Auth_Adapter_DbTable(
                 ウェブサーバは無傷なのでデータを攻撃者に悪用されることはありません。
             </para>
         </note>
+        <para>
+            もうひとつの方法は、アダプタを作成したあとで Zend_Auth_Adapter_DbTable
+            の <code>getDbSelect()</code> メソッドを使うことです。
+            このメソッドが返す Zend_Db_Select オブジェクトのインスタンスで
+            authenticate() を実行します。このメソッドは、authenticate()
+            をコールしたかどうかにかかわらず同じオブジェクトを返すことに注意しましょう。
+            このオブジェクトには識別や認証のための情報は含まれておらず、
+            authenticate() によってそれらが組み込まれます。
+        </para>
+        <para>
+            getDbSelect() メソッドを使いたくなるひとつの例としては、
+            たとえばユーザの状態のチェック、
+            つまりそのユーザアカウントが有効になっているかどうかの確認などがあります。
+        </para>
+        <programlisting role="php"><![CDATA[
+// 上の例の続き
+$adapter = new Zend_Auth_Adapter_DbTable(
+    $db,
+    'users',
+    'username',
+    'password',
+    'MD5(?)'
+);
+
+// select オブジェクトを (参照として) 取得します
+$select = $adapter->getDbSelect();
+$select->where('active = "TRUE"');
+
+// 認証。これにより、users.active = TRUE であることを保証します
+$adapter->authenticate();
+
+]]>
+        </programlisting>
     </sect2>
 </sect1>
