@@ -286,7 +286,7 @@ foreach ($commentFeed as $commentEntry) {
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoEntry = $yt->getVideoEntry('abc123813abc');
-// Die ID des Videos in diesem Beispiel ist nicht bekannt, aber wir haben die URL
+// Die ID des Videos in diesem Beispiel ist unbekannt, aber wir haben die URL
 $commentFeed = $yt->getVideoCommentFeed(null,
                                         $videoEntry->comments->href);
 ]]>
@@ -516,8 +516,8 @@ $myVideoEntry->setWhere($where);
 $uploadUrl =
     'http://uploads.gdata.youtube.com/feeds/users/default/uploads';
 
-// Versuch das Video hochzuladen, eine Zend_Gdata_App_HttpException fangen wenn Sie vorhanden ist
-// oder nur eine reguläre Zend_Gdata_App_Exception
+// Versuch das Video hochzuladen, eine Zend_Gdata_App_HttpException fangen wenn
+// Sie vorhanden ist oder nur eine reguläre Zend_Gdata_App_Exception
 
 try {
     $newEntry = $yt->insertEntry($myVideoEntry,
@@ -639,8 +639,9 @@ if ($control instanceof Zend_Gdata_App_Extension_Control) {
                   . $state->getName()
                   .' '. $state->getText();
         } else {
-            print 'Die Status Informationen des Videos konnten bis jetzt nicht empfangen'
-                  . " werden. Bitte versuchen Sie es etwas später nochmals.\n";
+            print 'Die Status Informationen des Videos konnten bis jetzt nicht'
+                . ' empfangen werden. Bitte versuchen Sie es etwas später'
+                . ' nochmals.\n";
         }
     }
 }

@@ -9,7 +9,7 @@
         bei der Konvertierung und Normalisierung zwischen verschiedenen Formaten und verschiedenen Gebietsschemata.
         Für die Manipulation von Datumszeichenketten die bereits übereinstimmen mit
         <link linkend="zend.date.constants">einem der vielen international erkannten Standardformate, oder einem der
-        lokalisierten Datumsformat</link> welche von <code>Zend_Date</code> verwendet werden.
+        lokalisierten Datumsformat welche von <code>Zend_Date</code> verwendet werden</link>.
         Die Verwendung von vordefinierten Formate bietet Vorteile, wie die Benutzung von gut getestetem Code, und
         die Sicherheit von Beweglichkeit und Interoperabilität (abhängig vom benutzten Standard). Das unten angeführte
         Beispiel folgt nicht dieser Empfehlung, da die Benutzung von nicht standardmäßigen Datumsformaten die
@@ -387,7 +387,7 @@ print_r ($date);
             <title>Testen von Daten</title>
             <programlisting role="php"><![CDATA[
 $locale = new Zend_Locale('de_AT');
-// Benutzen des Standard Datumsformates für 'de_AT'... ist das ein gültiges Datum ?
+// Standard Datumsformate für 'de_AT' benutzen... ist es ein gültiges Datum ?
 if (Zend_Locale_Format::checkDateFormat('13.Apr.2006',
                                         array('date_format' =>
                                                   Zend_Locale_Format::STANDARD,

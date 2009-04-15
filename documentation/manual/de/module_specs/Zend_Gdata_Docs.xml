@@ -53,16 +53,25 @@ $feed = $docs->getDocumentListFeed();
 /**
  * Ein spezielles Dokument hochladen
  *
- * @param Zend_Gdata_Docs $docs Das Service Objekt das für die Kommunikation mit dem Google Dokumenten Service
- *     verwendet wird.
- * @param boolean $html True wenn die Ausgabe für die Ausgabe in einem Web Browser formatiert sein soll.
- * @param string $originalFileName Der Name der Datei die hochgeladen werden soll. Der MIME-Typ dieser Datei
- *     wird von der erweiterung des Dateinamens eruiert. Zum Beispiel wird test.csv als Komma geteilter
- *     Inhalt hochgeladen und in eine Tabellenkalkulation konvertiert.
- * @param string $temporaryFileLocation (Optional) Die Datei in der die Daten für das Dokument gespeichert werden.
- *     Das wird verwendet wenn die Datei von der Maschine des Clients zum Server hochgeladen und in einer
- *     temporären Datei gespeichert wurde die keine Erweiterung hat. Wenn dieser Parameter null ist, wird die
- *     Datei von originalFileName gelesen.
+ * @param Zend_Gdata_Docs $docs Das Service Objekt das für die Kommunikation
+ *                              mit dem Google Dokument Service verwendet wird
+ * @param boolean $html True Wenn die Ausgabe für die Ausgabe in einem Web
+ *                           Browser formatiert sein soll
+ * @param string $originalFileName Der Name der Datei die hochgeladen werden
+ *                                 soll. Der MIME-Typ dieser Datei wird von der
+ *                                 Erweiterung des Dateinamens eruiert. Zum
+ *                                 Beispiel wird test.csv als Komma geteilter
+ *                                 Inhalt hochgeladen und in eine
+ *                                 Tabellenkalkulation konvertiert
+ * @param string $temporaryFileLocation (Optional) Die Datei in der die Daten
+ *                                      für das Dokument gespeichert werden.
+ *                                      Das wird verwendet wenn die Datei von
+ *                                      der Maschine des Clients zum Server
+ *                                      hochgeladen und in einer temporären
+ *                                      Datei gespeichert wurde die keine
+ *                                      Erweiterung hat. Wenn dieser Parameter
+ *                                      null ist, wird die Datei von
+ *                                      originalFileName gelesen.
  */
 function uploadDocument($docs, $html, $originalFileName,
                         $temporaryFileLocation) {
@@ -71,9 +80,9 @@ function uploadDocument($docs, $html, $originalFileName,
     $fileToUpload = $temporaryFileLocation;
   }
 
-  // Datei hochladen un in ein Google Dokument konvertieren Der originale Dateiname wird als Titel des
-  // Dokuments verwendet und der MIME Typ wird basieren auf der erweiterung des originalen Dateinamens
-  // eruiert.
+  // Datei hochladen un in ein Google Dokument konvertieren Der originale
+  // Dateiname wird als Titel des Dokuments verwendet und der MIME Typ wird
+  // basieren auf der erweiterung des originalen Dateinamens eruiert.
   $newDocumentEntry = $docs->uploadFile($fileToUpload, $originalFileName,
       null, Zend_Gdata_Docs::DOCUMENTS_LIST_FEED_URI);
 

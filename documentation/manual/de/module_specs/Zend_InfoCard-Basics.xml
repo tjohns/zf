@@ -100,7 +100,8 @@ if (isset($_POST['xmlToken'])) {
             print "PPI: {$claims->getCardID()}<br />";
             break;
         case Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID:
-            print "Die angegebenen Daten haben der Überprüfung nicht standgehalten";
+            print "Die angegebenen Daten haben der Überprüfung "
+                . "nicht standgehalten";
             break;
         default:
         case Zend_Auth_Result::FAILURE:
@@ -307,7 +308,8 @@ public function submitinfocardAction()
         return;
     } else {
         throw new
-            ZBlog_Exception("Informationskarte hat die Sicherheitsprüfungen nicht bestanden");
+            ZBlog_Exception("Informationskarte hat die Sicherheitsprüfungen "
+                          . "nicht bestanden");
     }
 }
 ]]>
@@ -349,7 +351,8 @@ class myAdapter implements Zend_InfoCard_Adapter_Interface
                                    $assertionID,
                                    $conditions)
     {
-        /* Die durch ID und URI angegebene Assertion und Ihre Konditionen speichern */
+        /* Die durch ID und URI angegebene Assertion
+           und Ihre Konditionen speichern */
     }
 
     public function retrieveAssertion($assertionURI, $assertionID)

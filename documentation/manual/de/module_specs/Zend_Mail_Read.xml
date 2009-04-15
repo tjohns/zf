@@ -156,9 +156,11 @@ $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
         </para>
 
         <programlisting role="php"><![CDATA[
-// Beispiel für Zend_Mail_Storage_Pop3, funktioniert auch für Zend_Mail_Storage_Imap
+// Beispiel für Zend_Mail_Storage_Pop3
+// funktioniert auch für Zend_Mail_Storage_Imap
 
-// SSL mit einem unterschiedlichen Port verwenden (Standard ist 995 für Pop3 und 993 für Imap)
+// SSL mit einem unterschiedlichen Port verwenden
+// (Standard ist 995 für Pop3 und 993 für Imap)
 $mail = new Zend_Mail_Storage_Pop3(array('host'     => 'example.com',
                                          'user'     => 'test',
                                          'password' => 'test',
@@ -554,8 +556,8 @@ echo '</select>';
         </para>
 
         <programlisting role="php"><![CDATA[
-// Abhängig vom Mail Speicher und seinen Einstellungen $rootFolder->Archive->2005
-// ist das gleiche wie:
+// Abhängig vom Mail Speicher und seinen Einstellungen
+// $rootFolder->Archive->2005 ist das gleiche wie:
 //   /Archive/2005
 //  Archive:2005
 //  INBOX.Archive.2005
@@ -750,9 +752,12 @@ $mail = new Example_Mail_Pop3_Knock(array('host'        => 'localhost',
 $mail = new Zend_Mail_Storage_Writable_Maildir(array('dirname' =>
                                                    '/home/test/mail/'));
 $mail->setQuota(true); // true zum einschalten, false zum ausschalten
-echo 'Quotenprüfung ist jetzt ', $mail->getQuota() ? 'eingeschaltet' : 'ausgeschaltet', "\n";
-// Quotenprüfung kann verwendet werden selbst wenn die Quotenprüfung ausgeschaltet ist
-echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quote', "\n";
+echo 'Quotenprüfung ist jetzt ', $mail->getQuota() ? 'eingeschaltet'
+                                                   : 'ausgeschaltet', "\n";
+// Quotenprüfung kann verwendet werden
+// selbst wenn die Quotenprüfung ausgeschaltet ist
+echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote'
+                                      : 'nicht über der Quote', "\n";
 ]]>
             </programlisting>
 
@@ -762,7 +767,8 @@ echo 'Sie sind ', $mail->checkQuota() ? 'über der Quote' : 'nicht über der Quo
 
             <programlisting role="php"><![CDATA[
 $quota = $mail->checkQuota(true);
-echo 'Sie sind ', $quota['over_quota'] ? 'über der Quote' : 'nicht über der Quote', "\n";
+echo 'Sie sind ', $quota['over_quota'] ? 'über der Quote'
+                                       : 'nicht über der Quote', "\n";
 echo 'Sie haben ',
     $quota['count'],
     ' von ',

@@ -27,7 +27,8 @@
 
         <programlisting role="php"><![CDATA[
 $backendOptions = array(
-    'cache_dir' => './tmp/' // Verzeichnis in welchem die geswappten Memory Blöcke abgelegt werden
+    // Verzeichnis in dem die geswappten Memory Blöcke abgelegt werden
+    'cache_dir' => './tmp/'
 );
 
 $memoryManager = Zend_Memory::factory('File', $backendOptions);
@@ -185,8 +186,8 @@ function foo()
                 der <code>getMemoryLimit()</code> und <code>setMemoryLimit($newLimit)</code>
                 Methoden:
                 <programlisting role="php"><![CDATA[
-$oldLimit = $memoryManager->getMemoryLimit();  // Memory Limit in Bytes empfangen
-$memoryManager->setMemoryLimit($newLimit);     // Das Memory Limit in Bytes setzen
+$oldLimit = $memoryManager->getMemoryLimit(); // Memorylimit in Bytes empfangen
+$memoryManager->setMemoryLimit($newLimit);    // Memorylimit in Bytes setzen
 ]]>
                 </programlisting>
             </para>

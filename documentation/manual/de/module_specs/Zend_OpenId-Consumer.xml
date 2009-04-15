@@ -142,7 +142,7 @@ if ($consumer->verify($_GET, $id)) {
         </para>
 
         <example id="zend.openid.consumer.example-2">
-            <title>Das komplette OpenID Login Skript</title>
+            <title>Das komplette Skript für ein OpenID Login</title>
             <programlisting role="php"><![CDATA[
 $status = "";
 if (isset($_POST['openid_action']) &&
@@ -619,7 +619,8 @@ if ($consumer->verify($_GET, $id, $sreg)) {
         echo "Email: " . htmlspecialchars($data['email']) . "<br>\n";
     }
     if (isset($data['fullname'])) {
-        echo "Vollständiger Name: " . htmlspecialchars($data['fullname']) . "<br>\n";
+        echo "Vollständiger Name: " . htmlspecialchars($data['fullname'])
+           . "<br>\n";
     }
 } else {
     echo "UNGÜLTIG " . htmlspecialchars($id);

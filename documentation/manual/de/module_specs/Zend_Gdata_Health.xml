@@ -206,7 +206,7 @@ function setupClient($singleUseToken = null) {
                                                               $session,
                                                               $authSubHandler);
 
-         // 1 - erlanbt es Notizen zu schicken && erlaubt das lesen von Profildaten
+         // 1 - Erlaubt es Notizen zu schicken und das Lesen von Profildaten
         $permission = 1;
         $authSubURL .= '&permission=' . $permission;
 
@@ -214,7 +214,8 @@ function setupClient($singleUseToken = null) {
     } else {
         $client = new Zend_Gdata_HttpClient();
 
-        // Das setzt den privaten Schlüssel mit dem nachfolgende Anfragen signiert werden
+        // Setzen des privaten Schlüssels mit dem nachfolgende Anfragen
+        // signiert werden
         $client->setAuthSubPrivateKeyFile('/path/to/your/rsa_private_key.pem',
                                           null,
                                           true);

@@ -110,7 +110,7 @@
             Jeder Computer benutzt Gebietsschemata, selbst wenn Sie es nicht wissen. Anwendungen welche keine
             Unterstützung für Lokalisierung bieten, unterstützen zumindest genau ein Gebietsschema (das
             Gebietsschema des Authors). Wenn eine Klasse oder Funktion Lokalisierung verwendet sagen wir sie ist
-            Lokalisierbar. Aber wie weiß der Code welches Gebietsschema ein Benutzer erwartet ?
+            <code>Lokalisierbar</code>. Aber wie weiß der Code welches Gebietsschema ein Benutzer erwartet ?
         </para>
 
         <para>
