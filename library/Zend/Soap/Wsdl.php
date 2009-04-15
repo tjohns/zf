@@ -75,7 +75,7 @@ class Zend_Soap_Wsdl
         if ($uri instanceof Zend_Uri_Http) {
             $uri = $uri->getUri();
         }
-        $this->_uri = $uri;
+        $this->_uri = htmlspecialchars($uri);
 
         /**
          * @todo change DomDocument object creation from cparsing to construxting using API
@@ -112,7 +112,7 @@ class Zend_Soap_Wsdl
             $uri = $uri->getUri();
         }
         $oldUri = $this->_uri;
-        $this->_uri = $uri;
+        $this->_uri = htmlspecialchars($uri);
 
         if($this->_dom !== null) {
             // @todo: This is the worst hack ever, but its needed due to design and non BC issues of WSDL generation
