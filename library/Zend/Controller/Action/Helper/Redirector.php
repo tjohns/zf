@@ -346,9 +346,6 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
         // prevent header injections
         $url = str_replace(array("\n", "\r"), '', $url);
 
-        $exit        = $this->getExit();
-        $prependBase = $this->getPrependBase();
-        $code        = $this->getCode();
         if (null !== $options) {
             if (isset($options['exit'])) {
                 $this->setExit(($options['exit']) ? true : false);
