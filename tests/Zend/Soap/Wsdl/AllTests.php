@@ -4,8 +4,7 @@ require_once dirname(__FILE__)."/../../../TestHelper.php";
 
 require_once "ArrayOfTypeComplexStrategyTest.php";
 require_once "ArrayOfTypeSequenceStrategyTest.php";
-require_once "ElementTest.php";
-require_once "ParserTest.php";
+require_once "DefaultComplexTypeTest.php";
 
 class Zend_Soap_Wsdl_AllTests
 {
@@ -15,8 +14,7 @@ class Zend_Soap_Wsdl_AllTests
 
         $suite->addTestSuite('Zend_Soap_Wsdl_ArrayOfTypeComplexStrategyTest');
         $suite->addTestSuite('Zend_Soap_Wsdl_ArrayOfTypeSequenceStrategyTest');
-        $suite->addTestSuite('Zend_Soap_Wsdl_ElementTest');
-        $suite->addTestSuite('Zend_Soap_Wsdl_ParserTest');
+        $suite->addTestSuite('Zend_Soap_Wsdl_DefaultComplexTypeTest');
 
         return $suite;
     }
