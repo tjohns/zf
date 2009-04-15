@@ -85,7 +85,7 @@ pdf-print-volume1: $(MANUAL_PRINT1_XML)
 	"$(FOP)" -fo ZendFramework.fo -pdf ZendFrameworkVolume1.pdf
 
 pdf-print-volume2: $(MANUAL_PRINT2_XML)
-	$(XSLTPROC) --xinclude --output ZendFramework.fo $(DOCBOOK_FO_XSL) $(MANUAL_PRINT1_XML)
+	$(XSLTPROC) --xinclude --output ZendFramework.fo $(DOCBOOK_FO_XSL) $(MANUAL_PRINT2_XML)
 	"$(FOP)" -fo ZendFramework.fo -pdf ZendFrameworkVolume2.pdf
 
 pdf-print: pdf-print-volume1 pdf-print-volume2
@@ -116,6 +116,7 @@ clean:
 	-rm -f html/*.html html/HTML.manifest
 	-rm -Rf html/figures
 	-rm -f _temp_*.xml
+	-rm -f ./*.pdf
 
 cleanall: clean
 	-rm -f config.* configure
