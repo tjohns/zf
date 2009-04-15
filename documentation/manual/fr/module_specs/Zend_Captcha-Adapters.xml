@@ -1,14 +1,16 @@
-<!-- EN-Revision: 12740 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 14617 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.captcha.adapters">
-    <title>Adaptateurs Captcha</title>
+    <title>Adaptateurs CAPTCHA</title>
 
     <para>Les adaptateurs suivants sont fournis dans Zend Framework par défaut.</para>
 
     <sect2 id="zend.captcha.adapters.word">
         <title>Zend_Captcha_Word</title>
 
-        <para><code>Zend_Captcha_Word</code> est un adaptateur abstrait qui sert de base pour les adaptateurs Dumb,
-        Figlet et Image. Il fournit des mutateurs permettant de spécifier la taille du mot le TTL de session, l'objet
+        <para><code>Zend_Captcha_Word</code> est un adaptateur abstrait qui sert de classe de base pour les autres
+        adaptateurs CAPTCHA. Il fournit des mutateurs permettant de spécifier la taille du mot le TTL de session, l'objet
         namespace de session à utiliser pour la persistance. Aussi, il encapsule toute la logique de validation.</para>
 
         <para>Par défaut la taille du mot est de 8 caractères, le timeout de session est de 5 minutes et l'objet
@@ -40,13 +42,13 @@
             </listitem>
 
             <listitem>
-                <para><code>getWord()</code> retourne le mot généré utilisé avec le captcha. Il sera généré pour vous si
+                <para><code>getWord()</code> retourne le mot généré utilisé avec le CAPTCHA. Il sera généré pour vous si
                 aucun n'existe déjà.</para>
             </listitem>
 
             <listitem>
                 <para><code>setSession(Zend_Session_Namespace $session)</code> permet d'injecter un objet de session qui
-                sera utilisé pour faire persister le jeton de captcha. <code>getSession()</code> retourne l'objet de
+                sera utilisé pour faire persister le jeton de CAPTCHA. <code>getSession()</code> retourne l'objet de
                 session actuellement utilisé.</para>
             </listitem>
         </itemizedlist>
@@ -65,7 +67,7 @@
         <title>Zend_Captcha_Dumb</title>
 
         <para>L'adaptateur "Dumb" propose une chaine aléatoire qui doit être ressaisie, mais inversée. Ce n'est pas une
-        solution captcha idéale (un robot peut la détourner), il devrait être utilisé comme solution de remplacement
+        solution CAPTCHA idéale (un robot peut la détourner), il devrait être utilisé comme solution de remplacement
         extrême, ou pour les tests. Il étend <code>Zend_Captcha_Word</code>.</para>
     </sect2>
 
@@ -93,7 +95,7 @@
         <itemizedlist>
             <listitem>
                 <para><code>setExpiration($expiration)</code> et <code>getExpiration()</code> vous autorisent à
-                manipuler le temps maximum que l'image captcha doit rester sur le disque. En général, il s'agit d'un
+                manipuler le temps maximum que l'image CAPTCHA doit rester sur le disque. En général, il s'agit d'un
                 temps supérieur à celui de la session. Un ramasse-miettes passe régulièrement à chaque instanciation de
                 l'objet captcha Image : il détruit les images arrivées à expiration. La période d'expiration doit être
                 exprimée en secondes.</para>
@@ -154,7 +156,7 @@
         <title>Zend_Captcha_ReCaptcha</title>
 
         <para>L'adaptateur ReCaptcha utilise <link linkend="zend.service.recaptcha">Zend_Service_ReCaptcha</link> pour
-        générer des captchas. Les méthodes suivantes lui sont propres :</para>
+        générer des CAPTCHA. Les méthodes suivantes lui sont propres :</para>
 
         <itemizedlist>
             <listitem>

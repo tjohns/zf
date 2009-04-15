@@ -1,8 +1,10 @@
-<!-- EN-Revision: 12116 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EN-Revision: 14607 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.captcha.operation">
     <title>Opération Captcha</title>
 
-    <para>Tous les objets concrets CAPTCHA implémentent <code>Zend_Captcha_Adapter</code>, qui ressemble à ceci :</para>
+    <para>Tous les adaptateurs CAPTCHA implémentent <code>Zend_Captcha_Adapter</code>, qui ressemble à ceci :</para>
 
     <programlisting role="php"><![CDATA[
 interface Zend_Captcha_Adapter extends Zend_Validate_Interface
@@ -26,12 +28,12 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
 }
 ]]></programlisting>
 
-    <para>Le mutateur et l'accesseur "name" sont utilisés pour spécifier et récupérer l'identifiant du captcha.
+    <para>Le mutateur et l'accesseur "name" sont utilisés pour spécifier et récupérer l'identifiant du CAPTCHA.
     <code>getDecorator()</code> peut être utilisé pour spécifier un décorateur <code>Zend_Form</code> soit par son nom
     ou en retournant un objet décorateur. Les vraies clés sont utilisées sauf pour <code>generate()</code> et
-    <code>render()</code>. <code>generate()</code> est utilisé pour créer l'élément captcha. Ce processus typiquement
+    <code>render()</code>. <code>generate()</code> est utilisé pour créer l'élément CAPTCHA. Ce processus typiquement
     stockera l'élément en session ainsi il pourra être utilisé pour comparaison dans les requêtes suivantes.
-    <code>render()</code> est utilisé pour effectuer le rendu de l'information que représente le captcha - en image, en
+    <code>render()</code> est utilisé pour effectuer le rendu de l'information que représente le CAPTCHA - en image, en
     texte Figlet, en problème logique, etc.</para>
 
     <para>Un cas d'utilisation typique pourrait ressembler à ceci :</para>
