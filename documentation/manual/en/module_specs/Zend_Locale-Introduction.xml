@@ -225,7 +225,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                     <para>
                         const <code>Zend_Locale::ENVIRONMENT</code> - PHP publishes the host server's locale via the PHP
                         internal function <code>setlocale()</code>. If no matching locale can be found, then preference
-                        is given to FRAMEWORK and lastly BROWSER.
+                        is given to <code>FRAMEWORK</code> and lastly <code>BROWSER</code>.
                     </para>
                 </listitem>
                 <listitem>
