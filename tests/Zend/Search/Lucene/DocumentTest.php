@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * @category   Zend
  * @package    Zend_Search_Lucene
@@ -92,14 +92,44 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
                  ->addField(Zend_Search_Lucene_Field::Text('body',       'Document body, document body, document body...'));
     }
 
-    public function testHtml()
+
+    public function testHtmlHighlighting()
     {
-        $doc =  Zend_Search_Lucene_Document_Html::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
+        $doc = Zend_Search_Lucene_Document_Html::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
 
         $doc->highlight('document', '#66ffff');
         $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#66ffff\">Document</b> body.") !== false);
+    }
 
+    public function testHtmlExtendedHighlighting()
+    {
+        $doc = Zend_Search_Lucene_Document_Html::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
+        $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
+
+        $doc->highlightExtended('document',
+                                array('Zend_Search_Lucene_DocumentTest_DocHighlightingContainer',
+                                      'extendedHighlightingCallback'),
+                                array('style="color:black;background-color:#ff66ff"',
+                                      '(!!!)'));
+        $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#ff66ff\">Document</b>(!!!) body.") !== false);
+    }
+
+    public function testHtmlExtendedHighlightingCorrectWrongHtml()
+    {
+        $doc = Zend_Search_Lucene_Document_Html::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
+        $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
+
+        $doc->highlightExtended('document',
+                                array('Zend_Search_Lucene_DocumentTest_DocHighlightingContainer',
+                                      'extendedHighlightingCallback'),
+                                array('style="color:black;background-color:#ff66ff"',
+                                      '<h3>(!!!)' /* Wrong HTML here, <h3> tag is not closed */));
+        $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#ff66ff\">Document</b><h3>(!!!)</h3> body.") !== false);
+    }
+
+    public function testHtmlLinksProcessing()
+    {
         $doc =  Zend_Search_Lucene_Document_Html::loadHTMLFile(dirname(__FILE__) . '/_indexSource/_files/contributing.documentation.html', true);
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
 
@@ -190,5 +220,13 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($xlsxDocument->getFieldValue('description'), 'This is a test document which can be used to demonstrate something.');
 		$this->assertTrue($xlsxDocument->getFieldValue('body') != '');
 		$this->assertTrue( strpos($xlsxDocument->getFieldValue('body'), 'ipsum') !== false );
+    }
+}
+
+
+class Zend_Search_Lucene_DocumentTest_DocHighlightingContainer {
+    public static function extendedHighlightingCallback($stringToHighlight, $param1, $param2)
+    {
+        return '<b ' . $param1 . '>' . $stringToHighlight . '</b>' . $param2;
     }
 }
