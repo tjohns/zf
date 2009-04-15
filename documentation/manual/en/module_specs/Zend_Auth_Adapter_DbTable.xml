@@ -300,7 +300,7 @@ $adapter = new Zend_Auth_Adapter_DbTable(
             This method will return the Zend_Db_Select object instance it will use
             to complete the authenticate() routine.  It is important to note that
             this method will always return the same object regardless if authenticate()
-            has been called or not.  This object <b>will not</b> have any of the
+            has been called or not.  This object <emphasis>will not</emphasis> have any of the
             identity or credential information in it as those values are placed 
             into the select object at authenticate() time.
         </para>
