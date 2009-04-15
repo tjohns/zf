@@ -489,12 +489,13 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
      * {@link _bootstrap()} method.
      * 
      * @param  null|string|array $resource
-     * @return void
+     * @return Zend_Application_Bootstrap_BootstrapAbstract
      * @throws Zend_Application_Bootstrap_Exception When invalid argument was passed 
      */
     final public function bootstrap($resource = null)
     {
         $this->_bootstrap($resource);
+        return $this;
     }
 
     /**
