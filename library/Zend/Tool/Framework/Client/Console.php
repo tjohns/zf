@@ -147,7 +147,7 @@ class Zend_Tool_Framework_Client_Console
     {
         fwrite(STDOUT, $inputRequest->getContent() . PHP_EOL . 'zf> ');
         $inputContent = fgets(STDIN);
-        return substr($inputContent, 0, -1); // remove the return from the end of the string
+        return rtrim($inputContent); // remove the return from the end of the string
     }
     
     /**

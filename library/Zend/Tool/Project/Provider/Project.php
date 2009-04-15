@@ -11,11 +11,12 @@ class Zend_Tool_Project_Provider_Project extends Zend_Tool_Project_Provider_Abst
         if ($path == null) {
             $path = getcwd();
         } else {
+            $path = trim($path);
             if (!file_exists($path)) {
                 $created = mkdir($path);
                 if (!$created) {
                     require_once 'Zend/Tool/Framework/Client/Exception.php';
-                    throw new Zend_Tool_Framework_Client_Exception('Could not create requested project direcotry ' . $path);
+                    throw new Zend_Tool_Framework_Client_Exception('Could not create requested project directory \'' . $path . '\'');
                 }
             }
             $path = str_replace('\\', '/', realpath($path));
