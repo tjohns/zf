@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sect2 id="zend.application.core-functionality.bootstrap-ibootstrap">
-    <title>Zend_Application_Bootstrap_IBootstrap</title>
+<sect2 id="zend.application.core-functionality.bootstrap-bootstrapper">
+    <title>Zend_Application_Bootstrap_Bootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_IBootstrap</code> is the base interface
+        <code>Zend_Application_Bootstrap_Bootstrapper</code> is the base interface
         all bootstrap classes must implement. The base functionality is aimed at
         configuration, identifying resources, bootstrapping (either individual
         resources or the entire application), and dispatching the application.
@@ -13,8 +13,8 @@
         The following methods make up the definition of the interface.
     </para>
 
-    <table id="zend.application.core-functionality.bootstrap-ibootstrap.methods-table">
-        <title>Zend_Application_Bootstrap_IBootstrap Interface</title>
+    <table id="zend.application.core-functionality.bootstrap-bootstrapper.methods-table">
+        <title>Zend_Application_Bootstrap_Bootstrapper Interface</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -32,7 +32,7 @@
                         <listitem><para>
                             <code>$application</code>: <emphasis>required</emphasis>.
                             Should accept a <code>Zend_Application</code> or a
-                            <code>Zend_Application_Bootstrap_IBootstrap</code>
+                            <code>Zend_Application_Bootstrap_Bootstrapper</code>
                             object as the sole argument.
                         </para></listitem>
                     </itemizedlist></entry>
@@ -45,7 +45,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -61,7 +61,7 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the application/bootstrap object passed via the

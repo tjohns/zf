@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sect2 id="zend.application.core-functionality.bootstrap-iresourcebootstrap">
-    <title>Zend_Application_Bootstrap_IResourceBootstrap</title>
+<sect2 id="zend.application.core-functionality.bootstrap-resourcebootstrapper">
+    <title>Zend_Application_Bootstrap_ResourceBootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_IResourceBootstrap</code> is an
+        <code>Zend_Application_Bootstrap_ResourceBootstrapper</code> is an
         interface to use when a bootstrap class will be loading external
         resources -- i.e., one or more resources will not be defined directly in
         the class, but rather via plugins. It should be used in conjunction with
-        <link linkend="zend.application.core-functionality.bootstrap-ibootstrap">Zend_Application_Bootstrap_IBootstrap</link>;
-        <link linkend="zend.application.core-functionality.bootstrap-base">Zend_Application_Bootstrap_Base</link>
+        <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>;
+        <link linkend="zend.application.core-functionality.bootstrap-bootstrapabstract">Zend_Application_Bootstrap_BootstrapAbstract</link>
         implements this functionality.
     </para>
 
@@ -16,8 +16,8 @@
         The following methods make up the definition of the interface.
     </para>
 
-    <table id="zend.application.core-functionality.bootstrap-iresourcebootstrap.methods-table">
-        <title>Zend_Application_Bootstrap_IResourceBootstrap Interface</title>
+    <table id="zend.application.core-functionality.bootstrap-resourcebootstrapper.methods-table">
+        <title>Zend_Application_Bootstrap_ResourceBootstrapper Interface</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -31,12 +31,12 @@
                 <row>
                     <entry><code>registerPluginResource($resource, $options =
                             null)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>required</emphasis>.
                             A resource name or
-                            <code>Zend_Application_Resource_IResource</code>
+                            <code>Zend_Application_Resource_Resource</code>
                             object.
                         </para></listitem>
 
@@ -54,7 +54,7 @@
 
                 <row>
                     <entry><code>unregisterPluginResource($resource)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>required</emphasis>.
@@ -83,7 +83,7 @@
 
                 <row>
                     <entry><code>getPluginResource($resource)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>Zend_Application_Resource_Resource</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>required</emphasis>.
@@ -107,7 +107,7 @@
                 <row>
                     <entry><code>setPluginLoader(Zend_Loader_PluginLoader_Interface
                             $loader)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$loader</code>: <emphasis>required</emphasis>.

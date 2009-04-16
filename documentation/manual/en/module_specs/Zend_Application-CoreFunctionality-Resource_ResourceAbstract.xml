@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sect2 id="zend.application.core-functionality.resource-iresource">
-    <title>Zend_Application_Resource_IResource</title>
+<sect2 id="zend.application.core-functionality.resource-resourceabstract">
+    <title>Zend_Application_Resource_ResourceAbstract</title>
 
     <para>
-        <code>Zend_Application_Resource_IResource</code> is an interface for
-        plugin resources used with bootstrap classes implementing
-        <code>Zend_Application_Bootstrap_IResourceBootstrap</code>. Resource
-        plugins are expected to allow configuration, be bootstrap aware, and
-        implement a strategy pattern for initializing the resource.
+        <code>Zend_Application_Resource_ResourceAbstract</code> is an abstract
+        class implementing <link linkend="zend.application.core-functionality.resource-iresource">Zend_Application_Resource_Resource</link>,
+        and is a good starting point for creating your own custom plugin
+        resources.
     </para>
 
-    <table id="zend.application.core-functionality.resource-iresource.api">
-        <title>Zend_Application_Resource_IResource Interface</title>
+    <para>
+        Note: this abstract class does not implement the <code>init()</code>
+        method; this is left for definition in concrete extensions of the
+        class.
+    </para>
+
+    <table id="zend.application.core-functionality.resource-resourceabstract.api">
+        <title>Zend_Application_Resource_ResourceAbstract Methods</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -38,8 +43,8 @@
                 </row>
 
                 <row>
-                    <entry><code>setBootstrap(Zend_Application_Bootstrap_IBootstrap $bootstrap)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)</code></entry>
+                    <entry><code>Zend_Application_Resource_ResourceAbstract</code></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>required</emphasis>.
@@ -53,7 +58,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the registered bootstrap instance.
@@ -62,7 +67,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>Zend_Application_Resource_ResourceAbstract</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -82,16 +87,8 @@
                         Retrieve registered options.
                     </para></entry>
                 </row>
-
-                <row>
-                    <entry><code>init()</code></entry>
-                    <entry><code>mixed</code></entry>
-                    <entry>N/A</entry>
-                    <entry><para>
-                        Strategy pattern: run initialization of the resource.
-                    </para></entry>
-                </row>
             </tbody>
         </tgroup>
     </table>
 </sect2>
+

@@ -4,16 +4,12 @@
 
     <para>
         The Bootstrap class itself will typically be fairly minimal; often,
-        it could consist of solely the following:
+        it will simply be an empty stub extending the base bootstrap class:
     </para>
 
     <programlisting role="php"><![CDATA[
-class Bootstrap extends Zend_Application_Bootstrap_Base
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-    public function run()
-    {
-        $this->frontController->dispatch();
-    }
 }
 ]]>
     </programlisting>
@@ -42,15 +38,39 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
         array of options.
     </para>
 
+    <para>
+        If your resource method returns a value, it will be stored in a
+        container in the bootstrap. This can be useful when different resources
+        need to interact (such as one resource injecting itself into another).
+        The method <code>getResource()</code> can then be used to retrieve those
+        values.
+    </para>
+
+    <para>
+        The example below shows a resource method for intializing the request
+        object. It makes use of dependency tracking (it depends on the front
+        controller resource), fetching a resource from the bootstrap, and
+        returning a value to store in the bootstrap.
+    </para>
+
     <programlisting role="php"><![CDATA[
-class Bootstrap extends Zend_Application_Bootstrap_Base
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initRequest(array $options = array())
     {
-        // ensure front controller instance is present
-        $this->bootstrap('frontController');
-        $this->request = new Zend_Controller_Request_Http();
-        $this->frontController->setRequest($this->request);
+        // Ensure front controller instance is present, and fetch it
+        $this->bootstrap('FrontController');
+        $front = $this->getResource('FrontController');
+
+        // Initialize the request object
+        $request = new Zend_Controller_Request_Http();
+        $request->setBaseUrl('/foo');
+
+        // Add it to the front controller
+        $front->setRequest($request);
+
+        // Bootstrap will store this value in the 'request' key of its container
+        return $request;
     }
 }
 ]]>
@@ -64,7 +84,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </para>
 
     <para>
-        The other option is to use bootstrap resources. Bootstrap resources are
+        The other option is to use resource plugins. Resource plugins are
         objects that perform specific initializations, and may be specified:
     </para>
 
@@ -88,7 +108,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </itemizedlist>
 
     <para>
-        Resources implement <code>Zend_Application_Bootstrap_Resource</code>,
+        Resource plugins implement <code>Zend_Application_Bootstrap_Resource</code>,
         which defines simply that they allow injection of the caller and
         options, and that they have an <code>init()</code> method. As an
         example, a custom "View" bootstrap resource might look like the
@@ -96,11 +116,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </para>
 
     <programlisting role="php"><![CDATA[
-class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
+class My_Bootstrap_Resource_View 
+    extends Zend_Application_Resource_ResourceAbstract
 {
-    public function init(array $options = array())
+    public function init()
     {
-        $view = new Zend_View($options);
+        $view = new Zend_View($this->getOptions());
         Zend_Dojo::enableView($view);
 
         $view->doctype('XHTML1_STRICT');
@@ -116,11 +137,11 @@ class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
                      ->disable();
 
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
-                            'ViewRenderer'
-                        );
+            'ViewRenderer'
+        );
         $viewRenderer->setView($view);
 
-        Zend_Registry::set('view', $view);
+        return $view;
     }
 }
 ]]>
@@ -156,16 +177,20 @@ $application = new Zend_Application(
 
     <para>
         Resources can call on other resources and initializers by accessing the
-        parent object:
+        parent bootstrap:
     </para>
 
     <programlisting role="php"><![CDATA[
-class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
+class My_Bootstrap_Resource_Layout 
+    extends Zend_Application_Resource_ResourceAbstract
 {
-    public function init(array $options = array())
+    public function init()
     {
         // ensure view is initialized...
         $this->getBootstrap()->bootstrap('view');
+
+        // Get view object:
+        $view = $this->getBootstrap()->getResource('view');
 
         // ...
     }
@@ -180,8 +205,8 @@ class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrap();
-$application->run();
+$application->bootstrap()
+            ->run();
 ]]>
     </programlisting>
 
@@ -192,7 +217,7 @@ $application->run();
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrap('db');
+$application->getBootstrap()->bootstrap('db');
 
 $service = new Zend_XmlRpc_Server();
 $service->setClass('Foo');  // uses database...
@@ -207,7 +232,7 @@ echo $service->handle();
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrapDb();
+$application->getBootstrap()->bootstrapDb();
 ]]>
     </programlisting>
 </sect1>

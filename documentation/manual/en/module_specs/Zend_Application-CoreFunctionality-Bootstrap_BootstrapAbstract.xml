@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sect2 id="zend.application.core-functionality.bootstrap-base">
-    <title>Zend_Application_Bootstrap_Base</title>
+<sect2 id="zend.application.core-functionality.bootstrap-bootstrapabstract">
+    <title>Zend_Application_Bootstrap_BootstrapAbstract</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_Base</code> is an abstract class which
+        <code>Zend_Application_Bootstrap_BootstrapAbstract</code> is an abstract class which
         provides the base functionallity of a common bootstrap. It implements
-        both <link linkend="zend.application.core-functionality.bootstrap-ibootstrap">Zend_Application_Bootstrap_IBootstrap</link>
-        and <link linkend="zend.application.core-functionality.bootstrap-iresourcebootstrap">Zend_Application_Bootstrap_IResourceBootstrap</link>.
+        both <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>
+        and <link linkend="zend.application.core-functionality.bootstrap-resourcebootstrapper">Zend_Application_Bootstrap_ResourceBootstrapper</link>.
     </para>
 
-    <table id="zend.application.core-functionality.bootstrap-base.api.table">
-        <title>Zend_Application_Bootstrap_Base Methods</title>
+    <table id="zend.application.core-functionality.bootstrap-bootstrapabstract.api.table">
+        <title>Zend_Application_Bootstrap_BootstrapAbstract Methods</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -28,7 +28,7 @@
                         <listitem><para>
                             <code>$application</code>: <emphasis>required</emphasis>.
                             Accepts either a <code>Zend_Application</code> or a
-                            <code>Zend_Application_Bootstrap_IBootstrap</code>
+                            <code>Zend_Application_Bootstrap_Bootstrapper</code>
                             object as the sole argument.
                         </para></listitem>
                     </itemizedlist></entry>
@@ -41,7 +41,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -106,9 +106,9 @@
                 </row>
 
                 <row>
-                    <entry><code>setApplication(Zend_Application | Zend_Application_Bootstrap_IBootstrap
+                    <entry><code>setApplication(Zend_Application | Zend_Application_Bootstrap_Bootstrapper
                             $application)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Base</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$application</code>: <emphasis>required</emphasis>.
@@ -121,7 +121,7 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the application/bootstrap object passed via the
@@ -147,6 +147,70 @@
                         Retrieve a list of available resource initializer names
                         as defined in the class. This may be implementation
                         specific.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>getContainer()</code></entry>
+                    <entry><code>object</code></entry>
+                    <entry>N/A</entry>
+                    <entry><para>
+                        Retrieves the container that stores resources. If no
+                        container is currently registered, it registers a <link
+                            linkend="zend.registry">Zend_Registry</link>
+                        instance before returning it.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>setContainer($container)</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
+                    <entry><itemizedlist>
+                        <listitem><para>
+                            <code>$container</code>, <emphasis>required</emphasis>.
+                            An object in which to store resources.
+                        </para></listitem>
+                    </itemizedlist></entry>
+                    <entry><para>
+                        Provide a container in which to store resources. When a
+                        resource method or plugin returns a value, it will be
+                        stored in this container for later retrieval.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>hasResource($name)</code></entry>
+                    <entry><code>boolean</code></entry>
+                    <entry><itemizedlist>
+                        <listitem><para>
+                            <code>$name</code>, <emphasis>required</emphasis>.
+                            Name of a resource to check.
+                        </para></listitem>
+                    </itemizedlist></entry>
+                    <entry><para>
+                        When a resource method or plugin returns a value, it
+                        will be stored in the resource container (see
+                        <code>getContainer()</code> and
+                        <code>setContainer()</code>. This method will indicate
+                        whether or not a value for that resource has been set.
+                    </para></entry>
+                </row>
+
+                <row>
+                    <entry><code>getResource($name)</code></entry>
+                    <entry><code>mixed</code></entry>
+                    <entry><itemizedlist>
+                        <listitem><para>
+                            <code>$name</code>, <emphasis>required</emphasis>.
+                            Name of a resource to fetch.
+                        </para></listitem>
+                    </itemizedlist></entry>
+                    <entry><para>
+                        When a resource method or plugin returns a value, it
+                        will be stored in the resource container (see
+                        <code>getContainer()</code> and
+                        <code>setContainer()</code>. This method will retrieve a
+                        resources from the container.
                     </para></entry>
                 </row>
 

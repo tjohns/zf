@@ -209,7 +209,7 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$path</code>: <emphasis>required</emphasis>.
-                            May be either a <code>Zend_Application_Bootstrap_IBootstrap</code>
+                            May be either a <code>Zend_Application_Bootstrap_Bootstrapper</code>
                             instance, a string path to the bootstrap class,
                             an associative array of classname =&gt;
                             filename, or an associative array with the keys
@@ -228,7 +228,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>null | Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>null | Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Retrieve the registered bootstrap instance.
