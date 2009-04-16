@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -21,7 +20,6 @@
  * @version    $Id$
  */
 
-
 /**
  * Test helper
  */
@@ -31,7 +29,6 @@ require_once dirname(__FILE__) . '/../../TestHelper.php';
  * @see Zend_Filter_Callback
  */
 require_once 'Zend/Filter/Callback.php';
-
 
 /**
  * @category   Zend
@@ -54,6 +51,33 @@ class Zend_Filter_CallbackTest extends PHPUnit_Framework_TestCase
             array('Zend_Filter_CallbackTest', 'staticCallback')
         );
         $this->assertEquals('staticCallback-test', $filter->filter('test'));
+    }
+
+    public function testSettingDefaultOptions()
+    {
+        $filter = new Zend_Filter_Callback(array($this, 'objectCallback'), 'options');
+        $this->assertEquals('options', $filter->getOptions());
+        $this->assertEquals('objectCallback-test', $filter->filter('test'));
+    }
+
+    public function testSettingDefaultOptionsAfterwards()
+    {
+        $filter = new Zend_Filter_Callback(array($this, 'objectCallback'));
+        $filter->setOptions('options');
+        $this->assertEquals('options', $filter->getOptions());
+        $this->assertEquals('objectCallback-test', $filter->filter('test'));
+    }
+
+    public function testCallbackWithStringParameter()
+    {
+        $filter = new Zend_Filter_Callback('strrev');
+        $this->assertEquals('!olleH', $filter->filter('Hello!'));
+    }
+
+    public function testCallbackWithArrayParameters()
+    {
+        $filter = new Zend_Filter_Callback('strrev');
+        $this->assertEquals('!olleH', $filter->filter('Hello!'));
     }
 
     public function objectCallback($value)
