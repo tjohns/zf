@@ -259,6 +259,65 @@ $location = $form->foo->getFileName();
         </note>
 
         <para>
+            Per default the file will automatically be received when you call
+            <code>getValues()</code> on the form. The reason behind this behaviour is, that the
+            file itself is the value of the file element.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$form->getValues();
+]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Therefor another call of <code>receive()</code> after calling
+                <code>getValues()</code> will not have an effect. Also creating a instance of
+                <code>Zend_File_Transfer</code> will not have an effect as there no file anymore
+                to receive.
+            </para>
+        </note>
+
+        <para>
+            Still, sometimes you may want to call <code>getValues()</code> without receiving the
+            file. You can archive this by calling <code>setValueDisabled(true)</code>. To get the
+            actual value of this flag you can call <code>isValueDisabled()</code>.
+        </para>
+
+        <example id="zend.form.standardElements.file.usage">
+            <title>Explicit file retrievement</title>
+
+            <para>
+                First call <code>setValueDisabled(true)</code>.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->setValueDisabled(true);
+]]>
+            </programlisting>
+
+            <para>
+                Now the file will not be received when you call <code>getValues()</code>.
+                So you must call <code>receive()</code> on the file element, or an instance of
+                <classname>Zend_File_Transfer</classname> yourself.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$values = $form->getValues();
+
+if ($form->isValid($form->getPost())) {
+    if (!$form->foo->receive()) {
+        print "Upload error";
+    }
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
             There are several states of the uploaded file which can be checked
             with the following methods:
         </para>
@@ -285,7 +344,6 @@ $location = $form->foo->getFileName();
                 </para>
             </listitem>
         </itemizedlist>
-
 
         <example id="zend.form.standardElements.file.isuploaded">
             <title>Checking if an optional file has been uploaded</title>

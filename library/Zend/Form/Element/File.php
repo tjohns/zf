@@ -54,6 +54,11 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     protected $_validated = false;
 
     /**
+     * @var boolean Disable value to be equal to file content
+     */
+    protected $_valueDisabled = false;
+
+    /**
      * @var integer Internal multifile counter
      */
     protected $_counter = 1;
@@ -670,6 +675,29 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
     }
 
     /**
+     * Set if the file will be uploaded when getting the value
+     * This defaults to false which will force receive() when calling getValues()
+     *
+     * @param boolean $flag Sets if the file is handled as the elements value
+     * @return Zend_Form_Element_File
+     */
+    public function setValueDisabled($flag)
+    {
+        $this->_valueDisabled = (bool) $flag;
+        return $this;
+    }
+
+    /**
+     * Returns if the file will be uploaded when calling getValues()
+     *
+     * @return boolean Receive the file on calling getValues()?
+     */
+    public function isValueDisabled()
+    {
+        return $this->_valueDisabled;
+    }
+
+    /**
      * Processes the file, returns null or the filename only
      * For the complete path, use getFileName
      *
@@ -677,6 +705,10 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getValue()
     {
+        if ($this->_valueDisabled) {
+            return null;
+        }
+
         if ($this->_value !== null) {
             return $this->_value;
         }
