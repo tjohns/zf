@@ -71,6 +71,7 @@ abstract class Zend_Service_Amazon_Ec2_Abstract extends Zend_Service_Amazon_Abst
         try {
             /* @var $request Zend_Http_Client */
             $request = self::getHttpClient();
+			$request->resetParameters();
 
             $request->setConfig(array(
                 'timeout' => self::HTTP_TIMEOUT
