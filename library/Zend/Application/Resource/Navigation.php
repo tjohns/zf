@@ -85,7 +85,7 @@ class Zend_Application_Resource_Navigation
         $key = !is_numeric($options['storage']['registry']['key'])
              ?  $options['storage']['registry']['key']
              : self::DEFAULT_REGISTRY_KEY;
-        Zend_Registry::set($key,$this->getNavigation());
+        Zend_Registry::set($key,$this->getContainer());
     }
 
     /**
