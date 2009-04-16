@@ -80,8 +80,8 @@ require_once 'Zend/Application.php';
     APPLICATION_ENV, 
     APPLICATION_PATH . '/configs/application.ini'
 );
-\$application->bootstrap();
-\$application->run();
+\$application->bootstrap()
+            ->run();
 EOS
             ));
         return $codeGenerator->generate();
