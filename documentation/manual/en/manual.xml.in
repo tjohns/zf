@@ -50,6 +50,7 @@
     <chapter id="zend.application">
         <title>Zend_Application</title>
         <xi:include href="module_specs/Zend_Application-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Application-QuickStart.xml" />
         <xi:include href="module_specs/Zend_Application-TheoryOfOperation.xml" />
         <xi:include href="module_specs/Zend_Application-Examples.xml" />
         <xi:include href="module_specs/Zend_Application-CoreFunctionality.xml" />

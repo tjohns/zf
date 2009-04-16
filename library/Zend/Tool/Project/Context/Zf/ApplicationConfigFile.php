@@ -88,9 +88,9 @@ class Zend_Tool_Project_Context_Zf_ApplicationConfigFile extends Zend_Tool_Proje
 phpSettings.display_startup_errors = 0
 phpSettings.display_errors = 0
 includePaths.library = APPLICATION_PATH "/../library"
-resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 bootstrap.path = APPLICATION_PATH "/Bootstrap.php"
 bootstrap.class = "Bootstrap"
+resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 
 [staging : production]
 
