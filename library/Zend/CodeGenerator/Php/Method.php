@@ -104,28 +104,6 @@ class Zend_CodeGenerator_Php_Method extends Zend_CodeGenerator_Php_Member_Abstra
     }
     
     /**
-     * setDocblock()
-     *
-     * @param Zend_CodeGenerator_Php_Docblock $methodDocblock
-     * @return Zend_CodeGenerator_Php_Method
-     */
-    public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock)
-    {
-        $this->_docblock = $docblock;
-        return $this;
-    }
-    
-    /**
-     * getDocblock()
-     *
-     * @return Zend_CodeGenerator_Php_Docblock
-     */
-    public function getDocblock()
-    {
-        return $this->_docblock;
-    }
-    
-    /**
      * setFinal()
      *
      * @param bool $isFinal

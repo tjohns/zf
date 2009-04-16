@@ -138,13 +138,24 @@ class Zend_CodeGenerator_Php_Class extends Zend_CodeGenerator_Php_Abstract
     }
     
     /**
-     * setDocblock()
+     * setDocblock() Set the docblock
      *
-     * @param Zend_CodeGenerator_Php_Docblock $docblock
-     * @return Zend_CodeGenerator_Php_Class
+     * @param Zend_CodeGenerator_Php_Docblock|array|string $docblock
+     * @return Zend_CodeGenerator_Php_File
      */
-    public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock)
+    public function setDocblock($docblock) 
     {
+        if (is_string($docblock)) {
+            $docblock = array('shortDescription' => $docblock);
+        }
+        
+        if (is_array($docblock)) {
+            $docblock = new Zend_CodeGenerator_Php_Docblock($docblock);
+        } elseif (!$docblock instanceof Zend_CodeGenerator_Php_Docblock) {
+            require_once 'Zend/CodeGenerator/Php/Exception.php';
+            throw new Zend_CodeGenerator_Php_Exception('setDocblock() is expecting either a string, array or an instance of Zend_CodeGenerator_Php_Docblock');
+        }
+        
         $this->_docblock = $docblock;
         return $this;
     }

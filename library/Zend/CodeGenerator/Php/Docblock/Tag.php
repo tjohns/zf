@@ -45,12 +45,9 @@ class Zend_CodeGenerator_Php_Docblock_Tag extends Zend_CodeGenerator_Abstract
 {
 
     /**
-     * @var array
+     * @var Zend_Loader_PluginLoader
      */
-    protected static $_tagClasses = array(
-        'param'  => 'Zend_CodeGenerator_Php_Docblock_Tag_Param',
-        'return' => 'Zend_CodeGenerator_Php_Docblock_Tag_Return',
-        );
+    protected static $_pluginLoader = null;
 
     /**
      * @var string
@@ -72,19 +69,61 @@ class Zend_CodeGenerator_Php_Docblock_Tag extends Zend_CodeGenerator_Abstract
     {
         $tagName = $reflectionTag->getName();
         
-        if (array_key_exists($tagName, self::$_tagClasses)) {
-            $tagClass = self::$_tagClasses[$tagName];
-            if (!class_exists($tagClass)) {
-                require_once 'Zend/Loader.php';
-                Zend_Loader::loadClass($tagClass);
+        $codeGenDocblockTag = self::factory($tagName);
+        
+        // transport any properties via accessors and mutators from reflection to codegen object
+        $reflectionClass = new ReflectionClass($reflectionTag);
+        foreach ($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+            if (substr($method->getName(), 0, 3) == 'get') {
+                $propertyName = substr($method->getName(), 3);
+                if (method_exists($codeGenDocblockTag, 'set' . $propertyName)) {
+                    $codeGenDocblockTag->{'set' . $propertyName}($reflectionTag->{'get' . $propertyName}());
+                }
             }
-            $tag = call_user_func(array($tagClass, 'fromReflection'), $reflectionTag); 
-        } else {
-            $tag = new self();
-            $tag->setName($reflectionTag->getName());
-            $tag->setDescription($reflectionTag->getDescription());
         }
         
+        return $codeGenDocblockTag;
+    }
+    
+    /**
+     * setPluginLoader()
+     *
+     * @param Zend_Loader_PluginLoader $pluginLoader
+     */
+    public static function setPluginLoader(Zend_Loader_PluginLoader $pluginLoader)
+    {
+        self::$_pluginLoader = $pluginLoader;
+        return;
+    }
+    
+    /**
+     * getPluginLoader()
+     *
+     * @return Zend_Loader_PluginLoader
+     */
+    public static function getPluginLoader()
+    {
+        if (self::$_pluginLoader == null) {
+            require_once 'Zend/Loader/PluginLoader.php';
+            self::setPluginLoader(new Zend_Loader_PluginLoader(array(
+                'Zend_CodeGenerator_Php_Docblock_Tag' => dirname(__FILE__) . '/Tag/'))
+                );
+        }
+        
+        return self::$_pluginLoader;
+    }
+    
+    public static function factory($tagName)
+    {
+        $pluginLoader = self::getPluginLoader();
+        
+        try {
+            $tagClass = $pluginLoader->load($tagName);
+        } catch (Zend_Loader_Exception $exception) {
+            $tagClass = 'Zend_CodeGenerator_Php_Docblock_Tag';
+        }
+        
+        $tag = new $tagClass(array('name' => $tagName));
         return $tag;
     }
     

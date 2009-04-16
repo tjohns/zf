@@ -28,6 +28,7 @@
  */
 abstract class Zend_CodeGenerator_Abstract
 {
+
     /**
      * @var string
      */
@@ -43,13 +44,32 @@ abstract class Zend_CodeGenerator_Abstract
      *
      * @param array $options
      */
-    final public function __construct(Array $options = array())
+    public function __construct($options = array())
     {
         $this->_init();
-        if ($options) {
-            $this->setOptions($options);
+        if ($options != null) {
+            // use Zend_Config objects if provided
+            if ($options instanceof Zend_Config) {
+                $options = $options->toArray();
+            }
+            // pass arrays to setOptions
+            if (is_array($options)) {
+                $this->setOptions($options);
+            }
         }
         $this->_prepare();
+    }
+    
+    /**
+     * setConfig()
+     *
+     * @param Zend_Config $config
+     * @return Zend_CodeGenerator_Abstract
+     */
+    public function setConfig(Zend_Config $config)
+    {
+        $this->setOptions($config->toArray());
+        return $this;
     }
     
     /**

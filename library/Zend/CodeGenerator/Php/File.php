@@ -172,13 +172,24 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
     }
     
     /**
-     * Set the docblock
+     * setDocblock() Set the docblock
      *
-     * @param Zend_CodeGenerator_Php_Docblock $docblock
+     * @param Zend_CodeGenerator_Php_Docblock|array|string $docblock
      * @return Zend_CodeGenerator_Php_File
      */
-    public function setDocblock(Zend_CodeGenerator_Php_Docblock $docblock) 
+    public function setDocblock($docblock) 
     {
+        if (is_string($docblock)) {
+            $docblock = array('shortDescription' => $docblock);
+        }
+        
+        if (is_array($docblock)) {
+            $docblock = new Zend_CodeGenerator_Php_Docblock($docblock);
+        } elseif (!$docblock instanceof Zend_CodeGenerator_Php_Docblock) {
+            require_once 'Zend/CodeGenerator/Php/Exception.php';
+            throw new Zend_CodeGenerator_Php_Exception('setDocblock() is expecting either a string, array or an instance of Zend_CodeGenerator_Php_Docblock');
+        }
+        
         $this->_docblock = $docblock;
         return $this;
     }
@@ -366,7 +377,7 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
         if (null !== ($docblock = $this->getDocblock())) {
             $docblock->setIndentation('');
             $regex = preg_quote(self::$_markerDocblock, '#');
-            if (preg_match('#'.$regex.'#', $body, $matches)) {
+            if (preg_match('#'.$regex.'#', $body)) {
                 $output  = preg_replace('#'.$regex.'#', $docblock->generate(), $output, 1);
             } else {
                 $output .= $docblock->generate() . PHP_EOL;
@@ -393,7 +404,7 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
             foreach ($classes as $class) {
                 $regex = str_replace('?', $class->getName(), self::$_markerClass);
                 $regex = preg_quote($regex, '#');
-                if (preg_match('#'.$regex.'#', $output, $matches)) {
+                if (preg_match('#'.$regex.'#', $output)) {
                     $output = preg_replace('#'.$regex.'#', $class->generate(), $output, 1);
                 } else {
                     $output .= $class->generate() . PHP_EOL;
