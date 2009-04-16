@@ -5,7 +5,7 @@
     <para>
         Containers have methods for adding, retrieving, deleting and
         iterating pages. Containers implement the
-        <ulink url="http://php.net/spl">SPL</ulink> interaces
+        <ulink url="http://php.net/spl">SPL</ulink> interfaces
         <classname>RecursiveIterator</classname> and
         <classname>Countable</classname>, meaning that a container can
         be iterated using the SPL

@@ -122,7 +122,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'view',
     'controller' => 'post',
     'module'     => 'blog',
-    'id'         => 1337
+    'params'     => array('id' => 1337)
 ));
 ]]>
         </programlisting>
@@ -182,7 +182,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'view',
     'controller' => 'post',
     'module'     => 'blog',
-    'id'         => null
+    'params'     => array('id' => null)
 ));
 
 // returns false, because page requires the id param to be set in the request
@@ -233,11 +233,12 @@ Zend_Controller_Front::getInstance()->getRouter()->addRoute(
 
 // a page is created with a 'route' option
 $page = new Zend_Navigation_Page_Mvc(array(
-    'label'  => 'A news article',
-    'route'  => 'article_view',
-    'params' => array(
-        'id' => 42
-    )
+    'label'      => 'A news article',
+    'route'      => 'article_view',
+    'module'     => 'news',    // required for isActive(), see note above
+    'controller' => 'article', // required for isActive(), see note above
+    'action'     => 'view',    // required for isActive(), see note above
+    'params'     => array('id' => 42)
 ));
 
 // returns: /a/42

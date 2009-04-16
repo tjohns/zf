@@ -43,7 +43,7 @@
                 container class for pages. It has methods for
                 adding, retrieving, deleting and iterating pages.
                 It implements the <ulink url="http://php.net/spl">SPL</ulink>
-                interaces <classname>RecursiveIterator</classname> and
+                interfaces <classname>RecursiveIterator</classname> and
                 <classname>Countable</classname>, and can thus be iterated
                 with SPL iterators such as
                 <classname>RecursiveIteratorIterator</classname>.
