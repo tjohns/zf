@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 11146 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.service.akismet">
     <title>Zend_Service_Akismet</title>
 

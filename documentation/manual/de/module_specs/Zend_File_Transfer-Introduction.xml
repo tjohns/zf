@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14395 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.file.transfer.introduction">
 
     <title>Zend_File_Transfer</title>
@@ -301,7 +302,8 @@ $names = $upload->getFileName('foo');
 $upload = new Zend_File_Transfer();
 $upload->receive();
 
-// Gibt die Größen aller Dateien als Array zurück wenn mehr als eine Datei hochgeladen wurde
+// Gibt die Größen aller Dateien als Array zurück
+// wenn mehr als eine Datei hochgeladen wurde
 $size = $upload->getFileSize();
 
 // Wechsle die SI Schreibweise damit reine Nummern zurückgegeben werden
@@ -326,7 +328,8 @@ $size = $upload->getFileSize();
 $upload = new Zend_File_Transfer();
 $upload->receive();
 
-// Gibt die Hashes von allen Dateien als Array zurück wenn mehr als eine Datei hochgeladen wurde
+// Gibt die Hashes von allen Dateien als Array zurück
+// wenn mehr als eine Datei hochgeladen wurde
 $hash = $upload->getHash('md5');
 
 // Gibt den Has für das 'foo' Formularelement zurück

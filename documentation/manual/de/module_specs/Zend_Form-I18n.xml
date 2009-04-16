@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13843 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.form.i18n">
     <title>Internationalisierung von <code>Zend_Form</code></title>
 

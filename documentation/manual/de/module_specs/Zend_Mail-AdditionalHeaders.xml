@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 10934 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.mail.additional-headers">
     <title>Zusätzliche Kopfzeilen</title>
     <para>

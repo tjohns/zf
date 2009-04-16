@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13904 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.translate.adapter">
 
     <title>Adapter für Zend_Translate</title>

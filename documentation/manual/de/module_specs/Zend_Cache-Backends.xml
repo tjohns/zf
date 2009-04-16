@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14635 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.cache.backends">
     <title>Zend_Cache Backends</title>
     <para>

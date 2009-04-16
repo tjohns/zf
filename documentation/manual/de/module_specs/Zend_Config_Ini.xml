@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13849 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>

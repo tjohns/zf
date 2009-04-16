@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 12759 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.session.global_session_management">
 
     <title>Globales Session Management</title>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14789 -->
+<!-- Reviewed: no -->
 <appendix id="coding-standard">
   <title>Zend Framework Coding Standard für PHP</title>
     <sect1 id="coding-standard.overview">

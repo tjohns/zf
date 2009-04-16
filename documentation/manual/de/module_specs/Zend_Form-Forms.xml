@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13843 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.form.forms">
     <title>Erstellen von Form durch Verwendung von <code>Zend_Form</code></title>
 
@@ -415,6 +416,11 @@ $form->setElementDecorators(
                     ViewHelper und DtDdWrapper Dekorator -- was zusätzliche Labels, Fehler und
                     Hinweise für die Darstellung verhindert. Das obige Beispiel würde einige
                     Inhalte (das Label) für Button Elemente duplizieren.
+                </para>
+
+                <para>
+                    Man kann das Enthalten/Ausnehmen Array verwenden um dieses Problem, wie im
+                    vorherigen Beispiel gezeigt, zu umgehen.
                 </para>
 
                 <para>

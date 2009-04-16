@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 13946 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>
@@ -468,9 +469,10 @@ try {
     $db = Zend_Db::factory('Pdo_Mysql', $parameters);
     $db->getConnection();
 } catch (Zend_Db_Adapter_Exception $e) {
-    // Möglicherweise ein fehlgeschlagener login, oder die RDBMS läuft möglicherweise nicht
+    // Möglicherweise ein fehlgeschlagener login,
+    // oder die RDBMS läuft möglicherweise nicht
 } catch (Zend_Exception $e) {
-    // Möglicherweise konnte factory() die definierte Adapter Klasse nicht laden
+    // Möglicherweise kann factory() die definierte Adapter Klasse nicht laden
 }
 ]]>
                 </programlisting>
@@ -795,7 +797,7 @@ $db->setFetchMode(Zend_Db::FETCH_OBJ);
 
 $result = $db->fetchRow('SELECT * FROM bugs WHERE bug_id = 2');
 
-// Beachte das $result ein einzelnes Objekt ist, und nicht ein Array von Objekten
+// Beachte das $result ein einzelnes Objekt ist, und kein Array von Objekten
 echo $result->bug_description;
 ]]>
                 </programlisting>
@@ -943,10 +945,11 @@ $id = $db->lastInsertId();
                 <programlisting role="php"><![CDATA[
 $db->insert('bugs', $data);
 
-// Gib den letzten durch die 'bugs_bug_id_seq' Sequenz erstellten Wert zurück.
+// Gib den letzten durch die 'bugs_bug_id_seq' Sequenz erstellten Wert zurück
 $id = $db->lastInsertId('bugs', 'bug_id');
 
-// Anternativ, gib den letzten durch die 'bugs_seq' Sequenz erstellten Wert zurück.
+// Gib, alternativ, den letzten durch die 'bugs_seq' Sequenz
+// erstellten Wert zurück
 $id = $db->lastInsertId('bugs');
 ]]>
                 </programlisting>
@@ -1405,13 +1408,15 @@ try {
     $db->query(...);
     $db->query(...);
 
-    // Wenn alle erfolgreich waren, übertrage die Transaktion und alle Änderungen  werden auf einmal übermittelt
+    // Wenn alle erfolgreich waren, übertrage die Transaktion
+    // und alle Änderungen werden auf einmal übermittelt
     $db->commit();
 
 } catch (Exception $e) {
-    // Wenn irgendeine der Abfragen fehlgeschlagen ist, wirf eine Ausnahme, wir wollen die komplette Transaktion
-    // zurücknehmen, alle durch die Transaktion gemachten Änderungen wieder entfernen auch die erfolgreichen.
-    // So werden alle Änderungen auf einmal übermittelt oder keine.
+    // Wenn irgendeine der Abfragen fehlgeschlagen ist, wirf eine Ausnahme, wir
+    // wollen die komplette Transaktion zurücknehmen, alle durch die
+    // Transaktion gemachten Änderungen wieder entfernen, auch die erfolgreichen
+    // So werden alle Änderungen auf einmal übermittelt oder keine
     $db->rollBack();
     echo $e->getMessage();
 }

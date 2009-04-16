@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EN-Revision: 14844 -->
 <sect1 id="zend.service.amazon.ec2.ebs">
-    <title>Zend_Service_Amazon_Ec2: Elastic Block Stroage (EBS)</title>
+    <title>Zend_Service_Amazon_Ec2: Elastischer Block Speicher (EBS)</title>
 
     <para>
-        Amazon Elastic Block Store (Amazon EBS) is a new type of storage
-        designed specifically for Amazon EC2 instances. Amazon EBS allows
-        you to create volumes that can be mounted as devices by Amazon EC2
-        instances. Amazon EBS  volumes behave like raw unformatted external
-        block devices. They have user supplied device names and provide a block
-        device interface. You can load a file system on top of Amazon EBS volumes,
-        or use them just as you would use a block device.
+        Amazon Elastischer Block Speicher (Amazon EBS) ist ein neuer Typ an Speicher der speziell
+        für Amazon EC2 Instanzen entwickelt wurde. Amazon EBS erlaubt es ein Volume zu erstellen
+        das als Device von Amazon EC2 Instanzen gemountet werden kann. Amazon EBS Volums verhalten
+        sich wie rohe unformatierte externe Block Devices. Sie haben einen vom Benutzer angegebenen
+        Device Namen und bieten ein Block Device Interface. Man kann ein File System auf Amazon EBS
+        Volums laden, oder Sie genauso verwenden wie man ein Block Device verwenden würde.
     </para>
     <para>
-        You can create up to twenty Amazon EBS volumes of any size (from one GiB up
-        to one TiB). Each Amazon EBS volume can be attached to any Amazon EC2
-        instance in the same Availability Zone or can be left unattached.
+        Man kann bis zu zwanzig Amazon EBS Volums jeder Größe erstellen (von einem GiB bis zu einem
+        TiB). Jedes Amazon EBS Volume kann jeder Amazon EC2 Instanz angehängt werden welche in der
+        selben Availability Zone ist, oder kann auch un-angehängt bleiben.
     </para>
     <para>
-        Amazon EBS provides the ability to create snapshots of your Amazon EBS volumes
-        to Amazon S3. You can use these snapshots as the starting point for new Amazon
-        EBS volumes and can protect your data for long term durability.
+        Amazon EBS bietet die Möglichkeit einen Snapshot der eigenen Amazon EBS Volums auf Amazon
+        S3 zu erstellen. Man kann diese Snapshots als Startpunkt für neue Amazon EBS Volums
+        verwenden und kann eigene Daten auf diese Art für eine lange Zeit schützen.
     </para>
 
     <sect2 id="zend.service.amazon.ec2.ebs.creating">
-        <title>Create EBS Volues and Snapshots</title>
+        <title>EBS Volums und Snapshots erstellen</title>
 
         <example id="zend.service.amazon.ec2.ebs.creating.volume">
-            <title>Create a new EBS Volume</title>
+            <title>Ein neues EBS Volume erstellen</title>
             <para>
-                Creating a brand new EBS Volume requires the size and which zone you
-                want the EBS Volume to be in.
+                Um ein brandneues EBS Volume zu erstellen benötigt man die Größe und die Zone in
+                der das EBS Volume sein soll.
             </para>
             <para>
-                <code>createNewVolume</code> will return an array containg information
-                about the new Volume which includes the volumeId, size, zone, status
-                and createTime.
+                <code>createNewVolume</code> gibt ein Array zurück das Informationen über das neue
+                Volume enthält. Diese beinhalten volumeId, size, zone, status und createTime.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -46,14 +44,14 @@ $return = $ec2_ebs->createNewVolume(40, 'us-east-1a');
         </example>
 
         <example id="zend.service.amazon.ec2.ebs.creating.volumesnapshot">
-            <title>Create an EBS Volume from a Snapshot</title>
+            <title>Ein EBS Volume von einem Snapshot erstellen</title>
             <para>
-                Creating an EBS Volume from a snapshot requires the snapshot_id and which zone you
-                want the EBS Volume to be in.
+                Um ein EBS Volume von einem Snapshot zu erstellen benötigt man die snapshot_id
+                in die Zone in der man das EBS Volume haben will.
             </para>
             <para>
-                <code>createVolumeFromSnapshot</code> will return an array containg information about
-                the new Volume which includes the volumeId, size, zone, status, createTime and snapshotId.
+                <code>createVolumeFromSnapshot</code> gibt ein Array mit Informationen zurück.
+                Diese enthalten volumeId, size, zone, status, createTime und snapshotId.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -64,14 +62,15 @@ $return = $ec2_ebs->createVolumeFromSnapshot('snap-78a54011', 'us-east-1a');
         </example>
 
         <example id="zend.service.amazon.ec2.ebs.creating.snapshot">
-            <title>Create a Snapshot of an EBS Volume</title>
+            <title>Einen Snapshot von einem EBS Volume erstellen</title>
             <para>
-                Creating a Snapshot of an EBS Volume requires the volumeId of the EBS Volume.
+                Um einen Snapshot von einem EBS Volume zu erstellen wird die volumeId des EBS
+                Volums benötigt.
             </para>
             <para>
-                <code>createSnapshot</code> will return an array containg information about the
-                new Volume Snapshot which includes the snapshotId, volumeId, status, startTime
-                and progress.
+                <code>createSnapshot</code> gibt ein Array zurück das Informationen über den neuen
+                Volume Snapshot enthält. Dieses beinhaltet snapshotId, volumeId, status, startTime
+                und progress.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -86,15 +85,20 @@ $return = $ec2_ebs->createSnapshot('volumeId');
         <title>Describing EBS Volues and Snapshots</title>
 
         <example id="zend.service.amazon.ec2.ebs.describing.volume">
-            <title>Describing an EBS Volume</title>
+            <title>Ein EBS Volume beschreiben</title>
             <para>
-                <code>describeVolume</code> allows you to get information on an EBS Volume or a set of EBS
-                Volumes.  If nothing is passed in then it will return all EBS Volumes.  If only
-                one EBS Volume needs to be described a string can be passed in while an array of
-                EBS Volume Id's can be passed in to describe them.
+                <code>describeVolume</code> erlaubt es Informationen über ein EBS Volume oder ein
+                Set von EBS Volums zu erhalten. Wenn nichts angegeben wird, werden alle EBS Volums
+                zurück gegeben. Wenn nur ein EBS Volume beschrieben werden soll, kann ein String
+                übergeben werden, wärend ein Array von EBS Volume Id's übergeben werden können um
+                diese zu beschreiben.
             </para>
             <para>
-                <code>describeVolume</code> will return an array with information about each Volume which
+                <code>describeVolume</code> gibt ein Array mit Informationen über jedes Volume
+                zurück. Dieses enthält die volumeId, size, status und createTime. Wenn das Volume
+                an eine Instanz angehängt ist, wird ein zusätzlicher Wert attachmentSet
+                zurückgegeben.
+                will return an array with information about each Volume which
                 includes the volumeId, size, status and createTime.  If the volume is attached to an instance,
                 an addition value of attachmentSet will be returned.  Attachment set contains information
                 about the instance that the EBS Volume is attached to, which includes volumeId, instanceId,
