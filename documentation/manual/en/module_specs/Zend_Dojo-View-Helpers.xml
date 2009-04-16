@@ -1168,8 +1168,8 @@ echo $view->validationTextBox(
 
             <programlisting role="php"><![CDATA[
 <?php echo $this->customDijit(
-    'foo', 
-    $content, 
+    'foo',
+    $content,
     array(
         'dojoType' => 'dojox.layout.ContentPane',
         'title'    => 'Custom pane',
@@ -1186,7 +1186,7 @@ echo $view->validationTextBox(
 
             <programlisting role="php"><![CDATA[
 <?php $this->customDijit()->captureStart(
-    'foo', 
+    'foo',
     array(
         'dojoType' => 'dojox.layout.ContentPane',
         'title'    => 'Custom pane',
@@ -1212,7 +1212,7 @@ class My_View_Helper_FooContentPane
     protected $_defaultDojoType = 'foo.ContentPane';
 
     public function fooContentPane(
-        $id = null, $value = null, 
+        $id = null, $value = null,
         array $params = array(), array $attribs = array()
     ) {
         return $this->customDijit($id, $value, $params, $attribs);

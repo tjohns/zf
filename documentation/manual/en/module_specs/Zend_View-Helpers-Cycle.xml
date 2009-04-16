@@ -15,7 +15,9 @@
 
         <programlisting role="php"><![CDATA[
 <?php foreach ($this->books as $book):?>
-  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next()?>">
+  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0",
+                                                            "#FFFFFF"))
+                                              ->next()?>">
   <td><?php echo $this->escape($book['author']) ?></td>
 </tr>
 <?php endforeach;?>
@@ -42,12 +44,14 @@ $this->cycle()->prev();
 <example id="zend.view.helpers.initial.cycle.advanceusage">
        <title>Working with two or more cycles</title>
 <para>To use two cycles you have to specify the names of cycles. Just set second parameter in cycle method.
-<code>$this->cycle(array("#F0F0F0","#FFFFFF"),'cycle2')</code>Yo can also use setName($name) function.
+<code>$this->cycle(array("#F0F0F0","#FFFFFF"),'cycle2')</code>. You can also use setName($name) function.
 </para>
 </example>
       <programlisting role="php"><![CDATA[
 <?php foreach ($this->books as $book):?>
-  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next()?>">
+  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0",
+                                                            "#FFFFFF"))
+                                              ->next()?>">
   <td><?php echo $this->cycle(array(1,2,3),'number')->next()?></td>
   <td><?php echo $this->escape($book['author'])?></td>
 </tr>

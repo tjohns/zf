@@ -53,7 +53,7 @@ if ($validator->isValid($username)) {
             The above will test that a given username is not in the database
             table. If a record is found containing the value of
             <code>$username</code> in the specified column, then an error
-            message is displayed. 
+            message is displayed.
         </para>
     </sect3>
 
@@ -78,10 +78,10 @@ if ($validator->isValid($username)) {
 //Check no other users have the username
 $user_id   = $user->getId();
 $validator = new Zend_Validate_Db_NoRecordExists(
-    'users', 
+    'users',
     'username',
     array(
-        'field' => 'id', 
+        'field' => 'id',
         'value' => $user_id
     )
 );
@@ -114,7 +114,7 @@ $post_id   = $post->getId();
 $clause    = $db->quoteInto('post_id = ?', $category_id);
 $validator = new Zend_Validate_Db_RecordExists(
     'posts_categories',
-    'post_id', 
+    'post_id',
     $clause
 );
 
@@ -132,7 +132,7 @@ if ($validator->isValid($username)) {
         <para>
             The above example will check the <code>posts_categories</code> table
             to ensure that a record with the <code>post_id</code> has a value
-            matching <code>$category_id</code> 
+            matching <code>$category_id</code>
         </para>
     </sect3>
 
