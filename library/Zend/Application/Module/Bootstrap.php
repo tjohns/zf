@@ -21,21 +21,22 @@
  */
 
 /**
- * @see Zend_Application_Bootstrap_BootstrapAbstract
+ * @see Zend_Application_Bootstrap_Bootstrap
  */
-require_once 'Zend/Application/Bootstrap/BootstrapAbstract.php';
+require_once 'Zend/Application/Bootstrap/Bootstrap.php';
 
 /**
  * Base bootstrap class for modules
  * 
  * @uses       Zend_Loader_Autoloader_Resource
- * @uses       Zend_Application_Bootstrap_BootstrapAbstract
+ * @uses       Zend_Application_Bootstrap_Bootstrap
  * @package    Zend_Application
  * @subpackage Module
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Application_Module_Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
+abstract class Zend_Application_Module_Bootstrap 
+    extends Zend_Application_Bootstrap_Bootstrap
 {
     /**
      * @var Zend_Loader_Autoloader_Resource
