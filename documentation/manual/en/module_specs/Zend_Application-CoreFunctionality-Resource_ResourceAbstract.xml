@@ -4,7 +4,7 @@
 
     <para>
         <code>Zend_Application_Resource_ResourceAbstract</code> is an abstract
-        class implementing <link linkend="zend.application.core-functionality.resource-iresource">Zend_Application_Resource_Resource</link>,
+        class implementing <link linkend="zend.application.core-functionality.resource-resource">Zend_Application_Resource_Resource</link>,
         and is a good starting point for creating your own custom plugin
         resources.
     </para>
