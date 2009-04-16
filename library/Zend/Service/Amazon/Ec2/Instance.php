@@ -124,7 +124,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
         $params['MinCount'] = $options['minCount'];
         $params['MaxCount'] = $options['maxCount'];
 
-        if($options['keyName']) {
+        if(isset($options['keyName'])) {
             $params['KeyName'] = $options['keyName'];
         }
 
@@ -132,31 +132,31 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
             foreach($options['securityGroup'] as $k=>$name) {
                 $params['SecurityGroup.' . ($k+1)] = $name;
             }
-        } elseif($options['securityGroup']) {
+        } elseif(isset($options['securityGroup'])) {
             $params['SecurityGroup.1'] = $options['securityGroup'];
         }
 
-        if($options['userData']) {
+        if(isset($options['userData'])) {
             $params['UserData'] = base64_encode($options['userData']);
         }
 
-        if($options['instanceType']) {
+        if(isset($options['instanceType'])) {
             $params['InstanceType'] = $options['instanceType'];
         }
 
-        if($options['placement']) {
+        if(isset($options['placement'])) {
             $params['Placement.AvailabilityZone'] = $options['placement'];
         }
 
-        if($options['kernelId']) {
+        if(isset($options['kernelId'])) {
             $params['KernelId'] = $options['kernelId'];
         }
 
-        if($options['ramdiskId']) {
+        if(isset($options['ramdiskId'])) {
             $params['RamdiskId'] = $options['ramdiskId'];
         }
 
-        if($options['blockDeviceVirtualName'] && $options['blockDeviceName']) {
+        if(isset($options['blockDeviceVirtualName']) && isset($options['blockDeviceName'])) {
             $params['BlockDeviceMapping.n.VirtualName'] = $options['blockDeviceVirtualName'];
             $params['BlockDeviceMapping.n.DeviceName'] = $options['blockDeviceName'];
         }
