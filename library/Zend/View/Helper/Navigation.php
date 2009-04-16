@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_View_Helper_Navigation_Abstract
+ * @see Zend_View_Helper_Navigation_HelperAbstract
  */
-require_once 'Zend/View/Helper/Navigation/Abstract.php';
+require_once 'Zend/View/Helper/Navigation/HelperAbstract.php';
 
 /**
  * Proxy helper for retrieving navigational helpers and forwarding calls
@@ -33,7 +33,8 @@ require_once 'Zend/View/Helper/Navigation/Abstract.php';
  * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_View_Helper_Navigation extends Zend_View_Helper_Navigation_Abstract
+class Zend_View_Helper_Navigation
+    extends Zend_View_Helper_Navigation_HelperAbstract
 {
     /**
      * View helper namespace
@@ -134,19 +135,19 @@ class Zend_View_Helper_Navigation extends Zend_View_Helper_Navigation_Abstract
      * Returns the helper matching $proxy
      *
      * The helper must implement the interface
-     * {@link Zend_View_Helper_Navigation_Interface}.
+     * {@link Zend_View_Helper_Navigation_Helper}.
      *
-     * @param string $proxy                           helper name
-     * @param bool   $strict                          [optional] whether
-     *                                                exceptions should be
-     *                                                thrown if something goes
-     *                                                wrong. Default is true.
-     * @return Zend_View_Helper_Navigation_Interface  helper instance
-     * @throws Zend_Loader_PluginLoader_Exception     if $strict is true and
-     *                                                helper cannot be found
-     * @throws Zend_View_Exception                    if $strict is true and
-     *                                                helper does not implement
-     *                                                the specified interface
+     * @param string $proxy                        helper name
+     * @param bool   $strict                       [optional] whether
+     *                                             exceptions should be
+     *                                             thrown if something goes
+     *                                             wrong. Default is true.
+     * @return Zend_View_Helper_Navigation_Helper  helper instance
+     * @throws Zend_Loader_PluginLoader_Exception  if $strict is true and
+     *                                             helper cannot be found
+     * @throws Zend_View_Exception                 if $strict is true and
+     *                                             helper does not implement
+     *                                             the specified interface
      */
     public function findHelper($proxy, $strict = true)
     {
@@ -170,12 +171,12 @@ class Zend_View_Helper_Navigation extends Zend_View_Helper_Navigation_Abstract
             }
         }
 
-        if (!$helper instanceof Zend_View_Helper_Navigation_Interface) {
+        if (!$helper instanceof Zend_View_Helper_Navigation_Helper) {
             if ($strict) {
                 require_once 'Zend/View/Exception.php';
                 throw new Zend_View_Exception(sprintf(
                         'Proxy helper "%s" is not an instance of ' .
-                        'Zend_View_Helper_Navigation_Interface',
+                        'Zend_View_Helper_Navigation_Helper',
                         get_class($helper)));
             }
 
@@ -192,10 +193,10 @@ class Zend_View_Helper_Navigation extends Zend_View_Helper_Navigation_Abstract
      * Injects container, ACL, and translator to the given $helper if this
      * helper is configured to do so
      *
-     * @param  Zend_View_Helper_Navigation_Interface $helper  helper instance
+     * @param  Zend_View_Helper_Navigation_Helper $helper  helper instance
      * @return void
      */
-    protected function _inject(Zend_View_Helper_Navigation_Interface $helper)
+    protected function _inject(Zend_View_Helper_Navigation_Helper $helper)
     {
         if ($this->getInjectContainer() && !$helper->hasContainer()) {
             $helper->setContainer($this->getContainer());
@@ -311,7 +312,7 @@ class Zend_View_Helper_Navigation extends Zend_View_Helper_Navigation_Abstract
         return $this->_injectTranslator;
     }
 
-    // Zend_View_Helper_Navigation_Abstract:
+    // Zend_View_Helper_Navigation_Helper:
 
     /**
      * Renders helper

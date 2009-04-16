@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_View_Helper_Navigation_Abstract
+ * @see Zend_View_Helper_Navigation_HelperAbstract
  */
-require_once 'Zend/View/Helper/Navigation/Abstract.php';
+require_once 'Zend/View/Helper/Navigation/HelperAbstract.php';
 
 /**
  * Helper for printing <link> elements
@@ -34,7 +34,7 @@ require_once 'Zend/View/Helper/Navigation/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View_Helper_Navigation_Links
-    extends Zend_View_Helper_Navigation_Abstract
+    extends Zend_View_Helper_Navigation_HelperAbstract
 {
     /**#@+
      * Constants used for specifying which link types to find and render
@@ -729,12 +729,12 @@ class Zend_View_Helper_Navigation_Links
                $this->getClosingBracket();
     }
 
-    // Zend_View_Helper_Navigation_Interface:
+    // Zend_View_Helper_Navigation_Helper:
 
     /**
      * Renders helper
      *
-     * Implements {@link Zend_View_Helper_Navigation_Interface::render()}.
+     * Implements {@link Zend_View_Helper_Navigation_Helper::render()}.
      *
      * @param  Zend_Navigation_Container $container  [optional] container to
      *                                               render. Default is to

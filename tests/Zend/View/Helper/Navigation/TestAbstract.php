@@ -36,7 +36,7 @@ abstract class Zend_View_Helper_Navigation_TestAbstract
     /**
      * View helper
      *
-     * @var Zend_View_Helper_Navigation_Abstract
+     * @var Zend_View_Helper_Navigation_HelperAbstract
      */
     protected $_helper;
 

@@ -20,9 +20,9 @@
  */
 
 /**
- * @see Zend_View_Helper_Navigation_Abstract
+ * @see Zend_View_Helper_Navigation_HelperAbstract
  */
-require_once 'Zend/View/Helper/Navigation/Abstract.php';
+require_once 'Zend/View/Helper/Navigation/HelperAbstract.php';
 
 /**
  * Helper for rendering menus from navigation containers
@@ -34,7 +34,7 @@ require_once 'Zend/View/Helper/Navigation/Abstract.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View_Helper_Navigation_Menu
-    extends Zend_View_Helper_Navigation_Abstract
+    extends Zend_View_Helper_Navigation_HelperAbstract
 {
     /**
      * CSS class to use for the ul element
@@ -608,12 +608,12 @@ class Zend_View_Helper_Navigation_Menu
         return $this->view->partial($partial, null, $model);
     }
 
-    // Zend_View_Helper_Navigation_Interface:
+    // Zend_View_Helper_Navigation_Helper:
 
     /**
      * Renders menu
      *
-     * Implements {@link Zend_View_Helper_Navigation_Interface::render()}.
+     * Implements {@link Zend_View_Helper_Navigation_Helper::render()}.
      *
      * If a partial view is registered in the helper, the menu will be rendered
      * using the given partial script. If no partial is registered, the menu

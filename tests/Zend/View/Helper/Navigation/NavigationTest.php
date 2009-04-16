@@ -184,25 +184,25 @@ class Zend_View_Helper_Navigation_NavigationTest
     public function testGetAclReturnsAclInstanceSetWithSetDefaultAcl()
     {
         $acl = new Zend_Acl();
-        Zend_View_Helper_Navigation_Abstract::setDefaultAcl($acl);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
         $actual = $this->_helper->getAcl();
-        Zend_View_Helper_Navigation_Abstract::setDefaultAcl(null);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl(null);
         $this->assertEquals($acl, $actual);
     }
 
     public function testSetDefaultAclAcceptsNull()
     {
         $acl = new Zend_Acl();
-        Zend_View_Helper_Navigation_Abstract::setDefaultAcl($acl);
-        Zend_View_Helper_Navigation_Abstract::setDefaultAcl(null);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl(null);
         $this->assertNull($this->_helper->getAcl());
     }
 
     public function testSetDefaultAclAcceptsNoParam()
     {
         $acl = new Zend_Acl();
-        Zend_View_Helper_Navigation_Abstract::setDefaultAcl($acl);
-        Zend_View_Helper_Navigation_Abstract::setDefaultAcl();
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl();
         $this->assertNull($this->_helper->getAcl());
     }
 
@@ -256,37 +256,37 @@ class Zend_View_Helper_Navigation_NavigationTest
     public function testSetDefaultRoleAcceptsString()
     {
         $expected = 'member';
-        Zend_View_Helper_Navigation_Abstract::setDefaultRole($expected);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole($expected);
         $actual = $this->_helper->getRole();
-        Zend_View_Helper_Navigation_Abstract::setDefaultRole(null);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(null);
         $this->assertEquals($expected, $actual);
     }
 
     public function testSetDefaultRoleAcceptsRoleInterface()
     {
         $expected = new Zend_Acl_Role('member');
-        Zend_View_Helper_Navigation_Abstract::setDefaultRole($expected);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole($expected);
         $actual = $this->_helper->getRole();
-        Zend_View_Helper_Navigation_Abstract::setDefaultRole(null);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(null);
         $this->assertEquals($expected, $actual);
     }
 
     public function testSetDefaultRoleAcceptsNull()
     {
-        Zend_View_Helper_Navigation_Abstract::setDefaultRole(null);
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(null);
         $this->assertNull($this->_helper->getRole());
     }
 
     public function testSetDefaultRoleAcceptsNoParam()
     {
-        Zend_View_Helper_Navigation_Abstract::setDefaultRole();
+        Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole();
         $this->assertNull($this->_helper->getRole());
     }
 
     public function testSetDefaultRoleThrowsExceptionWhenGivenAnInt()
     {
         try {
-            Zend_View_Helper_Navigation_Abstract::setDefaultRole(1337);
+            Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(1337);
             $this->fail('An invalid argument was given, but a ' .
                         'Zend_View_Exception was not thrown');
         } catch (Zend_View_Exception $e) {
@@ -297,7 +297,7 @@ class Zend_View_Helper_Navigation_NavigationTest
     public function testSetDefaultRoleThrowsExceptionWhenGivenAnArbitraryObject()
     {
         try {
-            Zend_View_Helper_Navigation_Abstract::setDefaultRole(new stdClass());
+            Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole(new stdClass());
             $this->fail('An invalid argument was given, but a ' .
                         'Zend_View_Exception was not thrown');
         } catch (Zend_View_Exception $e) {

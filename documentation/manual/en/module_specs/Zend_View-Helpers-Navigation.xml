@@ -47,11 +47,11 @@
         </itemizedlist>
 
         All built-in helpers extend
-        <classname>Zend_View_Helper_Navigation_Abstract</classname>, which
+        <classname>Zend_View_Helper_Navigation_HelperAbstract</classname>, which
         adds integration with <link linkend="zend.acl">ACL</link> and
         <link linkend="zend.translate">translation</link>. The abstract class
         implements the interface
-        <classname>Zend_View_Helper_Navigation_Interface</classname>, which
+        <classname>Zend_View_Helper_Navigation_Helper</classname>, which
         defines the following methods:
 
         <itemizedlist>
@@ -253,7 +253,7 @@ $this->navigation()->addPage(array(
 
         <para>
             All navigational view helpers support ACL inherently from the
-            class <classname>Zend_View_Helper_Navigation_Abstract</classname>.
+            class <classname>Zend_View_Helper_Navigation_HelperAbstract</classname>.
             A <classname>Zend_Acl</classname> object can be assigned to
             a helper instance with <code>$helper->setAcl($acl)</code>, and role
             with <code>$helper->setRole('member')</code> or
@@ -531,8 +531,8 @@ $acl->allow('admin', null);
 $view->navigation()->setAcl($acl)->setRole('member');
 
 // ...or set default ACL and role statically:
-Zend_View_Helper_Navigation_Abstract::setDefaultAcl($acl);
-Zend_View_Helper_Navigation_Abstract::setDefaultRole('member');
+Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
+Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole('member');
 ]]>
         </programlisting>
     </sect4>
@@ -2141,7 +2141,7 @@ echo $this->navigation()
 
         <para>
             The Navigation helper finds other helpers that implement the
-            <classname>Zend_View_Helper_Navigation_Interface</classname>
+            <classname>Zend_View_Helper_Navigation_Helper</classname>
             interface, which means custom view helpers can also be proxied.
             This would, however, require that the custom helper path is added
             to the view.
