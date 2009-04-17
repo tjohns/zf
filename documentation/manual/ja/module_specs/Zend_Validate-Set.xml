@@ -1,4 +1,4 @@
-<!-- EN-Revision: 14766 -->
+<!-- EN-Revision: 14925 -->
 <sect1 id="zend.validate.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のバリデーションクラス群</title>
@@ -76,6 +76,8 @@
             を参照ください。
         </para>
     </sect2>
+
+    <xi:include href="Zend_Validate-Db.xml" />
 
     <sect2 id="zend.validate.set.digits">
         <title>Digits</title>
