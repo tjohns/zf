@@ -705,10 +705,6 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getValue()
     {
-        if ($this->_valueDisabled) {
-            return null;
-        }
-
         if ($this->_value !== null) {
             return $this->_value;
         }
@@ -722,7 +718,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             return null;
         }
 
-        if (!$this->receive()) {
+        if (!$this->_valueDisabled && !$this->receive()) {
             return null;
         }
 
