@@ -163,7 +163,7 @@ interface Zend_Application_Bootstrap_Bootstrapper
         <para>
             You can implement this interface on your own, extend
             <code>Zend_Application_Bootstrap_BootstrapAbstract</code>, or use
-            <code>Zend_Application_Bootstrap_Bootstrap</code>. 
+            <code>Zend_Application_Bootstrap_Bootstrap</code>.
         </para>
 
         <para>
@@ -317,7 +317,7 @@ $application = new Zend_Application(APPLICATION_ENV, array(
     ),
 ));
 ]]></programlisting>
-    
+
             <para>
                 This indicates that the "FrontController" resource should be
                 used, with the options specified.
@@ -486,7 +486,7 @@ class FooController extends Zend_Controller_Action
 
             <para>
                 As noted previously, all resources -- whether methods or plugins
-                -- are bootstrapped by calling <code>bootstrap($resource)</code>, 
+                -- are bootstrapped by calling <code>bootstrap($resource)</code>,
                 where <code>$resource</code> is the name of a resource, an array
                 of resources, or, left empty, indicates all resources should be
                 run.
@@ -549,7 +549,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 interface Zend_Application_Resource_Resource
 {
     public function __construct($options = null);
-    public function setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap);
+    public function setBootstrap(
+        Zend_Application_Bootstrap_Bootstrapper $bootstrap
+    );
     public function getBootstrap();
     public function setOptions(array $options);
     public function getOptions();
@@ -598,9 +600,10 @@ class My_Resource_View extends Zend_Application_Resource_ResourceAbstract
             $view->headLink()->appendStylesheet('/css/site.css');
             $view->headScript()->appendfile('/js/analytics.js');
 
-            $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
-                'ViewRenderer',
-            );
+            $viewRenderer =
+                Zend_Controller_Action_HelperBroker::getStaticHelper(
+                    'ViewRenderer',
+                );
             $viewRenderer->setView($view);
 
             $this->_view = $view;

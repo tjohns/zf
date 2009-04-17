@@ -113,7 +113,7 @@ phpSettings.display_errors = 1
 
         <para>
             All settings in this configuration file are for use with
-            <code>Zend_Application</code> and your bootstrap. 
+            <code>Zend_Application</code> and your bootstrap.
         </para>
 
         <para>
@@ -123,27 +123,30 @@ phpSettings.display_errors = 1
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php 
+<?php
 // Define path to application directory
 defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+    || define('APPLICATION_PATH',
+              realpath(dirname(__FILE__) . '/../application'));
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+    || define('APPLICATION_ENV',
+              (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV')
+                                         : 'production'));
 
 /** Zend_Application */
-require_once 'Zend/Application.php';  
+require_once 'Zend/Application.php';
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(
-    APPLICATION_ENV, 
+    APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
 $application->bootstrap();
             ->run();
 ]]></programlisting>
-        
+
         <para>
             To continue the quick start, please <link
             linkend="zend.application.quick-start.resources">skip to the
@@ -223,21 +226,24 @@ phpSettings.display_errors = 1
         </para>
 
         <programlisting role="php"><![CDATA[
-<?php 
+<?php
 // Define path to application directory
 defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+    || define('APPLICATION_PATH',
+              realpath(dirname(__FILE__) . '/../application'));
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+    || define('APPLICATION_ENV',
+              (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV')
+                                         : 'production'));
 
 /** Zend_Application */
-require_once 'Zend/Application.php';  
+require_once 'Zend/Application.php';
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(
-    APPLICATION_ENV, 
+    APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
 $application->bootstrap()
@@ -262,7 +268,7 @@ RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
-        
+
 ]]></programlisting>
 
         <para>
@@ -333,10 +339,10 @@ phpSettings.display_errors = 1
 <?php echo $this->doctype() ?>
 <html>
 <head>
-    <?php echo $this->headTitle() ?> 
-    <?php echo $this->headLink() ?> 
-    <?php echo $this->headStyle() ?> 
-    <?php echo $this->headScript() ?> 
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+    <?php echo $this->headScript() ?>
 </head>
 <body>
     <?php echo $this->layout()->content ?>

@@ -169,7 +169,9 @@ $filter->filter(array('day' => '12', 'month' => '04', 'year' => '2009');
 
         <programlisting role="php"><![CDATA[
 // Date Filter
-$filter = new Zend_Filter_LocalizedToNormalized(array('date_format' => 'ss:mm:HH'));
+$filter = new Zend_Filter_LocalizedToNormalized(
+    array('date_format' => 'ss:mm:HH')
+);
 
 $filter->filter(array('hour' => '33', 'minute' => '22', 'second' => '11'));
 // returns '11:22:33'

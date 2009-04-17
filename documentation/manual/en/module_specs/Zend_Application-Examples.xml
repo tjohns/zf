@@ -116,7 +116,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     </para>
 
     <programlisting role="php"><![CDATA[
-class My_Bootstrap_Resource_View 
+class My_Bootstrap_Resource_View
     extends Zend_Application_Resource_ResourceAbstract
 {
     public function init()
@@ -181,7 +181,7 @@ $application = new Zend_Application(
     </para>
 
     <programlisting role="php"><![CDATA[
-class My_Bootstrap_Resource_Layout 
+class My_Bootstrap_Resource_Layout
     extends Zend_Application_Resource_ResourceAbstract
 {
     public function init()

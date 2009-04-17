@@ -49,7 +49,10 @@ print $filter->filter('Hello!');
     </para>
 
     <programlisting role="php"><![CDATA[
-$filter = new Zend_Filter_Callback('MyMethod', array('key' => 'param1', 'key2' => 'param2'));
+$filter = new Zend_Filter_Callback(
+    'MyMethod',
+    array('key' => 'param1', 'key2' => 'param2')
+);
 $filter->filter(array('value' => 'Hello'));
 ]]>
     </programlisting>

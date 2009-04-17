@@ -178,7 +178,7 @@ http://www.google.com/books/feeds/volumes?q=keyword&amp;min-viewability=partial
             </para>
 
             <programlisting role="php"><![CDATA[
-http://www.google.com/books/p/PARTNER_COBRAND_ID?q=football
+http://www.google.com/books/p/PARTNER_COBRAND_ID?q=ball
 ]]>
             </programlisting>
 
@@ -187,7 +187,7 @@ http://www.google.com/books/p/PARTNER_COBRAND_ID?q=football
             </para>
 
             <programlisting role="php"><![CDATA[
-http://www.google.com/books/feeds/p/PARTNER_COBRAND_ID/volumes?q=football+-soccer
+http://www.google.com/books/feeds/p/PARTNER_COBRAND_ID/volumes?q=ball+-soccer
 ]]>
             </programlisting>
 
