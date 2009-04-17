@@ -171,7 +171,7 @@ $acl = new Zend_Acl();
         représenté dans un registre de rôles, permettant à chaque groupe d'hériter des privilèges
         des groupes "parents". Les permissions peuvent être rendues de la manière suivante :</para>
 
-        <table>
+        <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
             <title>Contrôles d'Accès pour un exemple de CMS</title>
 
             <tgroup cols="3">

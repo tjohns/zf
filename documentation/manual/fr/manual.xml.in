@@ -65,6 +65,9 @@
         <xi:include href="module_specs/Zend_Application-Introduction.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Application-Introduction.xml" /></xi:fallback>
         </xi:include>
+        <xi:include href="module_specs/Zend_Application-QuickStart.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Application-QuickStart.xml" /></xi:fallback>
+        </xi:include>
         <xi:include href="module_specs/Zend_Application-TheoryOfOperation.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Application-TheoryOfOperation.xml" /></xi:fallback>
         </xi:include>
