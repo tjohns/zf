@@ -92,6 +92,10 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
                     }
                     break;
 
+                case 'throwexceptions':
+                    $front->throwExceptions((bool) $value);
+                    break;
+
                 default:
                     $front->setParam($key, $value);
                     break;
