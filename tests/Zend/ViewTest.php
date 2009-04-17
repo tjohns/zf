@@ -1043,6 +1043,34 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->fail('LFI attack failed: ' . $e->getMessage());
         }
     }
+
+    /**
+     * @group ZF-6087
+     */
+    public function testConstructorShouldAllowPassingArrayOfHelperPaths()
+    {
+        $view = new Zend_View(array(
+            'helperPath' => array(
+                'My_View'   => 'My/View/',
+            ),
+        ));
+        $paths = $view->getHelperPaths();
+        $this->assertTrue(array_key_exists('My_View_', $paths), var_export($paths, 1));
+    }
+
+    /**
+     * @group ZF-6087
+     */
+    public function testConstructorShouldAllowPassingArrayOfFilterPaths()
+    {
+        $view = new Zend_View(array(
+            'filterPath' => array(
+                'My_View'   => 'My/View/',
+            ),
+        ));
+        $paths = $view->getFilterPaths();
+        $this->assertTrue(array_key_exists('My_View_', $paths), var_export($paths, 1));
+    }
 }
 
 /**
