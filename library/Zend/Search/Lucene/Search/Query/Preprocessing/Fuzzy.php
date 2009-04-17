@@ -141,6 +141,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
             $subqueries = $query->getSubqueries();
 
             if (count($subqueries) == 0) {
+            	$this->_matches = array();
                 if ($hasInsignificantSubqueries) {
                     return new Zend_Search_Lucene_Search_Query_Insignificant();
                 } else {
@@ -154,6 +155,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
 
             $query->setBoost($this->getBoost());
 
+            $this->_matches = $query->getQueryTerms();
             return $query;
         }
 
@@ -165,7 +167,11 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
             $query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, $this->_minimumSimilarity);
             $query->setBoost($this->getBoost());
 
-            return $query->rewrite($index);
+            // Get rewritten query. Important! It also fills terms matching container.
+            $rewrittenQuery = $query->rewrite($index);
+            $this->_matches = $query->getQueryTerms();
+
+            return $rewrittenQuery;
         }
 
 
@@ -189,6 +195,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
         $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_word, $this->_encoding);
 
         if (count($tokens) == 0) {
+        	$this->_matches = array();
             return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
 
@@ -197,12 +204,61 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy extends Zend_Search_Lu
             $query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, $this->_minimumSimilarity);
             $query->setBoost($this->getBoost());
 
-            return $query->rewrite($index);
+            // Get rewritten query. Important! It also fills terms matching container.
+            $rewrittenQuery = $query->rewrite($index);
+            $this->_matches = $query->getQueryTerms();
+
+            return $rewrittenQuery;
         }
 
         // Word is tokenized into several tokens
         require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
         throw new Zend_Search_Lucene_Search_QueryParserException('Fuzzy search is supported only for non-multiple word terms');
+    }
+
+    /**
+     * Query specific matches highlighting
+     *
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
+     */
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
+    {
+    	/** Skip fields detection. We don't need it, since we expect all fields presented in the HTML body and don't differentiate them */
+
+    	/** Skip exact term matching recognition, keyword fields highlighting is not supported */
+
+        // -------------------------------------
+        // Recognize wildcard queries
+
+        /** @todo check for PCRE unicode support may be performed through Zend_Environment in some future */
+        if (@preg_match('/\pL/u', 'a') == 1) {
+            $subPatterns = preg_split('/[*?]/u', iconv($this->_encoding, 'UTF-8', $this->_word));
+        } else {
+            $subPatterns = preg_split('/[*?]/', $this->_word);
+        }
+        if (count($subPatterns) > 1) {
+            // Do nothing
+            return;
+        }
+
+        // -------------------------------------
+        // Recognize one-term multi-term and "insignificant" queries
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_word, $this->_encoding);
+        if (count($tokens) == 0) {
+            // Do nothing
+            return;
+        }
+        if (count($tokens) == 1) {
+            $term  = new Zend_Search_Lucene_Index_Term($tokens[0]->getTermText(), $this->_field);
+            $query = new Zend_Search_Lucene_Search_Query_Fuzzy($term, $this->_minimumSimilarity);
+
+            $query->_highlightMatches($highlighter);
+            return;
+        }
+
+        // Word is tokenized into several tokens
+        // But fuzzy search is supported only for non-multiple word terms
+        // Do nothing
     }
 
     /**

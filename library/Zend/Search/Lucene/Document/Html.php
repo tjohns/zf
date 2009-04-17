@@ -254,8 +254,9 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             $matchedWordNode = $node->splitText($token->getStartOffset());
 
             // Retrieve HTML string representation for highlihted word
-            array_unshift($params, $matchedWordNode->nodeValue);
-            $highlightedWordNodeSetHtml = call_user_func_array($callback, $params);
+            $fullCallbackparamsList = $params;
+            array_unshift($fullCallbackparamsList, $matchedWordNode->nodeValue);
+            $highlightedWordNodeSetHtml = call_user_func_array($callback, $fullCallbackparamsList);
 
             // Transform HTML string to a DOM representation and automatically transform retrieved string
             // into valid XHTML (It's automatically done by loadHTML() method)
@@ -328,7 +329,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      * @return string
      * @internal
      */
-    public static function applyColour($stringToHighlight, $colour)
+    public function applyColour($stringToHighlight, $colour)
     {
         return '<b style="color:black;background-color:' . $colour . '">' . $stringToHighlight . '</b>';
     }
@@ -342,8 +343,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      */
     public function highlight($words, $colour = '#66ffff')
     {
-    	$this->_highlightingColour = $colour;
-    	return $this->highlightExtended($words, array('Zend_Search_Lucene_Document_Html', 'applyColour'), array($colour));
+    	return $this->highlightExtended($words, array($this, 'applyColour'), array($colour));
     }
 
 
@@ -354,7 +354,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      * @param string|array $words  Words to highlight. they could be organized using the array or string
      * @param callback $callback   Callback method, used to transform (highlighting) text.
      * @param array    $params     Array of additionall callback parameters
-     *                             (first non-optional parameter is a HTML fragment to for highlighting)
+     *                             (first non-optional parameter is an HTML fragment for highlighting)
      * @return string
      * @throws Zend_Search_Lucene_Exception
      */

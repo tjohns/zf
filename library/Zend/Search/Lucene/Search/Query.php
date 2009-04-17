@@ -25,6 +25,9 @@ require_once 'Zend/Search/Lucene/Document/Html.php';
 /** Zend_Search_Lucene_Index_DocsFilter */
 require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
 
+/** Zend_Search_Lucene_Search_Highlighter_Default */
+require_once 'Zend/Search/Lucene/Search/Highlighter/Default.php';
+
 
 /**
  * @category   Zend
@@ -35,7 +38,6 @@ require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
  */
 abstract class Zend_Search_Lucene_Search_Query
 {
-
     /**
      * query boost factor
      *
@@ -56,17 +58,6 @@ abstract class Zend_Search_Lucene_Search_Query
      * @var integer
      */
     private $_currentColorIndex = 0;
-
-    /**
-     * List of colors for text highlighting
-     *
-     * @var array
-     */
-    private $_highlightColors = array('#66ffff', '#ff66ff', '#ffff66',
-                                      '#ff8888', '#88ff88', '#8888ff',
-                                      '#88dddd', '#dd88dd', '#dddd88',
-                                      '#aaddff', '#aaffdd', '#ddaaff', '#ddffaa', '#ffaadd', '#ffddaa');
-
 
     /**
      * Gets the boost for this clause.  Documents matching
@@ -186,40 +177,29 @@ abstract class Zend_Search_Lucene_Search_Query
     abstract public function getQueryTerms();
 
     /**
-     * Get highlight color and shift to next
+     * Query specific matches highlighting
      *
-     * @param integer &$colorIndex
-     * @return string
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    protected function _getHighlightColor(&$colorIndex)
-    {
-        $color = $this->_highlightColors[$colorIndex++];
-
-        $colorIndex %= count($this->_highlightColors);
-
-        return $color;
-    }
-
-    /**
-     * Highlight query terms
-     *
-     * @param integer &$colorIndex
-     * @param Zend_Search_Lucene_Document_Html $doc
-     */
-    abstract public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex);
+    abstract protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter);
 
     /**
      * Highlight matches in $inputHTML
      *
      * @param string $inputHTML
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface|null $highlighter
      * @return string
      */
-    public function highlightMatches($inputHTML)
+    public function highlightMatches($inputHTML, $highlighter = null)
     {
-        $doc = Zend_Search_Lucene_Document_Html::loadHTML($inputHTML);
+        if ($highlighter === null) {
+        	$highlighter = new Zend_Search_Lucene_Search_Highlighter_Default();
+        }
 
-        $colorIndex = 0;
-        $this->highlightMatchesDOM($doc, $colorIndex);
+        $doc = Zend_Search_Lucene_Document_Html::loadHTML($inputHTML);
+        $highlighter->setDocument($doc);
+
+        $this->_highlightMatches($highlighter);
 
         return $doc->getHTML();
     }

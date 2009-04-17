@@ -76,7 +76,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
      *
      * @var array
      */
-    private $_matches;
+    private $_matches = null;
 
 
     /**
@@ -255,7 +255,7 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
     {
         if ($this->_matches === null) {
             require_once 'Zend/Search/Lucene/Exception.php';
-            throw new Zend_Search_Lucene_Exception('Search has to be performed first to get matched terms');
+            throw new Zend_Search_Lucene_Exception('Search or rewrite operations have to be performed before.');
         }
 
         return $this->_matches;
@@ -318,24 +318,39 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
     }
 
     /**
-     * Highlight query terms
+     * Query specific matches highlighting
      *
-     * @param integer &$colorIndex
-     * @param Zend_Search_Lucene_Document_Html $doc
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
      */
-    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
     {
         $words = array();
 
-        if ($this->_matches === null) {
-            require_once 'Zend/Search/Lucene/Exception.php';
-            throw new Zend_Search_Lucene_Exception('Search has to be performed first to get matched terms');
-        }
-        foreach ($this->_matches as $term) {
-            $words[] = $term->text;
+        $docBody = $highlighter->getDocument()->getFieldUtf8Value('body');
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($docBody, 'UTF-8');
+
+        $lowerTermText = ($this->_lowerTerm !== null)? $this->_lowerTerm->text : null;
+        $upperTermText = ($this->_upperTerm !== null)? $this->_upperTerm->text : null;
+
+        if ($this->_inclusive) {
+	        foreach ($tokens as $token) {
+	            $termText = $token->getTermText();
+	            if (($lowerTermText == null  ||  $lowerTermText <= $termText)  &&
+	                ($upperTermText == null  ||  $termText <= $upperTermText)) {
+	                $words[] = $termText;
+	            }
+	        }
+        } else {
+            foreach ($tokens as $token) {
+                $termText = $token->getTermText();
+                if (($lowerTermText == null  ||  $lowerTermText < $termText)  &&
+                    ($upperTermText == null  ||  $termText < $upperTermText)) {
+                    $words[] = $termText;
+                }
+            }
         }
 
-        $doc->highlight($words, $this->_getHighlightColor($colorIndex));
+        $highlighter->highlight($words);
     }
 
     /**

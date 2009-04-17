@@ -164,6 +164,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
                 $query->addSubquery($subquery->rewrite($index));
             }
 
+            $this->_matches = $query->getQueryTerms();
             return $query;
     	}
 
@@ -174,6 +175,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
             $query = new Zend_Search_Lucene_Search_Query_Term($term);
     		$query->setBoost($this->getBoost());
 
+    		$this->_matches = $query->getQueryTerms();
     		return $query;
     	}
 
@@ -182,6 +184,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
         $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_phrase, $this->_phraseEncoding);
 
         if (count($tokens) == 0) {
+        	$this->_matches = arrray();
             return new Zend_Search_Lucene_Search_Query_Insignificant();
         }
 
@@ -190,6 +193,7 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
             $query = new Zend_Search_Lucene_Search_Query_Term($term);
             $query->setBoost($this->getBoost());
 
+            $this->_matches = $query->getQueryTerms();
             return $query;
         }
 
@@ -202,7 +206,42 @@ class Zend_Search_Lucene_Search_Query_Preprocessing_Phrase extends Zend_Search_L
             $query->addTerm($term, $position);
             $query->setSlop($this->getSlop());
         }
+        $this->_matches = $query->getQueryTerms();
         return $query;
+    }
+
+    /**
+     * Query specific matches highlighting
+     *
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface $highlighter  Highlighter object (also contains doc for highlighting)
+     */
+    protected function _highlightMatches(Zend_Search_Lucene_Search_Highlighter_Interface $highlighter)
+    {
+    	/** Skip fields detection. We don't need it, since we expect all fields presented in the HTML body and don't differentiate them */
+
+        /** Skip exact term matching recognition, keyword fields highlighting is not supported */
+
+        /** Skip wildcard queries recognition. Supported wildcards are removed by text analyzer */
+
+        // tokenize phrase using current analyzer and process it as a phrase query
+        $tokens = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($this->_phrase, $this->_phraseEncoding);
+
+        if (count($tokens) == 0) {
+            // Do nothing
+            return;
+        }
+
+        if (count($tokens) == 1) {
+            $highlighter->highlight($tokens[0]->getTermText());
+            return;
+        }
+
+        //It's non-trivial phrase query
+        $words = array();
+        foreach ($tokens as $token) {
+            $words[] = $token->getTermText();
+        }
+        $highlighter->highlight($words);
     }
 
     /**

@@ -45,6 +45,18 @@ require_once 'Zend/Search/Lucene/Search/Weight.php';
 abstract class Zend_Search_Lucene_Search_Query_Preprocessing extends Zend_Search_Lucene_Search_Query
 {
     /**
+     * Matched terms.
+     *
+     * Matched terms list.
+     * It's filled during rewrite operation and may be used for search result highlighting
+     *
+     * Array of Zend_Search_Lucene_Index_Term objects
+     *
+     * @var array
+     */
+    protected $_matches = null;
+
+    /**
      * Optimize query in the context of specified index
      *
      * @param Zend_Search_Lucene_Interface $index
@@ -116,18 +128,6 @@ abstract class Zend_Search_Lucene_Search_Query_Preprocessing extends Zend_Search
     {
         require_once 'Zend/Search/Lucene/Exception.php';
         throw new Zend_Search_Lucene_Exception('Rewrite operation has to be done before retrieving query terms.');
-    }
-
-    /**
-     * Highlight query terms
-     *
-     * @param integer &$colorIndex
-     * @param Zend_Search_Lucene_Document_Html $doc
-     */
-    public function highlightMatchesDOM(Zend_Search_Lucene_Document_Html $doc, &$colorIndex)
-    {
-        require_once 'Zend/Search/Lucene/Exception.php';
-        throw new Zend_Search_Lucene_Exception('This query is not intended to be executed.');
     }
 }
 
