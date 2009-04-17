@@ -284,7 +284,7 @@ $form->getValues();
             actual value of this flag you can call <code>isValueDisabled()</code>.
         </para>
 
-        <example id="zend.form.standardElements.file.usage">
+        <example id="zend.form.standardElements.file.retrievement">
             <title>Explicit file retrievement</title>
 
             <para>
