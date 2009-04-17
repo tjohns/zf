@@ -96,12 +96,20 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
                     $front->throwExceptions((bool) $value);
                     break;
 
+                case 'actionhelperpaths':
+                    if (is_array($value)) {
+                        foreach ($value as $helperPrefix => $helperPath) {
+                            Zend_Controller_Action_HelperBroker::addPath($helperPath, $helperPrefix);
+                        }
+                    }
+                    break;
+
                 default:
                     $front->setParam($key, $value);
                     break;
             }
         }
-        
+
         if (null !== ($bootstrap = $this->getBootstrap())) {
             $this->getBootstrap()->frontController = $front;
         }
