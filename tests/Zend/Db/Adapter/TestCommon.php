@@ -1983,8 +1983,8 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
 
         // create test table using no identifier quoting
         $util->createTable('charsetutf8', array(
-            'id'    => 'INT UNSIGNED NOT NULL PRIMARY KEY',
-            'stuff' => 'VARCHAR(6) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL'
+            'id'    => 'IDENTITY',
+            'stuff' => 'VARCHAR(32)'
         ));
         $tableName = $this->_util->getTableName('charsetutf8');
 
@@ -1995,8 +1995,9 @@ abstract class Zend_Db_Adapter_TestCommon extends Zend_Db_TestSetup
         ));
 
         // check if the row was inserted as expected
-        $sql = "SELECT id, stuff FROM $tableName ORDER BY id";
-        $stmt = $db->query($sql);
+        $select = $db->select()->from($tableName, array('id', 'stuff'));
+
+        $stmt = $db->query($select);
         $fetched = $stmt->fetchAll(Zend_Db::FETCH_NUM);
         $a = array(
             0 => array(0 => 1, 1 => 'äöüß')
