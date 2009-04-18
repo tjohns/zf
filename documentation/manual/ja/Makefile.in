@@ -44,6 +44,8 @@ DOCBOOK_XSL=http://framework.zend.com/docbook-xsl/htmlhelp/htmlhelp.xsl
 DOCBOOK_FO_XSL=http://framework.zend.com/docbook-xsl/fo/docbook.xsl
 HTML_XSL=html.xsl
 MANUAL_XML=manual.xml
+MANUAL_PRINT1_XML=manual-print1.xml
+MANUAL_PRINT2_XML=manual-print2.xml
 MANUAL_LINT_XML=manual-lint.xml.in
 MODULE=module_specs
 XMLFILE=
@@ -56,12 +58,17 @@ html: html/index.html
 
 html/index.html: $(MANUAL_XML) $(HTML_XSL)
 	@echo "Rendering the whole manual with $(XSLTPROC)..."
-	$(XMLLINT) --xinclude --output _temp_manual.xml $(MANUAL_XML)
-	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) _temp_manual.xml
+	$(XSLTPROC) --xinclude --output html/index.html $(HTML_XSL) $(MANUAL_XML)
 	@echo "Copying manual figures (recursively)..."
 	-[ -d figures ] && cp -r figures html/figures
 
 $(MANUAL_XML): $(MANUAL_XML).in
+	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
+	
+$(MANUAL_PRINT1_XML): $(MANUAL_PRINT1_XML).in
+	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
+	
+$(MANUAL_PRINT2_XML): $(MANUAL_PRINT2_XML).in
 	sed -e 's!@DOCBOOK_DTD@!$(DOCBOOK_DTD)!' $< > $@
 
 $(HTML_XSL): $(HTML_XSL).in
@@ -72,6 +79,17 @@ $(HTML_XSL): $(HTML_XSL).in
 pdf-xep: $(MANUAL_XML)
 	$(XSLTPROC) --xinclude --output ZendFramework.fo $(DOCBOOK_FO_XSL) $(MANUAL_XML)
 	"$(XEP)" -fo ZendFramework.fo -pdf ZendFramework.pdf
+
+pdf-print-volume1: $(MANUAL_PRINT1_XML)
+	$(XSLTPROC) --xinclude --output ZendFramework.fo $(DOCBOOK_FO_XSL) $(MANUAL_PRINT1_XML)
+	"$(FOP)" -fo ZendFramework.fo -pdf ZendFrameworkVolume1.pdf
+
+pdf-print-volume2: $(MANUAL_PRINT2_XML)
+	$(XSLTPROC) --xinclude --output ZendFramework.fo $(DOCBOOK_FO_XSL) $(MANUAL_PRINT2_XML)
+	"$(FOP)" -fo ZendFramework.fo -pdf ZendFrameworkVolume2.pdf
+
+pdf-print: pdf-print-volume1 pdf-print-volume2
+
 
 check: $(MANUAL_XML)
 	@echo "Checking the whole manual with $(XMLLINT)..."
@@ -98,9 +116,10 @@ clean:
 	-rm -f html/*.html html/HTML.manifest
 	-rm -Rf html/figures
 	-rm -f _temp_*.xml
+	-rm -f ./*.pdf
 
 cleanall: clean
 	-rm -f config.* configure
 	-rm -rf autom4te.cache
 	-rm -f Makefile
-	-rm -f $(HTML_XSL) $(MANUAL_XML)
+	-rm -f $(HTML_XSL) $(MANUAL_XML) $(MANUAL_PRINT1_XML) $(MANUAL_PRINT2_XML)
