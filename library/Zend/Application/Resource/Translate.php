@@ -60,7 +60,7 @@ class Zend_Application_Resource_Translate extends Zend_Application_Resource_Reso
             $options = $this->getOptions();
 
             if (!isset($options['data'])) {
-            	throw new Zend_Application_Resource_Exception('No translation source data provided.');
+                throw new Zend_Application_Resource_Exception('No translation source data provided.');
             }
 
             $adapter = isset($options['adapter']) ? $options['adapter'] : Zend_Translate::AN_ARRAY;
