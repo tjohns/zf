@@ -394,7 +394,9 @@ $return = $ec2_instance->describe('instanceId');
         <note>
             <title>Terminated Instances</title>
             <para>Recently terminated instances might appear in the returned results.
-            This interval is usually less than one hour.</para>
+            This interval is usually less than one hour. If you do not want terminated
+            instances to be returned, pass in a second variable of boolean true to
+            <code>describe</code> and the terminated instances will be ignored.</para>
         </note>
 
         <example id="zend.service.amazon.ec2.instance.utility.consoleOutput">

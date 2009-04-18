@@ -215,8 +215,10 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
      * This interval is usually less than one hour.
      *
      * @param string|array $instaceId       Set of instances IDs of which to get the status.
+     * @param boolean                       Ture to ignore Terminated Instances.
+     * @return array
      */
-    public function describe($instanceId = null)
+    public function describe($instanceId = null, $ignoreTerminated = false)
     {
         $params = array();
         $params['Action'] = 'DescribeInstances';
@@ -249,6 +251,8 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
 
             $is = $xpath->query('ec2:instancesSet/ec2:item', $node);
             foreach($is as $is_node) {
+                if($xpath->evaluate('string(ec2:instanceState/ec2:code/text())', $is_node) == 48 && $ignoreTerminated) continue;
+
                 $item = array();
 
                 $item['instanceId'] = $xpath->evaluate('string(ec2:instanceId/text())', $is_node);
