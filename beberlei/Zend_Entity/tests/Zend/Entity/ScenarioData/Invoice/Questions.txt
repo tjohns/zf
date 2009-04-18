@@ -1,0 +1,9 @@
+How to define Many-to-Many relationships? The API isn't clear in the GIT code, and not shown in the proposal
+ - See 'Customer Def.php' and 'Invoice Def.php'
+
+How to define Composite Primary Keys? Class doesn't exist in GIT.
+ - See 'InvoiceItem Def.php'
+
+Do the keys of the array returned by Zend_Entity_Interface::getState() need to match property names from the definition, or field names in the DB?
+
+Class locations in namespaces different in GIT from proposal; which one is "correct"?

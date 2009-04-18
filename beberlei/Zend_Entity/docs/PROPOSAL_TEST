@@ -1,0 +1,164 @@
+{zone-template-instance:ZFPROP:Proposal Zone Template}
+{composition-setup}
+
+{zone-data:component-name}
+Zend_Test_PHPUnit_Database
+{zone-data}
+
+{zone-data:proposer-list}
+[Benjamin Eberlei|mailto:kontakt@beberlei.de]
+{zone-data}
+
+{zone-data:liaison}
+TBD
+{zone-data}
+
+{zone-data:revision}
+1.0 - 5 February 2009: Initial Draft.
+{zone-data}
+
+{zone-data:overview}
+The PHPUnit Database Extension is very PDO centric and may hinder people
+using Zend_Db to effectivly write Database related tests. This proposal
+is for a subcomponent in the Zend_Test namespace that implementes the
+necessary interfaces of the PHPUnit_Extensions_Database to make this tool
+work with Zend_Db_Adapter_Abstract connections.
+
+It would also allow for a very simple integration of a Zend_Db_Table implementation
+as a dataset which would make testing against Zend_Db_Table and corresponding
+Zend_Db_TableRowset instances a bit more convenient.
+
+Additionally the profiler does much work on counting queries and stuff, which could
+also be integrated as additional assertions.
+{zone-data}
+
+{zone-data:references}
+* [PHPUnit Database Extension|http://Zendw.phpunit.de/manual/3.3/en/database.html]
+* [Extension Authors blog with recent information|http://digitalsandwich.com/]
+{zone-data}
+
+{zone-data:requirements}
+* This component *MUST* allow using Zend_Db_Adapter_Abstract in conjunction with PHPUnits database extension.
+* This component *MUST* allow using Zend_Db_Table implementations as DataSets to test against.
+* This component *MUST* add new constraints for use with the Zend_Db_Profiler
+{zone-data}
+
+{zone-data:dependencies}
+* Zend_Db_Adapter_Abstract
+* Zend_Db_Table
+* PHPUnit
+{zone-data}
+
+{zone-data:operation}
+Operation would be exactly the same as in the current PHPUnit Database Extension.
+
+You add a default dataset and do stuff on it and at the end you assert wheater a dataset equals
+a specific other dataset exactly, which proves test-success.
+{zone-data}
+
+{zone-data:milestones}
+* Milestone 1: Proposal, Community Review and Acceptance
+* Milestone 2: Unit-Testing and Development
+* Milestone 3: Documentation and Testing
+{zone-data}
+
+{zone-data:class-list}
+* Zend_Test_PHPUnit_DatabaseTestCase
+* Zend_Test_PHPUnit_Database_Connection
+* Zend_Test_PHPUnit_Database_DataSet_ZendDbTable
+* Zend_Test_PHPUnit_Database_DataSet_RowSet
+* Zend_Test_PHPUnit_Database_Metadata_Generic
+* Zend_Test_PHPUnit_Database_Operation_*
+{zone-data}
+
+{zone-data:use-cases}
+
+{deck:id=UseCaseBasic}
+{card:label=Use-Case 1: Setup database in Unittests and test Zend Db Table}
+{code}
+class MyDbTestCase extends Zend_Test_PHPUnit_DatabaseTestCase
+{
+    /**
+     * Returns the test database connection.
+     *
+     * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+     */
+    protected function getConnection()
+    {
+        $db = Zend_Db::factory(...);
+        return $this->createDefaultDBConnection($db, "myDatabase");
+    }
+
+    /**
+     * Returns the test dataset.
+     *
+     * @return PHPUnit_Extensions_Database_DataSet_IDataSet
+     */
+    protected function getDataSet()
+    {
+        return $this->createFlatXMLDataSet('my-seed-data.xml');
+    }
+
+    public function testMyDatabaseChanges()
+    {
+        $db = $this->getConnection();
+        $bugsTable = new Bugs();
+        $bugsTable->setAdapter($db);
+        $bugsTable->insert(array(...));
+
+        $this->assertDataSetsEqual( $fixtureDataSet, new Zend_Test_PHPUnit_Database_DataSet_ZendDbTable($bugsTable) );
+        // or by use of convenience function
+        $this->assertDataSetsEqual( $fixtureDataset, $this->createDbTableDataSet($bugsTable) );
+    }
+
+}
+{code}
+{card}
+
+{card:label=Use Case 2: Profiler Assertions}
+{code}
+class MyDbProfilerTest extends Zend_Test_PHPUnit_DatabaseTestCase
+{
+    // [..] do setup of db connection and such
+
+    public function testSomeFeature()
+    {
+        // do stuff
+
+        // assert
+        $this->assertDataBaseQueryTotalTimeLessThan( 3 ); // no more than 3 seconds please!
+        $this->assertDataBaseQueryCount( 10 ); // exactly 10 queries are executed by this test!
+
+        $this->assertDataBaseInsertQueryCount( 5 ); // exactly 5 inserts
+        $this->assertDataBaseSelectQueryCount( 4 );
+        $this->assertDataBaseUpdateQueryCount( 1 );
+    }
+}
+{code}
+{card}
+
+{card:label=Use Case3: RowSet Assertions}
+{code}
+class MyDbRowsetTest extends Zend_Test_PHPUnit_DatabaseTestCase
+{
+    // [..] do setup of db connection and such
+
+    public function testSomeFeatureWithRowset()
+    {
+        $myTable = new MyTable();
+        $rowset = $myTable->fetchAll(...);
+
+        $this->assertDataSetsEqual( $fixtureDataset, new Zend_Test_PHPUnit_Database_DataSet_ZendDbRowset($rowset) );
+        // or by use of convenience function
+        $this->assertDataSetsEqual( $fixtureDataset, $this->createDbRowsetDataSet($rowset) );
+    }
+}
+{code}
+{card}
+{deck}
+{zone-data}
+
+{zone-data:skeletons}
+
+{zone-data}
+{zone-template-instance}

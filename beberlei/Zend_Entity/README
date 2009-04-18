@@ -1,0 +1,22 @@
+Zend_Db_Mapper Proposal Prototype
+=================================
+
+See proposal: http://framework.zend.com/wiki/display/ZFPROP/Zend_Db_Mapper+-+Benjamin+Eberlei
+
+1. Running Unittests:
+
+In tests/Zend/Entity/ScenarioData/Clinic grab the database.sql and put
+it into your MySQL Database. Open up the Zend_Entity_Adapter_PDO_MySQL_ClinicScenario
+and change the options for the Database connection.
+
+Do:
+cd tests/
+phpunit Zend_Entity_AllTests
+
+2. See embedded Zend_Test_PHPUnit_Database proposal
+
+Embedded into this proposal is a conversion of the PHPUnit Database Extension
+to work with Zend_Db_Adapter_Abstract and add some convenience functionality that
+is offered by Zend_Db over PDO.
+
+http://framework.zend.com/wiki/display/ZFPROP/Zend_Test_PHPUnit_Database+-+Benjamin+Eberlei
