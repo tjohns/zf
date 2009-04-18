@@ -164,6 +164,117 @@ class Zend_Service_Amazon_Ec2_InstanceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('us-east-1b', $return['instances'][0]['availabilityZone']);
     }
 
+    public function testDescribeIgnoreTerminatedInstance()
+    {
+        $rawHttpResponse = "HTTP/1.1 200 OK\r\n"
+                    . "Date: Fri, 24 Oct 2008 17:24:52 GMT\r\n"
+                    . "Server: hi\r\n"
+                    . "Last-modified: Fri, 24 Oct 2008 17:24:52 GMT\r\n"
+                    . "Status: 200 OK\r\n"
+                    . "Content-type: application/xml; charset=utf-8\r\n"
+                    . "Expires: Tue, 31 Mar 1981 05:00:00 GMT\r\n"
+                    . "Connection: close\r\n"
+                    . "\r\n"
+                    . "<DescribeInstancesResponse xmlns=\"http://ec2.amazonaws.com/doc/2008-12-01/\">\r\n"
+                    . "  <reservationSet>\r\n"
+                    . "    <item>\r\n"
+                    . "      <reservationId>r-44a5402d</reservationId>\r\n"
+                    . "      <ownerId>UYY3TLBUXIEON5NQVUUX6OMPWBZIQNFM</ownerId>\r\n"
+                    . "      <groupSet>\r\n"
+                    . "        <item>\r\n"
+                    . "          <groupId>default</groupId>\r\n"
+                    . "        </item>\r\n"
+                    . "      </groupSet>\r\n"
+                    . "      <instancesSet>\r\n"
+                    . "        <item>\r\n"
+                    . "          <instanceId>i-28a64341</instanceId>\r\n"
+                    . "          <imageId>ami-6ea54007</imageId>\r\n"
+                    . "          <instanceState>\r\n"
+                    . "            <code>48</code>\r\n"
+                    . "            <name>terminated</name>\r\n"
+                    . "          </instanceState>\r\n"
+                    . "          <privateDnsName>10-251-50-75.ec2.internal</privateDnsName>\r\n"
+                    . "          <dnsName>ec2-72-44-33-4.compute-1.amazonaws.com</dnsName>\r\n"
+                    . "          <keyName>example-key-name</keyName>\r\n"
+                    . "          <productCodesSet>\r\n"
+                    . "            <item><productCode>774F4FF8</productCode></item>\r\n"
+                    . "          </productCodesSet>\r\n"
+                    . "          <instanceType>m1.small</instanceType>\r\n"
+                    . "          <launchTime>2007-08-07T11:54:42.000Z</launchTime>\r\n"
+                    . "          <placement>\r\n"
+                    . "           <availabilityZone>us-east-1b</availabilityZone>\r\n"
+                    . "          </placement>\r\n"
+                    . "          <kernelId>aki-ba3adfd3</kernelId>\r\n"
+                    . "          <ramdiskId>ari-badbad00</ramdiskId>\r\n"
+                    . "        </item>\r\n"
+                    . "      </instancesSet>\r\n"
+                    . "    </item>\r\n"
+                    . "  </reservationSet>\r\n"
+                    . "</DescribeInstancesResponse>\r\n";
+        $this->adapter->setResponse($rawHttpResponse, true);
+
+        $return = $this->Zend_Service_Amazon_Ec2_Instance->describe('i-28a64341', true);
+
+        $this->assertEquals(0, count($return['instances']));
+    }
+
+    public function testDescribeByImageId()
+    {
+        $rawHttpResponse = "HTTP/1.1 200 OK\r\n"
+                    . "Date: Fri, 24 Oct 2008 17:24:52 GMT\r\n"
+                    . "Server: hi\r\n"
+                    . "Last-modified: Fri, 24 Oct 2008 17:24:52 GMT\r\n"
+                    . "Status: 200 OK\r\n"
+                    . "Content-type: application/xml; charset=utf-8\r\n"
+                    . "Expires: Tue, 31 Mar 1981 05:00:00 GMT\r\n"
+                    . "Connection: close\r\n"
+                    . "\r\n"
+                    . "<DescribeInstancesResponse xmlns=\"http://ec2.amazonaws.com/doc/2008-12-01/\">\r\n"
+                    . "  <reservationSet>\r\n"
+                    . "    <item>\r\n"
+                    . "      <reservationId>r-44a5402d</reservationId>\r\n"
+                    . "      <ownerId>UYY3TLBUXIEON5NQVUUX6OMPWBZIQNFM</ownerId>\r\n"
+                    . "      <groupSet>\r\n"
+                    . "        <item>\r\n"
+                    . "          <groupId>default</groupId>\r\n"
+                    . "        </item>\r\n"
+                    . "      </groupSet>\r\n"
+                    . "      <instancesSet>\r\n"
+                    . "        <item>\r\n"
+                    . "          <instanceId>i-28a64341</instanceId>\r\n"
+                    . "          <imageId>ami-6ea54007</imageId>\r\n"
+                    . "          <instanceState>\r\n"
+                    . "            <code>0</code>\r\n"
+                    . "            <name>running</name>\r\n"
+                    . "          </instanceState>\r\n"
+                    . "          <privateDnsName>10-251-50-75.ec2.internal</privateDnsName>\r\n"
+                    . "          <dnsName>ec2-72-44-33-4.compute-1.amazonaws.com</dnsName>\r\n"
+                    . "          <keyName>example-key-name</keyName>\r\n"
+                    . "          <productCodesSet>\r\n"
+                    . "            <item><productCode>774F4FF8</productCode></item>\r\n"
+                    . "          </productCodesSet>\r\n"
+                    . "          <instanceType>m1.small</instanceType>\r\n"
+                    . "          <launchTime>2007-08-07T11:54:42.000Z</launchTime>\r\n"
+                    . "          <placement>\r\n"
+                    . "           <availabilityZone>us-east-1b</availabilityZone>\r\n"
+                    . "          </placement>\r\n"
+                    . "          <kernelId>aki-ba3adfd3</kernelId>\r\n"
+                    . "          <ramdiskId>ari-badbad00</ramdiskId>\r\n"
+                    . "        </item>\r\n"
+                    . "      </instancesSet>\r\n"
+                    . "    </item>\r\n"
+                    . "  </reservationSet>\r\n"
+                    . "</DescribeInstancesResponse>\r\n";
+        $this->adapter->setResponse($rawHttpResponse);
+
+        $return = $this->Zend_Service_Amazon_Ec2_Instance->describeByImageId('ami-6ea54007');
+
+        $this->assertEquals('i-28a64341', $return[0]['instanceId']);
+        $this->assertEquals('ami-6ea54007', $return[0]['imageId']);
+        $this->assertEquals('m1.small', $return[0]['instanceType']);
+        $this->assertEquals('us-east-1b', $return[0]['availabilityZone']);
+    }
+
     public function testRunThrowsExceptionWhenNoImageIdPassedIn()
     {
         $arrStart = array(

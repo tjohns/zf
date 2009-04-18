@@ -250,6 +250,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
             unset($gs);
 
             $is = $xpath->query('ec2:instancesSet/ec2:item', $node);
+            $return['instances'] = array();
             foreach($is as $is_node) {
                 if($xpath->evaluate('string(ec2:instanceState/ec2:code/text())', $is_node) == 48 && $ignoreTerminated) continue;
 
@@ -274,6 +275,32 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
                 unset($is_node);
             }
             unset($is);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Returns information about instances that you own that were started from
+     * a specific imageId
+     *
+     * Recently terminated instances might appear in the returned results.
+     * This interval is usually less than one hour.
+     *
+     * @param string $imageId               The imageId used to start the Instance.
+     * @param boolean                       Ture to ignore Terminated Instances.
+     * @return array
+     */
+    public function describeByImageId($imageId, $ignoreTerminated = false)
+    {
+        $arrInstances = $this->describe(null, $ignoreTerminated);
+
+        $return = array();
+
+        foreach($arrInstances['instances'] as $k => $instance) {
+            if($instance['imageId'] !== $imageId) continue;
+            $instance['groupSet'] = $arrInstances['groupSet'][$k];
+            $return[] = $instance;
         }
 
         return $return;
