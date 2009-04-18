@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14932 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.navigation.pages.mvc">
     <title>Zend_Navigation_Page_Mvc</title>
@@ -121,7 +121,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'view',
     'controller' => 'post',
     'module'     => 'blog',
-    'id'         => 1337
+    'params'     => array('id' => 1337)
 ));
 ]]>
         </programlisting>
@@ -182,7 +182,7 @@ $page = new Zend_Navigation_Page_Mvc(array(
     'action'     => 'view',
     'controller' => 'post',
     'module'     => 'blog',
-    'id'         => null
+    'params'     => array('id' => null)
 ));
 
 // Gibt false zurück weil die Seite den id Parameter in der
@@ -233,11 +233,12 @@ Zend_Controller_Front::getInstance()->getRouter()->addRoute(
 
 // Eine Seite wird mit der 'route' Option erstellt
 $page = new Zend_Navigation_Page_Mvc(array(
-    'label'  => 'A news article',
-    'route'  => 'article_view',
-    'params' => array(
-        'id' => 42
-    )
+    'label'      => 'A news article',
+    'route'      => 'article_view',
+    'module'     => 'news',    // wird für isActive() benötigt, siehe oben
+    'controller' => 'article', // wird für isActive() benötigt, siehe oben
+    'action'     => 'view',    // wird für isActive() benötigt, siehe oben
+    'params'     => array('id' => 42)
 ));
 
 // Gibt /a/42 zurück

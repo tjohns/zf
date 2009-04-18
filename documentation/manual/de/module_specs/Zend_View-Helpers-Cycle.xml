@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14824 -->
+<!-- EN-Revision: 14935 -->
 <!-- Reviewed: no -->
 <sect3 id="zend.view.helpers.initial.cycle">
     <title>Cycle Helfer</title>
@@ -18,7 +18,9 @@
 
         <programlisting role="php"><![CDATA[
 <?php foreach ($this->books as $book):?>
-  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next()?>">
+  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0",
+                                                            "#FFFFFF"))
+                                              ->next()?>">
   <td><?php echo $this->escape($book['author']) ?></td>
 </tr>
 <?php endforeach;?>
@@ -44,14 +46,16 @@ $this->cycle()->prev();
     </example>
 <example id="zend.view.helpers.initial.cycle.advanceusage">
        <title>Mit einem oder mehreren Zyklen arbeiten</title>
-<para>Um twei Zyklen zu verwenden muß man den Namen des Zyklus verwenden. Einfach zwei Parameter
+<para>Um zwei Zyklen zu verwenden muß man den Namen des Zyklus verwenden. Einfach zwei Parameter
 in der cycle Methode setzen. <code>$this->cycle(array("#F0F0F0","#FFFFFF"),'cycle2')</code>.
 Man kann auch die setName($name) Funktion verwenden.
 </para>
 </example>
       <programlisting role="php"><![CDATA[
 <?php foreach ($this->books as $book):?>
-  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0","#FFFFFF"))->next()?>">
+  <tr style="background-color:<?php echo $this->cycle(array("#F0F0F0",
+                                                            "#FFFFFF"))
+                                              ->next()?>">
   <td><?php echo $this->cycle(array(1,2,3),'number')->next()?></td>
   <td><?php echo $this->escape($book['author'])?></td>
 </tr>
