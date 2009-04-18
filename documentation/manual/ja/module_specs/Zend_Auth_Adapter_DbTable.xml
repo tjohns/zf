@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
 <!-- EN-Revision: 14899 -->
 <sect1 id="zend.auth.adapter.dbtable">
     <title>データベースのテーブルでの認証</title>
