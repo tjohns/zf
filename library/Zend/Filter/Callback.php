@@ -116,6 +116,8 @@ class Zend_Filter_Callback implements Zend_Filter_Interface
      */
     public function filter($value)
     {
+    	$options = array();
+
         if ($this->_options !== null) {
             if (!is_array($this->_options)) {
                 $options = array($this->_options);
@@ -124,11 +126,7 @@ class Zend_Filter_Callback implements Zend_Filter_Interface
             }
         }
 
-        if (!empty($options)) {
-            array_unshift($options, $value);
-        } else {
-            $options = $value;
-        }
+        array_unshift($options, $value);
 
         return call_user_func_array($this->_callback, $options);
     }
