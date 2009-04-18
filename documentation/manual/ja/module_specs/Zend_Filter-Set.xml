@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13630 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.filter.set" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>標準のフィルタクラス群</title>
@@ -42,6 +44,9 @@
         </para>
     </sect2>
 
+    <xi:include href="Zend_Filter-Callback.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Filter-Callback.xml" /></xi:fallback>
+    </xi:include>
     <xi:include href="Zend_Filter-Decryption.xml" />
 
     <sect2 id="zend.filter.set.digits">
@@ -75,6 +80,13 @@
             (int) <code>$value</code> を返します。
         </para>
     </sect2>
+
+    <xi:include href="Zend_Filter-LocalizedToNormalized.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Filter-LocalizedToNormalized.xml" /></xi:fallback>
+    </xi:include>
+    <xi:include href="Zend_Filter-NormalizedToLocalized.xml">
+        <xi:fallback><xi:include href="../../en/module_specs/Zend_Filter-NormalizedToLocalized.xml" /></xi:fallback>
+    </xi:include>
 
     <sect2 id="zend.filter.set.stripnewlines">
         <title>StripNewlines</title>
