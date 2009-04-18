@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14823 -->
+<!-- EN-Revision: 14938 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.application.examples">
     <title>Beispiele</title>
 
     <para>
-        Die Bootstrap Klasse selbst wird typischerweise sehr minimal sein; oft besteht Sie nur
-        aus dem folgenden:
+        Die Bootstrap Klasse selbst wird typischerweise sehr minimal sein; oft wird sie einfach
+        nur ein leerer Stub sein der die Basis Bootstrapping Klasse erweitert:
     </para>
 
     <programlisting role="php"><![CDATA[
-class Bootstrap extends Zend_Application_Bootstrap_Base
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-    public function run()
-    {
-        $this->frontController->dispatch();
-    }
 }
 ]]>
     </programlisting>
@@ -44,15 +40,40 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
         Array an Optionen akzeptieren.
     </para>
 
+    <para>
+        Wenn die eigene Ressource Methode einen Wert zurückgibt, wird diese in einem Container
+        im Bootstrap gespeichert. Das kann nützlich sein wenn verschiedene Ressourcen interagieren
+        müssen (wie wenn eine Ressource sich selbst in eine andere Iniziiert). Die Methode
+        <code>getResource()</code> kann dann verwendet werden um diese Werte zu erhalten.
+    </para>
+
+    <para>
+        Das Beispiel anbei zwigt eine Ressource Methode für die Initialisierung des Anfrage
+        Objekts. Es verwendet die Erkennung der Abhängigkeit (diese hängt von der Front Controller
+        Ressource ab), holt eine Ressource vom Bootstrap, und gibt einen Wert zurück um Ihn im
+        Bootstrap zu speichern.
+    </para>
+
     <programlisting role="php"><![CDATA[
-class Bootstrap extends Zend_Application_Bootstrap_Base
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initRequest(array $options = array())
     {
-        // sicherstellen das eine Front Controller Instanz vorhanden ist
-        $this->bootstrap('frontController');
-        $this->request = new Zend_Controller_Request_Http();
-        $this->frontController->setRequest($this->request);
+        // Sicherstellen das eine Front Controller Instanz vorhanden ist
+        // und diese holen
+        $this->bootstrap('FrontController');
+        $front = $this->getResource('FrontController');
+
+        // Das Anfrage Objekt initialisieren
+        $request = new Zend_Controller_Request_Http();
+        $request->setBaseUrl('/foo');
+
+        // Sie dem Front Controller hinzufügen
+        $front->setRequest($request);
+
+        // Bootstrap speichert den Wert im 'request' Schlüssel
+        // seines Containers
+        return $request;
     }
 }
 ]]>
@@ -61,11 +82,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     <para>
         Beachte in diesem Beispiel den Aufruf von <code>bootstrap()</code>; dieser stellt sicher
         das der Front Controlle initialisiert wurde before die Methode aufgerufen wird. Dieser
-        Aufruf kan entweder eine Ressource oder eine andere Methode in der Klasse auslösen.
+        Aufruf kann entweder eine Ressource oder eine andere Methode in der Klasse auslösen.
     </para>
 
     <para>
-        Die andere Option ist die Verwendung einer Bootstrap Ressource. Bootstrap Ressourcen sind
+        Die andere Option ist die Verwendung eines Ressource Plugins. Ressource Plugins sind
         Objekte die spezielle Initialisierungen ausführen, und die wie folgt spezifiziert werden
         können:
     </para>
@@ -89,18 +110,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Base
     </itemizedlist>
 
     <para>
-        Ressourcen implementieren <code>Zend_Application_Bootstrap_Resource</code>, welche einfach
-        definieren das Sie Injektion des Aufrufers und von Optionen erlauben, und die eine
+        Ressource Plugins implementieren <code>Zend_Application_Bootstrap_Resource</code>, welche
+        einfach definieren das Sie Injektion des Aufrufers und von Optionen erlauben, und die eine
         <code>init()</code> Methode haben. Als Beispiel, könnte eine eigene "View" Bootstrap
         Ressource wie folgt aussehen:
     </para>
 
     <programlisting role="php"><![CDATA[
-class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
+class My_Bootstrap_Resource_View
+    extends Zend_Application_Resource_ResourceAbstract
 {
-    public function init(array $options = array())
+    public function init()
     {
-        $view = new Zend_View($options);
+        $view = new Zend_View($this->_getOptions());
         Zend_Dojo::enableView($view);
 
         $view->doctype('XHTML1_STRICT');
@@ -116,11 +138,11 @@ class My_Bootstrap_Resource_View extends Zend_Application_Resource_Base
                      ->disable();
 
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
-                            'ViewRenderer'
-                        );
+            'ViewRenderer'
+        );
         $viewRenderer->setView($view);
 
-        Zend_Registry::set('view', $view);
+        return $view;
     }
 }
 ]]>
@@ -155,17 +177,21 @@ $application = new Zend_Application(
     </programlisting>
 
     <para>
-        Ressourcen können andere Ressourcen und Initialisierungen aufrufen indem Sie auf das
-        Eltern-Objekt zugreifen:
+        Ressourcen können andere Ressourcen und Initialisierungen aufrufen indem Sie auf den
+        Eltern-Bootstrap zugreifen:
     </para>
 
     <programlisting role="php"><![CDATA[
-class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
+class My_Bootstrap_Resource_Layout
+    extends Zend_Application_Resource_ResourceAbstract
 {
-    public function init(array $options = array())
+    public function init()
     {
         // Sicherstellen das die View initialisiert ist...
         $this->getBootstrap()->bootstrap('view');
+
+        // Das View Objekt erhalten
+        $view = $this->getBootstrap()->getResource('view');
 
         // ...
     }
@@ -180,8 +206,8 @@ class My_Bootstrap_Resource_Layout extends Zend_Application_Resource_Base
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrap();
-$application->run();
+$application->bootstrap()
+            ->run();
 ]]>
     </programlisting>
 
@@ -191,7 +217,7 @@ $application->run();
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrap('db');
+$application->getBootstrap('db');
 
 $service = new Zend_XmlRpc_Server();
 $service->setClass('Foo');  // Verwende die Datenbank...
@@ -206,7 +232,7 @@ echo $service->handle();
 
     <programlisting role="php"><![CDATA[
 $application = new Zend_Application(...);
-$application->bootstrapDb();
+$application->getBootstrapDb();
 ]]>
     </programlisting>
 </sect1>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14938 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.application.core-functionality.application">
     <title>Zend_Application</title>
@@ -201,7 +201,7 @@
                         <listitem><para>
                             <code>$path</code>: <emphasis>Benötigt</emphasis>.
                             Kann entweder eine Instanz von
-                            <code>Zend_Application_Bootstrap_IBootstrap</code>, ein String Pfad
+                            <code>Zend_Application_Bootstrap_Bootstrapper</code>, ein String Pfad
                             zur Bootstrap Klasse, ein assoziatives Array von Klassenname =&gt;
                             Dateiname, oder ein assoziatives Array mit den Schlüsseln 'class' und
                             'path' sein.
@@ -218,7 +218,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>null | Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>null | Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt die registrierte Bootstrap Instanz.

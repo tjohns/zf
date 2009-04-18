@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14938 -->
 <!-- Reviewed: no -->
-<sect2 id="zend.application.core-functionality.resource-iresource">
-    <title>Zend_Application_Resource_IResource</title>
+<sect2 id="zend.application.core-functionality.resource-resource">
+    <title>Zend_Application_Resource_Resource</title>
 
     <para>
-        <code>Zend_Application_Resource_IResource</code> ist ein Interface für Plugin Ressourcen
+        <code>Zend_Application_Resource_Resource</code> ist ein Interface für Plugin Ressourcen
         die mit Bootstrap Klassen verwendet werden welche
-        <code>Zend_Application_Bootstrap_IResourceBootstrap</code> implementieren. Von Ressourcen
+        <code>Zend_Application_Bootstrap_ResourceBootstrapper</code> implementieren. Von Ressourcen
         Plugins wird erwartet das Sie Konfiguration erlauben, das Sie Bootstrapping erlauben, und
         ein Strategy Pattern für die Initialisierung der Ressource implementieren.
     </para>
 
-    <table id="zend.application.core-functionality.resource-iresource.api">
-        <title>Zend_Application_Resource_IResource Interface</title>
+    <table id="zend.application.core-functionality.resource-resource.api">
+        <title>Zend_Application_Resource_Resource Interface</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -40,8 +40,8 @@
                 </row>
 
                 <row>
-                    <entry><code>setBootstrap(Zend_Application_Bootstrap_IBootstrap $bootstrap)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)</code></entry>
+                    <entry><code>Zend_Application_Resource_Resource</code></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>Benötigt</emphasis>.
@@ -55,7 +55,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt die registrierte Bootstrap Instanz.
@@ -64,7 +64,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>Zend_Application_Resource_Resource</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>Benötigt</emphasis>.

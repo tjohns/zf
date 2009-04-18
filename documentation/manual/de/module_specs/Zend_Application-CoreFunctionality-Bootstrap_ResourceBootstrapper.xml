@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14938 -->
 <!-- Reviewed: no -->
-<sect2 id="zend.application.core-functionality.bootstrap-iresourcebootstrap">
-    <title>Zend_Application_Bootstrap_IResourceBootstrap</title>
+<sect2 id="zend.application.core-functionality.bootstrap-resourcebootstrapper">
+    <title>Zend_Application_Bootstrap_ResourceBootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_IResourceBootstrap</code> ist ein Interface das zu
+        <code>Zend_Application_Bootstrap_ResourceBootstrapper</code> ist ein Interface das zu
         Verwenden ist wenn externe Ressourcen geladen werden -- z.B. wenn ein oder mehrere
         Ressourcen nicht direkt in der Klasse definiert werden, sonder über Plugins. Es sollte
         in Verbindung mit
-        <link linkend="zend.application.core-functionality.bootstrap-ibootstrap">Zend_Application_Bootstrap_IBootstrap</link>;
+        <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>;
         verwendet werden;
-        <link linkend="zend.application.core-functionality.bootstrap-base">Zend_Application_Bootstrap_Base</link>
+        <link linkend="zend.application.core-functionality.bootstrap-bootstrapabstract">Zend_Application_Bootstrap_BootstrapAbstract</link>
         implementiert diese Funktionalität.
     </para>
 
@@ -19,8 +19,8 @@
         Die folgenden Methoden machen zusammen die Definition des Interfaces.
     </para>
 
-    <table id="zend.application.core-functionality.bootstrap-iresourcebootstrap.methods-table">
-        <title>Zend_Application_Bootstrap_IResourceBootstrap Interface</title>
+    <table id="zend.application.core-functionality.bootstrap-resourcebootstrapper.methods-table">
+        <title>Zend_Application_Bootstrap_ResourceBootstrapper Interface</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -34,12 +34,12 @@
                 <row>
                     <entry><code>registerPluginResource($resource, $options =
                             null)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>Benötigt</emphasis>.
                             Ein Ressourcen Name oder ein
-                            <code>Zend_Application_Resource_IResource</code> Objekt.
+                            <code>Zend_Application_Resource_Resource</code> Objekt.
                         </para></listitem>
 
                         <listitem><para>
@@ -56,7 +56,7 @@
 
                 <row>
                     <entry><code>unregisterPluginResource($resource)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>Benötigt</emphasis>.
@@ -84,7 +84,7 @@
 
                 <row>
                     <entry><code>getPluginResource($resource)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>Zend_Application_Resource_Resource</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>Benötigt</emphasis>.
@@ -108,7 +108,7 @@
                 <row>
                     <entry><code>setPluginLoader(Zend_Loader_PluginLoader_Interface
                             $loader)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IResourceBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$loader</code>: <emphasis>Benötigt</emphasis>.

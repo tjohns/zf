@@ -211,53 +211,54 @@ $this->navigation()->addPage(array(
         <title>Übersetzung von Labels und Titeln</title>
 
         <para>
-            The navigation helpers support translation of page labels and titles.
-            You can set a translator of type <classname>Zend_Translate</classname>
-            or <classname>Zend_Translate_Adapter</classname> in the helper using
-            <code>$helper->setTranslator($translator)</code>, or like with other
-            I18n-enabled components; by adding the translator to
-            <link linkend="zend.registry">the registry</link> by using the key
-            <code>Zend_Translate</code>.
+            Der Navigations Helfer unterstützt die Übersetzung von SeitenLabels und Überschriften.
+            Man kann einen Übersetzer vom Typ <classname>Zend_Translate</classname> oder
+            <classname>Zend_Translate_Adapter</classname> im Helfer setzen indem
+            <code>$helper->setTranslator($translator)</code> verwendet wird, oder wie in allen
+            anderen I18n-fähigen Komponenten; durch das Hinzufügen des Übersetzers in
+            <link linkend="zend.registry">die Registry</link> indem der Schlüssel
+            <code>Zend_Translate</code> verwendet wird.
         </para>
 
         <para>
-            If you want to disable translation, use <code>$helper->setUseTranslator(false)</code>.
+            Wenn man die Übersetzung ausschalten will, sollte man
+            <code>$helper->setUseTranslator(false)</code> verwenden.
         </para>
 
         <para>
-            The
-            <link linkend="zend.view.helpers.initial.navigation.navigation">proxy
-            helper</link> will inject its own translator to the helper it
-            proxies to if the proxied helper doesn't already have a translator.
+            Der <link linkend="zend.view.helpers.initial.navigation.navigation">Proxy Helfer</link>
+            injiziert seinen eigenen Übersetzer in den Helfer auf den er weiterleitet wenn der
+            weitergeleitete Helfer nicht bereits einen Übersetzer hat.
         </para>
 
         <para>
             <note>
                 <para>
-                    There is no translation in the sitemap helper, since there
-                    are no page labels or titles involved in an XML sitemap.
+                    Es gibt keinen Übersetzer im Sitemap Helfer, da keine SeitenLabels oder
+                    Überschriften in einer XML Sitemap enthalten sind.
                 </para>
             </note>
         </para>
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.acl">
-        <title>Integration with ACL</title>
+        <title>Integration mit ACL</title>
 
         <para>
-            All navigational view helpers support ACL inherently from the
-            class <classname>Zend_View_Helper_Navigation_HelperAbstract</classname>.
-            A <classname>Zend_Acl</classname> object can be assigned to
-            a helper instance with <code>$helper->setAcl($acl)</code>, and role
-            with <code>$helper->setRole('member')</code> or
-            <code>$helper->setRole(new Zend_Acl_Role('member'))</code> . If ACL
-            is used in the helper, the role in the helper must be allowed by
-            the ACL to access a page's <code>resource</code> and/or have the
-            page's <code>privilege</code> for the page to be included when
-            rendering.
+            Alle navigatorischen View Helfer unterstützen ACL abgeleitet von der
+            <classname>Zend_View_Helper_Navigation_HelperAbstract</classname> Klasse. Ein
+            <classname>Zend_Acl</classname> Objekt kann einer Instanz eines Helfers mit
+            <code>$helper->setAcl($acl)</code> hinzugefügt werden, und eine Rolle mit
+            <code>$helper->setRole('member')</code> oder
+            <code>$helper->setRole(new Zend_Acl_Role('member'))</code>. Wenn ACL im Helfer
+            verwendet wird, muß es der Rolle im Helfer vom ACL erlaubt sein auf die
+            <code>Ressourcen</code> zuzugreifen und/oder das die <code>Privilegien</code> für diese
+            Seite bei der Darstellung eingefügt werden dürfen.
         </para>
 
         <para>
+            Wenn eine Seite vom ACL nicht akzeptiert ist, wird auch jede untergeordnete Seite von
+            der Darstellung ausgenommen sein.
             If a page is not accepted by ACL, any descendant page will also
             be excluded from rendering.
         </para>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14944 -->
 <!-- Reviewed: no -->
-<sect2 id="zend.application.core-functionality.resource-base">
-    <title>Zend_Application_Resource_Base</title>
+<sect2 id="zend.application.core-functionality.resource-resourceabstract">
+    <title>Zend_Application_Resource_ResourceAbstract</title>
 
     <para>
-        <code>Zend_Application_Resource_Base</code> ist eine abstrakte Klasse die
-        <link linkend="zend.application.core-functionality.resource-iresource">Zend_Application_Resource_IResource</link>
+        <code>Zend_Application_Resource_ResourceAbstract</code> ist eine abstrakte Klasse die
+        <link linkend="zend.application.core-functionality.resource-resource">Zend_Application_Resource_Resource</link>
         implementiert, und ist ein guter Startpunkt für die Erstellung eigener Plugin Ressourcen.
     </para>
 
@@ -15,8 +15,8 @@
         wird der Definition in einer konkreten Erweiterung dieser Klasse vorbehalten.
     </para>
 
-    <table id="zend.application.core-functionality.resource-base.api">
-        <title>Zend_Application_Resource_Base Methods</title>
+    <table id="zend.application.core-functionality.resource-resourceabstract.api">
+        <title>Zend_Application_Resource_ResourceAbstract Methods</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -43,8 +43,8 @@
                 </row>
 
                 <row>
-                    <entry><code>setBootstrap(Zend_Application_Bootstrap_IBootstrap $bootstrap)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)</code></entry>
+                    <entry><code>Zend_Application_Resource_Resource</code></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>required</emphasis>.
@@ -58,7 +58,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfange die registrierte Bootstrap Instanz.
@@ -67,7 +67,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Resource_IResource</code></entry>
+                    <entry><code>Zend_Application_Resource_Resource</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>required</emphasis>.
@@ -91,4 +91,3 @@
         </tgroup>
     </table>
 </sect2>
-

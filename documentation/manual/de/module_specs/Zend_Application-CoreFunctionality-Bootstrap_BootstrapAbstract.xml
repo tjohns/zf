@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14938 -->
 <!-- Reviewed: no -->
-<sect2 id="zend.application.core-functionality.bootstrap-base">
-    <title>Zend_Application_Bootstrap_Base</title>
+<sect2 id="zend.application.core-functionality.bootstrap-bootstrapabstract">
+    <title>Zend_Application_Bootstrap_BootstrapAbstract</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_Base</code> ist eine abstrakte Klasse die die
+        <code>Zend_Application_Bootstrap_BootstrapAbstract</code> ist eine abstrakte Klasse die die
         Basisfunktionalität des normalen Bootstrappings bietet. Sie implementiert sowohl
-        <link linkend="zend.application.core-functionality.bootstrap-ibootstrap">Zend_Application_Bootstrap_IBootstrap</link>
+        <link linkend="zend.application.core-functionality.bootstrap-bootstrapper">Zend_Application_Bootstrap_Bootstrapper</link>
         als auch
-        <link linkend="zend.application.core-functionality.bootstrap-iresourcebootstrap">Zend_Application_Bootstrap_IResourceBootstrap</link>.
+        <link linkend="zend.application.core-functionality.bootstrap-resourcebootstrapper">Zend_Application_Bootstrap_ResourceBootstrapper</link>.
     </para>
 
-    <table id="zend.application.core-functionality.bootstrap-base.api.table">
-        <title>Zend_Application_Bootstrap_Base Methoden</title>
+    <table id="zend.application.core-functionality.bootstrap-bootstrapabstract.api.table">
+        <title>Zend_Application_Bootstrap_BootstrapAbstract Methoden</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -31,7 +31,7 @@
                         <listitem><para>
                             <code>$application</code>: <emphasis>Benötigt</emphasis>.
                             Akzeptiert entweder ein <code>Zend_Application</code> oder ein
-                            <code>Zend_Application_Bootstrap_IBootstrap</code> Objekt als sein
+                            <code>Zend_Application_Bootstrap_Bootstrapper</code> Objekt als sein
                             einziges Argument.
                         </para></listitem>
                     </itemizedlist></entry>
@@ -44,7 +44,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>Benötigt</emphasis>.
@@ -108,9 +108,9 @@
                 </row>
 
                 <row>
-                    <entry><code>setApplication(Zend_Application | Zend_Application_Bootstrap_IBootstrap
+                    <entry><code>setApplication(Zend_Application | Zend_Application_Bootstrap_Bootstrapper
                             $application)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Base</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_BootstrapAbstract</code></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$application</code>: <emphasis>Benötigt</emphasis>.
@@ -123,7 +123,7 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt das Anwendungs/Bootstrap Objekt das über den Konstruktor übergeben

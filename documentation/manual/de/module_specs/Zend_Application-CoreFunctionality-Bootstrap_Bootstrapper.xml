@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14741 -->
+<!-- EN-Revision: 14938 -->
 <!-- Reviewed: no -->
-<sect2 id="zend.application.core-functionality.bootstrap-ibootstrap">
-    <title>Zend_Application_Bootstrap_IBootstrap</title>
+<sect2 id="zend.application.core-functionality.bootstrap-bootstrapper">
+    <title>Zend_Application_Bootstrap_Bootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_IBootstrap</code> ist das Basisinterface das alle
+        <code>Zend_Application_Bootstrap_Bootstrapper</code> ist das Basisinterface das alle
         Bootstrap Klassen implementieren müssen. Die Basisfunktionalität zielt auf Konfiguration,
         Identifikation von Ressourcen, Bootstrapping (entweder von individuellen Ressourcen oder
         der kompletten Anwendung), und dem Dispatchen der Anwendung ab.
@@ -15,8 +15,8 @@
         Die folgenden Methoden sind zusammengenommen die Definition des Interfaces.
     </para>
 
-    <table id="zend.application.core-functionality.bootstrap-ibootstrap.methods-table">
-        <title>Zend_Application_Bootstrap_IBootstrap Interface</title>
+    <table id="zend.application.core-functionality.bootstrap-bootstrapper.methods-table">
+        <title>Zend_Application_Bootstrap_Bootstrapper Interface</title>
         <tgroup cols="4">
             <thead>
                 <row>
@@ -34,7 +34,7 @@
                         <listitem><para>
                             <code>$application</code>: <emphasis>benötigt</emphasis>.
                             Sollte ein <code>Zend_Application</code> oder
-                            <code>Zend_Application_Bootstrap_IBootstrap</code> Objekt als einziges
+                            <code>Zend_Application_Bootstrap_Bootstrapper</code> Objekt als einziges
                             Argument akzeptieren.
                         </para></listitem>
                     </itemizedlist></entry>
@@ -47,7 +47,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>benötigt</emphasis>.
@@ -63,7 +63,7 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_IBootstrap</code></entry>
+                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt das Anwendungs/Bootstrap Objekt das über den Konstruktor übergeben
