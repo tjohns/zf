@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 13843 -->
+<!-- EN-Revision: 14962 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.standardElements">
     <title>Standard Form Elemente die mit dem With Zend Framework ausgeliefert werden</title>
@@ -251,6 +251,66 @@ $location = $form->foo->getFileName();
                 der Datei zurückgibt.
             </para>
         </note>
+
+        <para>
+            Standardmäßig wird die Datei automatisch empfangen wenn man <code>getValues()</code>
+            auf dem Formular aufruft. Der Grund hinter diesem Verhalten ist, das die Datei selbst
+            der Wert des File Elements ist.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$form->getValues();
+]]>
+        </programlisting>
+
+        <note>
+            <para>
+                Deshalb hat ein weiterer Aufruf von <code>receive()</code> nach dem Aufruf von
+                <code>getValues()</code> keinen Effekt. Auch die Erstellung einer Instanz von
+                <code>Zend_File_Transfer</code> wird keinen Effekt haben da es keine weitere
+                Datei zum Empfangen gibt.
+            </para>
+        </note>
+
+        <para>
+            Trotzdem kann es manchmal gewünscht sein <code>getValues()</code> aufzurufen ohne das
+            die Datei empfangen wird. Man kann dies erreichen indem
+            <code>setValueDisabled(true)</code> aufgerufen wird. Um den aktuellen Wert dieses
+            Flags zu erhalten kann man <code>isValueDisabled()</code> aufrufen.
+        </para>
+
+        <example id="zend.form.standardElements.file.retrievement">
+            <title>Datei explizit empfangen</title>
+
+            <para>
+                Zuerst <code>setValueDisabled(true)</code> aufrufen.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Ein Bild hochladen:')
+        ->setDestination('/var/www/upload')
+        ->setValueDisabled(true);
+]]>
+            </programlisting>
+
+            <para>
+                Jetzt wird die Datei nicht mehr empfangen wenn man <code>getValues()</code>
+                aufruft. Man muß also <code>receive()</code> vom Datei Element, oder einer
+                Instanz von <classname>Zend_File_Transfer</classname> selbst aufrufen.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$values = $form->getValues();
+
+if ($form->isValid($form->getPost())) {
+    if (!$form->foo->receive()) {
+        print "Upload Fehler";
+    }
+}
+]]>
+            </programlisting>
+        </example>
 
         <para>
             Es gibt verschiedene Stati von hochgeladenen Dateien welche mit den folgenden Optionen
