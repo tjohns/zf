@@ -99,7 +99,7 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
 
         $doc->highlight('document', '#66ffff');
-        $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#66ffff\">Document</b> body.") !== false);
+        $this->assertTrue(strpos($doc->getHTML(), '<b style="color:black;background-color:#66ffff">Document</b> body.') !== false);
     }
 
     public function testHtmlExtendedHighlighting()
@@ -112,7 +112,18 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
                                       'extendedHighlightingCallback'),
                                 array('style="color:black;background-color:#ff66ff"',
                                       '(!!!)'));
-        $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#ff66ff\">Document</b>(!!!) body.") !== false);
+        $this->assertTrue(strpos($doc->getHTML(), '<b style="color:black;background-color:#ff66ff">Document</b>(!!!) body.') !== false);
+    }
+
+    public function testHtmlWordsHighlighting()
+    {
+        $doc = Zend_Search_Lucene_Document_Html::loadHTML('<HTML><HEAD><TITLE>Page title</TITLE></HEAD><BODY>Document body.</BODY></HTML>');
+        $this->assertTrue($doc instanceof Zend_Search_Lucene_Document_Html);
+
+        $doc->highlight(array('document', 'body'), '#66ffff');
+        $highlightedHTML = $doc->getHTML();
+        $this->assertTrue(strpos($highlightedHTML, '<b style="color:black;background-color:#66ffff">Document</b>') !== false);
+        $this->assertTrue(strpos($highlightedHTML, '<b style="color:black;background-color:#66ffff">body</b>')     !== false);
     }
 
     public function testHtmlExtendedHighlightingCorrectWrongHtml()
@@ -125,7 +136,7 @@ class Zend_Search_Lucene_DocumentTest extends PHPUnit_Framework_TestCase
                                       'extendedHighlightingCallback'),
                                 array('style="color:black;background-color:#ff66ff"',
                                       '<h3>(!!!)' /* Wrong HTML here, <h3> tag is not closed */));
-        $this->assertTrue(strpos($doc->getHTML(), "<b style=\"color:black;background-color:#ff66ff\">Document</b><h3>(!!!)</h3> body.") !== false);
+        $this->assertTrue(strpos($doc->getHTML(), '<b style="color:black;background-color:#ff66ff">Document</b><h3>(!!!)</h3> body.') !== false);
     }
 
     public function testHtmlLinksProcessing()

@@ -31,6 +31,8 @@ require_once 'Zend/Search/Lucene/Index/TermTest.php';
 require_once 'Zend/Search/Lucene/Storage/DirectoryTest.php';
 require_once 'Zend/Search/Lucene/Storage/FileTest.php';
 
+require_once 'Zend/Search/Lucene/SearchHighlightTest.php';
+
 require_once 'Zend/Search/Lucene/SearchTest.php';
 require_once 'Zend/Search/Lucene/Search23Test.php';
 
@@ -69,6 +71,8 @@ class Zend_Search_Lucene_AllTests
 
         $suite->addTestSuite('Zend_Search_Lucene_Storage_DirectoryTest');
         $suite->addTestSuite('Zend_Search_Lucene_Storage_FileTest');
+
+        $suite->addTestSuite('Zend_Search_Lucene_SearchHighlightTest');
 
         $suite->addTestSuite('Zend_Search_Lucene_SearchTest');
         $suite->addTestSuite('Zend_Search_Lucene_Search23Test');
