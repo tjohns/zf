@@ -1,4 +1,6 @@
-<!-- EN-Revision: 14784 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14995 -->
 <sect3 id="zend.controller.router.routes.hostname">
     <title>Zend_Controller_Router_Route_Hostname</title>
 
@@ -52,70 +54,6 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
         (<code>Zend_Controller_Router_Route_Chain</code>) が返されます。
         そして、これをルータに渡します。
     </para>
-
-    <note>
-        <title>パラメータの優先度</title>
-        <para>
-            hostname ルートと path ルートを連結させるときは、
-            hostname ルートのパラメータのほうが
-            path ルートのパラメータより優先されます。
-            したがって、hostname ルートと path ルートの両方でコントローラを定義した場合は
-            hostname ルートで指定したコントローラが選択されます。
-        </para>
-    </note>
-
-    <sect4 id="zend.controller.router.routes.hostname.config">
-        <title><code>Zend_Config</code> 経由での hostname ルートの使用</title>
-
-        <para>
-            hostname ルートと path ルートを連結させる場合は、追加の設定パラメータ
-            <code>chains</code> を使用します。これは単なるルートのリストで、
-            このリストが親のルートに連結されます。
-            親ルートおよび子ルートのいずれについても、
-            直接ルータに追加されるのではなく連結されたルートに追加されます。
-            連結されたルートのルータ内での名前は、
-            親ルートの名前と子ルートの名前をダッシュ (-) でつないだものとなります
-            単純な設定を XML で書いたものは次のようになります。
-        </para>
-
-        <programlisting role="xml"><![CDATA[
-<routes>
-    <www type="Zend_Controller_Router_Route_Hostname">
-        <route>www.example.com</route>
-        <chains>
-            <index type="Zend_Controller_Router_Route_Static">
-                <route></route>
-                <defaults module="default" controller="index" action="index" />
-            </index>
-            <imprint type="Zend_Controller_Router_Route_Static">
-                <route>imprint</route>
-                <defaults module="default" controller="index" action="index" />
-            </imprint>
-        </chains>
-    </www>
-    <users type="Zend_Controller_Router_Route_Hostname">
-        <route>users.example.com</route>
-        <chains>
-            <profile type="Zend_Controller_Router_Route">
-                <route>:username</route>
-                <defaults module="users" controller="profile" action="index" />
-            </profile>
-        </chains>
-    </users>
-    <misc type="Zend_Controller_Router_Route_Static">
-        <route>misc</route>
-    </misc>
-</routes>
-]]>
-        </programlisting>
-
-        <para>
-            この結果、3 つのルート <code>www-index</code>、
-            <code>www-imprint</code> および <code>users-profile</code>
-            が作られます。これらはホスト名に基づいてのみマッチし、ルート
-            <code>misc</code> がすべてのホスト名に対してマッチします。
-        </para>
-    </sect4>
 </sect3>
 <!--
 vim:se ts=4 sw=4 et:
