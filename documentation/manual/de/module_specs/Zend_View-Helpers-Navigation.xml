@@ -105,98 +105,93 @@
          <itemizedlist>
             <listitem>
                 <para>
-                    <code>{get|set}Indent()</code> gets/set indentation. The
-                    setter accepts a <code>string</code> or an <code>int</code>.
-                    In the case of an <code>int</code>, the helper will use
-                    the given number of spaces for indentation. I.e.,
-                    <code>setIndent(4)</code> means 4 initial spaces of
-                    indentation. Indentation can be specified for all helpers
-                    except the Sitemap helper.
+                    <code>{get|set}Indent()</code> empfängt/setzt die Einrückung. Der Setzer
+                    akzeptiert einen <code>string</code> oder ein <code>int</code>. Im
+                    Fall eines <code>int</code>'s verwendet der Helfer die angegebene Zahl
+                    als Leerzeichen für die Einrückung. Z.B. bedeutet <code>setIndent(4)</code>
+                    eine Einrückung von initial 4 Leerzeichen. Die Einrückung kann für alle
+                    Helfer außer dem Sitemap Helfer spezifiziert werden.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>{get|set}MinDepth()</code> gets/set the minimum depth
-                    a page must have to be included by the helper. Setting
-                    <code>null</code> means no minimum depth.
+                    <code>{get|set}MinDepth()</code> empfängt/setzt die minimale Tiefe die eine
+                    Seite  haben muß um vom Helfer eingefügt zu werden. Das Setzen von
+                    <code>null</code> bedeutet keine minimale Tiefe.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>{get|set}MaxDepth()</code> gets/set the maximum depth
-                    a page can have to be included by the helper. Setting
-                    <code>null</code> means no maximum depth.
+                    <code>{get|set}MaxDepth()</code> empfängt/setzt die maximale Tiefe die eine
+                    Seite haben muß um vom Helfer eingefügt zu werden. Das Setzen von
+                    <code>null</code> bedeutet keine maximale Tiefe.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>__call()</code> is used for proxying calls to the
-                    container registered in the helper, which means you can
-                    call methods on a helper as if it was a container. See
-                    <link linkend="zend.view.helpers.initial.navigation.proxy.example">example</link>
-                    below.
+                    <code>__call()</code> wird verwendet um Aufrufe zum Container, der im Helfer
+                    registriert ist, weiterzuleiten, was bedeutet das man Methoden in einem
+                    Helfer aufrufen kann wie wenn Sie im Container wären. Siehe das folgende
+                    <link linkend="zend.view.helpers.initial.navigation.proxy.example">Beispiel</link>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>findActive($container, $minDepth, $maxDepth)</code>
-                    is used for finding the deepest active page in the given
-                    container. If depths are not given, the method will use
-                    the values retrieved from <code>getMinDepth()</code> and
-                    <code>getMaxDepth()</code>. The deepest active page must
-                    be between <code>$minDepth</code> and <code>$axnDepth</code>
-                    inclusively. Returns an array containing a reference to the
-                    found page instance and the depth at which the page was
-                    found.
+                    <code>findActive($container, $minDepth, $maxDepth)</code> wird verwendet um die
+                    tiefste aktive Seite im angegebenen Container zu finden. Wenn keine Tiefe
+                    angegeben wird, verwendet diese Methode die Werte die sie von
+                    <code>getMinDepth()</code> und <code>getMaxDepth()</code> erhält. Die tiefste
+                    aktive Seite muß zwischen <code>$minDepth</code> und <code>$maxDepth</code>
+                    inklusive liegen. Gibt ein Array zurück das Referenzen zu der gefundenen
+                    Instanz der Seite enthält, und die Tiefe bei der die Seite gefunden wurde.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>htmlify()</code> renders an <code>a</code> HTML
-                    element from a <classname>Zend_Navigation_Page</classname>
-                    instance.
+                    <code>htmlify()</code> stellt ein <code>a</code> HTML Element von einer
+                    <classname>Zend_Navigation_Page</classname> Instanz dar.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>accept()</code> is used for determining if a page
-                    should be accepted when iterating containers. This method
-                    checks for page visibility and verifies that the helper's
-                    role is allowed access to the page's resource/privilege.
+                    <code>accept()</code> wird verwendet um zu erkennen ub eine Seite akzeptiert
+                    werden soll wenn durch Container iteriert wird. Diese Methode prüft die
+                    Sichtbarkeit der Seite und verifiziert das die Rolle des Helfers auf die
+                    Ressource/Privilegien der Seite zugreifen darf.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>static setDefaultAcl()</code> is used for setting
-                    a defualt ACL object that will be used by helpers.
+                    <code>static setDefaultAcl()</code> wird für das Setzen des standardmäßigen
+                    ACL Objekts verwendet, das dann von Helfern verwendet wird.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>static setDefaultRole()</code> is used for setting
-                    a default ACL that will be used by helpers
+                    <code>static setDefaultRole()</code> wird für das Setzen der standardmäßigen
+                    Rolle verwendet, die dann von Helfern verwendet wird.
                 </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        If a navigation container is not explicitly set in a helper using
-        <code>$helper->setContainer($nav)</code>, the helper will look
-        for a container instance with the key <code>Zend_Navigation</code> in
-        <link linkend="zend.registry">the registry</link>.
-        If a container is not explicitly set or found in the registry, the
-        helper will create an empty <classname>Zend_Navigation</classname>
-        container when calling <code>$helper->getContainer()</code>.
+        Wenn ein Navigations Container nicht explizit in einem Helfer durch Verwendung von
+        <code>$helper->setContainer($nav)</code> gesetzt ist, schaut der Helfer in
+        <link linkend="zend.registry">der Registry</link> nach einer Container Instanz mit dem
+        Schlüssel <code>Zend_Navigation</code>.  Wenn ein Container nicht explizit gesetzt wurde,
+        oder nicht in der Registry gefunden wird, erstellt der Helfer einen leeren
+        <classname>Zend_Navigation</classname> Container wenn <code>$helper->getContainer()</code>
+        aufgerufen wird.
     </para>
 
     <example id="zend.view.helpers.initial.navigation.proxy.example">
-        <title>Proxying calls to the navigation container</title>
+        <title>Aufrufe an den Navigations Container weiterleiten</title>
 
         <para>
-            Navigation view helpers use the magic method <code>__call()</code>
-            to proxy method calls to the navigation container that is
-            registered in the view helper.
+            Navigations View Helfer verwenden die magisch <code>__call()</code> Methode um
+            Methodenaufrufe an den Navigationscontainer weiterzuleiten der im View Helfer
+            registriert ist.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -207,13 +202,13 @@ $this->navigation()->addPage(array(
         </programlisting>
 
         <para>
-            The call above will add a page to the container in the
-            <classname>Navigation</classname> helper.
+            Der obige Aufruf fügt eine Seite zum Container im <classname>Navigation</classname>
+            Helfer hinzu.
         </para>
     </example>
 
     <sect4 id="zend.view.helpers.initial.navigation.i18n">
-        <title>Translation of labels and titles</title>
+        <title>Übersetzung von Labels und Titeln</title>
 
         <para>
             The navigation helpers support translation of page labels and titles.

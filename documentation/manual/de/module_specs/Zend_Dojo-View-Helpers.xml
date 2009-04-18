@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14385 -->
+<!-- EN-Revision: 14913 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.dojo.view.dijit">
     <title>Dijit-Spezifische View Helfer</title>
@@ -1046,6 +1046,115 @@ echo $view->validationTextBox(
                 </programlisting>
             </listitem>
         </itemizedlist>
+    </sect3>
+
+    <sect3 id="zend.dojo.view.dijit.custom">
+        <title>Eigene Dijits</title>
+
+        <para>
+            Wenn man viel in Dojo herumtaucht, wird man sehr bald selbst eigene Dijits schreiben,
+            oder experimentelle Dijits von Dojox verwenden. Wärend Zend Framework nicht jeden Dijit
+            direkt unterstützen kann, bietet es einiges an direkter rudimentärer Unterstützung für
+            jeden Dijit, und es bietet einiges an rudimentärer Unterstützung für beliebige Dijit
+            Typen über den <code>CustomDijit</code> View Helfer.
+        </para>
+
+        <para>
+            Die API des <code>CustomDijit</code> View Helfers ist genauso wie die jedes anderen
+            Dijits, mit einem grundsätzlichen Unterschied: Das dritten "params" Argument
+            <emphasis>muss</emphasis> das Attribut "dojotype" enthalten. Der Wert dieses Attributs
+            sollte die Dijit Klasse sein die man verwenden will.
+        </para>
+
+        <para>
+            <code>CustomDijit</code> erweitert den Basis <code>DijitContainer</code> View Helfer,
+            welches er erlaubt Inhalte zu fangen (durch Verwendung der
+            <code>captureStart()</code>/<code>captureEnd()</code> Methodenpaare).
+            <code>captureStart()</code> erwartet auch das man das "dojoType" Attribut als sein
+            "params" Argument übergibt.
+        </para>
+
+        <example id="zend.dojo.view.dijit.custom.example">
+            <title>Verwendung von CustomDijit um ein dojox.layout.ContentPane darzustellen</title>
+
+            <para>
+                <code>dojox.layout.ContentPane</code> ist eine Next-Generation Erweiterung von
+                <code>dijit.layout.ContentPane</code> und bietet ein Superset der Möglichkeiten
+                dieser Klasse. Bis seine Funktionalitäten stabil sind, wird es weiterhin in Dojox
+                leben. Wenn man es trotzdem im heutigen Zend Framework verwenden will, kann man
+                den <code>CustomDijit</code> View Helfer verwenden.
+                is a next-generation
+                iteration of <code>dijit.layout.ContentPane</code>, and provides
+                a superset of that class's capabilities. Until it's
+                functionality stabilizes, it will continue to live in Dojox.
+                However, if you want to use it in Zend Framework today, you can,
+                using the <code>CustomDijit</code> view helper.
+            </para>
+
+            <para>
+                Grundsätzlich kann man das folgende tun:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<?php echo $this->customDijit(
+    'foo',
+    $content,
+    array(
+        'dojoType' => 'dojox.layout.ContentPane',
+        'title'    => 'Eigene Ebene',
+        'region'   => 'center'
+    )
+); ?>
+]]></programlisting>
+
+            <para>
+                Wenn man stattdessen Inhalte fangen will, sollte einfach die
+                <code>captureStart()</code> Methode verwendet, und der "dojoType" als "params"
+                Argument übergeben werden:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+<?php $this->customDijit()->captureStart(
+    'foo',
+    array(
+        'dojoType' => 'dojox.layout.ContentPane',
+        'title'    => 'Eigene Ebene',
+        'region'   => 'center'
+    )
+); ?>
+Das ist der Inhalt der Ebene
+<?php echo $this->customDijit()->captureEnd('foo'); ?>
+]]></programlisting>
+
+            <para>
+                Man kann <code>CustomDijit</code> auch einfach erweitern um Unterstützung für
+                eigene Dijits zu bieten. Wenn man, als Beispiel,
+                <code>dijit.layout.ContentPane</code> erweitern will um eine eigene
+                <code>foo.ContentPane</code> Klasse zu erstellen, kann man den folgenden Helfer
+                erstellen um Ihn zu unterstützen:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+class My_View_Helper_FooContentPane
+    extends Zend_Dojo_View_Helper_CustomDijit
+{
+    protected $_defaultDojoType = 'foo.ContentPane';
+
+    public function fooContentPane(
+        $id = null, $value = null,
+        array $params = array(), array $attribs = array()
+    ) {
+        return $this->customDijit($id, $value, $params, $attribs);
+    }
+}
+]]></programlisting>
+
+            <para>
+                Solange der eigene Dijit der gleichen grundsätzlichen API wie offizielle Dijits
+                folgt, sollte die Verwendung oder Erweiterung von <code>CustomDijit</code> korrekt
+                funktionieren.
+            </para>
+        </example>
     </sect3>
 </sect2>
 <!--

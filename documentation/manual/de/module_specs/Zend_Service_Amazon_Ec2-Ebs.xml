@@ -82,7 +82,7 @@ $return = $ec2_ebs->createSnapshot('volumeId');
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.ebs.describing">
-        <title>Describing EBS Volues and Snapshots</title>
+        <title>EBS Volumes und Snapshots beschreiben</title>
 
         <example id="zend.service.amazon.ec2.ebs.describing.volume">
             <title>Ein EBS Volume beschreiben</title>
@@ -97,12 +97,9 @@ $return = $ec2_ebs->createSnapshot('volumeId');
                 <code>describeVolume</code> gibt ein Array mit Informationen über jedes Volume
                 zurück. Dieses enthält die volumeId, size, status und createTime. Wenn das Volume
                 an eine Instanz angehängt ist, wird ein zusätzlicher Wert attachmentSet
-                zurückgegeben.
-                will return an array with information about each Volume which
-                includes the volumeId, size, status and createTime.  If the volume is attached to an instance,
-                an addition value of attachmentSet will be returned.  Attachment set contains information
-                about the instance that the EBS Volume is attached to, which includes volumeId, instanceId,
-                device, status and attachTime.
+                zurückgegeben. Ein gesetztes Attachment enthält Informationen über die Instanz
+                bei der das EBS Volume angehängt ist. Diese enthalten volumeId, instanceId,
+                device, status und attachTime.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -113,14 +110,16 @@ $return = $ec2_ebs->describeVolume('volumeId');
         </example>
 
         <example id="zend.service.amazon.ec2.ebs.describing.attachedvolumes">
-            <title>Describe Attached Volumes</title>
+            <title>Angehängte Volumes beschreiben</title>
             <para>
-                To return a list of EBS Volumes currently attached to a running instance you can call this method.
-                It will only return an EBS Volumes attached the passed in instanceId.
+                Um eine Liste der EBS Volumes, die einer laufenden Instanz aktuell angehängt sind,
+                zurückzugeben kann man diese Methode aufrufen. Sie gibt nur EBS Volumes zurück die
+                der übergebenen instanceId angehängt sind.
             </para>
             <para>
-                <code>describeAttachedVolumes</code> returns the same information as the <code>describeVolume</code>
-                but only for the EBS Volumes that are currently attached to the specified instanceId.
+                <code>describeAttachedVolumes</code> gibt die gleichen Informationen wie
+                <code>describeVolume</code> zurück, allerdings nur für die EBS Volumes die der
+                spezifizierten instanceId aktuell angehängt sind.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -131,17 +130,19 @@ $return = $ec2_ebs->describeAttachedVolumes('instanceId');
         </example>
 
         <example id="zend.service.amazon.ec2.ebs.describing.snapshot">
-            <title>Describe an EBS Volume Snapshot</title>
+            <title>Einen EBS Volume Snapshot beschreiben</title>
             <para>
-                <code>describeSnapshot</code> allows you to get information on an EBS Volume Snapshot
-                or a set of EBS Volume Snapshots.  If nothing is passed in then it will return information
-                about all EBS Volume Snapshots.  If only one EBS Volume Snapshot needs to be described it's
-                snapshotId can be passed in while an array of EBS Volume Snapshot Id's can be passed in to
-                describe them.
+                <code>describeSnapshot</code> erlaub es Informationen über einen EBS Volume
+                Snapshot oder ein Set von EBS Volume Snapshots zu erhalten. Wenn nichts übergeben
+                wurde, dann werden Informationen über alle EBS Volume Snapshots zurückgegeben. Wenn
+                nur die Beschreibung eines EBS Volume Snapshot benötigt wird kann dessen snapshotId
+                übergeben werden, wärend ein Array von EBS Volume Snapshot Id's übergeben werden
+                kann um mehrere zu beschreiben.
             </para>
             <para>
-                <code>describeSnapshot</code> will return an array containg informaion about each EBS Volume Snapshot
-                which includes the snapshotId, volumeId, status, startTime and progress.
+                <code>describeSnapshot</code> gibt ein Array mit Informationen über jedes EBS
+                Volume Snapshot zurück. Dieses enthält snapshotId, volumeId, status, startTime
+                und progress.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -153,19 +154,19 @@ $return = $ec2_ebs->describeSnapshot('volumeId');
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.ebs.attachdetach">
-        <title>Attach and Detaching Volumes from Instances</title>
+        <title>Anhängen und Entfernen von Volumes an Instanzen</title>
 
         <example id="zend.service.amazon.ec2.ebs.attachdetach.attach">
-            <title>Attaching an EBS Volume</title>
+            <title>Ein EBS Volume anhängen</title>
             <para>
-                <code>attachVolume</code> will attach an EBS Volume to a running Instance.  To
-                attach a volume you need to specify the volumeId, the instanceId and the
-                device <emphasis>(ex: /dev/sdh)</emphasis>.
+                <code>attachVolume</code> hängt ein EBS Volume an eine laufende Instanz an. Um
+                ein Volume anzuhängen muß man die volumeId, die instanceId und das device
+                <emphasis>(ex: /dev/sdh)</emphasis> spezifizieren.
             </para>
             <para>
-                <code>attachVolume</code> will return an array with information about the
-                attach status which contains volumeId, instanceId, device, status and
-                attachTime
+                <code>attachVolume</code> gibt ein Array mit Informationen über über den
+                angehängten Status zurück. Dieses enthält volumeId, instanceId, device, status
+                und attachTime.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -176,17 +177,17 @@ $return = $ec2_ebs->attachVolume('volumeId', 'instanceid', '/dev/sdh');
         </example>
 
         <example id="zend.service.amazon.ec2.ebs.attachdetach.detach">
-            <title>Detaching an EBS Volume</title>
+            <title>Ein EBS Volume entfernen</title>
             <para>
-                <code>detachVolume</code> will detach an EBS Volume from a running Instance.
-                <code>detachVolume</code> required that you specify the volumeId with the optional
-                instanceId and device name that was passed when attaching the volume.  If you need to
-                force the detachment you can set the forth parameter to be true and it will force
-                the volume to detach.
+                <code>detachVolume</code> entferne ein EBS Volume von einer laufenden Instanz.
+                <code>detachVolume</code> benötigt die Spezifikation der volumeId mit der
+                optionalen instanceId und dem device name die beim Anhängen des Volumes angegeben
+                wurden. Wenn man das Entfernen erzwingen will kann man den vierten Parameter
+                auf true setzen und er wird das Volume zwangsweise entfernen.
             </para>
             <para>
-                <code>detachVolume</code> returns an array containing status information about
-                the EBS Volume which includes volumeId, instanceId, device, status and attachTime.
+                <code>detachVolume</code> gibt ein Array zurück das Statusinformationen über das
+                EBS Volume enthält. Diese sind volumeId, instanceId, device, status und attachTime.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -196,29 +197,30 @@ $return = $ec2_ebs->detachVolume('volumeId');
             </programlisting>
         </example>
         <note>
-            <title>Forced Detach</title>
+            <title>Erzwingene Entfernung</title>
             <para>
-                You should only for a detach if the previous detachment attempt did not occur
-                cleanly(logging into an instance, unmounting the volume, and detaching normally).
-                This option can lead to data loss or a corrupted file system. Use this option
-                only as a last resort to detach a volume from a failed instance. The instance
-                will not have an opportunity to flush file system caches nor file system meta
-                data. If you use this option, you must perform file system check and repair
-                procedures.
+                Man sollte eine Entfernung nur dann erzwingen wenn der vorhergehende
+                Entfernungsversuch nicht sauber durchgeführt wurde (Loggen in eine Instanz, das
+                Volume unmounten, und normal entfernen). Diese Option kann zu Datenverlusten oder
+                einem beschädigten Dateisystem führen. Diese Option sollte nur als letzter Weg
+                verwendet werden um ein Volume von einer fehlerhaften Instanz zu entfernen. Die
+                Instanz hat keine Möglichkeit die Caches vom Dateisystem zu flushen oder die
+                Metadaten des Dateisystems. Wenn man diese Option verwendet muß man anschließend
+                eine Prüfung des Dateisystems und Reparatur Maßnahmen durchführen.
             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.service.amazon.ec2.ebs.deleting">
-        <title>Deleting EBS Volumes and Snapshots</title>
+        <title>EBS Volumes und Snapshots löschen</title>
 
         <example id="zend.service.amazon.ec2.ebs.deleting.volume">
-            <title>Deleting an EBS Volume</title>
+            <title>Löschen eines EBS Volums</title>
             <para>
-                <code>deleteVolume</code> will delete an unattached EBS Volume.
+                <code>deleteVolume</code> löscht ein entferntes EBS Volume.
             </para>
             <para>
-                <code>deleteVolume</code> will return boolean true or false.
+                <code>deleteVolume</code> gibt ein boolsches true oder false zurück.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -229,12 +231,12 @@ $return = $ec2_ebs->deleteVolume('volumeId');
         </example>
 
         <example id="zend.service.amazon.ec2.ebs.deleting.snapshot">
-            <title>Deleting an EBS Volume Snapshot</title>
+            <title>Löschen eines EBS Volume Snapshots</title>
             <para>
-                <code>deleteSnapshot</code> will delete a EBS Volume Snapshot.
+                <code>deleteSnapshot</code> löscht einen EBS Volume Snapshot.
             </para>
             <para>
-                <code>deleteSnapshot</code> returns booleen true or false.
+                <code>deleteSnapshot</code> gibt ein boolsches true oder false zurück.
             </para>
 
             <programlisting role="php"><![CDATA[
