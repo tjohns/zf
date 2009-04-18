@@ -1,4 +1,6 @@
-<!-- EN-Revision: 14925 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect2 id="zend.validate.Db">
     <title>Db_RecordExists および Db_NoRecordExists</title>
 
@@ -77,10 +79,10 @@ if ($validator->isValid($username)) {
 // そのユーザ名のユーザがほかにいないことを調べます
 $user_id   = $user->getId();
 $validator = new Zend_Validate_Db_NoRecordExists(
-    'users', 
+    'users',
     'username',
     array(
-        'field' => 'id', 
+        'field' => 'id',
         'value' => $user_id
     )
 );
@@ -113,7 +115,7 @@ $post_id   = $post->getId();
 $clause    = $db->quoteInto('post_id = ?', $category_id);
 $validator = new Zend_Validate_Db_RecordExists(
     'posts_categories',
-    'post_id', 
+    'post_id',
     $clause
 );
 
