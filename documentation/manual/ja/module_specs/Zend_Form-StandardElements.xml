@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13843 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.form.standardElements">
     <title>Zend Framework に同梱されている標準のフォーム要素</title>
 
@@ -271,6 +273,65 @@ $location = $form->foo->getFileName();
         </note>
 
         <para>
+            デフォルトでは、フォーム上で
+            <code>getValues()</code> をコールしたときにファイルが自動的に受信されます。
+            このような挙動となる理由は、ファイルそのものが file 要素の値となるからです。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$form->getValues();
+]]>
+        </programlisting>
+
+        <note>
+            <para>
+                したがって、<code>getValues()</code> をコールした後に改めて
+                <code>receive()</code> をコールしても何も影響を及ぼしません。また、
+                <code>Zend_File_Transfer</code> のインスタンスを作成しても何も影響を及ぼしません。
+                受信すべきファイルはもうないからです。
+            </para>
+        </note>
+
+        <para>
+            しかし、ファイルを受信せずに <code>getValues()</code> をコールしたい場合もあるかもしれません。
+            そのような場合は <code>setValueDisabled(true)</code> をコールします。
+            このフラグの値を取得するには <code>isValueDisabled()</code> をコールします。
+        </para>
+
+        <example id="zend.form.standardElements.file.retrievement">
+            <title>明示的なファイルの取得</title>
+
+            <para>
+                まずは <code>setValueDisabled(true)</code> をコールします。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$element = new Zend_Form_Element_File('foo');
+$element->setLabel('Upload an image:')
+        ->setDestination('/var/www/upload')
+        ->setValueDisabled(true);
+]]>
+            </programlisting>
+
+            <para>
+                これで、 <code>getValues()</code> をコールしてもファイルは取得されなくなります。
+                したがって、file 要素上で <code>receive()</code> をコールするか、
+                あるいは <classname>Zend_File_Transfer</classname> のインスタンスを自分で作成しなければなりません。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$values = $form->getValues();
+
+if ($form->isValid($form->getPost())) {
+    if (!$form->foo->receive()) {
+        print "Upload error";
+    }
+}
+]]>
+            </programlisting>
+        </example>
+
+        <para>
             アップロードされたファイルの状態については、次のメソッドで調べることができます。
         </para>
 
@@ -296,7 +357,6 @@ $location = $form->foo->getFileName();
                 </para>
             </listitem>
         </itemizedlist>
-
 
         <example id="zend.form.standardElements.file.isuploaded">
             <title>オプションのファイルがアップロードされたかどうかの確認</title>
