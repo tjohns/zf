@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- EN-Revision: 14826 -->
+<!-- EN-Revision: 14945 -->
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
     "@DOCBOOK_DTD@"
 [
@@ -52,6 +52,9 @@
         <title>Zend_Application</title>
         <xi:include href="module_specs/Zend_Application-Introduction.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Application-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Application-QuickStart.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Application-QuickStart.xml" /></xi:fallback>
         </xi:include>
         <xi:include href="module_specs/Zend_Application-TheoryOfOperation.xml">
             <xi:fallback><xi:include href="../en/module_specs/Zend_Application-TheoryOfOperation.xml" /></xi:fallback>
