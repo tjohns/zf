@@ -1,57 +1,83 @@
-<!-- EN-Revision: 14251 -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- EN-Revision: 14978 -->
+<!-- Reviewed: no -->
 <sect1 id="zend.auth.adapter.dbtable">
+
     <title>Authentification avec une table de base de données</title>
 
     <sect2 id="zend.auth.adapter.dbtable.introduction">
+
         <title>Introduction</title>
 
-        <para><code>Zend_Auth_Adapter_DbTable</code> fournit la possibilité d'authentifier sur la base de crédits
-        stockés dans une table de base de données. Comme <code>Zend_Auth_Adapter_DbTable</code> requiert qu'une instance
-        de <code>Zend_Db_Adapter_Abstract</code> soit fournie à son constructeur, chaque instance est liée à une
-        connexion de base de données particulière. Les autres options de configuration peuvent être réglées grâce au
-        constructeur ou au travers de différentes méthodes, une pour chaque option.</para>
+        <para>
+            <classname>Zend_Auth_Adapter_DbTable</classname> fournit la possibilité d'authentifier
+            sur la base de crédits stockés dans une table de base de données. Comme
+            <classname>Zend_Auth_Adapter_DbTable</classname> requiert qu'une instance de
+            <classname>Zend_Db_Adapter_Abstract</classname> soit fournie à son constructeur, chaque
+            instance est liée à une connexion de base de données particulière. Les autres options
+            de configuration peuvent être réglées grâce au constructeur ou au travers de
+            différentes méthodes, une pour chaque option.
+        </para>
 
-        <para>Les options de configuration disponibles incluent : <itemizedlist>
+        <para>
+            Les options de configuration disponibles incluent&#160;:
+            <itemizedlist>
                 <listitem>
-                    <para><code>tableName</code> : il s'agit du nom de la table dans la base de données qui contient les
-                    crédits d'authentification, et envers laquelle la requête d'authentification sera réalisée.</para>
+                    <para><code>tableName</code>&#160;: il s'agit du nom de la table dans la base de
+                    données qui contient les crédits d'authentification, et envers laquelle la
+                    requête d'authentification sera réalisée.
+                </para>
                 </listitem>
-
                 <listitem>
-                    <para><code>identityColumn</code> : il s'agit du nom de la colonne dans la table utilisée pour
-                    représenter l'identité. La colonne d'identité doit contenir une valeur unique, comme un
-                    "<code>username</code>" ou une adresse émail.</para>
+                    <para>
+                        <code>identityColumn</code>&#160;: il s'agit du nom de la colonne dans la
+                        table utilisée pour représenter l'identité. La colonne d'identité doit contenir
+                        une valeur unique, comme un "<code>username</code>" ou une adresse
+                        émail.
+                    </para>
                 </listitem>
-
                 <listitem>
-                    <para><code>credentialColumn</code> : il s'agit du nom de la colonne dans la table utilisée pour
-                    représenter le crédit. Dans le cas d'une simple authentification par identité / mot de passe, la
-                    valeur de crédit correspond au mot de passe. Voir aussi l'option
-                    <code>credentialTreatment</code>.</para>
+                    <para>
+                        <code>credentialColumn</code>&#160;: il s'agit du nom de la colonne dans la
+                        table utilisée pour représenter le crédit. Dans le cas d'une simple
+                        authentification par identité / mot de passe, la valeur de crédit correspond au
+                        mot de passe. Voir aussi l'option <code>credentialTreatment</code>.
+                    </para>
                 </listitem>
-
                 <listitem>
-                    <para><code>credentialTreatment</code> : dans la plupart des cas, les mots de passe et autres
-                    données sensibles sont cryptés, hachés, encodés, masqués, ou sinon traités à travers une fonction ou
-                    un algorithme. En spécifiant un traitement paramétrable de chaîne avec cette méthode, comme
-                    <code>'MD5(?)'</code> ou <code>'PASSWORD(?)'</code>, un développeur peut appliquer un code SQL
-                    arbitraire sur les données de crédit fournies. Comme ces fonctions sont spécifiques à chaque
-                    gestionnaire de base de données, vérifiez le manuel de la base de données pour vérifier la
-                    disponibilité de ces fonctions dans votre système.</para>
+                    <para>
+                        <code>credentialTreatment</code>&#160;: dans la plupart des cas, les mots de
+                        passe et autres données sensibles sont cryptés, hachés, encodés, masqués, ou
+                        sinon traités à travers une fonction ou un algorithme. En spécifiant un
+                        traitement paramétrable de chaîne avec cette méthode, comme
+                        <code>'MD5(?)'</code> ou <code>'PASSWORD(?)'</code>, un développeur peut
+                        appliquer un code SQL arbitraire sur les données de crédit fournies. Comme ces
+                        fonctions sont spécifiques à chaque gestionnaire de base de données, vérifiez
+                        le manuel de la base de données pour vérifier la disponibilité de ces fonctions
+                        dans votre système.
+                    </para>
                 </listitem>
-            </itemizedlist></para>
+            </itemizedlist>
+        </para>
 
         <example id="zend.auth.adapter.dbtable.introduction.example.basic_usage">
+
             <title>Utilisation basique</title>
 
-            <para>Comme expliqué dans l'introduction, le constructeur de <code>Zend_Auth_Adapter_DbTable</code> requiert
-            une instance de <code>Zend_Db_Adapter_Abstract</code> qui est utilisée comme connexion à la base de données
-            à laquelle l'instance d'adaptateur d'authentification est liée. Avant tout, la connexion à la base de donnée
-            devrait être crée.</para>
+            <para>
+                Comme expliqué dans l'introduction, le constructeur de
+                <classname>Zend_Auth_Adapter_DbTable</classname> requiert une instance de
+                <classname>Zend_Db_Adapter_Abstract</classname> qui est utilisée comme connexion à
+                la base de données à laquelle l'instance d'adaptateur d'authentification est liée.
+                Avant tout, la connexion à la base de donnée devrait être crée.
+            </para>
 
-            <para>Le code suivant crée un adaptateur pour une base de données en mémoire, crée un schéma avec une table
-            unique, et insère une ligne sur laquelle nous pouvons réaliser une requête d'authentification plus tard. Cet
-            exemple requiert que l'extension PDO SQLite soit disponible : <programlisting role="php"><![CDATA[
+            <para>
+                Le code suivant crée un adaptateur pour une base de données en mémoire, crée
+                un schéma avec une table unique, et insère une ligne sur laquelle nous pouvons
+                réaliser une requête d'authentification plus tard. Cet exemple requiert que
+                l'extension PDO SQLite soit disponible&#160;:
+                <programlisting role="php"><![CDATA[
 // Crée une connexion de base de données SQLite en mémoire
 $dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' =>
                                                   ':memory:'));
@@ -73,12 +99,16 @@ $sqlInsert = "INSERT INTO users (username, password, real_name) "
 
 // Insertion des données
 $dbAdapter->query($sqlInsert);
-]]></programlisting></para>
+]]></programlisting>
+            </para>
 
-            <para>Avec une connexion de base de données et des données disponibles dans la table, une instance de
-            <code>Zend_Auth_Adapter_DbTable</code> peut être créée. Les valeurs d'options de configuration peuvent être
-            fournies au constructeur ou en tant que paramètres aux méthodes de réglage après l'instanciation :
-            <programlisting role="php"><![CDATA[
+            <para>
+                Avec une connexion de base de données et des données disponibles dans la
+                table, une instance de <classname>Zend_Auth_Adapter_DbTable</classname> peut être
+                créée. Les valeurs d'options de configuration peuvent être fournies au
+                constructeur ou en tant que paramètres aux méthodes de réglage après
+                l'instanciation&#160;:
+                <programlisting role="php"><![CDATA[
 // Configure une instance avec des paramètres de constructeur ...
 $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter,
                                              'users',
@@ -90,12 +120,15 @@ $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 $authAdapter->setTableName('users')
             ->setIdentityColumn('username')
             ->setCredentialColumn('password');
-]]></programlisting></para>
+]]></programlisting>
+            </para>
 
-            <para>A cet instant, l'instance de l'adaptateur d'authentification est prête à recevoir des requêtes
-            d'authentification. Dans le but de réaliser une requête d'authentification, les valeurs des crédits requêtés
-            sont fournies à l'adaptateur avant d'appeler la méthode <code>authenticate()</code> : <programlisting
-            role="php"><![CDATA[
+            <para>
+                A cet instant, l'instance de l'adaptateur d'authentification est prête à
+                recevoir des requêtes d'authentification. Dans le but de réaliser une requête
+                d'authentification, les valeurs des crédits requêtés sont fournies à l'adaptateur
+                avant d'appeler la méthode <code>authenticate()</code>&#160;:
+                <programlisting role="php"><![CDATA[
 // Règle les valeurs d'entrées des crédits
 // (en général, à partir d'un formulaire d'enregistrement)
 $authAdapter->setIdentity('my_username')
@@ -103,11 +136,15 @@ $authAdapter->setIdentity('my_username')
 
 // Réalise la requête d'authentification, et sauvegarde le résultat
 $result = $authAdapter->authenticate();
-]]></programlisting></para>
+]]></programlisting>
+            </para>
 
-            <para>En plus de la disponibilité de la méthode <code>getIdentity()</code> pour récupérer l'objet du
-            résultat d'authentification, <code>Zend_Auth_Adapter_DbTable</code> supporte aussi la récupération de la
-            ligne de la table qui a réussi l'authentification : <programlisting role="php"><![CDATA[
+            <para>
+                En plus de la disponibilité de la méthode <code>getIdentity()</code> pour
+                récupérer l'objet du résultat d'authentification,
+                <classname>Zend_Auth_Adapter_DbTable</classname> supporte aussi la récupération de
+                la ligne de la table qui a réussi l'authentification&#160;:
+                <programlisting role="php"><![CDATA[
 // Affiche l'identité
 echo $result->getIdentity() . "\n\n";
 
@@ -125,20 +162,28 @@ Array
     [real_name] => My Real Name
 )
 */
-]]></programlisting> Puisque la ligne de la table contient la valeur de crédit, il est important de garantir ces
-            valeurs contre l'accès fortuit.</para>
+]]></programlisting>
+                Puisque la ligne de la table contient la valeur de crédit, il est important de
+                garantir ces valeurs contre l'accès fortuit.
+            </para>
+
         </example>
+
     </sect2>
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.storing_result_row">
+
         <title>Utilisation avancée : maintenir persistant l'objet de résultat DbTable</title>
 
-        <para>Par défaut, <code>Zend_Auth_Adapter_DbTable</code> retourne l'identité fournie à l'objet Auth en cas
-        d'authentification couronnée de succès. Un autre scénario d'utilisation, où les développeurs veulent stocker
-        dans le mécanisme de stockage persistant du <code>Zend_Auth</code> un objet d'identité contenant d'autres
-        informations utiles, est résolu en utilisant la méthode <code>getResultRowObject()</code> retournant un objet
-        <code>stdClass</code>. Le petit bout de code suivant illustre cette utilisation : <programlisting
-        role="php"><![CDATA[
+        <para>
+            Par défaut, <classname>Zend_Auth_Adapter_DbTable</classname> retourne l'identité
+            fournie à l'objet Auth en cas d'authentification couronnée de succès. Un autre scénario
+            d'utilisation, où les développeurs veulent stocker dans le mécanisme de stockage
+            persistant du <classname>Zend_Auth</classname> un objet d'identité contenant d'autres
+            informations utiles, est résolu en utilisant la méthode
+            <code>getResultRowObject()</code> retournant un objet <code>stdClass</code>. Le petit
+            bout de code suivant illustre cette utilisation&#160;:
+            <programlisting role="php"><![CDATA[
 // authentifie avec Zend_Auth_Adapter_DbTable
 $result = $this->_auth->authenticate($adapter);
 
@@ -161,22 +206,32 @@ if ($result->isValid()) {
     /* ... */
 
 }
-]]></programlisting></para>
+]]></programlisting>
+        </para>
+
     </sect2>
 
     <sect2 id="zend.auth.adapter.dbtable.advanced.advanced_usage">
+
         <title>Utilisation avancée par l'exemple</title>
 
-        <para>Bien que le but initial de <code>Zend_Auth</code> (et par extension celui de
-        <code>Zend_Auth_Adapter_DbTable</code>) est principalement l'<emphasis role="strong">authentification</emphasis>
-        et non l'<emphasis role="strong">autorisation</emphasis> (ou contrôle d'accès), il existe quelques exemples et
-        problèmes qui franchissent la limite des domaines auxquels ils appartiennent. Selon la façon dont vous avez
-        décidé d'expliquer votre problème, il semble parfois raisonnable de résoudre ce qui pourrait ressembler à un
-        problème d'autorisation dans l'adaptateur d'authentification.</para>
+        <para>
+            Bien que le but initial de <classname>Zend_Auth</classname> (et par extension celui de
+            <classnameZend_Auth_Adapter_DbTable</classname>) est principalement l'<emphasis
+            role="strong">authentification</emphasis> et non l'<emphasis
+            role="strong">autorisation</emphasis> (ou contrôle d'accès), il existe quelques
+            exemples et problèmes qui franchissent la limite des domaines auxquels ils
+            appartiennent. Selon la façon dont vous avez décidé d'expliquer votre problème, il
+            semble parfois raisonnable de résoudre ce qui pourrait ressembler à un problème
+            d'autorisation dans l'adaptateur d'authentification.
+        </para>
 
-        <para>Ceci étant dit, <code>Zend_Auth_Adapter_DbTable</code> possède des mécanismes qui sont construits de telle
-        sorte qu'ils peuvent être démultipliés pour ajouter des contrôles supplémentaires au moment de
-        l'authentification pour résoudre quelques problèmes communs d'utilisateur.</para>
+        <para>
+            Ceci étant dit, <classname>Zend_Auth_Adapter_DbTable</classname> possède des mécanismes
+            qui sont construits de telle sorte qu'ils peuvent être démultipliés pour ajouter des
+            contrôles supplémentaires au moment de l'authentification pour résoudre quelques
+            problèmes communs d'utilisateur.
+        </para>
 
         <programlisting role="php"><![CDATA[
 // La valeur du champs "etat" d'un compte
@@ -196,12 +251,19 @@ $adapter = new Zend_Auth_Adapter_DbTable($db,
                                          'MD5(?) AND actif = "TRUE"');
 ]]></programlisting>
 
-        <para>Un autre scénario possible est l'implantation d'un mécanisme de "salting". "Salting" est un terme se
-        référant une technique qui peut fortement améliorer la sécurité de votre application. C'est basé sur l'idée que
-        concaténer une chaîne aléatoire à tout mot de passe rend impossible la réussite d'une attaque de type "brute
-        force" sur la base de données en utilisant des valeurs préalablement hashées issues d'un dictionnaire.</para>
+        <para>
+            Un autre scénario possible est l'implantation d'un mécanisme de "salting".
+            "Salting" est un terme se référant une technique qui peut fortement améliorer la
+            sécurité de votre application. C'est basé sur l'idée que concaténer une chaîne
+            aléatoire à tout mot de passe rend impossible la réussite d'une attaque de type "brute
+            force" sur la base de données en utilisant des valeurs préalablement hashées issues
+            d'un dictionnaire.
+        </para>
 
-        <para>Par conséquent nous devons modifier notre table pour stocker notre chaîne de "salt" aléatoire :</para>
+        <para>
+            Par conséquent nous devons modifier notre table pour stocker notre chaîne de
+            "salt" aléatoire&#160;:
+        </para>
 
         <programlisting role="php"><![CDATA[
 $sqlAlter = "ALTER TABLE [users] "
@@ -212,8 +274,10 @@ $sqlAlter = "ALTER TABLE [users] "
 $dbAdapter->query($sqlAlter);
 ]]></programlisting>
 
-        <para>Voici une méthode simple pour générer une chaîne aléatoire pour chaque utilisateur à leur enregistrement
-        :</para>
+        <para>
+            Voici une méthode simple pour générer une chaîne aléatoire pour chaque
+            utilisateur à leur enregistrement&#160;:
+        </para>
 
         <programlisting role="php"><![CDATA[
 for ($i = 0; $i < 50; $i++)
@@ -222,7 +286,7 @@ for ($i = 0; $i < 50; $i++)
 }
 ]]></programlisting>
 
-        <para>Et maintenant, construisons l'adaptateur :</para>
+        <para>Et maintenant, construisons l'adaptateur&#160;:</para>
 
         <programlisting role="php"><![CDATA[
 $adapter = new Zend_Auth_Adapter_DbTable(
@@ -237,9 +301,14 @@ $adapter = new Zend_Auth_Adapter_DbTable(
 ]]></programlisting>
 
         <note>
-            <para>Vous pouvez encore améliorer la sécurité en utilisant une chaîne de "salt" statique codée en dur dans
-            votre application. Dans le cas ou la base de données est compromise (par exemple par une attaque de type
-            injection SQL) mais que votre serveur Web est intact, les données sont inutilisables par l'attaquant.</para>
+            <para>
+                Vous pouvez encore améliorer la sécurité en utilisant une chaîne de "salt"
+                statique codée en dur dans votre application. Dans le cas ou la base de données est
+                compromise (par exemple par une attaque de type injection SQL) mais que votre
+                serveur Web est intact, les données sont inutilisables par l'attaquant.
+            </para>
         </note>
+
     </sect2>
+
 </sect1>
