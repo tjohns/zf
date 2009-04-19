@@ -275,39 +275,37 @@ $this->navigation()->addPage(array(
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.setup">
-        <title>Navigation setup used in examples</title>
+        <title>Setup der Navigation das in Beispielen verwendet wird</title>
 
         <para>
-            This example shows the setup of a navigation container for a
-            fictional software company.
+            Dieses Beispiel zeigt das Setup eines Navigations Container für eine fiktive Software
+            Firma.
         </para>
 
         <para>
-            Notes on the setup:
+            Notizen zum Setup:
             <itemizedlist>
                 <listitem>
                     <para>
-                        The domain for the site is <code>www.example.com</code>.
+                        Die Domain der Site ist <code>www.example.com</code>.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Interesting page properties are marked with a comment.
+                        Interessante Eigenschaften der Seite sind mit einem Kommentar markiert.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Unless otherwise is stated in other examples, the user
-                        is requesting the URL
-                        <code>http://www.example.com/products/server/faq/</code>,
-                        which translates to the page labeled <code>FAQ</code>
-                        under <code>Foo Server</code>.
+                        Solange im Beispiel nicht anders erwähnt, fragt der Benutzer nach der URL
+                        <code>http://www.example.com/products/server/faq/</code>, welche auf die
+                        Seite mit dem Label <code>FAQ</code> unter <code>Foo Server</code>
+                        übersetzt wird.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        The assumed ACL and router setup is shown below the
-                        container setup.
+                        Das angenommene ACL und Route Setup wird unter dem Container Setup gezeigt.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -315,30 +313,30 @@ $this->navigation()->addPage(array(
 
         <programlisting role="php"><![CDATA[
 /*
- * Navigation container (config/array)
+ * Navigations Container (config/array)
 
- * Each element in the array will be passed to
- * Zend_Navigation_Page::factory() when constructing
- * the navigation container below.
+ * Jedes Element im Array wird an Zend_Navigation_Page::factory()
+ * übergeben wenn der unten angezeigt Navigations Container
+ * erstellt wird.
  */
 $pages = array(
     array(
         'label'      => 'Home',
-        'title'      => 'Go Home',
+        'title'      => 'Geh zu Home',
         'module'     => 'default',
         'controller' => 'index',
         'action'     => 'index',
-        'order'      => -100 // make sure home is the first page
+        'order'      => -100 // Sicherstellen das Home die erste Seite ist
     ),
     array(
-        'label'      => 'Special offer this week only!',
+        'label'      => 'Spezielles Angebot nur diese Woche!',
         'module'     => 'store',
         'controller' => 'offer',
         'action'     => 'amazing',
-        'visible'    => false // not visible
+        'visible'    => false // nicht sichtbar
     ),
     array(
-        'label'      => 'Products',
+        'label'      => 'Produkte',
         'module'     => 'products',
         'controller' => 'index',
         'action'     => 'index',
@@ -365,13 +363,13 @@ $pages = array(
                         )
                     ),
                     array(
-                        'label'      => 'Editions',
+                        'label'      => 'Editionen',
                         'module'     => 'products',
                         'controller' => 'server',
                         'action'     => 'editions'
                     ),
                     array(
-                        'label'      => 'System Requirements',
+                        'label'      => 'System Anforderungen',
                         'module'     => 'products',
                         'controller' => 'server',
                         'action'     => 'requirements'
@@ -385,7 +383,7 @@ $pages = array(
                 'action'     => 'index',
                 'pages'      => array(
                     array(
-                        'label'      => 'Customer Stories',
+                        'label'      => 'Kunden Stories',
                         'module'     => 'products',
                         'controller' => 'studio',
                         'action'     => 'customers'
@@ -401,8 +399,8 @@ $pages = array(
         )
     ),
     array(
-        'label'      => 'Company',
-        'title'      => 'About us',
+        'label'      => 'Firma',
+        'title'      => 'Über uns',
         'module'     => 'company',
         'controller' => 'about',
         'action'     => 'index',
@@ -415,20 +413,20 @@ $pages = array(
             ),
             array(
                 'label'      => 'News',
-                'class'      => 'rss', // class
+                'class'      => 'rss', // Klasse
                 'module'     => 'company',
                 'controller' => 'news',
                 'action'     => 'index',
                 'pages'      => array(
                     array(
-                        'label'      => 'Press Releases',
+                        'label'      => 'Für die Presse',
                         'module'     => 'company',
                         'controller' => 'news',
                         'action'     => 'press'
                     ),
                     array(
-                        'label'      => 'Archive',
-                        'route'      => 'archive', // route
+                        'label'      => 'Archiv',
+                        'route'      => 'archive', // Route
                         'module'     => 'company',
                         'controller' => 'news',
                         'action'     => 'archive'
@@ -444,16 +442,16 @@ $pages = array(
         'action'     => 'index',
         'pages'      => array(
             array(
-                'label'      => 'My Account',
+                'label'      => 'Mein Account',
                 'module'     => 'community',
                 'controller' => 'account',
                 'action'     => 'index',
-                'resource'   => 'mvc:community.account' // resource
+                'resource'   => 'mvc:community.account' // Ressource
             ),
             array(
-                'label' => 'Forums',
+                'label' => 'Forum',
                 'uri'   => 'http://forums.example.com/',
-                'class' => 'external' // class
+                'class' => 'external' // Klasse
             )
         )
     ),
@@ -462,10 +460,10 @@ $pages = array(
         'module'     => 'admin',
         'controller' => 'index',
         'action'     => 'index',
-        'resource'   => 'mvc:admin', // resource
+        'resource'   => 'mvc:admin', // Ressource
         'pages'      => array(
             array(
-                'label'      => 'Write new article',
+                'label'      => 'Neuen Artikel schreiben',
                 'module'     => 'admin',
                 'controller' => 'post',
                 'aciton'     => 'write'
@@ -474,26 +472,26 @@ $pages = array(
     )
 );
 
-// Create container from array
+// Container von einem Array erstellen
 $container = new Zend_Navigation($pages);
 
-// Store the container in the proxy helper:
+// Den Container im Proxy Helfer speichern
 $view->getHelper('navigation')->setContainer($container);
 
-// ...or simply:
+// ...oder einfach:
 $view->navigation($container);
 
-// ...or store it in the reigstry:
+// ...oder ihn einfach in der Registry speichern:
 Zend_Registry::set('Zend_Navigation', $container);
 ]]>
         </programlisting>
 
         <para>
-            In addition to the container above, the following setup is assumed:
+            Zusätzlich zum obigen Container, wird das folgende Setup angenommen:
         </para>
 
         <programlisting role="php"><![CDATA[
-// Setup router (default routes and 'archive' route):
+// Router Setup (Standardrouten und 'archive' Route):
 $front = Zend_Controller_Front::getInstance();
 $router = $front->getRouter();
 $router->addDefaultRoutes();
@@ -511,7 +509,7 @@ $router->addRoute(
     )
 );
 
-// Setup ACL:
+// ACL Setup:
 $acl = new Zend_Acl();
 $acl->addRole(new Zend_Acl_Role('member'));
 $acl->addRole(new Zend_Acl_Role('admin'));
@@ -520,10 +518,10 @@ $acl->add(new Zend_Acl_Resource('mvc:community.account'));
 $acl->allow('member', 'mvc:community.account');
 $acl->allow('admin', null);
 
-// Store ACL and role in the proxy helper:
+// ACL und Rolle im Proxy Helfer speichern:
 $view->navigation()->setAcl($acl)->setRole('member');
 
-// ...or set default ACL and role statically:
+// ...oder ein standard ACL und Rolle statisch setzen:
 Zend_View_Helper_Navigation_HelperAbstract::setDefaultAcl($acl);
 Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole('member');
 ]]>
@@ -531,182 +529,174 @@ Zend_View_Helper_Navigation_HelperAbstract::setDefaultRole('member');
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.breadcrumbs">
-        <title>Breadcrumbs Helper</title>
+        <title>Breadcrumbs Helfer</title>
 
         <para>
-            Breadcrumbs are used for indicating where in a sitemap
-            a user is currently browsing, and are typically rendered
-            like this: "You are here: Home > Products > FantasticProduct 1.0".
-            The breadcrumbs helper follows the guidelines from
+            Breadcrumbs werden verwendet um anzuzeigen wo in einer Sitemap ein Benutzer aktuell
+            browst, und werden typischerweise wie folgt angezeigt: "Du bist hier: Home > Produkte
+            > FantastischesProdukt 1.0". Der BreakCrumbs Helfer folgt den Richtlinien von
             <ulink url="http://developer.yahoo.com/ypatterns/pattern.php?pattern=breadcrumbs">Breadcrumbs Pattern - Yahoo! Design Pattern Library</ulink>,
-            and allows simple customization (minimum/maximum depth, indentation,
-            separator, and whether the last element should be linked), or
-            rendering using a partial view script.
+            und erlaubt eine einfache Anpassung (Minimale/Maximale Tiefe, Einrückung, Trennzeichen,
+            und ob das letzte Element verlinkt sein soll), oder die Darstellung durch Verwendung
+            eines partiellen View Skripts.
         </para>
 
         <para>
-            The Breadcrumbs helper works like this; it finds the deepest active
-            page in a navigation container, and renders an upwards path to
-            the root. For MVC pages, the "activeness" of a page is
-            determined by inspecting the request object, as stated in the
-            section on <link linkend="zend.navigation.pages.mvc">Zend_Navigation_Page_Mvc</link>.
+            Der Breabcrumbs Helfer funktioniert wie folgt; er findet die tiefste aktive Seite in
+            einem Navigations Container, und stellt den aufwärtsgerichteten Pfad zum Root dar.
+            Für MVC Seiten wird die "Aktivität" einer Seite erkannt indem das Anfrage Objekt
+            angeschaut wird, wie im Kapitel
+            <link linkend="zend.navigation.pages.mvc">Zend_Navigation_Page_Mvc</link> beschrieben.
         </para>
 
         <para>
-            The helper sets the <code>minDepth</code> property to 1 by default,
-            meaning breadcrumbs will not be rendered if the deepest active page
-            is a root page. If <code>maxDepth</code> is specified, the helper
-            will stop rendering when at the specified depth (e.g. stop at level
-            2 even if the deepest active page is on level 3).
+            Der Helfer setzt die Eigenschaft <code>minDepth</code> standardmäßig auf 1, was
+            bedeutet das Breadcrumbs nicht dargestellt werden wenn die tiefste aktive Seite eine
+            Root Seite ist. Wenn <code>maxDepth</code> spezifiziert ist, beendet der Helfer die
+            Darstellung bei der spezifizierten Tiefe (z.B. stopp bei Level 2 selbst wenn die
+            tiefste aktive Seite auf Level 3 ist).
         </para>
 
         <para>
-            Methods in the breadcrumbs helper:
+            Methoden im Breakcrumbs Helfer sind:
         </para>
 
         <itemizedlist>
            <listitem>
                <para>
-                   <code>{get|set}Separator()</code> gets/sets separator
-                   string that is used between breadcrumbs. Defualt is
-                   <code>' &amp;gt; '</code>.
+                   <code>{get|set}Separator()</code> empfängt/setzt das Trennzeichen das zwischen
+                   Breakcrumbs verwendet wird. Der Standardwert ist <code>' &amp;gt; '</code>.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>{get|set}LinkLast()</code> gets/sets whether the
-                   last breadcrumb should be rendered as an anchor or not.
-                   Default is <code>false</code>.
+                   <code>{get|set}LinkLast()</code> empfängt/setzt ob der letzte Breabcrumb
+                   als Anker dargestellt werden soll oder nicht. Der Standardwert ist
+                   <code>false</code>.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>{get|set}Partial()</code> gets/sets a partial view
-                   script that should be used for rendering breadcrumbs.
-                   If a partial view script is set, the helper's
-                   <code>render()</code> method will use the
-                   <code>renderPartial()</code> method. If no partial is
-                   set, the <code>renderStraight()</code> method is used.
-                   The helper expects the partial to be a <code>string</code>
-                   or an <code>array</code> with two elements. If the partial
-                   is a <code>string</code>, it denotes the name of the partial
-                   script to use. If it is an <code>array</code>, the first
-                   element will be used as the name of the partial view
-                   script, and the second element is the module where the
-                   script is found.
+                   <code>{get|set}Partial()</code> empfängt/setzt ein partielles View Skript das
+                   für die Darstellung von Breadcrumbs verwendet werden soll. Wenn ein partielles
+                   View Skript gesetzt ist, verwendet die <code>render()</code> Methode des
+                   Helfers die <code>renderPartial()</code> Methode. Wenn kein partielles gesetzt
+                   ist, wird die <code>renderStraight()</code> Methode verwendet. Der Helfer
+                   erwartet das der partielle ein <code>string</code> oder ein <code>array</code>
+                   mit zwei Elementen ist. Wen der Partielle ein <code>string</code> ist, benennt
+                   er den Namen des partiellen Skripts das zu verwenden ist. Wenn er ein
+                   <code>array</code> ist, wird das erste Element als Name des partiellen View
+                   Skripts verwendet, und das zweite Element ist das Modul in dem das Skript zu
+                   finden ist.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>renderStraight()</code> is the default render
-                   method.
+                   <code>renderStraight()</code> ist die standardmäßige render Methode.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>renderPartial()</code> is used for rendering
-                   using a partial view script.
+                   <code>renderPartial()</code> wird für die Darstellung verwendet wenn ein
+                   partielles View Skript verwendet wird.
                </para>
            </listitem>
        </itemizedlist>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example1">
-            <title>Rendering breadcrumbs</title>
+            <title>Darstellung von Breadcrumbs</title>
 
             <para>
-                This example shows how to render breadcrumbs with default
-                settings.
+                Dieses Beispiel zeigt wie Breadcrumbs mit Standardsettings dargestellt werden.
             </para>
 
             <programlisting role="php"><![CDATA[
-In a view script or layout:
+In einem View Skript oder Layout:
 <?php echo $this->navigation()->breadcrumbs(); ?>
 
-or if short tags are enabled:
+oder wenn Short-Tags aktiviert sind:
 <?php $this->navigation()->breadcrumbs(); ?>
 
-The two calls above take advantage of the magic __toString() method,
-and are equivalent to:
+Die zwei obigen Aufrufe verwenden die magische __toString() Methode,
+und sind identisch mit:
 <?php echo $this->navigation()->breadcrumbs()->render(); ?>
 
-Output:
-<a href="/products">Products</a> &gt; <a href="/products/server">Foo Server</a> &gt; FAQ
+Ausgabe:
+<a href="/products">Produkte</a> &gt; <a href="/products/server">Foo Server</a> &gt; FAQ
 ]]>
             </programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example2">
-            <title>Specifying indentation</title>
+            <title>Einrückung spezifizieren</title>
 
             <para>
-                This example shows how to render breadcrumbs with initial
-                indentation.
+                Dieses Beispiel zeigt wie Breadcrumbs mit anfänglicher Einrückung dargestellt
+                werden können.
             </para>
 
             <programlisting role="php"><![CDATA[
-Rendering with 8 spaces indentation:
+Darstellung mit 8 Leerzeichen Einrückung:
 <?php echo $this->navigation()->breadcrumbs()->setIndent(8); ?>
 
-Output:
+Ausgabe:
         <a href="/products">Products</a> &gt; <a href="/products/server">Foo Server</a> &gt; FAQ
 ]]>
             </programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example3">
-            <title>Customize breadcrumbs output</title>
+            <title>Eigene Ausgabe für Breakcrumbs</title>
 
             <para>
-                This example shows how to customze breadcrumbs output by
-                specifying various options.
+                Dieses Beispiel zeigt wie man eine eigene Breadcrumbs Ausgabe durch die
+                Spezifizierung diverser Optionen erstellt.
             </para>
 
             <programlisting role="php"><![CDATA[
-In a view script or layout:
+In einem View Skript oder Layout:
 
 <?php
 echo $this->navigation()
           ->breadcrumbs()
-          ->setLinkLast(true)                   // link last page
-          ->setMaxDepth(1)                      // stop at level 1
-          ->setSeparator(' &#9654;' . PHP_EOL); // cool separator with newline
+          ->setLinkLast(true)                   // Letzte Seite verlinken
+          ->setMaxDepth(1)                      // Bei Level 1 stoppen
+          ->setSeparator(' &#9654;' . PHP_EOL); // Cooler Seperator mit Umbruch
 ?>
 
 Output:
-<a href="/products">Products</a> &#9654;
+<a href="/products">Produkte</a> &#9654;
 <a href="/products/server">Foo Server</a>
 
 /////////////////////////////////////////////////////
 
-Setting minimum depth required to render breadcrumbs:
+Minimale notwendige Tiefe für die Darstellung von Breadcrumbs setzen:
 
 <?php
 $this->navigation()->breadcrumbs()->setMinDepth(10);
 echo $this->navigation()->breadcrumbs();
 ?>
 
-Output:
-Nothing, because the deepest active page is not at level 10 or deeper.
+Ausgabe:
+Nichts, weil die tiefste aktive Seite nicht auf Level 10 oder tiefer ist.
 ]]>
             </programlisting>
         </example>
 
         <example id="zend.view.helpers.initial.navigation.breadcrumbs.example4">
-            <title>Rendering breadcrumbs using a partial view script</title>
+            <title>Darstellung von Breadcrumbs mit Verwendung eines partiellen View Skripts</title>
 
             <para>
-                This example shows how to render customized breadcrumbs using
-                a partial vew script. By calling <code>setPartial()</code>,
-                you can specify a partial view script that will be used
-                when calling <code>render()</code>. When a partial is specified,
-                the <code>renderPartial()</code> method will be called. This
-                method will find the deepest active page and pass an array
-                of pages that leads to the active page to the partial view
-                script.
+                Dieses Beispiel zeigt wir eigene Breakcrumbs durch Verwendung eines partiellen
+                View Skripts dargestellt werden können. Durch den Aufruf von
+                <code>setPartial()</code> kann man ein partielles View Skript spezifizieren das
+                verwendet wird wenn die <code>renderPartial()</code> Methode aufgerufen wird.
+                Diese Methode findest die tiefste aktive Seite und übergibt ein Array von Seiten
+                die zur aktiven Seite des partiellen View Skripts weiterleitet.
             </para>
 
             <para>
-                In a layout:
+                Im Layout:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -717,7 +707,7 @@ echo $this->navigation()->breadcrumbs()
             </programlisting>
 
             <para>
-                Contents of
+                Inhalt von
                 <code>application/modules/default/views/breadcrumbs.phtml</code>:
             </para>
 
@@ -729,18 +719,18 @@ echo implode(', ', array_map(
             </programlisting>
 
             <para>
-                Output:
+                Ausgabe:
             </para>
 
             <programlisting role="php"><![CDATA[
-Products, Foo Server, FAQ
+Produkte, Foo Server, FAQ
 ]]>
             </programlisting>
         </example>
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.links">
-        <title>Links Helper</title>
+        <title>Link Helfer</title>
 
         <para>
             The links helper is used for rendering HTML <code>LINK</code>
