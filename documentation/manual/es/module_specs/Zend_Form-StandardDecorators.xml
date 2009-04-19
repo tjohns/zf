@@ -2,22 +2,22 @@
     <title>Decoradores de Formulario (Form Decorartors) estándar contenidos en Zend Framework</title>
 
     <para>
-        <code>Zend_Form</code> ships with several standard decorators. For more
-        information on general decorator usage, see <link
-            linkend="zend.form.decorators">the Decorators section</link>.
+        <code>Zend_Form</code> se distribuye con distintos decoradores estándar. Para más
+        información sobre el uso de decoradores en general, vea <link
+            linkend="zend.form.decorators">la sección sobre decoradores</link>.
     </para>
 
     <sect2 id="zend.form.standardDecorators.callback">
         <title>Zend_Form_Decorator_Callback</title>
 
         <para>
-            El decorador de Callback (llamada de retorno) permite ejecutar una llamada de retorno al
-            contenido que se va a mostrar. Las llamadas de retorno deben especificarse a través
-            de la opción 'callback' pasada en la configuración del decorador, y pueden
-            ser de cualquier valor de llamada de retorno PHP. Los Callbacks deben
-            aceptar tres argumentos: <code>$content</code> (el contenido original
-            enviado al decorador), <code>$element</code> (el objeto que se está decorando),
-            y un array de <code>$options</code>. Un callback de ejemplo sería:
+            El decorador Callback (llamada de retorno) permite ejecutar una llamada de retorno para
+			mostrar el contenido. Las llamadas de retorno deben especificarse a través
+			de la opción 'callback' pasada en la configuración del decorador, y pueden
+			ser de cualquier valor de llamada de retorno PHP. Los Callbacks deben
+			aceptar tres argumentos: <code>$content</code> (el contenido original
+			enviado al decorador), <code>$element</code> (el objeto que se está decorando),
+			y un array de <code>$options</code>. Un callback de ejemplo sería:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -32,18 +32,17 @@ class Util
         </programlisting>
 
         <para>
-            This callback would be specified as <code>array('Util',
-                'label')</code>, and would generate some (bad) HTML markup
-            for the label. The Callback decorator would then either replace,
-            append, or prepend the original content with the return value of
-            this.
+            Esta llamada de retorno se especificaría como <code>array('Util',
+                'label')</code>, y generaría un (mal) código HTML para
+            la etiqueta. El decorador Callback reemplazará, antepondrá o postpondrá
+            el contenido original con el que devuelva.
         </para>
 
         <para>
-            The Callback decorator allows specifying a null value for the
-            placement option, which will replace the original content with
-            the callback return value; 'prepend' and 'append' are still
-            valid as well.
+            El decorador Callback permite especificar un valor null para la opción 
+            placement (colocación), que reemplazará el contenido original
+			con el valor devuelto de la llamada de retorno; 'prepend' (anteponer) y 'append' (postponer)
+			siguen siendo válidas.
         </para>
     </sect2>
 
@@ -58,10 +57,10 @@ class Util
 
         <para>
             Una variante del decorador Captcha, 'Captcha_Word', es usada frecuentemente,
-            y crea dos elementos, un id y una entrada (input). El id indica
-            el identificador de sesión que hay que comparar, y la entrada es para
-            la verificación de usuario del captcha. Éstos elementos son validados
-            como un sólo elemento.
+			y crea dos elementos, un id y una entrada (input). El id indica
+			el identificador de sesión que hay que comparar, y la entrada es para
+			la verificación de usuario del captcha. Éstos elementos son validados
+			como un sólo elemento.
         </para>
     </sect2>
 
@@ -69,28 +68,27 @@ class Util
         <title>Zend_Form_Decorator_Description</title>
 
         <para>
-            The Description decorator can be used to display a description set
-            on a <code>Zend_Form</code>, <code>Zend_Form_Element</code>, or
-            <code>Zend_Form_DisplayGroup</code> item; it pulls the description
-            using the object's <code>getDescription()</code> method. Common use
-            cases are for providing UI hints for your elements.
+            El decorador Description puede ser usado para mostrar un conjunto de descripciones
+			de un elemento <code>Zend_Form</code>, <code>Zend_Form_Element</code>, o
+            <code>Zend_Form_DisplayGroup</code>; toma la descripción usando el método
+			<code>getDescription()</code> del objeto.
         </para>
 
         <para>
             Por defecto, si no se encuentra la descripción, no se genera ninguna salida.
-            Si la descripción está presente, entonces se envolverá en una etiqueta
+			Si la descripción está presente, entonces se envolverá en una etiqueta 
             <code>p</code> HTML por defecto, aunque tiene la posibilidad de especificar
-            una etiqueta pasando una opción <code>tag</code> al crear el decorador, o
-            llamando a <code>setTag()</code>. También puede especificar una clase
-            para el ta usando la opción <code>class</code> o llamando a
-            <code>setClass()</code>; por defecto, se usa la clase 'hint'.
+			una etiqueta pasando una opción <code>tag</code> al crear el decorador, o 
+			llamando a <code>setTag()</code>. También puede especificar una clase
+			para el tag usando la opción <code>class</code> o llamando a 
+			<code>setClass()</code>; por defecto, se usa la clase 'hint'.
         </para>
 
         <para>
-            The description is escaped using the view object's escaping
-            mechanisms by default. You can disable this by passing a
-            <code>false</code> value to the decorator's 'escape' option or
-            <code>setEscape()</code> method.
+            La descripción es escapada utilizando los mecanismos de escapado por defecto
+			del objeto de vista. Puede desactivar esto pasando un valor
+            <code>false</code> a la opción 'escape' del decorador o el método
+            <code>setEscape()</code>.
         </para>
     </sect2>
 
@@ -98,14 +96,15 @@ class Util
         <title>Zend_Form_Decorator_DtDdWrapper</title>
 
         <para>
-            The default decorators utilize definition lists
-            (<code>&lt;dl&gt;</code>) to render form elements. Since form
-            items can appear in any order, display groups and sub forms can
-            be interspersed with other form items. To keep these particular
-            item types within the definition list, the DtDdWrapper creates a
-            new, empty definition term (<code>&lt;dt&gt;</code>) and wraps
-            its content in a new definition datum (<code>&lt;dd&gt;</code>).
-            The output looks something like this:
+            Los decoradores por defecto utilizan listas de definición
+            (<code>&lt;dl&gt;</code>) para generar elementos de formulario (form). 
+			Dato que los elementos de formulario pueden aparecer en cualquier orden,
+			grupos de visualización y subformularios pueden ser encapsulados dentro de
+			otros elementos de formulario. Para mantener estos tipos de elemento particulares
+            dentro de la lista de definición, DtDdWrapper crea una nuevo término de definición
+			vacío (definition term)(<code>&lt;dt&gt;</code>) y encapsula su contenido
+            en un nuevo dato de definición (<code>&lt;dd&gt;</code>).
+            La salida queda como sigue:
         </para>
 
         <programlisting role="html"><![CDATA[
@@ -127,16 +126,16 @@ class Util
         <title>Zend_Form_Decorator_Errors</title>
 
         <para>
-            Element errors get their own decorator with the Errors
-            decorator. This decorator proxies to the FormErrors view helper,
-            which renders error messages in an unordered list
-            (<code>&lt;ul&gt;</code>) as list items. The
-            <code>&lt;ul&gt;</code> element receives a class of "errors".
+            Los errores de elemento obtienen su propio decorador con el decorador 
+            de errores. Este decorador sustituye al view helper FormErrors,
+            que genera mensajes de error en una lista no ordenada
+            (<code>&lt;ul&gt;</code>) como elementos de lista (li). El elemento
+            <code>&lt;ul&gt;</code> recibe una clase de "errores".
         </para>
 
         <para>
             El decorador de Errores puede anteponerse o postponerse al contenido
-            que se le provee.
+			que se le provee.
         </para>
     </sect2>
 
@@ -144,13 +143,13 @@ class Util
         <title>Zend_Form_Decorator_Fieldset</title>
 
         <para>
-            Display groups and sub forms render their content within
-            fieldsets by default. The Fieldset decorator checks for either a
-            'legend' option or a <code>getLegend()</code> method in the
-            registered element, and uses that as a legend if non-empty. Any
-            content passed in is wrapped in the HTML fieldset, replacing the
-            original content. Any attributes set in the decorated item are
-            passed to the fieldset as HTML attributes.
+            Por defecto, los grupos de visualización y subformularios generan sus contenidos dentro
+			de fieldsets, EL decorador Fieldset busca la opción
+            'legend' o bien el método <code>getLegend()</code> en el elemento 
+			registrado, y lo usa como campo "legend" si no es vacío. Cualquier
+			contenido pasado es envuelto en el fieldset HTML, reemplazando
+			al contenido original. Cualquier atributo pasado al elemento decorado
+			será generado como atributo del fieldset HTML.
         </para>
     </sect2>
 
@@ -158,11 +157,11 @@ class Util
         <title>Zend_Form_Decorator_File</title>
 
         <para>
-            File Elements have special notation when you use multiple
-            file elements or subforms. The File decorator is used by
-            <code>Zend_Form_Element_File</code> and allows to set multiple
-            file elements with only a single methodcall. It is used
-            automatically and fixes the elements name.
+            Los elementos de tipo "File" (upload de ficheros) tienen una notación especial
+			cuando se usan múltiples elementos file o subformularios. El decorador 
+			File es usado por <code>Zend_Form_Element_File</code> y permite fijar 
+			múltiples elementos file con una única llamada al método. Se usa automáticamente
+			y fija el nombre de cada elemento.
         </para>
     </sect2>
 
@@ -170,11 +169,10 @@ class Util
         <title>Zend_Form_Decorator_Form</title>
 
         <para>
-            <code>Zend_Form</code> objects typically need to render an HTML
-            form tag. The Form decorator proxies to the Form view helper. It
-            wraps any provided content in an HTML form element, using the
-            <code>Zend_Form</code> object's action and method, and any
-            attributes as HTML attributes.
+            Los objetos <code>Zend_Form</code> normalmente necesitan generar una etiqueta
+			HTML "form". El decorador Form utiliza la ayuda del view helper Form. Encapsula
+			cualquier contenido provista en un elemento HTML form, usando la acción y el
+			método del objeto Zend Form, y cualquier atributo como atributo HTML.
         </para>
     </sect2>
 
@@ -182,12 +180,12 @@ class Util
         <title>Zend_Form_Decorator_FormElements</title>
 
         <para>
-            Forms, display groups, and sub forms are collections of
-            elements. In order to render these elements, they utilize the
-            FormElements decorator, which iterates through all items,
-            calling <code>render()</code> on each and joining them with the
-            registered separator. It can either append or prepend content
-            passed to it.
+            Los formularios(forms), grupos de visualización y subformularios
+			son colecciones de elementos. Para poder generar estos elementos,
+			utilizan el decorador FormElements, el cual itera sobre todos los elementos,
+			llamando a <code>render()</code> en cada uno de ellos y uniéndolos
+            con el separador indicado. Puede anteponer o postponer al contenido que
+			se le envía.
         </para>
     </sect2>
 
@@ -196,25 +194,25 @@ class Util
 
         <para>
             Algunos desarrolladores y diseñadores prefieren agrupar todos los
-            mensajes de error en la parte superior del formulario. El decorador
-            FormErrors le permite hacer esto.
+			mensajes de error en la parte superior del formulario. El decorador
+			FormErrors le permite hacer esto.
         </para>
-
+        
         <para>
             Por defecto, la lista de errores generada tiene el siguiente marcado:
         </para>
 
         <programlisting role="html"><![CDATA[
-<ul class="form-errors>
-    <li><b>[element label or name]</b><ul>
-            <li>[error message]</li>
-            <li>[error message]</li>
+<ul class="form-errors">
+    <li><b>[etiqueta de elemento o nombre]</b><ul>
+            <li>[mensaje de error]</li>
+            <li>[mensaje de error]</li>
         </ul>
     </li>
     <li><ul>
-        <li><b>[subform element label or name</b><ul>
-                <li>[error message]</li>
-                <li>[error message]</li>
+        <li><b>[etiqueta o nombre de elemento subformulario</b><ul>
+                <li>[mensaje de error]</li>
+                <li>[mensaje de error]</li>
             </ul>
         </li>
     </ul></li>
@@ -228,43 +226,37 @@ class Util
         <itemizedlist>
             <listitem><para>
                 <code>ignoreSubForms</code>: se desactiva o no la recursividad
-                en los subformularios. Valor por defecto: false (i.e., permitir recursividad).
+                en los subformularios. Por defecto: false (i.e., permitir recursividad).
             </para></listitem>
 
             <listitem><para>
-                <code>markupElementLabelEnd</code>: Markup to append to element
-                labels. Default value: '&lt;/b&gt;'
+                <code>markupElementLabelEnd</code>: Marcado para postponer las etiquetas de elementos. Por defecto: '&lt;/b&gt;'
             </para></listitem>
 
             <listitem><para>
-                <code>markupElementLabelStart</code>: Markup to prepend to
-                element labels. Default value: '&lt;b&gt;'
+                <code>markupElementLabelStart</code>: Marcado para anteponer las etiquetas de elementos. Por defecto'&lt;b&gt;'
             </para></listitem>
 
             <listitem><para>
-                <code>markupListEnd</code>: Markup to append error message lists
-                with.  Default value: '&lt;/ul&gt;'.
+                <code>markupListEnd</code>: Marcado para postponer listas de mensajes de error.  Por defecto: '&lt;/ul&gt;'.
             </para></listitem>
 
             <listitem><para>
-                <code>markupListItemEnd</code>: Markup to append individual
-                error messages with. Default value: '&lt;/li&gt;'
+                <code>markupListItemEnd</code>: Marcado para postponer mensajes de error individuales.  Por defecto: '&lt;/li&gt;'
             </para></listitem>
 
             <listitem><para>
-                <code>markupListItemStart</code>: Markup to prepend individual
-                error messages with. Default value: '&lt;li&gt;'
+                <code>markupListItemStart</code>: Marcado para anteponer mensajes de error individuales.  Por defecto: '&lt;li&gt;'
             </para></listitem>
 
             <listitem><para>
-                <code>markupListStart</code>: Markup to append error message
-                lists with. Default value: '&lt;ul class="form-errors"&gt;'
+                <code>markupListStart</code>: Marcado para anteponer listas de mensajes de error.  Por defecto: '&lt;ul class="form-errors"&gt;'
             </para></listitem>
         </itemizedlist>
 
         <para>
-            El decorador FormErrors puede anteponerse o postponerse al contenido
-            que se le provee.
+			El decorador FormErrors puede anteponerse o postponerse al contenido
+			que se le provee.
         </para>
     </sect2>
 
@@ -272,12 +264,12 @@ class Util
         <title>Zend_Form_Decorator_HtmlTag</title>
 
         <para>
-            The HtmlTag decorator allows you to utilize HTML tags to
-            decorate content; the tag utilized is passed in the 'tag'
-            option, and any other options are used as HTML attributes to
-            that tag. The tag by default is assumed to be block level, and
-            replaces the content by wrapping it in the given tag. However,
-            you can specify a placement to append or prepend a tag as well.
+            El decorador HtmlTag le permite utilizar etiquetas HTML para
+			decorador el contenido; la etiqueta utiliza es pasada en la opción 'tag'
+            , y cualquier otra opción es usada como atributo HTML de esa etiqueta. 
+			Por defecto, el contenido generado reemplaza al contenido envolviéndolo en 
+			la etiqueta dada. De cualquier forma, se permite especificar una 
+			localización de tipo 'append' (postponer) o 'prepend' (anteponer).
         </para>
     </sect2>
 
@@ -285,23 +277,23 @@ class Util
         <title>Zend_Form_Decorator_Image</title>
 
         <para>
-            The Image decorator allows you to create an HTML image input
-            (<code>&lt;input type="image" ... /&gt;</code>), and optionally
-            render it within another HTML tag.
+            El decorador Image le permite crear un input HTML de tipo image
+            (<code>&lt;input type="image" ... /&gt;</code>), y opcionalmente
+            mostrarlo dentro de otro tag HTML.
         </para>
 
         <para>
-            By default, the decorator uses the element's src property, which can
-            be set with the <code>setImage()</code> method, as the image
-            source. Additionally, the element's label will be used as the alt
-            tag, and the <code>imageValue</code> (manipulated with the Image
-            element's <code>setImageValue()</code> and
-            <code>getImageValue()</code> accessors) will be used for the value.
+            Por defecto, el decorador usa la propiedad src del elemento,
+			que puede fijarse con el método <code>setImage()</code>, como la ruta
+			de la imagen ('src'). Adicionalmente, la etiqueta del elemento será usada
+			como la etiqueta 'alt', y <code>imageValue</code> (manipulado con los
+			métodos <code>setImageValue()</code> y
+            <code>getImageValue()</code>) será usada como el campo 'value'.
         </para>
 
         <para>
-            To specify an HTML tag with which to wrap the element, either pass a
-            'tag' option to the decorator, or explicitly call
+            Para especificar una etiqueta HTML que utilizar con el elemento, pase la opción
+            'tag' al decorador, o llame explícitamente a
             <code>setTag()</code>.
         </para>
     </sect2>
@@ -310,64 +302,66 @@ class Util
         <title>Zend_Form_Decorator_Label</title>
 
         <para>
-            Form elements typically have labels, and the Label decorator is
-            used to render these labels. It proxies to the FormLabel view
-            helper, and pulls the element label using the
-            <code>getLabel()</code> method of the element. If no label is
-            present, none is rendered. By default, labels are translated when a
-            translation adapter exists and a translation for the label exists.
+            Comúnmente, los elementos de formulario tienen etiquetas (labels) y se
+			usa el decorador Label para generar esas etiquetas. 
+			Utiliza la ayuda del view helper FormLabel, 
+			y toma la etiqueta del elemento mediante el método
+            <code>getLabel()</code> de ese elemento. Si no se encuentra
+			la etiqueta, no se genera. Por defecto, las etiquetas se
+			traducen cuando existe un adaptador de traducciones y existe una
+			traducción para la etiqueta.
         </para>
 
         <para>
-            You may optionally specify a 'tag' option; if provided, it wraps
-            the label in that block-level tag. If the 'tag' option is
-            present, and no label present, the tag is rendered with no
-            content. You can specify the class to use with the tag with the
-            'class' option or by calling <code>setClass()</code>.
+            Opcionalmente, se puede especificar la opción 'tag'; si se suministra, encapsula
+			la etiqueta en la etiqueta HTML en cuestión. Si la opción está presenta
+			pero no hay etiqueta, la etiqueta será generada sin contenido.
+			Puede especificar la clase que usar con la etiqueta mediante la opción
+            'class' o llamando a <code>setClass()</code>.
         </para>
 
         <para>
-            Additionally, you can specify prefixes and suffixes to use when
-            displaying the element, based on whether or not the label is for an
-            optional or required element. Common use cases would be to append a
-            ':' to the label, or a '*' indicating an item is required. You can
-            do so with the following options and methods:
+            Adicionalmente, se pueden especificar prefijos o sufijos que usar
+			al mostrar en pantalla los elementos, basados en si la etiqueta es para
+			un elemento opcional o requerido. Por ejemplo, podríamos querer
+			añadir ':' a la etiqueta o un '*', indicando que el elemento es requerido.
+			Se puede realizar con las siguientes opciones y métodos:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                    <code>optionalPrefix</code>: set the text to prefix the
-                    label with when the element is optional. Use the
-                    <code>setOptionalPrefix()</code> and
-                    <code>getOptionalPrefix()</code> accessors to manipulate it.
+                    <code>optionalPrefix</code>: fija el texto antepuesto a la etiqueta
+					cuando el elemento es opcional. Utilice los accesores
+                    <code>setOptionalPrefix()</code> y
+                    <code>getOptionalPrefix()</code> para manipularlo.
             </para></listitem>
 
             <listitem><para>
-                    <code>optionalSuffix</code>: set the text to append the
-                    label with when the element is optional. Use the
-                    <code>setOptionalSuffix()</code> and
-                    <code>getOptionalSuffix()</code> accessors to manipulate it.
+                    <code>optionalSuffix</code>: fija el texto pospuesto a la etiqueta
+					cuando el elemento es opcional. Utilice los accesores
+                    <code>setOptionalSuffix()</code> y
+                    <code>getOptionalSuffix()</code> para manipularlo.
             </para></listitem>
 
             <listitem><para>
-                    <code>requiredPrefix</code>: set the text to prefix the
-                    label with when the element is required. Use the
-                    <code>setRequiredPrefix()</code> and
-                    <code>getRequiredPrefix()</code> accessors to manipulate it.
+                    <code>requiredPrefix</code>: fija el texto antepuesto a la etiqueta
+					cuando el elemento es requerido. Utilice los accesores
+                    <code>setRequiredPrefix()</code> y
+                    <code>getRequiredPrefix()</code> para manipularlo.
             </para></listitem>
 
             <listitem><para>
-                    <code>requiredSuffix</code>: set the text to append the
-                    label with when the element is required. Use the
-                    <code>setRequiredSuffix()</code> and
-                    <code>getRequiredSuffix()</code> accessors to manipulate it.
+                    <code>requiredSuffix</code>: fija el texto antepuesto a la etiqueta
+					cuando el elemento es requerido. Utilice los accesores
+                    <code>setRequiredSuffix()</code> y
+                    <code>getRequiredSuffix()</code> para manipularlo.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            By default, the Label decorator prepends to the provided
-            content; specify a 'placement' option of 'append' to place it
-            after the content.
+            Por defecto, el decorador Label antecede al contenido provisto;
+			especifique la opción 'placement' (colocación) como 'append' para
+			colocarlo después del contenido.
         </para>
     </sect2>
 
@@ -375,14 +369,15 @@ class Util
         <title>Zend_Form_Decorator_PrepareElements</title>
 
         <para>
-            Forms, display groups, and sub forms are collections of
-            elements. When using the <link
+            Formularios, grupos de visualización, y subformularios son colecciones
+			de elementos. Al usar el decorador <link
                 linkend="zend.form.standardDecorators.viewScript">ViewScript</link>
-            decorator with your form or sub form, it's useful to be able to
-            recursively set the view object, translator, and all fully qualifid
-            names (as determined by sub form array notation). The
-            'PrepareElements' decorator can do this for you. Typically, you will
-            set it as the first decorator in the list.
+            con un formulario o subformulario, resulta útil el poder fijar 
+            recursívamente el objeto de vista, el traductor (translator)y todos los
+			nombres relacionados (determinados por la notiación de tabla del subformulario).
+			Esta tarea puede realizarse gracias al decorador
+            'PrepareElements'. Normalmente, se indicará como el primer 
+			decorador en al lista.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -397,23 +392,23 @@ $form->setDecorators(array(
         <title>Zend_Form_Decorator_ViewHelper</title>
 
         <para>
-            Most elements utilize <code>Zend_View</code> helpers for
-            rendering, and this is done with the ViewHelper decorator. With
-            it, you may specify a 'helper' tag to explicitly set the view
-            helper to utilize; if none is provided, it uses the last segment
-            of the element's class name to determine the helper, prepending
-            it with the string 'form': e.g., 'Zend_Form_Element_Text' would
-            look for a view helper of 'formText'.
+            La mayoría de los elementos utiliza helpers <code>Zend_View</code> 
+			para generar el contenido, y esto se realiza con el decorador ViewHelper. 
+			Con él, se puede especificar una etiqueta 'helper' para fijar
+			explicitamente el view helper que utilizar; si no se suministra ninguno,
+			utiliza el último segmento del nombre de clase del elemento para determinar
+			el helper, anteponiéndole la cadena 'form': e.g., 'Zend_Form_Element_Text'
+			buscaría un view helper del tipo 'formText'.
         </para>
 
         <para>
-            Any attributes of the provided element are passed to the view
-            helper as element attributes.
+            Cualquier atributo del elemento suministrado es pasado al view helper
+			como atributo del elemento.
         </para>
 
         <para>
-            By default, this decorator appends content; use the 'placement'
-            option to specify alternate placement.
+            Por defecto, este decorador postpone el contenido; utilice la opción 'placement'
+            para especificar una localización distinta.
         </para>
     </sect2>
 
@@ -421,58 +416,55 @@ $form->setDecorators(array(
         <title>Zend_Form_Decorator_ViewScript</title>
 
         <para>
-            Sometimes you may wish to use a view script for creating your
-            elements; this way you can have fine-grained control over your
-            elements, turn the view script over to a designer, or simply create
-            a way to easily override setting based on which module you're using
-            (each module could optionally override element view scripts to suit
-            their own needs). The ViewScript decorator solves this problem.
+            A veces es necesario usar un view script para crear elementos;
+			De esta forma, se puede tener un control preciso sobre los elementos;
+			entregar el view script a un diseñador, o simplemente crear 
+			una forma fácil de sobreescribir basado en el módulo que se esté usando.
+			El decorador ViewScript soluciona este problema.
         </para>
 
         <para>
-            The ViewScript decorator requires a 'viewScript' option, either
-            provided to the decorator, or as an attribute of the element. It
-            then renders that view script as a partial script, meaning each call
-            to it has its own variable scope; no variables from the view will be
-            injected other than the element itself. Several variables are then
-            populated:
+            El decorador ViewScript requiere una opción 'viewScript', o bien suministrada 
+            al decorador, o bien como atributo del elemento. Entonces genera ese script de vista como un
+            script parcial, lo que significa que cada llamada a él tiene su propio espacio de variables;
+			Ninguna variable de la vista será rellenada, aparte del elemento en sí. Distintas variables son
+			entonces rellenadas:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                    <code>element</code>: the element being decorated
+                    <code>element</code>: el elemento decorado
             </para></listitem>
 
             <listitem><para>
-                    <code>content</code>: the content passed to the decorator
+                    <code>content</code>: el contenido pasado al decorador
             </para></listitem>
 
             <listitem><para>
-                    <code>decorator</code>: the decorator object itself
+                    <code>decorator</code>: el propio objeto decorador
             </para></listitem>
 
             <listitem><para>
-                    Additionally, all options passed to the decorator via
-                    <code>setOptions()</code> that are not used internally (such
-                    as placement, separator, etc.) are passed to the view script
-                    as view variables.
+                    Del mismo modo, todas las opciones pasadas al decorador a través de
+                    <code>setOptions()</code> que no son usadas internamente (tales
+                    como placement, separator, etc.) son pasadas como
+                    variables de vista.
             </para></listitem>
         </itemizedlist>
 
         <para>
-            As an example, you might have the following element:
+            Como ejemplo, se pueden tener el siguiente elemento:
         </para>
 
         <programlisting role="php"><![CDATA[
-// Setting the decorator for the element to a single, ViewScript,
-// decorator, specifying the viewScript as an option, and some extra
-// options:
+// Fija un decorador ViewScript a un único elemento ,
+// especificando como opción el script de vista (obligatorio) y algunas opciones extra
 $element->setDecorators(array(array('ViewScript', array(
     'viewScript' => '_element.phtml',
     'class'      => 'form element'
 ))));
 
-// OR specifying the viewScript as an element attribute:
+// o especificando el viewScript como un atributo del elemento:
 $element->viewScript = '_element.phtml';
 $element->setDecorators(array(array('ViewScript',
                                     array('class' => 'form element'))));
@@ -480,7 +472,7 @@ $element->setDecorators(array(array('ViewScript',
         </programlisting>
 
         <para>
-            You could then have a view script something like this:
+            Un view script puede tener el siguiente aspecto:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -499,34 +491,34 @@ $element->setDecorators(array(array('ViewScript',
         </programlisting>
 
         <note>
-            <title>Replacing content with a view script</title>
+            <title>Reemplazar contenido con un script de vista (view script)</title>
 
             <para>
-                You may find it useful for the view script to replace the
-                content provided to the decorator -- for instance, if you want
-                to wrap it. You can do so by specifying a boolean false value
-                for the decorator's 'placement' option:
+                Resulta interesante que el script de vista reemplace el
+				contenido provisto por el decorador -- por ejemplo, si desea encapsularlo.
+				Puede hacer esto especificando un valor booleano false en la
+                opción 'placement' del decorador:
             </para>
 
             <programlisting role="php"><![CDATA[
-// At decorator creation:
+// En la creación del decorador:
 $element->addDecorator('ViewScript', array('placement' => false));
 
-// Applying to an existing decorator instance:
+// Aplicado a una instancia de un decorador ya existente:
 $decorator->setOption('placement', false);
 
-// Applying to a decorator already attached to an element:
+// Aplicado a un decorador ya asociado a un elemento:
 $element->getDecorator('ViewScript')->setOption('placement', false);
 
-// Within a view script used by a decorator:
+// Dentro de un view script usado por un decorador:
 $this->decorator->setOption('placement', false);
 ]]>
             </programlisting>
         </note>
 
         <para>
-            Using the ViewScript decorator is recommended for when you want to
-            have very fine-grained control over how your elements are rendered.
+            Se recomienda usar el decorador ViewScript cuando necesite un control
+            muy preciso sobre cómo generados sus elementos.
         </para>
     </sect2>
 </sect1>

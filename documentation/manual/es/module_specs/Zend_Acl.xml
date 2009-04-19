@@ -1,4 +1,4 @@
-<sect1 id="zend.acl.introduction">
+﻿<sect1 id="zend.acl.introduction">
     <title>Introducción</title>
     <para>
         Zend_Acl provee la implementación de un sistema simple y
@@ -455,7 +455,7 @@ echo $acl->isAllowed('administrador', null, 'actualizar') ?
      "permitido" : "denegado"; // permitido porque administrador tiene permitidos todos los privilegios]]>
         </programlisting>
     </sect2>
-</sect1>
+</sect1> 
 <!--
     vim:se ts=4 sw=4 et:
 -->
