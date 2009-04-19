@@ -4,51 +4,53 @@
 <sect2 id="zend.filter.set.callback">
     <title>Callback</title>
     <para>
-        This filter allows you to use own methods in conjunction with
-        <classname>Zend_Filter</classname>. You don't have to create a new filter when you already
-        have a method which does the job.
+        Dieser Filter erlaubt es einem eigene Methoden in Verbindung mit
+        <classname>Zend_Filter</classname> zu verwenden. Man muß keinen neuen Filter erstellen
+        wenn man bereits eine Methode hat die diesen Job erledigt.
     </para>
 
 
     <para>
-        Let's expect we want to create a filter which reverses a string.
+        Nehmen wir an das wir einen Filter erstellen wollen der einen String umdreht.
     </para>
 
     <programlisting role="php"><![CDATA[
 $filter = new Zend_Filter_Callback('strrev');
 
 print $filter->filter('Hello!');
-// returns "!olleH"
+// Ausgabe "!olleH"
 ]]>
     </programlisting>
 
     <para>
-        As you can see it's really simple to use a callback to define a own filter. It is also
-        possible to use a method, which is defined within a class, by giving an array as callback.
+        Wie man sehen kann ist es wirklich sehr einfach ein Callback zu verwenden um einen eigenen
+        Filter zu definieren. Es ist auch möglich eine Methode zu verwenden, wenn diese innerhalb
+        einer Klasse definiert ist, indem ein Array als Callback angegeben wird.
     </para>
 
     <programlisting role="php"><![CDATA[
-// Our classdefinition
+// Unsere Klassendefinition
 class MyClass
 {
     public function Reverse($param);
 }
 
-// The filter definition
+// Die Filter Definition
 $filter = new Zend_Filter_Callback(array('MyClass', 'Reverse'));
 print $filter->filter('Hello!');
 ]]>
     </programlisting>
 
     <para>
-        To get the actual set callback use <code>getCallback()</code> and to set another callback
-        use <code>setCallback()</code>.
+        Um den aktuell gesetzten Callback zu erhalten kann <code>getCallback()</code> verwendet
+        werden, und um einen anderen Callback zu setzen kann <code>setCallback()</code> verwendet
+        werden.
     </para>
 
     <para>
-        It is also possible to define default parameters, which are given to the called method
-        as array when the filter is executed. This array will be concated with the value which
-        will be filtered.
+        Es ist auch möglich Standardparameter zu definieren, die der aufgerufenen Methode als
+        Array übergeben werden wenn der Filter ausgeführt wird. Dieses Array wird mit dem
+        Wert der gefiltert werden soll zusammengehängt.
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -61,7 +63,8 @@ $filter->filter(array('value' => 'Hello'));
     </programlisting>
 
     <para>
-        When you would call the above method definition manually it would look like this:
+        Wenn man die oben stehende Methodendefinition manuell aufrufen würde, dann würde das wie
+        folgt aussehen:
     </para>
 
     <programlisting role="php"><![CDATA[
@@ -71,8 +74,8 @@ $value = MyMethod('Hello', 'param1', 'param2');
 
     <note>
         <para>
-            You should note that defining a callback method which can not be called will raise
-            an exception.
+            Man sollte auch beachten das die Definition einer Callback Methode, welche nicht
+            aufgerufen werden kann, eine Exception auslöst.
         </para>
     </note>
 

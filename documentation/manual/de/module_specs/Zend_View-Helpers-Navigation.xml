@@ -264,14 +264,13 @@ $this->navigation()->addPage(array(
         </para>
 
         <para>
-            The
-            <link linkend="zend.view.helpers.initial.navigation.navigation">proxy
-            helper</link> will inject its own ACL and role to the helper it
-            proxies to if the proxied helper doesn't already have any.
+            Der <link linkend="zend.view.helpers.initial.navigation.navigation">Proxy Helfer</link>
+            injiziert seine eigene ACL und Rolle in den Helfer zu dem er weiterleitet wenn der
+            weitergeleitete Helfer nicht bereits einen hat.
         </para>
 
         <para>
-            The examples below all show how ACL affects rendering.
+            Das Beispiel von unten zeigt wie ACL die Darstellung beeinflusst.
         </para>
     </sect4>
 

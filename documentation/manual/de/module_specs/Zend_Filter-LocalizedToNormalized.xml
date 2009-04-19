@@ -6,104 +6,111 @@
     <title>LocalizedToNormalized</title>
 
     <para>
-        This filter will change any given localized input to it's normalized representation. It
-        uses in Background <code>Zend_Locale</code> to do this transformation for you.
+        Dieser Filter ändert jede angegebene lokalisierte Eingabe in seine normalisierte
+        Repräsentation. Er verwendet im Hintergrund <code>Zend_Locale</code> um diese
+        Transformation durchzuführen.
     </para>
 
     <para>
-        This allows your user to enter informations in his own language notation, and you can then
-        store the normalized value into your database for example.
+        Das erlaubt es dem Benutzer Informationen in der Schreibweise seiner eigenen Sprache
+        einzugeben, und man kann diese anschließend den normalisierten Wert zum Beispiel in der
+        Datenbank speichern.
     </para>
 
     <note>
         <para>
-            Please note that normalization is not equal to translation. This filter can not translate
-            strings from one language into another like you could expect with months or names of days.
+            Es ist zu beachten das Normalisierung nicht mit Übersetzung gleichzusetzen ist. Dieser
+            Filter kann Strings nicht von einer Sprache in eine andere Übersetzen, wie man es
+            zum Beispiel bei Monaten oder Namen von Tagen erwarten könnte.
         </para>
     </note>
 
     <para>
-        The following input types can be normalized:
+        Die folgenden Eingabetypen können normalisiert werden:
     </para>
 
     <itemizedlist>
         <listitem>
             <para>
-                <emphasis>integer</emphasis>: Integer numbers, which are localized, will be normalized
-                to the english notation.
+                <emphasis>integer</emphasis>: Ganzzahlen, welche lokalisiert sind, werden in die
+                englische Schreibweise normalisiert.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>float</emphasis>: Float numbers, which are localized, will be normalized
-                to the english notation.
+                <emphasis>float</emphasis>: Gleitkommazahlen, welche lokalisiert sind, werden in
+                die englische Schreibweise normalisiert.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>numbers</emphasis>: Other numbers, like real, will be normalized
-                to the english notation.
+                <emphasis>numbers</emphasis>: Andere Zahlen, wie Realzahlen, werden in die
+                englische Schreibweise normalisiert.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>time</emphasis>: Time values, will be normalized to a named array.
+                <emphasis>time</emphasis>: Zeitwerte, werden in ein benanntes Array normalisiert.
             </para>
         </listitem>
 
         <listitem>
             <para>
-                <emphasis>date</emphasis>: Date values, will be normalized to a named array.
+                <emphasis>date</emphasis>: Datumswerte, werden in ein benanntes Array normalisiert.
             </para>
         </listitem>
     </itemizedlist>
 
     <para>
-        Any other input will be returned as it, without changing it.
+        Jede andere Eingabe wird so wie Sie ist zurückgegeben, ohne das Sie geändert wird.
     </para>
 
     <note>
         <para>
-            You should note that normalized output is always given as string. Otherwise your
-            environment would transfor the normalized output automatically to the notation used
-            by the locale your environment is set to.
+            Man sollte beachten das normalisierte Ausgabe immer als String angegeben sind.
+            Andernfalls würde die eigene Umgebung die normalisierte Ausgabe automatisch in die
+            Schreibweise konvertieren die die eigene Umgebung anhand des gesetzen Gebietsschemas
+            aktuell verwendet.
         </para>
     </note>
 
     <sect3 id="zend.filter.set.localizedtonormalized.numbers">
 
-        <title>Normalization for numbers</title>
+        <title>Normalisierung von Nummern</title>
 
         <para>
-            Any given number like integer, float or real value, can be normalized. Note, that
-            numbers in scientific notation, can actually not be handled by this filter.
+            Jede angegebene Nummer wie Integer, Float oder Real Werte können normalisiert werden.
+            Es ist zu beachten das Zahlen in der Wissenschaftlichen Schreibweise, aktuell nicht
+            von diesem Filter behandelt werden können.
         </para>
 
         <para>
-            So how does this normalization work in detail for numbers:
+            Wie funktioniert diese Normalisierung also im Detail für Nummern:
         </para>
 
         <programlisting role="php"><![CDATA[
-// Initiate the filter
+// Den Filter initiieren
 $filter = new Zend_Filter_LocalizedToNormalized();
 $filter->filter('123.456,78');
-// returns the value '123456.78'
+// Gibt den Wert '123456.78' zurück
 ]]>
         </programlisting>
 
         <para>
-            Let's expect you have set the locale 'de' as application wide locale.
-            <code>Zend_Filter_LocalizedToNormalized</code> will take the set locale and use it to
-            detect which sort of input you gave. In our example it was a value with precision. Now
-            the filter will return you the normalized representation for this value as string.
+            Nehmen wir an das wir das Gebietsschema 'de' als Anwendungsweites Gebietsschema gesetzt
+            haben. <code>Zend_Filter_LocalizedToNormalized</code> nimmt das gesetzte Gebietsschema
+            und verwendet es um zu erkennen welche Art der Eingabe angegeben wurde. In unserem
+            Beispiel wurde ein Wert mit Nachkommastellen angegeben. Jetzt gibt der Filter die
+            normalisierte Repräsentation für diesen Wert als String zurück.
         </para>
 
         <para>
-            You can also control how your normalized number has to look like. Therefor you can give
-            all options which are also used by <code>Zend_Locale_Format</code>. The most common are:
+            Man kann auch kontrollieren wie die normalisierte Nummer auszusehen hat. Hierfür kann
+            man alle Optionen angeben die auch von <code>Zend_Locale_Format</code> verwendet
+            werden. Die üblichsten sind:
         </para>
 
         <itemizedlist>
@@ -127,24 +134,24 @@ $filter->filter('123.456,78');
         </itemizedlist>
 
         <para>
-            For details about how these options are used take a look into this
-            <link linkend="zend.locale.parsing">Zend_Locale chapter</link>.
+            Für Details darüber, wie diese Optionen verwendet werden, sollte man in der
+            <link linkend="zend.locale.parsing">Kapitel Zend_Locale</link> sehen.
         </para>
 
         <para>
-            Below is a example with defined precision so you can see how options
-            work:
+            Anbei ist ein Beispiel welches Nachkommastellen definiert damit man sehen kann
+            wie Optionen arbeiten:
         </para>
 
         <programlisting role="php"><![CDATA[
-// Numeric Filter
+// Nummerischer Filter
 $filter = new Zend_Filter_LocalizedToNormalized(array('precision' => 2));
 
 $filter->filter('123.456');
-// returns the value '123456.00'
+// Gibt den Wert '123456.00' zurück
 
 $filter->filter('123.456,78901');
-// returns the value '123456.79'
+// Gibt den Wert '123456.79' zurück
 ]]>
         </programlisting>
 
@@ -152,39 +159,41 @@ $filter->filter('123.456,78901');
 
     <sect3 id="zend.filter.set.localizedtonormalized.dates">
 
-        <title>Normalization for date and time</title>
+        <title>Normalisierung für Datum und Zeit</title>
 
         <para>
-            Input for date and time values can also be normalized. All given date and time values
-            will be returned as array, where each date part is given within a own key.
+            Eingaben für Datum und Zeitwerte können auch normalisiert werden. Alle angegebenen
+            Datums- und Zeitwerte werden als Array zurückgegeben, wobei jeder Teil des Datums
+            mit einem eigenen Schlüssel angegeben wird.
         </para>
 
         <programlisting role="php"><![CDATA[
-// Initiate the filter
+// Den Filter initiieren
 $filter = new Zend_Filter_LocalizedToNormalized();
 $filter->filter('12.April.2009');
-// returns array('day' => '12', 'month' => '04', 'year' => '2009')
+// Gibt array('day' => '12', 'month' => '04', 'year' => '2009') zurück
 ]]>
         </programlisting>
 
         <para>
-            Let's expect you have set the locale 'de' again. Now the input is automatically detected
-            as date, and you will get a named array in return.
+            Angenommen wir haben wieder das Gebietsschema 'de' gesetzt. Die Eingaben werden jetzt
+            automatisch als Datum erkannt und man erhält ein benanntes Array zurück.
         </para>
 
         <para>
-            Of course you can also control how your date input looks like with the
-            <emphasis>date_format</emphasis> and the <emphasis>locale</emphasis> option.
+            Natürlich kann man auch kontrollieren wie die Datumseingaben auszusehen haben indem
+            die Optionen <emphasis>date_format</emphasis> und <emphasis>locale</emphasis>
+            verwendet werden.
         </para>
 
         <programlisting role="php"><![CDATA[
-// Date Filter
+// Datumsfilter
 $filter = new Zend_Filter_LocalizedToNormalized(
     array('date_format' => 'ss:mm:HH')
 );
 
 $filter->filter('11:22:33');
-// returns array('hour' => '33', 'minute' => '22', 'second' => '11')
+// Gibt array('hour' => '33', 'minute' => '22', 'second' => '11') zurück
 ]]>
         </programlisting>
     </sect3>
