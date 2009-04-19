@@ -389,15 +389,15 @@ $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
 $return = $ec2_instance->describe('instanceId');
 ]]>
             </programlisting>
+        </example>
 
-            <note>
-                <title>Terminated Instances</title>
-                <para>Recently terminated instances might appear in the returned results.
+        <note>
+            <title>Terminated Instances</title>
+            <para>Recently terminated instances might appear in the returned results.
                 This interval is usually less than one hour. If you do not want terminated
                 instances to be returned, pass in a second variable of boolean true to
                 <code>describe</code> and the terminated instances will be ignored.</para>
-            </note>
-        </example>
+        </note>
 
         <example id="zend.service.amazon.ec2.instance.utility.describebyimageid">
             <title>Describing Instances By Image Id</title>
@@ -415,6 +415,7 @@ $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
 $return = $ec2_instance->describeByImageId('imageId');
 ]]>
             </programlisting>
+        </example>
 
             <note>
                 <title>Terminated Instances</title>
@@ -423,7 +424,6 @@ $return = $ec2_instance->describeByImageId('imageId');
                 instances to be returned, pass in a second variable of boolean true to
                 <code>describe</code> and the terminated instances will be ignored.</para>
             </note>
-        </example>
 
         <example id="zend.service.amazon.ec2.instance.utility.consoleOutput">
             <title>Retreiving Console Output</title>
