@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14967 -->
+<!-- EN-Revision: 14978 -->
 <!-- Reviewed: no -->
 <sect2 id="zend.filter.set.localizedtonormalized">
 
@@ -79,10 +79,10 @@
 
     <sect3 id="zend.filter.set.localizedtonormalized.numbers">
 
-        <title>Normalisierung von Nummern</title>
+        <title>Normalisierung von Zahlen</title>
 
         <para>
-            Jede angegebene Nummer wie Integer, Float oder Real Werte können normalisiert werden.
+            Jede angegebene Zahl wie Integer, Float oder Realzahlen können normalisiert werden.
             Es ist zu beachten das Zahlen in der Wissenschaftlichen Schreibweise, aktuell nicht
             von diesem Filter behandelt werden können.
         </para>
