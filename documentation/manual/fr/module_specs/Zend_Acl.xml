@@ -13,26 +13,25 @@
     </para>
 
     <para>
-        Dans le cadre de cette documentation, 
+        Dans le cadre de cette documentation,
         <itemizedlist>
             <listitem>
-                <para>une <emphasis role="strong">ressource</emphasis> est un objet dont l'accès
-                est contrôlé,
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                un <emphasis role="strong">rôle</emphasis> est un objet qui peut demander
-                l'accès à une ressource.
-            </para>
-        </listitem>
-    </itemizedlist>Dit simplement, <emphasis role="strong"> les rôles demandent l'accès à des
-
-    ressources</emphasis>. Par exemple, si une personne demande l'accès à une voiture, alors la
-
-    personne est le rôle demandeur et la voiture est la ressource, puisque l'accès à la voiture
-
-    est soumis à un contrôle.</para>
+                <para>
+                    une <emphasis role="strong">ressource</emphasis> est un objet dont l'accès
+                    est contrôlé,
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    un <emphasis role="strong">rôle</emphasis> est un objet qui peut demander
+                    l'accès à une ressource.
+                </para>
+            </listitem>
+        </itemizedlist>Dit simplement, <emphasis role="strong"> les rôles demandent l'accès à des
+        ressources</emphasis>. Par exemple, si une personne demande l'accès à une voiture, alors la
+        personne est le rôle demandeur et la voiture est la ressource, puisque l'accès à la voiture
+        est soumis à un contrôle.
+    </para>
 
     <para>
         Grâce à la définition et à la mise en oeuvre d'une liste de contrôle d'accès (ACL),
@@ -119,11 +118,11 @@
                 Le code ci-dessous définit trois rôles de base - "invite", "membre", et
                 "admin" - desquels d'autres rôles peuvent hériter. Ensuite, un rôle identifié par
                 "unUser" est créé et hérite des trois autres rôles. L'ordre selon lequel ces rôles
-                apparaissent dans le tableau 
+                apparaissent dans le tableau
                 <varname>$parents</varname>est important. Lorsque cela est nécessaire
                 <classname>Zend_Acl</classname> recherche les règles d'accès définies non seulement
                 pour le rôle demandé (ici "unUser"), mais aussi pour les autres rôles desquels le
-                rôle recherché hérite (ici "invite", "membre", et "admin") :
+                rôle recherché hérite (ici "invite", "membre", et "admin")&#160;:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -189,7 +188,7 @@ echo $acl->isAllowed('unUtilisateur', 'uneResource') ? 'autorisé' : 'refusé';
             que vous souhaitez. Pour les besoins de la démonstration, nous allons créer un système
             basique d'ACL pour une Gestion de Contenus (CMS) qui comporte plusieurs niveaux de
             groupes au sein d'une grande variété de zones. Pour créer un nouvel objet ACL, nous
-            créons une nouvelle instance d'ACL sans paramètres :
+            créons une nouvelle instance d'ACL sans paramètres&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -221,7 +220,7 @@ $acl = new Zend_Acl();
             groupes plus des tâches de maintenance, de gestion des utilisateurs, configuration et
             backup/export. Cet ensemble de permissions peut être représenté dans un registre de
             rôles, permettant à chaque groupe d'hériter des privilèges des groupes "parents". Les
-            permissions peuvent être rendues de la manière suivante :
+            permissions peuvent être rendues de la manière suivante&#160;:
         </para>
 
         <table id="zend.acl.introduction.role_registry.table.example_cms_access_controls">
@@ -266,7 +265,7 @@ $acl = new Zend_Acl();
         <para>
             Pour cet exemple, <classname>Zend_Acl_Role</classname> est utilisé, mais
             n'importe quel objet qui implémente <classname>Zend_Acl_Role_Interface</classname> est
-            acceptable. Ces groupes peuvent être ajoutés au registre des rôles comme suit :
+            acceptable. Ces groupes peuvent être ajoutés au registre des rôles comme suit&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -316,7 +315,7 @@ $acl->addRole(new Zend_Acl_Role('administrateur'));
 
         <para>
             En conséquence, on peut définir un nombre assez complexe de règles avec un nombre
-            minimal de code. Pour définir les permissions comme définies ci-dessus :
+            minimal de code. Pour définir les permissions comme définies ci-dessus&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -362,8 +361,8 @@ $acl->allow('administrateur');
         <para>
             Nous avons maintenant une ACL flexible, qui peut être utilisée pour déterminer si
             l'objet appelant a les permissions pour réaliser les fonctions au sein de l'application
-            web. Interroger l'ACL est assez simple en utilisant la méthode <code>isAllowed()</code>
-            :
+            web. Interroger l'ACL est assez simple en utilisant la méthode
+            <code>isAllowed()</code>&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[

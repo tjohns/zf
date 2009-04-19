@@ -10,7 +10,7 @@
         <title>Mieux définir les Contrôles d'Accès</title>
 
         <para>
-            La liste basique définie dans le 
+            La liste basique définie dans le
             <link linkend="zend.acl.introduction">chapitre précédent</link>montre comment plusieurs
             privilèges peuvent être alloués pour l'ensemble de la liste (toutes les ressources). En
             pratique, toutefois, les contrôles d'accès ont souvent des exceptions et des degrés de
@@ -48,7 +48,7 @@ $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
         <para>
             Ensuite, notez que les contrôles d'accès plus haut font référence à des
             ressources (ex. "newsletters", "dernières news", "annonces"). Maintenant, nous ajoutons
-            ces Ressources :
+            ces Ressources&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -69,7 +69,7 @@ $acl->add(new Zend_Acl_Resource('announcement'), 'news');
 
         <para>
             Ensuite c'est simplement une manière de définir ces règles spécifiques sur les
-            parties cibles de l'ACL :
+            parties cibles de l'ACL&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -89,8 +89,7 @@ $acl->deny(null, 'annonce', 'archive');
 ]]></programlisting>
 
         <para>
-            On peut maintenant interroger les ACL sur base des dernières modifications
-            :
+            On peut maintenant interroger les ACL sur base des dernières modifications&#160;:
         </para>
 
         <programlisting role="php"><![CDATA[

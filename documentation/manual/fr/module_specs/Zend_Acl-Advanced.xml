@@ -22,7 +22,7 @@
             Le stockage des données ACL est dès lors laissé aux bons soins du développeur,
             dans la mesure où les cas d'utilisation peuvent grandement varier d'un cas à l'autre.
             Puisque <classname>Zend_Acl</classname> est sérialisable, les objets ACL peuvent être
-            sérialisés avec la fonction 
+            sérialisés avec la fonction
             <ulink url="http://fr.php.net/serialize"><code>serialize()</code></ulink>, et le
             résultat peut être stocké n'importe où le développeur le désire : fichier, base de
             donnée, cache.
