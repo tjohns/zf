@@ -300,15 +300,9 @@
                             <entry><ulink url="http://framework.zend.com/manual/en/zend.ldap.html"><code>Zend_Ldap</code></ulink></entry>
                         </row>
                         <row>
-                            <entry morerows="2" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></emphasis></entry>
-                            <entry morerows="2" valign="middle">Hard</entry>
-                            <entry><ulink url="http://www.php.net/manual/en/ref.dom.php"><code>dom</code></ulink></entry>
-                        </row>
-                        <row>
-                            <entry><ulink url="http://www.php.net/manual/en/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
-                        </row>
-                        <row>
-                            <entry><ulink url="http://www.php.net/manual/en/ref.xslt.php"><code>XSLT</code></ulink></entry>
+                            <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.libxml.php"><code>libxml</code></ulink></emphasis></entry>
+                            <entry>---</entry>
+                            <entry>---</entry>
                         </row>
                         <row>
                             <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.mbstring.php"><code>mbstring</code></ulink></emphasis></entry>
@@ -624,12 +618,9 @@
                             <entry>---</entry>
                         </row>
                         <row>
-                            <entry morerows="1" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink></emphasis></entry>
-                            <entry morerows="1" valign="middle">Hard</entry>
+                            <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/en/ref.zlib.php"><code>zlib</code></ulink></emphasis></entry>
+                            <entry>Hard</entry>
                             <entry><ulink url="http://framework.zend.com/manual/en/zend.pdf.html"><code>Zend_Pdf</code></ulink></entry>
-                        </row>
-                        <row>
-                            <entry><ulink url="http://www.php.net/manual/en/ref.memcache.php"><code>Memcache</code></ulink></entry>
                         </row>
                     </tbody>
                 </tgroup>
