@@ -1,4 +1,4 @@
-<!-- EN-Revision: 13977 -->
+<!-- EN-Revision: 14091 -->
 <sect1 id="zend.file.transfer.introduction">
     <title>Zend_File_Transfer</title>
 
@@ -11,7 +11,7 @@
     <note>
         <title>Limitation</title>
 
-        <para>L'implémentation actuelle de <code>Zend_File_Transfer</code> embarquée en version 1.6.0 est limitée aux
+        <para>L'implémentation actuelle de <code>Zend_File_Transfer</code> est limitée aux
         uploads de type HTTP Post. Le téléchargement de fichiers et les autres adaptateurs seront ajoutés dans les
         prochaines versions. Les méthodes non implémentées pour le moment lèveront une exception. Donc réellement vous
         devriez directement utiliser une instance de <code>Zend_File_Transfer_Adapter_Http</code>. Ceci changera dans le
@@ -297,5 +297,101 @@ $names = $upload->getMimeType('foo');
             elle utilise l'extension mimemagic. Quand aucune extension n'est fournie, elle utilise le type MIME donné
             par le serveur quand le fichier a été uploadé.</para>
         </note>
+    </sect2>
+    <sect2 id="zend.file.transfer.introduction.uploadprogress">
+
+        <title>Progress for file uploads</title>
+
+        <para>
+            <code>Zend_File_Transfer</code> can give you the actual state of a fileupload in progress. To use
+            this feature you need either the <code>APC</code> extension which is provided with most default
+            PHP installations, or the <code>uploadprogress</code> extension. Both extensions are detected
+            and used automatically. To be able to get the progress you need to meet some prerequisites.
+        </para>
+
+        <para>
+            First, you need to have either <code>APC</code> or <code>uploadprogress</code> to be enabled.
+            Note that you can disable this feature of <code>APC</code> within your php.ini.
+        </para>
+
+        <para>
+            Second, you need to have the proper hidden fields added in the form which sends the files. When you
+            use <code>Zend_Form_Element_File</code> this hidden fields are automatically added by
+            <code>Zend_Form</code>.
+        </para>
+
+        <para>
+            When the above two points are provided then you are able to get the actual progress of the
+            file upload by using the <code>getProgress</code> method.
+        </para>
+
+        <example id="zend.file.transfer.introduction.uploadprogress.fetching">
+            <title>Retrieve the actual progress of the file upload</title>
+
+            <para>
+                Let's expect that you have already created and submitted your form, and the file upload
+                is actually in progress.
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$upload = Zend_File_Transfer_Adapter_Http::getProgress();
+
+$upload = null;
+while (empty($upload['message'])) {
+    $upload = Zend_File_Transfer_Adapter_Http:getProgress($upload);
+    // do something with the returned data
+}
+]]>
+            </programlisting>
+
+        </example>
+
+        <para>
+            Based on the used extension the returned data differs in detail. But both extensions return their
+            informations within an array which provides the following keys:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <emphasis role="strong">total</emphasis>: The total filesize of the uploaded files in bytes
+                    as integer.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">current</emphasis>: The current uploaded filesize in bytes
+                    as integer.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">rate</emphasis>: The average upload speed in bytes per second
+                    as integer.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">id</emphasis>: The id is the reference to the upload itself. When
+                    multiple users upload a file, each upload gets it's own id. The actual id of this request
+                    will be returned when you call <code>getProgress()</code> the first time.
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <emphasis role="strong">message</emphasis>: A helpful message in the case of a problem.
+                    Problems could be, that there is no upload in progress, that there was a failure while
+                    retrieving the data for the progress, or that the upload has been canceled.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            All other returned keys are provided directly from the extensions and not checked.
+        </para>
     </sect2>
 </sect1>
