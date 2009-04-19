@@ -212,7 +212,6 @@ switch ($resultat->getCode()) {
             <title>Persistance par défaut dans une session PHP</title>
 
             <para>
-
                 <link linkend="zend.session">Zend_Session</link>est utilisé par
                 <code>Zend_Auth</code> pour fournir un stockage persistant de l'identité, après une
                 authentification réussie, via les sessions PHP. Après une authentification réussie,
@@ -389,7 +388,7 @@ $result = Zend_Auth::getInstance()->authenticate($authAdaptateur);
             proposées&#160;:
             <orderedlist>
                 <listitem>
-                    <para>indirectement, via <code>Zend_Auth::authenticate()</code></para>&#160;;
+                    <para>indirectement, via <code>Zend_Auth::authenticate()</code>&#160;;</para>
                 </listitem>
                 <listitem>
                     <para>
