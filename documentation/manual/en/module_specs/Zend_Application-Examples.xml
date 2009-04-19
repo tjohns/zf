@@ -48,7 +48,7 @@ resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
     </para>
 
     <para>
-        The example below shows a resource method for intializing the request
+        The example below shows a resource method for initializing the request
         object. It makes use of dependency tracking (it depends on the front
         controller resource), fetching a resource from the bootstrap, and
         returning a value to store in the bootstrap.
