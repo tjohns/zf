@@ -1,7 +1,9 @@
-<!-- EN-Revision: 14712 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect2 id="zend.application.available-resources.view">
     <title>Zend_Application_Resource_View</title>
-    
+
     <para>
         <code>Zend_Application_Resource_View</code>は<code>Zend_View</code>の
         インスタンスを設定するために使用できます。設定オプションは

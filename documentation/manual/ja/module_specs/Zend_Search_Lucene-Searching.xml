@@ -1,4 +1,6 @@
-<!-- EN-Revision: 14448 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.search.lucene.searching">
     <title>インデックスの検索</title>
 

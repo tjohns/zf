@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13835 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.pdf.create">
     <title>PDF ドキュメントの作成および読み込み</title>
     <para>

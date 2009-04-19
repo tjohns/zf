@@ -1,4 +1,6 @@
-<!-- EN-Revision: 14776 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.mail.read">
     <title>メールメッセージの読み込み</title>
 

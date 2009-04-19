@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13946 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.db.adapter">
 
     <title>Zend_Db_Adapter</title>

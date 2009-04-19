@@ -1,4 +1,6 @@
-<!-- EN-Revision: 14225 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.gdata.calendar">
     <title>Google Calendar の使用法</title>
     <para>
@@ -459,8 +461,8 @@ try {
                 必要な情報は、イベントの URL にすべて含まれているからです。
             </para>
             <programlisting role="php"><![CDATA[
-$eventURL =
-    "http://www.google.com/calendar/feeds/default/private/full/g829on5sq4ag12se91d10uumko";
+$eventURL = "http://www.google.com/calendar/feeds/default/private"
+          . "/full/g829on5sq4ag12se91d10uumko";
 
 try {
     $event = $service->getCalendarEventEntry($eventURL);

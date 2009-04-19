@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13910 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.http.cookies">
     <title>Zend_Http_Cookie および Zend_Http_CookieJar</title>
 

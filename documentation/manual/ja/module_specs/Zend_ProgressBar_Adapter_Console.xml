@@ -1,4 +1,6 @@
-<!-- EN-Revision: 14235 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
@@ -77,6 +79,12 @@
             <para>
                 <code>textWidth</code>:
                 <code>ELEMENT_TEXT</code> 要素の幅を文字数で表したもの。デフォルトは 20。
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <code>charset</code>:
+                <code>ELEMENT_TEXT</code> 要素の文字セット。デフォルトは utf-8。
             </para>
         </listitem>
         <listitem>

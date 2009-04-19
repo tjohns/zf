@@ -1,4 +1,6 @@
-<!-- EN-Revision: 11231 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect2 id="zend.log.writers.firebug">
     <title>Firebug への書き込み</title>
     <para>

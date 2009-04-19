@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13832 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.rest.client">
     <title>Zend_Rest_Client</title>
     <sect2 id="zend.rest.client.introduction">

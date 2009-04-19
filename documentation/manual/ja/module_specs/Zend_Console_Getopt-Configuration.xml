@@ -1,4 +1,6 @@
-<!-- EN-Revision: 13941 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 14978 -->
 <sect1 id="zend.console.getopt.configuration">
     <title><code>Zend_Console_Getopt</code> の設定</title>
 
