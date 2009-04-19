@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 14993 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.amazon.ec2.instance">
     <title>Zend_Service_Amazon_Ec2: Instanzen</title>
@@ -356,7 +356,7 @@ $return = $ec2_instance->terminate('instanceId');
         </para>
 
         <example id="zend.service.amazon.ec2.instance.utility.describe">
-            <title>Eine Instanz beschreiben</title>
+            <title>Instanzen beschreiben</title>
             <para>
                 <code>describe</code> gibt Information über die Instanzen zurück die einem
                 gehören.
@@ -380,12 +380,46 @@ $return = $ec2_instance->describe('instanceId');
 ]]>
             </programlisting>
 
+            <note>
+                <title>Beendete Instanzen</title>
+                <para>
+                    Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen
+                    vorkommen. Das Interval ist normalerweise weniger als eine Stunde. Wenn man
+                    nicht will das beendete Instanzen zurückgegeben werden, muß eine zweite
+                    Variable, ein boolsches true, an <code>describe</code> übergeben werden,
+                    und die beendete Instanz wird ignoriert.
+                </para>
+            </note>
         </example>
-        <note>
-            <title>Beendete Instanzen</title>
-            <para>Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen vorkommen.
-            Das Interval ist normalerweise weniger als eine Stunde.</para>
-        </note>
+
+        <example id="zend.service.amazon.ec2.instance.utility.describebyimageid">
+            <title>Instanzen anhand der Image Id beschreiben</title>
+            <para>
+                <code>describeByImageId</code> ist funktional identisch mit <code>describe</code>
+                gibt aber nur die Instanz zurück, die die angegebene imageId verwendet.
+            </para>
+            <para>
+                <code>describeByImageId</code>  gibt ein Array zurück das Informationen über die
+                Instanzen enthält, die von der übergebenen imageId gestartet wurden.
+            </para>
+            <programlisting role="php"><![CDATA[
+$ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
+                                                     'aws_secret_key');
+$return = $ec2_instance->describeByImageId('imageId');
+]]>
+            </programlisting>
+
+            <note>
+                <title>Beendete Instanzen</title>
+                <para>
+                    Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen
+                    vorkommen. Das Interval ist normalerweise weniger als eine Stunde. Wenn man
+                    nicht will das beendete Instanzen zurückgegeben werden, muß eine zweite
+                    Variable, ein boolsches true, an <code>describe</code> übergeben werden,
+                    und die beendete Instanz wird ignoriert.
+                </para>
+            </note>
+        </example>
 
         <example id="zend.service.amazon.ec2.instance.utility.consoleOutput">
             <title>Empfangen von Konsolen-Ausgaben</title>
