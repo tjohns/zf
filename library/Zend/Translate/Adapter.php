@@ -599,6 +599,7 @@ abstract class Zend_Translate_Adapter {
         if (!Zend_Locale::isLocale($locale, true, false)) {
             if (!Zend_Locale::isLocale($locale, false, false)) {
                 // language does not exist, return original string
+                $this->_log($messageId, $locale);
                 return false;
             }
 
@@ -620,6 +621,7 @@ abstract class Zend_Translate_Adapter {
         }
 
         // No translation found, return original
+        $this->_log($messageId, $locale);
         return false;
     }
 
