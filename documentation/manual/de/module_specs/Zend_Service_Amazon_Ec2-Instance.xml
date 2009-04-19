@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14993 -->
+<!-- EN-Revision: 15004 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.service.amazon.ec2.instance">
     <title>Zend_Service_Amazon_Ec2: Instanzen</title>
@@ -379,18 +379,18 @@ $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
 $return = $ec2_instance->describe('instanceId');
 ]]>
             </programlisting>
-
-            <note>
-                <title>Beendete Instanzen</title>
-                <para>
-                    Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen
-                    vorkommen. Das Interval ist normalerweise weniger als eine Stunde. Wenn man
-                    nicht will das beendete Instanzen zurückgegeben werden, muß eine zweite
-                    Variable, ein boolsches true, an <code>describe</code> übergeben werden,
-                    und die beendete Instanz wird ignoriert.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <title>Beendete Instanzen</title>
+            <para>
+                Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen
+                vorkommen. Das Interval ist normalerweise weniger als eine Stunde. Wenn man
+                nicht will das beendete Instanzen zurückgegeben werden, muß eine zweite
+                Variable, ein boolsches true, an <code>describe</code> übergeben werden,
+                und die beendete Instanz wird ignoriert.
+            </para>
+        </note>
 
         <example id="zend.service.amazon.ec2.instance.utility.describebyimageid">
             <title>Instanzen anhand der Image Id beschreiben</title>
@@ -408,18 +408,18 @@ $ec2_instance = new Zend_Service_Amazon_Ec2_Instance('aws_key',
 $return = $ec2_instance->describeByImageId('imageId');
 ]]>
             </programlisting>
-
-            <note>
-                <title>Beendete Instanzen</title>
-                <para>
-                    Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen
-                    vorkommen. Das Interval ist normalerweise weniger als eine Stunde. Wenn man
-                    nicht will das beendete Instanzen zurückgegeben werden, muß eine zweite
-                    Variable, ein boolsches true, an <code>describe</code> übergeben werden,
-                    und die beendete Instanz wird ignoriert.
-                </para>
-            </note>
         </example>
+
+        <note>
+            <title>Beendete Instanzen</title>
+            <para>
+                Kürzlich beendete Instanzen können in den zurückgegebenen Ergebnissen
+                vorkommen. Das Interval ist normalerweise weniger als eine Stunde. Wenn man
+                nicht will das beendete Instanzen zurückgegeben werden, muß eine zweite
+                Variable, ein boolsches true, an <code>describe</code> übergeben werden,
+                und die beendete Instanz wird ignoriert.
+            </para>
+        </note>
 
         <example id="zend.service.amazon.ec2.instance.utility.consoleOutput">
             <title>Empfangen von Konsolen-Ausgaben</title>

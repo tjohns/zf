@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 14995 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.controller.router"  xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Der Standard Router</title>
@@ -152,7 +152,7 @@ $router->addRoute('user',
         </programlisting>
 
         <para>
-            Der Rewrite Router kommt mit fünf Basistypen von Routen (eine von denen ist speziell):
+            Der Rewrite Router kommt mit sechs Basistypen von Routen (eine von denen ist speziell):
             is special):
         </para>
 
@@ -161,6 +161,7 @@ $router->addRoute('user',
             <listitem><para><xref linkend="zend.controller.router.routes.static" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.regex" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.routes.hostname" /></para></listitem>
+            <listitem><para><xref linkend="zend.controller.router.routes.chain" /></para></listitem>
             <listitem><para><xref linkend="zend.controller.router.default-routes" /> *</para></listitem>
         </itemizedlist>
 
@@ -373,6 +374,7 @@ $router->setGlobalParam('lang', 'en');
         <xi:include href="Zend_Controller-Router-Route-Static.xml" />
         <xi:include href="Zend_Controller-Router-Route-Regex.xml" />
         <xi:include href="Zend_Controller-Router-Route-Hostname.xml" />
+        <xi:include href="Zend_Controller-Router-Route-Chain.xml" />
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">

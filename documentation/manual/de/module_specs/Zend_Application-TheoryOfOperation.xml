@@ -130,10 +130,10 @@
         <title>Bootstrapping</title>
 
         <para>
-            <code>Zend_Application</code>'s second area of responsibility is
-            executing the application bootstrap. Bootstraps minimally need to
-            implement <code>Zend_Application_Bootstrap_Bootstrapper</code>,
-            which defines the following API:
+            <code>Zend_Application</code>'s zweites Feld der Arbeit ist die Ausführung des
+            Bootstraps der Anwendung. Bootstraps müssen mindestens
+            <code>Zend_Application_Bootstrap_Bootstrapper</code> implementieren, welches die
+            folgende API definiert:
         </para>
 
         <programlisting role="php"><![CDATA[
