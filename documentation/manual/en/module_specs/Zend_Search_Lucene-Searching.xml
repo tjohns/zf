@@ -342,28 +342,28 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
             (see <link linkend="zend.search.lucene.index-creation.html-documents">HTML documents section</link> for details)
             using the following methods:
             <programlisting role="php"><![CDATA[
-    /**
-     * Highlight text with specified color
-     *
-     * @param string|array $words
-     * @param string $colour
-     * @return string
-     */
-    public function highlight($words, $colour = '#66ffff');
+/**
+ * Highlight text with specified color
+ *
+ * @param string|array $words
+ * @param string $colour
+ * @return string
+ */
+public function highlight($words, $colour = '#66ffff');
 ]]>
             </programlisting>
             <programlisting role="php"><![CDATA[
-    /**
-     * Highlight text using specified View helper or callback function.
-     *
-     * @param string|array $words  Words to highlight. Words could be organized using the array or string.
-     * @param callback $callback   Callback method, used to transform (highlighting) text.
-     * @param array    $params     Array of additionall callback parameters passed through into it
-     *                             (first non-optional parameter is an HTML fragment for highlighting)
-     * @return string
-     * @throws Zend_Search_Lucene_Exception
-     */
-    public function highlightExtended($words, $callback, $params = array())
+/**
+ * Highlight text using specified View helper or callback function.
+ *
+ * @param string|array $words  Words to highlight. Words could be organized using the array or string.
+ * @param callback $callback   Callback method, used to transform (highlighting) text.
+ * @param array    $params     Array of additionall callback parameters passed through into it
+ *                             (first non-optional parameter is an HTML fragment for highlighting)
+ * @return string
+ * @throws Zend_Search_Lucene_Exception
+ */
+public function highlightExtended($words, $callback, $params = array())
 ]]>
             </programlisting>
         </para>
@@ -378,6 +378,13 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
                     In both cases returned HTML is automatically transformed into valid XHTML.
                 </para>
             </footnote>
+        </para>
+        <para>
+            <link linkend="zend.view.helpers">View helpers</link> also can be used as callbacks in context of view script:
+            <programlisting role="php"><![CDATA[
+$doc->highlightExtended('word1 word2 word3...', array($this, 'myViewHelper'));
+]]>
+            </programlisting>
         </para>
         <para>
             The result of highlighting operation is retrieved by <code>Zend_Search_Lucene_Document_Html->getHTML()</code> method.  
