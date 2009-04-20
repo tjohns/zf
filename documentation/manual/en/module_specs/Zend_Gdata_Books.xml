@@ -12,16 +12,16 @@
         Your client application can use the Book Search Data API to issue
         full-text searches for books and to retrieve standard book information,
         ratings, and reviews. You can also access individual users'
-        <ulink url="http://books.google.com/googlebooks/mylibrary/">library collections and public reviews</ulink>.
-        Finally, your application can submit authenticated requests to enable
-        users to create and modify library collections, ratings, labels,
+        <ulink url="http://books.google.com/googlebooks/mylibrary/">library collections and
+        public reviews</ulink>. Finally, your application can submit authenticated requests
+        to enable users to create and modify library collections, ratings, labels,
         reviews, and other account-specific entities.
     </para>
 
     <para>
         For more information on the Book Search Data API, please refer to the official
-        <ulink url="http://code.google.com/apis/books/gdata/developers_guide_php.html">PHP Developer's Guide</ulink>
-        on code.google.com.
+        <ulink url="http://code.google.com/apis/books/gdata/developers_guide_php.html">PHP
+        Developer's Guide</ulink> on code.google.com.
     </para>
 
     <sect2 id="zend.gdata.books.authentication">
@@ -35,9 +35,9 @@
             ratings, or add labels, then your client needs to authenticate before
             requesting private feeds. It can authenticate using either of two
             approaches: AuthSub proxy authentication or ClientLogin username/password
-            authentication. Please refer to the
-            <ulink url="http://code.google.com/apis/books/gdata/developers_guide_php.html#Authentication">Authentication section in the PHP Developer's Guide</ulink>
-            for more detail.
+            authentication. Please refer to the <ulink
+            url="http://code.google.com/apis/books/gdata/developers_guide_php.html#Authentication">
+            Authentication section in the PHP Developer's Guide</ulink> for more detail.
         </para>
 
     </sect2>
@@ -114,9 +114,8 @@ http://www.google.com/books/feeds/volumes?q=keyword&amp;min-viewability=partial
             To search for an exact phrase, enclose the phrase in quotation marks.
             For example, to search for books matching the phrase "spy plane", set
             the <code>q</code> parameter to <code>%22spy+plane%22</code>.
-            You can also use any of the
-            <ulink url="http://books.google.com/advanced_book_search">advanced search operators</ulink>
-            supported by Book Search. For example,
+            You can also use any of the <ulink url="http://books.google.com/advanced_book_search">
+            advanced search operators</ulink> supported by Book Search. For example,
             <code>jane+austen+-inauthor:austen</code> returns matches that mention
             (but are not authored by) Jane Austen.
         </para>
@@ -152,7 +151,8 @@ http://www.google.com/books/feeds/volumes?q=keyword&amp;min-viewability=partial
         <para>
             <code>setMinViewability:</code>
             Allows you to filter the results according to the books'
-            <ulink url="http://code.google.com/apis/books/docs/dynamic-links.html#terminology">viewability status</ulink>.
+            <ulink url="http://code.google.com/apis/books/docs/dynamic-links.html#terminology">
+            viewability status</ulink>.
             This parameter accepts one of three values: <code>'none'</code>
             (the default, returning all matching books regardless of
             viewability), <code>'partial_view'</code> (returning only books
@@ -166,10 +166,10 @@ http://www.google.com/books/feeds/volumes?q=keyword&amp;min-viewability=partial
             <title>Partner Co-Branded Search</title>
 
             <para>
-                Google Book Search provides
-                <ulink url="http://books.google.com/support/partner/bin/answer.py?hl=en&amp;answer=65113">Co-Branded Search</ulink>,
-                which lets content partners provide full-text search of their
-                books from their own websites.
+                Google Book Search provides <ulink
+                url="http://books.google.com/support/partner/bin/answer.py?hl=en&amp;answer=65113">
+                Co-Branded Search</ulink>, which lets content partners provide full-text search of
+                their books from their own websites.
             </para>
 
             <para>
@@ -185,7 +185,8 @@ http://www.google.com/books/p/PARTNER_COBRAND_ID?q=ball
             </programlisting>
 
             <para>
-                then you can obtain the same results using the Book Search Data API at the following URL:
+                then you can obtain the same results using the Book Search Data API at the
+                following URL:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -250,8 +251,8 @@ $books->insertVolume($entry, Zend_Gdata_Books::MY_ANNOTATION_FEED_URI);
             <para>
                 In addition to ratings, authenticated users can submit reviews or
                 edit their reviews. For information on how to request previously
-                submitted reviews, see
-                <ulink url="#zend.gdata.books.retrieving_annotations">Retrieving annotations</ulink>.
+                submitted reviews, see <ulink
+                url="#zend.gdata.books.retrieving_annotations">Retrieving annotations</ulink>.
             </para>
 
             <sect4 id="zend.gdata.books.adding_review">
@@ -308,8 +309,8 @@ $books->updateVolume($entry, $entryUrl);
             <para>
                 You can use the Book Search Data API to label volumes with
                 keywords. A user can submit, retrieve and modify labels. See
-                <ulink url="#zend.gdata.books.retrieving_annotations">Retrieving annotations</ulink>
-                for how to read previously submitted labels.
+                <ulink url="#zend.gdata.books.retrieving_annotations">Retrieving
+                annotations</ulink> for how to read previously submitted labels.
             </para>
 
             <sect4 id="zend.gdata.books.submitting_labels">
@@ -344,8 +345,8 @@ $books->insertVolume($entry, Zend_Gdata_Books::MY_ANNOTATION_FEED_URI);
                 You can use the Book Search Data API to retrieve annotations
                 submitted by a given user. Annotations include reviews, ratings, and
                 labels. To retrieve any user's annotations, you can send an
-                unauthenticated request that includes the user's user ID. To retrieve
-                the authenticated user's annotations, use the value <code>me</code> as the user ID.
+                unauthenticated request that includes the user's user ID. To retrieve the
+                authenticated user's annotations, use the value <code>me</code> as the user ID.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -406,7 +407,8 @@ $books->deleteVolume($entry);
             The most important collection is the user's My Library, which
             represents the books the user would like to remember, organize, and
             share with others. This is the collection the user sees when accessing
-            his or her <ulink url="http://books.google.com/books?op=library">My Library page</ulink>.
+            his or her <ulink url="http://books.google.com/books?op=library">My Library
+            page</ulink>.
         </para>
 
         <sect3 id="zend.gdata.books.retrieving_books_in_library">
@@ -452,8 +454,8 @@ $feed = $books->getUserLibraryFeed();
                 <title>Searching for books in a user's library</title>
 
                 <para>
-                    Just as you can
-                    <ulink url="#zend.gdata.books.searching_for_books">search across all books</ulink>,
+                    Just as you can <ulink
+                    url="#zend.gdata.books.searching_for_books">search across all books</ulink>,
                     you can do a full-text search over just the books in a
                     user's library. To do this, just set the appropriate
                     paramters on the <code>VolumeQuery</code> object.
@@ -502,8 +504,8 @@ $feed = $books->getVolumeFeed($query);
                 You can use the Book Search Data API to add a book to, or remove a
                 book from, a user's library. Ratings, reviews, and labels are valid
                 across all the collections of a user, and are thus edited using the
-                annotation feed (see
-                <ulink url="#zend.gdata.books.community_features">Using community features</ulink>).
+                annotation feed (see <ulink
+                url="#zend.gdata.books.community_features">Using community features</ulink>).
             </para>
 
             <sect4 id="zend.gdata.books.library_book_add">
