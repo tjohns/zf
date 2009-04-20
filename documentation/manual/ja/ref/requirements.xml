@@ -1,4 +1,6 @@
-<!-- EN-Revision: 12953 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<!-- EN-Revision: 15019 -->
 <appendix id="requirements">
 
     <title>Zend Framework のシステム要件</title>
@@ -305,15 +307,9 @@
                             <entry><ulink url="http://framework.zend.com/manual/ja/zend.ldap.html"><code>Zend_Ldap</code></ulink></entry>
                         </row>
                         <row>
-                            <entry morerows="2" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/ja/ref.libxml.php"><code>libxml</code></ulink></emphasis></entry>
-                            <entry morerows="2" valign="middle">ハード</entry>
-                            <entry><ulink url="http://www.php.net/manual/ja/ref.dom.php"><code>dom</code></ulink></entry>
-                        </row>
-                        <row>
-                            <entry><ulink url="http://www.php.net/manual/ja/ref.simplexml.php"><code>SimpleXML</code></ulink></entry>
-                        </row>
-                        <row>
-                            <entry><ulink url="http://www.php.net/manual/ja/ref.xslt.php"><code>XSLT</code></ulink></entry>
+                            <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/ja/ref.libxml.php"><code>libxml</code></ulink></emphasis></entry>
+                            <entry>---</entry>
+                            <entry>---</entry>
                         </row>
                         <row>
                             <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/ja/ref.mbstring.php"><code>mbstring</code></ulink></emphasis></entry>
@@ -629,12 +625,9 @@
                             <entry>---</entry>
                         </row>
                         <row>
-                            <entry morerows="1" valign="middle"><emphasis role="strong"><ulink url="http://www.php.net/manual/ja/ref.zlib.php"><code>zlib</code></ulink></emphasis></entry>
-                            <entry morerows="1" valign="middle">ハード</entry>
+                            <entry><emphasis role="strong"><ulink url="http://www.php.net/manual/ja/ref.zlib.php"><code>zlib</code></ulink></emphasis></entry>
+                            <entry>ハード</entry>
                             <entry><ulink url="http://framework.zend.com/manual/ja/zend.pdf.html"><code>Zend_Pdf</code></ulink></entry>
-                        </row>
-                        <row>
-                            <entry><ulink url="http://www.php.net/manual/ja/ref.memcache.php"><code>Memcache</code></ulink></entry>
                         </row>
                     </tbody>
                 </tgroup>
@@ -3605,60 +3598,13 @@
 vim:se ts=4 sw=4 et:
 
 Note:
-All added classes listed below... all 3 tables use this as reference.
-Acl
-Auth
-Cache
-Config
-Console_GetOpt
-Controller
-Currency
-Date
-Db
-Debug
-Exception
-Feed
-Filter
-Form
-Gdata
-Http
-InfoCard
-Json
-Layout
-Ldap
-Loader
-Locale
-Log
-Mail
-Measure
-Memory
-Mime
-OpenId
-Pdf
-Registry
-Request
-Rest
-Search_Lucene
-Server_Reflection
-Service_Akismet
-Service_Amazon
-Service_Audioscrobbler
-Service_Delicious
-Service_Flickr
-Service_Nirvanix
-Service_Simpy
-Service_SlideShare
-Service_StrikeIron
-Service_Technorati
-Service_Yahoo
-Session
-TimeSync
-Translate
-Uri
-Validate
-Version
-View
-XmlRpc
+Tables related to Release 1.7.2
+
+1Zend_Db
+1Zend_Dojo
+1Zend_Form
+1Zend_Layout
+1Zend_Session
 -->
 
 
