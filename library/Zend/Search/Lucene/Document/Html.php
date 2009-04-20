@@ -351,9 +351,9 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     /**
      * Highlight text using specified View helper or callback function.
      *
-     * @param string|array $words  Words to highlight. they could be organized using the array or string
+     * @param string|array $words  Words to highlight. Words could be organized using the array or string.
      * @param callback $callback   Callback method, used to transform (highlighting) text.
-     * @param array    $params     Array of additionall callback parameters
+     * @param array    $params     Array of additionall callback parameters passed through into it
      *                             (first non-optional parameter is an HTML fragment for highlighting)
      * @return string
      * @throws Zend_Search_Lucene_Exception

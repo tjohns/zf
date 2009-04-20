@@ -335,25 +335,126 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
     <sect2 id="zend.search.lucene.searching.highlighting">
         <title>Search Results Highlighting</title>
         <para>
-            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> method allows the developer to highlight HTML document terms
-            in the context of a search query:
+            Zend_Search_Lucene provides two options for search results highlighting.
+        </para>
+        <para>
+            The first one is utilizing <code>Zend_Search_Lucene_Document_Html</code> class 
+            (see <link linkend="zend.search.lucene.index-creation.html-documents">HTML documents section</link> for details)
+            using the following methods:
+            <programlisting role="php"><![CDATA[
+    /**
+     * Highlight text with specified color
+     *
+     * @param string|array $words
+     * @param string $colour
+     * @return string
+     */
+    public function highlight($words, $colour = '#66ffff');
+]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[
+    /**
+     * Highlight text using specified View helper or callback function.
+     *
+     * @param string|array $words  Words to highlight. Words could be organized using the array or string.
+     * @param callback $callback   Callback method, used to transform (highlighting) text.
+     * @param array    $params     Array of additionall callback parameters passed through into it
+     *                             (first non-optional parameter is an HTML fragment for highlighting)
+     * @return string
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function highlightExtended($words, $callback, $params = array())
+]]>
+            </programlisting>
+        </para>
+        <para>
+            To customize highlighting behavior use <code>highlightExtended()</code> method with specified callback, which takes
+            one or more parameters<footnote><para>The first is an HTML fragment for highlighting and others are callback behavior 
+            dependent. Returned value is a highlighted HTML fragment.</para></footnote>, or extend 
+            <code>Zend_Search_Lucene_Document_Html</code> class and redefine <code>applyColour($stringToHighlight, $colour)</code>
+            method used as a default highlighting callback. 
+            <footnote>
+                <para>
+                    In both cases returned HTML is automatically transformed into valid XHTML.
+                </para>
+            </footnote>
+        </para>
+        <para>
+            The result of highlighting operation is retrieved by <code>Zend_Search_Lucene_Document_Html->getHTML()</code> method.  
+        </para>
+        
+        <note>
+            <para>
+                Highlighting is performed in terms of current analyzer. So all forms of the word(s) recognized by analyzer 
+                are highlighted. 
+            </para>
+            <para>
+                E.g. if current analyzer is case insensitive and we request to highlight 'text' word, then 'text', 'Text', 'TEXT'
+                and other case combinations will be highlighted.
+            </para>
+            <para>
+                In the same way, if current analyzer supports stemming and we request to highlight 'indexed', then 'index', 
+                'indexing', 'indices' and other word forms will be highlighted.
+            </para>
+            <para>
+                On the other hand, if word is skipped by corrent analyzer (e.g. if short words filter is applied to the analyzer),
+                then nothing will be highlighted.
+            </para>
+        </note>
+
+        <para>
+            The second option is to use 
+            <code>Zend_Search_Lucene_Search_Query->highlightMatches(string $inputHTML[, Zend_Search_Lucene_Search_Highlighter_Interface $highlighter])</code> 
+            method:
             <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
-$hits = $index->find($query);
-...
 $highlightedHTML = $query->highlightMatches($sourceHTML);
 ]]>
             </programlisting>
         </para>
-
         <para>
-            <code>highlightMatches()</code> method utilizes <code>Zend_Search_Lucene_Document_Html</code> class
-            (see <link linkend="zend.search.lucene.index-creation.html-documents">HTML documents section</link> for details)
-            for HTML processing, so it has the same requirements for HTML source.
+            Optional second parameter is a highlighter object which has to implement 
+            <code>Zend_Search_Lucene_Search_Highlighter_Interface</code> interface:
+            <programlisting role="php"><![CDATA[
+interface Zend_Search_Lucene_Search_Highlighter_Interface
+{
+    /**
+     * Set document for highlighting.
+     *
+     * @param Zend_Search_Lucene_Document_Html $document
+     */
+    public function setDocument(Zend_Search_Lucene_Document_Html $document);
+
+    /**
+     * Get document for highlighting.
+     *
+     * @return Zend_Search_Lucene_Document_Html $document
+     */
+    public function getDocument();
+
+    /**
+     * Highlight specified words (method is invoked once per subquery)
+     *
+     * @param string|array $words  Words to highlight. They could be organized using the array or string.
+     */
+    public function highlight($words);
+}
+]]>
+            </programlisting>
+            Where <code>Zend_Search_Lucene_Document_Html</code> object is an object constructed from the source HTML
+            provided to the <code>Zend_Search_Lucene_Search_Query->highlightMatches()</code> method.
+        </para>
+        <para>
+            If <code>$highlighter</code> parameter is omitted, then <code>Zend_Search_Lucene_Search_Highlighter_Default</code>
+            object is instantiated and used.
+        </para>
+        <para>
+            Highlighter <code>highlight()</code> method is invoked once per subquery, so it has an ability to differentiate 
+            highlighting for them.
+        </para>
+        <para>
+            Actually, default highlighter does this walking through predefined color table. So you can implement 
+            your own highlighter or just extend the default and redefine color table.
         </para>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
