@@ -39,7 +39,6 @@ require_once 'Zend/Reflection/Factory.php';
  */
 class Zend_Reflection_File implements Reflector
 {
-    
     /**
      * @var string
      */
@@ -85,12 +84,17 @@ class Zend_Reflection_File implements Reflector
      */
     protected $_contents        = null;
     
+    /**
+     * @var Zend_Reflection_Factory
+     */
     protected $_factory;
 
     /**
-     * __construct()
+     * Constructor
      *
-     * @param string $file
+     * @param  string $file
+     * @param  null|Zend_Reflection_Factory $factory
+     * @return void
      */
     public function __construct($file, $factory = null) {
         
@@ -117,7 +121,7 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * findRealpathInIncludePath()
+     * Find real path of file from within include_path
      *
      * @param string $fileName
      * @return string
@@ -137,17 +141,20 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * export() - required by the Reflector interface
+     * Export
      *
+     * Required by the Reflector interface
+     *
+     * @todo   What is this supposed to do?
+     * @return null
      */
     public static function export()
     {
-        // @todo what does this do?
         return null;
     }
     
     /**
-     * getFileName() - Return the file name of the reflected file
+     * Return the file name of the reflected file
      *
      * @return string
      */
@@ -167,7 +174,7 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * getEndLine() - Get the end line - number of lines
+     * Get the end line / number of lines
      *
      * @return int
      */
@@ -177,7 +184,7 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * getDocComment() - Return the doc comment
+     * Return the file level doc comment
      *
      * @return string
      */
@@ -187,7 +194,7 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * getDocblock() - Return the docblock
+     * Return the docblock
      *
      * @return Zend_Reflection_Docblock
      */
@@ -197,7 +204,7 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * getClasses() Return the reflection classes of the classes found inside this file
+     * Return the reflection classes of the classes found inside this file
      *
      * @return array Array of Zend_Reflection_Class
      */
@@ -207,7 +214,7 @@ class Zend_Reflection_File implements Reflector
     }
     
 	/**
-     * getFunctions() - Return the reflection functions of the functions found inside this file
+     * Return the reflection functions of the functions found inside this file
      *
      * @return array Array of Zend_Reflection_Functions
      */
@@ -217,14 +224,14 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * getClass()
+     * Return a reflection class instance
      *
-     * @param string $name
+     * @param  null|string $name Name of class for which to retrieve reflection
      * @return Zend_Reflection_Class
      */
     public function getClass($name = null)
     {
-        if ($name == null) {
+        if ($name === null) {
             reset($this->_classes);
             return current($this->_classes);
         }
@@ -240,7 +247,7 @@ class Zend_Reflection_File implements Reflector
     }
 
     /**
-     * getContents() - Return the full contents of file.
+     * Return the full contents of file.
      *
      * @return string
      */
@@ -250,67 +257,76 @@ class Zend_Reflection_File implements Reflector
     }
     
     /**
-     * __toString() - Required by the Reflector interface
+     * Serialize to string
      *
+     * Required by the Reflector interface
+     *
+     * @todo   What is this supposed to do?
+     * @return string
      */
     public function __toString()
     {
-        // @todo what does this do?
-        return null;
+        return '';
     }
     
     /**
-     * _reflect() - this method does the work of "reflecting" the file
+     * Do the work of "reflecting" the file
      *
+     * Uses PHP's tokenizer to perform file reflection.
+     *
+     * @return void
      */
     protected function _reflect()
     {
         $contents = $this->_contents;
-        $tokens = token_get_all($contents);
+        $tokens   = token_get_all($contents);
         
         $functionTrapped = false;
         $classTrapped    = false;
         $requireTrapped  = false;
-        $openParens      = 0;
+        $openBraces      = 0;
         
         $this->_checkFileDocBlock($tokens);
                         
-        foreach($tokens as $token) {
+        foreach ($tokens as $token) {
             /*
-             * Tokens are characters representing symbols or arrays representing strings.
-             * The keys/values in the arrays are 0=>token id, 1=>string, 2=>line number.
-             * Token ID's are explained here: http://www.php.net/manual/en/tokens.php.
+             * Tokens are characters representing symbols or arrays 
+             * representing strings. The keys/values in the arrays are 
+             *
+             * - 0 => token id, 
+             * - 1 => string, 
+             * - 2 => line number
+             *
+             * Token ID's are explained here: 
+             * http://www.php.net/manual/en/tokens.php.
              */
             
-            if(is_array($token)) {
-                $type =    $token[0];
-                $value =   $token[1];
+            if (is_array($token)) {
+                $type    = $token[0];
+                $value   = $token[1];
                 $lineNum = $token[2];
             } else {
-                
                 // It's a symbol
-
-                // Maintain the count of open parens
+                // Maintain the count of open braces
                 if ($token == '{') {
-                    $openParens++;
+                    $openBraces++;
                 } else if ($token == '}') {
-                    $openParens--;
+                    $openBraces--;
                 }
                 
                 continue;
             }
             
-            switch($type) {
+            switch ($type) {
                 // Name of something
                 case T_STRING:
                     if ($functionTrapped) {
                         $this->_functions[] = $this->_factory->createFunction($value);
                         $functionTrapped = false;
-                    } else if ($classTrapped) {
+                    } elseif ($classTrapped) {
                         $this->_classes[] = $this->_factory->createClass($value);
                         $classTrapped = false;
                     }
-                    
                     continue;
                     
                 // Required file names are T_CONSTANT_ENCAPSED_STRING
@@ -319,23 +335,18 @@ class Zend_Reflection_File implements Reflector
                         $this->_requiredFiles[] = $value ."\n";
                         $requireTrapped = false;
                     }
-                    
                     continue;
                     
                 // Functions
                 case T_FUNCTION:
-                    
-                    if($openParens == 0) {
+                    if ($openBraces == 0) {
                         $functionTrapped = true;
                     }
-                    
                     break;
                     
                 // Classes
                 case T_CLASS:
-
                     $classTrapped = true;
-                    
                     break;
                     
                 // All types of requires
@@ -343,28 +354,35 @@ class Zend_Reflection_File implements Reflector
                 case T_REQUIRE_ONCE:
                 case T_INCLUDE:
                 case T_INCLUDE_ONCE:
-                    
                     $requireTrapped = true;
-                    
                     break;
-                    
+
+                // Default case: do nothing
+                default:
+                    break;
             }
         }
         
         $this->_endLine = count(explode("\n", $this->_contents));
     }
     
+    /**
+     * Validate / check a file level docblock
+     * 
+     * @param  array $tokens Array of tokenizer tokens
+     * @return void
+     */
     protected function _checkFileDocBlock($tokens) {
         foreach ($tokens as $token) {
-            $type  =   $token[0];
-            $value =   $token[1];
+            $type    = $token[0];
+            $value   = $token[1];
             $lineNum = $token[2];
-            if($type == T_OPEN_TAG || $type == T_WHITESPACE) {
+            if(($type == T_OPEN_TAG) || ($type == T_WHITESPACE)) {
                 continue;
-            } else if ($type == T_DOC_COMMENT) {
+            } elseif ($type == T_DOC_COMMENT) {
                 $this->_docComment = $value;
-                $this->_startLine = $lineNum + substr_count($value, "\n") + 1;
-                $this->_docblock = $this->_factory->createDocblock($this);
+                $this->_startLine  = $lineNum + substr_count($value, "\n") + 1;
+                $this->_docblock   = $this->_factory->createDocblock($this);
                 return;
             } else {
                 // Only whitespace is allowed before file docblocks
