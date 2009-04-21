@@ -467,6 +467,12 @@
         <xi:include href="module_specs/Zend_Soap_AutoDiscovery.xml" />
     </chapter>
 
+    <chapter id="zend.tag">
+        <title>Zend_Tag</title>
+        <xi:include href="module_specs/Zend_Tag-Introduction.xml" />
+        <xi:include href="module_specs/Zend_Tag_Cloud.xml" />
+    </chapter>
+
     <chapter id="zend.test">
         <title>Zend_Test</title>
         <xi:include href="module_specs/Zend_Test.xml" />
