@@ -285,7 +285,12 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
                 $className = $object->getASClassName();
                 break;
                 // No return class name is set make it a generic object
+            case ($object instanceof stdClass):
+                $className = '';
+                break;
+		// By default, use object's class name
             default:
+		$className = get_class($object);
                 break;
         }
         if(!$className == '') {
