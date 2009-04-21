@@ -229,7 +229,7 @@ if ($validator->isValid($iban)) {
             このクラスは UTF-8 のほかに
             <ulink url="http://www.php.net/manual/ja/ref.iconv.php#iconv.configuration"><code>iconv.internal_encoding</code></ulink>
             にもとづいたその他の文字エンコーディングもサポートします。
-            別の円コーディングを使用したい場合は、アクセサメソッド getEncoding
+            別のエンコーディングを使用したい場合は、アクセサメソッド getEncoding
             および setEncoding で設定します。
         </para>
     </sect2>
