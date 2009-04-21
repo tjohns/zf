@@ -203,5 +203,26 @@ abstract class Zend_Search_Lucene_Search_Query
 
         return $doc->getHTML();
     }
+
+    /**
+     * Highlight matches in $inputHtmlFragment and return it (without HTML header and body tag)
+     *
+     * @param string $inputHtmlFragment
+     * @param Zend_Search_Lucene_Search_Highlighter_Interface|null $highlighter
+     * @return string
+     */
+    public function htmlFragmentHighlightMatches($inputHtmlFragment, $highlighter = null)
+    {
+        if ($highlighter === null) {
+            $highlighter = new Zend_Search_Lucene_Search_Highlighter_Default();
+        }
+
+    	$doc = Zend_Search_Lucene_Document_Html::loadHTML($inputHtmlFragment);
+        $highlighter->setDocument($doc);
+
+        $this->_highlightMatches($highlighter);
+
+        return $doc->getHtmlBody();
+    }
 }
 

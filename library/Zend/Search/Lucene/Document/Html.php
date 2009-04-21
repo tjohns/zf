@@ -69,11 +69,12 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     /**
      * Object constructor
      *
-     * @param string  $data
+     * @param string  $data         HTML string (may be HTML fragment, )
      * @param boolean $isFile
      * @param boolean $storeContent
+     * @param string  $encoding
      */
-    private function __construct($data, $isFile, $storeContent)
+    private function __construct($data, $isFile, $storeContent, $encoding = null)
     {
         $this->_doc = new DOMDocument();
         $this->_doc->substituteEntities = true;
@@ -84,6 +85,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             $htmlData = $data;
         }
         @$this->_doc->loadHTML($htmlData);
+
+        // Set curent locale as encoding if it's not recognized
+        if ($encoding !== null) {
+        	$this->_doc->encoding = $encoding;
+        }
 
         $xpath = new DOMXPath($this->_doc);
 
@@ -171,6 +177,34 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
                 $this->_retrieveNodeText($childNode, $text);
             }
         }
+    }
+
+    /**
+     * Get encoding
+     *
+     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
+     * but it may be overriden overridden with setEncoding() method or additional
+     * constructor parameter.
+     *
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_doc->encoding;
+    }
+
+    /**
+     * Set encoding
+     *
+     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
+     * but it may be overriden overridden with setEncoding() method or additional
+     * constructor parameter.
+     *
+     * @param string $encoding
+     */
+    public function setEncoding($encoding)
+    {
+        $this->_doc->encoding = $encoding;
     }
 
     /**
@@ -402,6 +436,24 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     public function getHTML()
     {
         return $this->_doc->saveHTML();
+    }
+
+    /**
+     * Get HTML body
+     *
+     * @return string
+     */
+    public function getHtmlBody()
+    {
+        $xpath = new DOMXPath($this->_doc);
+        $bodySubnodes = $xpath->query('/html/body')->item(0)->childNodes;
+
+        $outputFragments = array();
+        for ($count = 0; $count < $bodySubnodes->length; $count++) {
+        	$outputHtmlFragments[] = $this->_doc->saveXML($bodySubnodes->item($count));
+        }
+
+        return implode($outputFragments);
     }
 }
 
