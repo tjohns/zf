@@ -952,6 +952,16 @@
         </xi:include>
     </chapter>
 
+    <chapter id="zend.tag">
+        <title>Zend_Tag</title>
+        <xi:include href="module_specs/Zend_Tag-Introduction.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Tag-Introduction.xml" /></xi:fallback>
+        </xi:include>
+        <xi:include href="module_specs/Zend_Tag_Cloud.xml">
+            <xi:fallback><xi:include href="../en/module_specs/Zend_Tag_Cloud.xml" /></xi:fallback>
+        </xi:include>
+    </chapter> 
+
     <chapter id="zend.test">
         <title>Zend_Test</title>
         <xi:include href="module_specs/Zend_Test.xml">
