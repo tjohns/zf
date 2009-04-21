@@ -1139,136 +1139,129 @@ Ausgabe:
             </listitem>
             <listitem>
                 <para>
-                    <code>{get|set}Partial()</code> gets/sets a partial view
-                    script that should be used for rendering menu.
-                    If a partial view script is set, the helper's
-                    <code>render()</code> method will use the
-                    <code>renderPartial()</code> method. If no partial is
-                    set, the <code>renderMenu()</code> method is used.
-                    The helper expects the partial to be a <code>string</code>
-                    or an <code>array</code> with two elements. If the partial
-                    is a <code>string</code>, it denotes the name of the partial
-                    script to use. If it is an <code>array</code>, the first
-                    element will be used as the name of the partial view
-                    script, and the second element is the module where the
-                    script is found.
+                    <code>{get|set}Partial()</code> empfängt/setzt ein partielles View Skript
+                    das für die Darstellung des Menüs verwendet werden soll. Wenn ein partielles
+                    Skript gesetzt ist, verwendet die <code>render()</code> Methode des Helfers
+                    die <code>renderPartial()</code> Methode. Wenn kein Partieller gesetzt ist,
+                    wird die <code>renderMenu()</code> Methode verwendet. Der Helfer erwartet das
+                    der Partielle ein <code>string</code>, oder ein <code>array</code> mit zwei
+                    Elementen, ist. Wenn der Partielle ein <code>string</code> ist bezeichnet er
+                    den Namen des partiellen Skripts das zu verwenden ist. Wenn er ein
+                    <code>array</code> ist wird das erste Element als Name des partiellen View
+                    Skripts verwendet, und das zweite Element ist das Modul indem das Skript
+                    gefunden wird.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>htmlify()</code> overrides the method from the
-                    abstract class to return <code>span</code> elements
-                    if the page has no <code>href</code>.
+                    <code>htmlify()</code> überschreibt die Methode der abstrakten Klasse damit
+                    <code>span</code> Elemente zurückgegeben werden wenn die Seite kein
+                    <code>href</code> hat.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>renderMenu($container = null, $options = array())</code>
-                    is the default render method, and will render a container as
-                    a HTML <code>UL</code> list.
+                    <code>renderMenu($container = null, $options = array())</code> ist eine
+                    standardmäßige render Methode, und stellt einen Container als HTML
+                    <code>UL</code> Liste dar.
                 </para>
                 <para>
-                    If <code>$container</code> is not given, the container
-                    registered in the helper will be rendered.
+                    Wenn <code>$container</code> nicht angegeben wird, wird der Container der
+                    im Helfer registriert ist dargestellt.
                 </para>
                 <para>
-                    <code>$options</code> is used for overriding options
-                    specified temporarily without rsetting the values in the
-                    helper instance. It is an associative array where each key
-                    corresponds to an option in the helper.
+                    <code>$options</code> wird verwendet um temporär spezifizierte Optionen zu
+                    überschreiben ohne das die Werte in der Helferinstanz resetiert werden. Es
+                    ist ein assoziatives Array wobei jeder Schlüssel mit einer Option im Helfer
+                    korrespondiert.
                 </para>
                 <para>
-                    Recognized options:
+                    Erkannte Optionen:
                     <itemizedlist>
                         <listitem>
                             <para>
-                                <code>indent</code>; indentation. Expects a
-                                <code>string</code> or an <code>int</code>
-                                value.
+                                <code>indent</code>; Einrückung. Erwartet einen <code>string</code>
+                                oder einen <code>int</code> Wert.
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                                <code>minDepth</code>; minimum depth. Expcects
-                                an <code>int</code> or <code>null</code> (no
-                                minimum depth).
+                                <code>minDepth</code>; Minimale Tiefe. Erwartet ein
+                                <code>int</code> oder <code>null</code> (keine minimale Tiefe).
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                                <code>maxDepth</code>; maximum depth. Expcects
-                                an <code>int</code> or <code>null</code> (no
-                                maximum depth).
+                                <code>maxDepth</code>; Maximale Tiefe. Erwartet ein
+                                <code>int</code> oder <code>null</code> (keine maximale Tiefe).
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                                <code>ulClass</code>; CSS class for
-                                <code>ul</code> element. Expects a
-                                <code>string</code>.
+                                <code>ulClass</code>; CSS Klasse für das <code>ul</code> Element.
+                                Erwartet einen <code>string</code>.
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                                <code>onlyActiveBranch</code>; whether only
-                                active branch should be rendered. Expects
-                                a <code>boolean</code> value.
+                                <code>onlyActiveBranch</code>; Ob nur der aktive Branch dargestellt
+                                werden soll. Erwartet einen <code>boolean</code> Wert.
                             </para>
                         </listitem>
                         <listitem>
                             <para>
-                                <code>renderParents</code>; whether parents
-                                should be rendered if only rendering active
-                                branch. Expects a <code>boolean</code> value.
+                                <code>renderParents</code>; Ob eltern dargestellt werden sollen
+                                wenn nur der aktive Branch dargestellt wird. Erwartet einen
+                                <code>boolean</code> Wert.
                             </para>
                         </listitem>
                     </itemizedlist>
                 </para>
                 <para>
-                    If an option is not given, the value set in the helper
-                    will be used.
+                    Wenn keine Option angegeben wird, werden die Werte die im Helfer gesetzt
+                    sind verwendet.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>renderPartial()</code> is used for rendering the menu
-                    using a partial view script.
+                    <code>renderPartial()</code> wird für die Darstellung des Menüs in einem
+                    partiellen View Skript verwendet.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>renderSubMenu()</code> renders the deepest menu level
-                    of a container's active branch.
+                    <code>renderSubMenu()</code> stellt das tiefste Menü Level des aktiven
+                    Branches eines Containers dar.
                 </para>
             </listitem>
        </itemizedlist>
 
         <example id="zend.view.helpers.initial.navigation.menu.example1">
-            <title>Rendering a menu</title>
+            <title>Darstellung eines Menüs</title>
 
             <para>
-                This example shows how to render a menu from a container
-                registered/found in the view helper. Notice how pages
-                are filtered out based on visibility and ACL.
+                Dieses Beispiel zeigt wie ein Menü von einem registrierten/im View Helfer
+                gefundenen Container, dargestellt wird. Es ist zu beachten das Seiten basierend
+                auf Ihrer Sichtbarkeit und ACL ausgefiltert werden.
             </para>
 
             <programlisting role="php"><![CDATA[
-In a view script or layout:
+In einem View Skript oder Layout:
 <?php echo $this->navigation()->menu()->render() ?>
 
-Or simply:
+Oder einfach:
 <?php echo $this->navigation()->menu() ?>
 
-Or if short tags are enabled:
+Oder wenn Short Tags aktiviert sind:
 <?= $this->navigation()->menu() ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li>
-        <a title="Go Home" href="/">Home</a>
+        <a title="Geh zu Home" href="/">Home</a>
     </li>
     <li class="active">
-        <a href="/products">Products</a>
+        <a href="/products">Produkte</a>
         <ul>
             <li class="active">
                 <a href="/products/server">Foo Server</a>
@@ -1277,10 +1270,10 @@ Output:
                         <a href="/products/server/faq">FAQ</a>
                     </li>
                     <li>
-                        <a href="/products/server/editions">Editions</a>
+                        <a href="/products/server/editions">Editionen</a>
                     </li>
                     <li>
-                        <a href="/products/server/requirements">System Requirements</a>
+                        <a href="/products/server/requirements">System Anforderungen</a>
                     </li>
                 </ul>
             </li>
@@ -1288,7 +1281,7 @@ Output:
                 <a href="/products/studio">Foo Studio</a>
                 <ul>
                     <li>
-                        <a href="/products/studio/customers">Customer Stories</a>
+                        <a href="/products/studio/customers">Kunden Stories</a>
                     </li>
                     <li>
                         <a href="/prodcts/studio/support">Support</a>
@@ -1298,7 +1291,7 @@ Output:
         </ul>
     </li>
     <li>
-        <a title="About us" href="/company/about">Company</a>
+        <a title="About us" href="/company/about">Firma</a>
         <ul>
             <li>
                 <a href="/company/about/investors">Investor Relations</a>
@@ -1307,10 +1300,10 @@ Output:
                 <a class="rss" href="/company/news">News</a>
                 <ul>
                     <li>
-                        <a href="/company/news/press">Press Releases</a>
+                        <a href="/company/news/press">Für die Presse</a>
                     </li>
                     <li>
-                        <a href="/archive">Archive</a>
+                        <a href="/archive">Archiv</a>
                     </li>
                 </ul>
             </li>
@@ -1320,7 +1313,7 @@ Output:
         <a href="/community">Community</a>
         <ul>
             <li>
-                <a href="/community/account">My Account</a>
+                <a href="/community/account">Mein Account</a>
             </li>
             <li>
                 <a class="external" href="http://forums.example.com/">Forums</a>
@@ -1333,18 +1326,17 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example2">
-            <title>Calling <code>renderMenu()</code> directly</title>
+            <title><code>renderMenu()</code> direkt aufrufen</title>
 
             <para>
-                This example shows how to render a menu that is not
-                registered in the view helper by calling the
-                <code>renderMenu()</code> directly and specifying a few
-                options.
+                Dieses Beispiel zeigt wie ein Menü dargestellt werden kann das nicht im View
+                Helfer registriert ist, indem <code>renderMenu()</code> direkt aufgerufen wird
+                und ein paar wenige Optionen spezifiziert werden.
             </para>
 
             <programlisting role="php"><![CDATA[
 <?php
-// render only the 'Community' menu
+// Nur das 'Community' Menü darstellen
 $community = $this->navigation()->findOneByLabel('Community');
 $options = array(
     'indent'  => 16,
@@ -1357,7 +1349,7 @@ echo $this->navigation()
 Output:
                 <ul class="community">
                     <li>
-                        <a href="/community/account">My Account</a>
+                        <a href="/community/account">Mein Account</a>
                     </li>
                     <li>
                         <a class="external" href="http://forums.example.com/">Forums</a>
@@ -1368,17 +1360,17 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example3">
-            <title>Rendering the deepest active menu</title>
+            <title>Das tiefste aktive Menü darstellen</title>
 
             <para>
-                This example shows how the <code>renderSubMenu()</code>
-                will render the deepest sub menu of the active branch.
+                Dieses Beispiel zeigt wie <code>renderSubMenu()</code> das tiefste Untermenü
+                des aktiven Branches dargestellt wird.
             </para>
 
             <para>
-                Calling <code>renderSubMenu($container, $ulClass, $indent)</code>
-                is equivalent to calling <code>renderMenu($container, $options)</code>
-                with the following options:
+                Der Aufruf von <code>renderSubMenu($container, $ulClass, $indent)</code> ist
+                identisch mit dem Aufruf von <code>renderMenu($container, $options)</code> mit
+                den folgenden Optionen:
 <code>array(
     'ulClass'          => $ulClass,
     'indent'           => $indent,
@@ -1396,16 +1388,16 @@ echo $this->navigation()
           ->renderSubMenu(null, 'sidebar', 4);
 ?>
 
-The output will be the same if 'FAQ' or 'Foo Server' is active:
+Die Ausgabe ist die gleiche wenn 'FAQ' oder 'Foo Server' aktiv sind:
     <ul class="sidebar">
         <li class="active">
             <a href="/products/server/faq">FAQ</a>
         </li>
         <li>
-            <a href="/products/server/editions">Editions</a>
+            <a href="/products/server/editions">Editionen</a>
         </li>
         <li>
-            <a href="/products/server/requirements">System Requirements</a>
+            <a href="/products/server/requirements">System Anforderungen</a>
         </li>
     </ul>
 ]]>
@@ -1413,7 +1405,7 @@ The output will be the same if 'FAQ' or 'Foo Server' is active:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example4">
-            <title>Rendering a menu with maximum depth</title>
+            <title>Darstellung eines Menüs mit maximaler Tiefe</title>
 
             <programlisting role="php"><![CDATA[
 <?php
@@ -1422,13 +1414,13 @@ echo $this->navigation()
           ->setMaxDepth(1);
 ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li>
-        <a title="Go Home" href="/">Home</a>
+        <a title="Geh zu Home" href="/">Home</a>
     </li>
     <li class="active">
-        <a href="/products">Products</a>
+        <a href="/products">Produkte</a>
         <ul>
             <li class="active">
                 <a href="/products/server">Foo Server</a>
@@ -1439,7 +1431,7 @@ Output:
         </ul>
     </li>
     <li>
-        <a title="About us" href="/company/about">Company</a>
+        <a title="About us" href="/company/about">Firma</a>
         <ul>
             <li>
                 <a href="/company/about/investors">Investor Relations</a>
@@ -1453,7 +1445,7 @@ Output:
         <a href="/community">Community</a>
         <ul>
             <li>
-                <a href="/community/account">My Account</a>
+                <a href="/community/account">Mein Account</a>
             </li>
             <li>
                 <a class="external" href="http://forums.example.com/">Forums</a>
@@ -1466,7 +1458,7 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example5">
-            <title>Rendering a menu with minimum depth</title>
+            <title>Darstellung eines Menüs mit minimaler Tiefe</title>
 
             <programlisting role="php"><![CDATA[
 <?php
@@ -1475,7 +1467,7 @@ echo $this->navigation()
           ->setMinDepth(1);
 ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li class="active">
         <a href="/products/server">Foo Server</a>
@@ -1484,10 +1476,10 @@ Output:
                 <a href="/products/server/faq">FAQ</a>
             </li>
             <li>
-                <a href="/products/server/editions">Editions</a>
+                <a href="/products/server/editions">Editionen</a>
             </li>
             <li>
-                <a href="/products/server/requirements">System Requirements</a>
+                <a href="/products/server/requirements">System Anforderungen</a>
             </li>
         </ul>
     </li>
@@ -1495,7 +1487,7 @@ Output:
         <a href="/products/studio">Foo Studio</a>
         <ul>
             <li>
-                <a href="/products/studio/customers">Customer Stories</a>
+                <a href="/products/studio/customers">Kunden Stories</a>
             </li>
             <li>
                 <a href="/prodcts/studio/support">Support</a>
@@ -1509,15 +1501,15 @@ Output:
         <a class="rss" href="/company/news">News</a>
         <ul>
             <li>
-                <a href="/company/news/press">Press Releases</a>
+                <a href="/company/news/press">Für die Presse</a>
             </li>
             <li>
-                <a href="/archive">Archive</a>
+                <a href="/archive">Archiv</a>
             </li>
         </ul>
     </li>
     <li>
-        <a href="/community/account">My Account</a>
+        <a href="/community/account">Mein Account</a>
     </li>
     <li>
         <a class="external" href="http://forums.example.com/">Forums</a>
@@ -1528,7 +1520,7 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example6">
-            <title>Rendering only the active branch of a menu</title>
+            <title>Nur den aktiven Branch eines Menüs darstellen</title>
 
             <programlisting role="php"><![CDATA[
 <?php
@@ -1537,10 +1529,10 @@ echo $this->navigation()
           ->setOnlyActiveBranch(true);
 ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li class="active">
-        <a href="/products">Products</a>
+        <a href="/products">Produkte</a>
         <ul>
             <li class="active">
                 <a href="/products/server">Foo Server</a>
@@ -1549,10 +1541,10 @@ Output:
                         <a href="/products/server/faq">FAQ</a>
                     </li>
                     <li>
-                        <a href="/products/server/editions">Editions</a>
+                        <a href="/products/server/editions">Editionen</a>
                     </li>
                     <li>
-                        <a href="/products/server/requirements">System Requirements</a>
+                        <a href="/products/server/requirements">System Anforderungen</a>
                     </li>
                 </ul>
             </li>
@@ -1565,7 +1557,7 @@ Output:
 
         <example id="zend.view.helpers.initial.navigation.menu.example7">
             <title>
-                Rendering only the active branch of a menu with minimum depth
+                Nur den aktiven Branch eines Menüs mit minimaler Tiefe darstellen
             </title>
 
             <programlisting role="php"><![CDATA[
@@ -1576,7 +1568,7 @@ echo $this->navigation()
           ->setMinDepth(1);
 ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li class="active">
         <a href="/products/server">Foo Server</a>
@@ -1585,10 +1577,10 @@ Output:
                 <a href="/products/server/faq">FAQ</a>
             </li>
             <li>
-                <a href="/products/server/editions">Editions</a>
+                <a href="/products/server/editions">Editionen</a>
             </li>
             <li>
-                <a href="/products/server/requirements">System Requirements</a>
+                <a href="/products/server/requirements">System Anforderungen</a>
             </li>
         </ul>
     </li>
@@ -1599,7 +1591,7 @@ Output:
 
         <example id="zend.view.helpers.initial.navigation.menu.example8">
             <title>
-                Rendering only the active branch of a menu with maximum depth
+                Nur den aktiven Branch eines Menüs mit maximaler Tiefe darstellen
             </title>
 
             <programlisting role="php"><![CDATA[
@@ -1610,10 +1602,10 @@ echo $this->navigation()
           ->setMaxDepth(1);
 ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li class="active">
-        <a href="/products">Products</a>
+        <a href="/products">Produkte</a>
         <ul>
             <li class="active">
                 <a href="/products/server">Foo Server</a>
@@ -1630,8 +1622,7 @@ Output:
 
         <example id="zend.view.helpers.initial.navigation.menu.example9">
             <title>
-                Rendering only the active branch of a menu with maximum depth
-                and no parents
+                Nur den aktiven Branch eines Menüs mit maximaler Tiefe aber ohne Eltern darstellen
             </title>
 
             <para>
@@ -1646,7 +1637,7 @@ echo $this->navigation()
           ->setMaxDepth(1);
 ?>
 
-Output:
+Ausgabe:
 <ul class="navigation">
     <li class="active">
         <a href="/products/server">Foo Server</a>
@@ -1660,16 +1651,17 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.menu.example10">
-            <title>Rendering a custom menu using a partial view script</title>
+            <title>
+                Darstellen eines eigenen Menüs durch Verwendung eines partiellen View Skripts
+            </title>
 
             <para>
-                This example shows how to render a custom menu using
-                a partial vew script. By calling <code>setPartial()</code>,
-                you can specify a partial view script that will be used
-                when calling <code>render()</code>. When a partial is specified,
-                the <code>renderPartial()</code> method will be called. This
-                method will assign the container to the view with the key
-                <code>container</code>.
+                Dieses Beispiel zeigt wie ein eigenes Menü, durch Verwendung eines partiellen View
+                Skripts, dargestellt werden kann. Durch Aufruf von <code>setPartial()</code> kann
+                ein partielles View Skript spezifiziert werden das verwendet wird wenn man
+                <code>render()</code> aufruft. Wenn ein Partielles spezifiziert ist, wird die
+                <code>renderPartial()</code> Methode aufgerufen. Diese Methode fügt den Container
+                in die View ein, und verwendet hierbei den Schlüssel <code>container</code>.
             </para>
 
             <para>In a layout:</para>
@@ -1690,12 +1682,12 @@ foreach ($this->container as $page) {
 ]]>
             </programlisting>
 
-            <para>Output:</para>
+            <para>Ausgabe:</para>
 
             <programlisting role="php"><![CDATA[
-<a title="Go Home" href="/">Home</a>
-<a href="/products">Products</a>
-<a title="About us" href="/company/about">Company</a>
+<a title="Geh zu Home" href="/">Home</a>
+<a href="/products">Produkte</a>
+<a title="About us" href="/company/about">Firma</a>
 <a href="/community">Community</a>
 ]]>
             </programlisting>
@@ -1703,69 +1695,67 @@ foreach ($this->container as $page) {
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.sitemap">
-        <title>Sitemap Helper</title>
+        <title>Sitemap Helfer</title>
 
         <para>
-            The Sitemap helper is used for generating XML sitemaps, as
-            defined by the <ulink url="http://www.sitemaps.org/protocol.php">Sitemaps XML format</ulink>.
-            Read more about <ulink url="http://en.wikipedia.org/wiki/Sitemaps">Sitemaps
-            on Wikpedia</ulink>.
+            Der Sitemap Helfer wird für die Erzeugung von XML Sitemaps verwendet wie im
+            <ulink url="http://www.sitemaps.org/protocol.php">Sitemaps XML Format</ulink>
+            definiert. Mehr darüber kann unter <ulink url="http://en.wikipedia.org/wiki/Sitemaps">
+            Sitemaps in Wikipedia</ulink> nachgelesen werden.
         </para>
 
         <para>
-            By default, the sitemap helper uses
-            <link linkend="zend.validate.sitemap">sitemap validators</link>
-            to validate each element that is rendered. This can be disabled by
-            calling <code>$helper->setUseSitemapValidators(false)</code>.
+            Standardmäßig verwendet der Sitemap Helfer
+            <link linkend="zend.validate.sitemap">Sitemap Prüfungen</link> um jedes Element zu
+            prüfen das dargestellt werden soll. Das kann deaktiviert werden indem man
+            <code>$helper->setUseSitemapValidators(false)</code> aufruft.
 
             <note>
                 <para>
-                    If you disable sitemap validators, the custom properties (see table)
-                    are not validated at all.
+                    Wenn man die Sitemap Prüfungen deaktiviert, werden die eigenen Eigenschaften
+                    (siehe Tabelle) nicht geprüft.
                 </para>
             </note>
         </para>
 
         <para>
-            The sitemap helper also supports
-            <ulink url="http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">Sitemap XSD Schema</ulink>
-            validation of the generated sitemap. This is disabled by default,
-            since it will require a request to the Schema file. It can be
-            enabled with
-            <code>$helper->setUseSchemaValidation(true)</code>.
+            Der Sitemap Helfer unterstützt auch die Pürfung von
+            <ulink url="http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">Sitemap XSD
+            Schemas</ulink> der erzeugten Sitemap. Das ist standardmäßig deaktiviert, da es eine
+            Anfrage auf die Schema Datei benötigt. Es kann mit
+            <code>$helper->setUseSchemaValidation(true)</code> aktiviert werden.
         </para>
 
         <table id="zend.view.helpers.initial.navigation.sitemap.elements">
-            <title>Sitemap XML elements</title>
+            <title>Sitemap XML Elemente</title>
             <tgroup cols="2">
                 <thead>
                     <row>
                         <entry>Element</entry>
-                        <entry>Description</entry>
+                        <entry>Beschreibung</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry><code>loc</code></entry>
                         <entry>
-                            Absolute URL to page. An absolute URL will
-                            be generated by the helper.
+                            Absolute UTL zur Seite. Eine absolute URL wird vom Helfer erzeugt.
                         </entry>
                     </row>
                     <row>
                         <entry><code>lastmod</code></entry>
                         <entry>
                             <para>
-                                The date of last modification of the file,
-                                in <ulink url="http://www.w3.org/TR/NOTE-datetime">W3C Datetime</ulink> format.
-                                This time portion can be omitted if desired, and only use YYYY-MM-DD.
+                                Das Datum der letzten Änderung der Datei, im
+                                <ulink url="http://www.w3.org/TR/NOTE-datetime">W3C
+                                Datetime</ulink> Format. Dieser Zeitabschnitt kann bei Bedarf
+                                unterdrückt, und nur YYYY-MM-DD verwendet werden.
                             </para>
                             <para>
-                                The helper will try to retrieve the
-                                <code>lastmod</code> value from the page's
-                                custom property <code>lastmod</code> if it
-                                is set in the page. If the value is not a
-                                valid date, it is ignored.
+                                Der Helfer versucht den <code>lastmod</code> Wert von der
+                                Seiteneigenschaft <code>lastmod</code> zu erhalten wenn diese auf
+                                der Seite gesetzt ist. Wenn der Wert kein gültiges Datum ist, wird
+                                er ignoriert.
                             </para>
                         </entry>
                     </row>
@@ -1773,11 +1763,9 @@ foreach ($this->container as $page) {
                         <entry><code>changefreq</code></entry>
                         <entry>
                             <para>
-                                How frequently the page is likely to change.
-                                This value provides general information to
-                                search engines and may not correlate exactly
-                                to how often they crawl the page. Valid
-                                values are:
+                                Wie oft eine Seite geändert wird. Dieser Wert bietet eine generelle
+                                Information für Suchmaschinen und muß nicht exakt mit der Anzahl
+                                der Suchen auf der Seite übereinstimmen. Gültige Werte sind:
                                 <itemizedlist>
                                     <listitem><para>always</para></listitem>
                                     <listitem><para>hourly</para></listitem>
@@ -1789,11 +1777,10 @@ foreach ($this->container as $page) {
                                 </itemizedlist>
                             </para>
                             <para>
-                                The helper will try to retrieve the
-                                <code>changefreq</code> value from the page's
-                                custom property <code>changefreq</code> if it
-                                is set in the page. If the value is not
-                                valid, it is ignored.
+                                Der Helfer versucht den <code>changefreq</code> Wert von der
+                                Seiteneigenschaft <code>changefreq</code> zu erhalten, wenn diese
+                                auf der Seite gesetzt ist. Wenn der Wert nicht gültig ist, wird er
+                                ignoriert.
                             </para>
                         </entry>
                     </row>
@@ -1801,16 +1788,14 @@ foreach ($this->container as $page) {
                         <entry><code>priority</code></entry>
                         <entry>
                             <para>
-                                The priority of this URL relative to other
-                                URLs on your site. Valid values range from
-                                0.0 to 1.0.
+                                Die Priorität dieser URL relativ zu anderen URLs auf der eigenen
+                                Site. Der gültige Bereich für diesen Wert ist von 0.0 bis 1.0.
                             </para>
                             <para>
-                                The helper will try to retrieve the
-                                <code>priority</code> value from the page's
-                                custom property <code>priority</code> if it
-                                is set in the page. If the value is not
-                                valid, it is ignored.
+                                Der Helfer versucht den <code>priority</code> Wert von der
+                                Seiteneigenschaft <code>priority</code> zu erhalten wenn dieser
+                                auf der Seite gesetzt ist. Wenn der Wert nicht gültig ist, wird
+                                er ignoriert.
                             </para>
                         </entry>
                     </row>
@@ -1819,96 +1804,90 @@ foreach ($this->container as $page) {
         </table>
 
         <para>
-            Methods in the sitemap helper:
+            Methoden im Sitemap Helfer:
         </para>
 
         <itemizedlist>
            <listitem>
                 <para>
-                    <code>{get|set}FormatOutput()</code> gets/sets a flag
-                    indicating whether XML output should be formatted. This
-                    corresponds to the <code>formatOutput</code> property
-                    of the native <classname>DOMDocument</classname> class.
-                    Read more at
-                    <ulink url="http://php.net/domdocument">PHP: DOMDocument - Manual</ulink>.
-                    Default is <code>false</code>.
+                    <code>{get|set}FormatOutput()</code> empfängt/setzt ein Flag das anzeigt ob
+                    XML Ausgaben formatiert werden sollen. Das entspricht der Eigenschaft
+                    <code>formatOutput</code> der nativen <classname>DOMDocument</classname>
+                    Klasse. Mehr kann man unter <ulink url="http://php.net/domdocument">PHP:
+                    DOMDocument - Handbuch</ulink> nachlesen. Der Standardwert ist
+                    <code>false</code>.
                 </para>
            </listitem>
            <listitem>
                 <para>
-                    <code>{get|set}UseXmlDeclaration()</code> gets/sets a
-                    flag indicating whether the XML declaration should be
-                    included when rendering. Default is <code>true</code>.
+                    <code>{get|set}UseXmlDeclaration()</code> empfängt/setzt ein Flag das
+                    anzeigt ob die XML Deklaration bei der Darstellung enthalten sein soll.
+                    Der Standardwert ist <code>true</code>.
                 </para>
            </listitem>
            <listitem>
                 <para>
-                    <code>{get|set}UseSitemapValidators()</code> gets/sets a
-                    flag indicating whether sitemap validators should be
-                    used when generating the DOM sitemap. Default is
-                    <code>true</code>.
+                    <code>{get|set}UseSitemapValidators()</code> empfängt/setzt ein Flag das
+                    anzeigt ob Sitemap Prüfungen verwendet werden sollen wenn die DOM Sitemap
+                    dargestellt werden soll. Der Standardwert ist <code>true</code>.
                 </para>
            </listitem>
            <listitem>
                 <para>
-                    <code>{get|set}UseSchemaValidation()</code> gets/sets a
-                    flag indicating whether the helper should use XML Schema
-                    validation when generating the DOM sitemap. Default is
-                    <code>false</code>. If <code>true</code>.
+                    <code>{get|set}UseSchemaValidation()</code> empfängt/setzt ein Flag das
+                    anzeigt ob der Helfer eine XML Schema Prüfung verwenden soll wenn die DOM
+                    Sitemap erzeugt wird. Der Standardwert ist <code>false</code>.
                 </para>
            </listitem>
            <listitem>
                 <para>
-                    <code>{get|set}ServerUrl()</code> gets/sets server URL
-                    that will be prepended to non-absolute URLs in the
-                    <code>url()</code> method. If no server URL is specified,
-                    it will be determined by the helper.
+                    <code>{get|set}ServerUrl()</code> empfängt/setzt die Server URL die
+                    nicht-absoluten URLs in der <code>url()</code> Methode vorangestellt werden.
+                    Wenn keine Server URL spezifiziert ist, wird diese vom Helfer festgestellt.
                 </para>
            </listitem>
            <listitem>
                 <para>
-                    <code>url()</code> is used to generate absolute URLs to
-                    pages.
+                    <code>url()</code> wird verwendet um absolute URLs zu Seiten zu erstellen.
                 </para>
            </listitem>
            <listitem>
                 <para>
-                    <code>getDomSitemap()</code> generates a DOMDocument
-                    from a given container.
+                    <code>getDomSitemap()</code> erzeugt ein DOMDocument von einem angegebenen
+                    Container.
                 </para>
            </listitem>
        </itemizedlist>
 
         <example id="zend.view.helpers.initial.navigation.sitemap.example">
-            <title>Rendering an XML sitemap</title>
+            <title>Eine XML Sitemap darstellen</title>
 
             <para>
-                This example shows how to render an XML sitemap based
-                on the setup we did further up.
+                Dieses Beispiel zeigt wie eine XML Sitemap, basierend auf dem Setup das wir
+                vorher angegeben haben, dargestellt wird.
             </para>
 
             <programlisting role="php"><![CDATA[
-// In a view script or layout:
+// In einem View Skript oder Layout:
 
-// format output
+// Ausgabeformat
 $this->navigation()
       ->sitemap()
-      ->setFormatOutput(true); // default is false
+      ->setFormatOutput(true); // Standardwert ist false
 
-// other possible methods:
-// ->setUseXmlDeclaration(false); // default is true
+// Andere mögliche Methoden:
+// ->setUseXmlDeclaration(false); // Standardwert ist true
 // ->setServerUrl('http://my.otherhost.com');
-// default is to detect automatically
+// Standard ist die automatische Erkennung
 
-// print sitemap
+// Sitemap ausdrucken
 echo $this->navigation()->sitemap();
 ]]>
             </programlisting>
 
             <para>
-                Notice how pages that are invisible or pages with
-                ACL roles incompatible with the view helper are filtered
-                out:
+                Es ist zu beachten wie Seiten die unsichtbar oder Seiten mit ACL Rollen die mit dem
+                View Helfer inkompatibel sin, ausgefiltert werden:
             </para>
 
             <programlisting role="xml"><![CDATA[
@@ -1970,8 +1949,8 @@ echo $this->navigation()->sitemap();
             </programlisting>
 
             <para>
-                Render the sitemap using no ACL role (should filter out
-                /community/account):
+                Die Sitemap ohne Verwendung einer ACL Rolle darstellen (sollte /community/account
+                ausfiltern):
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -2038,7 +2017,7 @@ echo $this->navigation()
             </programlisting>
 
             <para>
-                Render the sitemap using a maximum depth of 1.
+                Darstellen der Sitemap mit Verwendung einer maximalen Tiefe von 1.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -2090,75 +2069,70 @@ echo $this->navigation()
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.navigation">
-        <title>Navigation Helper</title>
+        <title>Navigation Helfer</title>
 
         <para>
-            The Navigation helper is a proxy helper
-            that relays calls to other navigational helpers. It can be
-            considered an entry point to all navigation-related view tasks.
-            The aforementioned navigational helpers are in the namespace
-            <code>Zend_View_Helper_Navigation</code>, and would thus require
-            the path <code>Zend/View/Helper/Navigation</code> to be added as
-            a helper path to the view. With the proxy helper residing in the
-            <code>Zend_View_Helper</code> namespace, it will always be
-            available, without the need to add any helper paths to the view.
+            Der Navigation Helfer ist ein Proxy Helfer der Aufrufe zu anderen Navigations Helfern
+            durchführt. Er kann als Einstiegspunkt fpr alle navigations-basierenden View Tasks
+            verwendet werden. Die vorher erwähnten Navigations Helfer sind im Namespace
+            <code>Zend_View_Helper_Navigation</code> und würden es deshalb benötigen, den Pfad
+            <code>Zend/View/Helper/Navigation</code> als Helfer Pfad der View hinzuzufügen. Mit dem
+            Proxy Helfer der im <code>Zend_View_Helper</code> Namespace sitzt, ist er immer
+            vorhanden, ohne das irgendein Helfer Pfad an der View hinzugefügt werden muß.
         </para>
 
         <para>
-            The Navigation helper finds other helpers that implement the
-            <classname>Zend_View_Helper_Navigation_Helper</classname>
-            interface, which means custom view helpers can also be proxied.
-            This would, however, require that the custom helper path is added
-            to the view.
+            Der Navigations Helfer findet andere Helfer die das
+            <classname>Zend_View_Helper_Navigation_Helper</classname> Interface implementieren,
+            was bedeuet das auch auf eigene View Helfer weitergeleitet wird. Das würde trotzdem
+            das Hinzufügen des eigenen Helfer Pfades zur View benötigen.
         </para>
 
         <para>
-            When proxying to other helpers, the Navigation helper can inject
-            its container, ACL/role, and translator. This means that you
-            won't have to explicitly set all three in all navigational
-            helpers, nor resort to injecting by means of
-            <classname>Zend_Registry</classname> or static methods.
+            Wenn auf andere Helfer weitergeleitet wird, kann der Navigations Helfer seinen
+            Container, ACL/Rolle und Übersetzer injizieren. Das bedeutet weder das man diese drei
+            nicht explizit in allen navigatorischen Helfern setzen muß, noch das diese in
+            <classname>Zend_Registry</classname> oder in statische Methoden injiziert werden muß.
         </para>
 
         <itemizedlist>
            <listitem>
                <para>
-                   <code>findHelper()</code> finds the given helper,
-                   verifies that it is a navigational helper, and injects
-                   container, ACL/role and translator.
+                   <code>findHelper()</code> findet alle angegebenen Helfer, prüft das dieser
+                   ein navigatorischer Helfer ist, und injiziiert Container, ACL/Rolle und
+                   Übersetzer.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>{get|set}InjectContainer()</code> gets/sets a flag
-                   indicating whether the container should be injected to
-                   proxied helpers. Default is <code>true</code>.
+                   <code>{get|set}InjectContainer()</code> empfängt/setzt ein Flag das anzeigt
+                   ob der Container an weitergeleitete Helfer injiziiert werden soll. Der
+                   Standardwert ist <code>true</code>.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>{get|set}InjectAcl()</code> gets/sets a flag
-                   indicating whether the ACL/role should be injected to
-                   proxied helpers. Default is <code>true</code>.
+                   <code>{get|set}InjectAcl()</code> empfängt/setzt ein Flag das anzeigt ob die
+                   ACL/Rolle an weitergeleitete Helfer injiziiert werden soll. Der Standardwert
+                   ist <code>true</code>.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>{get|set}InjectTranslator()</code> gets/sets a flag
-                   indicating whether the translator should be injected to
-                   proxied helpers. Default is <code>true</code>.
+                   <code>{get|set}InjectTranslator()</code> empfängt/setzt ein Flag das anzeigt
+                   ob der Übersetzer an weitergeleitete Helfer injiziiert werden soll. Der
+                   Standardwert ist <code>true</code>.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>{get|set}DefaultProxy()</code> gets/sets the default
-                   proxy. Default is <code>'menu'</code>.
+                   <code>{get|set}DefaultProxy()</code> empfängt/setzt den Standard Proxy. Der
+                   Standardwert ist <code>'menu'</code>.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>render()</code> proxies to the render method of
-                   the default proxy.
+                   <code>render()</code> leitet auf die render Methode des Standardproxies weiter.
                </para>
            </listitem>
        </itemizedlist>
