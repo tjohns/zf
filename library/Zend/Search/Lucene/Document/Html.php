@@ -74,7 +74,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      * @param boolean $storeContent
      * @param string  $encoding
      */
-    private function __construct($data, $isFile, $storeContent, $encoding = null)
+    private function __construct($data, $isFile, $storeContent, $encoding)
     {
         $this->_doc = new DOMDocument();
         $this->_doc->substituteEntities = true;
@@ -86,7 +86,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         }
         @$this->_doc->loadHTML($htmlData);
 
-        // Set curent locale as encoding if it's not recognized
+        // Set encoding if it's specified
         if ($encoding !== null) {
         	$this->_doc->encoding = $encoding;
         }
@@ -230,25 +230,27 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     /**
      * Load HTML document from a string
      *
-     * @param string $data
+     * @param string  $data
      * @param boolean $storeContent
+     * @param string  $encoding
      * @return Zend_Search_Lucene_Document_Html
      */
-    public static function loadHTML($data, $storeContent = false)
+    public static function loadHTML($data, $storeContent = false, $encoding = null)
     {
-        return new Zend_Search_Lucene_Document_Html($data, false, $storeContent);
+        return new Zend_Search_Lucene_Document_Html($data, false, $storeContent, $encoding);
     }
 
     /**
      * Load HTML document from a file
      *
-     * @param string $file
+     * @param string  $file
      * @param boolean $storeContent
-     * @return Zend_Search_Lucene_Document_Html
+     * @param string  $encoding
+     *      * @return Zend_Search_Lucene_Document_Html
      */
-    public static function loadHTMLFile($file, $storeContent = false)
+    public static function loadHTMLFile($file, $storeContent = false, $encoding = null)
     {
-        return new Zend_Search_Lucene_Document_Html($file, true, $storeContent);
+        return new Zend_Search_Lucene_Document_Html($file, true, $storeContent, $encoding);
     }
 
 
@@ -446,11 +448,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
     public function getHtmlBody()
     {
         $xpath = new DOMXPath($this->_doc);
-        $bodySubnodes = $xpath->query('/html/body')->item(0)->childNodes;
+        $bodyNodes = $xpath->query('/html/body')->item(0)->childNodes;
 
         $outputFragments = array();
-        for ($count = 0; $count < $bodySubnodes->length; $count++) {
-        	$outputHtmlFragments[] = $this->_doc->saveXML($bodySubnodes->item($count));
+        for ($count = 0; $count < $bodyNodes->length; $count++) {
+        	$outputFragments[] = $this->_doc->saveXML($bodyNodes->item($count));
         }
 
         return implode($outputFragments);

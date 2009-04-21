@@ -60,8 +60,6 @@ class Zend_Search_Lucene_SearchHighlightTest extends PHPUnit_Framework_TestCase
 
         $highlightedHtmlFragment = $query->htmlFragmentHighlightMatches('Text highlighting using Zend_Search_Lucene is the right way to go!');
 
-        var_dump($highlightedHtmlFragment);exit();
-
         $this->assertEquals($highlightedHtmlFragment,
                             '<p>Text highlighting using Zend_Search_Lucene is <b style="color:black;background-color:#66ffff">the</b> <b style="color:black;background-color:#66ffff">right</b> <b style="color:black;background-color:#66ffff">way</b> to <b style="color:black;background-color:#ff66ff">go</b>!</p>');
     }

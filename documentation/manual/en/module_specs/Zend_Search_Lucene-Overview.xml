@@ -282,7 +282,11 @@ $index->addDocument($doc);
             be retrieved from the index. By default, the body is tokenized and indexed, but not stored.
         </para>
         <para>
-            
+            The third parameter of <code>loadHTML()</code> and <code>loadHTMLFile()</code> methods optionally specifies source HTML 
+            document encoding. If it's omitted, then encoding is automatically recognized from content type charset meta tag.
+        </para>
+        <para>
+            Encoding may be retrieved/overridden lately with <code>getEncoding()</code>/<code>setEncoding($encoding)</code> methods.
         </para>
 
         <para>
