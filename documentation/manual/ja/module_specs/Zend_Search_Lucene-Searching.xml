@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Reviewed: no -->
-<!-- EN-Revision: 14978 -->
+<!-- EN-Revision: 15037 -->
 <sect1 id="zend.search.lucene.searching">
     <title>インデックスの検索</title>
 
@@ -360,26 +360,139 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
     <sect2 id="zend.search.lucene.searching.highlighting">
         <title>検索結果の強調</title>
         <para>
-            <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code>
-            メソッドを使用すると、HTML ドキュメントの中で検索用語を強調させることができます。
+            Zend_Search_Lucene では、2 とおりの方法で検索結果を強調させることができます。
+        </para>
+        <para>
+            まず最初の方法が、<code>Zend_Search_Lucene_Document_Html</code> クラス
+            (詳細は <link linkend="zend.search.lucene.index-creation.html-documents">HTML ドキュメントの節</link>
+            を参照ください) を用いて次のようにすることです。
+            <programlisting role="php"><![CDATA[
+/**
+ * テキストを指定した色で強調する
+ *
+ * @param string|array $words
+ * @param string $colour
+ * @return string
+ */
+public function highlight($words, $colour = '#66ffff');
+]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[
+/**
+ * テキストを、指定したビューヘルパーあるいはコールバック関数で強調する
+ *
+ * @param string|array $words  強調したい単語。配列あるいは文字列で指定します
+ * @param callback $callback   コールバックメソッド。テキストの変換 (強調) に使用します
+ * @param array    $params     コールバックのパラメータとして渡す配列
+ *                             (最初の必須パラメータは、強調させる HTML 片となります)
+ * @return string
+ * @throws Zend_Search_Lucene_Exception
+ */
+public function highlightExtended($words, $callback, $params = array())
+]]>
+            </programlisting>
+        </para>
+        <para>
+            強調方法をカスタマイズするには <code>highlightExtended()</code>
+            メソッドにコールバックを指定して使用します。このコールバックは、ひとつ以上のパラメータを受け取ります
+            <footnote><para>最初のパラメータは強調対象の HTML 片、
+            そしてその他のパラメータはコールバックの振る舞いによって変わります。
+            返り値は、強調済みの HTML 片となります。</para></footnote>。
+            あるいは、<code>Zend_Search_Lucene_Document_Html</code> クラスを継承して
+            <code>applyColour($stringToHighlight, $colour)</code> メソッドを再定義することもできます。
+            このメソッドは、デフォルトの強調コールバックとして用いられるものです。
+            <footnote>
+                <para>
+                    どちらの場合についても、返される HTML は自動的に正しい XHTML 形式に変換されます。
+                </para>
+            </footnote>
+        </para>
+        <para>
+            <link linkend="zend.view.helpers">ビューヘルパー</link> も、ビュースクリプトのコンテキストでコールバックとして使えます。
+            <programlisting role="php"><![CDATA[
+$doc->highlightExtended('word1 word2 word3...', array($this, 'myViewHelper'));
+]]>
+            </programlisting>
+        </para>
+        <para>
+            強調した結果を取得するには <code>Zend_Search_Lucene_Document_Html->getHTML()</code> メソッドを使用します。
+        </para>
+        
+        <note>
+            <para>
+                強調処理は、現在の解析器を使って行われます。つまり、解析器が理解するすべての形式の単語が強調されます。
+            </para>
+            <para>
+                たとえば、大文字小文字を区別しない解析器を使っている場合に 'text' を強調するよう指定すると、
+                'text' や 'Text' そして 'TEXT' といった単語も強調されます。
+            </para>
+            <para>
+                同様に、語幹抽出機能を持つ解析器を使っている場合に 'indexed' を強調するよう指定すると、
+                'index' や 'indexing' そして 'indices' といった単語も強調されます。
+            </para>
+            <para>
+                一方、現在の解析器が処理をスキップするような単語
+                (短い単語に対するフィルタが解析器に適用されている場合など)
+                は、なにも強調されません。
+            </para>
+        </note>
+
+        <para>
+            もうひとつの方法は、
+            <code>Zend_Search_Lucene_Search_Query->highlightMatches(string $inputHTML[, Zend_Search_Lucene_Search_Highlighter_Interface $highlighter])</code> 
+            メソッドを使うことです。
             <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
-$hits = $index->find($query);
-...
 $highlightedHTML = $query->highlightMatches($sourceHTML);
 ]]>
             </programlisting>
         </para>
-
         <para>
-            <code>highlightMatches()</code> メソッドは、HTML の処理の際に
-            <code>Zend_Search_Lucene_Document_Html</code> クラスを使用しています
-            (詳細は <link linkend="zend.search.lucene.index-creation.html-documents">HTML
-            ドキュメントの節</link> を参照ください)。つまり、HTML ソースと同じ条件が適用されます。
+            オプションの 2 番目のパラメータは、
+            <code>Zend_Search_Lucene_Search_Highlighter_Interface</code>
+            インターフェイスを実装したオブジェクトです。
+            <programlisting role="php"><![CDATA[
+interface Zend_Search_Lucene_Search_Highlighter_Interface
+{
+    /**
+     * 強調対象の文書を設定します
+     *
+     * @param Zend_Search_Lucene_Document_Html $document
+     */
+    public function setDocument(Zend_Search_Lucene_Document_Html $document);
+
+    /**
+     * 強調対象の文書を取得します
+     *
+     * @return Zend_Search_Lucene_Document_Html $document
+     */
+    public function getDocument();
+
+    /**
+     * 指定した単語を強調します (サブクエリ単位でこのメソッドが起動されます)
+     *
+     * @param string|array $words  強調したい単語。配列あるいは文字列で指定します
+     */
+    public function highlight($words);
+}
+]]>
+            </programlisting>
+            ここでの <code>Zend_Search_Lucene_Document_Html</code> オブジェクトは、
+            <code>Zend_Search_Lucene_Search_Query->highlightMatches()</code> メソッドに渡された
+            HTML から作成されるオブジェクトです。
+        </para>
+        <para>
+            <code>$highlighter</code> パラメータを省略すると、
+            <code>Zend_Search_Lucene_Search_Highlighter_Default</code>
+            オブジェクトのインスタンスを作成してそれを使用します。
+        </para>
+        <para>
+            <code>highlight()</code> メソッドはサブクエリ単位で起動されるので、
+            サブクエリ単位で異なる強調処理を行うことができます。
+        </para>
+        <para>
+            実際のところ、デフォルトの処理は定義済みの色テーブルを使用しているだけです。
+            自前の強調処理を実装することもできますし、デフォルトの処理を継承して色テーブルだけを再定義することもできます。
         </para>
     </sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
