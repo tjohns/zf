@@ -828,49 +828,40 @@ Produkte, Foo Server, FAQ
 
         <note>
             <para>
-                When looking for relations in the the page instance
-                (<code>$page->getRel($type)</code> or
-                <code>$page->getRev($type)</code>), the helper accepts the
-                values of type <code>string</code>, <code>array</code>,
-                <classname>Zend_Config</classname>, or
-                <classname>Zend_Navigation_Page</classname>. If a string
-                is found, it will be converted to a
-                <classname>Zend_Navigation_Page_Uri</classname>. If an array
-                or a config is found, it will be converted to one or several
-                page instances. If the first key of the array/config is numeric,
-                it will be considered to contain several pages, and each
-                element will be passed to the
-                <link linkend="zend.navigation.pages.factory">page factory</link>.
-                If the first key is not numeric, the array/config will be
-                passed to the page factory directly, and a single page will
-                be returned.
+                Wenn in der Instanz der Seite nach Beziehungen gesehen wird (
+                (<code>$page->getRel($type)</code> oder <code>$page->getRev($type)</code>),
+                akzeptiert der Helfer Wert vom Typ <code>string</code>, <code>array</code>,
+                <classname>Zend_Config</classname>, oder
+                <classname>Zend_Navigation_Page</classname>. Wenn ein String gefunden wird, wird
+                dieser zu einer <classname>Zend_Navigation_Page_Uri</classname> konvertiert. Wenn
+                ein Array oder eine Config gefunden wird, wird diese in ein oder mehrere
+                Seiteninstanzen konvertiert, und jedes Element wird an die
+                <link linkend="zend.navigation.pages.factory">Seiten Factory</link> übergeben.
+                Wenn der erste Schlüssel nicht nummerische ist, wird das Array/Config direkt an die
+                Seiten Factory übergeben, und eine einzelne Seite wird retourniert.
             </para>
         </note>
 
         <para>
-            The helper also supports magic methods for finding relations.
-            E.g. to find forward alternate relations, call
-            <code>$helper->findRelAlternate($page)</code>, and to find
-            reverse section relations, call
-            <code>$helper->findRevSection($page)</code>. Those calls correspond
-            to <code>$helper->findRelation($page, 'rel', 'alternate');</code>
-            and <code>$helper->findRelation($page, 'rev', 'section');</code>
-            respectively.
+            Der Helfer unterstützt auch magische Methoden für das Finden von Beziehungen. Um z.B.
+            alternative vorwärts Beziehungen zu finden muß
+            <code>$helper->findRelAlternate($page)</code> aufgerufen werden, und um rückwärts
+            gerichtete Kapitel Beziehungen zu finden <code>$helper->findRevSection($page)</code>.
+            Diese Aufrufe korrespondieren mit <code>$helper->findRelation($page, 'rel',
+            'alternate');</code> und <code>$helper->findRelation($page, 'rev', 'section');</code>.
         </para>
 
         <para>
-            To customize which relations should be rendered, the helper
-            uses a render flag. The render flag is an integer value, and will be
-            used in a
-            <ulink url="http://php.net/manual/en/language.operators.bitwise.php">bitwse
-            <code>and</code> (<code>&amp;</code>) operation</ulink> against the
-            helper's render constants to determine if the relation that belongs
-            to the render constant should be rendered.
+            Um zu Steuern welche Beziehung dargestellt werden soll, verwendet der Helfer ein render
+            Flag. Das render Flag ist ein Integer Wert, und kann in
+            <ulink url="http://php.net/manual/en/language.operators.bitwise.php">binären
+            <code>und</code> (<code>&amp;</code>) Operationen</ulink> mit den render Konstanten des
+            Helfers verwendet werden um festzustellen ob die Beziehung zu der die render Konstante
+            gehört, dargestellt werden soll.
         </para>
         <para>
-            See the
-            <link linkend="zend.view.helpers.initial.navigation.links.example3">example
-            below</link> for more information.
+            Siehe das <link linkend="zend.view.helpers.initial.navigation.links.example3">folgende
+            Beispiel</link> für weitere Informationen.
         </para>
 
         <para>
@@ -930,71 +921,67 @@ Produkte, Foo Server, FAQ
         </para>
 
         <para>
-            The constants from <code>RENDER_ALTERNATE</code> to
-            <code>RENDER_BOOKMARK</code> denote standard HTML link types.
-            <code>RENDER_CUSTOM</code> denotes non-standard relations that
-            specified in pages. <code>RENDER_ALL</code> denotes standard and
-            non-standard relations.
+            Die Konstanten von <code>RENDER_ALTERNATE</code> bis <code>RENDER_BOOKMARK</code>
+            stellen standardmäßige HTML Linktypen dar. <code>RENDER_CUSTOM</code> stellt eine
+            nicht-standardmäßige Beziehung dar die in der Seite spezifiziert ist.
+            <code>RENDER_ALL</code> stellt standardmäßige und nicht-standardmäßige Beziehungen dar.
         </para>
 
         <para>
-            Methods in the links helper:
+            Methoden im Link Helfer:
         </para>
 
         <itemizedlist>
            <listitem>
                <para>
-                   <code>{get|set}RenderFlag()</code> gets/sets the render
-                   flag. Default is <code>RENDER_ALL</code>. See examples
-                   below on how to set the render flag.
+                   <code>{get|set}RenderFlag()</code> empfängt/setzt das render Flag.
+                   Standardwert ist <code>RENDER_ALL</code>. Siehe das folgende Beispiel dafür
+                   wie das render Flag zu setzen ist.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>findAllRelations()</code> finds all relations of
-                   all types for a given page.
+                   <code>findAllRelations()</code> findet alle Beziehungen von allen Typen
+                   einer angegebenen Seite.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>findRelation()</code> finds all relations of a given
-                   type from a given page.
+                   <code>findRelation()</code> findet alle Beziehungen eines angegebenen Typs
+                   einer angegebenen Seite.
                </para>
            </listitem>
            <listitem>
                <para>
                    <code>searchRel{Start|Next|Prev|Chapter|Section|Subsection}()</code>
-                   traverses a container to find forward relations to
-                   the start page, the next page, the previous page,
-                   chapters, sections, and subsections.
+                   durchsucht einen Container um vorwärtsgerichtete Beziehungen zu Startseite,
+                   nächster Seite, voriger Seite, Kapitel, Sektion und Untersektion zu finden.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>searchRev{Section|Subsection}()</code> traverses
-                   a container to find reverse relations to sections or
-                   subsections.
+                   <code>searchRev{Section|Subsection}()</code> durchsucht einen Container um
+                   rückwärtsgerichtete Beziehungen zu Sektionen oder Untersektionen zu finden.
                </para>
            </listitem>
            <listitem>
                <para>
-                   <code>renderLink()</code> renders a single <code>link</code>
-                   element.
+                   <code>renderLink()</code> stellt ein einzelnes <code>link</code> Element dar.
                </para>
            </listitem>
        </itemizedlist>
 
         <example id="zend.view.helpers.initial.navigation.links.example1">
-            <title>Specify relations in pages</title>
+            <title>Beziehungen in Seiten spezifizieren</title>
 
             <para>
-                This example shows how to specify relations in pages.
+                Dieses Beispiel zeigt wir Beziehungen in Seiten spezifiziert werden können.
             </para>
 
             <programlisting role="php"><![CDATA[
 $container = new Zend_Navigation(array(
     array(
-        'label' => 'Relations using strings',
+        'label' => 'Strings für Beziehungen verwenden',
         'rel'   => array(
             'alternate' => 'http://www.example.org/'
         ),
@@ -1003,7 +990,7 @@ $container = new Zend_Navigation(array(
         )
     ),
     array(
-        'label' => 'Relations using arrays',
+        'label' => 'Arrays für Beziehungen verwenden',
         'rel'   => array(
             'alternate' => array(
                 'label' => 'Example.org',
@@ -1012,7 +999,7 @@ $container = new Zend_Navigation(array(
         )
     ),
     array(
-        'label' => 'Relations using configs',
+        'label' => 'Konfigurationen für Beziehungen verwenden',
         'rel'   => array(
             'alternate' => new Zend_Config(array(
                 'label' => 'Example.org',
@@ -1021,7 +1008,7 @@ $container = new Zend_Navigation(array(
         )
     ),
     array(
-        'label' => 'Relations using pages instance',
+        'label' => 'Instanzen von Seiten für Beziehungen verwenden',
         'rel'   => array(
             'alternate' => Zend_Navigation_Page::factory(array(
                 'label' => 'Example.org',
@@ -1035,24 +1022,24 @@ $container = new Zend_Navigation(array(
         </example>
 
         <example id="zend.view.helpers.initial.navigation.links.example2">
-            <title>Default rendering of links</title>
+            <title>Standardmäßige Darstellung von Links</title>
 
             <para>
-                This example shows how to render a menu from a container
-                registered/found in the view helper.
+                Dieses Beispiel zeigt wie ein Menü von einem Container dargestellt wird, der im
+                View Helfer registriert/gefunden wurde.
             </para>
 
             <programlisting role="php"><![CDATA[
-In a view script or layout:
+Im View Skript oder Layout:
 <?php echo $this->view->navigation()->links(); ?>
 
-Output:
+Ausgabe:
 <link rel="alternate" href="/products/server/faq/format/xml">
 <link rel="start" href="/" title="Home">
-<link rel="next" href="/products/server/editions" title="Editions">
+<link rel="next" href="/products/server/editions" title="Editionen">
 <link rel="prev" href="/products/server" title="Foo Server">
-<link rel="chapter" href="/products" title="Products">
-<link rel="chapter" href="/company/about" title="Company">
+<link rel="chapter" href="/products" title="Produkte">
+<link rel="chapter" href="/company/about" title="Firma">
 <link rel="chapter" href="/community" title="Community">
 <link rel="canonical" href="http://www.example.com/?page=server-faq">
 <link rev="subsection" href="/products/server" title="Foo Server">
@@ -1061,52 +1048,52 @@ Output:
         </example>
 
         <example id="zend.view.helpers.initial.navigation.links.example3">
-            <title>Specify which relations to render</title>
+            <title>Spezifizieren welche Beziehungen dargestellt werden sollen</title>
 
             <para>
-                This example shows how to specify which relations to find
-                and render.
+                Dieses Beispiel zeigt wie spezifiziert werden kann, welche Beziehungen zu finden
+                und darzustellen sind.
             </para>
 
             <programlisting role="php"><![CDATA[
-Render only start, next, and prev:
+Nur start, next und prev darstellen:
 $helper->setRenderFlag(Zend_View_Helper_Navigation_Links::RENDER_START |
                        Zend_View_Helper_Navigation_Links::RENDER_NEXT |
                        Zend_View_Helper_Navigation_Links::RENDER_PREV);
 
-Output:
+Ausgabe:
 <link rel="start" href="/" title="Home">
-<link rel="next" href="/products/server/editions" title="Editions">
+<link rel="next" href="/products/server/editions" title="Editionen">
 <link rel="prev" href="/products/server" title="Foo Server">
 ]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-Render only native link types:
+Nur native Linktypen darstellen:
 $helper->setRenderFlag(Zend_View_Helper_Navigation_Links::RENDER_ALL ^
                        Zend_View_Helper_Navigation_Links::RENDER_CUSTOM);
 
-Output:
+Ausgabe:
 <link rel="alternate" href="/products/server/faq/format/xml">
 <link rel="start" href="/" title="Home">
-<link rel="next" href="/products/server/editions" title="Editions">
+<link rel="next" href="/products/server/editions" title="Editionen">
 <link rel="prev" href="/products/server" title="Foo Server">
-<link rel="chapter" href="/products" title="Products">
-<link rel="chapter" href="/company/about" title="Company">
+<link rel="chapter" href="/products" title="Produkte">
+<link rel="chapter" href="/company/about" title="Firma">
 <link rel="chapter" href="/community" title="Community">
 <link rev="subsection" href="/products/server" title="Foo Server">
 ]]>
             </programlisting>
 
             <programlisting role="php"><![CDATA[
-Render all but chapter:
+Alles ausser Kapitel darstellen:
 $helper->setRenderFlag(Zend_View_Helper_Navigation_Links::RENDER_ALL ^
                        Zend_View_Helper_Navigation_Links::RENDER_CHAPTER);
 
-Output:
+Ausgabe:
 <link rel="alternate" href="/products/server/faq/format/xml">
 <link rel="start" href="/" title="Home">
-<link rel="next" href="/products/server/editions" title="Editions">
+<link rel="next" href="/products/server/editions" title="Editionen">
 <link rel="prev" href="/products/server" title="Foo Server">
 <link rel="canonical" href="http://www.example.com/?page=server-faq">
 <link rev="subsection" href="/products/server" title="Foo Server">
@@ -1116,40 +1103,38 @@ Output:
     </sect4>
 
     <sect4 id="zend.view.helpers.initial.navigation.menu">
-        <title>Menu Helper</title>
+        <title>Menu Helfer</title>
 
         <para>
-            The Menu helper is used for rendering menus from navigation
-            containers. By default, the menu will be rendered using
-            HTML <code>UL</code> and <code>LI</code> tags, but the helper also
-            allows using a partial view script.
+            Der Menu Helfer wird für die Darstellung von Menüs aus Navigations Containern
+            verwendet. Standardmäßig wird das Menü durch Verwendung der HTML Tags
+            <code>UL</code> und <code>LI</code> dargestellt. Der Helfer erlaubt aber auch
+            die Verwendung eines partiellen View Skripts.
         </para>
 
         <para>
-            Methods in the Menu helper:
+            Methoden im Menu Helfer:
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>{get|set}UlClass()</code> gets/sets the CSS class
-                    used in <code>renderMenu()</code>.
+                    <code>{get|set}UlClass()</code> empfängt/setzt die CSS Klasse zur Verwendung
+                    in <code>renderMenu()</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>{get|set}OnlyActiveBranch()</code> gets/sets a flag
-                    specifying whether only the active branch of a container
-                    should be rendered.
+                    <code>{get|set}OnlyActiveBranch()</code> empfängt/setzt ein Flag das
+                    spezifiziert ob der aktive Zweig eines Containers dargestellt werden soll.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>{get|set}RenderParents()</code> gets/sets a flag
-                    specifying whether parents should be rendered when only
-                    rendering active branch of a container. If set to
-                    <code>false</code>, only the deepest active menu will be
-                    rendered.
+                    <code>{get|set}RenderParents()</code> empfängt/setzt ein Flag das
+                    spezifiziert ob Eltern nur dargestellt werden sollen wenn nur der aktive
+                    Zweig eines Containers dargestellt wird. Wenn es auf <code>false</code>
+                    gesetzt wird, wird nur das tiefste aktive Menü dargestellt.
                 </para>
             </listitem>
             <listitem>
