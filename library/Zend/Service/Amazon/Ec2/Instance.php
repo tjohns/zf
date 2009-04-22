@@ -112,7 +112,7 @@ class Zend_Service_Amazon_Ec2_Instance extends Zend_Service_Amazon_Ec2_Abstract
         // set / override the defualt optoins if they are not passed into the array;
         $options = array_merge($_defaultOptions, $options);
 
-        if(!$options['imageId']) {
+        if(!isset($options['imageId'])) {
             require_once 'Zend/Service/Amazon/Ec2/Exception.php';
             throw new Zend_Service_Amazon_Ec2_Exception('No Image Id Provided');
         }
