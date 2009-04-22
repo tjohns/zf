@@ -101,7 +101,7 @@ class Zend_Tool_Project_Provider_Test extends Zend_Tool_Project_Provider_Abstrac
         
         $response = $this->_registry->getResponse();
         
-        if ($this->_getRequest()->isPretend()) {
+        if ($this->_registry->getRequest()->isPretend()) {
             $response->appendContent('Would create a library stub in location ' . $testLibraryResource->getContext()->getPath());
         } else {
             $response->appendContent('Creating a library stub in location ' . $testLibraryResource->getContext()->getPath());

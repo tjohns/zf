@@ -82,7 +82,7 @@ class Zend_Tool_Project_Provider_Controller extends Zend_Tool_Project_Provider_A
         }
 
         // do the creation
-        if ($this->_getRequest()->isPretend()) {
+        if ($this->_registry->getRequest()->isPretend()) {
             
             $this->_registry->getResponse()->appendContent('Would create a controller at '  . $controllerResource->getContext()->getPath());
             
