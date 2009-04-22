@@ -10,18 +10,19 @@
             <title>Geltungsbereich</title>
 
             <para>
-                Dieses Dokument bietet Richtlinien für die Formatierung von Code und Dokumentation für
-                Individuen und Teams die im Zend Framework mitarbeiten. Viele Entwickler die den
-                Zend Framework verwenden haben diese Code Standards als nützlich empfunden weil Ihr
-                Code Stil mit jedem Zend Framework Code konsistent bleibt. Es ist auch anzumerken das
-                es signifikant viel Arbeit erfordert einen kompletten Coding Standard zu definieren.
+                Dieses Dokument bietet Richtlinien für die Formatierung von Code und Dokumentation
+                für Individuen und Teams die im Zend Framework mitarbeiten. Viele Entwickler die
+                den Zend Framework verwenden haben diese Code Standards als nützlich empfunden weil
+                Ihr Code Stil mit jedem Zend Framework Code konsistent bleibt. Es ist auch
+                anzumerken das es signifikant viel Arbeit erfordert einen kompletten Coding
+                Standard zu definieren.
 
-                Beachte: Manchmal entscheiden Entwickler das die Verfügbarkeit eines Standards wichtiger
-                ist als was der Standard aktuell im höchsten Level des Designs empfiehlt. Diese
-                Richtlinien im Zend Framework Coding Standard beschreiben die Praxis die im ZF Projekt
-                sehr gut funktionieren. Diese Standard können geändert oder so wie sie sind verwendet
-                werden solange Sie sich an unsere <ulink url="http://framework.zend.com/license">Lizenz</ulink>
-                halten.
+                Beachte: Manchmal entscheiden Entwickler das die Verfügbarkeit eines Standards
+                wichtiger ist als was der Standard aktuell im höchsten Level des Designs empfiehlt.
+                Diese Richtlinien im Zend Framework Coding Standard beschreiben die Praxis die im
+                ZF Projekt sehr gut funktionieren. Diese Standard können geändert oder so wie sie
+                sind verwendet werden solange Sie sich an unsere
+                <ulink url="http://framework.zend.com/license">Lizenz</ulink> halten.
             </para>
 
             <para>
@@ -51,10 +52,10 @@
             <title>Ziele</title>
 
             <para>
-                Coding Standards sind in jedem Entwicklungs Projekt wichtig, aber sie sid speziell dann
-                wichtig wenn viele Entwickler an dem gleichen Projekt arbeiten. Coding Standards helfen
-                sicherzustellen das der Code von hoher Qualität ist, weniger Fehler hat, und einfach zu
-                warten ist.
+                Coding Standards sind in jedem Entwicklungs Projekt wichtig, aber sie sid speziell
+                dann wichtig wenn viele Entwickler an dem gleichen Projekt arbeiten. Coding
+                Standards helfen sicherzustellen das der Code von hoher Qualität ist, weniger
+                Fehler hat, und einfach zu warten ist.
             </para>
         </sect2>
     </sect1>
@@ -72,15 +73,18 @@
             </para>
 
             <para>
-                <emphasis>WICHTIG:</emphasis> Einbeziehen von beliebigen binärischen Daten durch <code>__HALT_COMPILER()</code>
-                ist in den PHP Dateien im Zend Framework oder abgeleiteten Datei verboten. Das Benutzen
-                ist nur für einige Installationsskirpte erlaubt.
+                <emphasis>WICHTIG:</emphasis> Einbeziehen von beliebigen binärischen Daten durch
+                <code>__HALT_COMPILER()</code> ist in den PHP Dateien im Zend Framework oder
+                abgeleiteten Datei verboten. Das Benutzen ist nur für einige Installationsskirpte
+                erlaubt.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.indentation">
             <title>Einrücken</title>
-            <para>Ein Einzug sollte aus 4 Leerzeichen bestehen. Tabulatoren sind nicht erlaubt.</para>
+            <para>
+                Ein Einzug sollte aus 4 Leerzeichen bestehen. Tabulatoren sind nicht erlaubt.
+            </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.max-line-length">
@@ -88,8 +92,9 @@
 
             <para>
                 Die Zielzeilenlänge ist 80 Zeichen. Entwickler sollten jede Zeile Ihres Codes unter
-                80 Zeichen halten, soweit dies möglich und praktikabel ist. Trotzdem sind längere Zeilen
-                in einigen Fällen erlaubt. Die maximale Länge einer Zeile beträgt 120 Zeichen.
+                80 Zeichen halten, soweit dies möglich und praktikabel ist. Trotzdem sind längere
+                Zeilen in einigen Fällen erlaubt. Die maximale Länge einer Zeile beträgt 120
+                Zeichen.
             </para>
         </sect2>
 
@@ -98,14 +103,14 @@
 
             <para>
                 Die Zeilenbegrenzung folgt der Unix Textdatei Konvention. Zeilen müssen mit
-                einem einzelnen Zeilenvorschubzeichen (LF) enden. Zeilenvorschub Zeicen werden duch eine
-                ordinale 10, oder durch 0x0A (hexadecimal) dargestellt.
+                einem einzelnen Zeilenvorschubzeichen (LF) enden. Zeilenvorschub Zeicen werden duch
+                eine ordinale 10, oder durch 0x0A (hexadecimal) dargestellt.
             </para>
 
             <para>
-                Beachte: Benutze nicht den Wagenrücklauf (CR) wie in den Konventionen von Apple's OS
-                (0x0D) oder die Kombination aus Wagenrücklauf und Zeilenvorschub (CRLF) wie im Standard für
-                das Windows OS (0x0D, 0x0A).
+                Beachte: Benutze nicht den Wagenrücklauf (CR) wie in den Konventionen von Apple's
+                OS (0x0D) oder die Kombination aus Wagenrücklauf und Zeilenvorschub (CRLF) wie im
+                Standard für das Windows OS (0x0D, 0x0A).
             </para>
         </sect2>
     </sect1>
@@ -117,40 +122,43 @@
             <title>Klassen</title>
 
             <para>
-                Zend Framework standartisiert eine Klassennamen Konvention wobei die Namen der Klassen
-                direkt mit den Verzeichnissen übereinstimmen muß in welchen Sie gespeichert sind.
-                Das Basisverzeichnis der ZF Standard Bibliothek ist das "Zend/" Verzeichnis, wobei das
-                Basisverzeichnis der ZF Extras Bibliothek im "ZendX/" Verzeichnis ist. Alle Zend
-                Framework Klassen werden hierarchisch unter dem gleichen Basisverzeichnis gespeichert.
+                Zend Framework standartisiert eine Klassennamen Konvention wobei die Namen der
+                Klassen direkt mit den Verzeichnissen übereinstimmen muß in welchen Sie gespeichert
+                sind. Das Basisverzeichnis der ZF Standard Bibliothek ist das "Zend/" Verzeichnis,
+                wobei das Basisverzeichnis der ZF Extras Bibliothek im "ZendX/" Verzeichnis ist.
+                Alle Zend Framework Klassen werden hierarchisch unter dem gleichen Basisverzeichnis
+                gespeichert.
             </para>
 
             <para>
-                Klassennamen dürfen nur alphanumerische Zeichen enthalten. Nummern sind in Klassennamen
-                gestattet es wird aber von Ihnen in den meisten Fällen abgeraten. Unterstriche sind nur
-                gestattet im Platz des Pfadseparators -- der Dateiname "Zend/Db/Table.php" muß
-                übereinstimmen mit dem Klassennamen "Zend_Db_Table".
+                Klassennamen dürfen nur alphanumerische Zeichen enthalten. Nummern sind in
+                Klassennamen gestattet es wird aber von Ihnen in den meisten Fällen abgeraten.
+                Unterstriche sind nur gestattet im Platz des Pfadseparators -- der Dateiname
+                "Zend/Db/Table.php" muß übereinstimmen mit dem Klassennamen "Zend_Db_Table".
             </para>
 
             <para>
-                Wenn ein Klassenname aus mehr als einem Wort besteht, muß der erste Buchstabe von jedem neuen
-                Wort großgeschrieben werden. Durchgehende Großbuchstaben sind nicht erlaubt, z.B. eine Klasse
-                "Zend_PDF" ist nicht erlaubt, aber "Zend_Pdf" ist akzeptierbar.
+                Wenn ein Klassenname aus mehr als einem Wort besteht, muß der erste Buchstabe von
+                jedem neuen Wort großgeschrieben werden. Durchgehende Großbuchstaben sind nicht
+                erlaubt, z.B. eine Klasse "Zend_PDF" ist nicht erlaubt, aber "Zend_Pdf" ist
+                akzeptierbar.
             </para>
 
             <para>
-                Diese Konventionen definieren einen Pseudo-Namespace Mechanismus für Zend Framework.
-                Zend Framework wird das PHP Namespace Feature einbauen sobald es verfügbar ist und es
-                für unsere Entwickler in deren Anwendungen ohne Bedenken verwendbar ist.
+                Diese Konventionen definieren einen Pseudo-Namespace Mechanismus für Zend
+                Framework. Zend Framework wird das PHP Namespace Feature einbauen sobald es
+                verfügbar ist und es für unsere Entwickler in deren Anwendungen ohne Bedenken
+                verwendbar ist.
             </para>
 
             <para>
                 Siehe die Klassennamen in der Standard und Extra Bibliothek für Beispiel dieser
                 Klassennamen Konvention.
 
-                <emphasis>WICHTIG:</emphasis> Code welcher mit dem Framework ausgeliefert werden muß,
-                aber nicht Teil der Standard oder Extras Bibliothek ist (z.B. Anwendungscode oder
-                Bibliotheken die nicht von Zend ausgeliefert werden), dürfen nie mit "Zend_" oder "ZendX_"
-                beginnen.
+                <emphasis>WICHTIG:</emphasis> Code welcher mit dem Framework ausgeliefert werden
+                muß, aber nicht Teil der Standard oder Extras Bibliothek ist (z.B. Anwendungscode
+                oder Bibliotheken die nicht von Zend ausgeliefert werden), dürfen nie mit "Zend_"
+                oder "ZendX_" beginnen.
             </para>
         </sect2>
 
@@ -163,9 +171,9 @@
             </para>
 
             <para>
-                Jede Datei die irgendeinen PHP Code enthält sollte mit der Endung ".php" enden, mit Ausnahme
-                der View Skripte. Die folgenden Beispiele zeigen akzeptierbare Dateinamen für Zend
-                Framework Klassen:
+                Jede Datei die irgendeinen PHP Code enthält sollte mit der Endung ".php" enden, mit
+                Ausnahme der View Skripte. Die folgenden Beispiele zeigen akzeptierbare Dateinamen
+                für Zend Framework Klassen:
 
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
@@ -184,20 +192,20 @@ Zend/View/Helper/FormRadio.php
             <title>Funktionen und Methoden</title>
 
             <para>
-                Funktionsnamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
-                gestattet. Nummern sind in Funktionsnamen gestattet aber in den meisten Fällen nicht
-                empfohlen.
+                Funktionsnamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind
+                nicht gestattet. Nummern sind in Funktionsnamen gestattet aber in den meisten
+                Fällen nicht empfohlen.
             </para>
 
             <para>
-                Funktionsnamen müssen immer mit einem Kleinbuchstaben anfangen. Wenn Funktionsnamen aus mehr als
-                einem Wort bestehen, muß der erste Buchstabe jeden Wortes großgeschrieben werden. Das wird
-                normalerweise "camelCase" Formatierung genannt.
+                Funktionsnamen müssen immer mit einem Kleinbuchstaben anfangen. Wenn Funktionsnamen
+                aus mehr als einem Wort bestehen, muß der erste Buchstabe jeden Wortes
+                großgeschrieben werden. Das wird normalerweise "camelCase" Formatierung genannt.
             </para>
 
             <para>
-                Wortreichtum wird generell befürwortet. Funktionsnamen sollten so wortreich wie möglich
-                sein um deren Zweck und Verhalten zu erklären.
+                Wortreichtum wird generell befürwortet. Funktionsnamen sollten so wortreich wie
+                möglich sein um deren Zweck und Verhalten zu erklären.
             </para>
 
             <para>
@@ -214,17 +222,19 @@ widgetFactory()
             </para>
 
             <para>
-                Für objekt-orientiertes Programmieren, sollten Zugriffspunkte für Instanzen oder statische
-                Variablen immer mit "get" oder "set" beginnen. Wenn Design-Pattern implementiert werden,
-                wie Singleton oder das Factory Pattern, sollte der Name der Methode den Namen des Pattern
-                enthalten wo es praktikabel ist, um das Verhalten besser zu beschreiben.
+                Für objekt-orientiertes Programmieren, sollten Zugriffspunkte für Instanzen oder
+                statische Variablen immer mit "get" oder "set" beginnen. Wenn Design-Pattern
+                implementiert werden, wie Singleton oder das Factory Pattern, sollte der Name der
+                Methode den Namen des Pattern enthalten wo es praktikabel ist, um das Verhalten
+                besser zu beschreiben.
             </para>
 
             <para>
-                 Für Methoden in Objekten die mit dem "private" oder "protected" Modifikator deklariert
-                 sind, muß das erste Zeichen des Namens der Methode ein einzelner Unterstrich sein. Das
-                 ist die einzige akzeptable Anwendung von einem Unterstrich im Namen einer Methode.
-                 Methoden die als "public" deklariert sind sollten nie einem Unterstrich enthalten.
+                 Für Methoden in Objekten die mit dem "private" oder "protected" Modifikator
+                 deklariert sind, muß das erste Zeichen des Namens der Methode ein einzelner
+                 Unterstrich sein. Das ist die einzige akzeptable Anwendung von einem Unterstrich
+                 im Namen einer Methode. Methoden die als "public" deklariert sind sollten nie
+                 einem Unterstrich enthalten.
             </para>
 
             <para>
@@ -238,8 +248,9 @@ widgetFactory()
             <title>Variablen</title>
 
             <para>
-                Variablennamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind nicht
-                gestattet. Nummern sind in Variablen gestattet in den meisten Fällen aber nicht empfohlen.
+                Variablennamen dürfen nur Alphanummerische Zeichen enthalten. Unterstriche sind
+                nicht gestattet. Nummern sind in Variablen gestattet in den meisten Fällen aber
+                nicht empfohlen.
             </para>
 
             <para>
