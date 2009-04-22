@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Reviewed: no -->
+<sect2 id="zend.application.available-resources.session">
+    <title>Zend_Application_Resource_Session</title>
+
+    <para>
+        <code>Zend_Application_Resource_Session</code> allows you to configure
+        <code>Zend_Session</code> as well as optionally initialize a session
+        SaveHandler.
+    </para>
+
+    <para>
+        To set a session save handler, simply pass the <code>saveHandler</code>
+        (case insensitive) option key to the resource. The value of this option
+        may be one of the following:
+    </para>
+
+    <itemizedlist>
+        <listitem><para>
+            <code>string</code>: A string indicating a class implementing
+            <code>Zend_Session_SaveHandler_Interface</code> that should be
+            instantiated.
+        </para></listitem>
+
+        <listitem><para>
+            <code>array</code>: An array with the keys "class" and, optionally,
+            "options", indicating a class implementing
+            <code>Zend_Session_SaveHandler_Interface</code> that should be
+            instantiated and an array of options to provide to its constructor.
+        </para></listitem>
+
+        <listitem><para>
+            <code>Zend_Session_SaveHandler_Interface</code>: an object
+            implementing this interface.
+        </para></listitem>
+    </itemizedlist>
+
+    <para>
+        Any other option keys passed will be passed to
+        <code>Zend_Session::setOptions()</code> to configure
+        <code>Zend_Session</code>.
+    </para>
+
+    <example id="zend.application.available-resources.session.configExample">
+        <title>Sample Session resource configuration</title>
+
+        <para>
+            Below is a sample INI snippet showing how to configure the session
+            resource. It sets several <code>Zend_Session</code> options, as well
+            as configures a <code>Zend_Session_SaveHandler_Db</code> instance.
+        </para>
+
+        <programlisting role="ini"><![CDATA[
+resources.session.save_path = APPLICATION_PATH "/../data/session"
+resources.session.use_only_cookies = true
+resources.session.remember_me_seconds = 864000
+resources.session.saveHandler.class = "Zend_Session_SaveHandler_Db"
+resources.session.saveHandler.options.name = "session"
+resources.session.saveHandler.options.primary.session_id = "session_id"
+resources.session.saveHandler.options.primary.save_path = "save_path"
+resources.session.saveHandler.options.primary.name = "name"
+resources.session.saveHandler.options.primaryAssignment.sessionId = "sessionId"
+resources.session.saveHandler.options.primaryAssignment.sessionSavePath = "sessionSavePath"
+resources.session.saveHandler.options.primaryAssignment.sessionName = "sessionName"
+resources.session.saveHandler.options.modifiedColumn = "modified"
+resources.session.saveHandler.options.dataColumn = "session_data"
+resources.session.saveHandler.options.lifetimeColumn = "lifetime"
+]]></programlisting>
+    </example>
+</sect2>
