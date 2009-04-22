@@ -139,8 +139,7 @@ class Zend_Service_Amazon_Ec2_EbsTest extends PHPUnit_Framework_TestCase
             'size'  => '400',
             'status'  => 'creating',
             'createTime'  => '2008-05-07T11:51:50.000Z',
-            'availabilityZone'  => 'us-east-1a',
-            'snapshotId'        => ''
+            'availabilityZone'  => 'us-east-1a'
         );
 
         $this->assertSame($arrCreateNewVolume, $return);
