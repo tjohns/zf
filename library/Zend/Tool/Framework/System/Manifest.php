@@ -43,7 +43,6 @@ class Zend_Tool_Framework_System_Manifest
     {
         $providers = array(
             new Zend_Tool_Framework_System_Provider_Version(),
-            new Zend_Tool_Framework_System_Provider_Providers(),
             new Zend_Tool_Framework_System_Provider_Phpinfo(),
             new Zend_Tool_Framework_System_Provider_Manifest()
             );
