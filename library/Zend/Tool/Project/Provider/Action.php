@@ -38,7 +38,7 @@ class Zend_Tool_Project_Provider_Action extends Zend_Tool_Project_Provider_Abstr
         
         $actionMethod = self::createResource($profile, $name, $controllerName);
         
-        if ($this->_getRequest()->isPretend()) {
+        if ($this->_registry->getRequest()->isPretend()) {
             $this->_registry->getResponse()->appendContent(
                 'Would create an action named ' . $name . 
                 ' inside controller at ' . $actionMethod->getParentResource()->getContext()->getPath()
