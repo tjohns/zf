@@ -221,6 +221,28 @@ class Zend_Tool_Framework_Client_Request
     }
     
     /**
+     * setDebug()
+     *
+     * @param bool $pretend
+     * @return Zend_Tool_Framework_Client_Request
+     */
+    public function setDebug($debug)
+    {
+        $this->_isDebug = (bool) $debug;
+        return $this;
+    }
+    
+    /**
+     * isDebug() - Whether or not this is a debug enabled request
+     *
+     * @return bool
+     */
+    public function isDebug()
+    {
+        return $this->_isDebug;
+    }
+    
+    /**
      * setDispatchable()
      *
      * @param bool $dispatchable

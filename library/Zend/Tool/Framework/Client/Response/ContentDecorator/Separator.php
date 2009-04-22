@@ -74,11 +74,20 @@ class Zend_Tool_Framework_Client_Response_ContentDecorator_Separator
     
     public function decorate($content, $decoratorValue)
     {
-        if ($decoratorValue) {
-            return $content . $this->_separator;
-        } else {
+        $run = 1;
+        if (is_bool($decoratorValue) && $decoratorValue === false) {
             return $content;
         }
+        
+        if (is_int($decoratorValue)) {
+            $run = $decoratorValue;
+        }
+        
+        for ($i = 0; $i < $run; $i++) {
+            $content .= $this->_separator;
+        }
+        
+        return $content;
     }
     
 }

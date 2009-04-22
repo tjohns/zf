@@ -30,6 +30,7 @@ require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
  */
 require_once 'Zend/Tool/Framework/Registry.php';
 
+
 /**
  * @category   Zend
  * @package    Zend_Tool
@@ -55,6 +56,19 @@ abstract class Zend_Tool_Framework_Client_Abstract implements Zend_Tool_Framewor
     protected $_isInitialized = false;
     
     /**
+     * @var Zend_Log
+     */
+    protected $_debugLogger = null;
+    
+    /**
+     * getName() - Return the client name which can be used to 
+     * query the manifest if need be.
+     *
+     * @return string The client name
+     */
+    abstract public function getName();
+    
+    /**
      * initialized() - This will initialize the client for use
      *
      */
@@ -64,7 +78,6 @@ abstract class Zend_Tool_Framework_Client_Abstract implements Zend_Tool_Framewor
         if ($this->_isInitialized) {
             return;
         }
-
         
         // this might look goofy, but this is setting up the 
         // registry for dependency injection into the client
@@ -76,6 +89,13 @@ abstract class Zend_Tool_Framework_Client_Abstract implements Zend_Tool_Framewor
         
         // run any preInit
         $this->_preInit();
+
+        // setup the debug log
+        if (!$this->_debugLogger instanceof Zend_Log) {
+            require_once 'Zend/Log.php';
+            require_once 'Zend/Log/Writer/Null.php';
+            $this->_debugLogger = new Zend_Log(new Zend_Log_Writer_Null());
+        }
         
         // let the loader load, then the repositories process whats been loaded
         $this->_registry->getLoader()->load();
@@ -109,13 +129,11 @@ abstract class Zend_Tool_Framework_Client_Abstract implements Zend_Tool_Framewor
     }
 
     /**
-     * This method should be implemented by the client implementation to
+     * This method *must* be implemented by the client implementation to
      * parse out and setup the request objects action, provider and parameter
      * information.
      */
-    protected function _preDispatch()
-    {
-    }
+    abstract protected function _preDispatch();
 
     /**
      * This method should be implemented by the client implementation to
@@ -181,12 +199,12 @@ abstract class Zend_Tool_Framework_Client_Abstract implements Zend_Tool_Framewor
 
                 if ($this->_registry->getRequest()->getActionName() == null) {
                     require_once 'Zend/Tool/Framework/Client/Exception.php';
-                    throw new Zend_Tool_Framework_Client_Exception('Endpoint failed to setup the action name.');
+                    throw new Zend_Tool_Framework_Client_Exception('Client failed to setup the action name.');
                 }
 
                 if ($this->_registry->getRequest()->getProviderName() == null) {
                     require_once 'Zend/Tool/Framework/Client/Exception.php';
-                    throw new Zend_Tool_Framework_Client_Exception('Endpoint failed to setup the provider name.');
+                    throw new Zend_Tool_Framework_Client_Exception('Client failed to setup the provider name.');
                 }
 
                 $this->_handleDispatch();

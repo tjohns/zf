@@ -6,7 +6,7 @@ require_once 'Zend/Console/Getopt.php';
  * The main
  *
  */
-class Zend_Tool_Framework_Client_Console_ArgumentParser
+class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Framework_Registry_EnabledInterface 
 {
     
     /**
@@ -45,30 +45,35 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
     protected $_metadataProviderOptionsShort = null;
 
     /**
-     * Constructor, takes in an client request and response, as well as the arguments.
+     * setArguments
      *
      * @param array $arguments
-     * @param Zend_Tool_Framework_Registry_Interface $registry
+     * @return Zend_Tool_Framework_Client_Console_ArgumentParser
      */
-    public function __construct(Array $arguments, Zend_Tool_Framework_Registry_Interface $registry)
+    public function setArguments(Array $arguments)
     {
-        // set the arguments
         $this->_argumentsOriginal = $this->_argumentsWorking = $arguments;
-        
+        return $this;
+    }
+    
+    /**
+     * setRegistry()
+     *
+     * @param Zend_Tool_Framework_Registry_Interface $registry
+     * @return Zend_Tool_Framework_Client_Console_ArgumentParser
+     */
+    public function setRegistry(Zend_Tool_Framework_Registry_Interface $registry)
+    {
         // get the client registry
         $this->_registry = $registry;
         
         // set manifest repository, request, response for easy access
         $this->_manifestRepository = $this->_registry->getManifestRepository();
-        $this->_request      = $this->_registry->getRequest();
-        $this->_response     = $this->_registry->getResponse();
-        
-        if ($this->_request == null || $this->_response == null) {
-            require_once 'Zend/Tool/Framework/Client/Exception.php';
-            throw new Zend_Tool_Framework_Client_Exception('The client registry must have both a request and response registered.');
-        }
+        $this->_request  = $this->_registry->getRequest();
+        $this->_response = $this->_registry->getResponse();
+        return $this;
     }
-
+    
     /**
      * Parse() - This method does the work of parsing the arguments into the enpooint request,
      * this will also (during help operations) fill the response in with information as needed
@@ -78,8 +83,13 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
     public function parse()
     {
 
+        if ($this->_request == null || $this->_response == null) {
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
+            throw new Zend_Tool_Framework_Client_Exception('The client registry must have both a request and response registered.');
+        }
+        
         // check to see if the first cli arg is the script name
-        if ($this->_argumentsWorking[0] == $_SERVER["SCRIPT_NAME"]) {
+        if ($this->_argumentsWorking[0] == $_SERVER['SCRIPT_NAME' ]) {
             array_shift($this->_argumentsWorking);
         }
 
@@ -157,6 +167,8 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
         foreach ($getoptParser->getOptions() as $option) {
             if ($option == 'pretend') {
                 $this->_request->setPretend(true);
+            } elseif ($option == 'debug') {
+                $this->_request->setDebug(true);
             } else {
                 $property = '_'.$option;
                 $this->{$property} = true;                
@@ -371,121 +383,22 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser
     }
 
     /**
-     * Internal routine for creating help messages
+     * _createHelpResponse
      *
-     * @param array $options
+     * @param unknown_type $options
      */
-    protected function _createHelpResponse(Array $options = array())
+    protected function _createHelpResponse($options = array())
     {
-        $response = '';
-
+        require_once 'Zend/Tool/Framework/Client/Console/HelpSystem.php';
+        $helpSystem = new Zend_Tool_Framework_Client_Console_HelpSystem();
+        $helpSystem->setRegistry($this->_registry);
+        
         if (isset($options['error'])) {
-            $response .= $options['error'] . PHP_EOL . PHP_EOL;
+            $helpSystem->respondWithErrorMessage($options['error']);
         }
-
-        $response .= 'Usage: zf <global options> <action name> <action options> <provider name> <provider options>'
-                  . PHP_EOL;
-
-        $actionName    = $this->_request->getActionName();
-        $providerName  = $this->_request->getProviderName();
-        //$specialtyName = $this->_request->getSpecialtyName();
-                  
-        // both action and provider are known
-        if ($actionName != '' && $actionName != '?' && $providerName != '' && $providerName != '?') {
-            
-            if ($this->_metadataProviderOptionsLong) {
-                $response .= '    Options for this action/resource: ' . PHP_EOL;
-                $optionsReference = $this->_metadataProviderOptionsLong->getReference();
-                $shortNameRef = $this->_metadataProviderOptionsShort->getValue();
-
-                foreach ($this->_metadataProviderOptionsLong->getValue() as $optionName => $consoleOptionName) {
-                    $response .= '       --' . $consoleOptionName . '|-' . $shortNameRef[$optionName];
-                    if ($desc = $optionsReference['parameterInfo'][$optionName]['description']) {
-                        $response .= ' (\033[32m' . $desc . '\033[37m)' . PHP_EOL;
-                    }
-                }
-            } else {
-                $response .= '    There are no options available for this action-provider.';
-            }
-
-        // action name is known, provider is not
-        } elseif ($actionName != '' && $actionName != '?' && ($providerName == '' || $providerName == '?') ) {
-
-            // find all providers this action applies to
-            $providersSupported = array();
-            $providerMetadatas = $this->_registry->getManifestRepository()->getMetadatas(array(
-                'type'       => 'Tool', 
-                'name'       => 'providerName',
-                'clientName' => 'console'
-                ));
-
-            foreach ($providerMetadatas as $providerMetadata) {
-                foreach ($providerMetadata->getReference()->getActionableMethods() as $actionableMethod) {
-                    if ($actionableMethod['actionName'] == $this->_metadataAction->getActionName()) {
-                        $providersSupported[] = $providerMetadata->getValue();
-                    }
-                }
-            }
-
-            $providersSupported = array_unique($providersSupported);
-
-            if ($providersSupported) {
-                $response .= '    Supported providers: ' . PHP_EOL . '    ';
-                $response .= implode(PHP_EOL . '    ', $providersSupported);
-            } else {
-                $response .= '    No supported providers for action ' . $this->_metadataAction->getActionName();
-            }
-
-        // provider name is known, action is not
-        } elseif ($providerName != '' && $providerName != '?' && ($actionName == '' || $actionName == '?')) {
-            
-            //$actionsSupported = array();
-            
-            $validActions = $this->_metadataProvider->getReference()->getActions();
-
-            $response .= '    Supported actions:' . PHP_EOL;
-
-            foreach ($validActions as $validAction) {
-                $actionMetadata = $this->_registry->getManifestRepository()->getMetadata(array(
-                    'type'       => 'Tool',
-                    'name'       => 'actionName',
-                    'actionName' => $validAction->getName(),
-                    'clientName' => 'console'
-                    ));
-
-                $response .= '    ' . $actionMetadata->getValue() . PHP_EOL;
-
-            }
-
-        } else {
-
-            $providerMetadatas = $this->_registry->getManifestRepository()->getMetadatas(array(
-                'type'       => 'Tool',
-                'name'       => 'providerName',
-                'clientName' => 'console'
-                ));
-
-            foreach ($providerMetadatas as $providerMetadata) {
-                $responseProviderActions = array();
-                foreach ($providerMetadata->getReference()->getActionableMethods() as $actionableMethod) {
-                    $actionName = $actionableMethod['action']->getName();
-                    $actionMetadata = $this->_registry->getManifestRepository()->getMetadata(array(
-                        'type'       => 'Tool',
-                        'name'       => 'actionName',
-                        'actionName' => $actionName,
-                        'clientName' => 'console'
-                        ));
-
-                    $responseProviderActions[] = $actionMetadata->getValue();
-                }
-                $responseProviderActions = array_unique($responseProviderActions);
-                $response .= "    (" . implode('|', $responseProviderActions) . ") " . $providerMetadata->getValue() . PHP_EOL;
-            }
-
-        }
-
-        $this->_response->appendContent($response);
-        return;
+        
+        $helpSystem->respondWithGeneralHelp();
+        
     }
 
 }
