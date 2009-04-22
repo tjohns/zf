@@ -215,7 +215,7 @@ class Zend_CodeGenerator_Php_Method extends Zend_CodeGenerator_Php_Member_Abstra
 
         if ($this->_body) {
             $output .= '        ' 
-                    .  str_replace(PHP_EOL, PHP_EOL . '        ', $this->_body) 
+                    .  str_replace(PHP_EOL, PHP_EOL . '        ', trim($this->_body)) 
                     .  PHP_EOL;
         }
         
