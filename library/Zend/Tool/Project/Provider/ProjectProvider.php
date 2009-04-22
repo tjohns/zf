@@ -74,7 +74,7 @@ class Zend_Tool_Project_Provider_ProjectProvider extends Zend_Tool_Project_Provi
         
         $projectProvider = self::createResource($profile, $name, $actions);
 
-        if ($this->_getRequest()->isPretend()) {
+        if ($this->_registry->getRequest()->isPretend()) {
             $this->_registry->getResponse()->appendContent('Would create a project provider named ' . $name 
                 . ' in location ' . $projectProvider->getPath()
                 );
