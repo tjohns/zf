@@ -54,8 +54,8 @@ class Zend_CodeGenerator_Php_Docblock_Tag_License extends Zend_CodeGenerator_Php
     {
         $returnTag = new self();
         
-        $returnTag->setName('return');
-        $returnTag->setUrl($reflectionTagLicense->getUrl()); // @todo rename
+        $returnTag->setName('license');
+        $returnTag->setUrl($reflectionTagLicense->getUrl());
         $returnTag->setDescription($reflectionTagLicense->getDescription());
         
         return $returnTag;

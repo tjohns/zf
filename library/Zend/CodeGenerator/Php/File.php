@@ -149,7 +149,8 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
             unset($bodyLines, $bodyReturn, $classStartLine, $classEndLine);
         }
         
-        if ($docblock = $reflectionFile->getDocblock()) {
+        if (($reflectionFile->getDocComment() != '')) {
+            $docblock = $reflectionFile->getDocblock();
             $file->setDocblock(Zend_CodeGenerator_Php_Docblock::fromReflection($docblock));
             
             $bodyLines = explode("\n", $body);
