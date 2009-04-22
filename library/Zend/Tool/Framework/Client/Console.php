@@ -122,13 +122,14 @@ class Zend_Tool_Framework_Client_Console
     protected function _preDispatch()
     {
         $response = $this->_registry->getResponse();
-        $response->addContentDecorator(new Zend_Tool_Framework_Client_Response_ContentDecorator_Separator())
-            ->setDefaultDecoratorOptions(array('separator' => true));
             
         if (function_exists('posix_isatty')) {
             require_once 'Zend/Tool/Framework/Client/Console/ResponseDecorator/Colorizer.php';
             $response->addContentDecorator(new Zend_Tool_Framework_Client_Console_ResponseDecorator_Colorizer());
         }
+
+        $response->addContentDecorator(new Zend_Tool_Framework_Client_Response_ContentDecorator_Separator())
+            ->setDefaultDecoratorOptions(array('separator' => true));
         
         $optParser = new Zend_Tool_Framework_Client_Console_ArgumentParser();
         $optParser->setArguments($_SERVER['argv'])

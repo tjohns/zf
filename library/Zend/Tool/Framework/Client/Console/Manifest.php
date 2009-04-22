@@ -140,12 +140,11 @@ class Zend_Tool_Framework_Client_Console_Manifest
 
             // create the metadatas for the per provider specialites in providerSpecaltyNames
             foreach ($providerSignature->getSpecialties() as $specialty) {
-                
-                //$cliSpecialtyNames[$specialty] = $ccToDashedFilter->filter($specialty);
-                
+                                
                 $metadatas[] = new Zend_Tool_Framework_Metadata_Tool(array(
-                    'name'            => 'providerSpecialtyNames',
+                    'name'            => 'specialtyName',
                     'value'           =>  $ccToDashedFilter->filter($specialty),
+                    'reference'       => $providerSignature,
                     'clientName'      => 'console',
                     'providerName'    => $providerSignature->getName(),
                     'specialtyName'   => $specialty,

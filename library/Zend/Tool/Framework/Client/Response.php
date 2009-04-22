@@ -168,9 +168,10 @@ class Zend_Tool_Framework_Client_Response
      * @param Zend_Tool_Framework_Client_Response_ContentDecorator_Interface $contentDecorator
      * @return unknown
      */
-    public function addContentDecorator(Zend_Tool_Framework_Client_Response_ContentDecorator_Interface  $contentDecorator)
+    public function addContentDecorator(Zend_Tool_Framework_Client_Response_ContentDecorator_Interface $contentDecorator)
     {
-        $this->_decorators[strtolower($contentDecorator->getName())] = $contentDecorator;
+        $decoratorName = strtolower($contentDecorator->getName());
+        $this->_decorators[$decoratorName] = $contentDecorator;
         return $this;
     }
     
@@ -205,6 +206,16 @@ class Zend_Tool_Framework_Client_Response
     {
         $options = array_merge($this->_defaultDecoratorOptions, $decoratorOptions);
         
+        $options = array_change_key_case($options, CASE_LOWER);
+        
+        foreach ($this->_decorators as $decoratorName => $decorator) {
+            if (array_key_exists($decoratorName, $options)) {
+                $content = $decorator->decorate($content, $options[$decoratorName]);
+            }
+        }
+        
+        return $content;
+        /*
         foreach ($options as $optionName => $optionValue) {
             if (!array_key_exists(strtolower($optionName), $this->_decorators)) {
                 // option is not supported by this response object
@@ -216,6 +227,7 @@ class Zend_Tool_Framework_Client_Response
         }
         
         return $content;
+        */
     }
 
 }
