@@ -97,7 +97,7 @@ class Zend_Reflection_FileTest extends PHPUnit_Framework_TestCase
         
         require_once 'Zend/Version.php';
         $reflectionFile = new Zend_Reflection_File('Zend/Version.php');
-        $this->assertNull($reflectionFile->__toString());
+        $this->assertEquals('', $reflectionFile->__toString());
     }
     
     public function testGetFilenameReturnsCorrectFilename()
