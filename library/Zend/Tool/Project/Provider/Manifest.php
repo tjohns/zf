@@ -6,7 +6,6 @@ require_once 'Zend/Tool/Project/Provider/Project.php';
 require_once 'Zend/Tool/Project/Provider/Controller.php';
 require_once 'Zend/Tool/Project/Provider/Action.php';
 require_once 'Zend/Tool/Project/Provider/View.php';
-require_once 'Zend/Tool/Project/Provider/DbAdapter.php';
 require_once 'Zend/Tool/Project/Provider/ProjectProvider.php';
 
 class Zend_Tool_Project_Provider_Manifest implements Zend_Tool_Framework_Manifest_Interface
