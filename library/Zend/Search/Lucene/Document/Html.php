@@ -72,9 +72,8 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      * @param string  $data         HTML string (may be HTML fragment, )
      * @param boolean $isFile
      * @param boolean $storeContent
-     * @param string  $encoding
      */
-    private function __construct($data, $isFile, $storeContent, $encoding)
+    private function __construct($data, $isFile, $storeContent/*, $encoding*/)
     {
         $this->_doc = new DOMDocument();
         $this->_doc->substituteEntities = true;
@@ -86,10 +85,10 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         }
         @$this->_doc->loadHTML($htmlData);
 
-        // Set encoding if it's specified
-        if ($encoding !== null) {
-        	$this->_doc->encoding = $encoding;
-        }
+//        // Set encoding if it's specified
+//        if ($encoding !== null) {
+//        	$this->_doc->encoding = $encoding;
+//        }
 
         $xpath = new DOMXPath($this->_doc);
 
@@ -179,33 +178,33 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         }
     }
 
-    /**
-     * Get encoding
-     *
-     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
-     * but it may be overriden overridden with setEncoding() method or additional
-     * constructor parameter.
-     *
-     * @return string
-     */
-    public function getEncoding()
-    {
-        return $this->_doc->encoding;
-    }
-
-    /**
-     * Set encoding
-     *
-     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
-     * but it may be overriden overridden with setEncoding() method or additional
-     * constructor parameter.
-     *
-     * @param string $encoding
-     */
-    public function setEncoding($encoding)
-    {
-        $this->_doc->encoding = $encoding;
-    }
+//    /**
+//     * Get encoding
+//     *
+//     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
+//     * but it may be overriden overridden with setEncoding() method or additional
+//     * constructor parameter.
+//     *
+//     * @return string
+//     */
+//    public function getEncoding()
+//    {
+//        return $this->_doc->encoding;
+//    }
+//
+//    /**
+//     * Set encoding
+//     *
+//     * Document encoding is automatically recognized by DOMDocument::loadHTML() method,
+//     * but it may be overriden overridden with setEncoding() method or additional
+//     * constructor parameter.
+//     *
+//     * @param string $encoding
+//     */
+//    public function setEncoding($encoding)
+//    {
+//        $this->_doc->encoding = $encoding;
+//    }
 
     /**
      * Get document HREF links
@@ -232,12 +231,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      *
      * @param string  $data
      * @param boolean $storeContent
-     * @param string  $encoding
      * @return Zend_Search_Lucene_Document_Html
      */
-    public static function loadHTML($data, $storeContent = false, $encoding = null)
+    public static function loadHTML($data, $storeContent = false/*, $encoding = null*/)
     {
-        return new Zend_Search_Lucene_Document_Html($data, false, $storeContent, $encoding);
+        return new Zend_Search_Lucene_Document_Html($data, false, $storeContent/*, $encoding*/);
     }
 
     /**
@@ -245,12 +243,11 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
      *
      * @param string  $file
      * @param boolean $storeContent
-     * @param string  $encoding
-     *      * @return Zend_Search_Lucene_Document_Html
+     * @return Zend_Search_Lucene_Document_Html
      */
-    public static function loadHTMLFile($file, $storeContent = false, $encoding = null)
+    public static function loadHTMLFile($file, $storeContent = false/*, $encoding = null*/)
     {
-        return new Zend_Search_Lucene_Document_Html($file, true, $storeContent, $encoding);
+        return new Zend_Search_Lucene_Document_Html($file, true, $storeContent/*, $encoding*/);
     }
 
 
