@@ -55,7 +55,7 @@ class Zend_Tool_Project_Provider_Action extends Zend_Tool_Project_Provider_Abstr
         if ($viewIncluded) {
             $viewResource = Zend_Tool_Project_Provider_View::createResource($profile, $controllerName, $name);
             
-            if ($this->_getRequest()->isPretend()) {
+            if ($this->_registry->getRequest()->isPretend()) {
                 $this->_registry->getResponse()->appendContent(
                     'Would create a view script for the ' . $name . ' action method at ' . $viewResource->getContext()->getPath()
                     );
