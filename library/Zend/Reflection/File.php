@@ -37,7 +37,6 @@ require_once 'Zend/Reflection/Function.php';
  */
 class Zend_Reflection_File implements Reflector
 {
-    
     /**
      * @var string
      */

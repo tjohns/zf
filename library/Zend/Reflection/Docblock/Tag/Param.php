@@ -19,6 +19,9 @@
  * @version    $Id$
  */
 
+/** Zend_Reflection_Docblock_Tag */
+require_once 'Zend/Reflection/Docblock/Tag.php';
+
 /**
  * @category   Zend
  * @package    Zend_Reflection
@@ -27,7 +30,6 @@
  */
 class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
 {
-    
     /**
      * @var string
      */
@@ -39,7 +41,7 @@ class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
     protected $_variableName = null;
     
     /**
-     * __construct()
+     * Constructor
      *
      * @param string $tagDocblockLine
      */
@@ -70,7 +72,7 @@ class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
     }
     
     /**
-     * getType()
+     * Get parameter variable type
      *
      * @return string
      */
@@ -80,7 +82,7 @@ class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
     }
     
     /**
-     * getVariableName()
+     * Get parameter name
      *
      * @return string
      */
@@ -88,5 +90,4 @@ class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
     {
         return $this->_variableName;
     }
-    
 }

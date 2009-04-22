@@ -20,6 +20,7 @@
  */
 
 /**
+ * @todo       implement line numbers
  * @category   Zend
  * @package    Zend_Reflection
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
@@ -27,20 +28,20 @@
  */
 class Zend_Reflection_Property extends ReflectionProperty
 {
-    
-    // @todo implement line numbers in here
-    
     /**
-     * getDeclaringClass()
+     * Get declaring class reflection object
      *
      * @return Zend_Reflection_Class
      */
-    public function getDeclaringClass()
+    public function getDeclaringClass($reflectionClass = 'Zend_Reflection_Class')
     {
-        $phpReflection = parent::getDeclaringClass();
-        $zendReflection = new Zend_Reflection_Class($phpReflection->getName());
+        $phpReflection  = parent::getDeclaringClass();
+        $zendReflection = new $reflectionClass($phpReflection->getName());
+        if (!$zendReflection instanceof Zend_Reflection_Class) {
+            require_once 'Zend/Reflection/Exception.php';
+            throw new Zend_Reflection_Exception('Invalid reflection class provided; must extend Zend_Reflection_Class');
+        }
         unset($phpReflection);
         return $zendReflection;
     }
-    
 }
