@@ -117,9 +117,6 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
         $className = $filter->filter($this->_controllerName) . 'Controller';
         
         $codeGenFile = new Zend_CodeGenerator_Php_File(array(
-            'requiredFiles' => array(
-                'Zend/Controller/Action.php'
-            ),
             'classes' => array(
                 new Zend_CodeGenerator_Php_Class(array(
                     'name' => $className,
@@ -138,9 +135,6 @@ class Zend_Tool_Project_Context_Zf_ControllerFile extends Zend_Tool_Project_Cont
         if ($className == 'ErrorController') {
             
             $codeGenFile = new Zend_CodeGenerator_Php_File(array(
-                'requiredFiles' => array(
-                    'Zend/Controller/Action.php'
-                    ),
                 'classes' => array(
                     new Zend_CodeGenerator_Php_Class(array(
                         'name' => $className,

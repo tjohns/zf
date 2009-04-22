@@ -419,6 +419,9 @@ class Zend_CodeGenerator_Php_File extends Zend_CodeGenerator_Php_Abstract
             $output .= $body;
         }
 
+        $output = preg_replace('/^<\?php(\s+<\?php)/s', '<?php', $output);
+        $output = trim($output);
+
         return $output;
     }
     
