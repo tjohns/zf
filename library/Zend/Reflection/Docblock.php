@@ -98,6 +98,7 @@ class Zend_Reflection_Docblock implements Reflector
         if ($commentOrReflector instanceof Reflector) {
             $this->_reflector = $commentOrReflector;
             if (!method_exists($commentOrReflector, 'getDocComment')) {
+                require_once 'Zend/Reflection/Exception.php';
                 throw new Zend_Reflection_Exception('Reflector must contain method "getDocComment"');
             }
             $docComment = $commentOrReflector->getDocComment();
@@ -110,10 +111,12 @@ class Zend_Reflection_Docblock implements Reflector
         } elseif (is_string($commentOrReflector)) {
             $docComment = $commentOrReflector;
         } else {
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception(get_class($this) . ' must have a (string) DocComment or a Reflector in the constructor.');
         }
         
         if ($docComment == '') {
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception('DocComment cannot be empty.');
         }
         
