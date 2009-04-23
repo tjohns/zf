@@ -36,6 +36,9 @@ require_once 'Zend/Amf/Value/MessageHeader.php';
 /** Zend_Amf_Value_Messaging_CommandMessage */
 require_once 'Zend/Amf/Value/Messaging/CommandMessage.php';
 
+/** Zend_Amf_Parse_TypeLoader */
+require_once 'Zend/Amf/Parse/TypeLoader.php';
+
 /**
  * An AMF gateway server implementation to allow the connection of the Adobe Flash Player to
  * Zend Framework
@@ -155,6 +158,11 @@ class Zend_Amf_Server implements Zend_Server_Interface
      */
     protected function _dispatch($method, $params = null, $source = null)
     {
+    	if($source) {
+        	if(($mapped = Zend_Amf_Parse_TypeLoader::getMappedClassName($source)) !== false) {
+        		$source = $mapped;
+        	}
+    	}
         $qualifiedName = empty($source) ? $method : $source.".".$method;
         
         if (!isset($this->_table[$qualifiedName])) {
