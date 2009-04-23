@@ -23,10 +23,13 @@ require_once 'Zend/Controller/Router/Route/Chain.php';
 /** Zend_Controller_Router_Route */
 require_once 'Zend/Controller/Router/Route.php';
 
+/** Zend_Controller_Router_Route_Module */
+require_once 'Zend/Controller/Router/Route/Module.php';
+
 /** Zend_Controller_Router_Route_Static */
 require_once 'Zend/Controller/Router/Route/Static.php';
 
-/** Zend_Controller_Router_Route_Static */
+/** Zend_Controller_Router_Route_Regex */
 require_once 'Zend/Controller/Router/Route/Regex.php';
 
 /** Zend_Controller_Router_Route_Hostname */
@@ -161,6 +164,22 @@ class Zend_Controller_Router_Route_ChainTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $res['foo']);
         $this->assertEquals(2, $res['bar']);
+    }
+    
+    public function testChainingModule()
+    {
+        $foo = new Zend_Controller_Router_Route_Static('foo', array('foo' => 'bar'));
+        $bar = new Zend_Controller_Router_Route_Module();
+
+        $chain = $foo->chain($bar);
+
+        $request = new Zend_Controller_Router_ChainTest_Request('http://www.zend.com/foo/bar/baz/var/val');
+        $res = $chain->match($request);
+
+        $this->assertEquals('bar', $res['foo']);
+        $this->assertEquals('bar', $res['controller']);
+        $this->assertEquals('baz', $res['action']);
+        $this->assertEquals('val', $res['var']);
     }
 
     public function testChainingSeparatorOverriding()
