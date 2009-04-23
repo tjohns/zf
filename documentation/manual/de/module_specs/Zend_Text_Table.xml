@@ -4,27 +4,27 @@
 <sect1 id="zend.text.table.introduction">
     <title>Zend_Text_Table</title>
     <para>
-        <code>Zend_Text_Table</code> ist eine Komponente für die Erstellung von Text-basierenden Tabellen
+        <classname>Zend_Text_Table</classname> ist eine Komponente für die Erstellung von Text-basierenden Tabellen
         welche mit unterschiedlichen Dekoratoren arbeitet. Das kann hilfreich sein, wenn man entweder
         strukturierte Daten in einer Textemail verwenden will, welche normalerweise mit monospaced Schriftarten
         geschrieben sind, oder um Tabelleninformationen in einer CLI Anwendung darzustellen.
-        <code>Zend_Text_Table</code> unterstützt mehrzeilige Spalten, Colspan und auch Ausrichtung.
+        <classname>Zend_Text_Table</classname> unterstützt mehrzeilige Spalten, Colspan und auch Ausrichtung.
     </para>
     <note>
         <title>Kodierung</title>
         <para>
-            <code>Zend_Text_Table</code> erwartet die Strings standardmäßig als UTF-8 kodiert. Wenn das nicht
+            <classname>Zend_Text_Table</classname> erwartet die Strings standardmäßig als UTF-8 kodiert. Wenn das nicht
             der Fall ist, kann entweder die Zeichenkodierung als Parameter an den <code>Constructor</code>
-            übergeben werden, oder an die <code>setContent</code> Methode von <code>Zend_Text_Table_Column</code>.
+            übergeben werden, oder an die <code>setContent</code> Methode von <classname>Zend_Text_Table_Column</classname>.
             Wenn man im kompletten Prozess eine andere Kodierung verwendet, kann man die standardmäßige
-            Eingabekodierung mit <code>Zend_Text_Table::setInputCharset($charset)</code> setzen.
+            Eingabekodierung mit <classname>Zend_Text_Table::setInputCharset($charset)</classname> setzen.
             Im Fall, das man eine andere Ausgabekodierung für die Tabelle benötigt, kann diese mit
-            <code>Zend_Text_Table::setOutputCharset($charset)</code> gesetzt werden.
+            <classname>Zend_Text_Table::setOutputCharset($charset)</classname> gesetzt werden.
         </para>
     </note>
     <para>
-        Ein <code>Zend_Text_Table</code> Objekt besteht aus Zeilen, die Spalten enthalten, repräsentiert durch
-        <code>Zend_Text_Table_Row</code> und <code>Zend_Text_Table_Column</code>. Wenn eine Tabelle erstellt
+        Ein <classname>Zend_Text_Table</classname> Objekt besteht aus Zeilen, die Spalten enthalten, repräsentiert durch
+        <classname>Zend_Text_Table_Row</classname> und <classname>Zend_Text_Table_Column</classname>. Wenn eine Tabelle erstellt
         wird, kann ein Array mit Optionen für die Tabelle angegeben werden: Diese sind:
 
         <itemizedlist>
@@ -51,19 +51,19 @@
                 <para>
                     <code>AutoSeparate</code>: Der Weg auf dem Zeilen mit horizontalen Linien getrennt werden.
                     Der Standard ist eine Trennung zwischen allen Zeilen. Das ist als Bitmaske definiert die
-                    ein oder mehrere der folgenden Konstanten von <code>Zend_Text_Table</code> haben kann:
+                    ein oder mehrere der folgenden Konstanten von <classname>Zend_Text_Table</classname> haben kann:
                     <itemizedlist>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_NONE</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_NONE</classname></para>
                         </listitem>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_HEADER</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_HEADER</classname></para>
                         </listitem>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_FOOTER</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_FOOTER</classname></para>
                         </listitem>
                         <listitem>
-                            <para><code>Zend_Text_Table::AUTO_SEPARATE_ALL</code></para>
+                            <para><classname>Zend_Text_Table::AUTO_SEPARATE_ALL</classname></para>
                         </listitem>
                     </itemizedlist>
                     Wobei der Tabellenheader immer die erste Zeile ist, und der Tabellenfooter immer die letzte
@@ -73,18 +73,18 @@
         </itemizedlist>
     </para>
     <para>
-        Zeilen werden zur Tabelle einfach hinzugefügt indem eine neue Instanz von <code>Zend_Text_Table_Row</code>
+        Zeilen werden zur Tabelle einfach hinzugefügt indem eine neue Instanz von <classname>Zend_Text_Table_Row</classname>
         erstellt, und der Tabelle über die <code>appendRow</code> Methode angehängt wird. Zeilen selbst haben
         keine Optionen. Man kann der <code>appendRow</code> Methode auch direkt auch ein Array geben, welches
         dann automatisch in ein Zeilenobjekt konvertiert wird, welches mehrere Spaltenobjekte enthält.
     </para>
     <para>
         Auf dem gleichen Weg kann man Spalten zu Zeilen hinzufügen. Man erstellt eine neue Instanz von
-        <code>Zend_Text_Table_Column</code> und setzt dann entweder die Zeilenoptionen im Constructor, oder
+        <classname>Zend_Text_Table_Column</classname> und setzt dann entweder die Zeilenoptionen im Constructor, oder
         später mit den <code>set*</code> Methoden. Der erste Parameter ist der Inhalt der Spalte, welcher
         mehrere Zeilen haben kann, welche im besten Fall einfach durch das <code>\n</code> Zeichen getrennt
         sind. Der zweite Parameter definiert die Ausrichtung, welche standardmäßig <code>left</code> ist, und
-        eine der Klassenkonstanten von <code>Zend_Text_Table_Column</code> sein kann:
+        eine der Klassenkonstanten von <classname>Zend_Text_Table_Column</classname> sein kann:
 
         <itemizedlist>
             <listitem>
@@ -119,7 +119,7 @@
     <example id="zend.text.table.example.using">
         <title>Verwenden von Zend_Text_Table</title>
         <para>
-            Ein Beispiel zeigt die grundsätzliche Verwendung von <code>Zend_Text_Table</code> um eine einfache
+            Ein Beispiel zeigt die grundsätzliche Verwendung von <classname>Zend_Text_Table</classname> um eine einfache
             Tabelle zu erstellen:
         </para>
         <programlisting role="php"><![CDATA[

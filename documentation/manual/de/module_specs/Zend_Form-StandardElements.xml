@@ -17,7 +17,7 @@
 
         <para>
             Wird für die Erstellung von HTML Button Elementen verwendet wobei
-            <code>Zend_Form_Element_Button</code>
+            <classname>Zend_Form_Element_Button</classname>
             <link linkend="zend.form.standardElements.submit">Zend_Form_Element_Submit</link>
             erweitert, und seine eigene Funktionalität hinzufügt. Sie spezifiziert den 'formButton'
             View Helfer für die Dekoration.
@@ -58,7 +58,7 @@
         </para>
 
         <para>
-            Adapter können alle Adapter in <code>Zend_Captcha</code> sein, sowie jeder eigene Adapter
+            Adapter können alle Adapter in <classname>Zend_Captcha</classname> sein, sowie jeder eigene Adapter
             der irgendwo anders definiert wurde. Um das z uerlauben, kann ein zusätzlicher Schlüssel für
             den Plugin Ladetyp, 'CAPTCHA' oder 'captcha' übergeben werden, wenn der Plugin Loader Präfixpfad
             spezifiziert wird:
@@ -134,7 +134,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
             HTML Checkboxen erlauben es spezifische Werte zurückzugeben, arbeiten aber
             grundsätzlich als Boolean. Wenn Sie angehackt sind, wird der Wert der Checkbox übertragen. Wenn Sie
             nicht angehackt sind, wird nichts übertragen. Intern erzwingt
-            <code>Zend_Form_Element_Checkbox</code> diesen Status.
+            <classname>Zend_Form_Element_Checkbox</classname> diesen Status.
         </para>
 
         <para>
@@ -157,7 +157,7 @@ $element = new Zend_Form_Element_Captcha('foo', array(
         </para>
 
         <para>
-            <code>Zend_Form_Element_Checkbox</code> verwendet den 'formCheckbox' View Helfer. Der
+            <classname>Zend_Form_Element_Checkbox</classname> verwendet den 'formCheckbox' View Helfer. Der
             angehackte Wert wird immer verwendet um Sie zu veröffentlichen.
         </para>
     </sect2>
@@ -267,7 +267,7 @@ $form->getValues();
             <para>
                 Deshalb hat ein weiterer Aufruf von <code>receive()</code> nach dem Aufruf von
                 <code>getValues()</code> keinen Effekt. Auch die Erstellung einer Instanz von
-                <code>Zend_File_Transfer</code> wird keinen Effekt haben da es keine weitere
+                <classname>Zend_File_Transfer</classname> wird keinen Effekt haben da es keine weitere
                 Datei zum Empfangen gibt.
             </para>
         </note>
@@ -358,7 +358,7 @@ if ($form->foo->isUploaded()) {
         </example>
 
         <para>
-            <code>Zend_Form_Element_File</code> unterstützt auch mehrere Dateien. Durch den Aufruf der
+            <classname>Zend_Form_Element_File</classname> unterstützt auch mehrere Dateien. Durch den Aufruf der
             <code>setMultiFile($count)</code> Methode kann die Anzahl an File Elementen die man erstellen
             will festgelegt werden. Das verhindert das die selben Einstellungen mehrere Male durchgeführt
             werden müssen.
@@ -447,7 +447,7 @@ $form->addElement($element, 'foo');
 
         <para>
             Versteckte Elemente fügen Daten ein die übertragen werden sollen, welche der Benutzer
-            aber nicht manipulieren soll. <code>Zend_Form_Element_Hidden</code> ermöglicht das
+            aber nicht manipulieren soll. <classname>Zend_Form_Element_Hidden</classname> ermöglicht das
             mit dem 'formHidden' View Helfers.
         </para>
     </sect2>
@@ -480,10 +480,10 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
 
         <para>
             Intern speichert das Element einen eindeutigen Identifikator indem es
-            <code>Zend_Session_Namespace</code> verwendet, und danach bei der Übertragung checkt
+            <classname>Zend_Session_Namespace</classname> verwendet, und danach bei der Übertragung checkt
             (es wird geprüft das die TTL nicht abgelaufen ist). Die 'Identical' Prüfung wird
             Internally, the element stores a unique identifier using
-            <code>Zend_Session_Namespace</code>, and checks for it at
+            <classname>Zend_Session_Namespace</classname>, and checks for it at
             submission (checking that the TTL has not expired). The 'Identical'
             validator is then used to ensure the submitted hash matches the
             stored hash.
@@ -503,7 +503,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            Bilder benötigen eine Bildquelle. <code>Zend_Form_Element_Image</code> erlaube dessen
+            Bilder benötigen eine Bildquelle. <classname>Zend_Form_Element_Image</classname> erlaube dessen
             Spezifikation durch Verwendung der <code>setImage()</code> Zugriffsmethode (oder des
             'image' Konfigurations Schlüssels). Es kann auch optional ein Wert spezifiziert werden
             der zu verwenden ist wenn das Bild übertragen wird indem die Zugriffsmethode
@@ -532,7 +532,7 @@ $form->addElement('hash', 'no_csrf_foo', array('salt' => 'unique'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_MultiCheckbox</code> macht das in einem Rutsch. Wie alle
+            <classname>Zend_Form_Element_MultiCheckbox</classname> macht das in einem Rutsch. Wie alle
             anderen Elemente kann mit der Erweiterung des Basis MultiElements eine Liste von
             Optionen spezifiziert werden und einfach gegen die selbe Liste geprüft werden. Der
             'formMultiCheckbox' View Helfer stellt sicher das Sie als Array bei der Übermittlung
@@ -599,10 +599,10 @@ $element->setValue(array('bar', 'bat'));
         <para>
             XHTML <code>select</code> Elemente erlaube ein 'multiple' Attribut, das zeigt das
             mehrere Optionen für die Übermittlung ausgewählt werden können, statt normalerweise
-            nur eines. <code>Zend_Form_Element_Multiselect</code> erweitert
+            nur eines. <classname>Zend_Form_Element_Multiselect</classname> erweitert
             <link linkend="zend.form.standardElements.select">Zend_Form_Element_Select</link> und
             setzt das <code>multiple</code> Attribut auf 'multiple'. Wie andere Klassen die von der
-            Basisklasse <code>Zend_Form_Element_Multi</code> abgeleitet werden, können die Optionen
+            Basisklasse <classname>Zend_Form_Element_Multi</classname> abgeleitet werden, können die Optionen
             für die Auswahl wie folgt verändert werden:
         </para>
 
@@ -647,7 +647,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Password</code> ermöglicht das durch den Aufruf von
+            <classname>Zend_Form_Element_Password</classname> ermöglicht das durch den Aufruf von
             <code>setObscureValue(true)</code> auf jeder Prüfung (und stellt sicher das das
             Passwort in der Prüfungs Fehlermeldung verschleiert wird), und verwendet den
             'formPassword' View Helfer (welcher den an Ihn übergebenen Wert nicht anzeigt).
@@ -659,8 +659,8 @@ $element->setValue(array('bar', 'bat'));
 
         <para>
             Radio Elemente erlauben es verschiedene Optionen zu spezifizieren, von denen ein
-            einzelner Wert zurückgegeben wird. <code>Zend_Form_Element_Radio</code> erweitert die
-            Basisklasse <code>Zend_Form_Element_Multi</code> und erlaubt es eine Anzahl von
+            einzelner Wert zurückgegeben wird. <classname>Zend_Form_Element_Radio</classname> erweitert die
+            Basisklasse <classname>Zend_Form_Element_Multi</classname> und erlaubt es eine Anzahl von
             Optionen zu spezifizieren, und verwendet dann den <code>formRadio</code> View Helfer
             um diese darzustellen.
         </para>
@@ -707,7 +707,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Reset</code> erweitert
+            <classname>Zend_Form_Element_Reset</classname> erweitert
             <link linkend="zend.form.standardElements.submit">Zend_Form_Element_Submit</link>.
             Deswegen wird das Label für die Anzeige des Buttons verwendet und wird übersetzt
             wenn ein Übersetzungs Adapter vorhanden ist. Es verwendet nur die 'ViewHelper' und
@@ -721,7 +721,7 @@ $element->setValue(array('bar', 'bat'));
 
         <para>
             Auswahlboxen sind der übliche Weg um spezielle Auswahlen für gegebene Formdaten zu
-            begrenzen. <code>Zend_Form_Element_Select</code> erlaubt es diese schnell und
+            begrenzen. <classname>Zend_Form_Element_Select</classname> erlaubt es diese schnell und
             einfach zu erzeugen.
         </para>
 
@@ -756,7 +756,7 @@ $element->setValue(array('bar', 'bat'));
         </itemizedlist>
 
         <para>
-            <code>Zend_Form_Element_Select</code> verwendet den 'formSelect' View Helfer für
+            <classname>Zend_Form_Element_Select</classname> verwendet den 'formSelect' View Helfer für
             die Dekoration.
         </para>
     </sect2>
@@ -768,7 +768,7 @@ $element->setValue(array('bar', 'bat'));
             Sendebuttons (Submit) werden verwendet um eine Form zu senden. Es kann gewünscht sein
             mehrere Sendebuttons zu verwendetn; die Buttons zur Übermittlung der Form können
             verwendet werden um auszuwählen welche Aktion mit den übermittelten Daten genommen
-            werden soll. <code>Zend_Form_Element_Submit</code> macht die Entscheidung einfach,
+            werden soll. <classname>Zend_Form_Element_Submit</classname> macht die Entscheidung einfach,
             durch das Hinzufügen einer <code>isChecked()</code> Methode; da nur ein Button Element
             von der Form übermittelt wird, nachdem die Form übermittelt oder geprüft wurde, kann
             diese Methode auf jedem Sendebutton ausgerufen werden um festzustellen welcher
@@ -776,7 +776,7 @@ $element->setValue(array('bar', 'bat'));
         </para>
 
         <para>
-            <code>Zend_Form_Element_Submit</code> verwendet das Label als den "Wert" des
+            <classname>Zend_Form_Element_Submit</classname> verwendet das Label als den "Wert" des
             Sendebuttons, und übersetzt es wenn ein Übersetzungsadapter vorhanden ist.
             <code>isChecked()</code> prüft den übermittelten Wert gegen das Label um festzustellen
             ob der Button verwendet wurde.
@@ -797,7 +797,7 @@ $element->setValue(array('bar', 'bat'));
         <para>
             Der nützlichste Typ von Form Element ist das Text Element, das begrenzte Texteinträge
             erlaubt; es ist ein ideales Element für die meisten Dateneinträge.
-            <code>Zend_Form_Element_Text</code> verwendet einfach den 'formText' View Helfer um das
+            <classname>Zend_Form_Element_Text</classname> verwendet einfach den 'formText' View Helfer um das
             Element darzustellen.
         </para>
     </sect2>
@@ -809,7 +809,7 @@ $element->setValue(array('bar', 'bat'));
             Textbereiche werden verwendet wenn große Mengen von Text erwartet werden, und keine
             Begrenzung in der Anzahl des übermittelten Textes vorhanden sind (anders als das Limit
             der Maximalgröße wie vom Server von PHP diktiert).
-            <code>Zend_Form_Element_Textarea</code> verwendet den 'textArea' View Helfer um solche
+            <classname>Zend_Form_Element_Textarea</classname> verwendet den 'textArea' View Helfer um solche
             Element darzustellen, und platziert den Wert als Inhalt des Elements.
         </para>
     </sect2>

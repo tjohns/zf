@@ -4,7 +4,7 @@
 <sect1 id="zend.feed.consuming-rss">
     <title>Einen RSS Feed konsumieren</title>
     <para>
-        Einen RSS Feed zu lesen, ist so einfach wie das Instanziieren eines <code>Zend_Feed_Rss</code>
+        Einen RSS Feed zu lesen, ist so einfach wie das Instanziieren eines <classname>Zend_Feed_Rss</classname>
         Objekts mit der URL eines Feeds:
     </para>
         <programlisting role="php"><![CDATA[
@@ -12,7 +12,7 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 ]]>
         </programlisting>
     <para>
-        Wenn beim Abrufen des Feeds Fehler auftreten, wird eine <code>Zend_Feed_Exception</code>
+        Wenn beim Abrufen des Feeds Fehler auftreten, wird eine <classname>Zend_Feed_Exception</classname>
         geworfen.
     </para>
 
@@ -25,7 +25,7 @@ echo $channel->title();
 ]]>
         </programlisting>
     <para>
-        Beachte die Syntax der Funktion. <code>Zend_Feed</code> verwendet die Konvention, die
+        Beachte die Syntax der Funktion. <classname>Zend_Feed</classname> verwendet die Konvention, die
         Eigenschaften als XML Objekt zu behandeln, wenn sie durch die "Getter" Syntax für Variablen
         (<code>$obj->property</code>) angefordert werden, und als String zu behandeln, wenn sie
         durch die Methodensyntax (<code>$obj->property()</code>) angefordert werden. Dies ermöglicht
@@ -48,7 +48,7 @@ echo $channel->category['domain'];
 
     <para>
         Meistens möchtest Du einen Feed durchlaufen und etwas mit seinen Einträgen machen.
-        <code>Zend_Feed_Abstract</code> implementiert das <code>Iterator</code> Interface von PHP,
+        <classname>Zend_Feed_Abstract</classname> implementiert das <code>Iterator</code> Interface von PHP,
         so dass die Ausgabe aller Artikelüberschriften eines Channels nur dies erfordert:
     </para>
         <programlisting role="php"><![CDATA[

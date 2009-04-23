@@ -22,7 +22,7 @@
         <para>
             Man kann eine Liste von den Google Dokumenten für einen bestimmten Benutzer erhalten  indem die
             <code>getDocumentListFeed</code> Methode des Docs Services verwendet wird. Das Service gibt ein
-            <code>Zend_Gdata_Docs_DocumentListFeed</code> Objekt zurück das eine Liste von dokumenten enthält
+            <classname>Zend_Gdata_Docs_DocumentListFeed</classname> Objekt zurück das eine Liste von dokumenten enthält
             die mit dem authentifizierten Benutzer assoziiert sind.
         </para>
 
@@ -35,8 +35,8 @@ $feed = $docs->getDocumentListFeed();
         </programlisting>
 
         <para>
-            Das sich ergebende <code>Zend_Gdata_Docs_DocumentListFeed</code> Objekt repräsentiert die Antwort
-            des Servers. Dieser Feed enthält eine Liste von <code>Zend_Gdata_Docs_DocumentListEntry</code>
+            Das sich ergebende <classname>Zend_Gdata_Docs_DocumentListFeed</classname> Objekt repräsentiert die Antwort
+            des Servers. Dieser Feed enthält eine Liste von <classname>Zend_Gdata_Docs_DocumentListEntry</classname>
             Objekten (<code>$feed->entries</code>), wobei jeder von Ihnen ein einzelnes Google Dokument
             repräsentiert.
         </para>
@@ -152,7 +152,7 @@ $feed = $docs->getDocumentListFeed(
         <sect3 id="zend.gdata.docs.textquery">
             <title>Eine Textabfrage durchführen</title>
             <para>
-                Der Inhalt von Dokumenten kann durch Verwendung von <code>Zend_Gdata_Docs_Query</code> in der
+                Der Inhalt von Dokumenten kann durch Verwendung von <classname>Zend_Gdata_Docs_Query</classname> in der
                 Abfrage durchsucht werden. Ein Abfrage Objekt kann verwendet werden um eine Abfrage URI zu
                 erstellen, wobei der Suchbegriff als Parameter übergeben wird. Hier ist eine Beispielmethode
                 welche die Dokumenten Liste nach Dokumenten abfrage die den Suchstring enthalten:

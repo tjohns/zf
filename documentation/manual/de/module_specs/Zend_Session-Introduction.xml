@@ -13,14 +13,14 @@
     <para>
         In Web Anwendungen die mit PHP geschrieben sind, repräsentiert eine <emphasis role="bold">Session</emphasis>
         eine logische Eins-zu-Eins Verbindung zwischen fixen Daten auf dem Server und einem bestimmten
-        Benutzer Client (z.B., einem Web Browser). <code>Zend_Session</code> hilft beim Verwalten und Aufbewahren
+        Benutzer Client (z.B., einem Web Browser). <classname>Zend_Session</classname> hilft beim Verwalten und Aufbewahren
         von Session Daten, einer logischen Verbindung von Cookie Daten über mehrere Seitenaufrufe hinweg durch
         den gleichen Client. Anders als Cookie Daten, werden Session Daten nicht beim Client gespeichert und stehen
         diesem nur dann zur Verfügung wenn der Server-seitige Sourcecode diese Daten freiwillig zur Verfügung stellt
         und diese vom Client angefragt werden. Innerhalb dieser Komponente und der Dokumentation bezeichnt der Term
         "Session Daten" die Server-seitigen Daten welche in
         <ulink url="http://www.php.net/manual/de/reserved.variables.php#reserved.variables.session"><code>$_SESSION[]</code></ulink>
-        gespeichert, durch <code>Zend_Session</code> verwaltet und durch <code>Zend_Session_Namespace</code>
+        gespeichert, durch <classname>Zend_Session</classname> verwaltet und durch <classname>Zend_Session_Namespace</classname>
         Zugriffsobjekte individuell verändert werden. <emphasis role="bold">Session Namensräume</emphasis> gestatten
         den Zugriff auf Session Daten durch Verwendung klassischer
         <ulink url="http://en.wikipedia.org/wiki/Namespace_%28computer_science%29">Namensräume</ulink> welche
@@ -29,16 +29,16 @@
     </para>
 
     <para>
-        <code>Zend_Session_Namespace</code> Instanzen sind Zugriffsobjekte für benannte Abschnitte von
-        <code>$_SESSION[]</code>. Die <code>Zend_Session</code> Komponente wrappt die bestehende PHP Erweiterung
+        <classname>Zend_Session_Namespace</classname> Instanzen sind Zugriffsobjekte für benannte Abschnitte von
+        <code>$_SESSION[]</code>. Die <classname>Zend_Session</classname> Komponente wrappt die bestehende PHP Erweiterung
         ext/session mit einem Administrations und Management Interface sowie einer API für
-        <code>Zend_Session_Namespace</code> um Session Namensräume zu erlauben. <code>Zend_Session_Namespace</code>
+        <classname>Zend_Session_Namespace</classname> um Session Namensräume zu erlauben. <classname>Zend_Session_Namespace</classname>
         bietet ein standardisiertes, objekt-orientiertes Interface für das Arbeiten mit Namensräumen welche
         innerhalb von PHP's Standard Session Mechanismum bereitgehalten werden. Es werden sowohl anonyme als auch
-        authentifizierte (z.B., "login") Session Namensräume unterstützt. <code>Zend_Auth</code>, die
-        Authentifizierungs-Komponente des Zend Framework verwendet <code>Zend_Session_Namespace</code> um einige
+        authentifizierte (z.B., "login") Session Namensräume unterstützt. <classname>Zend_Auth</classname>, die
+        Authentifizierungs-Komponente des Zend Framework verwendet <classname>Zend_Session_Namespace</classname> um einige
         Informationen, welche mit den authentifizierten
-        Benutzern verbunden sind, innerhalb des "Zend_Auth" Namensraums zu speichern. Da <code>Zend_Session</code>
+        Benutzern verbunden sind, innerhalb des "Zend_Auth" Namensraums zu speichern. Da <classname>Zend_Session</classname>
         intern die normalen PHP ext/session Funktionen verwendet, sind alle bekannten Konfigurationsoptionen und
         Einstellungen vorhanden (siehe  <ulink url="http://www.php.net/session">http://www.php.net/session</ulink>),
         mit dem Bonus und Komfort durch ein Objekt-orientiertes Interface und unterstützt standardmäßig beides,

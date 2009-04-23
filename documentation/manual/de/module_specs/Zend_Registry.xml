@@ -14,7 +14,7 @@
 
     <para>
         Die typische Methode um Registries mit dem Zend Framework zu verwenden ist
-        durch die statischen Methoden in der <code>Zend_Registry</code> Klasse. Alternativ kann die
+        durch die statischen Methoden in der <classname>Zend_Registry</classname> Klasse. Alternativ kann die
         Registry als Arrayobjekt verwendet werden, und so können Elemente welche darin gespeichert
         wurden durch ein gewöhnliches Array-artiges Interface verwendet werden.
     </para>
@@ -105,7 +105,7 @@ foreach ($registry as $index => $value) {
 
         <para>
             Der traditionelle <code>new</code> Operator kann verwendet werden um
-            <code>Zend_Registry</code> zu initiieren. Das Initiieren von <code>Zend_Registry</code>
+            <classname>Zend_Registry</classname> zu initiieren. Das Initiieren von <classname>Zend_Registry</classname>
             mit seinem Konstruktor initiiert auch die Einträge in der Registry einfach durch die
             Verwendung eines assoziativen Arrays als Argument.
         </para>
@@ -119,9 +119,9 @@ $registry = new Zend_Registry(array('index' => $value));
         </example>
 
         <para>
-            Sobald so ein <code>Zend_Registry</code> Objekt initiiert wurde, kann es durch den
+            Sobald so ein <classname>Zend_Registry</classname> Objekt initiiert wurde, kann es durch den
             Aufruf irgendeiner Array Objektmethode verwendet werden, oder indem es als
-            Singleton Instanz für <code>Zend_Registry</code> mit der statischen Methode
+            Singleton Instanz für <classname>Zend_Registry</classname> mit der statischen Methode
             <code>setInstance()</code> gesetzt wird.
         </para>
 
@@ -136,7 +136,7 @@ Zend_Registry::setInstance($registry);
         </example>
 
         <para>
-            Die <code>setInstance()</code> Methode wirft eine <code>Zend_Exception</code> wenn die
+            Die <code>setInstance()</code> Methode wirft eine <classname>Zend_Exception</classname> wenn die
             statische Registry bereits initialisiert wurde.
         </para>
 
@@ -269,15 +269,15 @@ if (isset($registry->index)) {
         <title>Erweitern der Registry</title>
 
         <para>
-            Die statische Registry ist eine Instanz der Klasse <code>Zend_Registry</code>.
+            Die statische Registry ist eine Instanz der Klasse <classname>Zend_Registry</classname>.
             Wenn Funktionalität zur Registry hinzugefügt werden soll, sollte eine
-            Klasse erstellt werden die <code>Zend_Registry</code> erweitert und dann kann diese
+            Klasse erstellt werden die <classname>Zend_Registry</classname> erweitert und dann kann diese
             spezielle Klasse definiert werden um das Singleton in der statische Registry zu initiieren.
             Die statische Methode <code>setClassName()</code> kann verwendet
             werden um die Klasse zu definieren.
             <note>
                 <para>
-                    Diese Klasse muß eine Unterklasse von <code>Zend_Registry</code> sein.
+                    Diese Klasse muß eine Unterklasse von <classname>Zend_Registry</classname> sein.
                 </para>
             </note>
         </para>
@@ -293,7 +293,7 @@ Zend_Registry::set('index', $value);
         </example>
 
         <para>
-            Die Registry wirft eine <code>Zend_Exception</code> wenn man versucht den Klassennamen
+            Die Registry wirft eine <classname>Zend_Exception</classname> wenn man versucht den Klassennamen
             zu setzen nachdem die Registry das erste Mal verwendet wurde. Es ist deshalb
             notwendig den Klassennamen für die statische Registry in der Bootstrap
             Datei der Anwendung zu definieren.
@@ -326,7 +326,7 @@ Zend_Registry::set('index', $value);
             Initialisierung des Singleton Registry Objektes verwendet werden soll.
             Entfernen der Singleton Instanz erlaubt die Benutzung dieser Methoden
             selbst nachdem das Singleton Registry Objekt gesetzt wurde. Die Verwendung
-            von <code>Zend_Registry</code> auf diese Weise ist für typische Anwendungen
+            von <classname>Zend_Registry</classname> auf diese Weise ist für typische Anwendungen
             und Umgebungen nicht empfohlen.
         </para>
 

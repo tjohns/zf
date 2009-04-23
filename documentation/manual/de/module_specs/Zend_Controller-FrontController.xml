@@ -8,7 +8,7 @@
         <title>Übersicht</title>
 
         <para>
-            <code>Zend_Controller_Front</code> implementiert ein <ulink
+            <classname>Zend_Controller_Front</classname> implementiert ein <ulink
                 url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front
                 Controller-Entwurfsmuster</ulink>, das in <ulink
                 url="http://de.wikipedia.org/wiki/Model_View_Controller">Model-View-Controller
@@ -19,7 +19,7 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> implementiert auch das <ulink
+            <classname>Zend_Controller_Front</classname> implementiert auch das <ulink
                 url="http://de.wikipedia.org/wiki/Einzelst%C3%BCck_%28Entwurfsmuster%29">Singleton-Entwurfsmuster
             </ulink>,
             das heißt nur eine einzige Instanz dieser Klasse darf zu jedem Zeitpunkt existieren.
@@ -28,7 +28,7 @@
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> registriert einen <link
+            <classname>Zend_Controller_Front</classname> registriert einen <link
                 linkend="zend.controller.plugins">Plugin-Broker</link> in der Registry, die er selber ist,
             was es erlaubt, verschiedene Events, die er auslöst, von den Plugins überwachen zu lassen.
             In den meisten Fällen gibt das dem Entwickler die Möglichkeit, einen maßgeschneiderten Dispatch-Prozess
@@ -224,7 +224,7 @@ $front->addControllerDirectory('../modules/foo/controllers', 'foo');
             <title>run()</title>
 
             <para>
-                <code>Zend_Controller_Front::run($path)</code> ist eine statische Methode, die einfach einen
+                <classname>Zend_Controller_Front::run($path)</classname> ist eine statische Methode, die einfach einen
                 Pfad zu einem Verzeichnis, das Action-Controller enthält, als Parameter akzeptiert.
                 Sie holt sich eine Front-Controller-Instanz (mit
                 <link
@@ -379,7 +379,7 @@ Zend_Controller_Front::run('../application/controllers');
                     <code>dispatch()</code> vom Front-Controller zurückgegeben werden soll
                     (<code>true</code>) oder ob er sie automatisch ausgibt (<code>false</code>).
                     In der Standardeinstellung wird die Antwort automatisch ausgegeben (durch
-                    Aufruf von <code>Zend_Controller_Response_Abstract::sendResponse()</code>);
+                    Aufruf von <classname>Zend_Controller_Response_Abstract::sendResponse()</classname>);
                     das Einschalten von <code>returnResponse()</code> ändert das.
                 </para>
 
@@ -510,8 +510,8 @@ class My_Controller_Front extends Zend_Controller_Front
 
         <para>
             Das Überschreiben der <code>getInstance()</code>-Methode sorgt dafür, dass folgende Aufrufe von
-            <code>Zend_Controller_Front::getInstance()</code> eine Instanz der neuen Subklasse zurückgeben anstatt
-            einer <code>Zend_Controller_Front</code>-Instanz -- das ist speziell für einige der alternativen Router
+            <classname>Zend_Controller_Front::getInstance()</classname> eine Instanz der neuen Subklasse zurückgeben anstatt
+            einer <classname>Zend_Controller_Front</classname>-Instanz -- das ist speziell für einige der alternativen Router
             und View-Helfer nützlich.
         </para>
 

@@ -41,7 +41,7 @@
         <para>
             Bevor irgendeine Transaktion stattfinden kann, muß diese Verbindung hergestellt werden. Das
             Erstellen einer Verbindung zu den Base Server enthält zwei Schritte: Erstellen eines HTTP Clients
-            und das Binden einer <code>Zend_Gdata_Gbase</code> Serviceinstanz an diesen Client.
+            und das Binden einer <classname>Zend_Gdata_Gbase</classname> Serviceinstanz an diesen Client.
         </para>
         <sect3 id="zend.gdata.gbase.connect.authentication">
             <title>Authentifizierung</title>
@@ -72,7 +72,7 @@
                 </listitem>
             </itemizedlist>
             <para>
-                Die <code>Zend_Gdata</code> Bibliothek bietet Unterstützung für alle drei Authentifizierungs
+                Die <classname>Zend_Gdata</classname> Bibliothek bietet Unterstützung für alle drei Authentifizierungs
                 Schemata. Im Rest dieses Kapitels wird angenommen das man mit den Authentifizierungs Schemata
                 umgehen kann und wie eine notwendige Authentifizierte Verbindung erstellt wird. Für weitere
                 Informationen kann in das Kapitel <xref linkend="zend.gdata.introduction.authentication" />
@@ -84,18 +84,18 @@
         <sect3 id="zend.gdata.gbase.connect.service">
             <title>Eine Service Instanz erstellen</title>
             <para>
-                Im mit Google Base zu interagieren, bietet diese Bibliothek die <code>Zend_Gdata_Gbase</code>
+                Im mit Google Base zu interagieren, bietet diese Bibliothek die <classname>Zend_Gdata_Gbase</classname>
                 Service Klasse. Diese klasse bietet ein standardmäßiges Interface zu Google Data und den
                 Atom Publishing Protokoll Modellen und unterstützt in der Durchführung von Anfragen von und
                 zu den Base Servern.
             </para>
             <para>
                 Sobald ein Authentifizierungs Schema ausgewählt wurde, besteht der nächste Schritt darin
-                eine Instanz von <code>Zend_Gdata_Gbase</code> zu erstellen. Diese Klasse nimmt eine Instanz
-                von <code>Zend_Http_Client</code> als einziges Argument. Das bietet ein Interface für
+                eine Instanz von <classname>Zend_Gdata_Gbase</classname> zu erstellen. Diese Klasse nimmt eine Instanz
+                von <classname>Zend_Http_Client</classname> als einziges Argument. Das bietet ein Interface für
                 AuthSub und ClientAuth Authentifizierungen, da beide einen speziellen authentifizierten
                 HTTP Client für die Erstellung benötigen. Wenn keine Argumente angegeben wurden, wird
-                automatisch eine nicht authentifizierte Instanz von <code>Zend_Http_Client</code> erstellt.
+                automatisch eine nicht authentifizierte Instanz von <classname>Zend_Http_Client</classname> erstellt.
             </para>
             <para>
                 Das nachfolgende Beispiel zeigt wir eine Base Service Klasse erstellt wird indem die
@@ -233,7 +233,7 @@ $service = new Zend_Gdata_Gbase();
             <para>
                 Wenn Elemente empfangen werden indem die Base API verwendet wird, werden speziell
                 konstruierte Abfrage URLs verwendet um  zu beschreiben welche Evente zurückgegeben werden sollen.
-                Die <code>Zend_Gdata_Gbase_ItemQuery</code> und <code>Zend_Gdata_Gbase_SnippetQuery</code>
+                Die <classname>Zend_Gdata_Gbase_ItemQuery</classname> und <classname>Zend_Gdata_Gbase_SnippetQuery</classname>
                 Klassen vereinfachen diese Aufgabe durch die automatische Erstellung einer Anfrage URL basierend
                 auf den angegebenen Parametern.
             </para>
@@ -424,8 +424,8 @@ $entry->save($dryRun);
             </programlisting>
             <para>
                 Nach der Durchführung der Änderungen, muß entweder die <code>save($dryRun)</code> Methode am
-                <code>Zend_Gdata_Gbase_ItemEntry</code> Objekt oder die
-                <code>updateGbaseItem($entry, $dryRun)</code> Methode am <code>Zend_Gdata_Gbase</code>
+                <classname>Zend_Gdata_Gbase_ItemEntry</classname> Objekt oder die
+                <code>updateGbaseItem($entry, $dryRun)</code> Methode am <classname>Zend_Gdata_Gbase</classname>
                 Objekt aufgerufen werden um die Änderungen abzuspeichern.
             </para>
         </sect3>
@@ -440,7 +440,7 @@ $service->deleteGbaseItem($entry, $dryRun);
 ]]>
             </programlisting>
             <para>
-                Alternativ kann <code>delete()</code> auf dem <code>Zend_Gdata_Gbase_ItemEntry</code> Objekt
+                Alternativ kann <code>delete()</code> auf dem <classname>Zend_Gdata_Gbase_ItemEntry</classname> Objekt
                 aufgerufen werden:
             </para>
             <programlisting role="php"><![CDATA[

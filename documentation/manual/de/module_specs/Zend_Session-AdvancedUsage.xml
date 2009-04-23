@@ -35,7 +35,7 @@ Zend_Session::start();
             Durch das Starten der Session in der Bootstrap Datei verhindert man das die Session gestartet werden
             könnte nachdem die Header an den Browser gesendet wurde, was zu einer Ausnahme und möglicherweise
             zu einer fehlerhaften Seiten im Browser führen würde. Viele gehobenen Features benötigen zuerst
-            <code>Zend_Session::start()</code>. (Mehr dazu später in den gehobenen Features)
+            <classname>Zend_Session::start()</classname>. (Mehr dazu später in den gehobenen Features)
         </para>
 
         <para>
@@ -62,17 +62,17 @@ php_value session.auto_start 0
                 <para>
                     Falsch: PHP's <ulink url="http://www.php.net/session_start"><code>session_start()</code></ulink>
                     Funktion darf nicht direkt verwendet werden. Wenn <code>session_start()</code> direkt, und
-                    anschließend <code>Zend_Session_Namespace</code> verwendet wird, wird von
-                    <code>Zend_Session::start()</code> eine Ausnahme geworfen ("session has already been started").
-                    Wenn <code>Zend_Session::start()</code> ausgerufen wird, nachdem
-                    <code>Zend_Session_Namespace</code> verwendet wird oder <code>Zend_Session::start()</code>
+                    anschließend <classname>Zend_Session_Namespace</classname> verwendet wird, wird von
+                    <classname>Zend_Session::start()</classname> eine Ausnahme geworfen ("session has already been started").
+                    Wenn <classname>Zend_Session::start()</classname> ausgerufen wird, nachdem
+                    <classname>Zend_Session_Namespace</classname> verwendet wird oder <classname>Zend_Session::start()</classname>
                     explizit verwendet wird, wird ein Fehler vom Level <code>E_NOTICE</code> erzeugt und der Aufruf
                     wird ignoriert.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Richtig: Verwenden von <code>Zend_Session::start()</code>. Wenn es gewünscht ist, das alle
+                    Richtig: Verwenden von <classname>Zend_Session::start()</classname>. Wenn es gewünscht ist, das alle
                     Anfragen eine Session haben und verwenden, sollte diese Funktion sehr früh, direkt und
                     entscheidungslos in der Bootstrap Datei aufgerufen werden. Session haben einigen Overhead.
                     Wenn einige Anfragen Sessions benötigen aber andere Anfragen keine Sessions verwenden, dann:
@@ -81,30 +81,30 @@ php_value session.auto_start 0
                     <listitem>
                         <para>
                             Entscheidungslos, die <code>strict</code> Option auf <code>true</code> setzen durch
-                            Verwendung von <code>Zend_Session::setOptions()</code> in der Bootstrap Datei.
+                            Verwendung von <classname>Zend_Session::setOptions()</classname> in der Bootstrap Datei.
                         </para>
                     </listitem>
                     <listitem>
                         <para>
-                            Aufruf von <code>Zend_Session::start()</code> nur für die Anfragen die eine Session
-                            verwenden müssen und vor jeglichen <code>Zend_Session_Namespace</code> initiiert werden.
+                            Aufruf von <classname>Zend_Session::start()</classname> nur für die Anfragen die eine Session
+                            verwenden müssen und vor jeglichen <classname>Zend_Session_Namespace</classname> initiiert werden.
                         </para>
                     </listitem>
                     <listitem>
                         <para>
                             Normales verwenden von "<code>new Zend_Session_Namespace()</code>" wo es benötigt wird,
-                            aber sicherstellen das davor <code>Zend_Session::start()</code> ausgerufen wurde.
+                            aber sicherstellen das davor <classname>Zend_Session::start()</classname> ausgerufen wurde.
                         </para>
                     </listitem>
                 </itemizedlist>
                 <para>
                     Die Option <code>strict</code> verhindert das <code>new Zend_Session_Namespace()</code>
-                    automatisch eine Session startet und dabei <code>Zend_Session::start()</code> verwendet.
+                    automatisch eine Session startet und dabei <classname>Zend_Session::start()</classname> verwendet.
                     Deshalb hilft diese Option Anwendungs Entwicklern, sich für ein Design entscheiden
                     zu können welches verhindert das für bestimmte Anfragen Sessions verwendet werden, da es eine
-                    Ausnahme verursachen würde wenn <code>Zend_Session_Namespace</code> instanziiert wird,
-                    bevor <code>Zend_Session::start()</code> aufgerufen wird. Entwickler sollten vorsichtig
-                    entscheiden welchen Einfluß die Verwendung von <code>Zend_Session::setOptions()</code> hat,
+                    Ausnahme verursachen würde wenn <classname>Zend_Session_Namespace</classname> instanziiert wird,
+                    bevor <classname>Zend_Session::start()</classname> aufgerufen wird. Entwickler sollten vorsichtig
+                    entscheiden welchen Einfluß die Verwendung von <classname>Zend_Session::setOptions()</classname> hat,
                     da diese Optionen globale Seiteneffekte hat, in Folge der Korrespondenz der darunterliegenden
                     Optionen für ext/session.
                 </para>
@@ -138,7 +138,7 @@ php_value session.auto_start 0
             bestehen nicht von einer Anfrage zur nächsten. Die Sperre des Namensraumes hat keinen Effekt auf
             Setz-Methoden von Objekten welche im Namensraum gespeichert sind, aber sie verhindert die Verwendung
             der Setz-Methoden des Namensraumes welche das gespeicherte Objekt direkt im Namensraum löschen oder
-            ersetzen. Gleichwohl verhindert das Sperren von <code>Zend_Session_Namespace</code> Instanzen nicht
+            ersetzen. Gleichwohl verhindert das Sperren von <classname>Zend_Session_Namespace</classname> Instanzen nicht
             die Verwendung von symbolischen Tabellen-Aliasen auf die gleichen Daten (siehe
             <ulink url="http://www.php.net/references">PHP references</ulink>).
         </para>
@@ -272,13 +272,13 @@ $testSpace->accept_answer = true;
         <para>
             Obwohl <link linkend="zend.session.advanced_usage.locking">session locking</link> einen guten Grad von
             Schutz gegen unerlaubte Verwendung von Session Daten in einem Namensraum bietet, bietet
-            <code>Zend_Session_Namespace</code> auch die Fähigkeit die Erzeugung von mehreren Instanzen zu verhindern
+            <classname>Zend_Session_Namespace</classname> auch die Fähigkeit die Erzeugung von mehreren Instanzen zu verhindern
             die zu einem einzelnen Namensraum korrespondieren.
         </para>
 
         <para>
             Um dieses Verhalten einzuschalten, muß <code>true</code> als zweites Argument im Konstruktor angegeben
-            werden wenn die letzte erlaubt Instanz von <code>Zend_Session_Namespace</code> erzeugt wurde. Jeder
+            werden wenn die letzte erlaubt Instanz von <classname>Zend_Session_Namespace</classname> erzeugt wurde. Jeder
             weitere Versuch den selben Namensraum zu instanzieren wird in einer geworfenen Ausnahme resultieren.
         </para>
 
@@ -313,8 +313,8 @@ try {
         </example>
 
         <para>
-            Der zweite Parameter oben im Konstruktor sagt <code>Zend_Session_Namespace</code> das alle zukünftigen
-            Instanzen  mit dem <code>Zend_Auth</code> Namensraum nicht erlaubt sind. Der Versuch solche Instanzen zu erstellen
+            Der zweite Parameter oben im Konstruktor sagt <classname>Zend_Session_Namespace</classname> das alle zukünftigen
+            Instanzen  mit dem <classname>Zend_Auth</classname> Namensraum nicht erlaubt sind. Der Versuch solche Instanzen zu erstellen
             verursacht eine Ausnahme die vom Konstruktor geworfen wird. Der Entwickler wird darauf aufmerksam gemacht
             eine Referenz zu einer Instanz des Objektes irgendwo zu speichern (<code>$authSpaceAccessor1</code>,
             <code>$authSpaceAccessor2</code>, oder <code>$authSpaceAccessor3</code> im obigen Beispiel), wenn
@@ -458,9 +458,9 @@ echo $myNamespace->someArray['foo']; // gibt "bar" aus
             anzudecken. Die Ausnahme "<emphasis role="strong">Zend_Session ist aktuell als nur-lesbar markiert</emphasis>"
             wird geworfen wärend Unit Tests durchgeführt werden, wenn irgendeine schreibende Methode verwendet wird
             nachdem Ende der Session. Trotzdem benötigen Unit Tests die Zend_Session verwenden besondere Aufmerksamkeit
-            weil das Schließen (<code>Zend_Session::writeClose()</code>) oder Zerstören einer Session
-            (<code>Zend_Session::destroy()</code>) weitere Änderungen oder Rücknahmen von Schlüsseln in jeder
-            Instanz von <code>Zend_Session_Namespace</code> verhindert. Dieses Verhalten ist ein direktes Resultat
+            weil das Schließen (<classname>Zend_Session::writeClose()</classname>) oder Zerstören einer Session
+            (<classname>Zend_Session::destroy()</classname>) weitere Änderungen oder Rücknahmen von Schlüsseln in jeder
+            Instanz von <classname>Zend_Session_Namespace</classname> verhindert. Dieses Verhalten ist ein direktes Resultat
             des darunterliegenden ext/session Mechanismus und PHP's <code>session_destroy()</code> und
             <code>session_write_close()</code> welche keinen "rückgängig machen" Mechanismus unterstützen um
             Setup/Teardown innerhalb der Unit Tests zu unterstützen.

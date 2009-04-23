@@ -8,13 +8,13 @@
     <para>
         Zend_Filter bietet ein Set von normalerweise benötigten Filtern, aber Entwickler müssen oft Ihre eigenen
         Filter für deren eigene spezielle Verwendung schreiben. Die Arbeit des Schreibens eines eigenen Filters
-        ist möglich durch die Implementierung von <code>Zend_Filter_Interface</code>.
+        ist möglich durch die Implementierung von <classname>Zend_Filter_Interface</classname>.
     </para>
 
     <para>
-        <code>Zend_Filter_Interface</code> definiert eine einzige Methode, <code>filter()</code>, die von
+        <classname>Zend_Filter_Interface</classname> definiert eine einzige Methode, <code>filter()</code>, die von
         Benutzerdefinierten Klassen implementiert werden kann. Ein Objekt das dieses Interface implementiert
-        kann in eine Filterkette mit <code>Zend_Filter::addFilter()</code> hinzugefügt werden.
+        kann in eine Filterkette mit <classname>Zend_Filter::addFilter()</classname> hinzugefügt werden.
     </para>
 
     <para>

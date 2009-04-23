@@ -6,11 +6,11 @@
     <title>Arbeiten mit Daten und Zeiten</title>
 
     <para>
-        <code>Zend_Locale_Format</code> bietet verschiedene Methoden für das Arbeiten mit Daten und Zeiten und hilft
+        <classname>Zend_Locale_Format</classname> bietet verschiedene Methoden für das Arbeiten mit Daten und Zeiten und hilft
         bei der Konvertierung und Normalisierung zwischen verschiedenen Formaten und verschiedenen Gebietsschemata.
         Für die Manipulation von Datumszeichenketten die bereits übereinstimmen mit
         <link linkend="zend.date.constants">einem der vielen international erkannten Standardformate, oder einem der
-        lokalisierten Datumsformat welche von <code>Zend_Date</code> verwendet werden</link>.
+        lokalisierten Datumsformat welche von <classname>Zend_Date</classname> verwendet werden</link>.
         Die Verwendung von vordefinierten Formate bietet Vorteile, wie die Benutzung von gut getestetem Code, und
         die Sicherheit von Beweglichkeit und Interoperabilität (abhängig vom benutzten Standard). Das unten angeführte
         Beispiel folgt nicht dieser Empfehlung, da die Benutzung von nicht standardmäßigen Datumsformaten die
@@ -77,12 +77,12 @@
             Für jene die ein spezielles Format für Datumseingaben definieren müssen, werden die nachfolgend
             angegebenen Format Zeichen unterstützt. Wenn ein ungültiges Format Zeichen verwendet wird, so wie
             PHP's 'i' Zeichen in einem ISO Format, dann wird ein Fehler von den Methoden, die benutzer definierte
-            Formate in <code>Zend_Locale_Format</code> unterstützen, geworfen.
+            Formate in <classname>Zend_Locale_Format</classname> unterstützen, geworfen.
         </para>
 
         <para>
             Die unten angegebenen Zeichen sind nur ein kleiner Teil des kompletten "ISO" Sets welches von
-            <code>Zend_Date</code>'s <code>toString()</code> unterstützt werden. Wenn PHP <code>date()</code> kompatible
+            <classname>Zend_Date</classname>'s <code>toString()</code> unterstützt werden. Wenn PHP <code>date()</code> kompatible
             Format Zeichen benutzt werden müssen, dann muß zuerst <code>setOptions(array('format_type' => 'php'))</code>
             aufgerufen werden. Und wenn eine spezielle Format Zeichenkette vom PHP <code>date()</code> kompatiblen
             Format in ein "ISO" Format konvertiert werden muß kann <code>convertPhpToIsoFormat()</code>
@@ -197,7 +197,7 @@ Array
             Datumseingaben einem Gebietsschema Format zuzuordnen. Die Option '<code>fix_date</code>' verwendet
             einfache Tests um herauszufinden ob Tag oder Monat ungültig sind, um dann eine Heuristik anzuwenden
             die versucht alle gefundenen Probleme zu korrigieren. Anzumerken ist auch die Verwendung von
-            '<code>Zend_Locale_Format::STANDARD</code>' als Wert für '<code>date_format</code>' bei der Funktion
+            '<classname>Zend_Locale_Format::STANDARD</classname>' als Wert für '<code>date_format</code>' bei der Funktion
             <code>setOptions()</code> um zu verhindern das das klassenweit gesetzte standardmäßige Datumsformat
             verwendet wird. Das zwingt getDate dazu das standardmäßige Datumsformat dieser <code>$locale</code>
             zu verwenden.
@@ -343,7 +343,7 @@ print_r ($date);
             <title>Datumsformate für Datenbanken</title>
             <para>
                 Um einen Datumswert einer Datenbank zu analysieren (zum Beispiel MySql oder MsSql) sollte
-                <code>Zend_Date</code>'s ISO_8601 Format statt getDate() benutzt werden.
+                <classname>Zend_Date</classname>'s ISO_8601 Format statt getDate() benutzt werden.
             </para>
         </note>
 

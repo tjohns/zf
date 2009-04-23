@@ -179,7 +179,7 @@
         Wenn ein Navigations Container nicht explizit in einem Helfer durch Verwendung von
         <code>$helper->setContainer($nav)</code> gesetzt ist, schaut der Helfer in
         <link linkend="zend.registry">der Registry</link> nach einer Container Instanz mit dem
-        Schlüssel <code>Zend_Navigation</code>.  Wenn ein Container nicht explizit gesetzt wurde,
+        Schlüssel <classname>Zend_Navigation</classname>.  Wenn ein Container nicht explizit gesetzt wurde,
         oder nicht in der Registry gefunden wird, erstellt der Helfer einen leeren
         <classname>Zend_Navigation</classname> Container wenn <code>$helper->getContainer()</code>
         aufgerufen wird.
@@ -217,7 +217,7 @@ $this->navigation()->addPage(array(
             <code>$helper->setTranslator($translator)</code> verwendet wird, oder wie in allen
             anderen I18n-fähigen Komponenten; durch das Hinzufügen des Übersetzers in
             <link linkend="zend.registry">die Registry</link> indem der Schlüssel
-            <code>Zend_Translate</code> verwendet wird.
+            <classname>Zend_Translate</classname> verwendet wird.
         </para>
 
         <para>
@@ -867,55 +867,55 @@ Produkte, Foo Server, FAQ
         <para>
             <itemizedlist>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_ALTERNATE</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_ALTERNATE</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_STYLESHEET</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_STYLESHEET</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_START</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_START</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_NEXT</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_NEXT</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_PREV</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_PREV</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_CONTENTS</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_CONTENTS</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_INDEX</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_INDEX</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_GLOSSARY</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_GLOSSARY</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_COPYRIGHT</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_COPYRIGHT</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_CHAPTER</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_CHAPTER</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_SECTION</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_SECTION</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_SUBSECTION</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_SUBSECTION</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_APPENDIX</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_APPENDIX</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_HELP</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_HELP</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_BOOKMARK</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_BOOKMARK</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_CUSTOM</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_CUSTOM</classname></para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_View_Helper_Navigation_Link::RENDER_ALL</code></para>
+                    <para><classname>Zend_View_Helper_Navigation_Link::RENDER_ALL</classname></para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -2075,9 +2075,9 @@ echo $this->navigation()
             Der Navigation Helfer ist ein Proxy Helfer der Aufrufe zu anderen Navigations Helfern
             durchführt. Er kann als Einstiegspunkt fpr alle navigations-basierenden View Tasks
             verwendet werden. Die vorher erwähnten Navigations Helfer sind im Namespace
-            <code>Zend_View_Helper_Navigation</code> und würden es deshalb benötigen, den Pfad
+            <classname>Zend_View_Helper_Navigation</classname> und würden es deshalb benötigen, den Pfad
             <code>Zend/View/Helper/Navigation</code> als Helfer Pfad der View hinzuzufügen. Mit dem
-            Proxy Helfer der im <code>Zend_View_Helper</code> Namespace sitzt, ist er immer
+            Proxy Helfer der im <classname>Zend_View_Helper</classname> Namespace sitzt, ist er immer
             vorhanden, ohne das irgendein Helfer Pfad an der View hinzugefügt werden muß.
         </para>
 

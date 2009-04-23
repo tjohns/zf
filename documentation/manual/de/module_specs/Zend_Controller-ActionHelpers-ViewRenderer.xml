@@ -65,7 +65,7 @@
                 Der <code>ViewRenderer</code> ist standardmäßig aktiviert. Man kann Ihn über den Parameter
                 <code>noViewRenderer</code> des Frontkontrollers deaktivieren
                 (<code>$front->setParam('noViewRenderer', true)</code>) oder den Helfer vom Helfer Broker Stack
-                entfernen (<code>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</code>).
+                entfernen (<classname>Zend_Controller_Action_HelperBroker::removeHelper('viewRenderer')</classname>).
             </para>
 
             <para>
@@ -414,8 +414,8 @@ $viewRenderer =
                     </para>
 
                     <para>
-                        Intern verwendet der Inflector die Filter <code>Zend_Filter_Word_CamelCaseToDash</code>
-                        und <code>Zend_Filter_StringToLower</code>.
+                        Intern verwendet der Inflector die Filter <classname>Zend_Filter_Word_CamelCaseToDash</classname>
+                        und <classname>Zend_Filter_StringToLower</classname>.
                     </para>
                 </listitem>
 
@@ -428,9 +428,9 @@ $viewRenderer =
                     </para>
 
                     <para>
-                        Intern verwendet der Inflector die Filter <code>Zend_Filter_Word_CamelCaseToDash</code>,
-                        <code>Zend_Filter_Word_UnderscoreToSeparator</code> und
-                        <code>Zend_Filter_StringToLower</code>.
+                        Intern verwendet der Inflector die Filter <classname>Zend_Filter_Word_CamelCaseToDash</classname>,
+                        <classname>Zend_Filter_Word_UnderscoreToSeparator</classname> und
+                        <classname>Zend_Filter_StringToLower</classname>.
                     </para>
                 </listitem>
 
@@ -444,8 +444,8 @@ $viewRenderer =
                     </para>
 
                     <para>
-                        Intern verwendet der Inflector die Filter <code>Zend_Filter_Word_CamelCaseToDash</code>,
-                        <code>Zend_Filter_PregReplace</code> und <code>Zend_Filter_StringToLower</code>.
+                        Intern verwendet der Inflector die Filter <classname>Zend_Filter_Word_CamelCaseToDash</classname>,
+                        <classname>Zend_Filter_PregReplace</classname> und <classname>Zend_Filter_StringToLower</classname>.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -472,7 +472,7 @@ $viewRenderer =
 
                 <note>
                     <para>
-                        Standardmäßig handelt <code>Zend_Controller_Action::renderScript()</code> in Vertretung zur
+                        Standardmäßig handelt <classname>Zend_Controller_Action::renderScript()</classname> in Vertretung zur
                         <code>renderScript()</code> Methode des <code>ViewRenderer</code>'s.
                     </para>
                 </note>
@@ -502,7 +502,7 @@ $viewRenderer =
 
                 <note>
                     <para>
-                        Standardmäßig handelt <code>Zend_Controller_Action::getViewScript()</code> in Vertretung
+                        Standardmäßig handelt <classname>Zend_Controller_Action::getViewScript()</classname> in Vertretung
                         zur <code>getViewScript()</code> Methode des <code>ViewRenderer</code>'s.
                     </para>
                 </note>
@@ -527,7 +527,7 @@ $viewRenderer =
 
                 <note>
                     <para>
-                        Standardmäßig handelt <code>Zend_Controller_Action::render()</code> in Vertretung zur
+                        Standardmäßig handelt <classname>Zend_Controller_Action::render()</classname> in Vertretung zur
                         <code>render()</code> Methode des <code>ViewRenderer</code>'s.
                     </para>
                 </note>

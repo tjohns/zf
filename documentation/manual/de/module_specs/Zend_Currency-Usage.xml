@@ -6,8 +6,8 @@
     <title>Arbeiten mit Währungen</title>
 
     <para>
-        Um <code>Zend_Currency</code> in einer Anwendung zu verwenden muß nur eine Instanz davon erstellt
-        werden ohne das Parameter angegeben werden. Das Erstellt eine Instanz von <code>Zend_Currency</code>
+        Um <classname>Zend_Currency</classname> in einer Anwendung zu verwenden muß nur eine Instanz davon erstellt
+        werden ohne das Parameter angegeben werden. Das Erstellt eine Instanz von <classname>Zend_Currency</classname>
         mit deinem Gebietsschema, und definiert die Währung die aktuell in diesem Gebietsschema
         verwendet wird.
     </para>
@@ -19,7 +19,7 @@
         <para>
             Angenommen 'en_US' ist, durch die Umgebung des Benutzers, als aktuelles Gebietsschema gesetzt.
             Durch das Angeben keines einzigen Parameters wärend der Erstellung der Instanz kann
-            <code>Zend_Currency</code> gesagt werden das es die aktuelle Währung des Gebietsschemas 'en_US'
+            <classname>Zend_Currency</classname> gesagt werden das es die aktuelle Währung des Gebietsschemas 'en_US'
             verwenden soll. Das führt zu einer Instanz mit US Dollar als aktueller Währung mit den
             Formatregeln von 'en_US'.
         </para>
@@ -32,8 +32,8 @@ $currency = new Zend_Currency();
     </example>
 
     <para>
-        <code>Zend_Currency</code> unterstützt auch die Verwendung eines
-        Anwendungsweiten Gebietsschemas. Man kann eine <code>Zend_Locale</code> Instanz in der
+        <classname>Zend_Currency</classname> unterstützt auch die Verwendung eines
+        Anwendungsweiten Gebietsschemas. Man kann eine <classname>Zend_Locale</classname> Instanz in der
         Registry wie unten gezeigt setzen. Mit dieser Schreibweise kann man verhindern das
         Gebietsschematas mit jeder Instanz gesetzt werden müssen wenn man das gleiche Gebietsschema in der
         gesamten Anwendung verwenden will.
@@ -53,7 +53,7 @@ $currency = new Zend_Currency();
         <para>
             Wenn das eigene System kein standardmäßiges Gebietsschema hat, oder das
             Gebietsschema des eigenen Systems nicht automatisch eruiert werden kann, wird
-            <code>Zend_Currency</code> eine Ausnahme werfen. Wenn dieses Verhalten auftritt sollte man daran
+            <classname>Zend_Currency</classname> eine Ausnahme werfen. Wenn dieses Verhalten auftritt sollte man daran
             denken das Gebietsschema per Hand zu setzen.
         </para>
     </note>
@@ -126,7 +126,7 @@ $currency = new Zend_Currency('en_US', 'EUR');
     </example>
 
     <para>
-        Es können also alle diese Parameter bei <code>Zend_Currency</code>'s Constructor unterdrückt werden
+        Es können also alle diese Parameter bei <classname>Zend_Currency</classname>'s Constructor unterdrückt werden
         wenn man die Standardwerte verwenden will. Das hat keine negativen Effekte bei der Handhabung von
         Währungen. Es kann aber nützlich sein, wenn man zum Beispiel die Standardwährung einer Region nicht weiß.
     </para>
@@ -195,7 +195,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
         <title>Das Format einer Währung ändern</title>
 
         <para>
-            Das Format das bei der Erstellung der <code>Zend_Currency</code> Instanz angegeben wurde, ist
+            Das Format das bei der Erstellung der <classname>Zend_Currency</classname> Instanz angegeben wurde, ist
             natürlich das Standardformat. Aber manchmal ist es nützlich dieses Format anzupassen.
         </para>
 
@@ -229,7 +229,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 <para>
                     Die Schreibweise die verwendet werden soll um Ziffern anzuzeigen. Detailierte
                     Informationen über Schreibweisen und deren verwendung kann in der Dokumentation von
-                    <code>Zend_Locale</code> unter
+                    <classname>Zend_Locale</classname> unter
                     <link linkend="zend.locale.appendix.numberscripts.supported">unterstützte Schreibweisen für Ziffern</link>
                     gefunden werden.
                 </para>
@@ -280,7 +280,7 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                     Trennzeichen für Tausender. Man kann entweder ein Standardformat verwenden indem ein
                     Identifikator für ein Gebietsschema angegeben wird, oder das Nummern-Format manuell
                     definieren. Wenn kein Format gesetzt wurde, wird das Gebietsschema vom
-                    <code>Zend_Currency</code> Objekt verwendet.
+                    <classname>Zend_Currency</classname> Objekt verwendet.
                 </para>
             </listitem>
             <listitem>
@@ -303,21 +303,21 @@ echo $currency->toCurrency(1000, array('script' => 'Arab'));
                 <para>
                     <emphasis role="strong">name</emphasis>: Definiert den kompletten Namen der Währung der
                     angezeigt werden soll. Diese Option überschreibt den Namen der Währung der durch die
-                    Erstellung von <code>Zend_Currency</code> gesetzt wurde.
+                    Erstellung von <classname>Zend_Currency</classname> gesetzt wurde.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">currency</emphasis>: Definiert die internationale Abkürzung die
                     angezeigt werden soll. Diese Option überschreibt die Abkürzung die durch die Erstellung
-                    von <code>Zend_Currency</code> gesetzt wurde.
+                    von <classname>Zend_Currency</classname> gesetzt wurde.
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <emphasis role="strong">symbol</emphasis>: Definiert das Symbol der Währung welches
                     angezeigt werden soll. Diese Option überschreibt das Symbol das durch die Erstellung
-                    von <code>Zend_Currency</code> gesetzt wurde.
+                    von <classname>Zend_Currency</classname> gesetzt wurde.
                 </para>
             </listitem>
         </itemizedlist>
@@ -419,8 +419,8 @@ echo $currency->toCurrency(1000);
         <title>Referenz Methoden von Zend_Currency</title>
 
         <para>
-            Natürlich bietet <code>Zend_Currency</code> auch Methoden an um Informationen über jede existierende
-            und viele historische Währungen von <code>Zend_Locale</code> zu bekommen. Die unterstützten
+            Natürlich bietet <classname>Zend_Currency</classname> auch Methoden an um Informationen über jede existierende
+            und viele historische Währungen von <classname>Zend_Locale</classname> zu bekommen. Die unterstützten
             Methoden sind:
         </para>
 
@@ -520,7 +520,7 @@ print_r($currency->getCurrencyList('de_AT');
         <title>Neue Standardwerte setzen</title>
 
         <para>
-            Die Methode <code>setLocale</code> erlaubt es ein neues Gebietsschema für <code>Zend_Currency</code>
+            Die Methode <code>setLocale</code> erlaubt es ein neues Gebietsschema für <classname>Zend_Currency</classname>
             zu setzen. Alle Standardwerte werden überschrieben wenn diese Funktion aufgerufen wird.
             Das beinhaltet den Namen der Währung, die Abkürzung und das Symbol.
         </para>
@@ -548,11 +548,11 @@ print $currency->toCurrency(1000);
         <title>Zend_Currency Performance Optimierung</title>
 
         <para>
-            <code>Zend_Currency</code>'s Geschwindigkeit kann optimiert werden indem <code>Zend_Cache</code>
-            verwendet wird. Die statischen Methode <code>Zend_Currency::setCache($cache)</code> akzeptiert
-            eine Option: Einen <code>Zend_Cache</code> Adapter. Wenn der Cache Adapter gesetzt wird,
+            <classname>Zend_Currency</classname>'s Geschwindigkeit kann optimiert werden indem <classname>Zend_Cache</classname>
+            verwendet wird. Die statischen Methode <classname>Zend_Currency::setCache($cache)</classname> akzeptiert
+            eine Option: Einen <classname>Zend_Cache</classname> Adapter. Wenn der Cache Adapter gesetzt wird,
             werden die Lokalisierungsdaten von Zend_Currency gecached. Es gibt einige
-            statischen Methoden für die Manipulation des Caches: <code>Zend_Currency::getCache()</code>,
+            statischen Methoden für die Manipulation des Caches: <classname>Zend_Currency::getCache()</classname>,
             <code>hasCache()</code>, <code>clearCache()</code> und <code>removeCache()</code>.
         </para>
 

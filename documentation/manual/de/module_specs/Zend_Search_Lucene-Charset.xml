@@ -8,12 +8,12 @@
         <title>Unterstützung für UTF-8 und Einzel-Byte Zeichensätze</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> arbeitet intern mit dem UTF-8 Zeichensatz. Indexdateien speichern Unicode Daten in
-            Java's "modifiziertem UTF-8 Codierung". Der Kern von <code>Zend_Search_Lucene</code> unterstützt diesen
+            <classname>Zend_Search_Lucene</classname> arbeitet intern mit dem UTF-8 Zeichensatz. Indexdateien speichern Unicode Daten in
+            Java's "modifiziertem UTF-8 Codierung". Der Kern von <classname>Zend_Search_Lucene</classname> unterstützt diesen
             Zeichensatz mit einer Ausnahme komplett.
             <footnote>
                <para>
-                   <code>Zend_Search_Lucene</code> unterstützt nur Basic Multilingual Plane (BMP) Zeichen (von 0x0000 bis 0xFFFF)
+                   <classname>Zend_Search_Lucene</classname> unterstützt nur Basic Multilingual Plane (BMP) Zeichen (von 0x0000 bis 0xFFFF)
                    und unterstützt keine "zusätzlichen Zeichen" (Zeichen deren Codepunkte größer als 0xFFFF sind).
                </para>
                <para>
@@ -26,7 +26,7 @@
         </para>
 
         <para>
-            Die Codierung der aktuellen Eingabedaten dann über die API von <code>Zend_Search_Lucene</code> spezifiziert werden.
+            Die Codierung der aktuellen Eingabedaten dann über die API von <classname>Zend_Search_Lucene</classname> spezifiziert werden.
             Daten werden automatisch in die UTF-8 Codierung konvertiert.
         </para>
     </sect2>
@@ -62,11 +62,11 @@
         <title>UTF-8 kompatibler Textanalysator</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> enthält auch ein Set von UTF-8 kompatiblen Analysatoren:
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</code>,
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</code>,
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</code>,
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</code>.
+            <classname>Zend_Search_Lucene</classname> enthält auch ein Set von UTF-8 kompatiblen Analysatoren:
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8</classname>,
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num</classname>,
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive</classname>,
+            <classname>Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive</classname>.
         </para>
 
         <para>

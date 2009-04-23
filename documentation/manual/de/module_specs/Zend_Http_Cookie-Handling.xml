@@ -359,7 +359,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</code>: Hinzufügen eines
+                    <classname>Zend_Http_CookieJar->addCookie($cookie[, $ref_uri])</classname>: Hinzufügen eines
                     einzelnen Cookies zum CookieJar. $cookie kann entweder ein Zend_Http_Cookie-Objekt
                     oder ein String, der automatisch zu einem Cookie Objekt transformiert wird,
                     sein. Wenn ein String übergeben wird, sollte man jedoch zusätzlich immer $ref_uri
@@ -370,7 +370,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</code>:
+                    <classname>Zend_Http_CookieJar->addCookiesFromResponse($response, $ref_uri)</classname>:
                     Fügt alle Cookies zum CookieJar hinzu, die in einer einzelnen HTTP-Antwort gesetzt
                     wurden. Es wird erwartet, dass $response ein Zend_Http_Response Objekt mit
                     Set-Cookie-Headern ist. $ref_uri ist ein Anfrage-URI in Form eines Strings
@@ -399,7 +399,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_OBJECT</code>: Gibt ein
+                    <classname>Zend_Http_CookieJar::COOKIE_OBJECT</classname>: Gibt ein
                     Zend_Http_Cookie Objekt zurück. Wenn diese Methode mehr als
                     einen Cookie zurückgeben sollte, wird stattdessen ein Array aus Objekten
                     zurückgegeben.
@@ -407,7 +407,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</code>: Gibt Cookies
+                    <classname>Zend_Http_CookieJar::COOKIE_STRING_ARRAY</classname>: Gibt Cookies
                     als Strings - im Format "foo=bar" - zurück, welche passend für das
                     Senden im "Cookie"-Header einer HTTP-Anfrage sind. Wenn mehr als
                     ein Cookie zurückgegeben werden sollte, wird stattdessen ein Array
@@ -416,7 +416,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</code>: Ähnlich zu
+                    <classname>Zend_Http_CookieJar::COOKIE_STRING_CONCAT</classname>: Ähnlich zu
                     COOKIE_STRING_ARRAY; allerdings gibt diese Methode, falls mehr als
                     ein Cookie zurückgegeben wird, einen einzelnen, langen String zurück,
                     der die Cookies anhand eines Semikolons (;) trennt. Dieses Prozedere
@@ -431,7 +431,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
             <itemizedlist>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</code>:
+                    <classname>Zend_Http_CookieJar->getCookie($uri, $cookie_name[, $ret_as])</classname>:
                     Gibt einen einzelnen Cookie von dem CookieJar zurück, dessen URI (Domain und
                     Pfad) und Name zu den Parametern passen. $uri ist entweder ein String oder
                     ein Zend_Http_Uri Objekt, die den URI darstellen. $cookie_name ist ein String
@@ -442,14 +442,14 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getAllCookies($ret_as)</code>: Holt alle Cookies
+                    <classname>Zend_Http_CookieJar->getAllCookies($ret_as)</classname>: Holt alle Cookies
                     aus dem CookieJar. $ret_as gibt den Rückgabetyp - wie oben bereits beschrieben - an.
                     Wenn er nicht angegeben wird, nimmt er COOKIE_OBJECT an.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <code>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</code>:
+                    <classname>Zend_Http_CookieJar->getMatchingCookies($uri[, $matchSessionCookies[, $ret_as[, $now]]])</classname>:
                     Gibt alle Cookies vom CookieJar zurück, die mit der Ablaufzeit und dem URI übereinstimmen.
                     <itemizedlist>
                         <listitem>

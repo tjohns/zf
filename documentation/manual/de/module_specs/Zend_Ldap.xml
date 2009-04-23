@@ -9,7 +9,7 @@
         <title>Minimale Funktionalität</title>
         <para>
             Im Moment ist diese Klasse nur dafür gedacht, die beschränkte Funktionalität zu bieten,
-            die für <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>
+            die für <link linkend="zend.auth.adapter.ldap"><classname>Zend_Auth_Adapter_Ldap</classname></link>
             nötig ist. Weiterführende Verwendungsmöglichkeiten wie das Suchen, Erstellen,
             Bearbeiten oder Umbenennen von Objekten im Verzeichnis werden im Moment nicht
             unterstützt und werden zu einem späteren Zeitpunkt hinzugefügt werden.
@@ -17,7 +17,7 @@
     </note>
 
     <para>
-        <code>Zend_Ldap</code> ist eine Klasse, mit der LDAP-Operationen, wie das Durchsuchen, das
+        <classname>Zend_Ldap</classname> ist eine Klasse, mit der LDAP-Operationen, wie das Durchsuchen, das
         Bearbeiten oder die Bindung an Einträge im LDAP-Verzeichnis, durchgeführt werden können.
     </para>
 
@@ -26,14 +26,14 @@
         <title>Beschreibung</title>
 
         <para>
-            Diese Komponente besteht im Moment aus zwei Klassen, <code>Zend_Ldap</code> und
-            <code>Zend_Ldap_Exception</code>. Ein <code>Zend_Ldap</code>-Objekt repräsentiert
+            Diese Komponente besteht im Moment aus zwei Klassen, <classname>Zend_Ldap</classname> und
+            <classname>Zend_Ldap_Exception</classname>. Ein <classname>Zend_Ldap</classname>-Objekt repräsentiert
             konzeptionell die Bindung an einen einzelnen LDAP server. Die Parameter für diese
             Bindung können explizit oder in der Form eines Optionen-Arrays angegeben werden.
         </para>
 
         <para>
-            Die Verwendung von <code>Zend_Ldap</code> hängt von der Art Ihres LDAP-Servers ab und
+            Die Verwendung von <classname>Zend_Ldap</classname> hängt von der Art Ihres LDAP-Servers ab und
             kann am besten mit einigen einfachen Beispielen erklärt werden.
         </para>
 
@@ -94,13 +94,13 @@ echo "$acctname\n";
                 aber <code>bindRequiresDN</code> <code>true</code> ist und kein Benutzername in
                 DN-Form als Option angegeben wird, wird die Server-Bindung fehlschlagen. Wenn
                 allerdings ein Benutzername in DN-Form im Optionen-Array übergeben wurde, wird
-                <code>Zend_Ldap</code> sich zuerst mit diesem Benutzernamen an den Server binden,
+                <classname>Zend_Ldap</classname> sich zuerst mit diesem Benutzernamen an den Server binden,
                 den Account-Domain Name für den Benutzernamen, der <code>bind()</code> suchen und
                 sich dann neu mit diesem DN verbinden.
             </para>
 
             <para>
-                Dieses Verhalten ist wichtig für <code>Zend_Auth_Adapter_Ldap</code>, das den
+                Dieses Verhalten ist wichtig für <classname>Zend_Auth_Adapter_Ldap</classname>, das den
                 eingegebenen Benutzernamen direkt an <code>bind()</code> weiterleitet.
             </para>
 
@@ -140,7 +140,7 @@ echo "$acctname\n";
             <title>Zend_Ldap Optionen</title>
 
             <para>
-                Die <code>Zend_Ldap</code>-Komponente akzeptiert ein Array von Optionen, das
+                Die <classname>Zend_Ldap</classname>-Komponente akzeptiert ein Array von Optionen, das
                 entweder im Konstruktor oder der Methode <code>setOptions()</code> übergeben werden
                 kann. Folgende Optionen sind möglich:
 
@@ -203,7 +203,7 @@ echo "$acctname\n";
                       <row>
                         <entry>bindRequiresDn</entry>
                         <entry>
-                            Wenn dieser Wert<code>true</code> ist, wird <code>Zend_Ldap</code> den
+                            Wenn dieser Wert<code>true</code> ist, wird <classname>Zend_Ldap</classname> den
                             Domain-Name für den Account, der zur Bindung genutzt wird, suchen, wenn
                             der Benutzername noch nicht in DN-Form ist. Der Standardwert ist
                             <code>false</code>.
@@ -351,8 +351,8 @@ echo "$acctname\n";
             <title>Authentifizierung auf mehreren Domains und Ausfallsicherung</title>
 
             <para>
-                <code>Zend_Ldap</code> an sich wird nicht versuchen, sich mit mehreren Servern zu
-                verbinden. Allerdings ist <code>Zend_Ldap</code> auf dieses Szenario vorbereitet.
+                <classname>Zend_Ldap</classname> an sich wird nicht versuchen, sich mit mehreren Servern zu
+                verbinden. Allerdings ist <classname>Zend_Ldap</classname> auf dieses Szenario vorbereitet.
                 Dazu können Sie einfach ein Array mit Optionen für mehrere Server durchlaufen und
                 nacheinander versuchen, sich mit jedem Server zu verbinden. Wie oben beschrieben
                 wird <code>bind()</code> automatisch jeden Benutzernamen normalisieren, also ist es
@@ -444,7 +444,7 @@ foreach ($multiOptions as $name => $options) {
 
             <para>
                 Der obige Code ist dem sehr ähnlich, der in
-                <link linkend="zend.auth.adapter.ldap"><code>Zend_Auth_Adapter_Ldap</code></link>
+                <link linkend="zend.auth.adapter.ldap"><classname>Zend_Auth_Adapter_Ldap</classname></link>
                 verwendet wird. Wir empfehlen daher, einfach den Authentifizierungs-Adapter
                 für Multi-Domain-Authentifizierung und LDAP-basierte Authentifizierung mit
                 Ausfallsicherung zu verwenden (oder kopieren Sie den Code oben).

@@ -4,13 +4,13 @@
 <sect1 id="zend.mail.smtp-secure">
   <title>SMTP Übertragungen sichern</title>
 
-  <para><code>Zend_Mail</code> unterstützt die Verwendung von TLS oder SSL um SMTP Verbindungen zu sichern.
+  <para><classname>Zend_Mail</classname> unterstützt die Verwendung von TLS oder SSL um SMTP Verbindungen zu sichern.
   Das kann eingeschaltet werden durch das Übergeben des 'ssl' Parameters an das Konfigurationsarray im
-  <code>Zend_Mail_Transport_Smtp</code> Konstruktor indem entweder der Wert 'ssl' oder 'tls' übergeben wird.
+  <classname>Zend_Mail_Transport_Smtp</classname> Konstruktor indem entweder der Wert 'ssl' oder 'tls' übergeben wird.
   Ein Port kann optional angegeben werden, andernfalls ist er standardmäßig 25 für TLS oder 465 für SSL.</para>
 
   <example id="zend.mail.smtp-secure.example-1">
-    <title>Aktivieren einer sicheren Verbindung innerhalb von <code>Zend_Mail_Transport_Smtp</code></title>
+    <title>Aktivieren einer sicheren Verbindung innerhalb von <classname>Zend_Mail_Transport_Smtp</classname></title>
 
     <programlisting role="php"><![CDATA[
 $config = array('ssl' => 'tls',

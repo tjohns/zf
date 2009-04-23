@@ -4,21 +4,21 @@
 <sect3 id="zend.progressbar.adapter.jspush">
     <title>Zend_ProgressBar_Adapter_JsPush</title>
     <para>
-        <code>Zend_ProgressBar_Adapter_JsPush</code> ist ein Adapter der es erlaubt den Fortschrittsbalken
+        <classname>Zend_ProgressBar_Adapter_JsPush</classname> ist ein Adapter der es erlaubt den Fortschrittsbalken
         in einem Browser über Javascript Push zu aktualisieren. Das bedeutet das keine zweite
         Verbindung benötigt wird um den Status über den aktuell laufenden Prozess zu erhalten, sondern das
         der Prozess selbst seinen Status direkt an den Browser schickt.
     </para>
     <para>
         Man kann auch die Optionen des Adapters entweder über die <code>set*</code> Methoden oder durch die
-        Übergabe eines Arrays, oder einer Instanz von <code>Zend_Config</code>, an den Constructor mit dem Optionen als
+        Übergabe eines Arrays, oder einer Instanz von <classname>Zend_Config</classname>, an den Constructor mit dem Optionen als
         ersten Parameter. Die möglichen Optionen sind:
     </para>
     <itemizedlist>
         <listitem>
             <para>
                 <code>updateMethodName</code>: Die Javascript Methode die bei jeder Aktualisierung
-                aufgerufen werden soll. Standardwert ist <code>Zend_ProgressBar_Update</code>.
+                aufgerufen werden soll. Standardwert ist <classname>Zend_ProgressBar_Update</classname>.
             </para>
         </listitem>
         <listitem>

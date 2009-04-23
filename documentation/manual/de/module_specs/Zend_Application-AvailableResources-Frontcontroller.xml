@@ -5,16 +5,16 @@
     <title>Zend_Application_Resource_Frontcontroller</title>
 
     <para>
-        Die warscheinlich am meisten verwendete Ressource die man mit <code>Zend_Application</code>
+        Die warscheinlich am meisten verwendete Ressource die man mit <classname>Zend_Application</classname>
         verwenden wird, ist die Front Controller Ressource, die eine Möglichkeit bietet den
-        <code>Zend_Controller_Front</code> zu konfigurieren. Diese Ressource bietet die Möglichkeit
+        <classname>Zend_Controller_Front</classname> zu konfigurieren. Diese Ressource bietet die Möglichkeit
         verschiedenste Front Controller Parameter zu setzen, Plugins zu spezifizieren die
         initialisiert werden sollen, und vieles mehr.
     </para>
 
     <para>
         Sobald Sie initialisiert wurde, fügt die Ressource die <code>frontController</code>
-        Eigenschaft vom Bootstrap in die <code>Zend_Controller_Front</code> Instanz hinzu.
+        Eigenschaft vom Bootstrap in die <classname>Zend_Controller_Front</classname> Instanz hinzu.
     </para>
 
     <para>

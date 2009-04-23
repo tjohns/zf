@@ -6,7 +6,7 @@
     <title>Einführung in Zend_Currency</title>
 
     <para>
-        <code>Zend_Currency</code> ist Teil starken Supports für I18n im Zend Frameworks. Es behandelt alle Arbeiten
+        <classname>Zend_Currency</classname> ist Teil starken Supports für I18n im Zend Frameworks. Es behandelt alle Arbeiten
         betreffend Währungen, Geld Darstellung und Formatierung. Ausserdem bietet es zusätzliche informative
         Methoden welche lokalisierte Informationen zu Währungen und Informationen darüber enthalten welche
         Währung in welcher Region verwendet wird.
@@ -14,10 +14,10 @@
 
     <sect2 id="zend.currency.introduction.list">
 
-        <title>Warum sollte man <code>Zend_Currency</code> verwenden ?</title>
+        <title>Warum sollte man <classname>Zend_Currency</classname> verwenden ?</title>
 
         <para>
-            <code>Zend_Currency</code> bietet die folgenden Funktionen für die Manipulation von Währungen.
+            <classname>Zend_Currency</classname> bietet die folgenden Funktionen für die Manipulation von Währungen.
         </para>
 
         <itemizedlist mark='opencircle'>
@@ -26,7 +26,7 @@
                     <emphasis role="strong">Kompletter Support für Gebietsschemata</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> arbeitet mit allen vorhandenen Gebietsschemata und kennt
+                    <classname>Zend_Currency</classname> arbeitet mit allen vorhandenen Gebietsschemata und kennt
                     über 100 verschiedene lokalisierte Währungen. Das beinhaltet zum Beispiel Namen von
                     Währungen, Abkürzungen, Währungssymbole und mehr.
                 </para>
@@ -36,9 +36,9 @@
                     <emphasis role="strong">Wiederverwendbare Währungs Definitionen</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> enthält nicht den Wert der Währung. Das ist der Grund warum
-                    dessen Funktionalität nicht in <code>Zend_Locale_Format</code> beinhaltet ist.
-                    <code>Zend_Currency</code> bietet den Vorteil das bereits definierte Währungs Darstellungen
+                    <classname>Zend_Currency</classname> enthält nicht den Wert der Währung. Das ist der Grund warum
+                    dessen Funktionalität nicht in <classname>Zend_Locale_Format</classname> beinhaltet ist.
+                    <classname>Zend_Currency</classname> bietet den Vorteil das bereits definierte Währungs Darstellungen
                     wieder verwendet werden können.
                 </para>
             </listitem>
@@ -47,7 +47,7 @@
                     <emphasis role="strong">Fluent Interface</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> beinhaltet das Fluent Interface wo es möglich ist.
+                    <classname>Zend_Currency</classname> beinhaltet das Fluent Interface wo es möglich ist.
                 </para>
             </listitem>
             <listitem>
@@ -55,7 +55,7 @@
                     <emphasis role="strong">Zusätzliche Methoden</emphasis>
                 </para>
                 <para>
-                    <code>Zend_Currency</code> enthält zusätzliche Methoden die Informationen darüber anbieten
+                    <classname>Zend_Currency</classname> enthält zusätzliche Methoden die Informationen darüber anbieten
                     in welcher Region eine Währung verwendet wird, oder welche Währung in einer
                     bestimmten Region verwendet wird.
                 </para>

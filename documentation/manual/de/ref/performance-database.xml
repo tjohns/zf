@@ -5,8 +5,8 @@
     <title>Zend_Db Performance</title>
 
     <para>
-        <code>Zend_Db</code> ist ein Datenbank Abstraktion Layer und ist dazu gedacht eine
-        gemeinsame API für SQL Operationen zu bieten. <code>Zend_Db_Table</code> ist ein Table
+        <classname>Zend_Db</classname> ist ein Datenbank Abstraktion Layer und ist dazu gedacht eine
+        gemeinsame API für SQL Operationen zu bieten. <classname>Zend_Db_Table</classname> ist ein Table
         Data Bateway, dazu gedacht übliche Tabellen-artige Datenbank Operationen zu abstrahieren.
         Wegen Ihrer abstrakten Natur und der "Magie" die Sie versteckt haben um Ihre Operationen
         durchführen zu können, können Sie manchmal auch zu Geschwindigkeitsnachteilen führen.
@@ -20,7 +20,7 @@
 
         <para>
             Um die Verwendung so einfach wie möglich zu halten, und auch sich konstant ändernde
-            Schemata wärend der Entwicklung zu unterstützen, macht <code>Zend_Db_Table</code>
+            Schemata wärend der Entwicklung zu unterstützen, macht <classname>Zend_Db_Table</classname>
             einiges an Magie unter seinem Hut: bei der ersten Verwendung, holt es das
             Tabellenschema und speichert es im Objekt. Diese Operation ist normalerweise sehr
             teuer, unabhängig von der Datenbank -- das zu einer Schwachstelle in der Produktion
@@ -35,14 +35,14 @@
             <title>Den Metadaten Cache verwenden</title>
 
             <para>
-                <code>Zend_Db_Table</code> kann optional <code>Zend_Cache</code> verwenden um die
+                <classname>Zend_Db_Table</classname> kann optional <classname>Zend_Cache</classname> verwenden um die
                 Metadaten der Tabelle zu cachen. Dieser ist typischerweise schneller im Zugriff
                 und nicht so teuer wie das holen der Metadaten von der Tabelle selbst.
             </para>
 
             <para>
                 Die Dokumentation von <link linkend="zend.db.table.metadata.caching">
-                <code>Zend_Db_Table</code> enthält Informationen über das Cachen der Metadaten
+                <classname>Zend_Db_Table</classname> enthält Informationen über das Cachen der Metadaten
                 </link>.
             </para>
         </sect3>
@@ -51,7 +51,7 @@
             <title>Die Metadaten in der Tabellendefinition fix codieren</title>
 
             <para>
-                Mit 1.7.0, bietet <code>Zend_Db_Table</code> auch
+                Mit 1.7.0, bietet <classname>Zend_Db_Table</classname> auch
                 <link linkend="zend.db.table.metadata.caching.hardcoding">Unterstützung für fix
                 kodierte Metadaten in der Tabellen Definition</link>. Das ist ein schwierigerer
                 Verwendungsfall, und sollte nur dann verwendet werden wenn man weiß das sich das
@@ -68,7 +68,7 @@
         </title>
 
         <para>
-            <code>Zend_Db_Select</code> ist relativ gut in seinem Job. Trotzdem kann es, wenn man
+            <classname>Zend_Db_Select</classname> ist relativ gut in seinem Job. Trotzdem kann es, wenn man
             komplexe Abfragen benötigt die Joins oder Unterabfragen enthalten, sehr naiv sein.
         </para>
 
@@ -76,8 +76,8 @@
             <title>Selbst getuntes SQL schreiben</title>
 
             <para>
-                Die einzige echte Antwort ist es eigenes SQL zu schreiben; <code>Zend_Db</code>
-                erfordert nicht die Verwendung von <code>Zend_Db_Select</code>, als ist die
+                Die einzige echte Antwort ist es eigenes SQL zu schreiben; <classname>Zend_Db</classname>
+                erfordert nicht die Verwendung von <classname>Zend_Db_Select</classname>, als ist die
                 Verwendung von eigenen, getunten SQL Select Statements, eine perfekte und legitime
                 Anwendung.
             </para>

@@ -14,7 +14,7 @@
     </para>
 
     <para>
-        <code>Zend_Db_Statement</code> basiert auf dem PDOStatement Objekt aus der <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>
+        <classname>Zend_Db_Statement</classname> basiert auf dem PDOStatement Objekt aus der <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink>
         Erweiterung.
     </para>
 
@@ -115,7 +115,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
 
         <para>
             PDO Statements unterstützen sowohl postionierte als auch benannte Parameter, jedoch nicht beide Typen
-            in einem einzelnen SQL Statement. Einige der <code>Zend_Db_Statement</code> Klassen für nicht-PDO Erweiterungen
+            in einem einzelnen SQL Statement. Einige der <classname>Zend_Db_Statement</classname> Klassen für nicht-PDO Erweiterungen
             könnten nur einen Typ von Parametern unterstützen.
         </para>
 
@@ -129,7 +129,7 @@ $stmt->execute(array(':reporter' => 'goofy', ':status' => 'FIXED'));
             Es können Methoden des Statement Objekts aufgefufen werden um Ergebnissätze zu erzeugen. SELECT, SHOW,
             DESCRIBE und EXPLAIN sind Beispiele von von Statements die Ergebnissätze erzeugen. INSERT, UPDATE und
             DELETE sind Beispiele von Statements die keine Ergebnissätze erzeugen. Letztere Statements können zwar
-            mit <code>Zend_Db_Statement</code> ausgeführt werden, aber Methoden die Zeilen oder Ergebnisse liefern können bei
+            mit <classname>Zend_Db_Statement</classname> ausgeführt werden, aber Methoden die Zeilen oder Ergebnisse liefern können bei
             diesen nicht verwendet werden.
         </para>
 

@@ -8,13 +8,13 @@
         <title>Seitendarstellung von Datensammlungen</title>
 
         <para>
-            Um Elemente in Seiten darzustellen muß <code>Zend_Paginator</code> einen generellen Weg des
+            Um Elemente in Seiten darzustellen muß <classname>Zend_Paginator</classname> einen generellen Weg des
             Zugriffs auf diese Daten haben. Für diesen Zweck, läuft jeder Datenzugriff über Datenquellen
             Adapter. Verschiedene Adapter werden mit dem Zend Framework standardmäßig ausgeliefert:
         </para>
 
         <table id="zend.paginator.usage.paginating.adapters">
-            <title>Adapter für <code>Zend_Paginator</code></title>
+            <title>Adapter für <classname>Zend_Paginator</classname></title>
 
             <tgroup cols="2">
                 <thead>
@@ -32,7 +32,7 @@
                         <entry>DbSelect</entry>
                         <entry>
                             Verwendet eine Instanz von
-                            <link linkend="zend.db.select"><code>Zend_Db_Select</code></link>,
+                            <link linkend="zend.db.select"><classname>Zend_Db_Select</classname></link>,
                             welche ein Array zurückgibt
                         </entry>
                     </row>
@@ -40,8 +40,8 @@
                         <entry>DbTableSelect</entry>
                         <entry>
                             Verwendet eine Instanz von
-                            <link linkend="zend.db.table.fetch-all"><code>Zend_Db_Table_Select</code></link>,
-                            welche eine Instanz von <code>Zend_Db_Table_Rowset_Abstract</code> zurückgibt.
+                            <link linkend="zend.db.table.fetch-all"><classname>Zend_Db_Table_Select</classname></link>,
+                            welche eine Instanz von <classname>Zend_Db_Table_Rowset_Abstract</classname> zurückgibt.
                             Das gibt zusätzliche Information pber das Ergebnisset, wie z.B. die Namen der Spalten.
                         </entry>
                     </row>
@@ -55,7 +55,7 @@
                     <row>
                         <entry>Null</entry>
                         <entry>
-                            <code>Zend_Paginator</code> nicht für das Verwalten von seitenweisen Daten verwenden.
+                            <classname>Zend_Paginator</classname> nicht für das Verwalten von seitenweisen Daten verwenden.
                             Man kann trotzdem die Vorteile des Features der Seitenkontrolle verwenden.
                         </entry>
                     </row>
@@ -79,7 +79,7 @@
         </note>
 
         <para>
-            Um eine Instanz von <code>Zend_Paginator</code> zu erstellen, muß ein Adapter an den Konstruktor
+            Um eine Instanz von <classname>Zend_Paginator</classname> zu erstellen, muß ein Adapter an den Konstruktor
             übergeben werden:
         </para>
 
@@ -124,7 +124,7 @@ $paginator->setCurrentPageNumber($page);
 
         <para>
             Der einfachste Weg um diesen Wert zu verfolgen ist über eine URL. Auch wenn wir empfehlen einen
-            <code>Zend_Controller_Router_Interface</code>-kompatiblen Router zu verwenden um dies zu
+            <classname>Zend_Controller_Router_Interface</classname>-kompatiblen Router zu verwenden um dies zu
             bewerkstelligen, ist das keine Notwendigkeit.
         </para>
 
@@ -162,7 +162,7 @@ $paginator->setCurrentPageNumber($this->_getParam('page'));
         </para>
 
         <para>
-            Schlußendlich muß die Paginator Instanz der View angehängt werden. Wenn <code>Zend_View</code> mit
+            Schlußendlich muß die Paginator Instanz der View angehängt werden. Wenn <classname>Zend_View</classname> mit
             dem ViewRenderer Action Helfer verwendet wird, dann funktioniert das folgende:
         </para>
 
@@ -178,12 +178,12 @@ $this->view->paginator = $paginator;
         <title>Seiten mit View Skripten darstellen</title>
 
         <para>
-            Das View Skript wird verwendet um die Seitenelemente darzustellen (wenn <code>Zend_Paginator</code>
+            Das View Skript wird verwendet um die Seitenelemente darzustellen (wenn <classname>Zend_Paginator</classname>
             verwendet wird um das zu tun) und die Seitenkontrollen anzuzeigen.
         </para>
 
         <para>
-            Weil <code>Zend_Paginator</code> Das SPL Interface
+            Weil <classname>Zend_Paginator</classname> Das SPL Interface
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html"><code>IteratorAggregate</code></ulink>
             integriert, ist das Durchlaufen von Elementen und deren Darstellung einfach.
         </para>
@@ -243,7 +243,7 @@ $this->view->paginator = $paginator;
         </para>
 
         <table id="zend.paginator.usage.rendering.scrolling-styles">
-            <title>Scrolling Stile für <code>Zend_Paginator</code></title>
+            <title>Scrolling Stile für <classname>Zend_Paginator</classname></title>
 
             <tgroup cols="2">
                 <thead>
@@ -322,7 +322,7 @@ $paginator->setView($view);
 
         <note>
             <para>
-                Natürlich ist es möglich <code>Zend_Paginator</code> mit anderen Template Engines zu
+                Natürlich ist es möglich <classname>Zend_Paginator</classname> mit anderen Template Engines zu
                 verwenden. Mit Smarty zum Beispiel, würde man das folgendermaßen bewerkstelligen:
             </para>
 

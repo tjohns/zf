@@ -4,17 +4,17 @@
 <sect1 id="zend.cache.theory">
     <title>Die Theorie des Cachens</title>
     <para>
-        Es gibt 3 Schlüsselkonzepte in <code>Zend_Cache</code>. Eines ist die eindeutige Identifizierung (ein String),
+        Es gibt 3 Schlüsselkonzepte in <classname>Zend_Cache</classname>. Eines ist die eindeutige Identifizierung (ein String),
         die benutzt wird, um Cache Datensätze zu identifizieren. Das zweite ist die <code>'lifetime'</code>
         Direktive, wie im Beispiel gezeigt; sie definiert, wie lange eine gecachte Ressource als 'frisch'
         betrachtet wird. Das dritte Konzept ist die bedingte Ausführung, so das Teile des Codes komplett
         übersprungen werden können, was die Leistung steigert.
-        Die Haupt-Frontend Funktion (eg. <code>Zend_Cache_Core::get()</code>) ist immer so gestaltet, das
+        Die Haupt-Frontend Funktion (eg. <classname>Zend_Cache_Core::get()</classname>) ist immer so gestaltet, das
         false zurückgegeben wird, wenn ein Cache fehlt. Aber nur, wenn das für die Natur des Frontends Sinn macht.
         Das erlaubt es Endbenutzern, die Teile des Codes, die gecached (oder übersprungen) werden sollen, in
-        <code>if(){ ... }</code> Anweisungen zu umhüllen, wobei die Bedingung die <code>Zend_Cache</code> Methode selbst ist.
+        <code>if(){ ... }</code> Anweisungen zu umhüllen, wobei die Bedingung die <classname>Zend_Cache</classname> Methode selbst ist.
         Am Ende der Blöcke muss das erstellte auf alle Fälle gespeichert werden
-        (z.B. <code>Zend_Cache_Core::save()</code>).
+        (z.B. <classname>Zend_Cache_Core::save()</classname>).
     </para>
     <note><para>
         Das Design der bedingten Ausführung des erzeugten Codes ist in einigen Frontends nicht notwendig
@@ -28,9 +28,9 @@
         Datensatz vom Cache transparent holen.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>Die <code>Zend_Cache</code> Factory Methode</title>
+        <title>Die <classname>Zend_Cache</classname> Factory Methode</title>
         <para>
-            Ein guter Weg, um eine verwendbare Instanz eines <code>Zend_Cache</code> Frontends zu erstellen, wird im
+            Ein guter Weg, um eine verwendbare Instanz eines <classname>Zend_Cache</classname> Frontends zu erstellen, wird im
             folgenden Beispiel gegeben:
         </para>
         <programlisting role="php"><![CDATA[
@@ -60,7 +60,7 @@ $cache = Zend_Cache::factory($frontendName,
             Parameter an das ausgewählte Backend übergeben werden.
         </para>
         <note><para>
-            Immer <code>Zend_Cache::factory()</code> benutzen, um eine Frontend Instanz zu bekommen.
+            Immer <classname>Zend_Cache::factory()</classname> benutzen, um eine Frontend Instanz zu bekommen.
             Das selbstständige Instantiieren von Frontends und Backends funktioniert nicht so wie
             erwartet.
         </para></note>

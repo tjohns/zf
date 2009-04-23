@@ -5,14 +5,14 @@
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Layout</code> implementiert ein plassisches Zwei Schritt View Pattern, welches Entwicklern
+        <classname>Zend_Layout</classname> implementiert ein plassisches Zwei Schritt View Pattern, welches Entwicklern
         erlaubt Anwendungs Inhalte innerhalb von anderen Views einzupacken, die normalerweise Site Templates
         repräsentieren. Solche Templates werden oft von anderen Projekten als <emphasis>Layouts</emphasis>
         bezeichnet, und Zend Framework hat diesen  Begriff der Konsistenz halber übernommen.
     </para>
 
     <para>
-        Die Hauptziele von <code>Zend_Layout</code> sind wie folgt:
+        Die Hauptziele von <classname>Zend_Layout</classname> sind wie folgt:
     </para>
 
     <itemizedlist>

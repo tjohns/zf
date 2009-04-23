@@ -6,7 +6,7 @@
     <sect2 id="zend.service.delicious.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Service_Delicious</code> ist eine simple API, um die XML- und JSON-Webservices von
+            <classname>Zend_Service_Delicious</classname> ist eine simple API, um die XML- und JSON-Webservices von
             <ulink url="http://del.icio.us">del.icio.us</ulink> nutzen zu können. Diese Komponente bietet
             Lese- und Schreibzugriff auf Beiträge bei del.icio.us, sofern man die nötigen Zugrffisrechte vorweist.
         </para>
@@ -28,9 +28,9 @@ foreach ($posts as $post) {
     <sect2 id="zend.service.delicious.retrieving_posts">
         <title>Beiträge abrufen</title>
         <para>
-            <code>Zend_Service_Delicious</code> bietet drei Möglichkeiten, um Beiträge von del.icio.us abzurufen:
+            <classname>Zend_Service_Delicious</classname> bietet drei Möglichkeiten, um Beiträge von del.icio.us abzurufen:
             <code>getPosts()</code>, <code>getRecentPosts()</code> und <code>getAllPosts()</code>. Jede dieser Methoden
-            liefert eine Instanz der Klasse <code>Zend_Service_Delicious_PostList</code>, welche die abgerufenen
+            liefert eine Instanz der Klasse <classname>Zend_Service_Delicious_PostList</classname>, welche die abgerufenen
             Beiträge beinhaltet.
         </para>
         <programlisting role="php"><![CDATA[
@@ -70,7 +70,7 @@ public function getAllPosts($tag = null);
         <title>Zend_Service_Delicious_PostList</title>
         <para>
             Instanzen dieser Klasse werden von den Methoden <code>getPosts()</code>, <code>getAllPosts()</code>,
-            <code>getRecentPosts()</code> und <code>getUserPosts()</code> der Klasse <code>Zend_Service_Delicious</code>
+            <code>getRecentPosts()</code> und <code>getUserPosts()</code> der Klasse <classname>Zend_Service_Delicious</classname>
             zurückgegeben.
         </para>
         <para>
@@ -209,7 +209,7 @@ $delicious->deletePost($posts[0]->getUrl());
         <title>Das Hinzufügen von neuen Beiträgen</title>
         <para>
           Um einen Beitrag hinzuzufügen, muss zu Beginn die Methode <code>createNewPost()</code> aufgerufen werden,
-          welche eine Instanz der Klasse <code>Zend_Service_Delicious_Post</code> zurückgibt. Danach kann mit
+          welche eine Instanz der Klasse <classname>Zend_Service_Delicious_Post</classname> zurückgibt. Danach kann mit
           Hilfe des erhaltenen Objekts der Beitrag verändert werden. Nach der Änderung muss die <code>save()</code>-Methode
           aufgerufen werden, damit die Änderungen in die del.icio.us-Datenbank übernommen werden.
         </para>
@@ -310,7 +310,7 @@ $delicious->addBundle('newBundle', array('tag1', 'tag2'));
         </table>
         <note>
             <para>
-                Sollten nur diese Methoden verwendet werden, ist dem Konstruktor der Klasse <code>Zend_Service_Delicious</code>
+                Sollten nur diese Methoden verwendet werden, ist dem Konstruktor der Klasse <classname>Zend_Service_Delicious</classname>
                 bei der Instanzierung kein Nutzername in Kombination mit dem entsprechenden Passwort zu übergeben.
             </para>
         </note>
@@ -335,13 +335,13 @@ print_r($delicious->getUserTags('someUser'));
             <title>Öffentliche Beiträge</title>
             <para>
                 Wenn öffentliche Beiträge über die Methode <code>getUserPosts()</code> bezogen werden wird ein
-                <code>Zend_Service_Delicious_PostList</code>-Objekt zurückgegeben, welches die einzelnen Beiträge
-                in einer Liste von <code>Zend_Service_Delicious_SimplePost</code>-Objekten speichert. Diese
+                <classname>Zend_Service_Delicious_PostList</classname>-Objekt zurückgegeben, welches die einzelnen Beiträge
+                in einer Liste von <classname>Zend_Service_Delicious_SimplePost</classname>-Objekten speichert. Diese
                 Objekte enthalten Basisinformationen über den Beitrag, wie z.B. den URL, den Titel, die Notizen und
                 tags.
             </para>
             <table id="zend.service.delicious.public_data.posts.SimplePost_methods">
-                <title>Methoden der Klasse <code>Zend_Service_Delicious_SimplePost</code></title>
+                <title>Methoden der Klasse <classname>Zend_Service_Delicious_SimplePost</classname></title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -379,12 +379,12 @@ print_r($delicious->getUserTags('someUser'));
     <sect2 id="zend.service.delicious.httpclient">
         <title>HTTP client</title>
         <para>
-            <code>Zend_Service_Delicious</code> verwendet die Klasse <code>Zend_Rest_Client</code>, um HTTP-Request
-            an den del.icio.us webservice zu schicken. Um einzustellen, welchen HTTP client <code>Zend_Service_Delicious</code>
-            verwenden soll, muss der HTTP client der Klasse <code>Zend_Rest_Client</code> geändert werden.
+            <classname>Zend_Service_Delicious</classname> verwendet die Klasse <classname>Zend_Rest_Client</classname>, um HTTP-Request
+            an den del.icio.us webservice zu schicken. Um einzustellen, welchen HTTP client <classname>Zend_Service_Delicious</classname>
+            verwenden soll, muss der HTTP client der Klasse <classname>Zend_Rest_Client</classname> geändert werden.
         </para>
         <example id="zend.service.delicious.httpclient.changing">
-            <title>Veränderung des HTTP clients der Klasse <code>Zend_Rest_Client</code></title>
+            <title>Veränderung des HTTP clients der Klasse <classname>Zend_Rest_Client</classname></title>
             <programlisting role="php"><![CDATA[
 $myHttpClient = new My_Http_Client();
 Zend_Rest_Client::setHttpClient($myHttpClient);
@@ -392,7 +392,7 @@ Zend_Rest_Client::setHttpClient($myHttpClient);
             </programlisting>
         </example>
         <para>
-            Sollte man mehr als einen Request mit <code>Zend_Service_Delicious</code> senden, ist es sinnvoll den
+            Sollte man mehr als einen Request mit <classname>Zend_Service_Delicious</classname> senden, ist es sinnvoll den
             HTTP client so zu konfigurieren, dass die Verbindungen offen gehalten werden, um die Geschwindigkeit der
             Requests zu erhöhen.
         </para>
@@ -407,8 +407,8 @@ Zend_Rest_Client::getHttpClient()->setConfig(array(
         </example>
         <note>
             <para>
-                Bei der Instanzierung eines <code>Zend_Service_Delicious</code> Objekts wird der SSL Transport
-                der Klasse <code>Zend_Rest_Client</code> auf <code>'ssl'</code> anstatt auf <code>'ssl2'</code> gesetzt,
+                Bei der Instanzierung eines <classname>Zend_Service_Delicious</classname> Objekts wird der SSL Transport
+                der Klasse <classname>Zend_Rest_Client</classname> auf <code>'ssl'</code> anstatt auf <code>'ssl2'</code> gesetzt,
                 da del.icio.us einige Probleme mit <code>'ssl2'</code> hat. So kann es vorkommen, dass die
                 Vervollständigung eines Request sehr lange (um die zwei Sekunden) dauert.
             </para>

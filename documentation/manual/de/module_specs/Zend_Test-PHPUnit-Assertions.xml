@@ -6,7 +6,7 @@
 
     <para>
         Ausnahmen sind der Herz vom Unit Testen; Sie können verwendet werden um zu prüfen das die Ergebnisse
-        das sind was man erwartet. Zu diesem Zweck bietet <code>Zend_Test_PHPUnit_ControllerTestCase</code>
+        das sind was man erwartet. Zu diesem Zweck bietet <classname>Zend_Test_PHPUnit_ControllerTestCase</classname>
         eine Anzahl an Ausnahmen um das testen eigene MVC Anwendungen und Kontroller einfacher zu machen.
     </para>
 
@@ -134,7 +134,7 @@
 
         <para>
             Oft wird eine Aktion umgeleitet. Statt der Umleitung zu folgen erlaubt es
-            <code>Zend_Test_PHPUnit_ControllerTestCase</code> diese Umleitungen mit einer handvoll von
+            <classname>Zend_Test_PHPUnit_ControllerTestCase</classname> diese Umleitungen mit einer handvoll von
             Ausnahmen zu testen.
         </para>
 

@@ -5,13 +5,13 @@
     <title>Zend_Application</title>
 
     <para>
-        <code>Zend_Application</code> bietet die Basisfunktionalität der Komponente, und ist der
+        <classname>Zend_Application</classname> bietet die Basisfunktionalität der Komponente, und ist der
         Eintrittspunkt zur eigenen Zend Framework Anwendung. Sein Zweck ist zweigeteilt: das
         Setup der PHP Umgebung (inklusive Autoloading), und das Anwendungs-Bootstrap auszuführen.
     </para>
 
     <para>
-        Typischerweise, wird man die komplette Konfiguration an den <code>Zend_Application</code>
+        Typischerweise, wird man die komplette Konfiguration an den <classname>Zend_Application</classname>
         Konstruktor übergeben, aber man kann das Objekt auch komplett konfigurieren indem dessen
         eigene Methoden verwendet werden. Diese Referenz dient dazu beide Fälle zu zeigen.
     </para>
@@ -48,7 +48,7 @@
                             <itemizedlist>
                                 <listitem><para>
                                     <emphasis>String</emphasis>: Pfad zu einer
-                                    <code>Zend_Config</code> Datei für die eigene Anwendung.
+                                    <classname>Zend_Config</classname> Datei für die eigene Anwendung.
                                     <code>$environment</code> wird verwendet um zu erkennen
                                     welche Sektion der Konfiguration geholt werden soll.
                                 </para></listitem>
@@ -68,7 +68,7 @@
                     <entry><para>
                         Konstruktor. Die Argumente sind wie beschrieben, und werden verwendet
                         um den initialen Objektstatus zu setzen. Eine Instanz von
-                        <code>Zend_Loader_Autoloader</code> wird wärend der Instanziierung
+                        <classname>Zend_Loader_Autoloader</classname> wird wärend der Instanziierung
                         registriert. Optionen die an den Konstruktor übergeben werden, werden
                         an <code>setOptions()</code> weitergeleitet.
                     </para></entry>
@@ -85,17 +85,17 @@
 
                 <row>
                     <entry><code>getAutoloader()</code></entry>
-                    <entry><code>Zend_Loader_Autoloader</code></entry>
+                    <entry><classname>Zend_Loader_Autoloader</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
-                        Empfangen der <code>Zend_Loader_Autoloader</code> Instanz die wärend der
+                        Empfangen der <classname>Zend_Loader_Autoloader</classname> Instanz die wärend der
                         Instanziierung registriert wurde.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>Benötigt</emphasis>.
@@ -117,7 +117,7 @@
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt alle Optionen die verwendet wurden um das Objekt zu
-                        initialisieren; könnte verwendet werden um <code>Zend_Config</code>
+                        initialisieren; könnte verwendet werden um <classname>Zend_Config</classname>
                         Optionen zwischen Anfragen in ein serialisierbares Format zu cachen.
                     </para></entry>
                 </row>
@@ -154,7 +154,7 @@
 
                 <row>
                     <entry><code>setPhpSettings(array $settings, $prefix = '')</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$settings</code>: <emphasis>Benötigt</emphasis>.
@@ -172,7 +172,7 @@
                     </itemizedlist></entry>
                     <entry><para>
                         Setzt Laufzeit php.ini Einstellungen. Punkt-getrennte Einstellungen
-                        können hierarchisch verschachtelt sein (welche in <code>Zend_Config</code>
+                        können hierarchisch verschachtelt sein (welche in <classname>Zend_Config</classname>
                         INI Dateien auftreten können) über ein Array-von-Arrays, und wird trotzdem
                         korrekt aufgelöst.
                     </para></entry>
@@ -180,28 +180,28 @@
 
                 <row>
                     <entry><code>setAutoloaderNamespaces(array $namespaces)</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$namespaces</code>: <emphasis>Benötigt</emphasis>.
                             Array von Strings die den Namespace repräsentieren der mit der
-                            <code>Zend_Loader_Autoloader</code> Instanz registriert wird.
+                            <classname>Zend_Loader_Autoloader</classname> Instanz registriert wird.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
-                        Registriert den Namespace mit der <code>Zend_Loader_Autoloader</code>
+                        Registriert den Namespace mit der <classname>Zend_Loader_Autoloader</classname>
                         Instanz.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setBootstrap($path, $class = null)</code></entry>
-                    <entry><code>Zend_Application</code></entry>
+                    <entry><classname>Zend_Application</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$path</code>: <emphasis>Benötigt</emphasis>.
                             Kann entweder eine Instanz von
-                            <code>Zend_Application_Bootstrap_Bootstrapper</code>, ein String Pfad
+                            <classname>Zend_Application_Bootstrap_Bootstrapper</classname>, ein String Pfad
                             zur Bootstrap Klasse, ein assoziatives Array von Klassenname =&gt;
                             Dateiname, oder ein assoziatives Array mit den Schlüsseln 'class' und
                             'path' sein.

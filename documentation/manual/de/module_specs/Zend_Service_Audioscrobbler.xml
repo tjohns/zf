@@ -10,11 +10,11 @@
         <title>Einführung</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> ist eine einfache API für die Verwendung des Audioscrobbler REST
+            <classname>Zend_Service_Audioscrobbler</classname> ist eine einfache API für die Verwendung des Audioscrobbler REST
             Web Services. Der Audioscrobbler Web Service bietet Zugang zu seinen Datenbanken von Benutzern, Artisten,
-            Albums, Lieder, tags, Gruppen und Foren. Die Methoden der <code>Zend_Service_Audioscrobbler</code> Klasse
+            Albums, Lieder, tags, Gruppen und Foren. Die Methoden der <classname>Zend_Service_Audioscrobbler</classname> Klasse
             beginnt mit einem dieser Bezeichner. Der Syntax und der Namensraum des Audioscrobbler Web Services sind in
-            <code>Zend_Service_Audioscrobbler</code> gespiegelt. Für weitere Informationen über das Audioscrobbler
+            <classname>Zend_Service_Audioscrobbler</classname> gespiegelt. Für weitere Informationen über das Audioscrobbler
             REST Web Service, siehe die
             <ulink url="http://www.audioscrobbler.net/data/webservices/">Audioscrobbler Web Service Seite</ulink>.
         </para>
@@ -28,7 +28,7 @@
         <para>
             Um Informationen über einen bestimmten Benutzer zu erhalten, wird zuerst die <code>setUser()</code>
             Methode verwendet um den Benutzer zu selektieren für den Daten empfangen werden sollen.
-            <code>Zend_Service_Audioscrobbler</code> bietet verschiedene Methoden für das empfangen von Daten eines
+            <classname>Zend_Service_Audioscrobbler</classname> bietet verschiedene Methoden für das empfangen von Daten eines
             einzelnen Benutzers:
             <itemizedlist>
                 <listitem>
@@ -232,7 +232,7 @@ foreach ($previousWeeklyArtists as $artist) {
         <title>Artisten</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> bietet verschiedene Methoden um Daten über einen speziellen
+            <classname>Zend_Service_Audioscrobbler</classname> bietet verschiedene Methoden um Daten über einen speziellen
             Artisten zu empfangen, der über die <code>setArtist()</code> Methode spezifiziert wurde:
             <itemizedlist>
                 <listitem>
@@ -294,7 +294,7 @@ foreach ($relatedArtists as $artist) {
         <title>Lieder</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> bietet zwei Methoden für das empfangen von Daten für ein
+            <classname>Zend_Service_Audioscrobbler</classname> bietet zwei Methoden für das empfangen von Daten für ein
             einzelnes Lied, das über die <code>setTrack()</code> Methode spezifiziert wurde:
             <itemizedlist>
                 <listitem>
@@ -319,7 +319,7 @@ foreach ($relatedArtists as $artist) {
         <title>Tags</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> bietet verschiedene Methoden für das empfangen von Daten die
+            <classname>Zend_Service_Audioscrobbler</classname> bietet verschiedene Methoden für das empfangen von Daten die
             einem einzelnen Tag zugeordnet sind, welches über die <code>setTag()</code> Methode zugeordnet werden:
             <itemizedlist>
                 <listitem>
@@ -356,7 +356,7 @@ foreach ($relatedArtists as $artist) {
         <title>Gruppen</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> bietet verschiedene Methoden um Daten zu erhalten die einer
+            <classname>Zend_Service_Audioscrobbler</classname> bietet verschiedene Methoden um Daten zu erhalten die einer
             speziellen Gruppe gehören, die über die <code>setGroup()</code> Methode zugeordnet wurde:
             <itemizedlist>
                 <listitem>
@@ -422,7 +422,7 @@ foreach ($relatedArtists as $artist) {
         <title>Foren</title>
 
         <para>
-            <code>Zend_Service_Audioscrobbler</code> bietet eine Methode für das Empfangen von Daten eines
+            <classname>Zend_Service_Audioscrobbler</classname> bietet eine Methode für das Empfangen von Daten eines
             einzelnen Forums, das über die <code>setForum()</code> Methode spezifiziert wurde:
             <itemizedlist>
                 <listitem>

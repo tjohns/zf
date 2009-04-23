@@ -11,7 +11,7 @@
     <para>
         Historisch wird diese Information durch das Verwenden einer speziellen Info Struktur gespeichert.
         Diese struktur kann als assoziatives Array mithilfe der öffentlichen <code>properties</code> Eigenschaft
-        des <code>Zend_Pdf</code> Objektes gelesen und geschrieben werden:
+        des <classname>Zend_Pdf</classname> Objektes gelesen und geschrieben werden:
             <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 
@@ -174,8 +174,8 @@ $pdf->save($pdfPath);
     </para>
 
     <para>
-        Dieses XML Dokument kann empfangen und dem PDF mit der <code>Zend_Pdf::getMetadata()</code> und der
-        <code>Zend_Pdf::setMetadata($metadata)</code> Methode wieder hinzugefügt werden:
+        Dieses XML Dokument kann empfangen und dem PDF mit der <classname>Zend_Pdf::getMetadata()</classname> und der
+        <classname>Zend_Pdf::setMetadata($metadata)</classname> Methode wieder hinzugefügt werden:
             <programlisting role="php"><![CDATA[
 $pdf = Zend_Pdf::load($pdfPath);
 $metadata = $pdf->getMetadata();

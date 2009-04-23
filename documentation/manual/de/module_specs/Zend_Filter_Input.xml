@@ -485,7 +485,7 @@ $input->setDefaultEscapeFilter(new Zend_Filter_StringTrim());
             </para>
 
             <para>
-                Dieses Metakommando kann durch Verwendung der Klassenkonstanten <code>Zend_Filter_Input::FIELDS</code>
+                Dieses Metakommando kann durch Verwendung der Klassenkonstanten <classname>Zend_Filter_Input::FIELDS</classname>
                 statt der Angabe eines Strings spezifiziert werden.
             </para>
 
@@ -555,7 +555,7 @@ $validators = array(
 
             <para>
                 Das Metakommando kann auch spezifiziert werden indem die Klassenkonstante
-                <code>Zend_Filter_Input::PRESENCE</code> statt dem String verwendet wird.
+                <classname>Zend_Filter_Input::PRESENCE</classname> statt dem String verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -585,7 +585,7 @@ $validators = array(
 
             <para>
                 Dieses Metakommando kann auch spezifiziert werden indem die Klassenkonstante
-                <code>Zend_Filter_Input::DEFAULT_VALUE</code> statt einem String verwendet wird.
+                <classname>Zend_Filter_Input::DEFAULT_VALUE</classname> statt einem String verwendet wird.
             </para>
 
             <para>
@@ -646,7 +646,7 @@ echo $input->month; // gibt 1 aus
 
             <para>
                 Dieses Metakommando kann spezifiziert werden indem die Klassenkonstante
-                <code>Zend_Filter_Input::ALLOW_EMPTY</code> statt einem String verwendet wird.
+                <classname>Zend_Filter_Input::ALLOW_EMPTY</classname> statt einem String verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -707,7 +707,7 @@ $input->setOptions($options);
 
             <para>
                 Dieses Metakommando kann spezifiziert werden indem die Klassenkonstante
-                <code>Zend_Filter_Input::BREAK_CHAIN</code> statt einem String verwendet wird.
+                <classname>Zend_Filter_Input::BREAK_CHAIN</classname> statt einem String verwendet wird.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -768,7 +768,7 @@ $input = new Zend_Filter_Input(null, $validators);
 
             <para>
                 Dieses Metakommando kann spezifiziert werden indem die Klassenkonstante
-                <code>Zend_Filter_Input::MESSAGES</code> statt einem String verwendet wird.
+                <classname>Zend_Filter_Input::MESSAGES</classname> statt einem String verwendet wird.
             </para>
 
             <para>
@@ -943,16 +943,16 @@ $input->addFilterPrefixPath('Foo_Namespace', 'Foo/Namespace');
                 Ab der Version 1.5 sollte die Funktion <code>addNamespace($namespace)</code> nicht mehr
                 verwendet werden und wurde durch den Plugin Lader getauscht. Und <code>addFilterPrefixPath</code>
                 sowie <code>addValidatorPrefixPath</code> wurden hinzugefügt. Auch die Konstante
-                <code>Zend_Filter_Input::INPUT_NAMESPACE</code> sollte jetzt nicht mehr verwendet werden.
-                Die Konstanten <code>Zend_Filter_Input::VALIDATOR_NAMESPACE</code> und
-                <code>Zend_Filter_Input::FILTER_NAMESPACE</code> sind seit den Releases nach 1.7.0 vorhanden.
+                <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname> sollte jetzt nicht mehr verwendet werden.
+                Die Konstanten <classname>Zend_Filter_Input::VALIDATOR_NAMESPACE</classname> und
+                <classname>Zend_Filter_Input::FILTER_NAMESPACE</classname> sind seit den Releases nach 1.7.0 vorhanden.
             </para>
         </note>
 
         <note>
             <para>
-                Seit Version 1.0.4 wurde <code>Zend_Filter_Input::NAMESPACE</code>, der den Wert
-                <code>namespace</code> hatte, auf <code>Zend_Filter_Input::INPUT_NAMESPACE</code>,
+                Seit Version 1.0.4 wurde <classname>Zend_Filter_Input::NAMESPACE</classname>, der den Wert
+                <code>namespace</code> hatte, auf <classname>Zend_Filter_Input::INPUT_NAMESPACE</classname>,
                 mit dem Wert <code>inputNamespace</code> geändert, um der Reservierung des
                 Schlüsselwortes <code>namespace</code> ab PHP 5.3 gerecht zu werden.
             </para>

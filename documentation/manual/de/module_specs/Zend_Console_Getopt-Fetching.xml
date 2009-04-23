@@ -4,7 +4,7 @@
 <sect1 id="zend.console.getopt.fetching">
     <title>Holen von Optionen und Argumenten</title>
     <para>
-        Nach dem Erstellen der Optionen welche das <code>Zend_Console_Getopt</code>
+        Nach dem Erstellen der Optionen welche das <classname>Zend_Console_Getopt</classname>
         Objekt erkennen sollte, und der Übergabe von Argumenten von der
         Kommandozeile oder einem Array, kann das Objekt abgefragt werden um
         herauszufinden welche Optionen durch den Benutzer mit einem gegebenen
@@ -14,7 +14,7 @@
     </para>
     <para>
         Das Analysieren der Daten wird verzögert, bis zur ersten Abfrage die am
-        <code>Zend_Console_Getopt</code> Objekt durchgeführt wird um herauszufinden
+        <classname>Zend_Console_Getopt</classname> Objekt durchgeführt wird um herauszufinden
         ob eine Option angegeben wurde. Das erlaubt die Anwendung einiger
         Methodenaufrufe zur Konfiguration der Optionen, Argumente, Hilfstexte und
         Konfigurationsoptionen bevor das Analysieren durchgeführt wird.
@@ -25,7 +25,7 @@
         <para>
             Wenn ein Benutzer irgendeine ungültige Option auf der Kommandozeile
             angibt, wirft die analysierende Funktion eine
-            <code>Zend_Console_Getopt_Exception</code>. Diese Ausnahme kann im
+            <classname>Zend_Console_Getopt_Exception</classname>. Diese Ausnahme kann im
             Code der Anwendung abgefangen werden. Die <code>parse()</code> Methode
             kann verwendet werden um das Objekt dazu zu zwingen die Argumente zu
             analysieren. Das ist deswegen nützlich weil <code>parse()</code> in
@@ -176,7 +176,7 @@ $args = $opts->getRemainingArgs(); // Rückgabe array('filename')
             </programlisting>
         </example>
         <para>
-            <code>Zend_Console_Getopt</code> unterstützt die GNU Konvention das ein Argument welches auf einem
+            <classname>Zend_Console_Getopt</classname> unterstützt die GNU Konvention das ein Argument welches auf einem
             Doppelten Bindestrich besteht das Ende der Optionen bezeichnet. Jedes Argument welches diesem
             Bezeichner folgt, muß als Nicht-Options-Argument behandelt werden. Das ist nützlich wenn ein
             Nicht-Options-Argument vorhanden ist welches mit einem Bindestrich anfängt.

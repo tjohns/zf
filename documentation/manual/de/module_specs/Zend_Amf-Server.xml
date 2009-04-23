@@ -5,7 +5,7 @@
     <title>Zend_Amf_Server</title>
 
     <para>
-        <code>Zend_Amf_Server</code> bietet einen RPC-artigen Server für die Behandlung der
+        <classname>Zend_Amf_Server</classname> bietet einen RPC-artigen Server für die Behandlung der
         Anfragen die vom Adobe Flash Player durchgeführt werden indem das AMF Protokoll verwendet
         wird. Wie alle Zend Framework Serverklassen, folgt es der SoapServer API, und bietet ein
         einfach zu merkendes Interface für die Erstellung von Servern.
@@ -140,8 +140,8 @@ class World
         <title>Zum Server von Flex aus verbinden</title>
 
         <para>
-            Zum eigenen <code>Zend_Amf_Server</code> von einem Flex Projekt aus zu verbinden
-            ist recht einfach; man muß zur Endpunkt URI des <code>Zend_Amf_Server</code>
+            Zum eigenen <classname>Zend_Amf_Server</classname> von einem Flex Projekt aus zu verbinden
+            ist recht einfach; man muß zur Endpunkt URI des <classname>Zend_Amf_Server</classname>
             Sripts zeigen.
         </para>
 
@@ -221,7 +221,7 @@ class World
         <para>
             Es gibt zwei Schlüsselpunkt im Beispiel. Erstens, aber letztes im Code, erstellen wir
             einen AMF Kanal, und spezifizieren den Endpunt als die URL zu unserem
-            <code>Zend_Amf_Server</code>:
+            <classname>Zend_Amf_Server</classname>:
         </para>
 
         <programlisting role="xml"><![CDATA[
@@ -375,7 +375,7 @@ echo $response;
         </para>
 
         <para>
-            <code>Zend_Amf</code> bietet drei Methoden für das Mappen von ActionScript und PHP Objekten.
+            <classname>Zend_Amf</classname> bietet drei Methoden für das Mappen von ActionScript und PHP Objekten.
         </para>
 
         <itemizedlist>
@@ -486,10 +486,10 @@ private function getContactHandler(event:ResultEvent):void {
         <title>Von Flash aus auf den Server verbinden</title>
 
         <para>
-            Auf den <code>Zend_Amf_Server</code> vom Flash Projekt aus zu verbinden ist etwas anders
-            als von Flex aus. Trotzdem sind die Funktionen mit <code>Zend_Amf_Server</code> die gleichen
+            Auf den <classname>Zend_Amf_Server</classname> vom Flash Projekt aus zu verbinden ist etwas anders
+            als von Flex aus. Trotzdem sind die Funktionen mit <classname>Zend_Amf_Server</classname> die gleichen
             wie mit Flex sobald die Verbindung erstellt wurde. Das folgende Beispiel kann auch von einer
-            Flex AS3 Datei aus verwendet werden. Wir werden die selbe <code>Zend_Amf_Server</code>
+            Flex AS3 Datei aus verwendet werden. Wir werden die selbe <classname>Zend_Amf_Server</classname>
             Konfiguration mit der World Klasse unserer Verbindung wiederverwenden.
         </para>
 
@@ -562,7 +562,7 @@ import flash.net.Responder;
 
         <para>
             In der Klasse benötigen wir drei Variable um NetConnection, Responder, und die Gateway URL zu
-            unserer <code>Zend_Amf_Server</code> Installation zu repräsentieren.
+            unserer <classname>Zend_Amf_Server</classname> Installation zu repräsentieren.
         </para>
 
         <programlisting role="as"><![CDATA[
@@ -574,7 +574,7 @@ private var responder:Responder;
 
         <para>
             Im Main Contructor erstellen wir einen Responder und eine neue Verbindung zum
-            <code>Zend_Amf_Server</code> Endpunkt. Der Responder definiert zwei unterschiedliche Methoden
+            <classname>Zend_Amf_Server</classname> Endpunkt. Der Responder definiert zwei unterschiedliche Methoden
             für die Behandlung des Servers. Der Einfachheit halber haben wir Sie onResult und onFault
             benannt.
         </para>
@@ -589,7 +589,7 @@ connection.connect(gateway);
         <para>
             In der onComplete Funktion, welche ausgeführt wird sobald das Konstrukt fertiggestellt wurde,
             senden wir die Daten zum Server. Wird benötigen eine weitere zusätzliche Zeile die den Aufruf
-            der <code>Zend_Amf_Server</code> World->hello Funktion durchführt.
+            der <classname>Zend_Amf_Server</classname> World->hello Funktion durchführt.
         </para>
 
         <programlisting role="as"><![CDATA[

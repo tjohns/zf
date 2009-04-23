@@ -4,7 +4,7 @@
 <sect1 id="zend.console.getopt.rules">
     <title>Definieren von Getopt Regeln</title>
     <para>
-        Der Constructor für die <code>Zend_Console_Getopt</code> Klasse nimmt
+        Der Constructor für die <classname>Zend_Console_Getopt</classname> Klasse nimmt
         ein bis drei Argumente. Das erste Argument definiert welche Optionen durch
         die Anwendung unterstützt werden. Diese Klasse unterstützt alternative
         Syntaxformen für das definieren der Optionen. Die nächsten Sektionen geben
@@ -17,7 +17,7 @@
     </para>
     <para>
         Das dritte Argument des Constructors kann Konfigurationsoptionen enthalten
-        um das Verhalten von <code>Zend_Console_Getopt</code> anzupassen.
+        um das Verhalten von <classname>Zend_Console_Getopt</classname> anzupassen.
         Siehe <link linkend="zend.console.getopt.configuration.config">Konfiguration hinzufügen</link>
         für eine Referenz der möglichen Optionen.
     </para>
@@ -25,7 +25,7 @@
     <sect2 id="zend.console.getopt.rules.short">
         <title>Optionen mit der kurzen Syntax definieren</title>
         <para>
-            <code>Zend_Console_Getopt</code> unterstützt eine kompakte Syntax wie Sie durch
+            <classname>Zend_Console_Getopt</classname> unterstützt eine kompakte Syntax wie Sie durch
             GNU Getopt verwendet wird (siehe
             <ulink url="http://www.gnu.org/software/libc/manual/html_node/Getopt.html">http://www.gnu.org/software/libc/manual/html_node/Getopt.html</ulink>).
             Diese Syntax unterstützt nur Einzel-Zeichen Flags. In einer einzelnen
@@ -42,7 +42,7 @@ $opts = new Zend_Console_Getopt('abp:');
             </programlisting>
         </example>
         <para>
-            Das obige Beispiel zeigt die Verwendung von <code>Zend_Console_Getopt</code>
+            Das obige Beispiel zeigt die Verwendung von <classname>Zend_Console_Getopt</classname>
             um die Optionen zu definieren die als "<code>-a</code>", "<code>-b</code>",
             oder "<code>-p</code>" angegeben werden können. Das letzte Flag benötigt
             einen Parameter.

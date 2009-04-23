@@ -4,16 +4,16 @@
 <sect1 id="zend.service.introduction">
     <title>Einführung</title>
     <para>
-        <code>Zend_Service</code> ist eine abstrakte Klasse welche die Grundlage für
+        <classname>Zend_Service</classname> ist eine abstrakte Klasse welche die Grundlage für
         Web Service Implementationen ist, wie SOAP oder REST.
     </para>
     <para>
         Wenn Unterstützung für generische, XML-basierte REST Services sucht, sollte sich den
-        <link linkend="zend.rest.client"><code>Zend_Rest_Client</code></link> anschauen.
+        <link linkend="zend.rest.client"><classname>Zend_Rest_Client</classname></link> anschauen.
     </para>
     <para>
-        Zusätzlich zur Möglichkeit <code>Zend_Service</code> zu erweitern und
-        <code>Zend_Rest_Client</code> für REST basierte Web Services zu benutzen,
+        Zusätzlich zur Möglichkeit <classname>Zend_Service</classname> zu erweitern und
+        <classname>Zend_Rest_Client</classname> für REST basierte Web Services zu benutzen,
         bietet Zend Unterstützung für populäre Web Services. Siehe die folgenden
         Sektionen für spezielle Informationen über jedes unterstützte Web Service.
      </para>

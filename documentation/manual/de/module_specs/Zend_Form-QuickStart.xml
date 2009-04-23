@@ -6,14 +6,14 @@
 
     <para>
         Diese Anleitung soll die Grundsätze der Erstellung, Validierung und
-        Darstellung von Formularen mit <code>Zend_Form</code> zeigen.
+        Darstellung von Formularen mit <classname>Zend_Form</classname> zeigen.
     </para>
 
     <sect2 id="zend.form.quickstart.create">
         <title>Ein Form Objekt erstellen</title>
 
         <para>
-            Die Erstellung eines Formular Objektes ist sehr einfach: nur <code>Zend_Form</code>
+            Die Erstellung eines Formular Objektes ist sehr einfach: nur <classname>Zend_Form</classname>
             instanzieren:
         </para>
 
@@ -23,9 +23,9 @@ $form = new Zend_Form;
         </programlisting>
 
         <para>
-            Für fortgeschrittene Anwendungsfälle, kann man eine <code>Zend_Form</code> Unterklasse
+            Für fortgeschrittene Anwendungsfälle, kann man eine <classname>Zend_Form</classname> Unterklasse
             erstellen, aber für einfache Formulare, kann ein Formular programmtechnisch mit einem
-            <code>Zend_Form</code> erstellt werden.
+            <classname>Zend_Form</classname> erstellt werden.
         </para>
 
         <para>
@@ -61,8 +61,8 @@ $form->setAttrib('id', 'login');
         <title>Elemente einer Form hinzufügen</title>
 
         <para>
-            Ein Formular ist nichts ohne seine Elemente. <code>Zend_Form</code> kommt mit einigen
-            Standardelementen die XHTML über <code>Zend_View</code> Helfer darstellen. Das sind
+            Ein Formular ist nichts ohne seine Elemente. <classname>Zend_Form</classname> kommt mit einigen
+            Standardelementen die XHTML über <classname>Zend_View</classname> Helfer darstellen. Das sind
             die folgenden:
         </para>
 
@@ -115,7 +115,7 @@ $form->setAttrib('id', 'login');
         <para>
             Es gibt zwei Optionen für das Hinzufügen von Elementen zu einem Formular: Man kann ein
             konkretes Element instanzieren und dieses dem Objekt übergeben, oder man kann den Typ
-            des Elements übergeben und <code>Zend_Form</code> ein Objekt des richtigen Typs für
+            des Elements übergeben und <classname>Zend_Form</classname> ein Objekt des richtigen Typs für
             einen instanzieren lassen.
         </para>
 
@@ -136,14 +136,14 @@ $form->addElement('text', 'username');
             Standardmäßig haben diese Elemente keine Prüfer oder Filter. Das bedeutet, dass man
             eigene Elemente mit minimalen Prüfern und potentiellen Filtern konfigurieren muss. Man
             kann das entweder (a) vor der Übergabe des Elements an das Formular machen, (b) über
-            Konfigurationsoptionen die bei der Erstellung des Elements über <code>Zend_Form</code>
+            Konfigurationsoptionen die bei der Erstellung des Elements über <classname>Zend_Form</classname>
             angegeben werden, oder (c), durch beziehen des Elements vom Formular Objekt und dessen
             Konfiguration im nachhinein.
         </para>
 
         <para>
             Betrachten wir zuerst die Erstellung eines Prüfers für eine konkrete Instanz eines
-            Elements. Es können entweder <code>Zend_Validate_*</code> Instanzen übergeben werden,
+            Elements. Es können entweder <classname>Zend_Validate_*</classname> Instanzen übergeben werden,
             oder der Name des Prüfers, der verwendet werden soll:
         </para>
 
@@ -225,7 +225,7 @@ $username->addValidators(array('alnum',
         <para>
             So einfach das ist, ist das für jedes einzelne Elemet in einer Form sehr aufwendig.
             Versuchen wir es also mit Option (b) von oben. Wenn wir ein neues Element erstellen
-            wird <code>Zend_Form::addElement()</code> als Factory verwendet, und wir können
+            wird <classname>Zend_Form::addElement()</classname> als Factory verwendet, und wir können
             optional Konfigurationsoptionen übergeben. Diese können Prüfer und Filter enthalten
             die angepasst werden können. Um alles von oben implizit durchzuführen, versuchen
             wir folgendes:
@@ -245,7 +245,7 @@ $form->addElement('text', 'username', array(
 
         <note><para>
             Wenn man sieht, dass man Elemente die die gleichen Optionen in vielen Plätzen verwenden,
-            konfiguriert, kann es gewünscht sein, eine eigene <code>Zend_Form_Element</code>
+            konfiguriert, kann es gewünscht sein, eine eigene <classname>Zend_Form_Element</classname>
             Unterklasse zu erstellen und diese stattdessen anzupassen; das spart viel Tipparbeit im
             weiteren Verlauf.
         </para></note>
@@ -256,7 +256,7 @@ $form->addElement('text', 'username', array(
 
         <para>
             Die Darstellung eines Formulars ist einfach. Die meisten Elemente verwenden einen
-            <code>Zend_View</code> Helfer, um sich selbst darzustellen und benötigen deshalb ein
+            <classname>Zend_View</classname> Helfer, um sich selbst darzustellen und benötigen deshalb ein
             View Objekt, um dargestellt zu werden. Dafür gibt es zwei unterschiedliche Varianten:
             Die <code>render()</code> Methode des Formulare verwenden, oder ein einfaches
             <code>echo</code>.
@@ -272,7 +272,7 @@ echo $form;
         </programlisting>
 
         <para>
-            Standardmäßig versuchen <code>Zend_Form</code> und <code>Zend_Form_Element</code> ein
+            Standardmäßig versuchen <classname>Zend_Form</classname> und <classname>Zend_Form_Element</classname> ein
             im <code>ViewRenderer</code> initialisiertes View Objekt zu verwenden, was bedeutet,
             dass die View nicht manuell gesetzt werden muss, wenn das MVC des Zend Frameworks
             verwendet wird. Die Darstellung eines Formulars in einem View Skript ist sehr einfach:
@@ -284,11 +284,11 @@ echo $form;
         </programlisting>
 
         <para>
-            Unter der Hand verwendet <code>Zend_Form</code> "Dekoratoren" um die Darstellung
+            Unter der Hand verwendet <classname>Zend_Form</classname> "Dekoratoren" um die Darstellung
             durchzuführen. Diese Dekoratoren können Inhalte ersetzen, anfügen oder voranstellen,
             und haben eine volle Introspektive des Elements das Ihnen übergeben wurde. Als Ergebnis
             können mehrere Dekoratoren kombiniert werden, um eigene Effekte zu ermöglichen.
-            Standardmüßig kombiniert <code>Zend_Form_Element</code> View Dekoratoren um seine
+            Standardmüßig kombiniert <classname>Zend_Form_Element</classname> View Dekoratoren um seine
             Ausgaben zu erstellen; das Setup sieht ähnlich diesem aus:
         </para>
 
@@ -482,7 +482,7 @@ if (!$form->isValid($_POST)) {
         </para>
 
         <para>
-            Wir verwenden die Stärke von <code>Zend_Form</code>'s Konfigurationsoptionen um die
+            Wir verwenden die Stärke von <classname>Zend_Form</classname>'s Konfigurationsoptionen um die
             Form zu erstellen:
         </para>
 
@@ -564,16 +564,16 @@ class UserController extends Zend_Controller_Action
         <para>
             Wie man im Controller Code sieht, gibt es mehr Arbeit zu tun: Während die Übertragung
             gültig sein muss, kann es trotzdem notwendig sein, zum Beispiel, ein Authentifizierung
-            mit Hilfe von <code>Zend_Auth</code> durchzuführen.
+            mit Hilfe von <classname>Zend_Auth</classname> durchzuführen.
         </para>
     </sect2>
 
     <sect2 id="zend.form.quickstart.config">
-        <title>Ein <code>Zend_Config</code> Objekt verwenden</title>
+        <title>Ein <classname>Zend_Config</classname> Objekt verwenden</title>
 
         <para>
-            Alle <code>Zend_Form</code>'s sind konfigurierbar, indem <code>Zend_Config</code>
-            verwendet wird; es kann entweder ein <code>Zend_Config</code> Objekt an den Kontruktor
+            Alle <classname>Zend_Form</classname>'s sind konfigurierbar, indem <classname>Zend_Config</classname>
+            verwendet wird; es kann entweder ein <classname>Zend_Config</classname> Objekt an den Kontruktor
             oder über <code>setConfig()</code> übergeben werden. Sehen wir uns an, wie das obige
             Formular erstellt werden kann, wenn wir eine INI Datei verwenden. Zuerst folgen wir den
             Notwendigkeiten und platzieren die Konfigurationen in Sektionen, die den Ort des Releases
@@ -629,7 +629,7 @@ $form   = new Zend_Form($config->user->login);
 
         <para>
             Hoffentlich ist, mit dieser kleinen Anleitung der Weg klar, um die Leistung und
-            Flexibilität von <code>Zend_Form</code> einzusetzen. Für detailiertere Informationen
+            Flexibilität von <classname>Zend_Form</classname> einzusetzen. Für detailiertere Informationen
             lesen Sie weiter!
         </para>
     </sect2>

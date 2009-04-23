@@ -172,8 +172,8 @@ $front->addModuleDirectory('/path/to/application/modules');
         <title>Zu Modulen routen</title>
 
         <para>
-            Die Standardroute in <code>Zend_Controller_Router_Rewrite</code> ist ein Objekt vom Typ
-            <code>Zend_Controller_Router_Route_Module</code>. Diese Route erwartet eines der folgenden
+            Die Standardroute in <classname>Zend_Controller_Router_Rewrite</classname> ist ein Objekt vom Typ
+            <classname>Zend_Controller_Router_Route_Module</classname>. Diese Route erwartet eines der folgenden
             Routing Schemas:
         </para>
 

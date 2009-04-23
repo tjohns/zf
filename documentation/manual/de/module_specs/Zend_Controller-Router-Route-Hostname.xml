@@ -5,7 +5,7 @@
     <title>Zend_Controller_Router_Route_Hostname</title>
 
     <para>
-        <code>Zend_Controller_Router_Route_Hostname</code> ist die Hostname Route des Frameworks.
+        <classname>Zend_Controller_Router_Route_Hostname</classname> ist die Hostname Route des Frameworks.
         Sie arbeitet ähnlich wie die Standardrouten, aber Sie arbeitet an und mit dem Hostnamen der
         aufgerufenen URL statt mit dem Pfad.
     </para>
@@ -33,7 +33,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
     </programlisting>
 
     <para>
-        Der erste Parameter in Konstruktor von <code>Zend_Controller_Router_Route_Hostname</code> ist
+        Der erste Parameter in Konstruktor von <classname>Zend_Controller_Router_Route_Hostname</classname> ist
         eine Routerdefinition die zu einem Hostnamen passt. Routerdefinitionen bestehen aus statischen
         und dynamischen Teilen die durch ein Punkt ('.') Zeichen getrennt sind. Dynamische Teile, genannt
         Variablen, werden durch einen, dem Variablennamen vorangestellten Doppelpunkt, gekennzeichnet:
@@ -46,7 +46,7 @@ $router->addRoute('user', $hostnameRoute->chain($plainPathRoute);
         an die Hostnameroute zu ketten. Das wird, wie im Beispiel, getan indem
         <code>$hostnameRoute->chain($pathRoute);</code> aufgerufen wird. Indem das getan wird, wird
         <code>$hostnameRoute</code> nicht geändert, aber eine neue Route
-        (<code>Zend_Controller_Router_Route_Chain</code>), welche dann dem Router übergeben werden kann,
+        (<classname>Zend_Controller_Router_Route_Chain</classname>), welche dann dem Router übergeben werden kann,
         wird zurückgegeben.
     </para>
 

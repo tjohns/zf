@@ -2,10 +2,10 @@
 <!-- EN-Revision: 14978 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.decorators">
-    <title>Erstellen von eigenem Form Markup durch <code>Zend_Form_Decorator</code></title>
+    <title>Erstellen von eigenem Form Markup durch <classname>Zend_Form_Decorator</classname></title>
 
     <para>
-        Die Darstellung eines Form Objektes ist komplett optional -- <code>Zend_Form</code>'s
+        Die Darstellung eines Form Objektes ist komplett optional -- <classname>Zend_Form</classname>'s
         render() Methoden müssen nicht einmal verwendet werden. Wenn es trotzdem so gemacht wird,
         dann werden Dekoratoren verwendet, um die verschiedenen Form Objekte darzustellen.
     </para>
@@ -41,8 +41,8 @@
 
         <para>
             Um einen Dekorator zu konfigurieren, kann ein Array von Optionen, oder ein
-            <code>Zend_Config</code> Objekt an dessen Konstruktor übergeben werden, ein Array an
-            <code>setOptions()</code>, oder ein <code>Zend_Config</code> Objekt an
+            <classname>Zend_Config</classname> Objekt an dessen Konstruktor übergeben werden, ein Array an
+            <code>setOptions()</code>, oder ein <classname>Zend_Config</classname> Objekt an
             <code>setConfig()</code>.
         </para>
 
@@ -97,9 +97,9 @@
         </itemizedlist>
 
         <para>
-            Dekoratoren sollen mit den verschiedenen <code>Zend_Form</code> Klassentypen
-            interagieren: <code>Zend_Form</code>, <code>Zend_Form_Element</code>,
-            <code>Zend_Form_DisplayGroup</code>, und allen von ihnen abgeleiteten Klassen. Die
+            Dekoratoren sollen mit den verschiedenen <classname>Zend_Form</classname> Klassentypen
+            interagieren: <classname>Zend_Form</classname>, <classname>Zend_Form_Element</classname>,
+            <classname>Zend_Form_DisplayGroup</classname>, und allen von ihnen abgeleiteten Klassen. Die
             Methode <code>setElement()</code> erlaubt es, das Objekt des Dekorators, mit den
             aktuell gearbeitet wird, zu setzen und <code>getElement()</code> wird verwendet
             um es zu empfangen.
@@ -119,7 +119,7 @@
         <title>Standard Dekoratoren</title>
 
         <para>
-            <code>Zend_Form</code> wird mit vielen Standard Dekoratoren ausgeliefert; siehe
+            <classname>Zend_Form</classname> wird mit vielen Standard Dekoratoren ausgeliefert; siehe
             <link linkend="zend.form.standardDecorators">das Kapitel über Standard Dekoratoren</link>
             für Details.
         </para>
@@ -135,7 +135,7 @@
         </para>
 
         <para>
-            Dekoratoren implementieren nur <code>Zend_Decorator_Interface</code>. Das Interface
+            Dekoratoren implementieren nur <classname>Zend_Decorator_Interface</classname>. Das Interface
             spezifiziert folgendes:
         </para>
 
@@ -158,7 +158,7 @@ interface Zend_Decorator_Interface
         </programlisting>
 
         <para>
-            Um es sich einfacher zu machen, kann man <code>Zend_Decorator_Abstract</code>
+            Um es sich einfacher zu machen, kann man <classname>Zend_Decorator_Abstract</classname>
             erweitern, welches alle Methoden außer <code>render()</code> implementiert.
         </para>
 
@@ -324,7 +324,7 @@ class My_Decorator_Errors
 
         <para>
             In diesem speziellen Beispiel, weil das letzte Segment 'Errors' des Dekorators auf
-            <code>Zend_Form_Decorator_Errors</code> passt, wird er <emphasis>statt</emphasis> diesem
+            <classname>Zend_Form_Decorator_Errors</classname> passt, wird er <emphasis>statt</emphasis> diesem
             Dekorator dargestellt -- was bedeutet, dass kein Dekorator verändert werden muß um die
             Ausgabe anzupassen. Durch die Benennung des Dekorators nach dem bestehenden Standard
             Dekorator, kann die Dekoration verändert werden ohne, dass der Dekorator des Elements

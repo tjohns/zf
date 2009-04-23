@@ -5,8 +5,8 @@
     <title>Einen Atom Feed konsumieren</title>
 
     <para>
-        <code>Zend_Feed_Atom</code> wird auf die ziemlich genau selbe Weise verwendet wie
-        <code>Zend_Feed_Rss</code>. Es stellt die gleichen Zugriffsmöglichkeiten auf Eigenschaften
+        <classname>Zend_Feed_Atom</classname> wird auf die ziemlich genau selbe Weise verwendet wie
+        <classname>Zend_Feed_Rss</classname>. Es stellt die gleichen Zugriffsmöglichkeiten auf Eigenschaften
         auf Feed Ebene und bei der Iteration über Einträge des Feeds bereit. Der Hauptunterschied
         ist die Struktur des Atom Protokolls selber. Atom ist ein Nachfolger von RSS; es ist ein
         mehr verallgemeinertes Protokoll und es wurde gestaltet, um einfacher mit Feeds umzugehen,

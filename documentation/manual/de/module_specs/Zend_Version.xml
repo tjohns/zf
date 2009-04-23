@@ -6,14 +6,14 @@
     <title>Die Version des Zend Frameworks erhalten</title>
 
     <para>
-        <code>Zend_Version</code> bietet eine Klassenkonstante
-        <code>Zend_Version::VERSION</code> die einen String enthält der die
+        <classname>Zend_Version</classname> bietet eine Klassenkonstante
+        <classname>Zend_Version::VERSION</classname> die einen String enthält der die
         Versionsnummer der eigenen Installation des Zend Frameworks enthält.
-        <code>Zend_Version::VERSION</code> kann zum Beispiel "1.7.4" enthalten.
+        <classname>Zend_Version::VERSION</classname> kann zum Beispiel "1.7.4" enthalten.
     </para>
 
     <para>
-        Die statische Methode <code>Zend_Version::compareVersion($version)</code>
+        Die statische Methode <classname>Zend_Version::compareVersion($version)</classname>
         basiert auf der PHP Funktion
         <ulink url="http://php.net/version_compare"><code>version_compare()</code></ulink>.
         Die Methode gibt -1 zurück wenn die angegebene Version älter als die

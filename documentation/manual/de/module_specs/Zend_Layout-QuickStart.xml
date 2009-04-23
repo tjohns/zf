@@ -5,7 +5,7 @@
     <title>Zend_Layout Schnellstart</title>
 
     <para>
-        Es gibt zwei primäre Verwendungen für <code>Zend_Layout</code>: Mit dem Zend Framework MVC, und ohne.
+        Es gibt zwei primäre Verwendungen für <classname>Zend_Layout</classname>: Mit dem Zend Framework MVC, und ohne.
     </para>
 
     <sect2 id="zend.layout.quickstart.layouts">
@@ -14,7 +14,7 @@
         <para>
             In beiden Fällen, müssen trotzdem Layout Skripte erstellt werden. Layout Sktipte verwenden einfach
             Zend_View (oder welche View Implementation auch immer verwendet wird). Layout Variablen werden
-            mit einem <code>Zend_Layout</code>
+            mit einem <classname>Zend_Layout</classname>
             <link linkend="zend.view.helpers.initial.placeholder">Platzhalter</link> registriert, und es kann
             auf Sie über den Platzhalter Helfer zugegriffen werden oder dadurch das Sie als Objekt Eigenschaften
             vom Layout Objekt über den Layout Helfer geholt werden.
@@ -52,7 +52,7 @@
         </programlisting>
 
         <para>
-            Weil <code>Zend_Layout</code> <code>Zend_View</code> für die Darstellung verwendet, kann auch jeder
+            Weil <classname>Zend_Layout</classname> <classname>Zend_View</classname> für die Darstellung verwendet, kann auch jeder
             registrierte View Helfer verwendet werden, und auch auf jede zuvor zugeordnete View Variable kann
             zugegriffen werden. Sehr hilfreich sind die verschiedenen
             <link linkend="zend.view.helpers.initial.placeholder">Platzhalter Helfer</link>, da diese das
@@ -88,16 +88,16 @@
         <title>Zend_Layout mit dem Zend Framework MVC verwenden</title>
 
         <para>
-            <code>Zend_Controller</code> bietet ein reiches Set von Funktionalitäten für Erweiterung mit seinen
+            <classname>Zend_Controller</classname> bietet ein reiches Set von Funktionalitäten für Erweiterung mit seinen
             <link linkend="zend.controller.plugins">Front Kontroller Plugins</link> und
             <link linkend="zend.controller.actionhelpers">Action Kontroller Helfern</link>.
-            <code>Zend_View</code> hat auch <link linkend="zend.view.helpers">Helfer</link>.
-            <code>Zend_Layout</code> nimmt Vorteile wahr von diesen verschiedenen Erweiterungspunkten wenn es
+            <classname>Zend_View</classname> hat auch <link linkend="zend.view.helpers">Helfer</link>.
+            <classname>Zend_Layout</classname> nimmt Vorteile wahr von diesen verschiedenen Erweiterungspunkten wenn es
             mit den MVC Komponenten verwendet wird.
         </para>
 
         <para>
-            <code>Zend_Layout::startMvc()</code> erstellt eine Instanz von <code>Zend_Layout</code> mit jeder
+            <classname>Zend_Layout::startMvc()</classname> erstellt eine Instanz von <classname>Zend_Layout</classname> mit jeder
             optionalen Konfiguration die angegeben wird. Anschließend wird ein Front Kontroller Plugin
             registriert das das Layout mit jedem Anwendungsinhalt darstellt sobald die Dispatch Schleife
             fertiggestellt ist, und registriert einen Action Helfer der den Zugriff auf das Layout Objekt
@@ -116,7 +116,7 @@ Zend_Layout::startMvc();
         </programlisting>
 
         <para>
-            <code>startMvc()</code> kann ein optionales Array von Optionen oder ein <code>Zend_Config</code>
+            <code>startMvc()</code> kann ein optionales Array von Optionen oder ein <classname>Zend_Config</classname>
             Objekt entgegennehmen um die Instanz anzupassen; diese Optionen werden detailiert in
             <xref linkend="zend.layout.options" /> beschrieben.
         </para>
@@ -157,7 +157,7 @@ $this->layout()->setLayout('foo'); // alternatives Layout setzen
         </programlisting>
 
         <para>
-            Die im MVC registrierte <code>Zend_Layout</code> Instanz kann jederzeit über die statische
+            Die im MVC registrierte <classname>Zend_Layout</classname> Instanz kann jederzeit über die statische
             <code>getMvcInstance()</code> Methode geholt werden:
         </para>
 
@@ -168,7 +168,7 @@ $layout = Zend_Layout::getMvcInstance();
         </programlisting>
 
         <para>
-            Letztendlich hat das Front Controller Plugin von <code>Zend_Layout</code> ein wichtiges Feature
+            Letztendlich hat das Front Controller Plugin von <classname>Zend_Layout</classname> ein wichtiges Feature
             zusätzlich zur Darstellung des Layouts: Es empfängt alle benannte Segmente vom Antwortobjekt und
             ordnet diese als Layout Variablen zu, wobei das 'default' Segment der 'content' Variable zugeordnet
             wird. Das erlaubt es auf den Anwendungsinhalt zugreifen zu können und es in View Skripten

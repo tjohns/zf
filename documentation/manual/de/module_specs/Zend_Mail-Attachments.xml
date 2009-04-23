@@ -5,7 +5,7 @@
     <title>Anhänge</title>
     <para>
         Dateien können durch die <code>createAttachment()</code> Methode an eine E-Mail angehängt
-        werden. Standardmäßig nimmt <code>Zend_Mail</code> an, dass der Anhang ein binärisches
+        werden. Standardmäßig nimmt <classname>Zend_Mail</classname> an, dass der Anhang ein binärisches
         Objekt (application/octet-stream) ist, über eine bas64 Kodierung übertragen werden soll und
         als Anhang verarbeitet wird. Diese Annahmen können durch die Übergabe von weiteren
         Parametern an <code>createAttachment()</code> überschrieben werden:
@@ -26,7 +26,7 @@ $mail->createAttachment($myImage,
     <para>
         Wenn du weitere Kontrolle über den für diesen Anhang generierten MIME Teil benötigst, kannst
         du zurückgegebenen Wert von <code>createAttachment()</code> verwenden, um die Attributes zu
-        verändern. Die <code>createAttachment()</code> Methode gibt ein <code>Zend_Mime_Part</code>
+        verändern. Die <code>createAttachment()</code> Methode gibt ein <classname>Zend_Mime_Part</classname>
         Objekt zurück:
     </para>
     <programlisting role="php"><![CDATA[
@@ -42,7 +42,7 @@ $mail->send();
 ]]>
     </programlisting>
     <para>
-        Eine Alternative ist die Erstellung einer Instanz von <code>Zend_Mime_Part</code> und das Hinzufügen von Ihr mit
+        Eine Alternative ist die Erstellung einer Instanz von <classname>Zend_Mime_Part</classname> und das Hinzufügen von Ihr mit
         <code>addAttachment()</code>:
     </para>
     <programlisting role="php"><![CDATA[

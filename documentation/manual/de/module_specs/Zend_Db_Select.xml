@@ -10,7 +10,7 @@
         <title>Einführung</title>
 
         <para>
-            Das <code>Zend_Db_Select</code> Objekt repräsentiert ein SQL <code>SELECT</code> Anfrage Statement.
+            Das <classname>Zend_Db_Select</classname> Objekt repräsentiert ein SQL <code>SELECT</code> Anfrage Statement.
             Die Klasse bietet Methoden um einzelne Teile der Anfrage hinzuzufügen. Einzelne Teile
             der Anfrage können mit Hilfe von PHP Methoden und Datenstrukturen angegeben werden, und
             die Klasse erzeugt korrekte SQL Syntax. Nachdem die Anfrage formuliert wurde kann sie
@@ -18,7 +18,7 @@
         </para>
 
         <para>
-            <code>Zend_Db_Select</code> bietet folgenden Nutzen:
+            <classname>Zend_Db_Select</classname> bietet folgenden Nutzen:
         </para>
 
         <itemizedlist>
@@ -50,10 +50,10 @@
         </itemizedlist>
 
         <para>
-            Nutzung von <code>Zend_Db_Select</code> ist nicht zwingend erforderlich. Für einfache SELECT
+            Nutzung von <classname>Zend_Db_Select</classname> ist nicht zwingend erforderlich. Für einfache SELECT
             Anfragen ist es normalerweise einfacher die gesamte SQL Anfrage in einem String zu
             formulieren und mit Hilfe der Methoden der Adapterklasse, wie <code>fetch()</code> oder
-            <code>fetchAll()</code>, auszuführen. Die Nutzung von <code>Zend_Db_Select</code> ist hilfreich wenn
+            <code>fetchAll()</code>, auszuführen. Die Nutzung von <classname>Zend_Db_Select</classname> ist hilfreich wenn
             eine SELECT Anfrage prozedural oder basierend auf der konditionellen Logik der
             Anwendung zusammengesetzt wird.
         </para>
@@ -65,8 +65,8 @@
         <title>Erzeugung eines Select Objekts</title>
 
         <para>
-            Die Instanz eines <code>Zend_Db_Select</code> Objekts kann mit Hilfe der <code>select()</code>
-            Methode des <code>Zend_Db_Adapter_Abstract</code> Objekts erzeugt werden.
+            Die Instanz eines <classname>Zend_Db_Select</classname> Objekts kann mit Hilfe der <code>select()</code>
+            Methode des <classname>Zend_Db_Adapter_Abstract</classname> Objekts erzeugt werden.
         </para>
 
         <example id="zend.db.select.creating.example-db">
@@ -82,7 +82,7 @@ $select = $db->select();
         </example>
 
         <para>
-            Ein anderer Weg ein <code>Zend_Db_Select</code> Objekt zu erzeugen ist die Nutzung des Konstruktors
+            Ein anderer Weg ein <classname>Zend_Db_Select</classname> Objekt zu erzeugen ist die Nutzung des Konstruktors
             unter Angabe des Datenbankadapters als Argument.
         </para>
 
@@ -107,7 +107,7 @@ $select = new Zend_Db_Select($db);
         <para>
             Wenn die Anfrage erstellt wird können Bedingungen der Anfrage nacheinander hinzugefügt
             werden. Es gibt eine separate Methode für das Hinzufügen von verschiedenen Bedingungen
-            zum <code>Zend_Db_Select</code> Objekt.
+            zum <classname>Zend_Db_Select</classname> Objekt.
         </para>
 
         <example id="zend.db.select.building.example">
@@ -132,7 +132,7 @@ $select->order( ...Angabe von Sortierkriterien... );
         </example>
 
         <para>
-            Die meisten Methoden des <code>Zend_Db_Select</code> Objekts lassen sich auch über das bequeme
+            Die meisten Methoden des <classname>Zend_Db_Select</classname> Objekts lassen sich auch über das bequeme
             Fluent Interface nutzen. Fluent Interface bedeutet das jede Methode eine Referenz auf
             das aufrufende Objekt zurück gibt, daher kann direkt eine andere Methode aufgerufen
             werden.
@@ -166,7 +166,7 @@ $select = $db->select()
             <para>
                 Um die Tabelle für die Anfrage an zu geben wird die <code>from()</code> Methode
                 verwendet. Der Tabellenname kann als einfacher String übergeben werden.
-                <code>Zend_Db_Select</code> wendet Bezeichner Quotierung an, es können also auch spezielle
+                <classname>Zend_Db_Select</classname> wendet Bezeichner Quotierung an, es können also auch spezielle
                 Zeichen verwendet werden.
             </para>
 
@@ -191,7 +191,7 @@ $select = $db->select()
                 werden. Anstelle eines einfachen Strings muss dann ein assoziatives Array übergeben
                 werden, welches den Beziehungsnamen dem tatsächlichen Tabellennamen zuordnet. In
                 anderen Bedingungen der SQL Anfrage kann dann dieser Beziehungsname verwendet
-                werden. Wenn die Anfrage mehr als eine Tabelle verbindet, generiert <code>Zend_Db_Select</code>
+                werden. Wenn die Anfrage mehr als eine Tabelle verbindet, generiert <classname>Zend_Db_Select</classname>
                 eindeutige Beziehungsnamen basierend auf den Tabellennamen, wenn keine
                 Beziehungsnamen angegeben wurden.
             </para>
@@ -215,7 +215,7 @@ $select = $db->select()
             <para>
                 Einige RDBMS Marken unterstützen einen voran stehenden Schemenbezeichner für eine
                 Tabelle. Der Tabellenname kann mit "<code>schemaName.tabellenName</code>" angegeben
-                werden, <code>Zend_Db_Select</code> Quotiert die einzelnen Teile für sich. Der Schemaname kann
+                werden, <classname>Zend_Db_Select</classname> Quotiert die einzelnen Teile für sich. Der Schemaname kann
                 aber auch separat angegeben werden. Ein Schemaname, der mit dem Tabellennamen
                 angegeben wurde bekommt Vorrang, falls beides angegeben wurde.
             </para>
@@ -269,7 +269,7 @@ $select = $db->select()
 
             <para>
                 Der Spaltenname kann mit "<code>beziehungsName.spaltenName</code>" angegeben
-                werden. <code>Zend_Db_Select</code> Quotiert die einzelnen Teile für sich. Wird kein
+                werden. <classname>Zend_Db_Select</classname> Quotiert die einzelnen Teile für sich. Wird kein
                 Beziehungsname für die Spalte angegeben, dann wird der Beziehungsname der Tabelle
                 der aktuellen <code>from()</code> Methode verwendet.
             </para>
@@ -317,13 +317,13 @@ $select = $db->select()
                 Spalten in einer SQL Anfrage sind manchmal Expressions, keine einfachen
                 Spaltennamen einer Tabelle. Expressions dürfen keine Beziehungsnamen oder
                 Quotierungen bekommen. Wenn der Spaltenstring runde Klammern enthält erkennt
-                <code>Zend_Db_Select</code> dies als eine Expression.
+                <classname>Zend_Db_Select</classname> dies als eine Expression.
             </para>
 
             <para>
-                Es kann auch ein Objekt des Typs <code>Zend_Db_Expr</code> erzeugt werden um zu verhindern das
-                ein String wie ein Spaltenname behandelt wird. <code>Zend_Db_Expr</code> ist eine Minimalklasse
-                die einen String enthält. <code>Zend_Db_Select</code> erkennt Objekte des Typs <code>Zend_Db_Expr</code> und
+                Es kann auch ein Objekt des Typs <classname>Zend_Db_Expr</classname> erzeugt werden um zu verhindern das
+                ein String wie ein Spaltenname behandelt wird. <classname>Zend_Db_Expr</classname> ist eine Minimalklasse
+                die einen String enthält. <classname>Zend_Db_Select</classname> erkennt Objekte des Typs <classname>Zend_Db_Expr</classname> und
                 konvertiert diese in Strings, nimmt aber keine Änderungen daran vor, wie Quotierung
                 oder Beziehungsnamen.
             </para>
@@ -331,8 +331,8 @@ $select = $db->select()
             <note>
 
                 <para>
-                    Benutzung von <code>Zend_Db_Expr</code> für Spaltennamen ist nicht nötig wenn Spaltennamen
-                    Expressions runde Klammern enthalten. <code>Zend_Db_Select</code> erkennt diese und
+                    Benutzung von <classname>Zend_Db_Expr</classname> für Spaltennamen ist nicht nötig wenn Spaltennamen
+                    Expressions runde Klammern enthalten. <classname>Zend_Db_Select</classname> erkennt diese und
                     behandelt den String als eine Expression und lässt Quotierung und
                     Beziehungsnamen aus.
                 </para>
@@ -378,7 +378,7 @@ $select = $db->select()
             </example>
 
             <para>
-                In den oben stehenden Fällen ändern <code>Zend_Db_Select</code> den String nicht mit
+                In den oben stehenden Fällen ändern <classname>Zend_Db_Select</classname> den String nicht mit
                 Beziehungsnamen oder Bezeichnerquotierung. Wenn diese Änderungen notwendig sein
                 sollten um doppeldeutigkeiten auf zu lösen, muss dies manuell am String geändert
                 werden.
@@ -433,7 +433,7 @@ $select = $db->select()
                 Tabelle hinzuzufügen nachdem diese Methoden aufgerufen wurde. Die
                 <code>columns()</code> Methode erlaubt es spezifische Spalten an jedem Punkt
                 hinzuzufügen bevor die Abfrage aufgeführt wird. Die Spalte kann entweder als String
-                oder <code>Zend_Db_Expr</code> oder als Array dieser Elemente angegeben werden. Das
+                oder <classname>Zend_Db_Expr</classname> oder als Array dieser Elemente angegeben werden. Das
                 zweite Argument dieser Methode kann unterdrückt werden, was impliziert das die
                 Spalten zu der FROM Tabelle hinzugefügt werden sollen, andernfall muß ein
                 bestehender Korrelationsname verwendet werden.
@@ -474,7 +474,7 @@ $select = $db->select()
             <para>
                 Viele nützliche Anfragen benötigen ein <code>JOIN</code> um mehrere Spalten
                 verschiedener Tabellen miteinander zu kombinieren. Tabellen können zu einer
-                <code>Zend_Db_Select</code> Anfrage mit der <code>join()</code> Methode hinzugefügt werden. Die
+                <classname>Zend_Db_Select</classname> Anfrage mit der <code>join()</code> Methode hinzugefügt werden. Die
                 Nutzung dieser Methode ist ähnlich der <code>from()</code> Methode, außer das in
                 den meisten Fällen zusätzlich eine Join Bedingung angegeben werden kann.
             </para>
@@ -520,7 +520,7 @@ $select = $db->select()
             <para>
                 Das dritte Argument für <code>join()</code> ist ein Array von Spaltennahmen,
                 entsprechend des Arrays der <code>from()</code> Methode. Der Standard ist ebenfalls
-                "<code>*</code>" und unterstützt Beziehungsnamen, Expressions und <code>Zend_Db_Expr</code> in
+                "<code>*</code>" und unterstützt Beziehungsnamen, Expressions und <classname>Zend_Db_Expr</classname> in
                 der gleichen Weise wie dem Array von Spaltennamen der <code>from()</code> Methode.
             </para>
 
@@ -560,7 +560,7 @@ $select = $db->select()
 
             <para>
                 SQL kennt verschiedene Typen von Joins. In der unten stehen Liste sind Methoden zu
-                finden, für die verschiedenen Join Typen die <code>Zend_Db_Select</code> unterstützt.
+                finden, für die verschiedenen Join Typen die <classname>Zend_Db_Select</classname> unterstützt.
             </para>
 
             <itemizedlist>
@@ -686,7 +686,7 @@ $select = $db->select()
                 Zusätzlich zu diesen Join Methoden können Abfragen durch Verwendung der JoinUsing
                 Methoden vereinfacht werden. Statt das eine komplette Definition des Joins
                 angegeben wird, kann einfach der Spaltenname übergeben werden auf welchem gejoint
-                werden soll und das <code>Zend_Db_Select</code> Objekt vervollständigt die Bedingung alleine.
+                werden soll und das <classname>Zend_Db_Select</classname> Objekt vervollständigt die Bedingung alleine.
             </para>
 
             <example id="zend.db.select.building.joinusing.example">
@@ -711,7 +711,7 @@ $select = $db->select()
             </example>
 
             <para>
-                Jede der anwendbaren Join Methoden in der <code>Zend_Db_Select</code> Komponente hat eine
+                Jede der anwendbaren Join Methoden in der <classname>Zend_Db_Select</classname> Komponente hat eine
                 entsprechende 'using' Methode.
             </para>
 
@@ -786,7 +786,7 @@ $select = $db->select()
 
             <para>
                 Das zweite Argument der <code>where()</code> Methode ist optional. Es ist ein Wert
-                der in die Expression eingesetzt wird. <code>Zend_Db_Select</code> Quotiert den Wert und ersetzt
+                der in die Expression eingesetzt wird. <classname>Zend_Db_Select</classname> Quotiert den Wert und ersetzt
                 ihn für ein Fragezeichen ("<code>?</code>") in der Expression.
             </para>
 
@@ -817,7 +817,7 @@ $select = $db->select()
             </example>
 
             <para>
-                Die <code>where()</code> Methode kann mehrere Male in dem selben <code>Zend_Db_Select</code>
+                Die <code>where()</code> Methode kann mehrere Male in dem selben <classname>Zend_Db_Select</classname>
                 Objekt aufgerufen werden. Die daraus folgenden Anfrage kombiniert die
                 unterschiedlichen Ausdrücke unter Benutzung von <code>AND</code> zwischen ihnen.
             </para>
@@ -878,7 +878,7 @@ $select = $db->select()
             </example>
 
             <para>
-                <code>Zend_Db_Select</code> klammert Expressions automatisch mit runden Klammern ein wenn sie
+                <classname>Zend_Db_Select</classname> klammert Expressions automatisch mit runden Klammern ein wenn sie
                 mit der <code>where()</code> oder <code>orWhere()</code> Methode angegeben wurden.
                 Dies hilft sicher zu stellen dass das voranstellen von Boolean Operatoren keine
                 unerwarteten Ergebnisse nach sich zieht.
@@ -912,7 +912,7 @@ $select = $db->select()
             <para>
                 In dem oben stehenden Beispiel währen die Ergebnisse ohne den Klammern ziemlich
                 anders, weil <code>AND</code> eine höhere Priorität als <code>OR</code> hat.
-                <code>Zend_Db_Select</code> erzeugt runde Klammern wodurch jede Expression von aufeinander
+                <classname>Zend_Db_Select</classname> erzeugt runde Klammern wodurch jede Expression von aufeinander
                 folgenden Aufrufen der <code>where()</code> Methode fester binden als das
                 <code>AND</code> welches die Expressions kombiniert.
             </para>
@@ -930,7 +930,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code> können diese Spalte(n) mit der <code>group()</code> Methode
+                In <classname>Zend_Db_Select</classname> können diese Spalte(n) mit der <code>group()</code> Methode
                 angegeben werden. Das Argument der Methode ist ein Spaltenname oder ein Array von
                 Spaltennamen, welche im <code>GROUP BY</code> Abschnitt stehen sollen.
             </para>
@@ -962,7 +962,7 @@ $select = $db->select()
                 Wie in dem Array von Spaltennamen der <code>from()</code> Methode, so können auch
                 hier Beziehungsnamen in den Strings der Spaltennamen verwendet werden, und der
                 Spaltenname wird als Bezeichner Quotiert, wenn er nicht in runden Klammern steht
-                oder ein Objekt des Typs <code>Zend_Db_Expr</code> ist.
+                oder ein Objekt des Typs <classname>Zend_Db_Expr</classname> ist.
             </para>
 
         </sect3>
@@ -981,7 +981,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code> können Bedingungen für die Einschränkung von Gruppen mit der
+                In <classname>Zend_Db_Select</classname> können Bedingungen für die Einschränkung von Gruppen mit der
                 <code>having()</code> Methode angegeben werden. Die Nutzung ist ähnlich wie die der
                 <code>where()</code> Methode. Das erste Argument ist ein String, welcher eine SQL
                 Expression enthält. Das zweite Argument ist optional und wird verwendet um einen
@@ -1045,7 +1045,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code> kann die <code>order()</code> Methode verwendet werden um
+                In <classname>Zend_Db_Select</classname> kann die <code>order()</code> Methode verwendet werden um
                 Spalten, oder Arrays von Spalten, anzugeben, nach denen sortiert werden soll. Jedes
                 Element des Arrays ist ein String, welcher die Spalte benennt. Optional kann auf
                 den Namen eines der Schlüsselwörter <code>ASC</code> <code>DESC</code> folgen,
@@ -1055,7 +1055,7 @@ $select = $db->select()
             <para>
                 Wie in den <code>from()</code> und <code>group()</code> Methoden, werden Spalten
                 als Bezeichner Quotiert, wenn sie nicht von runden Klammern eingeschlossen oder vom
-                Objekttyp <code>Zend_Db_Expr</code> sind.
+                Objekttyp <classname>Zend_Db_Expr</classname> sind.
             </para>
 
             <example id="zend.db.select.building.order.example">
@@ -1100,7 +1100,7 @@ $select = $db->select()
             </para>
 
             <para>
-                In <code>Zend_Db_Select</code> kann die <code>limit()</code> Methode verwendet werden um die
+                In <classname>Zend_Db_Select</classname> kann die <code>limit()</code> Methode verwendet werden um die
                 Anzahl von Zeilen und die Anzahl der auszulassenden Spalten anzugeben. Das erste
                 Argument ist die gewünschte Anzahl von Zeilen. Das zweite Argument gibt die Anzahl
                 der auszulassenden Zeilen an.
@@ -1130,7 +1130,7 @@ $select = $db->select()
                 <para>
                     Die <code>LIMIT</code> Syntax wird nicht von allen RDBMS Marken unterstützt.
                     Einige RDBMS benötigen eine unterschiedliche Syntax für eine ähnliche
-                    Funktionalität. Jede <code>Zend_Db_Adapter_Abstract</code> Klasse enthält eine Methode um
+                    Funktionalität. Jede <classname>Zend_Db_Adapter_Abstract</classname> Klasse enthält eine Methode um
                     für das RDBMS passende Syntax zu erzeugen.
                 </para>
 
@@ -1232,7 +1232,7 @@ $select = $db->select()
 
         <para>
             Dieser Abschnitt beschreibt wie Anfragen ausgeführt werden, die durch ein
-            <code>Zend_Db_Select</code> Objekt repräsentiert werden.
+            <classname>Zend_Db_Select</classname> Objekt repräsentiert werden.
         </para>
 
         <sect3 id="zend.db.select.execute.query-adapter">
@@ -1240,14 +1240,14 @@ $select = $db->select()
             <title>Ausführen von Select Anfragen aus dem Db Adapter</title>
 
             <para>
-                Die Anfrage, die durch das <code>Zend_Db_Select</code> Objekt repräsentiert wird kann ausgeführt
+                Die Anfrage, die durch das <classname>Zend_Db_Select</classname> Objekt repräsentiert wird kann ausgeführt
                 werden, indem sie als erstes Argument an die <code>query()</code> Methode des
-                <code>Zend_Db_Adapter_Abstract</code> Objekts übergeben wird. Dabei wird das <code>Zend_Db_Select</code>
+                <classname>Zend_Db_Adapter_Abstract</classname> Objekts übergeben wird. Dabei wird das <classname>Zend_Db_Select</classname>
                 anstelle eines Strings verwendet.
             </para>
 
             <para>
-                Die <code>query()</code> Methode gibt ein Objekt vom Typ <code>Zend_Db_Statement</code> oder
+                Die <code>query()</code> Methode gibt ein Objekt vom Typ <classname>Zend_Db_Statement</classname> oder
                 PDOStatement zurück, je nachdem welcher Adaptertyp verwendet wird.
             </para>
 
@@ -1274,8 +1274,8 @@ $result = $stmt->fetchAll();
 
             <para>
                 Als Alternative zur Nutzung der <code>query()</code> Methode des Adapterobjekts
-                kann auch die <code>query()</code> Methode des <code>Zend_Db_Select</code> Objekts verwendet
-                werden. Beide Methoden geben ein Objekt vom Typ <code>Zend_Db_Statement</code> oder PDOStatement
+                kann auch die <code>query()</code> Methode des <classname>Zend_Db_Select</classname> Objekts verwendet
+                werden. Beide Methoden geben ein Objekt vom Typ <classname>Zend_Db_Statement</classname> oder PDOStatement
                 zurück, je nachdem welcher Adaptertyp verwendet wird.
             </para>
 
@@ -1302,7 +1302,7 @@ $result = $stmt->fetchAll();
 
             <para>
                 Wenn Zugriff zu auf eine String Repräsentante der SQL Anfrage, entsprechend dem
-                <code>Zend_Db_Select</code>, benötigt wird, kann die <code>__toString()</code> Methode verwendet
+                <classname>Zend_Db_Select</classname>, benötigt wird, kann die <code>__toString()</code> Methode verwendet
                 werden.
             </para>
 
@@ -1333,7 +1333,7 @@ echo "$sql\n";
         <title>Andere Methoden</title>
 
         <para>
-            Dieser Abschnitt beschreibt andere Methoden der <code>Zend_Db_Select</code> Klasse, welche bisher
+            Dieser Abschnitt beschreibt andere Methoden der <classname>Zend_Db_Select</classname> Klasse, welche bisher
             nicht beschrieben wurden: <code>getPart()</code> und <code>reset()</code>.
         </para>
 
@@ -1364,7 +1364,7 @@ echo "$sql\n";
             </para>
 
             <para>
-                Die <code>Zend_Db_Select</code> Klasse definiert Konstanten die für Teile der SQL Anfrage
+                Die <classname>Zend_Db_Select</classname> Klasse definiert Konstanten die für Teile der SQL Anfrage
                 verwendet werden können. Es können die Konstantendefinitionen oder die literalen
                 Strings verwendet werden.
             </para>
@@ -1383,52 +1383,52 @@ echo "$sql\n";
 
                     <tbody>
                         <row>
-                            <entry><code>Zend_Db_Select::DISTINCT</code></entry>
+                            <entry><classname>Zend_Db_Select::DISTINCT</classname></entry>
                             <entry><code>'distinct'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::FOR_UPDATE</code></entry>
+                            <entry><classname>Zend_Db_Select::FOR_UPDATE</classname></entry>
                             <entry><code>'forupdate'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::COLUMNS</code></entry>
+                            <entry><classname>Zend_Db_Select::COLUMNS</classname></entry>
                             <entry><code>'columns'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::FROM</code></entry>
+                            <entry><classname>Zend_Db_Select::FROM</classname></entry>
                             <entry><code>'from'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::WHERE</code></entry>
+                            <entry><classname>Zend_Db_Select::WHERE</classname></entry>
                             <entry><code>'where'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::GROUP</code></entry>
+                            <entry><classname>Zend_Db_Select::GROUP</classname></entry>
                             <entry><code>'group'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::HAVING</code></entry>
+                            <entry><classname>Zend_Db_Select::HAVING</classname></entry>
                             <entry><code>'having'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::ORDER</code></entry>
+                            <entry><classname>Zend_Db_Select::ORDER</classname></entry>
                             <entry><code>'order'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::LIMIT_COUNT</code></entry>
+                            <entry><classname>Zend_Db_Select::LIMIT_COUNT</classname></entry>
                             <entry><code>'limitcount'</code></entry>
                         </row>
 
                         <row>
-                            <entry><code>Zend_Db_Select::LIMIT_OFFSET</code></entry>
+                            <entry><classname>Zend_Db_Select::LIMIT_OFFSET</classname></entry>
                             <entry><code>'limitoffset'</code></entry>
                         </row>
                     </tbody>
@@ -1478,7 +1478,7 @@ print_r( $orderData );
 
             <para>
                 Wenn der Parameter ausgelassen wird, setzt <code>reset()</code> alle geänderten
-                Teile auf einen Standardwert zurück. Dadurch ist das <code>Zend_Db_Select</code> Objekt
+                Teile auf einen Standardwert zurück. Dadurch ist das <classname>Zend_Db_Select</classname> Objekt
                 gleichwertig mit einem neuen Objekt, wie wenn es gerade Instanziiert wurde.
             </para>
 

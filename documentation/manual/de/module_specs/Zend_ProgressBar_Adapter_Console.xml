@@ -4,7 +4,7 @@
 <sect3 id="zend.progressbar.adapter.console">
     <title>Zend_ProgressBar_Adapter_Console</title>
     <para>
-        <code>Zend_ProgressBar_Adapter_Console</code> ist ein Textbasierter Adater für Terminals. Er kann
+        <classname>Zend_ProgressBar_Adapter_Console</classname> ist ein Textbasierter Adater für Terminals. Er kann
         automatisch die Terminalbreite erkennen unterstützt aber auch eigene Breiten. Kann kann definieren
         welche Elemente mit dem Fortschrittsbalken angezeigt werden und auch deren Reihenfolge ändern. Man
         kann auch den Stil des Fortschrittsbalkens selbst definieren.
@@ -19,7 +19,7 @@
     </note>
     <para>
         Man kann auch die Optionen des Adapters entweder über die <code>set*</code> Methoden oder durch die
-        Übergabe eines Arrays, oder einer Instanz von <code>Zend_Config</code>, an den Constructor mit dem Optionen als
+        Übergabe eines Arrays, oder einer Instanz von <classname>Zend_Config</classname>, an den Constructor mit dem Optionen als
         ersten Parameter. Die möglichen Optionen sind:
     </para>
     <itemizedlist>
@@ -32,13 +32,13 @@
         <listitem>
             <para>
                 <code>width</code>: Entweder ein Integer oder die Konstante <code>AUTO</code> von
-                <code>Zend_Console_ProgressBar</code>.
+                <classname>Zend_Console_ProgressBar</classname>.
             </para>
         </listitem>
         <listitem>
             <para>
                 <code>elements</code>: Entweder <code>NULL</code> für Standard oder ein Array mit zumindest
-                einer der folgenden Konstanten von <code>Zend_Console_ProgressBar</code> als Wert:
+                einer der folgenden Konstanten von <classname>Zend_Console_ProgressBar</classname> als Wert:
             </para>
 
             <itemizedlist>

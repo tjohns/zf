@@ -16,8 +16,8 @@
     <para>
         Captchas können eine Vielzahl an Formen annehmen, inklusive der Frage nach logischen Antworten,
         dem Angeben von verzerrten Schriften, der Darstellung von mehreren Bildern und der Frage wie sich diese
-        zueinander verhalten. <code>Zend_Captcha</code> zielt darauf ab eine Vielzahl von Backends anzubieten die
-        entweder alleinstehend verwendet werden können, oder in Verbindung mit <code>Zend_Form</code>.
+        zueinander verhalten. <classname>Zend_Captcha</classname> zielt darauf ab eine Vielzahl von Backends anzubieten die
+        entweder alleinstehend verwendet werden können, oder in Verbindung mit <classname>Zend_Form</classname>.
     </para>
 </sect1>
 <!--

@@ -6,7 +6,7 @@
 
     <para>
         Wie im <link linkend="zend.test.phpunit.loginexample">Login Beispiel</link> gezeigt sollten alle
-        MVC Testcases <code>Zend_Test_PHPUnit_ControllerTestCase</code> erweitern. Diese Klasse ihrerseits
+        MVC Testcases <classname>Zend_Test_PHPUnit_ControllerTestCase</classname> erweitern. Diese Klasse ihrerseits
         erweitert <code>PHPUnit_Framework_TestCase</code>, und gibt einem alle Strukturen und Ausnahmen
         die man von PHPUnit erwartet -- sowie einiges an Scaffolding und Ausnahme spezifisches der
         Zend Framework MVC Implementation.
@@ -72,7 +72,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     <para>
         Beachte das <code>parent::setUp()</code> aufgerufen wird; das ist notwendig, da die <code>setUp()</code>
-        Methode von <code>Zend_Test_PHPUnit_Controller_TestCase</code> die Erinnerung des Bootstrap Prozesses
+        Methode von <classname>Zend_Test_PHPUnit_Controller_TestCase</classname> die Erinnerung des Bootstrap Prozesses
         durchführen wird (was den Aufruf des Callbacks inkludiert).
     </para>
 
@@ -92,9 +92,9 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     <itemizedlist>
         <listitem><para>
             Wir bieten keine alternative Implementierung der Anfrage und Antwort Objekte; diese werden nicht
-            verwendet. <code>Zend_Test_PHPUnit_Controller_TestCase</code> verwendet eigene Anfrage und
-            Antwort Objekte, <code>Zend_Controller_Request_HttpTestCase</code> und
-            <code>Zend_Controller_Response_HttpTestCase</code>. Diese Objekte bieten Methoden für das
+            verwendet. <classname>Zend_Test_PHPUnit_Controller_TestCase</classname> verwendet eigene Anfrage und
+            Antwort Objekte, <classname>Zend_Controller_Request_HttpTestCase</classname> und
+            <classname>Zend_Controller_Response_HttpTestCase</classname>. Diese Objekte bieten Methoden für das
             Konfigurieren der Anfrageumgebung auf gezieltem Wege an, und dem holen von Antwort Artefakten auf
             speziellem Weg.
         </para></listitem>

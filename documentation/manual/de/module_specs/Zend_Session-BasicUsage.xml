@@ -6,18 +6,18 @@
     <title>Grundsätzliche Verwendung</title>
 
     <para>
-        <code>Zend_Session_Namespace</code> Instanzen stellen die primäre API für das Manipulieren von Session Daten
+        <classname>Zend_Session_Namespace</classname> Instanzen stellen die primäre API für das Manipulieren von Session Daten
         im Zend Framework bereit. Namensräume werden verwendet um alle Session Daten zu kapseln, aber es existiert
         auch ein Standard Namensraum für jene die nur einen Namensraum für alle Session Daten benötigen.
-        <code>Zend_Session</code> verwendet die Erweiterung ext/session und dessen spezielle superglobale Variable
+        <classname>Zend_Session</classname> verwendet die Erweiterung ext/session und dessen spezielle superglobale Variable
         <code>$_SESSION</code> als Speichermechanismus für Session Daten. Wärend <code>$_SESSION</code> im
         globalen Namensraum von PHP noch immer vorhanden ist, sollten Entwickler davon absehen diese direkt zu
-        verwenden, damit <code>Zend_Session</code> und <code>Zend_Session_Namespace</code> am effizientesten
+        verwenden, damit <classname>Zend_Session</classname> und <classname>Zend_Session_Namespace</classname> am effizientesten
         und sichersten Ihre Sammlung von Session relevanten Funktionen bereitstellen können.
     </para>
 
     <para>
-        Jede Instanz von <code>Zend_Session_Namespace</code> korrespondiert mit einerm Eintrag des Superglobalen
+        Jede Instanz von <classname>Zend_Session_Namespace</classname> korrespondiert mit einerm Eintrag des Superglobalen
         Arrays <code>$_SESSION</code>, wobei die Namensräume als Schlüssel verwendet werden.
 
         <programlisting role="php"><![CDATA[
@@ -29,7 +29,7 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
 
         Es ist möglich Zend_Session in Verbindung mit anderem Code zu verwenden welche <code>$_SESSION</code> direkt
         verwendet. Um Probleme zu vermeiden wird trotzdem stärkstens empfohlen das solcher Code nur Teile von
-        <code>$_SESSION</code> verwendet die nicht mit Instanzen von <code>Zend_Session_Namespace</code>
+        <code>$_SESSION</code> verwendet die nicht mit Instanzen von <classname>Zend_Session_Namespace</classname>
         korrespondieren.
     </para>
 
@@ -38,11 +38,11 @@ $myNamespace = new Zend_Session_Namespace('myNamespace');
         <title>Übungs Beispiele</title>
 
         <para>
-            Wenn kein Namensraum bei der Instanziierung von <code>Zend_Session_Namespace</code> definiert wurde,
+            Wenn kein Namensraum bei der Instanziierung von <classname>Zend_Session_Namespace</classname> definiert wurde,
             werden alle Daten
-            transparent in einem Namensraum gespeichert der "<code>Default</code>" heißt. <code>Zend_Session</code>
+            transparent in einem Namensraum gespeichert der "<code>Default</code>" heißt. <classname>Zend_Session</classname>
             ist nicht dazu gedacht um direkt mit den Inhalten von Containern der Session Namensräume zu arbeiten.
-            Stattdessen wird <code>Zend_Session_Namespace</code> verwendet. Das folgende Beispiel demonstriert die
+            Stattdessen wird <classname>Zend_Session_Namespace</classname> verwendet. Das folgende Beispiel demonstriert die
             Verwendung dieses Standard Namensraums und zeigt wie die Anzahl der Zugriffe eines Benutzers
             gezählt werden kann.
         </para>
@@ -69,9 +69,9 @@ echo "Seitenzugriffe in dieser Session: ",
         </example>
 
         <para>
-            Wenn mehrere Module Instanzen von <code>Zend_Session_Namespace</code> verwenden die verschiedene
+            Wenn mehrere Module Instanzen von <classname>Zend_Session_Namespace</classname> verwenden die verschiedene
             Namensräume haben, erhält jedes Modul Datenkapselung für die eigenen Daten der Session. Dem
-            <code>Zend_Session_Namespace</code> Konstruktor kann ein optionales <code>$namespace</code> Argument
+            <classname>Zend_Session_Namespace</classname> Konstruktor kann ein optionales <code>$namespace</code> Argument
             übergeben werden, welches Entwicklern erlaubt Session Daten in eigene Namensräume zu partitionieren.
             Die Verwendung von Namensräumen ist ein effektiver und populärer Weg um Session Daten gegenüber
             Änderungen durch ungewollte Namenskollisionen sicher zu machen.
@@ -124,7 +124,7 @@ $_SESSION['Some_Web_Service']['user'] = "meinwebbenutzername";
         <title>Session Namensräume wiederholen</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> stellt das komplette
+            <classname>Zend_Session_Namespace</classname> stellt das komplette
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate
             Interface</ulink> zur Verfügung, was die Unterstützung der <code>foreach</code> Anweisung beinhält:
         </para>
@@ -151,7 +151,7 @@ foreach ($aNamespace as $index => $value) {
         <title>Zugriffsfunktionen für Session Namensräume</title>
 
         <para>
-            <code>Zend_Session_Namespace</code> implementiert die
+            <classname>Zend_Session_Namespace</classname> implementiert die
             <ulink url="http://www.php.net/manual/de/language.oop5.overloading.php">magischen Methoden</ulink>
             <code>__get()</code>, <code>__set()</code>, <code>__isset()</code>, and <code>__unset()</code>
             welche nicht direkt angesprochen werden sollte, ausser von innerhalb einer Subklasse. Stattdessen

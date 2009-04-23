@@ -297,8 +297,8 @@ $view->dojo()->addLayer('/js/foo/foo.js');
             <listitem><para><code>removeLayer($path)</code>: Den Layer der <code>$path</code> entspricht
                     von der Liste der registrierten Layer (eigene Builds) entfernen.</para></listitem>
             <listitem><para><code>setCdnBase($url)</code>: Den Basis URL für ein CDN setzen; typischerweise
-                    ist das <code>Zend_Dojo::CDN_BASE_AOL</code> oder
-                    <code>Zend_Dojo::CDN_BASE_GOOGLE</code>, aber es wird der URL String vor der Versionsnummer
+                    ist das <classname>Zend_Dojo::CDN_BASE_AOL</classname> oder
+                    <classname>Zend_Dojo::CDN_BASE_GOOGLE</classname>, aber es wird der URL String vor der Versionsnummer
                     benötigt.</para></listitem>
             <listitem><para><code>getCdnBase()</code>: Den Basis CDN URL empfangen.</para></listitem>
             <listitem><para><code>setCdnVersion($version = null)</code>: Setzen selche Version von Dojo vom
@@ -307,7 +307,7 @@ $view->dojo()->addLayer('/js/foo/foo.js');
                     wird.</para></listitem>
             <listitem><para><code>setCdnDojoPath($path)</code>: Setzt den relativen Pfad zur dojo.js oder
                     dojo.xd.js Datei am CDN; typischerweise ist das entweder
-                    <code>Zend_Dojo::CDN_DOJO_PATH_AOL</code> oder <code>Zend_Dojo::CDN_DOJO_PATH_GOOGLE</code>,
+                    <classname>Zend_Dojo::CDN_DOJO_PATH_AOL</classname> oder <classname>Zend_Dojo::CDN_DOJO_PATH_GOOGLE</classname>,
                     aber es wird der Pfadstring nach der Versionsnummer benötigt.</para></listitem>
             <listitem><para><code>getCdnDojoPath()</code>: Das letzte Pfadsegment der CDN URL erhalten das auf
                     die dojo.js Datei zeigt.</para></listitem>

@@ -6,11 +6,11 @@
     <title>Prüfungen für Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> wird mit verschiedenen Datei-relevanten Prüfungen ausgeliefert
+        <classname>Zend_File_Transfer</classname> wird mit verschiedenen Datei-relevanten Prüfungen ausgeliefert
         welche verwendet werden können um die Sicherheit zu erhöhen und mögliche Attacken zu verhindern.
         Es ist zu beachten das diese Prüfungen nur so effektiv sind wie Sie effektiv angewendet verwendet.
-        Alle Prüfungen die mit <code>Zend_File_Transfer</code> angeboten werden können in der
-        <code>Zend_Validator</code> Komponente gefunden werden und heißen <code>Zend_Validate_File_*</code>.
+        Alle Prüfungen die mit <classname>Zend_File_Transfer</classname> angeboten werden können in der
+        <classname>Zend_Validator</classname> Komponente gefunden werden und heißen <classname>Zend_Validate_File_*</classname>.
         Die folgenden Prüfungen sind vorhanden:
     </para>
 
@@ -143,7 +143,7 @@
             <para>
                 <code>Upload</code>: Diese Prüfung ist eine interne. Sie prüft ob ein Upload zu einem
                 Fehler geführt hat. Dieser darf nicht gesetzt werden, da er automatisch durch
-                <code>Zend_File_Transfer</code> selbst gesetzt wird. Deshalb darf diese Prüfung nicht
+                <classname>Zend_File_Transfer</classname> selbst gesetzt wird. Deshalb darf diese Prüfung nicht
                 direkt verwendet werden. Man sollte nur wissen das Sie existiert.
             </para>
         </listitem>
@@ -158,7 +158,7 @@
     </itemizedlist>
 
     <sect2 id="zend.file.transfer.validators.usage">
-        <title>Prüfungen mit <code>Zend_File_Transfer</code> verwenden</title>
+        <title>Prüfungen mit <classname>Zend_File_Transfer</classname> verwenden</title>
 
         <para>
             Prüfungen einzubinden ist sehr einfach. Es gibt verschiedene Methoden für das

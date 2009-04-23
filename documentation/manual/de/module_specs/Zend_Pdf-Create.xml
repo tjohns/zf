@@ -4,19 +4,19 @@
 <sect1 id="zend.pdf.create">
     <title>Erstellen und Laden von PDF Dokumenten</title>
     <para>
-        Die <code>Zend_Pdf</code> Klasse bildet das PDF Dokument ab und stellt
+        Die <classname>Zend_Pdf</classname> Klasse bildet das PDF Dokument ab und stellt
         Operationen auf Dokumentebene bereit.
     </para>
 
     <para>
-        Um ein neues Dokument zu stellen, sollte zuerst ein neues <code>Zend_Pdf</code> Objekt erstellt
+        Um ein neues Dokument zu stellen, sollte zuerst ein neues <classname>Zend_Pdf</classname> Objekt erstellt
         werden.
     </para>
 
     <para>
-        Die <code>Zend_Pdf</code> Klasse stellt zwei statische Methoden zum Laden von bestehenden
-        PDF Dokumenten bereit. Dies sind die <code>Zend_Pdf::load()</code> und <code>Zend_Pdf::parse()</code>
-        Methoden. Beide geben als Ergebnis <code>Zend_Pdf</code> Objekte zurück oder werfen eine Ausnahme, wenn ein
+        Die <classname>Zend_Pdf</classname> Klasse stellt zwei statische Methoden zum Laden von bestehenden
+        PDF Dokumenten bereit. Dies sind die <classname>Zend_Pdf::load()</classname> und <classname>Zend_Pdf::parse()</classname>
+        Methoden. Beide geben als Ergebnis <classname>Zend_Pdf</classname> Objekte zurück oder werfen eine Ausnahme, wenn ein
         Fehler auftritt.
     </para>
 
@@ -40,15 +40,15 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     <para>
         Das PDF Datei Format unterstützt die schrittweise Aktualisierung von Dokumenten. Jedes Mal,
         wenn ein Dokument aktualisiert wird, wird eine neue Revision des Dokuments erstellt. Die
-        <code>Zend_Pdf</code> Komponente unterstützt die Rückgabe einer vorgegebenen Revision des Dokuments.
+        <classname>Zend_Pdf</classname> Komponente unterstützt die Rückgabe einer vorgegebenen Revision des Dokuments.
     </para>
     <para>
-        Die Revision kann den Methoden <code>Zend_Pdf::load()</code> and
-        <code>Zend_Pdf::parse()</code> als zweiter Parameter übergeben oder durch Aufruf der
-        <code>Zend_Pdf::rollback()</code> Methode.
+        Die Revision kann den Methoden <classname>Zend_Pdf::load()</classname> and
+        <classname>Zend_Pdf::parse()</classname> als zweiter Parameter übergeben oder durch Aufruf der
+        <classname>Zend_Pdf::rollback()</classname> Methode.
         <footnote>
             <para>
-                Die <code>Zend_Pdf::rollback()</code> Methode muss vor einer Änderung eines
+                Die <classname>Zend_Pdf::rollback()</classname> Methode muss vor einer Änderung eines
                 Dokuments aufgerufen werden, andernfalls ist das Verhalten nicht definiert.
             </para>
         </footnote>

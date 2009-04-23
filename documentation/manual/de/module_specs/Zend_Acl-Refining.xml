@@ -13,7 +13,7 @@
             Die grundlegende ACL, wie sie im <link linkend="zend.acl.introduction">vorherigen
             Kapitel</link> definiert ist, zeigt wie verschiedene Rechte für die gesamte ACL (alle
             Ressourcen) vergeben werden können. In der Praxis tendieren Zugangsbeschränkungen jedoch
-            eher dahin, Ausnahmen und verschiedene Stufen von Komplexität zu haben. <code>Zend_Acl</code>
+            eher dahin, Ausnahmen und verschiedene Stufen von Komplexität zu haben. <classname>Zend_Acl</classname>
             erlaubt einem, diese Verfeinerungen auf einfache und flexible Weise zu bewerkstelligen.
         </para>
 

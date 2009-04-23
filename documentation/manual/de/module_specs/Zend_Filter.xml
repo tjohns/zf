@@ -47,7 +47,7 @@
 
         <para>
             Diese Filterdefinition bekanntgegeben zu haben bietet die Grundlage für
-            <code>Zend_Filter_Interface</code>, welches eine einzelne Methode benötigt die <code>filter()</code>
+            <classname>Zend_Filter_Interface</classname>, welches eine einzelne Methode benötigt die <code>filter()</code>
             genannt wird, und von der Filterklasse implementiert werden muß.
         </para>
 
@@ -73,7 +73,7 @@ echo $htmlEntities->filter('"'); // &quot;
 
         <para>
             Wenn es unbequem ist einen gegebene Filterklasse zu Laden und eine Instanz des Filters zu erstellen,
-            kann die statische <code>Zend_Filter::get()</code> Methode als alternativer Aufrufstil verwendet werden.
+            kann die statische <classname>Zend_Filter::get()</classname> Methode als alternativer Aufrufstil verwendet werden.
             Das erste Argument dieser Methode ist der Eingabewert, der die <code>filter()</code> Methode passieren
             soll. Das zweite Argument ist ein String, der dem Basisnamen der Filterklasse, relativ zum
             Zend_Filter Namensraum, entspricht. Die <code>get()</code> Methode läde die Klasse automatisch, erstellt

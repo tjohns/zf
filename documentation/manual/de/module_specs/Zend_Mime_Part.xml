@@ -11,8 +11,8 @@
       Sie enthält den aktuellen Inhalt des Abschnitts der Nachricht und zusätzlich
       Informationen über Ihre Verschlüsselung, den Typ und den originalen Dateinamen.
       Sie stellt ausserdem eine Methode, für die Erzeugung eines Strings aus den
-      in Ihr gespeicherten Daten, zur Verfügung. <code>Zend_Mime_Part</code> Objekte
-      können zu <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>
+      in Ihr gespeicherten Daten, zur Verfügung. <classname>Zend_Mime_Part</classname> Objekte
+      können zu <link linkend="zend.mime.message"><classname>Zend_Mime_Message</classname></link>
       hinzugefügt werden, um zu einer kompletten mehrteiligen Nachricht verknüpft
       zu werden.</para>
     </sect2>
@@ -20,10 +20,10 @@
   <sect2 id="zend.mime.part.instantiation">
     <title>Instanziierung</title>
 
-    <para><code>Zend_Mime_Part</code> wird instanziiert mit einem String welcher den
+    <para><classname>Zend_Mime_Part</classname> wird instanziiert mit einem String welcher den
     Inhalt des neuen Abschnitts repräsentiert. Der Typ wird angenommen mit OCTET-STREAM,
     die Verschlüsselung mit 8Bit. Nach der Instanziierung einer
-    <code>Zend_Mime_Part</code> kann die Meta Informationen gesetzt werden durch
+    <classname>Zend_Mime_Part</classname> kann die Meta Informationen gesetzt werden durch
     direkten Zugriff auf die Attribute:</para>
 
     <programlisting role="php"><![CDATA[

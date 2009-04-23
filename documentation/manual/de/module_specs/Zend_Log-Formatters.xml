@@ -17,7 +17,7 @@
   <sect2 id="zend.log.formatters.simple">
     <title>Eingache Formatierung</title>
     <para>
-      <code>Zend_Log_Formatter_Simple</code> ist der Standard Formatter. Er ist automatisch konfiguriert wenn
+      <classname>Zend_Log_Formatter_Simple</classname> ist der Standard Formatter. Er ist automatisch konfiguriert wenn
       kein Formatter definiert wird. Die Standard Konfiguration ist identisch mit dem folgenden:
 
       <programlisting role="php"><![CDATA[
@@ -47,18 +47,18 @@ $logger->info('dort');
     </para>
 
     <para>
-      Der Konstruktor von <code>Zend_Log_Formatter_Simple</code> akzeptiert einen einzelnen Parameter: Den
+      Der Konstruktor von <classname>Zend_Log_Formatter_Simple</classname> akzeptiert einen einzelnen Parameter: Den
       Format String. Dieser String enthält Schlüssel die durch Prozentzeichen begrenzt sind
       (z.B. <code>%message%</code>). Der Format String kann jeden Schlüssel des Event Data Arrays enthalten.
       Die Standardschlüssel können durch Verwendung der DEFAULT_FORMAT Konstante von
-      <code>Zend_Log_Formatter_Simple</code> empfangen werden.
+      <classname>Zend_Log_Formatter_Simple</classname> empfangen werden.
     </para>
   </sect2>
 
   <sect2 id="zend.log.formatters.xml">
     <title>In XML formatieren</title>
     <para>
-      <code>Zend_Log_Formatter_Xml</code> formatiert Log Daten in einen XML String. Standardmäßig loggt er
+      <classname>Zend_Log_Formatter_Xml</classname> formatiert Log Daten in einen XML String. Standardmäßig loggt er
       automatisch alle Elemente des Event Data Arrays:
 
       <programlisting role="php"><![CDATA[
@@ -90,7 +90,7 @@ $logger->info('Informative Nachricht');
 
     <para>
       Es ist möglich das Root Element anzupassen sowie ein Mapping von XML Elementen zu den Elementen im
-      Event Data Array zu definieren. Der Konstruktor von <code>Zend_Log_Formatter_Xml</code> akzeptiert
+      Event Data Array zu definieren. Der Konstruktor von <classname>Zend_Log_Formatter_Xml</classname> akzeptiert
       einen String mit dem Namen des Root Elements als ersten Parameter und ein assoziatives Array mit den
       gemappten Elementen als zweiten Parameter:
 

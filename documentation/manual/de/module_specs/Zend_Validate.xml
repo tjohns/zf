@@ -37,7 +37,7 @@
         <title>Standardnutzung von Prüfungen</title>
 
         <para>
-            Prüfungen auf diesem Weg definiert zu haben, bietet die Sammlung für <code>Zend_Validate_Interface</code>
+            Prüfungen auf diesem Weg definiert zu haben, bietet die Sammlung für <classname>Zend_Validate_Interface</classname>
             welche zwei Methoden definiert, <code>isValid()</code> und <code>getMessages()</code>. Die
             <code>isValid()</code> Methode führt eine Prüfung über die angegebenen Werte aus, und gibt nur dann
             <code>true</code> zurück wenn der Wert gegenüber den Kriterien der Prüfung entsprochen hat.
@@ -100,7 +100,7 @@ if ($validator->isValid($email)) {
             Daten aufgefüllt werden. Das Kürzel <code>%value%</code> wird von allen Prüfungen unterstützt;
             es ist verbunden mit dem Wert der an <code>isValid()</code> übergeben wird.
             Andere Kürzel können unterstützt werden von Fall-zu-Fall in jeder Prüfer-Klasse. Zum Beispiel ist
-            <code>%max%</code> das Kürzel welches von <code>Zend_Validate_LessThan</code> unterstützt wird.
+            <code>%max%</code> das Kürzel welches von <classname>Zend_Validate_LessThan</classname> unterstützt wird.
             Die <code>getMessageVariables()</code> Methode give ein Array von variablen Kürzel zurück
             welche vom Prüfer unterstützt werden.
         </para>
@@ -184,11 +184,11 @@ if (!validator->isValid('word')) {
 
         <para>
             Wenn es nicht gebräuchlich ist eine gegebenen Prüfklasse zu laden und eine Instanz
-            des Prüfers zu erstellen, kann die statische Methode <code>Zend_Validate::is()</code>
+            des Prüfers zu erstellen, kann die statische Methode <classname>Zend_Validate::is()</classname>
             verwendet werden als alternativer Stil des Aufrufs. Das erste Argument dieser
             Methode ist ein Datenwert, der an die <code>isValid()</code> Methode übergeben werden
             würde. Das zweite Argument ist ein String, welcher mit dem Basisnamen der Prüfklasse
-            übereinstimmt, relativ zum Namensraum von <code>Zend_Validate</code>. Die <code>is()</code>
+            übereinstimmt, relativ zum Namensraum von <classname>Zend_Validate</classname>. Die <code>is()</code>
             Methode lädt die Klasse automatisch, erstellt eine Instanz und wendet die
             <code>isValid()</code> Methode an den Eingabedaten an.
 
@@ -228,7 +228,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
         </para>
 
         <para>
-            Die <code>Zend_Filter_Input</code> Klasse erlaubt es auch mehrfache Filter und Prüfklassen
+            Die <classname>Zend_Filter_Input</classname> Klasse erlaubt es auch mehrfache Filter und Prüfklassen
             zu instanzieren und bei Bedarf aufzurufen um Sets von Eingabedaten zu bearbeiten. Siehe
             <xref linkend="zend.filter.input" />.
         </para>
@@ -241,7 +241,7 @@ if (Zend_Validate::is($value, 'Between', array(1, 12))) {
 
         <para>
             Prüfungsklassen bieten eine <code>setTranslator()</code> Methode mit der man eine
-            Instanz von <code>Zend_Translate</code> definieren kann die Nachrichten im Falle eines
+            Instanz von <classname>Zend_Translate</classname> definieren kann die Nachrichten im Falle eines
             Prüfungsfehlers übersetzt. Die <code>getTranslator()</code> Methode gibt die gesetzte
             Übersetzungsinstanz zurück.
         </para>
@@ -260,7 +260,7 @@ $validator->setTranslator($translate);
 
         <para>
             Mit der statischen Methode <code>setDefaultTranslator()</code> kann eine Instanz von
-            <code>Zend_Translate</code> gesetzt werden, und mit <code>getDefaultTranslator()</code>
+            <classname>Zend_Translate</classname> gesetzt werden, und mit <code>getDefaultTranslator()</code>
             empfangen. Das verhindert das man den Übersetzer manuell für alle Prüfungsklassen
             setzen muß und vereinfacht den Code.
         </para>

@@ -134,9 +134,9 @@ class Foo
         <title>Erzeugung von PHP Klassen mit Klassen-Methoden</title>
 
         <para>
-            <code>Zend_CodeGenerator_Php_Class</code> erlaubt es Methoden mit optionalem Inhalt
+            <classname>Zend_CodeGenerator_Php_Class</classname> erlaubt es Methoden mit optionalem Inhalt
             zur Klasse hinzuzufügen. Methoden können entweder als Array oder als konkrete Instanzen
-            von <code>Zend_CodeGenerator_Php_Method</code> hinzugefügt werden.
+            von <classname>Zend_CodeGenerator_Php_Method</classname> hinzugefügt werden.
         </para>
 
             <programlisting role="php"><![CDATA[
@@ -269,10 +269,10 @@ class Foo
         <title>Erzeugung von PHP Dateien</title>
 
         <para>
-            <code>Zend_CodeGenerator_Php_File</code> kann verwendet werden um den Inhalt einer PHP
+            <classname>Zend_CodeGenerator_Php_File</classname> kann verwendet werden um den Inhalt einer PHP
             Datei zu erzeugen. Man kann Klassen inkludieren als auch eigene Inhalte. Wenn Klassen
             angegängt werden sollte man entweder eine konkrete Instanz von
-            <code>Zend_CodeGenerator_Php_Class</code> oder ein Array das die Klasse definiert
+            <classname>Zend_CodeGenerator_Php_Class</classname> oder ein Array das die Klasse definiert
             anhängen.
         </para>
 

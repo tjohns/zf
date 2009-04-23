@@ -13,7 +13,7 @@
         </para>
 
         <para>
-            Um das zu tun, muß man <code>Zend_Paginator_Adapter_Interface</code> implementieren. Es gibt
+            Um das zu tun, muß man <classname>Zend_Paginator_Adapter_Interface</classname> implementieren. Es gibt
             zwei Methoden die hierfür benötigt werden:
         </para>
 
@@ -35,9 +35,9 @@
         <para>
             Wenn man jemals schon das SPL Interface
             <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceCountable.html"><code>Countable</code></ulink>
-            verwendet hat, wird man mit <code>count()</code> umgehen können. <code>Zend_Paginator</code> verwendet
+            verwendet hat, wird man mit <code>count()</code> umgehen können. <classname>Zend_Paginator</classname> verwendet
             es als totale Anzahl an Elementen in der Datensammlung. Zusätzlich bietet die
-            <code>Zend_Paginator</code> Instanz eine <code>countAllItems()</code> Methode die auf die
+            <classname>Zend_Paginator</classname> Instanz eine <code>countAllItems()</code> Methode die auf die
             <code>count()</code> Methode des Adapters weiterleitet.
         </para>
 
@@ -56,7 +56,7 @@ return array_slice($this->_array, $offset, $itemCountPerPage);
 
         <para>
             Man sollte einen Blick auf die mitgelieferten Adapter werfen (alle welche
-            <code>Zend_Paginator_Adapter_Interface</code> implementieren) um eine Idee zu bekommen wie man das
+            <classname>Zend_Paginator_Adapter_Interface</classname> implementieren) um eine Idee zu bekommen wie man das
             selbst implementieren könnte.
         </para>
     </sect2>
@@ -66,7 +66,7 @@ return array_slice($this->_array, $offset, $itemCountPerPage);
 
         <para>
             Das Erstellen von eigenen Scrolling Stilen erfordert das man
-            <code>Zend_Paginator_ScrollingStyle_Interface</code> implementiert, welche eine eizelne Methode,
+            <classname>Zend_Paginator_ScrollingStyle_Interface</classname> implementiert, welche eine eizelne Methode,
             <code>getPages()</code>, definiert. Speziell,
         </para>
 
@@ -84,7 +84,7 @@ public function getPages(Zend_Paginator $paginator, $pageRange = null);
 
         <para>
             Solange es keinen anderen Scrolling Stil erweitert (siehe zum Beispiel
-            <code>Zend_Paginator_ScrollingStyle_Elastic</code>, wird der eigene Scrolling Stil üblicherweise mit
+            <classname>Zend_Paginator_ScrollingStyle_Elastic</classname>, wird der eigene Scrolling Stil üblicherweise mit
             etwas ähnlichem sie der folgenden Codezeile enden:
         </para>
 
@@ -101,7 +101,7 @@ return $paginator->getPagesInRange($lowerBound, $upperBound);
         </para>
 
         <para>
-            Wenn man bereit ist den neuen Scrolling Stil zu benutzen, muß man <code>Zend_Paginator</code>
+            Wenn man bereit ist den neuen Scrolling Stil zu benutzen, muß man <classname>Zend_Paginator</classname>
             bekanntgeben in welchem Verzeichnis er nachschauen muß. Um das zu tun muß das folgende ausgeführt
             werden:
         </para>
@@ -120,10 +120,10 @@ Zend_Paginator::addScrollingStylePrefixPath($prefix, $path);
         <title>Caching features</title>
 
         <para>
-            <code>Zend_Paginator</code> kann gesagt werden das es die Daten die Ihm bereits übergeben wurden,
+            <classname>Zend_Paginator</classname> kann gesagt werden das es die Daten die Ihm bereits übergeben wurden,
             cachen soll, um zu verhindern das der Adapter sie jedes mal wenn Sie verwendet werden holen muß.
             Um dem Paginator zu sagen das die Daten des Adapters automatisch gecacht werden, muß der-
-            <code>setCache()</code> Methode nur eine <code>Zend_Cache_Core</code> Instanz übergeben werden.
+            <code>setCache()</code> Methode nur eine <classname>Zend_Cache_Core</classname> Instanz übergeben werden.
         </para>
 
         <para>
@@ -138,7 +138,7 @@ Zend_Paginator::setCache($cache);
         </para>
 
         <para>
-            Sobald <code>Zend_Paginator</code> eine <code>Zend_Cache_Core</code> Instanz erhalten hat, werden Daten gecacht. Manchmal will
+            Sobald <classname>Zend_Paginator</classname> eine <classname>Zend_Cache_Core</classname> Instanz erhalten hat, werden Daten gecacht. Manchmal will
             man Daten nicht cachen selbst wenn man bereits eine Cacheinstanz übergeben hat. Man sollte dann
             hierfür <code>setCacheEnable()</code> verwenden.
         </para>

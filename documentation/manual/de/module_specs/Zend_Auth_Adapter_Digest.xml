@@ -53,7 +53,7 @@ irgendeinBenutzer:Irgendein Bereich:fde17b91c3a510ecbaf7dbd37f59d4f8
         <title>Spezifisches</title>
 
         <para>
-            Der Digest Authentifizierungs Adapter, <code>Zend_Auth_Adapter_Digest</code>, benötigt verschiedene
+            Der Digest Authentifizierungs Adapter, <classname>Zend_Auth_Adapter_Digest</classname>, benötigt verschiedene
             Eingabeparameter:
             <itemizedlist>
                 <listitem>
@@ -87,7 +87,7 @@ irgendeinBenutzer:Irgendein Bereich:fde17b91c3a510ecbaf7dbd37f59d4f8
         <title>Identität</title>
 
         <para>
-            Der Digest Authentifizierungs Adapter gibt ein <code>Zend_Auth_Result</code> Objekt zurück, welches
+            Der Digest Authentifizierungs Adapter gibt ein <classname>Zend_Auth_Result</classname> Objekt zurück, welches
             mit der Identität wird wobei dieses als Arry mit Schlüssel von <code>Bereich</code>
             und <code>Benutzername</code> veröffentlicht wird. Die entsprechenden Array Werte die diesen
             Schlüsseln zugeordnet sind korrespondieren mit den Werte die vorher durch den Aufruf von

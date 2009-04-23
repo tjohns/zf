@@ -5,7 +5,7 @@
     <title>Controller Skripte</title>
 
     <para>
-        Der Controller ist der Ort, wo du <code>Zend_View</code> instanziieren und konfigurieren kannst. Du
+        Der Controller ist der Ort, wo du <classname>Zend_View</classname> instanziieren und konfigurieren kannst. Du
         übergibst dann die Variablen an den View und teilst ihm mit, welches bestimmte Skript für
         die Ausgabe benutzt werden soll.
     </para>
@@ -83,7 +83,7 @@ $view->assign('c', "Sea");
 
         <para>
             Sobald du alle notwendigen Variablen übergeben hast, sollte der Controller dem
-            <code>Zend_View</code> mitteilen, ein bestimmtes View Skript zu verarbeiten. Dies funktioniert über
+            <classname>Zend_View</classname> mitteilen, ein bestimmtes View Skript zu verarbeiten. Dies funktioniert über
             die render() Methode. Beachte, dass diese Methode die verarbeitete Ausgabe zurück- aber
             nicht ausgibt, so dass du die Ausgabe selber zur passenden Zeit per echo() oder print()
             ausgeben musst.
@@ -105,15 +105,15 @@ echo $view->render('someView.php');
         <title>Pfade für View Skripte</title>
 
         <para>
-            Standardmäßig erwartet <code>Zend_View</code>, dass deine View Skripte im selben Verzeichnis wie
+            Standardmäßig erwartet <classname>Zend_View</classname>, dass deine View Skripte im selben Verzeichnis wie
             das Conntroller Skript liegen. Wenn dein Controller Skript zum Beispiel im Pfad
             "/path/to/app/controllers" liegt und es $view->render('someView.php') aufruft, wird
-            <code>Zend_View</code> nach der Datei "/path/to/app/controllers/someView.php" schauen.
+            <classname>Zend_View</classname> nach der Datei "/path/to/app/controllers/someView.php" schauen.
         </para>
 
         <para>
             Es ist durchaus wahrscheinlich, dass deine View Skripte woanders liegen. Verwende
-            die setScriptPath() Methode, um <code>Zend_View</code> mitzuteilen, wo es nach View Skripten
+            die setScriptPath() Methode, um <classname>Zend_View</classname> mitzuteilen, wo es nach View Skripten
             schauen soll.
         </para>
 
@@ -130,7 +130,7 @@ $view->setScriptPath('/path/to/app/views');
 
         <para>
             Durch Verwendung der addScriptPath() Methode können die Pfade "gestapelt" werden. Wenn
-            du Pfade zu diesem Stapelspeicher hinzufügst, wird <code>Zend_View</code> im zuletzt
+            du Pfade zu diesem Stapelspeicher hinzufügst, wird <classname>Zend_View</classname> im zuletzt
             hinzugefügten Pfad nach dem angeforderten View Skript schauen. Dies erlaubt dir,
             Standard Views mit spezialisierten Views zu überschreiben, so dass Du  "Themen"
             oder "Skins" für einige Views erstellen kannst, während du andere bestehen lässt.
@@ -152,7 +152,7 @@ $view->addScriptPath('/path/to/custom/');
             <title>Benutze nie Eingaben des Benutzers um den Skriptpfad zu setzen</title>
 
             <para>
-                <code>Zend_View</code> verwendet Skriptpfade um Viewskripte zu eruieren und Sie darzustellen.
+                <classname>Zend_View</classname> verwendet Skriptpfade um Viewskripte zu eruieren und Sie darzustellen.
                 Deshalb sollten diese Verzeichnisse im Vorhinein bekannt sein, und unter der eigenen Kontrolle.
                 <emphasis>Niemals</emphasis> sollten Pfade von Viewskripten basierend auf Benutzereingaben
                 gesetzt werden, da diese dazu führen können das man sich potentiell gegen Local File Inclusion

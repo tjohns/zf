@@ -5,7 +5,7 @@
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Reflection</code> ist ein Ersatz zu PHP's eigener
+        <classname>Zend_Reflection</classname> ist ein Ersatz zu PHP's eigener
         <ulink url="http://php.net/reflection">Reflection API</ulink> die verschiedene
         zusätzliche Features bietet:
     </para>
@@ -42,7 +42,7 @@
     </itemizedlist>
 
     <para>
-        Generell arbeitet <code>Zend_Reflection</code> genauso wie die Standard Reflection API,
+        Generell arbeitet <classname>Zend_Reflection</classname> genauso wie die Standard Reflection API,
         bietet aber einige zusätzliche Methoden für das Empfangen von Teilinformationen die in
         der Reflection API nicht definiert sind.
     </para>

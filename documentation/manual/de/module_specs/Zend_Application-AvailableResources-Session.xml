@@ -5,7 +5,7 @@
     <title>Zend_Application_Resource_Session</title>
 
     <para>
-        <code>Zend_Application_Resource_Session</code> erlaubt es <code>Zend_Session</code> zu
+        <classname>Zend_Application_Resource_Session</classname> erlaubt es <classname>Zend_Session</classname> zu
         konfigurieren, sowie optional einen Session SaveHandler zu initialisieren.
     </para>
 
@@ -18,26 +18,26 @@
     <itemizedlist>
         <listitem><para>
             <code>string</code>: Ein String der eine Klasse benennt die
-            <code>Zend_Session_SaveHandler_Interface</code> implementiert und initiiert werden
+            <classname>Zend_Session_SaveHandler_Interface</classname> implementiert und initiiert werden
             soll.
         </para></listitem>
 
         <listitem><para>
             <code>array</code>: Ein Array mit den Schlüsseln "class", und optional "options", das
-            eine Klasse benennt die <code>Zend_Session_SaveHandler_Interface</code> implementiert
+            eine Klasse benennt die <classname>Zend_Session_SaveHandler_Interface</classname> implementiert
             und iniiert werden, und ein Array von Optionen die an dessen Contructor übergeben
             werden soll.
         </para></listitem>
 
         <listitem><para>
-            <code>Zend_Session_SaveHandler_Interface</code>: Ein Objekt das dieses Interface
+            <classname>Zend_Session_SaveHandler_Interface</classname>: Ein Objekt das dieses Interface
             implementiert.
         </para></listitem>
     </itemizedlist>
 
     <para>
-        Jeder andere übergebene Optionsschlüssel wird an <code>Zend_Session::setOptions()</code>
-        übergeben um <code>Zend_Session</code> zu konfigurieren.
+        Jeder andere übergebene Optionsschlüssel wird an <classname>Zend_Session::setOptions()</classname>
+        übergeben um <classname>Zend_Session</classname> zu konfigurieren.
     </para>
 
     <example id="zend.application.available-resources.session.configExample">
@@ -45,8 +45,8 @@
 
         <para>
             Anbei ist das Beispiel eines INI Abschnitts der zeigt wie die Session Ressource
-            konfiguriert werden kann. Er setzt verschiedene <code>Zend_Session</code> Optionen,
-            und konfiguriert eine <code>Zend_Session_SaveHandler_Db</code> Instanz.
+            konfiguriert werden kann. Er setzt verschiedene <classname>Zend_Session</classname> Optionen,
+            und konfiguriert eine <classname>Zend_Session_SaveHandler_Db</classname> Instanz.
         </para>
 
         <programlisting role="ini"><![CDATA[

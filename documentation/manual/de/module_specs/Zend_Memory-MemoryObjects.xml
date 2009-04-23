@@ -46,7 +46,7 @@ $memObject = $memoryManager->createLocked($data);
 
         <para>
             Gesperrte Objekte haben das selbe Interface wie verschiebbare Objekte
-            (<code>Zend_Memory_Container_Interface</code>).
+            (<classname>Zend_Memory_Container_Interface</classname>).
             Deswegen können gesperrte Objekte an jedem Platz statt verschiebbaren
             Objekten verwendet werden.
         </para>
@@ -63,7 +63,7 @@ $memObject = $memoryManager->createLocked($data);
         </para>
 
         <para>
-            Die Klasse der gelockten Objekte (<code>Zend_Memory_Container_Locked</code>)
+            Die Klasse der gelockten Objekte (<classname>Zend_Memory_Container_Locked</classname>)
             garantiert virtuell die selbe Performance wie das Arbeiten mit einer
             Zeichenketten Variablen. Der Overhead ist ein einzelnes De-Referenzieren um
             die Eigenschaft der Klasse zu erhalten.

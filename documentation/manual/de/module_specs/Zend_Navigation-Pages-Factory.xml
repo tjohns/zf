@@ -6,7 +6,7 @@
 
     <para>
         Alle Seiten (also auch eigene Klassen), können durch Verwendung der Page Factory
-        <code>Zend_Navigation_Page::factory()</code> erstellt werden. Die Factory kann ein Array
+        <classname>Zend_Navigation_Page::factory()</classname> erstellt werden. Die Factory kann ein Array
         mit Optionen oder ein <classname>Zend_Config</classname> Objekt annehmen. Jeder Schlüssel
         im Array/Config entspricht einer Seiten Option, wie im Kapitel
         <link linkend="zend.navigation.pages">Seiten</link> gezeigt. Wenn die Option

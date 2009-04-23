@@ -17,7 +17,7 @@
         <para>
             Trotzdem enthalten Ausnahmemeldungen und Backtrace Informationen oft sensitive Systeminformationen,
             wie SQL Anweisungen, Dateiorte, und andere. Um zu helfen die eigene Site zu schützen, werden
-            standardmäßig alle Ausnahmen von <code>Zend_Controller_Front</code> gefangen und im Antwortobjekt
+            standardmäßig alle Ausnahmen von <classname>Zend_Controller_Front</classname> gefangen und im Antwortobjekt
             registriert; zusätzlich zeigt das Antwortobjekt die Ausnahmemeldungen standardmäßig nicht an.
         </para>
     </sect2>
@@ -64,7 +64,7 @@
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Front::throwExceptions()</code></para>
+                <para><classname>Zend_Controller_Front::throwExceptions()</classname></para>
 
                 <para>
                     Durch die Übergabe eines boolschen True Wertes an diese Methode, kann dem Front Controller
@@ -90,7 +90,7 @@ try {
             </listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Response_Abstract::renderExceptions()</code></para>
+                <para><classname>Zend_Controller_Response_Abstract::renderExceptions()</classname></para>
 
                 <para>
                     Durch die Übergabe eines boolschen True Wertes an diese Methode kann dem Antwortobjekt
@@ -102,14 +102,14 @@ try {
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front::returnResponse()</code> und
-                    <code>Zend_Controller_Response_Abstract::isException()</code>.
+                    <classname>Zend_Controller_Front::returnResponse()</classname> und
+                    <classname>Zend_Controller_Response_Abstract::isException()</classname>.
                 </para>
 
                 <para>
                     Durch die Übergabe eines boolschen True zu
-                    <code>Zend_Controller_Front::returnResponse()</code>, wird
-                    <code>Zend_Controller_Front::dispatch()</code> die Antwort nicht darstellen, aber diese
+                    <classname>Zend_Controller_Front::returnResponse()</classname>, wird
+                    <classname>Zend_Controller_Front::dispatch()</classname> die Antwort nicht darstellen, aber diese
                     stattdessen zurückgeben. Sobald man die antwort hat, kann diese getestet werden um zu
                     sehen ob irgendwelche Ausnahmen gefangen wurden indem die <code>isException()</code>
                     Methode verwendet, und die Ausnahme über die <code>getException()</code> Methode
@@ -131,7 +131,7 @@ if ($response->isException()) {
 
                 <para>
                     Der primäre Vorteil die diese Methode über
-                    <code>Zend_Controller_Front::throwExceptions()</code> bietet ist, das Sie es erlaubt
+                    <classname>Zend_Controller_Front::throwExceptions()</classname> bietet ist, das Sie es erlaubt
                     die Antwort wahlweise darzustellen nachdem die Ausnahme behandelt wurde. Das fängt jede
                     Ausnahme in der Kontrollerkette, im Gegensatz zum Error Handler Plugin.
                 </para>
@@ -154,7 +154,7 @@ if ($response->isException()) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher::dispatch()</code> wird standardmäßig eine Ausnahme werfen
+                    <classname>Zend_Controller_Dispatcher::dispatch()</classname> wird standardmäßig eine Ausnahme werfen
                     wenn ein ungültiger Controller angefragt wird. Es gibt zwei empfohlene Wege um damit
                     umzugehen.
                 </para>
@@ -189,7 +189,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                     <listitem>
                         <para>
                             Die Ausnahme die von <code>dispatch()</code> geworfen wird, ist eine
-                            <code>Zend_Controller_Dispatcher_Exception</code> die den Text
+                            <classname>Zend_Controller_Dispatcher_Exception</classname> die den Text
                             'Invalid controller specified' enthält. Eine der Methoden die in
                             <link linkend="zend.controller.exceptions.handling">der vorhergehenden Sektion</link>
                             beschrieben wurden können verwendet werden um die Ausnahme zu fangen und dann zu
@@ -201,8 +201,8 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action::__call()</code> wird eine
-                    <code>Zend_Controller_Action_Exception</code> geworfen wenn eine nicht existierende Aktion
+                    <classname>Zend_Controller_Action::__call()</classname> wird eine
+                    <classname>Zend_Controller_Action_Exception</classname> geworfen wenn eine nicht existierende Aktion
                     einer Methode nicht dargestellt werden kann. Normalerweise wird es gewünscht sein in Fällen
                     wie diesen eine Standardaktion im Controller zu verwenden. Wege um das zu tun beinhalten:
                 </para>
@@ -210,7 +210,7 @@ $dispatcher->setParam('useDefaultControllerAlways', true);
                 <itemizedlist>
                     <listitem>
                         <para>
-                            Eine Subklasse von <code>Zend_Controller_Action</code> erstellen und die
+                            Eine Subklasse von <classname>Zend_Controller_Action</classname> erstellen und die
                             <code>__call()</code> Methode überschreiben. Als Beispiel:
                         </para>
 
@@ -238,7 +238,7 @@ class My_Controller_Action extends Zend_Controller_Action
 
                     <listitem>
                         <para>
-                            Eine Subklasse von <code>Zend_Controller_Dispatcher</code> erstellen und die
+                            Eine Subklasse von <classname>Zend_Controller_Dispatcher</classname> erstellen und die
                             <code>getAction()</code> Methode überschreiben um zu prüfen ob die Aktion
                             existiert. Als Beispiel:
                         </para>
@@ -284,13 +284,13 @@ class My_Controller_Dispatcher extends Zend_Controller_Dispatcher
 
                     <listitem>
                         <para>
-                            Verwenden von <code>Zend_Controller_Action::preDispatch()</code> oder
-                            <code>Zend_Controller_Plugin_Abstract::preDispatch()</code> um eine ungültige
+                            Verwenden von <classname>Zend_Controller_Action::preDispatch()</classname> oder
+                            <classname>Zend_Controller_Plugin_Abstract::preDispatch()</classname> um eine ungültige
                             Aktion zu identifizieren.
                         </para>
 
                         <para>
-                            Durch das Erstellen einer Subklasse von <code>Zend_Controller_Action</code> und
+                            Durch das Erstellen einer Subklasse von <classname>Zend_Controller_Action</classname> und
                             dem modifizieren von <code>preDispatch()</code>, können alle eigenen Kontroller
                             geändert werden damit Sie an andere Aktionen weiterleiten oder umleiten bevor
                             die Aktion letztendlich dargestellt wird. Der Code hierfür schaut ähnlich wie der

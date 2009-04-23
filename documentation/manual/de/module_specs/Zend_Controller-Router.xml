@@ -6,19 +6,19 @@
     <sect2 id="zend.controller.router.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Controller_Router_Rewrite</code> ist der Standard Router des Frameworks.
+            <classname>Zend_Controller_Router_Rewrite</classname> ist der Standard Router des Frameworks.
             Routing ist der Prozess der Übernahme und Zerteilung einer URI, um zu
             ermitteln, welches Modul, welcher Controller und welche Aktion des Controllers die
             Anfrage erhalten soll. Die Definition des Moduls, des Controllers, der Aktion sowie
             weiterer Parameter wird in einem Objekt mit Namen
-            <code>Zend_Controller_Dispatcher_Token</code> gekapselt, das dann vom
-            <code>Zend_Controller_Dispatcher_Standard</code> verarbeitet wird. Das Routing
+            <classname>Zend_Controller_Dispatcher_Token</classname> gekapselt, das dann vom
+            <classname>Zend_Controller_Dispatcher_Standard</classname> verarbeitet wird. Das Routing
             geschieht nur einmal: wenn zu Beginn die Anfrage erhalten wird und bevor der erste
             Controller aufgerufen wird.
         </para>
 
         <para>
-            <code>Zend_Controller_Router_Rewrite</code> wurde entwickelt, um mit reinen PHP
+            <classname>Zend_Controller_Router_Rewrite</classname> wurde entwickelt, um mit reinen PHP
             Strukturen eine mod_rewrite ähnliche Funktionalität zu erlauben. Es richtet sich
             sehr frei nach dem Ruby on Rails Routing und benötigt kein tieferes Wissen über
             URL Weiterleitung des Webservers. Es wurde entwickelt, um mit einer einzigen
@@ -61,7 +61,7 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css|html)$)[\w\%]*$)? /index.
             <para>
                 Bei Verwendung von IIS, wird <code>$_SERVER['REQUEST_URI']</code> entweder nicht
                 vorhanden oder auf einen leeren String gesetzt sein. In diesem Fall wird
-                <code>Zend_Controller_Request_Http</code> versuchen, den durch die Isapi_Rewrite
+                <classname>Zend_Controller_Request_Http</classname> versuchen, den durch die Isapi_Rewrite
                 Erweiterung gesetzten Wert <code>$_SERVER['HTTP_X_REWRITE_URL']</code> zu
                 verwenden.
             </para>
@@ -142,7 +142,7 @@ $router->addRoute(
         <para>
             Das Herz des RewriteRouters ist die Definition von Benutzerdefinierten Routen. Routen werden durch
             aufruf der addRoute Methode des RewriteRouters hinzugefügt und übergeben eine neue Instanz einer
-            Klasse die <code>Zend_Controller_Router_Route_Interface</code> implementiert. Z.B.:
+            Klasse die <classname>Zend_Controller_Router_Route_Interface</classname> implementiert. Z.B.:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -181,7 +181,7 @@ $router->addRoute('user',
 
         <note>
             <para>
-                Die gewöhnlichste Verwendung des Namens der Route ist gegeben durch die Zwecke des <code>Zend_View</code>
+                Die gewöhnlichste Verwendung des Namens der Route ist gegeben durch die Zwecke des <classname>Zend_View</classname>
                 Url Helfers:
             </para>
 
@@ -200,7 +200,7 @@ $router->addRoute('user',
             Routen ist ein einfacher Prozess des Durchlaufens aller vorhandenen Routen und Vergleichens deren
             Definitionen mit der aktuellen Anfrage URI. Wenn ein positiver Vergleich gefunden wird, werden
             variable Werte von der Instanz des Routers zurückgegeben, und werden für die spätere Verwendung im
-            Dispatcher in das <code>Zend_Controller_Request</code> Objekt iniziiert, sowie in von Benutzern
+            Dispatcher in das <classname>Zend_Controller_Request</classname> Objekt iniziiert, sowie in von Benutzern
             erstellten Controllern. Bei einem negativen Ergebnis des Vergleiches, wird die nächste Route in der
             Kette geprüft.
         </para>
@@ -225,14 +225,14 @@ $router->addRoute('user',
             <para>
                 Werte die vom Routen zurückgegeben werden kommen von URL Parametern oder Benutzerdefinierten
                 Router Standards. Diese Variablen sind später durch die
-                <code>Zend_Controller_Request::getParam()</code> oder
-                <code>Zend_Controller_Action::_getParam()</code>Methoden verwendbar.
+                <classname>Zend_Controller_Request::getParam()</classname> oder
+                <classname>Zend_Controller_Action::_getParam()</classname>Methoden verwendbar.
             </para>
         </note>
 
         <para>
             Es gibt drei spezielle Variablen welche in den Routen verwendet werden können - 'module', 'controller'
-            und 'action'. Diese speziellen Variablen werden durch <code>Zend_Controller_Dispatcher</code> verwendet um
+            und 'action'. Diese speziellen Variablen werden durch <classname>Zend_Controller_Dispatcher</classname> verwendet um
             einen Kontroller und die Aktion zu funden zu der verwiesen wird.
         </para>
 
@@ -240,7 +240,7 @@ $router->addRoute('user',
             <title>Spezielle Variablen</title>
             <para>
                 Die Namen dieser speziellen Variablen kann unterschiedlich sein wenn entschieden wird die
-                Standards in <code>Zend_Controller_Request_Http</code> mithilfe der <code>setControllerKey</code>
+                Standards in <classname>Zend_Controller_Request_Http</classname> mithilfe der <code>setControllerKey</code>
                 und <code>setActionKey</code> Methode zu Ändern.
             </para>
         </note>
@@ -251,7 +251,7 @@ $router->addRoute('user',
         <title>Standard Routen</title>
 
         <para>
-            <code>Zend_Controller_Router_Rewrite</code> kommt mit einer Standard Route vorkonfiguriert, welche URIs im Sinn
+            <classname>Zend_Controller_Router_Rewrite</classname> kommt mit einer Standard Route vorkonfiguriert, welche URIs im Sinn
             von <code>controller/action</code> entspricht. Zusätzlich kann ein Modul Name als erstes Pfad Element
             definiert werden, welches URIs in der Form von <code>module/controller/action</code> erlaubt.
             Letztendlich wird es auch allen zusätzlichen Parametern entsprechen die der URI standardmäßig
@@ -302,7 +302,7 @@ http://example/blog/archive/list/sort/alpha/date/desc
         </programlisting>
 
         <para>
-            Die Standardroute ist einfach ein <code>Zend_Controller_Router_Route_Module</code> Objekt welches unter
+            Die Standardroute ist einfach ein <classname>Zend_Controller_Router_Route_Module</classname> Objekt welches unter
             dem Namen (Index) 'default' im RewriteRouter gespeichert ist. Es wird mehr oder weniger wie folgt
             erstellt:
         </para>
@@ -336,12 +336,12 @@ $router->removeDefaultRoutes();
             Der Rewrite Router kann in Unterverzeichnissen verwendet werden (z.B.
             <code>http://domain.com/~user/application-root/</code>) und in diesem Fall sollte die Basis URL der
             Anwendung (<code>/~user/application-root</code>) automatisch durch
-            <code>Zend_Controller_Request_Http</code> erkannt und auch verwendet werden.
+            <classname>Zend_Controller_Request_Http</classname> erkannt und auch verwendet werden.
         </para>
 
         <para>
             Sollte die Basis URL nicht richtig erkannt werden kann diese mit eigenen Basispfad überschrieben werden
-            durch Verwendung von <code>Zend_Controller_Request_Http</code> und Auruf der <code>setBaseUrl()</code>
+            durch Verwendung von <classname>Zend_Controller_Request_Http</classname> und Auruf der <code>setBaseUrl()</code>
             Methode (siehe <xref linkend="zend.controller.request.http.baseurl" />):
         </para>
 
@@ -378,13 +378,13 @@ $router->setGlobalParam('lang', 'en');
     </sect2>
 
     <sect2 id="zend.controller.router.add-config">
-        <title><code>Zend_Config</code> mit dem RewriteRouter verwenden</title>
+        <title><classname>Zend_Config</classname> mit dem RewriteRouter verwenden</title>
 
         <para>
             Manchmal ist es praktischer, eine Konfigurationsdatei mit neuen Routen zu
             aktualisieren, als den Code zu ändern. Dies ist mit Hilfe der
             <code>addConfig()</code> Methode möglich. Im Wesentlichen kann man eine
-            <code>Zend_Config</code> kompatible Konfiguration erstellen, in seinem Code einlesen und an den
+            <classname>Zend_Config</classname> kompatible Konfiguration erstellen, in seinem Code einlesen und an den
             RewriteRouter übergeben:
         </para>
 
@@ -416,7 +416,7 @@ routes.archive.map.1 = "year"
 
         <para>
             Die oben angeführte INI Datei kann dann wie folgt in ein
-            <code>Zend_Config</code> Objekt eingelesen werden:
+            <classname>Zend_Config</classname> Objekt eingelesen werden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -434,11 +434,11 @@ $router->addConfig($config, 'routes');
             Eintrag und einen oder mehrere 'defaults' Einträge; optional können eine oder
             mehrere 'reqs' (kurz für 'required', d.h. erforderlich) Einträge angegeben werden.
             Alles in allem entspricht dies den drei Argumenten, die an ein
-            <code>Zend_Controller_Router_Route_Interface</code> Objekt übergeben werden. Ein
+            <classname>Zend_Controller_Router_Route_Interface</classname> Objekt übergeben werden. Ein
             Optionsschlüssel 'type' kann verwendet werden, um den Typ der Routenklasse für
-            diese Route anzugeben; standardmäßig wird <code>Zend_Controller_Router_Route</code>
+            diese Route anzugeben; standardmäßig wird <classname>Zend_Controller_Router_Route</classname>
             verwendet. Im obigen Beispiel wird die 'news' Route definiert, um
-            <code>Zend_Controller_Router_Route_Static</code> zu verwenden.
+            <classname>Zend_Controller_Router_Route_Static</classname> zu verwenden.
         </para>
     </sect2>
 
@@ -453,7 +453,7 @@ $router->addConfig($config, 'routes');
 
         <para>
             So gesehen, wird man in einigen Fällen ein anderes Routing Paradigma verwenden wollen. Das Interface
-            <code>Zend_Controller_Router_Interface</code> bietet die minimalen Information die benötigt werden um
+            <classname>Zend_Controller_Router_Interface</classname> bietet die minimalen Information die benötigt werden um
             einen Router er erstellen und besteht aus einer einzigen Methode.
         </para>
 

@@ -5,7 +5,7 @@
     <title>Zend_Test_PHPUnit</title>
 
     <para>
-        <code>Zend_Test_PHPUnit</code> bietet einen TestCase, für MVC Anwendungen die Ausnahmen enthalten,
+        <classname>Zend_Test_PHPUnit</classname> bietet einen TestCase, für MVC Anwendungen die Ausnahmen enthalten,
         für das Testen einer Vielzahl an Möglichkeiten. Der warscheinlich einfachste Weg um zu verstehen was
         das ist, ist das ansehen des folgenden Beispiels.
     </para>

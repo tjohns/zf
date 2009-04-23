@@ -8,7 +8,7 @@
     <para>
         Analysieren und normalisieren von Eingaben kombiniert mit der Ausgabe in lokalisierter Schreibweise macht
         die Daten für Benutzer in fremden Gebietsschemata benutzbar. Viele zusätzliche Methoden existieren in den
-        <code>Zend_Measure_*</code> Komponentenum diese Daten zu manipulieren und mit Ihnen zu arbeiten nachdem Sie
+        <classname>Zend_Measure_*</classname> Komponentenum diese Daten zu manipulieren und mit Ihnen zu arbeiten nachdem Sie
         normalisiert wurden.
     </para>
 

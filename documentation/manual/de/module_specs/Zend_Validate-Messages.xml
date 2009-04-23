@@ -6,7 +6,7 @@
     <title>Prüfungsmeldungen</title>
 
     <para>
-        Jede Prüfung die auf <code>Zend_Validate</code> basiert, bietet im Fall einer
+        Jede Prüfung die auf <classname>Zend_Validate</classname> basiert, bietet im Fall einer
         fehlgeschlagen Prüfung eine oder mehrere Meldungen an. Diese Information kann verwendet
         werden um eigene Meldungen zu setzen, oder um die Meldungen die eine Prüfung zurückgeben
         kann zu übersetzen. Die folgende Tabelle zeigt alle vorhandenen Meldungen welche von

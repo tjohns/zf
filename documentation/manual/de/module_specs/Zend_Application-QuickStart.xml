@@ -5,14 +5,14 @@
     <title>Zend_Application Quick Start</title>
 
     <para>
-        Es gibt zwei Wege um mit <code>Zend_Application</code> anzufangen, und diese hängen davon
+        Es gibt zwei Wege um mit <classname>Zend_Application</classname> anzufangen, und diese hängen davon
         ab wie man das Projekt beginnt. In jedem Fall beginnt man immer mit der Erstellung einer
         <code>Bootstrap</code> klasse und einer diesbezüglichen Konfigurationsdatei.
     </para>
 
     <para>
-        Wenn man plant <code>Zend_Tool</code> zu verwenden um das eigene Projekt zu erstellen
-        sollte man anbei weiterlesen. Wenn man <code>Zend_Application</code> zu einem existierenden
+        Wenn man plant <classname>Zend_Tool</classname> zu verwenden um das eigene Projekt zu erstellen
+        sollte man anbei weiterlesen. Wenn man <classname>Zend_Application</classname> zu einem existierenden
         Projekt hinzufügen will, sollte man <link linkend="zend.application.quick-start.manual">
         hier weiterlesen</link>.
     </para>
@@ -21,8 +21,8 @@
         <title>Verwenden von Zend_Tool</title>
 
         <para>
-            Der schnellste Weg um mit <code>Zend_Application</code> zu beginnen ist die
-            Verwendung von <code>Zend_Tool</code> um das Projekt zu erstellen. Das erstellt auch
+            Der schnellste Weg um mit <classname>Zend_Application</classname> zu beginnen ist die
+            Verwendung von <classname>Zend_Tool</classname> um das Projekt zu erstellen. Das erstellt auch
             die <code>Bootstrap</code> Klasse und die Datei.
         </para>
 
@@ -114,12 +114,12 @@ phpSettings.display_errors = 1
 
         <para>
             Alle Einstellungen in dieser Konfigurationsdatei sind für die Verwendung mit
-            <code>Zend_Application</code> und der Bootstrap.
+            <classname>Zend_Application</classname> und der Bootstrap.
         </para>
 
         <para>
             Eine andere Datei von Interesse ist die <code>newproject/public/index.php</code> Datei,
-            welche <code>Zend_Application</code> einfügt und diese ausführt.
+            welche <classname>Zend_Application</classname> einfügt und diese ausführt.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -157,7 +157,7 @@ $application->bootstrap();
         <title>Zend_Application in der eigenen Anwendung hinzufügen</title>
 
         <para>
-            Die Basis von <code>Zend_Application</code> ist wirklich einfach:
+            Die Basis von <classname>Zend_Application</classname> ist wirklich einfach:
         </para>
 
         <itemizedlist>
@@ -168,11 +168,11 @@ $application->bootstrap();
 
             <listitem><para>
                 Eine Konfigurationsdatei <code>application/configs/application.ini</code> mit der
-                Basiskonfiguration für <code>Zend_Application</code> erstellen.
+                Basiskonfiguration für <classname>Zend_Application</classname> erstellen.
             </para></listitem>
 
             <listitem><para>
-                Ändern von <code>public/index.php</code> um <code>Zend_Application</code>
+                Ändern von <code>public/index.php</code> um <classname>Zend_Application</classname>
                 anzupassen.
             </para></listitem>
         </itemizedlist>
@@ -268,7 +268,7 @@ RewriteRule ^.*$ index.php [NC,L]
 ]]></programlisting>
 
         <para>
-            An diesem Punkt, wurde alles gesetzt um die Vorteile von <code>Zend_Application</code>
+            An diesem Punkt, wurde alles gesetzt um die Vorteile von <classname>Zend_Application</classname>
             zu verwenden.
         </para>
     </sect2>
@@ -289,9 +289,9 @@ RewriteRule ^.*$ index.php [NC,L]
         </para>
 
         <para>
-            Eine der von <code>Zend_Application</code> angebotenen Standardressourcen ist die
+            Eine der von <classname>Zend_Application</classname> angebotenen Standardressourcen ist die
             "layout" Ressource. Diese Ressource erwartet, das man Konfgurationswerte definiert,
-            welche dann verwendet werden um die <code>Zend_Layout</code> Instanz zu konfigurieren.
+            welche dann verwendet werden um die <classname>Zend_Layout</classname> Instanz zu konfigurieren.
         </para>
 
         <para>
@@ -388,7 +388,7 @@ class Bootstrap extends Zend_Application_Bootstrap_BootstrapAbstract
         <title>Nächste Schritte mit Zend_Application</title>
 
         <para>
-            Das oben erwähnte reicht um mit <code>Zend_Application</code> zu beginnen und das
+            Das oben erwähnte reicht um mit <classname>Zend_Application</classname> zu beginnen und das
             Bootstrap der eigenen Anwendung zu erstellen. Von hier an, sollte man beginnen
             Ressource-Methoden zu erstellen, oder, für maximale Wiederverwendbarkeit,
             Ressource-Plugin Klassen. Lesen Sie weiter, um mehr zu lernen!

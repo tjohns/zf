@@ -8,7 +8,7 @@
         <title>Feldnamen</title>
 
         <para>
-            Es gibt keine Begrenzungen für Feldnamen in <code>Zend_Search_Lucene</code>.
+            Es gibt keine Begrenzungen für Feldnamen in <classname>Zend_Search_Lucene</classname>.
         </para>
 
         <para>
@@ -18,7 +18,7 @@
         </para>
 
         <para>
-            Die <code>Zend_Search_Lucene_Search_QueryHit</code> <code>id</code> und <code>score</code>
+            Die <classname>Zend_Search_Lucene_Search_QueryHit</classname> <code>id</code> und <code>score</code>
             Eigenschaften referieren immer zur internen Lucene Dokumenten Id und Treffer-
             <link linkend="zend.search.lucene.searching.results-scoring">Anzahl</link>. Wenn ein indiziertes
             Dokument die gleichen Felder gespeichert hat, muß die <code>getDocument()</code> Methode verwendet
@@ -131,9 +131,9 @@ $index->optimize();
             </itemizedlist>
             <note>
                 <para>
-                    Alle diese Optionen sind Objekteigenschaften von <code>Zend_Search_Lucene</code>, aber keine
+                    Alle diese Optionen sind Objekteigenschaften von <classname>Zend_Search_Lucene</classname>, aber keine
                     Indexeigenschaften. Sie beeinflussen nur das Verhalten des aktuellen
-                    <code>Zend_Search_Lucene</code> Objekts und können sich für verschiedene Skripte
+                    <classname>Zend_Search_Lucene</classname> Objekts und können sich für verschiedene Skripte
                     unterscheiden.
                 </para>
             </note>
@@ -186,7 +186,7 @@ $index->optimize();
 
             <footnote>
                 <para>
-                    <code>Zend_Search_Lucene</code> hält jedes Segment offen um die Geschwindigkeit des Suchens zu erhöhen.
+                    <classname>Zend_Search_Lucene</classname> hält jedes Segment offen um die Geschwindigkeit des Suchens zu erhöhen.
                 </para>
             </footnote>
         </para>
@@ -232,7 +232,7 @@ $index->optimize();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> prüft wärend jedem Aufruf von <code>addDocument()</code> ob das Zusammenführen
+            <classname>Zend_Search_Lucene</classname> prüft wärend jedem Aufruf von <code>addDocument()</code> ob das Zusammenführen
             von Segmentgruppen dazu führt das neu erstellte Segmente in die nächste Gruppe verschoben
             werden. Wenn ja, wird das Zusammenführen durchgeführt.
         </para>
@@ -271,7 +271,7 @@ $index->optimize();
         <title>Index wärend des Herunterfahrens</title>
 
         <para>
-            Die <code>Zend_Search_Lucene</code> Instanz führt einiges an Arbeit während des Herunterfahrens
+            Die <classname>Zend_Search_Lucene</classname> Instanz führt einiges an Arbeit während des Herunterfahrens
             durch, wenn Dokumente zum Index hinzugefügt aber nicht in ein neues Segment geschrieben wurden.
         </para>
 
@@ -345,7 +345,7 @@ $index->commit();
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> bietet eine <code>termDocs()</code> Methode um Dokumente zu
+            <classname>Zend_Search_Lucene</classname> bietet eine <code>termDocs()</code> Methode um Dokumente zu
             empfangen die spezielle Terme enthalten.
         </para>
 
@@ -392,7 +392,7 @@ foreach ($docIds as $id) {
         <title>Speicherverwendung</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> ist ein relativ speicherintensives Modul.
+            <classname>Zend_Search_Lucene</classname> ist ein relativ speicherintensives Modul.
         </para>
 
         <para>
@@ -410,7 +410,7 @@ foreach ($docIds as $id) {
 
             <footnote>
                 <para>
-                    Das Lucene Dateiformat erlaubt es diese Zahl zu ändern, aber <code>Zend_Search_Lucene</code> bietet
+                    Das Lucene Dateiformat erlaubt es diese Zahl zu ändern, aber <classname>Zend_Search_Lucene</classname> bietet
                     keine Möglichkeit das über seine API durchzuführen. Trotzdem gibt es die Möglichkeit
                     diesen Wert zu ändern wenn er mit einer anderen Lucene Implementation vorbereitet wird.
                 </para>
@@ -448,8 +448,8 @@ foreach ($docIds as $id) {
         <title>Verschlüsselung</title>
 
         <para>
-            <code>Zend_Search_Lucene</code> arbeitet intern mit UTF-8 Strings. Das bedeutet also das alle von
-            <code>Zend_Search_Lucene</code> zurückgegebenen Strings UTF-8 verschlüsselt sind.
+            <classname>Zend_Search_Lucene</classname> arbeitet intern mit UTF-8 Strings. Das bedeutet also das alle von
+            <classname>Zend_Search_Lucene</classname> zurückgegebenen Strings UTF-8 verschlüsselt sind.
         </para>
 
         <para>
@@ -463,7 +463,7 @@ foreach ($docIds as $id) {
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> bietet einen breite Palette von Möglichkeiten für die Verschlüsselung
+            <classname>Zend_Search_Lucene</classname> bietet einen breite Palette von Möglichkeiten für die Verschlüsselung
             von indizierten Dokumenten und analysierten Abfragen.
         </para>
 
@@ -545,7 +545,7 @@ $hits = $index->find($queryStr);
         <title>Index Wartung</title>
 
         <para>
-            Es sollte klar sein das <code>Zend_Search_Lucene</code>, genauso wie jede andere Lucene Implementation,
+            Es sollte klar sein das <classname>Zend_Search_Lucene</classname>, genauso wie jede andere Lucene Implementation,
             keine "Datenbank" ersetzt.
         </para>
 
@@ -556,7 +556,7 @@ $hits = $index->find($queryStr);
         </para>
 
         <para>
-            Trotzdem versucht <code>Zend_Search_Lucene</code> Indizes jederzeit in einem gültigen Status zu halten.
+            Trotzdem versucht <classname>Zend_Search_Lucene</classname> Indizes jederzeit in einem gültigen Status zu halten.
         </para>
 
         <para>

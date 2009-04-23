@@ -8,7 +8,7 @@
         <title>Einführung</title>
 
         <para>
-            <code>Zend_Server_Reflection</code> stellt einen Standardmechanismus für Funktion und Klassen
+            <classname>Zend_Server_Reflection</classname> stellt einen Standardmechanismus für Funktion und Klassen
             Introspektion für die Verwendung der Serverklassen bereit. Es basiert auf der PHP 5
             Reflection API und erweitert es, um Methoden für die Erhaltung von Parameter und
             Rückgabewerttypen und Beschreibung, eine komplette Liste mit Funktion und Methoden
@@ -58,8 +58,8 @@ $reflection->getNamespace();
         </programlisting>
 
         <para>
-            <code>reflectFunction()</code> gibt ein  <code>Zend_Server_Reflection_Function</code>
-            Objekt zurück; <code>reflectClass</code> gibt ein <code>Zend_Server_Reflection_Class</code>
+            <code>reflectFunction()</code> gibt ein  <classname>Zend_Server_Reflection_Function</classname>
+            Objekt zurück; <code>reflectClass</code> gibt ein <classname>Zend_Server_Reflection_Class</classname>
             Objekt zurück. Bitte die API Documentation beachten, um zu erfahren, welche Methoden
             für beide Klassen verfügbar sind.
         </para>

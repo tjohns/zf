@@ -5,10 +5,10 @@
     <title>Zend_Controller Grundlagen</title>
 
     <para>
-        Das <code>Zend_Controller</code> System wurde leichtgewichtig, modular und erweiterbar
+        Das <classname>Zend_Controller</classname> System wurde leichtgewichtig, modular und erweiterbar
         aufgebaut. Das Design ist einfach, um den Benutzern viel Flexibilität und Freiheiten zu
         ermöglichen. Dennoch bietet es ausreichend Struktur, damit Systeme, die auf den
-        <code>Zend_Controller</code> aufbauen, gemeinsame Konventionen befolgen und einen
+        <classname>Zend_Controller</classname> aufbauen, gemeinsame Konventionen befolgen und einen
         ähnlichen Code Aufbau verwenden.
     </para>
 
@@ -23,7 +23,7 @@
     </para>
 
     <para>
-        Der <code>Zend_Controller</code> Ablauf wurde mit Hilfe verschiedener Komponenten
+        Der <classname>Zend_Controller</classname> Ablauf wurde mit Hilfe verschiedener Komponenten
         implementiert. Während es für die Benutzung des Systems nicht notwendig ist, den
         kompletten Unterbau all dieser Komponenten zu verstehen, ist es hilfreich, über den
         Ablauf ausreichend Kenntnisse zu haben.
@@ -32,23 +32,23 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Front</code> steuert den gesamten Ablauf des
-                    <code>Zend_Controller</code> Systems. Es ist eine Interpretation des
-                    FrontController Entwurfsmusters. <code>Zend_Controller_Front</code>
+                    <classname>Zend_Controller_Front</classname> steuert den gesamten Ablauf des
+                    <classname>Zend_Controller</classname> Systems. Es ist eine Interpretation des
+                    FrontController Entwurfsmusters. <classname>Zend_Controller_Front</classname>
                     verarbeitet alle Anfragen, die der Server erhält, und ist letztendlich dafür
                     verantwortlich, die Anfragen an die ActionController
-                    (<code>Zend_Controller_Action</code>) zu deligieren.
+                    (<classname>Zend_Controller_Action</classname>) zu deligieren.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Request_Abstract</code> (oft als das <code>Request
+                    <classname>Zend_Controller_Request_Abstract</classname> (oft als das <code>Request
                     Objekt</code> bezeichnet) repräsentiert die Umgebung
                     der Anfrage und stellt Methoden für das Setzen und Abfragen der Namen für
                     Controller und Aktion sowie jeder Anfrageparameter bereit. Zusätzlich
                     behält es die Übersicht darüber, ob die enthaltene Aktion von
-                    <code>Zend_Controller_Dispatcher</code> verarbeitet wurde oder nicht.
+                    <classname>Zend_Controller_Dispatcher</classname> verarbeitet wurde oder nicht.
                     Erweiterungen dieses abstrakten Request Objektes können verwendet werden,
                     um die gesamte Anfrageumgebung zu kapseln und Routern zu erlauben,
                     Informationen aus der Anfrageumgebung abzufragen, um die Namen für
@@ -56,26 +56,26 @@
                 </para>
 
                 <para>
-                    Standardmäßig wird <code>Zend_Controller_Request_Http</code> verwendet,
+                    Standardmäßig wird <classname>Zend_Controller_Request_Http</classname> verwendet,
                     welches den Zugriff auf die komplette HTTP Anfrageumgebung ermöglicht.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Router_Interface</code> wird verwendet, um Router zu
+                    <classname>Zend_Controller_Router_Interface</classname> wird verwendet, um Router zu
                     definieren. Routing ist der Prozess, bei dem die Anfrageumgebung untersucht
                     wird, um zu ermitteln, welcher Controller und welche Aktion dieses
                     Controllers diese Anfrage verarbeiten soll. Dieser Controller, diese Aktion
                     und optionale Parameter werden dann im Request Object gesetzt, das vom
-                    <code>Zend_Controller_Dispatcher_Standard</code> verarbeitet wird. Das
+                    <classname>Zend_Controller_Dispatcher_Standard</classname> verarbeitet wird. Das
                     Routing wird nur einmal ausgeführt: wenn die Anfrage erhalten wird und
                     bevor der erste Controller aufgerufen wird.
                 </para>
 
                 <para>
-                    Der Standardrouter <code>Zend_Controller_Router_Rewrite</code> nimmt den
-                    URI Endpunkt entgegen, der in <code>Zend_Controller_Request_Http</code>
+                    Der Standardrouter <classname>Zend_Controller_Router_Rewrite</classname> nimmt den
+                    URI Endpunkt entgegen, der in <classname>Zend_Controller_Request_Http</classname>
                     angegeben ist, und zerlegt ihn in einen Controller, eine Aktion und die
                     Parameter basierend auf den Pfadinformationen der URL. Zum Beispiel würde
                     die URL <code>http://localhost/foo/bar/key/value</code> übersetzt, um den
@@ -84,7 +84,7 @@
                 </para>
 
                 <para>
-                    <code>Zend_Controller_Router_Rewrite</code> kann auch für beliebige Pfade
+                    <classname>Zend_Controller_Router_Rewrite</classname> kann auch für beliebige Pfade
                     verwendet werden; man beachte <link
                         linkend="zend.controller.router">die
                     Rewrite Router Dokumentation</link> für weitere Informationen.
@@ -93,7 +93,7 @@
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Dispatcher_Interface</code> wird verwendet, um
+                    <classname>Zend_Controller_Dispatcher_Interface</classname> wird verwendet, um
                     Dispatcher zu definieren. Dispatching ist der Prozess, den Controller und
                     die Aktion aus dem Request Objekt abzufragen und auf eine Controller Datei/
                     Klasse und eine Aktionsmethode in dieser Controller Klasse zu abzubilden.
@@ -113,7 +113,7 @@
                 </para>
 
                 <para>
-                    Der Standarddispatcher ist <code>Zend_Controller_Dispatcher_Standard</code>.
+                    Der Standarddispatcher ist <classname>Zend_Controller_Dispatcher_Standard</classname>.
                     Er definiert Controller als MixedCasedKlassen, die auf das Wort Controller
                     enden, und Aktionsmethoden als camelCasedMethoden, die auf das Wort Action
                     enden: <code>SomeFooController::barAction</code>. In diesem Fall wird auf
@@ -149,38 +149,38 @@
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Action</code> ist die elementare Controller
+                    <classname>Zend_Controller_Action</classname> ist die elementare Controller
                     Komponente. Jeder Controller ist eine einzelne Klasse, welche die
-                    <code>Zend_Controller_Action</code> Klasse erweitert und Methoden für die
+                    <classname>Zend_Controller_Action</classname> Klasse erweitert und Methoden für die
                     Aktionen enthält.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Response_Abstract</code> definiert eine grundlegende
+                    <classname>Zend_Controller_Response_Abstract</classname> definiert eine grundlegende
                     Response Klasse, um Antworten der Aktion aus den Controllern zu sammeln und
                     zurück zu geben. Es sammelt sowohl Header als auch Inhalte.
                 </para>
 
                 <para>
-                    Die Standard Response Klasse ist <code>Zend_Controller_Response_Http</code>,
+                    Die Standard Response Klasse ist <classname>Zend_Controller_Response_Http</classname>,
                     welches in einer HTTP Umgebung verwendet werden kann.
                 </para>
             </listitem>
         </itemizedlist>
 
     <para>
-        Der Ablauf vom <code>Zend_Controller</code> ist relativ einfach. Eine Anfrage wird vom
-        <code>Zend_Controller_Front</code> empfangen, der wiederum
-        <code>Zend_Controller_Router_Rewrite</code> aufruft, um zu ermitteln, welcher Controller
+        Der Ablauf vom <classname>Zend_Controller</classname> ist relativ einfach. Eine Anfrage wird vom
+        <classname>Zend_Controller_Front</classname> empfangen, der wiederum
+        <classname>Zend_Controller_Router_Rewrite</classname> aufruft, um zu ermitteln, welcher Controller
         (und welche Aktion in dem Controller) ausgeführt werden soll.
-        <code>Zend_Controller_Router_Rewrite</code> zerteilt die URI um den Namen des Controllers
-        und der Aktion für den Request zu setzen. <code>Zend_Controller_Front</code> durchläuft
-        dann eine Dispatcher Schleife. Er ruft <code>Zend_Controller_Dispatcher_Standard</code>
+        <classname>Zend_Controller_Router_Rewrite</classname> zerteilt die URI um den Namen des Controllers
+        und der Aktion für den Request zu setzen. <classname>Zend_Controller_Front</classname> durchläuft
+        dann eine Dispatcher Schleife. Er ruft <classname>Zend_Controller_Dispatcher_Standard</classname>
         auf und übergibt den Request, um den Controller und die Aktion auszuführen, die im Request
         spezifiziert wurden (oder verwendet die  Standardwerte). Wenn der Controller fertig ist,
-        wird die Kontrolle wieder an <code>Zend_Controller_Front</code> übergeben. Wenn der
+        wird die Kontrolle wieder an <classname>Zend_Controller_Front</classname> übergeben. Wenn der
         Controller durch das Zurücksetzen des Dispatch Status des Requests angezeigt hat, dass
         ein weiterer Controller ausgeführt werden soll, wird der Durchlauf fortgesetzt und ein
         weiterer Dispatcher Prozess wird durchlaufen. Andernfalls endet der Prozess.

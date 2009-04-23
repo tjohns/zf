@@ -8,7 +8,7 @@
         <title>Einführung</title>
 
         <para>
-            <code>Zend_Service_ReCaptcha</code> bietet einen Client für das
+            <classname>Zend_Service_ReCaptcha</classname> bietet einen Client für das
             <ulink url="http://recaptcha.net/">reCAPTCHA Web Service</ulink>. Laut der reCAPTCHA Seite ist
             "reCAPTCHA ein freies CAPTCHA Service das hilft Bücher zu digitalisieren." Jedes reCAPTCHA
             verlangt das der Benutzer zwei Wörter eingibt, das erste ist das aktuelle Captcha, und das
@@ -30,7 +30,7 @@
         <title>Einfachste Verwendung</title>
 
         <para>
-            Ein <code>Zend_Service_ReCaptcha</code> Objekt instanzieren, und ihm den öffentlichen und
+            Ein <classname>Zend_Service_ReCaptcha</classname> Objekt instanzieren, und ihm den öffentlichen und
             privaten Schlüssel übergeben:
         </para>
 
@@ -64,7 +64,7 @@ $result = $recaptcha->verify(
 
         <para>
             Sobald man das Ergebnis hat, kann es getestet werden um zu sehen ob es gültig ist. Das
-            Ergebnis ist ein <code>Zend_Service_ReCaptcha_Response</code> Objekt, welche eine
+            Ergebnis ist ein <classname>Zend_Service_ReCaptcha_Response</classname> Objekt, welche eine
             <code>isValid()</code> Methode anbietet.
         </para>
 
@@ -77,7 +77,7 @@ if (!$result->isValid()) {
 
         <para>
             Noch einfacher zu verwenden ist
-            <link linkend="zend.captcha.adapters.recaptcha">der ReCaptcha</link> <code>Zend_Captcha</code>
+            <link linkend="zend.captcha.adapters.recaptcha">der ReCaptcha</link> <classname>Zend_Captcha</classname>
             Adapter, oder diesen Adapter als Backend für das
             <link linkend="zend.form.standardElements.captcha">Captcha Formularelement</link> zu verwenden.
             In jedem Fall werden die Details der Darstellung und Prüfung des reCAPTCHA automatisch durchgeführt.

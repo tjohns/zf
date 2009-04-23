@@ -10,7 +10,7 @@
         <para>
             Es gibt zwei Arten, den Index zu durchsuchen. Die erste Methode verwendet den
             Query Parser, um eine Abfrage aus einem String zu erstellen. Die zweite kann
-            programmtechnisch eigene Abfragen über die <code>Zend_Search_Lucene</code> API
+            programmtechnisch eigene Abfragen über die <classname>Zend_Search_Lucene</classname> API
             erstellen.
         </para>
 
@@ -73,8 +73,8 @@ $index->find($query);
         </programlisting>
 
         <para>
-            Die <code>Zend_Search_Lucene::find()</code> Methode ermittelt den Eingabetyp automatisch
-            und verwendet den Query Parser, um ein entsprechendes <code>Zend_Search_Lucene_Search_Query</code>
+            Die <classname>Zend_Search_Lucene::find()</classname> Methode ermittelt den Eingabetyp automatisch
+            und verwendet den Query Parser, um ein entsprechendes <classname>Zend_Search_Lucene_Search_Query</classname>
             Objekt aus einer Eingabe vom Typ String zu erstellen.
         </para>
         <para>
@@ -95,7 +95,7 @@ $index->find($query);
         <sect3 id="zend.search.lucene.searching.query_building.parsing">
             <title>Parsen der Abfrage</title>
             <para>
-                Die <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> Methode kann verwendet werden um
+                Die <classname>Zend_Search_Lucene_Search_QueryParser::parse()</classname> Methode kann verwendet werden um
                 einen Abfrage String in ein Abfrage Objekt zu parsen.
             </para>
 
@@ -126,7 +126,7 @@ $hits = $index->find($query);
             </para>
 
             <para>
-                Die <code>Zend_Search_Lucene_Search_QueryParser::parse()</code> Methode nimmt auch einen optionalen
+                Die <classname>Zend_Search_Lucene_Search_QueryParser::parse()</classname> Methode nimmt auch einen optionalen
                 Encoding Parameter, welche die Codierung des Abfrage Strings definieren kann:
                 <programlisting role="php"><![CDATA[
 $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr,
@@ -141,7 +141,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr,
 
             <para>
                 Es ist auch möglich eine Standard Codierung für den Abfragestring mit der
-                <code>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</code> Methode zu definieren:
+                <classname>Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding()</classname> Methode zu definieren:
                 <programlisting role="php"><![CDATA[
 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('iso-8859-5');
 ...
@@ -151,7 +151,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
             </para>
 
             <para>
-                <code>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</code> gibt die aktuelle
+                <classname>Zend_Search_Lucene_Search_QueryParser::getDefaultEncoding()</classname> gibt die aktuelle
                 Standard Codierung des Abfrage Strings zurück (leerer String bedeutet "aktuelles Gebietsschema").
             </para>
         </sect3>
@@ -160,7 +160,7 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
     <sect2 id="zend.search.lucene.searching.results">
         <title>Suchergebnisse</title>
         <para>
-            Das Suchergebnis ist ein Array mit <code>Zend_Search_Lucene_Search_QueryHit</code> Objekten. Jedes
+            Das Suchergebnis ist ein Array mit <classname>Zend_Search_Lucene_Search_QueryHit</classname> Objekten. Jedes
             davon hat zwei Eigenschaften: <code>$hit->document</code> ist eine Dokumentnummer
             innerhalb des Index und <code>$hit->score</code> ist ein Punktwert für den Treffer im
             Suchergebnis. Das Ergebnis wird anhand der Punktwerte sortiert (absteigend von der besten
@@ -168,8 +168,8 @@ $userQuery = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
         </para>
 
         <para>
-            Das <code>Zend_Search_Lucene_Search_QueryHit</code> Objekt beinhaltet zudem jedes Feld des
-            <code>Zend_Search_Lucene_Document</code>, das bei der Suche gefunden wurde, als Eigenschaft des Treffers. Im
+            Das <classname>Zend_Search_Lucene_Search_QueryHit</classname> Objekt beinhaltet zudem jedes Feld des
+            <classname>Zend_Search_Lucene_Document</classname>, das bei der Suche gefunden wurde, als Eigenschaft des Treffers. Im
             folgenden Beispiel, wird ein Treffer mit zwei Feldern des entsprechenden Dokuments
             zurückgegeben: Titel und Autor.
         </para>
@@ -192,8 +192,8 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Optional kann das originale <code>Zend_Search_Lucene_Document</code> Objekt vom
-            <code>Zend_Search_Lucene_Search_QueryHit</code> Objekt zurückgegeben werden.
+            Optional kann das originale <classname>Zend_Search_Lucene_Document</classname> Objekt vom
+            <classname>Zend_Search_Lucene_Search_QueryHit</classname> Objekt zurückgegeben werden.
 
             Du kannst gespeicherte Teile des Dokuments durch Verwendung der <code>getDocument()</code>
             Methode des Indexobjektes zurückerhalten und diese dann durch die
@@ -222,7 +222,7 @@ foreach ($hits as $hit) {
         </programlisting>
 
         <para>
-            Die Felder, die in einem <code>Zend_Search_Lucene_Document</code> Objekt verfügbar sind, werden beim
+            Die Felder, die in einem <classname>Zend_Search_Lucene_Document</classname> Objekt verfügbar sind, werden beim
             Indizieren festgelegt. Die Dokumentenfelder werden durch die Indizieranwendung
             (z.B. LuceneIndexCreation.jar) im Dokument entweder nur indiziert oder indiziert und
             gespeichert.
@@ -243,7 +243,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            <code>Zend_Search_Lucene</code> bietet die Möglichkeit die Ergebnisse mit den <code>getResultSetLimit()</code> und
+            <classname>Zend_Search_Lucene</classname> bietet die Möglichkeit die Ergebnisse mit den <code>getResultSetLimit()</code> und
             <code>setResultSetLimit()</code> Methoden zu begrenzen:
             <programlisting role="php"><![CDATA[
 $currentResultSetLimit = Zend_Search_Lucene::getResultSetLimit();
@@ -264,7 +264,7 @@ Zend_Search_Lucene::setResultSetLimit($newLimit);
     <sect2 id="zend.search.lucene.searching.results-scoring">
         <title>Ergebnisgewichtung</title>
         <para>
-            <code>Zend_Search_Lucene</code> verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Alle
+            <classname>Zend_Search_Lucene</classname> verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Alle
             Treffer in den Suchergebnisse werden standardmäßig nach einem Punktwert sortiert.
             Treffer mit höherem Punktwert kommen zuerst, und Dokumente mit höherem Punktwert passen
             präziser auf die Abfrage als solche mit niedrigerem Punktwert.
@@ -291,7 +291,7 @@ foreach ($hits as $hit) {
         </programlisting>
 
         <para>
-            Die <code>Zend_Search_Lucene_Search_Similarity</code> Klasse wird verwendet, um den Punktwert für jeden Treffer zu
+            Die <classname>Zend_Search_Lucene_Search_Similarity</classname> Klasse wird verwendet, um den Punktwert für jeden Treffer zu
             berechnen. Beachte den <link linkend="zend.search.lucene.extending.scoring">Erweiterbarkeit.
             Algorithmen für Punktwertermittlung</link> Abschnitt für weitere Details.
         </para>
@@ -358,7 +358,7 @@ $index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
     <sect2 id="zend.search.lucene.searching.highlighting">
         <title>Such Resultate hervorheben</title>
         <para>
-            Die <code>Zend_Search_Lucene_Search_Query::highlightMatches()</code> Methode erlaubt es
+            Die <classname>Zend_Search_Lucene_Search_Query::highlightMatches()</classname> Methode erlaubt es
             dem Entwickler Begriffe von HTML Dokumenten im Kontext der Suchabfrage hervorzuheben:
             <programlisting role="php"><![CDATA[
 $query = Zend_Search_Lucene_Search_QueryParser::parse($queryStr);
@@ -370,7 +370,7 @@ $highlightedHTML = $query->highlightMatches($sourceHTML);
         </para>
 
         <para>
-            Die <code>highlightMatches()</code> Methode verwendet die <code>Zend_Search_Lucene_Document_Html</code>
+            Die <code>highlightMatches()</code> Methode verwendet die <classname>Zend_Search_Lucene_Document_Html</classname>
             Klasse (siehe den <link linkend="zend.search.lucene.index-creation.html-documents">HTML Dokumente Abschnitt</link> für Details)
             für das Bearbeiten von HTML, deshalb hat Sie die gleichen Voraussetzungen wie HTML Quellen.
         </para>

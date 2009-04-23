@@ -34,7 +34,7 @@
         <title>Automatische Ausgabe</title>
 
         <para>
-            <code>Zend_Measure</code> unterstützt die automatische Ausgabe von Zeichenketten.
+            <classname>Zend_Measure</classname> unterstützt die automatische Ausgabe von Zeichenketten.
             <example id="zend.measure.output.auto.example-1">
                 <title>Automatische Ausgabe</title>
                 <programlisting role="php"><![CDATA[

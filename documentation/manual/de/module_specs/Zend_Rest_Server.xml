@@ -54,7 +54,7 @@ $server->handle();
         <title>Aufruf eines Zend_Rest_Server Services</title>
 
         <para>
-            Um ein <code>Zend_Rest_Server</code> Service aufzurufen muß ein GET/POST <code>method</code> Argument
+            Um ein <classname>Zend_Rest_Server</classname> Service aufzurufen muß ein GET/POST <code>method</code> Argument
             mit einem Wert angegeben werden der der Methode entspricht die aufgerufen werden soll. Es können
             anschließend beliebig viele Argumente folgen die entweder den Namen des Arguments verwenden (z.B. "wer")
             oder man kann <code>arg</code> verwenden gefolgt von der nummerischen Position des Arguments

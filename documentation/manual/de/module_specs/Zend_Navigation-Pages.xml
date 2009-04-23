@@ -5,7 +5,7 @@
     <title>Seiten</title>
 
     <para>
-        <code>Zend_Navigation</code> wird mit zwei Seiten Typen ausgeliefert:
+        <classname>Zend_Navigation</classname> wird mit zwei Seiten Typen ausgeliefert:
 
         <itemizedlist>
             <listitem>

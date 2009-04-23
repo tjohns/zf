@@ -12,16 +12,16 @@
     </para>
 
     <para>
-        <code>Zend_Validate_Interface</code> definiert drei Methoden, <code>isValid()</code>,
+        <classname>Zend_Validate_Interface</classname> definiert drei Methoden, <code>isValid()</code>,
         <code>getMessages()</code>, und <code>getErrors()</code>, welche von Benutzerklassen implementiert
         werden können um eigene Prüfobjekte zu erstellen. Ein Objekt welches das
-        <code>Zend_Validate_Interface</code> Interface implementiert kann einer Prüfkette mit
-        <code>Zend_Validate::addValidator()</code> hinzugefügt werden. Solche Objekte können auch mit
-        <link linkend="zend.filter.input"><code>Zend_Filter_Input</code></link> verwendet werden.
+        <classname>Zend_Validate_Interface</classname> Interface implementiert kann einer Prüfkette mit
+        <classname>Zend_Validate::addValidator()</classname> hinzugefügt werden. Solche Objekte können auch mit
+        <link linkend="zend.filter.input"><classname>Zend_Filter_Input</classname></link> verwendet werden.
     </para>
 
     <para>
-        Wie man bereits aus der obigen Beschreibung von <code>Zend_Validate_Interface</code> folgern kann,
+        Wie man bereits aus der obigen Beschreibung von <classname>Zend_Validate_Interface</classname> folgern kann,
         geben die vom Zend Framework bereitgestellten Prüfklassen einen boolschen Wert zurück, ob die Prüfung
         des Wertes erfolgreich war oder nicht. Sie geben auch darüber Informationen
         <emphasis role="bold">warum</emphasis> ein Wert die Prüfung nicht bestanden hat. Die Verfügbarkeit der
@@ -30,9 +30,9 @@
     </para>
 
     <para>
-        Grundlegende Funktionalitäten für fehlgeschlagene Prüfmeldungen ist in <code>Zend_Validate_Abstract</code>
+        Grundlegende Funktionalitäten für fehlgeschlagene Prüfmeldungen ist in <classname>Zend_Validate_Abstract</classname>
         implementiert. Um diese Funktionalität einzubinden wenn eine Prüfklasse erstellt wird, muß einfach
-        <code>Zend_Validate_Abstract</code> erweitert werden. In der existierenden Klasse wird die Logik der
+        <classname>Zend_Validate_Abstract</classname> erweitert werden. In der existierenden Klasse wird die Logik der
         <code>isValid()</code> Methode implementiert und die Variablen für die Nachrichten und
         Nachrichten-Templates definiert werden die zu den Typen von Prüffehlern passen die auftreten können.
         Wenn ein Wert die Prüfung nicht besteht, sollte <code>isValid()</code> <code>false</code> zurückgeben.

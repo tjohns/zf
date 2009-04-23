@@ -5,7 +5,7 @@
     <title>Zend_Service_StrikeIron</title>
 
     <para>
-        <code>Zend_Service_StrikeIron</code> bietet einen PHP 5 Clienten zu den Web Services von StrikeIron. Siehe die folgenden
+        <classname>Zend_Service_StrikeIron</classname> bietet einen PHP 5 Clienten zu den Web Services von StrikeIron. Siehe die folgenden
         Sektionen:
     </para>
 
@@ -41,19 +41,19 @@
         <para>
           Die Services von StrikeIron können schon alleine durch die
           <ulink url="http://us.php.net/soap">PHP 5 SOAP Erweiterung</ulink> verwendet werden. Trotzdem bietet die
-          Verwendung von StrikeIron auf diesem Weg kein ideales PHP-artiges Interface. Die <code>Zend_Service_StrikeIron</code>
+          Verwendung von StrikeIron auf diesem Weg kein ideales PHP-artiges Interface. Die <classname>Zend_Service_StrikeIron</classname>
           Componente bietet einen leichtgewichtigen Layer aufbauend auf der SOAP Erweiterung für die Arbeit mit
           den Services von StrikeIron auf einem bequemeren und PHP-artigeren Weg.
         </para>
 
         <note>
           <para>
-            Die PHP 5 SOAP Erweiterung muß installiert und aktiviert sein um <code>Zend_Service_StrikeIron</code> zu verwenden.
+            Die PHP 5 SOAP Erweiterung muß installiert und aktiviert sein um <classname>Zend_Service_StrikeIron</classname> zu verwenden.
           </para>
         </note>
 
         <para>
-          Die <code>Zend_Service_StrikeIron</code> Komponente bietet:
+          Die <classname>Zend_Service_StrikeIron</classname> Komponente bietet:
 
           <itemizedlist>
             <listitem>
@@ -90,13 +90,13 @@
     <sect2 id="zend.service.strikeiron.registering">
       <title>Registrieren mit StrikeIron</title>
       <para>
-        Bevor man mit <code>Zend_Service_StrikeIron</code> beginnen kann, muß man sich zuerst für einen StrikeIron
+        Bevor man mit <classname>Zend_Service_StrikeIron</classname> beginnen kann, muß man sich zuerst für einen StrikeIron
         Entwickler Zugang <ulink url="http://strikeiron.com/Register.aspx">registrieren</ulink>.
       </para>
 
       <para>
         Nach der Registrierung erhält man einen StrikeIron Benutzernamen und ein Passwort. Diese werden
-        Verwendet wenn man sich auf StrikeIron verbindet indem man <code>Zend_Service_StrikeIron</code> verwendet.
+        Verwendet wenn man sich auf StrikeIron verbindet indem man <classname>Zend_Service_StrikeIron</classname> verwendet.
       </para>
 
       <para>
@@ -116,11 +116,11 @@
         Sobald man sich für einen StrikeIron Account
         <ulink url="http://strikeiron.com/Register.aspx">registriert</ulink> und für das
         <ulink url="http://www.strikeiron.com/ProductDetail.aspx?p=257">Super Data Pack</ulink> angemeldet hat,
-        ist man für die Benutzung von <code>Zend_Service_StrikeIron</code> bereit.
+        ist man für die Benutzung von <classname>Zend_Service_StrikeIron</classname> bereit.
       </para>
 
       <para>
-        StrikeIron besteht aus hunderten von verschiedenen WebServices. <code>Zend_Service_StrikeIron</code> kann mit vielen
+        StrikeIron besteht aus hunderten von verschiedenen WebServices. <classname>Zend_Service_StrikeIron</classname> kann mit vielen
         dieser Services verwendet werden bietet aber nur für drei von Ihnen unterstützte Wrapper:
       </para>
 
@@ -137,7 +137,7 @@
       </itemizedlist>
 
       <para>
-        Die Klasse <code>Zend_Service_StrikeIron</code> bietet einen einfachen Web um die eigenen Account
+        Die Klasse <classname>Zend_Service_StrikeIron</classname> bietet einen einfachen Web um die eigenen Account
         Informationen von StrikeIron und andere Option im Konstruktor zu spezifizieren. Sie bietet auch eine
         Factory Methode die Clients für StrikeIron Services zurück gibt:
 
@@ -153,7 +153,7 @@ $taxBasic = $strikeIron->getService(array('class' => 'SalesUseTaxBasic'));
       <para>
         Die <code>getService()</code> Methode gibt einen Client für irgendein StrikeIron Service zurück das durch
         den Namen seiner PHP Wrapper Klasse definiert wurde. In diesem Fall, referiert der Name
-        <code>SalesUseTaxBasic</code> zu der Wrapper Klasse <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code>.
+        <code>SalesUseTaxBasic</code> zu der Wrapper Klasse <classname>Zend_Service_StrikeIron_SalesUseTaxBasic</classname>.
         Wrapper sind für drei Services inkludiert und in
         <link linkend="zend.service.strikeiron.bundled-services">Bundled Services</link> beschrieben.
       </para>
@@ -217,7 +217,7 @@ echo $rateInfo->GST;
       <para>
         Wenn man Services von StrikeIron lernt oder versucht fehler zu beheben, ist es oft nützlich das Ergebnis
         das von einem Methodenaufruf zurückgegeben wird auszugeben. Das Ergebnis wird immer ien Objekt sein das
-        eine Instanz von <code>Zend_Service_StrikeIron_Decorator</code> ist. Das ist ein kleines
+        eine Instanz von <classname>Zend_Service_StrikeIron_Decorator</classname> ist. Das ist ein kleines
         <ulink url="http://en.wikipedia.org/wiki/Decorator_pattern">Dekorator</ulink> Objekt das die Ergebnisse des
         Methoden Aufrufs ummantelt.
       </para>
@@ -311,7 +311,7 @@ try {
 }
 ]]>
         </programlisting>
-        Die geworfenen Ausnahmen werden immer <code>Zend_Service_StrikeIron_Exception</code> sein.
+        Die geworfenen Ausnahmen werden immer <classname>Zend_Service_StrikeIron_Exception</classname> sein.
       </para>
 
       <para>

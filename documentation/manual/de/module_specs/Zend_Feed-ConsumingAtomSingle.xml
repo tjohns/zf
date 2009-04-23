@@ -12,7 +12,7 @@
     </para>
 
     <para>
-        Wenn Du einen einzelnen Eintrag liest, wirst du dennoch ein <code>Zend_Feed_Atom</code>
+        Wenn Du einen einzelnen Eintrag liest, wirst du dennoch ein <classname>Zend_Feed_Atom</classname>
         Objekt erhalten, aber es wird automatisch ein "anonymer" Feed erstellt, welcher den Eintrag
         enthält.
     </para>

@@ -22,7 +22,7 @@
         <title>Registrierung mit Amazon S3</title>
 
         <para>
-            Bevor man mit <code>Zend_Service_Amazon_S3</code> beginnen kann, muß man einen Account
+            Bevor man mit <classname>Zend_Service_Amazon_S3</classname> beginnen kann, muß man einen Account
             registrieren. Sehen Sie bitte auf die Amazon Website
             <ulink url="http://aws.amazon.com/s3/faqs/">S3 FAQ</ulink> für weitere Informationen.
         </para>
@@ -37,7 +37,7 @@
         <title>API Dokumentation</title>
 
         <para>
-            Die Klasse <code>Zend_Service_Amazon_S3</code> bietet einen PHP Wrapper zum Amazon S3
+            Die Klasse <classname>Zend_Service_Amazon_S3</classname> bietet einen PHP Wrapper zum Amazon S3
             REST Interface. Schauen Sie bitte in die
             <ulink url="http://developer.amazonwebservices.com/connect/kbcategory.jspa?categoryID=48">Amazon S3 Dokumentation</ulink>
             für eine detailierte Beschreibung des Services. Man muß mit dem grundsätzlichen Konzept
@@ -50,7 +50,7 @@
         <title>Features</title>
 
         <para>
-            <code>Zend_Service_Amazon_S3</code> bietet die folgenden Funktionalitäten:
+            <classname>Zend_Service_Amazon_S3</classname> bietet die folgenden Funktionalitäten:
 
             <itemizedlist>
                 <listitem>
@@ -119,7 +119,7 @@ echo $s3->getObject("my-own-bucket/myobject");
         </example>
 
         <para>
-            Da der <code>Zend_Service_Amazon_S3</code> Service eine Authentifizierung benötigt,
+            Da der <classname>Zend_Service_Amazon_S3</classname> Service eine Authentifizierung benötigt,
             sollte man seine Zugangsdaten (AWS Schlüssel und Geheimschlüssel) an den Konstruktor
             übergeben.
 
@@ -463,7 +463,7 @@ foreach($list as $name) {
 
         <para>
             Zusätzlich zum oben beschriebenen Interface unterstützt
-            <code>Zend_Service_Amazon_S3</code> das Arbeiten als Stream Wrapper. Hierfür muß das
+            <classname>Zend_Service_Amazon_S3</classname> das Arbeiten als Stream Wrapper. Hierfür muß das
             Client-Objekt als Stream Wrapper registriert werden:
         </para>
 

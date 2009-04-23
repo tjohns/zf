@@ -5,7 +5,7 @@
     <title>Captcha Anwendung</title>
 
     <para>
-        Alle CAPTCHA Adapter implementieren <code>Zend_Captcha_Adapter</code>, welches wie folgt
+        Alle CAPTCHA Adapter implementieren <classname>Zend_Captcha_Adapter</classname>, welches wie folgt
         aussieht:
     </para>
 
@@ -35,7 +35,7 @@ interface Zend_Captcha_Adapter extends Zend_Validate_Interface
     <para>
         Die benannten Getter- und Settermethoden werden verwenden um den CAPTCHA Identifikator zu
         spezifizieren und zu empfangen. <code>getDecorator()</code> kann verwendet werden um einen
-        <code>Zend_Form</code> Dekorator entweder durch seinen Namen zu spezifizieren oder indem
+        <classname>Zend_Form</classname> Dekorator entweder durch seinen Namen zu spezifizieren oder indem
         ein aktuelles Dekoratorobjekt zurückgegeben wird. Der interessantesten Methoden sind aber
         <code>generate()</code> und <code>render()</code>. <code>generate()</code> wird verwendet
         um das CAPTCHA Token zu erstellen. Dieser Prozess speichert das Token typischerweise in der

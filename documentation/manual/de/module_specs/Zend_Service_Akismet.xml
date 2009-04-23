@@ -8,7 +8,7 @@
         <title>Einführung</title>
 
         <para>
-            <code>Zend_Service_Akismet</code> bietet einen Client für die
+            <classname>Zend_Service_Akismet</classname> bietet einen Client für die
             <ulink url="http://akismet.com/development/api/">Akismet API</ulink>. Der Akismet Service wird
             verwendet um herauszufinden ob hereinkommende Daten potentieller Spam sind; Er bietet auch
             Methoden für das Übertragen von Daten als bekannter Spam oder als falsch Positiv (ham). Original
@@ -35,7 +35,7 @@
         <title>Prüfen eines API Schlüssels</title>
 
         <para>
-            <code>Zend_Service_Akismet::verifyKey($key)</code> wird verwendet um zu prüfen ob ein Akismet API
+            <classname>Zend_Service_Akismet::verifyKey($key)</classname> wird verwendet um zu prüfen ob ein Akismet API
             Schlüssel gültig ist. In den meisten Fällen, besteht keine Notwendigkeit ihn zu prüfen, aber wenn
             eine Qualitätssicherung durchgeführt werden soll, oder eruiert werden soll ob ein neuerer
             erhaltener Schlüssel aktiv ist, kann das mit dieser Methode gemacht werden.
@@ -68,7 +68,7 @@ if ($akismet->verifyKey($apiKey) {
         <title>Auf Spam prüfen</title>
 
         <para>
-            <code>Zend_Service_Akismet::isSpam($data)</code> wird verwendet um zu prüfen ob die übergebenen
+            <classname>Zend_Service_Akismet::isSpam($data)</classname> wird verwendet um zu prüfen ob die übergebenen
             Daten von Akismet als Spam erkannt werden. Es wird ein assoziatives Array als Basisargument
             akzeptiert. Das Array erfordert das die folgenden Schlüssel gesetzt werden:
         </para>
@@ -197,7 +197,7 @@ if ($akismet->isSpam($data)) {
         </para>
 
         <para>
-            <code>Zend_Service_Akismet::submitSpam()</code> nimmt das selbe Datenarray entgegen wie es der
+            <classname>Zend_Service_Akismet::submitSpam()</classname> nimmt das selbe Datenarray entgegen wie es der
             <code>isSpam()</code> übergeben wird, aber es wird kein Wert zurückgegeben. Eine Ausnahme wird
             geworfen wenn der API Schlüsel ungültig ist.
         </para>
@@ -236,7 +236,7 @@ $akismet->submitSpam($data));
         </para>
 
         <para>
-            <code>Zend_Service_Akismet::submitHam()</code> nimmt das selbe Datenarray entgegen wie
+            <classname>Zend_Service_Akismet::submitHam()</classname> nimmt das selbe Datenarray entgegen wie
             <code>isSpam()</code> oder <code>submitSpam()</code>, und wie bei <code>submitSpam()</code> wird
             kein Wert zurückgegeben. Eine Ausnahme wird geworfen wenn der verwendete API Schlüssel ungültig ist.
         </para>
@@ -268,7 +268,7 @@ $akismet->submitHam($data));
         <title>Zend-spezielle Zugriffsmethoden</title>
 
         <para>
-            Wärend die Akismet API nur vier Methoden spezifiziert, hat <code>Zend_Service_Akismet</code>
+            Wärend die Akismet API nur vier Methoden spezifiziert, hat <classname>Zend_Service_Akismet</classname>
             verschiedene zusätzliche Helfer die für die Modifikation von internen Eigenschaften verwendet
             werden können.
         </para>
@@ -316,7 +316,7 @@ $akismet->submitHam($data));
                     <code>ein Benutzer Agent/Version | Akismet/Version</code> haben. Der Standardwert ist
                     <code>Zend Framework/ZF-VERSION | Akismet/1.11</code>, wobei <code>ZF-VERSION</code>
                     die aktuelle Version des Zend Frameworks ist wie in der Konstante
-                    <code>Zend_Framework::VERSION</code> gespeichert.
+                    <classname>Zend_Framework::VERSION</classname> gespeichert.
                 </para>
             </listitem>
         </itemizedlist>

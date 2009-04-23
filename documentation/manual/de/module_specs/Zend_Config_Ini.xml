@@ -4,7 +4,7 @@
 <sect1 id="zend.config.adapters.ini">
     <title>Zend_Config_Ini</title>
     <para>
-        <code>Zend_Config_Ini</code> ermöglicht es Entwicklern, Konfigurations-Daten in einem
+        <classname>Zend_Config_Ini</classname> ermöglicht es Entwicklern, Konfigurations-Daten in einem
         vertrauten INI-Format zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf
         die Eigenschaften verschachtelter Objekte entspricht. Das verwendete INI-Format bietet
         einerseits die Möglichkeit, Konfigurations-Daten hierarchisch abzulegen und andererseits
@@ -16,10 +16,10 @@
     <note>
         <title>Die Ini Datei parsen</title>
         <para>
-            <code>Zend_Config_Ini</code> verwendet die PHP-Funktion
+            <classname>Zend_Config_Ini</classname> verwendet die PHP-Funktion
             <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>. Deren
             Dokumentation klärt über spezielle Verhaltensweisen auf, die sich auch auf
-            <code>Zend_Config_Ini</code> auswirken, z. B. wie die besonderen Werte
+            <classname>Zend_Config_Ini</classname> auswirken, z. B. wie die besonderen Werte
             <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> und
             <code>null</code> gehandhabt werden.
         </para>
@@ -29,7 +29,7 @@
         <para>
             Standardmäßig ist das Schlüssel Trennzeichen der Punkt (<code>.</code>). Dies kann
             geändert werden, indem der <code>$options</code> Schlüssel <code>'nestSeparator'</code>
-            geändert wird, wenn das <code>Zend_Config_Ini</code> Objekt instanziert wird. Zum
+            geändert wird, wenn das <classname>Zend_Config_Ini</classname> Objekt instanziert wird. Zum
             Beispiel:
             <programlisting role="php"><![CDATA[
 $options['nestSeparator'] = ':';
@@ -41,9 +41,9 @@ $config = new Zend_Config_Ini('/path/to/config.ini',
         </para>
     </note>
     <example id="zend.config.adapters.ini.example.using">
-        <title><code>Zend_Config_Ini</code> benutzen</title>
+        <title><classname>Zend_Config_Ini</classname> benutzen</title>
         <para>
-            Dieses Beispiel zeigt die grundlegende Nutzung von <code>Zend_Config_Ini</code> um
+            Dieses Beispiel zeigt die grundlegende Nutzung von <classname>Zend_Config_Ini</classname> um
             Konfigurations-Daten aus einem XML-File zu laden. In diesem Beispiel gibt es
             Konfigurations-Daten für ein Produktiv- und ein Staging-System. Da sich die Daten für
             das Staging-System nur unwesentlich von denen für das Produktiv-System unterscheiden,

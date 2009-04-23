@@ -29,7 +29,7 @@ if ($validatorChain->isValid($username)) {
 ]]>
         </programlisting>
 
-        Prüfungen werden in der Reihenfolge durchgeführt in der Sie <code>Zend_Validate</code> hinzugefügt
+        Prüfungen werden in der Reihenfolge durchgeführt in der Sie <classname>Zend_Validate</classname> hinzugefügt
         wurden. Im obigen Beispiel wird der Benutzername zuerst geprüft um sicherzustellen das die Länge
         zwischen 6 und 12 Zeichen beträgt, und anschließend wird geprüft um sicherzustellen das er nur
         alphanumerische Zeichen enthält. Die zweite Prüfung, für alphanumerische Zeichen, wird durchgeführt
@@ -40,7 +40,7 @@ if ($validatorChain->isValid($username)) {
 
     <para>
         In einigen Fällen macht es Sinn eine Prüfung die Kette abbrechen zu lassen wenn der Prüfprozess
-        fehlschlägt. <code>Zend_Validate</code> unterstützt solche Fälle mit dem zweiten Parameter der
+        fehlschlägt. <classname>Zend_Validate</classname> unterstützt solche Fälle mit dem zweiten Parameter der
         <code>addValidator()</code> Methode. Durch Setzen von <code>$breakChainOnFailure</code> zu
         <code>true</code> bricht die hinzugefügte Prüfung die Ausführung der Kette bei einem Fehler ab und
         verhindert damit die Ausführung von jeglichen anderen Prüfungen welche für diese Situation als
@@ -56,7 +56,7 @@ $validatorChain->addValidator(new Zend_Validate_StringLength(6, 12), true)
     </para>
 
     <para>
-        Jegliches Objekt welches das <code>Zend_Validate_Interface</code> enthält kann in einer Prüfkette
+        Jegliches Objekt welches das <classname>Zend_Validate_Interface</classname> enthält kann in einer Prüfkette
         verwendet werden.
     </para>
 

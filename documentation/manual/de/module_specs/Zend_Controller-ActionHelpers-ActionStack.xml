@@ -27,7 +27,7 @@
 
         <para>
             Oft ist es am einfachsten, einfach die Aktion, den Kontroller und das Modul (und optionale
-            Anfrage Parameter) zu spezifizieren, wie wenn <code>Zend_Controller_Action::_forward()</code>
+            Anfrage Parameter) zu spezifizieren, wie wenn <classname>Zend_Controller_Action::_forward()</classname>
             aufgerufen werden würde:
         </para>
 

@@ -9,15 +9,15 @@
         <title>Erstellen eines Memory Manager</title>
 
         <para>
-            Ein neuer Memory Manager (<code>Zend_Memory_Manager</code> object)
+            Ein neuer Memory Manager (<classname>Zend_Memory_Manager</classname> object)
             kann erstellt werden durch Verwendung der
-            <code>Zend_Memory::factory($backendName [, $backendOprions])</code>
+            <classname>Zend_Memory::factory($backendName [, $backendOprions])</classname>
             Methode.
         </para>
 
         <para>
             Das erste Argument <code>$backendName</code> ist eine Zeichenkette die
-            eine der Backend Implementationen benennt welche durch <code>Zend_Cache</code>
+            eine der Backend Implementationen benennt welche durch <classname>Zend_Cache</classname>
             unterstützt werden.
         </para>
 
@@ -37,13 +37,13 @@ $memoryManager = Zend_Memory::factory('File', $backendOptions);
         </programlisting>
 
         <para>
-            <code>Zend_Memory</code> verwendet <link linkend="zend.cache.backends"><code>Zend_Cache Backends</code></link>
+            <classname>Zend_Memory</classname> verwendet <link linkend="zend.cache.backends"><classname>Zend_Cache Backends</classname></link>
             als Speicheranbieter.
         </para>
 
         <para>
             Der spezielle Name '<code>None</code>' kann als Backend Name verwendet werden,
-            zusätzlich zu den Standard <code>Zend_Cache</code> Backends.
+            zusätzlich zu den Standard <classname>Zend_Cache</classname> Backends.
 
             <programlisting role="php"><![CDATA[
 $memoryManager = Zend_Memory::factory('None');
@@ -81,7 +81,7 @@ $memoryManager = Zend_Memory::factory('None');
             <para>
                 Verschiebbare Objekte (Objekte, welche verschoben werden können)
                 können erstellt werden mit Hilfe der
-                <code>Zend_Memory_Manager::create([$data])</code> Methode:
+                <classname>Zend_Memory_Manager::create([$data])</classname> Methode:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->create($data);
 ]]>
@@ -104,7 +104,7 @@ $memObject = $memoryManager->create($data);
             <para>
                 Verschlüsselte Objekte (Objekte, welche niemals getauscht werden) können
                 erstellt werden mit Hilfe der
-                <code>Zend_Memory_Manager::createLocked([$data])</code> Methode:
+                <classname>Zend_Memory_Manager::createLocked([$data])</classname> Methode:
                 <programlisting role="php"><![CDATA[
 $memObject = $memoryManager->createLocked($data);
 ]]>

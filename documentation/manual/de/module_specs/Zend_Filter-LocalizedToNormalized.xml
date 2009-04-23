@@ -7,7 +7,7 @@
 
     <para>
         Dieser Filter ändert jede angegebene lokalisierte Eingabe in seine normalisierte
-        Repräsentation. Er verwendet im Hintergrund <code>Zend_Locale</code> um diese
+        Repräsentation. Er verwendet im Hintergrund <classname>Zend_Locale</classname> um diese
         Transformation durchzuführen.
     </para>
 
@@ -101,7 +101,7 @@ $filter->filter('123.456,78');
 
         <para>
             Nehmen wir an das wir das Gebietsschema 'de' als Anwendungsweites Gebietsschema gesetzt
-            haben. <code>Zend_Filter_LocalizedToNormalized</code> nimmt das gesetzte Gebietsschema
+            haben. <classname>Zend_Filter_LocalizedToNormalized</classname> nimmt das gesetzte Gebietsschema
             und verwendet es um zu erkennen welche Art der Eingabe angegeben wurde. In unserem
             Beispiel wurde ein Wert mit Nachkommastellen angegeben. Jetzt gibt der Filter die
             normalisierte Repräsentation für diesen Wert als String zurück.
@@ -109,7 +109,7 @@ $filter->filter('123.456,78');
 
         <para>
             Man kann auch kontrollieren wie die normalisierte Nummer auszusehen hat. Hierfür kann
-            man alle Optionen angeben die auch von <code>Zend_Locale_Format</code> verwendet
+            man alle Optionen angeben die auch von <classname>Zend_Locale_Format</classname> verwendet
             werden. Die üblichsten sind:
         </para>
 

@@ -30,7 +30,7 @@ $view->addHelperPath('Zend/Dojo/View/Helper/', 'Zend_Dojo_View_Helper');
         </programlisting>
 
         <para>
-            Alternativ kann <code>Zend_Dojo</code>'s <code>enableView()</code> Methode verwendet werden um einem
+            Alternativ kann <classname>Zend_Dojo</classname>'s <code>enableView()</code> Methode verwendet werden um einem
             die Arbeit abzunehmen:
         </para>
 

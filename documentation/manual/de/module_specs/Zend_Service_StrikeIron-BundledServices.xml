@@ -5,14 +5,14 @@
     <title>Zend_Service_StrikeIron: Mitgelieferte Services</title>
 
     <para>
-      <code>Zend_Service_StrikeIron</code> kommt mit Wrapper Klassen für drei populäre StrikeIron Services.
+      <classname>Zend_Service_StrikeIron</classname> kommt mit Wrapper Klassen für drei populäre StrikeIron Services.
     </para>
 
     <sect2 id="zend.service.strikeiron.bundled-services.zip-code-information">
       <title>ZIP Code Informationen</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_ZipCodeInfo</code> bietet einen Client für StrikeIron's Zip Code Informations
+        <classname>Zend_Service_StrikeIron_ZipCodeInfo</classname> bietet einen Client für StrikeIron's Zip Code Informations
         Service. Für mehr Informationen über dieses Service kann bei diesen StrikeIron Ressourcen nachgesehen
         werden:
 
@@ -77,7 +77,7 @@ $status = $response->serviceStatus;
       <title>U.S. Address-Prüfung</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_USAddressVerification</code> bietet einen Client für StrikeIron's U.S.
+        <classname>Zend_Service_StrikeIron_USAddressVerification</classname> bietet einen Client für StrikeIron's U.S.
         Address-Prüfungs Service. Für mehr Informationen über dieses Service kann bei diesen StrikeIron Ressourcen
         nachgesehen werden:
 
@@ -139,7 +139,7 @@ if ($result->addressErrorNumber != 0) {
       <title>Verkaufs &amp; Steuer Grundlagen</title>
 
       <para>
-        <code>Zend_Service_StrikeIron_SalesUseTaxBasic</code> bietet einen Client für StrikeIron's Verkaufs &amp;
+        <classname>Zend_Service_StrikeIron_SalesUseTaxBasic</classname> bietet einen Client für StrikeIron's Verkaufs &amp;
         Steuer Grundlagen Service. Für mehr Informationen über dieses Service kann bei diesen StrikeIron
         Ressourcen nachgesehen werden:
 

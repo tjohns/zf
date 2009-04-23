@@ -5,16 +5,16 @@
     <title>Zend_Cache Frontends</title>
 
     <sect2 id="zend.cache.frontends.core">
-        <title><code>Zend_Cache_Core</code></title>
+        <title><classname>Zend_Cache_Core</classname></title>
         <sect3 id="zend.cache.frontends.core.introduction">
             <title>Einführung</title>
             <para>
-                <code>Zend_Cache_Core</code> ist ein spezielles Frontend, da es der Kern dieses Moduls ist.
+                <classname>Zend_Cache_Core</classname> ist ein spezielles Frontend, da es der Kern dieses Moduls ist.
                 Es ist ein generelles Cache Frontend und wurde von anderen Klassen erweitert.
             </para>
             <note>
                 <para>
-                    Alle Frontends sind von <code>Zend_Cache_Core</code> abgeleitet, so dass deren Methoden und
+                    Alle Frontends sind von <classname>Zend_Cache_Core</classname> abgeleitet, so dass deren Methoden und
                     Optionen (wie folgt beschrieben) auch in anderen Frontends vorhanden sind. Deswegen werden
                     sie dort nicht dokumentiert.
                 </para>
@@ -74,7 +74,7 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                Wenn auf true gesetzt, wird das Logging durch <code>Zend_Log</code> aktiviert
+                                Wenn auf true gesetzt, wird das Logging durch <classname>Zend_Log</classname> aktiviert
                                 (aber das System wird langsamer)
                               </entry>
                           </row>
@@ -244,11 +244,11 @@ if (!($cache->test($id))) {
     </sect2>
 
     <sect2 id="zend.cache.frontends.output">
-        <title><code>Zend_Cache_Frontend_Output</code></title>
+        <title><classname>Zend_Cache_Frontend_Output</classname></title>
         <sect3 id="zend.cache.frontends.output.introduction">
             <title>Einführung</title>
             <para>
-                <code>Zend_Cache_Frontend_Output</code> ist ein Ausgabe-Empfangendes Frontend. Es verwendet den
+                <classname>Zend_Cache_Frontend_Output</classname> ist ein Ausgabe-Empfangendes Frontend. Es verwendet den
                 Ausgabe Puffer in PHP, um alles zwischen der <code>start()</code> und der <code>end()</code> Methode
                 zu fangen.
             </para>
@@ -257,7 +257,7 @@ if (!($cache->test($id))) {
             <title>Mögliche Optionen</title>
             <para>
                 Dieses Frontend hat keine bestimmten Optionen zusätzlich zu denen von
-                <code>Zend_Cache_Core</code>.
+                <classname>Zend_Cache_Core</classname>.
             </para>
         </sect3>
 
@@ -289,11 +289,11 @@ echo 'Hier wird nie gecached ('.time().').';
     </sect2>
 
     <sect2 id="zend.cache.frontends.function">
-        <title><code>Zend_Cache_Frontend_Function</code></title>
+        <title><classname>Zend_Cache_Frontend_Function</classname></title>
         <sect3 id="zend.cache.frontends.function.introduction">
             <title>Einführung</title>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> cached das Ergebnis von Funktionsaufrufen. Es hat
+                <classname>Zend_Cache_Frontend_Function</classname> cached das Ergebnis von Funktionsaufrufen. Es hat
                 eine einzelne Hauptmethode genannt <code>call()</code>, welche den Funktionsnamen und Parameter
                 für den Aufruf in einem Array entgegennimmt.
             </para>
@@ -357,7 +357,7 @@ $cache->call('veryExpensiveFunc', $params);
 ]]>
             </programlisting>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> ist elegant genug, um beides zu cachen, den
+                <classname>Zend_Cache_Frontend_Function</classname> ist elegant genug, um beides zu cachen, den
                 Rückgabewert der Funktion und deren interne Ausgabe.
             </para>
             <note><para>
@@ -370,11 +370,11 @@ $cache->call('veryExpensiveFunc', $params);
     </sect2>
 
     <sect2 id="zend.cache.frontends.class">
-        <title><code>Zend_Cache_Frontend_Class</code></title>
+        <title><classname>Zend_Cache_Frontend_Class</classname></title>
         <sect3 id="zend.cache.frontends.class.introduction">
             <title>Einführung</title>
             <para>
-                <code>Zend_Cache_Frontend_Class</code> ist unterschiedlich zu <code>Zend_Cache_Frontend_Function</code>,
+                <classname>Zend_Cache_Frontend_Class</classname> ist unterschiedlich zu <classname>Zend_Cache_Frontend_Function</classname>,
                 weil es das Cachen von Objekten und statischen Methodenaufrufen erlaubt.
             </para>
         </sect3>
@@ -487,19 +487,19 @@ $res = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.file">
-        <title><code>Zend_Cache_Frontend_File</code></title>
+        <title><classname>Zend_Cache_Frontend_File</classname></title>
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Einführung</title>
             <para>
-                <code>Zend_Cache_Frontend_File</code> ist ein Frontend angetrieben durch den
+                <classname>Zend_Cache_Frontend_File</classname> ist ein Frontend angetrieben durch den
                 Änderungszeitpunkt einer "Masterdatei". Es ist wirklich interessant für Beispiele
                 in Konfigurations- oder Templateanwendungen. Es ist auch möglich mehrere Masterdateien
                 zu verwenden.
             </para>
             <para>
                 Zum Beispiel eine XML Konfigurationsdatei, welche von einer Funktion geparsed wird
-                und die ein "Config Objekt" zurückgibt (wie durch <code>Zend_Config</code>). Mit
-                <code>Zend_Cache_Frontend_File</code> kann das "Config Objekt" im Cache gespeichert
+                und die ein "Config Objekt" zurückgibt (wie durch <classname>Zend_Config</classname>). Mit
+                <classname>Zend_Cache_Frontend_File</classname> kann das "Config Objekt" im Cache gespeichert
                 werden (um zu Verhindern, das die XML Konfiguration jedes mal geparsed wird), aber mit
                 einer strengen Abhängigkeit zur "Masterdatei". Wenn also die XML Konfigurationsdatei
                 geändert wird, wird der Cache sofort ungültig.
@@ -538,10 +538,10 @@ $res = $cache->foobar2('1', '2');
                           <row>
                               <entry><code>master_files_mode</code></entry>
                               <entry><code>string</code></entry>
-                              <entry><code>Zend_Cache_Frontend_File::MODE_OR</code></entry>
+                              <entry><classname>Zend_Cache_Frontend_File::MODE_OR</classname></entry>
                               <entry>
-                                  <code>Zend_Cache_Frontend_File::MODE_AND</code> oder
-                                  <code>Zend_Cache_Frontend_File::MODE_OR</code> ;
+                                  <classname>Zend_Cache_Frontend_File::MODE_AND</classname> oder
+                                  <classname>Zend_Cache_Frontend_File::MODE_OR</classname> ;
                                   bei <code>MODE_AND</code> müssen alle Masterdateien angegriffen werden um einen
                                   Cache ungültig zu machen, bei <code>MODE_OR</code> ist eine eizelne angegriffene
                                   Datei genug um den Cache ungültig zu machen
@@ -563,7 +563,7 @@ $res = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.examples">
             <title>Beispiele</title>
             <para>
-                Die Verwendung dieses Frontends ist die gleiche wie die von <code>Zend_Cache_Core</code>.
+                Die Verwendung dieses Frontends ist die gleiche wie die von <classname>Zend_Cache_Core</classname>.
                 Es gibt kein eigenes Beispiel - was als einziges gemacht werden muß, ist das <code>master_File</code>
                 zu definieren, wenn die Factory verwendet wird.
             </para>
@@ -571,12 +571,12 @@ $res = $cache->foobar2('1', '2');
     </sect2>
 
     <sect2 id="zend.cache.frontends.page">
-        <title><code>Zend_Cache_Frontend_Page</code></title>
+        <title><classname>Zend_Cache_Frontend_Page</classname></title>
         <sect3 id="zend.cache.frontends.page.introduction">
             <title>Einführung</title>
             <para>
-                <code>Zend_Cache_Frontend_Page</code> ist wie <code>Zend_Cache_Frontend_Output</code>
-                aber entwickelt für eine komplette Seite. Es ist unmöglich <code>Zend_Cache_Frontend_Page</code>
+                <classname>Zend_Cache_Frontend_Page</classname> ist wie <classname>Zend_Cache_Frontend_Output</classname>
+                aber entwickelt für eine komplette Seite. Es ist unmöglich <classname>Zend_Cache_Frontend_Page</classname>
                 nur für das Cachen eines einzelnen Blockes zu verwenden.
             </para>
             <para>
@@ -756,7 +756,7 @@ $res = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.page.examples">
             <title>Beispiele</title>
             <para>
-                Die Verwendung von <code>Zend_Cache_Frontend_Page</code> ist wirklich trivial :
+                Die Verwendung von <classname>Zend_Cache_Frontend_Page</classname> ist wirklich trivial :
             </para>
             <programlisting role="php"><![CDATA[
 // [...] // Benötigt, Konfiguration und Factory
@@ -770,7 +770,7 @@ $cache->start();
             </programlisting>
             <para>
                 Ein etwas komplexeres Beispiel, welches einen Weg zeigt, um ein zentralisiertes
-                Cache Management in einer Bootstrap Datei zu erhalten (um es z.B. mit <code>Zend_Controller</code>
+                Cache Management in einer Bootstrap Datei zu erhalten (um es z.B. mit <classname>Zend_Controller</classname>
                 zu verwenden)
             </para>
             <programlisting role="php"><![CDATA[

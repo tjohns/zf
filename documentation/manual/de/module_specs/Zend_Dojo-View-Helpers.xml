@@ -88,7 +88,7 @@
 
         <listitem>
             <para>
-                <emphasis>Form Elemente</emphasis>: Diese wurden designed um von <code>Zend_Form</code>
+                <emphasis>Form Elemente</emphasis>: Diese wurden designed um von <classname>Zend_Form</classname>
                 verwendet zu werden, können aber auch selbstständig in Viewsktipten verwendet werden.
                 Jedes Dijit Element Viewhelfer erwartet die folgenden Elemente:
             </para>

@@ -12,7 +12,7 @@
         Kodierung können derzeit nur auf binärische Inhalte angewandt werden.
     </para>
     <para>
-        <code>Zend_Mail_Transport_Smtp</code> kodiert die Zeilen beginnend mit einem oder zwei
+        <classname>Zend_Mail_Transport_Smtp</classname> kodiert die Zeilen beginnend mit einem oder zwei
         Punkten, so dass die Mail das SMTP Protokoll nicht missachtet.
     </para>
 </sect1>

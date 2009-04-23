@@ -7,7 +7,7 @@
         <title>Einführung</title>
         <para>
             Das Request Objekt ist eine einfaches Wertobjekt, das zwischen
-            <code>Zend_Controller_Front</code> und den Router, Dispatcher und Controller Klassen
+            <classname>Zend_Controller_Front</classname> und den Router, Dispatcher und Controller Klassen
             übergeben wird. Es enthält sowohl die Definition des Controllers, der Aktion und der
             Parameter, die an die Aktion übergeben werden sollen, als auch den Rest der
             Anfrageumgebung, seit es HTTP, CLI oder PHP-GTK.
@@ -37,7 +37,7 @@
 
         <para>
             Abhängig vom Typ der Anfrage können auch weitere Methoden verfügbar sein. Das
-            verwendete Standard Request Object <code>Zend_Controller_Request_Http</code> stellt z.B.
+            verwendete Standard Request Object <classname>Zend_Controller_Request_Http</classname> stellt z.B.
             Methoden zum Abfragen der Request URI, Pfadinformationen, <code>$_GET</code> und
             <code>$_POST</code> Parameter usw. bereit.
         </para>
@@ -65,7 +65,7 @@
             <title>Auf Request Daten zugreifen</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> kapselt den Zugriff auf relevante Werte
+                <classname>Zend_Controller_Request_Http</classname> kapselt den Zugriff auf relevante Werte
                 wie der Schlüssel und Wert für Controller und Action Variablen des Routers und alle
                 zusätzlichen Parameter, die aus der URI ermittelt wurden. Es erlaubt zusätzlich
                 den Zugriff auf superglobale Werte als öffentliche Eigenschaften und verwaltet
@@ -78,7 +78,7 @@
                 <title>Superglobale Daten</title>
                 <para>
                     Beim Zugriff auf superglobale Daten über die öffentlichen Eigenschaften von
-                    <code>Zend_Controller_Request_Http</code> ist es notwendig, darauf zu achten,
+                    <classname>Zend_Controller_Request_Http</classname> ist es notwendig, darauf zu achten,
                     dass der Eigenschaftsname (der superglobale Arrayschlüssel) einem superglobalen
                     Wert in einer bestimmten Reihenfolge entspricht: 1. GET, 2. POST, 3. COOKIE,
                     4. SERVER, 5. ENV.
@@ -158,7 +158,7 @@
                     übergeben, oder ein PT Flag mit Rewrite Regeln verwendet wird, enthält
                     <code>$_SERVER['REDIRECT_URL']</code> die URI die benötigt wird, nicht
                     <code>$_SERVER['REQUEST_URI']</code>. Wenn so ein Setup verwendet wird und man ungültige
-                    Routen erhält, sollte man stattdessen die <code>Zend_Controller_Request_Apache404</code>
+                    Routen erhält, sollte man stattdessen die <classname>Zend_Controller_Request_Apache404</classname>
                     Klasse statt der standard Http Klasse für das Anfrage Objekt verwenden:
                 </para>
 
@@ -169,7 +169,7 @@ $front->setRequest($request);
                 </programlisting>
 
                 <para>
-                    Diese Klasse erweitert die <code>Zend_Controller_Request_Http</code> Klasse und modifiziert
+                    Diese Klasse erweitert die <classname>Zend_Controller_Request_Http</classname> Klasse und modifiziert
                     einfach die automatische Entdeckung der Anfrage URI. Sie kann als einfache Ersetzung verwendet
                     werden.
                 </para>
@@ -180,8 +180,8 @@ $front->setRequest($request);
             <title>Basis Url und Unterverzeichnisse</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> erlaubt, dass <code>Zend_Controller_Router_Rewrite</code>
-                in einem Unterverzeichnis verwendet werden kann. <code>Zend_Controller_Request_Http</code>
+                <classname>Zend_Controller_Request_Http</classname> erlaubt, dass <classname>Zend_Controller_Router_Rewrite</classname>
+                in einem Unterverzeichnis verwendet werden kann. <classname>Zend_Controller_Request_Http</classname>
                 versucht, die Basis URL automatisch zu erkennen und entsprechend zu setzen.
             </para>
 
@@ -209,9 +209,9 @@ $front->setRequest($request);
             <para>
                 Sollte die Basis URL falsch erkannt werden, kann man diese auch mit einem eigenen
                 Pfad mit Hilfe der <code>setBaseUrl()</code> Methode der
-                <code>Zend_Controller_Request_Http</code> Klasse oder der
-                <code>Zend_Controller_Front</code> Klasse überschreiben. Die einfachste Methode ist
-                die von <code>Zend_Controller_Front</code>, welche es an das Request Object weiter
+                <classname>Zend_Controller_Request_Http</classname> Klasse oder der
+                <classname>Zend_Controller_Front</classname> Klasse überschreiben. Die einfachste Methode ist
+                die von <classname>Zend_Controller_Front</classname>, welche es an das Request Object weiter
                 leitet. Beispiel, um eine eigene Basis URL zu setzen:
             </para>
 
@@ -259,7 +259,7 @@ $response   = $controller->dispatch();
             <title>Erkennen von AJAX Anfragen</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> hat eine rudimentäre Methode für die Erkennung von
+                <classname>Zend_Controller_Request_Http</classname> hat eine rudimentäre Methode für die Erkennung von
                 AJAX Anfragen: <code>isXmlHttpRequest()</code>. Diese Methode sucht nach einem HTTP Anfrageheader
                 <code>X-Requested-With</code> mit dem Wert 'XMLHttpRequest'; wenn er gefunden wird, gibt er
                 true zurück.
@@ -289,7 +289,7 @@ $response   = $controller->dispatch();
 
         <para>
             Die Basis Anfrage Klasse die für alle Anfrage Objekte verwendet wird ist die abstrakte Klasse
-            <code>Zend_Controller_Request_Abstract</code>. Sie ist sehr grundsätzlich und definiert die folgenden
+            <classname>Zend_Controller_Request_Abstract</classname>. Sie ist sehr grundsätzlich und definiert die folgenden
             Methoden:
         </para>
 

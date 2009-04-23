@@ -5,7 +5,7 @@
     <title>Zend_Soap_Server</title>
 
     <para>
-        Die <code>Zend_Soap_Server</code> Klasse ist dazu gedacht den Web Service Teil der Entwicklung für
+        Die <classname>Zend_Soap_Server</classname> Klasse ist dazu gedacht den Web Service Teil der Entwicklung für
         PHP Programmierer zu vereinfachen.
     </para>
 
@@ -23,7 +23,7 @@
         Ein WSDL Dokument kann automatisch erzeugt werden mit der Funktionalität die von der
         <link linkend="zend.soap.autodiscovery.introduction">Zend_Soap_AutoDiscovery Komponente</link> angeboten wird
         oder sollte händisch erzeugt werden durch Verwendung der
-        <link linkend="zend.soap.wsdl"><code>Zend_Soap_Wsdl</code> Klasse</link> oder irgendeinem anderen
+        <link linkend="zend.soap.wsdl"><classname>Zend_Soap_Wsdl</classname> Klasse</link> oder irgendeinem anderen
         XML Erstellungstool.
     </para>
 
@@ -33,16 +33,16 @@
     </para>
 
     <sect2 id="zend.soap.server.constructor">
-        <title>Der <code>Zend_Soap_Server</code> Konstruktor.</title>
+        <title>Der <classname>Zend_Soap_Server</classname> Konstruktor.</title>
         <para>
-            Der Contructor von <code>Zend_Soap_Server</code> sollte für WSDL und nicht-WSDL Modi
+            Der Contructor von <classname>Zend_Soap_Server</classname> sollte für WSDL und nicht-WSDL Modi
             unterschiedlich verwendet werden.
         </para>
 
         <sect3 id="zend.soap.server.constructor.wsdl_mode">
-            <title>Der <code>Zend_Soap_Server</code> Konstruktor für den WSDL Modus.</title>
+            <title>Der <classname>Zend_Soap_Server</classname> Konstruktor für den WSDL Modus.</title>
             <para>
-                Der <code>Zend_Soap_Server</code> Konstruktor nimmt zwei optionale Parameter wenn er im
+                Der <classname>Zend_Soap_Server</classname> Konstruktor nimmt zwei optionale Parameter wenn er im
                 WSDL Modus arbeitet:
                 <orderedlist>
                     <listitem>
@@ -109,11 +109,11 @@
         </sect3>
 
         <sect3 id="zend.soap.server.wsdl_mode">
-            <title>Der <code>Zend_Soap_Server</code> Konstruktor für den nicht-WSDL Modus.</title>
+            <title>Der <classname>Zend_Soap_Server</classname> Konstruktor für den nicht-WSDL Modus.</title>
             <para>
                 Der erste Parameter des Konstruktors <emphasis role="strong">muß</emphasis> auf
                 <code>null</code> gesetzt werden wenn man plant die Funktionalität von
-                <code>Zend_Soap_Server</code> im nicht-WSDL Modus zu verwenden.
+                <classname>Zend_Soap_Server</classname> im nicht-WSDL Modus zu verwenden.
             </para>
             <para>
                 Man muß in diesem Fall auch die 'uri' Option setzen (siehe anbei).
@@ -178,7 +178,7 @@
         </para>
 
         <para>
-            Der Erste ist das Anfügen einer Klasse zum <code>Zend_Soap_Server</code> Objekt welche eine
+            Der Erste ist das Anfügen einer Klasse zum <classname>Zend_Soap_Server</classname> Objekt welche eine
             Web Service API komplett beschreibt:
             <programlisting role="php"><![CDATA[
 ...
@@ -281,7 +281,7 @@ $server->handle();
             <title>Anfrage Bearbeitung.</title>
 
             <para>
-                Die <code>Zend_Soap_Server::handle()</code> Methode nimmt Anfragen vom Standard-Eingabe Stream
+                Die <classname>Zend_Soap_Server::handle()</classname> Methode nimmt Anfragen vom Standard-Eingabe Stream
                 ('php://input') entgegen. Sie kann übergangen werden durch die Angabe von optionalen Parametern
                 an die <code>handle()</code> Methode oder durch setzen einer Anfrage durch Verwendung der
                 <code>setRequest()</code> Methode:
@@ -349,7 +349,7 @@ $request = $server->getLastRequest();
             <title>Antworten vor-bearbeiten.</title>
 
             <para>
-                Die <code>Zend_Soap_Server::handle()</code> Methode wirft die erzeugte Antwort automatisch
+                Die <classname>Zend_Soap_Server::handle()</classname> Methode wirft die erzeugte Antwort automatisch
                 auf den Ausgabe Stream aus. Das kann durch Verwendung von <code>setReturnResponse()</code>
                 mit <code>true</code> oder <code>false</code> als Parameter blockiert werden
                 <footnote>

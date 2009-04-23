@@ -5,7 +5,7 @@
     <title>Zend_Filter_Inflector</title>
 
     <para>
-        <code>Zend_Filter_Inflector</code> ist ein generell verwendbares Tool für regel-basierende
+        <classname>Zend_Filter_Inflector</classname> ist ein generell verwendbares Tool für regel-basierende
         Beugung von Strings zu einem gegebenen Ziel.
     </para>
 
@@ -17,7 +17,7 @@
     </para>
 
     <para>
-        <code>Zend_Filter_Inflector</code> implementiert <code>Zend_Filter_Interface</code>; eine
+        <classname>Zend_Filter_Inflector</classname> implementiert <classname>Zend_Filter_Interface</classname>; eine
         Beugung kann durch den Aufruf von <code>filter()</code> auf der Objekt Instanz durchgeführt werden.
     </para>
 
@@ -59,7 +59,7 @@ $filtered = $inflector->filter(array('page' => $string));
 
         <para>
             Jede Variable im Ziel kann null oder mehr, mit Ihr assoziierte Regeln, besitzen. Regeln können
-            entweder <emphasis>statisch</emphasis> (static) sein oder zu einer <code>Zend_Filter</code> Klasse
+            entweder <emphasis>statisch</emphasis> (static) sein oder zu einer <classname>Zend_Filter</classname> Klasse
             verweisen. Statische Regeln werden den angegebenen Text ersetzen. Andernfalls wird eine Klasse
             verwendet die auf die Regel passt die angegeben wurde, um den Text zu beugen. Klasse werden
             typischerweise spezifiziert indem ein Kurzname verwendet wird, der den Filternamen indiziert,
@@ -67,7 +67,7 @@ $filtered = $inflector->filter(array('page' => $string));
         </para>
 
         <para>
-            Als Beispiel kann jede konkrete <code>Zend_Filter</code> Implementierung verwendet werden;
+            Als Beispiel kann jede konkrete <classname>Zend_Filter</classname> Implementierung verwendet werden;
             trotzdem, statt auf diese als 'Zend_Filter_Alpha' oder 'Zend_Filter_StringToLower' zu
             verweisen kann einfach 'Alpha' oder 'StringToLower' spezifiziert werden.
         </para>
@@ -77,9 +77,9 @@ $filtered = $inflector->filter(array('page' => $string));
         <title>Pfade zu alternativen Filtern setzen</title>
 
         <para>
-            <code>Zend_Filter_Inflector</code> verwendet <code>Zend_Loader_PluginLoader</code> um das Laden
+            <classname>Zend_Filter_Inflector</classname> verwendet <classname>Zend_Loader_PluginLoader</classname> um das Laden
             von Filtern zu managen die von der Beugung verwendet werden sollen. Standardmäßig, wird jeder
-            Filter mit dem Präfix <code>Zend_Filter</code> vorhanden sein. Um auf Filter mit diesem Präfix
+            Filter mit dem Präfix <classname>Zend_Filter</classname> vorhanden sein. Um auf Filter mit diesem Präfix
             zuzugreifen, die aber tiefer in der Hirarchie vorhanden sind, kann einfach der Zend_Filter Präfix
             entfernt werden:
         </para>
@@ -91,7 +91,7 @@ $inflector->addRules(array('script' => 'Word_CamelCaseToDash'));
         </programlisting>
 
         <para>
-            Um einen alternativen Pfad zu setzen hat <code>Zend_Filter_Inflector</code> eine Utility Methode
+            Um einen alternativen Pfad zu setzen hat <classname>Zend_Filter_Inflector</classname> eine Utility Methode
             die den Plugin Lader verwendet, <code>addFilterPrefixPath()</code>:
         </para>
 
@@ -143,7 +143,7 @@ $inflector->setTargetReplacementIdentifier('#');
         <para>
             Typischerweise wird das Ziel über den Konstruktor gesetzt. Trotzdem kann es Ziel später geändert
             werden (zum Beispiel, um die Standardbeugung in Kernkomponenten die dem <code>ViewRenderer</code>
-            oder <code>Zend_Layout</code> zu verändern). <code>setTarget()</code> kann für diese Zwecke
+            oder <classname>Zend_Layout</classname> zu verändern). <code>setTarget()</code> kann für diese Zwecke
             verwendet werden:
         </para>
 
@@ -281,7 +281,7 @@ class Foo
             <title>Beugungsregeln filtern</title>
 
             <para>
-                Die Filter von <code>Zend_Filter</code> können auch als Beugungsregeln verwendet werden.
+                Die Filter von <classname>Zend_Filter</classname> können auch als Beugungsregeln verwendet werden.
                 Genauso wie bei statische Regeln werden Sie an eine Zielvariable gebunden; anders als statische
                 Regeln können mehrfache Filter definiert werden die zur Beugung verwendet werden. Diese
                 Filter werden in der Reihenfolge ausgeführt, weswegen man vorsichtig sein sollte und Sie in
@@ -307,7 +307,7 @@ class Foo
                 <listitem>
                     <para>
                         <emphasis>Filter Objekt</emphasis>. Jede Objekt Instanz die
-                        <code>Zend_Filter_Interface</code> implementiert kann als ein Filter übergeben werden.
+                        <classname>Zend_Filter_Interface</classname> implementiert kann als ein Filter übergeben werden.
                     </para>
                 </listitem>
 
@@ -342,7 +342,7 @@ $inflector->setFilterRule('script', array(
 
             <para>
                 Typischerweise ist es einfacher viele Regeln auf einmal zu setzen als eine einzelne Variable
-                und die Beugungsregeln auf einmal zu konfigurieren. <code>Zend_Filter_Inflector</code>'s
+                und die Beugungsregeln auf einmal zu konfigurieren. <classname>Zend_Filter_Inflector</classname>'s
                 <code>addRules()</code> und <code>setRules()</code> Methode erlaubt dies.
             </para>
 
@@ -390,7 +390,7 @@ $inflector->addRules(array(
         <title>Hilfsmethoden</title>
 
         <para>
-            <code>Zend_Filter_Inflector</code> hat eine Anzahl von Hilfsmethoden für das empfangen und setzen
+            <classname>Zend_Filter_Inflector</classname> hat eine Anzahl von Hilfsmethoden für das empfangen und setzen
             der Plugin Laders, die Manipulation und das Empfangen von Regeln, und die Kontrolle ob und wann
             Ausnahmen geworfen werden.
         </para>
@@ -399,7 +399,7 @@ $inflector->addRules(array(
             <listitem>
                 <para>
                     <code>setPluginLoader()</code> kann verwendet werden wenn ein eigener Plugin Lader
-                    konfiguriert werden soll der mit <code>Zend_Filter_Inflector</code> verwendet werden soll;
+                    konfiguriert werden soll der mit <classname>Zend_Filter_Inflector</classname> verwendet werden soll;
                     <code>getPluginLoader()</code> empfängt den aktuell gesetzten.
                 </para>
             </listitem>
@@ -440,8 +440,8 @@ $inflector->addRules(array(
         <title>Zend_Config mit Zend_Filter_Inflector verwenden</title>
 
         <para>
-            <code>Zend_Config</code> kann verwendet werden um Regeln, Filter Präfix Pfade, oder andere
-            Objektstati im Beugungsmachanismus zu setzen, entweder durch die Übergabe eines <code>Zend_Config</code>
+            <classname>Zend_Config</classname> kann verwendet werden um Regeln, Filter Präfix Pfade, oder andere
+            Objektstati im Beugungsmachanismus zu setzen, entweder durch die Übergabe eines <classname>Zend_Config</classname>
             Objekts zum Konstruktor, oder durch <code>setConfig()</code>. Die folgenden Einstellungen können
             spezifiziert werden:
         </para>

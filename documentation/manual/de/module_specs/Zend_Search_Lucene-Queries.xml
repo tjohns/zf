@@ -24,18 +24,18 @@ $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Exception</code> wird geworfen wenn irgendwas im Abfrageparser
+                        <classname>Zend_Search_Lucene_Exception</classname> wird geworfen wenn irgendwas im Abfrageparser
                         selbst falsch läuft.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Search_Lucene_Search_QueryParserException</code> wird geworfen wenn ein
+                        <classname>Zend_Search_Lucene_Search_QueryParserException</classname> wird geworfen wenn ein
                         Fehler im Syntax der Abfrage ist.
                     </para>
                 </listitem>
             </itemizedlist>
-            Es ist eine gute Idee die <code>Zend_Search_Lucene_Search_QueryParserException</code>s abzufangen und
+            Es ist eine gute Idee die <classname>Zend_Search_Lucene_Search_QueryParserException</classname>s abzufangen und
             richtig abzuarbeiten:
             <programlisting role="php"><![CDATA[
 try {
@@ -48,17 +48,17 @@ try {
         </para>
 
         <para>
-            Die selbe Technik sollte für die find() Methode des <code>Zend_Search_Lucene</code> Objektes verwendet werden.
+            Die selbe Technik sollte für die find() Methode des <classname>Zend_Search_Lucene</classname> Objektes verwendet werden.
         </para>
 
         <para>
             Beginnend mit 1.5 werden Abfrageparser Exceptions standardmäßig unterdrückt. Wenn eine Abfrage
             nicht konform mit der Abfragesprache ist, dann wird Sie mithilfe des aktuellen Standardanalysators
             gestückelt und alle Begriffsstücke werden für die Suche verwendet.
-            Die <code>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</code> Methode
+            Die <classname>Zend_Search_Lucene_Search_QueryParser::dontSuppressQueryParsingExceptions()</classname> Methode
             kann verwendet werden um Exceptions einzuschalten. Die
-            <code>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</code> und
-            <code>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</code> Methoden
+            <classname>Zend_Search_Lucene_Search_QueryParser::suppressQueryParsingExceptions()</classname> und
+            <classname>Zend_Search_Lucene_Search_QueryParser::queryParsingExceptionsSuppressed()</classname> Methoden
             sind auch dazu gedacht das Verhalten der Exceptionsbehandlung zu verwalten.
         </para>
 
@@ -91,7 +91,7 @@ $hits  = $index->find($query);
         </programlisting>
 
         <para>
-            Das Term Feld ist optional. <code>Zend_Search_Lucene</code> durchsucht alle indizierten Felder in jedem
+            Das Term Feld ist optional. <classname>Zend_Search_Lucene</classname> durchsucht alle indizierten Felder in jedem
             Dokument wenn das Feld nicht spezifiziert
             wurde:
             <programlisting role="php"><![CDATA[
@@ -416,7 +416,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Die Ausdrucksfelder sind optional. <code>Zend_Search_Lucene</code> durchsucht alle Felder in jedem
+            Die Ausdrucksfelder sind optional. <classname>Zend_Search_Lucene</classname> durchsucht alle Felder in jedem
             Dokument wenn kein Feld spezifiziert wurde:
             <programlisting role="php"><![CDATA[
 $pattern = new Zend_Search_Lucene_Index_Term('test*');
@@ -480,7 +480,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Das Term Feld ist optional. <code>Zend_Search_Lucene</code> durchsucht alle Felder in jedem Dokument ob ein
+            Das Term Feld ist optional. <classname>Zend_Search_Lucene</classname> durchsucht alle Felder in jedem Dokument ob ein
             Feld nicht spezifiziert ist:
             <programlisting role="php"><![CDATA[
 $term = new Zend_Search_Lucene_Index_Term('test');
@@ -541,12 +541,12 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Eine Phrasenabfrage kann in einem Schritt mit einem Klassenkonstruktor erstellt werden
-            oder Schritt für Schritt mit der <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>
+            oder Schritt für Schritt mit der <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname>
             Methode.
         </para>
 
         <para>
-            Der <code>Zend_Search_Lucene_Search_Query_Phrase</code> Klassenkonstruktor nimmt drei optionale
+            Der <classname>Zend_Search_Lucene_Search_Query_Phrase</classname> Klassenkonstruktor nimmt drei optionale
             Argumente entgegen:
         </para>
         <programlisting role="php"><![CDATA[
@@ -607,8 +607,8 @@ $query = new Zend_Search_Lucene_Search_Query_Phrase(
 
 
         <para>
-            Die <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> Methode nimmt zwei
-            Argumente entgeben. Ein <code>Zend_Search_Lucene_Index_Term</code> Objekt ist
+            Die <classname>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</classname> Methode nimmt zwei
+            Argumente entgeben. Ein <classname>Zend_Search_Lucene_Index_Term</classname> Objekt ist
             erforderlich und die Position optional:
         </para>
         <programlisting role="php"><![CDATA[
@@ -733,7 +733,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Begriffsfelder sind optional. <code>Zend_Search_Lucene</code> durchsucht alle Felder wenn das Feld nicht spezifiziert
+            Begriffsfelder sind optional. <classname>Zend_Search_Lucene</classname> durchsucht alle Felder wenn das Feld nicht spezifiziert
             wurde:
             <programlisting role="php"><![CDATA[
 $from = new Zend_Search_Lucene_Index_Term('Aida');
@@ -747,7 +747,7 @@ $hits  = $index->find($query);
         </para>
 
         <para>
-            Jede (aber nicht beide) der Begrenzungsausdrücke kann auf null gesetzt werden. <code>Zend_Search_Lucene</code> sucht
+            Jede (aber nicht beide) der Begrenzungsausdrücke kann auf null gesetzt werden. <classname>Zend_Search_Lucene</classname> sucht
             vom Anfang oder bis zum Ende des Verzeichnisses für die spezifizierten Feld(er) für diesen Fall:
             <programlisting role="php"><![CDATA[
 // Sucht nach ['20020101' TO ...]

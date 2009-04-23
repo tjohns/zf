@@ -12,23 +12,23 @@
         <title>Zend_Captcha_Word</title>
 
         <para>
-            <code>Zend_Captcha_Word</code> ist ein abstrakter Adapter der als Basisklasse für die
+            <classname>Zend_Captcha_Word</classname> ist ein abstrakter Adapter der als Basisklasse für die
             meisten anderen CAPTCHA Adapter fungiert. Er bietet Mutatoren für die Spezifizierung der
             Wortlänge, Session TTL, das Session Namespaceobjekt das verwendet werden soll, und die
             Session Namespaceklasse die für die Persistenz zu verwenden ist wenn man
-            <code>Zend_Session_Namespace</code> nicht verwenden will. <code>Zend_Captcha_Word</code>
+            <classname>Zend_Session_Namespace</classname> nicht verwenden will. <classname>Zend_Captcha_Word</classname>
             kapselt die Prüflogik.
         </para>
 
         <para>
             Standardmäßig ist die Wortlänge 8 Zeichen, das Sessiontimeout 5 Minuten und für die
-            Persistenz wird <code>Zend_Session_Namespace</code> verwendet (wobei der Namespace
+            Persistenz wird <classname>Zend_Session_Namespace</classname> verwendet (wobei der Namespace
             "Zend_Form_Captcha_&lt;captcha ID&gt;" verwendet wird).
         </para>
 
         <para>
-            Zusätzlich zu den Methoden wie vom <code>Zend_Captcha_Adapter</code> Interface benötigt
-            werden bietet <code>Zend_Captcha_Word</code> die folgenden Methoden an:
+            Zusätzlich zu den Methoden wie vom <classname>Zend_Captcha_Adapter</classname> Interface benötigt
+            werden bietet <classname>Zend_Captcha_Word</classname> die folgenden Methoden an:
         </para>
 
         <itemizedlist>
@@ -45,7 +45,7 @@
 
             <listitem><para>
                 <code>setSessionClass($class)</code> und <code>getSessionClass()</code> erlauben es eine
-                alternative <code>Zend_Session_Namespace</code> Implementation zu spezifizieren die
+                alternative <classname>Zend_Session_Namespace</classname> Implementation zu spezifizieren die
                 verwendet werden soll um das CAPTCHA Token persistent zu machen und den aktuellen Wert
                 zu bekommen.
             </para></listitem>
@@ -68,7 +68,7 @@
 
         <para>
             Alle Wort CAPTCHAs erlauben es ein Array von Optionen an den Konstruktor zu übergeben, oder
-            alternativ dieses an <code>setOptions()</code> zu übergeben. Man kan auch ein <code>Zend_Config</code>
+            alternativ dieses an <code>setOptions()</code> zu übergeben. Man kan auch ein <classname>Zend_Config</classname>
             Objekt an <code>setConfig()</code> zu übergeben. Standardmäßig können die <code>wordLen</code>,
             <code>timeout</code>, und <code>sessionClass</code> Schlüssel alle verwendet werden. Jede
             konkrete Implementation kann zusätzliche Schlüssel definieren oder die Optionen auf einem
@@ -77,29 +77,29 @@
 
         <note>
             <para>
-                <code>Zend_Captcha_Word</code> ist eine abstrakte Klasse und kann nicht direkt
+                <classname>Zend_Captcha_Word</classname> ist eine abstrakte Klasse und kann nicht direkt
                 instanziiert werden.
             </para>
         </note>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.dumb">
-        <title><code>Zend_Captcha_Dumb</code></title>
+        <title><classname>Zend_Captcha_Dumb</classname></title>
 
         <para>
-            Der <code>Zend_Captcha_Dumb</code> Adapter ist fast selbsterklärend. Er bietet einen
+            Der <classname>Zend_Captcha_Dumb</classname> Adapter ist fast selbsterklärend. Er bietet einen
             zufälligen String der in umgekehrter Reihenfolge eingegeben werden muß um validiert
             zu werden. Als solches ist es keine gute CAPTCHA Lösung, und sollte nur für Testzwecke
-            verwendet werden. Er erweitert <code>Zend_Captcha_Word</code>.
+            verwendet werden. Er erweitert <classname>Zend_Captcha_Word</classname>.
         </para>
     </sect2>
 
     <sect2 id="zend.captcha.adapters.figlet">
-        <title><code>Zend_Captcha_Figlet</code></title>
+        <title><classname>Zend_Captcha_Figlet</classname></title>
 
         <para>
-            Der <code>Zend_Captcha_Figlet</code> Adapter verwendet
-            <link linkend="zend.text.figlet"><code>Zend_Text_Figlet</code></link> um dem
+            Der <classname>Zend_Captcha_Figlet</classname> Adapter verwendet
+            <link linkend="zend.text.figlet"><classname>Zend_Text_Figlet</classname></link> um dem
             Benutzer ein Figlet zu präsentieren.
         </para>
 
@@ -123,7 +123,7 @@
         </para>
 
         <para>
-            <code>Zend_Captcha_Image</code> erweitert <code>Zend_Captcha_Word</code>, und bietet zusätzlich
+            <classname>Zend_Captcha_Image</classname> erweitert <classname>Zend_Captcha_Word</classname>, und bietet zusätzlich
             die folgenden Methoden:
         </para>
 
@@ -195,7 +195,7 @@
         <title>Zend_Captcha_ReCaptcha</title>
 
         <para>
-            Der <code>Zend_Captcha_ReCaptcha</code> Adapter verwendet
+            Der <classname>Zend_Captcha_ReCaptcha</classname> Adapter verwendet
             <link linkend="zend.service.recaptcha">Zend_Service_ReCaptcha</link> um CAPTCHAs zu erzeugen
             und zu prüfen. Es bietet die folgenden Methoden an:
         </para>

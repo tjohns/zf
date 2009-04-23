@@ -13,7 +13,7 @@
             Vorteile gegenüber der <code>_redirect()</code> Methode. Er ist zum Beispiel fähig seitenweises
             Verhalten im Redirector Objekt vorzudefinieren oder bietet ein eingebautes
             <code>gotoSimple($action, $controller, $module, $params)</code> Interface ähnlich dem von
-            <code>Zend_Controller_Action::_forward()</code>.
+            <classname>Zend_Controller_Action::_forward()</classname>.
         </para>
 
         <para>
@@ -40,7 +40,7 @@
                 <para>
                     <code>setGotoSimple()</code> kann verwendet werden um eine Standard URL zu setzen die verwendet wird
                     wenn keine an <code>gotoSimple()</code> übergeben wird. Verwendet die API von
-                    <code>Zend_Controller_Action::_forward()</code>:
+                    <classname>Zend_Controller_Action::_forward()</classname>:
                     setGotoSimple($action, $controller = null, $module = null, array $params = array());
                 </para>
             </listitem>
@@ -204,7 +204,7 @@ class AlternativeController extends Zend_Controller_Action
             <title>Verwenden von goto()'s _forward() API</title>
 
             <para>
-                <code>gotoSimple()</code>'s API entspricht der von <code>Zend_Controller_Action::_forward()</code>. Der
+                <code>gotoSimple()</code>'s API entspricht der von <classname>Zend_Controller_Action::_forward()</classname>. Der
                 primäre Unterschied ist das Sie eine URL von den übergebenen Parametern erstellt und das
                 Standardformat <code>:module/:controller/:action/*</code> des Standardrouters verwendet. Dann leitet
                 es um statt die Aktion zu verketten.

@@ -5,14 +5,14 @@
     <title>Zend_Application_Resource_Modules</title>
 
     <para>
-        <code>Zend_Application_Resource_Modules</code> wird verwendet im eigene Anwendungsmodule zu
+        <classname>Zend_Application_Resource_Modules</classname> wird verwendet im eigene Anwendungsmodule zu
         initialisieren. Wenn das Modul eine <code>Bootstrap.php</code> Datei in seinem Root hat,
         und es eine Klasse die <code>Module_Bootstrap</code> heißt enthält (wobei "Module" der
         Modulname ist), dann wird diese Klasse verwendet um das Modul zu bootstrappen.
     </para>
 
     <para>
-        Standardmäßig wird eine Instanz vom <code>Zend_Application_Module_Autoloader</code> für das
+        Standardmäßig wird eine Instanz vom <classname>Zend_Application_Module_Autoloader</classname> für das
         Modul erstellt, indem der Modulname und das Verzeichnis dazu verwendet werden sie zu
         initialisieren.
     </para>

@@ -8,7 +8,7 @@
         Eine Anzahl von Zend Framework Komponenten ist steckbar, und erlaubt es Funktionen dynamisch zu laden
         durch die Angabe eines Klassenpräfixes und einem Pfad zu den Klassendaten die nicht notwendigerweise im
         <code>include_path</code> sind, oder nicht notwendigerweise den traditionellen Namenskonventionen
-        folgen. <code>Zend_Loader_PluginLoader</code> bietet übliche Funktionalitäten für diesen Prozess.
+        folgen. <classname>Zend_Loader_PluginLoader</classname> bietet übliche Funktionalitäten für diesen Prozess.
     </para>
 
     <para>
@@ -91,7 +91,7 @@ $formSubmitClass = $loader->load('FormSubmit'); // 'Bar_View_Helper_FormSubmit'
 
             <para>
                 In einigen Fällen kann es gewünscht sein den gleichen Präfix für mehrere Pfade zu verwenden.
-                <code>Zend_Loader_PluginLoader</code> registriert aktuell ein Array von Pfaden für jeden
+                <classname>Zend_Loader_PluginLoader</classname> registriert aktuell ein Array von Pfaden für jeden
                 gegebenen Präfix; der zuletzt resistrierte wird als erste geprüft. Das ist teilweise nützlich
                 wenn Inkubator Komponenten verwendet werden.
             </para>
@@ -114,7 +114,7 @@ $loader = new Zend_Loader_PluginLoader(array(
         </note>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> erlaubt es auch optional Plugins  über Plugin-fähige Objekte
+            <classname>Zend_Loader_PluginLoader</classname> erlaubt es auch optional Plugins  über Plugin-fähige Objekte
             zu teilen, ohne das eine Singleton Instanz verwendet werden muß. Das wird durch eine statische
             Registrierung ermöglicht. Der Name des Registry muß bei der Instanziierung als zweiter Parameter
             an den Konstruktor übergeben werden:
@@ -204,7 +204,7 @@ if ($loader->isLoaded('Adapter')) {
         </para>
 
         <para>
-            <code>Zend_Loader_PluginLoader</code> bietet ein optional einschaltbares Feature für genau diese
+            <classname>Zend_Loader_PluginLoader</classname> bietet ein optional einschaltbares Feature für genau diese
             Situation, einen integrierten Cache für die Klassendateien. Wenn er aktiviert wird, erstellt er
             eine Datei die alle erfolgreichen Includes enthält welche dann von der Bootstrap Datei aus
             aufgerufen werden kann. Durch Verwendung dieser Strategie, kann die Performance für

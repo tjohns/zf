@@ -17,7 +17,7 @@
 
         <para>
             Die Ereignismethoden sind in der abstrakten Klasse
-            <code>Zend_Controller_Plugin_Abstract</code> definiert, von dem User Plugin Klassen
+            <classname>Zend_Controller_Plugin_Abstract</classname> definiert, von dem User Plugin Klassen
             angeleitet werden müssen:
         </para>
 
@@ -25,7 +25,7 @@
             <listitem>
                 <para>
                     <code>routeStartup()</code> wird aufgerufen bevor
-                    <code>Zend_Controller_Front</code> <link
+                    <classname>Zend_Controller_Front</classname> <link
                         linkend="zend.controller.router">den Router</link>
                     aufruft, um den Request anhand der registrierten Routen zu überprüfen.
                 </para>
@@ -42,7 +42,7 @@
             <listitem>
                 <para>
                     <code>dispatchLoopStartup()</code> wird aufgerufen, bevor
-                    <code>Zend_Controller_Front</code> den Dispatch Loop aufnimmt.
+                    <classname>Zend_Controller_Front</classname> den Dispatch Loop aufnimmt.
                 </para>
             </listitem>
 
@@ -53,7 +53,7 @@
                     aufgerufen, bevor eine Aktion verarbeitet wird. Dieser Callback erlaubt ein
                     Proxy oder Filter Verhalten. Durch Verändern des Requests und Zurücksetzen
                     des Verarbeitungsstatus (mittels
-                    <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>) kann
+                    <classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname>) kann
                     die aktuelle Aktion abgebrochen oder ersetzt werden.
                 </para>
             </listitem>
@@ -65,7 +65,7 @@
                     aufgerufen, nachdem eine Aktion verarbeitet wurde. Dieser Callback erlaubt ein
                     Proxy oder Filter Verhalten. Durch Verändern des Requests und Zurücksetzen
                     des Verarbeitungsstatus (mittels
-                    <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>) kann
+                    <classname>Zend_Controller_Request_Abstract::setDispatched(false)</classname>) kann
                     eine neue Aktion für die Verarbeitung angegeben werden.
                 </para>
             </listitem>
@@ -73,7 +73,7 @@
             <listitem>
                 <para>
                     <code>dispatchLoopShutdown()</code> wird aufgerufen, nachdem
-                    <code>Zend_Controller_Front</code> den Dispatch Loop beendet.
+                    <classname>Zend_Controller_Front</classname> den Dispatch Loop beendet.
                 </para>
             </listitem>
         </itemizedlist>
@@ -84,7 +84,7 @@
 
         <para>
             Um eine Plugin Klasse zu schreiben, bindet man einfach die abstrakte Klasse
-            <code>Zend_Controller_Plugin_Abstract</code> ein und erweitert sie:
+            <classname>Zend_Controller_Plugin_Abstract</classname> ein und erweitert sie:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -96,7 +96,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         </programlisting>
 
         <para>
-            Keine der Methoden von <code>Zend_Controller_Plugin_Abstract</code> ist abstrakt, so
+            Keine der Methoden von <classname>Zend_Controller_Plugin_Abstract</classname> ist abstrakt, so
             dass Plugin Klassen nicht gezwungen werden, irgend einen der vorhandenen
             Ereignismethoden zu implemetieren, die oben gelistet wurden. Schreiber von Plugins
             brauchen nur die Methoden zu implementieren, die sie für ihre speziellen Bedürfnisse
@@ -104,7 +104,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         </para>
 
         <para>
-            <code>Zend_Controller_Plugin_Abstract</code> stellt den Controller Plugins außerdem die
+            <classname>Zend_Controller_Plugin_Abstract</classname> stellt den Controller Plugins außerdem die
             Request und Response Objekte über die <code>getRequest()</code> und
             <code>getResponse()</code> Methoden zur Verfügung.
         </para>
@@ -114,7 +114,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
         <title>Plugins verwenden</title>
 
         <para>
-            Plugin Klassen werden mit <code>Zend_Controller_Front::registerPlugin()</code>
+            Plugin Klassen werden mit <classname>Zend_Controller_Front::registerPlugin()</classname>
             registriert und können jederzeit registriert werden. Der folgende Schnipsel zeigt,
             wie ein Plugin in der Controllerkette verwendet werden kann:
         </para>

@@ -14,7 +14,7 @@
             Zusätzlich übergibt der Front Controller alle aufgefangenen Ausnahmen an das Response
             Objekt, um dem Entwickler das Verarbeiten von Ausnahmen zu ermöglichen. Dies
             Funktionalität kann durch Setzen von
-            <code>Zend_Controller_Front::throwExceptions(true)</code> überschrieben werden.
+            <classname>Zend_Controller_Front::throwExceptions(true)</classname> überschrieben werden.
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -38,7 +38,7 @@ $response->sendResponse();
                 bearbeitet hat; typischerweise wird es nie notwendig sein Ihn aufzurufen. Wenn man trotzdem die
                 Antwort manipulieren will oder Sie beim Testen verwenden will, kann dieses Verhalten durch das
                 Setzen des <code>returnResponse</code> Flags mit
-                <code>Zend_Controller_Front::returnResponse(true)</code> geändert werden:
+                <classname>Zend_Controller_Front::returnResponse(true)</classname> geändert werden:
             </para>
 
             <programlisting role="php"><![CDATA[$front->returnResponse(true);
@@ -74,7 +74,7 @@ $this->getResponse()
             <para>
                 Wenn die <link linkend="zend.controller.action.viewintegration">View Integration</link> des Aktion
                 Controllers verwendet wird muß der bearbeitete Inhalt des View Skripts im Antwort Objekt nicht
-                gesetzt werden, da die <code>Zend_Controller_Action::render()</code> das standardmäßig macht.
+                gesetzt werden, da die <classname>Zend_Controller_Action::render()</classname> das standardmäßig macht.
             </para>
         </note>
 
@@ -450,7 +450,7 @@ array(
         </para>
 
         <para>
-            Die Basis Antwort Klasse ist <code>Zend_Controller_Response_Abstract</code>, und jede erbende Klasse die
+            Die Basis Antwort Klasse ist <classname>Zend_Controller_Response_Abstract</classname>, und jede erbende Klasse die
             erstellt wird sollte von dieser Klasse oder eine Ihrer Derivate erben. Die verschiedenen vorhandenen
             Methoden wurden in der vorhergehenden Sektion aufgezählt.
         </para>

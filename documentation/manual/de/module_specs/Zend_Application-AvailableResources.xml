@@ -6,7 +6,7 @@
 
     <para>
         Hier kann man API-artige Dokumentation über alle Ressource Plugins finden die
-        standardmäßig in <code>Zend_Application</code> vorhanden sind.
+        standardmäßig in <classname>Zend_Application</classname> vorhanden sind.
     </para>
 
     <xi:include href="Zend_Application-AvailableResources-Db.xml" />

@@ -2,10 +2,10 @@
 <!-- EN-Revision: 14978 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.advanced">
-    <title>Fortgeschrittene Verwendung von <code>Zend_Form</code></title>
+    <title>Fortgeschrittene Verwendung von <classname>Zend_Form</classname></title>
 
     <para>
-        <code>Zend_Form</code> hat eine Vielzahl an Funktionalitäten, von denen viele auf
+        <classname>Zend_Form</classname> hat eine Vielzahl an Funktionalitäten, von denen viele auf
         fortgeschrittene Entwickler zugeschnitten sind. Dieses Kapitel beschreibt einige dieser
         Funktionalitäten mit Beispielen und Usecases.
     </para>
@@ -151,14 +151,14 @@
         </para>
 
         <para>
-            <code>Zend_Form</code> versucht diesen Prozess mit seinen
+            <classname>Zend_Form</classname> versucht diesen Prozess mit seinen
             <link linkend="zend.form.forms.subforms">Unterformularen</link> zu automatisieren.
             Standardmäßig werden Unterformulare dargestellt, indem die Array Schreibweise, wie im
             vorherigen HTML Form Code gezeigt, komplett mit Ids, verwendet wird. Der Arrayname
             basiert auf dem Namen des Unterformulars, mit den Schlüsseln basierend auf den
             Elementen, die im Unterformualr enthalten sind. Unterformulare können beliebig tief
             verschachtelt sein, und das erzeugt verschachtelte Arrays um die Struktur zu
-            reflektieren. Zusätzlich beachten die verschiedenen Prüfroutinen in <code>Zend_Form</code>
+            reflektieren. Zusätzlich beachten die verschiedenen Prüfroutinen in <classname>Zend_Form</classname>
             die Arraystruktur, und stellen sicher, dass die Form korrekt überprüft wird, egal wie
             tief verschachtelt die Unterformulare sind. Es muss nichts getan werden, um davon zu
             profitieren; dieses Verhalten ist standardmäßig aktiviert.
@@ -173,7 +173,7 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Form::setIsArray($flag)</code>: Durch das Setzen dieses Flags auf
+                    <classname>Zend_Form::setIsArray($flag)</classname>: Durch das Setzen dieses Flags auf
                     <code>true</code>, kann angezeigt werden, dass das komplette Formular als Array
                     behandelt werden soll. Standardmäßig wird der Name des Formulars als Name des
                     Arrays verwendet, solange <code>setElementsBelongTo()</code> aufgerufen wurde.
@@ -189,7 +189,7 @@
             </listitem>
 
             <listitem><para>
-                    <code>Zend_Form::setElementsBelongTo($array)</code>: Durch Verwendung dieser
+                    <classname>Zend_Form::setElementsBelongTo($array)</classname>: Durch Verwendung dieser
                     Methode kann der Name eines Arrays spezifiziert werden dem alle Elemente des
                     Formulars angehören. Der Name kann durch Verwendung der Zugriffsmethode
                     <code>getElementsBelongTo()</code> eruiert werden.
@@ -198,7 +198,7 @@
 
         <para>
             Zusätzlich können auf dem Element Level, individuelle Elemente spezifiziert werden die
-            bestimmten Arrays angehören indem die <code>Zend_Form_Element::setBelongsTo()</code>
+            bestimmten Arrays angehören indem die <classname>Zend_Form_Element::setBelongsTo()</classname>
             Methode verwendet wird. Um herauszufinden welcher Wert gesetzt ist -- egal ob dieser
             explizit gesetzt wurde oder implzit über das Formular -- kann die Zugriffsmethode
             <code>getBelongsTo()</code> verwendet werden.
@@ -209,7 +209,7 @@
         <title>Mehrseitige Formulare</title>
 
         <para>
-            Aktuell werden mehrseitige Formulare nicht offiziell in <code>Zend_Form</code>
+            Aktuell werden mehrseitige Formulare nicht offiziell in <classname>Zend_Form</classname>
             unterstützt; trotzdem ist die meiste Unterstützung für deren Implementierung bereits
             vorhanden und kann mit etwas extra Code angepasst werden.
         </para>
@@ -435,7 +435,7 @@ class My_Form_Registration extends Zend_Form
                 können wann abgebrochen wird. Zweitens wird etwas Logik benötigt, um festzustellen
                 welche Formularteile bereits übermittelt wurden und welches Unterformular, basierend
                 auf dieser Information, angezeigt werden soll. Wir verwenden
-                <code>Zend_Session_Namespace</code> um Daten zu fixieren, was uns auch hilft die
+                <classname>Zend_Session_Namespace</classname> um Daten zu fixieren, was uns auch hilft die
                 Frage zu beantworten welches Formular zu übertragen ist.
             </para>
 

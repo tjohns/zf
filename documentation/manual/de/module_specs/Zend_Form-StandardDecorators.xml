@@ -5,7 +5,7 @@
     <title>Standard Formular Dekoratoren die mit dem Zend Framework ausgeliefert werden</title>
 
     <para>
-        <code>Zend_Form</code> wird mit verschiedenen Standard Dekoratoren ausgeliefert. Für
+        <classname>Zend_Form</classname> wird mit verschiedenen Standard Dekoratoren ausgeliefert. Für
         weitere Informationen über die generelle Verwendung von Dekoratoren, siehe das
         <link linkend="zend.form.decorators">Kapitel über Dekoratoren</link>.
     </para>
@@ -70,8 +70,8 @@ class Util
 
         <para>
             Der Description Dekorator kann verwendet werden, um eine Beschreibung in einem
-            <code>Zend_Form</code>, <code>Zend_Form_Element</code>, oder
-            <code>Zend_Form_DisplayGroup</code> Element anzuzeigen; es holt die Beschreibung,
+            <classname>Zend_Form</classname>, <classname>Zend_Form_Element</classname>, oder
+            <classname>Zend_Form_DisplayGroup</classname> Element anzuzeigen; es holt die Beschreibung,
             indem es die <code>getDescription()</code> Methode des Objektes verwendet.
             Übliche Anwendungsfälle sind das Anbieten von UI Hinweisen für Elemente.
         </para>
@@ -157,7 +157,7 @@ class Util
 
         <para>
             File Elemente haben eine spezielle Schreibweise wenn man mehrere File Elemente oder Unterformulare
-            verwendet. Der File Decorator wird von <code>Zend_Form_Element_File</code> verwendet und erlaubt
+            verwendet. Der File Decorator wird von <classname>Zend_Form_Element_File</classname> verwendet und erlaubt
             es mehrere File Elemente, mit einem einzelnen Methodenaufruf, zu setzen. Er wird automatisch
             verwendet und bestimmt den Namen des Elements.
         </para>
@@ -167,10 +167,10 @@ class Util
         <title>Zend_Form_Decorator_Form</title>
 
         <para>
-            <code>Zend_Form</code> Objekte müssen typischerweise ein HTML <code>&lt;form&gt;</code> Tag
+            <classname>Zend_Form</classname> Objekte müssen typischerweise ein HTML <code>&lt;form&gt;</code> Tag
             darstellen. Der Formular Dekorator verweist auf den Formular View Helfer. Er bettet jeden
             angebotenen Inhalt in ein HTML Formular Element ein, indem die Aktionen und Methoden des
-            <code>Zend_Form</code> Objektes verwendet werden, und jedes Attribut als HTML Attribut.
+            <classname>Zend_Form</classname> Objektes verwendet werden, und jedes Attribut als HTML Attribut.
         </para>
     </sect2>
 
@@ -386,7 +386,7 @@ $form->setDecorators(array(
         <title>Zend_Form_Decorator_ViewHelper</title>
 
         <para>
-            Die meisten Elemente verwenden <code>Zend_View</code> Helfer für die Darstellung und
+            Die meisten Elemente verwenden <classname>Zend_View</classname> Helfer für die Darstellung und
             das wird mit dem View Helfer Dekorator getan. Mit ihm kann ein 'helper' Tag spezifiziert
             werden der explizit den View Helfer setzt, der anzupassen ist; wenn keiner angegeben
             wird, verwendet er das letzte Segment des Klassennamens des Elements um den Helfer

@@ -5,7 +5,7 @@
     <title>Zend_Application_Bootstrap_Bootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_Bootstrapper</code> ist das Basisinterface das alle
+        <classname>Zend_Application_Bootstrap_Bootstrapper</classname> ist das Basisinterface das alle
         Bootstrap Klassen implementieren müssen. Die Basisfunktionalität zielt auf Konfiguration,
         Identifikation von Ressourcen, Bootstrapping (entweder von individuellen Ressourcen oder
         der kompletten Anwendung), und dem Dispatchen der Anwendung ab.
@@ -33,21 +33,21 @@
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$application</code>: <emphasis>benötigt</emphasis>.
-                            Sollte ein <code>Zend_Application</code> oder
-                            <code>Zend_Application_Bootstrap_Bootstrapper</code> Objekt als einziges
+                            Sollte ein <classname>Zend_Application</classname> oder
+                            <classname>Zend_Application_Bootstrap_Bootstrapper</classname> Objekt als einziges
                             Argument akzeptieren.
                         </para></listitem>
                     </itemizedlist></entry>
                     <entry><para>
                         Konstruktor. Akzeptiert ein einzelnes Argument, welche ein
-                        <code>Zend_Application</code> oder ein anderes Bootstrap Objekt sein
+                        <classname>Zend_Application</classname> oder ein anderes Bootstrap Objekt sein
                         sollte.
                     </para></entry>
                 </row>
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>benötigt</emphasis>.
@@ -63,7 +63,7 @@
 
                 <row>
                     <entry><code>getApplication()</code></entry>
-                    <entry><code>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application | Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt das Anwendungs/Bootstrap Objekt das über den Konstruktor übergeben

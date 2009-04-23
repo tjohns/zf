@@ -6,7 +6,7 @@
     <title>Theorie der Arbeitsweise</title>
 
     <para>
-        Warum gibt es nur eine Klasse <code>Zend_Date</code> für das Arbeiten mit Daten und Zeiten im
+        Warum gibt es nur eine Klasse <classname>Zend_Date</classname> für das Arbeiten mit Daten und Zeiten im
         Zend Framework ?
     </para>
 
@@ -14,7 +14,7 @@
         Viele Sprachen teilen das Arbeiten mit Zeiten und Kalendern in zwei Klassen. Aber Zend Framework
         strebt nach extremer Vereinfachung und die Entwickler zu zwingen verschiedene Objekte mit verschiedenen
         Methoden für Zeiten und Daten zu verwenden ist in vielen Situationen eine Belastung. Da die Methoden von
-        <code>Zend_Date</code> das Arbeiten mit vieldeutigen Daten unterstützen die möglicherweise nicht alle
+        <classname>Zend_Date</classname> das Arbeiten mit vieldeutigen Daten unterstützen die möglicherweise nicht alle
         Datumsabschnitte beinhalten (Zeitalter, Jahr, Monat, Tag, Stunde, Minute, Sekunde, Zeitzone), können
         Entwickler die Flexibilität und die einfache Handhabung der selben Klasse und der selben Methode geniessen
         um die gleichen Änderungen durchzuführen (zum Beispiel Addieren, Subtrahieren, Vergleichen, Verbinden
@@ -38,7 +38,7 @@
                         Alle Daten und Zeiten, selbst die mehrdeutigen (z.B. kein Jahr), sind intern dargestellt
                         in absoluten Momenten der Zeit, repräsentiert als UNIX Zeitpunkt welcher die Differenz zwischen
                         der gewünschten Zeit und dem 01.Jänner 1970 00:00:00 GMT/UTC darstellt. Das ist nur
-                        deshalb möglich weil <code>Zend_Date</code> nicht durch UNIX Zeitpunkte limitiert ist und
+                        deshalb möglich weil <classname>Zend_Date</classname> nicht durch UNIX Zeitpunkte limitiert ist und
                         auch nicht durch Integer Zahlen. Die BCMath Erweiterung wird benötigt um extrem große Daten
                         ausserhalb des Bereichs vom Freitag dem 13.Dezember 1901 20:45:54 GMT bis zum 19.Jänner 2038
                         03:14:07 GMT zu unterstützen. Zusätzlich können kleine Mathematikfehler aufgrund der
@@ -60,7 +60,7 @@
                         PHP Funktionen
                     </para>
                     <para>
-                        Wo es möglich ist verwendet <code>Zend_Date</code> normalerweise PHP Funktionen um die
+                        Wo es möglich ist verwendet <classname>Zend_Date</classname> normalerweise PHP Funktionen um die
                         Geschwindigkeit zu erhöhen.
                     </para>
                 </listitem>

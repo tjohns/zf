@@ -5,7 +5,7 @@
     <title>Zend_Application_Bootstrap_ResourceBootstrapper</title>
 
     <para>
-        <code>Zend_Application_Bootstrap_ResourceBootstrapper</code> ist ein Interface das zu
+        <classname>Zend_Application_Bootstrap_ResourceBootstrapper</classname> ist ein Interface das zu
         Verwenden ist wenn externe Ressourcen geladen werden -- z.B. wenn ein oder mehrere
         Ressourcen nicht direkt in der Klasse definiert werden, sonder über Plugins. Es sollte
         in Verbindung mit
@@ -34,17 +34,17 @@
                 <row>
                     <entry><code>registerPluginResource($resource, $options =
                             null)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_ResourceBootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>Benötigt</emphasis>.
                             Ein Ressourcen Name oder ein
-                            <code>Zend_Application_Resource_Resource</code> Objekt.
+                            <classname>Zend_Application_Resource_Resource</classname> Objekt.
                         </para></listitem>
 
                         <listitem><para>
                             <code>$options</code>: <emphasis>Optional</emphasis>.
-                            Ein Array oder <code>Zend_Config</code> Objekt das an die Ressource
+                            Ein Array oder <classname>Zend_Config</classname> Objekt das an die Ressource
                             bei der Instanziierung zu übergeben ist.
                         </para></listitem>
                     </itemizedlist></entry>
@@ -56,7 +56,7 @@
 
                 <row>
                     <entry><code>unregisterPluginResource($resource)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_ResourceBootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>Benötigt</emphasis>.
@@ -84,7 +84,7 @@
 
                 <row>
                     <entry><code>getPluginResource($resource)</code></entry>
-                    <entry><code>Zend_Application_Resource_Resource</code></entry>
+                    <entry><classname>Zend_Application_Resource_Resource</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$resource</code>: <emphasis>Benötigt</emphasis>.
@@ -108,7 +108,7 @@
                 <row>
                     <entry><code>setPluginLoader(Zend_Loader_PluginLoader_Interface
                             $loader)</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_ResourceBootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_ResourceBootstrapper</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$loader</code>: <emphasis>Benötigt</emphasis>.
@@ -124,7 +124,7 @@
 
                 <row>
                     <entry><code>getPluginLoader()</code></entry>
-                    <entry><code>Zend_Loader_PluginLoader_Interface</code></entry>
+                    <entry><classname>Zend_Loader_PluginLoader_Interface</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt den registrierten Plugin Loader.

@@ -6,19 +6,19 @@
     <title>Zend_File_Transfer</title>
 
     <para>
-        <code>Zend_File_Transfer</code> bietet exzessiven Support für Datei Uploads und Downloads. Es kommt
+        <classname>Zend_File_Transfer</classname> bietet exzessiven Support für Datei Uploads und Downloads. Es kommt
         mit eingebauten Prüfungen für Dateien und Funktionslitäten um Dateien mit Filtern zu verändern.
-        Protokoll-Adapter erlauben <code>Zend_File_Transfer</code> die selbe API für Transportprotokolle wie
+        Protokoll-Adapter erlauben <classname>Zend_File_Transfer</classname> die selbe API für Transportprotokolle wie
         HTTP, FTP, WEBDAV und andere zu verwenden.
     </para>
 
     <note>
         <title>Einschränkungen</title>
         <para>
-            Die aktuelle Implementation von <code>Zend_File_Transfer</code>
+            Die aktuelle Implementation von <classname>Zend_File_Transfer</classname>
             ist auf HTTP Post Uploads limitiert. Andere Adapter die Downloads und andere Protokolle
             unterstützen werden in zukünftigen Releases hinzugefügt. Aktuell sollte
-            <code>Zend_File_Transfer_Adapter_Http</code> direkt verwendet werden. Sobald andere Adapter
+            <classname>Zend_File_Transfer_Adapter_Http</classname> direkt verwendet werden. Sobald andere Adapter
             vorhanden sind, kann ein gemeinsames Interface verwendet werden.
         </para>
     </note>
@@ -26,17 +26,17 @@
     <note>
         <title>Formulare</title>
         <para>
-            Wenn man <code>Zend_Form</code> verwendet sollte man die APIs die von <code>Zend_Form</code> zur
-            Verfügung gestellt werden, und <code>Zend_File_Transfer</code> nicht direkt, verwenden. Der
-            Dateitransfer Support von <code>Zend_Form</code> ist in <code>Zend_File_Transfer</code>
+            Wenn man <classname>Zend_Form</classname> verwendet sollte man die APIs die von <classname>Zend_Form</classname> zur
+            Verfügung gestellt werden, und <classname>Zend_File_Transfer</classname> nicht direkt, verwenden. Der
+            Dateitransfer Support von <classname>Zend_Form</classname> ist in <classname>Zend_File_Transfer</classname>
             implementiert, weshalb die Informationen in diesem Kapitel für fortgeschrittene Benutzer von
-            <code>Zend_Form</code> interessant sind.
+            <classname>Zend_Form</classname> interessant sind.
         </para>
     </note>
 
     <para>
-        Die Verwendung von <code>Zend_File_Transfer</code> ist relativ einfach. Es besteht aus zwei Teilen.
-        Dem HTTP Formular, wärend <code>Zend_File_Transfer</code> die hochgeladenen Dateien behandelt.
+        Die Verwendung von <classname>Zend_File_Transfer</classname> ist relativ einfach. Es besteht aus zwei Teilen.
+        Dem HTTP Formular, wärend <classname>Zend_File_Transfer</classname> die hochgeladenen Dateien behandelt.
         Siehe das folgende Beispiel:
     </para>
 
@@ -82,7 +82,7 @@ if (!$adapter->receive()) {
         </programlisting>
 
         <para>
-            Dieses Codebeispiel demonstriert die einfachste Verwendung von <code>Zend_File_Transfer</code>.
+            Dieses Codebeispiel demonstriert die einfachste Verwendung von <classname>Zend_File_Transfer</classname>.
             Ein lokales Ziel wird mit der <code>setDestination</code> Methode definiert, und anschließend die
             <code>receive()</code> Methode aufgerufen. Wenn irgendwelche Uploadfehler auftreten werden diese
             als Ausnahme zurückgegeben.
@@ -94,7 +94,7 @@ if (!$adapter->receive()) {
         <title>Achtung</title>
         <para>
             Dieses Beispiel ist nur für die Demonstration der grundsätzlichen API von
-            <code>Zend_File_Transfer</code>. Man sollte dieses Code Beispiel
+            <classname>Zend_File_Transfer</classname>. Man sollte dieses Code Beispiel
             <emphasis role="strong">niemals</emphasis> in einer Produktivumgebung einsetzen da es
             massive Sicherheitslücken aufweisst. Man sollte immer Prüfungen verwenden um die Sicherheit
             zu erhöhen.
@@ -106,8 +106,8 @@ if (!$adapter->receive()) {
         <title>Von Zend_File_Transfer unterstützte Adapter</title>
 
         <para>
-            <code>Zend_File_Transfer</code> wurde designt um verschiedenste Adapter und auch Richtungen zu
-            unterstützen. Mit <code>Zend_File_Transfer</code> kann man Dateien Hochladen, Herunterladen und
+            <classname>Zend_File_Transfer</classname> wurde designt um verschiedenste Adapter und auch Richtungen zu
+            unterstützen. Mit <classname>Zend_File_Transfer</classname> kann man Dateien Hochladen, Herunterladen und
             sogar Weiterleiten (Hochladen mit einem Adapter und Herunterladen mit einem anderen Adapter zur
             gleichen Zeit).
         </para>
@@ -118,7 +118,7 @@ if (!$adapter->receive()) {
         <title>Optionen für Zend_File_Transfer</title>
 
         <para>
-            <code>Zend_File_Transfer</code> und seine Adapter unterstützen verschiedene Optionen. Alle Optionen
+            <classname>Zend_File_Transfer</classname> und seine Adapter unterstützen verschiedene Optionen. Alle Optionen
             können gesetzt werden indem Sie entweder dem Constructor übergeben werden, oder durch Aufruf der
             <code>setOptions($options)</code>. <code>getOptions()</code> gibt die Optionen zurück die aktuell
             gesetzt sind. Nachfolgend ist eine Liste aller unterstützten Optionen:
@@ -140,7 +140,7 @@ if (!$adapter->receive()) {
         <title>Dateien prüfen</title>
 
         <para>
-            <code>Zend_File_Transfer</code> hat verschiedene Methoden die auf verschiedenste Stati von
+            <classname>Zend_File_Transfer</classname> hat verschiedene Methoden die auf verschiedenste Stati von
             spezifizierten Dateien prüfen. Diese sind nützlich wenn man Dateien bearbeiten will nachdem
             Sie empfangen wurden. Diese Methoden beinhalten:
         </para>
@@ -209,7 +209,7 @@ $upload->receive();
         <title>Zusätzliche Dateiinformationen</title>
 
         <para>
-            <code>Zend_File_Transfer</code> kann zusätzliche Informationen über Dateien zurückgeben.
+            <classname>Zend_File_Transfer</classname> kann zusätzliche Informationen über Dateien zurückgeben.
             Die folgenden Methoden sind vorhanden:
         </para>
 
@@ -382,7 +382,7 @@ $names = $upload->getMimeType('foo');
         <title>Fortschritt für Datei Uploads</title>
 
         <para>
-            <code>Zend_File_Transfer</code> kann den aktuellen Status eines gerade stattfindenden Datei Uploads
+            <classname>Zend_File_Transfer</classname> kann den aktuellen Status eines gerade stattfindenden Datei Uploads
             erheben. Um dieses Feature zu verwenden muß man entweder die <code>APC</code> Erweiterung
             verwenden, die mit den meisten standardmäßigen PHP Installationen vorhanden ist, oder die
             <code>uploadprogress</code> Erweiterung. Beide Erweiterungen werden erkannt und automatisch
@@ -397,8 +397,8 @@ $names = $upload->getMimeType('foo');
 
         <para>
             Zweitens, muß man die richtigen unsichtbaren Felder im Formular hinzugefügt haben das die Dateien
-            sendet. Wenn man <code>Zend_Form_Element_File</code> verwendet werden diese unsichtbaren Felder
-            automatisch von <code>Zend_Form</code> hinzugefügt.
+            sendet. Wenn man <classname>Zend_Form_Element_File</classname> verwendet werden diese unsichtbaren Felder
+            automatisch von <classname>Zend_Form</classname> hinzugefügt.
         </para>
 
         <para>
@@ -452,7 +452,7 @@ while (!$upload['done']) {
 
             <para>
                 Man kann mit <code>getProgress()</code> auch händisch arbeiten, also ohne ie Verwendung von
-                <code>Zend_ProgressBar</code>.
+                <classname>Zend_ProgressBar</classname>.
             </para>
 
             <para>
@@ -521,7 +521,7 @@ while (!$upload['done']) {
                         <emphasis role="strong">session</emphasis>: Dieser optionale Schlüssel nimmt den Namen
                         eines Session Namespaces entgegen der in Zend_ProgressBar verwendet wird. Wenn dieser
                         Schlüssel nicht angegeben wird, ist er standardmäßig
-                        <code>Zend_File_Transfer_Adapter_Http_ProgressBar</code>.
+                        <classname>Zend_File_Transfer_Adapter_Http_ProgressBar</classname>.
                     </para>
                 </listitem>
             </itemizedlist>

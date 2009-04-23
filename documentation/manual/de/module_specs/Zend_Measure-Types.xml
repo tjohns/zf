@@ -27,7 +27,7 @@
                     <entry>Zend_Measure_Acceleration</entry>
                     <entry>Meter pro Sekunde zum Quadrat | <code>m/s²</code></entry>
                     <entry>
-                        <code>Zend_Measure_Acceleration</code> behandelt den physikalischen
+                        <classname>Zend_Measure_Acceleration</classname> behandelt den physikalischen
                         Faktor der Beschleunigung
                     </entry>
                 </row>
@@ -35,26 +35,26 @@
                     <entry>Winkel</entry>
                     <entry>Zend_Measure_Angle</entry>
                     <entry>Radiant | <code>rad</code></entry>
-                    <entry><code>Zend_Measure_Angle</code> behandelt Winkelmaße</entry>
+                    <entry><classname>Zend_Measure_Angle</classname> behandelt Winkelmaße</entry>
                 </row>
                 <row>
                     <entry>Fläche</entry>
                     <entry>Zend_Measure_Area</entry>
                     <entry>Quadratmeter | <code>m²</code></entry>
-                    <entry><code>Zend_Measure_Area</code> behandelt quadratische Maßeinheiten</entry>
+                    <entry><classname>Zend_Measure_Area</classname> behandelt quadratische Maßeinheiten</entry>
                 </row>
                 <row>
                     <entry>Binär</entry>
                     <entry>Zend_Measure_Binary</entry>
                     <entry>Byte | <code>b</code></entry>
-                    <entry><code>Zend_Measure_Binary</code> behandelt binäre Umwandlungen</entry>
+                    <entry><classname>Zend_Measure_Binary</classname> behandelt binäre Umwandlungen</entry>
                 </row>
                 <row>
                     <entry>Kapazität</entry>
                     <entry>Zend_Measure_Capacitance</entry>
                     <entry>Farad | <code>F</code></entry>
                     <entry>
-                        <code>Zend_Measure_Capacitance</code> behandelt den physikalischen
+                        <classname>Zend_Measure_Capacitance</classname> behandelt den physikalischen
                         Faktor der Kapazität
                     </entry>
                 </row>
@@ -63,7 +63,7 @@
                     <entry>Zend_Measure_Cooking_Volume</entry>
                     <entry>Kubikmeter | <code>m³</code></entry>
                     <entry>
-                        <code>Zend_Measure_Cooking_Volume</code> behandelt Volumen die
+                        <classname>Zend_Measure_Cooking_Volume</classname> behandelt Volumen die
                         für das Kochen in Kochbüchern Verwendung finden
                     </entry>
                 </row>
@@ -72,7 +72,7 @@
                     <entry>Zend_Measure_Cooking_Weight</entry>
                     <entry>Gramm | <code>g</code></entry>
                     <entry>
-                        <code>Zend_Measure_Cooking_Weight</code> behandelt die Masse / das Gewicht
+                        <classname>Zend_Measure_Cooking_Weight</classname> behandelt die Masse / das Gewicht
                         welches für das Kochen in Kochbüchern Verwendung findet
                     </entry>
                 </row>
@@ -80,32 +80,32 @@
                     <entry>Strom</entry>
                     <entry>Zend_Measure_Current</entry>
                     <entry>Ampere | <code>A</code></entry>
-                    <entry><code>Zend_Measure_Current</code> behandelt den physikalischen Faktor des Stromes</entry>
+                    <entry><classname>Zend_Measure_Current</classname> behandelt den physikalischen Faktor des Stromes</entry>
                 </row>
                 <row>
                     <entry>Dichte</entry>
                     <entry>Zend_Measure_Density</entry>
                     <entry>Kilogramm pro Kubikmeter | <code>kg/m³</code></entry>
-                    <entry><code>Zend_Measure_Density</code> behandelt den physikalischen Faktor der Dichte</entry>
+                    <entry><classname>Zend_Measure_Density</classname> behandelt den physikalischen Faktor der Dichte</entry>
                 </row>
                 <row>
                     <entry>Energie</entry>
                     <entry>Zend_Measure_Energy</entry>
                     <entry>Joule | <code>J</code></entry>
-                    <entry><code>Zend_Measure_Energy</code> behandelt den physikalischen Faktor der Energie</entry>
+                    <entry><classname>Zend_Measure_Energy</classname> behandelt den physikalischen Faktor der Energie</entry>
                 </row>
                 <row>
                     <entry>Kraft</entry>
                     <entry>Zend_Measure_Force</entry>
                     <entry>Newton | <code>N</code></entry>
-                    <entry><code>Zend_Measure_Force</code> behandelt den physikalischen Faktor der Kraft</entry>
+                    <entry><classname>Zend_Measure_Force</classname> behandelt den physikalischen Faktor der Kraft</entry>
                 </row>
                 <row>
                     <entry>Strömung (Gewicht)</entry>
                     <entry>Zend_Measure_Flow_Mass</entry>
                     <entry>Kilogramm pro Sekunde | <code>kg/s</code></entry>
                     <entry>
-                        <code>Zend_Measure_Flow_Mass</code> behandelt den physikalischen Faktor der Strömung.
+                        <classname>Zend_Measure_Flow_Mass</classname> behandelt den physikalischen Faktor der Strömung.
                         Das Gewicht der fließenden Masse wird als Referenz für diese Klasse verwendet
                     </entry>
                 </row>
@@ -114,7 +114,7 @@
                     <entry>Zend_Measure_Flow_Mole</entry>
                     <entry>Mol pro Sekunde | <code>mol/s</code></entry>
                     <entry>
-                        <code>Zend_Measure_Flow_Mole</code> behandelt den physikalischen Faktor der Strömung.
+                        <classname>Zend_Measure_Flow_Mole</classname> behandelt den physikalischen Faktor der Strömung.
                         Die Dichte der fließenden Masse wird als Referenz für diese Klasse verwendet
                     </entry>
                 </row>
@@ -123,7 +123,7 @@
                     <entry>Zend_Measure_Flow_Volume</entry>
                     <entry>Kubikmeter pro Sekunde | <code>m³/s</code></entry>
                     <entry>
-                        <code>Zend_Measure_Flow_Mole</code> behandelt den physikalischen Faktor der Strömung.
+                        <classname>Zend_Measure_Flow_Mole</classname> behandelt den physikalischen Faktor der Strömung.
                         Das Volumen der fließenden Masse wird als Referenz für diese Klasse verwendet
                     </entry>
                 </row>
@@ -131,14 +131,14 @@
                     <entry>Frequenz</entry>
                     <entry>Zend_Measure_Frequency</entry>
                     <entry>Hertz | <code>Hz</code></entry>
-                    <entry><code>Zend_Measure_Frequency</code> behandelt den physikalischen Faktor der Frequenz</entry>
+                    <entry><classname>Zend_Measure_Frequency</classname> behandelt den physikalischen Faktor der Frequenz</entry>
                 </row>
                 <row>
                     <entry>Beleuchtungsstärke</entry>
                     <entry>Zend_Measure_Illumination</entry>
                     <entry>Lux | <code>lx</code></entry>
                     <entry>
-                        <code>Zend_Measure_Illumination</code> behandelt den physikalischen Faktor der
+                        <classname>Zend_Measure_Illumination</classname> behandelt den physikalischen Faktor der
                         Beleuchtungsstärke
                     </entry>
                 </row>
@@ -146,63 +146,63 @@
                     <entry>Länge</entry>
                     <entry>Zend_Measure_Length</entry>
                     <entry>Meter | <code>m</code></entry>
-                    <entry><code>Zend_Measure_Length</code> behandelt den physikalischen Faktor der Länge</entry>
+                    <entry><classname>Zend_Measure_Length</classname> behandelt den physikalischen Faktor der Länge</entry>
                 </row>
                 <row>
                     <entry>Helligkeit</entry>
                     <entry>Zend_Measure_Lightness</entry>
                     <entry>Candela pro Quadratmeter | <code>cd/m²</code></entry>
-                    <entry><code>Zend_Measure_Ligntness</code> behandelt den physikalischen Faktor der Lichtenergie</entry>
+                    <entry><classname>Zend_Measure_Ligntness</classname> behandelt den physikalischen Faktor der Lichtenergie</entry>
                 </row>
                 <row>
                     <entry>Zahl</entry>
                     <entry>Zend_Measure_Number</entry>
                     <entry>Dezimal | <code>(10)</code></entry>
-                    <entry><code>Zend_Measure_Number</code> konvertiert zwischen Zahlenformaten</entry>
+                    <entry><classname>Zend_Measure_Number</classname> konvertiert zwischen Zahlenformaten</entry>
                 </row>
                 <row>
                     <entry>Leistung</entry>
                     <entry>Zend_Measure_Power</entry>
                     <entry>Watt | <code>W</code></entry>
-                    <entry><code>Zend_Measure_Power</code> behandelt den physikalischen Faktor der Leistung</entry>
+                    <entry><classname>Zend_Measure_Power</classname> behandelt den physikalischen Faktor der Leistung</entry>
                 </row>
                 <row>
                     <entry>Druck</entry>
                     <entry>Zend_Measure_Pressure</entry>
                     <entry>Newton pro Quadratmeter | <code>N/m²</code>
                     </entry>
-                    <entry><code>Zend_Measure_Pressure</code> behandelt den physikalischen Faktor des Druckes</entry>
+                    <entry><classname>Zend_Measure_Pressure</classname> behandelt den physikalischen Faktor des Druckes</entry>
                 </row>
                 <row>
                     <entry>Geschwindigkeit</entry>
                     <entry>Zend_Measure_Speed</entry>
                     <entry>Meter pro Sekunde | <code>m/s</code></entry>
-                    <entry><code>Zend_Measure_Speed</code> behandelt den physikalischen Faktor des Geschwindigkeit</entry>
+                    <entry><classname>Zend_Measure_Speed</classname> behandelt den physikalischen Faktor des Geschwindigkeit</entry>
                 </row>
                 <row>
                     <entry>Temperatur</entry>
                     <entry>Zend_Measure_Temperature</entry>
                     <entry>Kelvin | <code>K</code></entry>
-                    <entry><code>Zend_Measure_Temperature</code> behandelt den physikalischen Faktor der Temperatur</entry>
+                    <entry><classname>Zend_Measure_Temperature</classname> behandelt den physikalischen Faktor der Temperatur</entry>
                 </row>
                 <row>
                     <entry>Time</entry>
                     <entry>Zend_Measure_Time</entry>
                     <entry>Sekunde | <code>s</code></entry>
-                    <entry><code>Zend_Measure_Time</code> behandelt den physikalischen Faktor der Zeit</entry>
+                    <entry><classname>Zend_Measure_Time</classname> behandelt den physikalischen Faktor der Zeit</entry>
                 </row>
                 <row>
                     <entry>Drehmoment</entry>
                     <entry>Zend_Measure_Torque</entry>
                     <entry>Newtonmeter | <code>Nm</code></entry>
-                    <entry><code>Zend_Measure_Torque</code> behandelt den physikalischen Faktor des Drehmoments</entry>
+                    <entry><classname>Zend_Measure_Torque</classname> behandelt den physikalischen Faktor des Drehmoments</entry>
                 </row>
                 <row>
                     <entry>Viskosität (Dynamisch)</entry>
                     <entry>Zend_Measure_Viscosity_Dynamic</entry>
                     <entry>Kilogramm pro Metersekunde | <code>kg/ms</code></entry>
                     <entry>
-                        <code>Zend_Measure_Viscosity_Dynamic</code> behandelt den physikalischen Faktor der Viskosität.
+                        <classname>Zend_Measure_Viscosity_Dynamic</classname> behandelt den physikalischen Faktor der Viskosität.
                         Das Gewicht der Flüssigkeit wird als Referenz für diese Klasse verwendet
                     </entry>
                 </row>
@@ -211,7 +211,7 @@
                     <entry>Zend_Measure_Viscosity_Kinematic</entry>
                     <entry>Quadratmeter pro Sekunde | <code>m²/s</code></entry>
                     <entry>
-                        <code>Zend_Measure_Viscosity_Kinematic</code> behandelt den physikalischen Faktor der Viskosität.
+                        <classname>Zend_Measure_Viscosity_Kinematic</classname> behandelt den physikalischen Faktor der Viskosität.
                         Die Distanz der geflossenen Flüssigkeit wird als Referenz für diese Klasse verwendet
                     </entry>
                 </row>
@@ -219,14 +219,14 @@
                     <entry>Volumen</entry>
                     <entry>Zend_Measure_Volume</entry>
                     <entry>Kubikmeter | <code>m³</code></entry>
-                    <entry><code>Zend_Measure_Volume</code> behandelt den physikalischen Faktor des Volumens (Inhalt)</entry>
+                    <entry><classname>Zend_Measure_Volume</classname> behandelt den physikalischen Faktor des Volumens (Inhalt)</entry>
                 </row>
                 <row>
                     <entry>Gewicht</entry>
                     <entry>Zend_Measure_Weight</entry>
                     <entry>Kilogramm | <code>kg</code>
                     </entry>
-                    <entry><code>Zend_Measure_Weight</code> behandelt den physikalischen Faktor des Gewichts</entry>
+                    <entry><classname>Zend_Measure_Weight</classname> behandelt den physikalischen Faktor des Gewichts</entry>
                 </row>
             </tbody>
         </tgroup>
@@ -234,7 +234,7 @@
 
     <sect2 id="zend.measure.types.binary">
 
-        <title>Hinweise für <code>Zend_Measure_Binary</code></title>
+        <title>Hinweise für <classname>Zend_Measure_Binary</classname></title>
 
         <para>
             Einige übliche Binäre Konventionen beinhalten Terme wie Kilo-, Mega-, Giga-, usw. die im normalen
@@ -256,7 +256,7 @@
 
     <sect2 id="zend.measure.types.decimal">
 
-        <title>Hinweise für <code>Zend_Measure_Number</code></title>
+        <title>Hinweise für <classname>Zend_Measure_Number</classname></title>
 
         <para>
             Das bekannteste Zahlenformat ist das Dezimalsystem. Zusätzlich unterstützt diese Klasse das Oktalsystem,

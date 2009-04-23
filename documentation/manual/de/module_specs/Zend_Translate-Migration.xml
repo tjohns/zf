@@ -6,8 +6,8 @@
     <title>Migration von vorhergehenden Versionen</title>
 
     <para>
-        Die API von <code>Zend_Translate</code> wurde von Zeit zu Zeit verändert. Wenn man bereits
-        angefangen hat <code>Zend_Translate</code> und dessen Subkomponenten in vorhergehenden Versionen
+        Die API von <classname>Zend_Translate</classname> wurde von Zeit zu Zeit verändert. Wenn man bereits
+        angefangen hat <classname>Zend_Translate</classname> und dessen Subkomponenten in vorhergehenden Versionen
         zu verwenden sollte man den anbei beschriebenen Richtlinien folgen um eigene Skripts auf die neue
         API zu migrieren.
     </para>
@@ -19,7 +19,7 @@
 
             <para>
                 Wenn man die automatische Erkennung von Sprachen verwendet, oder Sprachen manuell auf
-                <code>Zend_Translate</code> setzt kann es sein das man von Zeit zu Zeit eine Notiz geworfen bekommen die
+                <classname>Zend_Translate</classname> setzt kann es sein das man von Zeit zu Zeit eine Notiz geworfen bekommen die
                 über nicht hinzugefügte oder leere Übersetzungen schreibt. In einigen vorhergehenden Releases
                 wurde in einigen Fällen auch eine Exception geworfen.
             </para>

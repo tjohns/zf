@@ -4,7 +4,7 @@
 <sect1 id="zend.openid.introduction">
     <title>Einführung</title>
     <para>
-        <code>Zend_OpenId</code> ist eine Zend Framework Komponente die eine einfache API für das erstellen von
+        <classname>Zend_OpenId</classname> ist eine Zend Framework Komponente die eine einfache API für das erstellen von
         OpenID-verwendenden Sites und Identitäts Providern bietet.
     </para>
 
@@ -35,7 +35,7 @@
     <sect2 id="zend.openid.introduction.how">
         <title>Wie funktioniert das ?</title>
         <para>
-            Der Zweck der <code>Zend_OpenId</code> Komponente ist es das OpenID Authentifizierungsprotokoll zu
+            Der Zweck der <classname>Zend_OpenId</classname> Komponente ist es das OpenID Authentifizierungsprotokoll zu
             implementieren, wie im folgenden Sequenzdiagramm beschrieben:
         </para>
 
@@ -112,25 +112,25 @@
     <sect2 id="zend.openid.introduction.structure">
         <title>Zend_OpenId Struktur</title>
         <para>
-            <code>Zend_OpenId</code> besteht aus zwei Unterpaketen. Das erste ist
-            <code>Zend_OpenId_Consumer</code> für die Entwicklung von OpenID-verwendenden Servern und der
-            zweite ist <code>Zend_OpenId_Provider</code> für die Entwicklung von OpenID Servern. Diese sind
+            <classname>Zend_OpenId</classname> besteht aus zwei Unterpaketen. Das erste ist
+            <classname>Zend_OpenId_Consumer</classname> für die Entwicklung von OpenID-verwendenden Servern und der
+            zweite ist <classname>Zend_OpenId_Provider</classname> für die Entwicklung von OpenID Servern. Diese sind
             komplett unabhängig voneinander und können separat verwendet werden.
         </para>
 
         <para>
             Der einzige gemeinsame Code der von diesen Unterpaketen verwendet wird ist die OpenID Simply
-            Registry Erweiterung die von der <code>Zend_OpenId_Extension_Sreg</code> Klasse implementiert
-            wird und ein Set von Hilfs Funktionen die von der <code>Zend_OpenId</code> Klasse implementiert
+            Registry Erweiterung die von der <classname>Zend_OpenId_Extension_Sreg</classname> Klasse implementiert
+            wird und ein Set von Hilfs Funktionen die von der <classname>Zend_OpenId</classname> Klasse implementiert
             werden.
         </para>
 
         <note>
             <para>
-                <code>Zend_OpenId</code> hat Vorteile davon wenn die
+                <classname>Zend_OpenId</classname> hat Vorteile davon wenn die
                 <ulink url="http://php.net/gmp">GMP Erweiterung</ulink> vorhanden ist. Es sollte
                 Angedacht werden die GMP Erweiterung für eine verbesserte Performance einzuschalten wenn
-                <code>Zend_OpenId</code> verwendet wird.OpenID
+                <classname>Zend_OpenId</classname> verwendet wird.OpenID
             </para>
         </note>
     </sect2>
@@ -138,7 +138,7 @@
     <sect2 id="zend.openid.introduction.standards">
         <title>Unterstützte OpenId Standards</title>
         <para>
-            Die <code>Zend_OpenId</code> Komponente unterstützt die folgenden Stanadards:
+            Die <classname>Zend_OpenId</classname> Komponente unterstützt die folgenden Stanadards:
         </para>
 
         <itemizedlist>

@@ -6,19 +6,19 @@
     <title>Zend_Db_Adapter</title>
 
     <para>
-        <code>Zend_Db</code> und die zugehörigen Klassen bieten eine einfache SQL Schnittstelle für Zend Framework.
-        <code>Zend_Db_Adapter</code> ist die Basisklasse zur Anbindung einer PHP Anwendung an ein RDBMS. Es gibt für
+        <classname>Zend_Db</classname> und die zugehörigen Klassen bieten eine einfache SQL Schnittstelle für Zend Framework.
+        <classname>Zend_Db_Adapter</classname> ist die Basisklasse zur Anbindung einer PHP Anwendung an ein RDBMS. Es gibt für
         jede RDBMS Marke einen eigenen Adapter.
     </para>
 
     <para>
-        Die <code>Zend_Db</code> Adapter bilden eine Schnittstelle zu den Hersteller spezifischen PHP Erweiterungen und
+        Die <classname>Zend_Db</classname> Adapter bilden eine Schnittstelle zu den Hersteller spezifischen PHP Erweiterungen und
         unterstützen dadurch die Entwicklung einer PHP Anwendung für verschiedene RDBMS mit geringem Aufwand.
     </para>
 
     <para>
         Die Schnittstellen der Adapterklasse ähneln denen der
-        <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> Erweiterung. <code>Zend_Db</code> bietet Adapterklassen
+        <ulink url="http://www.php.net/pdo">PHP Data Objects</ulink> Erweiterung. <classname>Zend_Db</classname> bietet Adapterklassen
         für PDO Treiber der folgenden RDBMS Marken:
     </para>
 
@@ -62,7 +62,7 @@
     </itemizedlist>
 
     <para>
-        Zusätzlich bietet <code>Zend_Db</code> Adapterklassen für die folgenden Marken, welche eigene PHP Datenbank
+        Zusätzlich bietet <classname>Zend_Db</classname> Adapterklassen für die folgenden Marken, welche eigene PHP Datenbank
         Erweiterungen nutzen:
     </para>
 
@@ -94,9 +94,9 @@
 
     <note>
         <para>
-            Jeder <code>Zend_Db</code> Adapter nutzt eine PHP Erweiterung. Die entsprechend PHP Erweiterung muss in der
-            PHP Umgebung aktiviert sein um den <code>Zend_Db</code> Adapter zu nutzen. Zum Beispiel muss bei der Nutzung
-            eines PDO <code>Zend_Db</code> Adapters sowohl die PDO Erweiterung, als auch der PDO Treiber für die jeweilige
+            Jeder <classname>Zend_Db</classname> Adapter nutzt eine PHP Erweiterung. Die entsprechend PHP Erweiterung muss in der
+            PHP Umgebung aktiviert sein um den <classname>Zend_Db</classname> Adapter zu nutzen. Zum Beispiel muss bei der Nutzung
+            eines PDO <classname>Zend_Db</classname> Adapters sowohl die PDO Erweiterung, als auch der PDO Treiber für die jeweilige
             Marke geladen sein.
         </para>
     </note>
@@ -110,7 +110,7 @@
         </para>
 
         <sect3 id="zend.db.adapter.connecting.constructor">
-            <title>Nutzung des <code>Zend_Db</code> Adapter Konstruktors</title>
+            <title>Nutzung des <classname>Zend_Db</classname> Adapter Konstruktors</title>
 
             <para>
                 Man kann eine Instanz eines Adapters erzeugen, indem man den Konstruktor verwendet. Ein Adapter
@@ -133,11 +133,11 @@ $db = new Zend_Db_Adapter_Pdo_Mysql(array(
         </sect3>
 
         <sect3 id="zend.db.adapter.connecting.factory">
-            <title>Nutzung der <code>Zend_Db</code> Factory</title>
+            <title>Nutzung der <classname>Zend_Db</classname> Factory</title>
 
             <para>
                 Als Alternative zur direkten Nutzung des Konstruktors kann man auch eine Instanz des Adapters
-                erzeugen indem man die statische Methode <code>Zend_Db::factory()</code> nutzt. Diese Methode
+                erzeugen indem man die statische Methode <classname>Zend_Db::factory()</classname> nutzt. Diese Methode
                 lädt die Adapterklasse dynamisch bei Aufruf unter Nutzung von
                 <link linkend="zend.loader.load.class">Zend_Loader::loadClass()</link>.
             </para>
@@ -170,7 +170,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </example>
 
             <para>
-                Wenn eine eigene Klasse geschrieben wird, die <code>Zend_Db_Adapter_Abstract_Adapter</code> erweitert aber nicht
+                Wenn eine eigene Klasse geschrieben wird, die <classname>Zend_Db_Adapter_Abstract_Adapter</classname> erweitert aber nicht
                 mit dem Präfix "Zend_Db_Adapter" beginnt, kann die <code>factory()</code> Methode verwendet
                 werden um den Adapter zu Laden wenn der führende Teil der Adapter Klasse mit dem
                 'adapterNamespace' Schlüssel im Parameter Array spezifiziert wird.
@@ -199,7 +199,7 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
 
         <sect3 id="zend.db.adapter.connecting.factory-config">
 
-            <title>Zend_Config mit <code>Zend_Db_Factory</code> verwenden</title>
+            <title>Zend_Config mit <classname>Zend_Db_Factory</classname> verwenden</title>
 
             <para>
                 Optional kann jedes Argument der <code>factory()</code> Methode als Objekt des Typs
@@ -215,9 +215,9 @@ $db = Zend_Db::factory('Pdo_Mysql', array(
             </para>
 
             <example id="zend.db.adapter.connecting.factory.example1">
-                <title>Verwenden der Factory Methode des Adapters mit einem <code>Zend_Config Objekt</code></title>
+                <title>Verwenden der Factory Methode des Adapters mit einem <classname>Zend_Config Objekt</classname></title>
                 <para>
-                    Im Beispiel anbei wird ein <code>Zend_Config</code> Objekt von einem Array erstellt. Die Daten können
+                    Im Beispiel anbei wird ein <classname>Zend_Config</classname> Objekt von einem Array erstellt. Die Daten können
                     auch aus einer externen Datei geladen werden indem Klassen wie zum Beispiel
                     <link linkend="zend.config.adapters.ini">Zend_Config_Ini</link> oder
                     <link linkend="zend.config.adapters.xml">Zend_Config_Xml</link> verwendet werden.
@@ -245,7 +245,7 @@ $db = Zend_Db::factory($config->database);
             <para>
                 Das zweite Argument der <code>factory()</code> Methode kann ein assoziatives Array sein das
                 Einträge enthält die den Parameters des Adapters entsprechen. Dieses Argument ist optional.
-                Wenn das erste Argument vom Typ <code>Zend_Config</code> ist, wird angenommen das es alle Parameter
+                Wenn das erste Argument vom Typ <classname>Zend_Config</classname> ist, wird angenommen das es alle Parameter
                 enthält, und das zweite Argument wird ignoriert.
             </para>
 
@@ -255,7 +255,7 @@ $db = Zend_Db::factory($config->database);
             <title>Adapter Parameter</title>
 
             <para>
-                Die folgende Liste erklärt die gemeinsamen Parameter die von <code>Zend_Db</code> Adapterklassen erkannt
+                Die folgende Liste erklärt die gemeinsamen Parameter die von <classname>Zend_Db</classname> Adapterklassen erkannt
                 werden.
             </para>
 
@@ -323,11 +323,11 @@ $db = Zend_Db::factory($config->database);
             <example id="zend.db.adapter.connecting.parameters.example1">
                 <title>Übergeben der case-folding Option an die factory</title>
                 <para>
-                    Diese Option kann über die Konstante <code>Zend_Db::CASE_FOLDING</code> angegeben werden.
+                    Diese Option kann über die Konstante <classname>Zend_Db::CASE_FOLDING</classname> angegeben werden.
                     Sie entspricht dem <code>ATTR_CASE</code> Attribut in PDO and IBM DB2 Datenbanktreibern und
                     stelllt die Schreibweise von String Schlüsseln in Abfrageergebnissen ein. Die Option kann
-                    den Wert <code>Zend_Db::CASE_NATURAL</code> (der Standard), <code>Zend_Db::CASE_UPPER</code>
-                    oder <code>Zend_Db::CASE_LOWER</code> annehmen.
+                    den Wert <classname>Zend_Db::CASE_NATURAL</classname> (der Standard), <classname>Zend_Db::CASE_UPPER</classname>
+                    oder <classname>Zend_Db::CASE_LOWER</classname> annehmen.
                 </para>
                 <programlisting role="php"><![CDATA[
 $options = array(
@@ -350,7 +350,7 @@ $db = Zend_Db::factory('Db2', $params);
             <example id="zend.db.adapter.connecting.parameters.example2">
                 <title>Übergeben der auto-quoting Option an die factory</title>
                 <para>
-                    Diese Option kann über die Konstante <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code> angegeben
+                    Diese Option kann über die Konstante <classname>Zend_Db::AUTO_QUOTE_IDENTIFIERS</classname> angegeben
                     werden. Wenn der Wert <code>true</code> (der Standard) ist, werden Bezeichner wie
                     Tabellennamen, Spaltennamen und auch Aliase in jeder SQL Syntax die vom Adapter Objekt
                     generiert wurde begrenzt. Dies macht es einfach Bezeichner zu verwenden, die SQL
@@ -452,13 +452,13 @@ $db = Zend_Db::factory('Pdo_Mysql', $params);
             <para>
                 Zusätzlich kann ein Adapter serialisiert werden um Ihn zu speichern, zum Beispiel in einer
                 Session Variable. Das kann sehr nütlich sein, nicht nur für den Adapter selbst, sondern auch
-                für andere Objekte die Ihn verwenden, wie ein <code>Zend_Db_Select</code> Objekt.
+                für andere Objekte die Ihn verwenden, wie ein <classname>Zend_Db_Select</classname> Objekt.
                 Standardmäßig, ist es Adaptern erlaubt serialisiert zu werden. Wenn man das nicht will, sollte
-                man die <code>Zend_Db::ALLOW_SERIALIZATION=false</code> Option übergeben, wie im Beispiel anbei
+                man die <classname>Zend_Db::ALLOW_SERIALIZATION=false</classname> Option übergeben, wie im Beispiel anbei
                 gezeigt. Um das Prinzip von Lazy Connections zu erlauben, wird der Adapter sich selbst nicht
                 wiederverbinden wenn er deserialisiert wird. Man muß <code>getConnection()</code> selbst
                 aufrufen. Mann kann den Adapter dazu bringen sich automatisch wieder zu verbinden indem
-                <code>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</code> als Option zum Adapter übergeben wird.
+                <classname>Zend_Db::AUTO_RECONNECT_ON_UNSERIALIZE=true</classname> als Option zum Adapter übergeben wird.
             </para>
 
             <example
@@ -487,7 +487,7 @@ try {
         <title>Beispiel Datenbank</title>
 
         <para>
-            In der Dokumentation für die <code>Zend_Db</code> Klassen verwenden wir einige einfache Tabellen um die Verwendung
+            In der Dokumentation für die <classname>Zend_Db</classname> Klassen verwenden wir einige einfache Tabellen um die Verwendung
             der Klassen und Methoden zu erläutern. Diese Beispieltabellen können Informationen für das Bugtracking
             in einem Softwareprojekt speichern. Die Datenbank enthält vier Tabellen:
         </para>
@@ -524,7 +524,7 @@ try {
         <para>
             Der folgende SQL Daten Definitions Sprache Pseudocode beschreibt die Tabellen in dieser
             Beispieldatenbank. Diese Beispieltabellen werden intensiv bei den automatisierten Unit-Tests für
-            <code>Zend_Db</code> verwendet.
+            <classname>Zend_Db</classname> verwendet.
         </para>
 
         <programlisting role="sql"><![CDATA[
@@ -633,7 +633,7 @@ $result = $db->fetchAll($sql, 2);
                     <para>
                         <emphasis role="strong">Zend_Db::FETCH_ASSOC</emphasis>:
                         Gibt Daten in einem assoziativem Array zurück. Die Array Schlüssel sind Strings der
-                        Spaltennamen. Dies ist der Standardmodus für <code>Zend_Db_Adapter</code> Klassen.
+                        Spaltennamen. Dies ist der Standardmodus für <classname>Zend_Db_Adapter</classname> Klassen.
                     </para>
                     <para>
                         Zu beachten ist, dass wenn die Select-Liste mehr als eine Spalte mit dem selben Namen
@@ -645,7 +645,7 @@ $result = $db->fetchAll($sql, 2);
                     <para>
                         Standardmäßig werden die Strings so zurück gegeben wie sie von dem Datenbanktreiber
                         geliefert werden. Dies entspricht der typischen Schreibweise der Spaltennamen auf dem RDBMS
-                        Server. Die Schreibweise dieser Strings kann mit der <code>Zend_Db::CASE_FOLDING</code>
+                        Server. Die Schreibweise dieser Strings kann mit der <classname>Zend_Db::CASE_FOLDING</classname>
                         Option angegeben werden. Dies muss bei der Instanziierung des Adapters angegeben werden.
                         Beschreibung unter <xref linkend="zend.db.adapter.connecting.parameters.example1" />.
                     </para>
@@ -880,7 +880,7 @@ $db->insert('bugs', $data);
                 Einige Werte in dem Array könnten als SQL Expressions benötigt werden, in diesem Fall dürfen sie
                 nicht in Anführungszeichen stehen. Standardmäßig werden alle übergebenen String-Werte als
                 String-literale behandelt. Um anzugeben das ein Wert eine SQL Expression ist, und daher nicht
-                quotiert werden soll, muss der Wert als ein Objekt des Typs <code>Zend_Db_Expr</code> übergeben werden, und
+                quotiert werden soll, muss der Wert als ein Objekt des Typs <classname>Zend_Db_Expr</classname> übergeben werden, und
                 nicht als einfacher String.
             </para>
 
@@ -1157,7 +1157,7 @@ echo $sql;
         </para>
 
         <para>
-            Die <code>Zend_Db</code> Adapterklassen bieten bequeme Methoden, die helfen die Verletzbarkeit durch SQL Injection
+            Die <classname>Zend_Db</classname> Adapterklassen bieten bequeme Methoden, die helfen die Verletzbarkeit durch SQL Injection
             Angriffe im PHP Code zu reduzieren. Die Lösung ist bestimmte Zeichen, wie Anführungszeichen, in PHP
             Werten zu ersetzen bevor sie in SQL Strings eingefügt werden. Dies schützt sowohl vor versehentlicher
             als auch vor absichtlicher Manipulation von SQL Strings durch PHP Variablen, die spezielle Zeichen
@@ -1227,14 +1227,14 @@ $sql = 'SELECT * FROM atable WHERE intColumn = '
             </example>
 
             <para>
-                Jede <code>Zend_Db_Adapter</code> Klasse hat den Namen des nummerischen SQL Datentyps für die respektive
-                Marke von RDBMS codiert. Man kann genauso die Konstanten <code>Zend_Db::INT_TYPE</code>,
-                <code>Zend_Db::BIGINT_TYPE</code>, und <code>Zend_Db::FLOAT_TYPE</code> verwenden um Code
+                Jede <classname>Zend_Db_Adapter</classname> Klasse hat den Namen des nummerischen SQL Datentyps für die respektive
+                Marke von RDBMS codiert. Man kann genauso die Konstanten <classname>Zend_Db::INT_TYPE</classname>,
+                <classname>Zend_Db::BIGINT_TYPE</classname>, und <classname>Zend_Db::FLOAT_TYPE</classname> verwenden um Code
                 in einem mehr RDBMS-unabhängigen Weg zu schreiben.
             </para>
 
             <para>
-                <code>Zend_Db_Table</code> definiert SQL Typen zu <code>quote()</code> automatisch wenn SQL Abfragen erstellt
+                <classname>Zend_Db_Table</classname> definiert SQL Typen zu <code>quote()</code> automatisch wenn SQL Abfragen erstellt
                 werden die einer Tabellen Schlüssel Spalte entsprechen.
             </para>
 
@@ -1345,9 +1345,9 @@ echo $sql
             </para>
 
             <para>
-                In den meisten Fällen wo SQL innerhalb der <code>Zend_Db</code> Klassen generiert wird, werden standardmäßig
+                In den meisten Fällen wo SQL innerhalb der <classname>Zend_Db</classname> Klassen generiert wird, werden standardmäßig
                 alle Bezeichner automatisch begrenzt. Dieses Verhalten kann mit der Option
-                <code>Zend_Db::AUTO_QUOTE_IDENTIFIERS</code> geändert werden. Dies muss beim Instanziieren des
+                <classname>Zend_Db::AUTO_QUOTE_IDENTIFIERS</classname> geändert werden. Dies muss beim Instanziieren des
                 Adapters wie in <xref linkend="zend.db.adapter.connecting.parameters.example2" /> angegeben werden.
             </para>
 
@@ -1365,7 +1365,7 @@ echo $sql
             Alle Anfragen an einen Datenbank werden im Kontext einer Transaktion ausgeführt, selbst wenn der
             Datenbanktreiber sie implizit Verwaltet. Es wird <emphasis>auto-commit</emphasis> Modus genannt,
             wenn der Datenbanktreiber eine Transaktion für jede Anweisung erzeugt, und diese direkt nach dem
-            Ausführen übergibt. Standardmäßig operieren alle <code>Zend_Db</code> Adapterklassen im auto-commit Modus.
+            Ausführen übergibt. Standardmäßig operieren alle <classname>Zend_Db</classname> Adapterklassen im auto-commit Modus.
         </para>
 
         <para>
@@ -1392,7 +1392,7 @@ echo $sql
         </para>
 
         <para>
-            Nach dem Auflösen der Transaktion befindet sich der <code>Zend_Db_Adapter</code> wieder im auto-commit
+            Nach dem Auflösen der Transaktion befindet sich der <classname>Zend_Db_Adapter</classname> wieder im auto-commit
             Modus, bis <code>beginTransaction()</code> wieder aufgerufen wird.
         </para>
 
@@ -1604,9 +1604,9 @@ $db->closeConnection();
         </example>
 
         <note>
-            <title>Unterstützt <code>Zend_Db</code> persistente Verbindungen?</title>
+            <title>Unterstützt <classname>Zend_Db</classname> persistente Verbindungen?</title>
             <para>
-                Die Nutzung von persistenten Verbindungen wird weder von <code>Zend_Db</code> unterstützt, noch gewünscht.
+                Die Nutzung von persistenten Verbindungen wird weder von <classname>Zend_Db</classname> unterstützt, noch gewünscht.
             </para>
             <para>
                 Die Benutzung von persistenten Verbindungen kann überschüssige und untätige Verbindungen auf
@@ -1631,11 +1631,11 @@ $db->closeConnection();
         <para>
             Es könnte Fälle geben in denen direkter Zugriff auf das Verbindungsobjekt benötigt wird, wie es von
             der PHP Erweiterung bereitgestellt wird. Einige der Erweiterungen könnten Features anbieten, welche
-            nicht von Methoden der <code>Zend_Db_Adapter_Abstract</code> Klasse auftauchen..
+            nicht von Methoden der <classname>Zend_Db_Adapter_Abstract</classname> Klasse auftauchen..
         </para>
 
         <para>
-            Zum Beispiel werden alle SQL Anweisungen von <code>Zend_Db</code> vorbereited und dann ausgeführt. Trotzdem gibt
+            Zum Beispiel werden alle SQL Anweisungen von <classname>Zend_Db</classname> vorbereited und dann ausgeführt. Trotzdem gibt
             es einige Features welche nicht kompatibel mit vorbereiteten Anweisungen sind. DDL Anweisungen wie
             CREATE und ALTER können in MySQL nicht vorbereitet werden. Auch können SQL Anweisungen keinen Nutzen
             aus dem <ulink url="http://dev.mysql.com/doc/refman/5.1/en/query-cache-how.html">MySQL Query Cache</ulink>
@@ -1663,7 +1663,7 @@ $result = $db->getConnection()->exec('DROP TABLE bugs');
         </para>
 
         <para>
-            In zukünftigen Versionen von <code>Zend_Db</code> werden Möglichkeiten gegeben sein, um Methoden Startpunkte
+            In zukünftigen Versionen von <classname>Zend_Db</classname> werden Möglichkeiten gegeben sein, um Methoden Startpunkte
             hinzuzufügen, für Funktionalitäten die den unterstützten PHP Datenbankerweiterungen gemein sind.
             Dies wird die Rückwärtskompatibilität nicht beeinträchtigen.
         </para>
@@ -1782,7 +1782,7 @@ if (!is_null($version)) {
                 </listitem>
                 <listitem>
                     <para>
-                        Aktuell wird die <code>Zend_Db::CASE_FOLDING</code> Option vom Oracle Adapter nicht
+                        Aktuell wird die <classname>Zend_Db::CASE_FOLDING</classname> Option vom Oracle Adapter nicht
                         unterstützt. Um diese Option mit Oracle zu nutzen muss der PDO OCI Adapter verwendet
                         werden.
                     </para>
@@ -1831,7 +1831,7 @@ if (!is_null($version)) {
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Zend_Db_Adapter_Pdo_Mssql</code> setzt <code>QUOTED_IDENTIFIER ON</code> direkt nach dem
+                        <classname>Zend_Db_Adapter_Pdo_Mssql</classname> setzt <code>QUOTED_IDENTIFIER ON</code> direkt nach dem
                         Verbinden zu einer SQL Server Datenbank. Dadurch verwendet der Treiber das Standard SQL
                         Bezeichner Begrenzungssymbol (<code>"</code>) an Stelle der proprietären Eckige-Klammer
                         Syntax die der SQL Server standradmäßig nutzt.
@@ -2012,7 +2012,7 @@ if (!is_null($version)) {
                 </listitem>
                 <listitem>
                     <para>
-                        Aktuell wird die <code>Zend_Db::CASE_FOLDING</code> Option vom
+                        Aktuell wird die <classname>Zend_Db::CASE_FOLDING</classname> Option vom
                         Firebird/interbase Adapter nicht unterstützt. Nicht gequotete Identifizierer
                         werden automatisch in Großschreibweise zurückgegeben.
                     </para>

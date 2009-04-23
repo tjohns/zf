@@ -31,7 +31,7 @@
         <para>
             Man kann eine Liste von Tabellenkalkulationen für einen bestimmten Benutzer erhalten indem die
             <code>getSpreadsheetFeed</code> Methode des Tabellenkalkulationsservices verwendet wird. Der Service
-            wird ein <code>Zend_Gdata_Spreadsheets_SpreadsheetFeed</code> Objekt zurückgeben das eine Liste von
+            wird ein <classname>Zend_Gdata_Spreadsheets_SpreadsheetFeed</classname> Objekt zurückgeben das eine Liste von
             Tabellenkalkulationen enthält die mit dem authentifizierten Benutzer authentifiziert sind.
         </para>
 
@@ -53,7 +53,7 @@ $feed = $spreadsheetService->getSpreadsheetFeed();
 
         <para>
             Mit der Schlüssel der Tabellenkalkulation von der &lt;id&gt; des
-            <code>Zend_Gdata_Spreadsheets_SpreadsheetEntry</code> Objekts das man bereits empfangen hat,
+            <classname>Zend_Gdata_Spreadsheets_SpreadsheetEntry</classname> Objekts das man bereits empfangen hat,
             kann mein einen Feed holen der eine Liste von Arbeitsblättern enthält die mit dieser
             Tabellenkalkulation assoziiert sind.
         </para>
@@ -66,9 +66,9 @@ $feed = $spreadsheetService->getWorksheetFeed($query);
         </programlisting>
 
         <para>
-            Der sich ergebende <code>Zend_Gdata_Spreadsheets_WorksheetFeed</code> Objektfeed repräsentiert die
+            Der sich ergebende <classname>Zend_Gdata_Spreadsheets_WorksheetFeed</classname> Objektfeed repräsentiert die
             Antwort des Servers. Neben anderen Dingen enthält dieser Feed eine Liste von
-            <code>Zend_Gdata_Spreadsheets_WorksheetEntry </code> Objekten (<code>$feed->entries</code>), wobei
+            <classname>Zend_Gdata_Spreadsheets_WorksheetEntry </classname> Objekten (<code>$feed->entries</code>), wobei
             jedes ein einzelnes Arbeitsblatt repräsentiert.
         </para>
 
@@ -129,14 +129,14 @@ $listFeed = $spreadsheetService->getListFeed($query);
             </programlisting>
 
             <para>
-                Das sich ergebende <code>Zend_Gdata_Spreadsheets_ListFeed</code> Objekt <code>$listfeed</code>
+                Das sich ergebende <classname>Zend_Gdata_Spreadsheets_ListFeed</classname> Objekt <code>$listfeed</code>
                 repräsentiert eine Antwort vom Server. Neben anderen Dingen enthält dieser Feed ein Array von
-                <code>Zend_Gdata_Spreadsheets_ListEntry</code> Objekten (<code>$listFeed->entries</code>),
+                <classname>Zend_Gdata_Spreadsheets_ListEntry</classname> Objekten (<code>$listFeed->entries</code>),
                 wobei jedes eine einzelne Zeile in einem Arbeitsblatt repräsentiert.
             </para>
 
             <para>
-                Jeder <code>Zend_Gdata_Spreadsheets_ListEntry</code> enthält ein Array, <code>custom</code>,
+                Jeder <classname>Zend_Gdata_Spreadsheets_ListEntry</classname> enthält ein Array, <code>custom</code>,
                 welches die Daten für die Zeile enthält. Dieses Array kann extrahiert und angezeigt werden:
             </para>
 
@@ -168,7 +168,7 @@ echo $customEntry->getColumnName() . " = " . $customEntry->getText();
                 Standardmäßig werden die Zeilen im Feed in der gleichen Reihenfolge angezeigt wie in den
                 entsprechenden Zeilen im GUI; das ist die Reihenfolge anhand der Zeilennummer. Um Zeilen in einer
                 umgekehrten Reihenfolge zu erhalten, muß die reverse Eigenschaft des
-                <code>Zend_Gdata_Spreadsheets_ListQuery</code> Objektes auf true gesetzt werden:
+                <classname>Zend_Gdata_Spreadsheets_ListQuery</classname> Objektes auf true gesetzt werden:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -183,7 +183,7 @@ $listFeed = $spreadsheetService->getListFeed($query);
             <para>
                 Es ist zu beachten, das wenn nach einer speziellen Spalte sortiert (oder umgekehrt sortiert)
                 werden soll, statt nach der Position im Arbeitsblatt, kann der  <code>orderby</code> Wert des
-                <code>Zend_Gdata_Spreadsheets_ListQuery</code> Objekts auf
+                <classname>Zend_Gdata_Spreadsheets_ListQuery</classname> Objekts auf
                 <code>column:&lt;Der Header dieser Spalte&gt;</code> gesetzt werden.
             </para>
         </sect3>
@@ -192,7 +192,7 @@ $listFeed = $spreadsheetService->getListFeed($query);
             <title>Eine strukturierte Abfrage senden</title>
 
             <para>
-                Der <code>sq</code> Wert von <code>Zend_Gdata_Spreadsheets_ListQuery</code> kann gesetzt werden
+                Der <code>sq</code> Wert von <classname>Zend_Gdata_Spreadsheets_ListQuery</classname> kann gesetzt werden
                 um einen Feed mit Einträgen zu erzeugen die ein spezielles Kriterium erfüllen. Angenommen, man
                 hat ein Arbeitsblatt das personelle Daten enthält, in denen jede Zeile Informationen über eine
                 einzelne Person repräsentiert, und man will alle Zeilen empfangen will in denen der Name der
@@ -227,7 +227,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData,
 
             <para>
                 Der <code>$rowData</code> Parameter enthält ein Array von Spaltenschlüssel zu Datenwerten.
-                Die Methode gibt ein <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code> Objekt zurück welches
+                Die Methode gibt ein <classname>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</classname> Objekt zurück welches
                 die eingefügte Zeile repräsentiert.
             </para>
 
@@ -241,7 +241,7 @@ $insertedListEntry = $spreadsheetService->insertRow($rowData,
             <title>Eine Zeile bearbeiten</title>
 
             <para>
-                Sobald ein <code>Zend_Gdata_Spreadsheets_ListEntry</code> Objekt geholt wird, können diese
+                Sobald ein <classname>Zend_Gdata_Spreadsheets_ListEntry</classname> Objekt geholt wird, können diese
                 Zeilen durch die Verwendung der <code>updateRow</code> Methode des Tabellenkalkulations Services
                 aktualisiert werden.
             </para>
@@ -256,7 +256,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
                 Der <code>$oldListEntry</code> Parameter enthält den Listeneintrag der aktualisiert werden soll.
                 <code>$newRowData</code> enthält ein Array von Spaltenschlüssel zu Datenwerten, die als neue
                 Zeilendaten verwendet werden. Diese Methode gibt ein
-                <code>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</code> Objekt zurück welches die aktualisierte
+                <classname>Zend_Gdata_Spreadsheets_SpreadsheetsEntry</classname> Objekt zurück welches die aktualisierte
                 Zeile repräsentiert.
             </para>
         </sect3>
@@ -266,7 +266,7 @@ $updatedListEntry = $spreadsheetService->updateRow($oldListEntry,
 
             <para>
                 Um eine Zeile zu löschen muß einfach <code>deleteRow</code> auf dem
-                <code>Zend_Gdata_Spreadsheets</code> Objekt mit dem bestehenden Eintrag aufgerufen werden, der
+                <classname>Zend_Gdata_Spreadsheets</classname> Objekt mit dem bestehenden Eintrag aufgerufen werden, der
                 gelöscht werden soll:
             </para>
 
@@ -316,9 +316,9 @@ $cellFeed = $spreadsheetService->getCellFeed($query);
             </programlisting>
 
             <para>
-                Im resultierenden <code>Zend_Gdata_Spreadsheets_CellFeed</code> Objekt repräsentiert
+                Im resultierenden <classname>Zend_Gdata_Spreadsheets_CellFeed</classname> Objekt repräsentiert
                 <code>$cellFeed</code> eine Antwort vom Server. Neben anderen Dingen enthält dieser Feed ein
-                Array von <code>Zend_Gdata_Spreadsheets_CellEntry</code> Objekten
+                Array von <classname>Zend_Gdata_Spreadsheets_CellEntry</classname> Objekten
                 (<code>$cellFeed>entries</code>), von denen jeder eine einzelne Zelle in einem Arbeitsblatt
                 repräsentiert. Diese Information kann angezeigt werden:
             </para>

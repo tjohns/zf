@@ -6,7 +6,7 @@
 
     <para>
         Hier findet man API-artige Dokumentation über alle Kern Komponenten von
-        <code>Zend_Application</code>.
+        <classname>Zend_Application</classname>.
     </para>
 
     <xi:include href="Zend_Application-CoreFunctionality-Application.xml" />

@@ -6,7 +6,7 @@
     <title>Konstanten für generelle Datums Funktionen</title>
 
     <para>
-        Wo auch immer eine <code>Zend_Date</code> Methode einen <code>$parts</code> Parameter besitzt,
+        Wo auch immer eine <classname>Zend_Date</classname> Methode einen <code>$parts</code> Parameter besitzt,
         kann eine der nachfolgenden Konstanten als Argument für diesen Parameter benutzt werden, um einen
         speziellen Teil des Datums auszuwählen, oder um anzuzeigen das ein bestimmtes Datumsformat benutzt werden
         oder gewünscht ist (z.B. RFC 822).
@@ -17,7 +17,7 @@
         <title>Konstanten benutzen</title>
 
         <para>
-            Zum Beispiel kann die Konstante <code>Zend_Date::HOUR</code> in den anbei gezeigten Arten
+            Zum Beispiel kann die Konstante <classname>Zend_Date::HOUR</classname> in den anbei gezeigten Arten
             benutzt werden. Wenn mit Wochentagen, Kalendardaten, Stunden, Minuten, Sekunden oder jedem anderen
             Datumsabschnitt gearbeitet wird die in verschiedenen Teilen der Welt unterschiedlich dargestellt werden,
             wird die Zeitzone des Objektes automatisch benutzt um den richtigen Wert zu berechnen selbst wenn der
@@ -104,8 +104,8 @@
         <title>Liste aller Konstanten</title>
 
         <para>
-            Jeder Teil von Datum/Zeit hat eine eindeutige Konstante in <code>Zend_Date</code>. Alle durch
-            <code>Zend_Date</code> unterstützten Konstanten sind anbei aufgelistet.
+            Jeder Teil von Datum/Zeit hat eine eindeutige Konstante in <classname>Zend_Date</classname>. Alle durch
+            <classname>Zend_Date</classname> unterstützten Konstanten sind anbei aufgelistet.
         </para>
 
         <table id="zend.date.constants.list.table-1">
@@ -556,8 +556,8 @@
         </table>
 
         <para>
-            Auf <code>Zend_Date::DATES</code> sollte speziell geachtet werden, da dieser Formatbezeichner
-            eine besondere Bedeutung innerhalb von <code>Zend_Date</code> als
+            Auf <classname>Zend_Date::DATES</classname> sollte speziell geachtet werden, da dieser Formatbezeichner
+            eine besondere Bedeutung innerhalb von <classname>Zend_Date</classname> als
             <emphasis role="strong">Eingabe</emphasis>-Formatbezeichner. Wenn dieser Bezeichner als Eingabeformat
             für <code>$part</code> benutzt wird, erlaubt diese Konstante die beste und flexibelste Art um viele
             ähnliche Datumsformate zu akzeptieren. Heuristik wird benutzt um Daten automatisch von einer
@@ -682,7 +682,7 @@
             Die akzeptierten Formatbezeichner können vom ISO Format zu PHP's date Format geändert werden, wenn
             man damit mehr Erfahrung hat. Wie auch immer, nicht alle Format welche in der ISO Norm definiert sind,
             werden durch PHP's date Formatbezeichner unterstützt. Die Verwendung der
-            <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> Methode erlaubt es, für alle
+            <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname> Methode erlaubt es, für alle
             Zend_Date Methoden, zwischen der Unterstützung von ISO Formatbezeichnern und PHP date() Typbezeichner
             zu wählen (siehe <xref linkend="zend.date.constants.phpformats" />).
         </para>
@@ -1124,7 +1124,7 @@ print $date->toString("'Epoche:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
 
         <para>
             Wenn man mit PHP's date Formatdefinition vertrauter ist als mit den ISO Formatdefinitionen, dann kann
-            man durch Verwendung der Methode <code>Zend_Date::setOptions(array('format_type' => 'php'))</code> das Wechseln
+            man durch Verwendung der Methode <classname>Zend_Date::setOptions(array('format_type' => 'php'))</classname> das Wechseln
             von ISO Formatdefinition zu PHP date Formatdefinition welche dann für alle Zend_Date Methoden verwendet
             werden wechseln. Danach müssen alle Format Parameter in
             <ulink url="http://php.net/date">PHP's <code>date()</code> Formatdefintion</ulink> angegeben werden.
@@ -1156,7 +1156,7 @@ print $date->toString("'Format:D M j G:i:s T Y='D M j G:i:s T Y");
             Die folgende Tabelle zeit die Liste der PHP date Formatdefinitionen mit Ihrem Äquivalent in
             Zend_Date Konstanten und der im CLDR/ISO äquivalenten Formatdefintion. In den meisten Fällen
             wenn das CLDR/ISO Format keine entsprechende Formardefinition enthält, wird die PHP
-            Formatdefinition nicht durch <code>Zend_Locale_Format::convertPhpToIsoFormat()</code> geändert,
+            Formatdefinition nicht durch <classname>Zend_Locale_Format::convertPhpToIsoFormat()</classname> geändert,
             und die Zend_Date Methoden erkennen dann diese "besonderen" PHP Formatdefinitionen, selbst im
             Standardmäßigen "ISO" Formatcode.
         </para>

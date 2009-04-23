@@ -6,13 +6,13 @@
     <title>Adapter für Zend_Translate</title>
 
     <para>
-        <code>Zend_Translate</code> kann unterschiedliche Adapter für die Übersetzung verwenden.
+        <classname>Zend_Translate</classname> kann unterschiedliche Adapter für die Übersetzung verwenden.
         Jeder Adapter hat seine eigenen Vor- und Nachteile. Hier ist eine kurze
         Liste aller unterstützten Adapter für Übersetzungs Quell Dateien.
     </para>
 
     <table id="zend.translate.adapter.table">
-        <title>Adapter für <code>Zend_Translate</code></title>
+        <title>Adapter für <classname>Zend_Translate</classname></title>
         <tgroup cols="3">
             <thead>
                 <row>
@@ -82,7 +82,7 @@
 
         <para>
             Zuerst muss man die Entscheidung treffen welchen der Adapter man für
-            <code>Zend_Translate</code> benutzen soll. Oft sind externe Kriterien wie die Vorgaben
+            <classname>Zend_Translate</classname> benutzen soll. Oft sind externe Kriterien wie die Vorgaben
             durch ein Projekt oder durch eien Kunden dafür ausschlaggebend. Aber
             wenn die Entscheidungsgewalt in den eigenen Händen liegt, werden die folgenden
             Hinweise die Entscheidung vereinfachen.
@@ -92,7 +92,7 @@
             <para>
                 Wenn man den Adapter auswählt sollte man auch auf das Verwendete Encoding achten.
                 Selbst wenn Zend Framework UTF-8 als Standard Encoding definiert besteht manchmal die
-                Notwendigkeit andere Encodings zu verwenden. <code>Zend_Translate</code> ändert kein
+                Notwendigkeit andere Encodings zu verwenden. <classname>Zend_Translate</classname> ändert kein
                 Encoding welches in Quelldateien definiert ist was bedeutet das, wenn eine Gettext Quelle
                 auf ISO-8859-1 aufgebaut ist, die Strings auch in diesem Encoding zurückgegeben werden
                 ohne das diese Konvertiert werden. Es gibt nur eine Einschränkung:
@@ -162,7 +162,7 @@
                 und jetzt weltweit Verwendung findet.
                 Es ist nicht menschlich lesbar, allerdings existieren einige kostenlose
                 Freeware Tools (zum Beispiel, <ulink url="http://sourceforge.net/projects/poedit/">POEdit</ulink>),
-                welche sehr nützlich sind. Der <code>Zend_Translate</code> Gettext Adapter ist nicht
+                welche sehr nützlich sind. Der <classname>Zend_Translate</classname> Gettext Adapter ist nicht
                 mit Hilfe von PHP's Gettext Erweiterung realisiert worden.
                 Der Gettext Adapter kann also verwendet werden selbst wenn PHP's Gettext
                 Erweiterung nicht verfügbar ist.
@@ -295,20 +295,20 @@
         <title>Selbst geschriebene Adapter integrieren</title>
 
         <para>
-            <code>Zend_Translate</code> erlaubt es, selbst geschriebene Adapter Klassen zu integrieren und zu verwenden. Diese
-            können wie die Standard Adapter Klassen, welche bereits in <code>Zend_Translate</code> inkludiert sind, verwendet
+            <classname>Zend_Translate</classname> erlaubt es, selbst geschriebene Adapter Klassen zu integrieren und zu verwenden. Diese
+            können wie die Standard Adapter Klassen, welche bereits in <classname>Zend_Translate</classname> inkludiert sind, verwendet
             werden.
         </para>
 
         <para>
-            Jede Adapter Klasse die mit <code>Zend_Translate</code> verwendet werden soll muß eine Subklasse von
-            <code>Zend_Translate_Adapter</code> sein. <code>Zend_Translate_Adapter</code> ist eine abstrakte Klasse welche bereits alles
+            Jede Adapter Klasse die mit <classname>Zend_Translate</classname> verwendet werden soll muß eine Subklasse von
+            <classname>Zend_Translate_Adapter</classname> sein. <classname>Zend_Translate_Adapter</classname> ist eine abstrakte Klasse welche bereits alles
             definiert was für eine Übersetzung notwendig ist. Was noch getan werden muß, ist die Definition des
             Lesers für die Übersetzungsdaten.
         </para>
 
         <para>
-            Die Verwendung des Prefixes "Zend" sollte dem Zend_Framework vorbehalten sein. Wenn <code>Zend_Translate</code>
+            Die Verwendung des Prefixes "Zend" sollte dem Zend_Framework vorbehalten sein. Wenn <classname>Zend_Translate</classname>
             mit einem eigenen Adapter erweitert wird, sollte er in etwa "Firma_Translate_Adapter_MeinFormat"
             heißen. Der folgende Code zeigt ein Beispiel davon, wie eine selbst geschriebene Adapter Klasse
             implmentiert werden sollte:
@@ -334,14 +334,14 @@ try {
         <title>Alle Adapter verschnellern</title>
 
         <para>
-            <code>Zend_Translate</code> erlaubt intern die Verwendung von <code>Zend_Cache</code> um das
+            <classname>Zend_Translate</classname> erlaubt intern die Verwendung von <classname>Zend_Cache</classname> um das
             Laden von Übersetzungs Quellen zu verschnellern. Das kann sehr nützlich sein wenn viele
             Übersetzungs Quellen oder aufwändige Quellformate, wie XML basierte Dateien, verwendet werden.
         </para>
 
         <para>
-            Um das Caching zu verwenden muß nur ein Cache Objekt an die <code>Zend_Translate::setCache()</code>
-            Methode übergeben werden. Diese nimmt eine Instanz von <code>Zend_Cache</code> als einzigen
+            Um das Caching zu verwenden muß nur ein Cache Objekt an die <classname>Zend_Translate::setCache()</classname>
+            Methode übergeben werden. Diese nimmt eine Instanz von <classname>Zend_Cache</classname> als einzigen
             Parameter. Auch wenn irgendein Adapter direkt verwendet wird kann die <code>setCache()</code>
             Methode verwendet werden. Der Bequemlichkeit halber gibt es die statischen Methoden
             <code>getCache()</code>, <code>hasCache()</code>, <code>clearCache()</code> und
@@ -363,7 +363,7 @@ $translate = new Zend_Translate('gettext',
         <note>
             <para>
                 Der Cache muß <emphasis role="strong">vor</emphasis> seiner Verwendung oder Initiierung eines
-                Adapter oder einer Instanz von <code>Zend_Translate</code> gesetzt werden. Andernfalls wird
+                Adapter oder einer Instanz von <classname>Zend_Translate</classname> gesetzt werden. Andernfalls wird
                 die Übersetzungs Quelle nicht gecached bis eine neue Quelle mit der
                 <code>addTranslation()</code> Methode hinzugefügt wird.
             </para>

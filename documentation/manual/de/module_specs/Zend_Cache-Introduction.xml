@@ -4,7 +4,7 @@
 <sect1 id="zend.cache.introduction">
     <title>Einführung</title>
     <para>
-        <code>Zend_Cache</code> bietet einen generellen Weg für das Cachen von Daten.
+        <classname>Zend_Cache</classname> bietet einen generellen Weg für das Cachen von Daten.
     </para>
     <para>
       Cachen im Zend Framework wird mit Frontends durchgeführt, wobei Cache Datensätze über Backend Adapter
@@ -14,14 +14,14 @@
       Tag markiert sind").
     </para>
     <para>
-        Der Kern des Moduls (<code>Zend_Cache_Core</code>) ist generell, flexibel und konfigurierbar.
-        Nun gibt es - für spezielle Bedürfnisse - Cache Frontends, welche <code>Zend_Cache_Core</code>
+        Der Kern des Moduls (<classname>Zend_Cache_Core</classname>) ist generell, flexibel und konfigurierbar.
+        Nun gibt es - für spezielle Bedürfnisse - Cache Frontends, welche <classname>Zend_Cache_Core</classname>
         erweitern: <code>Output</code>, <code>File</code>, <code>Function</code> und <code>Class</code>.
     </para>
     <example id="zend.cache.introduction.example-1">
-        <title>Ein Frontend mit <code>Zend_Cache::factory()</code> erzeugen</title>
+        <title>Ein Frontend mit <classname>Zend_Cache::factory()</classname> erzeugen</title>
         <para>
-            <code>Zend_Cache::factory()</code> instanziiert korrekte Objekte und fügt sie zusammen.
+            <classname>Zend_Cache::factory()</classname> instanziiert korrekte Objekte und fügt sie zusammen.
             In diesem ersten Beispiel wird das <code>Core</code> Frontend zusammen mit dem
             <code>File</code> Backend verwendet.
         </para>
@@ -92,7 +92,7 @@ print_r($result);
     </example>
 
     <example id="zend.cache.introduction.example-3">
-        <title>Cache Ausgabe mit dem <code>Zend_Cache</code> Frontend</title>
+        <title>Cache Ausgabe mit dem <classname>Zend_Cache</classname> Frontend</title>
         <para>
             Abschnitte, in denen die Ausgabe gecached werden soll, werden 'markiert', durch Hinzufügen
             von etwas bedingter Logik, wobei der Abschnitt innerhalb der <code>start()</code> und <code>end()</code> Methoden
@@ -141,7 +141,7 @@ echo 'Das wird nie gecached ('.time().').';
         </para>
     </example>
     <note><para>
-        Wenn <code>Zend_Cache</code> benutzt wird, muß auf die wichtigen Cache Identifizierungen geachtet werden (welche an
+        Wenn <classname>Zend_Cache</classname> benutzt wird, muß auf die wichtigen Cache Identifizierungen geachtet werden (welche an
         <code>save()</code> und <code>start()</code> übergeben werden). Diese müssen für jede Ressource
         einzigartig sein, die gecached werden soll. Andernfalls würden sich unverknüpfte Cache Datensätze gegenseitig
         entfernen oder, noch schlimmer, anstatt des anderen dargestellt werden.

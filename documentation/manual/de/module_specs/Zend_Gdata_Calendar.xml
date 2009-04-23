@@ -4,7 +4,7 @@
 <sect1 id="zend.gdata.calendar">
     <title>Google Kalender verwenden</title>
     <para>
-        Die <code>Zend_Gdata_Calendar</code> Klasse kann verwendet werden um Events im Online Google Kalender
+        Die <classname>Zend_Gdata_Calendar</classname> Klasse kann verwendet werden um Events im Online Google Kalender
         Service zu sehen, erstellen, updaten und löschen.
     </para>
     <para>
@@ -23,7 +23,7 @@
         <para>
             Bevor irgendeine Transaktion stattfinden kann, muß diese Verbindung erstellt werden. Die Erstellung
             einer Verbindung zu den Kalender Server beinhaltet zwei Schritte: Erstellung eines HTTP Clients und
-            das binden einer <code>Zend_Gdata_Calendar</code> Instanz an diesen Client.
+            das binden einer <classname>Zend_Gdata_Calendar</classname> Instanz an diesen Client.
         </para>
         <sect3 id="zend.gdata.calendar.connecting.authentication">
             <title>Authentifizierung</title>
@@ -62,7 +62,7 @@
                 </listitem>
             </itemizedlist>
             <para>
-                Die <code>Zend_Gdata</code> Bibliothek bietet Unterstützung für alle drei Authentifizierungs
+                Die <classname>Zend_Gdata</classname> Bibliothek bietet Unterstützung für alle drei Authentifizierungs
                 Schemas. Der Rest dieses Kapitels nimmt an das die vorhandenen Authentifizierungs Schemas
                 geläufig sind und wie eine korrekte Authentifizierte Verbindung erstellt wird. Für weitere Details
                 kann in die <link linkend="zend.gdata.introduction.authentication">Authentifizierungs Sektion</link>
@@ -75,17 +75,17 @@
             <title>Eine Service Instanz erstellen</title>
             <para>
                 Um mit dem Google Kalender zu interagieren, bietet diese Bibliothek die
-                <code>Zend_Gdata_Calendar</code> Service Klasse. Diese Klasse bietet ein übliches Interface zu den
+                <classname>Zend_Gdata_Calendar</classname> Service Klasse. Diese Klasse bietet ein übliches Interface zu den
                 Google Data und Atom Publishing Protocol Modellen und assistiert in der Behandlung der Anfragen
                 zum und von den Kalender Servern.
             </para>
             <para>
                 Sobald ein Authentifizierung Schema ausgewählt wurde, besteht der nächste Schritt darin eine
-                Instanz von <code>Zend_Gdata_Calendar</code> zu erstellen. Der Klassen Konstruktor nimmt eine
-                Instanz von <code>Zend_Http_Client</code> als einzelnes Argument. Das bietet ein Interface für
+                Instanz von <classname>Zend_Gdata_Calendar</classname> zu erstellen. Der Klassen Konstruktor nimmt eine
+                Instanz von <classname>Zend_Http_Client</classname> als einzelnes Argument. Das bietet ein Interface für
                 AuthSub und ClientAuth Authentifizierungen, da beide von Ihnen die Erstellung eines speziellen
                 authentifizierten  HTTP Clients benötigen. Wenn keine Argumente angegeben werden, wird
-                automatisch eine unauthentifizierte Instanz von <code>Zend_Http_Client</code> erstellt.
+                automatisch eine unauthentifizierte Instanz von <classname>Zend_Http_Client</classname> erstellt.
             </para>
             <para>
                 Das folgende Beispiel zeigt wie man eine Kalender Service Klasse erstellt und dabei die
@@ -243,8 +243,8 @@ try {
         </programlisting>
         <para>
             Der Aufruf von <code>getCalendarListFeed()</code> erstellt eine neue Instanz von
-            <code>Zend_Gdata_Calendar_ListFeed</code> die jeden vorhandenen Kalender als Instanz von
-            <code>Zend_Gdata_Calendar_ListEntry</code> enthält. Nachdem der Feed empfangen wurde, können der
+            <classname>Zend_Gdata_Calendar_ListFeed</classname> die jeden vorhandenen Kalender als Instanz von
+            <classname>Zend_Gdata_Calendar_ListEntry</classname> enthält. Nachdem der Feed empfangen wurde, können der
             Iterator und der Accessor die innerhalb des Feeds enthalten sind, verwendet werden um die enthaltenen
             Kalender zu inspizieren.
         </para>
@@ -263,9 +263,9 @@ echo "</ul>";
         <title>Events erhalten</title>
         <para>
             Wie die Liste der Kalender können auch die Events empfangen werden durch Verwendung der
-            <code>Zend_Gdata_Calendar</code> Service Klasse. Die zurückgegebene Event Liste ist vom Typ
-            <code>Zend_Gdata_Calendar_EventFeed</code> und enthält jedes Event als Instanz von
-            <code>Zend_Gdata_Calendar_EventEntry</code>. Wie vorher, erlauben die in der Instanz des Event Feeds
+            <classname>Zend_Gdata_Calendar</classname> Service Klasse. Die zurückgegebene Event Liste ist vom Typ
+            <classname>Zend_Gdata_Calendar_EventFeed</classname> und enthält jedes Event als Instanz von
+            <classname>Zend_Gdata_Calendar_EventEntry</classname>. Wie vorher, erlauben die in der Instanz des Event Feeds
             enthaltenen Accessoren und der Iterator das individuelle Events inspiziert werden können.
         </para>
         <sect3 id="zend.gdata.event_retrieval.queries">
@@ -273,7 +273,7 @@ echo "</ul>";
             <para>
                 Wenn Events mit der Kalender API empfangen werden, werden speziell erstellte Abfrage URLs verwendet
                 um zu beschreiben welche Events zurückgegeben werden sollten. Die
-                <code>Zend_Gdata_Calendar_EventQuery</code> Klasse vereinfacht diese Aufgabe durch
+                <classname>Zend_Gdata_Calendar_EventQuery</classname> Klasse vereinfacht diese Aufgabe durch
                 automatische Erstellung einer Abfrage URL basierend auf den gegebenen Parametern. Eine komplette
                 Liste dieser Parameter ist in der
                 <ulink url="http://code.google.com/apis/gdata/reference.html#Queries">Abfrage Sektion des
@@ -312,7 +312,7 @@ echo "</ul>";
         <sect3 id="zend.gdata.event_retrieval.start_time">
             <title>Events in der Reihenfolge Ihres Startzeitpunktes erhalten</title>
             <para>
-                Das folgende Beispiel zeigt die Verwendung der <code>Zend_Gdata_Query</code> Klasse und spezifiziert
+                Das folgende Beispiel zeigt die Verwendung der <classname>Zend_Gdata_Query</classname> Klasse und spezifiziert
                 den privat sichtbaren Feed, welcher eine vorhandene authentifizierte Verbindung zu den Kalender
                 Servern benötigt. Wenn ein MagicCookie für die Authentifizierung verwendet wird, sollte die
                 Sichtbarkeit zuerst auf "<code>private-magicCookieValue</code>" gesetzt werden, sobei
@@ -347,7 +347,7 @@ echo "</ul>";
             </programlisting>
             <para>
                 Zusätzliche Eigenschaften wie ID, Autor, Wann, Event Status, Sichtbarkeit, Web Inhalt, und Inhalt,
-                sowie andere sind innerhalb von <code>Zend_Gdata_Calendar_EventEntry</code> vorhanden. Siehe die
+                sowie andere sind innerhalb von <classname>Zend_Gdata_Calendar_EventEntry</classname> vorhanden. Siehe die
                 <ulink url="http://framework.zend.com/apidoc/core/">Zend Framework API Dokumentation</ulink> und
                 die <ulink url="http://code.google.com/apis/gdata/reference.html">Lalender Protokol Referenz</ulink>
                 für eine komplette Liste.
@@ -428,9 +428,9 @@ try {
         <sect3 id="zend.gdata.calendar.creating_events.single">
             <title>Ein einmal vorkommendes Event erstellen</title>
             <para>
-                Events werden einem Kalender hinzugefügt indem eine Instanz von  <code>Zend_Gdata_EventEntry</code>
+                Events werden einem Kalender hinzugefügt indem eine Instanz von  <classname>Zend_Gdata_EventEntry</classname>
                 erstellt wird, und diese mit den richtigen Daten bekanntgegeben wird. Die Kalender Service Instanz
-                (<code>Zend_Gdata_Calendar</code>) wird dann verwendet um das Event transparent in XML zu
+                (<classname>Zend_Gdata_Calendar</classname>) wird dann verwendet um das Event transparent in XML zu
                 konvertieren und diese an den Kalender Server zu senden.
             </para>
             <para>Mindestens die folgenden Attribute sollten gesetzt werden:</para>

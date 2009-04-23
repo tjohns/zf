@@ -6,7 +6,7 @@
     <sect2 id="zend.service.flickr.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Service_Flickr</code> ist eine einfache API um den Flickr REST Web Service zu nutzen.
+            <classname>Zend_Service_Flickr</classname> ist eine einfache API um den Flickr REST Web Service zu nutzen.
             Für die Benutzung des Flickr Web Service, benötigt man einen API Schlüssel.
             Um diesen Schlüssel zu bekommen und für weitergehende Informationen über den Flickr REST Web Service
             besuchen Sie bitte die <ulink url="http://www.flickr.com/services/api/">Flickr API Dokumentation</ulink>.
@@ -37,7 +37,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.finding-users">
         <title>Bilder und Informationen von Flickr Benutzern finden</title>
         <para>
-            <code>Zend_Service_Flickr</code> stellt verschiedene unterschiedliche Wege zur Verfügung um
+            <classname>Zend_Service_Flickr</classname> stellt verschiedene unterschiedliche Wege zur Verfügung um
             Informationen von Flickr Benutzern zu bekommen:
         </para>
         <itemizedlist>
@@ -45,7 +45,7 @@ foreach ($results as $result) {
                 <para>
                     <code>userSearch()</code>: Akzeptiert ein String Abfrage von mit Leerzeichen getrennten Tags
                     und als optionalen zweiten Parameter ein Array mit Such Optionen. Zurückgegeben wird ein
-                    Set von Photos als <code>Zend_Service_Flickr_ResultSet</code> Objekt.
+                    Set von Photos als <classname>Zend_Service_Flickr_ResultSet</classname> Objekt.
                 </para>
             </listitem>
             <listitem>
@@ -81,7 +81,7 @@ foreach ($results as $result) {
     <sect2 id="zend.service.flickr.grouppoolgetphotos">
         <title>Photos in einem Gruppenpool finden</title>
         <para>
-            <code>Zend_Service_Flickr</code> erlaubt es Photos eines Gruppenpools basierend auf der
+            <classname>Zend_Service_Flickr</classname> erlaubt es Photos eines Gruppenpools basierend auf der
             ID zu empfangen. Hierfür kann die <code>groupPoolGetPhotos()</code> Methode verwendet
             werden:
         </para>
@@ -109,7 +109,7 @@ $flickr = new Zend_Service_Flickr('MY_API_KEY');
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Empfangen von Details zu Bildern durch Flickr</title>
         <para>
-            <code>Zend_Service_Flickr</code> erlaubt es schnell und einfach an Details zu Bilders zu kommen,
+            <classname>Zend_Service_Flickr</classname> erlaubt es schnell und einfach an Details zu Bilders zu kommen,
             basieren auf einer übergebenen ID des Bildes. Einfach durch benutzen der  <code>getImageDetails()</code> Methode,
             wie im folgenden Beispiel:
         </para>
@@ -134,9 +134,9 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
         <para>
             Die folgenden Klassen werden durch <code>tagSearch()</code> und <code>userSearch()</code> zurückgegeben:
             <itemizedlist>
-                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><code>Zend_Service_Flickr_ResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.result"><code>Zend_Service_Flickr_Result</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.image"><code>Zend_Service_Flickr_Image</code></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><classname>Zend_Service_Flickr_ResultSet</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.result"><classname>Zend_Service_Flickr_Result</classname></link></para></listitem>
+                <listitem><para><link linkend="zend.service.flickr.classes.image"><classname>Zend_Service_Flickr_Image</classname></link></para></listitem>
             </itemizedlist>
         </para>
         <sect3 id="zend.service.flickr.classes.resultset">

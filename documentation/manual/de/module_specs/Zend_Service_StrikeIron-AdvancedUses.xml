@@ -5,7 +5,7 @@
     <title>Zend_Service_StrikeIron: Erweiterte Verwendung</title>
 
     <para>
-        Diese Sektion beschreibt die erweiterte Verwendung von <code>Zend_Service_StrikeIron</code>.
+        Diese Sektion beschreibt die erweiterte Verwendung von <classname>Zend_Service_StrikeIron</classname>.
     </para>
 
     <sect2 id="zend.service.strikeiron.advanced-uses.services-by-wsdl">
@@ -66,7 +66,7 @@ echo $result->listingName;
       </para>
 
       <para>
-        Jeder StrikeIron Client (Subklasse von <code>Zend_Service_StrikeIron_Base</code>) enthält eine
+        Jeder StrikeIron Client (Subklasse von <classname>Zend_Service_StrikeIron_Base</classname>) enthält eine
         <code>getSoapClient()</code> Methode um die darunterliegende Instanz von <code>SOAPClient</code>
         zu retournieren, die für die Kommunikation mit StrikeIron verwendet wird.
       </para>
@@ -74,7 +74,7 @@ echo $result->listingName;
       <para>
         PHP's <ulink url="http://www.php.net/manual/de/function.soap-soapclient-construct.php">SOAPClient</ulink>
         hat eine <code>trace</code> Option die dazu führt das das XML, das wärend der letzten Transaktion getauscht
-        wurde, gemerkt wird. <code>Zend_Service_StrikeIron</code> aktiviert die <code>trace</code> Option nicht standardmäßig
+        wurde, gemerkt wird. <classname>Zend_Service_StrikeIron</classname> aktiviert die <code>trace</code> Option nicht standardmäßig
         aber das kann einfach getan werden durch Spezifizierung der Option die dazu verwendet wird den
         <code>SOAPClient</code> Konstruktor zu übergeben.
       </para>

@@ -2,10 +2,10 @@
 <!-- EN-Revision: 14978 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.forms">
-    <title>Erstellen von Form durch Verwendung von <code>Zend_Form</code></title>
+    <title>Erstellen von Form durch Verwendung von <classname>Zend_Form</classname></title>
 
     <para>
-        Die <code>Zend_Form</code> Klasse wird verwendet um Form Element, Anzeigegruppen und
+        Die <classname>Zend_Form</classname> Klasse wird verwendet um Form Element, Anzeigegruppen und
         Unterforms zu gruppieren. Sie kann die folgenden Aktionen an diesen Elementen vornehmen:
     </para>
 
@@ -31,7 +31,7 @@
     </itemizedlist>
 
     <para>
-        Wärend Formen die mit <code>Zend_Form</code> erstellt werden komplex sein können, ist
+        Wärend Formen die mit <classname>Zend_Form</classname> erstellt werden komplex sein können, ist
         der warscheinlich beste Verwendungzweck eine einfache Form; die beste Verwendung ist für
         Rapid Application Development (RAD) und Prototyping.
     </para>
@@ -50,7 +50,7 @@ $form = new My_Form()
     </programlisting>
 
     <para>
-        Es kann optional eine Instanz von <code>Zend_Config</code> oder ein Array übergeben werden, welches verwendet
+        Es kann optional eine Instanz von <classname>Zend_Config</classname> oder ein Array übergeben werden, welches verwendet
         wird um den Status des Objektes zu setzen sowie potentiell neue Elemente zu erstellen:
     </para>
 
@@ -61,14 +61,14 @@ $form = new Zend_Form($config);
     </programlisting>
 
     <para>
-        <code>Zend_Form</code> ist iterierbarm und iteriert durch die Elemente, Anzeigegruppen und
+        <classname>Zend_Form</classname> ist iterierbarm und iteriert durch die Elemente, Anzeigegruppen und
         Subforms, indem es die Reihenfolge in der diese registriert wurde verwendet und jede
         Reihenfolge die der Index hat. Das ist nützlich in den Fällen in denen Elemente manuell in
         einer bestimmten Reihenfolge dargestellt werden sollen.
     </para>
 
     <para>
-        <code>Zend_Form</code>'s Magie liegt in der Fähigkeit als Factory für Elemente und
+        <classname>Zend_Form</classname>'s Magie liegt in der Fähigkeit als Factory für Elemente und
         Anzeigegruppen zu arbeiten, genauso wie die Fähigkeit sich selbst durch Dekoratore
         darzustellen.
     </para>
@@ -76,7 +76,7 @@ $form = new Zend_Form($config);
     <sect2 id="zend.form.forms.plugins">
         <title>Plugin Loader</title>
         <para>
-            <code>Zend_Form</code> verwendet <code>Zend_Loader_PluginLoader</code> um es
+            <classname>Zend_Form</classname> verwendet <classname>Zend_Loader_PluginLoader</classname> um es
             Entwicklern zu erlauben Orte von alternativen Elementen und Dekoratoren zu
             spezifizieren. Jeder hat seinen eigenen mit Ihm assoziierten Plugin Loader, und
             generelle Zugriffspunkte werden verwendet um jeden zu empfangen und zu ändern.
@@ -121,7 +121,7 @@ $form = new Zend_Form($config);
 
         <para>
             Zusätzlich kann ein Präfixpfad für alle Elemente und Anzeigegruppen die durch eine
-            <code>Zend_Form</code> Instanz erstellt wurden, spezifiziert werden, durch Verwendung
+            <classname>Zend_Form</classname> Instanz erstellt wurden, spezifiziert werden, durch Verwendung
             der folgenden Methoden:
         </para>
 
@@ -130,7 +130,7 @@ $form = new Zend_Form($config);
                 <code>addElementPrefixPath($prefix, $path, $type = null)</code>: Wie
                 <code>addPrefixPath()</code>, nur das ein Klassenpräfix und ein Pfad spezifiziert
                 werden muß. Wenn <code>$type</code> spezifiziert wurde, muß er einer der
-                Plugin Loader Typen sein die in <code>Zend_Form_Element</code> spezifiziert sind;
+                Plugin Loader Typen sein die in <classname>Zend_Form_Element</classname> spezifiziert sind;
                 siehe das <link linkend="zend.form.elements.loaders">Kapitel Element Plugins</link>
                 für weitere Informationen über gültige <code>$type</code> Werte. Wenn kein
                 <code>$type</code> spezifiziert wurde, nimmt diese Methode an das ein genereller
@@ -157,7 +157,7 @@ $form = new Zend_Form($config);
     <sect2 id="zend.form.forms.elements">
         <title>Elemente</title>
         <para>
-            <code>Zend_Form</code> bietet verschiedene Zugriffsmethoden für das Hinzufügen und
+            <classname>Zend_Form</classname> bietet verschiedene Zugriffsmethoden für das Hinzufügen und
             Entfernen von Elementen aus einer Form. Diese können Instanzen von Elemente Objekten
             nehmen oder als Factories für das Instanzieren der Element Objekte selbe herhalten.
         </para>
@@ -165,8 +165,8 @@ $form = new Zend_Form($config);
         <para>
             Die grundsätzlichste Methode für das Hinzufügen eines Elements ist
             <code>addElement()</code>. Diese Methode kann entweder ein Objekt vom Typ
-            <code>Zend_Form_Element</code> sein (oder einer Klasse die
-            <code>Zend_Form_Element</code> erweitert), oder Argumente für das Erstellen eines neuen
+            <classname>Zend_Form_Element</classname> sein (oder einer Klasse die
+            <classname>Zend_Form_Element</classname> erweitert), oder Argumente für das Erstellen eines neuen
             Elements -- inklusive dem Elementtyp, Namen, und jegliche Konfigurationsoption.
         </para>
 
@@ -195,9 +195,9 @@ $form->addElement('text', 'foo', array('label' => 'Foo:'));
 
             <para>
                 <code>addElement()</code> implementiert das Fluent Interface; das heißt es gibt das
-                <code>Zend_Form</code> Objekt zurück und nicht das Element. Das wird getan um es zu
+                <classname>Zend_Form</classname> Objekt zurück und nicht das Element. Das wird getan um es zu
                 erlauben das mehrere addElement() Methoden gekettet werden können oder andere
-                Methoden die das Fluent Interface implementieren (alle Setzer in <code>Zend_Form</code>
+                Methoden die das Fluent Interface implementieren (alle Setzer in <classname>Zend_Form</classname>
                 implementieren dieses Pattern).
             </para>
 
@@ -540,12 +540,12 @@ $form->setElementFilters(array('StringTrim'));
         </para>
 
         <para>
-            Die Basisklasse für Anzeigegruppen ist <code>Zend_Form_DisplayGroup</code>. Wärend Sie
+            Die Basisklasse für Anzeigegruppen ist <classname>Zend_Form_DisplayGroup</classname>. Wärend Sie
             direkt Instanziert werden kann, ist es normalerweise am besten die
-            <code>addDisplayGroup()</code> Methode von <code>Zend_Form</code> zu verwenden um das
+            <code>addDisplayGroup()</code> Methode von <classname>Zend_Form</classname> zu verwenden um das
             zu erledigen. Diese Methode nimmt ein Array von Elementen als erstes Argument, und
             einen Namen für die Anzeigegruppe als zweites Argument. Es kann optional ein Array von
-            Optionen oder ein <code>Zend_Config</code> Objekt als drittes Argument übergeben
+            Optionen oder ein <classname>Zend_Config</classname> Objekt als drittes Argument übergeben
             werden.
         </para>
 
@@ -594,7 +594,7 @@ $form->addDisplayGroup(
 
             <para>
                 Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird,
-                sowohl als Array Option als auch in einem <code>Zend_Config</code> Objekt.
+                sowohl als Array Option als auch in einem <classname>Zend_Config</classname> Objekt.
             </para>
         </note>
 
@@ -648,8 +648,8 @@ $form->setDisplayGroupDecorators(array(
             <title>Eigene Anzeigegruppen Klassen verwenden</title>
 
             <para>
-                Standardmäßig verwendet <code>Zend_Form</code> die
-                <code>Zend_Form_DisplayGroup</code> Klasse für Anzeigegruppen. Man kann diese
+                Standardmäßig verwendet <classname>Zend_Form</classname> die
+                <classname>Zend_Form_DisplayGroup</classname> Klasse für Anzeigegruppen. Man kann diese
                 Klasse erweitern um eigene Funktionalitäten anzubieten.
                 <code>addDisplayGroup()</code> erlaubt es nicht eine konkrete Instanz zu
                 übergeben, aber sie erlaubt es eine Klasse zu spezifizieren die als eine
@@ -668,8 +668,8 @@ $form->addDisplayGroup(
             </programlisting>
 
             <para>
-                Wenn die Klasse noch nicht geladen wurde, versucht <code>Zend_Form</code> das zu
-                tun, indem <code>Zend_Loader</code> verwendet wird.
+                Wenn die Klasse noch nicht geladen wurde, versucht <classname>Zend_Form</classname> das zu
+                tun, indem <classname>Zend_Loader</classname> verwendet wird.
             </para>
 
             <para>
@@ -750,7 +750,7 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
             <title>Methoden von Zend_Form_DisplayGroup</title>
 
             <para>
-                <code>Zend_Form_DisplayGroup</code> hat die folgenden Methoden, gruppiert nach Typ:
+                <classname>Zend_Form_DisplayGroup</classname> hat die folgenden Methoden, gruppiert nach Typ:
             </para>
 
             <itemizedlist>
@@ -900,8 +900,8 @@ $form->setDefaultDisplayGroupClass('My_DisplayGroup');
         </itemizedlist>
 
         <para>
-            Eine Subform kann ein <code>Zend_Form</code> Objekt sein, oder typischerweise ein
-            <code>Zend_Form_SubForm</code> Objekt. Das zweitere enthält Dekoratore die für das
+            Eine Subform kann ein <classname>Zend_Form</classname> Objekt sein, oder typischerweise ein
+            <classname>Zend_Form_SubForm</classname> Objekt. Das zweitere enthält Dekoratore die für das
             Einfügen in größere Formen passen (z.B. gibt es keine zusätzlichen HTML Form Tags aus,
             gruppiert aber Elemente). Um eine Subform anzuhängen, muß diese einfach der Form
             hinzugefügt und ein Name vergeben werden:
@@ -1035,8 +1035,8 @@ $form->setAction('/user/login')
 
         <para>
             Man kann auch den Encoding Typ des Formulars spezifizieren indem die Enctype Zugriffsmethode
-            verwendet wird. <code>Zend_Form</code> definiert zwei Konstanten, <code>Zend_Form::ENCTYPE_URLENCODED</code>
-            und <code>Zend_Form::ENCTYPE_MULTIPART</code>, die den Werten 'application/x-www-form-urlencoded'
+            verwendet wird. <classname>Zend_Form</classname> definiert zwei Konstanten, <classname>Zend_Form::ENCTYPE_URLENCODED</classname>
+            und <classname>Zend_Form::ENCTYPE_MULTIPART</classname>, die den Werten 'application/x-www-form-urlencoded'
             und 'multipart/form-data' entsprechen; trotzdem kann das auf jeden gewünschten Encodingtyp
             gesetzt werden.
         </para>
@@ -1057,7 +1057,7 @@ $form->setAction('/user/login')
         </note>
 
         <para>
-            <code>Zend_Form</code> implementiert das <code>Countable</code> Interface, welches es
+            <classname>Zend_Form</classname> implementiert das <code>Countable</code> Interface, welches es
             erlaubt es als Argument fürs Zählen zu übergeben:
         </para>
 
@@ -1068,7 +1068,7 @@ $numItems = count($form);
 
         <para>
             Das Setzen von eigenen Metadaten wird durch die attribs Zugriffsmethode durchgeführt.
-            Da Überladen in <code>Zend_Form</code> verwendet wird um auf Elemente, Anzeigegruppen,
+            Da Überladen in <classname>Zend_Form</classname> verwendet wird um auf Elemente, Anzeigegruppen,
             und Subformen zuzugreifen ist das die einzige Methode für den Zugriff auf Metadaten.
         </para>
 
@@ -1099,12 +1099,12 @@ $form->clearAttribs();
         <para>
             Das Erstellen des Markups für eine Form ist oft ein zeitintensiver Arbeitsschritt,
             speziell wenn man plant das selbe Markup wiederzuverwenden um Dinge zu zeigen wie
-            Prüffehler, übermittelte Werte, usw. <code>Zend_Form</code>'s Antwort hierfür sind
+            Prüffehler, übermittelte Werte, usw. <classname>Zend_Form</classname>'s Antwort hierfür sind
             <emphasis>Dekoratore</emphasis>.
         </para>
 
         <para>
-            Dekoratore für <code>Zend_Form</code> Objekte können verwendet werden um eine Form
+            Dekoratore für <classname>Zend_Form</classname> Objekte können verwendet werden um eine Form
             darzustellen. Der FormElements Dekorator iteriert durch alle Elemente in einer Form --
             Elemente, Anzeigegruppen, und Subformen -- stellt sie dar, und gibt das Ergebnis
             zurück. Zusätzliche Dekoratore können dann verwendet werden um diese Inhalte zu
@@ -1112,7 +1112,7 @@ $form->clearAttribs();
         </para>
 
         <para>
-            Die Standarddekoratore für <code>Zend_Form</code> sind FormElemente, HtmlTag (wrappt in
+            Die Standarddekoratore für <classname>Zend_Form</classname> sind FormElemente, HtmlTag (wrappt in
             einer Definitionsliste), und Form; der entsprechende Code für deren Erstellung ist wie
             folgt:
         </para>
@@ -1160,7 +1160,7 @@ $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
 
             <para>
                 Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird,
-                sowohl als Array Option als auch in einem <code>Zend_Config</code> Objekt.
+                sowohl als Array Option als auch in einem <classname>Zend_Config</classname> Objekt.
             </para>
         </note>
 
@@ -1168,7 +1168,7 @@ $form = new Zend_Form(array('disableLoadDefaultDecorators' => true));
             <title>Verwenden mehrerer Dekoratore des gleichen Typs</title>
 
             <para>
-                Intern verwendet <code>Zend_Form</code> eine Dekorator Klasse als Mechsnismus für
+                Intern verwendet <classname>Zend_Form</classname> eine Dekorator Klasse als Mechsnismus für
                 das nachsehen wenn Dekoratore empfangen werden. Als Ergebnis können mehrere
                 Dekoratore nicht zur gleichen Zeit registriert werden; nachfolgende Dekoratore
                 würden einfach die vorher existierenden überschreiben.
@@ -1254,7 +1254,7 @@ $fooBar  = $form->getDecorator('FooBar');
         </itemizedlist>
 
         <para>
-            <code>Zend_Form</code> verwendet auch das Überladen um die Darstellung von speziellen
+            <classname>Zend_Form</classname> verwendet auch das Überladen um die Darstellung von speziellen
             Dekoratoren zu erlauben. <code>__call()</code> interagiert mit Methoden die mit dem Text
             'render' beginnen und verwendet den Rest des Methodennamens um nach einem Dekorator zu suchen;
             wenn er gefunden wird, wird dieser <emphasis>einzelne</emphasis> Dekorator dargestellt. Jedes
@@ -1280,7 +1280,7 @@ echo $form->renderFieldset("<p>Das ist der Fieldset Inhalt</p>");
 
         <para>
             Ein primärer Verwendungszweck für Forms ist die Überprüfung von übermittelten Daten.
-            <code>Zend_Form</code> erlaubt es eine komplette Form, eine teilweise Form, oder
+            <classname>Zend_Form</classname> erlaubt es eine komplette Form, eine teilweise Form, oder
             Antworten von XmlHttpRequests (AJAX) zu prüfen. Wenn die übertragenen Daten nicht
             gültig sind, hat es Methoden für das Empfangen der verschiedenen Fehlercodes und
             Nachrichten für Elemente und Subformen.
@@ -1371,7 +1371,7 @@ $messages = $form->getMessages('username');
 
         <note>
             <para>
-                Notiz: Wenn Elemente geprüft werden, sendet <code>Zend_Form</code> ein zweites
+                Notiz: Wenn Elemente geprüft werden, sendet <classname>Zend_Form</classname> ein zweites
                 Argument zu jeder <code>isValid()</code> Methode der Elemente: Das Array der Daten
                 die geprüft werden sollen. Das kann von individuellen Prüfern verwendet werden um
                 Ihnen zu erlauben andere übertragene Werte zu verwenden wenn die Gültigkeit der
@@ -1450,7 +1450,7 @@ $messages = $form->getMessages('username');
         <title>Methoden</title>
 
         <para>
-            Nachfolgend ist eine komplette Liste der in <code>Zend_Form</code> vorhandenen
+            Nachfolgend ist eine komplette Liste der in <classname>Zend_Form</classname> vorhandenen
             Methoden, gruppiert nach Typ:
         </para>
 
@@ -1645,14 +1645,14 @@ $messages = $form->getMessages('username');
         <title>Konfiguration</title>
 
         <para>
-            <code>Zend_Form</code> ist über <code>setOptions()</code> und <code>setConfig()</code>
+            <classname>Zend_Form</classname> ist über <code>setOptions()</code> und <code>setConfig()</code>
             vollständig konfigurierbar (oder durch die Übergabe von Optionen oder einem
-            <code>Zend_Config</code> Objekt an den Konstruktor). Durch Verwendung dieser Methoden
+            <classname>Zend_Config</classname> Objekt an den Konstruktor). Durch Verwendung dieser Methoden
             können Form Elemente, Anzeigegruppen, Dekoratore, und Metadaten spezifiziert werden.
         </para>
 
         <para>
-            Als generelle Regel, wenn 'set' + der Optionsschlüssel zu einer <code>Zend_Form</code>
+            Als generelle Regel, wenn 'set' + der Optionsschlüssel zu einer <classname>Zend_Form</classname>
             Methode referieren, wird der angebotene Wert zu dieser Methode übergeben. Wenn die
             Methode nicht existiert, wird angenommen das der Schlüssel eine Referenz zu einem
             Attribut ist, und wird an <code>setAttrib()</code> übergeben.
@@ -1755,7 +1755,7 @@ decorators.form.decorator = "Form"
 
         <para>
             Eine Alternative zur Verwendung von Konfigurations-basierenden Forms ist es
-            <code>Zend_Form</code> abzuleiten. Das hat einige Vorteile:
+            <classname>Zend_Form</classname> abzuleiten. Das hat einige Vorteile:
         </para>
 
         <itemizedlist>

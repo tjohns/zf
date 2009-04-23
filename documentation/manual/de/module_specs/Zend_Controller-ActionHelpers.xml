@@ -8,7 +8,7 @@
         <title>Einführung</title>
         <para>
             Aktion Helfer erlauben Entwicklern Runtime und/oder On-Demand Funktionalität in jeden Aktion Kontroller
-            zu inizieren der <code>Zend_Controller_Action</code> erweitert. Aktion Kontroller versuchen den Notwendigkeit zu
+            zu inizieren der <classname>Zend_Controller_Action</classname> erweitert. Aktion Kontroller versuchen den Notwendigkeit zu
             minimieren, den abstrakten Aktion Kontroller zu erweitern um damit normale Aktion Kontroller
             Funktionen inizieren.
         </para>
@@ -17,7 +17,7 @@
             Es gibt eine Menge an Wegen um Aktion Helfer zu verwenden. Aktion Helfer verwenden ein Broker System,
             ähnlich den Typen von Brokern in <link linkend="zend.view.helpers">Zend_View_Helper</link>, und
             denen von <link linkend="zend.controller.plugins">Zend_Controller_Plugin</link>. Aktion Helfer
-            (wie <code>Zend_View_Helper</code>) können bei Bedarf geladen und aufgerufen werden, oder Sie können
+            (wie <classname>Zend_View_Helper</classname>) können bei Bedarf geladen und aufgerufen werden, oder Sie können
             wärend der Anfragezeit (Bootstrap) instanziert werden oder wären der Erstellungszeit des
             Aktion Kontrollers (init()). Um Sie näher zu verstehen, betrachten wir Ihre Verwendung in der
             folgenden Sektion.
@@ -33,7 +33,7 @@
         </para>
 
         <para>
-            Ein Helfer Broker wir das der <code>$_helper</code> Teilnehmer von <code>Zend_Controller_Action</code>
+            Ein Helfer Broker wir das der <code>$_helper</code> Teilnehmer von <classname>Zend_Controller_Action</classname>
             gespeichert; der Broker kann verwendet werden um Helfer zu empfangen oder aufzurufen. Einige Methoden
             das zu tun sind:
         </para>
@@ -94,7 +94,7 @@ $this->_helper->FlashMessenger('Wir haben in der letzten Anfrage etwas getan');
         <title>Der Helfer Broker</title>
 
         <para>
-            <code>Zend_Controller_Action_HelperBroker</code> behandelt die Details der Registrierung von Helfer
+            <classname>Zend_Controller_Action_HelperBroker</classname> behandelt die Details der Registrierung von Helfer
             Objekten und Helfer Pfaden, sowie dem Empfangen von Helfern bei Befarf.
         </para>
 
@@ -243,7 +243,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
         <title>Schreiben eigener Helfer</title>
 
         <para>
-            Aktions Helfer erweitern <code>Zend_Controller_Action_Helper_Abstract</code>, eine abstrakte Klasse die
+            Aktions Helfer erweitern <classname>Zend_Controller_Action_Helper_Abstract</classname>, eine abstrakte Klasse die
             das Basisinterface bietet und vom Helfer Broker funktionell benötigt wird. Diese inkludiert die folgenden
             Methoden:
         </para>
@@ -293,7 +293,7 @@ if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
                 <para>
                     <code>getName()</code> empfängt den Helfernamen. Sie empfängt die Portion des Klassennamens der
                     dem letzten Unterstrich-Zeichen folgt, oder andererseits den kompletten Klassennamen. Als
-                    Beispiel, wenn die Klasse <code>Zend_Controller_Action_Helper_Redirector</code> heißt, wird
+                    Beispiel, wenn die Klasse <classname>Zend_Controller_Action_Helper_Redirector</classname> heißt, wird
                     <code>Redirector</code> zurückgegeben; eine Klasse die <code>FooMessage</code> heißt wird
                     einfach sich selbst zurückgeben.
                 </para>

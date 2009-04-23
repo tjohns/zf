@@ -71,7 +71,7 @@
         </para>
 
         <para>
-            Die <code>Zend_Soap_AutoDiscovery</code> Klasse unterstützt auch das Mapping von Datentypen
+            Die <classname>Zend_Soap_AutoDiscovery</classname> Klasse unterstützt auch das Mapping von Datentypen
             von PHP zu <ulink url="http://www.w3.org/TR/xmlschema-2/">XSD Typen</ulink>.
         </para>
 
@@ -101,7 +101,7 @@ $autodiscover->handle();
             <title>Zend_Soap_Autodiscover ist kein Soap Server</title>
 
             <para>
-                Es ist wichtig anzumerken, das die Klasse <code>Zend_Soap_Autodiscover</code> nicht für
+                Es ist wichtig anzumerken, das die Klasse <classname>Zend_Soap_Autodiscover</classname> nicht für
                 sich selbst als SOAP Server agiert. Sie erzeugt nur den WSDL und bietet Ihn jedem an der
                 auf die URL zugreift auf die geschaut wird.
             </para>
@@ -110,8 +110,8 @@ $autodiscover->handle();
                 Als Endpunkt der SOAP URI verwendet es den Standard
                 <code>'http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']</code>, der aber mit der
                 <code>setUri()</code> Funktion oder dem Contructor Parameter der
-                <code>Zend_Soap_AutoDiscover</code> Klasse verändert werden kann. Der Endpunkt muß an
-                einen <code>Zend_Soap_Server</code> übergeben werden der auf die Anfragen hört.
+                <classname>Zend_Soap_AutoDiscover</classname> Klasse verändert werden kann. Der Endpunkt muß an
+                einen <classname>Zend_Soap_Server</classname> übergeben werden der auf die Anfragen hört.
             </para>
 
             <para>
@@ -136,7 +136,7 @@ if(isset($_GET['wsdl'])) {
 
         <para>
             Wenn eine Klasse verwendet wird um SOAP Server Funktionalitäten anzubieten, dann sollte die selbe
-            Klasse an <code>Zend_Soap_AutoDiscover</code> für die WSDL Erzeugung übergeben werden:
+            Klasse an <classname>Zend_Soap_AutoDiscover</classname> für die WSDL Erzeugung übergeben werden:
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->setClass('My_SoapServer_Class');
@@ -204,7 +204,7 @@ $autodiscover->handle();
 
         <para>
             Wenn ein Set von Funktionen verwendet wird um SOAP Server Funktionalität anzubieten, dann sollte
-            das selbe Set mit <code>Zend_Soap_AutoDiscovery</code> für die WSDL Erzeugung verwendet werden:
+            das selbe Set mit <classname>Zend_Soap_AutoDiscovery</classname> für die WSDL Erzeugung verwendet werden:
             <programlisting role="php"><![CDATA[
 $autodiscover = new Zend_Soap_AutoDiscover();
 $autodiscover->addFunction('function1');
@@ -302,15 +302,15 @@ $autodiscover->handle();
                         PHP Klasse &lt;-&gt; basierend auf der Strategie der komplexen Typen  (See: <xref linkend="zend.soap.wsdl.types.add_complex" />)
                         <footnote>
                             <para>
-                                <code>Zend_Soap_AutoDiscover</code> wird mit der
-                                <code>Zend_Soap_Wsdl_Strategy_DefaultComplexType</code> Klasse als
+                                <classname>Zend_Soap_AutoDiscover</classname> wird mit der
+                                <classname>Zend_Soap_Wsdl_Strategy_DefaultComplexType</classname> Klasse als
                                 Erkennungsalgorithmus für komplexe Typen erstellt. Der erste Parameter
                                 des AutoDiscover Constructors nimmt jede Strategie für komplexe Typen
-                                die <code>Zend_Soap_Wsdl_Strategy_Interface</code> implementieren oder
+                                die <classname>Zend_Soap_Wsdl_Strategy_Interface</classname> implementieren oder
                                 einen String mit dem Nmaen der Klasse. Um Backwards Compatibility mit
                                 <code>$extractComplexType</code> zu gewährleisten werden boolsche
-                                Variablen wie in <code>Zend_Soap_Wsdl</code> geparst. Siehe das
-                                <link linkend="zend.soap.wsdl.types.add_complex"><code>Zend_Soap_Wsdl</code>
+                                Variablen wie in <classname>Zend_Soap_Wsdl</classname> geparst. Siehe das
+                                <link linkend="zend.soap.wsdl.types.add_complex"><classname>Zend_Soap_Wsdl</classname>
                                 Manual über das Hinzufügen von komplexen</link> Typen für weitere Informationen.
                             </para>
                         </footnote>.

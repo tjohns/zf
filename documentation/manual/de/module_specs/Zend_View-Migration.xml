@@ -15,7 +15,7 @@
 
         <para>
             Vor dem 1.7.5 Release wurde das Zend Framework Team darauf aufmerksam gemacht das eine
-            potentielle Local File Inclusion (LFI) Schwäche in der <code>Zend_View::render()</code>
+            potentielle Local File Inclusion (LFI) Schwäche in der <classname>Zend_View::render()</classname>
             Methode existiert. Vor 1.7.5, erlaubte die Methode standardmäßig, die Fähigkeit View
             Skripte zu spezifizieren die Schreibweisen für Eltern-Verzeichnisse enthalten (z.B.
             "../" oder "..\"). Das öffnet die Möglichkeit für eine LFI Attacke wenn ungefilterte
@@ -28,7 +28,7 @@ echo $view->render($_GET['foobar']); // LFI Einbruch
 ]]></programlisting>
 
         <para>
-            <code>Zend_View</code> wirft jetzt standardmäßig eine Ausnahme wenn so ein View Skript
+            <classname>Zend_View</classname> wirft jetzt standardmäßig eine Ausnahme wenn so ein View Skript
             angefragt wird.
         </para>
 

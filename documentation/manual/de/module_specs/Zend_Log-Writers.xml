@@ -4,14 +4,14 @@
 <sect1 id="zend.log.writers" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Writer</title>
   <para>
-    Ein Writer ist ein Objekt das von <code>Zend_Log_Writer_Abstract</code> abstammt. Die Aufgabe eines Writer's
+    Ein Writer ist ein Objekt das von <classname>Zend_Log_Writer_Abstract</classname> abstammt. Die Aufgabe eines Writer's
     ist es Log Daten in ein Speicher-Backend aufzunehmen.
   </para>
 
   <sect2 id="zend.log.writers.stream">
     <title>In Streams schreiben</title>
     <para>
-      <code>Zend_Log_Writer_Stream</code> sendet Log Daten in einen
+      <classname>Zend_Log_Writer_Stream</classname> sendet Log Daten in einen
       <ulink url="http://www.php.net/stream">PHP Stream</ulink>.
     </para>
 
@@ -43,12 +43,12 @@ $logger->info('Informative Nachricht');
       </programlisting>
 
       Standardmäßig wird der Stream im Anhänge-Modus geöffnet (<code>"a"</code>). Um Ihn in einem anderen Modus
-      zu öffnen, akzeptiert der <code>Zend_Log_Writer_Stream</code> Konstruktor einen optionalen zweiten Parameter für den
+      zu öffnen, akzeptiert der <classname>Zend_Log_Writer_Stream</classname> Konstruktor einen optionalen zweiten Parameter für den
       Modus.
     </para>
 
     <para>
-      Der Konstruktor von <code>Zend_Log_Writer_Stream</code> akzeptiert auch eine existierende Stream Ressource:
+      Der Konstruktor von <classname>Zend_Log_Writer_Stream</classname> akzeptiert auch eine existierende Stream Ressource:
 
       <programlisting role="php"><![CDATA[
 $stream = @fopen('/path/to/logfile', 'a', false);
@@ -64,15 +64,15 @@ $logger->info('Informative Nachricht');
       </programlisting>
 
       Der Modus kann für existierende Stream Ressourcen nicht definiert werden. Wenn das gemacht versucht wird, wird
-      eine <code>Zend_Log_Exception</code> geworfen.
+      eine <classname>Zend_Log_Exception</classname> geworfen.
     </para>
   </sect2>
 
   <sect2 id="zend.log.writers.database">
     <title>In Datenbanken schreiben</title>
     <para>
-      <code>Zend_Log_Writer_Db</code> schreibt Log Informationen in eine Datenbank Tabelle wobei <code>Zend_Db</code>
-      verwendet wird. Der Konstrukor von <code>Zend_Log_Writer_Db</code> benötigt eine <code>Zend_Db_Adapter</code>
+      <classname>Zend_Log_Writer_Db</classname> schreibt Log Informationen in eine Datenbank Tabelle wobei <classname>Zend_Db</classname>
+      verwendet wird. Der Konstrukor von <classname>Zend_Log_Writer_Db</classname> benötigt eine <classname>Zend_Db_Adapter</classname>
       Instanz, einen Tabellennamen, und ein Abbild der Datenbankspalten zu den Elementen der Eventdaten:
 
       <programlisting role="php"><![CDATA[
@@ -104,7 +104,7 @@ $logger->info('Informative Nachricht');
   <sect2 id="zend.log.writers.null">
     <title>Einen Writer abstumpfen</title>
     <para>
-      <code>Zend_Log_Writer_Null</code> ist ein Stumpf der keine Log Daten irgendwohin schreibt. Er ist nützlich um
+      <classname>Zend_Log_Writer_Null</classname> ist ein Stumpf der keine Log Daten irgendwohin schreibt. Er ist nützlich um
       die Protokollierung auszuschalten oder wärend Tests abzustumpfen:
 
       <programlisting role="php"><![CDATA[
@@ -121,7 +121,7 @@ $logger->info('Informative Nachricht');
   <sect2 id="zend.log.writers.mock">
     <title>Mit der Attrappe testen</title>
     <para>
-      <code>Zend_Log_Writer_Mock</code> ist ein sehr einfacher Writer der die rohen Daten die er empfängt aufnimmt
+      <classname>Zend_Log_Writer_Mock</classname> ist ein sehr einfacher Writer der die rohen Daten die er empfängt aufnimmt
       und in einem Array als öffentliche Eigenschaft zur Verfügung stellt.
 
       <programlisting role="php"><![CDATA[

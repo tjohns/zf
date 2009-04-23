@@ -5,31 +5,31 @@
     <title>Übersicht</title>
 
     <para>
-      <code>Zend_Log</code> ist eine Komponente für Mehrzweckprotokollierung. Es unterstützt vielfache
+      <classname>Zend_Log</classname> ist eine Komponente für Mehrzweckprotokollierung. Es unterstützt vielfache
       Log Backends, das Senden von formatierten Nachrichten zum Log, und das Filtern von Nachrichten
       um nicht protokolliert zu werden. Diese Funktionen sind in die folgenden Objekte seperiert worden:
 
       <itemizedlist>
         <listitem>
           <para>
-            Ein Log (Instanz von <code>Zend_Log</code>) ist das Objekt das die Anwendung am meisten benutzt. Man
+            Ein Log (Instanz von <classname>Zend_Log</classname>) ist das Objekt das die Anwendung am meisten benutzt. Man
             kann soviele Log Objekte haben wie man will; Sie interagieren nicht. Ein Log Objekt muß mindestens
             einen Schreiber beinhalten, und kann optional einen oder mehrere Filter beinhalten.
           </para>
         </listitem><listitem>
           <para>
-            Ein Writer (Abgeleitet von <code>Zend_Log_Writer_Abstract</code>) ist dafür zuständig das Daten in
+            Ein Writer (Abgeleitet von <classname>Zend_Log_Writer_Abstract</classname>) ist dafür zuständig das Daten in
             den Speicher geschrieben werden.
           </para>
         </listitem><listitem>
           <para>
-            Ein Filter (implementiert <code>Zend_Log_Filter_Interface</code>) blockiert Logdaten vom gespeichert
+            Ein Filter (implementiert <classname>Zend_Log_Filter_Interface</classname>) blockiert Logdaten vom gespeichert
             werden. Ein Filter kann einem individuellen Writer hinzugefügt werden, oder an ein Log wo er
             vor allen Writern hinzugefügt wird. In jedem Fall können Filter verkettet werden.
           </para>
         </listitem><listitem>
           <para>
-            Ein Formatter (implementiert <code>Zend_Log_Formatter_Interface</code>) kann die Logdaten formatieren
+            Ein Formatter (implementiert <classname>Zend_Log_Formatter_Interface</classname>) kann die Logdaten formatieren
             bevor diese durch den Writer geschrieben werden. Jeder Writer hat exakt einen Formatter.
           </para>
         </listitem>
@@ -118,7 +118,7 @@ $logger = null;
   <sect2 id="zend.log.overview.builtin-priorities">
     <title>Verwenden von eingebauten Prioritäten</title>
     <para>
-      Die <code>Zend_Log</code> Klasse definiert die folgenden Prioritäten:
+      Die <classname>Zend_Log</classname> Klasse definiert die folgenden Prioritäten:
 
       <programlisting role="php"><![CDATA[
 EMERG   = 0;  // Notfall: System ist nicht verwendbar
@@ -141,7 +141,7 @@ DEBUG   = 7;  // Debug: Debug Nachrichten
       <ulink url="http://tools.ietf.org/html/rfc3164">RFC-3164</ulink> beschrieben wird. Die Namen und
       korrespondierenden Prioritätennummern sind auch mit einem anderen PHP Logging Systeme kompatibel,
       <ulink url="http://pear.php.net/package/log">PEAR Log</ulink>, welches möglicherweise mit
-      Interoperabilität zwischen Ihm und <code>Zend_Log</code> wirbt.
+      Interoperabilität zwischen Ihm und <classname>Zend_Log</classname> wirbt.
     </para>
 
     <para>

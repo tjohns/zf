@@ -7,17 +7,17 @@
     <sect2 id="zend.controller.action.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Controller_Action</code> ist eine abstrakte Klasse die verwendet werden kann um Aktion
+            <classname>Zend_Controller_Action</classname> ist eine abstrakte Klasse die verwendet werden kann um Aktion
             Kontroller zu implementieren die mit dem Front Kontroller verwendet werden können um eine WebSeite
             zu erstellen die auf dem Model-View-Controller (MVC) Pattern basiert.
         </para>
 
         <para>
-            Um <code>Zend_Controller_Action</code> zu verwenden, muß von dieser in der eigenen aktuellen
+            Um <classname>Zend_Controller_Action</classname> zu verwenden, muß von dieser in der eigenen aktuellen
             Aktions Kontroller Klasse ererbt werden (oder von dieser erben um eine eigene Basisklasse für Aktion
             Kontroller zu erstellen). Die grundsätzlichste Operation ist es von Ihr zu erben und Aktions Methoden
             zu erstellen die den verschiedenen Aktionen entsprechen die der Kontroller der eigenen Seite handhaben
-            soll. Das Handhaben von Routen und Dispatchen des <code>Zend_Controller</code>'s wird automatisch jegliche Methode
+            soll. Das Handhaben von Routen und Dispatchen des <classname>Zend_Controller</classname>'s wird automatisch jegliche Methode
             die in der eigenen Klasse auf 'Action' endet, als potentielle Kontroller Aktion herausfinden.
         </para>
 
@@ -123,7 +123,7 @@ class FooController extends Zend_Controller_Action
 
         <para>
             Wärend man immer den Konstruktor des Aktion Kontroller's überschreiben kann ist das nicht notwendig.
-            <code>Zend_Controller_Action::__construct()</code> führt einige wichtige Aufgabe aus, wie das registrieren der Anfrage
+            <classname>Zend_Controller_Action::__construct()</classname> führt einige wichtige Aufgabe aus, wie das registrieren der Anfrage
             und Antwort Objekte, sowie alle eigene einleitenden Argumente die von Front Kontroller übergeben wurden.
             Wenn der Konstruktor überschrieben werden muß, muß sichergestellt sein das
             <code>parent::__construct($request, $response, $invokeArgs)</code> aufgerufen wird.
@@ -156,7 +156,7 @@ class FooController extends Zend_Controller_Action
         <title>Pre- und Post-Dispatch Hooks</title>
 
         <para>
-            <code>Zend_Controller_Action</code> spezifiziert zwei Methoden die aufgerufen werden können um
+            <classname>Zend_Controller_Action</classname> spezifiziert zwei Methoden die aufgerufen werden können um
             eine angefragte Aktion fertigzustellen, <code>preDispatch()</code> und <code>postDispatch()</code>.
             Diese können auf viele Wege nützlich sein: zum Beispiel um Authentifizierungen und ACLs prüfen bevor
             eine Aktion ausgeführt wird (durch Aufruf von <code>_forward()</code> in <code>preDispatch()</code>
@@ -255,7 +255,7 @@ if ($this->_hasParam('id') {
         </note>
 
         <para>
-            <code>Zend_Controller_Action</code> bietet einen rudimentären und flexiblen Mechanismus für View
+            <classname>Zend_Controller_Action</classname> bietet einen rudimentären und flexiblen Mechanismus für View
             Integration. Zwei Methoden machen das möglich, <code>initView()</code> und <code>render()</code>;
             die erste Methode lädt die öffnetliche Eigenschaft <code>$view</code> träge, und die zweite
             rendert eine View basierend auf der aktuell angefragen Aktion, wobei die Verzeichnis Hirarchie
@@ -268,8 +268,8 @@ if ($this->_hasParam('id') {
             <para>
                 <code>initView()</code> initialisiert das View Objekt. <code>render()</code> ruft
                 <code>initView()</code> auf um das View Objekt zu erhalten, aber es kann jederzeit initialisiert
-                werden; standardmäßig wird die <code>$view</code> Eigenschaft mit einem <code>Zend_View</code>
-                Objekt bekanntgegeben, aber jede Klasse die <code>Zend_View_Interface</code> implementiert kann
+                werden; standardmäßig wird die <code>$view</code> Eigenschaft mit einem <classname>Zend_View</classname>
+                Objekt bekanntgegeben, aber jede Klasse die <classname>Zend_View_Interface</classname> implementiert kann
                 verwendet werden. Wenn <code>$view</code> bereits initialisiert wurde, wird diese Eigenschaft
                 einfach zurückgegeben.
             </para>
@@ -377,7 +377,7 @@ class MyController extends Zend_Controller_Action
         <title>Nützliche Methoden</title>
 
         <para>
-            Neben den Zugriffs- und View Integrationsmethoden, hat <code>Zend_Controller_Action</code> verschiedene
+            Neben den Zugriffs- und View Integrationsmethoden, hat <classname>Zend_Controller_Action</classname> verschiedene
             nützliche Methoden für die Durchführung üblicher Aufgaben von innerhalb der Aktionsmethoden (oder vom
             Pre-/Post-Dispatch).
         </para>
@@ -449,7 +449,7 @@ class MyController extends Zend_Controller_Action
         <title>Erweitern des Aktion Kontrollers</title>
 
         <para>
-            Vom Design her muß <code>Zend_Controller_Action</code> erweitert werden um einen Aktion Kontroller
+            Vom Design her muß <classname>Zend_Controller_Action</classname> erweitert werden um einen Aktion Kontroller
             zu erstellen. Als Minimum, muß eine Aktions Methode definiert werden die der Kontroller aufrufen kann.
         </para>
 
@@ -457,7 +457,7 @@ class MyController extends Zend_Controller_Action
             Neben dem erstellen von nützlichen Funktionalitäten für Web Anwendungen, wird auch die Notwendigkeit
             bestehen das vom gleichen Setup oder von den nützlichen Funktionen vieles in verschiedenen
             Kontrollern wiederholt wird; wenn dem so ist, löst die Erstellung einer gemeinsamen Basis Kontroller
-            Klasse die <code>Zend_Controller_Action</code> erweitert zu einer Lösung dieser Redundanz.
+            Klasse die <classname>Zend_Controller_Action</classname> erweitert zu einer Lösung dieser Redundanz.
         </para>
 
         <example id="zend.controller.action.subclassing.example-call">
@@ -465,12 +465,12 @@ class MyController extends Zend_Controller_Action
 
             <para>
                 Wenn eine Anfrage an einen Kontroller durchgeführt wird die eine undefinierte Aktions Methode
-                enthält, kommt <code>Zend_Controller_Action::__call()</code> zum Einsatz. <code>__call()</code>
+                enthält, kommt <classname>Zend_Controller_Action::__call()</classname> zum Einsatz. <code>__call()</code>
                 ist natürlich PHP's magische Methode für das Überladen von Methoden.
             </para>
 
             <para>
-                Standardmäßig wirft diese Methode eine <code>Zend_Controller_Action_Exception</code> die anzeigt
+                Standardmäßig wirft diese Methode eine <classname>Zend_Controller_Action_Exception</classname> die anzeigt
                 das die angefragte Aktion nicht im Kontroller gefunden werden konnte. Wenn die angefragte
                 Methode mit 'Action' endet, wird angenommen das eine Aktion angefragt wurde die nicht existiert;
                 solch ein Fehler resultiert in einer Ausnahme mit dem Code 404. Alle anderen Methoden resultieren

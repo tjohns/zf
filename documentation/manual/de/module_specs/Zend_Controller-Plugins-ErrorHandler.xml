@@ -5,7 +5,7 @@
     <title>Zend_Controller_Plugin_ErrorHandler</title>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> bietet ein Plugin für die Handhabung von Ausnahmen
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname> bietet ein Plugin für die Handhabung von Ausnahmen
         die von der Anwendung geworfen werden, inklusive denen die aus fehlenden Kontrollern oder Aktionen
         resultieren; das ist eine Alternative zu den Methoden die in der
         <link linkend="zend.controller.exceptions">Sektion MVC Ausnahmen</link> aufgeführt sind.
@@ -32,7 +32,7 @@
     </para>
 
     <para>
-        Standardmäßig leitet <code>Zend_Controller_Plugin_ErrorHandler</code> auf
+        Standardmäßig leitet <classname>Zend_Controller_Plugin_ErrorHandler</classname> auf
         <code>ErrorController::errorAction()</code> im Standardmodul weiter. Es kann ein alternativer Wert für dieses
         gesetzt werden durch Verwendung der diversen Zugriffsmethoden die zu dem Pligin existieren:
     </para>
@@ -70,7 +70,7 @@
     </para>
 
     <para>
-        <code>Zend_Controller_Plugin_ErrorHandler</code> benötigt einen <code>postDispatch()</code> Hook und
+        <classname>Zend_Controller_Plugin_ErrorHandler</classname> benötigt einen <code>postDispatch()</code> Hook und
         prüft auf Ausnahmen die im <link linkend="zend.controller.response">Antwort Objekt</link> registriert
         sind. Wenn welche gefunden werden, versucht es zur registrieren Fehler Handler Aktion weiterzuleiten.
     </para>
@@ -92,7 +92,7 @@
 
         <para>
             Aufgefangene Ausnahmen werden in einem in der Anfrage registrierten Objekt geloggt. Um dieses zu
-            empfangen kann <code>Zend_Controller_Action::_getParam('error_handler')</code> verwendet werden:
+            empfangen kann <classname>Zend_Controller_Action::_getParam('error_handler')</classname> verwendet werden:
         </para>
 
         <programlisting role="php"><![CDATA[class ErrorController extends Zend_Controller_Action
@@ -113,21 +113,21 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</code>,
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER</classname>,
                     zeigt das der Kontroller nicht gefunden wurde.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</code>,
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION</classname>,
                     zeigt das die angefragte Aktion nicht gefunden wurde.
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <code>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</code>,
+                    <classname>Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER</classname>,
                     zeigt andere Ausnahmen.
                 </para>
             </listitem>

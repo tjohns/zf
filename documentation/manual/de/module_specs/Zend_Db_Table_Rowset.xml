@@ -12,8 +12,8 @@
         <para>
             Wenn eine Datenbankabfrage über eine Tabellenklasse ausgeführt wird, genauer über deren Methoden
             <code>find()</code> und <code>fetchAll()</code>, wird das Ergebnis als Objekt vom Typ
-            <code>Zend_Db_Table_Rowset_Abstract</code> zurückgegeben. Ein Zeilensatz enthält eine Sammlung von
-            <code>Zend_Db_Table_Row_Abstract</code>-Objekten. Das Zeilensatz-Objekt implementiert das
+            <classname>Zend_Db_Table_Rowset_Abstract</classname> zurückgegeben. Ein Zeilensatz enthält eine Sammlung von
+            <classname>Zend_Db_Table_Row_Abstract</classname>-Objekten. Das Zeilensatz-Objekt implementiert das
             <code>Iterator</code>-Interface, sodass es auch einfach via <code>foreach</code> durchgegangen
             werden kann und Lese- und Schreibzugriff auf die einzelnen Zeilen möglich ist.
         </para>
@@ -25,8 +25,8 @@
         <title>Einen Zeilensatz lesen</title>
 
         <para>
-            <code>Zend_Db_Table_Abstract</code> bietet die Methoden <code>find()</code> und <code>fetchAll()</code>,
-            die beide ein Objekt vom Typ <code>Zend_Db_Table_Rowset_Abstract</code> zurückgeben.
+            <classname>Zend_Db_Table_Abstract</classname> bietet die Methoden <code>find()</code> und <code>fetchAll()</code>,
+            die beide ein Objekt vom Typ <classname>Zend_Db_Table_Rowset_Abstract</classname> zurückgeben.
         </para>
 
         <example id="zend.db.table.rowset.fetch.example">
@@ -55,7 +55,7 @@ $rowset = $bugs->fetchAll("bug_status = 'NEW'");
         <para>
             Eine normale Abfrage gibt null Zeilen zurück, wenn keine Zeilen in der Datenbank die Bedingungen der
             Abfrage erfüllt. Daher kann eine Zeilensatz-Objekt auch null Zeilenobjekte enthalten.
-            Weil <code>Zend_Db_Table_Rowset_Abstract</code> auch das Interface <code>Countable</code>
+            Weil <classname>Zend_Db_Table_Rowset_Abstract</classname> auch das Interface <code>Countable</code>
             (dt.: Zählbar) implementiert, kann die Funktion count() genutzt werden, um die Anzahl der Zeilen im
             Zeilensatz zu erhalten.
         </para>
@@ -107,10 +107,10 @@ $row    = $rowset->current();
             <title>Einen Zeilensatz durchlaufen</title>
 
             <para>
-                Objekte, die von <code>Zend_Db_Table_Rowset_Abstract</code> abstammen,
+                Objekte, die von <classname>Zend_Db_Table_Rowset_Abstract</classname> abstammen,
                 implementieren das <code>SeekableIterator</code> Interface, was bedeutet, dass es
                 mit <code>foreach</code> durchlaufen werden kann. Jeder Wert, der auf diesem Weg
-                zurückgegeben wird, ist ein <code>Zend_Db_Table_Row_Abstract</code>-Objekt, das zu
+                zurückgegeben wird, ist ein <classname>Zend_Db_Table_Row_Abstract</classname>-Objekt, das zu
                 einem Eintrag in der Tabelle gehört.
             </para>
 
@@ -181,7 +181,7 @@ $row9->save();
             ist ein Integer für die gewünschte Position. Der zweite optionale Parameter ist ein
             Boolean; Es teilt dem Rowset Iterator mit ob er zur gleichen Zeit diese Position
             suchen muss, oder nicht (standard ist nicht). Diese Methode gibt standardmäßig ein
-            <code>Zend_Db_Table_Row</code> Objekt zurück. Wenn die angefragte Position nicht existiert wird
+            <classname>Zend_Db_Table_Row</classname> Objekt zurück. Wenn die angefragte Position nicht existiert wird
             eine Ausnahme geworfen. Hier ist ein Beispiel:
         </para>
 
@@ -254,7 +254,7 @@ foreach ($rowsetArray as $rowArray) {
         <title>Einen Zeilensatz serialisieren / deserialisieren</title>
 
         <para>
-            Objekte vom Typ <code>Zend_Db_Table_Rowset_Abstract</code> sind serialisierbar auf eine ähnliche
+            Objekte vom Typ <classname>Zend_Db_Table_Rowset_Abstract</classname> sind serialisierbar auf eine ähnliche
             Art, wie auch einzelne Zeilen-Objekte serialisierbar und deserialisierbar sind.
         </para>
 
@@ -327,7 +327,7 @@ echo $row->bug_description;
         <para>
             Ein nicht verbundenes Zeilensatz-Objekt kann mithilfe der Methode <code>setTable()</code>
             reaktiviert werden. Das Argument dieser Methode ist ein valides
-            <code>Zend_Db_Table_Abstract</code>-Objekt,
+            <classname>Zend_Db_Table_Abstract</classname>-Objekt,
             das vom Benutzer erstellt wird. Für das Erstellen eines Tabellenobjekts wird eine aktive
             Datenbankverbindung benötigt, also wird, indem die Tabelle wieder mit dem Zeilenobjekt verknüpft
             wird, auch der Datenbankzugriff wiederhergestellt. Ab diesem Zeitpunkt können Werte in den enthaltenen
@@ -370,7 +370,7 @@ $row->save();
 
         <para>
             Es können auch alternative Klassen für Zeilensätze benutzt werden, wenn diese
-            <code>Zend_Db_Table_Rowset_Abstract</code> erweitern. Der Name der eigenen Zeilensatz-Klasse wird entweder
+            <classname>Zend_Db_Table_Rowset_Abstract</classname> erweitern. Der Name der eigenen Zeilensatz-Klasse wird entweder
             in der geschützten Tabellenklassen-Eigenschaft <code>$_rowsetClass</code> oder als Teil des
             Array-Arguments des Konstruktors eines Tabellenobjekts übergeben.
         </para>
@@ -399,7 +399,7 @@ $bugs = new Bugs(array('rowsetClass' => 'MyRowset'));
         </example>
 
         <para>
-            Typischerweise reicht die Standardklasse <code>Zend_Db_Rowset</code> für die meisten Benutzungsfälle aus.
+            Typischerweise reicht die Standardklasse <classname>Zend_Db_Rowset</classname> für die meisten Benutzungsfälle aus.
             Trotzdem könnte es nützlich sein, neue Logik in einen Zeilensatz einzubauen, die für eine
             bestimmte Tabelle nötig ist. Beispielsweise könnte eine neue Methode einen Durchschnitt aller
             Zeilen im Zeilensatz errechnen.

@@ -41,7 +41,7 @@
             Service Pbjekt übergeben werden.
         </para>
         <example id="zend.gdata.youtube.developer_key.example">
-            <title>Einen Entwicklerschlüssel und eine ClientID an <code>Zend_Gdata_YouTube</code> übergeben</title>
+            <title>Einen Entwicklerschlüssel und eine ClientID an <classname>Zend_Gdata_YouTube</classname> übergeben</title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube($httpClient,
                              $applicationId,
@@ -103,7 +103,7 @@ foreach ($videoFeed as $videoEntry) {
                 <ulink url="http://code.google.com/apis/youtube/reference.html#Searching_for_videos">Referenz Guide</ulink>
                 hilfreich sein. Die vorhandenen Hilfsfunktionen in
                 <ulink url="http://framework.zend.com/apidoc/core/Zend_Gdata/Zend_Gdata_YouTube_VideoQuery.html">
-                <code>Zend_Gdata_YouTube_VideoQuery</code></ulink> für jeden dieser Parameter werden im
+                <classname>Zend_Gdata_YouTube_VideoQuery</classname></ulink> für jeden dieser Parameter werden im
                 <ulink url="http://code.google.com/apis/youtube/developers_guide_php.html#SearchingVideos">PHP Entwickler Guide</ulink>
                 detailierter beschrieben.
             </para>
@@ -170,7 +170,7 @@ $videoFeed = $yt->getTopRatedVideoFeed();
             </para>
 
             <example id="zend.gdata.youtube.videos.standard.example-2">
-                <title>Verwenden von <code>Zend_Gdata_YouTube_VideoQuery</code> um Videos zu empfangen</title>
+                <title>Verwenden von <classname>Zend_Gdata_YouTube_VideoQuery</classname> um Videos zu empfangen</title>
                 <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $query = $yt->newVideoQuery();
@@ -283,7 +283,7 @@ foreach ($commentFeed as $commentEntry) {
         </para>
 
         <example id="zend.gdata.youtube.videos.comments.example-2">
-            <title>Empfangen eines Feeds von Videokommentaren von einem <code>Zend_Gdata_YouTube_VideoEntry</code></title>
+            <title>Empfangen eines Feeds von Videokommentaren von einem <classname>Zend_Gdata_YouTube_VideoEntry</classname></title>
             <programlisting role="php"><![CDATA[
 $yt = new Zend_Gdata_YouTube();
 $videoEntry = $yt->getVideoEntry('abc123813abc');

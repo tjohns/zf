@@ -31,7 +31,7 @@
     </programlisting>
 
     <para>
-        <code>Zend_Dojo_Data</code> bietet ein einfaches Interface für das programmtechnische erstellen solcher
+        <classname>Zend_Dojo_Data</classname> bietet ein einfaches Interface für das programmtechnische erstellen solcher
         Strukturen, der Interaktion mit Ihnen, und deren Serialisierung in ein Array oder JSON.
     </para>
 
@@ -70,7 +70,7 @@ $data->setIdentifier('id')
         </para>
 
         <example id="zend.dojo.data.usage.append">
-            <title>Hinzufügen von Daten bei <code>Zend_Dojo_Data</code></title>
+            <title>Hinzufügen von Daten bei <classname>Zend_Dojo_Data</classname></title>
 
             <programlisting role="php"><![CDATA[
 $data = new Zend_Dojo_Data($identifier, $items);
@@ -86,7 +86,7 @@ $data->addItems($someMoreItems);
 
             <para>
                 Für jeden dojo.data Datenspeicher muß die Identifikatorspalte als
-                Metadaten angegeben werden, inklusive <code>Zend_Dojo_Data</code>.
+                Metadaten angegeben werden, inklusive <classname>Zend_Dojo_Data</classname>.
                 Fakt ist das, wenn man versucht Elemente ohne
                 Identifikator hinzuzufügen, eine Ausnahme geworfen wird.
             </para>
@@ -133,7 +133,7 @@ $data->addItems($someMoreItems);
         </para>
 
         <example id="zend.dojo.data.usage.label">
-            <title>Spezifizierung eines Labelfeldes in <code>Zend_Dojo_Data</code></title>
+            <title>Spezifizierung eines Labelfeldes in <classname>Zend_Dojo_Data</classname></title>
 
             <programlisting role="php"><![CDATA[
 $data->setLabel('name');
@@ -142,12 +142,12 @@ $data->setLabel('name');
         </example>
 
         <para>
-            Letztendlich kann man auch ein <code>Zend_Dojo_Data</code> Element von einem dojo.data JSON Array
+            Letztendlich kann man auch ein <classname>Zend_Dojo_Data</classname> Element von einem dojo.data JSON Array
             geladen werden, indem die <code>fromJson()</code> Methode verwendet wird.
         </para>
 
         <example id="zend.dojo.data.usage.populate">
-            <title><code>Zend_Dojo_Data</code> von JSON aus bekanntgeben</title>
+            <title><classname>Zend_Dojo_Data</classname> von JSON aus bekanntgeben</title>
 
             <programlisting role="php"><![CDATA[
 $data->fromJson($json);
@@ -176,7 +176,7 @@ $data->fromJson($json);
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> erlaubt die Zuordnung von Metadaten Eigenschaften
+            <classname>Zend_Dojo_Data</classname> erlaubt die Zuordnung von Metadaten Eigenschaften
             zum Objekt. Das folgende zeigt die Verwendung:
         </para>
 
@@ -208,12 +208,12 @@ $data->clearMetadata();
         <title>Gehobenere Verwendungsfälle</title>
 
         <para>
-            Neben der Funktion als serialisierbarer Datenkontainer bietet <code>Zend_Dojo_Data</code> auch die
+            Neben der Funktion als serialisierbarer Datenkontainer bietet <classname>Zend_Dojo_Data</classname> auch die
             Möglichkeit Daten auf verschiedenen Wegen zu manipulieren und zu durchlaufen.
         </para>
 
         <para>
-            <code>Zend_Dojo_Data</code> implementiert die Interfaces <code>ArrayAccess</code>,
+            <classname>Zend_Dojo_Data</classname> implementiert die Interfaces <code>ArrayAccess</code>,
             <code>Iterator</code> und <code>Countable</code>. Deshalb kann man die Datenkollektion genauso
             verwenden kann wie wenn Sie ein Array wäre.
         </para>

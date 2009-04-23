@@ -8,21 +8,21 @@
     <title>Überblick</title>
 
     <para>
-        <code>Zend_Uri</code> ist eine Komponente, die das Verändern und Validieren von
+        <classname>Zend_Uri</classname> ist eine Komponente, die das Verändern und Validieren von
         <ulink url="http://www.w3.org/Addressing/">Uniform Resource Identifiers</ulink> (URIs)
-        unterstützt. <code>Zend_Uri</code> existiert hauptsächlich, um andere Komponenten wie z.B.
-        <code>Zend_Http_Client</code> zu unterstützen, aber ist auch als eigenständiges Hilfsmittel
+        unterstützt. <classname>Zend_Uri</classname> existiert hauptsächlich, um andere Komponenten wie z.B.
+        <classname>Zend_Http_Client</classname> zu unterstützen, aber ist auch als eigenständiges Hilfsmittel
         nützlich.
     </para>
 
     <para>
         URIs beginnen immer mit einem Schema, gefolgt von einem Doppelpunkt. Der Aufbau der vielen
-        unterschiedlichen Schemata unterscheidet sich erheblich. Die <code>Zend_Uri</code> stellt
+        unterschiedlichen Schemata unterscheidet sich erheblich. Die <classname>Zend_Uri</classname> stellt
         eine Fabrik (Factory) bereit, die eine Unterklasse von sich selber zurück gibt, die auf das
         entsprechende Schema spezialisiert ist. Diese Unterklasse heißt
-        <code>Zend_Uri_&lt;scheme&gt;</code>, wobei <code>&lt;scheme&gt;</code> das Schema in
+        <classname>Zend_Uri_&lt;scheme&gt;</classname>, wobei <code>&lt;scheme&gt;</code> das Schema in
         Kleinbuchstaben mit einem Großbuchstaben am Anfang darstellt. Eine Ausnahme dieser Regel ist
-        HTTPS, das auch von <code>Zend_Uri_Http</code> verarbeitet wird.
+        HTTPS, das auch von <classname>Zend_Uri_Http</classname> verarbeitet wird.
     </para>
   </sect2>
 
@@ -30,12 +30,12 @@
     <title>Eine neue URI erstellen</title>
 
     <para>
-        <code>Zend_Uri</code> erstellt eine neue URI von Grund auf, wenn nur das Schema an
-        <code>Zend_Uri::factory()</code> übergeben wurde.
+        <classname>Zend_Uri</classname> erstellt eine neue URI von Grund auf, wenn nur das Schema an
+        <classname>Zend_Uri::factory()</classname> übergeben wurde.
     </para>
 
     <example id="zend.uri.creation.example-1">
-      <title>Erstellen einer neuen URI mit <code>Zend_Uri::factory()</code></title>
+      <title>Erstellen einer neuen URI mit <classname>Zend_Uri::factory()</classname></title>
 
       <programlisting role="php"><![CDATA[
 // Um eine neue URI von Grund auf zu erstellen, übergebe nur das Schema.
@@ -48,14 +48,14 @@ $uri = Zend_Uri::factory('http');
 
     <para>
         Um eine neue URI von Grund auf zu erstellen, übergibt man nur das Schema an
-        <code>Zend_Uri::factory()</code><footnote><para>Zum Zeitpunkt des Schreiben unterstützt
+        <classname>Zend_Uri::factory()</classname><footnote><para>Zum Zeitpunkt des Schreiben unterstützt
         Zend_Uri nur HTTP uznd HTTPS Schemata</para></footnote> . Wenn eine nicht unterstütztes
-        Schema übergeben wird, wird eine <code>Zend_Uri_Exception</code> ausgeworfen.
+        Schema übergeben wird, wird eine <classname>Zend_Uri_Exception</classname> ausgeworfen.
     </para>
 
     <para>
         Wenn das Schema oder die übergebene URI unterstützt wird, gibt
-        <code>Zend_Uri::factory()</code> eine Unterklasse von sich selbst zurück, die auf das zu
+        <classname>Zend_Uri::factory()</classname> eine Unterklasse von sich selbst zurück, die auf das zu
         erstellende Schema spezialisiert ist.
     </para>
   </sect2>
@@ -65,11 +65,11 @@ $uri = Zend_Uri::factory('http');
 
     <para>
         Um eine vorhandene URI zu verändern, übergibt man die komplett URI an
-        <code>Zend_Uri::factory()</code>.
+        <classname>Zend_Uri::factory()</classname>.
     </para>
 
     <example id="zend.uri.manipulation.example-1">
-      <title>Verändern einer vorhandenen URI mit <code>Zend_Uri::factory()</code></title>
+      <title>Verändern einer vorhandenen URI mit <classname>Zend_Uri::factory()</classname></title>
 
       <programlisting role="php"><![CDATA[
 // Um eine vorhandene URI zu verändern, übergibt man sie.
@@ -82,7 +82,7 @@ $uri = Zend_Uri::factory('http://www.zend.com');
 
     <para>
         Die URI wird analysiert und validiert. Wenn sie als ungültig erkannt wird, wird sofort eine
-        <code>Zend_Uri_Exception</code> geworfen. Andernfalls gibt <code>Zend_Uri::factory()</code>
+        <classname>Zend_Uri_Exception</classname> geworfen. Andernfalls gibt <classname>Zend_Uri::factory()</classname>
         eine Unterklasse von sich selbst zurück, die auf das zu verändernde Schema spezialisiert
         ist.
     </para>
@@ -92,12 +92,12 @@ $uri = Zend_Uri::factory('http://www.zend.com');
     <title>URI Validierung</title>
 
     <para>
-        Die <code>Zend_Uri::check()</code> Methode kann verwendet werden, wenn nur das Validieren
+        Die <classname>Zend_Uri::check()</classname> Methode kann verwendet werden, wenn nur das Validieren
         einer vorhandenen URI benötigt wird.
     </para>
 
     <example id="zend.uri.validation.example-1">
-      <title>URI Validierung mit <code>Zend_Uri::check()</code></title>
+      <title>URI Validierung mit <classname>Zend_Uri::check()</classname></title>
 
       <programlisting role="php"><![CDATA[
 // Überprüfe, ob eine übergebe URI wohlgeformt ist
@@ -109,8 +109,8 @@ $valid = Zend_Uri::check('http://uri.in.question');
     </example>
 
     <para>
-        <code>Zend_Uri::check()</code> gibt ein Boolean zurück, was einfacher ist, als
-        <code>Zend_Uri::factory()</code> zu verwenden und eine Ausnahme abzufangen.
+        <classname>Zend_Uri::check()</classname> gibt ein Boolean zurück, was einfacher ist, als
+        <classname>Zend_Uri::factory()</classname> zu verwenden und eine Ausnahme abzufangen.
     </para>
 
     <sect3 id="zend.uri.validation.allowunwise">
@@ -147,7 +147,7 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
         </example>
 
         <note><para>
-            <code>Zend_Uri::setConfig()</code> setzt Konfigurationsoptionen global. Es wird empfohlen die
+            <classname>Zend_Uri::setConfig()</classname> setzt Konfigurationsoptionen global. Es wird empfohlen die
             'allow_unwise' Option auf 'false' zurückzusetzen wie im obigen Beispiel, solange man unwise
             Zeichen immer global erlauben will.
         </para></note>
@@ -158,7 +158,7 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
     <title>Allgemeine Instanzmethoden</title>
 
     <para>
-        Jede Instant einer <code>Zend_Uri</code> Unterklasse (z.B. <code>Zend_Uri_Http</code>) hat
+        Jede Instant einer <classname>Zend_Uri</classname> Unterklasse (z.B. <classname>Zend_Uri_Http</classname>) hat
         verschiedene Instanzmethoden, die für die Verwendung mit jeglicher URI nützlich sind.
     </para>
 
@@ -171,7 +171,7 @@ Zend_Uri::setConfig(array('allow_unwise' => false));
       </para>
 
       <example id="zend.uri.instance-methods.getscheme.example-1">
-        <title>Das Schema eines <code>Zend_Uri_*</code> Objektes erhalten</title>
+        <title>Das Schema eines <classname>Zend_Uri_*</classname> Objektes erhalten</title>
 
         <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
@@ -192,7 +192,7 @@ $scheme = $uri->getScheme();  // "http"
       <title>Die komplette URI erhalten</title>
 
       <example id="zend.uri.instance-methods.geturi.example-1">
-        <title>Die komplette URI eines <code>Zend_Uri_*</code> Objektes erhalten</title>
+        <title>Die komplette URI eines <classname>Zend_Uri_*</classname> Objektes erhalten</title>
 
         <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');
@@ -212,15 +212,15 @@ echo $uri->getUri();  // "http://www.zend.com"
       <title>Die URI validieren</title>
 
       <para>
-          <code>Zend_Uri::factory()</code> validiert immer jede übergebene URI und wird keine
-          <code>Zend_Uri</code> Unterklasse instantieren, wenn die übergebene URI ungültig ist.
-          Dennoch ist es nach der Instanzierung der <code>Zend_Uri</code> Unterklasse für eine neue
+          <classname>Zend_Uri::factory()</classname> validiert immer jede übergebene URI und wird keine
+          <classname>Zend_Uri</classname> Unterklasse instantieren, wenn die übergebene URI ungültig ist.
+          Dennoch ist es nach der Instanzierung der <classname>Zend_Uri</classname> Unterklasse für eine neue
           oder eine bestehende URI möglich, dass die URI später ungültig wird, nachdem sie verändert
           worden ist.
       </para>
 
       <example id="zend.uri.instance-methods.valid.example-1">
-        <title>Ein <code>Zend_Uri_*</code> Object validieren</title>
+        <title>Ein <classname>Zend_Uri_*</classname> Object validieren</title>
 
         <programlisting role="php"><![CDATA[
 $uri = Zend_Uri::factory('http://www.zend.com');

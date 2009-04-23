@@ -44,7 +44,7 @@
         <para>
             Bevor irgendeine Transaktion stattfinden kann muß diese Verbindung hergestellt werden. Die
             Erstellung einer Verbindung zum Picasa Servern beinhaltet zwei Schritte:
-            Erstellung eines HTTP Clients und Binden einer <code>Zend_Gdata_Photos</code> Instanz an diesen Client.
+            Erstellung eines HTTP Clients und Binden einer <classname>Zend_Gdata_Photos</classname> Instanz an diesen Client.
         </para>
 
         <sect3 id="zend.gdata.photos.connecting.authentication">
@@ -77,7 +77,7 @@
             </itemizedlist>
 
             <para>
-                Die <code>Zend_Gdata</code> Bibliothek bietet Unterstützung für beide Authentifizierungs
+                Die <classname>Zend_Gdata</classname> Bibliothek bietet Unterstützung für beide Authentifizierungs
                 Schemas. Der Rest dieses Kapitels nimmt an das die vorhandenen Authentifizierungs Schemas
                 geläufig sind und wie eine korrekte Authentifizierte Verbindung erstellt wird. Für weitere Details
                 kann in die <link linkend="zend.gdata.introduction.authentication">Authentifizierungs Sektion</link>
@@ -91,18 +91,18 @@
             <title>Erstellen einer Service Instanz</title>
             <para>
                 Um mit den Servern zu interagieren, bietet diese Bibliothek die
-                <code>Zend_Gdata_Photos</code> Service Klasse. Diese Klasse bietet ein übliches Interface zu den
+                <classname>Zend_Gdata_Photos</classname> Service Klasse. Diese Klasse bietet ein übliches Interface zu den
                 Google Data und Atom Publishing Protocol Modellen und assistiert in der Behandlung der Anfragen
                 zum und von den Kalender Servern.
             </para>
 
             <para>
                 Sobald ein Authentifizierung Schema ausgewählt wurde, besteht der nächste Schritt darin eine
-                Instanz von <code>Zend_Gdata_Photos</code> zu erstellen. Der Klassen Konstruktor nimmt eine
-                Instanz von <code>Zend_Http_Client</code> als einzelnes Argument. Das bietet ein Interface für
+                Instanz von <classname>Zend_Gdata_Photos</classname> zu erstellen. Der Klassen Konstruktor nimmt eine
+                Instanz von <classname>Zend_Http_Client</classname> als einzelnes Argument. Das bietet ein Interface für
                 AuthSub und ClientAuth Authentifizierungen, da beide von Ihnen die Erstellung eines speziellen
                 authentifizierten  HTTP Clients benötigen. Wenn keine Argumente angegeben werden, wird
-                automatisch eine unauthentifizierte Instanz von <code>Zend_Http_Client</code> erstellt.
+                automatisch eine unauthentifizierte Instanz von <classname>Zend_Http_Client</classname> erstellt.
             </para>
 
             <para>

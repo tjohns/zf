@@ -6,7 +6,7 @@
     <title>Erstellung einer Maßeinheit</title>
 
     <para>
-        Bei der Erstellung einer Maßeinheit erwarten die <code>Zend_Measure_*</code> Methoden den
+        Bei der Erstellung einer Maßeinheit erwarten die <classname>Zend_Measure_*</classname> Methoden den
         Eingabe-/den Originalwert als ersten Parameter. Dieser kann ein
         <link linkend="zend.measure.creation.number"><code>nummerisches Argument</code>
         </link>
@@ -56,12 +56,12 @@ echo $unit;
 
         <para>
             Viele Maßeinheiten die als Eingabe einer ZF Anwendung empfangen werden können nur als
-            Zeichenketten den Klassen von <code>Zend_Measure_*</code> übergeben werden, wie z.B. Zahlen die in
+            Zeichenketten den Klassen von <classname>Zend_Measure_*</classname> übergeben werden, wie z.B. Zahlen die in
             <ulink url="http://en.wikipedia.org/wiki/Roman_numerals">Römischer Schreibweise</ulink> geschrieben
             werden, oder extrem lange Binärwerte die die Genauigkeit von PHP's natürlichen Integer und Floattypen
             übersteigen würden. Da Integer auch als Zeichenketten geschrieben werden können sollten, sobald
             die Gefahr eines Genauigkeitverlustes durch die Limits von PHP's Integer und Floatwerten besteht,
-            stattdessen Zeichenketten verwendet werden. <code>Zend_Measure_Number</code> benutzt die
+            stattdessen Zeichenketten verwendet werden. <classname>Zend_Measure_Number</classname> benutzt die
             BCMath Erweiterung um aussergewöhnliche Genauigkeit zu unterstützen, wie im gezeigen Beispiel,
             um die Beschränkungen von vielen PHP Funktionen wie
             <ulink url="http://php.net/bin2dec"><code>bin2dec()</code></ulink> zu umgehen.
@@ -79,7 +79,7 @@ echo $unit;
         </example>
 
         <para>
-            Normalerweise kann <code>Zend_Measure_*</code> automatisch die gewünschte Maßeinheit aus einer
+            Normalerweise kann <classname>Zend_Measure_*</classname> automatisch die gewünschte Maßeinheit aus einer
             gewöhnlichen Zeichenkette extrahieren. Nur die erste identifizierbare Zahl die Standard
             Europäisch/Lateinische Ziffern (0,1,2,3,4,5,6,7,8,9) benutzt wird für die Erstellung der Maßeinheit
             benutzt. Wenn weitere Zahlen in der Zeichenkette enthalten sind, werden diese Ignoriert.
@@ -110,7 +110,7 @@ echo $unit; // Ausgabe "125 m²";
             Interpretation nicht herausgefunden werden ohne das das gewünschte Gebietsschema bekannt ist.
             Die Teilung der Dezimalziffern mit "." und die Gruppierung der Tausender mit "," ist in der
             Englischen Sprache üblich, aber nur in anderen Sprachen. Um mit solchen Problemen umgehen zu können,
-            besteht bei den lokalisierten Klassen der <code>Zend_Measure_*</code> Familie die Möglichkeit eine
+            besteht bei den lokalisierten Klassen der <classname>Zend_Measure_*</classname> Familie die Möglichkeit eine
             Sprache oder Region anzugeben, um einen Eingabewert eindeutig zu machen und die erwartete
             semantische Eingabe richtig zu interpretieren.
         </para>
@@ -136,8 +136,8 @@ echo $unit; // Ausgabe "1234.50 m"
         </example>
 
         <para>
-            Seit Zend Framework 1.7.0 unterstützt <code>Zend_Measure</code> auch die Verwendung eines
-            Anwendungsweiten Gebietsschemas. Man kann ganz einfach eine <code>Zend_Locale</code> Instanz
+            Seit Zend Framework 1.7.0 unterstützt <classname>Zend_Measure</classname> auch die Verwendung eines
+            Anwendungsweiten Gebietsschemas. Man kann ganz einfach eine <classname>Zend_Locale</classname> Instanz
             in der Registry setzen wie anbei gezeigt. Mit dieser Schreibweise kann man das manuelle Setzen eines
             Gebietsschemas für jede Instanz vergessen wenn man das selbe Gebietsschema mehrere Male verwenden
             will.

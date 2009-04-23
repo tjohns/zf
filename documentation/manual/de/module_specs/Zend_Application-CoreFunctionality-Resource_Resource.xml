@@ -5,9 +5,9 @@
     <title>Zend_Application_Resource_Resource</title>
 
     <para>
-        <code>Zend_Application_Resource_Resource</code> ist ein Interface für Plugin Ressourcen
+        <classname>Zend_Application_Resource_Resource</classname> ist ein Interface für Plugin Ressourcen
         die mit Bootstrap Klassen verwendet werden welche
-        <code>Zend_Application_Bootstrap_ResourceBootstrapper</code> implementieren. Von Ressourcen
+        <classname>Zend_Application_Bootstrap_ResourceBootstrapper</classname> implementieren. Von Ressourcen
         Plugins wird erwartet das Sie Konfiguration erlauben, das Sie Bootstrapping erlauben, und
         ein Strategy Pattern für die Initialisierung der Ressource implementieren.
     </para>
@@ -41,7 +41,7 @@
 
                 <row>
                     <entry><code>setBootstrap(Zend_Application_Bootstrap_Bootstrapper $bootstrap)</code></entry>
-                    <entry><code>Zend_Application_Resource_Resource</code></entry>
+                    <entry><classname>Zend_Application_Resource_Resource</classname></entry>
                     <entry><itemizedlist>
                             <listitem><para>
                                 <code>$bootstrap</code>: <emphasis>Benötigt</emphasis>.
@@ -55,7 +55,7 @@
 
                 <row>
                     <entry><code>getBootstrap()</code></entry>
-                    <entry><code>Zend_Application_Bootstrap_Bootstrapper</code></entry>
+                    <entry><classname>Zend_Application_Bootstrap_Bootstrapper</classname></entry>
                     <entry>N/A</entry>
                     <entry><para>
                         Empfängt die registrierte Bootstrap Instanz.
@@ -64,7 +64,7 @@
 
                 <row>
                     <entry><code>setOptions(array $options)</code></entry>
-                    <entry><code>Zend_Application_Resource_Resource</code></entry>
+                    <entry><classname>Zend_Application_Resource_Resource</classname></entry>
                     <entry><itemizedlist>
                         <listitem><para>
                             <code>$options</code>: <emphasis>Benötigt</emphasis>.

@@ -69,7 +69,7 @@
         <para>
             Bevor eine Transaktion stattfinden kann, muß eine Verbindung erstellt werden. Das Erstellen einer
             Verbindung zu den Health Servern beinhaltet zwei Schritte: Erstellung eines HTTP Clients und diesen
-            Client an eine <code>Zend_Gdata_Health</code> Instanz binden.
+            Client an eine <classname>Zend_Gdata_Health</classname> Instanz binden.
         </para>
         <sect3 id="zend.gdata.health.connect.authentication">
             <title>Authentifikation</title>
@@ -115,19 +115,19 @@
             <title>Erstellen einer Health Service Instanz</title>
             <para>
                 Um mit Google Health zu interagieren, bietet die Client Bibliothek die Serviceklasse
-                <code>Zend_Gdata_Health</code>. Diese Klasse bietet ein übliches Interface zu den Google Data und
+                <classname>Zend_Gdata_Health</classname>. Diese Klasse bietet ein übliches Interface zu den Google Data und
                 Atom Publishing Protokoll Modellen und hilft bei der Durchführung von Anfragen von und zur
                 Health API.
             </para>
             <para>
                 Sobald man sich für ein Authentifizierungsschema entschieden hat, ist der nächste Schritt die
-                Erstellung einer Instanz von <code>Zend_Gdata_Health</code>. Dieser Klasse sollte eine Instanz
-                von <code>Zend_Gdata_HttpClient</code> übergeben werden. Diese bietet ein Interface für-
+                Erstellung einer Instanz von <classname>Zend_Gdata_Health</classname>. Dieser Klasse sollte eine Instanz
+                von <classname>Zend_Gdata_HttpClient</classname> übergeben werden. Diese bietet ein Interface für-
                 AuthSub/OAuth und ClientLogin um einen speziell authentifizierten HTTP Client zu erstellen.
             </para>
             <para>
                 Um mit dem H9 des Entwicklers (/h9) statt Google Health (/health) nimmt der Konstruktor von
-                <code>Zend_Gdata_Health</code> ein optionales drittes Argument mit dem man den H9 Service Name
+                <classname>Zend_Gdata_Health</classname> ein optionales drittes Argument mit dem man den H9 Service Name
                 'weaver' spezifizieren kann.
             </para>
             <para>
@@ -265,14 +265,14 @@ $healthService = new Zend_Gdata_Health($client,
             <para>
                 Wenn man die Health API verwendet um ein Profil zu empfangen, werden speziell konstruierte
                 Anfrage URLs verwendet um zu beschreiben welche (CCR) Daten zurückgegeben werden sollen. Die
-                Klasse <code>Zend_Gdata_Health_Query</code> hilft dabei diese Aufgabe zu vereinfachen indem
+                Klasse <classname>Zend_Gdata_Health_Query</classname> hilft dabei diese Aufgabe zu vereinfachen indem
                 automatisch eine Abfrage URL erstellt wird basierend auf den Parametern die man gesetzt hat.
             </para>
             <sect4 id="zend.gdata.health.profilefeed.query.construct">
                 <title>Den Feed abfragen</title>
                 <para>
                     Um eine Abfrage eines Profil Feeds durchzuführen, muß eine neue Instanz von
-                    <code>Zend_Gdata_Health_Query</code> erzeugt und die <code>getHealthProfileFeed()</code>
+                    <classname>Zend_Gdata_Health_Query</classname> erzeugt und die <code>getHealthProfileFeed()</code>
                     Methode des Services aufgerufen werden:
                 </para>
                 <programlisting role="php"><![CDATA[
@@ -316,8 +316,8 @@ $profileFeed = $healthService->getHealthProfileFeed($query);
             </para>
             <para>
                 Um die kompletten CCR Informationen von einem Eintrag zu erhalten, muß ein Aufruf zur
-                <code>getCcr()</code> Methode der <code>Zend_Gdata_Health_ProfileEntry</code> Klasse
-                durchgeführt werden. Das gibt ein <code>Zend_Gdata_Health_Extension_CCR</code> zurück:
+                <code>getCcr()</code> Methode der <classname>Zend_Gdata_Health_ProfileEntry</classname> Klasse
+                durchgeführt werden. Das gibt ein <classname>Zend_Gdata_Health_Extension_CCR</classname> zurück:
             </para>
             <programlisting role="php"><![CDATA[
 $entries = $profileFeed->getEntries();

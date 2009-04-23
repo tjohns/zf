@@ -5,7 +5,7 @@
     <title>Eigene Klassen für Feeds und Einträge</title>
 
     <para>
-        Schließlich kannst du die <code>Zend_Feed</code> Klasse erweitern, wenn du dein eigenes
+        Schließlich kannst du die <classname>Zend_Feed</classname> Klasse erweitern, wenn du dein eigenes
         Format oder Feinheiten wie die automatische Verarbeitung von Elementen, die in deinen
         eigenen Namensraum enthalten sein sollen, bereit stellen möchtest
     </para>

@@ -6,7 +6,7 @@
 
     <para>
         MVC Seiten werden definiert indem MVC Parameter verwendet werden wie von der
-        <code>Zend_Controller</code> Komponent bekannt. Eine MVC Seite wird intern in der
+        <classname>Zend_Controller</classname> Komponent bekannt. Eine MVC Seite wird intern in der
         <code>getHref()</code> Methode <classname>Zend_Controller_Action_Helper_Url</classname>
         verwenden um hrefs zu erstellen, und die <code>isActive()</code> Methode wird die
         Parameter von <classname>Zend_Controller_Request_Abstract</classname> mit den Seiten
@@ -88,7 +88,7 @@
 
         <para>
             Die zurückgegebene URI ist relativ zur <code>baseUrl</code> in
-            <code>Zend_Controller_Front</code>. Im Beispiel ist die baseUrl der Einfachheit halber
+            <classname>Zend_Controller_Front</classname>. Im Beispiel ist die baseUrl der Einfachheit halber
             '/'.
         </para>
     </note>
@@ -209,8 +209,8 @@ $page->isActive(); // gibt false zurück
                     <code>isActive()</code> Methode nicht dazu in der Lage zu erkennen ob die Seite
                     aktiv ist oder nicht. Der Grund hierfür ist, das es aktuell keinen Weg gibt
                     die Standardparameter von einem
-                    <code>Zend_Controller_Router_Route_Interface</code> Objekt zu erhalten, oder
-                    die aktuelle Route von einem <code>Zend_Controller_Router_Interface</code>
+                    <classname>Zend_Controller_Router_Route_Interface</classname> Objekt zu erhalten, oder
+                    die aktuelle Route von einem <classname>Zend_Controller_Router_Interface</classname>
                     Objekt.
                 </para>
             </note>

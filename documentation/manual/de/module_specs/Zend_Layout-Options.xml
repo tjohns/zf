@@ -5,10 +5,10 @@
     <title>Zend_Layout Konfigurations Optionen</title>
 
     <para>
-        <code>Zend_Layout</code> hat eine Variation an Konfigurations Optionen. Diese können durch den Aufruf
+        <classname>Zend_Layout</classname> hat eine Variation an Konfigurations Optionen. Diese können durch den Aufruf
         entsprechender Zugriffsmethoden gesetzt werden, durch die Übergabe eines Arrays oder
-        <code>Zend_Config</code> Objektes an den Konstruktor oder <code>startMvc()</code>, durch die Übergabe
-        eines Arrays von Optionen an <code>setOptions()</code>, oder der Übergabe eines <code>Zend_Config</code>
+        <classname>Zend_Config</classname> Objektes an den Konstruktor oder <code>startMvc()</code>, durch die Übergabe
+        eines Arrays von Optionen an <code>setOptions()</code>, oder der Übergabe eines <classname>Zend_Config</classname>
         Objektes an <code>setConfig()</code>.
     </para>
 
@@ -51,7 +51,7 @@
         <listitem>
             <para>
                 <emphasis>view</emphasis>: Das View Objekt das für die Darstellung verwendet wird. Wenn mit
-                MVC verwendet, dann versucht <code>Zend_Layout</code> das View Objekt zu verwenden das mit
+                MVC verwendet, dann versucht <classname>Zend_Layout</classname> das View Objekt zu verwenden das mit
                 <link linkend="zend.controller.actionhelpers.viewrenderer">dem ViewRenderer</link> registriert
                 wurde wenn kein explizites View Objekt übergeben wurde. Zugriffsmethoden sind
                 <code>setView()</code> und <code>getView()</code>.
@@ -61,8 +61,8 @@
         <listitem>
             <para>
                 <emphasis>helperClass</emphasis>: Die Action Helfer Klasse die verwendet wird wenn
-                <code>Zend_Layout</code> mit den MVC Komponenten verwendet wird. Standardmäßig ist das
-                <code>Zend_Layout_Controller_Action_Helper_Layout</code>. Zugriffsmethoden sind
+                <classname>Zend_Layout</classname> mit den MVC Komponenten verwendet wird. Standardmäßig ist das
+                <classname>Zend_Layout_Controller_Action_Helper_Layout</classname>. Zugriffsmethoden sind
                 <code>setHelperClass()</code> und <code>getHelperClass()</code>.
             </para>
         </listitem>
@@ -70,8 +70,8 @@
         <listitem>
             <para>
                 <emphasis>pluginClass</emphasis>: Das Front Kontroller Plugin das verwendet wird wenn
-                <code>Zend_Layout</code> mit den MVC Komponenten verwendet wird. Standardmäßig ist das
-                <code>Zend_Layout_Controller_Plugin_Layout</code>. Zugriffsmethoden sind
+                <classname>Zend_Layout</classname> mit den MVC Komponenten verwendet wird. Standardmäßig ist das
+                <classname>Zend_Layout_Controller_Plugin_Layout</classname>. Zugriffsmethoden sind
                 <code>setPluginClass()</code> und <code>getPluginClass()</code>.
             </para>
         </listitem>
@@ -80,7 +80,7 @@
             <para>
                 <emphasis>inflector</emphasis>: Die Beugung die verwendet werden soll wenn Layout Namen zu
                 Layout Skript Pfaden aufgelöst werden; siehe <link linkend="zend.layout.advanced.inflector">die
-                <code>Zend_Layout</code> Beugungs Dokumentation für weitere Details</link>.
+                <classname>Zend_Layout</classname> Beugungs Dokumentation für weitere Details</link>.
                 Zugriffsmethoden sind <code>setInflector()</code> und <code>getInflector()</code>.
             </para>
         </listitem>
@@ -129,8 +129,8 @@ $config = new Zend_Config_Ini('/path/to/layout.ini', 'layout');
 
             <para>
                 Beide, der Konstruktor und die statische <code>startMvc()</code> Methode akzeptieren entweder
-                ein Array von Optionen oder ein <code>Zend_Config</code> Objekt mit Optionen um die
-                <code>Zend_Layout</code> Instanz zu konfigurieren.
+                ein Array von Optionen oder ein <classname>Zend_Config</classname> Objekt mit Optionen um die
+                <classname>Zend_Layout</classname> Instanz zu konfigurieren.
             </para>
 
             <para>
@@ -163,7 +163,7 @@ $layout = Zend_Layout::startMvc($config);
             </programlisting>
 
             <para>
-                Grundsätzlich ist das der einfachste Weg um die <code>Zend_Layout</code> Instanz anzupassen.
+                Grundsätzlich ist das der einfachste Weg um die <classname>Zend_Layout</classname> Instanz anzupassen.
             </para>
         </example>
 
@@ -171,7 +171,7 @@ $layout = Zend_Layout::startMvc($config);
             <title>setOption() und setConfig() verwenden</title>
 
             <para>
-                Machmal ist es notwendig das <code>Zend_Layout</code> Objekt zu Konfigurieren nachdem es
+                Machmal ist es notwendig das <classname>Zend_Layout</classname> Objekt zu Konfigurieren nachdem es
                 instanziiert wurde; <code>setOptions()</code> und <code>setConfig()</code> bieten einen
                 schnellen und einfachen Weg das zu tun:
             </para>
@@ -196,7 +196,7 @@ $layout->setConfig($options);
             <title>Zugriffsmethoden verwenden</title>
 
             <para>
-                Letztendlich kann die <code>Zend_Layout</code> Instanz auch über Zugriffsmetoden konfiguriert
+                Letztendlich kann die <classname>Zend_Layout</classname> Instanz auch über Zugriffsmetoden konfiguriert
                 werden. Alle Zugriffsmethoden implementieren ein Flüssiges Interface, was bedeutet das Ihre
                 Aufrufe gekettet werden können:
             </para>

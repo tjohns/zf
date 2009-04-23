@@ -7,16 +7,16 @@
     <sect2 id="zend.controller.quickstart.introduction">
         <title>Einführung</title>
         <para>
-            <code>Zend_Controller</code> ist das Herz des MVC-Systems des Zend Framework.
+            <classname>Zend_Controller</classname> ist das Herz des MVC-Systems des Zend Framework.
             MVC bedeutet <ulink url="http://de.wikipedia.org/wiki/Model_View_Controller">Model-View-Controller</ulink>
             und ist ein Entwurfsmuster, das darauf abzielt, Anwendungslogik von Anzeigelogik zu trennen.
-            <code>Zend_Controller_Front</code> implementiert ein <ulink
+            <classname>Zend_Controller_Front</classname> implementiert ein <ulink
             url="http://www.martinfowler.com/eaaCatalog/frontController.html">Front-Controller</ulink>-Entwurfsmuster,
             das vorschreibt, dass alle Anfragen vom Front-Controller abgefangen und abhängig von der angeforderten URL
             an individuelle Action-Controller weitergeleitet werden.
         </para>
         <para>
-            Das <code>Zend_Controller</code> System wurde im Sinne der Erweiterungsmöglichkeiten
+            Das <classname>Zend_Controller</classname> System wurde im Sinne der Erweiterungsmöglichkeiten
             entwickelt, entweder durch Erstellen von Subklassen, welche die bestehenden Klassen
             erweitern, oder durch Erstellen neuer Klassen, welche die verschiedenen Interfaces
             und abstrakten Klassen implementieren, welche das Fundament der Controller
@@ -168,7 +168,7 @@ Zend_Controller_Front::run('/path/to/app/controllers');
             </para>
 
             <para>
-                Der Dispatcher von <code>Zend_Controller</code> nimmt dann den Wert, der als Controller angegeben
+                Der Dispatcher von <classname>Zend_Controller</classname> nimmt dann den Wert, der als Controller angegeben
                 ist, und schließt daraus auf eine passende Klasse. In der normalen Einstellung des Dispatchers
                 wird der erste Buchstabe jedes Wortes im Controller-Namen groß geschrieben (Title-case), und dann
                 das Wort <code>Controller</code> angehängt. Das bedeutet für unser Beispiel, dass die Anfrage nach
@@ -206,7 +206,7 @@ class IndexController extends Zend_Controller_Action
                     linkend="zend.controller.actionhelpers.viewrenderer">ViewRenderer</link>
                 eingeschaltet. Das bedeutet, dass sofort, wenn eine leere Aktionsmethode und ein passendes View-Script
                 existieren, Inhalte gerendert werden. Standardmäßig wird die Klasse
-                <code>Zend_View</code> als View-Schicht im Zend-Framework MVC verwendet. Der <code>ViewRenderer</code>
+                <classname>Zend_View</classname> als View-Schicht im Zend-Framework MVC verwendet. Der <code>ViewRenderer</code>
                 zaubert ein wenig, und benutzt Controller- (hier: <code>index</code>) und Aktionsname
                 (hier: <code>index</code>), um herauszufinden, welches Template er rendern soll.
                 Ohne dass man dies ändert, haben Templates die Dateiendung <code>.phtml</code>, das heißt also für

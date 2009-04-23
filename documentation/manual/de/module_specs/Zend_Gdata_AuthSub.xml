@@ -30,7 +30,7 @@
     <note>
         <title>Registrierte Anwendungen</title>
         <para>
-            <code>Zend_Gdata</code> unterstützt aktuell die Verwendung von sicheren Tokens nicht, weil die AuthSub
+            <classname>Zend_Gdata</classname> unterstützt aktuell die Verwendung von sicheren Tokens nicht, weil die AuthSub
             Authentifizierung die Übergabe von Digitalen Zertifikaten, um ein sicheres Token zu erhalten,
             nicht unterstützt.
         </para>
@@ -41,7 +41,7 @@
 
         <para>
             Die PHP Anwendung sollte einen Hyperlink zur Google URL bieten die die Authentifizierung durchführt.
-            Die statische Funktion <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code> liefert die richtige
+            Die statische Funktion <classname>Zend_Gdata_AuthSub::getAuthSubTokenUri()</classname> liefert die richtige
             URL. Die Argumente dieser Funktion inkludieren die URL zur eigenen PHP Anwendung so das Google
             den Browser des Benutzers um zur eigenen Anwendung zurück umleiten kann, nachdem die
             Benutzerdaten verifiziert wurden.
@@ -55,14 +55,14 @@
         </para>
 
         <para>
-            Um den Token dann zu verwenden muß <code>Zend_Gdata_AuthSub::getHttpClient()</code> aufgerufen werden.
+            Um den Token dann zu verwenden muß <classname>Zend_Gdata_AuthSub::getHttpClient()</classname> aufgerufen werden.
             Diese Funktion gibe eine Instanz von Zend_Http_Client zurück, mit gültigen Headern gesetzt, sodas eine
             nachfolgende Anfrage der Anwendung, die diesen Http Clienten verwenden, auch authentifiziert sind.
         </para>
 
         <para>
             Nachfolgend ist ein Beispiel von PHP Code für eine Web Anwendung um eine Authentifizierung zu erlangen
-            damit der Google Calender Service verwendet werden kann, und der ein <code>Zend_Gdata</code> Client Objekt erstellt
+            damit der Google Calender Service verwendet werden kann, und der ein <classname>Zend_Gdata</classname> Client Objekt erstellt
             das diesen authentifizierten Http Client verwendet.
         </para>
 
@@ -102,7 +102,7 @@ $cal = new Zend_Gdata_Calendar($client);
 
         <para>
             Um den authentifizierten Status eines gegebenen Status zu beenden, kann die statische Funktion
-            <code>Zend_Gdata_AuthSub::AuthSubRevokeToken()</code> verwendet werden. Andernfalls bleibt der Token
+            <classname>Zend_Gdata_AuthSub::AuthSubRevokeToken()</classname> verwendet werden. Andernfalls bleibt der Token
             noch für einige Zeit gültig.
         </para>
 
@@ -126,7 +126,7 @@ if (isset($_GET['logout'])) {
         <title>Sicherheitshinweise</title>
         <para>
             Das vermeiden der <code>$php_self</code> Variable im obigen Beispiel ist eine generelle Sicherheits
-            Richtlinie, die nicht nur für <code>Zend_Gdata</code> gilt. Inhalt der zu Http Headern ausgegeben wird sollte immer
+            Richtlinie, die nicht nur für <classname>Zend_Gdata</classname> gilt. Inhalt der zu Http Headern ausgegeben wird sollte immer
             gefiltert werden.
         </para>
         <para>

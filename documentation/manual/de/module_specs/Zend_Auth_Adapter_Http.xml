@@ -10,7 +10,7 @@
         <title>Einführung</title>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> bietet die am meisten entsprechende Implementation von
+            <classname>Zend_Auth_Adapter_Http</classname> bietet die am meisten entsprechende Implementation von
             <ulink url="http://tools.ietf.org/html/rfc2617">RFC-2617</ulink>,
             <ulink url="http://en.wikipedia.org/wiki/Basic_authentication_scheme">Basis</ulink> und
             <ulink url="http://en.wikipedia.org/wiki/Digest_access_authentication">Digest</ulink> HTTP
@@ -92,7 +92,7 @@
         <title>Konfigurations Optionen</title>
 
         <para>
-            Die <code>Zend_Auth_Adapter_Http</code> Klasse benötigt ein Konfigurations Array das Ihrem
+            Die <classname>Zend_Auth_Adapter_Http</classname> Klasse benötigt ein Konfigurations Array das Ihrem
             Konstruktor übergeben werden muß. Es sind verschiedene Konfigurations Optionen vorhanden, und einige
             davon werden benötigt:
             <table id="zend.auth.adapter.configuration_options.table">
@@ -178,8 +178,8 @@
         </para>
 
         <para>
-            <code>Zend_Auth_Adapter_Http</code> ist darauf angewiesen das Objekte
-            <code>Zend_Auth_Adapter_Http_Resolver_Interface</code> implementieren. Eine Textdatei Auflöser Klasse
+            <classname>Zend_Auth_Adapter_Http</classname> ist darauf angewiesen das Objekte
+            <classname>Zend_Auth_Adapter_Http_Resolver_Interface</classname> implementieren. Eine Textdatei Auflöser Klasse
             ist mit diesem Adapter inkludiert, aber jede Art von Auflöser kann einfach erstellt werden indem
             das Resolver Interface implementiert wird.
         </para>

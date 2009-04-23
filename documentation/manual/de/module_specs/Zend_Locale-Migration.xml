@@ -6,8 +6,8 @@
     <title>Migrieren von vorhergehenden Versionen</title>
 
     <para>
-        Die API von <code>Zend_Locale</code> wurde von Zeit zu Zeit verändert. Wenn man begonnen hat
-        <code>Zend_Locale</code> und seine Unterkomponenten in früheren Versionen dann sollte man
+        Die API von <classname>Zend_Locale</classname> wurde von Zeit zu Zeit verändert. Wenn man begonnen hat
+        <classname>Zend_Locale</classname> und seine Unterkomponenten in früheren Versionen dann sollte man
         den unteren Richtlinien folgen um die Skripte so zu migrieren das sie die neue API verwenden.
     </para>
 

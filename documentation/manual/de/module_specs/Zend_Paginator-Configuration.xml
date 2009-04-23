@@ -5,11 +5,11 @@
     <title>Konfiguration</title>
 
     <para>
-        <code>Zend_Paginator</code> hat verschiedene Konfigurationsmethoden die aufgerufen werden können:
+        <classname>Zend_Paginator</classname> hat verschiedene Konfigurationsmethoden die aufgerufen werden können:
     </para>
 
     <table id="zend.paginator.configuration.table">
-        <title>Konfigurationsmethoden für <code>Zend_Paginator</code></title>
+        <title>Konfigurationsmethoden für <classname>Zend_Paginator</classname></title>
 
         <tgroup cols="2">
             <thead>

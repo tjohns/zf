@@ -263,37 +263,37 @@ Zend_Loader::registerAutoload();
 
         <itemizedlist>
             <listitem><para>
-                <code>Zend_Controller_Action_HelperBroker</code>: Helfer
+                <classname>Zend_Controller_Action_HelperBroker</classname>: Helfer
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Dojo</code>: View Helfer, Form Elemente und Dekorator
+                <classname>Zend_Dojo</classname>: View Helfer, Form Elemente und Dekorator
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_File_Transfer</code>: Adapter
+                <classname>Zend_File_Transfer</classname>: Adapter
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Inflector</code>: Filter (verwendet vom ViewRenderer Action
+                <classname>Zend_Filter_Inflector</classname>: Filter (verwendet vom ViewRenderer Action
                 Helfer und Zend_Layout)
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Filter_Input</code>: Filter und Prüfungen
+                <classname>Zend_Filter_Input</classname>: Filter und Prüfungen
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Form</code>: Elemente, Prüfungen, Filter, Dekoratore, Captcha und
+                <classname>Zend_Form</classname>: Elemente, Prüfungen, Filter, Dekoratore, Captcha und
                 File Transfer Adapter
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Paginator</code>: Adapter
+                <classname>Zend_Paginator</classname>: Adapter
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_View</code>: Helfer, Filter
+                <classname>Zend_View</classname>: Helfer, Filter
             </para></listitem>
         </itemizedlist>
 

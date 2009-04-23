@@ -9,9 +9,9 @@
         <para>
             Der <code>FlashMessenger</code> Helfer erlaubt es Nachrichten zu übergeben die ein Benutzer bei der
             nächsten Anfrage sehen können soll. Um das durchführen zu können, berwendet <code>FlashMessenger</code>
-            den <code>Zend_Session_Namespace</code> um Nachrichten für die Zukunft oder den nächsten Empfang einer
-            Anfrage zu speichern. Es ist generell eine gute Idee, das wenn man plant <code>Zend_Session</code> oder
-            <code>Zend_Session_Namespace</code> zu verwenden, diese mit <code>Zend_Session::start()</code> in der
+            den <classname>Zend_Session_Namespace</classname> um Nachrichten für die Zukunft oder den nächsten Empfang einer
+            Anfrage zu speichern. Es ist generell eine gute Idee, das wenn man plant <classname>Zend_Session</classname> oder
+            <classname>Zend_Session_Namespace</classname> zu verwenden, diese mit <classname>Zend_Session::start()</classname> in der
             Bootstrap Datei zu initialisieren. (Siehe die
             <link linkend="zend.session.advanced_usage.starting_a_session">Zend_Session</link> Dokumentation für
             weitere Details über die Verwendung)

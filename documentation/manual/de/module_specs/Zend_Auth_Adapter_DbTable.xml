@@ -10,9 +10,9 @@
         <title>Einführung</title>
 
         <para>
-            <code>Zend_Auth_Adapter_DbTable</code> bietet die Möglichkeit sich gegenüber Zeugnissen zu
+            <classname>Zend_Auth_Adapter_DbTable</classname> bietet die Möglichkeit sich gegenüber Zeugnissen zu
             authentifizieren die in einer Datenbank Tabelle gespeichert sind. Weil
-            <code>Zend_Auth_Adapter_DbTable</code> eine Instanz von <code>Zend_Db_Adapter_Abstract</code>
+            <classname>Zend_Auth_Adapter_DbTable</classname> eine Instanz von <classname>Zend_Db_Adapter_Abstract</classname>
             benötigt, die an den Konstruktor übergeben wird, ist jede Instanz an eine spezielle Datenbank
             Verbindung verknüpft. Andere Konfigurationsoptionen können durch den Konstruktor gesetzt werden und
             durch die Methoden der Instanz. Eine für jede Option.
@@ -63,8 +63,8 @@
             <title>Grundsätzliche Verwendung</title>
 
             <para>
-                Wie bereits in der Einführung beschrieben benötigt der <code>Zend_Auth_Adapter_DbTable</code>
-                Konstruktor eine Instanz von <code>Zend_Db_Adapter_Abstract</code> die als Datenbank Verbindung
+                Wie bereits in der Einführung beschrieben benötigt der <classname>Zend_Auth_Adapter_DbTable</classname>
+                Konstruktor eine Instanz von <classname>Zend_Db_Adapter_Abstract</classname> die als Datenbank Verbindung
                 fungiert zu welcher die Instanz des Authentifizierungs-Adapters gebunden ist. Zuerst sollte die
                 Datenbankverbindung erstellt werden.
             </para>
@@ -102,7 +102,7 @@ $dbAdapter->query($sqlInsert);
 
             <para>
                 Mit der Datenbankverbindung und den vorhandenen Tabellendaten, kann eine Instanz von
-                <code>Zend_Auth_Adapter_DbTable</code> erstellt werden. Die Werte der Konfigurationsoptionen
+                <classname>Zend_Auth_Adapter_DbTable</classname> erstellt werden. Die Werte der Konfigurationsoptionen
                 können dem Konstruktor übergeben werden, oder als Parameter der setzenden Methoden nach der
                 Instanziierung:
             </para>
@@ -145,7 +145,7 @@ $result = $authAdapter->authenticate();
 
             <para>
                 Zusätzlich zum Vorhandensein der <code>getIdentity()</code> Methode über das Authentifizierungs
-                Ergebnisobjekt, unterstützt <code>Zend_Auth_Adapter_DbTable</code> auch das empfangen der
+                Ergebnisobjekt, unterstützt <classname>Zend_Auth_Adapter_DbTable</classname> auch das empfangen der
                 Tabellenzeile wenn die Authentifizierung erfolgeich war:
             </para>
 
@@ -184,10 +184,10 @@ Array
         <title>Fortgeschrittene Verwendung: Ein DbTable Ergebnis Objekt dauerhaft machen</title>
 
         <para>
-            Standardmäßig gibt <code>Zend_Auth_Adapter_DbTable</code> die unterstützte Identität an das
+            Standardmäßig gibt <classname>Zend_Auth_Adapter_DbTable</classname> die unterstützte Identität an das
             Auth Objekt bei erfolgreicher Authentifizierung zurück. Ein anderes Verwendungs-Szenario, bei dem
             Entwickler ein Identitäts Objekt, welches andere nützliche Informationen enthält, in den dauerhaften
-            Speichermechanismus von <code>Zend_Auth</code> abspeichern wollen, wird durch die Verwendung der
+            Speichermechanismus von <classname>Zend_Auth</classname> abspeichern wollen, wird durch die Verwendung der
             <code>getResultRowObject()</code> Methode gelöst die ein <code>stdClass</code> Objekt zurück gibt.
             Der folgende Code Abschnitt zeigt diese Verwendung:
         </para>
@@ -229,8 +229,8 @@ if ($result->isValid()) {
         <title>Forgeschrittene Verwendung durch Beispiele</title>
 
         <para>
-            Wärend der primäre Zweck von <code>Zend_Auth</code> (und konsequenter Weise
-            <code>Zend_Auth_Adapter_DbTable</code>) die <emphasis role="strong">Authentifizierung</emphasis>
+            Wärend der primäre Zweck von <classname>Zend_Auth</classname> (und konsequenter Weise
+            <classname>Zend_Auth_Adapter_DbTable</classname>) die <emphasis role="strong">Authentifizierung</emphasis>
             und nicht die <emphasis role="strong">Authorisierung</emphasis> ist, gibt es ein paar
             Instanzen und Probleme auf dem Weg welche Art besser passt. Abhängig davon wie man sich
             entscheidet ein Problem zu beschreiben, macht es manchmal Sinn, das was wie ein
@@ -238,7 +238,7 @@ if ($result->isValid()) {
         </para>
 
         <para>
-            Mit dieser Definition, hat <code>Zend_Auth_Adapter_DbTable</code> einige eingebaute
+            Mit dieser Definition, hat <classname>Zend_Auth_Adapter_DbTable</classname> einige eingebaute
             Mechanismen die für zusätzliche Checks wärend der Authentifizierungszeit angepasst
             werden können, um einige übliche Benutzerprobleme zu lösen.
         </para>

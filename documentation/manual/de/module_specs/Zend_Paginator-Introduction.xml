@@ -5,12 +5,12 @@
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Paginator</code> ist eine flexible Komponente für die seitenweise Verarbeitung
+        <classname>Zend_Paginator</classname> ist eine flexible Komponente für die seitenweise Verarbeitung
         von Sammlungen von Daten und deren Darstellung zum Benutzer.
     </para>
 
     <para>
-        Die primären Designziele von <code>Zend_Paginator</code> sind wie folgt:
+        Die primären Designziele von <classname>Zend_Paginator</classname> sind wie folgt:
 
         <itemizedlist>
             <listitem>
@@ -31,9 +31,9 @@
             </listitem>
             <listitem>
                 <para>
-                    Lose Kopplung von <code>Zend_Paginator</code> zu anderen Zend Framework Komponenten damit
-                    Benutzer welche es wünschen Sie auch unabhängig von <code>Zend_View</code>,
-                    <code>Zend_Db</code> usw, verwenden können
+                    Lose Kopplung von <classname>Zend_Paginator</classname> zu anderen Zend Framework Komponenten damit
+                    Benutzer welche es wünschen Sie auch unabhängig von <classname>Zend_View</classname>,
+                    <classname>Zend_Db</classname> usw, verwenden können
                 </para>
             </listitem>
         </itemizedlist>

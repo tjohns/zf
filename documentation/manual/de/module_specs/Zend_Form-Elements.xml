@@ -2,11 +2,11 @@
 <!-- EN-Revision: 14978 -->
 <!-- Reviewed: no -->
 <sect1 id="zend.form.elements">
-    <title>Erstellen von Form Elementen mit Hilfe von <code>Zend_Form_Element</code></title>
+    <title>Erstellen von Form Elementen mit Hilfe von <classname>Zend_Form_Element</classname></title>
 
     <para>
         Ein Formular ist aus Elementen gemacht, die typischerweise mit einer HTML Form Eingabe
-        korrespondieren. <code>Zend_Form_Element</code> kapselt einzelne Formularelemente mit den folgenden
+        korrespondieren. <classname>Zend_Form_Element</classname> kapselt einzelne Formularelemente mit den folgenden
         Bereichen die erfüllt werden sollen:
     </para>
 
@@ -36,7 +36,7 @@
     </itemizedlist>
 
     <para>
-        Die Basisklasse, <code>Zend_Form_Element</code>, hat begründete Standardwerte für viele
+        Die Basisklasse, <classname>Zend_Form_Element</classname>, hat begründete Standardwerte für viele
         Fälle, aber es ist am besten die Klasse zu erweitern für oft verwendete speziell
         benötigte Elemente. Zusätzlich wird Zend Framework mit einer Anzahl an Standard
         XHTML Elementen ausgeliefert; über diese kann im
@@ -48,7 +48,7 @@
         <title>Plugin Loader</title>
 
         <para>
-            <code>Zend_Form_Element</code> verwendet
+            <classname>Zend_Form_Element</classname> verwendet
             <link linkend="zend.loader.pluginloader">Zend_Loader_PluginLoader</link> um es
             Entwicklern zu erlauben Orte für alternative Prüfungen, Filter und Dekoratoren zu
             definieren. Jeder hat seinen eigenen Plugin Loader assoziiert, und generelle
@@ -198,8 +198,8 @@ $form->addElementPrefixPath('My_Decorator', 'My/Decorator/', 'decorator');
             entfernen, aber die Prüfungen auf dem verbleibenden durchzuführen um sicherzustellen,
             dass die Übertragung gültig ist. Oder man will Leerzeichen bei Eingaben entfernen, damit
             eine StringLength Prüfung kein falsches "Korrekt" zurückgibt. Diese Operationen können
-            durchgeführt werden indem <code>Zend_Filter</code> verwendet wird, und
-            <code>Zend_Form_Element</code> unterstützt Filterketten, was es erlaubt mehrere,
+            durchgeführt werden indem <classname>Zend_Filter</classname> verwendet wird, und
+            <classname>Zend_Form_Element</classname> unterstützt Filterketten, was es erlaubt mehrere,
             sequentielle Filter zu spezifizieren und anzupassen. Das Filtern geschieht während
             der Prüfung und wenn der Wert des Elements über <code>getValue()</code> geholt wird:
         </para>
@@ -252,9 +252,9 @@ $element->addFilter('alnum');
 
             <para>
                 Wenn man sein eigenes Set an Filterklassen hat, kann man
-                <code>Zend_Form_Element</code> mitteilen diese zu verwenden indem
+                <classname>Zend_Form_Element</classname> mitteilen diese zu verwenden indem
                 <code>addPrefixPath()</code> verwendet wird. Wenn man zum Beispiel eigene Filter
-                unter dem 'My_Filter' Präfix hat, kann <code>Zend_Form_Element</code> dies auf dem
+                unter dem 'My_Filter' Präfix hat, kann <classname>Zend_Form_Element</classname> dies auf dem
                 folgenden Weg mitgeteilt werden:
             </para>
 
@@ -325,8 +325,8 @@ $unfiltered = $element->getUnfilteredValue();
         <para>
             Wenn man das Sicherheits-Mantra von "Eingabe filtern, Ausgabe escapen" unterschreibt
             dann wird man die Eingabe des Formulars prüfen ("Eingabefilterung") wollen. In
-            <code>Zend_Form</code> enthält jedes Element seine eigene Prüfkette, die aus
-            <code>Zend_Validate_*</code> Prüfungen besteht.
+            <classname>Zend_Form</classname> enthält jedes Element seine eigene Prüfkette, die aus
+            <classname>Zend_Validate_*</classname> Prüfungen besteht.
         </para>
 
         <para>
@@ -372,9 +372,9 @@ $element->addValidator('alnum');
 
             <para>
                 Wenn man sein eigenes Set an Prüfklassen hat, kann man
-                <code>Zend_Form_Element</code> mitteilen diese zu verwenden indem
+                <classname>Zend_Form_Element</classname> mitteilen diese zu verwenden indem
                 <code>addPrefixPath()</code> verwendet wird. Wenn man zum Beispiel eigene Prüfungen
-                unter dem 'My_Validator' Präfix hat, kann <code>Zend_Form_Element</code> dies auf dem
+                unter dem 'My_Validator' Präfix hat, kann <classname>Zend_Form_Element</classname> dies auf dem
                 folgenden Weg mitgeteilt werden:
             </para>
 
@@ -414,7 +414,7 @@ $element->addValidator('StringLength', false, array(6, 20));
         <para>
             Argumente die auf diesem Weg übergeben werden, sollten in der Reihenfolge sein in der
             sie im Konstruktor definiert sind. Das obige Beispiel instanziert die
-            <code>Zend_Validate_StringLenth</code> Klasse mit den <code>$min</code> und
+            <classname>Zend_Validate_StringLenth</classname> Klasse mit den <code>$min</code> und
             <code>$max</code> Parametern:
         </para>
 
@@ -428,7 +428,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
 
             <para>
                 Einige Entwickler wollen eigene Fehlermeldungen für eine Prüfung anbieten.
-                <code>Zend_Form_Element::addValidator()</code>'s <code>$options</code> Argument
+                <classname>Zend_Form_Element::addValidator()</classname>'s <code>$options</code> Argument
                 erlaubt es das zu tun, indem der Schlüssel 'messages' angegeben wird und
                 ein Array mit Schlüssel/Wert Paaren genutzt wird für das Setzen der
                 Nachrichten Templates. Man muss die Fehlermeldungen der betreffenden Prüfung
@@ -436,7 +436,7 @@ $validator = new Zend_Validate_StringLength(6, 20);
             </para>
 
             <para>
-                Eine bessere Option ist es <code>Zend_Translate_Adapter</code> in Formular zu
+                Eine bessere Option ist es <classname>Zend_Translate_Adapter</classname> in Formular zu
                 verwenden. Fehlercodes werden automatisch dem Adapter durch den Standardmäßigen
                 Fehlerdekorator übergeben; man kann durch die Erstellung von Übersetzungen
                 eigene Fehlermeldungen für die verschiedenen Fehlercodes der Prüfung definieren.
@@ -516,7 +516,7 @@ if ($element->isValid($value)) {
             <title>Die Prüfung findet an gefilterten Werte statt</title>
 
             <para>
-                <code>Zend_Form_Element::isValid()</code> filtert Werte durch die angegebene
+                <classname>Zend_Form_Element::isValid()</classname> filtert Werte durch die angegebene
                 Filterkette vor der Überprüfung. Siehe das
                 <link linkend="zend.form.elements.filters">Kapitel über Filter</link> für
                 weitere Informationen.
@@ -527,10 +527,10 @@ if ($element->isValid($value)) {
             <title>Prüfungskontext</title>
 
             <para>
-                <code>Zend_Form_Element::isValid()</code> unterstützt ein zusätzliches Argument
-                <code>$context</code>. <code>Zend_Form::isValid()</code> übergibt ein komplettes
+                <classname>Zend_Form_Element::isValid()</classname> unterstützt ein zusätzliches Argument
+                <code>$context</code>. <classname>Zend_Form::isValid()</classname> übergibt ein komplettes
                 Array von Daten die bearbeitet werden an <code>$context</code>, wenn ein Formular
-                geprüft wird und <code>Zend_Form_Element::isValid()</code> übergibt es an jede
+                geprüft wird und <classname>Zend_Form_Element::isValid()</classname> übergibt es an jede
                 Prüfung. Das bedeutet, dass man Prüfungen schreiben kann, die auf die Daten die
                 an andere Formulare übergeben werden acht geben. Als Beispiel nehmen wir ein
                 Anmeldeformular, welches die Felder für Passwort und Passwort Wiederholung hat;
@@ -640,7 +640,7 @@ $messages = $element->getMessages();
             <title>Verwenden von Zend_Form_Elements als generell-eingesetzte Prüfung</title>
 
             <para>
-                <code>Zend_Form_Element</code> implementiert <code>Zend_Validate_Interface</code>
+                <classname>Zend_Form_Element</classname> implementiert <classname>Zend_Validate_Interface</classname>
                 was bedeutet das ein Element auch als Prüfung füreinander verwendet werden
                 kann, bezüglich nicht-Formular Prüfketten.
             </para>
@@ -655,7 +655,7 @@ $messages = $element->getMessages();
                     <code>setRequired($flag)</code> und <code>isRequired()</code> erlauben es den
                     Status des 'required' Flag zu setzen und zu empfangen. Wenn der Wert auf
                     <code>true</code> gesetzt wird, erzwingt dieses Flag, dass das Element, in den
-                    Daten die von <code>Zend_Form</code> bearbeitet werden, vorhanden ist.
+                    Daten die von <classname>Zend_Form</classname> bearbeitet werden, vorhanden ist.
             </para></listitem>
 
             <listitem><para>
@@ -785,7 +785,7 @@ $messages = $element->getMessages();
         </para>
 
         <para>
-            <code>Zend_Form_Element</code> versucht dieses Problem durch die Verwendung von
+            <classname>Zend_Form_Element</classname> versucht dieses Problem durch die Verwendung von
             "Dekoratoren" zu lösen. Dekoratoren sind Klassen die Zugriff auf das Element
             haben und eine Methode zur Darstellung des Inhalts bieten. Für weitere Informationen
             darüber wie Dekoratoren arbeiten, kann im Kapitel über
@@ -793,7 +793,7 @@ $messages = $element->getMessages();
         </para>
 
         <para>
-            Die von <code>Zend_Form_Element</code> verwendeten Standarddekoratoren sind:
+            Die von <classname>Zend_Form_Element</classname> verwendeten Standarddekoratoren sind:
         </para>
 
         <itemizedlist>
@@ -801,13 +801,13 @@ $messages = $element->getMessages();
                 <emphasis>ViewHelper</emphasis>: Spezifiziert einen View Helfer der verwendet wird,
                 um das Element darzustellen. Das 'helper' Attribut des Elements kann verwendet
                 werden, um zu spezifizieren welcher View Helfer verwendet werden soll. Standardmäßig
-                spezifiziert <code>Zend_Form_Element</code> den 'formText' View Helfer, aber
+                spezifiziert <classname>Zend_Form_Element</classname> den 'formText' View Helfer, aber
                 individuelle Unterklassen spezifizieren unterschiedliche Helfer.
             </para></listitem>
 
             <listitem><para>
                 <emphasis>Errors</emphasis>: Fügt Fehlermeldungen an das Element an, indem es
-                <code>Zend_View_Helper_FormErrors</code> verwendet. Wenn keine vorhanden sind,
+                <classname>Zend_View_Helper_FormErrors</classname> verwendet. Wenn keine vorhanden sind,
                 wird nichts hinzugefügt.
             </para></listitem>
 
@@ -824,7 +824,7 @@ $messages = $element->getMessages();
 
             <listitem><para>
                 <emphasis>Label</emphasis>: Stellt ein Label vor das Element, indem es
-                <code>Zend_View_Helper_FormLabel</code> verwendet, und umschliesst es in einem &lt;dt&gt;
+                <classname>Zend_View_Helper_FormLabel</classname> verwendet, und umschliesst es in einem &lt;dt&gt;
                 Tag. Wenn kein Label angegeben wurde, wird nur das &lt;dt&gt; Tag dargestellt.
             </para></listitem>
         </itemizedlist>
@@ -848,7 +848,7 @@ $element = new Zend_Form_Element('foo',
 
             <para>
                 Diese Option kann mit jeder anderen Option gemischt werden die übergeben wird, sowohl
-                als Array Option oder in einem <code>Zend_Config</code> Objekt.
+                als Array Option oder in einem <classname>Zend_Config</classname> Objekt.
             </para>
         </note>
 
@@ -907,7 +907,7 @@ $this->addDecorators(array(
             <title>Mehrere Dekoratoren des gleichen Typs verwenden</title>
 
             <para>
-                Intern verwendet <code>Zend_Form_Element</code> eine Dekoratorklasse als
+                Intern verwendet <classname>Zend_Form_Element</classname> eine Dekoratorklasse als
                 Mechanismus für das Nachschauen wenn Dekoratore empfangen werden. Als Ergebnis,
                 können mehrere Dekratoren nicht zur gleichen Zeit registriert werden; nachgeordnete
                 Dekoratoren überschreiben jene, die vorher existiert haben.
@@ -988,7 +988,7 @@ $fooBar  = $element->getDecorator('FooBar');
         </itemizedlist>
 
         <para>
-            <code>Zend_Form_Element</code> verwendet auch Überladung um die Darstellung von speziellen
+            <classname>Zend_Form_Element</classname> verwendet auch Überladung um die Darstellung von speziellen
             Dekoratoren zu erlauben. <code>__call()</code> interagiert mit Methoden auf mit dem Text
             'render' anfangen und verwendet den Rest des Methodennamens dazu um nach einen Dekorator
             zu suchen; wenn er gefunden wird, wird er diesen <emphasis>einzelnen</emphasis> Dekorator
@@ -1013,7 +1013,7 @@ echo $element->renderHtmlTag("Das ist der Inhalt des HTML Tags");
         <title>Metadaten und Attribute</title>
 
         <para>
-            <code>Zend_Form_Element</code> behandelt eine Vielzahl von Attributen und Metadaten des
+            <classname>Zend_Form_Element</classname> behandelt eine Vielzahl von Attributen und Metadaten des
             Elements. Basisattribute sind:
         </para>
 
@@ -1098,7 +1098,7 @@ echo $element->renderHtmlTag("Das ist der Inhalt des HTML Tags");
 
         <para>
             Die meiste Zeit kann auf sie, trotzdem, einfach als Objekteigenschaften zugegriffen
-            werden, da <code>Zend_Form_Element</code> das Überladen realisiert und den Zugriff
+            werden, da <classname>Zend_Form_Element</classname> das Überladen realisiert und den Zugriff
             zu ihnen erlaubt:
         </para>
 
@@ -1119,7 +1119,7 @@ $element->class = 'text;
         <title>Standard Elemente</title>
 
         <para>
-            <code>Zend_Form</code> wird mit einer Anzahl an Standardelementen ausgeliefert;
+            <classname>Zend_Form</classname> wird mit einer Anzahl an Standardelementen ausgeliefert;
             lesen Sie das Kapitel über
             <link linkend="zend.form.standardElements">Standard Elemente</link> für vollständige
             Details.
@@ -1130,7 +1130,7 @@ $element->class = 'text;
         <title>Zend_Form_Element Methoden</title>
 
         <para>
-            <code>Zend_Form_Element</code> hat viele, viele Methoden. Was folgt, ist eine
+            <classname>Zend_Form_Element</classname> hat viele, viele Methoden. Was folgt, ist eine
             kurze Zusammenfassung ihrer Signatur - gruppiert nach Typ:
         </para>
 
@@ -1237,15 +1237,15 @@ $element->class = 'text;
         <title>Konfiguration</title>
 
         <para>
-            Der Konstruktor von <code>Zend_Form_Element</code> akzeptiert entweder einen Array von
-            Optionen oder ein <code>Zend_Config</code> Objekt das Optionen enthält, und es kann
+            Der Konstruktor von <classname>Zend_Form_Element</classname> akzeptiert entweder einen Array von
+            Optionen oder ein <classname>Zend_Config</classname> Objekt das Optionen enthält, und es kann
             auch durch Verwendung von <code>setOptions()</code> oder <code>setConfig()</code>
             konfiguriert werden. Generell, werden die Schlüssel wie folgt benannt:
         </para>
 
         <itemizedlist>
             <listitem><para>
-                Wenn 'set' + Schlüssel auf eine <code>Zend_Form_Element</code> Methode zeigt, dann
+                Wenn 'set' + Schlüssel auf eine <classname>Zend_Form_Element</classname> Methode zeigt, dann
                 wird der angebotene Wert zu dieser Methode übermittelt.
             </para></listitem>
 
@@ -1327,7 +1327,7 @@ decorators.label.decorator = "Label"
         <title>Eigene Elemente</title>
 
         <para>
-            Es können eigene Elemente durch die Erweiterung der <code>Zend_Form_Element</code>
+            Es können eigene Elemente durch die Erweiterung der <classname>Zend_Form_Element</classname>
             Klasse erstellt werden. Übliche Gründe hierfür sind:
         </para>
 
@@ -1392,7 +1392,7 @@ $form->addPrefixPath('My_Element', 'My/Element/', 'element')
         </para>
 
         <para>
-            Eine andere Methode, die man überschreiben sollte, wenn <code>Zend_Form_Element</code>
+            Eine andere Methode, die man überschreiben sollte, wenn <classname>Zend_Form_Element</classname>
             erweitert wird, ist die <code>loadDefaultDecorators()</code> Methode. Diese Methode
             lädt fallweise ein Set von Standarddekoratoren für das Element; es kann gewünscht sein,
             eigene Dekoratoren in der erweiterten Klasse zu verwenden:
@@ -1415,7 +1415,7 @@ class My_Element_Text extends Zend_Form_Element
 
         <para>
             Es gibt viele Wege, Elemente anzupassen; man sollte sicherstellen die API Dokumentation
-            von <code>Zend_Form_Element</code> zu lesen um alle vorhandenen Methoden zu kennen.
+            von <classname>Zend_Form_Element</classname> zu lesen um alle vorhandenen Methoden zu kennen.
         </para>
     </sect2>
 </sect1>

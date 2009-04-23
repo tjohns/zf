@@ -4,7 +4,7 @@
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
-        <code>Zend_Config_Xml</code> ermöglicht es Entwicklern, Konfigurations-Daten in einfachen
+        <classname>Zend_Config_Xml</classname> ermöglicht es Entwicklern, Konfigurations-Daten in einfachen
         XML-Dateien zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf die
         Eigenschaften verschachtelter Objekte entspricht. Der Name des Root-Elementes der XML-Datei
         oder des Strings ist unwichtig und kann beliebig gewählt werden. Die erste Ebene der
@@ -18,15 +18,15 @@
     <note>
         <title>Rückgabe Typen</title>
         <para>
-            Konfigurations-Daten, die in <code>Zend_Config_Xml</code> eingelesen wurden, werden
+            Konfigurations-Daten, die in <classname>Zend_Config_Xml</classname> eingelesen wurden, werden
             immer als Strings zurück gegeben. Die Konvertierung der Daten von Strings in andere
             Datentypen ist Aufgabe der Entwickler und von deren Bedürfnissen abhängig.
         </para>
     </note>
     <example id="zend.config.adapters.xml.example.using">
-        <title><code>Zend_Config_Xml</code> benutzen</title>
+        <title><classname>Zend_Config_Xml</classname> benutzen</title>
         <para>
-            Dieses Beispiel zeigt die grundlegende Nutzung von <code>Zend_Config_Xml</code> um
+            Dieses Beispiel zeigt die grundlegende Nutzung von <classname>Zend_Config_Xml</classname> um
             Konfigurations-Daten aus einem XML-File zu laden. In diesem Beispiel gibt es
             Konfigurations-Daten für ein Produktiv- und ein Staging-System. Da sich die Daten für
             das Staging-System nur unwesentlich von denen für das Produktiv-System unterscheiden,
@@ -77,9 +77,9 @@ echo $config->database->params->dbname; // ausgabe "dbname"
         </programlisting>
     </example>
     <example id="zend.config.adapters.xml.example.attributes">
-        <title>Tag Attribute in <code>Zend_Config_Xml</code> verwenden</title>
+        <title>Tag Attribute in <classname>Zend_Config_Xml</classname> verwenden</title>
         <para>
-            <code>Zend_Config_Xml</code> unterstützt auch zwei zusätzliche Wege der Definition von Knoten in der
+            <classname>Zend_Config_Xml</classname> unterstützt auch zwei zusätzliche Wege der Definition von Knoten in der
             Konfiguration. Beide verwenden Attribute. Da die <code>extends</code> und
             <code>value</code> Attribute reservierte Schlüsselwörter sind (das letztere durch den zweiten
             Weg der Verwendung von Attributen), können sie nicht verwendet werden. Der erste Weg
@@ -138,7 +138,7 @@ echo $config->database->params->dbname; // ausgabe "dbname"
     <note>
         <title>XML Strings</title>
         <para>
-            <code>Zend_Config_Xml</code> ist dazu in der Lage XML Strings direkt zu laden, wie z.B.
+            <classname>Zend_Config_Xml</classname> ist dazu in der Lage XML Strings direkt zu laden, wie z.B.
             deren Empfang von einer Datenbank. Der String wird als erster Parameter an den
             Konstruktor übergeben und muß mit den Zeichen <code>'&lt;?xml':</code> beginnen
         </para>

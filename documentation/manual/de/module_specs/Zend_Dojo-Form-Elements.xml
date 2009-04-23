@@ -6,7 +6,7 @@
 
     <para>
         Jedes Formular-Dijit für welches ein Viewhelfer vorhanden ist hat ein korrespondierendes
-        <code>Zend_Form</code> Element. Alle von Ihnen bieten die folgenden Methoden für die Manipulation
+        <classname>Zend_Form</classname> Element. Alle von Ihnen bieten die folgenden Methoden für die Manipulation
         von Dijit Parametern an:
     </para>
 

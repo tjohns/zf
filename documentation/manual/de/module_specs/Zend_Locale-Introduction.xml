@@ -6,7 +6,7 @@
     <title>Einführung</title>
 
     <para>
-        <code>Zend_Locale</code> ist die Antwort des Frameworks auf die Frage "Wie kann die selbe Anwendung
+        <classname>Zend_Locale</classname> ist die Antwort des Frameworks auf die Frage "Wie kann die selbe Anwendung
         auf der ganzen Welt verwendet werden?". Die meisten Leute werden sagen "Das ist einfach. Lasst uns alle
         Ausgaben in die unterschiedlichsten Sprachen übersetzen". Aber, eine einfache Übersetzungstabelle die
         Phrasen von einer Sprache in die andere übersetzt ist nicht genug. Verschiedene Regionen haben auch
@@ -23,7 +23,7 @@
         Sprachübersetzung, Unterstützung von lokalen Konventionen für Plurale, Daten, Zeiten, Währungen, Namen,
         Symbolen, Sortierungen, Reihungen und viele mehr. <code>L10n</code> und <code>I18n</code> sind einander
         sehr ähnlich. Zend Framework bietet Unterstützung für diese Konventionen durch eine Kombination von
-        Komponenten wie <code>Zend_Locale</code>, <code>Zend_Date</code>, <code>Zend_Measure</code>, <code>Zend_Translate</code>, <code>Zend_Currency</code> und <code>Zend_TimeSync</code>.
+        Komponenten wie <classname>Zend_Locale</classname>, <classname>Zend_Date</classname>, <classname>Zend_Measure</classname>, <classname>Zend_Translate</classname>, <classname>Zend_Currency</classname> und <classname>Zend_TimeSync</classname>.
     </para>
 
     <tip>
@@ -37,8 +37,8 @@
             Skripts verwendet.
         </para>
         <para>
-            Wenn <code>Zend_Locale</code> verwendet wird hat man diese Einschränkungen nicht, da
-            <code>Zend_Locale</code> weder von PHP's <code>setlocale()</code> abhängig ist, noch irgendwie
+            Wenn <classname>Zend_Locale</classname> verwendet wird hat man diese Einschränkungen nicht, da
+            <classname>Zend_Locale</classname> weder von PHP's <code>setlocale()</code> abhängig ist, noch irgendwie
             mit Ihr gekoppelt ist.
         </para>
     </tip>
@@ -56,38 +56,38 @@
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    <code>Zend_Locale</code> - Unterstützung für Gebietsschemata welche Unterstützung für
+                    <classname>Zend_Locale</classname> - Unterstützung für Gebietsschemata welche Unterstützung für
                     Lokalisierungen von anderen ZF Komponenten bieten.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Translate</code> - Übersetzung von Zeichenketten.
+                    <classname>Zend_Translate</classname> - Übersetzung von Zeichenketten.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Date</code> - Lokalisierung von Daten und Zeiten.
+                    <classname>Zend_Date</classname> - Lokalisierung von Daten und Zeiten.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Calendar</code> - Lokalisierung von Kalendern (Unterstützung für nicht Gregorianische Kalendersysteme)
+                    <classname>Zend_Calendar</classname> - Lokalisierung von Kalendern (Unterstützung für nicht Gregorianische Kalendersysteme)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Currency</code> - Lokalisierung von Währungen.
+                    <classname>Zend_Currency</classname> - Lokalisierung von Währungen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Format</code> - Erkennen und erzeugen von lokalisierten Zahlen.
+                    <classname>Zend_Locale_Format</classname> - Erkennen und erzeugen von lokalisierten Zahlen.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Zend_Locale_Data</code> - Empfangen von lokalisierten Standard Übersetzungen für
+                    <classname>Zend_Locale_Data</classname> - Empfangen von lokalisierten Standard Übersetzungen für
                     Länder, Sprachen und <ulink url="http://unicode.org/cldr/">mehr aus der CLDR</ulink>
                     .
                 </para>
@@ -116,7 +116,7 @@
 
         <para>
             Eine Gebietsschema Zeichenkette oder Objekt welches ein unterstütztes Gebietsschema identifiziert, gibt
-            <code>Zend_Locale</code> und dessen Unterklassen Zugriff auf Informationen über die Sprache und
+            <classname>Zend_Locale</classname> und dessen Unterklassen Zugriff auf Informationen über die Sprache und
             Region welche der Benutzer erwartet. Formatierungen, Normalisierungen und Konvertierungen werden
             anhand dieser Informationen durchgeführt.
         </para>
@@ -139,7 +139,7 @@
             <para>
                 Man muß darauf achten das nicht nur Gebietsschemata mit 2 Zeichen existieren wie die meisten
                 Leute denken. Es gibt auch Sprachen und Regionen die nicht nur mit 2 Zeichen abgekürzt werden.
-                Deswegen sollte man die Region und Sprache NICHT selbst trennen, sondern <code>Zend_Locale</code> verwenden
+                Deswegen sollte man die Region und Sprache NICHT selbst trennen, sondern <classname>Zend_Locale</classname> verwenden
                 um die Sprache oder Region von einem Gebietsschema String zu trennen. Andernfalls kann es zu
                 unerwartetem Verhalten im eigenen Code kommen wenn man versucht das selbst zu machen.
             </para>
@@ -219,12 +219,12 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
         </example>
 
         <para>
-            Der Suchalgorithmus, welcher von <code>Zend_Locale</code> für die automatische Auswahl des
+            Der Suchalgorithmus, welcher von <classname>Zend_Locale</classname> für die automatische Auswahl des
             Gebietsschemas verwendet wird beherrscht drei Informationsquellen:
             <orderedlist>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::BROWSER</code> - Der Webbrowser des Benutzer welcher die
+                        const <classname>Zend_Locale::BROWSER</classname> - Der Webbrowser des Benutzer welcher die
                         Informationen mit jeder Anfrage schickt. Diese wird von PHP durch die globale Variable
                         <code>HTTP_ACCEPT_LANGUAGE</code> veröffentlicht. Wenn kein passendes
                         Gebietsschema gefunden wurde, dann wird mit <code>ENVIRONMENT</code> gesucht und
@@ -233,7 +233,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::ENVIRONMENT</code> - PHP veröffentlicht das Gebietsschema
+                        const <classname>Zend_Locale::ENVIRONMENT</classname> - PHP veröffentlicht das Gebietsschema
                         des hostenden Servers über die interne PHP Funktion <code>setlocale()</code>. Wenn
                         kein passendes Gebietsschema gefunden wurde, dann wird mit <code>FRAMEWORK</code>
                         und als letztes mit <code>BROWSER</code> gesucht.
@@ -241,7 +241,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        const <code>Zend_Locale::FRAMEWORK</code> - Wenn Zend Framework einen standartisierten
+                        const <classname>Zend_Locale::FRAMEWORK</classname> - Wenn Zend Framework einen standartisierten
                         Weg zur Verfügung stellt um für Komponenten Standardwerte zu definieren (das ist geplant
                         aber noch nicht realisiert), dann wird die Verwendung dieser Konstante das
                         Gebietsschema anhand dieser Standardwerte auswählen. Wenn kein passendes Gebietsschema
@@ -259,7 +259,7 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
         <title>Verwenden automatischer Gebietsschemata</title>
 
         <para>
-            <code>Zend_Locale</code> bietet drei zusätzliche Gebietsschemata. Diese Gebietsschemata gehören
+            <classname>Zend_Locale</classname> bietet drei zusätzliche Gebietsschemata. Diese Gebietsschemata gehören
             nicht zu irgendeiner Sprache oder Region. Es sind "automatische" Gebietsschemata was bedeutet das
             Sie den gleichen Effekt wie die Methode <code>getDefault()</code> haben, aber ohne die negativen
             Effekte wie die Erstellung einer Instanz. Diese "automatischen" gebietsschemata können überall
@@ -275,13 +275,13 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
             <orderedlist>
                 <listitem>
                     <para>
-                        <code>'browser'</code> - <code>Zend_Locale</code> soll mit den Informationen arbeiten
+                        <code>'browser'</code> - <classname>Zend_Locale</classname> soll mit den Informationen arbeiten
                         die durch den Web Browser des Benutzers geliefert werden. Sie werden von PHP in der
                         globalen Variable <code>HTTP_ACCEPT_LANGUAGE</code> veröffentlicht.
                     </para>
                     <para>
                         Wenn ein Benutzer mehr als ein Gebietsschema in seinem Browser anbietet, wird
-                        <code>Zend_Locale</code> das erste gefundene Gebietsschema verwenden. Wenn der
+                        <classname>Zend_Locale</classname> das erste gefundene Gebietsschema verwenden. Wenn der
                         Benutzer kein Gebietsschema liefert oder das Skript von der Kommandozeile aufgerufen
                         wird, wird automatisch das Gebietsschema <code>'environment'</code> verwendet und
                         zurückgegeben.
@@ -289,19 +289,19 @@ $locale3 = new Zend_Locale(Zend_Locale::FRAMEWORK);
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'environment'</code> - <code>Zend_Locale</code> soll mit den Informationen arbeiten
+                        <code>'environment'</code> - <classname>Zend_Locale</classname> soll mit den Informationen arbeiten
                         welche vom Host Server geliefert werden. Sie werden vom PHP über die interne Funktion
                         <code>setlocale()</code> veröffentlicht.
                     </para>
                     <para>
-                        Wenn eine Umgebung mehr als ein Gebietsschema anbietet, wird <code>Zend_Locale</code>
+                        Wenn eine Umgebung mehr als ein Gebietsschema anbietet, wird <classname>Zend_Locale</classname>
                         das erste gefundene Gebietsschema verwenden. Wenn der Host kein Gebietsschema anbietet
                         wird automatisch das Gebietsschema <code>'browser'</code> verwendet und zurückgegeben.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>'auto'</code> - <code>Zend_Locale</code> soll automatisch jedes beliebige
+                        <code>'auto'</code> - <classname>Zend_Locale</classname> soll automatisch jedes beliebige
                         Gebietsschema erkennen mit dem gearbeitet werden kann. Zuerst wird nach dem
                         Gebietsschema des Benutzers gesucht und anschließend, wenn das nicht erfolgreich war,
                         nach dem Gebietsschema des Hosts.
@@ -341,7 +341,7 @@ $date = new Zend_Date('auto');
         </para>
 
         <para>
-            In solchen Fällen wirft <code>Zend_Locale</code> normalerweise eine Ausnahme mit einer Nachricht,
+            In solchen Fällen wirft <classname>Zend_Locale</classname> normalerweise eine Ausnahme mit einer Nachricht,
             das die automatische Erkennung des Gebietsschemas nicht erfolgreich war. Es gibt zwei Optionen
             um diese Situation handzuhaben. Entweder durch das Setzen eines neuen Gebietsschemas per Hand, oder
             der Definition eines Standardgebietsschemas.
@@ -365,7 +365,7 @@ $date = new Zend_Date($locale);
 
         <para>
             Aber das hat einen großen negativen Effekt. Man muß das Gebietsschema-Objekt in jeder Klasse
-            setzen die <code>Zend_Locale</code> verwendet. Das kann sehr unhandlch sein wenn mehrere Klassen
+            setzen die <classname>Zend_Locale</classname> verwendet. Das kann sehr unhandlch sein wenn mehrere Klassen
             verwendet werden.
         </para>
 
@@ -374,7 +374,7 @@ $date = new Zend_Date($locale);
             ein Standard Gebietsschema mit der statischen <code>setDefault()</code> Methode setzen. Natürlich
             wird jedes unbekannte oder nicht voll qualifizierte Gebietsschema eine Ausnahme werden.
             <code>setDefault()</code> sollte der erste Aufruf sein bevor irgendeine Klasse initiiert wird
-            die <code>Zend_Locale</code> verwendet. Siehe das folgende Beispiel für Details:
+            die <classname>Zend_Locale</classname> verwendet. Siehe das folgende Beispiel für Details:
         </para>
 
         <example id="zend.locale.defaultlocale.example-2">
@@ -402,9 +402,9 @@ $date = new Zend_Date();
         <title>ZF lokalisierbare Klassen</title>
 
         <para>
-            Im ZF sind lokalisierbare Klassen von <code>Zend_Locale</code> abhängig um ein Gebietsschema
+            Im ZF sind lokalisierbare Klassen von <classname>Zend_Locale</classname> abhängig um ein Gebietsschema
             automatisch auszuwählen, wie im oberen Abschnitt geschrieben. Das Erstellen eines Datums durch
-            Verwendung von <code>Zend_Date</code> ohne die Angabe eines Gebietsschemas führt als Ergebnis zu
+            Verwendung von <classname>Zend_Date</classname> ohne die Angabe eines Gebietsschemas führt als Ergebnis zu
             einem Objekt mit einem Gebietsschema, basierend auf den Informationen welche durch den Webbrowser des
             Benutzers zur Verfügung gestellt werden.
         </para>
@@ -461,7 +461,7 @@ $temp = new Zend_Measure_Temperature('100,10',
 
         <para>
             Zend Framework erlaubt die Verwendung eines Anwendungsweiten Gebietsschemas. Man kann einfach eine
-            Instanz von <code>Zend_Locale</code> in der Registry mit dem Schüssel 'Zend_Locale' setzen.
+            Instanz von <classname>Zend_Locale</classname> in der Registry mit dem Schüssel 'Zend_Locale' setzen.
             Dann wird diese Instanz in allen Klassen vom Zend Framework die Gebietsschemata verwenden selbst
             verwendet. Auf diesem Weg wird eine Instanz in der Registry gesetzt und dann kann man das weitere
             Setzen vergessen. Sie wird automatisch in allen anderen Klassen verwendet. Siehe das folgende
@@ -521,7 +521,7 @@ Zend_Locale_Format::setOptions(array('locale' => 'en_US',
 
         <para>
             Um mit den Standarddefinitionen eines Gebietsschemas zu arbeiten kann die Konstante
-            <code>Zend_Locale_Format::STANDARD</code> verwendet werden. Das Setzen der Konstante <code>Zend_Locale_Format::STANDARD</code>
+            <classname>Zend_Locale_Format::STANDARD</classname> verwendet werden. Das Setzen der Konstante <classname>Zend_Locale_Format::STANDARD</classname>
             für '<code>date_format</code>' benutzt die Standarddefinition des aktuellen Gebietsschemas. Das Setzen für
             'number_format' benutzt das Standard Nummernformat dieses Gebietsschemas. Und das Setzen für 'locale'
             verwendet das Standard Gebietsschema des Servers oder Browsers.
@@ -548,18 +548,18 @@ Zend_Locale_Format::setOptions(array('locale' => Zend_Locale_Format::STANDARD,
 
     <sect2 id="zend.locale.cache">
 
-        <title><code>Zend_Locale</code> und dessen Subklassen schneller machen</title>
+        <title><classname>Zend_Locale</classname> und dessen Subklassen schneller machen</title>
 
         <para>
-            <code>Zend_Locale</code> und dessen Subklassen können durch die Verwendung von
-            <code>Zend_Cache</code> schneller gemacht werden. Man sollte die statische Methode
-            <code>Zend_Locale::setCache($cache)</code> verwenden wenn man <code>Zend_Locale</code> benutzt.
-            <code>Zend_Locale_Format</code> kann schneller gemacht werden indem die Option
+            <classname>Zend_Locale</classname> und dessen Subklassen können durch die Verwendung von
+            <classname>Zend_Cache</classname> schneller gemacht werden. Man sollte die statische Methode
+            <classname>Zend_Locale::setCache($cache)</classname> verwenden wenn man <classname>Zend_Locale</classname> benutzt.
+            <classname>Zend_Locale_Format</classname> kann schneller gemacht werden indem die Option
             <code>cache</code> innerhalb von
-            <code>Zend_Locale_Format::setOptions(array('cache' => $adapter));</code> aufgerufen wird. Wenn beide
-            Klassen verwendet werden sollte nur für <code>Zend_Locale</code> ein Cache gesetzt werden, da der
+            <classname>Zend_Locale_Format::setOptions(array('cache' => $adapter));</classname> aufgerufen wird. Wenn beide
+            Klassen verwendet werden sollte nur für <classname>Zend_Locale</classname> ein Cache gesetzt werden, da der
             zuletzt gesetzte Cache den vorher gesetzten Cache überschreibt. Der Bequemlichkeit halber gibt es
-            auch die statischen Methoden <code>Zend_Locale::getCache()</code>, <code>hasCache()</code>,
+            auch die statischen Methoden <classname>Zend_Locale::getCache()</classname>, <code>hasCache()</code>,
             <code>clearCache()</code> und <code>removeCache()</code>.
         </para>
 
