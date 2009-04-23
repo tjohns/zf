@@ -100,7 +100,7 @@ class Zend_Tag_Cloud_Decorator_HtmlCloud extends Zend_Tag_Cloud_Decorator_Cloud
      * Defined by Zend_Tag_Cloud_Decorator_Cloud
      *
      * @param  array $tags
-     * @return array
+     * @return string
      */
     public function render(array $tags)
     {

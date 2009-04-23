@@ -30,6 +30,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once dirname(__FILE__) . '/../../../TestHelper.php';
 
 require_once 'Zend/Config.php';
+require_once 'Zend/Loader/PluginLoader.php';
 require_once 'Zend/Tag/Cloud.php';
 require_once 'Zend/Tag/ItemList.php';
 require_once dirname(__FILE__) . '/_classes/CloudDummy.php';
@@ -58,25 +59,25 @@ class Zend_Tag_Cloud_CloudTest extends PHPUnit_Framework_TestCase
         $cloud->setItemList(new Zend_Tag_ItemListDummy);
         $this->assertTrue($cloud->getItemList() instanceof Zend_Tag_ItemListDummy);
     }
-
-    public function testGetAndSetCloudDecorator()
-    {
-        $cloud = $this->_getCloud();
-        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_HtmlCloud);
-        
-        $cloud->setCloudDecorator(new Zend_Tag_Cloud_Decorator_CloudDummy());
-        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_CloudDummy);
-    }
     
     public function testSetCloudDecoratorViaArray()
     {
         $cloud = $this->_getCloud();
         
         $cloud->setCloudDecorator(array('decorator' => 'CloudDummy', 'options' => array('foo' => 'bar')));
-        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_CloudDummy);
+        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_Dummy_CloudDummy);
         $this->assertEquals($cloud->getCloudDecorator()->getFoo(), 'bar');
     }
     
+    public function testGetAndSetCloudDecorator()
+    {
+        $cloud = $this->_getCloud();
+        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_HtmlCloud);
+        
+        $cloud->setCloudDecorator(new Zend_Tag_Cloud_Decorator_Dummy_CloudDummy());
+        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_Dummy_CloudDummy);
+    }
+
     public function testSetInvalidCloudDecorator()
     {
         $cloud = $this->_getCloud();
@@ -88,25 +89,25 @@ class Zend_Tag_Cloud_CloudTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($e->getMessage(), 'Decorator is no instance of Zend_Tag_Cloud_Decorator_Cloud');
         }
     }
+   
+    public function testSetTagDecoratorViaArray()
+    {
+        $cloud = $this->_getCloud();
+        
+        $cloud->setTagDecorator(array('decorator' => 'TagDummy', 'options' => array('foo' => 'bar')));
+        $this->assertTrue($cloud->getTagDecorator() instanceof Zend_Tag_Cloud_Decorator_Dummy_TagDummy);
+        $this->assertEquals($cloud->getTagDecorator()->getFoo(), 'bar');
+    }
     
     public function testGetAndSetTagDecorator()
     {
         $cloud = $this->_getCloud();
         $this->assertTrue($cloud->getTagDecorator() instanceof Zend_Tag_Cloud_Decorator_HtmlTag);
         
-        $cloud->setTagDecorator(new Zend_Tag_Cloud_Decorator_TagDummy());
-        $this->assertTrue($cloud->getTagDecorator() instanceof Zend_Tag_Cloud_Decorator_TagDummy);
+        $cloud->setTagDecorator(new Zend_Tag_Cloud_Decorator_Dummy_TagDummy());
+        $this->assertTrue($cloud->getTagDecorator() instanceof Zend_Tag_Cloud_Decorator_Dummy_TagDummy);
     }
-    
-    public function testSetTagDecoratorViaArray()
-    {
-        $cloud = $this->_getCloud();
-        
-        $cloud->setTagDecorator(array('decorator' => 'TagDummy', 'options' => array('foo' => 'bar')));
-        $this->assertTrue($cloud->getTagDecorator() instanceof Zend_Tag_Cloud_Decorator_TagDummy);
-        $this->assertEquals($cloud->getTagDecorator()->getFoo(), 'bar');
-    }
-    
+
     public function testSetInvalidTagDecorator()
     {
         $cloud = $this->_getCloud();
@@ -117,6 +118,78 @@ class Zend_Tag_Cloud_CloudTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Tag_Cloud_Exception $e) {
             $this->assertEquals($e->getMessage(), 'Decorator is no instance of Zend_Tag_Cloud_Decorator_Tag');
         }
+    }
+    
+    public function testSetPrefixPathViaOptions()
+    {
+        $cloud = $this->_getCloud(array(
+            'prefixPath' => array(
+                'prefix' => 'Zend_Tag_Cloud_Decorator_Dummy_',
+                'path' => dirname(__FILE__) . '/_classes'
+            ),
+            'cloudDecorator' => array(
+                'decorator' => 'CloudDummy1',
+                'options'   => array(
+                    'foo' => 'bar'
+                )
+            )
+        ), false);
+
+        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_Dummy_CloudDummy1);
+        $this->assertEquals($cloud->getCloudDecorator()->getFoo(), 'bar');
+    }
+    
+    public function testSetPrefixPathsViaOptions()
+    {
+        $cloud = $this->_getCloud(array(
+            'prefixPath' => array(
+                array(
+                    'prefix' => 'Zend_Tag_Cloud_Decorator_Dummy_',
+                    'path' => dirname(__FILE__) . '/_classes'
+                )
+            ),
+            'cloudDecorator' => array(
+                'decorator' => 'CloudDummy2',
+                'options'   => array(
+                    'foo' => 'bar'
+                )
+            )
+        ), false);
+
+        $this->assertTrue($cloud->getCloudDecorator() instanceof Zend_Tag_Cloud_Decorator_Dummy_CloudDummy2);
+        $this->assertEquals($cloud->getCloudDecorator()->getFoo(), 'bar');
+    }
+    
+    public function testSetPrefixPathsSkip()
+    {
+        $cloud = $this->_getCloud(array(
+            'prefixPath' => array(
+                array(
+                    'prefix' => 'foobar',
+                )
+            ),
+        ), false);
+        
+        $this->assertEquals(count($cloud->getPluginLoader()->getPaths()), 1);
+    }
+    
+    public function testSetPluginLoader()
+    {
+        $loader = new Zend_Loader_PluginLoader(array('foo_' => 'bar/'));
+        $cloud  = $this->_getCloud(array(), null);
+        $cloud->setPluginLoader($loader);
+        $paths  = $cloud->getPluginLoader()->getPaths();
+        
+        $this->assertEquals($paths['foo_'][0], 'bar/');
+    }
+    
+    public function testSetPluginLoaderViaOptions()
+    {
+        $loader = new Zend_Loader_PluginLoader(array('foo_' => 'bar/'));
+        $cloud  = $this->_getCloud(array('pluginLoader' => $loader), null);
+        $paths  = $cloud->getPluginLoader()->getPaths();
+        
+        $this->assertEquals($paths['foo_'][0], 'bar/');
     }
     
     public function testAppendTagAsArray()
@@ -254,10 +327,14 @@ class Zend_Tag_Cloud_CloudTest extends PHPUnit_Framework_TestCase
                                              . '</ul>');
     }
     
-    protected function _getCloud($options = null)
+    protected function _getCloud($options = null, $setPluginLoader = true)
     {
         $cloud = new Zend_Tag_Cloud($options);
-        $cloud->getPluginLoader()->addPrefixPath('Zend_Tag_Cloud_Decorator_', dirname(__FILE__) . '/_classes');
+        
+        if ($setPluginLoader) {
+            $cloud->getPluginLoader()->addPrefixPath('Zend_Tag_Cloud_Decorator_Dummy_', dirname(__FILE__) . '/_classes');
+        }
+        
         return $cloud;
     }
 }
