@@ -148,6 +148,8 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
         
         if (!$this->isPartial()) {
             $path = trim($path, self::URI_DELIMITER);
+        } else {
+            $matchedPath = $path;
         }
 
         if ($path != '') {
@@ -176,7 +178,7 @@ class Zend_Controller_Router_Route_Module extends Zend_Controller_Router_Route_A
         }
         
         if ($this->isPartial()) {
-            $this->setMatchedPath($path);
+            $this->setMatchedPath($matchedPath);
         }
 
         $this->_values = $values + $params;
