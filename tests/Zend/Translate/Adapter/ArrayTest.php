@@ -265,8 +265,15 @@ class Zend_Translate_Adapter_ArrayTest extends PHPUnit_Framework_TestCase
         $cache   = Zend_Translate_Adapter_Array::getCache();
         $this->assertTrue($cache instanceof Zend_Cache_Core);
 
-        $cache   = Zend_Translate_Adapter_Array::removeCache();
+        Zend_Translate_Adapter_Array::removeCache();
         $this->assertFalse(Zend_Translate_Adapter_Array::hasCache());
+
+        $cache->save('testdata', 'testid');
+        Zend_Translate_Adapter_Array::setCache($cache);
+        $adapter = new Zend_Translate_Adapter_Array(dirname(__FILE__) . '/_files/translation_en.php', 'en');
+        Zend_Translate_Adapter_Array::removeCache();
+        $temp = $cache->load('testid');
+        $this->assertEquals('testdata', $temp);
     }
 
     /**

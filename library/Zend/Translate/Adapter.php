@@ -249,7 +249,7 @@ abstract class Zend_Translate_Adapter {
 
         if (isset(self::$_cache) and ($change == true)) {
             $id = 'Zend_Translate_' . $this->toString() . '_Options';
-            self::$_cache->save( serialize($this->_options), $id);
+            self::$_cache->save( serialize($this->_options), $id, array('Zend_Translate'));
         }
 
         return $this;
@@ -337,7 +337,7 @@ abstract class Zend_Translate_Adapter {
 
             if (isset(self::$_cache)) {
                 $id = 'Zend_Translate_' . $this->toString() . '_Options';
-                self::$_cache->save( serialize($this->_options), $id);
+                self::$_cache->save( serialize($this->_options), $id, array('Zend_Translate'));
             }
         }
 
@@ -491,7 +491,7 @@ abstract class Zend_Translate_Adapter {
 
         if (($read) and (isset(self::$_cache))) {
             $id = 'Zend_Translate_' . preg_replace('/[^a-zA-Z0-9_]/', '_', $data) . '_' . $this->toString();
-            self::$_cache->save( serialize($temp), $id);
+            self::$_cache->save( serialize($temp), $id, array('Zend_Translate'));
         }
 
         return $this;
@@ -676,7 +676,8 @@ abstract class Zend_Translate_Adapter {
      */
     public static function clearCache()
     {
-        self::$_cache->clean();
+        require_once 'Zend/Cache.php';
+        self::$_cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('Zend_Translate'));
     }
 
     /**
