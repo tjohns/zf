@@ -41,8 +41,7 @@
         <programlisting role="php"><![CDATA[
 // The new marketing group inherits permissions from staff
 $acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Next, note that the above access controls refer to specific resources (e.g.,
@@ -63,8 +62,7 @@ $acl->add(new Zend_Acl_Resource('latest'), 'news');
 
 // announcement news
 $acl->add(new Zend_Acl_Resource('announcement'), 'news');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Then it is simply a matter of defining these more specific rules on the target areas of
@@ -85,8 +83,7 @@ $acl->deny('staff', 'latest', 'revise');
 // Everyone (including administrators) are denied permission to
 // archive news announcements
 $acl->deny(null, 'announcement', 'archive');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             We can now query the ACL with respect to the latest changes:
@@ -124,8 +121,7 @@ echo $acl->isAllowed('editor', 'announcement', 'archive') ?
 echo $acl->isAllowed('administrator', 'announcement', 'archive') ?
      "allowed" : "denied";
 // denied
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -162,8 +158,7 @@ echo $acl->isAllowed('marketing', 'newsletter', 'publish') ?
 echo $acl->isAllowed('marketing', 'newsletter', 'archive') ?
      "allowed" : "denied";
 // denied
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Privileges may be modified incrementally as indicated above, but a <code>null</code>
@@ -185,8 +180,7 @@ echo $acl->isAllowed('marketing', 'latest', 'archive') ?
 echo $acl->isAllowed('marketing', 'latest', 'anything') ?
      "allowed" : "denied";
 // allowed
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 

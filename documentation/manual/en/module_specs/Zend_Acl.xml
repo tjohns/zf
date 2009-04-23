@@ -120,8 +120,7 @@ $acl->deny('guest', 'someResource');
 $acl->allow('member', 'someResource');
 
 echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
-]]>
-            </programlisting>
+]]></programlisting>
             <para>
                 Since there is no rule specifically defined for the "someUser" role and
                 "someResource", <classname>Zend_Acl</classname> must search for rules that may be
@@ -164,8 +163,7 @@ echo $acl->isAllowed('someUser', 'someResource') ? 'allowed' : 'denied';
 
         <programlisting role="php"><![CDATA[
 $acl = new Zend_Acl();
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <para>
@@ -253,8 +251,7 @@ $acl->addRole(new Zend_Acl_Role('editor'), 'staff');
 
 // Administrator does not inherit access controls
 $acl->addRole(new Zend_Acl_Role('administrator'));
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 
@@ -310,8 +307,7 @@ $acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator inherits nothing, but is allowed all privileges
 $acl->allow('administrator');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The <code>null</code> values in the above <code>allow()</code> calls are used to
@@ -361,8 +357,7 @@ echo $acl->isAllowed('administrator') ?
 echo $acl->isAllowed('administrator', null, 'update') ?
      "allowed" : "denied";
 // allowed because administrator is allowed all privileges
-]]>
-        </programlisting>
+]]></programlisting>
 
     </sect2>
 </sect1>

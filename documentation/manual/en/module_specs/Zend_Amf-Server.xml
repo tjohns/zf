@@ -24,8 +24,7 @@ $server = new Zend_Amf_Server();
 $server->setClass('Foo');
 $response = $server->handle();
 echo $response;
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Alternately, you may choose to attach a simple function as a
@@ -37,8 +36,7 @@ $server = new Zend_Amf_Server();
 $server->addFunction('myUberCoolFunction');
 $response = $server->handle();
 echo $response;
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             You could also mix and match multiple classes and functions. When
@@ -55,8 +53,7 @@ $server->addFunction('myUberCoolFunction', 'my')
        ->setClass('Bar', 'bar');
 $response = $server->handle();
 echo $response;
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             The <code>Zend Amf Server</code> also allows services to be dynamically loaded
@@ -69,8 +66,7 @@ echo $response;
         <programlisting role="php"><![CDATA[
 $server->addDirectory(dirname(__FILE__) .'/../services/');
 $server->addDirectory(dirname(__FILE__) .'/../package/');
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             When calling remote services your source name can have underscore(_) and dot(.)
@@ -110,8 +106,7 @@ function helloWorld($name, $greeting = 'Hello')
 {
     return $greeting . ', ' . $name;
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <programlisting role="php"><![CDATA[
 // Attached class
@@ -128,8 +123,7 @@ class World
         return $greeting . ', ' . $name;
     }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Other annotations may be used, but will be ignored.
@@ -207,8 +201,7 @@ class World
         </channel-definition>
     </channels>
 </services-config>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             There are two key points in the example. First, but last in the
@@ -221,8 +214,7 @@ class World
     <endpoint uri="http://example.com/server.php"
         class="flex.messaging.endpoints.AMFEndpoint"/>
 </channel-definition>
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Notice that we've given this channel an identifier, "zend-endpoint".
@@ -240,8 +232,7 @@ class World
     fault="faultHandler(event)"
     showBusyCursor="true"
     destination="zend">
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             Here, we've defined a new remote object identified by "myservice"
@@ -253,8 +244,7 @@ class World
 
         <programlisting role="ActionScript"><![CDATA[
 myservice.hello("Wade");
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             When namespacing, you would use
@@ -263,8 +253,7 @@ myservice.hello("Wade");
 
         <programlisting role="ActionScript"><![CDATA[
 myservice.world.hello("Wade");
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             For more information on Flex RemoteObject invocation, <ulink
@@ -296,8 +285,7 @@ myservice.world.hello("Wade");
 
         <programlisting role="php"><![CDATA[
 $server->setProduction(false);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <para>
             To re-enable it, pass a true boolean value instead:
@@ -305,8 +293,7 @@ $server->setProduction(false);
 
         <programlisting role="php"><![CDATA[
 $server->setProduction(true);
-]]>
-        </programlisting>
+]]></programlisting>
 
         <note>
             <title>Disable production mode sparingly!</title>
@@ -352,8 +339,7 @@ $server->setProduction(true);
 $response = $server->handle();
 $response->addAmfHeader(new Zend_Amf_Value_MessageHeader('foo', true, 'bar'))
 echo $response;
-]]>
-            </programlisting>
+]]></programlisting>
         </example>
     </sect2>
 
@@ -383,8 +369,7 @@ echo $response;
                 <programlisting role="php"><![CDATA[
 // Map the ActionScript class 'ContactVO' to the PHP class 'Contact':
 $server->setClassMap('ContactVO', 'Contact');
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -399,8 +384,7 @@ class Contact
 {
     public $_explicitType = 'ContactVO';
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
 
             <listitem>
@@ -418,8 +402,7 @@ class Contact
         return 'ContactVO';
     }
 }
-]]>
-                </programlisting>
+]]></programlisting>
             </listitem>
         </itemizedlist>
 
@@ -448,8 +431,7 @@ package
         }
     }
 }
-]]>
-            </programlisting>
+]]></programlisting>
         <para>
             The class is syntactically equivalent to the PHP of the same name.
             The variable names are exactly the same and need to be in the same case
@@ -467,8 +449,7 @@ private var myContact:ContactVO;
 private function getContactHandler(event:ResultEvent):void {
     myContact = ContactVO(event.result);
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             The following result event from the service call is cast instantly onto the Flex
             ContactVO. Anything that is bound to myContact will be updated with the returned
@@ -533,8 +514,7 @@ package {
     }
   }
 }
-]]>
-        </programlisting>
+]]></programlisting>
 
 
         <para>
@@ -546,8 +526,7 @@ package {
         <programlisting role="as"><![CDATA[
 import flash.net.NetConnection;
 import flash.net.Responder;
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             In the class we need three variables to represent the NetConnection, Responder, and
             the gateway URL to our <code>Zend_Amf_Server</code> installation.
@@ -556,8 +535,7 @@ import flash.net.Responder;
 private var gateway:String = "http://example.com/server.php";
 private var connection:NetConnection;
 private var responder:Responder;
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             In the Main constructor we create a responder and a new connection to the
             <code>Zend_Amf_Server</code> endpoint. The responder defines two different methods for
@@ -568,8 +546,7 @@ private var responder:Responder;
 responder = new Responder(onResult, onFault);
 connection = new NetConnection;
 connection.connect(gateway);
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             In the onComplete function which is run as soon as the construct has completed we send
             the data to the server. We need to add one more line that makes a call to the
@@ -577,8 +554,7 @@ connection.connect(gateway);
         </para>
         <programlisting role="as"><![CDATA[
 connection.call("World.hello", responder, params);
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             When we created the responder variable we defined an onResult and onFault function to
             handle the response from the server. We added this function for the successful result
@@ -590,8 +566,7 @@ private function onResult(result:Object):void {
     // Display the returned data
     trace(String(result));
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             The onFault function, is called if there was an invalid response from the server. This
             happens when there is an error on the server, the URL to the server is invalid, the
@@ -601,8 +576,7 @@ private function onResult(result:Object):void {
 private function onFault(fault:Object):void {
     trace(String(fault.description));
 }
-]]>
-        </programlisting>
+]]></programlisting>
         <para>
             Adding in the ActionScript to make the remoting connection is now complete. Running the
             ZendExample file now makes a connection to Zend Amf. In review you have added the
